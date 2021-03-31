@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::0a72fdaf4c65e81f7586319226749536, src\mzkit\mzkit\pages\dockWindow\explorer\frmSRMIonsExplorer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmSRMIonsExplorer
-    ' 
-    '     Function: GetIonTICOverlaps
-    ' 
-    '     Sub: frmSRMIonsExplorer_Load, LoadMRM, ShowSpectrumToolStripMenuItem_Click, ShowTICOverlap3DToolStripMenuItem_Click, ShowTICOverlapToolStripMenuItem_Click
-    '          Win7StyleTreeView1_AfterSelect
-    ' 
-    ' /********************************************************************************/
+' Class frmSRMIonsExplorer
+' 
+'     Function: GetIonTICOverlaps
+' 
+'     Sub: frmSRMIonsExplorer_Load, LoadMRM, ShowSpectrumToolStripMenuItem_Click, ShowTICOverlap3DToolStripMenuItem_Click, ShowTICOverlapToolStripMenuItem_Click
+'          Win7StyleTreeView1_AfterSelect
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -78,7 +79,7 @@ Public Class frmSRMIonsExplorer
 
     Public Sub LoadMRM(file As String)
         Dim list = file.LoadChromatogramList.ToArray
-        Dim TIC As chromatogram = list.Where(Function(i) i.id.TextEquals("TIC")).First
+        Dim TIC As DataReader.Chromatogram = list.GetIonsChromatogram
 
         ' Call Win7StyleTreeView1.Nodes.Clear()
 
@@ -115,16 +116,27 @@ Public Class frmSRMIonsExplorer
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterSelect
-        Dim chr As chromatogram = e.Node.Tag
-        Dim ticks As ChromatogramTick() = chr.Ticks
-        Dim proper As New MRMROIProperty(chr)
+        Dim ticks As ChromatogramTick()
+
+        If TypeOf e.Node.Tag Is DataReader.Chromatogram Then
+            ticks = DirectCast(e.Node.Tag, DataReader.Chromatogram).GetTicks.ToArray
+        Else
+            Dim chr As chromatogram = e.Node.Tag
+            ticks = chr.Ticks
+            Dim proper As New MRMROIProperty(chr)
+
+            Call VisualStudio.ShowProperties(proper)
+        End If
 
         Call MyApplication.host.mzkitTool.ShowMRMTIC(e.Node.Text, ticks)
-        Call VisualStudio.ShowProperties(proper)
     End Sub
 
-    Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps.ToArray)
+    Private Sub TICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TICToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps(False).ToArray, d3:=ShowTICOverlap3DToolStripMenuItem.Checked)
+    End Sub
+
+    Private Sub BPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BPCToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps(True).ToArray, d3:=ShowTICOverlap3DToolStripMenuItem.Checked)
     End Sub
 
     ''' <summary>
@@ -147,7 +159,7 @@ Public Class frmSRMIonsExplorer
         Next
     End Function
 
-    Private Iterator Function GetFileTICOverlaps() As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+    Private Iterator Function GetFileTICOverlaps(bpc As Boolean) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
         For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
             Dim fileName As String = rawfile.Text.BaseName
 
@@ -155,14 +167,14 @@ Public Class frmSRMIonsExplorer
                 Continue For
             End If
 
-            With DirectCast(rawfile.Tag, chromatogram)
-                Yield New NamedCollection(Of ChromatogramTick)(fileName, .Ticks)
+            With DirectCast(rawfile.Tag, DataReader.Chromatogram)
+                Yield New NamedCollection(Of ChromatogramTick)(fileName, .GetTicks(isbpc:=bpc))
             End With
         Next
     End Function
 
     Private Sub ShowTICOverlap3DToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlap3DToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps.ToArray, d3:=True)
+        ShowTICOverlap3DToolStripMenuItem.Checked = Not ShowTICOverlap3DToolStripMenuItem.Checked
     End Sub
 
     Private Sub ClearFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearFilesToolStripMenuItem.Click, ClearFilesToolStripMenuItem1.Click
@@ -205,5 +217,17 @@ Public Class frmSRMIonsExplorer
                 file.Nodes(i).Checked = True
             Next
         End If
+    End Sub
+
+    Private Sub SelectAllFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllFilesToolStripMenuItem.Click
+        For Each node As TreeNode In Win7StyleTreeView1.Nodes
+            node.Checked = True
+        Next
+    End Sub
+
+    Private Sub ClearFileSelectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearFileSelectionsToolStripMenuItem.Click
+        For Each node As TreeNode In Win7StyleTreeView1.Nodes
+            node.Checked = False
+        Next
     End Sub
 End Class
