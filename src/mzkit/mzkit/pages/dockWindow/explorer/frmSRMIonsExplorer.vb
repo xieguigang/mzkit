@@ -57,7 +57,7 @@ Public Class frmSRMIonsExplorer
 
     Public Sub LoadMRM(file As String)
         Dim list = file.LoadChromatogramList.ToArray
-        Dim TIC = list.Where(Function(i) i.id.TextEquals("TIC")).First
+        Dim TIC As chromatogram = list.Where(Function(i) i.id.TextEquals("TIC")).First
 
         ' Call Win7StyleTreeView1.Nodes.Clear()
 
@@ -65,6 +65,7 @@ Public Class frmSRMIonsExplorer
 
         TICRoot.Tag = TIC
         TICRoot.ImageIndex = 0
+        TICRoot.ContextMenuStrip = ContextMenuStrip1
 
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim display As String
@@ -81,6 +82,7 @@ Public Class frmSRMIonsExplorer
                 .Tag = chr
                 .ImageIndex = 1
                 .SelectedImageIndex = 1
+                .ContextMenuStrip = ContextMenuStrip2
             End With
         Next
     End Sub
@@ -88,7 +90,7 @@ Public Class frmSRMIonsExplorer
     Private Sub frmSRMIonsExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MRM Ions"
 
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1, ContextMenuStrip2)
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterSelect
@@ -100,29 +102,14 @@ Public Class frmSRMIonsExplorer
         Call VisualStudio.ShowProperties(proper)
     End Sub
 
-    Private Sub ShowSpectrumToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If Win7StyleTreeView1.SelectedNode Is Nothing OrElse DirectCast(Win7StyleTreeView1.SelectedNode.Tag, chromatogram).id = "TIC" Then
-            Return
-        End If
-
-        Dim chr As chromatogram = Win7StyleTreeView1.SelectedNode.Tag
-        Dim spectrum As ms2() = {
-            New ms2 With {.mz = chr.precursor.MRMTargetMz, .intensity = 1},
-            New ms2 With {.mz = chr.product.MRMTargetMz, .intensity = 0.6}
-        }
-        Dim scanData As New LibraryMatrix With {.ms2 = spectrum, .name = "SRM ions"}
-        Dim q = scanData.OrderByDescending(Function(x) x.intensity).First
-        Dim title1$ = $"SRM ion pair"
-        Dim title2$ = $"[{spectrum(0).mz.ToString("F4")}:{spectrum(1).intensity.ToString("G3")}]"
-
-        Call MyApplication.host.mzkitTool.showMatrix(spectrum, $"SRM ion pair [{spectrum(0).mz.ToString("F4")}:{spectrum(1).intensity.ToString("G3")}]")
-        Call MyApplication.host.mzkitTool.PlotMatrx(title1, title2, scanData)
-    End Sub
-
     Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray)
+        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps.ToArray)
     End Sub
 
+    ''' <summary>
+    ''' get ions TIC
+    ''' </summary>
+    ''' <returns></returns>
     Private Iterator Function GetIonTICOverlaps() As IEnumerable(Of NamedCollection(Of ChromatogramTick))
         For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
             Dim fileName As String = rawfile.Text.BaseName
@@ -139,7 +126,43 @@ Public Class frmSRMIonsExplorer
         Next
     End Function
 
+    Private Iterator Function GetFileTICOverlaps() As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
+            Dim fileName As String = rawfile.Text.BaseName
+
+            If Not rawfile.Checked Then
+                Continue For
+            End If
+
+            With DirectCast(rawfile.Tag, chromatogram)
+                Yield New NamedCollection(Of ChromatogramTick)(fileName, .Ticks)
+            End With
+        Next
+    End Function
+
     Private Sub ShowTICOverlap3DToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlap3DToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps.ToArray, d3:=True)
+    End Sub
+
+    Private Sub ClearFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearFilesToolStripMenuItem.Click
+        Call Win7StyleTreeView1.Nodes.Clear()
+    End Sub
+
+    ''' <summary>
+    ''' ions
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ShowTICOverlapToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem1.Click
+        Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray)
+    End Sub
+
+    ''' <summary>
+    ''' ions
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ShowTICOverlap3DToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ShowTICOverlap3DToolStripMenuItem1.Click
         Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray, d3:=True)
     End Sub
 End Class

@@ -689,7 +689,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACo
-        DQAAAk1TRnQBSQFMAgEBAgEAARgBAAEYAQABGAEAARgBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFg
+        DQAAAk1TRnQBSQFMAgEBAgEAASABAAEgAQABGAEAARgBAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFg
         AwABGAMAAQEBAAEYBgABGx4ABv8D/gP7A/kD+wP+DP8D/QP6A/kD+wP+Bv8YAAPBCQADwQkAA8GxAAP/
         A/wG+gPxAcsBkwFLAdABfAEQAdABfAEQA/IJ+gP5A+sBpwFZAQ4BpwFZAQ4B2gHZAdcD9QP6A/sD/QP/
         BgAMwQOWCcEDlgnBA5YYwZkAA/4D8gE2AccB/wE2AcYB/gEvAa0B3QHSAXcBAwHSAXcBAwHSAXcBAwEv
@@ -752,5 +752,8 @@
   </data>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>284, 17</value>
+  </metadata>
+  <metadata name="ContextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>396, 17</value>
   </metadata>
 </root>

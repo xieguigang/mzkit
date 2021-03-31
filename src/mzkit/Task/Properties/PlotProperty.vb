@@ -71,6 +71,7 @@ Public Class PlotProperty
     <Category("Styles")> <Description("Show data tag label for the interested object of the data plot?")> Public Property show_tag As Boolean = True
     <Category("Styles")> <Description("Tweaks of the line width of the data line plot.")> Public Property line_width As Single = 5
     <Category("Styles")> <Description("Tweaks of the point size of the data scatter plot.")> Public Property point_size As Single = 10
+    <Category("Styles")> Public Property label_font As Font = CSSFont.TryParse(CSSFont.Win10NormalLarger)
     <Category("Styles")> <Description("Tweaks of the fill color of the grid background.")> Public Property gridFill As Color = "rgb(245,245,245)".TranslateColor
 
     Public Function GetPadding() As Padding
