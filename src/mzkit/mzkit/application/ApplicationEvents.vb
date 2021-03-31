@@ -154,6 +154,14 @@ Namespace My
                 Sub(header, message, level)
                     log.Invoke(Sub() log.AppendMessage($"[{header} {level.ToString}] {message}"))
                 End Sub
+            Microsoft.VisualBasic.My.Log4VB.redirectInfo =
+                Sub(header, message, level)
+                    log.Invoke(Sub() log.AppendMessage($"[{header} {level.ToString}] {message}"))
+                End Sub
+            Microsoft.VisualBasic.My.Log4VB.redirectDebug =
+                Sub(header, message, level)
+                    log.Invoke(Sub() log.AppendMessage($"[{header} {level.ToString}] {message}"))
+                End Sub
         End Sub
 
         Public Shared Sub RegisterConsole(console As Console)
