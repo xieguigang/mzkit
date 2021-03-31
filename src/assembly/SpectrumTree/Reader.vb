@@ -128,7 +128,6 @@ Public Class Reader : Implements IDisposable
             Call New ms2 With {
                 .mz = reader.ReadDouble,
                 .intensity = reader.ReadDouble,
-                .quantity = reader.ReadDouble,
                 .Annotation = reader.ReadString(BinaryStringFormat.ZeroTerminated)
             }.DoCall(AddressOf products.Add)
         Next
