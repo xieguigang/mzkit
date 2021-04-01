@@ -60,10 +60,14 @@ Namespace Spectra.Xml
 
         Public ReadOnly Property mirror As Double
             Get
-                Dim nq As Integer = alignments.Where(Function(x) x.query > 0).Count
-                Dim nr As Integer = alignments.Where(Function(x) x.ref > 0).Count
+                If _alignments.IsNullOrEmpty Then
+                    Return 0.0
+                Else
+                    Dim nq As Integer = alignments.Where(Function(x) x.query > 0).Count
+                    Dim nr As Integer = alignments.Where(Function(x) x.ref > 0).Count
 
-                Return jaccard * (stdNum.Min(nq, nr) / stdNum.Max(nq, nr))
+                    Return jaccard * (stdNum.Min(nq, nr) / stdNum.Max(nq, nr))
+                End If
             End Get
         End Property
 

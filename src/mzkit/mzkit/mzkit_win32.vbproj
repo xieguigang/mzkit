@@ -838,33 +838,9 @@
       <Project>{b17ef2af-f2de-4036-9e2a-5fa10f8116c7}</Project>
       <Name>console</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.base\R.base.vbproj">
-      <Project>{6ec3d3f5-f19d-4899-af88-161f6238e6e8}</Project>
-      <Name>R.base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graphics\R.graphics.vbproj">
-      <Project>{c5c3428c-d64c-4e79-b239-77adc66b1156}</Project>
-      <Name>R.graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graph\R.graph.vbproj">
-      <Project>{1579d1a8-73c4-4f97-bb57-3d1e62343599}</Project>
-      <Name>R.graph</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.math\R.math.vbproj">
-      <Project>{de1c8d67-3e8e-436a-a88d-a39a050342e2}</Project>
-      <Name>R.math</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.vbproj">
-      <Project>{3a35ac34-f313-4f72-89e9-eacca217bc8d}</Project>
-      <Name>R-cmd</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\Rstudio\Rstudio.vbproj">
-      <Project>{f78107e5-2d25-4504-bfb4-fadd4de01dbb}</Project>
-      <Name>Rstudio</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487D7C92-D05A-4908-BF81-E6BABA0BF592}</Project>
