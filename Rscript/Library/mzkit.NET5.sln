@@ -95,6 +95,8 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xlsx-netcore5", "..\..\..\G
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{04F05CE9-F5D1-4FB9-BB02-0A5021899AEC}"
 EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsPlot.NET5", "..\..\src\visualize\plot\MsPlot.NET5.vbproj", "{23920423-1168-4A5B-9040-36DC97E41E22}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
@@ -934,6 +936,30 @@ Global
 		{C7C02130-6802-450B-94D0-4D3BC5E52591}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{C7C02130-6802-450B-94D0-4D3BC5E52591}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{C7C02130-6802-450B-94D0-4D3BC5E52591}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Debug|x64.ActiveCfg = Debug|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Debug|x64.Build.0 = Debug|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.mzkit|x64.ActiveCfg = mzkit|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.mzkit|x64.Build.0 = mzkit|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.PlantMAT|Any CPU.Build.0 = Debug|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.PlantMAT|x64.ActiveCfg = Debug|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.PlantMAT|x64.Build.0 = Debug|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Release|x64.ActiveCfg = Release|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Release|x64.Build.0 = Release|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Rsharp_app_release|x64.ActiveCfg = Release|x64
+		{23920423-1168-4A5B-9040-36DC97E41E22}.Rsharp_app_release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -980,6 +1006,7 @@ Global
 		{052EFEB6-19B5-4151-B282-77E5BE8D18CA} = {A0BD071C-02D4-4D7A-94D0-06855CEB2478}
 		{53AF2B13-CCD5-4F73-94D5-612191E785A9} = {04F05CE9-F5D1-4FB9-BB02-0A5021899AEC}
 		{C7C02130-6802-450B-94D0-4D3BC5E52591} = {64094D8D-7E1D-4A0E-96D8-339AB6A375AC}
+		{23920423-1168-4A5B-9040-36DC97E41E22} = {70F05EAA-5D6D-4DB6-AF06-68C9BFCB9179}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75B511EF-0EE5-4406-AEA1-274A98DAF7E3}
