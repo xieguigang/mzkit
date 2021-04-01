@@ -6,6 +6,14 @@
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT</Configurations>
+    <Authors>xieguigang</Authors>
+    <Company>BioNovoGene</Company>
+    <Product>BioDeep</Product>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
+    <PackageIcon>Flask.png</PackageIcon>
+    <PackageIconUrl />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -61,6 +69,14 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
