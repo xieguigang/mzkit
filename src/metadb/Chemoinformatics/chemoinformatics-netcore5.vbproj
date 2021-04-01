@@ -5,15 +5,20 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch</Configurations>
+    <Configurations>Debug;Release;LipidSearch;mzkit</Configurations>
+    <PackageIcon>Flask.png</PackageIcon>
+    <PackageIconUrl />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
@@ -24,12 +29,44 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
