@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
+    <RootNamespace>ProteoWizard.Interop</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math</AssemblyName>
+    <AssemblyName>ProteoWizard.Interop</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -101,9 +101,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

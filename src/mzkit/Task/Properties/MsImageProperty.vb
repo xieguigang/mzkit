@@ -65,7 +65,7 @@ Public Class MsImageProperty
     <Category("Render")> <DisplayName("width")> Public Property pixel_width As Integer = 10
     <Category("Render")> <DisplayName("height")> Public Property pixel_height As Integer = 10
     <Category("Render")> Public Property threshold As Double = 0.01
-    <Category("Render")> Public Property colors As Palettes = Palettes.Office2016
+    <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
 
     <Category("Pixel M/z Data")> Public Property tolerance As Double = 0.1

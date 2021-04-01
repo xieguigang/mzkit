@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::bb93c7e6a85c418228e76f776513082b, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, readCompoundReference
-    '               readIonPairs, readIS, ROISummary, RTShiftSummary, SampleQuantify
-    '               ScanPeakTable, ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
+'               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, readCompoundReference
+'               readIonPairs, readIS, ROISummary, RTShiftSummary, SampleQuantify
+'               ScanPeakTable, ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -185,14 +186,17 @@ Module MRMkit
                                  Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
+        Dim mzErrors = Math.getTolerance(tolerance, env)
 
         If _peakwidth Like GetType(Message) Then
-            Return _peakwidth
+            Return _peakwidth.TryCast(Of Message)
+        ElseIf mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
         End If
 
         Return New MRMArguments(
             TPAFactors:=TPAFactors,
-            tolerance:=interop_arguments.GetTolerance(tolerance, "da:0.3"),
+            tolerance:=mzErrors,
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
             baselineQuantile:=baselineQuantile,
@@ -222,12 +226,19 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20") As vector
+    <RApiReturn(GetType(IonChromatogram))>
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        End If
+
         Return MRMSamples.ExtractIonData(
-            ion_pairs:=IonPair.GetIsomerism(ionpairs, interop_arguments.GetTolerance(tolerance)),
+            ion_pairs:=IonPair.GetIsomerism(ionpairs, mzErrors),
             mzML:=mzML,
             assignName:=Function(i) i.accession,
-            tolerance:=interop_arguments.GetTolerance(tolerance)
+            tolerance:=mzErrors
         ).DoCall(Function(data)
                      Return New vector With {.data = data}
                  End Function)
@@ -340,8 +351,15 @@ Module MRMkit
     End Function
 
     <ExportAPI("isomerism.ion_pairs")>
-    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20") As IsomerismIonPairs()
-        Return IonPair.GetIsomerism(ions, interop_arguments.GetTolerance(tolerance)).ToArray
+    <RApiReturn(GetType(IsomerismIonPairs))>
+    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20", Optional env As Environment = Nothing) As Object
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        End If
+
+        Return IonPair.GetIsomerism(ions, mzErrors).ToArray
     End Function
 
     <ExportAPI("as.ion_pairs")>
@@ -497,6 +515,11 @@ Module MRMkit
                                   Optional sn_threshold As Double = 3,
                                   Optional env As Environment = Nothing) As Object
 
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        End If
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
@@ -513,7 +536,7 @@ Module MRMkit
             rtshifts:=rtshifts,
             args:=New MRMArguments(
                 TPAFactors:=TPAFactors,
-                tolerance:=interop_arguments.GetTolerance(tolerance),
+                tolerance:=mzErrors,
                 timeWindowSize:=timeWindowSize,
                 angleThreshold:=angleThreshold,
                 baselineQuantile:=baselineQuantile,
@@ -563,6 +586,11 @@ Module MRMkit
                                 Optional sn_threshold As Double = 3,
                                 Optional env As Environment = Nothing) As Object
 
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        End If
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
@@ -603,7 +631,7 @@ Module MRMkit
         'End If
 
         'Dim raw As RawFile = DirectCast(wiffConverts, RawFile)
-        Dim errorTolerance As Tolerance = interop_arguments.GetTolerance(tolerance)
+        Dim errorTolerance As Tolerance = mzErrors
 
         Return WiffRaw.Scan(
             mzMLRawFiles:=wiffConverts,
@@ -684,8 +712,11 @@ Module MRMkit
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+        Dim mzErrors = Math.getTolerance(tolerance, env)
 
-        If _peakwidth Like GetType(Message) Then
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        ElseIf _peakwidth Like GetType(Message) Then
             Return _peakwidth.TryCast(Of Message)
         End If
 
@@ -695,7 +726,7 @@ Module MRMkit
             ions:=ions,
             args:=New MRMArguments(
                 TPAFactors:=TPAFactors,
-                tolerance:=interop_arguments.GetTolerance(tolerance),
+                tolerance:=mzErrors,
                 timeWindowSize:=timeWindowSize,
                 angleThreshold:=angleThreshold,
                 baselineQuantile:=baselineQuantile,

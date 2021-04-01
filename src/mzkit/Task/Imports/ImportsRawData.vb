@@ -74,8 +74,10 @@ Public Class ImportsRawData
     Public Sub RunImports()
         Dim mzpack As mzPack = Converter.LoadRawFileAuto(source, showProgress)
 
-        showProgress("Create snapshot...")
-        mzpack.Thumbnail = mzpack.DrawScatter
+        If Not mzpack.MS.IsNullOrEmpty Then
+            showProgress("Create snapshot...")
+            mzpack.Thumbnail = mzpack.DrawScatter
+        End If
 
         Using file As Stream = cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Call showProgress("Write mzPack cache data...")

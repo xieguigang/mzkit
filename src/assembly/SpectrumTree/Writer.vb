@@ -137,7 +137,6 @@ Public Class Writer : Implements IDisposable
             For Each product As ms2 In spectra.mzInto
                 Call writer.Write(product.mz)
                 Call writer.Write(product.intensity)
-                Call writer.Write(product.quantity)
                 Call writer.Write(product.Annotation, BinaryStringFormat.ZeroTerminated)
             Next
 

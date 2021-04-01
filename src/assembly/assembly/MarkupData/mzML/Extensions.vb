@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace MarkupData.mzML
 
@@ -179,6 +180,34 @@ Namespace MarkupData.mzML
                 .ToArray
 
             Return data
+        End Function
+
+        Public Function GetIonsChromatogram(file As String) As DataReader.Chromatogram
+            Return file.LoadChromatogramList.GetIonsChromatogram
+        End Function
+
+        <Extension>
+        Public Function GetIonsChromatogram(channels As IEnumerable(Of chromatogram)) As DataReader.Chromatogram
+            Dim allTicks As ChromatogramTick() = channels _
+                .Where(Function(chr) chr.id <> "TIC" AndAlso chr.id <> "BPC") _
+                .Select(AddressOf Ticks) _
+                .IteratesALL _
+                .OrderBy(Function(t) t.Time) _
+                .ToArray
+            Dim time_groups = allTicks _
+                .GroupBy(Function(t) t.Time, offsets:=0.1) _
+                .OrderBy(Function(d) Val(d.name)) _
+                .ToArray
+            Dim TIC As Double() = time_groups.Select(Function(d) d.Sum(Function(p) p.Intensity)).ToArray
+            Dim BPC As Double() = time_groups.Select(Function(d) d.Max(Function(p) p.Intensity)).ToArray
+
+            Return New DataReader.Chromatogram With {
+                .scan_time = time_groups _
+                    .Select(Function(p) Val(p.name)) _
+                    .ToArray,
+                .TIC = TIC,
+                .BPC = BPC
+            }
         End Function
     End Module
 End Namespace

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
+    <RootNamespace>BioNovoGene.BioDeep.Chemistry</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
+    <AssemblyName>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
@@ -71,7 +71,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\Massbank\massbank-netcore5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

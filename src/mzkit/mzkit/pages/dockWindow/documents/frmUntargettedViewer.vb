@@ -115,6 +115,7 @@ Public Class frmUntargettedViewer
     Private Sub frmUntargettedViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ApplyVsTheme(ContextMenuStrip1)
 
+        Me.Icon = My.Resources.xobject
         Me.SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
 
