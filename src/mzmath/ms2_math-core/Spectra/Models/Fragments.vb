@@ -50,13 +50,13 @@ Namespace Spectra
     ''' <summary>
     ''' MS2 fragment matrix
     ''' </summary>
-    Public Class Library
+    Public Class Library : Implements IMzAnnotation
 
         ''' <summary>
         ''' Fragment ID in this matrix.
         ''' </summary>
         ''' <returns></returns>
-        Public Property ID As String
+        Public Property ID As String Implements IMzAnnotation.annotation
         ''' <summary>
         ''' 前体离子的m/z
         ''' </summary>
@@ -66,7 +66,7 @@ Namespace Spectra
         ''' 碎片的m/z
         ''' </summary>
         ''' <returns></returns>
-        Public Property ProductMz As Double
+        Public Property ProductMz As Double Implements IMzAnnotation.mz
         ''' <summary>
         ''' 当前的这个碎片的信号强度
         ''' </summary>
