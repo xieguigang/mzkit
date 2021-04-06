@@ -5,7 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
@@ -48,6 +48,11 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -72,6 +77,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
