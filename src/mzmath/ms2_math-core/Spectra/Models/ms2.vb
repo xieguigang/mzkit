@@ -55,14 +55,14 @@ Namespace Spectra
     ''' <summary>
     ''' A spectra fragment with m/z and into data.
     ''' </summary>
-    Public Class ms2
+    Public Class ms2 : Implements IMzAnnotation
 
         ''' <summary>
         ''' Molecular fragment m/z
         ''' </summary>
         ''' <returns></returns>
         <DataFrameColumn(NameOf(mz))>
-        <XmlAttribute> Public Property mz As Double
+        <XmlAttribute> Public Property mz As Double Implements IMzAnnotation.mz
         ''' <summary>
         ''' Relative intensity.(percentage) 
         ''' </summary>
@@ -75,7 +75,7 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         <XmlText>
-        Public Property Annotation As String
+        Public Property Annotation As String Implements IMzAnnotation.annotation
 
         Public Overrides Function ToString() As String
             If intensity <= 1 Then

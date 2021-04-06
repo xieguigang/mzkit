@@ -524,6 +524,7 @@
     <Compile Include="Spectra\Alignment\JaccardAlignment.vb" />
     <Compile Include="Spectra\Alignment\CosAlignment.vb" />
     <Compile Include="Spectra\Alignment\ScoreAggregates.vb" />
+    <Compile Include="Spectra\Models\MzAnnotation.vb" />
     <Compile Include="Spectra\Models\ms2.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
