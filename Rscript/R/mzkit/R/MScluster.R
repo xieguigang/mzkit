@@ -14,7 +14,8 @@ MScluster = function(peak_ms2,
 					 identical     = 0.85, 
 					 greaterThan   = 0.6, 
 					 tolerance     = mzkit::tolerance(0.3, "da"), 
-					 show_progress = TRUE) {
+					 show_progress = TRUE, 
+					 networking    = FALSE) {
 					 
     cos = function(query, ref) {
         query2  = globalAlign(query, ref, tolerance);
@@ -35,7 +36,17 @@ MScluster = function(peak_ms2,
     }
 
     # returns MS tree clusters
-    bclusterTree::bcluster(peak_ms2, compares = cos, show_progress = show_progress);
+	if (networking) {
+		run = bclusterTree::bnetwork;
+	} else {
+		run = bclusterTree::bcluster;
+	}    
+	
+	if (IsNothing(peak_ms2)) {
+		NULL;
+	} else {
+		run(peak_ms2, compares = cos, show_progress = show_progress);
+	}	
 }
 
 #' create a unify BIN id of MS data
