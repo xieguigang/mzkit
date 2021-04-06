@@ -9,7 +9,8 @@ MScluster(
   identical = 0.85,
   greaterThan = 0.6,
   tolerance = mzkit::tolerance(0.3, "da"),
-  show_progress = TRUE
+  show_progress = TRUE,
+  networking = FALSE
 )
 }
 \arguments{
