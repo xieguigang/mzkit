@@ -51,7 +51,6 @@ Imports mzkit.My
 Public Class frmSplashScreen
 
     Public Property isAboutScreen As Boolean = False
-    Public Property loadedSettings As Boolean = False
 
     Private Sub frmSplashScreen_Deactivate(sender As Object, e As EventArgs) Handles Me.Deactivate
         If isAboutScreen Then
@@ -104,12 +103,12 @@ Public Class frmSplashScreen
 
         If isAboutScreen Then
             Return
-        ElseIf loadedSettings Then
+        ElseIf Globals.loadedSettings Then
             Return
         End If
 
         If e.Alt AndAlso e.Control AndAlso e.Shift Then
-            loadedSettings = True
+            Globals.loadedSettings = True
 
             If MessageBox.Show("Delete the BioNovoGene Mzkit_Win32 Settings File?", "BioNovoGene Mzkit_Win32", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
 

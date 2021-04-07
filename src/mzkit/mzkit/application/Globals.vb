@@ -73,6 +73,8 @@ Module Globals
 
     Public ReadOnly Property Settings As Settings
 
+    Public Property loadedSettings As Boolean = False
+
     Public ReadOnly Property workspace As ViewerProject
         Get
             Return currentWorkspace

@@ -339,15 +339,15 @@ Public Class frmMain
             App.Exit()
         End If
 
-        splashScreen.loadedSettings = False
+        Globals.loadedSettings = False
         Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
         Thread.Sleep(1500)
 
-        Do While splashScreen.loadedSettings
+        Do While Globals.loadedSettings
             Thread.Sleep(1)
         Loop
 
-        splashScreen.loadedSettings = True
+        Globals.loadedSettings = True
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
 
