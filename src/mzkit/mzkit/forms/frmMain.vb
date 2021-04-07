@@ -337,9 +337,17 @@ Public Class frmMain
         If splashScreen Is Nothing Then
             MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             App.Exit()
-        Else
-            Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
         End If
+
+        splashScreen.loadedSettings = False
+        Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
+        Thread.Sleep(1500)
+
+        Do While splashScreen.loadedSettings
+            Thread.Sleep(1)
+        Loop
+
+        splashScreen.loadedSettings = True
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
 
