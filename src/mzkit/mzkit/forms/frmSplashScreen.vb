@@ -113,6 +113,8 @@ Public Class frmSplashScreen
             If MessageBox.Show("Delete the BioNovoGene Mzkit_Win32 Settings File?", "BioNovoGene Mzkit_Win32", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
 
             End If
+
+            Globals.loadedSettings = False
         End If
     End Sub
 End Class
