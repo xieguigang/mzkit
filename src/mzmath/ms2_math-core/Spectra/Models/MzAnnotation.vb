@@ -1,10 +1,12 @@
 ﻿
+Imports System.Xml.Serialization
+
 Namespace Spectra
 
     Public Class MzAnnotation : Implements IMzAnnotation
 
-        Public Property productMz As Double Implements IMzAnnotation.mz
-        Public Property annotation As String Implements IMzAnnotation.annotation
+        <XmlAttribute> Public Property productMz As Double Implements IMzAnnotation.mz
+        <XmlAttribute> Public Property annotation As String Implements IMzAnnotation.annotation
 
         Public Overrides Function ToString() As String
             Return $"{productMz.ToString("F4")} [{annotation}]"
