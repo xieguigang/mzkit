@@ -332,14 +332,23 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim splashScreen As frmSplashScreen = MyApplication.GetSplashScreen
+        Dim splashScreen As New frmSplashScreen With {
+            .TopMost = True,
+            .ShowInTaskbar = False,
+            .StartPosition = FormStartPosition.CenterScreen
+        }
 
-        If splashScreen Is Nothing Then
-            MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            App.Exit()
-        Else
-            Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
-        End If
+        Call New Thread(AddressOf splashScreen.ShowDialog).Start()
+
+        Globals.loadedSettings = False
+        Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
+        Thread.Sleep(2000)
+
+        Do While Globals.loadedSettings
+            Thread.Sleep(1)
+        Loop
+
+        Globals.loadedSettings = True
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
 
@@ -407,6 +416,7 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Ready!")
         showStatusMessage("Ready!")
+        splashScreen.Close()
     End Sub
 
     Private Sub InitializeFormulaProfile()

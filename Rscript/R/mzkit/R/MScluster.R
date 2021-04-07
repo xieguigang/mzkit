@@ -51,7 +51,7 @@ MScluster = function(peak_ms2,
 
 #' create a unify BIN id of MS data
 #'
-BinId = function(clusterList, peak_ms2) {
+BinId = function(clusterList, peak_ms2, prefix = "BIN.M/Z-") {
 	mzErr = mzkit::tolerance(0.3, "da");
 	topMz = function(mz) {
 		if (all(sapply(mz, IsNothing))) {
@@ -78,5 +78,5 @@ BinId = function(clusterList, peak_ms2) {
 		paste0(vec, collapse=",");
 	});
 	
-	sprintf("BIN.M/Z-%s", as.vector(names));
+	sprintf("%s%s", prefix, as.vector(names));
 }
