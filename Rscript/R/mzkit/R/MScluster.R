@@ -78,5 +78,19 @@ BinId = function(clusterList, peak_ms2, prefix = "BIN.M/Z-") {
 		paste0(vec, collapse=",");
 	});
 	
-	sprintf("%s%s", prefix, as.vector(names));
+	hits = list();
+	uniq = rep(NA, time = length(names)); 
+	i    = 1;
+	
+	for(id in sprintf("%s%s", prefix, as.vector(names))) {
+		if (is.null(hits[[id]])) {
+			hits[[id]] = 1;
+			uniq[i]    = id;
+		} else {
+			uniq[i]    = sprintf("%s_%s", id, hits[[id]]);
+			hits[[id]] = hits[[id]] + 1;
+		}
+	}
+	
+	uniq;
 }
