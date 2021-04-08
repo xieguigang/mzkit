@@ -210,7 +210,11 @@ Namespace Formula
 
                 If Not formula.HeteroatomRatioCheck Then
                     Continue For
-                ElseIf enableHCRatioCheck AndAlso Not parent.HydrogenCarbonElementRatioCheck Then
+
+                    ' the HC ratio is -1 when in the initial status:
+                    ' only just H or C
+                    ' pass this status
+                ElseIf enableHCRatioCheck AndAlso (formula.HCRatio > -1) AndAlso (Not formula.HydrogenCarbonElementRatioCheck) Then
                     Continue For
                 End If
 

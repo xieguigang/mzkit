@@ -73,6 +73,16 @@ Namespace Formula
             Call MyBase.New(counts, formula)
         End Sub
 
+        Public Function Ratio(element1 As String, element2 As String) As Double
+            If Not CountsByElement.ContainsKey(element1) Then
+                Return 0
+            ElseIf Not CountsByElement.ContainsKey(element2) Then
+                Return -1
+            Else
+                Return CountsByElement(element1) / CountsByElement(element2)
+            End If
+        End Function
+
         ''' <summary>
         ''' make a copy and then append a given atom element into formula model
         ''' </summary>
