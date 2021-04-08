@@ -67,7 +67,7 @@ BinId = function(clusterList, peak_ms2, prefix = "BIN.M/Z-") {
 		}
 	}
 	names = sapply(clusterList, function(peakIds) {		
-		top3 = lapply(peak_ms2[peakIds], function(Ms2) MStop(Ms2, topn = 3));
+		top3 = lapply(peak_ms2[peakIds], function(Ms2) mzkit::MStop(Ms2, topn = 3));
 		
 		x = as.vector(sapply(top3, function(vec) vec[1])) %=>% topMz; 
 		y = as.vector(sapply(top3, function(vec) vec[2])) %=>% topMz; 
@@ -90,6 +90,8 @@ BinId = function(clusterList, peak_ms2, prefix = "BIN.M/Z-") {
 			uniq[i]    = sprintf("%s_%s", id, hits[[id]]);
 			hits[[id]] = hits[[id]] + 1;
 		}
+		
+		i = i + 1;
 	}
 	
 	uniq;
