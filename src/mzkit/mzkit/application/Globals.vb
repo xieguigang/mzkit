@@ -68,7 +68,8 @@ Module Globals
     ''' <summary>
     ''' 这个是未进行任何工作区保存所保存的一个默认的临时文件的位置
     ''' </summary>
-    Dim defaultWorkspace As String = App.LocalData & "/.defaultWorkspace"
+    Friend ReadOnly defaultWorkspace As String = App.LocalData & "/.defaultWorkspace"
+
     Dim currentWorkspace As ViewerProject
 
     Public ReadOnly Property Settings As Settings

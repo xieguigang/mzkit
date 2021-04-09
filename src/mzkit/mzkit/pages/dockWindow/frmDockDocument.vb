@@ -61,7 +61,7 @@ Public Class frmDockDocument
 
     Private Sub frmDockDocument_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
-        Me.DockState = DockState.Document
+        Me.DockState = DockState.Hidden
     End Sub
 
     Private Sub frmDockDocument_Load(sender As Object, e As EventArgs) Handles Me.Load

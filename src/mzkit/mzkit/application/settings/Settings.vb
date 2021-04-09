@@ -67,12 +67,22 @@ Namespace Configuration
 
         Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
+        Public Function Reset() As Settings
+            precursor_search = New PrecursorSearchSettings With {.ppm = 5, .precursor_types = {"M", "M+H", "M-H", "M+H-H2O", "M-H2O-H"}}
+            formula_search = Nothing
+            ui = Nothing
+            viewer = Nothing
+            network = Nothing
+            recentFiles = {}
+            workspaceFile = Nothing
+            MRMLibfile = Nothing
+            QuantifyIonLibfile = Nothing
+
+            Return Me
+        End Function
+
         Public Shared Function DefaultProfile() As Settings
-            Return New Settings With {
-                .precursor_search = New PrecursorSearchSettings With {
-                    .ppm = 5, .precursor_types = {"M", "M+H", "M-H", "M+H-H2O", "M-H2O-H"}
-                }
-            }
+            Return New Settings().Reset
         End Function
 
         Public Shared Function GetConfiguration() As Settings

@@ -75,7 +75,7 @@ Namespace Configuration
 
     Public Class PrecursorSearchSettings
 
-        Public Property ppm As Double
+        Public Property ppm As Double = 20
         Public Property precursor_types As String()
 
     End Class

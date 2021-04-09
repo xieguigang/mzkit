@@ -4,7 +4,7 @@
 \alias{BinId}
 \title{create a unify BIN id of MS data}
 \usage{
-BinId(clusterList, peak_ms2)
+BinId(clusterList, peak_ms2, prefix = "BIN.M/Z-")
 }
 \description{
 create a unify BIN id of MS data

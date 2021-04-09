@@ -111,7 +111,10 @@ Public Class frmSplashScreen
             Globals.loadedSettings = True
 
             If MessageBox.Show("Delete the BioNovoGene Mzkit_Win32 Settings File?", "BioNovoGene Mzkit_Win32", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-
+                Globals.defaultWorkspace.DeleteFile
+                Globals.Settings?.workspaceFile?.DeleteFile
+                Globals.Settings.Reset()
+                Globals.Settings.Save()
             End If
 
             Globals.loadedSettings = False
