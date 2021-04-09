@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::3996bac73ef25a74260e3050a4bf24e5, src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FormulaSearch
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FormulaSearch
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ConstructAndVerifyCompoundWork, PPM, reorderCandidateElements, (+2 Overloads) SearchByExactMass, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -104,7 +104,7 @@ Namespace Formula
             Dim chargeMin As Double = opts.chargeRange.Min
             Dim chargeMax As Double = opts.chargeRange.Max
 
-            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements, cancel)
+            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements, cancel, doVerify:=doVerify)
                 If doVerify Then
                     Dim counts As New ElementNumType(formula)
                     Dim checked As Boolean = False
@@ -194,7 +194,11 @@ Namespace Formula
             Return blnHOK
         End Function
 
-        Private Iterator Function SearchByExactMass(exact_mass As Double, parent As FormulaComposition, candidates As Stack(Of ElementSearchCandiate), cancel As Value(Of Boolean)) As IEnumerable(Of FormulaComposition)
+        Private Iterator Function SearchByExactMass(exact_mass As Double,
+                                                    parent As FormulaComposition,
+                                                    candidates As Stack(Of ElementSearchCandiate),
+                                                    cancel As Value(Of Boolean),
+                                                    doVerify As Boolean) As IEnumerable(Of FormulaComposition)
             If candidates.Count = 0 Then
                 Return
             ElseIf Not parent.ElementProbabilityCheck Then
@@ -208,13 +212,13 @@ Namespace Formula
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
                 Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
 
-                If Not formula.HeteroatomRatioCheck Then
+                If doVerify AndAlso Not formula.HeteroatomRatioCheck Then
                     Continue For
 
                     ' the HC ratio is -1 when in the initial status:
                     ' only just H or C
                     ' pass this status
-                ElseIf enableHCRatioCheck AndAlso (formula.HCRatio > -1) AndAlso (Not formula.HydrogenCarbonElementRatioCheck) Then
+                ElseIf doVerify AndAlso (enableHCRatioCheck AndAlso (formula.HCRatio > -1) AndAlso (Not formula.HydrogenCarbonElementRatioCheck)) Then
                     Continue For
                 End If
 
@@ -235,7 +239,8 @@ Namespace Formula
                             exact_mass:=exact_mass,
                             parent:=formula,
                             candidates:=New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse),
-                            cancel:=cancel
+                            cancel:=cancel,
+                            doVerify:=doVerify
                         )
                             Yield subtree
                         Next
