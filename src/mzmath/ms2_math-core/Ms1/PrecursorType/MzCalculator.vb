@@ -62,10 +62,10 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 #End If
 
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
-Imports System.Xml.Serialization
 
 Namespace Ms1.PrecursorType
 
