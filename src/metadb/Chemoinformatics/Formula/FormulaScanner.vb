@@ -73,7 +73,23 @@ Namespace Formula
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
-            Return New FormulaScanner(n).ScanFormula(New CharPtr(formula))
+            Static cache As New Dictionary(Of String, Formula)
+
+            Dim key As String = $"{formula} ~ {n}"
+            Dim formula2 As Formula
+
+            If cache.ContainsKey(key) Then
+                formula2 = cache(key)
+                formula2 = New Formula(formula2.CountsByElement, formula2.m_formula)
+            Else
+                formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
+
+                SyncLock cache
+                    cache.Add(key, formula2)
+                End SyncLock
+            End If
+
+            Return formula2
         End Function
 
         Dim composition As New Dictionary(Of String, Counter)
