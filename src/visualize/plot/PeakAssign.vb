@@ -49,8 +49,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ''' <summary>
 ''' 通过KCF图模型为ms2二级质谱碎片鉴定分子碎片的具体的结构式
@@ -58,10 +60,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Class PeakAssign : Inherits Plot
 
     ReadOnly matrix As ms2()
+    ReadOnly title As String
 
-    Public Sub New(matrix As IEnumerable(Of ms2), theme As Theme)
+    Public Sub New(title$, matrix As IEnumerable(Of ms2), theme As Theme)
         MyBase.New(theme)
 
+        Me.title = title
         Me.matrix = matrix.ToArray
     End Sub
 
@@ -77,10 +81,32 @@ Public Class PeakAssign : Inherits Plot
             .X = xscale,
             .Y = yscale
         }
+        Dim bottom As Double = rect.Bottom
+        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
+        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
 
         Call Axis.DrawAxis(g, canvas, scaler, showGrid:=True, xlabel:="M/z ratio", ylabel:="Relative Intensity", XtickFormat:="F4", YtickFormat:="F1")
 
+        For Each product As ms2 In matrix
+            Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
+            Dim bottomPt As PointF = New PointF(pt.X, bottom)
+            Dim bar As New RectangleF With {.X = pt.X, .Y = pt.Y, .Height = bottomPt.Y - pt.Y, .Width = 5}
 
+            Call g.FillRectangle(Brushes.SteelBlue, bar)
+
+            If Not product.Annotation.StringEmpty Then
+                Call text.DrawString(product.Annotation, labelFont, Brushes.Black, pt, 90)
+            End If
+        Next
+
+        Dim size As SizeF = g.MeasureString(title, titleFont)
+        Dim location As New PointF With {
+            .X = size.Width / 2,
+            .Y = rect.Top - size.Height
+        }
+
+        Call g.DrawString(title, titleFont, Brushes.Black, location)
     End Sub
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
@@ -92,7 +118,7 @@ Public Class PeakAssign : Inherits Plot
             .padding = padding,
             .background = bg
         }
-        Dim app As New PeakAssign(matrix.ms2, theme)
+        Dim app As New PeakAssign(matrix.name, matrix.ms2, theme)
 
         Return app.Plot(size)
     End Function

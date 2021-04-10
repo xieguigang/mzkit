@@ -192,8 +192,19 @@ Module Visual
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
         Dim title As String = args.getValue("title", env, "Mass Spectrum Plot")
+        Dim mirror As Boolean = args.getValue("mirror", env, False)
 
-        Return SpectrumPlot(spectrum, title:=title)
+        If mirror Then
+            Return SpectrumPlot(spectrum, title:=title)
+        Else
+            Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
+
+            If ms Like GetType(Message) Then
+                Return ms.TryCast(Of Message)
+            End If
+
+            Return PeakAssign.DrawSpectrumPeaks(ms)
+        End If
     End Function
 
     ''' <summary>
