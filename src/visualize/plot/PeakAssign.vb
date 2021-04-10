@@ -109,6 +109,11 @@ Public Class PeakAssign : Inherits Plot
         Dim barColor As Brush = barStyle.fill.GetBrush
         Dim label As String
 
+        label = "M/z ratio"
+        labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS))
+
+        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS), Brushes.Black, New PointF(rect.Right - labelSize.Width, rect.Bottom + 5))
+
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
             Dim bar As New RectangleF With {
@@ -124,9 +129,9 @@ Public Class PeakAssign : Inherits Plot
 
             If Not label.StringEmpty Then
                 labelSize = g.MeasureString(label, labelFont)
-                pt = New PointF(pt.X - labelSize.Height / 2, pt.Y)
+                pt = New PointF(pt.X - labelSize.Height / 2, pt.Y - 10)
 
-                Call text.DrawString(label, labelFont, Brushes.Black, pt, 270)
+                Call text.DrawString(label, labelFont, Brushes.Black, pt, 315)
             ElseIf product.intensity / maxinto >= 0.2 Then
                 label = product.mz.ToString("F2")
                 labelSize = g.MeasureString(label, labelFont)
@@ -151,10 +156,10 @@ Public Class PeakAssign : Inherits Plot
                                              Optional padding$ = "padding:150px 100px 85px 125px;",
                                              Optional bg$ = "white",
                                              Optional gridFill$ = "white",
-                                             Optional barStroke$ = "stroke: steelblue; stroke-width: 8px; stroke-dash: solid;",
+                                             Optional barStroke$ = "stroke: skyblue; stroke-width: 5px; stroke-dash: solid;",
                                              Optional titleCSS$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional labelCSS$ = "font-style: normal; font-size: 8; font-family: " & FontFace.MicrosoftYaHei & ";",
-                                             Optional axisLabelCSS$ = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";",
+                                             Optional axisLabelCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional axisTicksCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.SegoeUI & ";",
                                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
