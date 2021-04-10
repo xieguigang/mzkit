@@ -72,16 +72,16 @@ Public Class PeakAssign : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
         Dim rect As RectangleF = canvas.PlotRegion.ToFloat
-        Dim xticks As Double() = matrix.Select(Function(p) p.mz).Range.CreateAxisTicks
+        Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
         Dim xscale = d3js.scale.linear().domain(xticks).range(values:={rect.Left, rect.Right})
         Dim yscale = d3js.scale.linear().domain(New Double() {0, 100}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
-            .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 100})),
+            .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
             .region = canvas.PlotRegion,
             .X = xscale,
             .Y = yscale
         }
-        Dim bottom As Double = rect.Bottom
+        Dim bottomY As Double = rect.Bottom
         Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
         Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
         Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
@@ -90,43 +90,84 @@ Public Class PeakAssign : Inherits Plot
             g, canvas, scaler,
             showGrid:=True,
             xlabel:="M/z ratio",
-            ylabel:="Relative Intensity",
+            ylabel:="Relative Intensity (%)",
             XtickFormat:="F4",
-            YtickFormat:="F1",
-            gridFill:=theme.gridFill
+            YtickFormat:="F0",
+            gridFill:=theme.gridFill,
+            xlayout:=XAxisLayoutStyles.None,
+            tickFontStyle:=theme.axisTickCSS,
+            gridX:=Nothing,
+            axisStroke:=theme.axisStroke,
+            htmlLabel:=False,
+            labelFont:=theme.axisLabelCSS
         )
+
+        Call g.DrawLine(Stroke.TryParse(theme.axisStroke), New PointF(rect.Left, rect.Bottom), New PointF(rect.Right, rect.Bottom))
+
+        Dim labelSize As SizeF
+        Dim barStyle As Stroke = Stroke.TryParse(theme.lineStroke)
+        Dim barColor As Brush = barStyle.fill.GetBrush
+        Dim label As String
 
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
-            Dim bottomPt As PointF = New PointF(pt.X, bottom)
-            Dim bar As New RectangleF With {.X = pt.X, .Y = pt.Y, .Height = bottomPt.Y - pt.Y, .Width = 5}
+            Dim bar As New RectangleF With {
+                .X = pt.X - barStyle.width / 2,
+                .Y = pt.Y,
+                .Height = bottomY - pt.Y,
+                .Width = barStyle.width
+            }
 
-            Call g.FillRectangle(Brushes.SteelBlue, bar)
+            Call g.FillRectangle(barColor, bar)
 
-            If Not product.Annotation.StringEmpty Then
-                Call text.DrawString(product.Annotation, labelFont, Brushes.Black, pt, 270)
+            label = product.Annotation
+
+            If Not label.StringEmpty Then
+                labelSize = g.MeasureString(label, labelFont)
+                pt = New PointF(pt.X - labelSize.Height / 2, pt.Y)
+
+                Call text.DrawString(label, labelFont, Brushes.Black, pt, 270)
+            ElseIf product.intensity / maxinto >= 0.2 Then
+                label = product.mz.ToString("F2")
+                labelSize = g.MeasureString(label, labelFont)
+                pt = New PointF(pt.X - labelSize.Width / 2, pt.Y - labelSize.Height)
+
+                Call g.DrawString(label, labelFont, Brushes.Black, pt)
             End If
         Next
 
-        Dim size As SizeF = g.MeasureString(title, titleFont)
+        labelSize = g.MeasureString(title, titleFont)
+
         Dim location As New PointF With {
-            .X = (canvas.Width - size.Width) / 2,
-            .Y = (rect.Top - size.Height) / 2
+            .X = (canvas.Width - labelSize.Width) / 2,
+            .Y = (rect.Top - labelSize.Height) / 2
         }
 
         Call g.DrawString(title, titleFont, Brushes.Black, location)
     End Sub
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
-                                             Optional size$ = "1600,1200",
-                                             Optional padding$ = "padding:150px 100px 200px 200px;",
+                                             Optional size$ = "1600,1080",
+                                             Optional padding$ = "padding:150px 100px 85px 125px;",
                                              Optional bg$ = "white",
-                                             Optional gridFill$ = "white") As GraphicsData
+                                             Optional gridFill$ = "white",
+                                             Optional barStroke$ = "stroke: steelblue; stroke-width: 8px; stroke-dash: solid;",
+                                             Optional titleCSS$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";",
+                                             Optional labelCSS$ = "font-style: normal; font-size: 8; font-family: " & FontFace.MicrosoftYaHei & ";",
+                                             Optional axisLabelCSS$ = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";",
+                                             Optional axisTicksCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.SegoeUI & ";",
+                                             Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
         Dim theme As New Theme With {
             .padding = padding,
             .background = bg,
-            .gridFill = gridFill
+            .gridFill = gridFill,
+            .lineStroke = barStroke,
+            .mainCSS = titleCSS,
+            .tagCSS = labelCSS,
+            .axisTickCSS = axisTicksCSS,
+            .axisStroke = axisStroke,
+            .axisLabelCSS = axisLabelCSS
         }
         Dim app As New PeakAssign(matrix.name, matrix.ms2, theme)
 
