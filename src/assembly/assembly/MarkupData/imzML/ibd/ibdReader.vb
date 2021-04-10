@@ -93,6 +93,11 @@ Namespace MarkupData.imzML
             magic = New Guid(stream.ReadBytes(16))
         End Sub
 
+        ''' <summary>
+        ''' Get spectrum data of a pixel point
+        ''' </summary>
+        ''' <param name="scan">[x, y] of a pixel point</param>
+        ''' <returns></returns>
         Public Function GetMSMS(scan As ScanData) As ms2()
             Dim mz As Double() = ReadArray(scan.MzPtr)
             Dim intensity As Double() = ReadArray(scan.IntPtr)
