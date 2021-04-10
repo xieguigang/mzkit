@@ -55,11 +55,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -68,7 +66,6 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
@@ -78,7 +75,6 @@ Module MzMath
 
     Sub New()
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
@@ -95,19 +91,6 @@ Module MzMath
         Call summary.AppendLine($"ion_mode: {type.mode}")
 
         Return summary.ToString
-    End Function
-
-    Private Function printLib([lib] As LibraryMatrix) As String
-        Dim sb As New StringBuilder
-
-        Call sb.AppendLine([lib].name)
-        Call sb.AppendLine(New String("-"c, 48))
-        Call sb.AppendLine($"centroid: {[lib].centroid.ToString.ToLower}")
-        Call sb.AppendLine($"length: {[lib].Length}")
-        Call sb.AppendLine($"totalIon: {[lib].totalIon}")
-        Call sb.AppendLine($"basePeak: {[lib].Max}")
-
-        Return sb.ToString
     End Function
 
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe

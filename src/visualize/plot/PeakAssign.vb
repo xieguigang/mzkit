@@ -86,7 +86,15 @@ Public Class PeakAssign : Inherits Plot
         Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
         Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
 
-        Call Axis.DrawAxis(g, canvas, scaler, showGrid:=True, xlabel:="M/z ratio", ylabel:="Relative Intensity", XtickFormat:="F4", YtickFormat:="F1")
+        Call Axis.DrawAxis(
+            g, canvas, scaler,
+            showGrid:=True,
+            xlabel:="M/z ratio",
+            ylabel:="Relative Intensity",
+            XtickFormat:="F4",
+            YtickFormat:="F1",
+            gridFill:=theme.gridFill
+        )
 
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
@@ -96,14 +104,14 @@ Public Class PeakAssign : Inherits Plot
             Call g.FillRectangle(Brushes.SteelBlue, bar)
 
             If Not product.Annotation.StringEmpty Then
-                Call text.DrawString(product.Annotation, labelFont, Brushes.Black, pt, 90)
+                Call text.DrawString(product.Annotation, labelFont, Brushes.Black, pt, 270)
             End If
         Next
 
         Dim size As SizeF = g.MeasureString(title, titleFont)
         Dim location As New PointF With {
-            .X = size.Width / 2,
-            .Y = rect.Top - size.Height
+            .X = (canvas.Width - size.Width) / 2,
+            .Y = (rect.Top - size.Height) / 2
         }
 
         Call g.DrawString(title, titleFont, Brushes.Black, location)
@@ -111,15 +119,17 @@ Public Class PeakAssign : Inherits Plot
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
                                              Optional size$ = "1600,1200",
-                                             Optional padding$ = g.DefaultPadding,
-                                             Optional bg$ = "white") As GraphicsData
+                                             Optional padding$ = "padding:150px 100px 200px 200px;",
+                                             Optional bg$ = "white",
+                                             Optional gridFill$ = "white") As GraphicsData
 
         Dim theme As New Theme With {
             .padding = padding,
-            .background = bg
+            .background = bg,
+            .gridFill = gridFill
         }
         Dim app As New PeakAssign(matrix.name, matrix.ms2, theme)
 
-        Return app.Plot(size)
+        Return app.Plot(size, ppi:=200)
     End Function
 End Class

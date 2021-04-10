@@ -92,7 +92,7 @@ Module data
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = i,
+                                .intensity = into(i),
                                 .Annotation = annotation(i)
                             }
                         End Function) _
