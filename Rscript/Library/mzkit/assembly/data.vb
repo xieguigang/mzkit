@@ -79,6 +79,40 @@ Module data
         Return table
     End Function
 
+    <ExportAPI("libraryMatrix")>
+    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object, Optional title$ = "MS Matrix", Optional env As Environment = Nothing) As Object
+        Dim MS As ms2()
+
+        If TypeOf matrix Is dataframe Then
+            Dim mz As Double() = DirectCast(matrix, dataframe)("mz")
+            Dim into As Double() = DirectCast(matrix, dataframe)("into")
+            Dim annotation As String() = DirectCast(matrix, dataframe)("annotation")
+
+            MS = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = i,
+                                .Annotation = annotation(i)
+                            }
+                        End Function) _
+                .ToArray
+        Else
+            Dim data As pipeline = pipeline.TryCreatePipeline(Of ms2)(matrix, env)
+
+            If data.isError Then
+                Return data.getError
+            End If
+
+            MS = data.populates(Of ms2)(env).ToArray
+        End If
+
+        Return New LibraryMatrix With {
+            .name = title,
+            .ms2 = MS
+        }
+    End Function
+
     ''' <summary>
     ''' get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
     ''' </summary>
