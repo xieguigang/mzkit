@@ -55,6 +55,9 @@ Namespace Spectra
     ''' <summary>
     ''' A spectra fragment with m/z and into data.
     ''' </summary>
+    ''' <remarks>
+    ''' [mz, into, annotation]
+    ''' </remarks>
     Public Class ms2 : Implements IMzAnnotation
 
         ''' <summary>
