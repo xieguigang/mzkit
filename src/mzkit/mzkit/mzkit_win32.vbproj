@@ -399,6 +399,12 @@
     <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\documents\PixelSelector.Designer.vb">
+      <DependentUpon>PixelSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\PixelSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmGCMSPeaks.Designer.vb">
       <DependentUpon>frmGCMSPeaks.vb</DependentUpon>
     </Compile>
@@ -714,6 +720,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
       <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\PixelSelector.resx">
+      <DependentUpon>PixelSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>

@@ -248,6 +248,8 @@ Public Class frmFileExplorer
     Public Sub showRawFile(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
         If lockFileDelete Then
             Return
+        ElseIf Not raw.cacheFileExists Then
+
         End If
 
         Call WindowModules.rawFeaturesList.LoadRaw(raw)

@@ -416,7 +416,7 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Ready!")
         showStatusMessage("Ready!")
-        splashScreen.Close()
+        splashScreen.Invoke(Sub() Call splashScreen.Close())
     End Sub
 
     Private Sub InitializeFormulaProfile()
