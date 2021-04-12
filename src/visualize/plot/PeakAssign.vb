@@ -61,12 +61,14 @@ Public Class PeakAssign : Inherits Plot
 
     ReadOnly matrix As ms2()
     ReadOnly title As String
+    ReadOnly barHighlight As String
 
-    Public Sub New(title$, matrix As IEnumerable(Of ms2), theme As Theme)
+    Public Sub New(title$, matrix As IEnumerable(Of ms2), barHighlight As String, theme As Theme)
         MyBase.New(theme)
 
         Me.title = title
         Me.matrix = matrix.ToArray
+        Me.barHighlight = barHighlight
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -102,17 +104,22 @@ Public Class PeakAssign : Inherits Plot
             labelFont:=theme.axisLabelCSS
         )
 
-        Call g.DrawLine(Stroke.TryParse(theme.axisStroke), New PointF(rect.Left, rect.Bottom), New PointF(rect.Right, rect.Bottom))
+        Dim ZERO As New PointF(rect.Left, rect.Bottom)
+        Dim RIGHT As New PointF(rect.Right, rect.Bottom)
+
+        Call g.DrawLine(Stroke.TryParse(theme.axisStroke), ZERO, RIGHT)
 
         Dim labelSize As SizeF
         Dim barStyle As Stroke = Stroke.TryParse(theme.lineStroke)
         Dim barColor As Brush = barStyle.fill.GetBrush
+        Dim barHighlight As Brush = Me.barHighlight.GetBrush
         Dim label As String
 
         label = "M/z ratio"
         labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS))
+        RIGHT = New PointF(rect.Right - labelSize.Width, rect.Bottom + 5)
 
-        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS), Brushes.Black, New PointF(rect.Right - labelSize.Width, rect.Bottom + 5))
+        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS), Brushes.Black, RIGHT)
 
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
@@ -123,20 +130,20 @@ Public Class PeakAssign : Inherits Plot
                 .Width = barStyle.width
             }
 
-            Call g.FillRectangle(barColor, bar)
-
             label = product.Annotation
 
             If Not label.StringEmpty Then
                 labelSize = g.MeasureString(label, labelFont)
                 pt = New PointF(pt.X - labelSize.Height / 2, pt.Y - 10)
 
+                Call g.FillRectangle(barHighlight, bar)
                 Call text.DrawString(label, labelFont, Brushes.Black, pt, 315)
             ElseIf product.intensity / maxinto >= 0.2 Then
                 label = product.mz.ToString("F2")
                 labelSize = g.MeasureString(label, labelFont)
                 pt = New PointF(pt.X - labelSize.Width / 2, pt.Y - labelSize.Height)
 
+                Call g.FillRectangle(barColor, bar)
                 Call g.DrawString(label, labelFont, Brushes.Black, pt)
             End If
         Next
@@ -156,6 +163,7 @@ Public Class PeakAssign : Inherits Plot
                                              Optional padding$ = "padding:150px 100px 85px 125px;",
                                              Optional bg$ = "white",
                                              Optional gridFill$ = "white",
+                                             Optional barHighlight$ = NameOf(Color.DarkRed),
                                              Optional barStroke$ = "stroke: skyblue; stroke-width: 5px; stroke-dash: solid;",
                                              Optional titleCSS$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional labelCSS$ = "font-style: normal; font-size: 8; font-family: " & FontFace.MicrosoftYaHei & ";",
@@ -174,7 +182,7 @@ Public Class PeakAssign : Inherits Plot
             .axisStroke = axisStroke,
             .axisLabelCSS = axisLabelCSS
         }
-        Dim app As New PeakAssign(matrix.name, matrix.ms2, theme)
+        Dim app As New PeakAssign(matrix.name, matrix.ms2, barHighlight, theme)
 
         Return app.Plot(size, ppi:=200)
     End Function
