@@ -106,7 +106,7 @@ Public Class frmLogin
             Globals.Settings.Save()
         End If
 
-        Dim SHA256 As New SHA256("mzkit_win32", random)
+        Dim SHA256 As New SHA256(My.User.Name.Base64String, random)
         Dim password As String = SHA256.EncryptData(TextBox2.Text)
 
         Return $"{TextBox1.Text}|{password}"
@@ -122,7 +122,7 @@ Public Class frmLogin
             Globals.Settings.Save()
         End If
 
-        Dim SHA256 As New SHA256("mzkit_win32", random)
+        Dim SHA256 As New SHA256(My.User.Name.Base64String, random)
         Dim password As String = SHA256.DecryptString(biodeep.Value)
 
         Return New NamedValue(Of String)(biodeep.Name, biodeep.Value)
