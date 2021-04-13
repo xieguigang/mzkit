@@ -130,7 +130,25 @@ Public Class frmLogin
     End Function
 
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Not Globals.Settings.biodeep.StringEmpty Then
+        Panel2.Hide()
+        Panel2.Dock = DockStyle.None
+        Panel1.Dock = DockStyle.Bottom
+        Panel1.Show()
+
+        If SingletonHolder(Of BioDeepSession).Instance.CheckSession Then
+            Dim info = SingletonHolder(Of BioDeepSession).Instance.GetSessionInfo
+
+            Panel1.Dock = DockStyle.None
+            Panel1.Hide()
+
+            Panel2.Show()
+            Panel2.Dock = DockStyle.Bottom
+
+            Label3.Text = info.adminlogin.username
+            Label4.Text = "E-Mail: " & info.adminlogin.user_email
+            Label5.Text = "Recent Login: " & info.adminlogin.address
+
+        ElseIf Not Globals.Settings.biodeep.StringEmpty Then
             Dim biodeep As NamedValue(Of String) = loadSettings()
 
             TextBox1.Text = biodeep.Name
