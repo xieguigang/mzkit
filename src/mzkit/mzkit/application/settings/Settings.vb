@@ -58,9 +58,15 @@ Namespace Configuration
         Public Property viewer As RawFileViewerSettings
         Public Property network As NetworkArguments
 
+        Public Property random As String
         Public Property recentFiles As String()
 
         Public Property workspaceFile As String
+        ''' <summary>
+        ''' username|password
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property biodeep As String
 
         Public Property MRMLibfile As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/mzkit/MRM_IonPairs.csv"
         Public Property QuantifyIonLibfile As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/mzkit/GCMS_QuantifyIons.ionPack"
@@ -77,6 +83,8 @@ Namespace Configuration
             workspaceFile = Nothing
             MRMLibfile = Nothing
             QuantifyIonLibfile = Nothing
+            random = RandomASCIIString(8)
+            biodeep = Nothing
 
             Return Me
         End Function
