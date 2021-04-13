@@ -268,7 +268,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
                                  Optional filters As IEnumerable(Of filter) = Nothing,
                                  Optional verbose As Boolean = True) As String
 
-        Call output.ParentPath.MkDIR
+        Call output.ParentPath.MakeDir
 
         If Strings.LCase(input).EndsWith(".raw.zip") Then
             Return convertWatersRawFile(input, output, type, filters.SafeQuery.ToArray, verbose)
