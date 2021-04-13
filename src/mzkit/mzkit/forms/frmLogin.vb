@@ -97,7 +97,7 @@ Public Class frmLogin
         End If
     End Sub
 
-    Private Function saveSettings() As String
+    Private Sub saveSettings()
         Dim random As String = Globals.Settings.random
 
         If random.StringEmpty Then
@@ -109,8 +109,9 @@ Public Class frmLogin
         Dim SHA256 As New SHA256(My.User.Name.Base64String, random)
         Dim password As String = SHA256.EncryptData(TextBox2.Text)
 
-        Return $"{TextBox1.Text}|{password}"
-    End Function
+        Globals.Settings.biodeep = $"{TextBox1.Text}|{password}"
+        Globals.Settings.Save()
+    End Sub
 
     Private Function loadSettings() As NamedValue(Of String)
         Dim biodeep As NamedValue(Of String) = Globals.Settings.biodeep.GetTagValue("|")
