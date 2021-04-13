@@ -126,7 +126,7 @@ Public Class frmLogin
         Dim SHA256 As New SHA256(My.User.Name.Base64String, random)
         Dim password As String = SHA256.DecryptString(biodeep.Value)
 
-        Return New NamedValue(Of String)(biodeep.Name, biodeep.Value)
+        Return New NamedValue(Of String)(biodeep.Name, password)
     End Function
 
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles Me.Load
