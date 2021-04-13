@@ -1,106 +1,86 @@
-﻿Imports System
-Imports System.Collections.Generic
-
-
-Public Class ChemicalElement
-
-    ''' <summary>
-    ''' 元素名称
-    ''' </summary>
-    Private label_Renamed As String
-
-    ''' <summary>
-    ''' 元素的整体序号
-    ''' </summary>
-    Private mark_Renamed As Integer
-
+﻿Public Class ChemicalElement
 
     ''' <summary>
     ''' 周围的元素和相应的键
     ''' </summary>
-    Private environments_2_Renamed As List(Of ChemicalElement)
     Private Keys As ChemicalKey()
-    Private Keys_2Field As List(Of ChemicalKey)
-
-    ''' <summary>
-    ''' 是元素的个数
-    ''' </summary>
-    Public count As Integer = 0
-
-    Private Shared allElement_Renamed As String()
-
-    ''' <summary>
-    ''' 断开的键的类型
-    ''' </summary>
-    Private disconnectKey_Renamed As ChemicalKey
-
-    Public Sub New(label As String, mark As Integer)
-        label_Renamed = label
-        mark_Renamed = mark
-        Keys = New ChemicalKey(3) {}
-        Keys_2Field = New List(Of ChemicalKey)()
-        environments_2_Renamed = New List(Of ChemicalElement)()
-    End Sub
-
-
-
-
-    '设置断键
-    Public Overridable Property disconnectKey As ChemicalKey
-        Set(value As ChemicalKey)
-            disconnectKey_Renamed = value
-        End Set
-        Get
-            Return disconnectKey_Renamed
-        End Get
-    End Property
-    '设置断键的数字，这里假设一个原SMILES表示最多一个断键
-    Public Overridable Property mark As Integer
-        Set(value As Integer)
-            mark_Renamed = value
-        End Set
-        Get
-            Return mark_Renamed
-        End Get
-    End Property
-    ''' <summary>
-    ''' 添加key的方法，同时把键连接的元素也添加进去 </summary>
-    ''' <param name="key"> </param>
-    Public Overridable Sub addToKeys(key As ChemicalKey, ce As ChemicalElement)
-        Keys_2Field.Add(key)
-        environments_2_Renamed.Add(ce)
-    End Sub
-    '返回，list,周围的元素
-    Public Overridable ReadOnly Property environments_2 As List(Of ChemicalElement)
-        Get
-            Return environments_2_Renamed
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' 返回所有的键
-    ''' @return
-    ''' </summary>
-    Public Overridable ReadOnly Property keys_2 As List(Of ChemicalKey)
-        Get
-            Return Keys_2Field
-        End Get
-    End Property
 
     ''' <summary>
     ''' 获得元素名称
     ''' @return
     ''' </summary>
     Public Overridable ReadOnly Property label As String
+
+    ''' <summary>
+    ''' 设置断键的数字，这里假设一个原SMILES表示最多一个断键
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable Property mark As Integer
+
+    ''' <summary>
+    ''' 是元素的个数
+    ''' </summary>
+    Public count As Integer = 0
+
+    ''' <summary>
+    ''' 返回，list,周围的元素
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable ReadOnly Property environments_2 As List(Of ChemicalElement)
+
+    ''' <summary>
+    ''' 返回所有的键
+    ''' @return
+    ''' </summary>
+    Public Overridable ReadOnly Property keys_2 As List(Of ChemicalKey)
+
+    ''' <summary>
+    ''' 设置断键 断开的键的类型
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable Property disconnectKey As ChemicalKey
+
+    Public Shared ReadOnly Property allElement As String()
         Get
-            Return label_Renamed
+            Dim allElements = New String(99) {}
+            allElements(0) = "C"
+            allElements(1) = "N"
+            allElements(2) = "O"
+            allElements(3) = "F"
+            allElements(4) = "Br"
+            allElements(5) = "Cl"
+            allElements(6) = "H"
+            allElements(7) = "S"
+
+            Return allElements
         End Get
     End Property
-    '获得与之相连元素的键对象
-    Public Overridable Function getKeyy(ce As ChemicalElement) As ChemicalKey
-        For Each ck In Keys_2Field
 
-            If ck.chemicalElements.Contains(ce) Then '某个键，包含这个元素,返回这个键的对象
+    Public Sub New(label As String, mark As Integer)
+        Me.label = label
+        Me.mark = mark
+        Keys = New ChemicalKey(3) {}
+        keys_2 = New List(Of ChemicalKey)()
+        environments_2 = New List(Of ChemicalElement)()
+    End Sub
+
+    ''' <summary>
+    ''' 添加key的方法，同时把键连接的元素也添加进去 </summary>
+    ''' <param name="key"> </param>
+    Public Overridable Sub addToKeys(key As ChemicalKey, ce As ChemicalElement)
+        keys_2.Add(key)
+        environments_2.Add(ce)
+    End Sub
+
+    ''' <summary>
+    ''' 获得与之相连元素的键对象
+    ''' </summary>
+    ''' <param name="ce"></param>
+    ''' <returns></returns>
+    Public Overridable Function getKeyy(ce As ChemicalElement) As ChemicalKey
+        For Each ck In keys_2
+            If ck.chemicalElements.Contains(ce) Then
+                ' 某个键，包含这个元素,返回这个键的对象
                 Console.WriteLine("!!!!!检测到元素在键:" & ck.key & "中")
                 Return ck
             End If
@@ -108,27 +88,4 @@ Public Class ChemicalElement
 
         Return Nothing
     End Function
-
-    Public Shared Sub Main(args As String())
-        Dim c1 As ChemicalElement = New ChemicalElement("H", 0)
-    End Sub
-
-    Private Shared Sub SetAllElement()
-        allElement_Renamed = New String(99) {}
-        allElement_Renamed(0) = "C"
-        allElement_Renamed(1) = "N"
-        allElement_Renamed(2) = "O"
-        allElement_Renamed(3) = "F"
-        allElement_Renamed(4) = "Br"
-        allElement_Renamed(5) = "Cl"
-        allElement_Renamed(6) = "H"
-        allElement_Renamed(7) = "S"
-    End Sub
-
-    Public Shared ReadOnly Property allElement As String()
-        Get
-            Call SetAllElement()
-            Return allElement_Renamed
-        End Get
-    End Property
 End Class
