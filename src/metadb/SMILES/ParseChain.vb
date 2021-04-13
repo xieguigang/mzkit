@@ -29,8 +29,8 @@ Public Class ParseChain
     ''' <summary>
     ''' MyElement 要删除的
     ''' 构造函数 </summary>
-    ''' <paramname="smiles"> </param>
-    Public Sub New(ByVal smiles As String)
+    ''' <param name="smiles"> </param>
+    Public Sub New(smiles As String)
         Me.smiles = smiles.ToUpper()
         Dim smilesList = Me.smiles.Split("", True)
         MyElements_2Field = New List(Of ChemicalElement)()
@@ -59,7 +59,7 @@ Public Class ParseChain
         Return st
     End Function
 
-    Private Function subParsing(ByVal smileList As String(), ByVal formerElement As ChemicalElement, ByVal formerKey As ChemicalKey) As ChemicalElement
+    Private Function subParsing(smileList As String(), formerElement As ChemicalElement, formerKey As ChemicalKey) As ChemicalElement
         '头元素，记录信息
         Dim start As ChemicalElement = Nothing
 
@@ -159,7 +159,7 @@ Public Class ParseChain
     '判断是否是键
     Friend allKeys As String() = ChemicalKey.allKeys
 
-    Public Overridable Function isKey(ByVal element As String) As Boolean
+    Public Overridable Function isKey(element As String) As Boolean
         For Each c In allKeys
 
             If element.Equals(c) Then
@@ -174,7 +174,7 @@ Public Class ParseChain
     '两位的元素没搞，比如Br Cl
     Friend elements As String() = ChemicalElement.allElement
 
-    Public Overridable Function isElement(ByVal element As String) As Boolean
+    Public Overridable Function isElement(element As String) As Boolean
         For Each s In elements
 
             If element.Equals(s) Then

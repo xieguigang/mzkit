@@ -11,7 +11,7 @@ Public Class ChemicalFormula
         Get
             Return FormulaField
         End Get
-        Set(ByVal value As List(Of ChemicalElement))
+        Set(value As List(Of ChemicalElement))
             FormulaField = value
         End Set
     End Property

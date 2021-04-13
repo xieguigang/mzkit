@@ -13,7 +13,7 @@ Public Class ChemicalKey
 
         Public Shared allKeys_Renamed As String()
         '构造函数
-        Public Sub New(ByVal key As String)
+        Public Sub New(key As String)
             key_Renamed = key
             chemicalElements_Renamed = New List(Of ChemicalElement)(2)
         End Sub
@@ -22,7 +22,7 @@ Public Class ChemicalKey
         ''' 键,两边的元素
         ''' @param
         ''' </summary>
-        Public Overridable Sub setTarget(ByVal target1 As ChemicalElement, ByVal target2 As ChemicalElement)
+        Public Overridable Sub setTarget(target1 As ChemicalElement, target2 As ChemicalElement)
             Try
                 chemicalElements_Renamed.Add(target1)
                 chemicalElements_Renamed.Add(target2)

@@ -34,12 +34,12 @@ Public Class ChemicalElement
     ''' </summary>
     Private disconnectKey_Renamed As ChemicalKey
 
-    Public Sub New(ByVal label As String, ByVal mark As Integer)
+    Public Sub New(label As String, mark As Integer)
         label_Renamed = label
         mark_Renamed = mark
         Keys = New ChemicalKey(3) {}
-        Keys_2Field = New List(Of)()
-        environments_2_Renamed = New List(Of)()
+        Keys_2Field = New List(Of ChemicalKey)()
+        environments_2_Renamed = New List(Of ChemicalElement)()
     End Sub
 
 
@@ -47,7 +47,7 @@ Public Class ChemicalElement
 
     '设置断键
     Public Overridable Property disconnectKey As ChemicalKey
-        Set(ByVal value As ChemicalKey)
+        Set(value As ChemicalKey)
             disconnectKey_Renamed = value
         End Set
         Get
@@ -56,7 +56,7 @@ Public Class ChemicalElement
     End Property
     '设置断键的数字，这里假设一个原SMILES表示最多一个断键
     Public Overridable Property mark As Integer
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             mark_Renamed = value
         End Set
         Get
@@ -65,8 +65,8 @@ Public Class ChemicalElement
     End Property
     ''' <summary>
     ''' 添加key的方法，同时把键连接的元素也添加进去 </summary>
-    ''' <paramname="key"> </param>
-    Public Overridable Sub addToKeys(ByVal key As ChemicalKey, ByVal ce As ChemicalElement)
+    ''' <param name="key"> </param>
+    Public Overridable Sub addToKeys(key As ChemicalKey, ce As ChemicalElement)
         Keys_2Field.Add(key)
         environments_2_Renamed.Add(ce)
     End Sub
@@ -97,7 +97,7 @@ Public Class ChemicalElement
         End Get
     End Property
     '获得与之相连元素的键对象
-    Public Overridable Function getKeyy(ByVal ce As ChemicalElement) As ChemicalKey
+    Public Overridable Function getKeyy(ce As ChemicalElement) As ChemicalKey
         For Each ck In Keys_2Field
 
             If ck.chemicalElements.Contains(ce) Then '某个键，包含这个元素,返回这个键的对象
@@ -109,7 +109,7 @@ Public Class ChemicalElement
         Return Nothing
     End Function
 
-    Public Shared Sub Main(ByVal args As String())
+    Public Shared Sub Main(args As String())
         Dim c1 As ChemicalElement = New ChemicalElement("H", 0)
     End Sub
 

@@ -6,16 +6,16 @@
     '由于匹配过程，一一对应，不会出现一对多，所以mapde 键是元素是可以的
     Private Ms As IDictionary(Of ChemicalElement, ChemicalElement)
 
-    Public Sub New(ByVal quG As ChemicalFormula, ByVal dbG As ChemicalFormula)
+    Public Sub New(quG As ChemicalFormula, dbG As ChemicalFormula)
         Me.quG = quG
         Me.dbG = dbG
     End Sub
 
-    ''' <paramname="state">  临时的态 </param>
-    ''' <paramname="quG">     query </param>
-    ''' <paramname="dbG">     dbG </param>
+    ''' <param name="state">  临时的态 </param>
+    ''' <param name="quG">     query </param>
+    ''' <param name="dbG">     dbG </param>
     ''' <returns>         boolean </returns>
-    Public Overridable Function Match(ByVal state As Dictionary(Of ChemicalElement, ChemicalElement), ByVal quG As ChemicalFormula, ByVal dbG As ChemicalFormula) As Boolean
+    Public Overridable Function Match(state As Dictionary(Of ChemicalElement, ChemicalElement), quG As ChemicalFormula, dbG As ChemicalFormula) As Boolean
         Dim flag = False
         'Mqu 已经在state中的query元素  Mdb 已经在state中的db元素
         Dim quG_Mid0 As ISet(Of ChemicalElement) = state.Keys
@@ -34,8 +34,8 @@
             Dim entry As ISet(Of Integer?) = P.Keys
             'Foreach p in P:
             For Each number As Integer In entry
-                Dim que As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, Global.System.Collections.Generic.List(Of Global.com.Demo2.ChemicalElement))(P, CType(number, Integer?)).[get](0) 'query
-                Dim dbe As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, Global.System.Collections.Generic.List(Of Global.com.Demo2.ChemicalElement))(P, CType(number, Integer?)).[get](1) 'db
+                Dim que As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, List(Of ChemicalElement))(P, CType(number, Integer?)).[Get](0) 'query
+                Dim dbe As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, List(Of ChemicalElement))(P, CType(number, Integer?)).[Get](1) 'db
                 'IF the feasibility rules succeed for inclusion of p in Ms
                 If FeasibilityRules(que, dbe, Mqu, Mdb, state) Then
                     'compute the state s'
@@ -58,14 +58,12 @@
 
     ''' <summary>
     ''' 搜索的空间P Candidate Pair Set </summary>
-    ''' <paramname="result"> 所有可能性集合容器 </param>
-    ''' <paramname="quG">  query </param>
-    ''' <paramname="bgG">  database </param>
-    ''' <paramname="Mqu">  M_query </param>
-    ''' <paramname="Mdb">  M_database
-    ''' @return
-    ''' </><C>>  </><C>> ... </param></C></param>       
-    Public Overridable Sub CandidateP(ByVal result As IDictionary(Of Integer?, List(Of ChemicalElement)), ByVal quG As ChemicalFormula, ByVal bgG As ChemicalFormula, ByVal Mqu As List(Of ChemicalElement), ByVal Mdb As List(Of ChemicalElement))
+    ''' <param name="result"> 所有可能性集合容器 </param>
+    ''' <param name="quG">  query </param>
+    ''' <param name="bgG">  database </param>
+    ''' <param name="Mqu">  M_query </param>
+    ''' <param name="Mdb">  M_database     </param>
+    Public Overridable Sub CandidateP(result As IDictionary(Of Integer?, List(Of ChemicalElement)), quG As ChemicalFormula, bgG As ChemicalFormula, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement))
         Dim count = 0
 
         For Each ce In quG.formula
@@ -86,13 +84,13 @@
         Next
     End Sub
 
-    ''' <paramname="quG"> query </param>
-    ''' <paramname="dbG"> dataBase </param>
-    ''' <paramname="Mqu">  已经加入的结点集合 </param>
-    ''' <paramname="Mdb"> </param>
-    ''' <paramname="match"> 已经匹配好的对象
+    ''' <param name="quG"> query </param>
+    ''' <param name="dbG"> dataBase </param>
+    ''' <param name="Mqu">  已经加入的结点集合 </param>
+    ''' <param name="Mdb"> </param>
+    ''' <param name="match"> 已经匹配好的对象
     ''' @return </param>
-    Public Overridable Function FeasibilityRules(ByVal quG As ChemicalElement, ByVal dbG As ChemicalElement, ByVal Mqu As List(Of ChemicalElement), ByVal Mdb As List(Of ChemicalElement), ByVal match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
+    Public Overridable Function FeasibilityRules(quG As ChemicalElement, dbG As ChemicalElement, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement), match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
         If Not quG.label.Equals(dbG.label) Then '两个元素名称是否一致
             Return False
         End If
@@ -117,11 +115,11 @@
                 If Not dbG_Mid.environments_2.Contains(dbG) Then '映射元素dbG_Mid与dbG之间没有连接
                     Return False
                 End If
-                ''' <summary>
-                ''' *
-                ''' 下面是需要改正的，键对象创建的太多了。
-                ''' 需要把键当成元素的属性，目前是元素是键的属性，用一个map比较好
-                ''' </summary>
+
+                ' *
+                ' 下面是需要改正的，键对象创建的太多了。
+                ' 需要把键当成元素的属性，目前是元素是键的属性，用一个map比较好
+
                 If Not quG.getKeyy(quG_Mid).key.Equals(dbG.getKeyy(dbG_Mid).key) Then '同一个键对象
                     Return False
                 End If
