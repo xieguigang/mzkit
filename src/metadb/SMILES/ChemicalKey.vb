@@ -1,15 +1,16 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿
+Public Class ChemicalKey
 
-Namespace com.Demo2
-    Public Class ChemicalKey
-        '键的名称
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+        ''' <summary>
+        ''' 键的名称
+        ''' </summary>
         Private key_Renamed As String
-        '键的指向的对象
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
+        ''' <summary>
+        ''' 键的指向的对象
+        ''' </summary>
         Private chemicalElements_Renamed As List(Of ChemicalElement)
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
         Public Shared allKeys_Renamed As String()
         '构造函数
         Public Sub New(ByVal key As String)
@@ -71,5 +72,4 @@ Namespace com.Demo2
                 Return allKeys_Renamed
             End Get
         End Property
-    End Class
-End Namespace
+End Class

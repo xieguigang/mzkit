@@ -64,11 +64,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="1.vb" />
-    <Compile Include="2.vb" />
-    <Compile Include="3.vb" />
-    <Compile Include="4.vb" />
-    <Compile Include="5.vb" />
+    <Compile Include="ChemicalKey.vb" />
+    <Compile Include="ChemicalElement.vb" />
+    <Compile Include="ChemicalFormula.vb" />
+    <Compile Include="ParseChain.vb" />
+    <Compile Include="VFMatch.vb" />
     <Compile Include="HashMapHelperClass.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

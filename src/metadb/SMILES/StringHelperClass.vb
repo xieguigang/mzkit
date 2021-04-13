@@ -5,6 +5,7 @@
 '	This class is used to convert some aspects of the Java String class.
 '-------------------------------------------------------------------------------------------
 Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Friend Module StringHelperClass
     '----------------------------------------------------------------------------------
