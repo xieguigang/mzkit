@@ -54,13 +54,12 @@ Public Class ChemicalKey
     End Sub
 
     Public Overrides Function ToString() As String
-        Dim sb As New StringBuilder
+        Dim sb As New List(Of String)
 
         For i = 0 To 2 - 1
-            sb.Append(chemicalElements(i).label)
-            sb.Append("-"c)
+            sb.Add(chemicalElements(i).label)
         Next
 
-        Return sb.ToString
+        Return sb.JoinBy("-")
     End Function
 End Class

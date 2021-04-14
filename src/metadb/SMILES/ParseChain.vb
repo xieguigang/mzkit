@@ -29,6 +29,8 @@ Public Class ParseChain
     ''' MyElement 要删除的
     ''' 构造函数 </summary>
     ''' <param name="smiles"> </param>
+    ''' 
+    <DebuggerStepThrough>
     Public Sub New(smiles As String)
         Me.smiles = smiles.ToUpper()
         myElements = New List(Of ChemicalElement)()

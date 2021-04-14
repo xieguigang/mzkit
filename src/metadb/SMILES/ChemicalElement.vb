@@ -86,4 +86,8 @@
 
         Return Nothing
     End Function
+
+    Public Overrides Function ToString() As String
+        Return label
+    End Function
 End Class
