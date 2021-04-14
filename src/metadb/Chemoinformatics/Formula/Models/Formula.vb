@@ -48,10 +48,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Formula
 
+    <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
     Public Class Formula
 
         Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
@@ -81,6 +81,12 @@ Namespace Formula
             End Get
         End Property
 
+        Friend ReadOnly Property Counts As String
+            Get
+                Return CountsByElement.Select(Function(a) $"{a.Key}: {a.Value}").JoinBy(", ")
+            End Get
+        End Property
+
         Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
             CountsByElement = New Dictionary(Of String, Integer)(counts)
 
@@ -98,10 +104,6 @@ Namespace Formula
                             Return If(e.Value = 1, e.Key, e.Key & e.Value)
                         End Function) _
                 .JoinBy("")
-        End Function
-
-        Public Function DebugView() As String
-            Return $"{EmpiricalFormula} ({ExactMass} = {CountsByElement.GetJson})"
         End Function
 
         Public Overrides Function ToString() As String
