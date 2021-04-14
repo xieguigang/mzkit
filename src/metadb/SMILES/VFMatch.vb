@@ -18,10 +18,8 @@
     End Sub
 
     ''' <param name="state">  临时的态 </param>
-    ''' <param name="quG">     query </param>
-    ''' <param name="dbG">     dbG </param>
     ''' <returns>         boolean </returns>
-    Public Function Match(state As Dictionary(Of ChemicalElement, ChemicalElement), quG As ChemicalFormula, dbG As ChemicalFormula) As Boolean
+    Public Function Match(state As Dictionary(Of ChemicalElement, ChemicalElement)) As Boolean
         Dim flag = False
         'Mqu 已经在state中的query元素  Mdb 已经在state中的db元素
         Dim quG_Mid0 As ISet(Of ChemicalElement) = state.Keys
@@ -35,7 +33,7 @@
         Else
             'compute the candidate of inclusion of Ms
             Dim P As IDictionary(Of Integer?, List(Of ChemicalElement)) = New Dictionary(Of Integer?, List(Of ChemicalElement))()
-            CandidateP(P, quG, dbG, Mqu, Mdb)
+            CandidateP(P, Mqu, Mdb)
             Console.WriteLine("计算完成候选的结果")
             Dim entry As ISet(Of Integer?) = P.Keys
             'Foreach p in P:
@@ -47,7 +45,7 @@
                     'compute the state s'
                     state(que) = dbe '添加进去
                     'call match(s')
-                    flag = Match(state, quG, dbG)
+                    flag = Match(state)
                     state.Remove(que) '回溯，要删除之前的状态
                 End If
 
@@ -61,21 +59,18 @@
         Return flag
     End Function
 
-
     ''' <summary>
     ''' 搜索的空间P Candidate Pair Set </summary>
     ''' <param name="result"> 所有可能性集合容器 </param>
-    ''' <param name="quG">  query </param>
-    ''' <param name="bgG">  database </param>
     ''' <param name="Mqu">  M_query </param>
     ''' <param name="Mdb">  M_database     </param>
-    Public Sub CandidateP(result As IDictionary(Of Integer?, List(Of ChemicalElement)), quG As ChemicalFormula, bgG As ChemicalFormula, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement))
+    Public Sub CandidateP(result As IDictionary(Of Integer?, List(Of ChemicalElement)), Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement))
         Dim count = 0
 
         For Each ce In quG.formula
 
             If Not Mqu.Contains(ce) Then 'query元素没被选的元素
-                For Each qe In bgG.formula
+                For Each qe In dbG.formula
 
                     If Not Mdb.Contains(qe) Then 'db元素，没被选的元素
                         Console.Write(ce.label & "-" & qe.label & " ")
@@ -96,7 +91,7 @@
     ''' <param name="Mdb"> </param>
     ''' <param name="match"> 已经匹配好的对象
     ''' @return </param>
-    Public Function FeasibilityRules(quG As ChemicalElement, dbG As ChemicalElement, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement), match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
+    Private Shared Function FeasibilityRules(quG As ChemicalElement, dbG As ChemicalElement, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement), match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
         If Not quG.label.Equals(dbG.label) Then '两个元素名称是否一致
             Return False
         End If
