@@ -148,7 +148,7 @@ Namespace Formula
                 .JoinIterates(b.CountsByElement.Keys) _
                 .Distinct _
                 .Select(Function(e)
-                            Return (e, n:=a.CountsByElement.TryGetValue(e) + b.CountsByElement.TryGetValue(e))
+                            Return (e, n:=a.CountsByElement.TryGetValue(e) - b.CountsByElement.TryGetValue(e))
                         End Function) _
                 .Where(Function(e) e.n > 0) _
                 .ToDictionary(Function(e) e.e,
