@@ -107,6 +107,10 @@ Namespace Formula
                 .JoinBy("")
         End Function
 
+        ''' <summary>
+        ''' show <see cref="EmpiricalFormula"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return EmpiricalFormula
         End Function
