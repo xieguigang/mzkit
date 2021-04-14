@@ -15,7 +15,7 @@
     ''' <param name="quG">     query </param>
     ''' <param name="dbG">     dbG </param>
     ''' <returns>         boolean </returns>
-    Public Overridable Function Match(state As Dictionary(Of ChemicalElement, ChemicalElement), quG As ChemicalFormula, dbG As ChemicalFormula) As Boolean
+    Public Function Match(state As Dictionary(Of ChemicalElement, ChemicalElement), quG As ChemicalFormula, dbG As ChemicalFormula) As Boolean
         Dim flag = False
         'Mqu 已经在state中的query元素  Mdb 已经在state中的db元素
         Dim quG_Mid0 As ISet(Of ChemicalElement) = state.Keys
@@ -63,7 +63,7 @@
     ''' <param name="bgG">  database </param>
     ''' <param name="Mqu">  M_query </param>
     ''' <param name="Mdb">  M_database     </param>
-    Public Overridable Sub CandidateP(result As IDictionary(Of Integer?, List(Of ChemicalElement)), quG As ChemicalFormula, bgG As ChemicalFormula, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement))
+    Public Sub CandidateP(result As IDictionary(Of Integer?, List(Of ChemicalElement)), quG As ChemicalFormula, bgG As ChemicalFormula, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement))
         Dim count = 0
 
         For Each ce In quG.formula
@@ -90,7 +90,7 @@
     ''' <param name="Mdb"> </param>
     ''' <param name="match"> 已经匹配好的对象
     ''' @return </param>
-    Public Overridable Function FeasibilityRules(quG As ChemicalElement, dbG As ChemicalElement, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement), match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
+    Public Function FeasibilityRules(quG As ChemicalElement, dbG As ChemicalElement, Mqu As List(Of ChemicalElement), Mdb As List(Of ChemicalElement), match As IDictionary(Of ChemicalElement, ChemicalElement)) As Boolean
         If Not quG.label.Equals(dbG.label) Then '两个元素名称是否一致
             Return False
         End If

@@ -6,25 +6,24 @@
 ''' https://blog.csdn.net/tortelee/article/details/85782913
 ''' </remarks>
 Public Class ParseChain
+
     ''' <summary>
     ''' 待解析的字符串对象
     ''' </summary>
-    Private smiles As String
+    Dim smiles As String
 
     ''' <summary>
     ''' 解析字符串的位置标记
     ''' </summary>
-    Private position As Integer
-
+    Dim position As Integer
 
     ''' <summary>
     ''' 解析后存放的位置
     ''' cmf：化学式存放
     ''' MyElements_2 以前的list存放
     ''' </summary>
-    Private MyElements_2Field As List(Of ChemicalElement)
-
-    Private cmf_Renamed As ChemicalFormula
+    Public ReadOnly Property myElements As List(Of ChemicalElement)
+    Public ReadOnly Property cmf As ChemicalFormula
 
     ''' <summary>
     ''' MyElement 要删除的
@@ -33,29 +32,17 @@ Public Class ParseChain
     Public Sub New(smiles As String)
         Me.smiles = smiles.ToUpper()
         Dim smilesList = Me.smiles.Split("", True)
-        MyElements_2Field = New List(Of ChemicalElement)()
-        cmf_Renamed = New ChemicalFormula()
+        myElements = New List(Of ChemicalElement)()
+        cmf = New ChemicalFormula()
     End Sub
 
-    Public Overridable ReadOnly Property myElements_2 As List(Of ChemicalElement)
-        Get
-            Return MyElements_2Field
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property cmf As ChemicalFormula
-        Get
-            Return cmf_Renamed
-        End Get
-    End Property
-
-    Public Overridable Function Parsing() As ChemicalElement
+    Public Function Parsing() As ChemicalElement
         Dim smilesList = smiles.Split("", True) '将字符串转成数组
         '第一步，完成图示解C步骤
         Dim st = subParsing(smilesList, Nothing, Nothing)
         '第二步，从C步骤，完成B步骤，对数字相同的进行拼凑；断键合并
         Combine()
-        cmf_Renamed.formula = MyElements_2Field '解析完，将元素存到化学键中
+        cmf.formula = myElements '解析完，将元素存到化学键中
         Return st
     End Function
 
@@ -101,7 +88,7 @@ Public Class ParseChain
                     current = New ChemicalElement(smileList(position), 0) '旧-将元素添加进去
                 End If
 
-                MyElements_2Field.Add(current) '新-将元素添加到MyElements_2
+                myElements.Add(current) '新-将元素添加到MyElements_2
 
                 If start Is Nothing Then '第一个元素
                     start = current
@@ -147,7 +134,8 @@ Public Class ParseChain
                 '括号后面部分的处理
                 formerKey = New ChemicalKey("-")
                 position += 1
-            ElseIf smileList(position).Equals(")") Then '这里不对位置进行操作 留在109处理
+            ElseIf smileList(position).Equals(")") Then
+                ' 这里不对位置进行操作 留在109处理
                 ' 但是要对formerkey做处理 留在109 循环出来后
                 Return start
             End If
@@ -156,10 +144,12 @@ Public Class ParseChain
         Return start
     End Function
 
-    '判断是否是键
+    ''' <summary>
+    ''' 判断是否是键
+    ''' </summary>
     Friend allKeys As String() = ChemicalKey.allKeys
 
-    Public Overridable Function isKey(element As String) As Boolean
+    Public Function isKey(element As String) As Boolean
         For Each c In allKeys
 
             If element.Equals(c) Then
@@ -174,7 +164,7 @@ Public Class ParseChain
     '两位的元素没搞，比如Br Cl
     Friend elements As String() = ChemicalElement.allElement
 
-    Public Overridable Function isElement(element As String) As Boolean
+    Public Function isElement(element As String) As Boolean
         For Each s In elements
 
             If element.Equals(s) Then
@@ -195,22 +185,22 @@ Public Class ParseChain
     Private Sub Combine()
         Dim maxNumber = 0
 
-        For Each ce In MyElements_2Field
+        For Each ce In myElements
 
             If ce.mark > maxNumber Then
                 maxNumber = ce.mark
             End If
         Next
 
-        For i = 0 To MyElements_2Field.Count - 1
+        For i = 0 To myElements.Count - 1
 
-            If MyElements_2Field(i).mark <> 0 Then
-                For j = i + 1 To MyElements_2Field.Count - 1
+            If myElements(i).mark <> 0 Then
+                For j = i + 1 To myElements.Count - 1
 
-                    If MyElements_2Field(i).mark = MyElements_2Field(j).mark Then
-                        MyElements_2Field(i).disconnectKey.setTarget(MyElements_2Field(i), MyElements_2Field(j))
-                        MyElements_2Field(i).addToKeys(MyElements_2Field(i).disconnectKey, MyElements_2Field(j))
-                        MyElements_2Field(j).addToKeys(MyElements_2Field(i).disconnectKey, MyElements_2Field(i))
+                    If myElements(i).mark = myElements(j).mark Then
+                        myElements(i).disconnectKey.setTarget(myElements(i), myElements(j))
+                        myElements(i).addToKeys(myElements(i).disconnectKey, myElements(j))
+                        myElements(j).addToKeys(myElements(i).disconnectKey, myElements(i))
                         Exit For
                     End If
                 Next

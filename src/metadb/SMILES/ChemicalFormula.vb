@@ -7,7 +7,7 @@ Public Class ChemicalFormula
     ''' <summary>
     ''' @return
     ''' </summary>
-    Public Overridable Property formula As List(Of ChemicalElement)
+    Public Property formula As List(Of ChemicalElement)
         Get
             Return FormulaField
         End Get

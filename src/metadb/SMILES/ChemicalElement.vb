@@ -9,13 +9,13 @@
     ''' 获得元素名称
     ''' @return
     ''' </summary>
-    Public Overridable ReadOnly Property label As String
+    Public ReadOnly Property label As String
 
     ''' <summary>
     ''' 设置断键的数字，这里假设一个原SMILES表示最多一个断键
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable Property mark As Integer
+    Public Property mark As Integer
 
     ''' <summary>
     ''' 是元素的个数
@@ -26,19 +26,19 @@
     ''' 返回，list,周围的元素
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable ReadOnly Property environments_2 As List(Of ChemicalElement)
+    Public ReadOnly Property environments_2 As List(Of ChemicalElement)
 
     ''' <summary>
     ''' 返回所有的键
     ''' @return
     ''' </summary>
-    Public Overridable ReadOnly Property keys_2 As List(Of ChemicalKey)
+    Public ReadOnly Property keys_2 As List(Of ChemicalKey)
 
     ''' <summary>
     ''' 设置断键 断开的键的类型
     ''' </summary>
     ''' <returns></returns>
-    Public Overridable Property disconnectKey As ChemicalKey
+    Public Property disconnectKey As ChemicalKey
 
     Public Shared ReadOnly Property allElement As String()
         Get
@@ -67,7 +67,7 @@
     ''' <summary>
     ''' 添加key的方法，同时把键连接的元素也添加进去 </summary>
     ''' <param name="key"> </param>
-    Public Overridable Sub addToKeys(key As ChemicalKey, ce As ChemicalElement)
+    Public Sub addToKeys(key As ChemicalKey, ce As ChemicalElement)
         keys_2.Add(key)
         environments_2.Add(ce)
     End Sub
@@ -77,7 +77,7 @@
     ''' </summary>
     ''' <param name="ce"></param>
     ''' <returns></returns>
-    Public Overridable Function getKeyy(ce As ChemicalElement) As ChemicalKey
+    Public Function getKeyy(ce As ChemicalElement) As ChemicalKey
         For Each ck In keys_2
             If ck.chemicalElements.Contains(ce) Then
                 ' 某个键，包含这个元素,返回这个键的对象

@@ -4,13 +4,13 @@ Public Class ChemicalKey
     ''' <summary>
     ''' 键的名称
     ''' </summary>
-    Public Overridable ReadOnly Property key As String
+    Public ReadOnly Property key As String
 
     ''' <summary>
     ''' 获得键两边元素
     ''' </summary>
     ''' <returns>键的指向的对象</returns>
-    Public Overridable ReadOnly Property chemicalElements As List(Of ChemicalElement)
+    Public ReadOnly Property chemicalElements As List(Of ChemicalElement)
 
     ''' <summary>
     ''' 获得所有的Key字符
@@ -41,7 +41,7 @@ Public Class ChemicalKey
     ''' 键,两边的元素
     ''' @param
     ''' </summary>
-    Public Overridable Sub setTarget(target1 As ChemicalElement, target2 As ChemicalElement)
+    Public Sub setTarget(target1 As ChemicalElement, target2 As ChemicalElement)
         Try
             chemicalElements.Add(target1)
             chemicalElements.Add(target2)
@@ -50,7 +50,7 @@ Public Class ChemicalKey
         End Try
     End Sub
 
-    Public Overridable Sub print()
+    Public Sub print()
         For i = 0 To 2 - 1
             Console.Write(chemicalElements(i).label)
             Console.Write("-"c)
