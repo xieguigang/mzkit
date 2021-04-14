@@ -1,9 +1,15 @@
 ﻿Public Class VFMatch
-    'query和db图   dbG=databaseGraph
+
+    ''' <summary>
+    ''' query和db图   dbG=databaseGraph
+    ''' </summary>
     Private quG As ChemicalFormula
     Private dbG As ChemicalFormula
-    'Ms用于存放空间状态点，也应该是个Map才对
-    '由于匹配过程，一一对应，不会出现一对多，所以mapde 键是元素是可以的
+
+    ''' <summary>
+    ''' Ms用于存放空间状态点，也应该是个Map才对
+    ''' 由于匹配过程，一一对应，不会出现一对多，所以mapde 键是元素是可以的
+    ''' </summary>
     Private Ms As IDictionary(Of ChemicalElement, ChemicalElement)
 
     Public Sub New(quG As ChemicalFormula, dbG As ChemicalFormula)
@@ -34,8 +40,8 @@
             Dim entry As ISet(Of Integer?) = P.Keys
             'Foreach p in P:
             For Each number As Integer In entry
-                Dim que As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, List(Of ChemicalElement))(P, CType(number, Integer?)).[Get](0) 'query
-                Dim dbe As ChemicalElement = HashMapHelperClass.GetValueOrNull(Of Global.System.Int32?, List(Of ChemicalElement))(P, CType(number, Integer?)).[Get](1) 'db
+                Dim que As ChemicalElement = P.GetValueOrNull(CType(number, Integer?)).[Get](0) 'query
+                Dim dbe As ChemicalElement = P.GetValueOrNull(CType(number, Integer?)).[Get](1) 'db
                 'IF the feasibility rules succeed for inclusion of p in Ms
                 If FeasibilityRules(que, dbe, Mqu, Mdb, state) Then
                     'compute the state s'

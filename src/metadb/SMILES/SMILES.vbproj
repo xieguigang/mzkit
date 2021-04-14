@@ -69,7 +69,6 @@
     <Compile Include="ChemicalFormula.vb" />
     <Compile Include="ParseChain.vb" />
     <Compile Include="VFMatch.vb" />
-    <Compile Include="HashMapHelperClass.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -85,7 +84,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="StringHelperClass.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

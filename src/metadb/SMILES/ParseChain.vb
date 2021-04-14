@@ -31,13 +31,13 @@ Public Class ParseChain
     ''' <param name="smiles"> </param>
     Public Sub New(smiles As String)
         Me.smiles = smiles.ToUpper()
-        Dim smilesList = Me.smiles.Split("", True)
+        Dim smilesList = Me.smiles.StringSplit("", True)
         myElements = New List(Of ChemicalElement)()
         cmf = New ChemicalFormula()
     End Sub
 
     Public Function Parsing() As ChemicalElement
-        Dim smilesList = smiles.Split("", True) '将字符串转成数组
+        Dim smilesList = smiles.StringSplit("", True) '将字符串转成数组
         '第一步，完成图示解C步骤
         Dim st = subParsing(smilesList, Nothing, Nothing)
         '第二步，从C步骤，完成B步骤，对数字相同的进行拼凑；断键合并
