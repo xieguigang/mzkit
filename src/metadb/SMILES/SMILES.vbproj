@@ -67,6 +67,7 @@
     <Compile Include="ChemicalKey.vb" />
     <Compile Include="ChemicalElement.vb" />
     <Compile Include="ChemicalFormula.vb" />
+    <Compile Include="Utils.vb" />
     <Compile Include="ParseChain.vb" />
     <Compile Include="VFMatch.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

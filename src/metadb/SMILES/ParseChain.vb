@@ -36,17 +36,20 @@ Public Class ParseChain
     End Sub
 
     Public Function Parsing() As ChemicalElement
-        Dim smilesList = smiles.StringSplit("", True) '将字符串转成数组
-        '第一步，完成图示解C步骤
-        Dim st = subParsing(smilesList, Nothing, Nothing)
-        '第二步，从C步骤，完成B步骤，对数字相同的进行拼凑；断键合并
-        Combine()
-        cmf.formula = myElements '解析完，将元素存到化学键中
+        ' 第一步，完成图示解C步骤
+        Dim st = subParsing(smiles.StringSplit("", True), Nothing, Nothing)
+
+        ' 第二步，从C步骤，完成B步骤，对数字相同的进行拼凑；断键合并
+        Call Combine()
+
+        ' 解析完，将元素存到化学键中
+        cmf.formula = myElements
+
         Return st
     End Function
 
     Private Function subParsing(smileList As String(), formerElement As ChemicalElement, formerKey As ChemicalKey) As ChemicalElement
-        '头元素，记录信息
+        ' 头元素，记录信息
         Dim start As ChemicalElement = Nothing
 
         While position < smileList.Length
@@ -144,58 +147,21 @@ Public Class ParseChain
     End Function
 
     ''' <summary>
-    ''' 判断是否是键
+    ''' 将断开的键合起来
+    ''' 断键信息1111 这种形式标记的 没搞
     ''' </summary>
-    Friend allKeys As String() = ChemicalKey.allKeys
-
-    Public Function isKey(element As String) As Boolean
-        For Each c In allKeys
-
-            If element.Equals(c) Then
-                '  System.out.println("是键");
-                Return True
-            End If
-        Next
-
-        Return False
-    End Function
-    '判断是否是元素  
-    '两位的元素没搞，比如Br Cl
-    Friend elements As String() = ChemicalElement.allElement
-
-    Public Function isElement(element As String) As Boolean
-        For Each s In elements
-
-            If element.Equals(s) Then
-                '   System.out.println("是元素");
-                Return True
-            End If
-
-            If element.Equals("[") Then
-                Return True
-            End If
-        Next
-
-        Return False
-    End Function
-
-    '将断开的键合起来
-    ' 断键信息1111 这种形式标记的 没搞
     Private Sub Combine()
-        Dim maxNumber = 0
+        Dim maxNumber As Integer = 0
 
-        For Each ce In myElements
-
+        For Each ce As ChemicalElement In myElements
             If ce.mark > maxNumber Then
                 maxNumber = ce.mark
             End If
         Next
 
         For i = 0 To myElements.Count - 1
-
             If myElements(i).mark <> 0 Then
                 For j = i + 1 To myElements.Count - 1
-
                     If myElements(i).mark = myElements(j).mark Then
                         myElements(i).disconnectKey.setTarget(myElements(i), myElements(j))
                         myElements(i).addToKeys(myElements(i).disconnectKey, myElements(j))

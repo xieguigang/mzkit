@@ -3,7 +3,7 @@
     ''' <summary>
     ''' 周围的元素和相应的键
     ''' </summary>
-    Private Keys As ChemicalKey()
+    Dim Keys As ChemicalKey()
 
     ''' <summary>
     ''' 获得元素名称
@@ -78,10 +78,8 @@
     ''' <param name="ce"></param>
     ''' <returns></returns>
     Public Function getKeyy(ce As ChemicalElement) As ChemicalKey
-        For Each ck In keys_2
+        For Each ck As ChemicalKey In keys_2
             If ck.chemicalElements.Contains(ce) Then
-                ' 某个键，包含这个元素,返回这个键的对象
-                Console.WriteLine("!!!!!检测到元素在键:" & ck.key & "中")
                 Return ck
             End If
         Next

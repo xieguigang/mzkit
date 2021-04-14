@@ -1,4 +1,6 @@
 ﻿
+Imports System.Text
+
 Public Class ChemicalKey
 
     ''' <summary>
@@ -28,6 +30,7 @@ Public Class ChemicalKey
             allKeys_Renamed(3) = "#"
             allKeys_Renamed(4) = "/"
             allKeys_Renamed(5) = "\\"
+
             Return allKeys_Renamed
         End Get
     End Property
@@ -46,16 +49,18 @@ Public Class ChemicalKey
             chemicalElements.Add(target1)
             chemicalElements.Add(target2)
         Catch __unusedException1__ As Exception
-            Console.WriteLine("键连接的元素超过2个了！")
+            Call "键连接的元素超过2个了！".Warning
         End Try
     End Sub
 
-    Public Sub print()
+    Public Overrides Function ToString() As String
+        Dim sb As New StringBuilder
+
         For i = 0 To 2 - 1
-            Console.Write(chemicalElements(i).label)
-            Console.Write("-"c)
+            sb.Append(chemicalElements(i).label)
+            sb.Append("-"c)
         Next
 
-        Console.WriteLine()
-    End Sub
+        Return sb.ToString
+    End Function
 End Class
