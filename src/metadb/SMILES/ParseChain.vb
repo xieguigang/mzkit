@@ -1,6 +1,6 @@
 ﻿
 ''' <summary>
-''' 
+''' The SMILES string parser
 ''' </summary>
 ''' <remarks>
 ''' https://blog.csdn.net/tortelee/article/details/85782913
@@ -31,7 +31,6 @@ Public Class ParseChain
     ''' <param name="smiles"> </param>
     Public Sub New(smiles As String)
         Me.smiles = smiles.ToUpper()
-        Dim smilesList = Me.smiles.StringSplit("", True)
         myElements = New List(Of ChemicalElement)()
         cmf = New ChemicalFormula()
     End Sub
