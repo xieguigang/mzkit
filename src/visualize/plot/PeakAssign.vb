@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -193,6 +194,7 @@ Public Class PeakAssign : Inherits Plot
                 If images.ContainsKey(label) Then
                     labelSize = images(label).Size.SizeF
                 Else
+                    label = label.DoWordWrap(20, "")
                     labelSize = g.MeasureString(label, labelFont)
                 End If
 
@@ -203,11 +205,14 @@ Public Class PeakAssign : Inherits Plot
                     .text = label,
                     .X = pt.X, .Y = pt.Y,
                     .width = labelSize.Width,
-                    .height = labelSize.Height
+                    .height = labelSize.Height,
+                    .pinned = False
                 }.DoCall(AddressOf labels.Add)
             Else
                 Call g.FillRectangle(barColor, bar)
             End If
+
+            labels.Add(New Label With {.height = bar.Height, .pinned = True, .width = bar.Width, .X = bar.X, .Y = bar.Y})
 
             If product.intensity / maxinto >= 0.2 Then
                 label = product.mz.ToString("F2")
@@ -218,6 +223,7 @@ Public Class PeakAssign : Inherits Plot
                 }
 
                 Call g.DrawString(label, labelFont, Brushes.Black, pt)
+                Call labels.Add(New Label With {.height = labelSize.Height, .pinned = True, .width = labelSize.Width, .X = pt.X, .Y = pt.Y})
             End If
         Next
 
@@ -230,19 +236,26 @@ Public Class PeakAssign : Inherits Plot
 
         Call g.DrawString(title, titleFont, Brushes.Black, location)
 
-        Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
+        Dim anchors As Anchor() = labels.GetLabelAnchors(r:=1)
 
-        Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
+        Call d3js.forcedirectedLabeler _
            .Labels(labels) _
            .Anchors(anchors) _
            .Width(rect.Width) _
            .Height(rect.Height) _
-           .Start(showProgress:=False, nsweeps:=1000)
+           .WithOffset(rect.Location) _
+           .Start(showProgress:=False, nsweeps:=1500)
 
         Dim labelBrush As Brush = theme.tagColor.GetBrush
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
 
+        labelConnector.EndCap = LineCap.ArrowAnchor
+
         For Each i As SeqValue(Of Label) In labels.SeqIterator
+            If i.value.pinned Then
+                Continue For
+            End If
+
             Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
 
             If images.ContainsKey(i.value.text) Then

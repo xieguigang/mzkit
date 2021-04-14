@@ -30,7 +30,7 @@ const into as double = [
 # print(mz);
 # print(into);
 
-names(anno) = round(as.numeric(names(anno)), 4);
+# names(anno) = round(as.numeric(names(anno)), 4);
 
 str(anno);
 
