@@ -72,7 +72,7 @@ Public Class PubChemDescriptorRepo : Implements IDisposable
     ''' </param>
     Sub New(dir$)
         base = dir
-        dir.MkDIR
+        dir.MakeDir
 
         For Each descriptor As PropertyInfo In ChemicalDescriptor.schema
             stream(descriptor.Name) = File.Open(
