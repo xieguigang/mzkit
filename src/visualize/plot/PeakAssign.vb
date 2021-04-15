@@ -210,13 +210,16 @@ Public Class PeakAssign : Inherits Plot
                 Call g.FillRectangle(barHighlight, bar)
 
                 If (Not images.ContainsKey(label)) AndAlso label.Length < 18 Then
-                    pt = New PointF With {.X = pt.X - labelSize.Width / 2, .Y = pt.Y - labelSize.Height}
+                    pt = New PointF With {
+                        .X = pt.X - labelSize.Width / 2,
+                        .Y = pt.Y - labelSize.Height
+                    }
                     g.DrawString(label, labelFont, Brushes.Black, pt)
                 Else
                     Call anchors.Add(pt)
                     Call New Label With {
                         .text = label,
-                        .X = pt.X - labelSize.Width / 2, .Y = pt.Y,
+                        .X = pt.X - labelSize.Width / 2, .Y = pt.Y + labelSize.Height,
                         .width = labelSize.Width,
                         .height = labelSize.Height,
                         .pinned = False
@@ -257,7 +260,7 @@ Public Class PeakAssign : Inherits Plot
                 ejectFactor:=2,
                 dist:=$"50,{canvas.Width / 2}",
                 condenseFactor:=100,
-                avoidRegions:={New RectangleF(rect.Left, rect.Bottom - rect.Height * 0.25, rect.Width, rect.Height * 0.25)}
+                avoidRegions:={}' {New RectangleF(rect.Left, rect.Bottom - rect.Height * 0.2, rect.Width, rect.Height * 0.2)}
              ) _
            .Labels(labels) _
            .Anchors(anchors) _
