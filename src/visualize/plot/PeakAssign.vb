@@ -217,13 +217,24 @@ Public Class PeakAssign : Inherits Plot
                     g.DrawString(label, labelFont, Brushes.Black, pt)
                 Else
                     Call anchors.Add(pt)
-                    Call New Label With {
-                        .text = label,
-                        .X = pt.X - labelSize.Width / 2, .Y = pt.Y + labelSize.Height,
-                        .width = labelSize.Width,
-                        .height = labelSize.Height,
-                        .pinned = False
-                    }.DoCall(AddressOf labels.Add)
+
+                    If images.ContainsKey(label) Then
+                        Call New Label With {
+                            .text = label,
+                            .X = pt.X - labelSize.Width / 2, .Y = 0,
+                            .width = labelSize.Width,
+                            .height = labelSize.Height,
+                            .pinned = False
+                        }.DoCall(AddressOf labels.Add)
+                    Else
+                        Call New Label With {
+                            .text = label,
+                            .X = pt.X - labelSize.Width / 2, .Y = pt.Y + labelSize.Height,
+                            .width = labelSize.Width,
+                            .height = labelSize.Height,
+                            .pinned = False
+                        }.DoCall(AddressOf labels.Add)
+                    End If
                 End If
             Else
                 Call g.FillRectangle(barColor, bar)
