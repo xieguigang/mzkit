@@ -195,14 +195,14 @@ Public Class PeakAssign : Inherits Plot
 
             If Not label.StringEmpty Then
                 If images.ContainsKey(label) Then
-                    labelSize = images(label).Size.SizeF
+                    labelSize = images(label).size.SizeF
                 Else
                     ' label = label.DoWordWrap(28, "")
                     labelSize = g.MeasureString(label, labelFont)
                 End If
 
                 If drawMzLabel Then
-                    pt = New PointF(bar.X + bar.Width / 2, bar.Y - labelSize.Height)
+                    pt = New PointF(bar.X + bar.Width / 2, bar.Y - g.MeasureString(label, labelFont).Height)
                 Else
                     pt = bar.Location.OffSet2D(bar.Width / 2, 0)
                 End If
@@ -311,8 +311,8 @@ Public Class PeakAssign : Inherits Plot
     End Sub
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
-                                             Optional size$ = "1600,1080",
-                                             Optional padding$ = "padding:150px 100px 85px 125px;",
+                                             Optional size$ = "1280,900",
+                                             Optional padding$ = "padding:200px 100px 85px 125px;",
                                              Optional bg$ = "white",
                                              Optional gridFill$ = "white",
                                              Optional barHighlight$ = NameOf(Color.DarkRed),
