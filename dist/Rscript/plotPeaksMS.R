@@ -49,5 +49,5 @@ const MS = libraryMatrix(matrix, name);
 print(MS);
 
 bitmap(file = `${dirname(@script)}/MS.png`) {
-	plot(MS);
+	plot(MS, images = list("*[Agly]+" = readImage(`${dirname(@script)}/Malvidin.png`)));
 }

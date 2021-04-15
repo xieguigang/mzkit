@@ -81,11 +81,15 @@ Namespace Spectra
         Public Property Annotation As String Implements IMzAnnotation.annotation
 
         Public Overrides Function ToString() As String
+            Dim mzinto As String
+
             If intensity <= 1 Then
-                Return $"{mz} ({Fix(intensity * 100%)}%)"
+                mzinto = $"{mz} ({Fix(intensity * 100%)}%)"
             Else
-                Return $"{mz} ({Fix(intensity)}%)"
+                mzinto = $"{mz} ({intensity.ToString("G3")})"
             End If
+
+            Return mzinto & If(Annotation.StringEmpty, "", $" {Annotation}")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

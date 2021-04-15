@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -90,7 +91,7 @@ Public Class PeakAssign : Inherits Plot
         End If
     End Sub
 
-    Private Function ResizeThisWidth(original As Image, maxwidth As Integer) As Image
+    Private Function ResizeThisWidth(original As Image, maxwidth As Integer) As Size
         Dim intWidth As Integer = original.Width
         Dim intHeight As Integer = original.Height
         Dim newWidth, newHeight As Integer
@@ -99,14 +100,14 @@ Public Class PeakAssign : Inherits Plot
             newWidth = maxwidth
             newHeight = maxwidth * (intHeight / intWidth)
 
-            Return New Bitmap(original, newWidth, newHeight)
+            Return New Size(newWidth, newHeight)
         Else
-            Return original
+            Return original.Size
         End If
     End Function
 
-    Private Function ResizeImages(canvas As GraphicsRegion, ratio As Double) As Dictionary(Of String, Image)
-        Dim output As New Dictionary(Of String, Image)
+    Private Function ResizeImages(canvas As GraphicsRegion, ratio As Double) As Dictionary(Of String, (img As Image, size As Size))
+        Dim output As New Dictionary(Of String, (Image, Size))
         Dim img As Image
         Dim maxWidth As Integer = canvas.PlotRegion.Width * ratio
         Dim maxHeight As Integer = canvas.PlotRegion.Height * ratio
@@ -116,10 +117,10 @@ Public Class PeakAssign : Inherits Plot
 
             If img.Width > img.Height Then
                 ' via height
-                output(item.Key) = ResizeThisWidth(img, maxwidth:=maxHeight / (img.Height / img.Width))
+                output(item.Key) = (img, ResizeThisWidth(img, maxwidth:=maxHeight / (img.Height / img.Width)))
             Else
                 ' via width
-                output(item.Key) = ResizeThisWidth(img, maxWidth)
+                output(item.Key) = (img, ResizeThisWidth(img, maxWidth))
             End If
         Next
 
@@ -178,6 +179,7 @@ Public Class PeakAssign : Inherits Plot
         g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS), Brushes.Black, RIGHT)
 
         Dim labels As New List(Of Label)
+        Dim anchors As New List(Of Anchor)
 
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
@@ -187,6 +189,7 @@ Public Class PeakAssign : Inherits Plot
                 .Height = bottomY - pt.Y,
                 .Width = barStyle.width
             }
+            Dim drawMzLabel As Boolean = product.intensity / maxinto >= 0.2
 
             label = product.Annotation
 
@@ -194,29 +197,42 @@ Public Class PeakAssign : Inherits Plot
                 If images.ContainsKey(label) Then
                     labelSize = images(label).Size.SizeF
                 Else
-                    label = label.DoWordWrap(20, "")
+                    ' label = label.DoWordWrap(28, "")
                     labelSize = g.MeasureString(label, labelFont)
                 End If
 
-                pt = New PointF(pt.X - labelSize.Height / 2, pt.Y - 10)
+                If drawMzLabel Then
+                    pt = New PointF(bar.X + bar.Width / 2, bar.Y - labelSize.Height)
+                Else
+                    pt = bar.Location.OffSet2D(bar.Width / 2, 0)
+                End If
 
                 Call g.FillRectangle(barHighlight, bar)
-                Call New Label With {
-                    .text = label,
-                    .X = pt.X, .Y = pt.Y,
-                    .width = labelSize.Width,
-                    .height = labelSize.Height,
-                    .pinned = False
-                }.DoCall(AddressOf labels.Add)
+
+                If (Not images.ContainsKey(label)) AndAlso label.Length < 18 Then
+                    pt = New PointF With {.X = pt.X - labelSize.Width / 2, .Y = pt.Y - labelSize.Height}
+                    g.DrawString(label, labelFont, Brushes.Black, pt)
+                Else
+                    Call anchors.Add(pt)
+                    Call New Label With {
+                        .text = label,
+                        .X = pt.X - labelSize.Width / 2, .Y = pt.Y,
+                        .width = labelSize.Width,
+                        .height = labelSize.Height,
+                        .pinned = False
+                    }.DoCall(AddressOf labels.Add)
+                End If
             Else
                 Call g.FillRectangle(barColor, bar)
             End If
 
             labels.Add(New Label With {.height = bar.Height, .pinned = True, .width = bar.Width, .X = bar.X, .Y = bar.Y})
+            anchors.Add(New Anchor)
 
-            If product.intensity / maxinto >= 0.2 Then
+            If drawMzLabel Then
                 label = product.mz.ToString("F2")
                 labelSize = g.MeasureString(label, labelFont)
+                pt = bar.Location
                 pt = New PointF With {
                     .X = pt.X - labelSize.Width / 2,
                     .Y = pt.Y - labelSize.Height
@@ -224,6 +240,7 @@ Public Class PeakAssign : Inherits Plot
 
                 Call g.DrawString(label, labelFont, Brushes.Black, pt)
                 Call labels.Add(New Label With {.height = labelSize.Height, .pinned = True, .width = labelSize.Width, .X = pt.X, .Y = pt.Y})
+                Call anchors.Add(New Anchor)
             End If
         Next
 
@@ -236,18 +253,22 @@ Public Class PeakAssign : Inherits Plot
 
         Call g.DrawString(title, titleFont, Brushes.Black, location)
 
-        Dim anchors As Anchor() = labels.GetLabelAnchors(r:=1)
-
-        Call d3js.forcedirectedLabeler _
+        Call d3js.forcedirectedLabeler(
+                ejectFactor:=2,
+                dist:=$"50,{canvas.Width / 2}",
+                condenseFactor:=100,
+                avoidRegions:={New RectangleF(rect.Left, rect.Bottom - rect.Height * 0.25, rect.Width, rect.Height * 0.25)}
+             ) _
            .Labels(labels) _
            .Anchors(anchors) _
            .Width(rect.Width) _
            .Height(rect.Height) _
            .WithOffset(rect.Location) _
-           .Start(showProgress:=False, nsweeps:=1500)
+           .Start(showProgress:=False, nsweeps:=2500)
 
         Dim labelBrush As Brush = theme.tagColor.GetBrush
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
+        Dim connectorLead As Pen = Stroke.TryParse(theme.tagLinkStroke)
 
         labelConnector.EndCap = LineCap.ArrowAnchor
 
@@ -256,10 +277,19 @@ Public Class PeakAssign : Inherits Plot
                 Continue For
             End If
 
-            Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
+            Dim a As PointF = i.value.GetTextAnchor(anchors(i))
+            Dim b As PointF = anchors(i)
+            Dim c As New PointF With {.X = a.X - (a.X - b.X) * 0.65, .Y = a.Y}
+
+            If a.Y >= i.value.rectangle.Bottom Then
+                Call g.DrawLine(labelConnector, a, b)
+            Else
+                Call g.DrawLine(connectorLead, a, c)
+                Call g.DrawLine(labelConnector, c, b)
+            End If
 
             If images.ContainsKey(i.value.text) Then
-                Call g.DrawImageUnscaled(images(i.value.text), i.value.rectangle.Location.ToPoint)
+                Call g.DrawImage(images(i.value.text).img, i.value.rectangle)
             Else
                 Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
             End If
@@ -278,6 +308,7 @@ Public Class PeakAssign : Inherits Plot
                                              Optional axisLabelCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional axisTicksCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.SegoeUI & ";",
                                              Optional axisStroke$ = Stroke.AxisStroke,
+                                             Optional connectorStroke$ = "stroke: gray; stroke-width: 3.5px; stroke-dash: dash;",
                                              Optional images As Dictionary(Of String, Image) = Nothing) As GraphicsData
 
         Dim theme As New Theme With {
@@ -289,7 +320,8 @@ Public Class PeakAssign : Inherits Plot
             .tagCSS = labelCSS,
             .axisTickCSS = axisTicksCSS,
             .axisStroke = axisStroke,
-            .axisLabelCSS = axisLabelCSS
+            .axisLabelCSS = axisLabelCSS,
+            .tagLinkStroke = connectorStroke
         }
         Dim app As New PeakAssign(matrix.name, matrix.ms2, barHighlight, theme, images)
 
