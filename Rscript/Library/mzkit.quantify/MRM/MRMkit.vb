@@ -520,6 +520,22 @@ Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Get MRM ions peaks data from a given raw data file
+    ''' </summary>
+    ''' <param name="mzML">the file path of the mzML raw data file</param>
+    ''' <param name="ions">the ion pairs data list</param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="tolerance$"></param>
+    ''' <param name="timeWindowSize#"></param>
+    ''' <param name="angleThreshold#"></param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="rtshifts"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.peaks")>
     <RApiReturn(GetType(DataSet))>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
