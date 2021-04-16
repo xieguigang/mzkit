@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData
@@ -16,7 +15,7 @@ Namespace MarkupData
 
             Select Case type
                 Case XmlFileTypes.mzML, XmlFileTypes.imzML
-                    Throw New NotImplementedException(type.Description)
+                    tag = "spectrum"
                 Case XmlFileTypes.mzXML
                     tag = "scan"
                 Case Else
@@ -42,6 +41,10 @@ Namespace MarkupData
             Else
                 Return Data.CreateNodeObject(Of T)(blockText)
             End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return type.Description & "::" & tag
         End Function
     End Class
 End Namespace
