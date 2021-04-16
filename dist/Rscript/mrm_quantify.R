@@ -1,7 +1,7 @@
 #!REnv
 
 # imports mzkit library modules
-imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
+imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
 imports "assembly" from "mzkit.dll";
 
 # includes external helper script
@@ -243,7 +243,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		
 		# save reference points
 		line
-		:> points(name = id)
+		:> points(nameRef = id)
 		:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
 		;
 	}
@@ -331,10 +331,11 @@ let doLinears as function(wiff_standards, subdir = "") {
 		
 		print(basename(sample.mzML));
 		
+		# QuantifyScan
 		result 
 		:> as.object 
-		:> do.call("MRMPeaks") 
-		:> write.MRMpeaks(file = peakfile);
+		:> do.call("ionPeaks") 
+		:> write.ionPeaks(file = peakfile);
 		
 		scans <- scans << result;
 	}
@@ -351,7 +352,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 	
 	# save linear regression html report
 	ref
-	:> mrm.dataset(scans, ionsRaw = ref_raws) 
+	:> report.dataset(scans, ionsRaw = ref_raws) 
 	:> html 
 	:> writeLines(con = `${dir}/${subdir}/index.html`)
 	;
@@ -360,7 +361,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 		print("Creating QC report....");
 	
 		ref
-		:> mrm.dataset(scans, QC_dataset = patternOf.QC) 
+		:> report.dataset(scans, QC_dataset = patternOf.QC) 
 		:> html 
 		:> writeLines(con = `${dir}/${subdir}/QC.html`)
 		;	
