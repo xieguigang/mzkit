@@ -1,54 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::b8120a4e96db0c14bae7730de5a9846c, src\assembly\assembly\MarkupData\XmlSeek.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class XmlSeek
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: LoadIndex, ParseFileType, parseIndex, parseIndexOfmzML, parseIndexOfmzXML
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class XmlSeek
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: LoadIndex, ParseFileType, parseIndex, parseIndexOfmzML, parseIndexOfmzXML
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
@@ -69,13 +72,21 @@ Namespace MarkupData
         ReadOnly reader As IDataReader
         ReadOnly indexOffset As Long
         ReadOnly sha1 As String
+        ReadOnly parser As XmlParser
 
-        Dim index As NamedValue(Of Long)()
+        Dim index As Dictionary(Of String, Long)
         Dim indexgroup As Dictionary(Of String, NamedValue(Of Long)())
         Dim disposedValue As Boolean
 
+        Public ReadOnly Property IndexKeys As String()
+            Get
+                Return index.Keys.ToArray
+            End Get
+        End Property
+
         Sub New(file As String)
             bin = file.OpenBinaryReader(Encodings.UTF8)
+            parser = New XmlParser(bin)
             type = ParseFileType(file)
 
             With parseIndex()
@@ -97,7 +108,20 @@ Namespace MarkupData
             bin.Seek(indexOffset, SeekOrigin.Begin)
         End Sub
 
+        Public Function ReadScan(key As String) As MSScan
+            Select Case type
+                Case XmlFileTypes.mzXML
+                    Return parser.ParseDataNode(Of scan)(index(key)).DoCall()
+                Case XmlFileTypes.mzML
+
+                Case Else
+                    Throw New NotImplementedException(type.Description)
+            End Select
+        End Function
+
         Public Function LoadIndex() As XmlSeek
+            Dim index As NamedValue(Of Long)()
+
             If type = XmlFileTypes.mzML Then
                 index = indexList.ParseIndexList(bin, indexOffset).GetOffsets.ToArray
             ElseIf type = XmlFileTypes.mzXML Then
@@ -110,7 +134,8 @@ Namespace MarkupData
                 Throw New NotImplementedException(type.Description)
             End If
 
-            indexgroup = index _
+            Me.index = index.ToDictionary.FlatTable
+            Me.indexgroup = index _
                 .GroupBy(Function(idx) idx.Description) _
                 .ToDictionary(Function(g) g.Key,
                               Function(g)

@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::81fe7b357dea0b2fddb4ab4e8431b616, src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ScanPopulator
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Load, PopulateValidScans
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ScanPopulator
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) Load, PopulateValidScans
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' helper module for read a raw data file and populate 
+    ''' a unify data scan model object
+    ''' </summary>
+    ''' <typeparam name="Scan"></typeparam>
     Public MustInherit Class ScanPopulator(Of Scan)
 
         Protected ms1 As ScanMS1
@@ -82,13 +87,42 @@ Namespace mzData.mzWebCache
             Next
         End Function
 
+        Public Function CreateScan(scan As Scan, Optional uniqueId As String = Nothing) As MSScan
+            Dim scan_time As Double = reader.GetScanTime(scan)
+            Dim scan_id As String = If(uniqueId.StringEmpty, reader.GetScanId(scan), $"[{uniqueId}]{reader.GetScanId(scan)}")
+            Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
+
+            If reader.GetMsLevel(scan) = 1 Then
+                Return New ScanMS1 With {
+                    .BPC = reader.GetBPC(scan),
+                    .TIC = reader.GetTIC(scan),
+                    .rt = scan_time,
+                    .scan_id = scan_id,
+                    .mz = msms.Select(Function(a) a.mz).ToArray,
+                    .into = msms.Select(Function(a) a.intensity).ToArray
+                }
+            Else
+                Return New ScanMS2 With {
+                    .rt = scan_time,
+                    .parentMz = reader.GetParentMz(scan),
+                    .scan_id = scan_id,
+                    .intensity = reader.GetBPC(scan),
+                    .mz = msms.Select(Function(a) a.mz).ToArray,
+                    .into = msms.Select(Function(a) a.intensity).ToArray,
+                    .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True),
+                    .activationMethod = reader.GetActivationMethod(scan),
+                    .centroided = reader.GetCentroided(scan),
+                    .charge = reader.GetCharge(scan),
+                    .collisionEnergy = reader.GetCollisionEnergy(scan)
+                }
+            End If
+        End Function
+
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
 
             For Each scan As Scan In PopulateValidScans(scans)
-                Dim scan_time As Double = reader.GetScanTime(scan)
-                Dim scan_id As String = $"[{++i}]{reader.GetScanId(scan)}"
-                Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
+                Dim scanVal As MSScan = CreateScan(scan, ++i)
 
                 If reader.GetMsLevel(scan) = 1 Then
                     If Not ms1 Is Nothing Then
@@ -98,32 +132,13 @@ Namespace mzData.mzWebCache
                         Yield ms1
                     End If
 
-                    ms1 = New ScanMS1 With {
-                        .BPC = reader.GetBPC(scan),
-                        .TIC = reader.GetTIC(scan),
-                        .rt = scan_time,
-                        .scan_id = scan_id,
-                        .mz = msms.Select(Function(a) a.mz).ToArray,
-                        .into = msms.Select(Function(a) a.intensity).ToArray
-                    }
+                    ms1 = scanVal
                 Else
-                    Call New ScanMS2 With {
-                        .rt = scan_time,
-                        .parentMz = reader.GetParentMz(scan),
-                        .scan_id = scan_id,
-                        .intensity = reader.GetBPC(scan),
-                        .mz = msms.Select(Function(a) a.mz).ToArray,
-                        .into = msms.Select(Function(a) a.intensity).ToArray,
-                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True),
-                        .activationMethod = reader.GetActivationMethod(scan),
-                        .centroided = reader.GetCentroided(scan),
-                        .charge = reader.GetCharge(scan),
-                        .collisionEnergy = reader.GetCollisionEnergy(scan)
-                    }.DoCall(AddressOf products.Add)
+                    Call products.Add(scanVal)
                 End If
 
                 If Not progress Is Nothing Then
-                    Call progress(scan_id)
+                    Call progress(scanVal.scan_id)
                 End If
             Next
 
