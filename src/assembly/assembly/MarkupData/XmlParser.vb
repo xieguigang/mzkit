@@ -12,16 +12,19 @@ Namespace MarkupData
         Sub New(file As Stream, type As XmlFileTypes)
             Me.type = type
             Me.bin = New StreamReader(file)
+            Me.tag = getTagName(type)
+        End Sub
 
+        Private Shared Function getTagName(type As XmlFileTypes) As String
             Select Case type
                 Case XmlFileTypes.mzML, XmlFileTypes.imzML
-                    tag = "spectrum"
+                    Return "spectrum"
                 Case XmlFileTypes.mzXML
-                    tag = "scan"
+                    Return "scan"
                 Case Else
                     Throw New NotImplementedException(type.Description)
             End Select
-        End Sub
+        End Function
 
         Private Iterator Function GotoReadText(offset As Long) As IEnumerable(Of String)
             Call bin.DiscardBufferedData()

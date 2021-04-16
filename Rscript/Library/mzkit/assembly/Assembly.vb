@@ -240,6 +240,11 @@ Module Assembly
         Return file.IndexKeys
     End Function
 
+    <ExportAPI("load_index")>
+    Public Function LoadIndex(file As String) As FastSeekIndex
+        Return FastSeekIndex.LoadIndex(file)
+    End Function
+
     ''' <summary>
     ''' write spectra data in mgf file format.
     ''' </summary>
