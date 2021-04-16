@@ -26,7 +26,7 @@ Namespace MarkupData
             End Select
         End Function
 
-        Private Iterator Function GotoReadText(offset As Long) As IEnumerable(Of String)
+        Private Shared Iterator Function GotoReadText(bin As StreamReader, offset As Long) As IEnumerable(Of String)
             Call bin.DiscardBufferedData()
             Call bin.BaseStream.Seek(offset, SeekOrigin.Begin)
 
@@ -36,7 +36,15 @@ Namespace MarkupData
         End Function
 
         Public Function ParseDataNode(Of T As Class)(index As Long) As T
-            Dim stream As IEnumerable(Of String) = GotoReadText(offset:=index)
+            Return ParseDataNode(Of T)(bin, index, tag)
+        End Function
+
+        Public Shared Function ParseDataNode(Of T As Class)(bin As StreamReader, index As Long, tag As String) As T
+            If index < 0 Then
+                Return Nothing
+            End If
+
+            Dim stream As IEnumerable(Of String) = GotoReadText(bin, offset:=index)
             Dim blockText As String = NodeIterator.CreateBlockReader(tag)(stream).FirstOrDefault
 
             If blockText.StringEmpty Then

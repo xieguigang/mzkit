@@ -2,9 +2,10 @@
 Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 Imports indexList = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.indexList
 
 Namespace MarkupData
@@ -12,7 +13,7 @@ Namespace MarkupData
     ''' <summary>
     ''' index work with <see cref="XmlSeek"/>
     ''' </summary>
-    Public Class FastSeekIndex : Inherits Chromatogram
+    Public Class FastSeekIndex : Inherits DataReader.Chromatogram
 
         Public Property indexId As String()
         Public Property Ms2Index As Dictionary(Of String, Double)
@@ -34,9 +35,20 @@ Namespace MarkupData
                 Dim type As XmlFileTypes = XmlSeek.ParseFileType(file)
                 Dim indexOffset As Long = XmlSeek.parseIndex(buffer, type, Encoding.UTF8).indexOffset
                 Dim index As indexList = indexList.ParseIndexList(buffer, indexOffset)
+                Dim offset1 As Long = index.chromatogram.FindOffSet("TIC")
+                Dim offset2 As Long = index.chromatogram.FindOffSet("BPC")
+                Dim TIC As chromatogram = XmlParser.ParseDataNode(Of chromatogram)(New StreamReader(buffer), offset1, "chromatogram")
+                Dim BPC As chromatogram = XmlParser.ParseDataNode(Of chromatogram)(New StreamReader(buffer), offset2, "chromatogram")
+                Dim TICvec = TIC.Ticks
+                Dim scan_time As Double() = TICvec.Select(Function(t) t.Time).ToArray
+                Dim indexId As String() = index.spectrum.offsets.Select(Function(a) a.idRef).ToArray
 
                 Return New FastSeekIndex With {
-                    .fileName = file.GetFullPath
+                    .fileName = file.GetFullPath,
+                    .scan_time = scan_time,
+                    .TIC = TICvec.Select(Function(t) t.Intensity).ToArray,
+                    .BPC = If(BPC Is Nothing, Nothing, BPC.Ticks.Select(Function(t) t.Intensity).ToArray),
+                    .indexId = indexId
                 }
             End Using
         End Function

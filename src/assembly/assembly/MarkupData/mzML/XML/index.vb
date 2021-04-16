@@ -61,7 +61,6 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
@@ -70,6 +69,18 @@ Namespace MarkupData.mzML
 
         <XmlElement(NameOf(index))>
         Public Property index As index()
+
+        Public ReadOnly Property spectrum As index
+            Get
+                Return index.Where(Function(i) i.name = "spectrum").FirstOrDefault
+            End Get
+        End Property
+
+        Public ReadOnly Property chromatogram As index
+            Get
+                Return index.Where(Function(i) i.name = "chromatogram").FirstOrDefault
+            End Get
+        End Property
 
         Friend Shared Function ParseIndexList(buffer As Stream, offset As Long) As indexList
             Dim text As New StreamReader(buffer)
@@ -104,6 +115,16 @@ Namespace MarkupData.mzML
 
         <XmlElement(NameOf(offset))>
         Public Property offsets As offset()
+
+        Public Function FindOffSet(key As String) As Long
+            Dim offset As offset = offsets.Where(Function(id) id.idRef = key).FirstOrDefault
+
+            If offset Is Nothing Then
+                Return -1
+            Else
+                Return offset.value
+            End If
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
