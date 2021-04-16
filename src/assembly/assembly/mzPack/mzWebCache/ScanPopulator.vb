@@ -53,12 +53,18 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace mzData.mzWebCache
 
+    Public Interface IScanReader
+
+        Function CreateScan(scan As Object, Optional uniqueId As String = Nothing) As MSScan
+
+    End Interface
+
     ''' <summary>
     ''' helper module for read a raw data file and populate 
     ''' a unify data scan model object
     ''' </summary>
     ''' <typeparam name="Scan"></typeparam>
-    Public MustInherit Class ScanPopulator(Of Scan)
+    Public MustInherit Class ScanPopulator(Of Scan) : Implements IScanReader
 
         Protected ms1 As ScanMS1
         Protected products As New List(Of ScanMS2)
@@ -85,6 +91,11 @@ Namespace mzData.mzWebCache
                     Yield scan
                 End If
             Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function CreateScanGeneral(obj As Object, Optional uniqueId As String = Nothing) As MSScan Implements IScanReader.CreateScan
+            Return CreateScan(scan:=DirectCast(obj, Scan), uniqueId)
         End Function
 
         Public Function CreateScan(scan As Scan, Optional uniqueId As String = Nothing) As MSScan
@@ -154,6 +165,5 @@ Namespace mzData.mzWebCache
         Public Function Load(rawfile As String, Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Return Load(loadScans(rawfile), progress)
         End Function
-
     End Class
 End Namespace

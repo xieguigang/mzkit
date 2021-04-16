@@ -49,6 +49,7 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -70,6 +71,7 @@ Namespace MarkupData
         ReadOnly bin As BinaryDataReader
         ReadOnly type As XmlFileTypes = XmlFileTypes.mzXML
         ReadOnly reader As IDataReader
+        ReadOnly loader As IScanReader
         ReadOnly indexOffset As Long
         ReadOnly sha1 As String
         ReadOnly parser As XmlParser
@@ -99,8 +101,10 @@ Namespace MarkupData
                     reader = New imzMLScan
                 Case XmlFileTypes.mzML
                     reader = New mzMLScan
+                    loader = New mzMLScans
                 Case XmlFileTypes.mzXML
                     reader = New mzXMLScan
+                    loader = New mzXMLScans
                 Case Else
                     Throw New NotImplementedException(type.Description)
             End Select
@@ -111,9 +115,9 @@ Namespace MarkupData
         Public Function ReadScan(key As String) As MSScan
             Select Case type
                 Case XmlFileTypes.mzXML
-                    Return parser.ParseDataNode(Of scan)(index(key)).DoCall()
+                    Return parser.ParseDataNode(Of mzXML.scan)(index(key)).DoCall(AddressOf loader.CreateScan)
                 Case XmlFileTypes.mzML
-
+                    Return parser.ParseDataNode(Of spectrum)(index(key)).DoCall(AddressOf loader.CreateScan)
                 Case Else
                     Throw New NotImplementedException(type.Description)
             End Select
