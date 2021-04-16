@@ -88,8 +88,8 @@ Namespace MarkupData
 
         Sub New(file As String)
             bin = file.OpenBinaryReader(Encodings.UTF8)
-            parser = New XmlParser(bin)
             type = ParseFileType(file)
+            parser = New XmlParser(bin.BaseStream, type)
 
             With parseIndex()
                 sha1 = .sha1
