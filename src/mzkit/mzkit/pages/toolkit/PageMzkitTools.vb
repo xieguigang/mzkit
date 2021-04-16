@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv
@@ -761,7 +762,7 @@ Public Class PageMzkitTools
 
     Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
         If Not PictureBox1.BackgroundImage Is Nothing Then
-            Dim temp As String = App.GetAppSysTempFile(".png", App.PID, "imagePlot_")
+            Dim temp As String = TempFileSystem.GetAppSysTempFile(".png", App.PID, "imagePlot_")
 
             Call PictureBox1.BackgroundImage.SaveAs(temp)
             Call Process.Start(temp)

@@ -350,7 +350,13 @@ Public Class frmMain
 
         Globals.loadedSettings = True
 
-        splashScreen.UpdateInformation("Initialize of the ribbon UI...")
+        If Not Globals.Settings.licensed Then
+            If New frmUserAgreement().ShowDialog() = DialogResult.Cancel Then
+                End
+            End If
+        End If
+
+            splashScreen.UpdateInformation("Initialize of the ribbon UI...")
 
         InitSpinner()
         InitializeFormulaProfile()

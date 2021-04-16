@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::7335d674626e76f83f55cd8ca0fe5762, src\mzkit\mzkit\pages\dockWindow\documents\frmTargetedQuantification.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTargetedQuantification
-    ' 
-    '     Function: createLinear, GetContentTable, GetGCMSFeatureReader, GetGCMSFeatures, GetScans
-    '               GetTableLevelKeys, isValidLinearRow, linearProfileNames, LoadGCMSIonLibrary, unifyGetStandards
-    ' 
-    '     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
-    '          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
-    '          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_Closed, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click
-    '          loadGCMSReference, loadLinearRaw, loadLinears, loadMRMReference, LoadSamplesToolStripMenuItem_Click
-    '          reload, reloadProfileNames, SaveAsToolStripMenuItem_Click, SaveDocument, saveLinearPack
-    '          saveLinearsTable, showIonPeaksTable, showQuanifyTable, showRawXTable, ToolStripComboBox2_SelectedIndexChanged
-    '          unifyLoadLinears, ViewLinearReportToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmTargetedQuantification
+' 
+'     Function: createLinear, GetContentTable, GetGCMSFeatureReader, GetGCMSFeatures, GetScans
+'               GetTableLevelKeys, isValidLinearRow, linearProfileNames, LoadGCMSIonLibrary, unifyGetStandards
+' 
+'     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
+'          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
+'          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_Closed, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click
+'          loadGCMSReference, loadLinearRaw, loadLinears, loadMRMReference, LoadSamplesToolStripMenuItem_Click
+'          reload, reloadProfileNames, SaveAsToolStripMenuItem_Click, SaveDocument, saveLinearPack
+'          saveLinearsTable, showIonPeaksTable, showQuanifyTable, showRawXTable, ToolStripComboBox2_SelectedIndexChanged
+'          unifyLoadLinears, ViewLinearReportToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
@@ -1066,7 +1067,7 @@ Public Class frmTargetedQuantification
             Return
         End If
 
-        Dim tempfile As String = App.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
+        Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
         Dim samples As QuantifyScan() = {}
         Dim ionsRaw As New Rlist With {
             .slots = linearPack.peakSamples _

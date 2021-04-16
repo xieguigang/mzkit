@@ -280,6 +280,12 @@
     <Compile Include="application\settings\RawFileViewerSettings.vb" />
     <Compile Include="application\VisualStudio.vb" />
     <Compile Include="application\RPackage.vb" />
+    <Compile Include="forms\frmUserAgreement.Designer.vb">
+      <DependentUpon>frmUserAgreement.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmUserAgreement.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmLogin.Designer.vb">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </Compile>
@@ -669,6 +675,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmUserAgreement.resx">
+      <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>

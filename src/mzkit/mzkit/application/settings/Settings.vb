@@ -57,7 +57,7 @@ Namespace Configuration
         Public Property ui As UISettings
         Public Property viewer As RawFileViewerSettings
         Public Property network As NetworkArguments
-
+        Public Property licensed As Boolean = False
         Public Property recentFiles As String()
 
         Public Property workspaceFile As String
@@ -77,6 +77,7 @@ Namespace Configuration
             workspaceFile = Nothing
             MRMLibfile = Nothing
             QuantifyIonLibfile = Nothing
+            licensed = False
 
             Return Me
         End Function
