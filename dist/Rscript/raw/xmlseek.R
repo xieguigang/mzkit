@@ -17,6 +17,8 @@ using raw as open.xml_seek(xmlfile) {
 # test mzML file
 
 using raw as open.xml_seek("D:\QC5.mzML") {
-	print("all of the scan id in the given raw data file:");
-	print(scan_id(raw));
+	# print("all of the scan id in the given raw data file:");
+	# print(scan_id(raw));
+	
+	print(raw :> seek("controllerType=0 controllerNumber=1 scan=1841"));
 }
