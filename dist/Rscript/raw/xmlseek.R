@@ -13,3 +13,10 @@ using raw as open.xml_seek(xmlfile) {
 	print("test of seek a MS2 scan data:");
 	print(raw :> seek(3430));
 }
+
+# test mzML file
+
+using raw as open.xml_seek("D:\QC5.mzML") {
+	print("all of the scan id in the given raw data file:");
+	print(scan_id(raw));
+}
