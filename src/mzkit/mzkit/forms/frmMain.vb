@@ -344,19 +344,13 @@ Public Class frmMain
         Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
         Thread.Sleep(2000)
 
-        Do While Globals.loadedSettings
+        Do While App.Running AndAlso Globals.loadedSettings
             Thread.Sleep(1)
         Loop
 
         Globals.loadedSettings = True
 
-        If Not Globals.Settings.licensed Then
-            If New frmUserAgreement().ShowDialog() = DialogResult.Cancel Then
-                End
-            End If
-        End If
-
-            splashScreen.UpdateInformation("Initialize of the ribbon UI...")
+        splashScreen.UpdateInformation("Initialize of the ribbon UI...")
 
         InitSpinner()
         InitializeFormulaProfile()
