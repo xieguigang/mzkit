@@ -71,12 +71,12 @@ Namespace MarkupData.mzML
         <XmlElement(NameOf(index))>
         Public Property index As index()
 
-        Friend Shared Function ParseIndexList(bin As BinaryDataReader, offset As Long) As indexList
-            Dim text As New StreamReader(bin.BaseStream)
+        Friend Shared Function ParseIndexList(buffer As Stream, offset As Long) As indexList
+            Dim text As New StreamReader(buffer)
             Dim source As String
             Dim indexList As indexList
 
-            bin.Seek(offset, SeekOrigin.Begin)
+            buffer.Seek(offset, SeekOrigin.Begin)
             source = text.IterateArrayNodes("indexList").FirstOrDefault
             indexList = Data.CreateNodeObject(Of indexList)(source)
 

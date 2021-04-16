@@ -48,6 +48,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -90,7 +91,7 @@ Namespace MarkupData
             type = ParseFileType(file)
             parser = New XmlParser(bin.BaseStream, type)
 
-            With parseIndex()
+            With parseIndex(bin.BaseStream, type, bin.Encoding)
                 sha1 = .sha1
                 indexOffset = .indexOffset
             End With
@@ -126,7 +127,7 @@ Namespace MarkupData
             Dim index As NamedValue(Of Long)()
 
             If type = XmlFileTypes.mzML Then
-                index = indexList.ParseIndexList(bin, indexOffset).GetOffsets.ToArray
+                index = indexList.ParseIndexList(bin.BaseStream, indexOffset).GetOffsets.ToArray
             ElseIf type = XmlFileTypes.mzXML Then
                 index = indexOffsets _
                     .ParseIndexList(bin, indexOffset) _
@@ -148,8 +149,8 @@ Namespace MarkupData
             Return Me
         End Function
 
-        Private Function parseIndex() As (indexOffset As Long, sha1 As String)
-            Dim tails As String = bin.BaseStream.Tails(128, encoding:=bin.Encoding)
+        Friend Shared Function parseIndex(bin As Stream, type As XmlFileTypes, encoding As Encoding) As (indexOffset As Long, sha1 As String)
+            Dim tails As String = bin.Tails(128, encoding:=encoding)
 
             Select Case type
                 Case XmlFileTypes.mzXML

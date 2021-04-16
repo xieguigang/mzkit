@@ -1,9 +1,11 @@
 ﻿
 Imports System.IO
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports indexList = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.indexList
 
 Namespace MarkupData
 
@@ -28,7 +30,15 @@ Namespace MarkupData
         End Function
 
         Public Shared Function LoadIndex_mzML(file As String) As FastSeekIndex
+            Using buffer As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Dim type As XmlFileTypes = XmlSeek.ParseFileType(file)
+                Dim indexOffset As Long = XmlSeek.parseIndex(buffer, type, Encoding.UTF8).indexOffset
+                Dim index As indexList = indexList.ParseIndexList(buffer, indexOffset)
 
+                Return New FastSeekIndex With {
+                    .fileName = file.GetFullPath
+                }
+            End Using
         End Function
 
         Public Shared Function LoadIndex_mzXML(file As String) As FastSeekIndex
