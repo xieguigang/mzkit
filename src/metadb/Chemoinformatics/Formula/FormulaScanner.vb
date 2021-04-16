@@ -67,6 +67,27 @@ Namespace Formula
             Me.n = n
         End Sub
 
+        Public Shared Function EvaluateExactMass(formula$, Optional n% = 9999) As Double
+            Static cache As New Dictionary(Of String, Double)
+
+            Dim key As String = $"{formula} ~ {n}"
+            Dim mass As Double
+
+            If cache.ContainsKey(key) Then
+                Return cache(key)
+            Else
+                mass = ScanFormula(formula, n).ExactMass
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, mass)
+                    End If
+                End SyncLock
+
+                Return mass
+            End If
+        End Function
+
         ' H2O
         ' (CH3)3CH
         ' (CH3)4C

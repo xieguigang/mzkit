@@ -58,4 +58,23 @@ Public Module Extensions
 
         Return formula
     End Function
+
+    Public Function GetQuantityPrefix(n As Integer) As String
+        Select Case n
+            Case 1 : Return "mono"
+            Case 2 : Return "di"
+            Case 3 : Return "tri"
+            Case 4 : Return "tetra"
+            Case 5 : Return "penta"
+            Case 6 : Return "hexa"
+            Case 7 : Return "hepta"
+            Case 8 : Return "octa"
+            Case 9 : Return "ennea"
+            Case 10 : Return "deca"
+            Case 11 : Return "undeca"
+            Case 12 : Return "dodeca"
+            Case Else
+                Return n.ToString
+        End Select
+    End Function
 End Module

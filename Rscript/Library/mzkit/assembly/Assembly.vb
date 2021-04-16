@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -227,6 +228,21 @@ Module Assembly
         Else
             Return New XmlSeek(file).LoadIndex
         End If
+    End Function
+
+    <ExportAPI("seek")>
+    Public Function Seek(file As XmlSeek, key As String) As MSScan
+        Return file.ReadScan(key)
+    End Function
+
+    <ExportAPI("scan_id")>
+    Public Function ScanIds(file As XmlSeek) As String()
+        Return file.IndexKeys
+    End Function
+
+    <ExportAPI("load_index")>
+    Public Function LoadIndex(file As String) As FastSeekIndex
+        Return FastSeekIndex.LoadIndex(file)
     End Function
 
     ''' <summary>

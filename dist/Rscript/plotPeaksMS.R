@@ -1,16 +1,36 @@
 imports "visual" from "mzkit.plot";
 imports "data" from "mzkit";
 
-const name as string = "[Malvidin+H]-3-O-Cou-dHex-Hex-Hex";
-const anno = list("315.048905361829" = "[Agly-H2O+H]+", "333.059229266798" = "*[Agly+H]+", "495.112956921774" = "[M-Hex-dHex-Cou+H]+", "657.166714658981" = "[M-dHex-Cou+H]+", "787.200125271248" = "[M-Hex+H]+");
+const name as string = "malvidin-3-O-arabinoside-xylitol-tetraacetoyl-dioxaloyl-malonoyl";
+const anno = list(
+"330.9937" = "*[Agly]+",
+"354.9948" = "[M-acetoyl-acetoyl-acetoyl-oxaloyl-oxaloyl-malonoyl-arabinoside-H2O]+",
+"354.9948" = "[M-acetoyl-acetoyl-acetoyl-acetoyl-oxaloyl-oxaloyl-arabinoside-H2O-CO2]+",
+"397.0093" = "[M-acetoyl-acetoyl-oxaloyl-oxaloyl-malonoyl-arabinoside-H2O]+",
+"397.0093" = "[M-acetoyl-acetoyl-acetoyl-oxaloyl-oxaloyl-arabinoside-H2O-CO2]+",
+"541.0429" = "[M-oxaloyl-oxaloyl-arabinoside-CO2]+",
+"541.0429" = "[M-acetoyl-acetoyl-malonoyl-arabinoside-H2O]+",
+"541.0429" = "[M-acetoyl-acetoyl-acetoyl-arabinoside-H2O-CO2]+",
+"833.1482" = "[M-oxaloyl-H2O]+",
+"833.1938" = "[M-oxaloyl-H2O]+"
+);
 
-const mz as double = [69.0341, 71.0139, 77.843, 80.7584, 83.0499, 85.029, 91.0551, 97.0294, 107.0498, 109.3651, 111.0448, 119.0496, 139.0398, 147.0445, 148.0475, 153.0177, 165.0187, 167.0333, 181.5862, 217.0481, 219.0298, 223.5279, 244.0368, 245.045, 273.0399, 287.0527, 289.0324, 290.0416, 293.1016, 301.035, 315.0489, 317.0687, 318.0355, 331.0851, 333.0592, 495.113, 657.1667, 746.9411, 787.2001, 949.2592, 949.3147];
-const into as double = [32371.2715, 11719.9482, 7495.1836, 7455.1245, 65818.625, 10202.9346, 47199.3867, 9042.3193, 11684.9756, 8752.8955, 23836.7871, 181764.7656, 12923.1309, 559355.6875, 12537.4727, 29256.6562, 12429.7549, 12449.8301, 8830.5332, 11951.041, 8786.6553, 11191.1514, 13753.2959, 26919.4414, 18936.4922, 12701.501, 11979.6299, 9812.748, 67260.5703, 27119.2344, 11883.2891, 24361.9473, 59974.375, 13533.9512, 235165.6719, 84894.7188, 41356.1523, 13834.5479, 21151.3047, 13754.6826, 6308.3477];
+const mz as double = [83.0505, 85.029, 105.1347, 119.0495, 126.6511, 147.0446, 
+157.0504, 157.5125, 166.7695, 167.0332, 234.9729, 302.0431, 317.0633, 330.9937, 
+345.0104, 354.9948, 376.1086, 383.5285, 397.0093, 541.0429, 552.7606, 746.7862, 
+746.9024, 833.1482, 833.1938, 995.1931, 995.2228
+];
+const into as double = [
+2517.9119, 2728.3787, 2822.5684, 4655.0566, 2828.2676, 22407.3965, 12553.7939, 
+3120.3821, 2803.3037, 67354.1875, 4714.9624, 4135.5259, 7851.895, 3100.303, 3345.5627, 
+2845.2083, 3082.9407, 2681.5422, 3692.0933, 13968.8945, 3086.3394, 3247.4729, 4436.0952, 
+6358.2314, 2430.4187, 12983.6299, 18796.9766
+];
 
 # print(mz);
 # print(into);
 
-names(anno) = round(as.numeric(names(anno)), 4);
+# names(anno) = round(as.numeric(names(anno)), 4);
 
 str(anno);
 
@@ -29,5 +49,5 @@ const MS = libraryMatrix(matrix, name);
 print(MS);
 
 bitmap(file = `${dirname(@script)}/MS.png`) {
-	plot(MS);
+	plot(MS, images = list("*[Agly]+" = readImage(`${dirname(@script)}/Malvidin.png`)));
 }

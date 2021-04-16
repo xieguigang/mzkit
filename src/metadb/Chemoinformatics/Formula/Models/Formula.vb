@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::b651b64f6dd9e89efa85008c5ab84f69, src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Formula
-    ' 
-    '         Properties: CountsByElement, Elements, EmpiricalFormula, ExactMass
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BuildFormula, DebugView, ToString
-    '         Operators: *
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Formula
+' 
+'         Properties: CountsByElement, Elements, EmpiricalFormula, ExactMass
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BuildFormula, DebugView, ToString
+'         Operators: *
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Formula
 
+    <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
     Public Class Formula
 
         Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
@@ -81,6 +82,12 @@ Namespace Formula
             End Get
         End Property
 
+        Friend ReadOnly Property Counts As String
+            Get
+                Return CountsByElement.Select(Function(a) $"{a.Key}: {a.Value}").JoinBy(", ")
+            End Get
+        End Property
+
         Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
             CountsByElement = New Dictionary(Of String, Integer)(counts)
 
@@ -100,10 +107,10 @@ Namespace Formula
                 .JoinBy("")
         End Function
 
-        Public Function DebugView() As String
-            Return $"{EmpiricalFormula} ({ExactMass} = {CountsByElement.GetJson})"
-        End Function
-
+        ''' <summary>
+        ''' show <see cref="EmpiricalFormula"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return EmpiricalFormula
         End Function
@@ -118,6 +125,38 @@ Namespace Formula
                               End Function)
 
             Return New Formula(newComposition, newFormula)
+        End Operator
+
+        Public Shared Operator *(n%, composition As Formula) As Formula
+            Return composition * n
+        End Operator
+
+        Public Shared Operator +(a As Formula, b As Formula) As Formula
+            Dim newComposition = a.CountsByElement.Keys _
+                .JoinIterates(b.CountsByElement.Keys) _
+                .Distinct _
+                .ToDictionary(Function(e) e,
+                              Function(e)
+                                  Return a.CountsByElement.TryGetValue(e) + b.CountsByElement.TryGetValue(e)
+                              End Function)
+
+            Return New Formula(newComposition)
+        End Operator
+
+        Public Shared Operator -(a As Formula, b As Formula) As Formula
+            Dim newComposition = a.CountsByElement.Keys _
+                .JoinIterates(b.CountsByElement.Keys) _
+                .Distinct _
+                .Select(Function(e)
+                            Return (e, n:=a.CountsByElement.TryGetValue(e) - b.CountsByElement.TryGetValue(e))
+                        End Function) _
+                .Where(Function(e) e.n > 0) _
+                .ToDictionary(Function(e) e.e,
+                              Function(e)
+                                  Return e.n
+                              End Function)
+
+            Return New Formula(newComposition)
         End Operator
     End Class
 End Namespace

@@ -81,7 +81,7 @@ Public Class BioDeepSession
         Dim result As JsonObject = Request(api:="http://my.biodeep.cn/services/session_info.vbs")
 
         If result.success Then
-            Return result.CreateObject(Of SessionInfo)
+            Return DirectCast(result!info, JsonObject).CreateObject(Of SessionInfo)
         Else
             Return Nothing
         End If

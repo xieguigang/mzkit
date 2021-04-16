@@ -171,6 +171,20 @@ Module MRMkit
         Return printContent
     End Function
 
+    ''' <summary>
+    ''' Create argument object for run MRM quantification.
+    ''' </summary>
+    ''' <param name="tolerance"></param>
+    ''' <param name="timeWindowSize#"></param>
+    ''' <param name="angleThreshold#"></param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.arguments")>
     <RApiReturn(GetType(MRMArguments))>
     Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
@@ -362,6 +376,12 @@ Module MRMkit
         Return IonPair.GetIsomerism(ions, mzErrors).ToArray
     End Function
 
+    ''' <summary>
+    ''' Convert any compatibale type as the ion pairs data object for MRM target selected.
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.ion_pairs")>
     <RApiReturn(GetType(IonPair()))>
     Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
@@ -500,6 +520,22 @@ Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Get MRM ions peaks data from a given raw data file
+    ''' </summary>
+    ''' <param name="mzML">the file path of the mzML raw data file</param>
+    ''' <param name="ions">the ion pairs data list</param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="tolerance$"></param>
+    ''' <param name="timeWindowSize#"></param>
+    ''' <param name="angleThreshold#"></param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="rtshifts"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.peaks")>
     <RApiReturn(GetType(DataSet))>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
