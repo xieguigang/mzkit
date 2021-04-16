@@ -171,6 +171,20 @@ Module MRMkit
         Return printContent
     End Function
 
+    ''' <summary>
+    ''' Create argument object for run MRM quantification.
+    ''' </summary>
+    ''' <param name="tolerance"></param>
+    ''' <param name="timeWindowSize#"></param>
+    ''' <param name="angleThreshold#"></param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.arguments")>
     <RApiReturn(GetType(MRMArguments))>
     Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
@@ -362,6 +376,12 @@ Module MRMkit
         Return IonPair.GetIsomerism(ions, mzErrors).ToArray
     End Function
 
+    ''' <summary>
+    ''' Convert any compatibale type as the ion pairs data object for MRM target selected.
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.ion_pairs")>
     <RApiReturn(GetType(IonPair()))>
     Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
