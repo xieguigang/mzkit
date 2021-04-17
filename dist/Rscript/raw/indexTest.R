@@ -1,5 +1,5 @@
 imports "assembly" from "mzkit";
 
-load_index("D:\Test-CD.mzXML");
+print(load_index("E:\biodeep\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\lxy-CID30.mzXML"));
 
-load_index("D:\QC5.mzML");
+print(load_index("E:\D065.mzML"));

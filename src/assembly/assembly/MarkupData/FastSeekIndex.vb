@@ -61,17 +61,21 @@ Namespace MarkupData
                 For Each line As String In xml.parser.GotoReadText(offset.Value)
                     If Not read.level AndAlso line.Contains(msLevelKey) Then
                         level = valueRegexp.Match(line).Value.GetTagValue("=").Value
-                    ElseIf Not read.time AndAlso line.Contains(timeKey) Then
-                        time = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
-                    ElseIf read.level AndAlso read.time Then
+                        read.level = True
+                    ElseIf read.level Then
                         If level = """1""" Then
                             If Not read.TIC AndAlso line.Contains(TICKey) Then
                                 TICval = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                read.TIC = True
                             ElseIf Not read.BPC AndAlso line.Contains(BPCKey) Then
                                 BPCval = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                read.BPC = True
+                            ElseIf Not read.time AndAlso line.Contains(timeKey) Then
+                                time = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                read.time = True
                             End If
 
-                            If read.TIC AndAlso read.BPC Then
+                            If read.TIC AndAlso read.BPC AndAlso read.time Then
                                 scan_time.Add(time)
                                 TIC.Add(TICval)
                                 BPC.Add(BPCval)
@@ -79,9 +83,12 @@ Namespace MarkupData
                                 Exit For
                             End If
                         Else
-                            Call Ms2Time.Add(offset.Name, time)
+                            If Not read.time AndAlso line.Contains(timeKey) Then
+                                time = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                Ms2Time.Add(offset.Name, time)
 
-                            Exit For
+                                Exit For
+                            End If
                         End If
                     End If
                 Next
@@ -91,7 +98,7 @@ Namespace MarkupData
                 .BPC = BPC.ToArray,
                 .scan_time = scan_time.ToArray,
                 .TIC = TIC.ToArray,
-                .indexId = keys.ToArray,
+                .indexId = offsets.Select(Function(o) o.Name).ToArray,
                 .Ms2Index = Ms2Time,
                 .fileName = xml.fileName
             }
@@ -104,7 +111,6 @@ Namespace MarkupData
             Dim scan_time As New List(Of Double)
             Dim TIC As New List(Of Double)
             Dim BPC As New List(Of Double)
-            Dim keys As New List(Of String)
             Dim Ms2Time As New Dictionary(Of String, Double)
 
             Dim msLevelRegexp As New Regex("msLevel[=]"".+?""", RegexOptions.Singleline Or RegexOptions.Compiled)
@@ -125,14 +131,18 @@ Namespace MarkupData
                 For Each line As String In xml.parser.GotoReadText(offset.Value)
                     If Not read.level AndAlso (match = msLevelRegexp.Match(line)).Success Then
                         level = CType(match, Match).Value.GetTagValue("=").Value
+                        read.level = True
                     ElseIf Not read.time AndAlso (match = timeRegexp.Match(line)).Success Then
                         time = PeakMs2.RtInSecond(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                        read.time = True
                     ElseIf read.level AndAlso read.time Then
                         If level = """1""" Then
                             If Not read.TIC AndAlso (match = TICRegexp.Match(line)).Success Then
                                 TICval = Double.Parse(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                read.TIC = True
                             ElseIf Not read.BPC AndAlso (match = BPCRegexp.Match(line)).Success Then
                                 BPCval = Double.Parse(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                read.BPC = True
                             End If
 
                             If read.TIC AndAlso read.BPC Then
@@ -155,7 +165,7 @@ Namespace MarkupData
                 .BPC = BPC.ToArray,
                 .scan_time = scan_time.ToArray,
                 .TIC = TIC.ToArray,
-                .indexId = keys.ToArray,
+                .indexId = offsets.Select(Function(o) o.Name).ToArray,
                 .Ms2Index = Ms2Time,
                 .fileName = xml.fileName
             }
