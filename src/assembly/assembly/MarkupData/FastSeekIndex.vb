@@ -1,26 +1,28 @@
-﻿
-Imports System.IO
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+﻿Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
-Imports indexList = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.indexList
 
 Namespace MarkupData
 
     ''' <summary>
     ''' index work with <see cref="XmlSeek"/>
     ''' </summary>
+    ''' <remarks>
+    ''' 这个模块主要是为了桌面软件可以尽可能快的加载原始数据文件的索引信息
+    ''' 而额外的基于最基础的字符串操作编写的
+    ''' </remarks>
     Public Class FastSeekIndex : Inherits DataReader.Chromatogram
 
         Public Property indexId As String()
         Public Property Ms2Index As Dictionary(Of String, Double)
         Public Property fileName As String
 
+        ''' <summary>
+        ''' load raw data file auto
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function LoadIndex(file As String) As FastSeekIndex
             Select Case XmlSeek.ParseFileType(file)
                 Case XmlFileTypes.imzML, XmlFileTypes.mzML
@@ -159,6 +161,9 @@ Namespace MarkupData
             }
         End Function
 
+        ''' <summary>
+        ''' data read status, false means not read yet, and true means data have been already read.
+        ''' </summary>
         Private Class ScanReadStatus
 
             Public level As Boolean = False
@@ -166,12 +171,32 @@ Namespace MarkupData
             Public TIC As Boolean = False
             Public BPC As Boolean = False
 
+            ''' <summary>
+            ''' reset all status to ``not read``
+            ''' </summary>
             Public Sub Reset()
                 level = False
                 time = False
                 TIC = False
                 BPC = False
             End Sub
+
+            Public Overrides Function ToString() As String
+                If level AndAlso time AndAlso TIC AndAlso BPC Then
+                    Return "read all data"
+                ElseIf (Not level) AndAlso (Not time) AndAlso (Not TIC) AndAlso (Not BPC) Then
+                    Return "read none"
+                Else
+                    Dim done As New List(Of String)
+
+                    If level Then done.Add(NameOf(level))
+                    If time Then done.Add(NameOf(time))
+                    If BPC Then done.Add(NameOf(BPC))
+                    If TIC Then done.Add(NameOf(TIC))
+
+                    Return "read: " & done.JoinBy(", ")
+                End If
+            End Function
 
         End Class
     End Class
