@@ -69,7 +69,6 @@ Namespace MarkupData
     Public Class XmlSeek : Implements IDisposable
 
         ReadOnly bin As BinaryDataReader
-        ReadOnly type As XmlFileTypes = XmlFileTypes.mzXML
         ReadOnly reader As IDataReader
         ReadOnly loader As IScanReader
         ReadOnly indexOffset As Long
@@ -77,6 +76,7 @@ Namespace MarkupData
 
         Friend ReadOnly parser As XmlParser
         Friend ReadOnly fileName As String
+        Friend ReadOnly type As XmlFileTypes = XmlFileTypes.mzXML
 
         Dim index As Dictionary(Of String, Long)
         Dim indexgroup As Dictionary(Of String, NamedValue(Of Long)())

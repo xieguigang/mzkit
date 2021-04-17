@@ -34,6 +34,22 @@ Namespace MarkupData
             End Select
         End Function
 
+        ''' <summary>
+        ''' load raw data file auto
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadIndex(file As XmlSeek) As FastSeekIndex
+            Select Case file.type
+                Case XmlFileTypes.imzML, XmlFileTypes.mzML
+                    Return LoadIndex_mzML(file)
+                Case XmlFileTypes.mzXML
+                    Return LoadIndex_mzXML(file)
+                Case Else
+                    Throw New NotImplementedException(file.type.Description)
+            End Select
+        End Function
+
         Public Shared Function LoadIndex_mzML(xml As XmlSeek) As FastSeekIndex
             Dim offsets As NamedValue(Of Long)() = xml.TryGetOffsets("spectrum")
             Dim scan_time As New List(Of Double)

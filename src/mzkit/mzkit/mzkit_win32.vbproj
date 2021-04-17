@@ -337,6 +337,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmSeeMs.Designer.vb">
+      <DependentUpon>frmSeeMs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmSeeMs.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\QuantifyParameters.vb" />
     <Compile Include="pages\dockWindow\documents\frmTableViewer.Designer.vb">
       <DependentUpon>frmTableViewer.vb</DependentUpon>
@@ -720,6 +726,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.resx">
       <DependentUpon>frmGCMS_CDFExplorer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmSeeMs.resx">
+      <DependentUpon>frmSeeMs.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmTableViewer.resx">
       <DependentUpon>frmTableViewer.vb</DependentUpon>
