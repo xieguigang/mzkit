@@ -26,7 +26,24 @@ Namespace MarkupData
             End Select
         End Function
 
-        Private Shared Iterator Function GotoReadText(bin As StreamReader, offset As Long) As IEnumerable(Of String)
+        ''' <summary>
+        ''' jump to target position and then start to populate
+        ''' all text lines data to file end
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Friend Function GotoReadText(offset As Long) As IEnumerable(Of String)
+            Return GotoReadText(bin, offset)
+        End Function
+
+        ''' <summary>
+        ''' jump to target position and then start to populate
+        ''' all text lines data to file end
+        ''' </summary>
+        ''' <param name="bin"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Friend Shared Iterator Function GotoReadText(bin As StreamReader, offset As Long) As IEnumerable(Of String)
             Call bin.DiscardBufferedData()
             Call bin.BaseStream.Seek(offset, SeekOrigin.Begin)
 

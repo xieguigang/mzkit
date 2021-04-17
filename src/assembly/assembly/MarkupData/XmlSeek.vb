@@ -74,7 +74,9 @@ Namespace MarkupData
         ReadOnly loader As IScanReader
         ReadOnly indexOffset As Long
         ReadOnly sha1 As String
-        ReadOnly parser As XmlParser
+
+        Friend ReadOnly parser As XmlParser
+        Friend ReadOnly fileName As String
 
         Dim index As Dictionary(Of String, Long)
         Dim indexgroup As Dictionary(Of String, NamedValue(Of Long)())
@@ -90,6 +92,7 @@ Namespace MarkupData
             bin = file.OpenBinaryReader(Encodings.UTF8)
             type = ParseFileType(file)
             parser = New XmlParser(bin.BaseStream, type)
+            fileName = file.GetFullPath
 
             With parseIndex(bin.BaseStream, type, bin.Encoding)
                 sha1 = .sha1
@@ -111,6 +114,10 @@ Namespace MarkupData
 
             bin.Seek(indexOffset, SeekOrigin.Begin)
         End Sub
+
+        Public Function TryGetOffsets(group As String) As NamedValue(Of Long)()
+            Return indexgroup.TryGetValue(group)
+        End Function
 
         Public Function ReadScan(key As String) As MSScan
             Select Case type
