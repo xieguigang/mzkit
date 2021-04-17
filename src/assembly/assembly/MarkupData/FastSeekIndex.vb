@@ -33,28 +33,66 @@ Namespace MarkupData
         End Function
 
         Public Shared Function LoadIndex_mzML(xml As XmlSeek) As FastSeekIndex
-            Dim offsets As NamedValue(Of Long)() = xml.TryGetOffsets("scan")
+            Dim offsets As NamedValue(Of Long)() = xml.TryGetOffsets("spectrum")
+            Dim scan_time As New List(Of Double)
+            Dim TIC As New List(Of Double)
+            Dim BPC As New List(Of Double)
+            Dim keys As New List(Of String)
+            Dim Ms2Time As New Dictionary(Of String, Double)
 
-            Using buffer As Stream = File.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Dim type As XmlFileTypes = XmlSeek.ParseFileType(File)
-                Dim indexOffset As Long = XmlSeek.parseIndex(buffer, type, Encoding.UTF8).indexOffset
-                Dim index As indexList = indexList.ParseIndexList(buffer, indexOffset)
-                Dim offset1 As Long = index.chromatogram.FindOffSet("TIC")
-                Dim offset2 As Long = index.chromatogram.FindOffSet("BPC")
-                Dim TIC As chromatogram = XmlParser.ParseDataNode(Of chromatogram)(New StreamReader(buffer), offset1, "chromatogram")
-                Dim BPC As chromatogram = XmlParser.ParseDataNode(Of chromatogram)(New StreamReader(buffer), offset2, "chromatogram")
-                Dim TICvec = TIC.Ticks
-                Dim scan_time As Double() = TICvec.Select(Function(t) t.Time).ToArray
-                Dim indexId As String() = index.spectrum.offsets.Select(Function(a) a.idRef).ToArray
+            Dim valueRegexp As New Regex("value[=]"".+?""", RegexOptions.Singleline Or RegexOptions.Compiled)
 
-                Return New FastSeekIndex With {
-                    .fileName = File.GetFullPath,
-                    .scan_time = scan_time,
-                    .TIC = TICvec.Select(Function(t) t.Intensity).ToArray,
-                    .BPC = If(BPC Is Nothing, Nothing, BPC.Ticks.Select(Function(t) t.Intensity).ToArray),
-                    .indexId = indexId
-                }
-            End Using
+            Const msLevelKey As String = "name=""ms level"""
+            Const BPCKey As String = "name=""base peak intensity"""
+            Const TICKey As String = "name=""total ion current"""
+            Const timeKey As String = "name=""scan start time"""
+
+            Dim level As String = Nothing
+            Dim time As Double
+            Dim TICval, BPCval As Double
+
+            Dim read As New ScanReadStatus
+
+            For Each offset As NamedValue(Of Long) In offsets
+                Call read.Reset()
+
+                For Each line As String In xml.parser.GotoReadText(offset.Value)
+                    If Not read.level AndAlso line.Contains(msLevelKey) Then
+                        level = valueRegexp.Match(line).Value.GetTagValue("=").Value
+                    ElseIf Not read.time AndAlso line.Contains(timeKey) Then
+                        time = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                    ElseIf read.level AndAlso read.time Then
+                        If level = """1""" Then
+                            If Not read.TIC AndAlso line.Contains(TICKey) Then
+                                TICval = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                            ElseIf Not read.BPC AndAlso line.Contains(BPCKey) Then
+                                BPCval = Double.Parse(valueRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                            End If
+
+                            If read.TIC AndAlso read.BPC Then
+                                scan_time.Add(time)
+                                TIC.Add(TICval)
+                                BPC.Add(BPCval)
+
+                                Exit For
+                            End If
+                        Else
+                            Call Ms2Time.Add(offset.Name, time)
+
+                            Exit For
+                        End If
+                    End If
+                Next
+            Next
+
+            Return New FastSeekIndex With {
+                .BPC = BPC.ToArray,
+                .scan_time = scan_time.ToArray,
+                .TIC = TIC.ToArray,
+                .indexId = keys.ToArray,
+                .Ms2Index = Ms2Time,
+                .fileName = xml.fileName
+            }
         End Function
 
         Const AttributeValueMask As String = """ "
@@ -84,15 +122,15 @@ Namespace MarkupData
 
                 For Each line As String In xml.parser.GotoReadText(offset.Value)
                     If Not read.level AndAlso (match = msLevelRegexp.Match(line)).Success Then
-                        level = msLevelRegexp.Match(line).Value.GetTagValue("=").Value
+                        level = CType(match, Match).Value.GetTagValue("=").Value
                     ElseIf Not read.time AndAlso (match = timeRegexp.Match(line)).Success Then
-                        time = PeakMs2.RtInSecond(timeRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                        time = PeakMs2.RtInSecond(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
                     ElseIf read.level AndAlso read.time Then
                         If level = """1""" Then
                             If Not read.TIC AndAlso (match = TICRegexp.Match(line)).Success Then
-                                TICval = Double.Parse(TICRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                TICval = Double.Parse(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
                             ElseIf Not read.BPC AndAlso (match = BPCRegexp.Match(line)).Success Then
-                                BPCval = Double.Parse(BPCRegexp.Match(line).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
+                                BPCval = Double.Parse(CType(match, Match).Value.GetTagValue("=", trim:=AttributeValueMask).Value)
                             End If
 
                             If read.TIC AndAlso read.BPC Then
