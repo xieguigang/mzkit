@@ -120,7 +120,10 @@ Public Class PageStart
         Dim firstFile As String = files.ElementAtOrDefault(Scan0)
 
         If Not firstFile Is Nothing Then
+            Dim page As frmSeeMs = VisualStudio.ShowDocument(Of frmSeeMs)
 
+            page.TabText = "SeeMS: " & firstFile.FileName
+            page.LoadRaw(firstFile)
         End If
     End Sub
 
