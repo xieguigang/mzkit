@@ -220,15 +220,30 @@ Module Visual
     <ExportAPI("raw_scatter")>
     Public Function PlotRawScatter(<RRawVectorArgument>
                                    ms1_scans As Object,
+                                   <RRawVectorArgument>
+                                   Optional colorSet As Object = "darkblue,blue,skyblue,green,orange,red,darkred",
+                                   Optional contour As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+        Dim schema As String = InteropArgumentHelper.getColorSet(colorSet)
 
         If points.isError Then
             Return points.getError
         End If
 
-        Return RawScatterPlot.Plot(points.populates(Of ms1_scan)(env))
+        Dim matrix As ms1_scan() = points.populates(Of ms1_scan)(env).ToArray
+
+        If contour Then
+            ' contour
+            Return ScanContour.Plot(matrix, colorSet:=colorSet)
+        Else
+            ' scatter
+            Return RawScatterPlot.Plot(
+                samples:=matrix,
+                sampleColors:=schema
+            )
+        End If
     End Function
 
     ''' <summary>

@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Public Class ScanContour : Inherits Plot
 
@@ -63,4 +64,22 @@ Public Class ScanContour : Inherits Plot
             ylabel:="m/z"
         ).Plot(g, canvas)
     End Sub
+
+    Public Overloads Shared Function Plot(data As IEnumerable(Of ms1_scan),
+                                          Optional size$ = "3600,2400",
+                                          Optional padding$ = "padding: 100px 900px 250px 300px;",
+                                          Optional bg$ = "white",
+                                          Optional colorSet$ = "darkblue,blue,skyblue,green,orange,red,darkred") As GraphicsData
+        Dim theme As New Theme With {
+            .colorSet = colorSet,
+            .padding = padding,
+            .background = bg
+        }
+        Dim app As New ScanContour(data.ToArray, theme) With {
+            .xlabel = "scan_time (seconds)",
+            .ylabel = "M/z"
+        }
+
+        Return app.Plot(size:=size)
+    End Function
 End Class
