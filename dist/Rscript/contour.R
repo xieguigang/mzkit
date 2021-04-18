@@ -5,6 +5,6 @@ bitmap(file = `${dirname(@script)}/contour.png`) {
 	"E:\test.mzPack"
 	:> open.mzpack
 	:> ms1_scans
-	:> raw_scatter(contour = TRUE)
+	:> raw_scatter(contour = TRUE, colorSet = "BuPu:c8")
 	;
 }

@@ -236,7 +236,7 @@ Module Visual
 
         If contour Then
             ' contour
-            Return ScanContour.Plot(matrix, colorSet:=colorSet)
+            Return ScanContour.Plot(matrix, colorSet:=schema)
         Else
             ' scatter
             Return RawScatterPlot.Plot(

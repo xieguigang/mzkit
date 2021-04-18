@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -7,15 +8,25 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Public Class ScanContour : Inherits Plot
 
     Dim scans As ms1_scan()
+    Dim mzRange As DoubleRange
+    Dim rtRange As DoubleRange
+    Dim xsteps As Double
+    Dim ysteps As Double
 
     Public Sub New(scans As ms1_scan(), theme As Theme)
         MyBase.New(theme)
 
         Me.scans = scans
+        Me.mzRange = scans.Select(Function(x) x.mz).CreateAxisTicks
+        Me.rtRange = scans.Select(Function(x) x.scan_time).CreateAxisTicks
+        Me.xsteps = (rtRange.Max - rtRange.Min) / 800
+        Me.ysteps = (mzRange.Max - mzRange.Min) / 800
     End Sub
 
     ''' <summary>
@@ -23,13 +34,11 @@ Public Class ScanContour : Inherits Plot
     ''' </summary>
     ''' <returns></returns>
     Private Iterator Function CreateMatrix() As IEnumerable(Of DataSet)
-        Dim mzRange As Double() = scans.Select(Function(x) x.mz).CreateAxisTicks
-        Dim rtRange As Double() = scans.Select(Function(x) x.scan_time).CreateAxisTicks
         Dim rtLeft As Double = 0
         Dim mzLeft As Double = 0
         Dim mzi As Double
 
-        For rt As Double = rtRange.Min To rtRange.Max Step (rtRange.Max - rtRange.Min) / 20
+        For rt As Double = rtRange.Min To rtRange.Max Step xsteps
             Dim rti As Double = rt
             Dim rtRow As ms1_scan() = scans _
                 .Where(Function(x) x.scan_time >= rtLeft AndAlso x.scan_time < rti) _
@@ -43,7 +52,7 @@ Public Class ScanContour : Inherits Plot
                 Continue For
             End If
 
-            For mz As Double = mzRange.Min To mzRange.Max Step (mzRange.Max - mzRange.Min) / 20
+            For mz As Double = mzRange.Min To mzRange.Max Step ysteps
                 mzi = mz
 
                 With rtRow _
@@ -58,7 +67,8 @@ Public Class ScanContour : Inherits Plot
                         row(mz.ToString) =
                             .OrderByDescending(Function(x) x.intensity) _
                             .First _
-                            .intensity
+                            .intensity _
+                            .DoCall(AddressOf stdNum.Log10)
                     End If
                 End With
 
@@ -79,7 +89,12 @@ Public Class ScanContour : Inherits Plot
             matrix:=matrix,
             legendTitle:="Scan Contour",
             xlabel:="scan_time(seconds)",
-            ylabel:="m/z"
+            ylabel:="m/z",
+            unit:=stdNum.Max(xsteps, ysteps),
+            legendTickFormat:="G2",
+            colorMap:=theme.colorSet,
+            xsteps:=xsteps,
+            ysteps:=ysteps
         ).Plot(g, canvas)
     End Sub
 
