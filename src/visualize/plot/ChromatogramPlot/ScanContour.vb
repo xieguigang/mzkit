@@ -38,19 +38,37 @@ Public Class ScanContour : Inherits Plot
                 .ID = rti.ToString
             }
 
+            If rtRow.Length = 0 Then
+                Yield row
+                Continue For
+            End If
+
             For mz As Double = mzRange.Min To mzRange.Max Step (mzRange.Max - mzRange.Min) / 20
                 mzi = mz
-                row(mz.ToString) = rtRow _
-                    .Where(Function(x) x.mz >= mzLeft AndAlso x.mz < mzi) _
-                    .OrderByDescending(Function(x) x.intensity) _
-                    .FirstOrDefault _
-                   ?.intensity
+
+                With rtRow _
+                    .Where(Function(x)
+                               Return x.mz >= mzLeft AndAlso x.mz < mzi
+                           End Function) _
+                    .ToArray
+
+                    If .Length = 0 Then
+                        row(mz.ToString) = 0.0
+                    Else
+                        row(mz.ToString) =
+                            .OrderByDescending(Function(x) x.intensity) _
+                            .First _
+                            .intensity
+                    End If
+                End With
 
                 mzLeft = mz
             Next
 
             mzLeft = 0
             rtLeft = rt
+
+            Yield row
         Next
     End Function
 
