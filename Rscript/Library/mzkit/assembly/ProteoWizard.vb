@@ -124,7 +124,7 @@ Module ProteoWizard
     End Function
 
     <ExportAPI("filter.msLevel")>
-    Public Function msLevelFilter(level As String) As filter
+    Public Function msLevelFilter(level As String) As Filter
         Return New msLevel(level)
     End Function
 
@@ -135,7 +135,7 @@ Module ProteoWizard
     ''' <param name="stop">Stop time in time unit of seconds</param>
     ''' <returns></returns>
     <ExportAPI("filter.scanTime")>
-    Public Function scanTimeFilter(start#, stop#) As filter
+    Public Function scanTimeFilter(start#, stop#) As Filter
         Return New scanTime(start, [stop])
     End Function
 
@@ -144,13 +144,13 @@ Module ProteoWizard
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="output">The output directory</param>
-    ''' <param name="filetype"></param>
-    ''' <param name="filters"></param>
+    ''' <param name="filetype">the file type of the raw data output.</param>
+    ''' <param name="filters">data filters</param>
     ''' <returns></returns>
     <ExportAPI("convert.thermo.raw")>
     Public Function ConvertThermoRawFile(raw As String(), output$,
                                          Optional filetype As OutFileTypes = OutFileTypes.mzXML,
-                                         Optional filters As filter() = Nothing,
+                                         Optional filters As Filter() = Nothing,
                                          Optional parallel As Object = False,
                                          Optional env As Environment = Nothing) As Object
 
@@ -183,7 +183,9 @@ Module ProteoWizard
 
         Dim result As Boolean() = rawPipeline _
             .OrderBy(Function(file) file.i) _
-            .Select(Function(file) file.value) _
+            .Select(Function(file)
+                        Return file.value
+                    End Function) _
             .ToArray
 
         Return result
@@ -192,7 +194,7 @@ Module ProteoWizard
     Private Class convertProcessor
 
         Public filetype As OutFileTypes
-        Public filters As filter()
+        Public filters As Filter()
         Public output As String
         Public bin As ProteoWizardCLI
 

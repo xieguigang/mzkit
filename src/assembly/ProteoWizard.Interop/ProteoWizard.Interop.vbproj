@@ -379,7 +379,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
-    <Compile Include="filters.vb" />
+    <Compile Include="Filters\Class1.vb" />
+    <Compile Include="Filters\Class2.vb" />
+    <Compile Include="Filters\Filter.vb" />
     <Compile Include="OutFileTypes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
