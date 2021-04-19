@@ -265,7 +265,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
     ''' <returns></returns>
     Public Function Convert2mzML(input$, output$,
                                  Optional type As OutFileTypes = OutFileTypes.mzXML,
-                                 Optional filters As IEnumerable(Of filter) = Nothing,
+                                 Optional filters As IEnumerable(Of Filter) = Nothing,
                                  Optional verbose As Boolean = True) As String
 
         Call output.ParentPath.MakeDir
@@ -277,16 +277,13 @@ Public Class ProteoWizardCLI : Inherits InteropService
         End If
     End Function
 
-    Private Function convertRawFile(input$, output$, type As OutFileTypes, filters As IEnumerable(Of filter), verbose As Boolean) As String
+    Private Function convertRawFile(input$, output$, type As OutFileTypes, filters As IEnumerable(Of Filter), verbose As Boolean) As String
         Dim std$ = ""
         Dim args$ = cli(input, output, type, filters.SafeQuery.ToArray, verbose)
 
         Call input.__INFO_ECHO
         Call args.SetValue(args.TrimNewLine(" "))
 
-        'Dim proc = Me.RunProgram(args, )
-        'proc.Run()
-        'std = proc.StandardOutput
         std = CommandLine.Call(ProteoWizardCLI.BIN, args)
 
         Return std
@@ -294,7 +291,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
 
     Private Function cli(input$, output$,
                          type As OutFileTypes,
-                         filters As filter(),
+                         filters As Filter(),
                          verbose As Boolean) As String
 
         Dim args As New ScriptBuilder(input.GetFullPath.CLIPath)
@@ -305,7 +302,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         args += "--zlib"
 
         If Not filters Is Nothing Then
-            args += filter.GetFilters(filters)
+            args += Filter.GetFilters(filters)
         End If
 
         If verbose Then
@@ -318,7 +315,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Return args.ToString
     End Function
 
-    Private Function convertWatersRawFile(input$, output$, type As OutFileTypes, filters As filter(), verbose As Boolean) As String
+    Private Function convertWatersRawFile(input$, output$, type As OutFileTypes, filters As Filter(), verbose As Boolean) As String
         Dim std$ = ""
 
         For Each part In SplitDirectory(waters:=input)
