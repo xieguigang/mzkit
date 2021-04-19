@@ -378,9 +378,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PWConvertProcessor.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="Filters\Class1.vb" />
-    <Compile Include="Filters\Class2.vb" />
+    <Compile Include="Filters\scanTime.vb" />
+    <Compile Include="Filters\msLevel.vb" />
     <Compile Include="Filters\Filter.vb" />
     <Compile Include="OutFileTypes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

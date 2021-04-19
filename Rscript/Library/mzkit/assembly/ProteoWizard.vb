@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::1c47614e85cb5a941221e0a20ca98fad, Rscript\Library\mzkit\assembly\ProteoWizard.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProteoWizard
-    ' 
-    '     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
-    '               wiffMRM
-    '     Class convertProcessor
-    ' 
-    '         Function: runConvert
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module ProteoWizard
+' 
+'     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
+'               wiffMRM
+'     Class convertProcessor
+' 
+'         Function: runConvert
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -155,7 +155,7 @@ Module ProteoWizard
                                          Optional env As Environment = Nothing) As Object
 
         Dim bin As ProteoWizardCLI = GetServices(env)
-        Dim process As New convertProcessor With {
+        Dim process As New PWConvertProcessor With {
             .filetype = filetype,
             .bin = bin,
             .filters = filters,
@@ -190,23 +190,4 @@ Module ProteoWizard
 
         Return result
     End Function
-
-    Private Class convertProcessor
-
-        Public filetype As OutFileTypes
-        Public filters As Filter()
-        Public output As String
-        Public bin As ProteoWizardCLI
-
-        Public Function runConvert(file As SeqValue(Of String)) As SeqValue(Of Boolean)
-            Dim outputfile = $"{output}/{file.value.FileName}"
-            bin.Convert2mzML(file.value, output, filetype, filters)
-
-            If outputfile.FileExists(ZERO_Nonexists:=True) Then
-                Return New SeqValue(Of Boolean)(file, True)
-            Else
-                Return New SeqValue(Of Boolean)(file, False)
-            End If
-        End Function
-    End Class
 End Module
