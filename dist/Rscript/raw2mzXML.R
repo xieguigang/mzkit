@@ -1,4 +1,4 @@
-require(ProteoWizard);
+imports "ProteoWizard" from "mzkit";
 
 let sample as string = ?"--samples" || stop("No raw samples data directory provided!");
 let output as string = ?"--output"  || `${dirname(sample)}/${basename(sample)}.mzXML/` ;
@@ -35,5 +35,5 @@ let doConvert as function(range, delta = 120) {
 
 # doConvert(750, 89);
 
-doConvert(0, 839);
+doConvert(0,1800);
 
