@@ -493,6 +493,10 @@
       <Project>{94e1a3b2-05c7-4d80-8385-4eaef4400f9b}</Project>
       <Name>MoNA</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>

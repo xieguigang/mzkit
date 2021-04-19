@@ -114,4 +114,22 @@ Public Class PageStart
         ' 打开R终端页面
         RibbonEvents.CreateNewScript(Nothing, Nothing)
     End Sub
+
+    Private Sub PageStart_DragDrop(sender As Object, e As DragEventArgs) Handles Me.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
+
+        If Not firstFile Is Nothing Then
+            Dim page As frmSeeMs = VisualStudio.ShowDocument(Of frmSeeMs)
+
+            page.TabText = "SeeMS: " & firstFile.FileName
+            page.LoadRaw(firstFile)
+        End If
+    End Sub
+
+    Private Sub PageStart_DragEnter(sender As Object, e As DragEventArgs) Handles Me.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
 End Class

@@ -1,5 +1,7 @@
 imports "assembly" from "mzkit";
 
-load_index("D:\Test-CD.mzXML");
+print(load_index("E:\D065.mzXML"));
 
-load_index("D:\QC5.mzML");
+print("parse mzML file:");
+
+print(load_index("E:\D065.mzML"));

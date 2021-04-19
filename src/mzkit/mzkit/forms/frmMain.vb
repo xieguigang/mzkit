@@ -344,7 +344,7 @@ Public Class frmMain
         Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
         Thread.Sleep(2000)
 
-        Do While Globals.loadedSettings
+        Do While App.Running AndAlso Globals.loadedSettings
             Thread.Sleep(1)
         Loop
 

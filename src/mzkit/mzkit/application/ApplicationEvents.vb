@@ -327,5 +327,9 @@ Type 'q()' to quit R.
                 host.showStatusMessage("missing R# package release file: mzkit.zip!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             End If
         End Sub
+
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+
+        End Sub
     End Class
 End Namespace
