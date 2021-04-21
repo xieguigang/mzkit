@@ -17,6 +17,13 @@ imports "math" from "mzkit";
 #'   Test Package:              'Ctrl + Shift + T'
 #' 
 let .onLoad as function() {
+  cat("\n");
+
   print(description(package = "mzkit")$title);
   print(description(package = "mzkit")$description);
+  
+  cat("\n");
+  
+  print("Visit of mzkit HOME:");
+  print("https://mzkit.org/");
 }
