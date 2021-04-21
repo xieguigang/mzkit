@@ -1,5 +1,7 @@
 #!REnv
 
+# title: MRM quantification
+
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
 imports "assembly" from "mzkit.dll";
