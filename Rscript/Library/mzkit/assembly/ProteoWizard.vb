@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::1c47614e85cb5a941221e0a20ca98fad, Rscript\Library\mzkit\assembly\ProteoWizard.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProteoWizard
-    ' 
-    '     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
-    '               wiffMRM
-    '     Class convertProcessor
-    ' 
-    '         Function: runConvert
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module ProteoWizard
+' 
+'     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
+'               wiffMRM
+'     Class convertProcessor
+' 
+'         Function: runConvert
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -124,7 +124,7 @@ Module ProteoWizard
     End Function
 
     <ExportAPI("filter.msLevel")>
-    Public Function msLevelFilter(level As String) As filter
+    Public Function msLevelFilter(level As String) As Filter
         Return New msLevel(level)
     End Function
 
@@ -135,7 +135,7 @@ Module ProteoWizard
     ''' <param name="stop">Stop time in time unit of seconds</param>
     ''' <returns></returns>
     <ExportAPI("filter.scanTime")>
-    Public Function scanTimeFilter(start#, stop#) As filter
+    Public Function scanTimeFilter(start#, stop#) As Filter
         Return New scanTime(start, [stop])
     End Function
 
@@ -144,18 +144,18 @@ Module ProteoWizard
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="output">The output directory</param>
-    ''' <param name="filetype"></param>
-    ''' <param name="filters"></param>
+    ''' <param name="filetype">the file type of the raw data output.</param>
+    ''' <param name="filters">data filters</param>
     ''' <returns></returns>
     <ExportAPI("convert.thermo.raw")>
     Public Function ConvertThermoRawFile(raw As String(), output$,
                                          Optional filetype As OutFileTypes = OutFileTypes.mzXML,
-                                         Optional filters As filter() = Nothing,
+                                         Optional filters As Filter() = Nothing,
                                          Optional parallel As Object = False,
                                          Optional env As Environment = Nothing) As Object
 
         Dim bin As ProteoWizardCLI = GetServices(env)
-        Dim process As New convertProcessor With {
+        Dim process As New PWConvertProcessor With {
             .filetype = filetype,
             .bin = bin,
             .filters = filters,
@@ -183,28 +183,11 @@ Module ProteoWizard
 
         Dim result As Boolean() = rawPipeline _
             .OrderBy(Function(file) file.i) _
-            .Select(Function(file) file.value) _
+            .Select(Function(file)
+                        Return file.value
+                    End Function) _
             .ToArray
 
         Return result
     End Function
-
-    Private Class convertProcessor
-
-        Public filetype As OutFileTypes
-        Public filters As filter()
-        Public output As String
-        Public bin As ProteoWizardCLI
-
-        Public Function runConvert(file As SeqValue(Of String)) As SeqValue(Of Boolean)
-            Dim outputfile = $"{output}/{file.value.FileName}"
-            bin.Convert2mzML(file.value, output, filetype, filters)
-
-            If outputfile.FileExists(ZERO_Nonexists:=True) Then
-                Return New SeqValue(Of Boolean)(file, True)
-            Else
-                Return New SeqValue(Of Boolean)(file, False)
-            End If
-        End Function
-    End Class
 End Module

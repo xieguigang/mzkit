@@ -51,10 +51,10 @@ let sn_threshold as double  = ?"--sn_threshold" || "3";
 # + negative value for auto detects: n.points / 2 - 1
 # + ZERO for no points is removed
 # + positive value for specific a number for the deletion.
-let maxNumOfPoint.delets = ?"--max.deletes"       || -1;
+let maxNumOfPoint.delets as integer = ?"--max.deletes"       || -1;
 
-let angle.threshold      = ?"--angle.threshold"   || 8;
-let baseline.quantile    = ?"--baseline.quantile" || 0.65;
+let angle.threshold as double   = ?"--angle.threshold"   || 8;
+let baseline.quantile as double = ?"--baseline.quantile" || 0.65;
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");

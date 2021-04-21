@@ -65,7 +65,12 @@ Public Module Extensions
         Return path
     End Function
 
-    Public Iterator Function SplitDirectory(waters$) As IEnumerable(Of (In$, Out$))
+    ''' <summary>
+    ''' helper function for handle waters data
+    ''' </summary>
+    ''' <param name="waters"></param>
+    ''' <returns></returns>
+    Public Iterator Function SplitDirectory(waters As String) As IEnumerable(Of (In$, Out$))
         Dim idx = waters.EnumerateFiles("*.IDX") _
                         .Select(AddressOf BaseName) _
                         .ToArray
