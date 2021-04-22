@@ -36,6 +36,8 @@ let patternOf.Blank    = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
 # 3. MRM.peaks
 # 4. extract.peakROI
 #
+[@info "the peak area integrator algorithm name."]
+[@type "term"]
 let integrator   as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve  as boolean = ?"--workMode";
 let rt_winSize   as double  = as.numeric(?"--rt.winsize" || "3"); 
