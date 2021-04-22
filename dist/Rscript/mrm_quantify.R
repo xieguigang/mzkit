@@ -1,5 +1,7 @@
 #!REnv
 
+# title: MRM quantification
+
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
 imports "assembly" from "mzkit.dll";
@@ -8,12 +10,16 @@ imports "assembly" from "mzkit.dll";
 imports "plot_ionRaws.R";
 
 # config of the standard curve data files
+[@info "the folder path of the reference lines."]
 let wiff     as string = ?"--Cal"          || stop("No standard curve data provides!");
+[@info "the folder path of the sample data files."]
 let sample   as string = ?"--data"         || stop("No sample data files provided!");
+[@info "MRM ion information xlsx table file."]
 let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
 # use external MSL data file if there is no 
 # ion pair data in the MRM table file. 
-let ions     as string = ?"--ions";         
+let ions     as string = ?"--ions";      
+[@info "folder location for save quantification result output."]   
 let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
