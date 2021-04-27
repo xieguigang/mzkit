@@ -40,9 +40,7 @@ Imports ThermoFisher.CommonCore.RawFileReader
 ''' Class for reading Thermo .raw files
 ''' </summary>
 <CLSCompliant(True)>
-Public Class XRawFileIO
-    Inherits EventNotifier
-    Implements IDisposable
+Public Class XRawFileIO : Implements IDisposable
 
     ''' <summary>
     ''' The full path to the currently loaded .raw file
@@ -245,16 +243,17 @@ Public Class XRawFileIO
     ''' </summary>
     ''' <param name="message"></param>
     ''' <param name="ex">Optional exception</param>
-    Private Sub RaiseErrorMessage(ByVal message As String, ByVal Optional ex As Exception = Nothing)
-        OnErrorEvent(message, ex)
+    Friend Sub RaiseErrorMessage(ByVal message As String, ByVal Optional ex As Exception = Nothing)
+        Call App.LogException(message)
+        Call App.LogException(ex)
     End Sub
 
     ''' <summary>
     ''' Report a warning message to the warning event handler
     ''' </summary>
     ''' <param name="message"></param>
-    Private Sub RaiseWarningMessage(ByVal message As String)
-        OnWarningEvent(message)
+    Friend Sub RaiseWarningMessage(ByVal message As String)
+        Call message.Warning
     End Sub
 
     Private Sub Options_OptionsUpdatedEvent(ByVal sender As Object)
@@ -515,17 +514,16 @@ Public Class XRawFileIO
     ''' <param name="filterText"></param>
     ''' <param name="parentIonMz">Parent ion m/z (output)</param>
     ''' <returns>True if success</returns>
-    ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
     ''' <remarks>
-    ''' <para>
+    ''' If multiple parent ion m/z values are listed then parentIonMz will have the last one.  
+    ''' However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed
+    ''' 
     ''' This was created for use in other programs that only need the parent ion m/z, and no other functions from ThermoRawFileReader.
     ''' Other projects that use this:
     '''      PHRPReader (https://github.com/PNNL-Comp-Mass-Spec/PHRP)
-    ''' </para>
-    ''' <para>
+    '''      
     ''' To copy this, take the code from this function, plus the RegEx strings <see cref="PARENT_ION_ONLY_NON_MSX_REGEX"/> and <see cref="PARENT_ION_ONLY_MSX_REGEX"/>,
     ''' with their uses in <see cref="mFindParentIonOnlyNonMsx"/> and <see cref="mFindParentIonOnlyMsx"/>
-    ''' </para>
     ''' </remarks>
     Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double) As Boolean
         Dim matcher As Regex
@@ -797,7 +795,7 @@ Public Class XRawFileIO
         Try
             If mXRawFile Is Nothing Then Return False
             FileInfo.Clear()
-            If TraceMode Then OnDebugEvent("Enumerating device data in the file")
+            If TraceMode Then Call "Enumerating device data in the file".__DEBUG_ECHO
 
             ' Discover the devices with data in the .raw file
             For Each item In GetDeviceStats()
@@ -817,12 +815,12 @@ Public Class XRawFileIO
 
             FileInfo.CreationDate = Date.MinValue
             FileInfo.CreationDate = mXRawFileHeader.CreationDate
-            If TraceMode Then OnDebugEvent("Checking mXRawFile.IsError")
+            If TraceMode Then Call "Checking mXRawFile.IsError".__DEBUG_ECHO
             If mXRawFile.IsError Then Return False
-            If TraceMode Then OnDebugEvent("mXRawFile.IsError reports true")
-            If TraceMode Then OnDebugEvent("Accessing mXRawFileHeader.WhoCreatedId")
+            If TraceMode Then Call "mXRawFile.IsError reports true".__DEBUG_ECHO
+            If TraceMode Then Call "Accessing mXRawFileHeader.WhoCreatedId".__DEBUG_ECHO
             FileInfo.CreatorID = mXRawFileHeader.WhoCreatedId
-            If TraceMode Then OnDebugEvent("Accessing mXRawFile.GetInstrumentData")
+            If TraceMode Then Call "Accessing mXRawFile.GetInstrumentData".__DEBUG_ECHO
             Dim instData = mXRawFile.GetInstrumentData()
             FileInfo.InstFlags = instData.Flags
             FileInfo.InstHardwareVersion = instData.HardwareVersion
@@ -833,13 +831,13 @@ Public Class XRawFileIO
                 LoadMethodInfo()
             End If
 
-            If TraceMode Then OnDebugEvent("Defining the model, name, description, and serial number")
+            If TraceMode Then Call "Defining the model, name, description, and serial number".__DEBUG_ECHO
             FileInfo.InstModel = instData.Model
             FileInfo.InstName = instData.Name
             FileInfo.InstrumentDescription = mXRawFileHeader.FileDescription
             FileInfo.InstSerialNumber = instData.SerialNumber
             FileInfo.VersionNumber = mXRawFileHeader.Revision
-            If TraceMode Then OnDebugEvent("Accessing mXRawFile.RunHeaderEx")
+            If TraceMode Then Call "Accessing mXRawFile.RunHeaderEx".__DEBUG_ECHO
             Dim runData = mXRawFile.RunHeaderEx
             FileInfo.MassResolution = runData.MassResolution
             FileInfo.ScanStart = runData.FirstSpectrum
@@ -1335,7 +1333,7 @@ Public Class XRawFileIO
                 scanInfo.ActivationType = ActivationTypeConstants.CID
             End If
 
-            Dim newMRMInfo As MRMInfo
+            Dim newMRMInfo As MRMInfo = Nothing
 
             If scanInfo.MRMScanType <> MRMScanTypeConstants.NotMRM Then
                 ' Parse out the MRM_QMS or SRM information for this scan
@@ -1637,14 +1635,14 @@ Public Class XRawFileIO
     End Sub
 
     Private Sub LoadMethodInfo()
-        If TraceMode Then OnDebugEvent("Accessing mXRawFile.InstrumentMethodsCount")
+        If TraceMode Then Call "Accessing mXRawFile.InstrumentMethodsCount".__DEBUG_ECHO
 
         Try
             Dim methodCount = mXRawFile.InstrumentMethodsCount
-            If TraceMode Then MyBase.OnDebugEvent(String.Format("File has {0} methods", methodCount))
+            If TraceMode Then Call String.Format("File has {0} methods", methodCount).__DEBUG_ECHO
 
             For methodIndex = 0 To methodCount - 1
-                If TraceMode Then OnDebugEvent("Retrieving method from index " & methodIndex)
+                If TraceMode Then Call ("Retrieving method from index " & methodIndex).__DEBUG_ECHO
                 Dim methodText = mXRawFile.GetInstrumentMethod(methodIndex)
 
                 If Not String.IsNullOrWhiteSpace(methodText) Then
@@ -2371,9 +2369,9 @@ Public Class XRawFileIO
             Me.mCachedScanInfo.Clear()
             Me.mCachedScans.Clear()
             RawFilePath = String.Empty
-            If TraceMode Then OnDebugEvent("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName)
+            If TraceMode Then Call ("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName).__DEBUG_ECHO
             mXRawFile = RawFileReaderAdapter.FileFactory(dataFile.FullName)
-            If TraceMode Then OnDebugEvent("Accessing mXRawFile.FileHeader")
+            If TraceMode Then Call "Accessing mXRawFile.FileHeader".__DEBUG_ECHO
             mXRawFileHeader = mXRawFile.FileHeader
             UpdateReaderOptions()
 

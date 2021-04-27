@@ -2,6 +2,8 @@
 ''' <summary>
 ''' Thermo reader options
 ''' </summary>
+''' 
+<CLSCompliant(True)>
 Public Class ThermoReaderOptions
 #Region "Events"
 
@@ -42,6 +44,8 @@ Public Class ThermoReaderOptions
         End Set
     End Property
 
+    Const DEFAULT_MAX_MZ = 10000000
+
     ''' <summary>
     ''' Load MS Method Information when calling OpenRawFile
     ''' </summary>
@@ -61,16 +65,40 @@ Public Class ThermoReaderOptions
     Public Property LoadMSTuneInfo As Boolean = True
 
     ''' <summary>
-    ''' 
+    ''' First scan to output
     ''' </summary>
     ''' <returns></returns>
     Public Property MinScan As Integer = -1
-    Public Property MinMz As Double
-    Public Property MaxMz As Double
-    Public Property MinRelIntensityThresholdRatio As Double
-    Public Property SignalToNoiseThreshold As Double
-    Public Property MinIntensityThreshold As Double
-    Public Property MaxScan As Integer
+    ''' <summary>
+    ''' Lowest m/z to output
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MinMz As Double = 0
+    ''' <summary>
+    ''' Highest m/z to output
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MaxMz As Double = DEFAULT_MAX_MZ
+    ''' <summary>
+    ''' Relative intensity threshold (value between 0 and 1)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MinRelIntensityThresholdRatio As Double = 0
+    ''' <summary>
+    ''' Minimum S/N ratio
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SignalToNoiseThreshold As Double = 0
+    ''' <summary>
+    ''' Minimum intensity threshold (absolute value)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MinIntensityThreshold As Double = 0
+    ''' <summary>
+    ''' Last scan to output
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MaxScan As Integer = -1
 
 #End Region
 

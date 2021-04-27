@@ -73,7 +73,7 @@
             End If
 
         Catch ex As Exception
-            OnErrorEvent(String.Format("Exception {0}: {1}", currentTask, ex.Message), ex)
+            Call mRawFileReader.RaiseErrorMessage(String.Format("Exception {0}: {1}", currentTask, ex.Message), ex)
         End Try
 
         Dim rt As Double = Nothing
@@ -145,7 +145,7 @@
         If peakData.Length <= 0 Then
             ' Report message: GetScanData2D returned no data for scan 2760
             ' See, for example QC_Shew_13_04_2c_22Sep13_Cougar_13-06-16
-            OnWarningEvent(String.Format("{0} {1}", GET_SCAN_DATA_WARNING, scanNumber))
+            Call mRawFileReader.RaiseWarningMessage(String.Format("{0} {1}", GET_SCAN_DATA_WARNING, scanNumber))
             Return Nothing
         End If
 
