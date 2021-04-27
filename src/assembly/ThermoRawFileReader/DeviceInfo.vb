@@ -29,7 +29,7 @@ Public Class DeviceInfo
     ''' </returns>
     Public ReadOnly Property DeviceDescription As String
         Get
-            If DeviceType Is Device.MS OrElse DeviceType Is Device.MSAnalog Then Return "Mass Spectrometer"
+            If DeviceType = Device.MS OrElse DeviceType = Device.MSAnalog Then Return "Mass Spectrometer"
             Return String.Format("{0} device #{1}", DeviceType.ToString(), DeviceNumber)
         End Get
     End Property

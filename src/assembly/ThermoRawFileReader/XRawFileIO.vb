@@ -1,18 +1,14 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.IO
-Imports System.Linq
+Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
-Imports PRISM
+Imports ThermoFisher.CommonCore.BackgroundSubtraction
 Imports ThermoFisher.CommonCore.Data
 Imports ThermoFisher.CommonCore.Data.Business
+Imports ThermoFisher.CommonCore.Data.FilterEnums
 Imports ThermoFisher.CommonCore.Data.Interfaces
 Imports ThermoFisher.CommonCore.MassPrecisionEstimator
 Imports ThermoFisher.CommonCore.RawFileReader
-Imports ThermoFisher.CommonCore.BackgroundSubtraction
-Imports ThermoFisher.CommonCore.Data.FilterEnums
-Imports System.Runtime.InteropServices
 
 ' The methods in this class use ThermoFisher.CommonCore.RawFileReader.dll
 ' and related DLLs to extract scan header info and mass spec data (m/z and intensity lists)
@@ -113,47 +109,18 @@ Public Class XRawFileIO
     ''' <summary>
     ''' Maximum size of the scan info cache
     ''' </summary>
-
+    Private mMaxScansToCacheInfo As Integer = 50000
+    ''' 
     ''' <summary>
     ''' The scan info cache
     ''' </summary>
-
+    Private ReadOnly mCachedScanInfo As New Dictionary(Of Integer, ThermoRawFileReader.clsScanInfo)
     ''' <summary>
     ''' This linked list tracks the scan numbers stored in mCachedScanInfo,
     ''' allowing for quickly determining the oldest scan added to the cache when the cache limit is reached
     ''' </summary>
-    Private mMaxScansToCacheInfo As Integer = 50000
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         /// <summary>
-    '''         /// The scan info cache
-    '''         /// </summary>
-    '''         private readonly System.Collections.Generic.Dictionary<int, ThermoRawFileReader.clsScanInfo> mCachedScanInfo = new();
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         /// <summary>
-    '''         /// This linked list tracks the scan numbers stored in mCachedScanInfo,
-    '''         /// allowing for quickly determining the oldest scan added to the cache when the cache limit is reached
-    '''         /// </summary>
-    '''         private readonly System.Collections.Generic.LinkedList<int> mCachedScans = new();
-    ''' 
-    ''' 
+    Private ReadOnly mCachedScans As New LinkedList(Of Integer)
+
 
     ''' <summary>
     ''' Reader that implements ThermoFisher.CommonCore.Data.Interfaces.IRawDataPlus
@@ -170,136 +137,32 @@ Public Class XRawFileIO
     ''' It is also set to true if the .raw file does not have any MS data
     ''' </summary>
     Private mCorruptMemoryEncountered As Boolean
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
+
+    Private Shared ReadOnly mFindMS As New Regex(ThermoRawFileReader.XRawFileIO.MS2_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mIonMode As New Regex(ThermoRawFileReader.XRawFileIO.ION_MODE_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mMassList As New Regex(ThermoRawFileReader.XRawFileIO.MASS_LIST_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mMassRanges As New Regex(ThermoRawFileReader.XRawFileIO.MASS_RANGES_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mFindParentIon As New Regex(ThermoRawFileReader.XRawFileIO.PARENT_ION_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mFindParentIonOnlyNonMsx As New Regex(ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_NON_MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mFindParentIonOnlyMsx As New Regex(ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mFindSAFullMS As New Regex(ThermoRawFileReader.XRawFileIO.SA_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
+
+    Private Shared ReadOnly mFindFullMSx As New Regex(ThermoRawFileReader.XRawFileIO.MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase Or System.Text.RegularExpressions.RegexOptions.Compiled)
     ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindMS = new(ThermoRawFileReader.XRawFileIO.MS2_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mIonMode = new(ThermoRawFileReader.XRawFileIO.ION_MODE_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mMassList = new(ThermoRawFileReader.XRawFileIO.MASS_LIST_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    Private Shared ReadOnly mCollisionSpecs As New Regex(ThermoRawFileReader.XRawFileIO.COLLISION_SPEC_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled)
     ''' 
     ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mMassRanges = new(ThermoRawFileReader.XRawFileIO.MASS_RANGES_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindParentIon = new(ThermoRawFileReader.XRawFileIO.PARENT_ION_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindParentIonOnlyNonMsx = new(ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_NON_MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindParentIonOnlyMsx = new(ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindSAFullMS = new(ThermoRawFileReader.XRawFileIO.SA_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mFindFullMSx = new(ThermoRawFileReader.XRawFileIO.MSX_REGEX, System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mCollisionSpecs = new(ThermoRawFileReader.XRawFileIO.COLLISION_SPEC_REGEX, System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
-    ''' Cannot convert FieldDeclarationSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-    '''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-    '''    at ICSharpCode.CodeConverter.VB.NodesVisitor.VisitFieldDeclaration(FieldDeclarationSyntax node)
-    '''    at Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-    '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-    '''    at ICSharpCode.CodeConverter.VB.CommentConvertingVisitorWrapper`1.Accept(SyntaxNode csNode, Boolean addSourceMapping)
-    ''' 
-    ''' Input:
-    ''' 
-    '''         private static readonly System.Text.RegularExpressions.Regex mMzWithoutCE = new(ThermoRawFileReader.XRawFileIO.MZ_WITHOUT_COLLISION_ENERGY, System.Text.RegularExpressions.RegexOptions.Compiled);
-    ''' 
-    ''' 
+
+    Private Shared ReadOnly mMzWithoutCE As New Regex(ThermoRawFileReader.XRawFileIO.MZ_WITHOUT_COLLISION_ENERGY, System.Text.RegularExpressions.RegexOptions.Compiled)
+
 
 #End Region
 
@@ -462,7 +325,7 @@ Public Class XRawFileIO
 
         ' Remove the oldest entry/entries in mCachedScanInfo
         While Me.mCachedScanInfo.Count > limit
-            Dim scan = Me.mCachedScans.First()
+            Dim scan As Integer = Me.mCachedScans.First().Value
             Me.mCachedScans.RemoveFirst()
 
             If Me.mCachedScanInfo.ContainsKey(scan) Then
@@ -575,7 +438,7 @@ Public Class XRawFileIO
         End If
 
         If match.Success Then
-            Return
+            Return match.Value
         End If
 
         Return IonModeConstants.Unknown
@@ -660,8 +523,8 @@ Public Class XRawFileIO
     '''      PHRPReader (https://github.com/PNNL-Comp-Mass-Spec/PHRP)
     ''' </para>
     ''' <para>
-    ''' To copy this, take the code from this function, plus the RegEx strings <seecref="PARENT_ION_ONLY_NON_MSX_REGEX"/> and <seecref="PARENT_ION_ONLY_MSX_REGEX"/>,
-    ''' with their uses in <seecref="mFindParentIonOnlyNonMsx"/> and <seecref="mFindParentIonOnlyMsx"/>
+    ''' To copy this, take the code from this function, plus the RegEx strings <see cref="PARENT_ION_ONLY_NON_MSX_REGEX"/> and <see cref="PARENT_ION_ONLY_MSX_REGEX"/>,
+    ''' with their uses in <see cref="mFindParentIonOnlyNonMsx"/> and <see cref="mFindParentIonOnlyMsx"/>
     ''' </para>
     ''' </remarks>
     Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double) As Boolean
@@ -695,7 +558,7 @@ Public Class XRawFileIO
     ''' <returns>True if success</returns>
     ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
     Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String) As Boolean
-        Return XRawFileIO.ExtractParentIonMZFromFilterText(filterText, parentIonMz, msLevel, collisionMode, __)
+        Return XRawFileIO.ExtractParentIonMZFromFilterText(filterText, parentIonMz, msLevel, collisionMode, Nothing)
     End Function
 
     ''' <summary>
@@ -817,8 +680,8 @@ Public Class XRawFileIO
                     .CollisionEnergy = collisionEnergyValue,
                     .CollisionEnergy2 = collisionEnergy2Value
                 }
-                If Not Equals(collisionMode, Nothing) Then parentIonInfo.CollisionMode = String.Copy(collisionMode)
-                If Not Equals(collisionMode2, Nothing) Then parentIonInfo.CollisionMode2 = String.Copy(collisionMode2)
+                If Not collisionMode Is Nothing Then parentIonInfo.CollisionMode = String.Copy(collisionMode)
+                If Not collisionMode2 Is Nothing Then parentIonInfo.CollisionMode2 = String.Copy(collisionMode2)
                 parentIons.Add(parentIonInfo)
 
                 If Not multiplexedMSnEnabled OrElse parentIons.Count = 1 Then
@@ -1149,7 +1012,7 @@ Public Class XRawFileIO
         Try
             If mXRawFile Is Nothing Then Return collisionEnergies
             GetScanInfo(scan, scanInfo)
-            XRawFileIO.ExtractParentIonMZFromFilterText(scanInfo.FilterText, __, __, __, parentIons)
+            XRawFileIO.ExtractParentIonMZFromFilterText(scanInfo.FilterText, Nothing, Nothing, Nothing, parentIons)
 
             For Each parentIon In parentIons
                 collisionEnergies.Add(parentIon.CollisionEnergy)
@@ -1290,7 +1153,7 @@ Public Class XRawFileIO
         scanInfo = New clsScanInfo(scan)
         ' XRaw periodically mislabels a scan as .EventNumber = 1 when it's really an MS/MS scan; check for this
         ' Parse out the parent ion and collision energy from .FilterText
-        Dim scanEventNumber As Integer = Nothing, ionInjectionTime As Double = Nothing, msLevel As Integer = Nothing, parentIonMz As Double = Nothing, msLevel As Integer = Nothing, collisionMode As String = Nothing, simScan As Boolean = Nothing, mrmScanType As MRMScanTypeConstants = Nothing, zoomScan As Boolean = Nothing, msLevel As Integer = Nothing, simScan As Boolean = Nothing, mrmScanType As MRMScanTypeConstants = Nothing, zoomScan As Boolean = Nothing
+        Dim scanEventNumber As Integer = Nothing, ionInjectionTime As Double = Nothing, msLevel As Integer = Nothing, parentIonMz As Double = Nothing, collisionMode As String = Nothing, simScan As Boolean = Nothing, mrmScanType As MRMScanTypeConstants = Nothing, zoomScan As Boolean = Nothing
 
         Try
             If mXRawFile Is Nothing Then Return False
@@ -1385,11 +1248,11 @@ Public Class XRawFileIO
             Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
             Dim filterText = scanFilter.ToString()
             scanInfo.FilterText = String.Copy(filterText)
-            scanInfo.IsFTMS = scanFilter.MassAnalyzer Is MassAnalyzerType.MassAnalyzerFTMS
+            scanInfo.IsFTMS = scanFilter.MassAnalyzer = MassAnalyzerType.MassAnalyzerFTMS
             If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then scanInfo.FilterText = String.Empty
 
             If scanInfo.EventNumber <= 1 Then
-                If XRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, __) Then
+                If XRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, Nothing) Then
                     scanInfo.EventNumber = msLevel
                 End If
             End If
@@ -1584,7 +1447,7 @@ Public Class XRawFileIO
                 Return defaultScanTypeName
             End If
 
-            If Not XRawFileIO.ExtractMSLevel(filterText, msLevel, __) Then
+            If Not XRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing) Then
                 ' Assume this is an MS scan
                 msLevel = 1
             End If
@@ -1592,7 +1455,7 @@ Public Class XRawFileIO
             If msLevel > 1 Then
                 ' Parse out the parent ion and collision energy from filterText
 
-                If XRawFileIO.ExtractParentIonMZFromFilterText(filterText, __, msLevel, collisionMode) Then
+                If XRawFileIO.ExtractParentIonMZFromFilterText(filterText, Nothing, msLevel, collisionMode) Then
                     ' Check whether this is an SRM MS2 scan
                     mrmScanType = DetermineMRMScanType(filterText)
                 Else
@@ -1963,7 +1826,7 @@ Public Class XRawFileIO
                 msLevel = 2
                 Return True
             Case Else
-                XRawFileIO.ExtractMSLevel(filterText, msLevel, __)
+                XRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing)
                 Return False
         End Select
     End Function
@@ -2149,8 +2012,8 @@ Public Class XRawFileIO
 
                 If data?.Masses Is Nothing OrElse data.Masses.Length = 0 Then
                     ' Centroiding for profile-mode ion trap data, or for other scan types that don't include a centroid stream
-                    Dim scanProf = scan.FromFile(mXRawFile, scan)
-                    Dim centroided = scan.ToCentroid(scanProf)
+                    Dim scanProf = ThermoFisher.CommonCore.Data.Business.Scan.FromFile(mXRawFile, scan)
+                    Dim centroided = ThermoFisher.CommonCore.Data.Business.Scan.ToCentroid(scanProf)
                     data = New SimpleScanAccessTruncated(centroided.PreferredMasses, centroided.PreferredIntensities)
                 End If
             Else
@@ -2206,10 +2069,10 @@ Public Class XRawFileIO
     End Function
 
     Private Class SimpleScanAccessTruncated
-        Inherits ISimpleScanAccess
+        Implements ISimpleScanAccess
 
-        Public ReadOnly Property Masses As Double()
-        Public ReadOnly Property Intensities As Double()
+        Public ReadOnly Property Masses As Double() Implements ISimpleScanAccess.Masses
+        Public ReadOnly Property Intensities As Double() Implements ISimpleScanAccess.Intensities
 
         Public Sub New(ByVal masses As Double(), ByVal intensities As Double())
             Me.Masses = masses
@@ -2357,37 +2220,28 @@ Public Class XRawFileIO
                 .ScanNumber = scan
             }
             Dim results = mpe.GetMassPrecisionEstimate().ToList()
-            ''' Cannot convert IfStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-            '''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitIfStatement(IfStatementSyntax node)
-            '''    at Microsoft.CodeAnalysis.CSharp.Syntax.IfStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-            '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-            '''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-            ''' 
-            ''' Input:
-            ''' 
-            '''                 if (results.Count > 0)
-            '''                 {
-            '''                     var dataCount = results.Count;
-            '''                     massResolutionData = new ThermoRawFileReader.MassPrecisionInfoType[dataCount];
-            ''' 
-            '''                     for (var i = 0; i < dataCount; i++)
-            '''                     {
-            '''                         var massPrecisionInfo = new ThermoRawFileReader.MassPrecisionInfoType
-            '''                         {
-            '''                             Intensity = results[(System.Int32)(i)].Intensity,
-            '''                             Mass = results[(System.Int32)(i)].Mass,
-            '''                             AccuracyMMU = results[(System.Int32)(i)].MassAccuracyInMmu,
-            '''                             AccuracyPPM = results[(System.Int32)(i)].MassAccuracyInPpm,
-            '''                             Resolution = results[(System.Int32)(i)].Resolution
-            '''                         };
-            ''' 
-            '''                         massResolutionData[i] = massPrecisionInfo;
-            '''                     }
-            ''' 
-            '''                     return dataCount;
-            '''                 }
-            ''' 
-            ''' 
+
+
+            If (results.Count > 0) Then
+                Dim dataCount = results.Count
+                massResolutionData = New ThermoRawFileReader.MassPrecisionInfoType(dataCount - 1) {}
+
+                For i = 0 To dataCount - 1
+
+                    Dim massPrecisionInfo As New ThermoRawFileReader.MassPrecisionInfoType With {
+                       .Intensity = results(i).Intensity,
+                                              .Mass = results(i).Mass,
+                                             .AccuracyMMU = results(i).MassAccuracyInMmu,
+                                             .AccuracyPPM = results(i).MassAccuracyInPpm,
+                                              .Resolution = results(i).Resolution
+                    }
+
+
+                    massResolutionData(i) = massPrecisionInfo
+                Next
+                Return dataCount
+            End If
+
             massResolutionData = New MassPrecisionInfoType(-1) {}
             Return 0
         Catch __unusedAccessViolationException1__ As AccessViolationException
@@ -2557,7 +2411,7 @@ Public Class XRawFileIO
 
         For index = 0 To method1.Settings.Count - 1
 
-            If Not Equals(method1.Settings(CInt(index)).Category, method2.Settings(CInt(index)).Category) OrElse Not Equals(method1.Settings(CInt(index)).Name, method2.Settings(CInt(index)).Name) OrElse Not Equals(method1.Settings(CInt(index)).Value, method2.Settings(CInt(index)).Value) Then
+            If Not method1.Settings(CInt(index)).Category = method2.Settings(CInt(index)).Category OrElse Not method1.Settings(CInt(index)).Name = method2.Settings(CInt(index)).Name OrElse Not method1.Settings(CInt(index)).Value = method2.Settings(CInt(index)).Value Then
                 ' Different segment data; the methods don't match
                 Return False
             End If

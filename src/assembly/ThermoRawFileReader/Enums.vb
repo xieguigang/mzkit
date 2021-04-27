@@ -1,8 +1,4 @@
-﻿Imports System
-
-' ReSharper disable UnusedMember.Global
-
-''' <summary>
+﻿''' <summary>
 ''' Activation Types enum
 ''' </summary>
 ''' <remarks>This enum mirrors ThermoFisher.CommonCore.Data.FilterEnums.ActivationType</remarks>
@@ -266,7 +262,7 @@ End Enum
 ''' <summary>
 ''' Intensity Cutoff Types
 ''' </summary>
-''' <remarks>Used with <seecref="XRawFileIO.mXRawFile"/> functions in <seecref="XRawFileIO.GetScanData2D(Integer,,Integer,Boolean)"/> and <seecref="XRawFileIO.GetScanDataSumScans"/></remarks>
+''' <remarks>Used with <see cref="XRawFileIO.mXRawFile"/> functions in <see cref="XRawFileIO.GetScanData2D"/> and <see cref="XRawFileIO.GetScanDataSumScans"/></remarks>
 <CLSCompliant(True)>
 Public Enum IntensityCutoffTypeConstants
     ''' <summary>
