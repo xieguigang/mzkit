@@ -1,0 +1,1789 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ThermoRawFileReader</name>
+    </assembly>
+    <members>
+        <member name="T:ThermoRawFileReader.TuneMethod">
+            <summary>
+            Type for Tune Methods
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.TuneMethod.Settings">
+            <summary>
+            Settings
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.TuneMethod.Clear">
+            <summary>
+            Clear the settings
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.udtTuneMethodSetting">
+            <summary>
+            Type for Tune Method Settings
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtTuneMethodSetting.Category">
+            <summary>
+            Tune category
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtTuneMethodSetting.Name">
+            <summary>
+            Tune name
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtTuneMethodSetting.Value">
+            <summary>
+            Tune value
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.udtTuneMethodSetting.ToString">
+            <summary>
+            Display the category, name, and value of this setting
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.RawFileInfo">
+            <summary>
+            Type for File Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.AcquisitionDate">
+            <summary>
+            Date of Acquisition
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.AcquisitionFilename">
+            <summary>
+            Acquisition Filename
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.Comment1">
+            <summary>
+            First Comment
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.Comment2">
+            <summary>
+            Second Comment
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.SampleName">
+            <summary>
+            Sample Name
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.SampleComment">
+            <summary>
+            Sample Comment
+            </summary>
+            <remarks>Will often be blank</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.CreationDate">
+            <summary>
+            Creation date
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.CreatorID">
+            <summary>
+            Logon name of the user when the file was created
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.Devices">
+            <summary>
+            Dictionary tracking the device data stored in the .raw file
+            Keys are Device type, values are the number of devices of this type
+            </summary>
+            <remarks>
+            Typically a .raw file has a single device, of type Device.MS
+            Some .raw files also have LC information, stored as Device.Analog or Device.UV
+            </remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstFlags">
+            <summary>
+            Instrument Flags
+            </summary>
+            <remarks>Values should be one of the constants in the InstFlags class (file Enums.cs)</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstHardwareVersion">
+            <summary>
+            Instrument Hardware Version
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstSoftwareVersion">
+            <summary>
+            Instrument Software Version
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstMethods">
+            <summary>
+            Instrument Methods
+            </summary>
+            <remarks>Typically only have one instrument method; the length of this array defines the number of instrument methods</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstModel">
+            <summary>
+            Instrument Model
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstName">
+            <summary>
+            Instrument Name
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstrumentDescription">
+            <summary>
+            Instrument Description
+            </summary>
+            <remarks>Typically only defined for instruments converted from other formats</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.InstSerialNumber">
+            <summary>
+            Instrument Serial Number
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.TuneMethods">
+            <summary>
+            Tune Methods
+            </summary>
+            <remarks>Typically have one or two tune methods; the length of this array defines the number of tune methods defined</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.VersionNumber">
+            <summary>
+            File format Version Number
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.MassResolution">
+            <summary>
+            Mass Resolution
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.ScanStart">
+            <summary>
+            First scan number
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.ScanEnd">
+            <summary>
+            Last scan number
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.RawFileInfo.CorruptFile">
+            <summary>
+            Flag for corrupt files
+            </summary>
+            <remarks>Auto-set to true if the file is corrupt / has no data</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.RawFileInfo.Clear">
+            <summary>
+            Reset all data in the struct
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.RawFileInfo.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.udtMRMMassRangeType">
+            <summary>
+            Type for storing MRM Mass Ranges
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMRMMassRangeType.StartMass">
+            <summary>
+            Start Mass
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMRMMassRangeType.EndMass">
+            <summary>
+            End Mass
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMRMMassRangeType.CentralMass">
+            <summary>
+            Central Mass
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.udtMRMMassRangeType.ToString">
+            <summary>
+            Return a summary of this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.MRMInfo">
+            <summary>
+            Type for MRM Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMInfo.MRMMassList">
+            <summary>
+            List of mass ranges monitored by the first quadrupole
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.MRMInfo.Clear">
+            <summary>
+            Clear all data in the object
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.MRMInfo.DuplicateMRMInfo(ThermoRawFileReader.MRMInfo,ThermoRawFileReader.MRMInfo@)">
+            <summary>
+            Duplicate the MRM info
+            </summary>
+            <param name="source"></param>
+            <param name="target"></param>
+        </member>
+        <member name="M:ThermoRawFileReader.MRMInfo.InitializeMRMInfo">
+            <summary>
+            Get an initialized MRMInfo object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.MRMInfo.InitializeMRMInfo(ThermoRawFileReader.MRMInfo@,System.Int32)">
+            <summary>
+            Get an initialized MRMInfo object
+            </summary>
+            <param name="mrmInfo"></param>
+            <param name="initialMassCountCapacity"></param>
+        </member>
+        <member name="T:ThermoRawFileReader.udtScanHeaderInfoType">
+            <summary>
+            Type for scan header information/metadata
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.MSLevel">
+            <summary>
+            MS Level
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.EventNumber">
+            <summary>
+            Event Number: 1 for parent-ion scan, >1 for fragmentation scans (in order)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.SIMScan">
+            <summary>
+            If this is a Selected Ion Monitoring scan
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.MRMScanType">
+            <summary>
+            MRM Scan Type
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.ZoomScan">
+            <summary>
+            If this is a zoom scan
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.NumPeaks">
+            <summary>
+            Number of mass intensity value pairs in the specified scan (may not be defined until .GetScanData() is called; -1 if unknown)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.RetentionTime">
+            <summary>
+            Retention time (in minutes)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.LowMass">
+            <summary>
+            Lowest m/z value
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.HighMass">
+            <summary>
+            Highest m/z value
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.TotalIonCurrent">
+            <summary>
+            Total Ion Current
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.BasePeakMZ">
+            <summary>
+            Base Peak m/z
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.BasePeakIntensity">
+            <summary>
+            Base Peak Intensity
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.FilterText">
+            <summary>
+            Scan Filter string
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.ParentIonMZ">
+            <summary>
+            Parent Ion m/z
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.ActivationType">
+            <summary>
+            Activation type (aka activation method) as reported by the reader
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.CollisionMode">
+            <summary>
+            Activation type, determined from the filter string
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.IonMode">
+            <summary>
+            Ion Mode
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.MRMInfo">
+            <summary>
+            MRM Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.NumChannels">
+            <summary>
+            Number of channels
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.UniformTime">
+            <summary>
+            Indicates whether the sampling time increment for the controller is constant
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.Frequency">
+            <summary>
+            Sampling frequency for the current controller
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.IsCentroidScan">
+            <summary>
+            True if centroid (sticks) scan; False if profile (continuum) scan
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.ScanEventNames">
+            <summary>
+            Names of scan events
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.ScanEventValues">
+            <summary>
+            Values of scan events, corresponding to ScanEventNames
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.StatusLogNames">
+            <summary>
+            Names of status log entries
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtScanHeaderInfoType.StatusLogValues">
+            <summary>
+            Values of status log entries, corresponding to StatusLogNames
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.udtScanHeaderInfoType.ToString">
+            <summary>
+            Summary of this object in a string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.udtParentIonInfoType">
+            <summary>
+            Type for storing Parent Ion Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.MSLevel">
+            <summary>
+            MS Level of the spectrum
+            </summary>
+            <remarks>1 for MS1 spectra, 2 for MS2, 3 for MS3</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.ParentIonMZ">
+            <summary>
+            Parent ion m/z
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.CollisionMode">
+            <summary>
+            Collision mode
+            </summary>
+            <remarks>Examples: cid, etd, hcd, EThcD, ETciD</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.CollisionMode2">
+            <summary>
+            Secondary collision mode
+            </summary>
+            <remarks>
+            For example, for filter string: ITMS + c NSI r d sa Full ms2 1143.72@etd120.55@cid20.00 [120.00-2000.00]
+            CollisionMode = ETciD
+            CollisionMode2 = cid
+            </remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.CollisionEnergy">
+            <summary>
+            Collision energy
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.CollisionEnergy2">
+            <summary>
+            Secondary collision energy
+            </summary>
+            <remarks>
+            For example, for filter string: ITMS + c NSI r d sa Full ms2 1143.72@etd120.55@cid20.00 [120.00-2000.00]
+            CollisionEnergy = 120.55
+            CollisionEnergy2 = 20.0
+            </remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtParentIonInfoType.ActivationType">
+            <summary>
+            Activation type
+            </summary>
+            <remarks>Examples: CID, ETD, or HCD</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.udtParentIonInfoType.Clear">
+            <summary>
+            Clear the data
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.udtParentIonInfoType.ToString">
+            <summary>
+            Return a simple summary of the object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.udtMassPrecisionInfoType">
+            <summary>
+            Type for Mass Precision Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMassPrecisionInfoType.Intensity">
+            <summary>
+            Peak Intensity
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMassPrecisionInfoType.Mass">
+            <summary>
+            Peak Mass
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMassPrecisionInfoType.AccuracyMMU">
+            <summary>
+            Peak Accuracy (in MMU)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMassPrecisionInfoType.AccuracyPPM">
+            <summary>
+            Peak Accuracy (in PPM)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtMassPrecisionInfoType.Resolution">
+            <summary>
+            Peak Resolution
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.udtFTLabelInfoType">
+            <summary>
+            Type for storing FT Label Information
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Mass">
+            <summary>
+            Peak m/z
+            </summary>
+            <remarks>This is observed m/z; it is not monoisotopic mass</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Intensity">
+            <summary>
+            Peak Intensity
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Resolution">
+            <summary>
+            Peak Resolution
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Baseline">
+            <summary>
+            Peak Baseline
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Noise">
+            <summary>
+            Peak Noise
+            </summary>
+            <remarks>For signal/noise ratio, see SignalToNoise</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.udtFTLabelInfoType.Charge">
+            <summary>
+            Peak Charge
+            </summary>
+            <remarks>Will be 0 if the charge could not be determined</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.udtFTLabelInfoType.SignalToNoise">
+            <summary>
+            Signal to noise ratio
+            </summary>
+            <returns>Intensity divided by noise, or 0 if Noise is 0</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.udtFTLabelInfoType.ToString">
+            <summary>
+            Return a summary of this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.DeviceInfo">
+            <summary>
+            Tracks information on the source device for data stored in a Thermo .raw file
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.DeviceType">
+            <summary>
+            Device type
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.DeviceNumber">
+            <summary>
+            Device number (for this device type)
+            </summary>
+            <remarks>Each device type starts with device number 1</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.DeviceDescription">
+            <summary>
+            Returns a human-readable description of the device
+            </summary>
+            <returns>
+            "Mass Spectrometer" if DeviceType is MS or MSAnalog
+            Otherwise, a description in the form "Analog Device #1"
+            </returns>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.InstrumentName">
+            <summary>
+            Instrument name (device name)
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.Model">
+            <summary>
+            Instrument model
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.SerialNumber">
+            <summary>
+            Instrument serial number
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.SoftwareVersion">
+            <summary>
+            Acquisition software version
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.Units">
+            <summary>
+            Units for stored intensity data for this device
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.AxisLabelX">
+            <summary>
+            X axis label for plotting data vs. scan
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.AxisLabelY">
+            <summary>
+            Y axis label for plotting data vs. scan
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.DeviceInfo.YAxisLabelWithUnits">
+            <summary>
+            Y axis label, along with the units in parentheses
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.DeviceInfo.#ctor(ThermoFisher.CommonCore.Data.Business.Device,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="deviceType">Device type</param>
+            <param name="deviceNumber">Device number (for this device type)</param>
+        </member>
+        <member name="M:ThermoRawFileReader.DeviceInfo.ToString">
+            <summary>
+            Display the device type and instrument model or name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ThermoRawFileReader.ActivationTypeConstants">
+            <summary>
+            Activation Types enum
+            </summary>
+            <remarks>This enum mirrors ThermoFisher.CommonCore.Data.FilterEnums.ActivationType</remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.Unknown">
+            <summary>
+            Unknown activation type
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.CID">
+            <summary>
+            Collision-Induced Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.MPD">
+            <summary>
+            Multi Photon Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ECD">
+            <summary>
+            Electron Capture Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.PQD">
+            <summary>
+            Pulsed Q Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ETD">
+            <summary>
+            Electron Transfer Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.HCD">
+            <summary>
+            High-energy Collision-induce Dissociation (psi-ms: beam-type collision-induced dissociation)
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.AnyType">
+            <summary>
+            Any activation type
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.SA">
+            <summary>
+            Supplemental Activation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.PTR">
+            <summary>
+            Proton Transfer Reaction
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.NETD">
+            <summary>
+            Negative Electron Transfer Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.NPTR">
+            <summary>
+            Negative Proton Transfer Reaction
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.UVPD">
+            <summary>
+            Ultraviolet Photo Dissociation
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeA">
+            <summary>
+            Mode A
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeB">
+            <summary>
+            Mode B
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeC">
+            <summary>
+            Mode C
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeD">
+            <summary>
+            Mode D
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeE">
+            <summary>
+            Mode E
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeF">
+            <summary>
+            Mode F
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeG">
+            <summary>
+            Mode G
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeH">
+            <summary>
+            Mode H
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeI">
+            <summary>
+            Mode I
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeJ">
+            <summary>
+            Mode J
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeK">
+            <summary>
+            Mode K
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeL">
+            <summary>
+            Mode L
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeM">
+            <summary>
+            Mode M
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeN">
+            <summary>
+            Mode N
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeO">
+            <summary>
+            Mode O
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeP">
+            <summary>
+            Mode P
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeQ">
+            <summary>
+            Mode Q
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeR">
+            <summary>
+            Mode R
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeS">
+            <summary>
+            Mode S
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeT">
+            <summary>
+            Mode T
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeU">
+            <summary>
+            Mode U
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeV">
+            <summary>
+            Mode V
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeW">
+            <summary>
+            Mode W
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeX">
+            <summary>
+            Mode X
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeY">
+            <summary>
+            Mode Y
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.ModeZ">
+            <summary>
+            Mode Z
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.ActivationTypeConstants.LastActivation">
+            <summary>
+            Last Activation
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.MRMScanTypeConstants">
+            <summary>
+            MRM Scan Types
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMScanTypeConstants.NotMRM">
+            <summary>
+            Not MRM
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMScanTypeConstants.MRMQMS">
+            <summary>
+            Multiple SIM ranges in a single scan
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMScanTypeConstants.SRM">
+            <summary>
+            Monitoring a parent ion and one or more daughter ions
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMScanTypeConstants.FullNL">
+            <summary>
+            Full neutral loss scan
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.MRMScanTypeConstants.SIM">
+            <summary>
+            Selected Ion Monitoring (SIM), which is MS1 of a limited m/z range
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.IonModeConstants">
+            <summary>
+            Ion Modes
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.IonModeConstants.Unknown">
+            <summary>
+            Unknown Ion Mode
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.IonModeConstants.Positive">
+            <summary>
+            Positive Ion Mode
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.IonModeConstants.Negative">
+            <summary>
+            Negative Ion Mode
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.IntensityCutoffTypeConstants">
+            <summary>
+            Intensity Cutoff Types
+            </summary>
+            <remarks>Used with <see cref="F:ThermoRawFileReader.XRawFileIO.mXRawFile"/> functions in <see cref="M:ThermoRawFileReader.XRawFileIO.GetScanData2D(System.Int32,System.Double[0:,0:]@,System.Int32,System.Boolean)"/> and <see cref="M:ThermoRawFileReader.XRawFileIO.GetScanDataSumScans(System.Int32,System.Int32,System.Double[0:,0:]@,System.Int32,System.Boolean)"/></remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.IntensityCutoffTypeConstants.None">
+            <summary>
+            All Values Returned
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.IntensityCutoffTypeConstants.AbsoluteIntensityUnits">
+            <summary>
+            Absolute Intensity Units
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.IntensityCutoffTypeConstants.RelativeToBasePeak">
+            <summary>
+            Intensity relative to base peak
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.InstFlags">
+            <summary>
+            Instrument Flags
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.InstFlags.TIM">
+            <summary>
+            Total Ion Map
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.InstFlags.NLM">
+            <summary>
+            Neutral Loss Map
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.InstFlags.PIM">
+            <summary>
+            Parent Ion Map
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.InstFlags.DDZMap">
+            <summary>
+            Data Dependent ZoomScan Map
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.ThermoReaderOptions">
+            <summary>
+            Thermo reader options
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.ThermoReaderOptions.LoadMSMethodInfo">
+            <summary>
+            MS Method Information
+            </summary>
+            <remarks>
+            Set this to false when using the ThermoRawFileReader on Linux systems;
+            CommonCore.RawFileReader raises an exception due to a null value when accessing
+            get_StorageDescriptions from get_InstrumentMethodsCount; stack trace:
+              ThermoRawFileReader.XRawFileIO.FillFileInfo
+              ThermoFisher.CommonCore.RawFileReader.RawFileAccessBase.get_InstrumentMethodsCount
+              ThermoFisher.CommonCore.RawFileReader.StructWrappers.Method.get_StorageDescriptions
+            </remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.ThermoReaderOptions.LoadMSTuneInfo">
+            <summary>
+            MS Tune Information
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.XRawFileIO">
+            <summary>
+            Class for reading Thermo .raw files
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mMaxScansToCacheInfo">
+            <summary>
+            Maximum size of the scan info cache
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mCachedFilePath">
+            <summary>
+            The the full path to the currently loaded .raw file
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mCachedScanInfo">
+            <summary>
+            The scan info cache
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mCachedScans">
+            <summary>
+            This linked list tracks the scan numbers stored in mCachedScanInfo,
+            allowing for quickly determining the oldest scan added to the cache when the cache limit is reached
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mXRawFile">
+            <summary>
+            Reader that implements ThermoFisher.CommonCore.Data.Interfaces.IRawDataPlus
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mXRawFileHeader">
+            <summary>
+            Cached file header
+            </summary>
+        </member>
+        <member name="F:ThermoRawFileReader.XRawFileIO.mCorruptMemoryEncountered">
+            <summary>
+            This is set to true if an exception is raised with the message "memory is corrupt"
+            It is also set to true if the .raw file does not have any MS data
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.FileInfo">
+            <summary>
+            File info for the currently loaded .raw file
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.Options">
+            <summary>
+            Thermo reader options
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.ScanInfoCacheMaxSize">
+            <summary>
+            Maximum number of scan metadata cached; defaults to 50000
+            </summary>
+            <remarks>Set to 0 to disable caching</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.ScanStart">
+            <summary>
+            First scan number in the .Raw file
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.ScanEnd">
+            <summary>
+            Last scan number in the .Raw file
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.XRawFileIO.TraceMode">
+            <summary>
+            When true, additional messages are reported via Debug events
+            </summary>
+        </member>
+        <member name="E:ThermoRawFileReader.XRawFileIO.ReportError">
+            <summary>
+            Event handler for reporting error messages
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.XRawFileIO.ReportErrorEventHandler">
+            <summary>
+            Event handler delegate for reporting error messages
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="E:ThermoRawFileReader.XRawFileIO.ReportWarning">
+            <summary>
+            Event handler for reporting warning messages
+            </summary>
+        </member>
+        <member name="T:ThermoRawFileReader.XRawFileIO.ReportWarningEventHandler">
+            <summary>
+            Event handler delegate for reporting warning messages
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.RaiseErrorMessage(System.String,System.Exception)">
+            <summary>
+            Report an error message to the error event handler
+            </summary>
+            <param name="message"></param>
+            <param name="ex">Optional exception</param>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.RaiseWarningMessage(System.String)">
+            <summary>
+            Report a warning message to the warning event handler
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.CheckFunctionality">
+            <summary>
+            Test the functionality of the reader - can we instantiate the MSFileReader Object?
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.IsMSFileReaderInstalled">
+            <summary>
+            Tests to see if we can load the needed Thermo MSFileReader DLL class without errors
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.IsMSFileReaderInstalled(System.String@)">
+            <summary>
+            Tests to see if we can load the needed Thermo MSFileReader DLL class without errors
+            </summary>
+            <param name="error">Reason for failure</param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.CloseRawFile">
+            <summary>
+            Close the .raw file
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.DetermineMRMScanType(System.String)">
+            <summary>
+            Determines the MRM scan type by parsing the scan filter string
+            </summary>
+            <param name="filterText"></param>
+            <returns>MRM scan type enum</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.DetermineIonizationMode(System.String)">
+            <summary>
+            Determine the Ionization mode by parsing the scan filter string
+            </summary>
+            <param name="filterText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ExtractMRMMasses(System.String,ThermoRawFileReader.MRMScanTypeConstants,ThermoRawFileReader.MRMInfo@)">
+            <summary>
+            Parse out the MRM_QMS or SRM mass info from filterText
+            </summary>
+            <param name="filterText"></param>
+            <param name="mrmScanType"></param>
+            <param name="mrmInfo">Output: MRM info class</param>
+            <remarks>We do not parse mass information out for Full Neutral Loss scans</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ExtractParentIonMZFromFilterText(System.String,System.Double@)">
+             <summary>
+             Parse out the parent ion from filterText
+             </summary>
+             <param name="filterText"></param>
+             <param name="parentIonMz">Parent ion m/z (output)</param>
+             <returns>True if success</returns>
+             <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
+             <remarks>
+             This was created for use in other programs that only need the parent ion m/z, and no other functions from ThermoRawFileReader.
+             Other projects that use this:
+                  PHRPReader (https://github.com/PNNL-Comp-Mass-Spec/PHRP)
+            
+             To copy this, take the code from this function, plus the regex strings <see cref="F:ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_NON_MSX_REGEX"/> and <see cref="F:ThermoRawFileReader.XRawFileIO.PARENT_ION_ONLY_MSX_REGEX"/>,
+             with their uses in <see cref="F:ThermoRawFileReader.XRawFileIO.mFindParentIonOnlyNonMsx"/> and <see cref="F:ThermoRawFileReader.XRawFileIO.mFindParentIonOnlyMsx"/>
+             </remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ExtractParentIonMZFromFilterText(System.String,System.Double@,System.Int32@,System.String@)">
+            <summary>
+            Parse out the parent ion and collision energy from filterText
+            </summary>
+            <param name="filterText"></param>
+            <param name="parentIonMz">Parent ion m/z (output)</param>
+            <param name="msLevel">MSLevel (output)</param>
+            <param name="collisionMode">Collision mode (output)</param>
+            <returns>True if success</returns>
+            <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ExtractParentIonMZFromFilterText(System.String,System.Double@,System.Int32@,System.String@,System.Collections.Generic.List{ThermoRawFileReader.udtParentIonInfoType}@)">
+            <summary>
+            Parse out the parent ion and collision energy from filterText
+            </summary>
+            <param name="filterText"></param>
+            <param name="parentIonMz">Parent ion m/z (output)</param>
+            <param name="msLevel">MSLevel (output)</param>
+            <param name="collisionMode">Collision mode (output)</param>
+            <param name="parentIons">Output: parent ion list</param>
+            <returns>True if success</returns>
+            <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ExtractMSLevel(System.String,System.Int32@,System.String@)">
+            <summary>
+            Extract the MS Level from the filter string
+            </summary>
+            <param name="filterText"></param>
+            <param name="msLevel"></param>
+            <param name="mzText"></param>
+            <returns>True if found and False if no match</returns>
+            <remarks>
+            Looks for "Full ms2" or "Full ms3" or " p ms2" or "SRM ms2" in filterText
+            Populates msLevel with the number after "ms" and mzText with the text after "ms2"
+            </remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.FillFileInfo">
+            <summary>
+            Populate mFileInfo
+            </summary>
+            <returns>True if no error, False if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetChromatogramData(ThermoFisher.CommonCore.Data.Business.Device,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get the list of intensity values, by scan, for the given device
+            Use this method to retrieve scan-based values for LC devices stored in the .raw file
+            </summary>
+            <param name="deviceType">Device type</param>
+            <param name="deviceNumber">Device number (1 based)</param>
+            <param name="scanStart">Start scan, or 0 to use ScanStart</param>
+            <param name="scanEnd">End scan, or 0 to use ScanEnd</param>
+            <returns>Dictionary where keys are scan number and values are the intensity for the scan</returns>
+            <remarks>
+            If the scan has multiple intensity values, they are summed
+            Scans that have no data will still be present in the dictionary, but with an intensity of 0
+            </remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetChromatogramData2D(ThermoFisher.CommonCore.Data.Business.Device,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get the intensities, by scan, for the given device
+            </summary>
+            <param name="deviceType">Device type</param>
+            <param name="deviceNumber">Device number (1 based)</param>
+            <param name="scanStart">Start scan, or 0 to use ScanStart</param>
+            <param name="scanEnd">End scan, or 0 to use ScanEnd</param>
+            <returns>Dictionary where keys are scan number and values are the list of intensities for that scan</returns>
+            <remarks>Scans that have no data will still be present in the dictionary, but with an empty list of doubles</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetCollisionEnergy(System.Int32)">
+            <summary>
+            Return the collision energy (or energies) for the given scan
+            </summary>
+            <param name="scan">Scan number</param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetDeviceInfo(ThermoFisher.CommonCore.Data.Business.Device,System.Int32)">
+            <summary>
+            Get the instrument information of the specified device
+            </summary>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetDeviceStats">
+            <summary>
+            Get a count of the number of instruments of each device type, as stored in the .raw file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetNumScans">
+            <summary>
+            Number of scans in the .raw file
+            </summary>
+            <returns>The number of scans, or -1 if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetRetentionTime(System.Int32,System.Double@)">
+            <summary>
+            Get the retention time for the specified scan. Use when searching for scans in a time range.
+            </summary>
+            <param name="scan">Scan number</param>
+            <param name="retentionTime">retention time</param>
+            <returns>True if no error, False if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanInfo(System.Int32,ThermoRawFileReader.clsScanInfo@)">
+            <summary>
+            Get the header info for the specified scan
+            </summary>
+            <param name="scan">Scan number</param>
+            <param name="scanInfo">Scan header info class</param>
+            <returns>True if no error, False if an error</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanTypeNameFromFinniganScanFilterText(System.String)">
+            <summary>
+            Parse the scan type name out of the scan filter string
+            </summary>
+            <param name="filterText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanTypeNameFromThermoScanFilterText(System.String)">
+            <summary>
+            Parse the scan type name out of the scan filter string
+            </summary>
+            <param name="filterText"></param>
+            <returns>Scan type name, e.g. HMS or HCD-HMSn</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.MakeGenericFinniganScanFilter(System.String)">
+            <summary>
+            Remove scan-specific data from a scan filter string; primarily removes the parent ion m/z and the scan m/z range
+            </summary>
+            <param name="filterText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.MakeGenericThermoScanFilter(System.String)">
+            <summary>
+            Remove scan-specific data from a scan filter string; primarily removes the parent ion m/z and the scan m/z range
+            </summary>
+            <param name="filterText"></param>
+            <returns>Generic filter text, e.g. FTMS + p NSI Full ms</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ValidateMSScan(System.String,System.Int32@,System.Boolean@,ThermoRawFileReader.MRMScanTypeConstants@,System.Boolean@)">
+            <summary>
+            Examines filterText to validate that it is a supported MS1 scan type (MS, SIM, or MRMQMS, or SRM scan)
+            </summary>
+            <param name="filterText"></param>
+            <param name="msLevel"></param>
+            <param name="simScan">True if mrmScanType is SIM or MRMQMS</param>
+            <param name="mrmScanType"></param>
+            <param name="zoomScan"></param>
+            <returns>True if filterText contains a known MS scan type</returns>
+            <remarks>Returns false for MSn scans (like ms2 or ms3)</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scanNumber">Scan number</param>
+            <param name="mzList">Output array of mass values</param>
+            <param name="intensityList">Output array of intensity values (parallel to mzList)</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,System.Int32)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scanNumber">Scan number</param>
+            <param name="mzList">Output array of mass values</param>
+            <param name="intensityList">Output array of intensity values (parallel to mzList)</param>
+            <param name="maxNumberOfPeaks">Set to 0 (or negative) to return all of the data</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,System.Int32,System.Boolean)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan">Scan number</param>
+            <param name="mzList">Output array of mass values</param>
+            <param name="intensityList">Output array of intensity values (parallel to mzList)</param>
+            <param name="maxNumberOfPeaks">Set to 0 (or negative) to return all of the data</param>
+            <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative),  returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData2D(System.Int32,System.Double[0:,0:]@)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="massIntensityPairs">2D array where the first dimension is 0 for mass or 1 for intensity while the second dimension is the data point index</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData2D(System.Int32,System.Double[0:,0:]@,System.Int32)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="massIntensityPairs">2D array where the first dimension is 0 for mass or 1 for intensity while the second dimension is the data point index</param>
+            <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData2D(System.Int32,System.Double[0:,0:]@,System.Int32,System.Boolean)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="massIntensityPairs">2D array where the first dimension is 0 for mass or 1 for intensity while the second dimension is the data point index</param>
+            <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
+            <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ReadScanData(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
+            <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
+            <returns>The scan data container, or null if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanLabelData(System.Int32,ThermoRawFileReader.udtFTLabelInfoType[]@)">
+            <summary>
+            Gets the scan label data for an FTMS-tagged scan
+            </summary>
+            <param name="scan">Scan number</param>
+            <param name="ftLabelData">List of mass, intensity, resolution, baseline intensity, noise floor, and charge for each data point</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetMSLevel(System.Int32)">
+            <summary>
+            Get the MSLevel (aka MS order) for a given scan
+            </summary>
+            <param name="scan"></param>
+            <returns>The MSOrder, or 0 if an error</returns>
+            <remarks>
+            MS1 spectra will return 1, MS2 spectra will return 2, etc.
+            Other, specialized scan types:
+              Neutral gain:   -3
+              Neutral loss:   -2
+              Parent scan:    -1
+            </remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanPrecisionData(System.Int32,ThermoRawFileReader.udtMassPrecisionInfoType[]@)">
+            <summary>
+            Gets scan precision data for FTMS data (resolution of each data point)
+            </summary>
+            <param name="scan"></param>
+            <param name="massResolutionData">List of Intensity, Mass, AccuracyMMU, AccuracyPPM, and Resolution for each data point</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>This returns a subset of the data thatGetScanLabelData does, but with 2 additional fields.</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanDataSumScans(System.Int32,System.Int32,System.Double[0:,0:]@,System.Int32,System.Boolean)">
+            <summary>
+            Sums data across scans
+            </summary>
+            <param name="scanFirst"></param>
+            <param name="scanLast"></param>
+            <param name="massIntensityPairs"></param>
+            <param name="maxNumberOfPeaks"></param>
+            <param name="centroidData"></param>
+            <returns>The number of data points</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.OpenRawFile(System.String)">
+            <summary>
+            Open the .raw file
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.ValidateAndSelectDevice(ThermoFisher.CommonCore.Data.Business.Device,System.Int32)">
+            <summary>
+            Validate that the .raw file has this device. If it does, select it using mXRawFile.SelectInstrument
+            If the device does not exist or there is an error, returns a message describing the problem
+            </summary>
+            <param name="deviceType"></param>
+            <param name="deviceNumber"></param>
+            <returns>Empty string if the device was successfully selected, otherwise an error message</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.#ctor">
+            <summary>
+            Constructor
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.#ctor(ThermoRawFileReader.ThermoReaderOptions)">
+            <summary>
+            Constructor with an options parameter
+            </summary>
+            <param name="options">Thermo reader options</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.#ctor(System.String,System.Boolean)">
+            <summary>
+            Constructor with a file path parameter
+            </summary>
+            <param name="rawFilePath">Thermo .raw file to open (empty string to not open a file)</param>
+            <param name="traceMode">When true, additional messages are reported via Debug events</param>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.#ctor(System.String,ThermoRawFileReader.ThermoReaderOptions,System.Boolean)">
+            <summary>
+            Constructor with file path, options, and optionally a trace flag
+            </summary>
+            <param name="rawFilePath">Thermo .raw file to open (empty string to not open a file)</param>
+            <param name="options">Thermo reader options</param>
+            <param name="traceMode">When true, additional messages are reported via Debug events</param>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.Dispose">
+            <summary>
+            Dispose the reader
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetCollisionEnergyUnnormalized(System.Int32)">
+            <summary>
+            Return un-normalized collision energies via call IScanFilter.GetEnergy
+            </summary>
+            <param name="scan"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanInfo(System.Int32,ThermoRawFileReader.udtScanHeaderInfoType@)">
+            <summary>
+            Get the header info for the specified scan
+            </summary>
+            <param name="scan">Scan number</param>
+            <param name="udtScanInfo">Scan header info struct</param>
+            <returns>True if no error, False if an error</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,ThermoRawFileReader.udtScanHeaderInfoType@)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="mzList"></param>
+            <param name="intensityList"></param>
+            <param name="udtScanInfo">Unused; parameter retained for compatibility reasons</param>
+            <returns>The number of data points, or -1 if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,ThermoRawFileReader.udtScanHeaderInfoType@,System.Boolean)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="mzList"></param>
+            <param name="intensityList"></param>
+            <param name="udtScanInfo">Unused; parameter retained for compatibility reasons</param>
+            <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
+            <returns>The number of data points, or -1 if an error</returns>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,ThermoRawFileReader.udtScanHeaderInfoType@,System.Int32)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="mzList"></param>
+            <param name="intensityList"></param>
+            <param name="udtScanInfo">Unused; parameter retained for compatibility reasons</param>
+            <param name="maxNumberOfPeaks">Set to 0 (or negative) to return all of the data</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData(System.Int32,System.Double[]@,System.Double[]@,ThermoRawFileReader.udtScanHeaderInfoType@,System.Int32,System.Boolean)">
+            <summary>
+            Obtain the mass and intensity list for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="mzList"></param>
+            <param name="intensityList"></param>
+            <param name="udtScanInfo">Unused; parameter retained for compatibility reasons</param>
+            <param name="maxNumberOfPeaks">Set to 0 (or negative) to return all of the data</param>
+            <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.XRawFileIO.GetScanData2D(System.Int32,System.Double[0:,0:]@,ThermoRawFileReader.udtScanHeaderInfoType@,System.Int32)">
+            <summary>
+            Obtain the mass and intensity for the specified scan
+            </summary>
+            <param name="scan"></param>
+            <param name="massIntensityPairs">2D array where the first dimension is 0 for mass or 1 for intensity while the second dimension is the data point index</param>
+            <param name="udtScanInfo">Unused; parameter retained for compatibility reasons</param>
+            <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
+            <returns>The number of data points, or -1 if an error</returns>
+            <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
+        </member>
+        <member name="T:ThermoRawFileReader.clsScanInfo">
+            <summary>
+            Container for metadata relating to a single scan
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.CacheDateUTC">
+            <summary>
+            UTC Time that this scan info was cached
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks>Used for determining which cached scan info can be discarded if too many scans become cached</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ScanNumber">
+            <summary>
+            Scan number
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.MSLevel">
+            <summary>
+            MS Level
+            </summary>
+            <value></value>
+            <returns>MS acquisition level, where 1 means MS, 2 means MS/MS, 3 means MS^3 aka MS/MS/MS</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.EventNumber">
+            <summary>
+            Event Number
+            </summary>
+            <value></value>
+            <returns>1 for parent-ion scan; 2 for 1st frag scan, 3 for 2nd frag scan, etc.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.SIMScan">
+            <summary>
+            SIM Scan Flag
+            </summary>
+            <value></value>
+            <returns>True if this is a selected ion monitoring (SIM) scan (i.e. a small mass range is being examined)</returns>
+            <remarks>If multiple selected ion ranges are examined simultaneously, then this will be false but MRMScanType will be .MRMQMS</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.MRMScanType">
+            <summary>
+            Multiple reaction monitoring mode
+            </summary>
+            <value></value>
+            <returns>1 or 2 if this is a multiple reaction monitoring scan (MRMQMS or SRM)</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ZoomScan">
+            <summary>
+            Zoom scan flag
+            </summary>
+            <value></value>
+            <returns>True when the given scan is a zoomed in mass region</returns>
+            <remarks>These spectra are typically skipped when creating SICs</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.NumPeaks">
+            <summary>
+            Number of mass intensity value pairs
+            </summary>
+            <value></value>
+            <returns>Number of points, -1 if unknown</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.RetentionTime">
+            <summary>
+            Retention time (in minutes)
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.LowMass">
+            <summary>
+            Lowest m/z value
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.HighMass">
+            <summary>
+            Highest m/z value
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.TotalIonCurrent">
+            <summary>
+            Total ion current
+            </summary>
+            <value></value>
+            <returns>Sum of all ion abundances</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.BasePeakMZ">
+            <summary>
+            Base peak m/z
+            </summary>
+            <value></value>
+            <returns>m/z value of the most abundant ion in the scan</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.BasePeakIntensity">
+            <summary>
+            Base peak intensity
+            </summary>
+            <value></value>
+            <returns>Intensity of the most abundant ion in the scan</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.FilterText">
+            <summary>
+            Scan Filter string
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ParentIonMZ">
+            <summary>
+            Parent ion m/z
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ParentIonMonoisotopicMZ">
+            <summary>
+            The monoisotopic parent ion m/z, as determined by the thermo software
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.IsolationWindowTargetMZ">
+            <summary>
+            The monoisotopic parent ion m/z, as determined by the Thermo software
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ChargeState">
+            <summary>
+            The parent ion charge state, as determined by the Thermo software
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ActivationType">
+            <summary>
+            Activation type (aka activation method) as reported by the reader
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks>Not applicable for MS1 scans (though will report 0=CID, which should be disregarded)</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.CollisionMode">
+            <summary>
+            Collision mode, determined from the filter string
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks>Typically CID, ETD, HCD, EThcD, or ETciD</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.IonMode">
+            <summary>
+            Ionization polarity
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.MRMInfo">
+            <summary>
+            MRM mode
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.NumChannels">
+             <summary>
+            
+             </summary>
+             <value></value>
+             <returns></returns>
+             <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.UniformTime">
+            <summary>
+            Indicates whether the sampling time increment for the controller is constant
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.Frequency">
+            <summary>
+            Sampling frequency for the current controller
+            </summary>
+            <value></value>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="F:ThermoRawFileReader.clsScanInfo.IonInjectionTime">
+            <summary>
+            Ion Injection Time (in milliseconds)
+            </summary>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.IsCentroided">
+            <summary>
+            Centroid scan flag
+            </summary>
+            <value></value>
+            <returns>True if centroid (sticks) scan; False if profile (continuum) scan</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.IsFTMS">
+            <summary>
+            FTMS flag (or Orbitrap, Q-Exactive, Lumos, or any other high resolution instrument)
+            </summary>
+            <value></value>
+            <returns>True if acquired on a high resolution mass analyzer (for example, on an Orbitrap or Q-Exactive)</returns>
+            <remarks></remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.ScanEvents">
+            <summary>
+            Scan event data
+            </summary>
+            <value></value>
+            <returns>List of key/value pairs</returns>
+            <remarks>Ignores scan events with a blank or null event name</remarks>
+        </member>
+        <member name="P:ThermoRawFileReader.clsScanInfo.StatusLog">
+            <summary>
+            Status log data
+            </summary>
+            <value></value>
+            <returns>List of key/value pairs</returns>
+            <remarks>Includes blank events that separate log sections</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.#ctor(System.Int32)">
+            <summary>
+            Constructor with only scan number
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.#ctor(System.Int32,ThermoRawFileReader.udtScanHeaderInfoType)">
+            <summary>
+            Constructor with scan number and data in a udtScanHeaderInfoType struct
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.StoreScanEvents(System.String[],System.String[])">
+            <summary>
+            Store this scan's scan events using parallel string arrays
+            </summary>
+            <param name="eventNames"></param>
+            <param name="eventValues"></param>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.StoreStatusLog(System.String[],System.String[])">
+            <summary>
+            Store this scan's log messages using parallel string arrays
+            </summary>
+            <param name="logNames"></param>
+            <param name="logValues"></param>
+            <remarks></remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.TryGetScanEvent(System.String,System.String@,System.Boolean)">
+            <summary>
+            Get the event value associated with the given scan event name
+            </summary>
+            <param name="eventName">Event name to find</param>
+            <param name="eventValue">Event value</param>
+            <param name="partialMatchToStart">Set to true to match the start of an event name, and not require a full match</param>
+            <returns>True if found a match for the event name, otherwise false</returns>
+            <remarks>Event names nearly always end in a colon, e.g. "Monoisotopic M/Z:" or "Charge State:"</remarks>
+        </member>
+        <member name="M:ThermoRawFileReader.clsScanInfo.ToString">
+            <summary>
+            Overridden ToString(): Displays a short summary of this object
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
