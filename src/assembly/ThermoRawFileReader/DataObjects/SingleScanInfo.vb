@@ -1,12 +1,10 @@
 ﻿Imports System.Runtime.InteropServices
 
-
 ''' <summary>
 ''' Container for metadata relating to a single scan
 ''' </summary>
 <CLSCompliant(True)>
-Public Class clsScanInfo
-    ' Ignore Spelling: EThcD, ETciD, frag
+Public Class SingleScanInfo
 
 #Region "Properties"
 

@@ -76,13 +76,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsScanInfo.vb" />
-    <Compile Include="DataObjects.vb" />
+    <Compile Include="DataObjects\SingleScanInfo.vb" />
+    <Compile Include="DataObjects\DataObjects.vb" />
     <Compile Include="DeviceInfo.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="RawFileReader.vb" />
-    <Compile Include="RawLabelData.vb" />
+    <Compile Include="DataObjects\RawLabelData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

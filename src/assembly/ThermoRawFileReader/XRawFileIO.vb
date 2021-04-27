@@ -112,7 +112,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <summary>
     ''' The scan info cache
     ''' </summary>
-    Private ReadOnly mCachedScanInfo As New Dictionary(Of Integer, ThermoRawFileReader.clsScanInfo)
+    Private ReadOnly mCachedScanInfo As New Dictionary(Of Integer, ThermoRawFileReader.SingleScanInfo)
     ''' <summary>
     ''' This linked list tracks the scan numbers stored in mCachedScanInfo,
     ''' allowing for quickly determining the oldest scan added to the cache when the cache limit is reached
@@ -303,7 +303,7 @@ Public Class XRawFileIO : Implements IDisposable
         End If
     End Sub
 
-    Private Sub CacheScanInfo(ByVal scan As Integer, ByVal scanInfo As clsScanInfo)
+    Private Sub CacheScanInfo(ByVal scan As Integer, ByVal scanInfo As SingleScanInfo)
         If ScanInfoCacheMaxSize = 0 Then
             Return
         End If
@@ -1005,7 +1005,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     Public Function GetCollisionEnergy(ByVal scan As Integer) As List(Of Double)
         Dim collisionEnergies = New List(Of Double)()
-        Dim scanInfo As clsScanInfo = Nothing, parentIons As List(Of ParentIonInfoType) = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing, parentIons As List(Of ParentIonInfoType) = Nothing
 
         Try
             If mXRawFile Is Nothing Then Return collisionEnergies
@@ -1136,7 +1136,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     ''' <param name="scanInfo">Scan header info class</param>
     ''' <returns>True if no error, False if an error</returns>
-    Public Function GetScanInfo(ByVal scan As Integer, <Out> ByRef scanInfo As clsScanInfo) As Boolean
+    Public Function GetScanInfo(ByVal scan As Integer, <Out> ByRef scanInfo As SingleScanInfo) As Boolean
         ' Check for the scan in the cache
         If Me.mCachedScanInfo.TryGetValue(scan, scanInfo) Then
             Return True
@@ -1148,7 +1148,7 @@ Public Class XRawFileIO : Implements IDisposable
             scan = FileInfo.ScanEnd
         End If
 
-        scanInfo = New clsScanInfo(scan)
+        scanInfo = New SingleScanInfo(scan)
         ' XRaw periodically mislabels a scan as .EventNumber = 1 when it's really an MS/MS scan; check for this
         ' Parse out the parent ion and collision energy from .FilterText
         Dim scanEventNumber As Integer = Nothing, ionInjectionTime As Double = Nothing, msLevel As Integer = Nothing, parentIonMz As Double = Nothing, collisionMode As String = Nothing, simScan As Boolean = Nothing, mrmScanType As MRMScanTypeConstants = Nothing, zoomScan As Boolean = Nothing
@@ -1975,7 +1975,7 @@ Public Class XRawFileIO : Implements IDisposable
             scan = FileInfo.ScanEnd
         End If
 
-        Dim scanInfo As clsScanInfo = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing
 
         If Not GetScanInfo(scan, scanInfo) Then
             Throw New Exception("Cannot retrieve ScanInfo from cache for scan " & scan & "; cannot retrieve scan data")
@@ -2091,7 +2091,7 @@ Public Class XRawFileIO : Implements IDisposable
             scan = FileInfo.ScanEnd
         End If
 
-        Dim scanInfo As clsScanInfo = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing
 
         If Not GetScanInfo(scan, scanInfo) Then
             Throw New Exception("Cannot retrieve ScanInfo from cache for scan " & scan & "; cannot retrieve scan data")
@@ -2192,7 +2192,7 @@ Public Class XRawFileIO : Implements IDisposable
             scan = FileInfo.ScanEnd
         End If
 
-        Dim scanInfo As clsScanInfo = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing
 
         If Not GetScanInfo(scan, scanInfo) Then
             Throw New Exception("Cannot retrieve ScanInfo from cache for scan " & scan & "; cannot retrieve scan data")

@@ -110,7 +110,7 @@
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
     Private Function GetScanData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
-        Dim scanInfo As clsScanInfo = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing
         If Not mRawFileReader.GetScanInfo(scanNumber, scanInfo) Then Return Nothing
         Return If(scanInfo.IsFTMS, GetLabelData(scanNumber), GetPeakData(scanNumber))
     End Function
