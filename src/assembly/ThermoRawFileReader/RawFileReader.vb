@@ -26,7 +26,7 @@
     ''' <summary>
     ''' Constructor
     ''' </summary>
-    ''' <paramname="filePath"></param>
+    ''' <param name="filePath"></param>
     Public Sub New(ByVal filePath As String)
         mFilePath = filePath
         mRawFileReader = Nothing
@@ -35,7 +35,7 @@
     ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>
-    ''' <paramname="options"></param>
+    ''' <param name="readerOptions"></param>
     Public Sub LoadFile(readerOptions As ThermoReaderOptions)
         mRawFileReader = New XRawFileIO(readerOptions)
         mRawFileReader.OpenRawFile(mFilePath)
@@ -50,7 +50,7 @@
     ''' <summary>
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS) as an enumerable list
     ''' </summary>
-    ''' <paramname="options"></param>
+    ''' <param name="options"></param>
     ''' <returns></returns>
     Public Iterator Function GetLabelData(ByVal options As CommandLineOptions) As IEnumerable(Of RawLabelData)
         Dim currentTask = "Initializing"
@@ -105,7 +105,7 @@
     ''' <summary>
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS)
     ''' </summary>
-    ''' <paramname="scanNumber"></param>
+    ''' <param name="scanNumber"></param>
     ''' <returns></returns>
     Private Function GetScanData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
         Dim scanInfo As clsScanInfo = Nothing
@@ -116,7 +116,7 @@
     ''' <summary>
     ''' Get the label data for the given scan
     ''' </summary>
-    ''' <paramname="scanNumber"></param>
+    ''' <param name="scanNumber"></param>
     ''' <returns></returns>
     Private Function GetLabelData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
         Dim labelData As udtFTLabelInfoType() = Nothing
@@ -132,7 +132,7 @@
     ''' <summary>
     ''' Get the peak data for the given scan
     ''' </summary>
-    ''' <paramname="scanNumber"></param>
+    ''' <param name="scanNumber"></param>
     ''' <returns></returns>
     Private Function GetPeakData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
         Const MAX_NUMBER_OF_PEAKS = 0

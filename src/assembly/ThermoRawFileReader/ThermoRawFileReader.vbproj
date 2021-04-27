@@ -63,9 +63,6 @@
     <Reference Include="ThermoFisher.CommonCore.RawFileReader">
       <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
     </Reference>
-    <Reference Include="ThermoRawFileReader">
-      <HintPath>..\..\..\ThermoFisher\ThermoRawFileReader.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -79,6 +76,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsScanInfo.vb" />
+    <Compile Include="DataObjects.vb" />
+    <Compile Include="DeviceInfo.vb" />
+    <Compile Include="Enums.vb" />
+    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="RawFileReader.vb" />
     <Compile Include="RawLabelData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -96,6 +98,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ThermoReaderOptions.vb" />
+    <Compile Include="XRawFileIO.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
