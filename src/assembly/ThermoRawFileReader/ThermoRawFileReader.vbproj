@@ -81,6 +81,7 @@
     <Compile Include="DeviceInfo.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="Module1.vb" />
     <Compile Include="RawFileReader.vb" />
     <Compile Include="RawLabelData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
