@@ -12,7 +12,7 @@
     ''' <summary>
     ''' Label data (if FTMS), otherwise peak data
     ''' </summary>
-    Public Property MSData As List(Of udtFTLabelInfoType)
+    Public Property MSData As List(Of FTLabelInfoType)
 
     ''' <summary>
     ''' Maximum intensity of the peaks in this scan

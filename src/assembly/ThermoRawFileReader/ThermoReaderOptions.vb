@@ -60,6 +60,18 @@ Public Class ThermoReaderOptions
     ''' </summary>
     Public Property LoadMSTuneInfo As Boolean = True
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property MinScan As Integer = -1
+    Public Property MinMz As Double
+    Public Property MaxMz As Double
+    Public Property MinRelIntensityThresholdRatio As Double
+    Public Property SignalToNoiseThreshold As Double
+    Public Property MinIntensityThreshold As Double
+    Public Property MaxScan As Integer
+
 #End Region
 
 End Class

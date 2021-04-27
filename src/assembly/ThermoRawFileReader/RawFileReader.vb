@@ -50,10 +50,10 @@
     ''' <summary>
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS) as an enumerable list
     ''' </summary>
-    ''' <param name="options"></param>
     ''' <returns></returns>
-    Public Iterator Function GetLabelData(ByVal options As CommandLineOptions) As IEnumerable(Of RawLabelData)
+    Public Iterator Function GetLabelData() As IEnumerable(Of RawLabelData)
         Dim currentTask = "Initializing"
+        Dim options As ThermoReaderOptions = mRawFileReader.Options
 
         Try
 
@@ -90,7 +90,9 @@
 
             ' Check for the maximum intensity being zero
             If Math.Abs(maxInt) < Single.Epsilon Then Continue For
-            Dim dataFiltered = data.Where(Function(x) x.Intensity >= options.MinIntensityThreshold AndAlso x.Intensity / maxInt >= options.MinRelIntensityThresholdRatio AndAlso x.Mass >= options.MinMz AndAlso x.Mass <= options.MaxMz AndAlso x.SignalToNoise >= options.SignalToNoiseThreshold).ToList()
+            Dim dataFiltered = data.Where(Function(x)
+                                              Return x.Intensity >= options.MinIntensityThreshold AndAlso x.Intensity / maxInt >= options.MinRelIntensityThresholdRatio AndAlso x.Mass >= options.MinMz AndAlso x.Mass <= options.MaxMz AndAlso x.SignalToNoise >= options.SignalToNoiseThreshold
+                                          End Function).ToList()
             If dataFiltered.Count = 0 Then Continue For
             mRawFileReader.GetRetentionTime(i, rt)
             Yield New RawLabelData With {
@@ -107,7 +109,7 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetScanData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
+    Private Function GetScanData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
         Dim scanInfo As clsScanInfo = Nothing
         If Not mRawFileReader.GetScanInfo(scanNumber, scanInfo) Then Return Nothing
         Return If(scanInfo.IsFTMS, GetLabelData(scanNumber), GetPeakData(scanNumber))
@@ -118,8 +120,8 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetLabelData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
-        Dim labelData As udtFTLabelInfoType() = Nothing
+    Private Function GetLabelData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
+        Dim labelData As FTLabelInfoType() = Nothing
         mRawFileReader.GetScanLabelData(scanNumber, labelData)
 
         If labelData.Length > 0 Then
@@ -134,7 +136,7 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetPeakData(ByVal scanNumber As Integer) As List(Of udtFTLabelInfoType)
+    Private Function GetPeakData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
         Const MAX_NUMBER_OF_PEAKS = 0
         Const CENTROID_DATA = True
         Dim peakData As Double(,) = Nothing
@@ -147,10 +149,10 @@
             Return Nothing
         End If
 
-        Dim data = New List(Of udtFTLabelInfoType)(dataCount)
+        Dim data = New List(Of FTLabelInfoType)(dataCount)
 
         For i = 0 To dataCount - 1
-            Dim peak = New udtFTLabelInfoType With {
+            Dim peak = New FTLabelInfoType With {
                 .Mass = peakData(0, i),
                 .Intensity = peakData(1, i)
             }
