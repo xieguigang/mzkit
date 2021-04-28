@@ -98,7 +98,7 @@ Public Class ThermoReaderOptions
     ''' Last scan to output
     ''' </summary>
     ''' <returns></returns>
-    Public Property MaxScan As Integer = -1
+    Public Property MaxScan As Integer = Short.MaxValue
 
 #End Region
 

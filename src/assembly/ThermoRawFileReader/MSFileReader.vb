@@ -1,4 +1,4 @@
-﻿Public Class RawFileReader : Implements IDisposable
+﻿Public Class MSFileReader : Implements IDisposable
 
     Private _ScanMin As Integer, _ScanMax As Integer
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"
@@ -30,6 +30,10 @@
     Public Sub New(ByVal filePath As String)
         mFilePath = filePath
         mRawFileReader = Nothing
+    End Sub
+
+    Public Sub LoadFile()
+        Call LoadFile(New ThermoReaderOptions)
     End Sub
 
     ''' <summary>
