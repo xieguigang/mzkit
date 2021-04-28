@@ -7,7 +7,7 @@ Module Module1
 
         Call raw.LoadFile()
 
-        For Each scan In raw.GetLabelData
+        For Each scan As RawLabelData In raw.GetLabelData
             Call Console.WriteLine(scan.ToString)
         Next
 
