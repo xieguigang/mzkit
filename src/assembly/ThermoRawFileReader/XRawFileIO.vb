@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports ThermoFisher.CommonCore.BackgroundSubtraction
 Imports ThermoFisher.CommonCore.Data
 Imports ThermoFisher.CommonCore.Data.Business
@@ -437,7 +438,12 @@ Public Class XRawFileIO : Implements IDisposable
         End If
 
         If match.Success Then
-            Return match.Value
+            Select Case Provider.ParseIonMode(match.Value, allowsUnknown:=True)
+                Case 1 : Return IonModeConstants.Positive
+                Case -1 : Return IonModeConstants.Negative
+                Case Else
+                    Return IonModeConstants.Unknown
+            End Select
         End If
 
         Return IonModeConstants.Unknown
