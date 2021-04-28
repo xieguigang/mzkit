@@ -1,4 +1,5 @@
-﻿Imports stdNum = System.Math
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+Imports stdNum = System.Math
 
 Public Class MSFileReader : Implements IDisposable
 

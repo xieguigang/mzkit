@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports ThermoFisher.CommonCore.BackgroundSubtraction
 Imports ThermoFisher.CommonCore.Data
@@ -114,7 +115,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <summary>
     ''' The scan info cache
     ''' </summary>
-    Private ReadOnly mCachedScanInfo As New Dictionary(Of Integer, ThermoRawFileReader.SingleScanInfo)
+    Private ReadOnly mCachedScanInfo As New Dictionary(Of Integer, SingleScanInfo)
     ''' <summary>
     ''' This linked list tracks the scan numbers stored in mCachedScanInfo,
     ''' allowing for quickly determining the oldest scan added to the cache when the cache limit is reached
@@ -2236,16 +2237,16 @@ Public Class XRawFileIO : Implements IDisposable
 
             If (results.Count > 0) Then
                 Dim dataCount = results.Count
-                massResolutionData = New ThermoRawFileReader.MassPrecisionInfoType(dataCount - 1) {}
+                massResolutionData = New MassPrecisionInfoType(dataCount - 1) {}
 
                 For i = 0 To dataCount - 1
 
-                    Dim massPrecisionInfo As New ThermoRawFileReader.MassPrecisionInfoType With {
-                       .Intensity = results(i).Intensity,
-                                              .Mass = results(i).Mass,
-                                             .AccuracyMMU = results(i).MassAccuracyInMmu,
-                                             .AccuracyPPM = results(i).MassAccuracyInPpm,
-                                              .Resolution = results(i).Resolution
+                    Dim massPrecisionInfo As New MassPrecisionInfoType With {
+                        .Intensity = results(i).Intensity,
+                        .Mass = results(i).Mass,
+                        .AccuracyMMU = results(i).MassAccuracyInMmu,
+                        .AccuracyPPM = results(i).MassAccuracyInPpm,
+                        .Resolution = results(i).Resolution
                     }
 
 

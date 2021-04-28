@@ -1,4 +1,6 @@
-﻿Namespace DataObjects
+﻿Imports ThermoFisher.CommonCore.Data.Business
+
+Namespace DataObjects
 
     ''' <summary>
     ''' Type for File Information

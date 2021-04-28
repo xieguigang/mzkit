@@ -1,4 +1,6 @@
-﻿Namespace DataObjects
+﻿Imports System.Runtime.InteropServices
+
+Namespace DataObjects
 
     ''' <summary>
     ''' Type for MRM Information
