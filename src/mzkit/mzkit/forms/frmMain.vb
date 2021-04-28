@@ -61,6 +61,8 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
@@ -72,7 +74,6 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports RibbonLib
-Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -155,6 +156,16 @@ Public Class frmMain
 
             Call WindowModules.rawFeaturesList.LoadRaw(raw)
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
+        ElseIf fileName.ExtensionSuffix("raw") Then
+            Dim raw As New MSFileReader(fileName)
+
+            Call raw.LoadFile()
+
+            For Each scan As RawLabelData In raw.GetLabelData
+                Call Console.WriteLine(scan.ToString)
+            Next
+
+            Throw New NotImplementedException
         Else
             Call WindowModules.fileExplorer.ImportsRaw(fileName)
         End If

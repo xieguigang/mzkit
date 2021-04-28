@@ -256,6 +256,18 @@
     <Reference Include="ThemeVS2015">
       <HintPath>..\dist\ThemeVS2015.dll</HintPath>
     </Reference>
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -981,6 +993,10 @@
     <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\ThermoRawFileReader\ThermoRawFileReader.vbproj">
+      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
+      <Name>ThermoRawFileReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
