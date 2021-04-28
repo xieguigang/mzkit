@@ -95,8 +95,15 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataObjects\MassPrecisionInfoType.vb" />
+    <Compile Include="DataObjects\ParentIonInfoType.vb" />
+    <Compile Include="DataObjects\MRMInfo.vb" />
+    <Compile Include="DataObjects\MRMMassRangeType.vb" />
+    <Compile Include="DataObjects\RawFileInfo.vb" />
+    <Compile Include="DataObjects\TuneMethodSettingType.vb" />
+    <Compile Include="DataObjects\TuneMethod.vb" />
     <Compile Include="DataObjects\SingleScanInfo.vb" />
-    <Compile Include="DataObjects\DataObjects.vb" />
+    <Compile Include="DataObjects\FTLabelInfoType.vb" />
     <Compile Include="DeviceInfo.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="GlobalSuppressions.vb" />
