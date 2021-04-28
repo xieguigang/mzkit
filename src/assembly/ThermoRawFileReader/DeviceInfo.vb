@@ -121,7 +121,7 @@ Public Class DeviceInfo
     ''' </summary>
     ''' <param name="deviceType">Device type</param>
     ''' <param name="deviceNumber">Device number (for this device type)</param>
-    Public Sub New(ByVal deviceType As Device, ByVal deviceNumber As Integer)
+    Public Sub New(deviceType As Device, deviceNumber As Integer)
         Me.DeviceType = deviceType
         Me.DeviceNumber = deviceNumber
     End Sub

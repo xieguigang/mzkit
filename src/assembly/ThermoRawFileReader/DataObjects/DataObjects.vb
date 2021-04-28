@@ -284,7 +284,7 @@ Public Class MRMInfo
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="target"></param>
-    Public Shared Sub DuplicateMRMInfo(ByVal source As MRMInfo, <Out> ByRef target As MRMInfo)
+    Public Shared Sub DuplicateMRMInfo(source As MRMInfo, <Out> ByRef target As MRMInfo)
         target = New MRMInfo()
 
         For Each item In source.MRMMassList

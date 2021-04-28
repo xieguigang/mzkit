@@ -1,4 +1,6 @@
-﻿Public Class MSFileReader : Implements IDisposable
+﻿Imports stdNum = System.Math
+
+Public Class MSFileReader : Implements IDisposable
 
     Private _ScanMin As Integer, _ScanMax As Integer
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"
@@ -9,7 +11,7 @@
         Get
             Return _ScanMin
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _ScanMin = value
         End Set
     End Property
@@ -18,7 +20,7 @@
         Get
             Return _ScanMax
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _ScanMax = value
         End Set
     End Property
@@ -27,7 +29,7 @@
     ''' Constructor
     ''' </summary>
     ''' <param name="filePath"></param>
-    Public Sub New(ByVal filePath As String)
+    Public Sub New(filePath As String)
         mFilePath = filePath
         mRawFileReader = Nothing
     End Sub
@@ -93,12 +95,22 @@
             Dim maxInt = data.Max(Function(x) x.Intensity)
 
             ' Check for the maximum intensity being zero
-            If Math.Abs(maxInt) < Single.Epsilon Then Continue For
-            Dim dataFiltered = data.Where(Function(x)
-                                              Return x.Intensity >= options.MinIntensityThreshold AndAlso x.Intensity / maxInt >= options.MinRelIntensityThresholdRatio AndAlso x.Mass >= options.MinMz AndAlso x.Mass <= options.MaxMz AndAlso x.SignalToNoise >= options.SignalToNoiseThreshold
-                                          End Function).ToList()
-            If dataFiltered.Count = 0 Then Continue For
-            mRawFileReader.GetRetentionTime(i, rt)
+            If stdNum.Abs(maxInt) < Single.Epsilon Then
+                Continue For
+            End If
+
+            Dim dataFiltered = data _
+                .Where(Function(x)
+                           Return x.Intensity >= options.MinIntensityThreshold AndAlso x.Intensity / maxInt >= options.MinRelIntensityThresholdRatio AndAlso x.Mass >= options.MinMz AndAlso x.Mass <= options.MaxMz AndAlso x.SignalToNoise >= options.SignalToNoiseThreshold
+                       End Function) _
+                .ToList()
+
+            If dataFiltered.Count = 0 Then
+                Continue For
+            Else
+                mRawFileReader.GetRetentionTime(i, rt)
+            End If
+
             Yield New RawLabelData With {
                 .ScanNumber = i,
                 .ScanTime = rt,
@@ -113,7 +125,7 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetScanData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
+    Private Function GetScanData(scanNumber As Integer) As List(Of FTLabelInfoType)
         Dim scanInfo As SingleScanInfo = Nothing
         If Not mRawFileReader.GetScanInfo(scanNumber, scanInfo) Then Return Nothing
         Return If(scanInfo.IsFTMS, GetLabelData(scanNumber), GetPeakData(scanNumber))
@@ -124,7 +136,7 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetLabelData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
+    Private Function GetLabelData(scanNumber As Integer) As List(Of FTLabelInfoType)
         Dim labelData As FTLabelInfoType() = Nothing
         mRawFileReader.GetScanLabelData(scanNumber, labelData)
 
@@ -140,7 +152,7 @@
     ''' </summary>
     ''' <param name="scanNumber"></param>
     ''' <returns></returns>
-    Private Function GetPeakData(ByVal scanNumber As Integer) As List(Of FTLabelInfoType)
+    Private Function GetPeakData(scanNumber As Integer) As List(Of FTLabelInfoType)
         Const MAX_NUMBER_OF_PEAKS = 0
         Const CENTROID_DATA = True
         Dim peakData As Double(,) = Nothing

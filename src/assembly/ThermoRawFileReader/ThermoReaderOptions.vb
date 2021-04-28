@@ -11,7 +11,7 @@ Public Class ThermoReaderOptions
     ''' Delegate method for OptionsUpdatedEvent
     ''' </summary>
     ''' <param name="sender"></param>
-    Public Delegate Sub OptionsUpdatedEventHandler(ByVal sender As Object)
+    Public Delegate Sub OptionsUpdatedEventHandler(sender As Object)
 
     ''' <summary>
     ''' This event is raised when one of the options tracked by this class is changed
@@ -37,7 +37,7 @@ Public Class ThermoReaderOptions
         Get
             Return mIncludeReferenceAndExceptionData
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             If mIncludeReferenceAndExceptionData = value Then Return
             mIncludeReferenceAndExceptionData = value
             RaiseEvent OptionsUpdatedEvent(Me)

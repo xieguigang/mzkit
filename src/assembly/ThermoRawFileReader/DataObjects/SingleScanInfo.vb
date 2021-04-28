@@ -223,7 +223,7 @@ Public Class SingleScanInfo
     ''' <summary>
     ''' Constructor with only scan number
     ''' </summary>
-    Public Sub New(ByVal scan As Integer)
+    Public Sub New(scan As Integer)
         NumPeaks = -1
         ScanNumber = scan
         CacheDateUTC = Date.UtcNow
@@ -239,7 +239,7 @@ Public Class SingleScanInfo
     ''' </summary>
     ''' <param name="eventNames"></param>
     ''' <param name="eventValues"></param>
-    Public Sub StoreScanEvents(ByVal eventNames As String(), ByVal eventValues As String())
+    Public Sub StoreScanEvents(eventNames As String(), eventValues As String())
         StoreParallelStrings(ScanEvents, eventNames, eventValues, True, True)
     End Sub
 
@@ -248,7 +248,7 @@ Public Class SingleScanInfo
     ''' </summary>
     ''' <param name="logNames"></param>
     ''' <param name="logValues"></param>
-    Public Sub StoreStatusLog(ByVal logNames As String(), ByVal logValues As String())
+    Public Sub StoreStatusLog(logNames As String(), logValues As String())
         StoreParallelStrings(StatusLog, logNames, logValues)
     End Sub
 
@@ -260,7 +260,7 @@ Public Class SingleScanInfo
     ''' <param name="partialMatchToStart">Set to true to match the start of an event name, and not require a full match</param>
     ''' <returns>True if found a match for the event name, otherwise false</returns>
     ''' <remarks>Event names nearly always end in a colon, e.g. "Monoisotopic M/Z:" or "Charge State:"</remarks>
-    Public Function TryGetScanEvent(ByVal eventName As String, <Out> ByRef eventValue As String, ByVal Optional partialMatchToStart As Boolean = False) As Boolean
+    Public Function TryGetScanEvent(eventName As String, <Out> ByRef eventValue As String, Optional partialMatchToStart As Boolean = False) As Boolean
         Dim results As IEnumerable(Of KeyValuePair(Of String, String))
 
         If partialMatchToStart Then
@@ -294,7 +294,7 @@ Public Class SingleScanInfo
 
 #Region "Private methods"
 
-    Private Sub StoreParallelStrings(ByVal targetList As ICollection(Of KeyValuePair(Of String, String)), ByVal names As IList(Of String), ByVal values As IList(Of String), ByVal Optional skipEmptyNames As Boolean = False, ByVal Optional replaceTabsInValues As Boolean = False)
+    Private Sub StoreParallelStrings(targetList As ICollection(Of KeyValuePair(Of String, String)), names As IList(Of String), values As IList(Of String), Optional skipEmptyNames As Boolean = False, Optional replaceTabsInValues As Boolean = False)
         targetList.Clear()
 
         For i = 0 To names.Count - 1

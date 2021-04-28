@@ -1,4 +1,4 @@
-﻿Imports ThermoRawFileReader
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 
 Module Module1
 

@@ -18,4 +18,8 @@
     ''' Maximum intensity of the peaks in this scan
     ''' </summary>
     Public Property MaxIntensity As Double
+
+    Public Overrides Function ToString() As String
+        Return $"[{ScanNumber}] RT: {ScanTime} = {MaxIntensity}"
+    End Function
 End Class

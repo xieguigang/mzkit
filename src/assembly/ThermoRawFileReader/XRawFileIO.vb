@@ -10,6 +10,7 @@ Imports ThermoFisher.CommonCore.Data.FilterEnums
 Imports ThermoFisher.CommonCore.Data.Interfaces
 Imports ThermoFisher.CommonCore.MassPrecisionEstimator
 Imports ThermoFisher.CommonCore.RawFileReader
+Imports stdNum = System.Math
 
 ' The methods in this class use ThermoFisher.CommonCore.RawFileReader.dll
 ' and related DLLs to extract scan header info and mass spec data (m/z and intensity lists)
@@ -181,7 +182,7 @@ Public Class XRawFileIO : Implements IDisposable
         Get
             Return _RawFilePath
         End Get
-        Private Set(ByVal value As String)
+        Private Set(value As String)
             _RawFilePath = value
         End Set
     End Property
@@ -194,7 +195,7 @@ Public Class XRawFileIO : Implements IDisposable
         Get
             Return mMaxScansToCacheInfo
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             mMaxScansToCacheInfo = value
 
             If mMaxScansToCacheInfo <= 0 Then
@@ -244,7 +245,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="message"></param>
     ''' <param name="ex">Optional exception</param>
-    Friend Sub RaiseErrorMessage(ByVal message As String, ByVal Optional ex As Exception = Nothing)
+    Friend Sub RaiseErrorMessage(message As String, Optional ex As Exception = Nothing)
         Call App.LogException(message)
         Call App.LogException(ex)
     End Sub
@@ -253,11 +254,11 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Report a warning message to the warning event handler
     ''' </summary>
     ''' <param name="message"></param>
-    Friend Sub RaiseWarningMessage(ByVal message As String)
+    Friend Sub RaiseWarningMessage(message As String)
         Call message.Warning
     End Sub
 
-    Private Sub Options_OptionsUpdatedEvent(ByVal sender As Object)
+    Private Sub Options_OptionsUpdatedEvent(sender As Object)
         UpdateReaderOptions()
     End Sub
 
@@ -274,7 +275,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Constructor with an options parameter
     ''' </summary>
     ''' <param name="options">Thermo reader options</param>
-    Public Sub New(ByVal options As ThermoReaderOptions)
+    Public Sub New(options As ThermoReaderOptions)
         Me.New(String.Empty, options)
     End Sub
 
@@ -283,7 +284,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="rawFilePath">Thermo .raw file to open (empty string to not open a file)</param>
     ''' <param name="traceMode">When true, additional messages are reported via Debug events</param>
-    Public Sub New(ByVal rawFilePath As String, ByVal Optional traceMode As Boolean = False)
+    Public Sub New(rawFilePath As String, Optional traceMode As Boolean = False)
         Me.New(rawFilePath, New ThermoReaderOptions(), traceMode)
     End Sub
 
@@ -293,7 +294,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="rawFilePath">Thermo .raw file to open (empty string to not open a file)</param>
     ''' <param name="options">Thermo reader options</param>
     ''' <param name="traceMode">When true, additional messages are reported via Debug events</param>
-    Public Sub New(ByVal rawFilePath As String, ByVal options As ThermoReaderOptions, ByVal Optional traceMode As Boolean = False)
+    Public Sub New(rawFilePath As String, options As ThermoReaderOptions, Optional traceMode As Boolean = False)
         Me.RawFilePath = String.Empty
         Me.TraceMode = traceMode
         Me.Options = options
@@ -304,7 +305,7 @@ Public Class XRawFileIO : Implements IDisposable
         End If
     End Sub
 
-    Private Sub CacheScanInfo(ByVal scan As Integer, ByVal scanInfo As SingleScanInfo)
+    Private Sub CacheScanInfo(scan As Integer, scanInfo As SingleScanInfo)
         If ScanInfoCacheMaxSize = 0 Then
             Return
         End If
@@ -320,7 +321,7 @@ Public Class XRawFileIO : Implements IDisposable
         Me.mCachedScans.AddLast(scan)
     End Sub
 
-    Private Sub RemoveCachedScanInfoOverLimit(ByVal limit As Integer)
+    Private Sub RemoveCachedScanInfoOverLimit(limit As Integer)
         If Me.mCachedScanInfo.Count <= limit Then Return
 
         ' Remove the oldest entry/entries in mCachedScanInfo
@@ -334,7 +335,7 @@ Public Class XRawFileIO : Implements IDisposable
         End While
     End Sub
 
-    Private Shared Function CapitalizeCollisionMode(ByVal collisionMode As String) As String
+    Private Shared Function CapitalizeCollisionMode(collisionMode As String) As String
         If String.Equals(collisionMode, "EThcD", StringComparison.OrdinalIgnoreCase) Then
             Return "EThcD"
         End If
@@ -364,11 +365,11 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
     End Sub
 
-    Private Shared Function ContainsAny(ByVal stringToSearch As String, ByVal itemsToFind As IEnumerable(Of String), ByVal Optional indexSearchStart As Integer = 0) As Boolean
+    Private Shared Function ContainsAny(stringToSearch As String, itemsToFind As IEnumerable(Of String), Optional indexSearchStart As Integer = 0) As Boolean
         Return itemsToFind.Any(Function(item) ContainsText(stringToSearch, item, indexSearchStart))
     End Function
 
-    Private Shared Function ContainsText(ByVal stringToSearch As String, ByVal textToFind As String, ByVal Optional indexSearchStart As Integer = 0) As Boolean
+    Private Shared Function ContainsText(stringToSearch As String, textToFind As String, Optional indexSearchStart As Integer = 0) As Boolean
         ' Note: need to append a space since many of the search keywords end in a space
         Return (stringToSearch & " ").IndexOf(textToFind, StringComparison.OrdinalIgnoreCase) >= indexSearchStart
     End Function
@@ -378,7 +379,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="filterText"></param>
     ''' <returns>MRM scan type enum</returns>
-    Public Shared Function DetermineMRMScanType(ByVal filterText As String) As MRMScanTypeConstants
+    Public Shared Function DetermineMRMScanType(filterText As String) As MRMScanTypeConstants
         If String.IsNullOrWhiteSpace(filterText) Then
             Return MRMScanTypeConstants.NotMRM
         End If
@@ -420,7 +421,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Determine the Ionization mode by parsing the scan filter string
     ''' </summary>
     ''' <param name="filterText"></param>
-    Public Shared Function DetermineIonizationMode(ByVal filterText As String) As IonModeConstants
+    Public Shared Function DetermineIonizationMode(filterText As String) As IonModeConstants
         ' Determine the ion mode by simply looking for the first + or - sign
 
         If String.IsNullOrWhiteSpace(filterText) Then
@@ -456,7 +457,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="mrmScanType"></param>
     ''' <param name="mrmInfo">Output: MRM info class</param>
     ''' <remarks>We do not parse mass information out for Full Neutral Loss scans</remarks>
-    Public Shared Sub ExtractMRMMasses(ByVal filterText As String, ByVal mrmScanType As MRMScanTypeConstants, <Out> ByRef mrmInfo As MRMInfo)
+    Public Shared Sub ExtractMRMMasses(filterText As String, mrmScanType As MRMScanTypeConstants, <Out> ByRef mrmInfo As MRMInfo)
         ' Parse out the MRM_QMS or SRM mass info from filterText
         ' It should be of the form
 
@@ -504,7 +505,7 @@ Public Class XRawFileIO : Implements IDisposable
                     .EndMass = Double.Parse(massRangeMatch.Groups(CStr("EndMass")).Value)
                 }
                 Dim centralMass = mrmMassRange.StartMass + (mrmMassRange.EndMass - mrmMassRange.StartMass) / 2
-                mrmMassRange.CentralMass = Math.Round(centralMass, 6)
+                mrmMassRange.CentralMass = stdNum.Round(centralMass, 6)
                 mrmInfo.MRMMassList.Add(mrmMassRange)
             Catch __unusedException1__ As Exception
                 ' Error parsing out the mass values; skip this group
@@ -531,7 +532,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' To copy this, take the code from this function, plus the RegEx strings <see cref="PARENT_ION_ONLY_NON_MSX_REGEX"/> and <see cref="PARENT_ION_ONLY_MSX_REGEX"/>,
     ''' with their uses in <see cref="mFindParentIonOnlyNonMsx"/> and <see cref="mFindParentIonOnlyMsx"/>
     ''' </remarks>
-    Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double) As Boolean
+    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String, <Out> ByRef parentIonMz As Double) As Boolean
         Dim matcher As Regex
 
         If filterText.IndexOf("msx", StringComparison.OrdinalIgnoreCase) >= 0 Then
@@ -561,7 +562,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="collisionMode">Collision mode (output)</param>
     ''' <returns>True if success</returns>
     ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
-    Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String) As Boolean
+    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String) As Boolean
         Return XRawFileIO.ExtractParentIonMZFromFilterText(filterText, parentIonMz, msLevel, collisionMode, Nothing)
     End Function
 
@@ -575,7 +576,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="parentIons">Output: parent ion list</param>
     ''' <returns>True if success</returns>
     ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
-    Public Shared Function ExtractParentIonMZFromFilterText(ByVal filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String, <Out> ByRef parentIons As List(Of ParentIonInfoType)) As Boolean
+    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String, <Out> ByRef parentIons As List(Of ParentIonInfoType)) As Boolean
         ' filterText should be of the form "+ c d Full ms2 1312.95@45.00 [ 350.00-2000.00]"
         ' or "+ c d Full ms3 1312.95@45.00 873.85@45.00 [ 350.00-2000.00]"
         ' or "ITMS + c NSI d Full ms10 421.76@35.00"
@@ -770,7 +771,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Looks for "Full ms2" or "Full ms3" or " p ms2" or "SRM ms2" in filterText
     ''' Populates msLevel with the number after "ms" and mzText with the text after "ms2"
     ''' </remarks>
-    Public Shared Function ExtractMSLevel(ByVal filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef mzText As String) As Boolean
+    Public Shared Function ExtractMSLevel(filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef mzText As String) As Boolean
         Dim matchTextLength = 0
         msLevel = 1
         Dim charIndex = 0
@@ -870,7 +871,7 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
     End Function
 
-    Private Function GetActivationType(ByVal scan As Integer) As ActivationTypeConstants
+    Private Function GetActivationType(scan As Integer) As ActivationTypeConstants
         Try
             Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
             Dim reactions = scanFilter.MassCount
@@ -905,7 +906,7 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
     End Function
 
-    Private Shared Function GetCapturedValue(ByVal match As Match, ByVal captureGroupName As String) As String
+    Private Shared Function GetCapturedValue(match As Match, captureGroupName As String) As String
         Dim capturedValue = match.Groups(captureGroupName)
 
         If Not String.IsNullOrWhiteSpace(capturedValue?.Value) Then
@@ -928,7 +929,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' If the scan has multiple intensity values, they are summed
     ''' Scans that have no data will still be present in the dictionary, but with an intensity of 0
     ''' </remarks>
-    Public Function GetChromatogramData(ByVal deviceType As Device, ByVal Optional deviceNumber As Integer = 1, ByVal Optional scanStart As Integer = 0, ByVal Optional scanEnd As Integer = 0) As Dictionary(Of Integer, Double)
+    Public Function GetChromatogramData(deviceType As Device, Optional deviceNumber As Integer = 1, Optional scanStart As Integer = 0, Optional scanEnd As Integer = 0) As Dictionary(Of Integer, Double)
         Dim chromatogramData = New Dictionary(Of Integer, Double)()
         Dim chromatogramData2D = Me.GetChromatogramData2D(deviceType, deviceNumber, scanStart, scanEnd)
         If chromatogramData2D.Count = 0 Then Return chromatogramData
@@ -956,7 +957,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scanEnd">End scan, or 0 to use ScanEnd</param>
     ''' <returns>Dictionary where keys are scan number and values are the list of intensities for that scan</returns>
     ''' <remarks>Scans that have no data will still be present in the dictionary, but with an empty list of doubles</remarks>
-    Public Function GetChromatogramData2D(ByVal deviceType As Device, ByVal Optional deviceNumber As Integer = 1, ByVal Optional scanStart As Integer = 0, ByVal Optional scanEnd As Integer = 0) As Dictionary(Of Integer, List(Of Double))
+    Public Function GetChromatogramData2D(deviceType As Device, Optional deviceNumber As Integer = 1, Optional scanStart As Integer = 0, Optional scanEnd As Integer = 0) As Dictionary(Of Integer, List(Of Double))
         Dim chromatogramData = New Dictionary(Of Integer, List(Of Double))()
 
         Try
@@ -1009,7 +1010,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Return the collision energy (or energies) for the given scan
     ''' </summary>
     ''' <param name="scan">Scan number</param>
-    Public Function GetCollisionEnergy(ByVal scan As Integer) As List(Of Double)
+    Public Function GetCollisionEnergy(scan As Integer) As List(Of Double)
         Dim collisionEnergies = New List(Of Double)()
         Dim scanInfo As SingleScanInfo = Nothing, parentIons As List(Of ParentIonInfoType) = Nothing
 
@@ -1041,7 +1042,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <summary>
     ''' Get the instrument information of the specified device
     ''' </summary>
-    Public Function GetDeviceInfo(ByVal deviceType As Device, ByVal deviceNumber As Integer) As DeviceInfo
+    Public Function GetDeviceInfo(deviceType As Device, deviceNumber As Integer) As DeviceInfo
         Dim deviceInfo = New DeviceInfo(deviceType, deviceNumber)
 
         Try
@@ -1118,7 +1119,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     ''' <param name="retentionTime">retention time</param>
     ''' <returns>True if no error, False if an error</returns>
-    Public Function GetRetentionTime(ByVal scan As Integer, <Out> ByRef retentionTime As Double) As Boolean
+    Public Function GetRetentionTime(scan As Integer, <Out> ByRef retentionTime As Double) As Boolean
         retentionTime = 0
 
         Try
@@ -1142,7 +1143,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     ''' <param name="scanInfo">Scan header info class</param>
     ''' <returns>True if no error, False if an error</returns>
-    Public Function GetScanInfo(ByVal scan As Integer, <Out> ByRef scanInfo As SingleScanInfo) As Boolean
+    Public Function GetScanInfo(scan As Integer, <Out> ByRef scanInfo As SingleScanInfo) As Boolean
         ' Check for the scan in the cache
         If Me.mCachedScanInfo.TryGetValue(scan, scanInfo) Then
             Return True
@@ -1157,7 +1158,14 @@ Public Class XRawFileIO : Implements IDisposable
         scanInfo = New SingleScanInfo(scan)
         ' XRaw periodically mislabels a scan as .EventNumber = 1 when it's really an MS/MS scan; check for this
         ' Parse out the parent ion and collision energy from .FilterText
-        Dim scanEventNumber As Integer = Nothing, ionInjectionTime As Double = Nothing, msLevel As Integer = Nothing, parentIonMz As Double = Nothing, collisionMode As String = Nothing, simScan As Boolean = Nothing, mrmScanType As MRMScanTypeConstants = Nothing, zoomScan As Boolean = Nothing
+        Dim scanEventNumber As Integer = Nothing
+        Dim ionInjectionTime As Double = Nothing
+        Dim msLevel As Integer = Nothing
+        Dim parentIonMz As Double = Nothing
+        Dim collisionMode As String = Nothing
+        Dim simScan As Boolean = Nothing
+        Dim mrmScanType As MRMScanTypeConstants = Nothing
+        Dim zoomScan As Boolean = Nothing
 
         Try
             If mXRawFile Is Nothing Then Return False
@@ -1397,7 +1405,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="filterText"></param>
     ''' <returns>Scan type name, e.g. HMS or HCD-HMSn</returns>
-    Public Shared Function GetScanTypeNameFromThermoScanFilterText(ByVal filterText As String) As String
+    Public Shared Function GetScanTypeNameFromThermoScanFilterText(filterText As String) As String
         ' Examines filterText to determine what the scan type is
         ' Examples:
         ' Given                                                                ScanTypeName
@@ -1673,7 +1681,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="filterText"></param>
     ''' <returns>Generic filter text, e.g. FTMS + p NSI Full ms</returns>
-    Public Shared Function MakeGenericThermoScanFilter(ByVal filterText As String) As String
+    Public Shared Function MakeGenericThermoScanFilter(filterText As String) As String
         ' Will make a generic version of the FilterText in filterText
         ' Examples:
         ' From                                                                 To
@@ -1745,7 +1753,7 @@ Public Class XRawFileIO : Implements IDisposable
         Return defaultGenericScanFilterText
     End Function
 
-    Private Shared Function ScanIsFTMS(ByVal filterText As String) As Boolean
+    Private Shared Function ScanIsFTMS(filterText As String) As Boolean
         Return ContainsText(filterText, "FTMS")
     End Function
 
@@ -1772,7 +1780,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="zoomScan"></param>
     ''' <returns>True if filterText contains a known MS scan type</returns>
     ''' <remarks>Returns false for MSn scans (like ms2 or ms3)</remarks>
-    Public Shared Function ValidateMSScan(ByVal filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef simScan As Boolean, <Out> ByRef mrmScanType As MRMScanTypeConstants, <Out> ByRef zoomScan As Boolean) As Boolean
+    Public Shared Function ValidateMSScan(filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef simScan As Boolean, <Out> ByRef mrmScanType As MRMScanTypeConstants, <Out> ByRef zoomScan As Boolean) As Boolean
         simScan = False
         mrmScanType = MRMScanTypeConstants.NotMRM
         zoomScan = False
@@ -1843,7 +1851,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="intensityList">Output array of intensity values (parallel to mzList)</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData(ByVal scanNumber As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double()) As Integer
+    Public Function GetScanData(scanNumber As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double()) As Integer
         Const maxNumberOfPeaks = 0
         Const centroidData = False
         Return GetScanData(scanNumber, mzList, intensityList, maxNumberOfPeaks, centroidData)
@@ -1858,7 +1866,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="maxNumberOfPeaks">Set to 0 (or negative) to return all of the data</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData(ByVal scanNumber As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double(), ByVal maxNumberOfPeaks As Integer) As Integer
+    Public Function GetScanData(scanNumber As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double(), maxNumberOfPeaks As Integer) As Integer
         Const centroid = False
         Return GetScanData(scanNumber, mzList, intensityList, maxNumberOfPeaks, centroid)
     End Function
@@ -1873,7 +1881,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative),  returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData(ByVal scan As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double(), ByVal maxNumberOfPeaks As Integer, ByVal centroidData As Boolean) As Integer
+    Public Function GetScanData(scan As Integer, <Out> ByRef mzList As Double(), <Out> ByRef intensityList As Double(), maxNumberOfPeaks As Integer, centroidData As Boolean) As Integer
         Dim dataCount As Integer
 
         Try
@@ -1907,7 +1915,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="massIntensityPairs">2D array where the first dimension is 0 for mass or 1 for intensity while the second dimension is the data point index</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData2D(ByVal scan As Integer, <Out> ByRef massIntensityPairs As Double(,)) As Integer
+    Public Function GetScanData2D(scan As Integer, <Out> ByRef massIntensityPairs As Double(,)) As Integer
         Return GetScanData2D(scan, massIntensityPairs, maxNumberOfPeaks:=0, centroidData:=False)
     End Function
 
@@ -1919,7 +1927,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData2D(ByVal scan As Integer, <Out> ByRef massIntensityPairs As Double(,), ByVal maxNumberOfPeaks As Integer) As Integer
+    Public Function GetScanData2D(scan As Integer, <Out> ByRef massIntensityPairs As Double(,), maxNumberOfPeaks As Integer) As Integer
         Return GetScanData2D(scan, massIntensityPairs, maxNumberOfPeaks, centroidData:=False)
     End Function
 
@@ -1932,7 +1940,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>If maxNumberOfPeaks is 0 (or negative), returns all data; set maxNumberOfPeaks to > 0 to limit the number of data points returned</remarks>
-    Public Function GetScanData2D(ByVal scan As Integer, <Out> ByRef massIntensityPairs As Double(,), ByVal maxNumberOfPeaks As Integer, ByVal centroidData As Boolean) As Integer
+    Public Function GetScanData2D(scan As Integer, <Out> ByRef massIntensityPairs As Double(,), maxNumberOfPeaks As Integer, centroidData As Boolean) As Integer
         Try
             Dim data = ReadScanData(scan, maxNumberOfPeaks, centroidData)
             Dim dataCount = data.Masses.Length
@@ -1974,7 +1982,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="maxNumberOfPeaks">Maximum number of data points; 0 to return all data</param>
     ''' <param name="centroidData">True to centroid the data, false to return as-is (either profile or centroid, depending on how the data was acquired)</param>
     ''' <returns>The scan data container, or null if an error</returns>
-    Private Function ReadScanData(ByVal scan As Integer, ByVal maxNumberOfPeaks As Integer, ByVal centroidData As Boolean) As ISimpleScanAccess
+    Private Function ReadScanData(scan As Integer, maxNumberOfPeaks As Integer, centroidData As Boolean) As ISimpleScanAccess
         If scan < FileInfo.ScanStart Then
             scan = FileInfo.ScanStart
         ElseIf scan > FileInfo.ScanEnd Then
@@ -2031,7 +2039,7 @@ Public Class XRawFileIO : Implements IDisposable
 
             If maxNumberOfPeaks > 0 Then
                 ' Takes the maxNumberOfPeaks highest intensities from scan, and sorts them (and their respective mass) by mass into the first maxNumberOfPeaks positions in the arrays.
-                Dim sortCount = Math.Min(maxNumberOfPeaks, data.Masses.Length)
+                Dim sortCount = stdNum.Min(maxNumberOfPeaks, data.Masses.Length)
                 Array.Sort(data.Intensities, data.Masses)
                 Array.Reverse(data.Intensities)
                 Array.Reverse(data.Masses)
@@ -2078,7 +2086,7 @@ Public Class XRawFileIO : Implements IDisposable
         Public ReadOnly Property Masses As Double() Implements ISimpleScanAccess.Masses
         Public ReadOnly Property Intensities As Double() Implements ISimpleScanAccess.Intensities
 
-        Public Sub New(ByVal masses As Double(), ByVal intensities As Double())
+        Public Sub New(masses As Double(), intensities As Double())
             Me.Masses = masses
             Me.Intensities = intensities
         End Sub
@@ -2090,7 +2098,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     ''' <param name="ftLabelData">List of mass, intensity, resolution, baseline intensity, noise floor, and charge for each data point</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
-    Public Function GetScanLabelData(ByVal scan As Integer, <Out> ByRef ftLabelData As FTLabelInfoType()) As Integer
+    Public Function GetScanLabelData(scan As Integer, <Out> ByRef ftLabelData As FTLabelInfoType()) As Integer
         If scan < FileInfo.ScanStart Then
             scan = FileInfo.ScanStart
         ElseIf scan > FileInfo.ScanEnd Then
@@ -2168,7 +2176,7 @@ Public Class XRawFileIO : Implements IDisposable
     '''   Neutral loss:   -2
     '''   Parent scan:    -1
     ''' </remarks>
-    Public Function GetMSLevel(ByVal scan As Integer) As Integer
+    Public Function GetMSLevel(scan As Integer) As Integer
         Try
             If mXRawFile Is Nothing Then Return 0
 
@@ -2191,7 +2199,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="massResolutionData">List of Intensity, Mass, AccuracyMMU, AccuracyPPM, and Resolution for each data point</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>This returns a subset of the data thatGetScanLabelData does, but with 2 additional fields.</remarks>
-    Public Function GetScanPrecisionData(ByVal scan As Integer, <Out> ByRef massResolutionData As MassPrecisionInfoType()) As Integer
+    Public Function GetScanPrecisionData(scan As Integer, <Out> ByRef massResolutionData As MassPrecisionInfoType()) As Integer
         If scan < FileInfo.ScanStart Then
             scan = FileInfo.ScanStart
         ElseIf scan > FileInfo.ScanEnd Then
@@ -2270,7 +2278,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="centroidData"></param>
     ''' <returns>The number of data points</returns>
     ''' <remarks>Uses the scan filter of the first scan to assure that we're only averaging similar scans</remarks>
-    Public Function GetScanDataSumScans(ByVal scanFirst As Integer, ByVal scanLast As Integer, <Out> ByRef massIntensityPairs As Double(,), ByVal maxNumberOfPeaks As Integer, ByVal centroidData As Boolean) As Integer
+    Public Function GetScanDataSumScans(scanFirst As Integer, scanLast As Integer, <Out> ByRef massIntensityPairs As Double(,), maxNumberOfPeaks As Integer, centroidData As Boolean) As Integer
         Try
 
             Try
@@ -2322,7 +2330,7 @@ Public Class XRawFileIO : Implements IDisposable
             Dim data = mXRawFile.AverageScansInScanRange(scanFirst, scanLast, filter)
             data.PreferCentroids = centroidData
             Dim masses = data.PreferredMasses
-            Dim dataCount = If(maxNumberOfPeaks > 0, Math.Min(masses.Length, maxNumberOfPeaks), masses.Length)
+            Dim dataCount = If(maxNumberOfPeaks > 0, stdNum.Min(masses.Length, maxNumberOfPeaks), masses.Length)
 
             If dataCount > 0 Then
                 Dim intensities = data.PreferredIntensities
@@ -2361,7 +2369,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Open the .raw file
     ''' </summary>
     ''' <param name="filePath"></param>
-    Public Function OpenRawFile(ByVal filePath As String) As Boolean
+    Public Function OpenRawFile(filePath As String) As Boolean
         Try
             Dim dataFile = New FileInfo(filePath)
 
@@ -2392,7 +2400,7 @@ Public Class XRawFileIO : Implements IDisposable
                 Return False
             End If
 
-            If FileInfo.ScanStart = 0 AndAlso FileInfo.ScanEnd = 0 AndAlso FileInfo.VersionNumber = 0 AndAlso Math.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso String.IsNullOrWhiteSpace(FileInfo.InstModel) Then
+            If FileInfo.ScanStart = 0 AndAlso FileInfo.ScanEnd = 0 AndAlso FileInfo.VersionNumber = 0 AndAlso stdNum.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso String.IsNullOrWhiteSpace(FileInfo.InstModel) Then
                 RaiseErrorMessage("File did not load correctly; ScanStart, ScanEnd, VersionNumber, and MassResolution are all 0 for " & RawFilePath)
                 FileInfo.CorruptFile = True
                 RawFilePath = String.Empty
@@ -2407,7 +2415,7 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
     End Function
 
-    Private Function TuneMethodsMatch(ByVal method1 As TuneMethod, ByVal method2 As TuneMethod) As Boolean
+    Private Function TuneMethodsMatch(method1 As TuneMethod, method2 As TuneMethod) As Boolean
         If method1.Settings.Count <> method2.Settings.Count Then
             ' Different segment number of setting count; the methods don't match
             Return False
@@ -2439,7 +2447,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="deviceType"></param>
     ''' <param name="deviceNumber"></param>
     ''' <returns>Empty string if the device was successfully selected, otherwise an error message</returns>
-    Private Function ValidateAndSelectDevice(ByVal deviceType As Device, ByVal deviceNumber As Integer) As String
+    Private Function ValidateAndSelectDevice(deviceType As Device, deviceNumber As Integer) As String
         Dim deviceCount As Integer = Nothing
 
         If Not FileInfo.Devices.TryGetValue(deviceType, deviceCount) OrElse deviceCount = 0 Then
@@ -2485,7 +2493,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <param name="scan"></param>
     <Obsolete("The collision energies reported by IScanFilter.GetEnergy are not normalized and are thus not very useful")>
-    Public Function GetCollisionEnergyUnnormalized(ByVal scan As Integer) As List(Of Double)
+    Public Function GetCollisionEnergyUnnormalized(scan As Integer) As List(Of Double)
         Dim collisionEnergies = New List(Of Double)()
 
         Try
