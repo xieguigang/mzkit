@@ -75,6 +75,7 @@ Module FormulaTools
 
     Sub New()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
+        Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
     End Sub
 
@@ -99,6 +100,10 @@ Module FormulaTools
 
     Private Function FormulaCompositionString(formula As FormulaComposition) As String
         Return formula.EmpiricalFormula & $" ({formula.CountsByElement.GetJson})"
+    End Function
+
+    Private Function FormulaString(formula As Formula) As String
+        Return formula.ExactMass.ToString("F7") & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
     End Function
 
     <ExportAPI("find.formula")>
@@ -145,10 +150,38 @@ Module FormulaTools
     ''' <param name="formula">The input formula string text.</param>
     ''' <param name="n">for counting polymers atoms</param>
     ''' <returns></returns>
-    <ExportAPI("scan.formula")>
-    Public Function ScanFormula(formula$, Optional n% = 9999) As FormulaComposition
+    <ExportAPI("scan")>
+    Public Function ScanFormula(formula$, Optional n% = 9999) As Formula
         Return FormulaScanner.ScanFormula(formula, n)
     End Function
+
+#Region "formula operators"
+
+    <ROperator("+")>
+    Public Function add(part1 As Formula, part2 As Formula) As Formula
+        Return part1 + part2
+    End Function
+
+    <ROperator("-")>
+    Public Function minus(total As Formula, part As Formula) As Formula
+        Return total - part
+    End Function
+
+    <ROperator("*")>
+    Public Function repeats(part As Formula, n As Integer) As Formula
+        Return part * n
+    End Function
+
+    <ROperator("*")>
+    Public Function repeats(n As Integer, part As Formula) As Formula
+        Return part * n
+    End Function
+
+    <ROperator("/")>
+    Public Function divide(total As Formula, n As Integer) As Formula
+        Return total / n
+    End Function
+#End Region
 
     ''' <summary>
     ''' Read KCF model data

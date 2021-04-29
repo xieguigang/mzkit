@@ -158,5 +158,16 @@ Namespace Formula
 
             Return New Formula(newComposition)
         End Operator
+
+        Public Shared Operator /(f As Formula, n As Integer) As Formula
+            Dim newComposition = f _
+                .CountsByElement _
+                .ToDictionary(Function(e) e.Key,
+                              Function(e)
+                                  Return CInt(e.Value / n)
+                              End Function)
+
+            Return New Formula(newComposition)
+        End Operator
     End Class
 End Namespace

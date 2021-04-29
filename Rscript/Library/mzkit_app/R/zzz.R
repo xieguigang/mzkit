@@ -26,4 +26,6 @@ let .onLoad as function() {
   
   print("Visit of mzkit HOME:");
   print("https://mzkit.org/");
+  
+  cat("\n");
 }
