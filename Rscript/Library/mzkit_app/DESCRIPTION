@@ -1,10 +1,10 @@
 Package: mzkit
 Type: Package
-Title: The BioNovoGene Mass Spectrum Data Toolkit
+Title: Mzkit: The BioNovoGene Mass Spectrum Data Toolkit
 Version: 1.1.0-beta
 Author: xieguigang
 Maintainer: xieguigang <gg.xie@bionovogene.com>
-Description: Mass Spectrum Raw Data processing and data visualization.
+Description: Mass spectrum raw data processing, chemistry data analysis and data visualization.
 License: MIT
 Encoding: UTF-8
 LazyData: true

@@ -103,7 +103,7 @@ Module FormulaTools
     End Function
 
     Private Function FormulaString(formula As Formula) As String
-        Return formula.ExactMass & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
+        Return formula.ExactMass.ToString("F7") & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
     End Function
 
     <ExportAPI("find.formula")>
@@ -175,6 +175,11 @@ Module FormulaTools
     <ROperator("*")>
     Public Function repeats(n As Integer, part As Formula) As Formula
         Return part * n
+    End Function
+
+    <ROperator("/")>
+    Public Function divide(total As Formula, n As Integer) As Formula
+        Return total / n
     End Function
 #End Region
 
