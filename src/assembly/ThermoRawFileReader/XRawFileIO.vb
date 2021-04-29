@@ -42,6 +42,9 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' Class for reading Thermo .raw files
 ''' </summary>
+''' <remarks>
+''' https://github.com/PNNL-Comp-Mass-Spec
+''' </remarks>
 <CLSCompliant(True)>
 Public Class XRawFileIO : Implements IDisposable
 
@@ -50,8 +53,6 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </summary>
     ''' <remarks>This is changed to an empty string once the file is closed</remarks>
     Private _RawFilePath As String
-    ' Ignore Spelling: Shofstahl, Bryson, cnl, msx, Biofilm, Smeagol, Jup, Ss, A-Za-z, sa, EThcD, ETciD
-    ' Ignore Spelling: Wideband, Raptor, cid, multipole, mrm, sizeof, centroiding, Subtractor, struct
 
 #Region "Constants"
 
@@ -2081,18 +2082,6 @@ Public Class XRawFileIO : Implements IDisposable
         Return Nothing
     End Function
 
-    Private Class SimpleScanAccessTruncated
-        Implements ISimpleScanAccess
-
-        Public ReadOnly Property Masses As Double() Implements ISimpleScanAccess.Masses
-        Public ReadOnly Property Intensities As Double() Implements ISimpleScanAccess.Intensities
-
-        Public Sub New(masses As Double(), intensities As Double())
-            Me.Masses = masses
-            Me.Intensities = intensities
-        End Sub
-    End Class
-
     ''' <summary>
     ''' Gets the scan label data for an FTMS-tagged scan
     ''' </summary>
@@ -2100,54 +2089,36 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="ftLabelData">List of mass, intensity, resolution, baseline intensity, noise floor, and charge for each data point</param>
     ''' <returns>The number of data points, or -1 if an error</returns>
     Public Function GetScanLabelData(scan As Integer, <Out> ByRef ftLabelData As FTLabelInfoType()) As Integer
+        Dim scanInfo As SingleScanInfo = Nothing
+
         If scan < FileInfo.ScanStart Then
             scan = FileInfo.ScanStart
         ElseIf scan > FileInfo.ScanEnd Then
             scan = FileInfo.ScanEnd
         End If
 
-        Dim scanInfo As SingleScanInfo = Nothing
-
         If Not GetScanInfo(scan, scanInfo) Then
             Throw New Exception("Cannot retrieve ScanInfo from cache for scan " & scan & "; cannot retrieve scan data")
         End If
 
+        If mXRawFile Is Nothing Then
+            ftLabelData = New FTLabelInfoType(-1) {}
+            Return -1
+        End If
+
+        If Not scanInfo.IsFTMS Then
+            Dim msg = "Scan " & scan & " is not an FTMS scan; function GetScanLabelData cannot be used with this scan"
+            RaiseWarningMessage(msg)
+            ftLabelData = New FTLabelInfoType(-1) {}
+            Return -1
+        End If
+
         Try
-
-            If mXRawFile Is Nothing Then
-                ftLabelData = New FTLabelInfoType(-1) {}
-                Return -1
-            End If
-
-            If Not scanInfo.IsFTMS Then
-                Dim msg = "Scan " & scan & " is not an FTMS scan; function GetScanLabelData cannot be used with this scan"
-                RaiseWarningMessage(msg)
-                ftLabelData = New FTLabelInfoType(-1) {}
-                Return -1
-            End If
-
-            Dim data = mXRawFile.GetCentroidStream(scan, False)
-            Dim dataCount = data.Length
+            Dim data As CentroidStream = mXRawFile.GetCentroidStream(scan, False)
+            Dim dataCount As Integer = data.Length
 
             If dataCount > 0 Then
-                ftLabelData = New FTLabelInfoType(dataCount - 1) {}
-                Dim masses = data.Masses
-                Dim intensities = data.Intensities
-                Dim resolutions = data.Resolutions
-                Dim baselines = data.Baselines
-                Dim noises = data.Noises
-                Dim charges = data.Charges
-
-                For i = 0 To dataCount - 1
-                    ftLabelData(i) = New FTLabelInfoType With {
-                        .Mass = masses(i),
-                        .Intensity = intensities(i),
-                        .Resolution = Convert.ToSingle(resolutions(i)),
-                        .Baseline = Convert.ToSingle(baselines(i)),
-                        .Noise = Convert.ToSingle(noises(i)),
-                        .Charge = Convert.ToInt32(charges(i))
-                    }
-                Next
+                ftLabelData = getFtLabelData(data)
             Else
                 ftLabelData = New FTLabelInfoType(-1) {}
             End If
@@ -2162,7 +2133,32 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
 
         ftLabelData = New FTLabelInfoType(-1) {}
+
         Return -1
+    End Function
+
+    Private Function getFtLabelData(data As CentroidStream) As FTLabelInfoType()
+        Dim masses = data.Masses
+        Dim intensities = data.Intensities
+        Dim resolutions = data.Resolutions
+        Dim baselines = data.Baselines
+        Dim noises = data.Noises
+        Dim charges = data.Charges
+        Dim dataCount As Integer = data.Length
+        Dim ftLabelData = New FTLabelInfoType(dataCount - 1) {}
+
+        For i As Integer = 0 To dataCount - 1
+            ftLabelData(i) = New FTLabelInfoType With {
+                .Mass = masses(i),
+                .Intensity = intensities(i),
+                .Resolution = Convert.ToSingle(resolutions(i)),
+                .Baseline = Convert.ToSingle(baselines(i)),
+                .Noise = Convert.ToSingle(noises(i)),
+                .Charge = Convert.ToInt32(charges(i))
+            }
+        Next
+
+        Return ftLabelData
     End Function
 
     ''' <summary>

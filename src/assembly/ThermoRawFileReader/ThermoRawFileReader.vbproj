@@ -95,6 +95,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimpleScanAccessTruncated.vb" />
     <Compile Include="DataObjects\MassPrecisionInfoType.vb" />
     <Compile Include="DataObjects\ParentIonInfoType.vb" />
     <Compile Include="DataObjects\MRMInfo.vb" />
