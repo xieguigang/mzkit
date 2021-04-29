@@ -10,4 +10,7 @@ print(D_glucose);
 
 const diglucose = D_glucose * 2 - H2O;
 
+cat("\n\n");
+
+print("diglucose:");
 print(diglucose);
