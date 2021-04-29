@@ -145,8 +145,8 @@ Module FormulaTools
     ''' <param name="formula">The input formula string text.</param>
     ''' <param name="n">for counting polymers atoms</param>
     ''' <returns></returns>
-    <ExportAPI("scan.formula")>
-    Public Function ScanFormula(formula$, Optional n% = 9999) As FormulaComposition
+    <ExportAPI("scan")>
+    Public Function ScanFormula(formula$, Optional n% = 9999) As Formula
         Return FormulaScanner.ScanFormula(formula, n)
     End Function
 
