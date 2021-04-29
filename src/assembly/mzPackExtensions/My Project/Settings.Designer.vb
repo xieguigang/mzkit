@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.BioNovoGene.Analytical.MassSpectrometry.[Assembly].mzPack.My.MySettings
+        Friend ReadOnly Property Settings() As Global.BioNovoGene.Analytical.MassSpectrometry.[Assembly].My.MySettings
             Get
-                Return Global.BioNovoGene.Analytical.MassSpectrometry.[Assembly].mzPack.My.MySettings.Default
+                Return Global.BioNovoGene.Analytical.MassSpectrometry.[Assembly].My.MySettings.Default
             End Get
         End Property
     End Module

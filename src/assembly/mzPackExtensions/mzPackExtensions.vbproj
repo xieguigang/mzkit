@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack</RootNamespace>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly</RootNamespace>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
