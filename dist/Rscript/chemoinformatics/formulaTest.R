@@ -14,3 +14,9 @@ cat("\n\n");
 
 print("diglucose:");
 print(diglucose);
+
+print("the compose formula:");
+print(toString(diglucose));
+
+const rhamnoside = formula::scan("C6H12O5");
+
