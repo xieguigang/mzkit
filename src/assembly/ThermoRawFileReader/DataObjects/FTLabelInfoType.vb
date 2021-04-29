@@ -1,7 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports ThermoFisher.CommonCore.Data.Business
-
-Namespace DataObjects
+﻿Namespace DataObjects
 
     ''' <summary>
     ''' Type for storing FT Label Information

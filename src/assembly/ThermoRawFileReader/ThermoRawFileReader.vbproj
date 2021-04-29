@@ -105,7 +105,7 @@
     <Compile Include="DataObjects\SingleScanInfo.vb" />
     <Compile Include="DataObjects\FTLabelInfoType.vb" />
     <Compile Include="DeviceInfo.vb" />
-    <Compile Include="Enums.vb" />
+    <Compile Include="Enums\Enums.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="MSFileReader.vb" />
     <Compile Include="DataObjects\RawLabelData.vb" />

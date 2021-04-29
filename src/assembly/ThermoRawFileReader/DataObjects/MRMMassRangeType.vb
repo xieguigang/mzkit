@@ -6,6 +6,7 @@ Namespace DataObjects
     ''' </summary>
     <CLSCompliant(True)>
     Public Structure MRMMassRangeType
+
         ''' <summary>
         ''' Start Mass
         ''' </summary>
@@ -19,7 +20,10 @@ Namespace DataObjects
         ''' <summary>
         ''' Central Mass
         ''' </summary>
-        Public CentralMass As Double      ' Useful for MRM/SRM experiments
+        ''' <remarks>
+        ''' Useful for MRM/SRM experiments
+        ''' </remarks>
+        Public CentralMass As Double
 
         ''' <summary>
         ''' Return a summary of this object
