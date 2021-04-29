@@ -150,6 +150,29 @@ Module FormulaTools
         Return FormulaScanner.ScanFormula(formula, n)
     End Function
 
+#Region "formula operators"
+
+    <ROperator("+")>
+    Public Function add(part1 As Formula, part2 As Formula) As Formula
+        Return part1 + part2
+    End Function
+
+    <ROperator("-")>
+    Public Function minus(total As Formula, part As Formula) As Formula
+        Return total - part
+    End Function
+
+    <ROperator("*")>
+    Public Function repeats(part As Formula, n As Integer) As Formula
+        Return part * n
+    End Function
+
+    <ROperator("*")>
+    Public Function repeats(n As Integer, part As Formula) As Formula
+        Return part * n
+    End Function
+#End Region
+
     ''' <summary>
     ''' Read KCF model data
     ''' </summary>
