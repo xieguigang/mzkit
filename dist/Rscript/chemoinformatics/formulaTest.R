@@ -1,4 +1,4 @@
-# require(mzkit);
+require(mzkit);
 
 imports "formula" from "mzkit";
 

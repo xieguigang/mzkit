@@ -103,7 +103,7 @@ Module FormulaTools
     End Function
 
     Private Function FormulaString(formula As Formula) As String
-        Return formula.ExactMass & $" ({formula.CountsByElement.GetJson})"
+        Return formula.ExactMass & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
     End Function
 
     <ExportAPI("find.formula")>
