@@ -75,6 +75,7 @@ Module FormulaTools
 
     Sub New()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
+        Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
     End Sub
 
@@ -99,6 +100,10 @@ Module FormulaTools
 
     Private Function FormulaCompositionString(formula As FormulaComposition) As String
         Return formula.EmpiricalFormula & $" ({formula.CountsByElement.GetJson})"
+    End Function
+
+    Private Function FormulaString(formula As Formula) As String
+        Return formula.ExactMass & $" ({formula.CountsByElement.GetJson})"
     End Function
 
     <ExportAPI("find.formula")>
