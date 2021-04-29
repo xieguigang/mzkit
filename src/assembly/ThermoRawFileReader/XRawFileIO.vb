@@ -721,15 +721,24 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <returns>True if no error, False if an error</returns>
     ''' <remarks>Called from OpenRawFile</remarks>
     Private Function FillFileInfo() As Boolean
-        Try
-            If mXRawFile Is Nothing Then Return False
+        If mXRawFile Is Nothing Then
+            Return False
+        Else
             FileInfo.Clear()
-            If TraceMode Then Call "Enumerating device data in the file".__DEBUG_ECHO
+        End If
+
+        Try
+            If TraceMode Then
+                Call "Enumerating device data in the file".__DEBUG_ECHO
+            End If
 
             ' Discover the devices with data in the .raw file
-            For Each item In GetDeviceStats()
-                If item.Value = 0 Then Continue For
-                FileInfo.Devices.Add(item.Key, item.Value)
+            For Each dev In GetDeviceStats()
+                If dev.Value = 0 Then
+                    Continue For
+                Else
+                    FileInfo.Devices.Add(dev.Key, dev.Value)
+                End If
             Next
 
             If FileInfo.Devices.Count = 0 Then
@@ -934,11 +943,16 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="scan">Scan number</param>
     Public Function GetCollisionEnergy(scan As Integer) As List(Of Double)
         Dim collisionEnergies = New List(Of Double)()
-        Dim scanInfo As SingleScanInfo = Nothing, parentIons As List(Of ParentIonInfoType) = Nothing
+        Dim scanInfo As SingleScanInfo = Nothing
+        Dim parentIons As List(Of ParentIonInfoType) = Nothing
 
         Try
-            If mXRawFile Is Nothing Then Return collisionEnergies
-            GetScanInfo(scan, scanInfo)
+            If mXRawFile Is Nothing Then
+                Return collisionEnergies
+            Else
+                Call GetScanInfo(scan, scanInfo)
+            End If
+
             XRawFileIO.ExtractParentIonMZFromFilterText(scanInfo.FilterText, Nothing, Nothing, Nothing, parentIons)
 
             For Each parentIon In parentIons
@@ -965,7 +979,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Get the instrument information of the specified device
     ''' </summary>
     Public Function GetDeviceInfo(deviceType As Device, deviceNumber As Integer) As DeviceInfo
-        Dim deviceInfo = New DeviceInfo(deviceType, deviceNumber)
+        Dim deviceInfo As New DeviceInfo(deviceType, deviceNumber)
 
         Try
             Dim warningMessage = Me.ValidateAndSelectDevice(deviceType, deviceNumber)
@@ -975,7 +989,7 @@ Public Class XRawFileIO : Implements IDisposable
                 Return New DeviceInfo(Device.None, 0)
             End If
 
-            Dim instData = mXRawFile.GetInstrumentData()
+            Dim instData As InstrumentData = mXRawFile.GetInstrumentData()
             deviceInfo.InstrumentName = If(instData.Name, String.Empty)
             deviceInfo.Model = If(instData.Model, String.Empty)
             deviceInfo.SerialNumber = If(instData.SerialNumber, String.Empty)
@@ -988,7 +1002,8 @@ Public Class XRawFileIO : Implements IDisposable
             RaiseErrorMessage(msg, ex)
         End Try
 
-        SetMSController()
+        Call SetMSController()
+
         Return deviceInfo
     End Function
 
@@ -996,13 +1011,16 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Get a count of the number of instruments of each device type, as stored in the .raw file
     ''' </summary>
     Public Function GetDeviceStats() As Dictionary(Of Device, Integer)
-        Dim devices = New Dictionary(Of Device, Integer)()
+        Dim devices As New Dictionary(Of Device, Integer)()
+        Dim countForDevice As Integer
 
         Try
-            If mXRawFile Is Nothing Then Return devices
+            If mXRawFile Is Nothing Then
+                Return devices
+            End If
 
-            For Each deviceType In [Enum].GetValues(GetType(Device)).Cast(Of Device)()
-                Dim countForDevice = mXRawFile.GetInstrumentCountOfType(deviceType)
+            For Each deviceType As Device In [Enum].GetValues(GetType(Device)).Cast(Of Device)()
+                countForDevice = mXRawFile.GetInstrumentCountOfType(deviceType)
                 devices.Add(deviceType, countForDevice)
             Next
 
@@ -1020,7 +1038,10 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <returns>The number of scans, or -1 if an error</returns>
     Public Function GetNumScans() As Integer
         Try
-            If mXRawFile Is Nothing Then Return -1
+            If mXRawFile Is Nothing Then
+                Return -1
+            End If
+
             Dim runData = mXRawFile.RunHeaderEx
             Dim scanCount = runData.SpectraCount
             Dim errorCode = mXRawFile.IsError
@@ -1680,8 +1701,10 @@ Public Class XRawFileIO : Implements IDisposable
     End Function
 
     Private Function SetMSController() As Boolean
+        Dim hasMsData As Boolean
+
         mXRawFile.SelectInstrument(Device.MS, 1)
-        Dim hasMsData = mXRawFile.SelectMsData()
+        hasMsData = mXRawFile.SelectMsData()
 
         If Not hasMsData Then
             ' Either the file is corrupt, or it simply doesn't have Mass Spec data
@@ -1703,10 +1726,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <returns>True if filterText contains a known MS scan type</returns>
     ''' <remarks>Returns false for MSn scans (like ms2 or ms3)</remarks>
     Public Shared Function ValidateMSScan(filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef simScan As Boolean, <Out> ByRef mrmScanType As MRMScanTypeConstants, <Out> ByRef zoomScan As Boolean) As Boolean
-        simScan = False
-        mrmScanType = MRMScanTypeConstants.NotMRM
-        zoomScan = False
-        Dim ms1Tags = New List(Of String) From {
+        Dim ms1Tags As New List(Of String) From {
             FULL_MS_TEXT,
             MS_ONLY_C_TEXT,
             MS_ONLY_P_TEXT,
@@ -1714,11 +1734,15 @@ Public Class XRawFileIO : Implements IDisposable
             FULL_PR_TEXT,
             FULL_LOCK_MS_TEXT
         }
-        Dim zoomTags = New List(Of String) From {
+        Dim zoomTags As New List(Of String) From {
             MS_ONLY_Z_TEXT,
             MS_ONLY_PZ_TEXT,
             MS_ONLY_DZ_TEXT
         }
+
+        simScan = False
+        mrmScanType = MRMScanTypeConstants.NotMRM
+        zoomScan = False
 
         If ContainsAny(filterText, ms1Tags, 1) Then
             ' This is a Full MS scan
