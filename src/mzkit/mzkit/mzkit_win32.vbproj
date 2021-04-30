@@ -423,12 +423,6 @@
     <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\documents\PixelSelector.Designer.vb">
-      <DependentUpon>PixelSelector.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\dockWindow\documents\PixelSelector.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmGCMSPeaks.Designer.vb">
       <DependentUpon>frmGCMSPeaks.vb</DependentUpon>
     </Compile>
@@ -455,12 +449,6 @@
     </Compile>
     <Compile Include="pages\dockWindow\explorer\frmTreeExplorer.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="pages\dockWindow\documents\RtRangeSelector.Designer.vb">
-      <DependentUpon>RtRangeSelector.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\dockWindow\documents\RtRangeSelector.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmVideoList.Designer.vb">
       <DependentUpon>frmVideoList.vb</DependentUpon>
@@ -751,9 +739,6 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
       <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\documents\PixelSelector.resx">
-      <DependentUpon>PixelSelector.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>
     </EmbeddedResource>
@@ -771,9 +756,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmUVScans.resx">
       <DependentUpon>frmUVScans.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\documents\RtRangeSelector.resx">
-      <DependentUpon>RtRangeSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmDemo.resx">
       <DependentUpon>frmDemo.vb</DependentUpon>
@@ -1025,6 +1007,10 @@
     <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msplots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControlLibrary\ControlLibrary.vbproj">
+      <Project>{df66aa70-9ab9-48d0-b492-9d0e0482a651}</Project>
+      <Name>ControlLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\Task\Task.vbproj">
       <Project>{6e5bca87-358e-4ba5-b279-de17afa52c5c}</Project>
