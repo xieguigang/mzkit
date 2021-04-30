@@ -15,7 +15,7 @@
 
 ## LICENSE
 
-**RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
++ **RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
 
 ```
 MIT License
