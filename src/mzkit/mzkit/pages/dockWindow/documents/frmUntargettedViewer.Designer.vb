@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports ControlLibrary
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmUntargettedViewer
     Inherits DocumentWindow
 
@@ -23,7 +25,7 @@ Partial Class frmUntargettedViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.RtRangeSelector1 = New mzkit.RtRangeSelector()
+        Me.RtRangeSelector1 = New RtRangeSelector()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()

@@ -1,5 +1,4 @@
-﻿Imports mzkit.DockSample
-Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports ControlLibrary
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmGCMS_CDFExplorer
@@ -25,7 +24,7 @@ Partial Class frmGCMS_CDFExplorer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.RtRangeSelector1 = New mzkit.RtRangeSelector()
+        Me.RtRangeSelector1 = New RtRangeSelector()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()

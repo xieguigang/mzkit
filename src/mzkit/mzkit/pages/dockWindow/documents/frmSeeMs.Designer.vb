@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports ControlLibrary
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSeeMs
     Inherits DocumentWindow
 
@@ -25,7 +27,7 @@ Partial Class frmSeeMs
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSeeMs))
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.RtRangeSelector1 = New mzkit.RtRangeSelector()
+        Me.RtRangeSelector1 = New RtRangeSelector()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
