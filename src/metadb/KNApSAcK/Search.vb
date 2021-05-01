@@ -15,6 +15,16 @@ Public Class Search
 
         Return result
     End Function
+
+    Public Shared Function GetData(cid As String, Optional cache$ = "./") As Information
+        Static query As New Dictionary(Of String, InformationQuery)
+
+        Dim result As Information = query _
+            .ComputeIfAbsent(cache, Function() New InformationQuery(cache)) _
+            .Query(Of Information)(cid, ".html")
+
+        Return result
+    End Function
 End Class
 
 Public Class ResultEntry
@@ -27,7 +37,7 @@ End Class
 
 Public Class Information
 
-    Public Property name As String
+    Public Property name As String()
     Public Property formula As String
     Public Property mw As Double
     Public Property CAS As String()
