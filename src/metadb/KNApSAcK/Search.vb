@@ -1,4 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class Search
 
@@ -22,6 +24,14 @@ Public Class Search
         Dim result As Information = query _
             .ComputeIfAbsent(cache, Function() New InformationQuery(cache)) _
             .Query(Of Information)(cid, ".html")
+        Dim img As String = result.img
+        Dim imgLocal As String = $"{cache}/{img}"
+
+        If Not imgLocal.FileExists Then
+            Call $"{My.Resources.knapsack}/{img}".DownloadFile(imgLocal)
+        End If
+
+        result.img = New DataURI(imgLocal.LoadImage).ToString
 
         Return result
     End Function
