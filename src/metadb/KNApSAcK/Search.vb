@@ -1,31 +1,19 @@
-﻿Imports Microsoft.VisualBasic.Language.C
-Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class Search
 
-    Public Shared Iterator Function Search(word As String, Optional type As Types = Types.metabolite) As IEnumerable(Of ResultEntry)
-        Dim content = sprintf(My.Resources.knapsack_search, type.Description, word.UrlEncode) _
-            .GET _
-            .GetTablesHTML _
-            .FirstOrDefault _
-            .GetRowsHTML
+    Public Shared Function Search(word As String, Optional type As Types = Types.metabolite, Optional cache$ = "./") As IEnumerable(Of ResultEntry)
+        Static query As New Dictionary(Of String, SearchQuery)
 
-        For Each rowText As String In content
-            Dim cells As String() = rowText.GetColumnsHTML
-            Dim names As String() = cells(2) _
-                .HtmlLines _
-                .Select(Function(str) str.StripHTMLTags) _
-                .ToArray
-            Dim entry As New ResultEntry With {
-                .C_ID = cells(Scan0).StripHTMLTags,
-                .CAS_ID = cells(1).StripHTMLTags,
-                .Metabolite = names,
-                .formula = cells(3).StripHTMLTags,
-                .Mw = cells(4).StripHTMLTags.ParseDouble
-            }
+        Dim term As New QueryInput With {
+            .type = type,
+            .word = word
+        }
+        Dim result As ResultEntry() = query _
+            .ComputeIfAbsent(cache, Function() New SearchQuery(cache)) _
+            .Query(Of ResultEntry())(term, ".html")
 
-            Yield entry
-        Next
+        Return result
     End Function
 End Class
 
@@ -35,4 +23,25 @@ Public Class ResultEntry
     Public Property Metabolite As String()
     Public Property formula As String
     Public Property Mw As Double
+End Class
+
+Public Class Information
+
+    Public Property name As String
+    Public Property formula As String
+    Public Property mw As Double
+    Public Property CAS As String()
+    Public Property CID As String
+    Public Property InChIKey As String
+    Public Property InChICode As String
+    Public Property SMILES As String
+    Public Property Biosynthesis As String
+    Public Property Organism As Organism()
+
+End Class
+
+Public Class Organism
+    Public Property Kingdom As String
+    Public Property Family As String
+    Public Property Species As String
 End Class

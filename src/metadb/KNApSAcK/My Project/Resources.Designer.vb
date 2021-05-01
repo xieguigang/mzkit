@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to http://www.knapsackfamily.com/knapsack_core/information.php?word=%s.
+        '''</summary>
+        Friend ReadOnly Property knapsack_info() As String
+            Get
+                Return ResourceManager.GetString("knapsack_info", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to http://www.knapsackfamily.com/knapsack_core/result.php?sname=%s&amp;word=%s.
         '''</summary>
         Friend ReadOnly Property knapsack_search() As String

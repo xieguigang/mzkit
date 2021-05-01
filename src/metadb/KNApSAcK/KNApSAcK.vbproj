@@ -103,6 +103,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SearchQuery.vb" />
     <Compile Include="Types.vb" />
     <Compile Include="Search.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
