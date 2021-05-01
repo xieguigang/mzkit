@@ -47,6 +47,11 @@ Public Class Information
     Public Property SMILES As String
     Public Property Biosynthesis As String
     Public Property Organism As Organism()
+    ''' <summary>
+    ''' data uri
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property img As String
 
 End Class
 

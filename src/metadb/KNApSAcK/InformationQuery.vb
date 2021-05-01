@@ -31,7 +31,17 @@ Public Class InformationQuery : Inherits WebQuery(Of String)
 
     Private Shared Iterator Function parseOrgList(html As String) As IEnumerable(Of Organism)
         Dim rows = html.GetRowsHTML
+        Dim cols As String()
 
+        For Each rowText As String In rows
+            cols = rowText.GetColumnsHTML
+
+            Yield New Organism With {
+                .Kingdom = cols(0).StripHTMLTags,
+                .Family = cols(1).StripHTMLTags,
+                .Species = cols(2).StripHTMLTags
+            }
+        Next
     End Function
 
     Private Shared Function parseInfo(html As String) As Information
@@ -43,7 +53,7 @@ Public Class InformationQuery : Inherits WebQuery(Of String)
         Dim data = table.GetTablesHTML(greedy:=True).First.GetValue
         Dim orgHtml = data.GetTablesHTML.First
         Dim orgList = orgHtml.DoCall(AddressOf parseOrgList).ToArray
-        Dim img = table.Replace(data, "")
+        Dim img As String = table.Replace(data, "").img.src
         Dim details = data _
             .Replace(orgHtml, "") _
             .GetRowsHTML _
@@ -66,8 +76,9 @@ Public Class InformationQuery : Inherits WebQuery(Of String)
             .InChIKey = details("InChIKey").FirstOrDefault,
             .InChICode = details("InChICode").FirstOrDefault,
             .SMILES = details("SMILES").FirstOrDefault,
-            .Biosynthesis = details("Start Substs in Alk. Biosynthesis (Prediction)	").FirstOrDefault,
-            .Organism = orgList
+            .Biosynthesis = details("Start Substs in Alk. Biosynthesis (Prediction)").FirstOrDefault,
+            .Organism = orgList,
+            .img = img
         }
     End Function
 End Class
