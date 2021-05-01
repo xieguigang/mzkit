@@ -13,6 +13,10 @@
 
 **Download Software**: [http://www.biodeep.cn/downloads?lang=en-US](http://www.biodeep.cn/downloads?lang=en-US)
 
+## LICENSE
+
++ **RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
+
 ```
 MIT License
 
