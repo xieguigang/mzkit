@@ -55,11 +55,9 @@ Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.Text
-Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
-Imports Vip.Notification
 
 ''' <summary>
 ''' 显示一个workspace对象里面所包含有的文件列表
