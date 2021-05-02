@@ -1,4 +1,8 @@
-﻿Public Class MSSelector : Inherits RtRangeSelector
+﻿Imports System.Runtime.CompilerServices
+
+<Assembly: InternalsVisibleTo("mzkit_win32")>
+
+Public Class MSSelector : Inherits RtRangeSelector
 
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Private components As System.ComponentModel.IContainer
@@ -8,6 +12,10 @@
     Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
     Friend WithEvents FilterMs2ToolStripMenuItem As ToolStripMenuItem
+
+    Public Event ShowTIC()
+    Public Event ShowBPC()
+    Public Event FilterMs2(rtmin As Double, rtmax As Double)
 
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -74,5 +82,27 @@
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
+    End Sub
+
+    Private Sub MSSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
+        BackColor = Color.White
+    End Sub
+
+    Private Sub showTICClick() Handles TICToolStripMenuItem.Click
+        TICToolStripMenuItem.Checked = True
+        BPCToolStripMenuItem.Checked = False
+
+        RaiseEvent ShowTIC()
+    End Sub
+
+    Private Sub showBPCClick() Handles BPCToolStripMenuItem.Click
+        TICToolStripMenuItem.Checked = False
+        BPCToolStripMenuItem.Checked = True
+
+        RaiseEvent ShowBPC()
+    End Sub
+
+    Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
+        RaiseEvent FilterMs2(rtmin, rtmax)
     End Sub
 End Class
