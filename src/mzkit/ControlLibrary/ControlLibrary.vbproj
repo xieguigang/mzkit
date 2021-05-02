@@ -144,6 +144,12 @@
     <Compile Include="MSSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ToggleSlider.Designer.vb">
+      <DependentUpon>ToggleSlider.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ToggleSlider.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -160,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MSSelector.resx">
       <DependentUpon>MSSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToggleSlider.resx">
+      <DependentUpon>ToggleSlider.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
