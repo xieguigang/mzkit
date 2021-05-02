@@ -1,4 +1,6 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmRawFeaturesList
@@ -64,10 +66,10 @@ Partial Class frmRawFeaturesList
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
+        Me.ToolStripSpringTextBox1 = New ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.treeView1 = New Win7StyleTreeView(Me.components)
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -414,7 +416,7 @@ Partial Class frmRawFeaturesList
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripSpringTextBox1 As ToolStripSpringTextBox
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents treeView1 As Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView
+    Friend WithEvents treeView1 As Win7StyleTreeView
     Friend WithEvents ShowPropertiesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IonTableToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenViewerToolStripMenuItem As ToolStripMenuItem

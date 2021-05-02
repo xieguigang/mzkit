@@ -1,4 +1,5 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmFileExplorer
@@ -36,10 +37,10 @@ Partial Class frmFileExplorer
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
-        Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.treeView1 = New Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
+        Me.ToolStripSpringTextBox1 = New ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ctxMenuScript = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddNewScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()

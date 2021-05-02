@@ -1,4 +1,5 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmUVScans
@@ -31,7 +32,7 @@ Partial Class frmUVScans
         Me.ShowPDAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowUVOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.Win7StyleTreeView1 = New Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)

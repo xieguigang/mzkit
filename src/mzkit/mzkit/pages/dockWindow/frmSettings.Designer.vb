@@ -1,5 +1,4 @@
-﻿Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
-Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSettings

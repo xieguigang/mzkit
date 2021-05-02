@@ -1,4 +1,5 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSRMIonsExplorer
@@ -36,7 +37,7 @@ Partial Class frmSRMIonsExplorer
         Me.ClearIonSelectionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ClearFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.Win7StyleTreeView1 = New Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ImportsFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearFilesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()

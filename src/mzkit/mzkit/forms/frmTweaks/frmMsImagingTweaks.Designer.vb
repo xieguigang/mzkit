@@ -1,4 +1,6 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmMsImagingTweaks
@@ -32,10 +34,10 @@ Partial Class frmMsImagingTweaks
         Me.RenderingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearSelectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.Win7StyleTreeView1 = New Win7StyleTreeView(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
+        Me.ToolStripSpringTextBox1 = New ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1.SuspendLayout()

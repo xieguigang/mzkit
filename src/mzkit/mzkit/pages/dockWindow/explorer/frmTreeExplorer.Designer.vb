@@ -1,4 +1,5 @@
-﻿Imports mzkit.DockSample
+﻿Imports ControlLibrary
+Imports mzkit.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmTreeExplorer
@@ -28,7 +29,7 @@ Partial Class frmTreeExplorer
         Me.components = New System.ComponentModel.Container()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.Win7StyleTreeView1 = New Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
