@@ -179,6 +179,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
 	EndGlobalSection
@@ -12716,8 +12717,8 @@ Global
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit_UnixDocker|x64.Build.0 = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit_UnixDocker|x86.ActiveCfg = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
-		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|x64.ActiveCfg = mzkit|x64
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|x64.Build.0 = mzkit|x64
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.mzkit|x86.ActiveCfg = Debug|Any CPU
@@ -12896,8 +12897,8 @@ Global
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit_UnixDocker|x64.Build.0 = Debug|x64
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit_UnixDocker|x86.ActiveCfg = Debug|Any CPU
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
-		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|x64.ActiveCfg = mzkit|x64
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|x64.Build.0 = mzkit|x64
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.mzkit|x86.ActiveCfg = Debug|Any CPU
@@ -13076,8 +13077,8 @@ Global
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit_UnixDocker|x64.Build.0 = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit_UnixDocker|x86.ActiveCfg = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
-		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|x64.ActiveCfg = mzkit|x64
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|x64.Build.0 = mzkit|x64
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.mzkit|x86.ActiveCfg = Debug|Any CPU
