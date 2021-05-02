@@ -62,6 +62,7 @@ Public Class frmUntargettedViewer
         Me.TabText = raw.source.FileName
 
         Call showTIC()
+        Call ApplyVsTheme(MsSelector1.ContextMenuStrip1)
     End Sub
 
     Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles MsSelector1.RangeSelect
@@ -105,8 +106,6 @@ Public Class frmUntargettedViewer
     End Sub
 
     Private Sub frmUntargettedViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Call ApplyVsTheme(MsSelector1.ContextMenuStrip1)
-
         Me.Icon = My.Resources.xobject
         Me.SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
