@@ -150,6 +150,15 @@
     <Compile Include="ToggleSlider.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ToolStripSpringTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Win7StyleTreeView.Designer.vb">
+      <DependentUpon>Win7StyleTreeView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Win7StyleTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -423,9 +423,6 @@
     <Compile Include="pages\dockWindow\explorer\frmGCMSPeaks.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\explorer\ToolStripSpringTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmSRMIonsExplorer.Designer.vb">
       <DependentUpon>frmSRMIonsExplorer.vb</DependentUpon>
     </Compile>
@@ -504,12 +501,6 @@
     </Compile>
     <Compile Include="pages\CollDatagridview.vb" />
     <Compile Include="pages\toolkit\contextMenu\ExportData.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.Designer.vb">
-      <DependentUpon>Win7StyleTreeView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\frmRScriptEdit.Designer.vb">
