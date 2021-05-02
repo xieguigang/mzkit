@@ -58,7 +58,8 @@ Namespace MarkupData.mzML.IonTargeted
 
         Shared ReadOnly methods As New Dictionary(Of String, String) From {
             {"beam-type collision-induced dissociation", "HCD"},
-            {"collision-induced dissociation", "CID"}
+            {"collision-induced dissociation", "CID"},
+            {"electron transfer dissociation", "ETD"}
         }
 
         Public Function GetActivationMethod() As String

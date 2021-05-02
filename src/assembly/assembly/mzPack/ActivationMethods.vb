@@ -85,6 +85,12 @@ Public Enum ActivationMethods As Byte
     ''' and usually yields rich fragmentation spectra. 
     ''' </summary>
     IRMPD
-
+    ''' <summary>
+    ''' Electron transfer dissociation (ETD) involves transfer of an electron from a 
+    ''' radical anion to the analyte cation and also produces c and z type ions, and 
+    ''' has been implemented with wide variety of mass analyzers, most commonly ion 
+    ''' traps.
+    ''' </summary>
+    ETD
 End Enum
 
