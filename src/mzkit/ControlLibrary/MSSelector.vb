@@ -1,101 +1,25 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
 <Assembly: InternalsVisibleTo("mzkit_win32")>
 
-Public Class MSSelector : Inherits RtRangeSelector
-
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Private components As System.ComponentModel.IContainer
-    Friend WithEvents TICToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BPCToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
-    Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
-    Friend WithEvents ResetToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents FilterMs2ToolStripMenuItem As ToolStripMenuItem
+Public Class MSSelector
 
     Public Event ShowTIC()
     Public Event ShowBPC()
     Public Event FilterMs2(rtmin As Double, rtmax As Double)
-
-    Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MSSelector))
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.TICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.FilterMs2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContextMenuStrip1.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetToolStripMenuItem, Me.PinToolStripMenuItem, Me.ToolStripMenuItem2, Me.TICToolStripMenuItem, Me.BPCToolStripMenuItem, Me.ToolStripMenuItem1, Me.FilterMs2ToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 148)
-        '
-        'PinToolStripMenuItem
-        '
-        Me.PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.PinToolStripMenuItem.Name = "PinToolStripMenuItem"
-        Me.PinToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.PinToolStripMenuItem.Text = "Pin"
-        Me.PinToolStripMenuItem.ToolTipText = "Pin of RT Range"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
-        '
-        'TICToolStripMenuItem
-        '
-        Me.TICToolStripMenuItem.Checked = True
-        Me.TICToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.TICToolStripMenuItem.Name = "TICToolStripMenuItem"
-        Me.TICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.TICToolStripMenuItem.Text = "TIC"
-        '
-        'BPCToolStripMenuItem
-        '
-        Me.BPCToolStripMenuItem.Name = "BPCToolStripMenuItem"
-        Me.BPCToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.BPCToolStripMenuItem.Text = "BPC"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
-        '
-        'FilterMs2ToolStripMenuItem
-        '
-        Me.FilterMs2ToolStripMenuItem.Image = CType(resources.GetObject("FilterMs2ToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.FilterMs2ToolStripMenuItem.Name = "FilterMs2ToolStripMenuItem"
-        Me.FilterMs2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.FilterMs2ToolStripMenuItem.Text = "Filter Ms2"
-        '
-        'ResetToolStripMenuItem
-        '
-        Me.ResetToolStripMenuItem.Image = CType(resources.GetObject("ResetToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
-        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ResetToolStripMenuItem.Text = "Reset"
-        '
-        'MSSelector
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.Name = "MSSelector"
-        Me.ContextMenuStrip1.ResumeLayout(False)
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
-
-    End Sub
+    Public Event RangeSelect(rtmin As Double, rtmax As Double)
 
     Private Sub MSSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
         BackColor = Color.White
+    End Sub
+
+    Public Sub SetTIC(TIC As ChromatogramTick())
+        Call RtRangeSelector1.SetTIC(TIC)
+    End Sub
+
+    Public Sub RefreshRtRangeSelector()
+        Call RtRangeSelector1.RefreshRtRangeSelector()
     End Sub
 
     Private Sub showTICClick() Handles TICToolStripMenuItem.Click
@@ -113,7 +37,7 @@ Public Class MSSelector : Inherits RtRangeSelector
     End Sub
 
     Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
-        RaiseEvent FilterMs2(rtmin, rtmax)
+        RaiseEvent FilterMs2(RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
     End Sub
 
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
@@ -123,5 +47,9 @@ Public Class MSSelector : Inherits RtRangeSelector
     Private Sub ResetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem.Click
         PinToolStripMenuItem.Checked = False
 
+    End Sub
+
+    Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles RtRangeSelector1.RangeSelect
+        RaiseEvent RangeSelect(min, max)
     End Sub
 End Class

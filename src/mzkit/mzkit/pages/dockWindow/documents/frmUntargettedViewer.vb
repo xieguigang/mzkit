@@ -62,7 +62,10 @@ Public Class frmUntargettedViewer
         Me.TabText = raw.source.FileName
 
         Call showTIC()
-        Call ApplyVsTheme(MsSelector1.ContextMenuStrip1)
+
+        If Not MsSelector1.ContextMenuStrip1 Is Nothing Then
+            Call ApplyVsTheme(MsSelector1.ContextMenuStrip1)
+        End If
     End Sub
 
     Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles MsSelector1.RangeSelect

@@ -20,8 +20,8 @@ Partial Class RtRangeSelector
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
-    Private Sub InitializeComponent()
+    <System.Diagnostics.DebuggerStepThrough()>
+    Protected Overridable Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
