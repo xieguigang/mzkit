@@ -11,6 +11,7 @@ Public Class MSSelector : Inherits RtRangeSelector
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents ResetToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FilterMs2ToolStripMenuItem As ToolStripMenuItem
 
     Public Event ShowTIC()
@@ -21,20 +22,34 @@ Public Class MSSelector : Inherits RtRangeSelector
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MSSelector))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.TICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.FilterMs2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ResetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinToolStripMenuItem, Me.ToolStripMenuItem2, Me.TICToolStripMenuItem, Me.BPCToolStripMenuItem, Me.ToolStripMenuItem1, Me.FilterMs2ToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetToolStripMenuItem, Me.PinToolStripMenuItem, Me.ToolStripMenuItem2, Me.TICToolStripMenuItem, Me.BPCToolStripMenuItem, Me.ToolStripMenuItem1, Me.FilterMs2ToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 126)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 148)
+        '
+        'PinToolStripMenuItem
+        '
+        Me.PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.PinToolStripMenuItem.Name = "PinToolStripMenuItem"
+        Me.PinToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PinToolStripMenuItem.Text = "Pin"
+        Me.PinToolStripMenuItem.ToolTipText = "Pin of RT Range"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
         '
         'TICToolStripMenuItem
         '
@@ -57,22 +72,17 @@ Public Class MSSelector : Inherits RtRangeSelector
         '
         'FilterMs2ToolStripMenuItem
         '
+        Me.FilterMs2ToolStripMenuItem.Image = CType(resources.GetObject("FilterMs2ToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FilterMs2ToolStripMenuItem.Name = "FilterMs2ToolStripMenuItem"
         Me.FilterMs2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.FilterMs2ToolStripMenuItem.Text = "Filter Ms2"
         '
-        'PinToolStripMenuItem
+        'ResetToolStripMenuItem
         '
-        Me.PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.PinToolStripMenuItem.Name = "PinToolStripMenuItem"
-        Me.PinToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.PinToolStripMenuItem.Text = "Pin"
-        Me.PinToolStripMenuItem.ToolTipText = "Pin of RT Range"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ResetToolStripMenuItem.Image = CType(resources.GetObject("ResetToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
+        Me.ResetToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ResetToolStripMenuItem.Text = "Reset"
         '
         'MSSelector
         '
@@ -104,5 +114,14 @@ Public Class MSSelector : Inherits RtRangeSelector
 
     Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
         RaiseEvent FilterMs2(rtmin, rtmax)
+    End Sub
+
+    Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
+        PinToolStripMenuItem.Checked = Not PinToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub ResetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem.Click
+        PinToolStripMenuItem.Checked = False
+
     End Sub
 End Class
