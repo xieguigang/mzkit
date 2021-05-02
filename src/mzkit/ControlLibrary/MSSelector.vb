@@ -10,6 +10,42 @@ Public Class MSSelector
     Public Event FilterMs2(rtmin As Double, rtmax As Double)
     Public Event RangeSelect(rtmin As Double, rtmax As Double)
 
+    Public Property SelectedColor As Color
+        Get
+            Return RtRangeSelector1.SelectedColor
+        End Get
+        Set(value As Color)
+            RtRangeSelector1.SelectedColor = value
+        End Set
+    End Property
+
+    Public Property FillColor As Color
+        Get
+            Return RtRangeSelector1.FillColor
+        End Get
+        Set(value As Color)
+            RtRangeSelector1.FillColor = value
+        End Set
+    End Property
+
+    Public Property rtmin As Double
+        Get
+            Return RtRangeSelector1.rtmin
+        End Get
+        Set(value As Double)
+            RtRangeSelector1.rtmin = value
+        End Set
+    End Property
+
+    Public Property rtmax As Double
+        Get
+            Return RtRangeSelector1.rtmax
+        End Get
+        Set(value As Double)
+            RtRangeSelector1.rtmax = value
+        End Set
+    End Property
+
     Private Sub MSSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
         BackColor = Color.White
     End Sub
