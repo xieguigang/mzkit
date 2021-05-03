@@ -9,18 +9,35 @@ Public Module RawStream
     <Extension>
     Public Function LoadFromXRaw(raw As MSFileReader) As mzPack
         Dim pack As New mzPack
+        Dim MSscans As New List(Of ScanMS1)
         Dim scanInfo As SingleScanInfo = Nothing
-        Dim MS1 As ScanMS1
+        Dim MS1 As ScanMS1 = Nothing
         Dim MS2 As New List(Of ScanMS2)
+        Dim mz As Double()
+        Dim into As Double()
 
         Call raw.LoadFile()
 
         For Each scan As RawLabelData In raw.GetLabelData
             scanInfo = Nothing
             raw.GetScanInfo(scan.ScanNumber)
+            mz = scan.MSData.Select(Function(a) a.Mass).ToArray
+            into = scan.MSData.Select(Function(a) a.Intensity).ToArray
 
             If scanInfo.MSLevel = 1 Then
-                MS1.products = MS2.PopAll
+                If Not MS1 Is Nothing Then
+                    MS1.products = MS2.PopAll
+                    MSscans += MS1
+                End If
+
+                MS1 = New ScanMS1 With {
+                    .BPC = scanInfo.BasePeakIntensity,
+                    .into = into,
+                    .mz = mz,
+                    .rt = scanInfo.RetentionTime,
+                    .scan_id = scanInfo.FilterText,
+                    .TIC = scanInfo.TotalIonCurrent
+                }
             Else
                 MS2 += New ScanMS2 With {
                     .activationMethod = scanInfo.ActivationType,
@@ -31,10 +48,17 @@ Public Module RawStream
                     .parentMz = scanInfo.ParentIonMZ,
                     .scan_id = scanInfo.FilterText,
                     .rt = scanInfo.RetentionTime,
-                    .polarity = scanInfo.IonMode
+                    .polarity = scanInfo.IonMode,
+                    .mz = mz,
+                    .into = into
                 }
             End If
         Next
+
+        MS1.products = MS2.PopAll
+        MSscans += MS1
+
+        pack.MS = MSscans
 
         Return pack
     End Function

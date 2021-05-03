@@ -138,7 +138,6 @@ Namespace DataObjects
         ''' <summary>
         ''' The parent ion charge state, as determined by the Thermo software
         ''' </summary>
-        <Obsolete("Unused")>
         Public ReadOnly Property ChargeState As Integer
             Get
                 Dim value As String = Nothing
