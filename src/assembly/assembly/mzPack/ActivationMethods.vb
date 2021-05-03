@@ -3,9 +3,11 @@
 ''' </summary>
 ''' <remarks>
 ''' This enum mirrors ThermoFisher.CommonCore.Data.FilterEnums.ActivationType
+''' 
+''' (这个枚举值为Byte类型，请勿修改，否则mzPack文件格式读写会出现问题)
 ''' </remarks>
 <CLSCompliant(True)>
-Public Enum ActivationMethods
+Public Enum ActivationMethods As Byte
 
     ''' <summary>
     ''' Unknown activation type
