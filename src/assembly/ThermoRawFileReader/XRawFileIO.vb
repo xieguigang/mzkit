@@ -820,7 +820,7 @@ Public Class XRawFileIO : Implements IDisposable
                 index -= 1
             End If
 
-            Dim activationTypeCode = scanFilter.GetActivation(index)
+            Dim activationTypeCode As ActivationType = scanFilter.GetActivation(index)
             Dim activationType As ActivationMethods
 
             Try
