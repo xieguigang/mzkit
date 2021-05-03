@@ -10,6 +10,8 @@ Module Module1
                 .LoadFromXRaw _
                 .Write(file)
         End Using
+
+        Pause()
     End Sub
 
 End Module
