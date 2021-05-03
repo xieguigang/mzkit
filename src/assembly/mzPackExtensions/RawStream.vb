@@ -15,11 +15,13 @@ Public Module RawStream
         Dim MS2 As New List(Of ScanMS2)
         Dim mz As Double()
         Dim into As Double()
+        Dim scanId As String
 
         For Each scan As RawLabelData In raw.GetLabelData
             scanInfo = raw.GetScanInfo(scan.ScanNumber)
             mz = scan.MSData.Select(Function(a) a.Mass).ToArray
             into = scan.MSData.Select(Function(a) a.Intensity).ToArray
+            scanId = $"[Scan_{scan.ScanNumber}] {scanInfo.FilterText}"
 
             If scanInfo.MSLevel = 1 Then
                 If Not MS1 Is Nothing Then
@@ -32,7 +34,7 @@ Public Module RawStream
                     .into = into,
                     .mz = mz,
                     .rt = scanInfo.RetentionTime,
-                    .scan_id = scanInfo.FilterText,
+                    .scan_id = scanId,
                     .TIC = scanInfo.TotalIonCurrent
                 }
             Else
@@ -43,7 +45,7 @@ Public Module RawStream
                     .collisionEnergy = 0,
                     .intensity = scanInfo.TotalIonCurrent,
                     .parentMz = scanInfo.ParentIonMZ,
-                    .scan_id = scanInfo.FilterText,
+                    .scan_id = scanId,
                     .rt = scanInfo.RetentionTime,
                     .polarity = scanInfo.IonMode,
                     .mz = mz,
