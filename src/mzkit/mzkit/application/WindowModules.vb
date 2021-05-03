@@ -102,6 +102,7 @@ Friend MustInherit Class WindowModules
             "Image mzML(*.imzML)|*.imzML",
             "GC-MS Targeted(*.cdf)|*.cdf;*.netcdf",
             "GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML",
+            "Thermo Raw File(*.raw)|*.raw",
             "R# Script(*.R)|*.R"
         }
 
