@@ -60,10 +60,12 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel
@@ -157,15 +159,20 @@ Public Class frmMain
             Call WindowModules.rawFeaturesList.LoadRaw(raw)
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         ElseIf fileName.ExtensionSuffix("raw") Then
-            Dim raw As New MSFileReader(fileName)
+            Dim Xraw As New MSFileReader(fileName)
+            Dim mzPack As mzPack = Xraw.LoadFromXRaw
+            Dim cacheFile As String = TempFileSystem.GetAppSysTempFile(".mzPack", App.PID.ToHexString, "MSRawFile_")
+            Dim raw As New Raw With {
+               .cache = cacheFile,
+               .numOfScan1 = 0,
+               .numOfScan2 = 0,
+               .rtmax = 0,
+               .rtmin = 0,
+               .source = fileName
+            }
 
-            Call raw.LoadFile()
-
-            For Each scan As RawLabelData In raw.GetLabelData
-                Call Console.WriteLine(scan.ToString)
-            Next
-
-            Throw New NotImplementedException
+            Call WindowModules.rawFeaturesList.LoadRaw(Raw)
+            Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         Else
             Call WindowModules.fileExplorer.ImportsRaw(fileName)
         End If

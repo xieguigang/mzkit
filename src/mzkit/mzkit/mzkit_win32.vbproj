@@ -954,6 +954,10 @@
       <Project>{6f5f8407-deb8-4b75-bf41-5284772d37dd}</Project>
       <Name>Comprehensive</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPackExtensions\mzPackExtensions.vbproj">
+      <Project>{2288294b-3a1d-40c0-b05b-c5f53eadd5c8}</Project>
+      <Name>mzPackExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>

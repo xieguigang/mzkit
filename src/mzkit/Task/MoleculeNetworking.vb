@@ -104,7 +104,7 @@ Public Module MoleculeNetworking
             msLevel = 1
             attrs = New ScanMS2 With {
                 .scan_id = ms1.scan_id,
-                .activationMethod = ActivationMethods.NA,
+                .activationMethod = ActivationMethods.Unknown,
                 .centroided = False,
                 .charge = 0,
                 .collisionEnergy = 0,
