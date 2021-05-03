@@ -21,7 +21,7 @@ Public Module RawStream
             scanInfo = raw.GetScanInfo(scan.ScanNumber)
             mz = scan.MSData.Select(Function(a) a.Mass).ToArray
             into = scan.MSData.Select(Function(a) a.Intensity).ToArray
-            scanId = $"[Scan_{scan.ScanNumber}] {scanInfo.FilterText}"
+            scanId = $"{If(scanInfo.MSLevel = 1, "[MS1]", "[MSn]")}[Scan_{scan.ScanNumber}] {scanInfo.FilterText}"
 
             If scanInfo.MSLevel = 1 Then
                 If Not MS1 Is Nothing Then
