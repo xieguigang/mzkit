@@ -227,6 +227,10 @@ Public Class XRawFileIO : Implements IDisposable
         End If
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return RawFilePath
+    End Function
+
     Private Sub CacheScanInfo(scan As Integer, scanInfo As SingleScanInfo)
         If ScanInfoCacheMaxSize = 0 Then
             Return
