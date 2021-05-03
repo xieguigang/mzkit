@@ -171,6 +171,10 @@ Public Class frmMain
                .source = fileName
             }
 
+            Using temp As Stream = cacheFile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Call mzPack.Write(temp)
+            End Using
+
             Call WindowModules.rawFeaturesList.LoadRaw(Raw)
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         Else
