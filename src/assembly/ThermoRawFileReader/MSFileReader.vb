@@ -76,7 +76,8 @@ Public Class MSFileReader : Implements IDisposable
         Dim rt As Double = Nothing
 
         For i As Integer = options.MinScan To options.MaxScan
-            Dim data As FTLabelInfoType() = GetScanData(i)
+            Dim scanInfo As SingleScanInfo = Nothing
+            Dim data As FTLabelInfoType() = GetScanData(i, scanInfo)
 
             ' XRawFileIO.udtMassPrecisionInfoType[] precisionInfo;
             ' mRawFileReader.GetScanPrecisionData(i, out precisionInfo);
@@ -118,14 +119,20 @@ Public Class MSFileReader : Implements IDisposable
         Next
     End Function
 
+    Public Function GetScanInfo(scanNumber As Integer) As SingleScanInfo
+        Dim scanInfo As SingleScanInfo = Nothing
+        Call mRawFileReader.GetScanInfo(scanNumber, scanInfo)
+        Return scanInfo
+    End Function
+
     ''' <summary>
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS)
     ''' </summary>
     ''' <param name="scanNumber"></param>
-    ''' <returns></returns>
-    Private Function GetScanData(scanNumber As Integer) As FTLabelInfoType()
-        Dim scanInfo As SingleScanInfo = Nothing
-
+    ''' <returns>
+    ''' the MS matrix data
+    ''' </returns>
+    Private Function GetScanData(scanNumber As Integer, ByRef scanInfo As SingleScanInfo) As FTLabelInfoType()
         If Not mRawFileReader.GetScanInfo(scanNumber, scanInfo) Then
             Return Nothing
         Else

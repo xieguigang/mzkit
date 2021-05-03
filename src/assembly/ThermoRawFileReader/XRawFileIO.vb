@@ -1080,6 +1080,245 @@ Public Class XRawFileIO : Implements IDisposable
         Return True
     End Function
 
+    Private Function GetScanInfoInternal(scanInfo As SingleScanInfo) As Boolean
+        Dim scan As Integer = scanInfo.ScanNumber
+
+        ' XRaw periodically mislabels a scan as .EventNumber = 1 when it's really an MS/MS scan; check for this
+        ' Parse out the parent ion and collision energy from .FilterText
+        Dim scanEventNumber As Integer = Nothing
+        Dim ionInjectionTime As Double = Nothing
+        Dim msLevel As Integer = Nothing
+        Dim parentIonMz As Double = Nothing
+        Dim collisionMode As String = Nothing
+        Dim simScan As Boolean = Nothing
+        Dim mrmScanType As MRMScanTypeConstants = Nothing
+        Dim zoomScan As Boolean = Nothing
+
+        ' Make sure the MS controller is selected
+        If Not SetMSController() Then
+            CacheScanInfo(Scan, scanInfo)
+            Return False
+        End If
+
+        ' Initialize the values that will be populated using GetScanHeaderInfoForScanNum()
+        scanInfo.NumPeaks = 0
+        scanInfo.TotalIonCurrent = 0
+        scanInfo.SIMScan = False
+        scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
+        scanInfo.ZoomScan = False
+        scanInfo.CollisionMode = String.Empty
+        scanInfo.FilterText = String.Empty
+        scanInfo.IonMode = IonModeConstants.Unknown
+
+        Dim scanStats As ScanStatistics = mXRawFile.GetScanStatsForScanNumber(scan)
+
+        scanInfo.NumPeaks = scanStats.PacketCount
+        scanInfo.RetentionTime = scanStats.StartTime
+        scanInfo.LowMass = scanStats.LowMass
+        scanInfo.HighMass = scanStats.HighMass
+        scanInfo.TotalIonCurrent = scanStats.TIC
+        scanInfo.BasePeakMZ = scanStats.BasePeakMass
+        scanInfo.BasePeakIntensity = scanStats.BasePeakIntensity
+        scanInfo.NumChannels = scanStats.NumberOfChannels
+        scanInfo.Frequency = scanStats.Frequency
+
+        Dim errorCode = mXRawFile.IsError
+
+        If errorCode Then
+            CacheScanInfo(Scan, scanInfo)
+            Return False
+        End If
+
+        scanInfo.UniformTime = scanStats.IsUniformTime
+        scanInfo.IsCentroided = scanStats.IsCentroidScan
+
+        Try
+
+            If Not mCorruptMemoryEncountered Then
+                ' Retrieve the additional parameters for this scan (including Scan Event)
+                Dim data = mXRawFile.GetTrailerExtraInformation(Scan)
+                Dim arrayCount = data.Length
+                Dim scanEventLabels = data.Labels
+                Dim scanEventValues = data.Values
+
+                If arrayCount > 0 AndAlso scanEventLabels IsNot Nothing AndAlso scanEventValues IsNot Nothing Then
+                    scanInfo.StoreScanEvents(scanEventLabels, scanEventValues)
+                End If
+            End If
+
+        Catch ex As AccessViolationException
+            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & Scan & ": " & ex.Message
+            RaiseWarningMessage(msg)
+        Catch ex As Exception
+            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & Scan & ": " & ex.Message
+            RaiseWarningMessage(msg)
+
+            If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
+                mCorruptMemoryEncountered = True
+            End If
+        End Try
+
+        scanInfo.EventNumber = 1
+
+        ' Look for the entry in scanInfo.ScanEvents named "Scan Event:"
+        ' Entries for the LCQ are:
+        '   Wideband Activation
+        '   Micro Scan Count
+        '   Ion Injection Time (ms)
+        '   Scan Segment
+        '   Scan Event
+        '   Elapsed Scan Time (sec)
+        '   API Source CID Energy
+        '   Resolution
+        '   Average Scan by Inst
+        '   BackGd Subtracted by Inst
+        '   Charge State
+
+        If Integer.TryParse(If(scanInfo.ScanEvents.Find(Function(x) x.Key.StartsWith("scan event", StringComparison.OrdinalIgnoreCase)).Value, String.Empty), scanEventNumber) Then
+            scanInfo.EventNumber = scanEventNumber
+        End If
+
+        If Double.TryParse(If(scanInfo.ScanEvents.Find(Function(x) x.Key.StartsWith("ion injection time (ms)", StringComparison.OrdinalIgnoreCase)).Value, String.Empty), ionInjectionTime) Then
+            scanInfo.IonInjectionTime = ionInjectionTime
+        End If
+
+        ' Lookup the filter text for this scan
+        ' Parse out the parent ion m/z for fragmentation scans
+        Dim scanFilter = mXRawFile.GetFilterForScanNumber(Scan)
+        Dim filterText = scanFilter.ToString()
+        scanInfo.FilterText = String.Copy(filterText)
+        scanInfo.IsFTMS = scanFilter.MassAnalyzer = MassAnalyzerType.MassAnalyzerFTMS
+        If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then scanInfo.FilterText = String.Empty
+
+        If scanInfo.EventNumber <= 1 Then
+            If XRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, Nothing) Then
+                scanInfo.EventNumber = msLevel
+            End If
+        End If
+
+        If scanInfo.EventNumber > 1 Then
+            ' MS/MS data
+            scanInfo.MSLevel = 2
+
+            If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then
+                ' FilterText is empty; this indicates a problem with the .Raw file
+                ' This is rare, but does happen (see scans 2 and 3 in QC_Shew_08_03_pt5_1_MAXPRO_27Oct08_Raptor_08-01-01.raw)
+                ' We'll set the Parent Ion to 0 m/z and the collision mode to CID
+                scanInfo.ParentIonMZ = 0
+                scanInfo.CollisionMode = "cid"
+
+                If scanInfo.ActivationType = ActivationTypeConstants.Unknown Then
+                    scanInfo.ActivationType = ActivationTypeConstants.CID
+                End If
+
+                scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
+            Else
+
+                If ExtractParentIonMZFromFilterText(scanInfo.FilterText, parentIonMz, msLevel, collisionMode) Then
+                    scanInfo.ParentIonMZ = parentIonMz
+                    scanInfo.CollisionMode = collisionMode
+
+                    If msLevel > 2 Then
+                        scanInfo.MSLevel = msLevel
+                    End If
+
+                    ' Check whether this is an SRM MS2 scan
+                    scanInfo.MRMScanType = DetermineMRMScanType(scanInfo.FilterText)
+                Else
+
+                    If ValidateMSScan(scanInfo.FilterText, msLevel, simScan, mrmScanType, zoomScan) Then
+                        ' Yes, scan is an MS, SIM, or MRMQMS, or SRM scan
+                        scanInfo.MSLevel = msLevel
+                        scanInfo.SIMScan = simScan
+                        scanInfo.MRMScanType = mrmScanType
+                        scanInfo.ZoomScan = zoomScan
+                    Else
+                        ' Unknown format for .FilterText; return an error
+                        RaiseErrorMessage("Unknown format for Scan Filter: " & scanInfo.FilterText)
+                        Return False
+                    End If
+                End If
+            End If
+        Else
+            ' MS1 data
+            ' Make sure .FilterText contains one of the known MS1, SIM or MRM tags
+
+            If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then
+                ' FilterText is empty; this indicates a problem with the .Raw file
+                ' This is rare, but does happen (see scans 2 and 3 in QC_Shew_08_03_pt5_1_MAXPRO_27Oct08_Raptor_08-01-01.raw)
+                scanInfo.MSLevel = 1
+                scanInfo.SIMScan = False
+                scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
+            Else
+
+                If ValidateMSScan(scanInfo.FilterText, msLevel, simScan, mrmScanType, zoomScan) Then
+                    ' Yes, scan is an MS, SIM, or MRMQMS, or SRM scan
+                    scanInfo.MSLevel = msLevel
+                    scanInfo.SIMScan = simScan
+                    scanInfo.MRMScanType = mrmScanType
+                    scanInfo.ZoomScan = zoomScan
+                Else
+                    ' Unknown format for .FilterText; return an error
+                    RaiseErrorMessage("Unknown format for Scan Filter: " & scanInfo.FilterText)
+                    Return False
+                End If
+            End If
+        End If
+
+        scanInfo.IonMode = DetermineIonizationMode(scanInfo.FilterText)
+
+        ' Now that we know MSLevel we can lookup the activation type (aka activation method)
+        If scanInfo.MSLevel > 1 Then
+            scanInfo.ActivationType = GetActivationType(Scan)
+        Else
+            scanInfo.ActivationType = ActivationTypeConstants.CID
+        End If
+
+        Dim newMRMInfo As MRMInfo = Nothing
+
+        If scanInfo.MRMScanType <> MRMScanTypeConstants.NotMRM Then
+            ' Parse out the MRM_QMS or SRM information for this scan
+            ExtractMRMMasses(scanInfo.FilterText, scanInfo.MRMScanType, newMRMInfo)
+        Else
+            newMRMInfo = New MRMInfo()
+        End If
+
+        scanInfo.MRMInfo = newMRMInfo
+
+        ' Retrieve the Status Log for this scan using the following
+        ' The Status Log includes numerous instrument parameters, including voltages, temperatures, pressures, turbo pump speeds, etc.
+
+        Try
+
+            If Not mCorruptMemoryEncountered Then
+                Dim retentionTime = mXRawFile.RetentionTimeFromScanNumber(Scan)
+
+                ' Get the status log nearest to a retention time.
+                Dim statusLogEntry = mXRawFile.GetStatusLogForRetentionTime(retentionTime)
+                Dim arrayCount = statusLogEntry.Length
+                Dim logNames = statusLogEntry.Labels
+                Dim logValues = statusLogEntry.Values
+
+                If arrayCount > 0 Then
+                    scanInfo.StoreStatusLog(logNames, logValues)
+                End If
+            End If
+
+        Catch ex As AccessViolationException
+            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & Scan & ": " & ex.Message
+            RaiseWarningMessage(msg)
+        Catch ex As Exception
+            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & Scan & ": " & ex.Message
+            RaiseWarningMessage(msg)
+
+            If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
+                mCorruptMemoryEncountered = True
+            End If
+        End Try
+
+        Return True
+    End Function
+
     ''' <summary>
     ''' Get the header info for the specified scan
     ''' </summary>
@@ -1099,247 +1338,26 @@ Public Class XRawFileIO : Implements IDisposable
         End If
 
         scanInfo = New SingleScanInfo(scan)
-        ' XRaw periodically mislabels a scan as .EventNumber = 1 when it's really an MS/MS scan; check for this
-        ' Parse out the parent ion and collision energy from .FilterText
-        Dim scanEventNumber As Integer = Nothing
-        Dim ionInjectionTime As Double = Nothing
-        Dim msLevel As Integer = Nothing
-        Dim parentIonMz As Double = Nothing
-        Dim collisionMode As String = Nothing
-        Dim simScan As Boolean = Nothing
-        Dim mrmScanType As MRMScanTypeConstants = Nothing
-        Dim zoomScan As Boolean = Nothing
+
+        If mXRawFile Is Nothing Then
+            Return False
+        End If
 
         Try
-            If mXRawFile Is Nothing Then Return False
-
-            ' Make sure the MS controller is selected
-            If Not SetMSController() Then
-                CacheScanInfo(scan, scanInfo)
+            If Not GetScanInfoInternal(scanInfo) Then
                 Return False
             End If
-
-            ' Initialize the values that will be populated using GetScanHeaderInfoForScanNum()
-            scanInfo.NumPeaks = 0
-            scanInfo.TotalIonCurrent = 0
-            scanInfo.SIMScan = False
-            scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
-            scanInfo.ZoomScan = False
-            scanInfo.CollisionMode = String.Empty
-            scanInfo.FilterText = String.Empty
-            scanInfo.IonMode = IonModeConstants.Unknown
-            Dim scanStats = mXRawFile.GetScanStatsForScanNumber(scan)
-            scanInfo.NumPeaks = scanStats.PacketCount
-            scanInfo.RetentionTime = scanStats.StartTime
-            scanInfo.LowMass = scanStats.LowMass
-            scanInfo.HighMass = scanStats.HighMass
-            scanInfo.TotalIonCurrent = scanStats.TIC
-            scanInfo.BasePeakMZ = scanStats.BasePeakMass
-            scanInfo.BasePeakIntensity = scanStats.BasePeakIntensity
-            scanInfo.NumChannels = scanStats.NumberOfChannels
-            scanInfo.Frequency = scanStats.Frequency
-            Dim errorCode = mXRawFile.IsError
-
-            If errorCode Then
-                CacheScanInfo(scan, scanInfo)
-                Return False
-            End If
-
-            scanInfo.UniformTime = scanStats.IsUniformTime
-            scanInfo.IsCentroided = scanStats.IsCentroidScan
-
-            Try
-
-                If Not mCorruptMemoryEncountered Then
-                    ' Retrieve the additional parameters for this scan (including Scan Event)
-                    Dim data = mXRawFile.GetTrailerExtraInformation(scan)
-                    Dim arrayCount = data.Length
-                    Dim scanEventLabels = data.Labels
-                    Dim scanEventValues = data.Values
-
-                    If arrayCount > 0 AndAlso scanEventLabels IsNot Nothing AndAlso scanEventValues IsNot Nothing Then
-                        scanInfo.StoreScanEvents(scanEventLabels, scanEventValues)
-                    End If
-                End If
-
-            Catch ex As AccessViolationException
-                Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & scan & ": " & ex.Message
-                RaiseWarningMessage(msg)
-            Catch ex As Exception
-                Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & scan & ": " & ex.Message
-                RaiseWarningMessage(msg)
-
-                If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
-                    mCorruptMemoryEncountered = True
-                End If
-            End Try
-
-            scanInfo.EventNumber = 1
-
-            ' Look for the entry in scanInfo.ScanEvents named "Scan Event:"
-            ' Entries for the LCQ are:
-            '   Wideband Activation
-            '   Micro Scan Count
-            '   Ion Injection Time (ms)
-            '   Scan Segment
-            '   Scan Event
-            '   Elapsed Scan Time (sec)
-            '   API Source CID Energy
-            '   Resolution
-            '   Average Scan by Inst
-            '   BackGd Subtracted by Inst
-            '   Charge State
-
-            If Integer.TryParse(If(scanInfo.ScanEvents.Find(Function(x) x.Key.StartsWith("scan event", StringComparison.OrdinalIgnoreCase)).Value, String.Empty), scanEventNumber) Then
-                scanInfo.EventNumber = scanEventNumber
-            End If
-
-            If Double.TryParse(If(scanInfo.ScanEvents.Find(Function(x) x.Key.StartsWith("ion injection time (ms)", StringComparison.OrdinalIgnoreCase)).Value, String.Empty), ionInjectionTime) Then
-                scanInfo.IonInjectionTime = ionInjectionTime
-            End If
-
-            ' Lookup the filter text for this scan
-            ' Parse out the parent ion m/z for fragmentation scans
-            Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
-            Dim filterText = scanFilter.ToString()
-            scanInfo.FilterText = String.Copy(filterText)
-            scanInfo.IsFTMS = scanFilter.MassAnalyzer = MassAnalyzerType.MassAnalyzerFTMS
-            If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then scanInfo.FilterText = String.Empty
-
-            If scanInfo.EventNumber <= 1 Then
-                If XRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, Nothing) Then
-                    scanInfo.EventNumber = msLevel
-                End If
-            End If
-
-            If scanInfo.EventNumber > 1 Then
-                ' MS/MS data
-                scanInfo.MSLevel = 2
-
-                If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then
-                    ' FilterText is empty; this indicates a problem with the .Raw file
-                    ' This is rare, but does happen (see scans 2 and 3 in QC_Shew_08_03_pt5_1_MAXPRO_27Oct08_Raptor_08-01-01.raw)
-                    ' We'll set the Parent Ion to 0 m/z and the collision mode to CID
-                    scanInfo.ParentIonMZ = 0
-                    scanInfo.CollisionMode = "cid"
-
-                    If scanInfo.ActivationType = ActivationTypeConstants.Unknown Then
-                        scanInfo.ActivationType = ActivationTypeConstants.CID
-                    End If
-
-                    scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
-                Else
-
-                    If ExtractParentIonMZFromFilterText(scanInfo.FilterText, parentIonMz, msLevel, collisionMode) Then
-                        scanInfo.ParentIonMZ = parentIonMz
-                        scanInfo.CollisionMode = collisionMode
-
-                        If msLevel > 2 Then
-                            scanInfo.MSLevel = msLevel
-                        End If
-
-                        ' Check whether this is an SRM MS2 scan
-                        scanInfo.MRMScanType = DetermineMRMScanType(scanInfo.FilterText)
-                    Else
-
-                        If ValidateMSScan(scanInfo.FilterText, msLevel, simScan, mrmScanType, zoomScan) Then
-                            ' Yes, scan is an MS, SIM, or MRMQMS, or SRM scan
-                            scanInfo.MSLevel = msLevel
-                            scanInfo.SIMScan = simScan
-                            scanInfo.MRMScanType = mrmScanType
-                            scanInfo.ZoomScan = zoomScan
-                        Else
-                            ' Unknown format for .FilterText; return an error
-                            RaiseErrorMessage("Unknown format for Scan Filter: " & scanInfo.FilterText)
-                            Return False
-                        End If
-                    End If
-                End If
-            Else
-                ' MS1 data
-                ' Make sure .FilterText contains one of the known MS1, SIM or MRM tags
-
-                If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then
-                    ' FilterText is empty; this indicates a problem with the .Raw file
-                    ' This is rare, but does happen (see scans 2 and 3 in QC_Shew_08_03_pt5_1_MAXPRO_27Oct08_Raptor_08-01-01.raw)
-                    scanInfo.MSLevel = 1
-                    scanInfo.SIMScan = False
-                    scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
-                Else
-
-                    If ValidateMSScan(scanInfo.FilterText, msLevel, simScan, mrmScanType, zoomScan) Then
-                        ' Yes, scan is an MS, SIM, or MRMQMS, or SRM scan
-                        scanInfo.MSLevel = msLevel
-                        scanInfo.SIMScan = simScan
-                        scanInfo.MRMScanType = mrmScanType
-                        scanInfo.ZoomScan = zoomScan
-                    Else
-                        ' Unknown format for .FilterText; return an error
-                        RaiseErrorMessage("Unknown format for Scan Filter: " & scanInfo.FilterText)
-                        Return False
-                    End If
-                End If
-            End If
-
-            scanInfo.IonMode = DetermineIonizationMode(scanInfo.FilterText)
-
-            ' Now that we know MSLevel we can lookup the activation type (aka activation method)
-            If scanInfo.MSLevel > 1 Then
-                scanInfo.ActivationType = GetActivationType(scan)
-            Else
-                scanInfo.ActivationType = ActivationTypeConstants.CID
-            End If
-
-            Dim newMRMInfo As MRMInfo = Nothing
-
-            If scanInfo.MRMScanType <> MRMScanTypeConstants.NotMRM Then
-                ' Parse out the MRM_QMS or SRM information for this scan
-                ExtractMRMMasses(scanInfo.FilterText, scanInfo.MRMScanType, newMRMInfo)
-            Else
-                newMRMInfo = New MRMInfo()
-            End If
-
-            scanInfo.MRMInfo = newMRMInfo
-
-            ' Retrieve the Status Log for this scan using the following
-            ' The Status Log includes numerous instrument parameters, including voltages, temperatures, pressures, turbo pump speeds, etc.
-
-            Try
-
-                If Not mCorruptMemoryEncountered Then
-                    Dim retentionTime = mXRawFile.RetentionTimeFromScanNumber(scan)
-
-                    ' Get the status log nearest to a retention time.
-                    Dim statusLogEntry = mXRawFile.GetStatusLogForRetentionTime(retentionTime)
-                    Dim arrayCount = statusLogEntry.Length
-                    Dim logNames = statusLogEntry.Labels
-                    Dim logValues = statusLogEntry.Values
-
-                    If arrayCount > 0 Then
-                        scanInfo.StoreStatusLog(logNames, logValues)
-                    End If
-                End If
-
-            Catch ex As AccessViolationException
-                Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & scan & ": " & ex.Message
-                RaiseWarningMessage(msg)
-            Catch ex As Exception
-                Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & scan & ": " & ex.Message
-                RaiseWarningMessage(msg)
-
-                If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
-                    mCorruptMemoryEncountered = True
-                End If
-            End Try
-
         Catch ex As Exception
             Dim msg = "Error: Exception in GetScanInfo: " & ex.Message
-            RaiseWarningMessage(msg)
-            CacheScanInfo(scan, scanInfo)
+
+            Call RaiseWarningMessage(msg)
+            Call CacheScanInfo(scan, scanInfo)
+
             Return False
         End Try
 
-        CacheScanInfo(scan, scanInfo)
+        Call CacheScanInfo(scan, scanInfo)
+
         Return True
     End Function
 
