@@ -16,8 +16,6 @@ Public Module RawStream
         Dim mz As Double()
         Dim into As Double()
 
-        Call raw.LoadFile()
-
         For Each scan As RawLabelData In raw.GetLabelData
             scanInfo = Nothing
             raw.GetScanInfo(scan.ScanNumber)

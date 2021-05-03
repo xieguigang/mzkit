@@ -5,36 +5,29 @@ Public Class MSFileReader : Implements IDisposable
 
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"
 
-    ReadOnly mFilePath As String
-
     Dim mRawFileReader As XRawFileIO
 
     Public Property ScanMin As Integer
     Public Property ScanMax As Integer
 
     ''' <summary>
-    ''' Constructor
-    ''' </summary>
-    ''' <param name="filePath"></param>
-    Public Sub New(filePath As String)
-        mFilePath = filePath
-        mRawFileReader = Nothing
-    End Sub
-
-    Public Sub LoadFile()
-        Call LoadFile(New ThermoReaderOptions)
-    End Sub
-
-    ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>
-    ''' <param name="readerOptions"></param>
-    Public Sub LoadFile(readerOptions As ThermoReaderOptions)
+    ''' <param name="filePath"></param>
+    Public Sub New(filePath As String, Optional readerOptions As ThermoReaderOptions = Nothing)
+        If readerOptions Is Nothing Then
+            readerOptions = New ThermoReaderOptions
+        End If
+
         mRawFileReader = New XRawFileIO(readerOptions)
-        mRawFileReader.OpenRawFile(mFilePath)
+        mRawFileReader.OpenRawFile(filePath.GetFullPath)
         ScanMin = 1
         ScanMax = mRawFileReader.GetNumScans()
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return mRawFileReader.RawFilePath
+    End Function
 
     Public Sub Dispose() Implements IDisposable.Dispose
         mRawFileReader?.CloseRawFile()
@@ -45,11 +38,6 @@ Public Class MSFileReader : Implements IDisposable
         Dim options As ThermoReaderOptions = mRawFileReader.Options
 
         Try
-            If mRawFileReader Is Nothing Then
-                currentTask = "Opening the .raw file"
-                LoadFile(options)
-            End If
-
             currentTask = "Validating the scan range"
 
             If options.MinScan < ScanMin Then
