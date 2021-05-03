@@ -17,8 +17,7 @@ Public Module RawStream
         Dim into As Double()
 
         For Each scan As RawLabelData In raw.GetLabelData
-            scanInfo = Nothing
-            raw.GetScanInfo(scan.ScanNumber)
+            scanInfo = raw.GetScanInfo(scan.ScanNumber)
             mz = scan.MSData.Select(Function(a) a.Mass).ToArray
             into = scan.MSData.Select(Function(a) a.Intensity).ToArray
 
