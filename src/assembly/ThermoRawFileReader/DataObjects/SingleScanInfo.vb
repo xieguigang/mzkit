@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Namespace DataObjects
 
@@ -154,7 +155,7 @@ Namespace DataObjects
         ''' Activation type (aka activation method) as reported by the reader
         ''' </summary>
         ''' <remarks>Not applicable for MS1 scans (though will report 0=CID, which should be disregarded)</remarks>
-        Public Property ActivationType As ActivationTypeConstants
+        Public Property ActivationType As ActivationMethods
 
         ''' <summary>
         ''' Collision mode, determined from the filter string
@@ -165,7 +166,7 @@ Namespace DataObjects
         ''' <summary>
         ''' Ionization polarity
         ''' </summary>
-        Public Property IonMode As IonModeConstants
+        Public Property IonMode As IonModes
 
         ''' <summary>
         ''' MRM mode
@@ -231,7 +232,7 @@ Namespace DataObjects
             CacheDateUTC = Date.UtcNow
             FilterText = String.Empty
             CollisionMode = String.Empty
-            ActivationType = ActivationTypeConstants.Unknown
+            ActivationType = ActivationMethods.Unknown
             ScanEvents = New List(Of KeyValuePair(Of String, String))()
             StatusLog = New List(Of KeyValuePair(Of String, String))()
         End Sub

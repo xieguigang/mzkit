@@ -125,11 +125,9 @@
     <Compile Include="DataObjects\SingleScanInfo.vb" />
     <Compile Include="DataObjects\FTLabelInfoType.vb" />
     <Compile Include="DeviceInfo.vb" />
-    <Compile Include="Enums\ActivationTypeConstants.vb" />
     <Compile Include="Enums\IntensityCutoffTypeConstants.vb" />
     <Compile Include="Enums\MRMScanTypeConstants.vb" />
     <Compile Include="Enums\InstFlags.vb" />
-    <Compile Include="Enums\IonModeConstants.vb" />
     <Compile Include="MSFileReader.vb" />
     <Compile Include="DataObjects\RawLabelData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

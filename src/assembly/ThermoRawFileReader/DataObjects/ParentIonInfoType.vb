@@ -51,7 +51,7 @@
         ''' Activation type
         ''' </summary>
         ''' <remarks>Examples: CID, ETD, or HCD</remarks>
-        Public ActivationType As ActivationTypeConstants
+        Public ActivationType As ActivationMethods
 
         ''' <summary>
         ''' Clear the data
@@ -63,7 +63,7 @@
             CollisionMode2 = String.Empty
             CollisionEnergy = 0
             CollisionEnergy2 = 0
-            ActivationType = ActivationTypeConstants.Unknown
+            ActivationType = ActivationMethods.Unknown
         End Sub
 
         ''' <summary>

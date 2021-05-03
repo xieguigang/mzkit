@@ -511,6 +511,7 @@
     <Compile Include="Ms1\ms1_scan.vb" />
     <Compile Include="Ms1\Ms1FeatureExtensions.vb" />
     <Compile Include="Ms1\PolarityData.vb" />
+    <Compile Include="Ms1\PrecursorType\IonModes.vb" />
     <Compile Include="Ms1\PrecursorType\TypeMatch.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />

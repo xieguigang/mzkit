@@ -538,10 +538,10 @@
     <Compile Include="MarkupData\mzML\XML\IonTargeted\selectedIonList.vb" />
     <Compile Include="MarkupData\mzML\XML\Components.vb" />
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
+    <Compile Include="mzPack\ActivationMethods.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamWriter.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamReader.vb" />
     <Compile Include="mzPack\Binary\NamespaceDoc.vb" />
-    <Compile Include="mzPack\ActivationMethods.vb" />
     <Compile Include="mzPack\Stream\ScanMS1.vb" />
     <Compile Include="mzPack\Stream\MSScan.vb" />
     <Compile Include="UnifyReader\Chromatogram.vb" />

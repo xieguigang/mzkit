@@ -343,11 +343,11 @@ Public Class XRawFileIO : Implements IDisposable
     ''' Determine the Ionization mode by parsing the scan filter string
     ''' </summary>
     ''' <param name="filterText"></param>
-    Public Shared Function DetermineIonizationMode(filterText As String) As IonModeConstants
+    Public Shared Function DetermineIonizationMode(filterText As String) As IonModes
         ' Determine the ion mode by simply looking for the first + or - sign
 
         If String.IsNullOrWhiteSpace(filterText) Then
-            Return IonModeConstants.Unknown
+            Return IonModes.Unknown
         End If
 
         ' For safety, remove any text after a square bracket
@@ -362,14 +362,14 @@ Public Class XRawFileIO : Implements IDisposable
 
         If match.Success Then
             Select Case Provider.ParseIonMode(match.Value, allowsUnknown:=True)
-                Case 1 : Return IonModeConstants.Positive
-                Case -1 : Return IonModeConstants.Negative
+                Case 1 : Return IonModes.Positive
+                Case -1 : Return IonModes.Negative
                 Case Else
-                    Return IonModeConstants.Unknown
+                    Return IonModes.Unknown
             End Select
         End If
 
-        Return IonModeConstants.Unknown
+        Return IonModes.Unknown
     End Function
 
     ''' <summary>
@@ -802,7 +802,7 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
     End Function
 
-    Private Function GetActivationType(scan As Integer) As ActivationTypeConstants
+    Private Function GetActivationType(scan As Integer) As ActivationMethods
         Try
             Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
             Dim reactions = scanFilter.MassCount
@@ -810,7 +810,7 @@ Public Class XRawFileIO : Implements IDisposable
             If reactions <= 0 Then
                 Dim msg = String.Format("Scan {0} has no precursor m/z values; this is unexpected for a MSn scan", scan)
                 RaiseWarningMessage(msg)
-                Return ActivationTypeConstants.Unknown
+                Return ActivationMethods.Unknown
             End If
 
             Dim index = reactions - 1
@@ -821,19 +821,19 @@ Public Class XRawFileIO : Implements IDisposable
             End If
 
             Dim activationTypeCode = scanFilter.GetActivation(index)
-            Dim activationType As ActivationTypeConstants
+            Dim activationType As ActivationMethods
 
             Try
-                activationType = CType(CInt(activationTypeCode), ActivationTypeConstants)
+                activationType = CType(CInt(activationTypeCode), ActivationMethods)
             Catch
-                activationType = ActivationTypeConstants.Unknown
+                activationType = ActivationMethods.Unknown
             End Try
 
             Return activationType
         Catch ex As Exception
             Dim msg = "Error: Exception in GetActivationType: " & ex.Message
             RaiseWarningMessage(msg)
-            Return ActivationTypeConstants.Unknown
+            Return ActivationMethods.Unknown
         End Try
     End Function
 
@@ -1096,7 +1096,7 @@ Public Class XRawFileIO : Implements IDisposable
 
         ' Make sure the MS controller is selected
         If Not SetMSController() Then
-            CacheScanInfo(Scan, scanInfo)
+            CacheScanInfo(scan, scanInfo)
             Return False
         End If
 
@@ -1108,7 +1108,7 @@ Public Class XRawFileIO : Implements IDisposable
         scanInfo.ZoomScan = False
         scanInfo.CollisionMode = String.Empty
         scanInfo.FilterText = String.Empty
-        scanInfo.IonMode = IonModeConstants.Unknown
+        scanInfo.IonMode = IonModes.Unknown
 
         Dim scanStats As ScanStatistics = mXRawFile.GetScanStatsForScanNumber(scan)
 
@@ -1125,7 +1125,7 @@ Public Class XRawFileIO : Implements IDisposable
         Dim errorCode = mXRawFile.IsError
 
         If errorCode Then
-            CacheScanInfo(Scan, scanInfo)
+            CacheScanInfo(scan, scanInfo)
             Return False
         End If
 
@@ -1136,7 +1136,7 @@ Public Class XRawFileIO : Implements IDisposable
 
             If Not mCorruptMemoryEncountered Then
                 ' Retrieve the additional parameters for this scan (including Scan Event)
-                Dim data = mXRawFile.GetTrailerExtraInformation(Scan)
+                Dim data = mXRawFile.GetTrailerExtraInformation(scan)
                 Dim arrayCount = data.Length
                 Dim scanEventLabels = data.Labels
                 Dim scanEventValues = data.Values
@@ -1147,10 +1147,10 @@ Public Class XRawFileIO : Implements IDisposable
             End If
 
         Catch ex As AccessViolationException
-            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & Scan & ": " & ex.Message
+            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & scan & ": " & ex.Message
             RaiseWarningMessage(msg)
         Catch ex As Exception
-            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & Scan & ": " & ex.Message
+            Dim msg = "Warning: Exception calling mXRawFile.GetTrailerExtraForScanNum for scan " & scan & ": " & ex.Message
             RaiseWarningMessage(msg)
 
             If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
@@ -1184,7 +1184,7 @@ Public Class XRawFileIO : Implements IDisposable
 
         ' Lookup the filter text for this scan
         ' Parse out the parent ion m/z for fragmentation scans
-        Dim scanFilter = mXRawFile.GetFilterForScanNumber(Scan)
+        Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
         Dim filterText = scanFilter.ToString()
         scanInfo.FilterText = String.Copy(filterText)
         scanInfo.IsFTMS = scanFilter.MassAnalyzer = MassAnalyzerType.MassAnalyzerFTMS
@@ -1207,8 +1207,8 @@ Public Class XRawFileIO : Implements IDisposable
                 scanInfo.ParentIonMZ = 0
                 scanInfo.CollisionMode = "cid"
 
-                If scanInfo.ActivationType = ActivationTypeConstants.Unknown Then
-                    scanInfo.ActivationType = ActivationTypeConstants.CID
+                If scanInfo.ActivationType = ActivationMethods.Unknown Then
+                    scanInfo.ActivationType = ActivationMethods.CID
                 End If
 
                 scanInfo.MRMScanType = MRMScanTypeConstants.NotMRM
@@ -1269,9 +1269,9 @@ Public Class XRawFileIO : Implements IDisposable
 
         ' Now that we know MSLevel we can lookup the activation type (aka activation method)
         If scanInfo.MSLevel > 1 Then
-            scanInfo.ActivationType = GetActivationType(Scan)
+            scanInfo.ActivationType = GetActivationType(scan)
         Else
-            scanInfo.ActivationType = ActivationTypeConstants.CID
+            scanInfo.ActivationType = ActivationMethods.CID
         End If
 
         Dim newMRMInfo As MRMInfo = Nothing
@@ -1291,7 +1291,7 @@ Public Class XRawFileIO : Implements IDisposable
         Try
 
             If Not mCorruptMemoryEncountered Then
-                Dim retentionTime = mXRawFile.RetentionTimeFromScanNumber(Scan)
+                Dim retentionTime = mXRawFile.RetentionTimeFromScanNumber(scan)
 
                 ' Get the status log nearest to a retention time.
                 Dim statusLogEntry = mXRawFile.GetStatusLogForRetentionTime(retentionTime)
@@ -1305,10 +1305,10 @@ Public Class XRawFileIO : Implements IDisposable
             End If
 
         Catch ex As AccessViolationException
-            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & Scan & ": " & ex.Message
+            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & scan & ": " & ex.Message
             RaiseWarningMessage(msg)
         Catch ex As Exception
-            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & Scan & ": " & ex.Message
+            Dim msg = "Warning: Exception calling mXRawFile.GetStatusLogForScanNum for scan " & scan & ": " & ex.Message
             RaiseWarningMessage(msg)
 
             If ex.Message.IndexOf("memory is corrupt", StringComparison.OrdinalIgnoreCase) >= 0 Then
