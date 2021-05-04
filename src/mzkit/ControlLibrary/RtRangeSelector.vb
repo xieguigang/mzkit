@@ -182,9 +182,30 @@ Public Class RtRangeSelector
     ''' redraw
     ''' </summary>
     Public Sub RefreshRtRangeSelector() Handles Me.Resize
-        Using g = Me.CreateGraphics
-            Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
-            Call DrawTIC(g)
-        End Using
+        Me.Invalidate()
+    End Sub
+
+    Private Sub RtRangeSelector_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+
+    End Sub
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        MyBase.OnPaint(e)
+
+        'Dim width = Me.Width
+        'Dim height = Me.Height
+
+        'Using g As Graphics = e.Graphics
+        '    If width > 0 AndAlso height > 0 Then
+        '        Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, width, height))
+        '        Call DrawTIC(g)
+        '    End If
+        'End Using
+    End Sub
+
+    Protected Overrides Sub OnValidated(e As EventArgs)
+        MyBase.OnValidated(e)
+
+        Call RefreshSelector()
     End Sub
 End Class

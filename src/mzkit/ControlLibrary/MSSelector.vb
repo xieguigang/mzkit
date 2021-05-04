@@ -106,8 +106,10 @@ Public Class MSSelector
                        End Function) _
                 .ToArray
 
-            RtRangeSelector1.SetTIC(newRange)
-            RtRangeSelector1.RefreshRtRangeSelector()
+            If newRange.Length > 0 Then
+                RtRangeSelector1.SetTIC(newRange)
+                RtRangeSelector1.RefreshRtRangeSelector()
+            End If
         End If
     End Sub
 End Class
