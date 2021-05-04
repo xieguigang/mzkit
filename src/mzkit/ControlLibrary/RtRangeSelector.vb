@@ -178,6 +178,9 @@ Public Class RtRangeSelector
         End If
     End Sub
 
+    ''' <summary>
+    ''' redraw
+    ''' </summary>
     Public Sub RefreshRtRangeSelector() Handles Me.Resize
         Using g = Me.CreateGraphics
             Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
