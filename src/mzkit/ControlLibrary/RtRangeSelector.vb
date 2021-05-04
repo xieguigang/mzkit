@@ -47,6 +47,7 @@
 
 Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 
@@ -74,9 +75,16 @@ Public Class RtRangeSelector
     Dim TIC As ChromatogramTick()
     Dim RtRange As Double
 
+    Public Property AllowMoveRange As Boolean = True
+
+    Dim TIC_time As DoubleRange
+    Dim TIC_max As Double
+
     Public Sub SetTIC(data As ChromatogramTick())
         TIC = data
         RtRange = data.Last.Time - data.First.Time
+        TIC_time = TIC.Select(Function(x) x.Time).Range
+        TIC_max = TIC.Select(Function(x) x.Intensity).Max
 
         Call Me.Invalidate()
         Call RefreshRtRangeSelector()
@@ -84,7 +92,7 @@ Public Class RtRangeSelector
 
     Private Sub RtRangeSelector_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         If e.X > start AndAlso e.X < endPox Then
-            onMoveRange = True
+            onMoveRange = AllowMoveRange
             lastX = e.X
         Else
             start = e.X
@@ -130,7 +138,8 @@ Public Class RtRangeSelector
         Timer1.Enabled = True
         Timer1.Start()
 
-        DoubleBuffered = True
+        ResizeRedraw = True
+        DoubleBuffered = False
     End Sub
 
     Private Sub DrawTIC(g As Graphics)
@@ -141,15 +150,27 @@ Public Class RtRangeSelector
         Using TICcurve As New GraphicsPath
             Dim height As Double = Me.Height
             Dim width As Double = Me.Width
-            Dim scaleX = d3js.scale.linear.domain(TIC.Select(Function(x) x.Time)).range(New Double() {0, width})
-            Dim scaleY = d3js.scale.linear.domain(TIC.Select(Function(x) x.Intensity)).range(New Double() {0, height})
+            Dim scaleX = d3js.scale.linear.domain({TIC_time.Min, TIC_time.Max}).range(New Double() {0, width})
+            Dim scaleY = d3js.scale.linear.domain({0.0, TIC_max}).range(New Double() {0, height})
             Dim i As i32 = Scan0
+            Dim x1, x2 As Single
+            Dim y1, y2 As Single
+
+            Call TICcurve.AddLine(0, CSng(height), CSng(scaleX(TIC(i).Time)), CSng(height - scaleY(TIC(i).Intensity)))
 
             For j As Integer = 1 To TIC.Length - 1
-                TICcurve.AddLine(CSng(scaleX(TIC(i).Time)), CSng(height - scaleY(TIC(++i).Intensity)), CSng(scaleX(TIC(j).Time)), CSng(height - scaleY(TIC(j).Intensity)))
+                x1 = CSng(scaleX(TIC(i).Time))
+                y1 = CSng(height - scaleY(TIC(++i).Intensity))
+                x2 = CSng(scaleX(TIC(j).Time))
+                y2 = CSng(height - scaleY(TIC(j).Intensity))
+
+                Call TICcurve.AddLine(x1, y1, x2, y2)
             Next
 
-            TICcurve.CloseAllFigures()
+            Call TICcurve.AddLine(x2, y2, x2, CSng(height))
+
+            Call TICcurve.CloseAllFigures()
+
             g.FillPath(New SolidBrush(FillColor), TICcurve)
         End Using
     End Sub
@@ -168,7 +189,10 @@ Public Class RtRangeSelector
         Using g = Me.CreateGraphics
             Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
             Call DrawTIC(g)
-            Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
+
+            If onSelect OrElse AllowMoveRange Then
+                Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
+            End If
         End Using
     End Sub
 
@@ -191,7 +215,7 @@ Public Class RtRangeSelector
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         MyBase.OnPaint(e)
-
+        Call RefreshSelector()
         'Dim width = Me.Width
         'Dim height = Me.Height
 
@@ -203,9 +227,9 @@ Public Class RtRangeSelector
         'End Using
     End Sub
 
-    Protected Overrides Sub OnValidated(e As EventArgs)
-        MyBase.OnValidated(e)
+    'Protected Overrides Sub OnValidated(e As EventArgs)
+    '    MyBase.OnValidated(e)
 
-        Call RefreshSelector()
-    End Sub
+    '    Call RefreshSelector()
+    'End Sub
 End Class

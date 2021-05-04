@@ -61,6 +61,7 @@ Public Class MSSelector
     Public Sub SetTIC(TIC As ChromatogramTick())
         rawTIC = TIC
         RtRangeSelector1.SetTIC(TIC)
+        RtRangeSelector1.AllowMoveRange = Pinned
     End Sub
 
     Public Sub RefreshRtRangeSelector()
@@ -87,6 +88,7 @@ Public Class MSSelector
 
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
         PinToolStripMenuItem.Checked = Not PinToolStripMenuItem.Checked
+        RtRangeSelector1.AllowMoveRange = Pinned
     End Sub
 
     Private Sub ResetToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem.Click
