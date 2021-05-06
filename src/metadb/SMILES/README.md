@@ -1,6 +1,38 @@
-# SMILES - A Simplified Chemical Language
+# [SMILES - A Simplified Chemical Language](https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html)
 
-> https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html
+```R
+imports "formula" from "mzkit";
+
+# R api demo test of SMILES parser that provided by mzkit
+
+let echo as function(SMILES, prompt) {
+  print(prompt);
+
+  SMILES = formula::parseSMILES(SMILES);
+	
+  print(toString(as.formula(SMILES)));
+  print(`exact mass: ${eval(as.formula(SMILES))}`);
+  print("---------------------------------------");
+
+  cat("\n");
+}
+
+# simple test
+echo("CC",            "ethane CH3CH3");
+echo("C=O",           "formaldehyde (CH2O)");
+echo("C=C",           "ethene (CH2=CH2)");
+echo("O=C=O",         "carbon dioxide (CO2)");
+echo("COC",           "dimethyl ether (CH3OCH3)");
+echo("C#N",           "hydrogen cyanide (HCN)");
+echo("CCO",           "ethanol (CH3CH2OH)");
+echo("[H][H]",        "molecular hydrogen (H2)");
+echo("C=C-C-C=C-C-O", "6-hydroxy-1,4-hexadiene CH2=CH-CH2-CH=CH-CH2-OH");
+
+# branches stack
+echo("CCN(CC)CC",            "Triethylamine C6H15N");
+echo("CC(C)C(=O)O",          "Isobutyric acid C4H8O2");
+echo("C=CC(CCC)C(C(C)C)CCC", "3-propyl-4-isopropyl-1-heptene C10H20");
+```
 
 SMILES (Simplified Molecular Input Line Entry System) is a line notation (a typographical method using printable characters) for entering and representing molecules and reactions. Some examples are:
 
