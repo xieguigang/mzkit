@@ -103,12 +103,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="old\ChemicalKey.vb" />
-    <Compile Include="old\ChemicalElement.vb" />
-    <Compile Include="old\ChemicalFormula.vb" />
-    <Compile Include="old\Utils.vb" />
-    <Compile Include="old\ParseChain.vb" />
-    <Compile Include="old\VFMatch.vb" />
+    <Compile Include="Bonds.vb" />
+    <Compile Include="ParseChain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
