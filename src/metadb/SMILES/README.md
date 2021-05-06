@@ -1,6 +1,4 @@
-# SMILES - A Simplified Chemical Language
-
-> https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html
+# [SMILES - A Simplified Chemical Language](https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html)
 
 SMILES (Simplified Molecular Input Line Entry System) is a line notation (a typographical method using printable characters) for entering and representing molecules and reactions. Some examples are:
 
