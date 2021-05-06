@@ -104,9 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bonds.vb" />
-    <Compile Include="ElementTypes.vb" />
-    <Compile Include="Utils.vb" />
-    <Compile Include="Token.vb" />
+    <Compile Include="Language\Tokenicer.vb" />
+    <Compile Include="Language\ElementTypes.vb" />
+    <Compile Include="Language\Utils.vb" />
+    <Compile Include="Language\Token.vb" />
     <Compile Include="Graph\ChemicalElement.vb" />
     <Compile Include="Graph\ChemicalKey.vb" />
     <Compile Include="Graph\ChemicalFormula.vb" />
