@@ -1,7 +1,14 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
 
 Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, ChemicalKey)
+
+    Public ReadOnly Property AllBonds As IEnumerable(Of ChemicalKey)
+        Get
+            Return edges.Values
+        End Get
+    End Property
 
     ''' <summary>
     ''' <see cref="AddEdge"/> without add elements
@@ -14,13 +21,7 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
     End Sub
 
     Public Function GetFormula() As EmpiricalFormula
-        Dim composition As New Dictionary(Of String, Integer)
-
-        For Each bond As ChemicalKey In edges.Values
-
-        Next
-
-        Return New EmpiricalFormula(composition)
+        Return New EmpiricalFormula(New FormulaBuilder(Me).GetComposition)
     End Function
 
     Public Overrides Function ToString() As String
