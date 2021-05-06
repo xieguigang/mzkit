@@ -5,37 +5,22 @@ Module Module1
 
     Sub Main()
 
-        ' ethane	
-        ' CH3CH3
-        ' Call runTest("CC")
-
-        ' formaldehyde	(CH2O)
-        ' Call runTest("C=O")
-
-        ' ethene	(CH2=CH2)
-        ' Call runTest("C=C")
-
-        ' carbon dioxide	(CO2)
-        ' Call runTest("O=C=O")
-
-        ' dimethyl ether	(CH3OCH3)
-        ' Call runTest("COC")
-
-        ' hydrogen cyanide	(HCN)
-        ' Call runTest("C#N")
-
-        ' ethanol	(CH3CH2OH)
-        ' Call runTest("CCO")
-
-        ' molecular hydrogen	(H2)
-        Call runTest("[H][H]")
+        Call runTest("CC", "ethane CH3CH3")
+        Call runTest("C=O", "formaldehyde (CH2O)")
+        Call runTest("C=C", "ethene (CH2=CH2)")
+        Call runTest("O=C=O", "carbon dioxide (CO2)")
+        Call runTest("COC", "dimethyl ether (CH3OCH3)")
+        Call runTest("C#N", "hydrogen cyanide (HCN)")
+        Call runTest("CCO", "ethanol (CH3CH2OH)")
+        Call runTest("[H][H]", "molecular hydrogen (H2)")
 
         Pause()
     End Sub
 
-    Sub runTest(SMILES As String)
+    Sub runTest(SMILES As String, prompt As String)
         Dim formula = ParseChain.ParseGraph(SMILES).GetFormula
 
+        Call Console.WriteLine(prompt)
         Call Console.WriteLine(formula.ToString)
         Call Console.WriteLine(Formula.BuildFormula(formula.CountsByElement))
         Call Console.WriteLine($"exact mass: {formula.ExactMass.ToString("F4")}")
