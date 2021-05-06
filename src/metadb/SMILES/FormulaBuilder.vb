@@ -62,6 +62,26 @@ Public Class FormulaBuilder
                     Throw New InvalidConstraintException
                 End If
 
+            Case "N"
+
+                Call Push("N")
+
+                If element.Keys = 1 Then
+
+                    Call Push("H", 3 - bond)
+
+                ElseIf element.Keys = 2 Then
+
+                    Call Push("H", 1 - bond)
+
+                ElseIf element.Keys = 3 Then
+
+                    ' no additional H element
+                Else
+                    Throw New InvalidConstraintException
+
+                End If
+
             Case Else
                 Throw New NotImplementedException(element.elementName)
         End Select

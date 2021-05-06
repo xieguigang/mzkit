@@ -19,7 +19,10 @@ Module Module1
         ' Call runTest("O=C=O")
 
         ' dimethyl ether	(CH3OCH3)
-        Call runTest("COC")
+        ' Call runTest("COC")
+
+        ' hydrogen cyanide	(HCN)
+        Call runTest("C#N")
 
         Pause()
     End Sub
