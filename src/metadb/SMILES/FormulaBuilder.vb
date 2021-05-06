@@ -26,5 +26,20 @@ Public Class FormulaBuilder
         Else
             Return
         End If
+
+        Select Case element.elementName
+            Case "C" : Call Push("C")
+            Case "H" : Call Push("H")
+            Case Else
+                Throw New NotImplementedException(element.elementName)
+        End Select
+    End Sub
+
+    Private Sub Push(element As String)
+        If Not composition.ContainsKey(element) Then
+            composition.Add(element, 0)
+        End If
+
+        composition(element) += 1
     End Sub
 End Class

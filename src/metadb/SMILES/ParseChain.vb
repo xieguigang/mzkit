@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Text.Parser
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class ParseChain
 
@@ -17,6 +19,7 @@ Public Class ParseChain
     Public Shared Function ParseGraph(SMILES As String) As ChemicalFormula
         Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
         Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph
+        Dim degree = graph.AllBonds.DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
         Return graph
     End Function

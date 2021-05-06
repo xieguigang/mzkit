@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
 
 Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, ChemicalKey)
