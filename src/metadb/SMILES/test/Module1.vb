@@ -5,16 +5,18 @@ Module Module1
 
     Sub Main()
 
-        Call runTest("CC", "ethane CH3CH3")
-        Call runTest("C=O", "formaldehyde (CH2O)")
-        Call runTest("C=C", "ethene (CH2=CH2)")
-        Call runTest("O=C=O", "carbon dioxide (CO2)")
-        Call runTest("COC", "dimethyl ether (CH3OCH3)")
-        Call runTest("C#N", "hydrogen cyanide (HCN)")
-        Call runTest("CCO", "ethanol (CH3CH2OH)")
-        Call runTest("[H][H]", "molecular hydrogen (H2)")
+        '  Call runTest("CC", "ethane CH3CH3")
+        ' Call runTest("C=O", "formaldehyde (CH2O)")
+        'Call runTest("C=C", "ethene (CH2=CH2)")
+        'Call runTest("O=C=O", "carbon dioxide (CO2)")
+        ' Call runTest("COC", "dimethyl ether (CH3OCH3)")
+        ' Call runTest("C#N", "hydrogen cyanide (HCN)")
+        ' Call runTest("CCO", "ethanol (CH3CH2OH)")
+        ' Call runTest("[H][H]", "molecular hydrogen (H2)")
 
-        Call runTest("C=C-C-C=C-C-O", "6-hydroxy-1,4-hexadiene CH2=CH-CH2-CH=CH-CH2-OH")
+        ' Call runTest("C=C-C-C=C-C-O", "6-hydroxy-1,4-hexadiene CH2=CH-CH2-CH=CH-CH2-OH")
+
+        Call runTest("CCN(CC)CC", "Triethylamine")
 
         Pause()
     End Sub

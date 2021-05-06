@@ -1,10 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+﻿Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 
 Public Class ParseChain
 
     ReadOnly graph As New ChemicalFormula
     ReadOnly chainStack As New Stack(Of ChemicalElement)
+    ReadOnly stackSize As New Stack(Of Counter)
     ReadOnly SMILES As String
     ReadOnly tokens As Token()
 
@@ -41,6 +43,11 @@ Public Class ParseChain
         Select Case t.name
             Case ElementTypes.Element : Call WalkElement(t)
             Case ElementTypes.Key : Call WalkKey(t)
+            Case ElementTypes.Open
+                ' do nothing
+                stackSize.Push(0)
+            Case ElementTypes.Close
+                Call chainStack.Pop(stackSize.Pop())
             Case Else
                 Throw New NotImplementedException(t.ToString)
         End Select
@@ -67,6 +74,9 @@ Public Class ParseChain
             }
 
             Call graph.AddBond(bond)
+        End If
+        If stackSize.Count > 0 Then
+            Call stackSize.Peek.Hit()
         End If
 
         lastKey = Nothing

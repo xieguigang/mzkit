@@ -26,14 +26,12 @@ Public Class Scanner
     End Function
 
     Private Iterator Function WalkChar(c As Char) As IEnumerable(Of Token)
-        If c = "("c Then
+        If c = "("c OrElse c = ")"c Then
             If buf > 0 Then
                 Yield MeasureElement(New String(buf.PopAllChars))
             End If
 
-            Yield New Token(ElementTypes.Open, "(")
-        ElseIf c = ")"c Then
-            Yield New Token(ElementTypes.Close, ")")
+            Yield MeasureElement(c)
         ElseIf c Like ChemicalBonds Then
             If buf > 0 Then
                 Yield MeasureElement(New String(buf.PopAllChars))
@@ -65,6 +63,10 @@ Public Class Scanner
         Select Case str
             Case "B", "C", "N", "O", "P", "S", "F", "Cl", "Br", "I", "Au", "H"
                 Return New Token(ElementTypes.Element, str)
+            Case "("
+                Return New Token(ElementTypes.Open, str)
+            Case ")"
+                Return New Token(ElementTypes.Close, str)
             Case Else
                 Throw New NotImplementedException(str)
         End Select
