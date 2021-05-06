@@ -12,5 +12,5 @@ Public Enum Bonds As Byte
     <Description("-")> [single] = 1
     <Description("=")> [double] = 2
     <Description("#")> triple = 3
-    <Description(":")> aromatic = 6
+    <Description(":")> aromatic = 4
 End Enum

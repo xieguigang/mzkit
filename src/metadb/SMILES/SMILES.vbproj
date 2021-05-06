@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Bonds.vb" />
     <Compile Include="ElementTypes.vb" />
+    <Compile Include="Utils.vb" />
     <Compile Include="Token.vb" />
     <Compile Include="Graph\ChemicalElement.vb" />
     <Compile Include="Graph\ChemicalKey.vb" />
