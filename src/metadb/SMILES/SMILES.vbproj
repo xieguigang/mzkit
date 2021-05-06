@@ -104,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bonds.vb" />
-    <Compile Include="Language\Tokenicer.vb" />
+    <Compile Include="Language\Scanner.vb" />
     <Compile Include="Language\ElementTypes.vb" />
     <Compile Include="Language\Utils.vb" />
     <Compile Include="Language\Token.vb" />
