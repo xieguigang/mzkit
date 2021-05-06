@@ -28,18 +28,27 @@ Public Class FormulaBuilder
         End If
 
         Select Case element.elementName
-            Case "C" : Call Push("C")
+            Case "C"
+                Call Push("C")
+
+                If element.Keys = 1 Then
+                    ' X-CH3
+                    Call Push("H", 3)
+                Else
+                    Throw New NotImplementedException
+                End If
+
             Case "H" : Call Push("H")
             Case Else
                 Throw New NotImplementedException(element.elementName)
         End Select
     End Sub
 
-    Private Sub Push(element As String)
+    Private Sub Push(element As String, Optional n As Integer = 1)
         If Not composition.ContainsKey(element) Then
             composition.Add(element, 0)
         End If
 
-        composition(element) += 1
+        composition(element) += n
     End Sub
 End Class
