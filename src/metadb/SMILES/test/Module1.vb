@@ -22,7 +22,13 @@ Module Module1
         ' Call runTest("COC")
 
         ' hydrogen cyanide	(HCN)
-        Call runTest("C#N")
+        ' Call runTest("C#N")
+
+        ' ethanol	(CH3CH2OH)
+        ' Call runTest("CCO")
+
+        ' molecular hydrogen	(H2)
+        Call runTest("[H][H]")
 
         Pause()
     End Sub

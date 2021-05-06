@@ -41,8 +41,15 @@ Public Class Scanner
 
             Yield New Token(ElementTypes.Key, c)
         Else
-            If Char.IsUpper(c) AndAlso buf > 0 Then
+            If Char.IsLetter(c) AndAlso Char.IsUpper(c) AndAlso buf > 0 Then
+                If buf = 1 AndAlso buf(Scan0) = "["c Then
+                Else
+                    Yield MeasureElement(New String(buf.PopAllChars))
+                End If
+            ElseIf c = "]"c Then
+                buf += c
                 Yield MeasureElement(New String(buf.PopAllChars))
+                Return
             End If
 
             buf += c
@@ -50,12 +57,13 @@ Public Class Scanner
     End Function
 
     Private Function MeasureElement(str As String) As Token
-        If str.Length > 3 AndAlso (str.First = "["c AndAlso str.Last = "]"c) Then
+        If str.Length >= 3 AndAlso (str.First = "["c AndAlso str.Last = "]"c) Then
+            ' [H]
             str = str.GetStackValue("[", "]")
         End If
 
         Select Case str
-            Case "B", "C", "N", "O", "P", "S", "F", "Cl", "Br", "I", "Au"
+            Case "B", "C", "N", "O", "P", "S", "F", "Cl", "Br", "I", "Au", "H"
                 Return New Token(ElementTypes.Element, str)
             Case Else
                 Throw New NotImplementedException(str)

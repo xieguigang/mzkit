@@ -40,7 +40,7 @@ Public Class FormulaBuilder
                     Call Push("H", 4 - bond)
                 ElseIf element.Keys = 2 Then
 
-                    Call Push("H", 2 - bond)
+                    Call Push("H", 2 - bond + 1)
 
                 Else
                     Throw New NotImplementedException
