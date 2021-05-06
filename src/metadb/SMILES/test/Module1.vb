@@ -6,8 +6,8 @@ Module Module1
 
         ' ethane	
         ' CH3CH3
-        Dim parser As New ParseChain("CC")
-        Dim graph = parser.ParseGraph
+        Dim parser As New ParseChain(New Scanner("CC").GetTokens)
+        Dim graph = parser.CreateGraph
         Dim formula = graph.GetFormula
 
         Pause()

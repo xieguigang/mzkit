@@ -9,6 +9,10 @@ Public Class Scanner
         Me.SMILES = SMILES
     End Sub
 
+    ''' <summary>
+    ''' Parse SMILES tokens
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function GetTokens() As IEnumerable(Of Token)
         Do While Not SMILES.EndRead
             For Each t As Token In WalkChar(++SMILES)
