@@ -129,9 +129,13 @@ Module FormulaTools
     ''' </summary>
     ''' <param name="formula"></param>
     ''' <returns></returns>
-    <ExportAPI("eval_formula")>
+    <ExportAPI("eval")>
     <RApiReturn(GetType(Double))>
     Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf formula Is Formula Then
+            Return DirectCast(formula, Formula).ExactMass
+        End If
+
         Return env.EvaluateFramework(Of String, Double)(
             x:=formula,
             eval:=Function(str)
@@ -296,7 +300,12 @@ Module FormulaTools
     End Function
 
     <ExportAPI("parseSMILES")>
-    Public Function parseSMILES(SMILES As String)
-        Return New ParseChain(SMILES).Parsing
+    Public Function parseSMILES(SMILES As String) As ChemicalFormula
+        Return ParseChain.ParseGraph(SMILES)
+    End Function
+
+    <ExportAPI("as.formula")>
+    Public Function asFormula(SMILES As ChemicalFormula) As Formula
+        Return SMILES.GetFormula
     End Function
 End Module
