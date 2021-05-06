@@ -15,8 +15,8 @@ Public Class FormulaBuilder
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
         For Each bond As ChemicalKey In graph.AllBonds
-            Call WalkElement(bond.U)
-            Call WalkElement(bond.V)
+            Call WalkElement(bond.U, bond.bond)
+            Call WalkElement(bond.V, bond.bond)
         Next
 
         empirical = Me.empirical.ToString
@@ -24,7 +24,7 @@ Public Class FormulaBuilder
         Return composition
     End Function
 
-    Private Sub WalkElement(element As ChemicalElement)
+    Private Sub WalkElement(element As ChemicalElement, bond As Bonds)
         If Not element.label Like visited Then
             visited += element.label
         Else
@@ -37,13 +37,27 @@ Public Class FormulaBuilder
 
                 If element.Keys = 1 Then
                     ' X-CH3
-                    Call Push("H", 3)
-                    Call empirical.Append("CH3")
+                    Call Push("H", 4 - bond)
                 Else
                     Throw New NotImplementedException
                 End If
 
             Case "H" : Call Push("H")
+
+            Case "O"
+                Call Push("O")
+
+                If element.Keys = 1 Then
+
+                    Call Push("H", 2 - bond)
+
+                ElseIf element.Keys = 2 Then
+                    ' do nothing
+                    ' no additional H element
+                Else
+                    Throw New InvalidConstraintException
+                End If
+
             Case Else
                 Throw New NotImplementedException(element.elementName)
         End Select
@@ -54,6 +68,14 @@ Public Class FormulaBuilder
             composition.Add(element, 0)
         End If
 
-        composition(element) += n
+        If n > 0 Then
+            composition(element) += n
+
+            If n = 1 Then
+                empirical.Append(element)
+            Else
+                empirical.Append($"{element}{n}")
+            End If
+        End If
     End Sub
 End Class

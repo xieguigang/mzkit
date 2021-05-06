@@ -7,7 +7,7 @@ Module Module1
 
         ' ethane	
         ' CH3CH3
-        Call runTest("CC")
+        ' Call runTest("CC")
 
         ' formaldehyde	(CH2O)
         Call runTest("C=O")
