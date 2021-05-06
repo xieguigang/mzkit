@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class ParseChain
 
@@ -20,6 +19,10 @@ Public Class ParseChain
         Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
         Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph
         Dim degree = graph.AllBonds.DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
+
+        For Each element As ChemicalElement In graph.AllElements
+            element.degree = (degree.in.TryGetValue(element.label), degree.out.TryGetValue(element.label))
+        Next
 
         Return graph
     End Function

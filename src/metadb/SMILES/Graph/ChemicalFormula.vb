@@ -9,6 +9,12 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         End Get
     End Property
 
+    Public ReadOnly Property AllElements As IEnumerable(Of ChemicalElement)
+        Get
+            Return vertex
+        End Get
+    End Property
+
     ''' <summary>
     ''' <see cref="AddEdge"/> without add elements
     ''' </summary>
