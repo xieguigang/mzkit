@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Text.Parser
+﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class Scanner
 
@@ -41,12 +42,39 @@ Public Class Scanner
         Else
             If Char.IsLetter(c) AndAlso Char.IsUpper(c) AndAlso buf > 0 Then
                 If buf = 1 AndAlso buf(Scan0) = "["c Then
+                    Call Debug.WriteLine("[")
+                ElseIf buf(0) = "["c Then
+                    Call Debug.WriteLine("-")
                 Else
                     Yield MeasureElement(New String(buf.PopAllChars))
                 End If
             ElseIf c = "]"c Then
                 buf += c
-                Yield MeasureElement(New String(buf.PopAllChars))
+
+                Dim tmpStr = New String(buf.PopAllChars)
+
+                tmpStr = tmpStr.GetStackValue("[", "]")
+                tmpStr = tmpStr.StringReplace("\d+", "")
+                tmpStr = tmpStr.StringReplace("[+-]$", "", RegexOptions.Multiline)
+
+                Dim tmp As String = ""
+
+                For Each c In tmpStr
+                    If Char.IsUpper(c) Then
+                        If tmp.Length > 0 Then
+                            Yield MeasureElement(tmp)
+                        End If
+
+                        tmp = c
+                    Else
+                        tmp = tmp & c
+                    End If
+                Next
+
+                If tmp.Length > 0 Then
+                    Yield MeasureElement(tmp)
+                End If
+
                 Return
             End If
 
@@ -58,6 +86,10 @@ Public Class Scanner
         If str.Length >= 3 AndAlso (str.First = "["c AndAlso str.Last = "]"c) Then
             ' [H]
             str = str.GetStackValue("[", "]")
+        End If
+        If str.IsPattern("[A-Za-z]+\d+") Then
+            ' removes number
+            str = str.Match("[a-zA-Z]+")
         End If
 
         Select Case str

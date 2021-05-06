@@ -17,16 +17,18 @@ Module Module1
 
     Sub Main()
 
-        Call simpleTest()
+        '  Call simpleTest()
         Call branchTest()
 
         Pause()
     End Sub
 
     Sub branchTest()
-        Call runTest("CCN(CC)CC", "Triethylamine  C6H15N")
-        Call runTest("CC(C)C(=O)O", "Isobutyric acid  C4H8O2")
-        Call runTest("C=CC(CCC)C(C(C)C)CCC", "3-propyl-4-isopropyl-1-heptene C10H20")
+        ' Call runTest("CCN(CC)CC", "Triethylamine  C6H15N")
+        '  Call runTest("CC(C)C(=O)O", "Isobutyric acid  C4H8O2")
+        ' Call runTest("CCCCC(C)(CCC)C=C", "3-Methyl-3-propyl-1-heptene C11H22")
+
+        Call runTest("COC1=CC(=CC(=C1O)OC)C2=C(C3=C4C(=CC(=[OH+])C=C4O2)OC(=C3)C5=CC(=C(C=C5)O)O)OC6C(C(C(C(O6)CO)O)O)O", "Malvidin 3-glucoside-4-vinylcatechol C31H29O14+")
     End Sub
 
     Sub runTest(SMILES As String, prompt As String)
