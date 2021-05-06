@@ -8,7 +8,7 @@ Public Class ParseChain
         Me.SMILES = SMILES
     End Sub
 
-    Public Function ParseGraph() As networkgraph
+    Public Function ParseGraph() As ChemicalFormula
 
     End Function
 End Class

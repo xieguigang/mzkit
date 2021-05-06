@@ -104,9 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bonds.vb" />
-    <Compile Include="ChemicalElement.vb" />
-    <Compile Include="ChemicalKey.vb" />
-    <Compile Include="ChemicalFormula.vb" />
+    <Compile Include="Graph\ChemicalElement.vb" />
+    <Compile Include="Graph\ChemicalKey.vb" />
+    <Compile Include="Graph\ChemicalFormula.vb" />
     <Compile Include="ParseChain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -162,8 +162,6 @@
       <Name>Chemoinformatics</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graph\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
