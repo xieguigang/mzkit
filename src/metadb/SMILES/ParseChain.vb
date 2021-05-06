@@ -8,6 +8,8 @@ Public Class ParseChain
     ReadOnly SMILES As String
     ReadOnly tokens As Token()
 
+    Dim lastKey As Bonds?
+
     Sub New(tokens As IEnumerable(Of Token))
         Me.tokens = tokens.ToArray
         Me.SMILES = Me.tokens _
@@ -36,26 +38,39 @@ Public Class ParseChain
     End Function
 
     Private Sub WalkToken(t As Token)
-        If t.name = ElementTypes.Element Then
-            Dim element As New ChemicalElement(t.text)
+        Select Case t.name
+            Case ElementTypes.Element : Call WalkElement(t)
+            Case ElementTypes.Key : Call WalkKey(t)
+            Case Else
+                Throw New NotImplementedException(t.ToString)
+        End Select
+    End Sub
 
-            Call graph.AddVertex(element)
+    Private Sub WalkKey(t As Token)
+        lastKey = CType(CByte(ChemicalBonds.IndexOf(t.text)), Bonds)
+    End Sub
 
-            If chainStack.Count > 0 Then
-                Dim lastElement As ChemicalElement = chainStack.Peek
-                ' 默认为单键
-                Dim bond As New ChemicalKey With {
-                    .U = lastElement,
-                    .V = element,
-                    .weight = 1,
-                    .Bond = Bonds.single
-                }
+    Private Sub WalkElement(t As Token)
+        Dim element As New ChemicalElement(t.text)
 
-                Call graph.AddBond(bond)
-            End If
+        Call graph.AddVertex(element)
 
-            Call chainStack.Push(element)
+        If chainStack.Count > 0 Then
+            Dim lastElement As ChemicalElement = chainStack.Peek
+            Dim bondType As Bonds = If(lastKey Is Nothing, Bonds.single, lastKey.Value)
+            ' 默认为单键
+            Dim bond As New ChemicalKey With {
+                .U = lastElement,
+                .V = element,
+                .weight = 1,
+                .bond = bondType
+            }
+
+            Call graph.AddBond(bond)
         End If
+
+        lastKey = Nothing
+        chainStack.Push(element)
     End Sub
 
     Public Overrides Function ToString() As String

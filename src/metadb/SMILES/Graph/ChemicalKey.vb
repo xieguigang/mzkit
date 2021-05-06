@@ -2,6 +2,6 @@
 
 Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
 
-    Public Property Bond As Bonds
+    Public Property bond As Bonds
 
 End Class
