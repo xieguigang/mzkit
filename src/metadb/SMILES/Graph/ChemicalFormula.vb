@@ -26,7 +26,10 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
     End Sub
 
     Public Function GetFormula() As EmpiricalFormula
-        Return New EmpiricalFormula(New FormulaBuilder(Me).GetComposition)
+        Dim empiricalFormula As String = Nothing
+        Dim composition As Dictionary(Of String, Integer) = New FormulaBuilder(Me).GetComposition(empiricalFormula)
+
+        Return New EmpiricalFormula(composition, empiricalFormula)
     End Function
 
     Public Overrides Function ToString() As String

@@ -1,9 +1,11 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class FormulaBuilder
 
     ReadOnly graph As ChemicalFormula
 
+    Dim empirical As New StringBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
 
@@ -11,11 +13,13 @@ Public Class FormulaBuilder
         Me.graph = graph
     End Sub
 
-    Public Function GetComposition() As Dictionary(Of String, Integer)
+    Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
         For Each bond As ChemicalKey In graph.AllBonds
             Call WalkElement(bond.U)
             Call WalkElement(bond.V)
         Next
+
+        empirical = Me.empirical.ToString
 
         Return composition
     End Function
@@ -34,6 +38,7 @@ Public Class FormulaBuilder
                 If element.Keys = 1 Then
                     ' X-CH3
                     Call Push("H", 3)
+                    Call empirical.Append("CH3")
                 Else
                     Throw New NotImplementedException
                 End If
