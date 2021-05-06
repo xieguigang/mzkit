@@ -14,6 +14,8 @@ Module Module1
         Call runTest("CCO", "ethanol (CH3CH2OH)")
         Call runTest("[H][H]", "molecular hydrogen (H2)")
 
+        Call runTest("C=C-C-C=C-C-O", "6-hydroxy-1,4-hexadiene CH2=CH-CH2-CH=CH-CH2-OH")
+
         Pause()
     End Sub
 
