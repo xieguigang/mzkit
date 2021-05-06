@@ -41,7 +41,7 @@ Public Class Scanner
 
             Yield New Token(ElementTypes.Key, c)
         Else
-            If c = "C"c AndAlso buf > 0 Then
+            If Char.IsUpper(c) AndAlso buf > 0 Then
                 Yield MeasureElement(New String(buf.PopAllChars))
             End If
 

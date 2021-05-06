@@ -38,6 +38,10 @@ Public Class FormulaBuilder
                 If element.Keys = 1 Then
                     ' X-CH3
                     Call Push("H", 4 - bond)
+                ElseIf element.Keys = 2 Then
+
+                    Call Push("H", 2 - bond)
+
                 Else
                     Throw New NotImplementedException
                 End If

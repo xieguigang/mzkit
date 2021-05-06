@@ -10,7 +10,16 @@ Module Module1
         ' Call runTest("CC")
 
         ' formaldehyde	(CH2O)
-        Call runTest("C=O")
+        ' Call runTest("C=O")
+
+        ' ethene	(CH2=CH2)
+        ' Call runTest("C=C")
+
+        ' carbon dioxide	(CO2)
+        ' Call runTest("O=C=O")
+
+        ' dimethyl ether	(CH3OCH3)
+        Call runTest("COC")
 
         Pause()
     End Sub
