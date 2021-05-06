@@ -40,16 +40,20 @@ Public Class FormulaBuilder
             Case Else
 
                 If atomProfile.ContainsKey(element.elementName) Then
-                    Call Push(atomProfile(element.elementName), element, bond)
+                    Call Push(atomProfile(element.elementName), element)
                 Else
                     Throw New NotImplementedException(element.elementName)
                 End If
         End Select
     End Sub
 
-    Private Sub Push(atom As Atom, element As ChemicalElement, bond As Integer)
+    Private Sub Push(atom As Atom, element As ChemicalElement)
+        Dim n As Integer = Aggregate key As ChemicalKey
+                           In graph.FindKeys(element.label)
+                           Into Sum(CInt(key.bond))
+
         Call Push(atom.label)
-        Call Push("H", atom.maxKeys - element.Keys - bond)
+        Call Push("H", atom.maxKeys - n)
     End Sub
 
     Private Sub Push(element As String, Optional n As Integer = 1)

@@ -18,9 +18,10 @@ Module Module1
     End Sub
 
     Sub runTest(SMILES As String, prompt As String)
+        Call Console.WriteLine(prompt)
+
         Dim formula = ParseChain.ParseGraph(SMILES).GetFormula
 
-        Call Console.WriteLine(prompt)
         Call Console.WriteLine(formula.ToString)
         Call Console.WriteLine(Formula.BuildFormula(formula.CountsByElement))
         Call Console.WriteLine($"exact mass: {formula.ExactMass.ToString("F4")}")
