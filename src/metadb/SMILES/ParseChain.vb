@@ -60,7 +60,8 @@ Public Class ParseChain
     Private Sub WalkElement(t As Token)
         Dim element As New ChemicalElement(t.text)
 
-        Call graph.AddVertex(element)
+        element.ID = graph.vertex.Count
+        graph.AddVertex(element)
 
         If chainStack.Count > 0 Then
             Dim lastElement As ChemicalElement = chainStack.Peek

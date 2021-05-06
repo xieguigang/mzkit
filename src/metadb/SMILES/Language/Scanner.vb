@@ -7,7 +7,7 @@ Public Class Scanner
     Dim buf As New CharBuffer
 
     Sub New(SMILES As String)
-        Me.SMILES = SMILES
+        Me.SMILES = SMILES.StringReplace("\d+", "").Replace("@", "")
     End Sub
 
     ''' <summary>
