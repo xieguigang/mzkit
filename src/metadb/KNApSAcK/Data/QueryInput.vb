@@ -1,10 +1,12 @@
-﻿
-Public Structure QueryInput
+﻿Namespace Data
 
-    Dim word As String
-    Dim type As Types
+    Public Structure QueryInput
 
-    Public Overrides Function ToString() As String
-        Return $"{type.Description}+{word.UrlEncode}"
-    End Function
-End Structure
+        Dim word As String
+        Dim type As Types
+
+        Public Overrides Function ToString() As String
+            Return $"{type.Description}+{word.UrlEncode}"
+        End Function
+    End Structure
+End Namespace
