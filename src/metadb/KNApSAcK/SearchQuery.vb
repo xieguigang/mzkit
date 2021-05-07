@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.Data
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
