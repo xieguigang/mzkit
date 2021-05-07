@@ -17,6 +17,11 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property img As String
+        ''' <summary>
+        ''' the query source keyword
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property query As String
 
         Public Overrides Function ToString() As String
             Return name(Scan0)
