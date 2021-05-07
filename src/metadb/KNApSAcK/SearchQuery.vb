@@ -57,13 +57,3 @@ Public Class SearchQuery : Inherits WebQuery(Of QueryInput)
         Return sprintf(My.Resources.knapsack_search, q.type.Description, q.word.UrlEncode)
     End Function
 End Class
-
-Public Structure QueryInput
-
-    Dim word As String
-    Dim type As Types
-
-    Public Overrides Function ToString() As String
-        Return $"{type.Description}+{word.UrlEncode}"
-    End Function
-End Structure
