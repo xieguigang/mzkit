@@ -32,7 +32,9 @@ Public Class Search
             Call $"{My.Resources.knapsack}/{img}".DownloadFile(imgLocal)
         End If
 
-        result.img = New DataURI(imgLocal.LoadImage).ToString
+        If imgLocal.FileExists Then
+            result.img = New DataURI(imgLocal.LoadImage).ToString
+        End If
 
         Return result
     End Function
