@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.Data
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Http
 
@@ -31,42 +32,10 @@ Public Class Search
             Call $"{My.Resources.knapsack}/{img}".DownloadFile(imgLocal)
         End If
 
-        result.img = New DataURI(imgLocal.LoadImage).ToString
+        If imgLocal.FileExists Then
+            result.img = New DataURI(imgLocal.LoadImage).ToString
+        End If
 
         Return result
     End Function
-End Class
-
-Public Class ResultEntry
-    Public Property C_ID As String
-    Public Property CAS_ID As String
-    Public Property Metabolite As String()
-    Public Property formula As String
-    Public Property Mw As Double
-End Class
-
-Public Class Information
-
-    Public Property name As String()
-    Public Property formula As String
-    Public Property mw As Double
-    Public Property CAS As String()
-    Public Property CID As String
-    Public Property InChIKey As String
-    Public Property InChICode As String
-    Public Property SMILES As String
-    Public Property Biosynthesis As String
-    Public Property Organism As Organism()
-    ''' <summary>
-    ''' data uri
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property img As String
-
-End Class
-
-Public Class Organism
-    Public Property Kingdom As String
-    Public Property Family As String
-    Public Property Species As String
 End Class

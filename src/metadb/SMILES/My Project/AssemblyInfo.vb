@@ -2,7 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-#if netcore5=0 then 
+#If netcore5 = 0 Then
 
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
@@ -10,12 +10,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("SMILES")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("SMILES - A Simplified Chemical Language")>
+<Assembly: AssemblyDescription("SMILES - A Simplified Chemical Language")>
+<Assembly: AssemblyCompany("BioDeep")>
 <Assembly: AssemblyProduct("SMILES")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © gg.xie@bionovogene.com 2021")>
+<Assembly: AssemblyTrademark("mzkit")>
 
 <Assembly: ComVisible(False)>
 
