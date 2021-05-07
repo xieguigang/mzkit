@@ -20,6 +20,7 @@ Namespace Data
         ''' </summary>
         ''' <returns></returns>
         Public Property origins As String()
+        Public Property query As String
 
         Public Shared Function FromDetails(data As Information) As InformationTable
             Return New InformationTable With {
@@ -37,7 +38,8 @@ Namespace Data
                     .Select(Function(o)
                                 Return $"{o.Kingdom}+{o.Family}+{o.Species}"
                             End Function) _
-                    .ToArray
+                    .ToArray,
+                .query = data.query
             }
         End Function
 
