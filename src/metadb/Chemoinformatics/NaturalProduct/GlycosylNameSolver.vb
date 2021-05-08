@@ -5,7 +5,7 @@ Namespace NaturalProduct
 
     Public Class GlycosylNameSolver
 
-        ReadOnly steric As Index(Of String) = {"alpha", "beta", "trans"}
+        ReadOnly steric As Index(Of String) = {"alpha", "beta", "trans", "cis", "red", "acid"}
         ReadOnly rules As Dictionary(Of String, String())
         ReadOnly qprefix As NamedValue(Of Integer)() = Enums(Of QuantityPrefix) _
             .Select(Function(n)
@@ -49,11 +49,13 @@ Namespace NaturalProduct
             glycosyl = glycosyl.StringReplace("[()]", " ")
             glycosyl = glycosyl.Replace("'", "").Replace("[", " ").Replace("]", " ")
             glycosyl = glycosyl.StringReplace("[-]{2,}", "-")
-            glycosyl = glycosyl.Trim(" "c, "-"c)
+            glycosyl = glycosyl.Trim(" "c, "-"c, ","c)
 
             For Each token As String In glycosyl.StringSplit("([-])|\s+")
                 For Each part As String In HandleComponents(token)
-                    Yield part
+                    If Not part.StringEmpty Then
+                        Yield part
+                    End If
                 Next
             Next
         End Function
