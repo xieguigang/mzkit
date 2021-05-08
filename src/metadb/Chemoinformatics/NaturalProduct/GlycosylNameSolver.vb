@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace NaturalProduct
 
-    Public Class NameSolver
+    Public Class GlycosylNameSolver
 
         ReadOnly steric As Index(Of String) = {"alpha", "beta", "trans"}
         ReadOnly rules As Dictionary(Of String, String())

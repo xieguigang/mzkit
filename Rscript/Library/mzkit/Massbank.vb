@@ -313,7 +313,24 @@ Module Massbank
     End Function
 
     <ExportAPI("glycosyl.tokens")>
-    Public Function GlycosylTokens(glycosyl As String) As String()
-        Return New NameSolver(Nothing).GlycosylNameParser(glycosyl).ToArray
+    Public Function GlycosylTokens(glycosyl As String,
+                                   Optional rules As list = Nothing,
+                                   Optional env As Environment = Nothing) As String()
+
+        Dim custom As Dictionary(Of String, String())
+
+        If Not rules Is Nothing Then
+            custom = rules.slots _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return DirectCast(asVector(Of String)(a.Value), String())
+                              End Function)
+        Else
+            custom = New Dictionary(Of String, String())
+        End If
+
+        Return New GlycosylNameSolver(custom) _
+            .GlycosylNameParser(glycosyl) _
+            .ToArray
     End Function
 End Module
