@@ -42,10 +42,6 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-
 <HideModuleName>
 Public Module Extensions
 
@@ -62,82 +58,5 @@ Public Module Extensions
 
         Return formula
     End Function
-
-    Public Function GetQuantityPrefix(n As Integer) As String
-        Select Case n
-            Case 1 : Return "mono"
-            Case 2 : Return "di"
-            Case 3 : Return "tri"
-            Case 4 : Return "tetra"
-            Case 5 : Return "penta"
-            Case 6 : Return "hexa"
-            Case 7 : Return "hepta"
-            Case 8 : Return "octa"
-            Case 9 : Return "ennea"
-            Case 10 : Return "deca"
-            Case 11 : Return "undeca"
-            Case 12 : Return "dodeca"
-            Case Else
-                Return n.ToString
-        End Select
-    End Function
-
-    ReadOnly steric As Index(Of String) = {"alpha", "beta", "trans"}
-
-    <Extension>
-    Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
-        Dim qprefix As NamedValue(Of Integer)() = Enums(Of QuantityPrefix) _
-            .Select(Function(n)
-                        Return New NamedValue(Of Integer)(n.Description, CInt(n))
-                    End Function) _
-            .ToArray
-
-        glycosyl = glycosyl.StringReplace("\d+", " ").ToLower
-        glycosyl = glycosyl.StringReplace("[()]", " ")
-        glycosyl = glycosyl.Replace("'", "").Replace("[", " ").Replace("]", " ")
-        glycosyl = glycosyl.StringReplace("[-]{2,}", "-")
-        glycosyl = glycosyl.Trim(" "c, "-"c)
-
-        For Each token As String In glycosyl.StringSplit("([-])|\s+")
-            Dim hitPrefix As Boolean = False
-
-            If token.Length < 3 Then
-                Continue For
-            ElseIf token Like steric Then
-                Continue For
-            End If
-
-            For Each q In qprefix
-                If token.StartsWith(q.Name) Then
-                    token = token.Substring(q.Name.Length)
-                    hitPrefix = True
-
-                    For i As Integer = 1 To q.Value
-                        Yield token
-                    Next
-
-                    Exit For
-                End If
-            Next
-
-            If Not hitPrefix Then
-                Yield token
-            End If
-        Next
-    End Function
 End Module
 
-Public Enum QuantityPrefix
-    mono = 1
-    di
-    tri
-    tetra
-    penta
-    hexa
-    hepta
-    octa
-    ennea
-    deca
-    undeca
-    dodeca
-End Enum

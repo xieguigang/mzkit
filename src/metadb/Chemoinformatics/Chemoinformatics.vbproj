@@ -475,6 +475,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ChemicalDescriptor.vb" />
+    <Compile Include="NaturalProduct\Extensions.vb" />
+    <Compile Include="NaturalProduct\QuantityPrefix.vb" />
+    <Compile Include="NaturalProduct\NameSolver.vb" />
     <Compile Include="SDF\NamespaceDoc.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="SDF\SDFParser.vb" />
