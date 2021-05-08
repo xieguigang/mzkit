@@ -26,7 +26,7 @@ Namespace NaturalProduct
                 Return
             End If
 
-            For Each q In qprefix
+            For Each q As NamedValue(Of Integer) In qprefix
                 If token.StartsWith(q.Name) Then
                     token = token.Substring(q.Name.Length)
                     hitPrefix = True
