@@ -1,20 +1,28 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace NaturalProduct
 
     Public Class GlycosylNameSolver
 
-        ReadOnly steric As Index(Of String) = {"alpha", "beta", "trans", "cis", "red", "acid"}
+        ReadOnly steric As Index(Of String) = {
+            "alpha", "beta", "trans",
+            "cis", "red", "acid",
+            "bis", "ester", "cyclic",
+            "bata", "hydroxy"
+        }
         ReadOnly rules As Dictionary(Of String, String())
-        ReadOnly qprefix As NamedValue(Of Integer)() = Enums(Of QuantityPrefix) _
-            .Select(Function(n)
-                        Return New NamedValue(Of Integer)(n.Description, CInt(n))
-                    End Function) _
-            .ToArray
+        ReadOnly qprefix As Dictionary(Of String, Integer) = Enums(Of QuantityPrefix) _
+            .ToDictionary(Function(a) a.Description,
+                          Function(a)
+                              Return CInt(a)
+                          End Function)
 
-        Sub New(customRules As Dictionary(Of String, String()))
+        Sub New(Optional customRules As Dictionary(Of String, String()) = Nothing)
             Me.rules = customRules
+
+            If rules.IsNullOrEmpty Then
+                rules = New Dictionary(Of String, String())
+            End If
         End Sub
 
         Private Iterator Function HandleComponents(token As String) As IEnumerable(Of String)
@@ -26,36 +34,72 @@ Namespace NaturalProduct
                 Return
             End If
 
-            For Each q As NamedValue(Of Integer) In qprefix
-                If token.StartsWith(q.Name) Then
-                    token = token.Substring(q.Name.Length)
+            For Each q As KeyValuePair(Of String, Integer) In qprefix
+                If token.StartsWith(q.Key) Then
                     hitPrefix = True
+                    token = token.Substring(q.Key.Length)
 
-                    For i As Integer = 1 To q.Value
-                        Yield token
-                    Next
+                    If rules.ContainsKey(token) Then
+                        For Each item As String In rules(token)
+                            For i As Integer = 1 To q.Value
+                                Yield item
+                            Next
+                        Next
+                    Else
+                        For i As Integer = 1 To q.Value
+                            Yield token
+                        Next
+                    End If
 
                     Exit For
                 End If
             Next
 
             If Not hitPrefix Then
-                Yield token
+                If rules.ContainsKey(token) Then
+                    For Each item As String In rules(token)
+                        Yield item
+                    Next
+                Else
+                    Yield token
+                End If
             End If
         End Function
 
-        Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
-            glycosyl = glycosyl.StringReplace("\d+", " ").ToLower
+        Private Shared Function Trim(glycosyl As String) As String
+            glycosyl = glycosyl.StringReplace("\d+", " ")
             glycosyl = glycosyl.StringReplace("[()]", " ")
             glycosyl = glycosyl.Replace("'", "").Replace("[", " ").Replace("]", " ")
             glycosyl = glycosyl.StringReplace("[-]{2,}", "-")
-            glycosyl = glycosyl.Trim(" "c, "-"c, ","c)
+            glycosyl = glycosyl.Trim(" "c, "-"c, ","c, "{"c, "}"c, "["c, "]"c, "("c, ")"c)
 
-            For Each token As String In glycosyl.StringSplit("([-])|\s+")
-                For Each part As String In HandleComponents(token)
-                    If Not part.StringEmpty Then
-                        Yield part
-                    End If
+            Return glycosyl
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="glycosyl"></param>
+        ''' <returns></returns>
+        Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
+            Dim n As Integer
+            Dim tokens As String() = Trim(glycosyl).ToLower.StringSplit("([-])|\s+")
+
+            For Each token As String In tokens
+                If qprefix.ContainsKey(token) Then
+                    n = qprefix(token)
+                Else
+                    n = 1
+                End If
+
+                Dim all As String() = HandleComponents(Trim(token)) _
+                    .Where(Function(part) Not part.StringEmpty) _
+                    .ToArray
+
+                For i As Integer = 1 To n
+                    For Each item As String In all
+                        Yield item
+                    Next
                 Next
             Next
         End Function
