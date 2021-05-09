@@ -1,5 +1,5 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Data
@@ -24,13 +24,15 @@ Namespace Data
         Public Property query As String
         Public Property glycosyl As String()
 
-        Public Shared Function FromDetails(data As Information) As InformationTable
-            Dim glycosyl As String() = data.name _
+        Public Shared Function FromDetails(data As Information, solver As GlycosylNameSolver, Optional ByRef chemicalName As String = Nothing) As InformationTable
+            Dim glycosyl As (String, String()) = data.name _
                 .Select(Function(name)
-                            Return name.GlycosylNameParser.ToArray
+                            Return (name, solver.GlycosylNameParser(name).ToArray)
                         End Function) _
-                .OrderByDescending(Function(n) n.Length) _
+                .OrderByDescending(Function(n) n.Item2.Length) _
                 .First
+
+            chemicalName = glycosyl.Item1
 
             Return New InformationTable With {
                 .Biosynthesis = data.Biosynthesis,
@@ -49,7 +51,7 @@ Namespace Data
                             End Function) _
                     .ToArray,
                 .query = data.query,
-                .glycosyl = glycosyl
+                .glycosyl = glycosyl.Item2
             }
         End Function
 
