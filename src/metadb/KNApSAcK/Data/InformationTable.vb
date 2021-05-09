@@ -27,7 +27,7 @@ Namespace Data
         Public Shared Function FromDetails(data As Information, solver As GlycosylNameSolver, Optional ByRef chemicalName As String = Nothing) As InformationTable
             Dim glycosyl As (String, String()) = data.name _
                 .Select(Function(name)
-                            Return (name, solver.GlycosylNameParser(name).ToArray)
+                            Return (name, solver.GlycosylNameParser(name.ToLower.Replace(data.query, "")).ToArray)
                         End Function) _
                 .OrderByDescending(Function(n) n.Item2.Length) _
                 .First
