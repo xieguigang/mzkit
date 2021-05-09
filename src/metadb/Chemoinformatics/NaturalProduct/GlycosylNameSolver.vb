@@ -93,7 +93,9 @@ Namespace NaturalProduct
                 End If
 
                 Dim all As String() = HandleComponents(Trim(token)) _
-                    .Where(Function(part) Not part.StringEmpty) _
+                    .Where(Function(part)
+                               Return Not part.StringEmpty AndAlso Not part Like steric
+                           End Function) _
                     .ToArray
 
                 For i As Integer = 1 To n
