@@ -92,6 +92,12 @@ Namespace Formula
         ' (CH3)3CH
         ' (CH3)4C
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="formula$"></param>
+        ''' <param name="n">for counting polymers atoms</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
             Static cache As New Dictionary(Of String, Formula)

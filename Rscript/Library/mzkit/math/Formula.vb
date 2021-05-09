@@ -152,11 +152,13 @@ Module FormulaTools
     ''' Get atom composition from a formula string
     ''' </summary>
     ''' <param name="formula">The input formula string text.</param>
-    ''' <param name="n">for counting polymers atoms</param>
     ''' <returns></returns>
     <ExportAPI("scan")>
-    Public Function ScanFormula(formula$, Optional n% = 9999) As Formula
-        Return FormulaScanner.ScanFormula(formula, n)
+    Public Function ScanFormula(formula$, Optional env As Environment = Nothing) As Formula
+        Dim n As Integer = env.globalEnvironment.options.getOption("formula.polymers_n", 999)
+        Dim formulaObj As Formula = FormulaScanner.ScanFormula(formula, n)
+
+        Return formulaObj
     End Function
 
 #Region "formula operators"
