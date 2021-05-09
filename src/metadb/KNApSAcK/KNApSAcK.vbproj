@@ -107,10 +107,11 @@
     <Compile Include="Data\Information.vb" />
     <Compile Include="Data\ResultEntry.vb" />
     <Compile Include="Data\QueryInput.vb" />
-    <Compile Include="InformationQuery.vb" />
-    <Compile Include="SearchQuery.vb" />
-    <Compile Include="Types.vb" />
-    <Compile Include="Search.vb" />
+    <Compile Include="Web\InformationQuery.vb" />
+    <Compile Include="KNApSAcKRef.vb" />
+    <Compile Include="Web\SearchQuery.vb" />
+    <Compile Include="Web\Types.vb" />
+    <Compile Include="Web\Search.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
