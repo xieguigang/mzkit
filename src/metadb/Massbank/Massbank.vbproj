@@ -425,6 +425,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concentration\Units.vb" />
     <Compile Include="MetaLib\Models\MetaInfo.vb" />
     <Compile Include="Public\lipidMAPS\MetaTable.vb" />
     <Compile Include="Public\NCBI\PubChemDescriptorRepo.vb" />
@@ -442,7 +443,7 @@
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\Match\NameEquality.vb" />
     <Compile Include="MetaLib\Models\MetaLib.vb" />
-    <Compile Include="Concentration.vb" />
+    <Compile Include="Concentration\Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
     <Compile Include="Public\NCBI\NamespaceDoc.vb" />
     <Compile Include="Public\NCBI\PubChem\PCXml\Elements.vb" />
