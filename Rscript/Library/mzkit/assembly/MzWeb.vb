@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -169,15 +170,17 @@ Module MzWeb
     End Function
 
     ''' <summary>
-    ''' 
+    ''' open a raw data files in common raw data format and then returns 
+    ''' in a unify mzpack data format.
     ''' </summary>
-    ''' <param name="file">the mzXML/mzML/mzPack raw data file</param>
+    ''' <param name="file">the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file</param>
     ''' <returns></returns>
-    ''' 
     <ExportAPI("open.mzpack")>
     Public Function Open(file As String) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
+        ElseIf file.ExtensionSuffix("raw") Then
+            Return New MSFileReader(file).LoadFromXRaw
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return mzPack.ReadAll(file:=stream)
