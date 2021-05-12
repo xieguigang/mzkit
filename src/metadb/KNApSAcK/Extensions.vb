@@ -23,7 +23,8 @@ Public Module Extensions
             .SMILES = table.SMILES,
             .name = chemicalName,
             .xrefId = table.CID,
-            .glycosyl = glycosyl
+            .glycosyl = glycosyl,
+            .term = data.query
         }
 
         Return ref
