@@ -29,4 +29,8 @@ Public Class KNApSAcKRef : Implements IExactmassProvider
                           End Function)
     End Function
 
+    Public Overrides Function ToString() As String
+        Return $"[{term}] {name}"
+    End Function
+
 End Class

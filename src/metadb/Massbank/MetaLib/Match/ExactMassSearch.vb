@@ -17,7 +17,11 @@ Namespace MetaLib
             Dim min As New MassQuery With {.mass = query - da}
             Dim max As New MassQuery With {.mass = query + da}
 
-            Return index.SelectByRange(New MassCompares(min), New MassCompares(max))
+            Return index _
+                .SelectByRange(New MassCompares(min), New MassCompares(max)) _
+                .Select(Function(target)
+                            Return DirectCast(target.obj, T)
+                        End Function)
         End Function
 
         Public Shared Function CreateIndex(data As IEnumerable(Of T)) As ExactMassSearch(Of T)
