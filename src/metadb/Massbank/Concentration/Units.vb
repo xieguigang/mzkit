@@ -1,4 +1,7 @@
 ﻿
+Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+
 <Convertor(GetType(Concentration))>
 Public Enum Units As Integer
 

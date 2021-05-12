@@ -49,7 +49,6 @@
 
 #End Region
 
-Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 
