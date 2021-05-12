@@ -57,12 +57,6 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib
 
-    Public Interface ICompoundNames
-
-        Function GetSynonym() As IEnumerable(Of String)
-
-    End Interface
-
     Public Class SynonymIndex(Of T As ICompoundNames) : Implements IEnumerable(Of T)
 
         ReadOnly bin As WordSimilarityIndex(Of T)

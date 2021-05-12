@@ -426,6 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concentration\Units.vb" />
+    <Compile Include="MetaLib\Models\ICompoundNames.vb" />
     <Compile Include="MetaLib\Models\MetaInfo.vb" />
     <Compile Include="Public\lipidMAPS\MetaTable.vb" />
     <Compile Include="Public\NCBI\PubChemDescriptorRepo.vb" />
