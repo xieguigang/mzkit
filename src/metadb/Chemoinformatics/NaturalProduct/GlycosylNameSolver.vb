@@ -104,7 +104,13 @@ Namespace NaturalProduct
                            End If
                        End Function) _
                 .ToArray
-            Dim blocks As Token()() = SplitByTopLevelStack(tokens).ToArray
+            Dim blocks As Token()()
+
+            Try
+                blocks = SplitByTopLevelStack(tokens).ToArray
+            Catch ex As Exception
+                Throw New InvalidExpressionException(glycosyl)
+            End Try
 
             For Each tokenList As Token() In blocks
                 Try
