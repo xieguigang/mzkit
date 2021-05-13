@@ -111,6 +111,7 @@ Namespace Formula
 
                     If ConstructAndVerifyCompoundWork(counts) Then
                         ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
+                        formula.charge = FormalCharge.EvaluateCharge(formula)
 
                         If formula.charge >= chargeMin AndAlso formula.charge <= chargeMax Then
                             checked = True
