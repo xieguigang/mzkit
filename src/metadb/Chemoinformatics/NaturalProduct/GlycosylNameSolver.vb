@@ -193,7 +193,7 @@ SingleName:
                 If t.name = NameTokens.open Then
                     stack.Push("(")
 
-                    If Not isNumber(buf) Then
+                    If Not isNumber(buf) AndAlso stack.Count = 0 Then
                         If buf > 0 Then
                             Yield buf.PopAll
                         End If
