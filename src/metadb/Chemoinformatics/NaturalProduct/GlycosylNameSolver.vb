@@ -142,65 +142,71 @@ Namespace NaturalProduct
             Next
         End Function
 
+        Private Function HandleSingle(tokenList As Token()) As IEnumerable(Of String)
+            If tokenList(Scan0).name = NameTokens.name Then
+                Return HandleComponents(tokenList(Scan0).text)
+            Else
+                Throw New SyntaxErrorException(tokenList.JoinBy(" "))
+            End If
+        End Function
+
+        Private Function HandleMultiple(tokenList As Token()) As IEnumerable(Of String)
+            Dim output As New List(Of String)
+
+            If tokenList.Any(Function(a) a.name = NameTokens.open) Then
+                Dim n As Integer = 1
+
+                If tokenList.First.name = NameTokens.number Then
+                    n = qprefix(tokenList(Scan0).text)
+                    tokenList = tokenList.Skip(2).Take(tokenList.Length - 3).ToArray
+                Else
+                    tokenList = tokenList.Skip(1).Take(tokenList.Length - 2).ToArray
+                End If
+
+                If tokenList.Any(Function(a) a.name = NameTokens.open) Then
+                    Dim blocks = SplitByTopLevelStack(tokenList).ToArray
+
+                    For Each block As Token() In blocks
+                        Dim allNames As String() = HandleComponents(block).ToArray
+
+                        For i As Integer = 1 To n
+                            output.AddRange(allNames)
+                        Next
+                    Next
+                Else
+                    Dim allNames = HandleComponents(tokenList).ToArray
+
+                    For i As Integer = 1 To n
+                        output.AddRange(allNames)
+                    Next
+                End If
+            ElseIf tokenList.Length = 2 Then
+                If tokenList(Scan0).name = NameTokens.number Then
+                    Dim allNames = HandleComponents(tokenList(1).text).ToArray
+                    Dim n As Integer = qprefix(tokenList(Scan0).text)
+
+                    For i As Integer = 1 To n
+                        output.AddRange(allNames)
+                    Next
+                Else
+                    For Each item In tokenList
+                        output.AddRange(HandleComponents(item.text))
+                    Next
+                End If
+            Else
+                For Each item In tokenList
+                    output.AddRange(HandleComponents(item.text))
+                Next
+            End If
+
+            Return output
+        End Function
+
         Private Function HandleComponents(tokenList As Token()) As IEnumerable(Of String)
             If tokenList.Length = 1 Then
-SingleName:
-                If tokenList(Scan0).name = NameTokens.name Then
-                    Return HandleComponents(tokenList(Scan0).text)
-                Else
-                    Throw New SyntaxErrorException(tokenList.JoinBy(" "))
-                End If
+                Return HandleSingle(tokenList)
             ElseIf tokenList.Length > 0 Then
-                If tokenList.Any(Function(a) a.name = NameTokens.open) Then
-                    Dim n As Integer = 1
-                    Dim output As New List(Of String)
-
-                    If tokenList.First.name = NameTokens.number Then
-                        n = qprefix(tokenList(Scan0).text)
-                        tokenList = tokenList.Skip(2).Take(tokenList.Length - 3).ToArray
-                    Else
-                        tokenList = tokenList.Skip(1).Take(tokenList.Length - 2).ToArray
-                    End If
-
-                    If tokenList.Any(Function(a) a.name = NameTokens.open) Then
-                        Dim blocks = SplitByTopLevelStack(tokenList).ToArray
-
-                        For Each block As Token() In blocks
-                            Dim allNames As String() = HandleComponents(block).ToArray
-
-                            For i As Integer = 1 To n
-                                output.AddRange(allNames)
-                            Next
-                        Next
-                    Else
-                        Dim allNames = HandleComponents(tokenList).ToArray
-
-                        For i As Integer = 1 To n
-                            output.AddRange(allNames)
-                        Next
-                    End If
-
-                    Return output
-                ElseIf tokenList.Length = 2 Then
-                    Dim output As New List(Of String)
-
-                    If tokenList(Scan0).name = NameTokens.number Then
-                        Dim allNames = HandleComponents(tokenList(1).text).ToArray
-                        Dim n As Integer = qprefix(tokenList(Scan0).text)
-
-                        For i As Integer = 1 To n
-                            output.AddRange(allNames)
-                        Next
-                    Else
-                        For Each item In tokenList
-                            output.AddRange(HandleComponents(item.text))
-                        Next
-                    End If
-
-                    Return output
-                Else
-                    Throw New SyntaxErrorException(tokenList.JoinBy(" "))
-                End If
+                Return HandleMultiple(tokenList)
             Else
                 Return {}
             End If
