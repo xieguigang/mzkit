@@ -9,7 +9,8 @@ Namespace NaturalProduct
             "cis", "red", "acid",
             "bis", "ester", "cyclic",
             "bata", "hydroxy",
-            "aero", "pro"
+            "aero", "pro",
+            "-", ","  ' delimiter symbols
         }
         ReadOnly rules As Dictionary(Of String, String())
         ReadOnly qprefix As Dictionary(Of String, Integer) = Enums(Of QuantityPrefix) _
@@ -83,14 +84,17 @@ Namespace NaturalProduct
         ''' <param name="glycosyl"></param>
         ''' <returns></returns>
         Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
-            Dim n As Integer
-            Dim tokens As String() = Trim(glycosyl).ToLower.StringSplit("([-])|\s+")
+            Dim n As Integer = 1
+            Dim tokens As String() = Trim(glycosyl) _
+                .ToLower _
+                .StringSplit("([-])|\s+") _
+                .Where(Function(t) Not t.StringEmpty AndAlso Not t Like steric) _
+                .ToArray
 
             For Each token As String In tokens
                 If qprefix.ContainsKey(token) Then
                     n = qprefix(token)
-                Else
-                    n = 1
+                    Continue For
                 End If
 
                 Dim all As String() = HandleComponents(Trim(token)) _
@@ -104,6 +108,8 @@ Namespace NaturalProduct
                         Yield item
                     Next
                 Next
+
+                n = 1
             Next
         End Function
     End Class
