@@ -107,7 +107,9 @@ Namespace NaturalProduct
             Dim blocks As Token()()
 
             Try
-                blocks = SplitByTopLevelStack(tokens).DoCall(AddressOf JoinNames).ToArray
+                blocks = SplitByTopLevelStack(tokens) _
+                    .DoCall(AddressOf JoinNames) _
+                    .ToArray
             Catch ex As Exception
                 Throw New InvalidExpressionException(glycosyl)
             End Try
@@ -268,11 +270,10 @@ Namespace NaturalProduct
 
                     Call message.__DEBUG_ECHO
 
-                    If stack.Count = 1 Then
+                    Do While stack.Count > 0
+                        stack.Pop()
                         buf += New Token(NameTokens.close, ")")
-                    Else
-                        Throw New SyntaxErrorException(message)
-                    End If
+                    Loop
 
                     Yield buf.PopAll
                 End If

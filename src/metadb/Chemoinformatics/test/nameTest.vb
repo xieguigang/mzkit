@@ -7,6 +7,8 @@ Module nameTest
 
     Sub Main()
 
+        Call echo(" 3-o-[6-o-(malonyl)-beta-d-glucopyranoside]-7-o-[6-o-(trans-p-coumaryl)-beta-d-glucopyranoside]-3'-o-[6-o-(trans-4-o-(6-o-(trans-4-o-(beta-d-glucopyranosyl)-p-coumaryl)-beta-d-glucopyranoside]")
+
         Call echo("  3-(6-p-coumaroylglucoside)-5-[6-(malonyl)-4-(rhamnosyl)glucoside)]")
 
         Call echo(" 3'-o-(2''-o-galloyl-6''-o-acetyl-beta-galactopyranoside)")
