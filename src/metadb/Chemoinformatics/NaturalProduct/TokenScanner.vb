@@ -40,6 +40,10 @@ Namespace NaturalProduct
                 End If
 
                 Yield New Token(NameTokens.close, ")")
+            ElseIf c = "-"c OrElse c = ","c OrElse c = " "c Then
+                If buf > 0 Then
+                    Yield MeasureToken()
+                End If
             Else
                 buf += c
             End If

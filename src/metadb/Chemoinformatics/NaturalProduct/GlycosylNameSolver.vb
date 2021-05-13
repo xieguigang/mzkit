@@ -89,10 +89,20 @@ Namespace NaturalProduct
             Dim n As Integer = 1
             Dim tokens As Token() = Trim(glycosyl) _
                 .ToLower _
-                .StringSplit("([-])|\s+") _
-                .Where(Function(t) Not t.StringEmpty AndAlso Not t Like steric) _
-                .JoinBy("") _
                 .DoCall(AddressOf TokenScanner.ScanTokens) _
+                .Where(Function(t)
+                           If t.name = NameTokens.name Then
+                               If t.text Like steric Then
+                                   Return False
+                               ElseIf t.length < 2 Then
+                                   Return False
+                               Else
+                                   Return True
+                               End If
+                           Else
+                               Return True
+                           End If
+                       End Function) _
                 .ToArray
 
             For Each token As Token In tokens
