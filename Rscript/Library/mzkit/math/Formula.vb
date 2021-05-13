@@ -200,6 +200,47 @@ Module FormulaTools
     Public Function divide(total As Formula, n As Integer) As Formula
         Return total / n
     End Function
+
+    <ROperator("-")>
+    Public Function minus(f As Formula, mass As Double) As Double
+        Return f.ExactMass - mass
+    End Function
+
+    <ROperator("-")>
+    Public Function minus(mass As Double, f As Formula) As Double
+        Return mass - f.ExactMass
+    End Function
+
+    <ROperator("+")>
+    Public Function add(mass As Double, f As Formula) As Double
+        Return mass + f.ExactMass
+    End Function
+
+    <ROperator("+")>
+    Public Function add(f As Formula, mass As Double) As Double
+        Return f.ExactMass + mass
+    End Function
+
+    <ROperator("-")>
+    Public Function minus(f As Formula, mass As Integer) As Double
+        Return f.ExactMass - mass
+    End Function
+
+    <ROperator("-")>
+    Public Function minus(mass As Integer, f As Formula) As Double
+        Return mass - f.ExactMass
+    End Function
+
+    <ROperator("+")>
+    Public Function add(mass As Integer, f As Formula) As Double
+        Return mass + f.ExactMass
+    End Function
+
+    <ROperator("+")>
+    Public Function add(f As Formula, mass As Integer) As Double
+        Return f.ExactMass + mass
+    End Function
+
 #End Region
 
     ''' <summary>
