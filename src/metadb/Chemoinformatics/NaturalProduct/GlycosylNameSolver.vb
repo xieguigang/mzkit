@@ -232,8 +232,16 @@ Namespace NaturalProduct
 
                     buf.Add(t)
                 ElseIf t.name = NameTokens.close Then
-                    stack.Pop()
-                    buf.Add(t)
+                    If stack.Count = 0 Then
+                        If buf = 0 Then
+                            Continue For
+                        Else
+                            Throw New InvalidProgramException
+                        End If
+                    Else
+                        stack.Pop()
+                        buf.Add(t)
+                    End If
 
                     If stack.Count = 0 Then
                         Yield buf.PopAll
