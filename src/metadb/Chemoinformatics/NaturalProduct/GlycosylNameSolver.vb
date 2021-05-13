@@ -230,7 +230,19 @@ SingleName:
             Next
 
             If stack.Count > 0 Then
-                Throw New SyntaxErrorException("name is broken!")
+                If buf > 0 Then
+                    Dim message As String = $"name is broken: {buf.Select(Function(t) t.text).JoinBy(" ")}"
+
+                    Call message.__DEBUG_ECHO
+
+                    If stack.Count = 1 Then
+                        buf += New Token(NameTokens.close, ")")
+                    Else
+                        Throw New SyntaxErrorException(message)
+                    End If
+
+                    Yield buf.PopAll
+                End If
             ElseIf buf > 0 Then
                 Yield buf.PopAll
             End If
