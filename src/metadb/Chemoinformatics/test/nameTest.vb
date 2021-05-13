@@ -7,6 +7,8 @@ Module nameTest
 
     Sub Main()
 
+        Call echo(" ( 3-gentiobios-6'''-yl)(apigenin 7-glucos-6''-yl)malonate")
+
         Call echo("  3-o-(6-o-(4-o-alpha-rhamnopyranosyl-beta-glucopyranoside)-5-o-(6-o-malonyl-beta-glucopyranoside)")
         Call echo("  3-o-(6-o-(4-o-malonyl-alpha-rhamnopyranosyl)-beta-glucopyranoside)-5-o-beta-glucopyranoside")
 

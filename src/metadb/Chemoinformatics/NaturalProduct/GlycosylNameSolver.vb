@@ -104,7 +104,7 @@ Namespace NaturalProduct
                            End If
                        End Function) _
                 .ToArray
-            Dim blocks As Token()() = SplitByTopLevelStack(tokens).ToArray
+            Dim blocks As Token()() = SplitByTopLevelStack(tokens).DoCall(AddressOf JoinNames).ToArray
 
             For Each tokenList As Token() In blocks
                 Try
@@ -114,6 +114,25 @@ Namespace NaturalProduct
                 Catch ex As Exception
                     Throw New InvalidExpressionException(glycosyl)
                 End Try
+            Next
+        End Function
+
+        Private Iterator Function JoinNames(blocks As IEnumerable(Of Token())) As IEnumerable(Of Token())
+            For Each block In blocks
+                Dim list As New List(Of Token)(block)
+
+                For i As Integer = 0 To list.Count - 1
+                    If list(i).text = "yl" Then
+                        list(i - 1).text = $"{list(i - 1).text}yl"
+                        list.RemoveAt(i)
+
+                        If list.Count <= i + 1 Then
+                            Exit For
+                        End If
+                    End If
+                Next
+
+                Yield list.PopAll
             Next
         End Function
 
