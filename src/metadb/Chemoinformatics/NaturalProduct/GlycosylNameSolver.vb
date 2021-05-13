@@ -224,7 +224,7 @@ SingleName:
             Next
 
             If stack.Count > 0 Then
-                Throw New SyntaxErrorException("name is broken!")
+                Call ("name is broken!").__DEBUG_ECHO
             ElseIf buf > 0 Then
                 Yield buf.PopAll
             End If
