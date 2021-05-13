@@ -47,7 +47,7 @@ Imports stdNum = System.Math
 
 Namespace Formula
 
-    Module FormalCharge
+    Public Module FormalCharge
 
         ''' <summary>
         ''' Correct charge using rules for an empirical formula
@@ -56,7 +56,7 @@ Namespace Formula
         ''' <param name="elementNum"></param>
         ''' <returns>Corrected charge</returns>
         ''' <remarks></remarks>
-        Public Function CorrectChargeEmpirical(totalCharge As Double, elementNum As ElementNumType) As Double
+        Friend Function CorrectChargeEmpirical(totalCharge As Double, elementNum As ElementNumType) As Double
             Dim correctedCharge = totalCharge
 
             If elementNum.C + elementNum.Si >= 1 Then
@@ -100,16 +100,16 @@ Namespace Formula
         End Function
 
         Public Function EvaluateCharge(formula As Formula) As Integer
-            Dim nC4 As Integer = formula("C") * 4
+            Dim nC4 As Integer = formula("C") * 3
             Dim nH1 As Integer = formula("H")
-            Dim totalCharge As Integer = nC4 - nH1
+            Dim totalCharge As Integer = nC4 - nH1 - 1
 
             For Each element In formula.CountsByElement
                 If element.Key = "C" OrElse element.Key = "H" Then
                     Continue For
                 End If
 
-                Dim singleCharge As Integer = Formula.Elements(element.Key).charge
+                Dim singleCharge As Integer = Formula.Elements(element.Key).charge + 1
                 Dim deltaCharge As Integer = singleCharge * element.Value
 
                 totalCharge += deltaCharge

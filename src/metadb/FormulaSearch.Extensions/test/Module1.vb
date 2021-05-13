@@ -63,6 +63,8 @@ Module Module1
     }
 
     Sub Main()
+        Call chargeTest()
+
         Call Console.WriteLine(FormulaScanner.ScanFormula("CH3").CountsByElement.GetJson)
         Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2").CountsByElement.GetJson)
         Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2CH2").CountsByElement.GetJson)
@@ -83,7 +85,15 @@ Module Module1
     End Sub
 
     Sub chargeTest()
+        ' https://pubchem.ncbi.nlm.nih.gov/compound/Malonate
+        ' -2
+        Dim formula As Formula = FormulaScanner.ScanFormula("C3H2O4")
+        Dim charge As Integer = FormalCharge.EvaluateCharge(formula)
 
+
+        Call Console.WriteLine(FormalCharge.EvaluateCharge(FormulaScanner.ScanFormula("C6H12O6")))
+
+        Pause()
     End Sub
 
 End Module
