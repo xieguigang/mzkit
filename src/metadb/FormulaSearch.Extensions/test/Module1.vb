@@ -82,4 +82,8 @@ Module Module1
         Pause()
     End Sub
 
+    Sub chargeTest()
+
+    End Sub
+
 End Module

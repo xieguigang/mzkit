@@ -165,6 +165,22 @@ Namespace Formula
             Return New Formula(newComposition)
         End Operator
 
+        Public Shared Operator -(f As Formula, mass As Double) As Double
+            Return f.ExactMass - mass
+        End Operator
+
+        Public Shared Operator -(mass As Double, f As Formula) As Double
+            Return mass - f.ExactMass
+        End Operator
+
+        Public Shared Operator +(mass As Double, f As Formula) As Double
+            Return mass + f.ExactMass
+        End Operator
+
+        Public Shared Operator +(f As Formula, mass As Double) As Double
+            Return f.ExactMass + mass
+        End Operator
+
         Public Shared Operator /(f As Formula, n As Integer) As Formula
             Dim newComposition = f _
                 .CountsByElement _
