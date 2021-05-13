@@ -115,6 +115,7 @@ Namespace NaturalProduct
 
         Private Iterator Function HandleComponents(tokenList As Token()) As IEnumerable(Of String)
             If tokenList.Length = 1 Then
+SingleName:
                 If tokenList(Scan0).name = NameTokens.name Then
                     For Each component As String In HandleComponents(tokenList(Scan0).text)
                         Yield component
@@ -122,26 +123,56 @@ Namespace NaturalProduct
                 Else
                     Throw New SyntaxErrorException
                 End If
-            Else
-                Dim n As Integer = 1
+            ElseIf tokenList.Length > 0 Then
+                If tokenList.Any(Function(a) a.name = NameTokens.open) Then
+                    Dim n As Integer = 1
 
-                If tokenList.First.name = NameTokens.number Then
-                    n = qprefix(tokenList(Scan0).text)
-                End If
+                    If tokenList.First.name = NameTokens.number Then
+                        n = qprefix(tokenList(Scan0).text)
+                        tokenList = tokenList.Skip(2).Take(tokenList.Length - 3).ToArray
+                    Else
+                        tokenList = tokenList.Skip(1).Take(tokenList.Length - 2).ToArray
+                    End If
 
-                tokenList = tokenList.Skip(2).Take(tokenList.Length - 3).ToArray
+                    If tokenList.Any(Function(a) a.name = NameTokens.open) Then
+                        Dim blocks = SplitByTopLevelStack(tokenList).ToArray
 
-                Dim blocks = SplitByTopLevelStack(tokenList).ToArray
+                        For Each block In blocks
+                            Dim allNames As String() = HandleComponents(block).ToArray
 
-                For Each block In blocks
-                    Dim allNames As String() = HandleComponents(block).ToArray
-
-                    For i As Integer = 1 To n
-                        For Each part As String In allNames
-                            Yield part
+                            For i As Integer = 1 To n
+                                For Each part As String In allNames
+                                    Yield part
+                                Next
+                            Next
                         Next
-                    Next
-                Next
+                    Else
+                        GoTo QCount
+                    End If
+                Else
+QCount:
+                    If tokenList.Length = 1 Then
+                        GoTo SingleName
+                    ElseIf tokenList.Length = 2 Then
+                        Dim n As Integer = 1
+
+                        If tokenList.First.name = NameTokens.number Then
+                            n = qprefix(tokenList(Scan0).text)
+                        Else
+                            Throw New SyntaxErrorException
+                        End If
+
+                        Dim allNames As String() = HandleComponents(tokenList(1).text).ToArray
+
+                        For i As Integer = 1 To n
+                            For Each part As String In allNames
+                                Yield part
+                            Next
+                        Next
+                    Else
+                        Throw New SyntaxErrorException
+                    End If
+                End If
             End If
         End Function
 
@@ -165,6 +196,10 @@ Namespace NaturalProduct
                 ElseIf t.name = NameTokens.close Then
                     stack.Pop()
                     buf.Add(t)
+
+                    If stack.Count = 0 Then
+                        Yield buf.PopAll
+                    End If
                 ElseIf t.name = NameTokens.number Then
                     buf.Add(t)
                 Else
