@@ -87,7 +87,6 @@ Namespace NaturalProduct
         ''' <param name="glycosyl"></param>
         ''' <returns></returns>
         Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
-            Dim n As Integer = 1
             Dim tokens As Token() = Trim(glycosyl) _
                 .ToLower _
                 .DoCall(AddressOf TokenScanner.ScanTokens) _
@@ -107,27 +106,43 @@ Namespace NaturalProduct
                 .ToArray
             Dim blocks As Token()() = SplitByTopLevelStack(tokens).ToArray
 
+            For Each tokenList As Token() In blocks
+                For Each part As String In HandleComponents(tokenList)
+                    Yield part
+                Next
+            Next
+        End Function
 
-            For Each token As Token In tokens
-                If token.name = NameTokens.number Then
-                    n = CInt(token.name)
-                    Continue For
+        Private Iterator Function HandleComponents(tokenList As Token()) As IEnumerable(Of String)
+            If tokenList.Length = 1 Then
+                If tokenList(Scan0).name = NameTokens.name Then
+                    For Each component As String In HandleComponents(tokenList(Scan0).text)
+                        Yield component
+                    Next
+                Else
+                    Throw New SyntaxErrorException
+                End If
+            Else
+                Dim n As Integer = 1
+
+                If tokenList.First.name = NameTokens.number Then
+                    n = qprefix(tokenList(Scan0).text)
                 End If
 
-                Dim all As String() = HandleComponents(token.text) _
-                    .Where(Function(part)
-                               Return Not part.StringEmpty AndAlso Not part Like steric
-                           End Function) _
-                    .ToArray
+                tokenList = tokenList.Skip(2).Take(tokenList.Length - 3).ToArray
 
-                For i As Integer = 1 To n
-                    For Each item As String In all
-                        Yield item
+                Dim blocks = SplitByTopLevelStack(tokenList).ToArray
+
+                For Each block In blocks
+                    Dim allNames As String() = HandleComponents(block).ToArray
+
+                    For i As Integer = 1 To n
+                        For Each part As String In allNames
+                            Yield part
+                        Next
                     Next
                 Next
-
-                n = 1
-            Next
+            End If
         End Function
 
         Private Shared Function isNumber(buf As List(Of Token)) As Boolean
@@ -145,8 +160,11 @@ Namespace NaturalProduct
                     If Not isNumber(buf) Then
                         Yield buf.PopAll
                     End If
+
+                    buf.Add(t)
                 ElseIf t.name = NameTokens.close Then
                     stack.Pop()
+                    buf.Add(t)
                 ElseIf t.name = NameTokens.number Then
                     buf.Add(t)
                 Else
@@ -158,7 +176,9 @@ Namespace NaturalProduct
                 End If
             Next
 
-            If buf > 0 Then
+            If stack.Count > 0 Then
+                Throw New SyntaxErrorException("name is broken!")
+            ElseIf buf > 0 Then
                 Yield buf.PopAll
             End If
         End Function

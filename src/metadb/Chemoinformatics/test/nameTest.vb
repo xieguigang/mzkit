@@ -7,9 +7,9 @@ Module nameTest
 
     Sub Main()
 
-        ' Call echo("Malvidin 3,7-di-(6-malonylglucoside)")
-        ' Call echo("Delphinidin 3,5-di(6-acetylglucoside)")
-        ' Call echo("Delphinidin 3,7,3'-triglucoside")
+        Call echo("Malvidin 3,7-di-(6-malonylglucoside)")
+        Call echo("Delphinidin 3,5-di(6-acetylglucoside)")
+        Call echo("Delphinidin 3,7,3'-triglucoside")
         Call echo("Delphinidin 3,7-diglucoside-3',5'-di(6-O-p-coumaroyl-beta-glucoside)")
 
         Pause()
