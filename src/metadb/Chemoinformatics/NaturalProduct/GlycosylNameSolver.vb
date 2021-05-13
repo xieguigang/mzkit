@@ -190,7 +190,9 @@ SingleName:
                     stack.Push("(")
 
                     If Not isNumber(buf) Then
-                        Yield buf.PopAll
+                        If buf > 0 Then
+                            Yield buf.PopAll
+                        End If
                     End If
 
                     buf.Add(t)
