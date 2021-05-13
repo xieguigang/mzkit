@@ -104,11 +104,10 @@ Namespace NaturalProduct
                            End If
                        End Function) _
                 .ToArray
-            Dim blocks As Token()() = SplitByTopLevelStack(tokens).DoCall(AddressOf JoinNames).ToArray
             Dim blocks As Token()()
 
             Try
-                blocks = SplitByTopLevelStack(tokens).ToArray
+                blocks = SplitByTopLevelStack(tokens).DoCall(AddressOf JoinNames).ToArray
             Catch ex As Exception
                 Throw New InvalidExpressionException(glycosyl)
             End Try
