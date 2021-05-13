@@ -107,9 +107,13 @@ Namespace NaturalProduct
             Dim blocks As Token()() = SplitByTopLevelStack(tokens).ToArray
 
             For Each tokenList As Token() In blocks
-                For Each part As String In HandleComponents(tokenList)
-                    Yield part
-                Next
+                Try
+                    For Each part As String In HandleComponents(tokenList)
+                        Yield part
+                    Next
+                Catch ex As Exception
+                    Throw New InvalidExpressionException(glycosyl)
+                End Try
             Next
         End Function
 
@@ -119,7 +123,7 @@ SingleName:
                 If tokenList(Scan0).name = NameTokens.name Then
                     Return HandleComponents(tokenList(Scan0).text)
                 Else
-                    Throw New SyntaxErrorException
+                    Throw New SyntaxErrorException(tokenList.JoinBy(" "))
                 End If
             ElseIf tokenList.Length > 0 Then
                 If tokenList.Any(Function(a) a.name = NameTokens.open) Then
@@ -170,7 +174,7 @@ SingleName:
 
                     Return output
                 Else
-                    Throw New SyntaxErrorException
+                    Throw New SyntaxErrorException(tokenList.JoinBy(" "))
                 End If
             Else
                 Return {}
