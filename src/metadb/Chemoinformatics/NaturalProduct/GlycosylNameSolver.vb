@@ -205,7 +205,12 @@ SingleName:
                     buf.Add(t)
                 Else
                     If stack.Count = 0 Then
-                        Yield {t}
+                        If buf > 0 Then
+                            buf += t
+                            Yield buf.PopAll
+                        Else
+                            Yield {t}
+                        End If
                     Else
                         buf.Add(t)
                     End If

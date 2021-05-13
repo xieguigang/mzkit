@@ -12,6 +12,8 @@ Module nameTest
         Call echo("Delphinidin 3,7,3'-triglucoside")
         Call echo("Delphinidin 3,7-diglucoside-3',5'-di(6-O-p-coumaroyl-beta-glucoside)")
         Call echo("Cyanidin 3-(6'',6'''-di-p-coumarylsophoroside)-5-(6-malonylglucoside)")
+        Call echo("Cyanidin 3-O-[2''-O-(xylosyl)-6''-O-(p-coumaroyl) glucoside] 5-O-malonylglucoside")
+        Call echo("Petunidin 3,5-di-O-beta-D-glucoside")
 
         Pause()
     End Sub
