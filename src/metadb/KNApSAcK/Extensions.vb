@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.Data
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
+Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
@@ -9,6 +10,7 @@ Public Module Extensions
         Dim chemicalName As String = Nothing
         Dim table As InformationTable = InformationTable.FromDetails(data, solver, chemicalName)
         Dim glycosyl As String() = table.glycosyl _
+            .SafeQuery _
             .GroupBy(Function(n) n) _
             .Select(Function(n) $"{n.Count} {n.Key}") _
             .ToArray
@@ -21,7 +23,8 @@ Public Module Extensions
             .SMILES = table.SMILES,
             .name = chemicalName,
             .xrefId = table.CID,
-            .glycosyl = glycosyl
+            .glycosyl = glycosyl,
+            .term = data.query
         }
 
         Return ref

@@ -441,6 +441,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExactMassProvider.vb" />
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\DNPOrWileyType.vb" />
     <Compile Include="Formula\ElementNumType.vb" />
@@ -475,6 +476,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ChemicalDescriptor.vb" />
+    <Compile Include="NaturalProduct\TokenScanner.vb" />
+    <Compile Include="NaturalProduct\NameToken.vb" />
     <Compile Include="NaturalProduct\Extensions.vb" />
     <Compile Include="NaturalProduct\QuantityPrefix.vb" />
     <Compile Include="NaturalProduct\GlycosylNameSolver.vb" />

@@ -333,4 +333,21 @@ Module Massbank
             .GlycosylNameParser(glycosyl) _
             .ToArray
     End Function
+
+    <ExportAPI("glycosyl.solver")>
+    Public Function GlycosylNameSolver(Optional rules As list = Nothing) As GlycosylNameSolver
+        Dim custom As Dictionary(Of String, String())
+
+        If Not rules Is Nothing Then
+            custom = rules.slots _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return DirectCast(asVector(Of String)(a.Value), String())
+                              End Function)
+        Else
+            custom = New Dictionary(Of String, String())
+        End If
+
+        Return New GlycosylNameSolver(custom)
+    End Function
 End Module

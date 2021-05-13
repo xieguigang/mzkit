@@ -53,6 +53,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -170,8 +171,19 @@ Module FormulaTools
     End Function
 
     <ROperator("-")>
-    Public Function minus(total As Formula, part As Formula) As Formula
-        Return total - part
+    Public Function minus(total As Formula, part As Formula, Optional env As Environment = Nothing) As Formula
+        Dim delta = total - part
+        Dim negative = delta.CountsByElement.Where(Function(c) c.Value < 0).ToDictionary
+
+        If Not negative.IsNullOrEmpty Then
+            Call env.AddMessage({
+                $"formula math results negative composition result: {negative.GetJson}",
+                $"total: {total.EmpiricalFormula}",
+                $"part: {part.EmpiricalFormula}"
+            }, MSG_TYPES.WRN)
+        End If
+
+        Return delta
     End Function
 
     <ROperator("*")>
