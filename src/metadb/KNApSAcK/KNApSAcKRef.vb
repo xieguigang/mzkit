@@ -1,9 +1,12 @@
-﻿Public Class KNApSAcKRef
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.Linq
+
+Public Class KNApSAcKRef : Implements IExactmassProvider
 
     Public Property xrefId As String
     Public Property name As String
     Public Property formula As String
-    Public Property exact_mass As Double
+    Public Property exact_mass As Double Implements IExactmassProvider.ExactMass
     Public Property CAS As String
     Public Property SMILES As String
     Public Property InChI As String
@@ -14,5 +17,20 @@
     ''' </summary>
     ''' <returns></returns>
     Public Property glycosyl As String()
+    Public Property term As String
+
+    Public Function CreateLossElementList() As Dictionary(Of String, Integer)
+        Return glycosyl _
+            .SafeQuery _
+            .Select(Function(gly) gly.GetTagValue(" ", trim:=True)) _
+            .ToDictionary(Function(a) a.Value,
+                          Function(a)
+                              Return Integer.Parse(a.Name)
+                          End Function)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"[{term}] {name}"
+    End Function
 
 End Class

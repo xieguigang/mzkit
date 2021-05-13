@@ -441,6 +441,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExactMassProvider.vb" />
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\DNPOrWileyType.vb" />
     <Compile Include="Formula\ElementNumType.vb" />

@@ -27,12 +27,24 @@ Namespace Data
         Public Shared Function FromDetails(data As Information, solver As GlycosylNameSolver, Optional ByRef chemicalName As String = Nothing) As InformationTable
             Dim glycosyl As (String, String()) = data.name _
                 .Select(Function(name)
-                            Return (name, solver.GlycosylNameParser(name).ToArray)
+                            Return (name, solver.GlycosylNameParser(name.ToLower.Replace(data.query.ToLower, "")).ToArray)
                         End Function) _
+                .Where(Function(n) n.Item2.Length > 0) _
+                .Where(Function(n)
+                           If n.Item2.Length = 1 Then
+                               Return n.name.ToLower <> n.Item2(Scan0)
+                           Else
+                               Return True
+                           End If
+                       End Function) _
                 .OrderByDescending(Function(n) n.Item2.Length) _
-                .First
+                .FirstOrDefault
 
             chemicalName = glycosyl.Item1
+
+            If chemicalName.StringEmpty Then
+                chemicalName = data.name.First
+            End If
 
             Return New InformationTable With {
                 .Biosynthesis = data.Biosynthesis,

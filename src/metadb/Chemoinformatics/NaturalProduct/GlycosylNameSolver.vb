@@ -8,7 +8,8 @@ Namespace NaturalProduct
             "alpha", "beta", "trans",
             "cis", "red", "acid",
             "bis", "ester", "cyclic",
-            "bata", "hydroxy"
+            "bata", "hydroxy",
+            "aero", "pro"
         }
         ReadOnly rules As Dictionary(Of String, String())
         ReadOnly qprefix As Dictionary(Of String, Integer) = Enums(Of QuantityPrefix) _
