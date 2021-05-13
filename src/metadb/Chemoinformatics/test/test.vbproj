@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="inchiTest.vb" />
+    <Compile Include="nameTest.vb" />
     <Compile Include="PeakAnnotations.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
