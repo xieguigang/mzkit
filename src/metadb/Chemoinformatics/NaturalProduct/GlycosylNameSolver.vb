@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 Namespace NaturalProduct
 
@@ -13,7 +14,8 @@ Namespace NaturalProduct
             "-", ","  ' delimiter symbols
         }
         ReadOnly rules As Dictionary(Of String, String())
-        ReadOnly qprefix As Dictionary(Of String, Integer) = Enums(Of QuantityPrefix) _
+
+        Friend Shared ReadOnly qprefix As Dictionary(Of String, Integer) = Enums(Of QuantityPrefix) _
             .ToDictionary(Function(a) a.Description,
                           Function(a)
                               Return CInt(a)
@@ -70,10 +72,10 @@ Namespace NaturalProduct
 
         Private Shared Function Trim(glycosyl As String) As String
             glycosyl = glycosyl.StringReplace("\d+", " ")
-            glycosyl = glycosyl.StringReplace("[()]", " ")
+            ' glycosyl = glycosyl.StringReplace("[()]", " ")
             glycosyl = glycosyl.Replace("'", "").Replace("[", " ").Replace("]", " ")
             glycosyl = glycosyl.StringReplace("[-]{2,}", "-")
-            glycosyl = glycosyl.Trim(" "c, "-"c, ","c, "{"c, "}"c, "["c, "]"c, "("c, ")"c)
+            glycosyl = glycosyl.Trim(" "c, "-"c, ","c, "{"c, "}"c, "["c, "]"c)
 
             Return glycosyl
         End Function
@@ -85,19 +87,21 @@ Namespace NaturalProduct
         ''' <returns></returns>
         Public Iterator Function GlycosylNameParser(glycosyl As String) As IEnumerable(Of String)
             Dim n As Integer = 1
-            Dim tokens As String() = Trim(glycosyl) _
+            Dim tokens As Token() = Trim(glycosyl) _
                 .ToLower _
                 .StringSplit("([-])|\s+") _
                 .Where(Function(t) Not t.StringEmpty AndAlso Not t Like steric) _
+                .JoinBy("") _
+                .DoCall(AddressOf TokenScanner.ScanTokens) _
                 .ToArray
 
-            For Each token As String In tokens
-                If qprefix.ContainsKey(token) Then
-                    n = qprefix(token)
+            For Each token As Token In tokens
+                If token.name = NameTokens.number Then
+                    n = CInt(token.name)
                     Continue For
                 End If
 
-                Dim all As String() = HandleComponents(Trim(token)) _
+                Dim all As String() = HandleComponents(token.text) _
                     .Where(Function(part)
                                Return Not part.StringEmpty AndAlso Not part Like steric
                            End Function) _

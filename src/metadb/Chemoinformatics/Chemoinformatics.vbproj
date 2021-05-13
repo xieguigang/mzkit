@@ -476,6 +476,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ChemicalDescriptor.vb" />
+    <Compile Include="NaturalProduct\TokenScanner.vb" />
+    <Compile Include="NaturalProduct\NameToken.vb" />
     <Compile Include="NaturalProduct\Extensions.vb" />
     <Compile Include="NaturalProduct\QuantityPrefix.vb" />
     <Compile Include="NaturalProduct\GlycosylNameSolver.vb" />
