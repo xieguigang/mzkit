@@ -92,7 +92,7 @@ Namespace Spectra.Xml
 
         Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
             For Each line As SSM2MatrixFragment In matrix
-                Yield $"{line.mz}:{line.query.ToString("G4")},{line.ref.ToString("G4")}"
+                Yield $"{line.mz.ToString("F4")}:{line.query.ToString("G4")},{line.ref.ToString("G4")}"
             Next
         End Function
 
