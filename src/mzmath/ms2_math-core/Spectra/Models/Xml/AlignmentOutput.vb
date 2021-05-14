@@ -90,5 +90,11 @@ Namespace Spectra.Xml
             Return $"{query} vs {reference}"
         End Function
 
+        Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
+            For Each line As SSM2MatrixFragment In matrix
+                Yield $"{line.mz}:{line.query.ToString("G4")},{line.ref.ToString("G4")}"
+            Next
+        End Function
+
     End Class
 End Namespace
