@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::e9d9a5cdde0b8f22ce4f036573f5ebe6, src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module FormalCharge
-    ' 
-    '         Function: CorrectChargeEmpirical
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module FormalCharge
+' 
+'         Function: CorrectChargeEmpirical
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,7 +47,7 @@ Imports stdNum = System.Math
 
 Namespace Formula
 
-    Module FormalCharge
+    Public Module FormalCharge
 
         ''' <summary>
         ''' Correct charge using rules for an empirical formula
@@ -56,7 +56,7 @@ Namespace Formula
         ''' <param name="elementNum"></param>
         ''' <returns>Corrected charge</returns>
         ''' <remarks></remarks>
-        Public Function CorrectChargeEmpirical(totalCharge As Double, elementNum As ElementNumType) As Double
+        Friend Function CorrectChargeEmpirical(totalCharge As Double, elementNum As ElementNumType) As Double
             Dim correctedCharge = totalCharge
 
             If elementNum.C + elementNum.Si >= 1 Then
@@ -97,6 +97,25 @@ Namespace Formula
             End If
 
             Return correctedCharge
+        End Function
+
+        Public Function EvaluateCharge(formula As Formula) As Integer
+            Dim nC4 As Integer = formula("C") * 3
+            Dim nH1 As Integer = formula("H")
+            Dim totalCharge As Integer = nC4 - nH1 - 1
+
+            For Each element In formula.CountsByElement
+                If element.Key = "C" OrElse element.Key = "H" Then
+                    Continue For
+                End If
+
+                Dim singleCharge As Integer = Formula.Elements(element.Key).charge + 1
+                Dim deltaCharge As Integer = singleCharge * element.Value
+
+                totalCharge += deltaCharge
+            Next
+
+            Return totalCharge
         End Function
     End Module
 End Namespace

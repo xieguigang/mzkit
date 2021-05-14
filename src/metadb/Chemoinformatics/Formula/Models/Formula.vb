@@ -143,6 +143,12 @@ Namespace Formula
             Return New Formula(newComposition)
         End Operator
 
+        ''' <summary>
+        ''' a - b will create a new formula composition.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator -(a As Formula, b As Formula) As Formula
             Dim newComposition = a.CountsByElement.Keys _
                 .JoinIterates(b.CountsByElement.Keys) _
@@ -150,13 +156,29 @@ Namespace Formula
                 .Select(Function(e)
                             Return (e, n:=a.CountsByElement.TryGetValue(e) - b.CountsByElement.TryGetValue(e))
                         End Function) _
-                .Where(Function(e) e.n > 0) _
+                .Where(Function(e) e.n <> 0) _
                 .ToDictionary(Function(e) e.e,
                               Function(e)
                                   Return e.n
                               End Function)
 
             Return New Formula(newComposition)
+        End Operator
+
+        Public Shared Operator -(f As Formula, mass As Double) As Double
+            Return f.ExactMass - mass
+        End Operator
+
+        Public Shared Operator -(mass As Double, f As Formula) As Double
+            Return mass - f.ExactMass
+        End Operator
+
+        Public Shared Operator +(mass As Double, f As Formula) As Double
+            Return mass + f.ExactMass
+        End Operator
+
+        Public Shared Operator +(f As Formula, mass As Double) As Double
+            Return f.ExactMass + mass
         End Operator
 
         Public Shared Operator /(f As Formula, n As Integer) As Formula
