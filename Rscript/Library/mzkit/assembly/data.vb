@@ -89,12 +89,16 @@ Module data
             Dim into As Double() = DirectCast(matrix, dataframe)("into")
             Dim annotation As String() = DirectCast(matrix, dataframe)("annotation")
 
+            If annotation Is Nothing Then
+                annotation = {}
+            End If
+
             MS = mz _
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
                                 .intensity = into(i),
-                                .Annotation = annotation(i)
+                                .Annotation = annotation.ElementAtOrDefault(i)
                             }
                         End Function) _
                 .ToArray
