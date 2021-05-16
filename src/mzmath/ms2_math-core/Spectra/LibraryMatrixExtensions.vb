@@ -70,8 +70,8 @@ Namespace Spectra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsMatrix(lib_ms2 As IEnumerable(Of Library)) As LibraryMatrix
-            Return lib_ms2 _
+        Public Function AsMatrix(lib_ms2 As IEnumerable(Of Library), Optional title As String = Nothing) As LibraryMatrix
+            Dim raw As ms2() = lib_ms2 _
                 .Select(Function(l)
                             Return New ms2 With {
                                 .mz = l.ProductMz,
@@ -79,6 +79,8 @@ Namespace Spectra
                             }
                         End Function) _
                 .ToArray
+
+            Return New LibraryMatrix With {.ms2 = raw, .name = title}
         End Function
 
         ''' <summary>
