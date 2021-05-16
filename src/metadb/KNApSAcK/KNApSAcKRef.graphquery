@@ -1,0 +1,7 @@
+# parse KNApSAcKRef metabolite details information
+
+KNApSAcKRef css("table") | css(tr) | eq(1) {
+	
+	data text()
+
+}
