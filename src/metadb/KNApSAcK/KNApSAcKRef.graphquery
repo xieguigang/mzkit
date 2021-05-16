@@ -1,7 +1,15 @@
 # parse KNApSAcKRef metabolite details information
 
-KNApSAcKRef css("table") | css(tr, 1) {
+KNApSAcK css("table") | css("tr", 1) | css("table") {
 	
-	data text()
+	name      css("tr", 0) | css("td") | text()
+	formula   css("tr", 1) | css("td") | text()
+	molweight css("tr", 2) | css("td") | text()
+	CAS       css("tr", 3) | css("td") | text()
+	C_ID      css("tr", 4) | css("td") | text() | trim(",", " ", "\r", "\n", "\t")
+    InChIKey  css("tr", 5) | css("td") | text() | trim()
+	InChI     css("tr", 6) | css("td") | text() | trim()
+	SMILES    css("tr", 7) | css("td") | text() | trim()
+	Origin    css("tr", 8) | css("td") | text() | trim()
 
 }
