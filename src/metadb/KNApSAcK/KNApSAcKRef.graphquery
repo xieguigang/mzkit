@@ -1,0 +1,36 @@
+# parse KNApSAcKRef metabolite details information
+# Rscript "R-sharp/studio/Rsharp_kit/graphquery.R" --url "url" --query "KNApSAcKRef.graphquery" --silent --niceprint
+
+KNApSAcK css("table") | css("tr", 1) | css("table") {
+	
+	     name  css("tr", 0) | css("td", 0) [
+			 # contains multiple common names
+			 # in a field		 
+		     text() | trim()
+		 ]
+		 
+	  formula  css("tr", 1) | css("td") | text()
+	molweight  css("tr", 2) | css("td") | text()
+	      CAS  css("tr", 3) | css("td") | text()
+		  
+		 # unsure of there is a lot of blank in this 
+		 # html table row,
+		 # and a comma symbol at last character
+	     C_ID   css("tr", 4) 
+		      | css("td") 
+			  | text() 
+			  | trim(",", " ", "\r", "\n", "\t")
+			  
+     InChIKey  css("tr", 5) | css("td") | text() | trim()
+	    InChI  css("tr", 6) | css("td") | text() | trim()
+	   SMILES  css("tr", 7) | css("td") | text() | trim()
+	Organisms  css("tr", 9) | css("td") | css("table") | css("tr") [
+	   {
+		
+			kingdom  css("td", 0) | text()
+			family   css("td", 1) | text()
+			species  css("td", 2) | text()
+		
+	   }]
+
+}

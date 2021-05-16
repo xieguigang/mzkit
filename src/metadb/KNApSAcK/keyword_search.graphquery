@@ -1,0 +1,14 @@
+
+search css("table") | css("tr") [{
+
+	C_ID css("td", 0) | text()
+	CAS css("td", 1) | text()
+	
+	metabolite css("td", 2) [ 
+		text() | trim()
+	] 
+	
+	formula css("td", 3) | text()
+	molweight css("td", 4) | text()
+
+}]
