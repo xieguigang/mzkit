@@ -68,9 +68,19 @@ Namespace Spectra
             Return matrix.ms2.Max(Function(r) r.intensity)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="lib_ms2"></param>
+        ''' <param name="title"></param>
+        ''' <param name="normalize">matrix will be normalized to [0, 1]</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsMatrix(lib_ms2 As IEnumerable(Of Library), Optional title As String = Nothing) As LibraryMatrix
+        Public Function AsMatrix(lib_ms2 As IEnumerable(Of Library),
+                                 Optional title As String = Nothing,
+                                 Optional normalize As Boolean = True) As LibraryMatrix
+
             Dim raw As ms2() = lib_ms2 _
                 .Select(Function(l)
                             Return New ms2 With {
@@ -79,8 +89,13 @@ Namespace Spectra
                             }
                         End Function) _
                 .ToArray
+            Dim libM As New LibraryMatrix With {.ms2 = raw, .name = title}
 
-            Return New LibraryMatrix With {.ms2 = raw, .name = title}
+            If normalize Then
+                libM = libM / libM.Max
+            End If
+
+            Return libM
         End Function
 
         ''' <summary>
