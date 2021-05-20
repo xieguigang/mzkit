@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;NPSearch</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,6 +14,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -21,6 +23,32 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineConstants>netcore5=1</DefineConstants>
+    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
+    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
