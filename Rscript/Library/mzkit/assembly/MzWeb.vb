@@ -82,13 +82,21 @@ Module MzWeb
     ''' <returns></returns>
     <ExportAPI("load.chromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function GetChromatogram(scans As pipeline, Optional env As Environment = Nothing) As Object
-        If scans.elementType Like GetType(mzXML.scan) Then
-            Return Chromatogram.GetChromatogram(scans.populates(Of scan)(env))
-        ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Return Chromatogram.GetChromatogram(scans.populates(Of mzML.spectrum)(env))
+    Public Function GetChromatogram(scans As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf scans Is mzPack Then
+            Return DirectCast(scans, mzPack).GetChromatogram
+        ElseIf Not TypeOf scans Is pipeline Then
+            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
         Else
-            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+            Dim scanPip As pipeline = DirectCast(scans, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Return Chromatogram.GetChromatogram(scanPip.populates(Of scan)(env))
+            ElseIf scanPip.elementType Like GetType(mzML.spectrum) Then
+                Return Chromatogram.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
         End If
     End Function
 
