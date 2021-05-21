@@ -196,7 +196,9 @@ Module MzWeb
         If file.ExtensionSuffix("mzXML", "mzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
         ElseIf file.ExtensionSuffix("raw") Then
-            Return New MSFileReader(file).LoadFromXRaw
+            Using msRaw As New MSFileReader(file)
+                Return msRaw.LoadFromXRaw
+            End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return mzPack.ReadAll(file:=stream)
