@@ -753,57 +753,65 @@ Public Class XRawFileIO : Implements IDisposable
             If Not SetMSController() Then
                 FileInfo.CorruptFile = True
                 Return False
+            Else
+                Return LoadFileInfoInternal()
             End If
-
-            FileInfo.CreationDate = Date.MinValue
-            FileInfo.CreationDate = mXRawFileHeader.CreationDate
-            If TraceMode Then Call "Checking mXRawFile.IsError".__DEBUG_ECHO
-            If mXRawFile.IsError Then Return False
-            If TraceMode Then Call "mXRawFile.IsError reports true".__DEBUG_ECHO
-            If TraceMode Then Call "Accessing mXRawFileHeader.WhoCreatedId".__DEBUG_ECHO
-            FileInfo.CreatorID = mXRawFileHeader.WhoCreatedId
-            If TraceMode Then Call "Accessing mXRawFile.GetInstrumentData".__DEBUG_ECHO
-            Dim instData = mXRawFile.GetInstrumentData()
-            FileInfo.InstFlags = instData.Flags
-            FileInfo.InstHardwareVersion = instData.HardwareVersion
-            FileInfo.InstSoftwareVersion = instData.SoftwareVersion
-            FileInfo.InstMethods.Clear()
-
-            If Options.LoadMSMethodInfo Then
-                LoadMethodInfo()
-            End If
-
-            If TraceMode Then Call "Defining the model, name, description, and serial number".__DEBUG_ECHO
-            FileInfo.InstModel = instData.Model
-            FileInfo.InstName = instData.Name
-            FileInfo.InstrumentDescription = mXRawFileHeader.FileDescription
-            FileInfo.InstSerialNumber = instData.SerialNumber
-            FileInfo.VersionNumber = mXRawFileHeader.Revision
-            If TraceMode Then Call "Accessing mXRawFile.RunHeaderEx".__DEBUG_ECHO
-            Dim runData = mXRawFile.RunHeaderEx
-            FileInfo.MassResolution = runData.MassResolution
-            FileInfo.ScanStart = runData.FirstSpectrum
-            FileInfo.ScanEnd = runData.LastSpectrum
-            FileInfo.AcquisitionFilename = String.Empty
-
-            ' Note that the following are typically blank
-            FileInfo.AcquisitionDate = mXRawFileHeader.CreationDate.ToString(CultureInfo.InvariantCulture)
-            'mXRawFile.GetAcquisitionFileName(mFileInfo.AcquisitionFilename); // DEPRECATED
-            FileInfo.Comment1 = runData.Comment1
-            FileInfo.Comment2 = runData.Comment2
-            Dim sampleInfo = mXRawFile.SampleInformation
-            FileInfo.SampleName = sampleInfo.SampleName
-            FileInfo.SampleComment = sampleInfo.Comment
-
-            If Options.LoadMSTuneInfo Then
-                GetTuneData()
-            End If
-
-            Return True
         Catch ex As Exception
             RaiseErrorMessage("Error: Exception in FillFileInfo: ", ex)
             Return False
         End Try
+    End Function
+
+    Private Function LoadFileInfoInternal() As Boolean
+        FileInfo.CreationDate = Date.MinValue
+        FileInfo.CreationDate = mXRawFileHeader.CreationDate
+        If TraceMode Then Call "Checking mXRawFile.IsError".__DEBUG_ECHO
+
+        If mXRawFile.IsError Then
+            Return False
+        End If
+
+        If TraceMode Then Call "mXRawFile.IsError reports true".__DEBUG_ECHO
+        If TraceMode Then Call "Accessing mXRawFileHeader.WhoCreatedId".__DEBUG_ECHO
+        FileInfo.CreatorID = mXRawFileHeader.WhoCreatedId
+        If TraceMode Then Call "Accessing mXRawFile.GetInstrumentData".__DEBUG_ECHO
+        Dim instData = mXRawFile.GetInstrumentData()
+        FileInfo.InstFlags = instData.Flags
+        FileInfo.InstHardwareVersion = instData.HardwareVersion
+        FileInfo.InstSoftwareVersion = instData.SoftwareVersion
+        FileInfo.InstMethods.Clear()
+
+        If Options.LoadMSMethodInfo Then
+            LoadMethodInfo()
+        End If
+
+        If TraceMode Then Call "Defining the model, name, description, and serial number".__DEBUG_ECHO
+        FileInfo.InstModel = instData.Model
+        FileInfo.InstName = instData.Name
+        FileInfo.InstrumentDescription = mXRawFileHeader.FileDescription
+        FileInfo.InstSerialNumber = instData.SerialNumber
+        FileInfo.VersionNumber = mXRawFileHeader.Revision
+        If TraceMode Then Call "Accessing mXRawFile.RunHeaderEx".__DEBUG_ECHO
+        Dim runData = mXRawFile.RunHeaderEx
+        FileInfo.MassResolution = runData.MassResolution
+        FileInfo.ScanStart = runData.FirstSpectrum
+        FileInfo.ScanEnd = runData.LastSpectrum
+        FileInfo.AcquisitionFilename = String.Empty
+
+        ' Note that the following are typically blank
+        FileInfo.AcquisitionDate = mXRawFileHeader.CreationDate.ToString(CultureInfo.InvariantCulture)
+        'mXRawFile.GetAcquisitionFileName(mFileInfo.AcquisitionFilename); // DEPRECATED
+        FileInfo.Comment1 = runData.Comment1
+        FileInfo.Comment2 = runData.Comment2
+        Dim sampleInfo = mXRawFile.SampleInformation
+        FileInfo.SampleName = sampleInfo.SampleName
+        FileInfo.SampleComment = sampleInfo.Comment
+
+        If Options.LoadMSTuneInfo Then
+            GetTuneData()
+        End If
+
+        Return True
     End Function
 
     Private Function GetActivationType(scan As Integer) As ActivationMethods
@@ -1525,7 +1533,7 @@ Public Class XRawFileIO : Implements IDisposable
     Private Sub GetTuneData()
         Dim numTuneData = mXRawFile.GetTuneDataCount()
 
-        For index = 0 To numTuneData - 1
+        For index As Integer = 0 To numTuneData - 1
             Dim tuneLabelCount = 0
             Dim tuneSettingNames As String() = Nothing
             Dim tuneSettingValues As String() = Nothing
@@ -1578,10 +1586,9 @@ Public Class XRawFileIO : Implements IDisposable
                 Continue For
             End If
 
-            Dim newTuneMethod = New TuneMethod()
-
+            Dim newTuneMethod As New TuneMethod()
             ' Step through the names and store in the .Setting() arrays
-            Dim tuneCategory = "General"
+            Dim tuneCategory$ = "General"
 
             For settingIndex = 0 To tuneLabelCount - 1
 
@@ -1614,14 +1621,22 @@ Public Class XRawFileIO : Implements IDisposable
     End Sub
 
     Private Sub LoadMethodInfo()
-        If TraceMode Then Call "Accessing mXRawFile.InstrumentMethodsCount".__DEBUG_ECHO
+        If TraceMode Then
+            Call "Accessing mXRawFile.InstrumentMethodsCount".__DEBUG_ECHO
+        End If
 
         Try
-            Dim methodCount = mXRawFile.InstrumentMethodsCount
-            If TraceMode Then Call String.Format("File has {0} methods", methodCount).__DEBUG_ECHO
+            Dim methodCount As Integer = mXRawFile.InstrumentMethodsCount
 
-            For methodIndex = 0 To methodCount - 1
-                If TraceMode Then Call ("Retrieving method from index " & methodIndex).__DEBUG_ECHO
+            If TraceMode Then
+                Call String.Format("File has {0} methods", methodCount).__DEBUG_ECHO
+            End If
+
+            For methodIndex As Integer = 0 To methodCount - 1
+                If TraceMode Then
+                    Call ("Retrieving method from index " & methodIndex).__DEBUG_ECHO
+                End If
+
                 Dim methodText = mXRawFile.GetInstrumentMethod(methodIndex)
 
                 If Not String.IsNullOrWhiteSpace(methodText) Then
@@ -1640,6 +1655,8 @@ Public Class XRawFileIO : Implements IDisposable
             RaiseWarningMessage("Consider instantiating the XRawFileIO class with a ThermoReaderOptions object that has LoadMSMethodInfo = false")
         End Try
     End Sub
+
+    Const defaultGenericScanFilterText = "MS"
 
     ''' <summary>
     ''' Remove scan-specific data from a scan filter string; primarily removes the parent ion m/z and the scan m/z range
@@ -1670,52 +1687,52 @@ Public Class XRawFileIO : Implements IDisposable
         ' + p NSI Q1MS [179.652-184.582, 505.778-510.708, 994.968-999.898]     + p NSI Q1MS
         ' + p NSI Q3MS [150.070-1500.000]                                      + p NSI Q3MS
         ' c NSI Full cnl 162.053 [300.000-1200.000]                            c NSI Full cnl
-
-        Const defaultGenericScanFilterText = "MS"
+        If String.IsNullOrWhiteSpace(filterText) Then
+            Return defaultGenericScanFilterText
+        End If
 
         Try
-
-            If String.IsNullOrWhiteSpace(filterText) Then
-                Return defaultGenericScanFilterText
-            End If
-
-            Dim genericScanFilterText As String
-
-            ' First look for and remove numbers between square brackets
-            Dim bracketIndex = filterText.IndexOf("["c)
-
-            If bracketIndex > 0 Then
-                genericScanFilterText = filterText.Substring(0, bracketIndex).TrimEnd(" "c)
-            Else
-                genericScanFilterText = filterText.TrimEnd(" "c)
-            End If
-
-            Dim fullCnlCharIndex = genericScanFilterText.IndexOf(MRM_FullNL_TEXT, StringComparison.OrdinalIgnoreCase)
-
-            If fullCnlCharIndex > 0 Then
-                ' MRM neutral loss
-                ' Remove any text after MRM_FullNL_TEXT
-                Return genericScanFilterText.Substring(0, fullCnlCharIndex + MRM_FullNL_TEXT.Length).Trim()
-            End If
-
-            ' Replace any digits before any @ sign with a 0
-            If genericScanFilterText.IndexOf("@"c) > 0 Then
-                Return LabelParser.mCollisionSpecs.Replace(genericScanFilterText, " 0@")
-            End If
-
-            ' No @ sign; look for text of the form "ms2 748.371"
-            Dim match = LabelParser.mMzWithoutCE.Match(genericScanFilterText)
-
-            If match.Success Then
-                Return genericScanFilterText.Substring(0, match.Groups(CStr("MzValue")).Index)
-            End If
-
-            Return genericScanFilterText
+            Return MakeGenericThermoScanFilterInternal(filterText)
         Catch __unusedException1__ As Exception
             ' Ignore errors
         End Try
 
         Return defaultGenericScanFilterText
+    End Function
+
+    Private Shared Function MakeGenericThermoScanFilterInternal(filterText As String) As String
+        Dim genericScanFilterText As String
+
+        ' First look for and remove numbers between square brackets
+        Dim bracketIndex = filterText.IndexOf("["c)
+
+        If bracketIndex > 0 Then
+            genericScanFilterText = filterText.Substring(0, bracketIndex).TrimEnd(" "c)
+        Else
+            genericScanFilterText = filterText.TrimEnd(" "c)
+        End If
+
+        Dim fullCnlCharIndex = genericScanFilterText.IndexOf(MRM_FullNL_TEXT, StringComparison.OrdinalIgnoreCase)
+
+        If fullCnlCharIndex > 0 Then
+            ' MRM neutral loss
+            ' Remove any text after MRM_FullNL_TEXT
+            Return genericScanFilterText.Substring(0, fullCnlCharIndex + MRM_FullNL_TEXT.Length).Trim()
+        End If
+
+        ' Replace any digits before any @ sign with a 0
+        If genericScanFilterText.IndexOf("@"c) > 0 Then
+            Return LabelParser.mCollisionSpecs.Replace(genericScanFilterText, " 0@")
+        End If
+
+        ' No @ sign; look for text of the form "ms2 748.371"
+        Dim match = LabelParser.mMzWithoutCE.Match(genericScanFilterText)
+
+        If match.Success Then
+            Return genericScanFilterText.Substring(0, match.Groups(CStr("MzValue")).Index)
+        End If
+
+        Return genericScanFilterText
     End Function
 
     Private Shared Function ScanIsFTMS(filterText As String) As Boolean
@@ -1748,7 +1765,7 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <returns>True if filterText contains a known MS scan type</returns>
     ''' <remarks>Returns false for MSn scans (like ms2 or ms3)</remarks>
     Public Shared Function ValidateMSScan(filterText As String, <Out> ByRef msLevel As Integer, <Out> ByRef simScan As Boolean, <Out> ByRef mrmScanType As MRMScanTypeConstants, <Out> ByRef zoomScan As Boolean) As Boolean
-        Dim ms1Tags As New List(Of String) From {
+        Static ms1Tags As New List(Of String) From {
             FULL_MS_TEXT,
             MS_ONLY_C_TEXT,
             MS_ONLY_P_TEXT,
@@ -1756,7 +1773,7 @@ Public Class XRawFileIO : Implements IDisposable
             FULL_PR_TEXT,
             FULL_LOCK_MS_TEXT
         }
-        Dim zoomTags As New List(Of String) From {
+        Static zoomTags As New List(Of String) From {
             MS_ONLY_Z_TEXT,
             MS_ONLY_PZ_TEXT,
             MS_ONLY_DZ_TEXT
@@ -1854,16 +1871,18 @@ Public Class XRawFileIO : Implements IDisposable
 
         Try
             Dim data = ReadScanData(scan, maxNumberOfPeaks, centroidData)
+
             dataCount = data.Masses.Length
 
             If dataCount <= 0 Then
                 mzList = New Double(-1) {}
                 intensityList = New Double(-1) {}
                 Return 0
+            Else
+                mzList = data.Masses
+                intensityList = data.Intensities
             End If
 
-            mzList = data.Masses
-            intensityList = data.Intensities
             Return dataCount
         Catch
             mzList = New Double(-1) {}
@@ -1921,12 +1940,12 @@ Public Class XRawFileIO : Implements IDisposable
             massIntensityPairs = New Double(1, dataCount - 1) {}
 
             ' 
-            ' // A more "black magic" version of doing the below array copy:
-            ' Buffer.BlockCopy(data.Masses, 0, massIntensityPairs, 0, dataCount * sizeof(double));
-            ' Buffer.BlockCopy(data.Intensities, 0, massIntensityPairs, dataCount * sizeof(double), dataCount * sizeof(double));
+            ' A more "black magic" version of doing the below array copy:
+            ' Buffer.BlockCopy(data.Masses, 0, massIntensityPairs, 0, dataCount * sizeof(double))
+            ' Buffer.BlockCopy(data.Intensities, 0, massIntensityPairs, dataCount * sizeof(double), dataCount * sizeof(double))
             ' 
 
-            For i = 0 To dataCount - 1
+            For i As Integer = 0 To dataCount - 1
                 ' m/z
                 massIntensityPairs(0, i) = data.Masses(i)
                 ' Intensity
@@ -1940,6 +1959,7 @@ Public Class XRawFileIO : Implements IDisposable
         End Try
 
         massIntensityPairs = New Double(-1, -1) {}
+
         Return 0
     End Function
 
@@ -2141,12 +2161,18 @@ Public Class XRawFileIO : Implements IDisposable
     ''' </remarks>
     Public Function GetMSLevel(scan As Integer) As Integer
         Try
-            If mXRawFile Is Nothing Then Return 0
+            If mXRawFile Is Nothing Then
+                Return 0
+            End If
 
             ' Make sure the MS controller is selected
-            If Not SetMSController() Then Return 0
+            If Not SetMSController() Then
+                Return 0
+            End If
+
             Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
             Dim msOrder = scanFilter.MSOrder
+
             Return CInt(msOrder)
         Catch ex As Exception
             Dim msg = "Unable to determine the MS Level for scan " & scan & ": " & ex.Message & "; possibly a corrupt .Raw file"
@@ -2163,13 +2189,13 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <returns>The number of data points, or -1 if an error</returns>
     ''' <remarks>This returns a subset of the data thatGetScanLabelData does, but with 2 additional fields.</remarks>
     Public Function GetScanPrecisionData(scan As Integer, <Out> ByRef massResolutionData As MassPrecisionInfoType()) As Integer
+        Dim scanInfo As SingleScanInfo = Nothing
+
         If scan < FileInfo.ScanStart Then
             scan = FileInfo.ScanStart
         ElseIf scan > FileInfo.ScanEnd Then
             scan = FileInfo.ScanEnd
         End If
-
-        Dim scanInfo As SingleScanInfo = Nothing
 
         If Not GetScanInfo(scan, scanInfo) Then
             Throw New Exception("Cannot retrieve ScanInfo from cache for scan " & scan & "; cannot retrieve scan data")
@@ -2201,8 +2227,7 @@ Public Class XRawFileIO : Implements IDisposable
                 Dim dataCount = results.Count
                 massResolutionData = New MassPrecisionInfoType(dataCount - 1) {}
 
-                For i = 0 To dataCount - 1
-
+                For i As Integer = 0 To dataCount - 1
                     Dim massPrecisionInfo As New MassPrecisionInfoType With {
                         .Intensity = results(i).Intensity,
                         .Mass = results(i).Mass,
@@ -2211,13 +2236,14 @@ Public Class XRawFileIO : Implements IDisposable
                         .Resolution = results(i).Resolution
                     }
 
-
                     massResolutionData(i) = massPrecisionInfo
                 Next
+
                 Return dataCount
             End If
 
             massResolutionData = New MassPrecisionInfoType(-1) {}
+
             Return 0
         Catch __unusedAccessViolationException1__ As AccessViolationException
             Dim msg = "Unable to load data for scan " & scan & "; possibly a corrupt .Raw file"
@@ -2247,7 +2273,7 @@ Public Class XRawFileIO : Implements IDisposable
             Try
                 ' Instantiate an instance of the BackgroundSubtractor to assure that file
                 ' ThermoFisher.CommonCore.BackgroundSubtraction.dll exists
-                Dim bgSub = New BackgroundSubtractor()
+                Dim bgSub As New BackgroundSubtractor()
                 Dim info = bgSub.ToString()
 
                 If String.IsNullOrWhiteSpace(info) Then
@@ -2291,7 +2317,9 @@ Public Class XRawFileIO : Implements IDisposable
             ' Without this, AverageScansInScanRange averages/sums all scans in the range, regardless of it being appropriate (i.e., it will sum MS1 and MS2 scans together)
             Dim filter = mXRawFile.GetFilterForScanNumber(scanFirst)
             Dim data = mXRawFile.AverageScansInScanRange(scanFirst, scanLast, filter)
+
             data.PreferCentroids = centroidData
+
             Dim masses = data.PreferredMasses
             Dim dataCount = If(maxNumberOfPeaks > 0, stdNum.Min(masses.Length, maxNumberOfPeaks), masses.Length)
 
@@ -2339,18 +2367,29 @@ Public Class XRawFileIO : Implements IDisposable
             If Not dataFile.Exists Then
                 RaiseErrorMessage(String.Format("File not found: {0}", filePath))
                 Return False
+            Else
+                ' Make sure any existing open files are closed
+                Call CloseRawFile()
             End If
 
-            ' Make sure any existing open files are closed
-            CloseRawFile()
             Me.mCachedScanInfo.Clear()
             Me.mCachedScans.Clear()
+
             RawFilePath = String.Empty
-            If TraceMode Then Call ("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName).__DEBUG_ECHO
+
+            If TraceMode Then
+                Call ("Initializing RawFileReaderAdapter.FileFactory for " & dataFile.FullName).__DEBUG_ECHO
+            End If
+
             mXRawFile = RawFileReaderAdapter.FileFactory(dataFile.FullName)
-            If TraceMode Then Call "Accessing mXRawFile.FileHeader".__DEBUG_ECHO
+
+            If TraceMode Then
+                Call "Accessing mXRawFile.FileHeader".__DEBUG_ECHO
+            End If
+
             mXRawFileHeader = mXRawFile.FileHeader
-            UpdateReaderOptions()
+
+            Call UpdateReaderOptions()
 
             If mXRawFile.IsError Then
                 Return False
@@ -2363,7 +2402,12 @@ Public Class XRawFileIO : Implements IDisposable
                 Return False
             End If
 
-            If FileInfo.ScanStart = 0 AndAlso FileInfo.ScanEnd = 0 AndAlso FileInfo.VersionNumber = 0 AndAlso stdNum.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso String.IsNullOrWhiteSpace(FileInfo.InstModel) Then
+            If FileInfo.ScanStart = 0 AndAlso
+               FileInfo.ScanEnd = 0 AndAlso
+               FileInfo.VersionNumber = 0 AndAlso
+               stdNum.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso
+               String.IsNullOrWhiteSpace(FileInfo.InstModel) Then
+
                 RaiseErrorMessage("File did not load correctly; ScanStart, ScanEnd, VersionNumber, and MassResolution are all 0 for " & RawFilePath)
                 FileInfo.CorruptFile = True
                 RawFilePath = String.Empty
@@ -2384,9 +2428,11 @@ Public Class XRawFileIO : Implements IDisposable
             Return False
         End If
 
-        For index = 0 To method1.Settings.Count - 1
+        For index As Integer = 0 To method1.Settings.Count - 1
+            If Not method1.Settings(CInt(index)).Category = method2.Settings(CInt(index)).Category OrElse
+               Not method1.Settings(CInt(index)).Name = method2.Settings(CInt(index)).Name OrElse
+               Not method1.Settings(CInt(index)).Value = method2.Settings(CInt(index)).Value Then
 
-            If Not method1.Settings(CInt(index)).Category = method2.Settings(CInt(index)).Category OrElse Not method1.Settings(CInt(index)).Name = method2.Settings(CInt(index)).Name OrElse Not method1.Settings(CInt(index)).Value = method2.Settings(CInt(index)).Value Then
                 ' Different segment data; the methods don't match
                 Return False
             End If
