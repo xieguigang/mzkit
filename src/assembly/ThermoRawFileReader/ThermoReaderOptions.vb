@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 ''' <summary>
 ''' Thermo reader options
 ''' </summary>
@@ -101,5 +103,9 @@ Public Class ThermoReaderOptions
     Public Property MaxScan As Integer = Short.MaxValue
 
 #End Region
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
 End Class
