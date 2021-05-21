@@ -460,7 +460,7 @@ Module Assembly
         End If
 
         If TypeOf raw Is mzPack Then
-            ms1.Add(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
+            ms1.AddRange(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
         Else
             Dim files As String() = REnv.asVector(Of String)(raw)
 
