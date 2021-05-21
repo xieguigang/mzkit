@@ -47,6 +47,7 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
@@ -445,7 +446,6 @@ Module Assembly
                                 Optional centroid As Object = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
-        Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
         Dim tolerance As Tolerance = Nothing
 
@@ -459,16 +459,22 @@ Module Assembly
             End With
         End If
 
-        For Each file As String In files
-            Select Case file.ExtensionSuffix.ToLower
-                Case "mzxml"
-                    ms1 += mzXMLMs1(file, tolerance).IteratesALL
-                Case "mzml"
-                    ms1 += mzMLMs1(file, tolerance).IteratesALL
-                Case Else
-                    Throw New NotImplementedException
-            End Select
-        Next
+        If TypeOf raw Is mzPack Then
+            ms1.Add(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
+        Else
+            Dim files As String() = REnv.asVector(Of String)(raw)
+
+            For Each file As String In files
+                Select Case file.ExtensionSuffix.ToLower
+                    Case "mzxml"
+                        ms1 += mzXMLMs1(file, tolerance).IteratesALL
+                    Case "mzml"
+                        ms1 += mzMLMs1(file, tolerance).IteratesALL
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+            Next
+        End If
 
         Return ms1.ToArray
     End Function

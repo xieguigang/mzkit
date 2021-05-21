@@ -72,6 +72,14 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("mzweb")>
 Module MzWeb
 
+    ''' <summary>
+    ''' load chromatogram data from the raw file data
+    ''' </summary>
+    ''' <param name="scans">
+    ''' the scan data object that reads from the mzXML/mzML/mzPack raw data file
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.chromatogram")>
     <RApiReturn(GetType(Chromatogram))>
     Public Function GetChromatogram(scans As pipeline, Optional env As Environment = Nothing) As Object
