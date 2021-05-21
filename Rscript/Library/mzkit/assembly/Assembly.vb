@@ -407,23 +407,38 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("polarity")>
     <RApiReturn(GetType(Integer))>
-    Public Function ionMode(scans As pipeline, Optional env As Environment = Nothing) As Object
+    Public Function ionMode(scans As Object, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
 
-        If scans.elementType Like GetType(mzXML.scan) Then
-            Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+        If TypeOf scans Is mzPack Then
+            Dim ms = DirectCast(scans, mzPack).MS
 
-            For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            For Each Ms1 As ScanMS1 In ms
+                For Each ms2 In Ms1.products
+                    polar.Add(ms2.polarity)
+                Next
             Next
-        ElseIf scans.elementType Like GetType(spectrum) Then
-            Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
 
-            For Each scanVal As spectrum In scans.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
-            Next
+        ElseIf TypeOf scans Is pipeline Then
+            Dim scanPip As pipeline = DirectCast(scans, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+
+                For Each scanVal As mzXML.scan In scanPip.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                Next
+            ElseIf scanPip.elementType Like GetType(spectrum) Then
+                Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
+
+                For Each scanVal As spectrum In scanPip.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                Next
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
         Else
-            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
         End If
 
         Return polar.ToArray
