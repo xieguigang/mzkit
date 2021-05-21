@@ -47,6 +47,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
@@ -476,35 +477,57 @@ Module Assembly
 
         If TypeOf raw Is mzPack Then
             ms1.AddRange(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
-        Else
+        ElseIf TypeOf raw Is vector OrElse TypeOf raw Is String() Then
             Dim files As String() = REnv.asVector(Of String)(raw)
 
             For Each file As String In files
                 Select Case file.ExtensionSuffix.ToLower
                     Case "mzxml"
-                        ms1 += mzXMLMs1(file, tolerance).IteratesALL
+                        ms1 += mzXMLMs1(file, tolerance)
                     Case "mzml"
-                        ms1 += mzMLMs1(file, tolerance).IteratesALL
+                        ms1 += mzMLMs1(file, tolerance)
                     Case Else
                         Throw New NotImplementedException
                 End Select
             Next
+        ElseIf TypeOf raw Is pipeline Then
+            Dim scanPip As pipeline = DirectCast(raw, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Call scanPip.populates(Of mzXML.scan)(env) _
+                    .mzXMLMs1(tolerance) _
+                    .IteratesALL _
+                    .DoCall(AddressOf ms1.AddRange)
+            ElseIf scanPip.elementType Like GetType(spectrum) Then
+                Call scanPip.populates(Of spectrum)(env) _
+                    .mzMLMs1(tolerance) _
+                    .IteratesALL _
+                    .DoCall(AddressOf ms1.AddRange)
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
         End If
 
         Return ms1.ToArray
     End Function
 
-    Private Iterator Function mzXMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
+    Private Function mzXMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan)
+        Return mzXMLMs1(mzXML.XML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return s.msLevel = 1
+                   End Function), centroid).IteratesALL
+    End Function
+
+    <Extension>
+    Private Iterator Function mzXMLMs1(scans As IEnumerable(Of mzXML.scan), centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzXMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As mzXML.scan In mzXML.XML _
-            .LoadScans(file) _
-            .Where(Function(s)
-                       Return s.msLevel = 1
-                   End Function)
-
+        For Each scan As mzXML.scan In scans
             ' ms1的数据总是使用raw intensity值
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
@@ -525,17 +548,23 @@ Module Assembly
         Next
     End Function
 
-    Private Iterator Function mzMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
+    Private Function mzMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan)
+        Dim reader As New mzMLScan
+
+        Return mzMLMs1(indexedmzML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return reader.GetMsLevel(s) = 1
+                   End Function), centroid).IteratesALL
+    End Function
+
+    <Extension>
+    Private Iterator Function mzMLMs1(scans As IEnumerable(Of spectrum), centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As spectrum In indexedmzML _
-            .LoadScans(file) _
-            .Where(Function(s)
-                       Return reader.GetMsLevel(s) = 1
-                   End Function)
-
+        For Each scan As spectrum In scans
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
 
