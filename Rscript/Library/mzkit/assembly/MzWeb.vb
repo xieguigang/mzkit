@@ -72,15 +72,31 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("mzweb")>
 Module MzWeb
 
+    ''' <summary>
+    ''' load chromatogram data from the raw file data
+    ''' </summary>
+    ''' <param name="scans">
+    ''' the scan data object that reads from the mzXML/mzML/mzPack raw data file
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.chromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function GetChromatogram(scans As pipeline, Optional env As Environment = Nothing) As Object
-        If scans.elementType Like GetType(mzXML.scan) Then
-            Return Chromatogram.GetChromatogram(scans.populates(Of scan)(env))
-        ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Return Chromatogram.GetChromatogram(scans.populates(Of mzML.spectrum)(env))
+    Public Function GetChromatogram(scans As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf scans Is mzPack Then
+            Return DirectCast(scans, mzPack).GetChromatogram
+        ElseIf Not TypeOf scans Is pipeline Then
+            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
         Else
-            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+            Dim scanPip As pipeline = DirectCast(scans, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Return Chromatogram.GetChromatogram(scanPip.populates(Of scan)(env))
+            ElseIf scanPip.elementType Like GetType(mzML.spectrum) Then
+                Return Chromatogram.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
         End If
     End Function
 
@@ -180,7 +196,9 @@ Module MzWeb
         If file.ExtensionSuffix("mzXML", "mzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
         ElseIf file.ExtensionSuffix("raw") Then
-            Return New MSFileReader(file).LoadFromXRaw
+            Using msRaw As New MSFileReader(file)
+                Return msRaw.LoadFromXRaw
+            End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return mzPack.ReadAll(file:=stream)

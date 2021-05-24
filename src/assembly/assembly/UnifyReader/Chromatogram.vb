@@ -98,6 +98,12 @@ Namespace DataReader
             }
         End Function
 
+        ''' <summary>
+        ''' returns a tuple chromatogram data [BPC/TIC]
+        ''' </summary>
+        ''' <typeparam name="Scan"></typeparam>
+        ''' <param name="scans"></param>
+        ''' <returns></returns>
         Public Shared Function GetChromatogram(Of Scan)(scans As IEnumerable(Of Scan)) As Chromatogram
             Dim scan_time As New List(Of Double)
             Dim tic As New List(Of Double)

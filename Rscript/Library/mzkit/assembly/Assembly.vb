@@ -47,6 +47,8 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
@@ -406,23 +408,38 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("polarity")>
     <RApiReturn(GetType(Integer))>
-    Public Function ionMode(scans As pipeline, Optional env As Environment = Nothing) As Object
+    Public Function ionMode(scans As Object, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
 
-        If scans.elementType Like GetType(mzXML.scan) Then
-            Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+        If TypeOf scans Is mzPack Then
+            Dim ms = DirectCast(scans, mzPack).MS
 
-            For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            For Each Ms1 As ScanMS1 In ms
+                For Each ms2 In Ms1.products
+                    polar.Add(ms2.polarity)
+                Next
             Next
-        ElseIf scans.elementType Like GetType(spectrum) Then
-            Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
 
-            For Each scanVal As spectrum In scans.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
-            Next
+        ElseIf TypeOf scans Is pipeline Then
+            Dim scanPip As pipeline = DirectCast(scans, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+
+                For Each scanVal As mzXML.scan In scanPip.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                Next
+            ElseIf scanPip.elementType Like GetType(spectrum) Then
+                Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
+
+                For Each scanVal As spectrum In scanPip.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                Next
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
         Else
-            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
         End If
 
         Return polar.ToArray
@@ -445,7 +462,6 @@ Module Assembly
                                 Optional centroid As Object = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
-        Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
         Dim tolerance As Tolerance = Nothing
 
@@ -459,31 +475,59 @@ Module Assembly
             End With
         End If
 
-        For Each file As String In files
-            Select Case file.ExtensionSuffix.ToLower
-                Case "mzxml"
-                    ms1 += mzXMLMs1(file, tolerance).IteratesALL
-                Case "mzml"
-                    ms1 += mzMLMs1(file, tolerance).IteratesALL
-                Case Else
-                    Throw New NotImplementedException
-            End Select
-        Next
+        If TypeOf raw Is mzPack Then
+            ms1.AddRange(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
+        ElseIf TypeOf raw Is vector OrElse TypeOf raw Is String() Then
+            Dim files As String() = REnv.asVector(Of String)(raw)
+
+            For Each file As String In files
+                Select Case file.ExtensionSuffix.ToLower
+                    Case "mzxml"
+                        ms1 += mzXMLMs1(file, tolerance)
+                    Case "mzml"
+                        ms1 += mzMLMs1(file, tolerance)
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+            Next
+        ElseIf TypeOf raw Is pipeline Then
+            Dim scanPip As pipeline = DirectCast(raw, pipeline)
+
+            If scanPip.elementType Like GetType(mzXML.scan) Then
+                Call scanPip.populates(Of mzXML.scan)(env) _
+                    .mzXMLMs1(tolerance) _
+                    .IteratesALL _
+                    .DoCall(AddressOf ms1.AddRange)
+            ElseIf scanPip.elementType Like GetType(spectrum) Then
+                Call scanPip.populates(Of spectrum)(env) _
+                    .mzMLMs1(tolerance) _
+                    .IteratesALL _
+                    .DoCall(AddressOf ms1.AddRange)
+            Else
+                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+            End If
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
+        End If
 
         Return ms1.ToArray
     End Function
 
-    Private Iterator Function mzXMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
+    Private Function mzXMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan)
+        Return mzXMLMs1(mzXML.XML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return s.msLevel = 1
+                   End Function), centroid).IteratesALL
+    End Function
+
+    <Extension>
+    Private Iterator Function mzXMLMs1(scans As IEnumerable(Of mzXML.scan), centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzXMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As mzXML.scan In mzXML.XML _
-            .LoadScans(file) _
-            .Where(Function(s)
-                       Return s.msLevel = 1
-                   End Function)
-
+        For Each scan As mzXML.scan In scans
             ' ms1的数据总是使用raw intensity值
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
@@ -504,17 +548,23 @@ Module Assembly
         Next
     End Function
 
-    Private Iterator Function mzMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
+    Private Function mzMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan)
+        Dim reader As New mzMLScan
+
+        Return mzMLMs1(indexedmzML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return reader.GetMsLevel(s) = 1
+                   End Function), centroid).IteratesALL
+    End Function
+
+    <Extension>
+    Private Iterator Function mzMLMs1(scans As IEnumerable(Of spectrum), centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As spectrum In indexedmzML _
-            .LoadScans(file) _
-            .Where(Function(s)
-                       Return reader.GetMsLevel(s) = 1
-                   End Function)
-
+        For Each scan As spectrum In scans
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
 
