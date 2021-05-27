@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports stdNum = System.Math
 
 Public Module MSIRawPack
@@ -32,10 +34,31 @@ Public Module MSIRawPack
                        Dim y As Integer = stdNum.Floor(n / pixels.Width)
                        Dim x As Integer = n - y * pixels.Width
 
-                       Return $"[MS1][Scan_{scan.ScanNumber}][x:{x}, y:{y}] {scan.FilterText}"
+                       Return $"[MS1][Scan_{scan.ScanNumber}][{x},{y}] {scan.FilterText}"
                    Else
                        Return $"[MSn][Scan_{scan.ScanNumber}] {scan.FilterText}"
                    End If
                End Function
+    End Function
+
+    <Extension>
+    Public Function ExactPixelTable(mzpack As mzPack) As DataSet()
+        Dim mz As New Dictionary(Of String, DataSet)
+
+        For Each scan As ScanMS1 In mzpack.MS
+            Dim pixel As String = scan.scan_id.Match("\[\d+,\d+\]")
+
+            For i As Integer = 0 To scan.mz.Length - 1
+                Dim mzi As String = scan.mz(i).ToString("F4")
+
+                If Not mz.ContainsKey(mzi) Then
+                    mz.Add(mzi, New DataSet With {.ID = mzi})
+                End If
+
+                mz(mzi)(pixel) = stdNum.Max(mz(mzi)(pixel), scan.into(i))
+            Next
+        Next
+
+        Return mz.Values.ToArray
     End Function
 End Module

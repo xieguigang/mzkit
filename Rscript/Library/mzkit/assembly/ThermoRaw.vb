@@ -3,11 +3,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
-Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
 <Package("ThermoRaw")>
 Module ThermoRaw
@@ -29,11 +30,11 @@ Module ThermoRaw
     End Function
 
     <ExportAPI("events")>
-    Public Function events(scan As SingleScanInfo) As dataframe
+    Public Function events(scan As SingleScanInfo) As rDataframe
         Dim key As Array = scan.ScanEvents.Select(Function(evt) evt.Key).ToArray
         Dim evts As Array = scan.ScanEvents.Select(Function(evt) evt.Value).ToArray
 
-        Return New dataframe With {
+        Return New rDataframe With {
             .columns = New Dictionary(Of String, Array) From {
                 {"event", key},
                 {"data", evts}
@@ -42,11 +43,11 @@ Module ThermoRaw
     End Function
 
     <ExportAPI("logs")>
-    Public Function logs(scan As SingleScanInfo) As dataframe
+    Public Function logs(scan As SingleScanInfo) As rDataframe
         Dim key As Array = scan.StatusLog.Select(Function(evt) evt.Key).ToArray
         Dim evts As Array = scan.StatusLog.Select(Function(evt) evt.Value).ToArray
 
-        Return New dataframe With {
+        Return New rDataframe With {
             .columns = New Dictionary(Of String, Array) From {
                 {"log", key},
                 {"text", evts}
@@ -64,5 +65,10 @@ Module ThermoRaw
         End If
 
         Return raw.LoadFromXMSIRaw(pixels:=size)
+    End Function
+
+    <ExportAPI("MSI_pixels")>
+    Public Function MSIPixels(mzpack As mzPack) As DataSet()
+        Return mzpack.ExactPixelTable
     End Function
 End Module

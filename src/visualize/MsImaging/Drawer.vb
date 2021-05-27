@@ -95,7 +95,9 @@ Public Class Drawer : Implements IDisposable
     ''' <returns></returns>
     Public Function LoadMzArray(ppm As Double) As Double()
         Dim mzlist = pixels _
-            .Select(Function(p) Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))) _
+            .Select(Function(p)
+                        Return Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))
+                    End Function) _
             .IteratesALL _
             .Distinct _
             .ToArray
@@ -114,7 +116,9 @@ Public Class Drawer : Implements IDisposable
         For Each point As ScanData In Me.pixels
             Dim msScan As ms2() = ibd.GetMSMS(point)
             Dim into As NamedCollection(Of ms2)() = msScan _
-                .Where(Function(mzi) mz.Any(Function(dmz) tolerance(mzi.mz, dmz))) _
+                .Where(Function(mzi)
+                           Return mz.Any(Function(dmz) tolerance(mzi.mz, dmz))
+                       End Function) _
                 .GroupBy(Function(a) a.mz, tolerance) _
                 .ToArray
 
