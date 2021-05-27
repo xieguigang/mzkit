@@ -20,7 +20,7 @@ Public Module MSIRawPack
         Dim pack As mzPack = loader.StreamTo
 
         If pixels.Width * pixels.Height <> pack.MS.Length Then
-            Call $"Data inconsistent: image pixels number is not equals to scan numbers!".Warning
+            Call $"Data inconsistent: image pixels number ({pixels.Width * pixels.Height}) is not equals to scan numbers ({pack.MS.Length})!".Warning
         End If
 
         Return pack
