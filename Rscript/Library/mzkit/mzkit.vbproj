@@ -381,6 +381,7 @@
     <Compile Include="assembly\ERS.vb" />
     <Compile Include="assembly\data.vb" />
     <Compile Include="assembly\Chromatogram.vb" />
+    <Compile Include="assembly\ThermoRaw.vb" />
     <Compile Include="assembly\MzWeb.vb" />
     <Compile Include="math\TestFormulaSymbolLang.vb" />
     <Compile Include="zzz.vb" />

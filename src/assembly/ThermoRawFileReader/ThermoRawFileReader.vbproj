@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LabelParser.vb" />
+    <Compile Include="Utils.vb" />
     <Compile Include="SimpleScanAccessTruncated.vb" />
     <Compile Include="DataObjects\MassPrecisionInfoType.vb" />
     <Compile Include="DataObjects\ParentIonInfoType.vb" />
