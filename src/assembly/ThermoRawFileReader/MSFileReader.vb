@@ -10,6 +10,12 @@ Public Class MSFileReader : Implements IDisposable
     Public Property ScanMin As Integer
     Public Property ScanMax As Integer
 
+    Public ReadOnly Property Options As ThermoReaderOptions
+        Get
+            Return mRawFileReader.Options
+        End Get
+    End Property
+
     ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>

@@ -16,6 +16,7 @@ Public Class XRawStream
 
     Sub New(raw As MSFileReader, Optional scanIdFunc As Func(Of SingleScanInfo, Integer, String) = Nothing)
         Me.raw = raw
+        Me.raw.Options.MaxScan = raw.ScanMax
         Me.scanIdFunc = scanIdFunc Or defaultId()
     End Sub
 
