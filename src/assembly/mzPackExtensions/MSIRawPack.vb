@@ -19,6 +19,10 @@ Public Module MSIRawPack
         Dim loader As New XRawStream(raw, PixelScanId(pixels))
         Dim pack As mzPack = loader.StreamTo
 
+        If pixels.Width * pixels.Height <> pack.MS.Length Then
+            Call $"Data inconsistent: image pixels number is not equals to scan numbers!".Warning
+        End If
+
         Return pack
     End Function
 
