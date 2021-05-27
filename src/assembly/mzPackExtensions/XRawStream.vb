@@ -26,8 +26,8 @@ Public Class XRawStream
             End Function)
     End Function
 
-    Public Function StreamTo() As mzPack
-        For Each scan As RawLabelData In raw.GetLabelData
+    Public Function StreamTo(Optional skipEmptyScan As Boolean = True) As mzPack
+        For Each scan As RawLabelData In raw.GetLabelData(skipEmptyScan)
             Call WalkScan(scan)
         Next
 

@@ -59,7 +59,7 @@ Public Class MSFileReader : Implements IDisposable
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS) as an enumerable list
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function GetLabelData() As IEnumerable(Of RawLabelData)
+    Public Iterator Function GetLabelData(Optional skipEmptyScan As Boolean = True) As IEnumerable(Of RawLabelData)
         Dim options As ThermoReaderOptions = InitReader()
         Dim rt As Double = Nothing
 
@@ -72,13 +72,17 @@ Public Class MSFileReader : Implements IDisposable
             ' Console.WriteLine("PrecisionInfoCount: " + precisionInfo.Length);
 
             If data Is Nothing Then
-                Continue For
+                If skipEmptyScan Then
+                    Continue For
+                Else
+                    data = {}
+                End If
             End If
 
-            Dim maxInt = data.Max(Function(x) x.Intensity)
+            Dim maxInt As Double = data.Max(Function(x) x.Intensity)
 
             ' Check for the maximum intensity being zero
-            If stdNum.Abs(maxInt) < Single.Epsilon Then
+            If skipEmptyScan AndAlso (stdNum.Abs(maxInt) < Single.Epsilon) Then
                 Continue For
             End If
 
@@ -92,7 +96,7 @@ Public Class MSFileReader : Implements IDisposable
                        End Function) _
                 .ToList()
 
-            If dataFiltered.Count = 0 Then
+            If skipEmptyScan AndAlso dataFiltered.Count = 0 Then
                 Continue For
             Else
                 mRawFileReader.GetRetentionTime(i, rt)
