@@ -1,5 +1,9 @@
 ﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math
 
 Public MustInherit Class PixelReader : Implements IDisposable
 
@@ -9,7 +13,59 @@ Public MustInherit Class PixelReader : Implements IDisposable
 
     Protected MustOverride Sub release()
 
-    Public MustOverride Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+    Protected MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
+
+    Private Iterator Function FindMatchedPixels(mz As Double(), tolerance As Tolerance) As IEnumerable(Of PixelScan)
+        For Each pixel As PixelScan In AllPixels()
+            If pixel.HasAnyMzIon(mz, tolerance) Then
+                Yield pixel
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' load pixels data for match a given list of m/z ions with tolerance
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="skipZero"></param>
+    ''' <returns></returns>
+    Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+        Dim pixel As PixelData
+
+        For Each point As PixelScan In FindMatchedPixels(mz, tolerance)
+            Dim msScan As ms2() = point.GetMs
+            Dim into As NamedCollection(Of ms2)() = msScan _
+                .Where(Function(mzi)
+                           Return mz.Any(Function(dmz) tolerance(mzi.mz, dmz))
+                       End Function) _
+                .GroupBy(Function(a) a.mz, tolerance) _
+                .ToArray
+
+            Call Application.DoEvents()
+
+            If skipZero AndAlso into.Length = 0 Then
+                Continue For
+            Else
+                For Each mzi As NamedCollection(Of ms2) In into
+                    pixel = New PixelData With {
+                        .x = point.X,
+                        .y = point.Y,
+                        .mz = Val(mzi.name),
+                        .intensity = Aggregate x In mzi Into Max(x.intensity)
+                    }
+
+                    Yield pixel
+                Next
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' load all ions m/z in the raw data file
+    ''' </summary>
+    ''' <param name="ppm"></param>
+    ''' <returns></returns>
     Public MustOverride Function LoadMzArray(ppm As Double) As Double()
 
     Protected Overridable Sub Dispose(disposing As Boolean)

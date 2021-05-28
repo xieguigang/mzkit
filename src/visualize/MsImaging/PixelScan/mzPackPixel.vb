@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -20,6 +21,12 @@ Public Class mzPackPixel : Inherits PixelScan
     ReadOnly scan As ScanMS1
     ReadOnly pixel As Point
 
+    Public ReadOnly Property mz As Double()
+        Get
+            Return scan.mz
+        End Get
+    End Property
+
     Sub New(scan As ScanMS1)
         Me.scan = scan
         Me.pixel = Casting.PointParser(scan.scan_id.Match("\[\d+,\d+\]").GetStackValue("[", "]"))
@@ -27,5 +34,12 @@ Public Class mzPackPixel : Inherits PixelScan
 
     Public Overrides Function GetMs() As ms2()
         Return scan.GetMs.ToArray
+    End Function
+
+    Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
+        Return mz _
+            .Any(Function(mzi)
+                     Return scan.mz.Any(Function(zzz) tolerance(zzz, mzi))
+                 End Function)
     End Function
 End Class

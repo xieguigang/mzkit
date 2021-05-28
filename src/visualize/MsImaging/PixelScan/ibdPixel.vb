@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Public Class ibdPixel : Inherits PixelScan
@@ -25,5 +26,18 @@ Public Class ibdPixel : Inherits PixelScan
 
     Public Overrides Function GetMs() As ms2()
         Return raw.GetMSMS(i)
+    End Function
+
+    Public Function ReadMz() As Double()
+        Return raw.ReadArray(i.MzPtr)
+    End Function
+
+    Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
+        Dim mzlist As Double() = raw.ReadArray(i.MzPtr)
+
+        Return mz _
+            .Any(Function(mzi)
+                     Return mzlist.Any(Function(zzz) tolerance(zzz, mzi))
+                 End Function)
     End Function
 End Class
