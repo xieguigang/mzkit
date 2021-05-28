@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports Microsoft.VisualBasic.Language
@@ -28,15 +29,32 @@ Public Class XRawStream
     End Function
 
     Public Function StreamTo(Optional skipEmptyScan As Boolean = True) As mzPack
+        Dim scan_times As New List(Of Double)
+        Dim TIC As New List(Of Double)
+        Dim BPC As New List(Of Double)
+
         For Each scan As RawLabelData In raw.GetLabelData(skipEmptyScan)
             Call WalkScan(scan)
+
+            If scan.MsLevel = 1 Then
+                Dim scaninfo As SingleScanInfo = raw.GetScanInfo(scan.ScanNumber)
+
+                scan_times += scan.ScanTime * 60
+                TIC += scaninfo.TotalIonCurrent
+                BPC += scaninfo.BasePeakIntensity
+            End If
         Next
 
         MS1.products = MS2.PopAll
         MSscans += MS1
 
         Return New mzPack With {
-            .MS = MSscans.PopAll
+            .MS = MSscans.PopAll,
+            .Chromatogram = New Chromatogram With {
+                .BPC = BPC.PopAll,
+                .TIC = TIC.PopAll,
+                .scan_time = scan_times.PopAll
+            }
         }
     End Function
 

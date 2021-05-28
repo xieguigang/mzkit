@@ -213,7 +213,7 @@ Module Visual
     ''' plot raw scatter matrix based on a given sequence of ms1 scans data
     ''' </summary>
     ''' <param name="ms1_scans">
-    ''' a sequence of ms1 scan data.
+    ''' a sequence of ms1 scan data or a mzpack data object.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -225,14 +225,24 @@ Module Visual
                                    Optional contour As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
         Dim schema As String = InteropArgumentHelper.getColorSet(colorSet)
+        Dim matrix As ms1_scan()
 
-        If points.isError Then
-            Return points.getError
+        If TypeOf ms1_scans Is mzPack Then
+            matrix = DirectCast(ms1_scans, mzPack) _
+                .GetAllScanMs1 _
+                .ToArray
+        Else
+            Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+
+            If points.isError Then
+                Return points.getError
+            Else
+                matrix = points _
+                    .populates(Of ms1_scan)(env) _
+                    .ToArray
+            End If
         End If
-
-        Dim matrix As ms1_scan() = points.populates(Of ms1_scan)(env).ToArray
 
         If contour Then
             ' contour
