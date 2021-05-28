@@ -205,6 +205,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reader\ReadRawPack.vb" />
+    <Compile Include="Reader\ReadIbd.vb" />
+    <Compile Include="Reader\PixelReader.vb" />
     <Compile Include="PixelScan\mzPackPixel.vb" />
     <Compile Include="PixelScan\ibdPixel.vb" />
     <Compile Include="PixelScan\PixelScan.vb" />

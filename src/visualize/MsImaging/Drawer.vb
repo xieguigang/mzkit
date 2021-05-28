@@ -1,66 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::9ca112abf8edd8b301badaf61568927b, src\visualize\MsImaging\Drawer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Drawer
-    ' 
-    '     Properties: dimension, ibd, UUID
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, LoadMzArray, LoadPixels, RenderPixels
-    '               ScalePixels
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Class Drawer
+' 
+'     Properties: dimension, ibd, UUID
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, LoadMzArray, LoadPixels, RenderPixels
+'               ScalePixels
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Application = Microsoft.VisualBasic.Parallel
 
 ''' <summary>
 ''' MS-imaging render canvas
@@ -68,78 +64,23 @@ Imports Application = Microsoft.VisualBasic.Parallel
 Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
-    Dim pixels As ScanData()
+    Dim pixelReader As PixelReader
 
-    Public ReadOnly Property ibd As ibdReader
     Public ReadOnly Property dimension As Size
-
-    Public ReadOnly Property UUID As String
         Get
-            Return ibd.UUID
+            Return pixelReader.dimension
         End Get
     End Property
 
-    Sub New(imzML As String)
-        ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
-        pixels = XML.LoadScans(file:=imzML).ToArray
-        dimension = New Size With {
-            .Width = pixels.Select(Function(p) p.x).Max,
-            .Height = pixels.Select(Function(p) p.y).Max
-        }
+    Sub New(file As String)
+        If file.ExtensionSuffix("imzML") Then
+            pixelReader = New ReadIbd(imzML:=file)
+        ElseIf file.ExtensionSuffix("mzpack") Then
+            pixelReader = New ReadRawPack(mzpack:=file)
+        Else
+            Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
+        End If
     End Sub
-
-    ''' <summary>
-    ''' load all ions m/z in the raw data file
-    ''' </summary>
-    ''' <param name="ppm"></param>
-    ''' <returns></returns>
-    Public Function LoadMzArray(ppm As Double) As Double()
-        Dim mzlist = pixels _
-            .Select(Function(p)
-                        Return Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))
-                    End Function) _
-            .IteratesALL _
-            .Distinct _
-            .ToArray
-        Dim groups = mzlist _
-            .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
-            .Select(Function(mz) Val(mz.name)) _
-            .OrderBy(Function(mzi) mzi) _
-            .ToArray
-
-        Return groups
-    End Function
-
-    Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
-        Dim pixel As PixelData
-
-        For Each point As ScanData In Me.pixels
-            Dim msScan As ms2() = ibd.GetMSMS(point)
-            Dim into As NamedCollection(Of ms2)() = msScan _
-                .Where(Function(mzi)
-                           Return mz.Any(Function(dmz) tolerance(mzi.mz, dmz))
-                       End Function) _
-                .GroupBy(Function(a) a.mz, tolerance) _
-                .ToArray
-
-            Call Application.DoEvents()
-
-            If skipZero AndAlso into.Length = 0 Then
-                Continue For
-            Else
-                For Each mzi As NamedCollection(Of ms2) In into
-                    pixel = New PixelData With {
-                        .x = point.x,
-                        .y = point.y,
-                        .mz = Val(mzi.name),
-                        .intensity = Aggregate x In mzi Into Max(x.intensity)
-                    }
-
-                    Yield pixel
-                Next
-            End If
-        Next
-    End Function
 
     ''' <summary>
     ''' 
@@ -209,7 +150,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
-        Dim pixels As PixelData() = LoadPixels({mz}, tolerance).ToArray
+        Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
@@ -267,7 +208,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
-        rawPixels = LoadPixels(mz, tolerance).ToArray
+        rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
         rawPixels = ScalePixels(rawPixels, tolerance)
 
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
@@ -283,7 +224,7 @@ Public Class Drawer : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
-                Call ibd.Dispose()
+                Call pixelReader.Dispose()
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
