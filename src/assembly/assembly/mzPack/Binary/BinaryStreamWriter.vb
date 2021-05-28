@@ -58,6 +58,8 @@ Namespace mzData.mzWebCache
         Dim scanIndex As New Dictionary(Of String, Long)
         ''' <summary>
         ''' a cache list of the meta data for each scan ms1
+        ''' 
+        ''' [scan_id, metadata]
         ''' </summary>
         Dim scanMetaData As New Dictionary(Of String, Dictionary(Of String, String))
 
@@ -75,7 +77,12 @@ Namespace mzData.mzWebCache
         Sub New(file As Stream)
             Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
+            ' 4 numeric placeholder for
+            ' mzmin, mzmax, rtmin, rtmax
+            ' see writeIndex function
             Me.file.Write(New Double() {0, 0, 0, 0})
+            ' this zero is the placeholder for
+            ' the position of indexPos
             Me.file.Write(0&)
             Me.file.ByteOrder = ByteOrder.LittleEndian
             Me.file.Flush()
@@ -97,6 +104,13 @@ Namespace mzData.mzWebCache
 
             ' add index data
             Call scanIndex.Add(scan.scan_id, start&)
+
+            If Not scan.meta.IsNullOrEmpty Then
+                Call scanMetaData.Add(
+                    key:=scan.scan_id,
+                    value:=scan.meta
+                )
+            End If
 
             ' write MS1 scan information
             ' this first zero int32 is a 
@@ -184,9 +198,12 @@ Namespace mzData.mzWebCache
                 Call file.Write(entry.Value)
                 Call file.Write(entry.Key, BinaryStringFormat.ZeroTerminated)
             Next
+
+            Call writeMetaData()
         End Sub
 
         Protected Sub writeMetaData()
+            Call file.Write(scanMetaData.Count)
 
         End Sub
 
