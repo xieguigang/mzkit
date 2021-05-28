@@ -209,6 +209,10 @@ Namespace mzData.mzWebCache
             ms1.mz = mz
             ms1.into = into
 
+            If metadata.ContainsKey(ms1.scan_id) Then
+                ms1.meta = metadata(ms1.scan_id)
+            End If
+
             Return ms1
         End Function
 
