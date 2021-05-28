@@ -50,6 +50,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
@@ -67,6 +68,7 @@ Public Class Drawer : Implements IDisposable
     Dim pixelReader As PixelReader
 
     Public ReadOnly Property dimension As Size
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return pixelReader.dimension
         End Get
@@ -81,6 +83,11 @@ Public Class Drawer : Implements IDisposable
             Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
         End If
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+        Return pixelReader.LoadPixels(mz, tolerance, skipZero)
+    End Function
 
     ''' <summary>
     ''' 

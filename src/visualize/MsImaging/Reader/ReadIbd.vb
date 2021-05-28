@@ -58,6 +58,6 @@ Public Class ReadIbd : Inherits PixelReader
     End Sub
 
     Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)
-        Return pixels.Select(Function(p) DirectCast(p, PixelData))
+        Return pixels.Select(Function(p) DirectCast(p, PixelScan))
     End Function
 End Class

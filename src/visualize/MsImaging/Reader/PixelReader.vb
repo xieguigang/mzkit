@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
 
+''' <summary>
+''' a unify raw data reader for MSI render
+''' </summary>
 Public MustInherit Class PixelReader : Implements IDisposable
 
     Private disposedValue As Boolean
