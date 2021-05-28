@@ -6,58 +6,61 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Application = Microsoft.VisualBasic.Parallel
 
-Public Class ReadIbd : Inherits PixelReader
+Namespace Reader
 
-    Dim pixels As ibdPixel()
+    Public Class ReadIbd : Inherits PixelReader
 
-    Public ReadOnly Property ibd As ibdReader
+        Dim pixels As ibdPixel()
 
-    Public ReadOnly Property UUID As String
-        Get
-            Return ibd.UUID
-        End Get
-    End Property
+        Public ReadOnly Property ibd As ibdReader
 
-    Public Overrides ReadOnly Property dimension As Size
+        Public ReadOnly Property UUID As String
+            Get
+                Return ibd.UUID
+            End Get
+        End Property
 
-    Sub New(imzML As String)
-        ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
-        pixels = XML.LoadScans(file:=imzML) _
-            .Select(Function(p) New ibdPixel(ibd, p)) _
-            .ToArray
-        dimension = New Size With {
-            .Width = pixels.Select(Function(p) p.x).Max,
-            .Height = pixels.Select(Function(p) p.y).Max
-        }
-    End Sub
+        Public Overrides ReadOnly Property dimension As Size
 
-    ''' <summary>
-    ''' load all ions m/z in the raw data file
-    ''' </summary>
-    ''' <param name="ppm"></param>
-    ''' <returns></returns>
-    Public Overrides Function LoadMzArray(ppm As Double) As Double()
-        Dim mzlist = pixels _
-            .Select(Function(p)
-                        Return Application.DoEvents(Function() p.ReadMz)
-                    End Function) _
-            .IteratesALL _
-            .Distinct _
-            .ToArray
-        Dim groups = mzlist _
-            .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
-            .Select(Function(mz) Val(mz.name)) _
-            .OrderBy(Function(mzi) mzi) _
-            .ToArray
+        Sub New(imzML As String)
+            ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
+            pixels = XML.LoadScans(file:=imzML) _
+                .Select(Function(p) New ibdPixel(ibd, p)) _
+                .ToArray
+            dimension = New Size With {
+                .Width = pixels.Select(Function(p) p.x).Max,
+                .Height = pixels.Select(Function(p) p.y).Max
+            }
+        End Sub
 
-        Return groups
-    End Function
+        ''' <summary>
+        ''' load all ions m/z in the raw data file
+        ''' </summary>
+        ''' <param name="ppm"></param>
+        ''' <returns></returns>
+        Public Overrides Function LoadMzArray(ppm As Double) As Double()
+            Dim mzlist = pixels _
+                .Select(Function(p)
+                            Return Application.DoEvents(Function() p.ReadMz)
+                        End Function) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+            Dim groups = mzlist _
+                .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
+                .Select(Function(mz) Val(mz.name)) _
+                .OrderBy(Function(mzi) mzi) _
+                .ToArray
 
-    Protected Overrides Sub release()
-        Call ibd.Dispose()
-    End Sub
+            Return groups
+        End Function
 
-    Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)
-        Return pixels.Select(Function(p) DirectCast(p, PixelScan))
-    End Function
-End Class
+        Protected Overrides Sub release()
+            Call ibd.Dispose()
+        End Sub
+
+        Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)
+            Return pixels.Select(Function(p) DirectCast(p, PixelScan))
+        End Function
+    End Class
+End Namespace
