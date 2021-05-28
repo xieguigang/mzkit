@@ -6,6 +6,11 @@ Namespace DataReader
 
     Public Module ChromatogramBuffer
 
+        ''' <summary>
+        ''' get data buffer of a <see cref="Chromatogram"/> data object.
+        ''' </summary>
+        ''' <param name="chr"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetBytes(chr As Chromatogram) As Byte()
             Using buffer As New MemoryStream, bin As New BinaryDataWriter(buffer) With {

@@ -46,6 +46,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
@@ -65,6 +66,7 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
     ''' </summary>
     Dim thumbnail As String
     Dim scannerIndex As New Dictionary(Of String, Long)
+    Dim chromatogram As Chromatogram
     Dim worktemp As String = TempFileSystem.GetAppSysTempFile("_mzpackwriter", App.PID.ToHexString, prefix:="other_scanners")
 
     Public Sub New(file As String)
@@ -90,6 +92,10 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
         End Using
 
         scanners(key) = file
+    End Sub
+
+    Public Sub SetChromatogram(chr As Chromatogram)
+        chromatogram = chr
     End Sub
 
     Private Sub writeScanners()
@@ -128,8 +134,27 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
         Call file.Flush()
     End Sub
 
+    Private Sub writeChromatogram()
+        If Not chromatogram Is Nothing Then
+            ' marker flag
+            Call file.Write(0&)
+
+            ' int32 length与byte size这两个数据之间是可以相互校验的
+            ' int32 length of the scan data points
+            Call file.Write(chromatogram.length)
+            ' byte size
+            Call file.Write(ChromatogramBuffer.MeasureSize(chromatogram))
+            Call file.Write(chromatogram.GetBytes)
+            Call file.Flush()
+        End If
+    End Sub
+
     ''' <summary>
     ''' ``[image_chunk][startOffset]``
+    ''' 
+    ''' 因为缩略图的起始位置的数据是从文件末尾开始计算的
+    ''' 所以缩略图不会受到格式变化的影响
+    ''' 缩略图的数据块之前可以添加任意数据而无需理会缩略图数据块区域
     ''' </summary>
     Private Sub writeThumbnail()
         Dim start As Long = file.Position
@@ -153,6 +178,7 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
 
         Call writeScanners()
         Call writeScannerIndex()
+        Call writeChromatogram()
         Call writeThumbnail()
     End Sub
 End Class
