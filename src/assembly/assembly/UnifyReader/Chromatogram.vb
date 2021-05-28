@@ -68,6 +68,10 @@ Namespace DataReader
         ''' <returns></returns>
         Public Property BPC As Double()
 
+        ''' <summary>
+        ''' the length of <see cref="scan_time"/> data points.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property length As Integer
             Get
                 Return scan_time.Length
