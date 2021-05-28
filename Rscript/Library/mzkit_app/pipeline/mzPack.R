@@ -4,7 +4,7 @@ require(mzkit);
 #' author: xieguigang
 #'
 #' description: A commandline script for convert raw data files to 
-#'    mzpack data files in batch.
+#' mzpack data files in batch.
 #'    
 
 [@info "A directory path that contains the raw data files that needs to be convert."]
