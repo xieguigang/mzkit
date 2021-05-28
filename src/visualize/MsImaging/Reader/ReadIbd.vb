@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Application = Microsoft.VisualBasic.Parallel
@@ -28,8 +29,8 @@ Namespace Reader
                 .Select(Function(p) New ibdPixel(ibd, p)) _
                 .ToArray
             dimension = New Size With {
-                .Width = pixels.Select(Function(p) p.x).Max,
-                .Height = pixels.Select(Function(p) p.y).Max
+                .Width = pixels.Select(Function(p) p.X).Max,
+                .Height = pixels.Select(Function(p) p.Y).Max
             }
         End Sub
 
