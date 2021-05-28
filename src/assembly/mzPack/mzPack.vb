@@ -46,6 +46,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -63,6 +64,12 @@ Public Class mzPack
     ''' <returns></returns>
     Public Property Thumbnail As Image
     Public Property MS As ScanMS1()
+
+    ''' <summary>
+    ''' TIC/BPC
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Chromatogram As Chromatogram
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描

@@ -56,6 +56,11 @@ Namespace mzData.mzWebCache
 
         Dim disposedValue As Boolean
         Dim scanIndex As New Dictionary(Of String, Long)
+        ''' <summary>
+        ''' a cache list of the meta data for each scan ms1
+        ''' </summary>
+        Dim scanMetaData As New Dictionary(Of String, Dictionary(Of String, String))
+
         Dim mzmin As Double = Integer.MaxValue
         Dim mzmax As Double = Integer.MinValue
         Dim rtmin As Double = Integer.MaxValue
@@ -90,8 +95,13 @@ Namespace mzData.mzWebCache
                 rtmax = scan.rt
             End If
 
+            ' add index data
             Call scanIndex.Add(scan.scan_id, start&)
 
+            ' write MS1 scan information
+            ' this first zero int32 is a 
+            ' placeholder for indicate the byte size
+            ' of this ms1 data region
             Call file.Write(0)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.rt)
@@ -174,6 +184,10 @@ Namespace mzData.mzWebCache
                 Call file.Write(entry.Value)
                 Call file.Write(entry.Key, BinaryStringFormat.ZeroTerminated)
             Next
+        End Sub
+
+        Protected Sub writeMetaData()
+
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)

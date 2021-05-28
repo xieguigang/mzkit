@@ -58,6 +58,13 @@ Namespace mzData.mzWebCache
         Public Property BPC As Double
         Public Property products As ScanMS2()
 
+        ''' <summary>
+        ''' other meta data about this MS1 scan, likes
+        ''' the [x,y] coordinate data of MSI scan data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property meta As Dictionary(Of String, String)
+
         Public Iterator Function GetMs1Scans() As IEnumerable(Of ms1_scan)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms1_scan With {
