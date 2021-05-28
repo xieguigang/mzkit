@@ -1,4 +1,4 @@
-require(mzkit);
+# require(mzkit);
 
 #' title: convert raw files to mzpack 
 #' author: xieguigang
