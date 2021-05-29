@@ -137,7 +137,7 @@ Namespace Formula
                 .Distinct _
                 .ToDictionary(Function(e) e,
                               Function(e)
-                                  Return a.CountsByElement.TryGetValue(e) + b.CountsByElement.TryGetValue(e)
+                                  Return a(e) + b(e)
                               End Function)
 
             Return New Formula(newComposition)
