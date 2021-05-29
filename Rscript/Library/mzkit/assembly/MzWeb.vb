@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
@@ -58,6 +59,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -204,6 +207,16 @@ Module MzWeb
                 Return mzPack.ReadAll(file:=stream)
             End Using
         End If
+    End Function
+
+    <ExportAPI("setThumbnail")>
+    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
+        If TypeOf thumb Is GraphicsData Then
+            thumb = DirectCast(thumb, GraphicsData).AsGDIImage
+        End If
+
+        mzpack.Thumbnail = DirectCast(thumb, Image)
+        Return mzpack
     End Function
 
     <ExportAPI("ms1_scans")>

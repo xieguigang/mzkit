@@ -548,6 +548,7 @@
     <Compile Include="UnifyReader\Chromatogram.vb" />
     <Compile Include="UnifyReader\FileFormats\imzMLScan.vb" />
     <Compile Include="UnifyReader\IDataReader.vb" />
+    <Compile Include="UnifyReader\ChromatogramBuffer.vb" />
     <Compile Include="UnifyReader\Provider.vb" />
     <Compile Include="UnifyReader\FileFormats\mzMLScan.vb" />
     <Compile Include="UnifyReader\FileFormats\mzXMLScan.vb" />

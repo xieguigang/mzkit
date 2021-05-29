@@ -205,6 +205,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reader\ReadRawPack.vb" />
+    <Compile Include="Reader\ReadIbd.vb" />
+    <Compile Include="Reader\PixelReader.vb" />
+    <Compile Include="PixelScan\mzPackPixel.vb" />
+    <Compile Include="PixelScan\ibdPixel.vb" />
+    <Compile Include="PixelScan\PixelScan.vb" />
     <Compile Include="PixelData.vb" />
     <Compile Include="Drawer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -233,6 +239,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Designer.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -271,6 +278,10 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
+      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
+      <Name>mzPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>

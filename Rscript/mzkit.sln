@@ -209,6 +209,7 @@ Global
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		Library\mzkit.interop\mzkit.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{7a42d5a0-8058-459c-a139-195b6022a710}*SharedItemsImports = 4
 		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{7a42d5a0-8058-459c-a139-195b6022a710}*SharedItemsImports = 4
 		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{c295c3af-3e62-4756-966a-3d0b90ded160}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
@@ -13735,8 +13736,8 @@ Global
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|Any CPU.Build.0 = Debug|Any CPU
-		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x64.ActiveCfg = Debug|x64
-		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x64.Build.0 = Debug|x64
+		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x64.ActiveCfg = mzkit|x64
+		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x64.Build.0 = mzkit|x64
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x86.ActiveCfg = Debug|Any CPU
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.mzkit|x86.Build.0 = Debug|Any CPU
 		{F81BDCFE-0B16-4F69-A161-52D7D5575C38}.node-debug|Any CPU.ActiveCfg = Debug|Any CPU

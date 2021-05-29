@@ -10,6 +10,12 @@ Public Class MSFileReader : Implements IDisposable
     Public Property ScanMin As Integer
     Public Property ScanMax As Integer
 
+    Public ReadOnly Property Options As ThermoReaderOptions
+        Get
+            Return mRawFileReader.Options
+        End Get
+    End Property
+
     ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>
@@ -19,8 +25,9 @@ Public Class MSFileReader : Implements IDisposable
             readerOptions = New ThermoReaderOptions
         End If
 
+        filePath = filePath.GetFullPath
         mRawFileReader = New XRawFileIO(readerOptions)
-        mRawFileReader.OpenRawFile(filePath.GetFullPath)
+        mRawFileReader.OpenRawFile(filePath)
         ScanMin = 1
         ScanMax = mRawFileReader.GetNumScans()
     End Sub
@@ -59,7 +66,7 @@ Public Class MSFileReader : Implements IDisposable
     ''' Get the LabelData (if FTMS) or PeakData (if not FTMS) as an enumerable list
     ''' </summary>
     ''' <returns></returns>
-    Public Iterator Function GetLabelData() As IEnumerable(Of RawLabelData)
+    Public Iterator Function GetLabelData(Optional skipEmptyScan As Boolean = True) As IEnumerable(Of RawLabelData)
         Dim options As ThermoReaderOptions = InitReader()
         Dim rt As Double = Nothing
 
@@ -72,13 +79,17 @@ Public Class MSFileReader : Implements IDisposable
             ' Console.WriteLine("PrecisionInfoCount: " + precisionInfo.Length);
 
             If data Is Nothing Then
-                Continue For
+                If skipEmptyScan Then
+                    Continue For
+                Else
+                    data = {}
+                End If
             End If
 
-            Dim maxInt = data.Max(Function(x) x.Intensity)
+            Dim maxInt As Double = data.Max(Function(x) x.Intensity)
 
             ' Check for the maximum intensity being zero
-            If stdNum.Abs(maxInt) < Single.Epsilon Then
+            If skipEmptyScan AndAlso (stdNum.Abs(maxInt) < Single.Epsilon) Then
                 Continue For
             End If
 
@@ -92,7 +103,7 @@ Public Class MSFileReader : Implements IDisposable
                        End Function) _
                 .ToList()
 
-            If dataFiltered.Count = 0 Then
+            If skipEmptyScan AndAlso dataFiltered.Count = 0 Then
                 Continue For
             Else
                 mRawFileReader.GetRetentionTime(i, rt)
@@ -102,7 +113,8 @@ Public Class MSFileReader : Implements IDisposable
                 .ScanNumber = i,
                 .ScanTime = rt,
                 .MSData = dataFiltered,
-                .MaxIntensity = maxInt
+                .MaxIntensity = maxInt,
+                .MsLevel = scanInfo.MSLevel
             }
         Next
     End Function
