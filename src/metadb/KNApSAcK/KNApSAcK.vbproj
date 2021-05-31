@@ -172,6 +172,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chemoinformatics\Chemoinformatics.vbproj">
+      <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
+      <Name>Chemoinformatics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
