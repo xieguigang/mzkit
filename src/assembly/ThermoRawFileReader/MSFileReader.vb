@@ -25,8 +25,9 @@ Public Class MSFileReader : Implements IDisposable
             readerOptions = New ThermoReaderOptions
         End If
 
+        filePath = filePath.GetFullPath
         mRawFileReader = New XRawFileIO(readerOptions)
-        mRawFileReader.OpenRawFile(filePath.GetFullPath)
+        mRawFileReader.OpenRawFile(filePath)
         ScanMin = 1
         ScanMax = mRawFileReader.GetNumScans()
     End Sub
@@ -112,7 +113,8 @@ Public Class MSFileReader : Implements IDisposable
                 .ScanNumber = i,
                 .ScanTime = rt,
                 .MSData = dataFiltered,
-                .MaxIntensity = maxInt
+                .MaxIntensity = maxInt,
+                .MsLevel = scanInfo.MSLevel
             }
         Next
     End Function

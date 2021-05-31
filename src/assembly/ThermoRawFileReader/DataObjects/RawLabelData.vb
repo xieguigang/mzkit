@@ -11,6 +11,8 @@
         ''' </summary>
         Public Property ScanTime As Double
 
+        Public Property MsLevel As Integer
+
         ''' <summary>
         ''' Label data (if FTMS), otherwise peak data
         ''' </summary>
