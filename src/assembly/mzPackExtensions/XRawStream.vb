@@ -74,7 +74,7 @@ Public Class XRawStream
                 .BPC = scanInfo.BasePeakIntensity,
                 .into = into,
                 .mz = mz,
-                .rt = scanInfo.RetentionTime,
+                .rt = scanInfo.RetentionTime * 60,
                 .scan_id = scanId,
                 .TIC = scanInfo.TotalIonCurrent
             }
@@ -87,7 +87,7 @@ Public Class XRawStream
                 .intensity = scanInfo.TotalIonCurrent,
                 .parentMz = scanInfo.ParentIonMZ,
                 .scan_id = scanId,
-                .rt = scanInfo.RetentionTime,
+                .rt = scanInfo.RetentionTime * 60,
                 .polarity = scanInfo.IonMode,
                 .mz = mz,
                 .into = into
