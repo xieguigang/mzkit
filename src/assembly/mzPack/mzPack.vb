@@ -154,7 +154,8 @@ Public Class mzPack
             Return New mzPack With {
                 .Thumbnail = mzpack.GetThumbnail,
                 .MS = allMSscans,
-                .Scanners = scanners
+                .Scanners = scanners,
+                .Chromatogram = mzpack.chromatogram
             }
         End Using
     End Function
@@ -169,6 +170,7 @@ Public Class mzPack
                 Call mzpack.AddOtherScanner(scanner.Key, scanner.Value)
             Next
 
+            Call mzpack.SetChromatogram(Chromatogram)
             Call mzpack.SetThumbnail(Thumbnail)
         End Using
 
