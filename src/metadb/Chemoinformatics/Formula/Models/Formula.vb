@@ -88,6 +88,13 @@ Namespace Formula
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="counts">
+        ''' constructor will make a value copy of this element composition vector.
+        ''' </param>
+        ''' <param name="formula"></param>
         Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
             CountsByElement = New Dictionary(Of String, Integer)(counts)
 

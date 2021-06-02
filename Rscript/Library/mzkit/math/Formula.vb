@@ -173,6 +173,8 @@ Module FormulaTools
 
     <ExportAPI("removeElement")>
     Public Function removeElement(formula As Formula, element As String) As Formula
+        formula = New Formula(formula.CountsByElement, formula.EmpiricalFormula)
+
         If formula.CountsByElement.ContainsKey(element) Then
             formula.CountsByElement.Remove(element)
         End If
