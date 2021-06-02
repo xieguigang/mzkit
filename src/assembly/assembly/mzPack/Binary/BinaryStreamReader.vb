@@ -144,11 +144,6 @@ Namespace mzData.mzWebCache
                     index(scanId) = scanPos
                 Next
 
-                MSscannerIndex = New BufferRegion With {
-                    .position = start,
-                    .size = file.Position - start
-                }
-
                 ' read meta data after index data
                 If file.Position + 20 <= file.Length AndAlso file.ReadInt64 = 0 Then
                     Dim byteSize As Long = file.ReadInt64
@@ -163,6 +158,11 @@ Namespace mzData.mzWebCache
                         Next
                     End If
                 End If
+
+                MSscannerIndex = New BufferRegion With {
+                    .position = start,
+                    .size = file.Position - start
+                }
             End Using
         End Sub
 

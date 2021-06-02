@@ -121,7 +121,7 @@ Public Class mzPackReader : Inherits BinaryStreamReader
             file.Seek(file.ReadInt64, SeekOrigin.Begin)
 
             indexOffset = file.Position
-            nsize = file.ReadInt32
+            nsize = file.ReadInt32 ' read int32 count
 
             For i As Integer = 0 To nsize - 1
                 scanPos = file.ReadInt64
