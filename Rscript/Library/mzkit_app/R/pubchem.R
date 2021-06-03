@@ -37,8 +37,14 @@ const parsePubchemMeta as function(document) {
     |> graphquery::query(pugView_query)
     ;
     const data  = lapply(json$Data, function(sec) sec$rawHtml, names = i -> i$name);
-    const names = data$"Names and Identifiers"; 
-    
+    const names = data$"Names and Identifiers" 
+    |> lapply(function(html) {
+        Html::parse(html)
+        |> graphquery::query(section_data)
+        ;
+    })
+    ;
+
     str(names);
 
     NULL;
