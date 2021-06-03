@@ -1,5 +1,6 @@
 imports "pubchem_kit" from "mzkit";
 imports "Html" from "webKit";
+imports "graphquery" from "webKit";
 
 require(REnv);
 
@@ -32,6 +33,7 @@ const pubchem_meta as function(term) {
 const parsePubchemMeta as function(document) {
     const pugView_query = ["graphquery/pubchem.graphquery"]
     |> system.file(package = "mzkit")
+    |> readText
     |> graphquery::parseQuery
     ;
     const json = document

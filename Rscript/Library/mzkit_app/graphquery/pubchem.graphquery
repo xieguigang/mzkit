@@ -1,0 +1,6 @@
+canonical css("Record") {
+
+    CID        xpath("//Record/RecordNumber") | text()
+    CommonName xpath("//Record/RecordTitle")  | text()
+
+}
