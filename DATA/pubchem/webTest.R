@@ -2,4 +2,4 @@
 
 options(pubchem.http_cache = `${dirname(@script)}/.pubchem`);
 
-print(pubchem_meta(1259312-93-0));
+print(pubchem_meta("56-65-5"));

@@ -1,5 +1,5 @@
 imports "pubchem_kit" from "mzkit";
-imports "" from "webKit";
+imports "Html" from "webKit";
 
 const pubchem_meta as function(term) {
     const cache = getOption("pubchem.http_cache") || stop("the 'pubchem.http_cache' location is not set!");
@@ -12,7 +12,7 @@ const pubchem_meta as function(term) {
         print(`no cid was found for metabolite term: '${term}'...`);
         NULL;
     } else {
-        print(`found ${length(cid)} mapping to term: '{term}'!`);
+        print(`found ${length(cid)} mapping to term: '${term}'!`);
 
         cid
         |> lapply(function(id) {
