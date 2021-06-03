@@ -7,6 +7,7 @@ Section {
         id    css("ReferenceNumber")
         name  css("Name")
         url   css("URL")
+        about css("Description")
 
         # value of the information may be variant in data types
         # select multiple value type tags with css list 
