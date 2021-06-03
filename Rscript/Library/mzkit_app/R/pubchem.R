@@ -32,7 +32,7 @@ const pubchem_meta as function(term) {
 
 const parsePubchemMeta as function(document) {
     const pugView_query = getQuery("pubchem.graphquery");
-    const section_data  = getQuery("section.graphquery");
+    const section_data  = getQuery("section_data.graphquery");
     const json = document
     |> graphquery::query(pugView_query)
     ;
