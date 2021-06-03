@@ -185,10 +185,14 @@ Module PubChemToolKit
 
     <ExportAPI("SID_map")>
     Public Function ReadSIDMap(sidMapText As String, Optional skipNoCID As Boolean = True, Optional dbfilter$ = Nothing) As SIDMap()
-        Dim ls As SIDMap() = SIDMap.GetMaps(handle:=sidMapText, skipNoCID:=skipNoCID).ToArray
+        Dim ls As SIDMap() = SIDMap _
+            .GetMaps(handle:=sidMapText, skipNoCID:=skipNoCID) _
+            .ToArray
 
         If Not dbfilter.StringEmpty Then
-            ls = ls.Where(Function(map) map.sourceName = dbfilter).ToArray
+            ls = ls _
+                .Where(Function(map) map.sourceName = dbfilter) _
+                .ToArray
         End If
 
         Return ls
