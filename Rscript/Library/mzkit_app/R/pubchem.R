@@ -54,6 +54,8 @@ const parsePubchemMeta as function(document) {
     print(descriptors);
     print(xref);
 
+    str(json);
+
     NULL;
 }
 
