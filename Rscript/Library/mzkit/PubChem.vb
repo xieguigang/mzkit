@@ -127,6 +127,11 @@ Module PubChemToolKit
         Return Query.QueryCID(name, cache, offlineMode:=offline, hitCache:=Nothing)
     End Function
 
+    <ExportAPI("pubchem_url")>
+    Public Function pubchemUrl(cid As String) As String
+        Return WebQuery.pugViewApi(cid)
+    End Function
+
     ''' <summary>
     ''' query of the pubchem database
     ''' </summary>

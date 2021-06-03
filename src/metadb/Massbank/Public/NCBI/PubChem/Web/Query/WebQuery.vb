@@ -145,7 +145,7 @@ Namespace NCBI.PubChem
             End If
         End Function
 
-        Private Shared Function pugViewApi(cid As String) As String
+        Public Shared Function pugViewApi(cid As String) As String
             Return fetchPugView.Replace("%s", cid)
         End Function
     End Class
