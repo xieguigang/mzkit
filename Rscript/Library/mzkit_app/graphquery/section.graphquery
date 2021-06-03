@@ -1,0 +1,17 @@
+Section {
+
+    name  css("TOCHeading")
+    about css("Description")
+
+    data css("Information") [{
+        id    css("ReferenceNumber")
+        url   css("URL")
+
+        # value of the information may be variant in data types
+        # select multiple value type tags with css list 
+        # selector 
+        value css("Value") | css("String,Number,Boolean") [
+            text()
+        ]
+    }]
+}

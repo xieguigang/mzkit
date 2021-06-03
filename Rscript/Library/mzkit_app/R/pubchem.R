@@ -31,14 +31,25 @@ const pubchem_meta as function(term) {
 }
 
 const parsePubchemMeta as function(document) {
-    const pugView_query = ["graphquery/pubchem.graphquery"]
-    |> system.file(package = "mzkit")
-    |> readText
-    |> graphquery::parseQuery
-    ;
+    const pugView_query = getQuery("pubchem.graphquery");
+    const section_data  = getQuery("section.graphquery");
     const json = document
     |> graphquery::query(pugView_query)
     ;
 
-    str(json);
+    str(lapply(json$Data[[1]]$rawHtml, function(html) {
+        Html::parse(html)
+        |> graphquery::query(section_data)
+        ;
+    }));
+
+    NULL;
+}
+
+const getQuery as function(fileName) {
+    `graphquery/${fileName}`
+    |> system.file(package = "mzkit")
+    |> readText
+    |> graphquery::parseQuery
+    ;
 }
