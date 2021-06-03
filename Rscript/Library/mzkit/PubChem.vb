@@ -116,6 +116,18 @@ Module PubChemToolKit
     End Function
 
     ''' <summary>
+    ''' query cid from pubchem database
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="cache$"></param>
+    ''' <param name="offline"></param>
+    ''' <returns></returns>
+    <ExportAPI("CID")>
+    Public Function CID(name As String, Optional cache$ = "./.pubchem", Optional offline As Boolean = False) As String()
+        Return Query.QueryCID(name, cache, offlineMode:=offline, hitCache:=Nothing)
+    End Function
+
+    ''' <summary>
     ''' query of the pubchem database
     ''' </summary>
     ''' <param name="id"></param>

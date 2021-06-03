@@ -84,7 +84,11 @@ Namespace NCBI.PubChem
         ''' <param name="name"></param>
         ''' <param name="cacheFolder$"></param>
         ''' <returns></returns>
-        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offlineMode As Boolean = False, Optional ByRef hitCache As Boolean = False) As String()
+        Public Function QueryCID(name As String,
+                                 Optional cacheFolder$ = "./pubchem_cache",
+                                 Optional offlineMode As Boolean = False,
+                                 Optional ByRef hitCache As Boolean = False) As String()
+
             Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".GetQueryHandler(Of CIDQuery)(offline:=offlineMode)
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json", hitCache:=hitCache)
             Dim CID As String() = Nothing
