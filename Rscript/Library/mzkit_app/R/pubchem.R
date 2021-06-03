@@ -52,10 +52,15 @@ const parsePubchemMeta as function(document) {
 }
 
 const parseNames as function(names) {
-    names = lapply(names, x -> x$data, names = x -> x$name);
+    names = lapply(names$dataList, x -> x$data, names = x -> x$name);
+    
     names$"Removed Synonyms" = NULL;
-
-    str(names);
+    names
+    |> sapply(v -> sapply(v, x -> x$value))
+    |> unlist
+    |> unique
+    |> orderBy(x -> nchar(x))
+    ;
 }
 
 const getQuery as function(fileName) {
