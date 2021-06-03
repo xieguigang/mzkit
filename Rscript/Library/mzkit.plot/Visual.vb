@@ -81,6 +81,7 @@ Module Visual
         Call Internal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
+        Call Internal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
         Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
     End Sub
 
@@ -151,6 +152,27 @@ Module Visual
                 axisTickFont:=axisTickCex,
                 showLegends:=showLegends
             )
+    End Function
+
+    ''' <summary>
+    ''' plot single TIC
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
+        Dim chr As Chromatogram = x.Chromatogram
+
+        If chr Is Nothing Then
+            chr = New Chromatogram With {
+                .scan_time = x.MS.Select(Function(a) a.rt).ToArray,
+                .BPC = x.MS.Select(Function(a) a.BPC).ToArray,
+                .TIC = x.MS.Select(Function(a) a.TIC).ToArray
+            }
+        End If
+
+        Return plotChromatogram(chr, args, env)
     End Function
 
     ''' <summary>
