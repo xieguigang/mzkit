@@ -45,10 +45,41 @@ const parsePubchemMeta as function(document) {
     })
     |> lapply(x -> x, names = x -> x$name)
     ;
-    const names = parseNames(identifiers$"Synonyms");
+    const names       = parseNames(identifiers$"Synonyms");
+    const formula     = getDataValues(identifiers$"Molecular Formula");
+    const descriptors = parseDescriptors(identifiers$"Computed Descriptors"); 
+    const xref        = parseXref(json$Reference);   
 
+    print(formula);
+    print(descriptors);
+    print(xref);
 
     NULL;
+}
+
+const parseXref as function(refs) {
+    refs = data.frame(
+        id      = refs |> sapply(x -> x$id),
+        dbName  = refs |> sapply(x -> x$database),
+        xref    = refs |> sapply(x -> x$xref),
+        synonym = refs |> sapply(x -> x$synonym),
+        guid    = refs |> sapply(x -> x$guid),
+        url     = refs |> sapply(x -> x$url)
+    );
+    refs = refs[order(refs[, "dbName"]), ];
+    refs;
+} 
+
+const parseDescriptors as function(descriptors) {
+    descriptors$dataList
+    |> lapply(getDataValues, names = x -> x$name)
+    ;
+}
+
+#' get values in section$data
+#' 
+const getDataValues as function(section) {
+    sapply(section$data, x -> x$value);
 }
 
 const parseNames as function(names) {
