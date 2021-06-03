@@ -1,6 +1,8 @@
 imports "pubchem_kit" from "mzkit";
 imports "Html" from "webKit";
 
+require(REnv);
+
 const pubchem_meta as function(term) {
     const cache = getOption("pubchem.http_cache") || stop("the 'pubchem.http_cache' location is not set!");
     const sleep = getOption("http.sleep") || 3;
@@ -28,5 +30,5 @@ const pubchem_meta as function(term) {
 }
 
 const parsePubchemMeta as function(document) {
-
+    print(document);
 }
