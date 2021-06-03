@@ -6,7 +6,7 @@ const pubchem_meta as function(term) {
     const sleep = getOption("http.sleep") || 3;
     const cid   = pubchem_kit::CID(term, cache);
 
-    option(http.cache_dir = cache);
+    options(http.cache_dir = cache);
 
     if (length(cid) == 0) {
         print(`no cid was found for metabolite term: '${term}'...`);

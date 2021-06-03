@@ -83,7 +83,16 @@ Namespace NCBI.PubChem
                        Optional cache As String = Nothing,
                        Optional interval As Integer = -1,
                        Optional offline As Boolean = False)
-            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, AddressOf prefix, cache, interval, offline)
+
+            Call MyBase.New(
+                AddressOf queryApi,
+                AddressOf normalizeFileName,
+                AddressOf loadQueryJson,
+                AddressOf prefix,
+                cache,
+                interval,
+                offline
+            )
         End Sub
 
         ''' <summary>
