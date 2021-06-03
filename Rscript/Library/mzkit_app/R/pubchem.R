@@ -37,17 +37,25 @@ const parsePubchemMeta as function(document) {
     |> graphquery::query(pugView_query)
     ;
     const data  = lapply(json$Data, function(sec) sec$rawHtml, names = i -> i$name);
-    const names = data$"Names and Identifiers" 
+    const identifiers = data$"Names and Identifiers" 
     |> lapply(function(html) {
         Html::parse(html)
         |> graphquery::query(section_data)
         ;
     })
+    |> lapply(x -> x, names = x -> x$name)
     ;
+    const names = parseNames(identifiers$"Synonyms");
 
-    str(names);
 
     NULL;
+}
+
+const parseNames as function(names) {
+    names = lapply(names, x -> x$data, names = x -> x$name);
+    names$"Removed Synonyms" = NULL;
+
+    str(names);
 }
 
 const getQuery as function(fileName) {
