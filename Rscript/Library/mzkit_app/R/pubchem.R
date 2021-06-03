@@ -30,5 +30,13 @@ const pubchem_meta as function(term) {
 }
 
 const parsePubchemMeta as function(document) {
-    print(document);
+    const pugView_query = ["graphquery/pubchem.graphquery"]
+    |> system.file(package = "mzkit")
+    |> graphquery::parseQuery
+    ;
+    const json = document
+    |> graphquery::query(pugView_query)
+    ;
+
+    str(json);
 }
