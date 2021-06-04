@@ -50,11 +50,15 @@ const parsePubchemMeta as function(document) {
     const descriptors = parseDescriptors(identifiers$"Computed Descriptors"); 
     const xref        = parseXref(json$Reference);   
 
-    print(formula);
-    print(descriptors);
-    print(xref);
+    # print(formula);
+    # print(descriptors);
+    # print(xref);
 
-    NULL;
+    # str(json);
+
+    list(
+        CID = json$CID
+    );
 }
 
 const parseXref as function(refs) {
