@@ -527,7 +527,7 @@ Module Assembly
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As mzXML.scan In scans
+        For Each scan As mzXML.scan In From item In scans Where Not reader.IsEmpty(item)
             ' ms1的数据总是使用raw intensity值
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
@@ -564,7 +564,7 @@ Module Assembly
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As spectrum In scans
+        For Each scan As spectrum In From item In scans Where Not reader.IsEmpty(item)
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
 

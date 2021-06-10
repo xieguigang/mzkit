@@ -166,6 +166,22 @@ Module FormulaTools
 
 #Region "formula operators"
 
+    <ExportAPI("getElementCount")>
+    Public Function getElementCount(formula As Formula, element As String) As Integer
+        Return formula(element)
+    End Function
+
+    <ExportAPI("removeElement")>
+    Public Function removeElement(formula As Formula, element As String) As Formula
+        formula = New Formula(formula.CountsByElement, formula.EmpiricalFormula)
+
+        If formula.CountsByElement.ContainsKey(element) Then
+            formula.CountsByElement.Remove(element)
+        End If
+
+        Return formula
+    End Function
+
     <ROperator("+")>
     Public Function add(part1 As Formula, part2 As Formula) As Formula
         Return part1 + part2

@@ -1,0 +1,24 @@
+canonical css("Record") {
+
+    CID        xpath("/RecordNumber") | text()
+    CommonName xpath("/RecordTitle")  | text()
+
+    Data css("Section") [{
+        name    css("TOCHeading")
+        about   css("Description")
+        rawHtml css("Section") [
+            html()
+        ]
+    }]
+
+    # database cross reference data
+    Reference css("Reference") [{
+        id       css("ReferenceNumber")
+        database css("SourceName")
+        xref     css("SourceID")
+        synonym  css("Name")
+        guid     css("ANID")
+        url      css("URL")
+    }]
+
+}

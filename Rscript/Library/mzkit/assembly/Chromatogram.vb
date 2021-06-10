@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::44893f2354315c43ffd6edbff0889a4a, Rscript\Library\mzkit\assembly\Chromatogram.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ChromatogramTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: addOverlaps, overlaps, overlapsSummary, ReadData, scaleScanTime
-    '               setLabels, subset
-    ' 
-    '     Sub: PackData
-    ' 
-    ' /********************************************************************************/
+' Module ChromatogramTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: addOverlaps, overlaps, overlapsSummary, ReadData, scaleScanTime
+'               setLabels, subset
+' 
+'     Sub: PackData
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -80,6 +81,28 @@ Module ChromatogramTools
         Next
 
         Return text.ToString
+    End Function
+
+    <ExportAPI("as.chromatogram")>
+    <RApiReturn(GetType(Chromatogram))>
+    Public Function asChromatogram(<RRawVectorArgument> XIC As Object, Optional env As Environment = Nothing) As Object
+        Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(XIC, env)
+
+        If ms1.isError Then
+            Return ms1.getError
+        End If
+
+        Dim scan As ms1_scan() = ms1 _
+            .populates(Of ms1_scan)(env) _
+            .OrderBy(Function(ti) ti.scan_time) _
+            .ToArray
+        Dim chr As New Chromatogram With {
+            .scan_time = scan.Select(Function(ti) ti.scan_time).ToArray,
+            .TIC = scan.Select(Function(ti) ti.intensity).ToArray,
+            .BPC = .TIC
+        }
+
+        Return chr
     End Function
 
     <ExportAPI("add")>
