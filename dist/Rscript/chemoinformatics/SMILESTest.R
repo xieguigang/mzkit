@@ -28,4 +28,4 @@ echo("C=C-C-C=C-C-O", "6-hydroxy-1,4-hexadiene CH2=CH-CH2-CH=CH-CH2-OH");
 
 echo("CCN(CC)CC",            "Triethylamine C6H15N");
 echo("CC(C)C(=O)O",          "Isobutyric acid C4H8O2");
-echo("C=CC(CCC)C(C(C)C)CCC", "3-propyl-4-isopropyl-1-heptene C10H20");
+# echo("C=CC(CCC)C(C(C)C)CCC", "3-propyl-4-isopropyl-1-heptene C10H20");
