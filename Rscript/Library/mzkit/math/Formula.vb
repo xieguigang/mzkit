@@ -128,7 +128,9 @@ Module FormulaTools
     ''' <summary>
     ''' evaluate exact mass for the given formula strings.
     ''' </summary>
-    ''' <param name="formula"></param>
+    ''' <param name="formula">
+    ''' a vector of the character formulas.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("eval")>
     <RApiReturn(GetType(Double))>
@@ -141,7 +143,8 @@ Module FormulaTools
             x:=formula,
             eval:=Function(str)
                       Dim composition As Formula = FormulaScanner.ScanFormula(str)
-                      Dim mass = Aggregate atom In composition.CountsByElement
+                      Dim mass = Aggregate atom As KeyValuePair(Of String, Integer)
+                                 In composition.CountsByElement
                                  Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
                                  Into Sum(eval)
 
