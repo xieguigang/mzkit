@@ -142,13 +142,7 @@ Module FormulaTools
         Return env.EvaluateFramework(Of String, Double)(
             x:=formula,
             eval:=Function(str)
-                      Dim composition As Formula = FormulaScanner.ScanFormula(str)
-                      Dim mass = Aggregate atom As KeyValuePair(Of String, Integer)
-                                 In composition.CountsByElement
-                                 Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
-                                 Into Sum(eval)
-
-                      Return mass
+                      Return FormulaScanner.ScanFormula(str).ExactMass
                   End Function)
     End Function
 
