@@ -32,8 +32,10 @@ Partial Class frmMsImagingTweaks
         Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RenderingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ClearSelectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.Win7StyleTreeView1 = New ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
@@ -42,8 +44,6 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.Win7StyleTreeView1 = New ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -58,27 +58,32 @@ Partial Class frmMsImagingTweaks
         Me.PropertyGrid1.LineColor = System.Drawing.SystemColors.ScrollBar
         Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(377, 261)
+        Me.PropertyGrid1.Size = New System.Drawing.Size(377, 414)
         Me.PropertyGrid1.TabIndex = 0
         '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderingToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearSelectionToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 76)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 54)
         '
         'RenderingToolStripMenuItem
         '
         Me.RenderingToolStripMenuItem.Image = CType(resources.GetObject("RenderingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RenderingToolStripMenuItem.Name = "RenderingToolStripMenuItem"
-        Me.RenderingToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RenderingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RenderingToolStripMenuItem.Text = "Render"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(149, 6)
         '
         'ClearSelectionToolStripMenuItem
         '
         Me.ClearSelectionToolStripMenuItem.Image = CType(resources.GetObject("ClearSelectionToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ClearSelectionToolStripMenuItem.Name = "ClearSelectionToolStripMenuItem"
-        Me.ClearSelectionToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClearSelectionToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ClearSelectionToolStripMenuItem.Text = "Clear Selection"
         '
         'SplitContainer1
@@ -96,8 +101,19 @@ Partial Class frmMsImagingTweaks
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.PropertyGrid1)
         Me.SplitContainer1.Size = New System.Drawing.Size(377, 529)
-        Me.SplitContainer1.SplitterDistance = 264
+        Me.SplitContainer1.SplitterDistance = 111
         Me.SplitContainer1.TabIndex = 2
+        '
+        'Win7StyleTreeView1
+        '
+        Me.Win7StyleTreeView1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Win7StyleTreeView1.HotTracking = True
+        Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 0)
+        Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
+        Me.Win7StyleTreeView1.ShowLines = False
+        Me.Win7StyleTreeView1.Size = New System.Drawing.Size(377, 111)
+        Me.Win7StyleTreeView1.TabIndex = 0
         '
         'ImageList1
         '
@@ -118,14 +134,14 @@ Partial Class frmMsImagingTweaks
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(74, 22)
-        Me.ToolStripLabel1.Text = "Ion Features:"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(31, 22)
+        Me.ToolStripLabel1.Text = "m/z:"
         '
         'ToolStripSpringTextBox1
         '
         Me.ToolStripSpringTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripSpringTextBox1.Name = "ToolStripSpringTextBox1"
-        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(185, 25)
+        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(228, 25)
         '
         'ToolStripButton1
         '
@@ -158,21 +174,6 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton3.Name = "ToolStripButton3"
         Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton3.Text = "Clear Layers"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
-        '
-        'Win7StyleTreeView1
-        '
-        Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Win7StyleTreeView1.HotTracking = True
-        Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 0)
-        Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
-        Me.Win7StyleTreeView1.ShowLines = False
-        Me.Win7StyleTreeView1.Size = New System.Drawing.Size(377, 264)
-        Me.Win7StyleTreeView1.TabIndex = 0
         '
         'frmMsImagingTweaks
         '
