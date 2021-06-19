@@ -220,6 +220,10 @@ Public Class RtRangeSelector
             End If
         End Using
 
+        Call updatelabel(left, right)
+    End Sub
+
+    Sub updatelabel(left As Integer, right As Integer)
         ' update label
         Dim length As Double = Width
 
@@ -239,6 +243,10 @@ Public Class RtRangeSelector
         If onSelect OrElse onMoveRange Then
             Call RefreshSelector()
         End If
+
+        With {start, endPox}
+            Call updatelabel(.Min, .Max)
+        End With
     End Sub
 
     ''' <summary>
