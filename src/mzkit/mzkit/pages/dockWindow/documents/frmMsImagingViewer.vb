@@ -95,7 +95,7 @@ Public Class frmMsImagingViewer
         WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
         WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
 
-        Dim allIons As Double() = render.LoadMzArray(20)
+        Dim allIons As Double() ' = render.LoadMzArray(20)
         Dim mzGroups = CutBins.FixedWidthBins(allIons, 24, Function(x) x).ToArray
 
         For Each group In mzGroups

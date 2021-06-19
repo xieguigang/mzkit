@@ -66,7 +66,8 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
-    Dim pixelReader As PixelReader
+
+    Public ReadOnly Property pixelReader As PixelReader
 
     Public ReadOnly Property dimension As Size
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
