@@ -73,6 +73,10 @@ Namespace Formula
             End Get
         End Property
 
+        ''' <summary>
+        ''' sum all isotopic mass of the atom elements. 
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ExactMass As Double
             Get
                 Return Aggregate element
