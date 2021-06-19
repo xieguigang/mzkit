@@ -72,7 +72,7 @@ Public Class frmMsImagingTweaks
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
-    Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click
+    Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
         For Each item In checkedMz.ToArray
             item.Checked = False
         Next
@@ -80,7 +80,7 @@ Public Class frmMsImagingTweaks
         checkedMz.Clear()
     End Sub
 
-    Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
+    Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs)
         If e.Node.Checked Then
             If e.Node.Tag Is Nothing Then
                 For Each mz As TreeNode In e.Node.Nodes
@@ -101,4 +101,14 @@ Public Class frmMsImagingTweaks
             End If
         End If
     End Sub
+
+    ''' <summary>
+    ''' load m/z layer
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+
+    End Sub
+
 End Class

@@ -94,22 +94,6 @@ Public Class frmMsImagingViewer
 
         WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
         WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
-
-        Dim allIons As Double() ' = render.LoadMzArray(20)
-        Dim mzGroups = CutBins.FixedWidthBins(allIons, 24, Function(x) x).ToArray
-
-        For Each group In mzGroups
-            Dim rawMz As Double() = group.Raw.OrderBy(Function(x) x).ToArray
-            Dim mzNode As TreeNode = checks.Nodes.Add($"m/z {rawMz.First.ToString("F3")} ~ {rawMz.Last.ToString("F3")}")
-
-            mzNode.ImageIndex = 0
-
-            For Each mz In group.Raw
-                Call mzNode.Nodes.Add(New TreeNode With {.Text = mz, .Tag = mz, .ImageIndex = 1})
-            Next
-
-            Call Application.DoEvents()
-        Next
     End Sub
 
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
