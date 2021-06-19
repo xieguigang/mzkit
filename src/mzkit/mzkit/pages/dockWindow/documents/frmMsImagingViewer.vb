@@ -172,7 +172,11 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub tweaks_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles tweaks.PropertyValueChanged
-        Call rendering()
+        If Not rendering Is Nothing Then
+            Call rendering()
+        Else
+            Call MyApplication.host.showStatusMessage("No image for render...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
