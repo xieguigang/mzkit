@@ -69,6 +69,7 @@ Public Class RtRangeSelector
     Dim start As Integer
     Dim endPox As Integer
     Dim lastX As Integer
+    Dim rtX As Integer
 
     Dim onSelect As Boolean
     Dim onMoveRange As Boolean
@@ -79,6 +80,20 @@ Public Class RtRangeSelector
 
     Dim TIC_time As DoubleRange
     Dim TIC_max As Double
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+        ' DoubleBuffered = True
+
+        ' SetStyle(ControlStyles.UserPaint, True)
+        ' SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        ' SetStyle(ControlStyles.DoubleBuffer, True)
+    End Sub
 
     Public Sub SetTIC(data As ChromatogramTick())
         TIC = data
@@ -91,6 +106,10 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub RtRangeSelector_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        If e.Button <> MouseButtons.Left Then
+            Return
+        End If
+
         If e.X > start AndAlso e.X < endPox Then
             onMoveRange = AllowMoveRange
             lastX = e.X
@@ -101,6 +120,10 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub RtRangeSelector_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        If e.Button <> MouseButtons.Left Then
+            Return
+        End If
+
         endPox = e.X
         onSelect = False
         onMoveRange = False
@@ -122,6 +145,8 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub RtRangeSelector_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        rtX = e.X
+
         If onSelect Then
             endPox = e.X
         ElseIf onMoveRange Then
@@ -134,7 +159,7 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub RtRangeSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Timer1.Interval = 30
+        Timer1.Interval = 100
         Timer1.Enabled = True
         Timer1.Start()
 
@@ -194,6 +219,20 @@ Public Class RtRangeSelector
                 Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
             End If
         End Using
+
+        ' update label
+        Dim length As Double = Width
+
+        rtmin = left / length
+        rtmax = right / length
+
+        rtmin = TIC(Scan0).Time + rtmin * RtRange
+        rtmax = TIC(Scan0).Time + rtmax * RtRange
+
+        Dim curTime = rtX / length
+        curTime = TIC(Scan0).Time + curTime * RtRange
+
+        Label1.Text = $"Time: {curTime.ToString("F2")} sec; time range selected [{rtmin.ToString("F2")}, {rtmax.ToString("F2")}]"
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick

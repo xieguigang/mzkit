@@ -35,12 +35,12 @@ Partial Class RtRangeSelector
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(4, 4)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(166, 13)
+        Me.Label1.Size = New System.Drawing.Size(146, 13)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Select TIC time range by mouse..."
+        Me.Label1.Text = "Select time range by mouse..."
         '
         'RtRangeSelector
         '

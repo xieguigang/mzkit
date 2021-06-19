@@ -3,6 +3,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
 <Assembly: InternalsVisibleTo("mzkit_win32")>
 
+''' <summary>
+''' 主要是应用于非靶向数据的查看
+''' </summary>
 Public Class MSSelector
 
     Public Event ShowTIC()
@@ -57,6 +60,19 @@ Public Class MSSelector
     End Sub
 
     Dim rawTIC As ChromatogramTick()
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        ' DoubleBuffered = True
+
+        ' SetStyle(ControlStyles.UserPaint, True)
+        ' SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        ' SetStyle(ControlStyles.DoubleBuffer, True)
+    End Sub
 
     Public Sub SetTIC(TIC As ChromatogramTick())
         rawTIC = TIC
