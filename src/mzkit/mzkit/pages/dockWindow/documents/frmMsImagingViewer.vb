@@ -96,6 +96,11 @@ Public Class frmMsImagingViewer
         WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
     End Sub
 
+    ''' <summary>
+    ''' 渲染多个图层的按钮
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
         Dim mz As Double() = WindowModules.msImageParameters _
             .GetSelectedIons _
@@ -104,9 +109,12 @@ Public Class frmMsImagingViewer
 
         If mz.Length = 0 Then
             Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
+        Else
+            Call renderByMzList(mz)
         End If
+    End Sub
 
+    Friend Sub renderByMzList(mz As Double())
         Dim selectedMz As New List(Of Double)
         Dim progress As New frmProgressSpinner
         Dim size As String = $"{params.pixel_width},{params.pixel_height}"
