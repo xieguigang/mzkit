@@ -143,7 +143,7 @@ Public Class frmMsImagingViewer
                                         Into Max(pm.intensity)
 
                 Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                Call Invoke(Sub() rendering = createRenderTask(pixels, size))
+                Call Invoke(Sub() rendering = createRenderTask(pixels, size, render.dimension))
                 Call Invoke(rendering)
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
@@ -154,9 +154,21 @@ Public Class frmMsImagingViewer
 
     Dim loadedPixels As PixelData()
 
-    Private Function createRenderTask(pixels As PixelData(), size$) As Action
-        Dim dimensionSize As Size = render.dimension
+    Public Sub renderByPixelsData(pixels As PixelData(), MsiDim As Size)
+        rendering = createRenderTask(pixels, "", MsiDim)
+        rendering()
 
+        If params Is Nothing Then
+            params = New MsImageProperty
+        End If
+
+        params.SetIntensityMax(Aggregate pm As PixelData In pixels Into Max(pm.intensity))
+
+        Call params.Reset(MsiDim, "N/A", "N/A")
+        Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+    End Sub
+
+    Private Function createRenderTask(pixels As PixelData(), size$, dimensionSize As Size) As Action
         loadedPixels = pixels
 
         Return Sub()

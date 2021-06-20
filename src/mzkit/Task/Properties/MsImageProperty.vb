@@ -111,6 +111,17 @@ Public Class MsImageProperty
         End If
     End Sub
 
+    Sub New()
+    End Sub
+
+    Public Sub Reset(MsiDim As Size, UUID As String, fileSize As String)
+        _scan_x = MsiDim.Width
+        _scan_y = MsiDim.Height
+        _background = Color.White
+        _UUID = UUID
+        _fileSize = fileSize
+    End Sub
+
     Public Function Smooth(img As Bitmap) As Bitmap
         If imageSmooth = SmoothFilters.None Then
             Return img

@@ -176,7 +176,11 @@ Public Class frmMsImagingTweaks
                 Using cdf As New netCDFReader(firstFile)
                     Dim size As Size = cdf.GetMsiDimension
                     Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
+                    Dim viewer = MyApplication.host.dockPanel.ActiveDocument
 
+                    If TypeOf viewer Is frmMsImagingViewer Then
+                        Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
+                    End If
                 End Using
             Else
                 Call MyApplication.host.showStatusMessage("invalid file type!", My.Resources.StatusAnnotations_Warning_32xLG_color)
