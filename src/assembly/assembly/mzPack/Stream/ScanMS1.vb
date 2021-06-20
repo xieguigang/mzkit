@@ -74,5 +74,24 @@ Namespace mzData.mzWebCache
                 }
             Next
         End Function
+
+        ''' <summary>
+        ''' has all meta keys?
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
+        Public Function hasMetaKeys(ParamArray keys As String()) As Boolean
+            If meta.IsNullOrEmpty Then
+                Return False
+            End If
+
+            For Each key As String In keys
+                If Not meta.ContainsKey(key) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
     End Class
 End Namespace

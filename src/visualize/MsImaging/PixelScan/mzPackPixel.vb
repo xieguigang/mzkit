@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Pixel
@@ -31,7 +32,18 @@ Namespace Pixel
 
         Sub New(scan As ScanMS1)
             Me.scan = scan
-            Me.pixel = Casting.PointParser(scan.scan_id.Match("\[\d+,\d+\]").GetStackValue("[", "]"))
+
+            If scan.hasMetaKeys("x", "y") Then
+                Me.pixel = New Point With {
+                    .X = CInt(Val(scan.meta!x)),
+                    .Y = CInt(Val(scan.meta!y))
+                }
+            Else
+                Me.pixel = scan.scan_id _
+                    .Match("\[\d+,\d+\]") _
+                    .GetStackValue("[", "]") _
+                    .DoCall(AddressOf Casting.PointParser)
+            End If
         End Sub
 
         Public Overrides Function GetMs() As ms2()

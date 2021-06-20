@@ -1,8 +1,12 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.Language
 
 Public Module PixelsCDF
 
@@ -62,4 +66,31 @@ Public Module PixelsCDF
             }
         Next
     End Function
+
+    <Extension>
+    Public Function CreatePixelReader(cdf As netCDFReader) As ReadRawPack
+        Dim size As Size = cdf.GetMsiDimension
+        Dim pixels As New List(Of mzPackPixel)
+        Dim xy = cdf.LoadPixelsData.GroupBy(Function(p) p.x).ToArray
+        Dim scan As ScanMS1
+
+        For Each x In xy
+            Dim ylist = x.GroupBy(Function(p) p.y).ToArray
+
+            For Each y In ylist
+                scan = New ScanMS1 With {
+                    .mz = y.Select(Function(m) m.mz).ToArray,
+                    .into = y.Select(Function(m) m.intensity).ToArray,
+                    .meta = New Dictionary(Of String, String) From {
+                        {"x", x.Key},
+                        {"y", y.Key}
+                    }
+                }
+                pixels += New mzPackPixel(scan)
+            Next
+        Next
+
+        Return New ReadRawPack(pixels, size)
+    End Function
+
 End Module

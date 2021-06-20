@@ -24,6 +24,11 @@ Namespace Reader
             End Using
         End Sub
 
+        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size)
+            Me.dimension = MsiDim
+            Me.pixels = pixels.ToArray
+        End Sub
+
         Protected Overrides Sub release()
             Erase pixels
         End Sub
