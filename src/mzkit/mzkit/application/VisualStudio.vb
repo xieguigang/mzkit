@@ -50,6 +50,12 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class VisualStudio
 
+    Public Shared ReadOnly Property DockPanel As DockPanel
+        Get
+            Return MyApplication.host.dockPanel
+        End Get
+    End Property
+
     Public Shared Sub Dock(win As ToolWindow, prefer As DockState)
         Select Case win.DockState
             Case DockState.Hidden, DockState.Unknown

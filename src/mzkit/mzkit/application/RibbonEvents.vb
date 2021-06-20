@@ -71,7 +71,7 @@ Module RibbonEvents
         AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
 
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
-        ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
+        AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() WindowModules.msDemo.ShowPage()
         AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call ConnectToBioDeep.OpenAdvancedFunction(AddressOf VisualStudio.ShowSingleDocument(Of frmTargetedQuantification))
 
@@ -90,25 +90,12 @@ Module RibbonEvents
     End Sub
 
     Private Sub showMsImaging()
-        Dim progress As New frmProgressSpinner
+        Dim dockPanel = VisualStudio.DockPanel
 
         Call WindowModules.viewer.Show(DockPanel)
-        Call WindowModules.msImageParameters.Show(DockPanel)
-        Call New Thread(
-            Sub()
-                Dim canvas As New Drawer(imzML)
-
-                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
-                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
-
-                Call progress.Invoke(Sub() progress.Close())
-
-                Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
-            End Sub).Start()
+        Call WindowModules.msImageParameters.Show(dockPanel)
 
         WindowModules.msImageParameters.DockState = DockState.DockLeft
-
-        Call progress.ShowDialog()
     End Sub
 
     Private Sub resetLayout()
