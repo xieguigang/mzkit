@@ -178,34 +178,38 @@ Public Class frmMsImagingTweaks
             If firstFile.ExtensionSuffix("imzML") Then
                 Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
             ElseIf firstFile.ExtensionSuffix("CDF") Then
-                Using cdf As New netCDFReader(firstFile)
-                    Dim size As Size = cdf.GetMsiDimension
-                    Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-                    Dim viewer = MyApplication.host.dockPanel.ActiveDocument
-                    Dim mzpack As ReadRawPack = cdf.CreatePixelReader
-                    Dim render As New Drawer(mzpack)
-
-                    If TypeOf viewer Is frmMsImagingViewer Then
-                        Call DirectCast(viewer, frmMsImagingViewer).LoadRender(render, firstFile)
-                    End If
-
-                    If TypeOf viewer Is frmMsImagingViewer Then
-                        Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
-                    End If
-
-                    Win7StyleTreeView1.Nodes.Clear()
-
-                    For Each mz As Double In pixels _
-                        .GroupBy(Function(p) p.mz, Tolerance.PPM(20)) _
-                        .Select(Function(a) Val(a.name))
-
-                        Call AddIonMzLayer(mz)
-                    Next
-                End Using
+                Call loadRenderFromCDF(firstFile)
             Else
                 Call MyApplication.host.showStatusMessage("invalid file type!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             End If
         End If
+    End Sub
+
+    Private Sub loadRenderFromCDF(firstFile As String)
+        Using cdf As New netCDFReader(firstFile)
+            Dim size As Size = cdf.GetMsiDimension
+            Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
+            Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+            Dim mzpack As ReadRawPack = cdf.CreatePixelReader
+            Dim render As New Drawer(mzpack)
+
+            If TypeOf viewer Is frmMsImagingViewer Then
+                Call DirectCast(viewer, frmMsImagingViewer).LoadRender(render, firstFile)
+            End If
+
+            If TypeOf viewer Is frmMsImagingViewer Then
+                Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
+            End If
+
+            Win7StyleTreeView1.Nodes.Clear()
+
+            For Each mz As Double In pixels _
+                .GroupBy(Function(p) p.mz, Tolerance.PPM(20)) _
+                .Select(Function(a) Val(a.name))
+
+                Call AddIonMzLayer(mz)
+            Next
+        End Using
     End Sub
 
     Private Sub PropertyGrid1_DragEnter(sender As Object, e As DragEventArgs) Handles PropertyGrid1.DragEnter
