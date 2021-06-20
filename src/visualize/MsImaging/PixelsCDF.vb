@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -11,7 +12,7 @@ Imports Microsoft.VisualBasic.Language
 Public Module PixelsCDF
 
     <Extension>
-    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size)
+    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size, tolerance As Tolerance)
         Using matrix As New CDFWriter(file)
             Dim mz As New List(Of Double)
             Dim intensity As New List(Of Double)
@@ -32,7 +33,13 @@ Public Module PixelsCDF
             matrix.GlobalAttributes(New attribute With {.name = "time", .value = Now.ToString, .type = CDFDataTypes.CHAR})
             matrix.Dimensions(New Dimension("pixels", loadedPixels.Length))
 
-            matrix.AddVariable("mz", New doubles(mz), "pixels")
+            Dim mzErr As New attribute With {
+                .name = "tolerance",
+                .type = CDFDataTypes.CHAR,
+                .value = tolerance.GetScript
+            }
+
+            matrix.AddVariable("mz", New doubles(mz), "pixels", mzErr)
             matrix.AddVariable("intensity", New doubles(intensity), "pixels")
             matrix.AddVariable("x", New integers(x), "pixels")
             matrix.AddVariable("y", New integers(y), "pixels")

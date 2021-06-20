@@ -29,22 +29,20 @@ Partial Class frmMsImagingViewer
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExportMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PictureBox1
         '
-        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackColor = System.Drawing.Color.White
         Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 32)
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(980, 595)
+        Me.PictureBox1.Size = New System.Drawing.Size(1004, 653)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -61,16 +59,16 @@ Partial Class frmMsImagingViewer
         Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
-        'ExportMatrixToolStripMenuItem
-        '
-        Me.ExportMatrixToolStripMenuItem.Name = "ExportMatrixToolStripMenuItem"
-        Me.ExportMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ExportMatrixToolStripMenuItem.Text = "Export Matrix"
-        '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(142, 6)
+        '
+        'ExportMatrixToolStripMenuItem
+        '
+        Me.ExportMatrixToolStripMenuItem.Name = "ExportMatrixToolStripMenuItem"
+        Me.ExportMatrixToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
+        Me.ExportMatrixToolStripMenuItem.Text = "Export Matrix"
         '
         'frmMsImagingViewer
         '

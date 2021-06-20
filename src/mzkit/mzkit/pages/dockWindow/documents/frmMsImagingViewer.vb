@@ -223,6 +223,11 @@ Public Class frmMsImagingViewer
     End Sub
 
     Protected Overrides Sub SaveDocument()
+        If PictureBox1.BackgroundImage Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No MSI plot image for output!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
         Using file As New SaveFileDialog With {.Filter = "PNG image(*.png)|*.png", .Title = "Save MS-Imaging Plot"}
             If file.ShowDialog = DialogResult.OK Then
                 Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
@@ -261,7 +266,7 @@ Public Class frmMsImagingViewer
         Using file As New SaveFileDialog With {.Filter = "NetCDF(*.cdf)|*.cdf", .Title = "Save MS-Imaging Matrix"}
             If file.ShowDialog = DialogResult.OK Then
                 Using filesave As FileStream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                    Call loadedPixels.CreateCDF(filesave, render.dimension)
+                    Call loadedPixels.CreateCDF(filesave, render.dimension, params.GetTolerance)
                 End Using
             End If
         End Using
