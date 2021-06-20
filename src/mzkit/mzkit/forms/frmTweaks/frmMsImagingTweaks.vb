@@ -159,7 +159,7 @@ Public Class frmMsImagingTweaks
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub RenderingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderingToolStripMenuItem.Click
+    Private Sub RGBLayers(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
         Dim mz3 As Double() = GetSelectedIons.Take(3).ToArray
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
         Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)

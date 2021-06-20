@@ -135,6 +135,10 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     Private Shared Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
+        If channel.IsNullOrEmpty Then
+            Return Function(x, y) CByte(0)
+        End If
+
         Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
         Dim byteRange As DoubleRange = {0, 255}
         Dim xy = channel _
