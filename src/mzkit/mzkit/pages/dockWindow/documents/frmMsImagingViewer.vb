@@ -52,8 +52,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Data.IO.netCDF
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime

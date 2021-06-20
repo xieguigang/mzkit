@@ -93,6 +93,10 @@ Public Class Drawer : Implements IDisposable
         End If
     End Sub
 
+    Sub New(reader As PixelReader)
+        pixelReader = reader
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Return pixelReader.LoadPixels(mz, tolerance, skipZero)

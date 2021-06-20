@@ -46,6 +46,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
@@ -181,10 +182,18 @@ Public Class frmMsImagingTweaks
                     Dim size As Size = cdf.GetMsiDimension
                     Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
                     Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+                    Dim mzpack As ReadRawPack = cdf.CreatePixelReader
+                    Dim render As New Drawer(mzpack)
+
+                    If TypeOf viewer Is frmMsImagingViewer Then
+                        Call DirectCast(viewer, frmMsImagingViewer).LoadRender(render, firstFile)
+                    End If
 
                     If TypeOf viewer Is frmMsImagingViewer Then
                         Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
                     End If
+
+                    Win7StyleTreeView1.Nodes.Clear()
 
                     For Each mz As Double In pixels _
                         .GroupBy(Function(p) p.mz, Tolerance.PPM(20)) _
