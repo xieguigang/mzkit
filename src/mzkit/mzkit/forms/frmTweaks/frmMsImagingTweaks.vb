@@ -79,6 +79,7 @@ Public Class frmMsImagingTweaks
     Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
         Win7StyleTreeView1.Nodes.Clear()
         checkedMz.Clear()
+        Win7StyleTreeView1.Nodes.Add("Ion Layers")
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs)
@@ -131,7 +132,12 @@ Public Class frmMsImagingTweaks
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Dim mz As Double = Val(ToolStripSpringTextBox1.Text)
-            Dim node = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
+
+            If Win7StyleTreeView1.Nodes.Count = 0 Then
+                Win7StyleTreeView1.Nodes.Add("Ion Layers")
+            End If
+
+            Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
 
             node.Tag = mz
         End If

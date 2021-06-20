@@ -31,6 +31,7 @@ Partial Class frmMsImagingTweaks
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMsImagingTweaks))
         Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RenderLayerCompositionModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RenderingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ClearSelectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -44,7 +45,6 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
-        Me.RenderLayerCompositionModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -66,7 +66,13 @@ Partial Class frmMsImagingTweaks
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderLayerCompositionModeToolStripMenuItem, Me.RenderingToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearSelectionToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 98)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 76)
+        '
+        'RenderLayerCompositionModeToolStripMenuItem
+        '
+        Me.RenderLayerCompositionModeToolStripMenuItem.Name = "RenderLayerCompositionModeToolStripMenuItem"
+        Me.RenderLayerCompositionModeToolStripMenuItem.Size = New System.Drawing.Size(261, 22)
+        Me.RenderLayerCompositionModeToolStripMenuItem.Text = "Render (Layers Composition Mode)"
         '
         'RenderingToolStripMenuItem
         '
@@ -107,12 +113,14 @@ Partial Class frmMsImagingTweaks
         '
         'Win7StyleTreeView1
         '
+        Me.Win7StyleTreeView1.CheckBoxes = True
         Me.Win7StyleTreeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Win7StyleTreeView1.FullRowSelect = True
         Me.Win7StyleTreeView1.HotTracking = True
         Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 0)
         Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
-        Me.Win7StyleTreeView1.ShowLines = False
+        Me.Win7StyleTreeView1.ShowNodeToolTips = True
         Me.Win7StyleTreeView1.Size = New System.Drawing.Size(377, 111)
         Me.Win7StyleTreeView1.TabIndex = 0
         '
@@ -175,12 +183,6 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton3.Name = "ToolStripButton3"
         Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton3.Text = "Clear Layers"
-        '
-        'RenderLayerCompositionModeToolStripMenuItem
-        '
-        Me.RenderLayerCompositionModeToolStripMenuItem.Name = "RenderLayerCompositionModeToolStripMenuItem"
-        Me.RenderLayerCompositionModeToolStripMenuItem.Size = New System.Drawing.Size(261, 22)
-        Me.RenderLayerCompositionModeToolStripMenuItem.Text = "Render (Layers Composition Mode)"
         '
         'frmMsImagingTweaks
         '
