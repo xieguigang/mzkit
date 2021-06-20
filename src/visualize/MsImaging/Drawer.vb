@@ -107,7 +107,8 @@ Public Class Drawer : Implements IDisposable
     Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,
-                                        Optional threshold As Double = 0.1) As Bitmap
+                                        Optional threshold As Double = 0.1,
+                                        Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
         Dim color As Color
         Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
         Dim index As Integer
@@ -133,15 +134,21 @@ Public Class Drawer : Implements IDisposable
             Next
         End Using
 
-        Call raw.SaveAs("D:/aaa.png")
+        If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
+            Return raw
+        End If
 
         Dim newWidth As Integer = dimension.Width * dimSize.Width
         Dim newHeight As Integer = dimension.Height * dimSize.Height
         Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
         Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
 
+        If scale = InterpolationMode.Invalid Then
+            scale = InterpolationMode.Default
+        End If
+
         Using layer As Graphics2D = New Bitmap(newWidth, newHeight)
-            layer.InterpolationMode = InterpolationMode.HighQualityBicubic
+            layer.InterpolationMode = scale
             layer.SmoothingMode = SmoothingMode.HighQuality
             layer.DrawImage(raw, newSize, rawSize, GraphicsUnit.Pixel)
 
@@ -164,7 +171,8 @@ Public Class Drawer : Implements IDisposable
                               Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
-                              Optional mapLevels% = 25) As Bitmap
+                              Optional mapLevels% = 25,
+                              Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -175,7 +183,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
+        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold, scale)
     End Function
 
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
@@ -221,7 +229,8 @@ Public Class Drawer : Implements IDisposable
                               Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
-                              Optional mapLevels% = 25) As Bitmap
+                              Optional mapLevels% = 25,
+                              Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
@@ -238,7 +247,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, threshold)
+        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, threshold, scale)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)

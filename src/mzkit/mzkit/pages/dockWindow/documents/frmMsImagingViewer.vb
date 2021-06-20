@@ -162,7 +162,8 @@ Public Class frmMsImagingViewer
                                dimSize:=size.SizeParser,
                                threshold:=params.threshold,
                                mapLevels:=params.mapLevels,
-                               colorSet:=params.colors.Description
+                               colorSet:=params.colors.Description,
+                               scale:=params.scale
                            )
 
                            image = params.Smooth(image)
