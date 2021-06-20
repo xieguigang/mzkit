@@ -51,6 +51,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -113,9 +114,9 @@ Public Class Drawer : Implements IDisposable
         Dim level As Double
         Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
         Dim levelRange As DoubleRange = New Double() {0, 1}
-        Dim raw As New Bitmap(dimension.Width, dimension.Height)
+        Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
 
-        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
+        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
             For Each point As PixelData In PixelData.ScalePixels(pixels)
                 level = point.level
 
@@ -131,6 +132,8 @@ Public Class Drawer : Implements IDisposable
                 Call buffer.SetPixel(point.x - 1, point.y - 1, color)
             Next
         End Using
+
+        Call raw.SaveAs("D:/aaa.png")
 
         Dim newWidth As Integer = dimension.Width * dimSize.Width
         Dim newHeight As Integer = dimension.Height * dimSize.Height
