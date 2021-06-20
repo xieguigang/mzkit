@@ -51,6 +51,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -149,8 +151,12 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
     End Sub
 
+    Dim loadedPixels As PixelData()
+
     Private Function createRenderTask(pixels As PixelData(), size$) As Action
         Dim dimensionSize As Size = render.dimension
+
+        loadedPixels = pixels
 
         Return Sub()
                    Call MyApplication.RegisterPlot(
@@ -228,6 +234,39 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub ExportMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMatrixToolStripMenuItem.Click
+        If loadedPixels.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("No loaded pixels data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
 
+        Using file As New SaveFileDialog With {.Filter = "NetCDF(*.cdf)|*.cdf", .Title = "Save MS-Imaging Matrix"}
+            If file.ShowDialog = DialogResult.OK Then
+                Using matrix As New CDFWriter(file.FileName)
+                    Dim mz As New List(Of Double)
+                    Dim intensity As New List(Of Double)
+                    Dim x As New List(Of Integer)
+                    Dim y As New List(Of Integer)
+
+                    For Each p As PixelData In loadedPixels
+                        mz.Add(p.mz)
+                        intensity.Add(p.intensity)
+                        x.Add(p.x)
+                        y.Add(p.y)
+                    Next
+
+                    matrix.GlobalAttributes(New attribute With {.name = "width", .value = render.pixelReader.dimension.Width, .type = CDFDataTypes.INT})
+                    matrix.GlobalAttributes(New attribute With {.name = "height", .value = render.pixelReader.dimension.Height, .type = CDFDataTypes.INT})
+                    matrix.GlobalAttributes(New attribute With {.name = "program", .value = "mzkit_win32", .type = CDFDataTypes.CHAR})
+                    matrix.GlobalAttributes(New attribute With {.name = "github", .value = "https://github.com/xieguigang/mzkit", .type = CDFDataTypes.CHAR})
+                    matrix.GlobalAttributes(New attribute With {.name = "time", .value = Now.ToString, .type = CDFDataTypes.CHAR})
+                    matrix.Dimensions(New Dimension("pixels", loadedPixels.Length))
+
+                    matrix.AddVariable("mz", New doubles(mz), "pixels")
+                    matrix.AddVariable("intensity", New doubles(intensity), "pixels")
+                    matrix.AddVariable("x", New integers(x), "pixels")
+                    matrix.AddVariable("y", New integers(y), "pixels")
+                End Using
+            End If
+        End Using
     End Sub
 End Class

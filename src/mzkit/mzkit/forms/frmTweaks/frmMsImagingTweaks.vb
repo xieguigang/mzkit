@@ -82,7 +82,7 @@ Public Class frmMsImagingTweaks
         Win7StyleTreeView1.Nodes.Add("Ion Layers")
     End Sub
 
-    Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs)
+    Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
         If e.Node.Checked Then
             If e.Node.Tag Is Nothing Then
                 For Each mz As TreeNode In e.Node.Nodes
