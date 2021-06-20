@@ -113,9 +113,9 @@ Public Class Drawer : Implements IDisposable
         Dim level As Double
         Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
         Dim levelRange As DoubleRange = New Double() {0, 1}
-        Dim raw As Bitmap
+        Dim raw As New Bitmap(dimension.Width, dimension.Height)
 
-        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(New Bitmap(dimension.Width, dimension.Height))
+        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
             For Each point As PixelData In PixelData.ScalePixels(pixels)
                 level = point.level
 
@@ -126,10 +126,10 @@ Public Class Drawer : Implements IDisposable
                     color = colors(index)
                 End If
 
-                Call buffer.SetPixel(point.x, point.y, color)
+                ' imzXML里面的坐标是从1开始的
+                ' 需要减一转换为.NET中从零开始的位置
+                Call buffer.SetPixel(point.x - 1, point.y - 1, color)
             Next
-
-            raw = buffer.GetImage
         End Using
 
         Dim newWidth As Integer = dimension.Width * dimSize.Width
