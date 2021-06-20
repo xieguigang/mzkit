@@ -49,9 +49,7 @@ Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -137,10 +135,11 @@ Public Class frmMsImagingViewer
             Sub()
                 Dim err As Tolerance = params.GetTolerance
                 Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim maxInto As Double = Aggregate pm As PixelData
+                                        In pixels
+                                        Into Max(pm.intensity)
 
-                pixels = Drawer.ScalePixels(pixels, err)
-                pixels = Drawer.GetPixelsMatrix(pixels)
-
+                Call Invoke(Sub() params.SetIntensityMax(maxInto))
                 Call Invoke(Sub() rendering = createRenderTask(pixels, size))
                 Call Invoke(rendering)
                 Call progress.Invoke(Sub() progress.Close())
@@ -156,8 +155,24 @@ Public Class frmMsImagingViewer
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
+                           Dim pixelFilter As PixelData() = (
+                              From pm As PixelData
+                              In pixels
+                              Where pm.intensity >= params.lowerbound
+                              Select If(pm.intensity > params.upperbound, New PixelData With {
+                                  .intensity = params.upperbound,
+                                  .level = pm.level,
+                                  .mz = pm.mz,
+                                  .x = pm.x,
+                                  .y = pm.y
+                              }, pm)
+                           ).ToArray
+
+                           pixelFilter = Drawer.ScalePixels(pixelFilter, params.GetTolerance)
+                           pixelFilter = Drawer.GetPixelsMatrix(pixelFilter)
+
                            Dim image As Bitmap = Drawer.RenderPixels(
-                               pixels:=pixels,
+                               pixels:=pixelFilter,
                                dimension:=dimensionSize,
                                dimSize:=size.SizeParser,
                                threshold:=params.threshold,
