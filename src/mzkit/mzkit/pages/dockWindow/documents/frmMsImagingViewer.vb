@@ -155,16 +155,22 @@ Public Class frmMsImagingViewer
     Dim loadedPixels As PixelData()
 
     Public Sub renderByPixelsData(pixels As PixelData(), MsiDim As Size)
+        If params Is Nothing Then
+            Me.params = New MsImageProperty
+            Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
+            Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
+            Me.FilePath = FilePath
+
+            WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
+            WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+        End If
+
+        Call params.SetIntensityMax(Aggregate pm As PixelData In pixels Into Max(pm.intensity))
+        Call params.Reset(MsiDim, "N/A", "N/A")
+
         rendering = createRenderTask(pixels, "", MsiDim)
         rendering()
 
-        If params Is Nothing Then
-            params = New MsImageProperty
-        End If
-
-        params.SetIntensityMax(Aggregate pm As PixelData In pixels Into Max(pm.intensity))
-
-        Call params.Reset(MsiDim, "N/A", "N/A")
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
     End Sub
 
