@@ -31,6 +31,7 @@ Partial Class frmDemo
         Dim ListViewItem2 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("Mass Spectrometry Demo Data", 1)
         Dim ListViewItem3 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("LC-MS/MS SRM Demo", 4)
         Dim ListViewItem4 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("GC-MS SIM Demo", 3)
+        Dim ListViewItem5 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("HR2MSI mouse urinary bladder S096 - Figure1", "HR2MSI mouse urinary bladder S096 - optical image.jpg")
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDemo))
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -65,7 +66,9 @@ Partial Class frmDemo
         ListViewItem3.StateImageIndex = 0
         ListViewItem4.Group = ListViewGroup2
         ListViewItem4.StateImageIndex = 0
-        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1, ListViewItem2, ListViewItem3, ListViewItem4})
+        ListViewItem5.Group = ListViewGroup1
+        ListViewItem5.ToolTipText = "HR2MSI mouse urinary bladder S096 - Figure1"
+        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1, ListViewItem2, ListViewItem3, ListViewItem4, ListViewItem5})
         Me.ListView1.LargeImageList = Me.ImageList1
         Me.ListView1.Location = New System.Drawing.Point(0, 0)
         Me.ListView1.MultiSelect = False
@@ -81,20 +84,20 @@ Partial Class frmDemo
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowInExplorerToolStripMenuItem, Me.OpenToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(176, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(163, 48)
         '
         'ShowInExplorerToolStripMenuItem
         '
         Me.ShowInExplorerToolStripMenuItem.Image = CType(resources.GetObject("ShowInExplorerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowInExplorerToolStripMenuItem.Name = "ShowInExplorerToolStripMenuItem"
-        Me.ShowInExplorerToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ShowInExplorerToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.ShowInExplorerToolStripMenuItem.Text = "Show In Explorer"
         '
         'OpenToolStripMenuItem
         '
         Me.OpenToolStripMenuItem.Image = CType(resources.GetObject("OpenToolStripMenuItem.Image"), System.Drawing.Image)
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.OpenToolStripMenuItem.Text = "Open"
         '
         'ImageList1
@@ -106,6 +109,7 @@ Partial Class frmDemo
         Me.ImageList1.Images.SetKeyName(2, "s042_229_continuous_large.png")
         Me.ImageList1.Images.SetKeyName(3, "GCMS_Targeted.png")
         Me.ImageList1.Images.SetKeyName(4, "MRM_Ions.png")
+        Me.ImageList1.Images.SetKeyName(5, "HR2MSI mouse urinary bladder S096 - optical image.jpg")
         '
         'PropertyGrid1
         '
@@ -117,13 +121,13 @@ Partial Class frmDemo
         '
         'frmDemo
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1045, 656)
         Me.Controls.Add(Me.ListView1)
         Me.Controls.Add(Me.PropertyGrid1)
+        Me.DoubleBuffered = True
         Me.Name = "frmDemo"
-        Me.Text = "Form1"
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
