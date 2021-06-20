@@ -44,8 +44,10 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 
 Public Class frmMsImagingTweaks
@@ -133,18 +135,20 @@ Public Class frmMsImagingTweaks
         If ToolStripSpringTextBox1.Text.StringEmpty Then
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
-            Dim mz As Double = Val(ToolStripSpringTextBox1.Text)
-
-            If Win7StyleTreeView1.Nodes.Count = 0 Then
-                Win7StyleTreeView1.Nodes.Add("Ion Layers")
-            End If
-
-            Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
-
-            node.Tag = mz
+            Call AddIonMzLayer(mz:=Val(ToolStripSpringTextBox1.Text))
         End If
 
         ToolStripSpringTextBox1.Text = ""
+    End Sub
+
+    Private Sub AddIonMzLayer(mz As Double)
+        If Win7StyleTreeView1.Nodes.Count = 0 Then
+            Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        End If
+
+        Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
+
+        node.Tag = mz
     End Sub
 
     ''' <summary>
@@ -181,6 +185,13 @@ Public Class frmMsImagingTweaks
                     If TypeOf viewer Is frmMsImagingViewer Then
                         Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
                     End If
+
+                    For Each mz As Double In pixels _
+                        .GroupBy(Function(p) p.mz, Tolerance.PPM(20)) _
+                        .Select(Function(a) Val(a.name))
+
+                        Call AddIonMzLayer(mz)
+                    Next
                 End Using
             Else
                 Call MyApplication.host.showStatusMessage("invalid file type!", My.Resources.StatusAnnotations_Warning_32xLG_color)
