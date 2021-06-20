@@ -46,6 +46,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
@@ -241,30 +242,8 @@ Public Class frmMsImagingViewer
 
         Using file As New SaveFileDialog With {.Filter = "NetCDF(*.cdf)|*.cdf", .Title = "Save MS-Imaging Matrix"}
             If file.ShowDialog = DialogResult.OK Then
-                Using matrix As New CDFWriter(file.FileName)
-                    Dim mz As New List(Of Double)
-                    Dim intensity As New List(Of Double)
-                    Dim x As New List(Of Integer)
-                    Dim y As New List(Of Integer)
-
-                    For Each p As PixelData In loadedPixels
-                        mz.Add(p.mz)
-                        intensity.Add(p.intensity)
-                        x.Add(p.x)
-                        y.Add(p.y)
-                    Next
-
-                    matrix.GlobalAttributes(New attribute With {.name = "width", .value = render.pixelReader.dimension.Width, .type = CDFDataTypes.INT})
-                    matrix.GlobalAttributes(New attribute With {.name = "height", .value = render.pixelReader.dimension.Height, .type = CDFDataTypes.INT})
-                    matrix.GlobalAttributes(New attribute With {.name = "program", .value = "mzkit_win32", .type = CDFDataTypes.CHAR})
-                    matrix.GlobalAttributes(New attribute With {.name = "github", .value = "https://github.com/xieguigang/mzkit", .type = CDFDataTypes.CHAR})
-                    matrix.GlobalAttributes(New attribute With {.name = "time", .value = Now.ToString, .type = CDFDataTypes.CHAR})
-                    matrix.Dimensions(New Dimension("pixels", loadedPixels.Length))
-
-                    matrix.AddVariable("mz", New doubles(mz), "pixels")
-                    matrix.AddVariable("intensity", New doubles(intensity), "pixels")
-                    matrix.AddVariable("x", New integers(x), "pixels")
-                    matrix.AddVariable("y", New integers(y), "pixels")
+                Using filesave As FileStream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                    Call loadedPixels.CreateCDF(filesave, render.dimension)
                 End Using
             End If
         End Using

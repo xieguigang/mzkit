@@ -72,6 +72,10 @@ Public Class Drawer : Implements IDisposable
 
     Public ReadOnly Property pixelReader As PixelReader
 
+    ''' <summary>
+    ''' the size of the scan in [width,height]
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property dimension As Size
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
