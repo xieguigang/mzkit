@@ -139,4 +139,7 @@ Public Class frmMsImagingTweaks
         ToolStripSpringTextBox1.Text = ""
     End Sub
 
+    Private Sub RenderLayerCompositionModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
+
+    End Sub
 End Class

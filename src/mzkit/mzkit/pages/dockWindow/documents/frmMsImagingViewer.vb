@@ -51,7 +51,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports mzkit.My
@@ -81,6 +80,8 @@ Public Class frmMsImagingViewer
         TabText = Text
         WindowModules.msImageParameters.DockState = DockState.DockLeft
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
+
+        Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
     Public Sub LoadRender(render As Drawer, filePath As String)
@@ -195,5 +196,13 @@ Public Class frmMsImagingViewer
             WindowModules.msImageParameters.DockState = DockState.Hidden
             Me.DockState = DockState.Hidden
         End If
+    End Sub
+
+    Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
+        Call SaveDocument()
+    End Sub
+
+    Private Sub ExportMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMatrixToolStripMenuItem.Click
+
     End Sub
 End Class
