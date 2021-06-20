@@ -204,8 +204,10 @@ Public Class frmMsImagingTweaks
             Win7StyleTreeView1.Nodes.Clear()
 
             For Each mz As Double In pixels _
-                .GroupBy(Function(p) p.mz, Tolerance.PPM(20)) _
-                .Select(Function(a) Val(a.name))
+                .GroupBy(Function(p) p.mz, cdf.GetMzTolerance) _
+                .Select(Function(a)
+                            Return Val(a.name)
+                        End Function)
 
                 Call AddIonMzLayer(mz)
             Next

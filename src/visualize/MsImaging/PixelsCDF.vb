@@ -47,6 +47,14 @@ Public Module PixelsCDF
     End Sub
 
     <Extension>
+    Public Function GetMzTolerance(cdf As netCDFReader) As Tolerance
+        Dim mz As variable = cdf.getDataVariableEntry("mz")
+        Dim errStr As String = mz.FindAttribute("tolerance")?.value
+
+        Return Tolerance.ParseScript(errStr)
+    End Function
+
+    <Extension>
     Public Function GetMsiDimension(cdf As netCDFReader) As Size
         Dim w As Integer = CType(cdf!width, Integer)
         Dim h As Integer = CType(cdf!height, Integer)
