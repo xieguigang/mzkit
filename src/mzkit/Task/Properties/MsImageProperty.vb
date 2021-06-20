@@ -69,9 +69,16 @@ Public Class MsImageProperty
     <Category("Render")> Public Property threshold As Double = 0.01
     <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
+    <Category("Render")> Public Property ImageSmooth As Double
 
     <Category("Pixel M/z Data")> Public Property tolerance As Double = 0.1
     <Category("Pixel M/z Data")> Public Property method As ToleranceMethod = ToleranceMethod.Da
+
+    <Category("Intensity")> Public ReadOnly Property min As Double
+    <Category("Intensity")> Public ReadOnly Property max As Double
+
+    <Category("Intensity")> Public Property upperbound As Double
+    <Category("Intensity")> Public Property lowerbound As Double
 
     Sub New(render As Drawer)
         scan_x = render.dimension.Width
@@ -85,6 +92,14 @@ Public Class MsImageProperty
                 .size _
                 .DoCall(AddressOf StringFormats.Lanudry)
         End If
+    End Sub
+
+    Public Sub SetIntensityMax(max As Double)
+        _min = 0
+        _max = max
+
+        lowerbound = 0
+        upperbound = max
     End Sub
 
     Public Function GetTolerance() As Tolerance
