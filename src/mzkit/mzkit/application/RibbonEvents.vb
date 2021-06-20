@@ -89,10 +89,10 @@ Module RibbonEvents
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
     End Sub
 
-    Private Sub showMsImaging()
+    Public Sub showMsImaging()
         Dim dockPanel = VisualStudio.DockPanel
 
-        Call WindowModules.viewer.Show(DockPanel)
+        Call WindowModules.viewer.Show(dockPanel)
         Call WindowModules.msImageParameters.Show(dockPanel)
 
         WindowModules.msImageParameters.DockState = DockState.DockLeft

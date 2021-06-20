@@ -189,7 +189,7 @@ Public Class frmMsImagingTweaks
         End If
     End Sub
 
-    Private Sub loadRenderFromCDF(firstFile As String)
+    Public Sub loadRenderFromCDF(firstFile As String)
         Using cdf As New netCDFReader(firstFile)
             Dim size As Size = cdf.GetMsiDimension
             Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray

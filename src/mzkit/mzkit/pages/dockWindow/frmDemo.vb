@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::04c45d569b1a39a9f473621d56f0f5c3, src\mzkit\mzkit\pages\dockWindow\frmDemo.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmDemo
-    ' 
-    '     Sub: frmDemo_Closing, frmDemo_Load, ListView1_DoubleClick, ListView1_SelectedIndexChanged, OpenContainingFolder
-    '          ShowInExplorerToolStripMenuItem_Click, ShowPage
-    ' 
-    ' /********************************************************************************/
+' Class frmDemo
+' 
+'     Sub: frmDemo_Closing, frmDemo_Load, ListView1_DoubleClick, ListView1_SelectedIndexChanged, OpenContainingFolder
+'          ShowInExplorerToolStripMenuItem_Click, ShowPage
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -110,6 +110,17 @@ Public Class frmDemo
                 info.Information = ""
                 info.Application = "Mzkit GC-MS Targeted Viewer"
 
+            Case 4
+
+                ' MSI demo2
+                info.Title = "HR2MSI mouse urinary bladder S096 - Figure1"
+                info.Url = $"{App.HOME}/demo/HR2MSI mouse urinary bladder S096 - Figure1.cdf".GetFullPath
+                info.Information = "Red: 743.5482(unknown);
+Green: 798.541(PC(34:1) [M+K]+)
+Blue: 741.5307(SM(34:1) [M+K]+)
+"
+                info.Application = "Mzkit MSI viewer"
+
         End Select
 
         PropertyGrid1.SelectedObject = info
@@ -160,6 +171,16 @@ Public Class frmDemo
                 Dim demoPath As String = $"{App.HOME}/demo/5ppm.CDF"
                 MyApplication.host.ShowGCMSSIM(demoPath, isBackground:=False, showExplorer:=True)
 
+            Case 4
+
+                Dim demopath As String = $"{App.HOME}/demo/HR2MSI mouse urinary bladder S096 - Figure1.cdf".GetFullPath
+
+                If Not demopath.FileExists Then
+                    MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    Call RibbonEvents.showMsImaging()
+                    Call WindowModules.msImageParameters.loadRenderFromCDF(demopath)
+                End If
         End Select
     End Sub
 
