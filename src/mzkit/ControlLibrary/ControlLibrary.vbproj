@@ -144,6 +144,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MSI\MSIRenderTask.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -159,10 +160,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PixelSelector.Designer.vb">
+    <Compile Include="MSI\PixelSelector.Designer.vb">
       <DependentUpon>PixelSelector.vb</DependentUpon>
     </Compile>
-    <Compile Include="PixelSelector.vb">
+    <Compile Include="MSI\PixelSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="RtRangeSelector.Designer.vb">
@@ -200,7 +201,7 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PixelSelector.resx">
+    <EmbeddedResource Include="MSI\PixelSelector.resx">
       <DependentUpon>PixelSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RtRangeSelector.resx">
@@ -247,6 +248,10 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
+      <Project>{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}</Project>
+      <Name>MsImaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Task\Task.vbproj">
       <Project>{6e5bca87-358e-4ba5-b279-de17afa52c5c}</Project>

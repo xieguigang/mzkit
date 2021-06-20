@@ -47,8 +47,11 @@
 
 Imports System.ComponentModel
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -132,30 +135,13 @@ Public Class frmMsImagingViewer
 
         Call New Thread(
             Sub()
-                Dim pixels = render.LoadPixels(selectedMz.ToArray, params.GetTolerance).ToArray
-                Dim dimensionSize As Size = render.dimension
+                Dim err As Tolerance = params.GetTolerance
+                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
 
-                pixels = Drawer.ScalePixels(pixels, params.GetTolerance)
+                pixels = Drawer.ScalePixels(pixels, err)
                 pixels = Drawer.GetPixelsMatrix(pixels)
 
-                Call Invoke(Sub()
-                                rendering = Sub()
-                                                Call MyApplication.RegisterPlot(
-                                                    Sub(args)
-                                                        PictureBox1.BackgroundImage = Drawer.RenderPixels(
-                                                            pixels:=pixels,
-                                                            dimension:=dimensionSize,
-                                                            dimSize:=size.SizeParser,
-                                                            threshold:=params.threshold,
-                                                            mapLevels:=params.mapLevels,
-                                                            colorSet:=params.colors.Description
-                                                        )
-
-                                                        PictureBox1.BackColor = params.background
-                                                    End Sub)
-                                            End Sub
-                            End Sub)
-
+                Call Invoke(Sub() rendering = createRenderTask(pixels, size))
                 Call Invoke(rendering)
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
@@ -163,6 +149,29 @@ Public Class frmMsImagingViewer
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
     End Sub
+
+    Private Function createRenderTask(pixels As PixelData(), size$) As Action
+        Dim dimensionSize As Size = render.dimension
+
+        Return Sub()
+                   Call MyApplication.RegisterPlot(
+                       Sub(args)
+                           Dim image As Bitmap = Drawer.RenderPixels(
+                               pixels:=pixels,
+                               dimension:=dimensionSize,
+                               dimSize:=size.SizeParser,
+                               threshold:=params.threshold,
+                               mapLevels:=params.mapLevels,
+                               colorSet:=params.colors.Description
+                           )
+
+                           image = params.Smooth(image)
+
+                           PictureBox1.BackgroundImage = image
+                           PictureBox1.BackColor = params.background
+                       End Sub)
+               End Sub
+    End Function
 
     Protected Overrides Sub OpenContainingFolder()
         Call Process.Start(FilePath.ParentPath)
