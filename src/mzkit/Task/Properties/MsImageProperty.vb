@@ -54,7 +54,20 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Filters
 Imports Microsoft.VisualBasic.Linq
+
+Public Enum SmoothFilters
+    Gauss
+    Median
+    Mean
+    Min
+    Max
+    GaussMedian
+    GaussMean
+    GaussMin
+    GaussMax
+End Enum
 
 Public Class MsImageProperty
 
@@ -69,7 +82,7 @@ Public Class MsImageProperty
     <Category("Render")> Public Property threshold As Double = 0.01
     <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
-    <Category("Render")> Public Property ImageSmooth As Double
+    <Category("Render")> Public Property imageSmooth As SmoothFilters
 
     <Category("Pixel M/z Data")> Public Property tolerance As Double = 0.1
     <Category("Pixel M/z Data")> Public Property method As ToleranceMethod = ToleranceMethod.Da
@@ -93,6 +106,22 @@ Public Class MsImageProperty
                 .DoCall(AddressOf StringFormats.Lanudry)
         End If
     End Sub
+
+    Public Function Smooth(img As Bitmap) As Bitmap
+        Select Case imageSmooth
+            Case SmoothFilters.Gauss : Return GaussBlur.GaussBlur(img)
+            Case SmoothFilters.GaussMax : Return New Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Max)
+            Case SmoothFilters.GaussMin : Return New Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Min)
+            Case SmoothFilters.GaussMean : Return New Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Mean)
+            Case SmoothFilters.GaussMedian : Return New Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Median)
+            Case SmoothFilters.Max : Return New Matrix(img).GetSmoothBitmap(Matrix2DFilters.Max)
+            Case SmoothFilters.Min : Return New Matrix(img).GetSmoothBitmap(Matrix2DFilters.Min)
+            Case SmoothFilters.Mean : Return New Matrix(img).GetSmoothBitmap(Matrix2DFilters.Mean)
+            Case SmoothFilters.Median : Return New Matrix(img).GetSmoothBitmap(Matrix2DFilters.Median)
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
 
     Public Sub SetIntensityMax(max As Double)
         _min = 0
