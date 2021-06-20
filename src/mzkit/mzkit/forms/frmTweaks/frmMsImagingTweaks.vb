@@ -55,6 +55,8 @@ Public Class frmMsImagingTweaks
 
     Dim checkedMz As New List(Of TreeNode)
 
+    Friend viewer As frmMsImagingViewer
+
     Public Iterator Function GetSelectedIons() As IEnumerable(Of Double)
         If checkedMz.Count > 0 Then
             For Each node In checkedMz
@@ -153,21 +155,24 @@ Public Class frmMsImagingTweaks
     End Sub
 
     ''' <summary>
-    ''' 将所有的m/z合在一起渲染
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub RenderLayerCompositionModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
-
-    End Sub
-
-    ''' <summary>
     ''' 只渲染前三个选中的m/z
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub RenderingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderingToolStripMenuItem.Click
+        Dim mz3 As Double() = GetSelectedIons.Take(3).ToArray
+        Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
+        Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)
+        Dim b As Double = mz3.ElementAtOrDefault(2, [default]:=-1)
+        Dim viewer = Me.viewer
 
+        If viewer Is Nothing Then
+            If TypeOf MyApplication.host.dockPanel.ActiveDocument Is frmMsImagingViewer Then
+                viewer = DirectCast(MyApplication.host.dockPanel.ActiveDocument, frmMsImagingViewer)
+            End If
+        End If
+
+        Call viewer.renderRGB(r, g, b)
     End Sub
 
     Private Sub PropertyGrid1_DragDrop(sender As Object, e As DragEventArgs) Handles PropertyGrid1.DragDrop

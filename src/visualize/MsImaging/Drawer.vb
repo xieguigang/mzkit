@@ -102,6 +102,87 @@ Public Class Drawer : Implements IDisposable
         Return pixelReader.LoadPixels(mz, tolerance, skipZero)
     End Function
 
+    Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
+                                               dimension As Size,
+                                               dimSize As Size,
+                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+
+        Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+        Dim Rchannel = GetPixelChannelReader(R)
+        Dim Gchannel = GetPixelChannelReader(G)
+        Dim Bchannel = GetPixelChannelReader(B)
+
+        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
+            For x As Integer = 1 To dimension.Width
+                For y As Integer = 1 To dimension.Height
+                    Dim bR As Byte = Rchannel(x, y)
+                    Dim bG As Byte = Gchannel(x, y)
+                    Dim bB As Byte = Bchannel(x, y)
+                    Dim color As Color = Color.FromArgb(bR, bG, bB)
+
+                    ' imzXML里面的坐标是从1开始的
+                    ' 需要减一转换为.NET中从零开始的位置
+                    Call buffer.SetPixel(x - 1, y - 1, color)
+                Next
+            Next
+        End Using
+
+        If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
+            Return raw
+        Else
+            Return ScaleLayer(raw, dimension, dimSize, scale)
+        End If
+    End Function
+
+    Private Shared Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
+        Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
+        Dim byteRange As DoubleRange = {0, 255}
+        Dim xy = channel _
+            .GroupBy(Function(p) p.x) _
+            .ToDictionary(Function(p) p.Key,
+                          Function(x)
+                              Return x _
+                                  .GroupBy(Function(p) p.y) _
+                                  .ToDictionary(Function(p) p.Key,
+                                                Function(p)
+                                                    Return p.Select(Function(pm) pm.intensity).Max
+                                                End Function)
+                          End Function)
+
+        Return Function(x, y) As Byte
+                   If Not xy.ContainsKey(x) Then
+                       Return 0
+                   End If
+
+                   Dim ylist = xy.Item(x)
+
+                   If Not ylist.ContainsKey(y) Then
+                       Return 0
+                   End If
+
+                   Return CByte(intensityRange.ScaleMapping(ylist.Item(y), byteRange))
+               End Function
+    End Function
+
+    Private Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
+        Dim newWidth As Integer = dimension.Width * dimSize.Width
+        Dim newHeight As Integer = dimension.Height * dimSize.Height
+        Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
+        Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
+
+        If scale = InterpolationMode.Invalid Then
+            scale = InterpolationMode.Default
+        End If
+
+        Using layer As Graphics2D = New Bitmap(newWidth, newHeight)
+            layer.InterpolationMode = scale
+            layer.SmoothingMode = SmoothingMode.HighQuality
+            layer.DrawImage(raw, newSize, rawSize, GraphicsUnit.Pixel)
+
+            Return layer.ImageResource
+        End Using
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -144,24 +225,9 @@ Public Class Drawer : Implements IDisposable
 
         If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
             Return raw
+        Else
+            Return ScaleLayer(raw, dimension, dimSize, scale)
         End If
-
-        Dim newWidth As Integer = dimension.Width * dimSize.Width
-        Dim newHeight As Integer = dimension.Height * dimSize.Height
-        Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
-        Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
-
-        If scale = InterpolationMode.Invalid Then
-            scale = InterpolationMode.Default
-        End If
-
-        Using layer As Graphics2D = New Bitmap(newWidth, newHeight)
-            layer.InterpolationMode = scale
-            layer.SmoothingMode = SmoothingMode.HighQuality
-            layer.DrawImage(raw, newSize, rawSize, GraphicsUnit.Pixel)
-
-            Return layer.ImageResource
-        End Using
     End Function
 
     ''' <summary>

@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports mzkit.My
@@ -95,6 +96,7 @@ Public Class frmMsImagingViewer
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
         Me.FilePath = filePath
 
+        WindowModules.msImageParameters.viewer = Me
         WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
         WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
     End Sub
@@ -116,6 +118,62 @@ Public Class frmMsImagingViewer
             Call renderByMzList(mz)
         End If
     End Sub
+
+    Friend Sub renderRGB(r As Double, g As Double, b As Double)
+        Dim selectedMz As Double() = {r, g, b}.Where(Function(mz) mz > 0).ToArray
+        Dim progress As New frmProgressSpinner
+        Dim size As String = $"{params.pixel_width},{params.pixel_height}"
+
+        If selectedMz.Count = 1 Then
+            MyApplication.host.showStatusMessage($"Run MS-Image rendering for selected ion m/z {selectedMz(Scan0)}...")
+        ElseIf selectedMz.Count > 1 Then
+            MyApplication.host.showStatusMessage($"Run MS-Image rendering for {selectedMz.Count} selected ions...")
+        Else
+            MyApplication.host.showStatusMessage("No RGB channels was selected!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Call New Thread(
+            Sub()
+                Dim err As Tolerance = params.GetTolerance
+                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim maxInto As Double = Aggregate pm As PixelData
+                                        In pixels
+                                        Into Max(pm.intensity)
+                Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
+                Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
+                Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
+
+                Call Invoke(Sub() params.SetIntensityMax(maxInto))
+                Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
+                Call Invoke(rendering)
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
+
+        Call progress.ShowDialog()
+        Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+    End Sub
+
+    Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), size$, dimensionSize As Size) As Action
+        loadedPixels = R.JoinIterates(G).JoinIterates(B).ToArray
+
+        Return Sub()
+                   Call MyApplication.RegisterPlot(
+                       Sub(args)
+                           Dim image As Bitmap = Drawer.ChannelCompositions(
+                               R:=R, G:=G, B:=B,
+                               dimension:=dimensionSize,
+                               dimSize:=size.SizeParser,
+                               scale:=params.scale
+                           )
+
+                           image = params.Smooth(image)
+
+                           PictureBox1.BackgroundImage = image
+                           PictureBox1.BackColor = params.background
+                       End Sub)
+               End Sub
+    End Function
 
     Friend Sub renderByMzList(mz As Double())
         Dim selectedMz As New List(Of Double)
