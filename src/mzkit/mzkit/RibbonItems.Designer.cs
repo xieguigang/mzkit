@@ -52,6 +52,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonShowExplorer = 1121;
             public const uint cmdShowGCMSExplorer = 113;
             public const uint cmdShowMRMExplorer = 118;
+            public const uint cmdButtonMsImaging = 1167;
             public const uint cmdButtonShowSearchList = 1122;
             public const uint cmdButtonShowProperties = 1123;
             public const uint cmdTabLayout = 1035;
@@ -135,6 +136,8 @@ namespace RibbonLib.Controls
         // ContextPopup CommandName
         public const uint cmdContextMap = Cmd.cmdContextMap;
 
+        private static bool initialized;
+
         public Ribbon Ribbon { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
@@ -169,6 +172,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonShowExplorer { get; private set; }
         public RibbonButton ShowGCMSExplorer { get; private set; }
         public RibbonButton ShowMRMExplorer { get; private set; }
+        public RibbonButton ButtonMsImaging { get; private set; }
         public RibbonButton ButtonShowSearchList { get; private set; }
         public RibbonButton ButtonShowProperties { get; private set; }
         public RibbonTab TabLayout { get; private set; }
@@ -250,6 +254,8 @@ namespace RibbonLib.Controls
         {
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
+            if (initialized)
+                return;
             this.Ribbon = ribbon;
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
@@ -284,6 +290,7 @@ namespace RibbonLib.Controls
             ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
             ShowGCMSExplorer = new RibbonButton(ribbon, Cmd.cmdShowGCMSExplorer);
             ShowMRMExplorer = new RibbonButton(ribbon, Cmd.cmdShowMRMExplorer);
+            ButtonMsImaging = new RibbonButton(ribbon, Cmd.cmdButtonMsImaging);
             ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
             ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
@@ -360,6 +367,7 @@ namespace RibbonLib.Controls
             GroupExport = new RibbonDropDownButton(ribbon, Cmd.cmdGroupExport);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
             ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);
+            initialized = true;
         }
 
     }

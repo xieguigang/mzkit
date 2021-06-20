@@ -89,6 +89,28 @@ Module RibbonEvents
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
     End Sub
 
+    Private Sub showMsImaging()
+        Dim progress As New frmProgressSpinner
+
+        Call WindowModules.viewer.Show(DockPanel)
+        Call WindowModules.msImageParameters.Show(DockPanel)
+        Call New Thread(
+            Sub()
+                Dim canvas As New Drawer(imzML)
+
+                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
+                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
+
+                Call progress.Invoke(Sub() progress.Close())
+
+                Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
+            End Sub).Start()
+
+        WindowModules.msImageParameters.DockState = DockState.DockLeft
+
+        Call progress.ShowDialog()
+    End Sub
+
     Private Sub resetLayout()
         WindowModules.fileExplorer.DockState = DockState.DockLeft
         WindowModules.rawFeaturesList.DockState = DockState.DockLeftAutoHide

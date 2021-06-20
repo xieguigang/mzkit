@@ -98,6 +98,7 @@ Friend MustInherit Class WindowModules
 
     Public Shared Sub OpenFile()
         Dim filters As String() = {
+            "All Raw Data Files(*.mzXML;*.mzML;*.mzPack;*.imzML;*.cdf;*.netcdf;*.raw)|*.mzXML;*.mzML;*.mzPack;*.imzML;*.cdf;*.netcdf;*.raw",
             "Untargetted Raw Data(*.mzXML;*.mzML;*.mzPack)|*.mzXML;*.mzML;*.mzPack",
             "Image mzML(*.imzML)|*.imzML",
             "GC-MS Targeted(*.cdf)|*.cdf;*.netcdf",
