@@ -50,11 +50,13 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -105,33 +107,40 @@ Public Class Drawer : Implements IDisposable
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,
                                         Optional threshold As Double = 0.1) As Bitmap
-        Dim color As SolidBrush
-        Dim colors As SolidBrush() = Designer _
-            .GetColors(colorSet, mapLevels) _
-            .Select(Function(c) New SolidBrush(c)) _
-            .ToArray
+        Dim color As Color
+        Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
         Dim index As Integer
         Dim level As Double
-        Dim rect As Rectangle
-        Dim pos As Point
         Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
         Dim levelRange As DoubleRange = New Double() {0, 1}
+        Dim raw As Bitmap
 
-        Using layer As Graphics2D = New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
+        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(New Bitmap(dimension.Width, dimension.Height))
             For Each point As PixelData In PixelData.ScalePixels(pixels)
                 level = point.level
 
                 If level < threshold Then
-                    color = Brushes.Transparent
+                    color = Color.Transparent
                 Else
                     index = levelRange.ScaleMapping(level, indexrange)
                     color = colors(index)
                 End If
 
-                pos = New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height)
-                rect = New Rectangle(pos, dimSize)
-                layer.FillRectangle(color, rect)
+                Call buffer.SetPixel(point.x, point.y, color)
             Next
+
+            raw = buffer.GetImage
+        End Using
+
+        Dim newWidth As Integer = dimension.Width * dimSize.Width
+        Dim newHeight As Integer = dimension.Height * dimSize.Height
+        Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
+        Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
+
+        Using layer As Graphics2D = New Bitmap(newWidth, newHeight)
+            layer.InterpolationMode = InterpolationMode.HighQualityBicubic
+            layer.SmoothingMode = SmoothingMode.HighQuality
+            layer.DrawImage(raw, newSize, rawSize, GraphicsUnit.Pixel)
 
             Return layer.ImageResource
         End Using

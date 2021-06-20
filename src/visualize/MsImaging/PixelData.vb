@@ -48,6 +48,9 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
+''' <summary>
+''' a pixels point of [x,y,color]
+''' </summary>
 Public Class PixelData
 
     Public Property x As Integer
