@@ -34,4 +34,32 @@ Public Module PixelsCDF
             matrix.AddVariable("y", New integers(y), "pixels")
         End Using
     End Sub
+
+    <Extension>
+    Public Function GetMsiDimension(cdf As netCDFReader) As Size
+        Dim w As Integer = CType(cdf!width, Integer)
+        Dim h As Integer = CType(cdf!height, Integer)
+
+        Return New Size With {
+            .Width = w,
+            .Height = h
+        }
+    End Function
+
+    <Extension>
+    Public Iterator Function LoadPixelsData(cdf As netCDFReader) As IEnumerable(Of PixelData)
+        Dim mz As doubles = cdf.getDataVariable("mz")
+        Dim intensity As doubles = cdf.getDataVariable("intensity")
+        Dim x As integers = cdf.getDataVariable("x")
+        Dim y As integers = cdf.getDataVariable("y")
+
+        For i As Integer = 0 To mz.Length - 1
+            Yield New PixelData With {
+                .mz = mz(i),
+                .intensity = intensity(i),
+                .x = x(i),
+                .y = y(i)
+            }
+        Next
+    End Function
 End Module

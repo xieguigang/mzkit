@@ -633,15 +633,6 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
-    Private Sub treeView1_DragDrop(sender As Object, e As DragEventArgs) Handles treeView1.DragDrop
-        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
-
-        If Not firstFile Is Nothing Then
-            Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
-        End If
-    End Sub
-
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         Dim mz As Double = Val(Strings.Trim(ToolStripSpringTextBox1.Text))
         Dim ppm As Double = MyApplication.host.GetPPMError
@@ -663,6 +654,15 @@ Public Class frmRawFeaturesList
         For Each item In Ms2
             Call mzNode.Nodes.Add(New TreeNode(item.ToString) With {.Tag = item, .ImageIndex = 1, .SelectedImageIndex = 1})
         Next
+    End Sub
+
+    Private Sub treeView1_DragDrop(sender As Object, e As DragEventArgs) Handles treeView1.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
+
+        If Not firstFile Is Nothing Then
+            Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
+        End If
     End Sub
 
     Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter

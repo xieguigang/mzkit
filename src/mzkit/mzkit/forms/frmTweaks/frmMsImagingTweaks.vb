@@ -44,6 +44,8 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports mzkit.My
 
 Public Class frmMsImagingTweaks
@@ -145,7 +147,46 @@ Public Class frmMsImagingTweaks
         ToolStripSpringTextBox1.Text = ""
     End Sub
 
+    ''' <summary>
+    ''' 将所有的m/z合在一起渲染
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RenderLayerCompositionModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
 
+    End Sub
+
+    ''' <summary>
+    ''' 只渲染前三个选中的m/z
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub RenderingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenderingToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub PropertyGrid1_DragDrop(sender As Object, e As DragEventArgs) Handles PropertyGrid1.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
+
+        If Not firstFile Is Nothing Then
+            If firstFile.ExtensionSuffix("imzML") Then
+                Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
+            ElseIf firstFile.ExtensionSuffix("CDF") Then
+                Using cdf As New netCDFReader(firstFile)
+                    Dim size As Size = cdf.GetMsiDimension
+                    Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
+
+                End Using
+            Else
+                Call MyApplication.host.showStatusMessage("invalid file type!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            End If
+        End If
+    End Sub
+
+    Private Sub PropertyGrid1_DragEnter(sender As Object, e As DragEventArgs) Handles PropertyGrid1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
     End Sub
 End Class

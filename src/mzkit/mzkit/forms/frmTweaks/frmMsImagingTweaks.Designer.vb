@@ -55,6 +55,7 @@ Partial Class frmMsImagingTweaks
         '
         'PropertyGrid1
         '
+        Me.PropertyGrid1.AllowDrop = True
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PropertyGrid1.LineColor = System.Drawing.SystemColors.ScrollBar
         Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
@@ -120,6 +121,7 @@ Partial Class frmMsImagingTweaks
         Me.Win7StyleTreeView1.HotTracking = True
         Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 0)
         Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
+        Me.Win7StyleTreeView1.ShowLines = False
         Me.Win7StyleTreeView1.ShowNodeToolTips = True
         Me.Win7StyleTreeView1.Size = New System.Drawing.Size(377, 111)
         Me.Win7StyleTreeView1.TabIndex = 0
