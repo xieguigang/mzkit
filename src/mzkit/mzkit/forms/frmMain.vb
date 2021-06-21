@@ -229,7 +229,7 @@ Public Class frmMain
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
     End Sub
 
-    Private Sub showMsImaging(imzML As String)
+    Friend Sub showMsImaging(imzML As String)
         Dim progress As New frmProgressSpinner
 
         Call WindowModules.viewer.Show(dockPanel)

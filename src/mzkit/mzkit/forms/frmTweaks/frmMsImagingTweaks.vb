@@ -49,6 +49,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
+Imports RibbonLib.Interop
 
 Public Class frmMsImagingTweaks
 
@@ -80,6 +81,7 @@ Public Class frmMsImagingTweaks
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
 
         Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        RibbonEvents.ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
     End Sub
 
     Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click

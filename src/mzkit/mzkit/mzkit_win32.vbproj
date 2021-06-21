@@ -343,6 +343,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\InputMSIDimension.Designer.vb">
+      <DependentUpon>InputMSIDimension.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\InputMSIDimension.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmSeeMs.Designer.vb">
       <DependentUpon>frmSeeMs.vb</DependentUpon>
     </Compile>
@@ -720,6 +726,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
       <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\InputMSIDimension.resx">
+      <DependentUpon>InputMSIDimension.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>

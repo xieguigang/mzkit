@@ -9,8 +9,12 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Module RibbonEvents
 
+    Public ReadOnly Property ribbonItems As RibbonItems
+
     <Extension>
     Public Sub AddHandlers(ribbonItems As RibbonItems)
+        _ribbonItems = ribbonItems
+
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf WindowModules.OpenFile
         AddHandler ribbonItems.ButtonImportsRawFiles.ExecuteEvent, AddressOf MyApplication.host.ImportsFiles
@@ -72,6 +76,7 @@ Module RibbonEvents
 
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
+        AddHandler ribbonItems.ButtonOpenMSIRaw.ExecuteEvent, AddressOf OpenMSIRaw
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() WindowModules.msDemo.ShowPage()
         AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call ConnectToBioDeep.OpenAdvancedFunction(AddressOf VisualStudio.ShowSingleDocument(Of frmTargetedQuantification))
 
@@ -87,6 +92,21 @@ Module RibbonEvents
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+    End Sub
+
+    Public Sub OpenMSIRaw()
+        Using file As New OpenFileDialog() With {
+            .Filter = "Thermo Raw(*.raw)|*.raw|mzML Raw(*.mzML)|*.mzML|Imaging mzML(*.imzML)|*.imzML",
+            .Title = "Open MS-imaging Raw Data File"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Select Case file.FileName.ExtensionSuffix.ToLower
+                    Case "raw" : Call WindowModules.viewer.loadRaw(file.FileName)
+                    Case "mzml" : Call WindowModules.viewer.loadmzML(file.FileName)
+                    Case "imzml" : Call WindowModules.viewer.loadimzML(file.FileName)
+                End Select
+            End If
+        End Using
     End Sub
 
     Public Sub showMsImaging()

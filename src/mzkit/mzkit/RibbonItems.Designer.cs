@@ -64,9 +64,6 @@ using RibbonLib.Interop;
             public const uint cmdButtonXIC = 1145;
             public const uint cmdPlotOptions = 97;
             public const uint cmdCheckBoxXICRelative = 96;
-            public const uint cmdTabGroupMSI = 120;
-            public const uint cmdTabMSIPage = 121;
-            public const uint cmdButtonOpenMSIRaw = 119;
             public const uint cmdTabGroupCalculatorTools = 1061;
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
@@ -105,6 +102,10 @@ using RibbonLib.Interop;
             public const uint cmdQuantifyIons = 109;
             public const uint cmdTagGroupParameterTool = 117;
             public const uint cmdAdjustParameters = 116;
+            public const uint cmdTabGroupMSI = 120;
+            public const uint cmdTabMSIPage = 121;
+            public const uint cmdGroupMSIFile = 122;
+            public const uint cmdButtonOpenMSIRaw = 119;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -187,9 +188,6 @@ using RibbonLib.Interop;
         public RibbonButton ButtonXIC { get; private set; }
         public RibbonGroup PlotOptions { get; private set; }
         public RibbonCheckBox CheckBoxXICRelative { get; private set; }
-        public RibbonTab TabGroupMSI { get; private set; }
-        public RibbonGroup TabMSIPage { get; private set; }
-        public RibbonButton ButtonOpenMSIRaw { get; private set; }
         public RibbonTabGroup TabGroupCalculatorTools { get; private set; }
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
@@ -228,6 +226,10 @@ using RibbonLib.Interop;
         public RibbonButton QuantifyIons { get; private set; }
         public RibbonGroup TagGroupParameterTool { get; private set; }
         public RibbonButton AdjustParameters { get; private set; }
+        public RibbonTabGroup TabGroupMSI { get; private set; }
+        public RibbonTab TabMSIPage { get; private set; }
+        public RibbonGroup GroupMSIFile { get; private set; }
+        public RibbonButton ButtonOpenMSIRaw { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -308,9 +310,6 @@ using RibbonLib.Interop;
             ButtonXIC = new RibbonButton(ribbon, Cmd.cmdButtonXIC);
             PlotOptions = new RibbonGroup(ribbon, Cmd.cmdPlotOptions);
             CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
-            TabGroupMSI = new RibbonTab(ribbon, Cmd.cmdTabGroupMSI);
-            TabMSIPage = new RibbonGroup(ribbon, Cmd.cmdTabMSIPage);
-            ButtonOpenMSIRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenMSIRaw);
             TabGroupCalculatorTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools);
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
@@ -349,6 +348,10 @@ using RibbonLib.Interop;
             QuantifyIons = new RibbonButton(ribbon, Cmd.cmdQuantifyIons);
             TagGroupParameterTool = new RibbonGroup(ribbon, Cmd.cmdTagGroupParameterTool);
             AdjustParameters = new RibbonButton(ribbon, Cmd.cmdAdjustParameters);
+            TabGroupMSI = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupMSI);
+            TabMSIPage = new RibbonTab(ribbon, Cmd.cmdTabMSIPage);
+            GroupMSIFile = new RibbonGroup(ribbon, Cmd.cmdGroupMSIFile);
+            ButtonOpenMSIRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenMSIRaw);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);

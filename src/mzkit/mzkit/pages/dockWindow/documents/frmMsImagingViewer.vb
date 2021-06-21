@@ -87,6 +87,26 @@ Public Class frmMsImagingViewer
         Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
+    Public Sub loadRaw(file As String)
+        Dim getSize As New InputMSIDimension
+
+        If getSize.ShowDialog = DialogResult.OK Then
+
+        End If
+    End Sub
+
+    Public Sub loadmzML(file As String)
+        Dim getSize As New InputMSIDimension
+
+        If getSize.ShowDialog = DialogResult.OK Then
+
+        End If
+    End Sub
+
+    Public Sub loadimzML(file As String)
+        Call MyApplication.host.showMsImaging(imzML:=file)
+    End Sub
+
     Public Sub LoadRender(render As Drawer, filePath As String)
         Dim checks As Win7StyleTreeView = WindowModules.msImageParameters.Win7StyleTreeView1
 

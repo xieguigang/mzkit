@@ -505,5 +505,10 @@
 #define cmdTabMSIPage_LabelDescription_RESID 60012
 #define cmdTabMSIPage_TooltipTitle_RESID 60013
 #define cmdTabMSIPage_TooltipDescription_RESID 60014
-#define InternalCmd2_LabelTitle_RESID 60015
-#define InternalCmd4_LabelTitle_RESID 60016
+#define cmdGroupMSIFile 122 
+#define cmdGroupMSIFile_LabelTitle_RESID 60015
+#define cmdGroupMSIFile_LabelDescription_RESID 60016
+#define cmdGroupMSIFile_TooltipTitle_RESID 60017
+#define cmdGroupMSIFile_TooltipDescription_RESID 60018
+#define InternalCmd2_LabelTitle_RESID 60019
+#define InternalCmd4_LabelTitle_RESID 60020

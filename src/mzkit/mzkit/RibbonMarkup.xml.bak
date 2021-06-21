@@ -1335,8 +1335,9 @@
         <Image MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdTabGroupMSI" Id="120" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
+    <Command Name="cmdTabGroupMSI" Id="120" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
     <Command Name="cmdTabMSIPage" Id="121" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
+    <Command Name="cmdGroupMSIFile" Id="122" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1452,11 +1453,6 @@
               <CheckBox CommandName="cmdCheckBoxXICRelative" />
             </Group>
           </Tab>
-          <Tab CommandName="cmdTabGroupMSI">
-            <Group CommandName="cmdTabMSIPage" SizeDefinition="OneButton">
-              <Button CommandName="cmdButtonOpenMSIRaw" />
-            </Group>
-          </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupCalculatorTools">
           <Tab CommandName="cmdTabCalculator">
@@ -1517,6 +1513,13 @@
             </Group>
             <Group CommandName="cmdTagGroupParameterTool" SizeDefinition="OneButton">
               <Button CommandName="cmdAdjustParameters" />
+            </Group>
+          </Tab>
+        </TabGroup>
+        <TabGroup CommandName="cmdTabGroupMSI">
+          <Tab CommandName="cmdTabMSIPage">
+            <Group CommandName="cmdGroupMSIFile" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonOpenMSIRaw" />
             </Group>
           </Tab>
         </TabGroup>
