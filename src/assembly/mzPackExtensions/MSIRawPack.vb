@@ -31,8 +31,8 @@ Public Module MSIRawPack
     Private Function PixelScanId(pixels As Size) As Func(Of SingleScanInfo, Integer, String)
         Return Function(scan, n)
                    If scan.MSLevel = 1 Then
-                       Dim y As Integer = stdNum.Floor(n / pixels.Width)
-                       Dim x As Integer = n - y * pixels.Width
+                       Dim y As Integer = stdNum.Floor(n / pixels.Width) + 1
+                       Dim x As Integer = n - (y - 1) * pixels.Width + 1
 
                        Return $"[MS1][Scan_{scan.ScanNumber}][{x},{y}] {scan.FilterText}"
                    Else
