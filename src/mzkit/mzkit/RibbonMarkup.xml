@@ -1327,6 +1327,16 @@
         <Image Id="475" MinDPI="192">Res/applications-system.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonOpenMSIRaw" Id="119" LabelTitle="Open MSI File" LabelDescription="Open MSI Raw Data File" TooltipTitle="Open MSI Raw Data File" TooltipDescription="Open MSI Raw Data File">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabGroupMSI" Id="120" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
+    <Command Name="cmdTabMSIPage" Id="121" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1440,6 +1450,11 @@
             </Group>
             <Group CommandName="cmdPlotOptions">
               <CheckBox CommandName="cmdCheckBoxXICRelative" />
+            </Group>
+          </Tab>
+          <Tab CommandName="cmdTabGroupMSI">
+            <Group CommandName="cmdTabMSIPage" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonOpenMSIRaw" />
             </Group>
           </Tab>
         </TabGroup>
