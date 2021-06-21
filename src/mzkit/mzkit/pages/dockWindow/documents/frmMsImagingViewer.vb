@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
@@ -91,9 +92,9 @@ Public Class frmMsImagingViewer
 
     Public Sub loadRaw(file As String)
         Dim getSize As New InputMSIDimension
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
 
-        If getSize.ShowDialog = DialogResult.OK Then
-
+        If mask.ShowDialogForm(getSize) = DialogResult.OK Then
             Dim progress As New frmProgressSpinner
 
             Call WindowModules.viewer.Show(DockPanel)
@@ -119,6 +120,8 @@ Public Class frmMsImagingViewer
             WindowModules.msImageParameters.DockState = DockState.DockLeft
 
             Call progress.ShowDialog()
+        Else
+            Call MyApplication.host.showStatusMessage("User cancel load MSI raw data file...")
         End If
     End Sub
 

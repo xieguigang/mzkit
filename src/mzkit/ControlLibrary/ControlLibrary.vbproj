@@ -144,6 +144,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message\MaskForm.Designer.vb">
+      <DependentUpon>MaskForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Message\MaskForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MSI\MSIRenderTask.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
