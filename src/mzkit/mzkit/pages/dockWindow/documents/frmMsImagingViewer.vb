@@ -93,12 +93,32 @@ Public Class frmMsImagingViewer
         Dim getSize As New InputMSIDimension
 
         If getSize.ShowDialog = DialogResult.OK Then
-            Using raw As New MSFileReader(file)
-                Dim mzpack As mzPack = raw.LoadFromXMSIRaw(getSize.Dims.SizeParser)
-                Dim render As New Drawer(mzpack)
 
-                Call LoadRender(render, file)
-            End Using
+            Dim progress As New frmProgressSpinner
+
+            Call WindowModules.viewer.Show(DockPanel)
+            Call WindowModules.msImageParameters.Show(DockPanel)
+            Call New Thread(
+                Sub()
+                    Using raw As New MSFileReader(file)
+                        Dim mzpack As mzPack = raw.LoadFromXMSIRaw(getSize.Dims.SizeParser)
+                        Dim render As New Drawer(mzpack)
+
+                        Call WindowModules.viewer.Invoke(Sub() Call LoadRender(render, file))
+                        Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
+                    End Using
+
+                    Call progress.Invoke(Sub() progress.Close())
+
+                    MyApplication.host.Invoke(
+                        Sub()
+                            MyApplication.host.Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {file.FileName}]"
+                        End Sub)
+                End Sub).Start()
+
+            WindowModules.msImageParameters.DockState = DockState.DockLeft
+
+            Call progress.ShowDialog()
         End If
     End Sub
 

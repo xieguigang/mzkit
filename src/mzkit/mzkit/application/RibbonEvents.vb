@@ -100,6 +100,8 @@ Module RibbonEvents
             .Title = "Open MS-imaging Raw Data File"
         }
             If file.ShowDialog = DialogResult.OK Then
+                Call showMsImaging()
+
                 Select Case file.FileName.ExtensionSuffix.ToLower
                     Case "raw" : Call WindowModules.viewer.loadRaw(file.FileName)
                     Case "mzml" : Call WindowModules.viewer.loadmzML(file.FileName)

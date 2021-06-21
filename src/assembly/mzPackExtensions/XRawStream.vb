@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 
@@ -42,6 +43,8 @@ Public Class XRawStream
                 scan_times += scan.ScanTime * 60
                 TIC += scaninfo.TotalIonCurrent
                 BPC += scaninfo.BasePeakIntensity
+
+                Call Application.DoEvents()
             End If
         Next
 

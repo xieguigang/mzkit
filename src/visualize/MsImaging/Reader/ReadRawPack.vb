@@ -19,6 +19,8 @@ Namespace Reader
                             Return New mzPackPixel(pixel)
                         End Function) _
                 .ToArray
+
+            Call ReadDimensions()
         End Sub
 
         Sub New(mzpack As String)
@@ -30,6 +32,15 @@ Namespace Reader
                             End Function) _
                     .ToArray
             End Using
+
+            Call ReadDimensions()
+        End Sub
+
+        Private Sub ReadDimensions()
+            Dim width As Integer = pixels.Select(Function(p) p.X).Max
+            Dim height As Integer = pixels.Select(Function(p) p.Y).Max
+
+            _dimension = New Size(width, height)
         End Sub
 
         Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size)
