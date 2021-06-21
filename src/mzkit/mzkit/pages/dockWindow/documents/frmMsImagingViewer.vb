@@ -85,7 +85,6 @@ Public Class frmMsImagingViewer
     Private Sub frmMsImagingViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = Text
         WindowModules.msImageParameters.DockState = DockState.DockLeft
-        PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
 
         Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
@@ -202,6 +201,7 @@ Public Class frmMsImagingViewer
 
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+        Call PixelSelector1.ShowMessage($"Render in RGB Channel Composition Mode: {selectedMz.JoinBy(", ")}")
     End Sub
 
     Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), size$, dimensionSize As Size) As Action
@@ -219,8 +219,8 @@ Public Class frmMsImagingViewer
 
                            image = params.Smooth(image)
 
-                           PictureBox1.BackgroundImage = image
-                           PictureBox1.BackColor = params.background
+                           PixelSelector1.MSImage = image
+                           PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
     End Function
@@ -256,6 +256,7 @@ Public Class frmMsImagingViewer
 
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+        Call PixelSelector1.ShowMessage($"Render in Layer Pixels Composition Mode: {selectedMz.JoinBy(", ")}")
     End Sub
 
     Dim loadedPixels As PixelData()
@@ -314,8 +315,8 @@ Public Class frmMsImagingViewer
 
                            image = params.Smooth(image)
 
-                           PictureBox1.BackgroundImage = image
-                           PictureBox1.BackColor = params.background
+                           PixelSelector1.MSImage = image
+                           PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
     End Function
@@ -329,14 +330,14 @@ Public Class frmMsImagingViewer
     End Sub
 
     Protected Overrides Sub SaveDocument()
-        If PictureBox1.BackgroundImage Is Nothing Then
+        If PixelSelector1.MSImage Is Nothing Then
             Call MyApplication.host.showStatusMessage("No MSI plot image for output!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         End If
 
         Using file As New SaveFileDialog With {.Filter = "PNG image(*.png)|*.png", .Title = "Save MS-Imaging Plot"}
             If file.ShowDialog = DialogResult.OK Then
-                Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+                Call PixelSelector1.MSImage.SaveAs(file.FileName)
             End If
         End Using
     End Sub

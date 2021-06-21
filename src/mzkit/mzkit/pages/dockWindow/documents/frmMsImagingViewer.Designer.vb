@@ -26,25 +26,13 @@ Partial Class frmMsImagingViewer
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMsImagingViewer))
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExportMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PixelSelector1 = New ControlLibrary.PixelSelector()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.Color.White
-        Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(1004, 653)
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
         '
         'ContextMenuStrip1
         '
@@ -70,24 +58,33 @@ Partial Class frmMsImagingViewer
         Me.ExportMatrixToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.ExportMatrixToolStripMenuItem.Text = "Export Matrix"
         '
+        'PixelSelector1
+        '
+        Me.PixelSelector1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.PixelSelector1.Cursor = System.Windows.Forms.Cursors.Cross
+        Me.PixelSelector1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PixelSelector1.Location = New System.Drawing.Point(0, 0)
+        Me.PixelSelector1.MSImage = Nothing
+        Me.PixelSelector1.Name = "PixelSelector1"
+        Me.PixelSelector1.Size = New System.Drawing.Size(1004, 653)
+        Me.PixelSelector1.TabIndex = 1
+        '
         'frmMsImagingViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1004, 653)
-        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.PixelSelector1)
         Me.DoubleBuffered = True
         Me.Name = "frmMsImagingViewer"
         Me.Text = "MS-Imaging Viewer"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents SaveImageToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExportMatrixToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents PixelSelector1 As ControlLibrary.PixelSelector
 End Class
