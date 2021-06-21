@@ -84,9 +84,9 @@ Public Class Drawer : Implements IDisposable
         End Get
     End Property
 
-    Sub New(file As String)
+    Sub New(file As String, Optional memoryCache As Boolean = False)
         If file.ExtensionSuffix("imzML") Then
-            pixelReader = New ReadIbd(imzML:=file)
+            pixelReader = New ReadIbd(imzML:=file, memoryCache:=memoryCache)
         ElseIf file.ExtensionSuffix("mzpack") Then
             pixelReader = New ReadRawPack(mzpack:=file)
         Else

@@ -23,8 +23,8 @@ Namespace Reader
 
         Public Overrides ReadOnly Property dimension As Size
 
-        Sub New(imzML As String)
-            ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
+        Sub New(imzML As String, Optional memoryCache As Boolean = False)
+            ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"), memoryCache)
             pixels = XML.LoadScans(file:=imzML) _
                 .Select(Function(p) New ibdPixel(ibd, p)) _
                 .ToArray

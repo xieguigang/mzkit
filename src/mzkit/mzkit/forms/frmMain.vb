@@ -236,7 +236,7 @@ Public Class frmMain
         Call WindowModules.msImageParameters.Show(dockPanel)
         Call New Thread(
             Sub()
-                Dim canvas As New Drawer(imzML)
+                Dim canvas As New Drawer(imzML, memoryCache:=True)
 
                 Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
                 Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)

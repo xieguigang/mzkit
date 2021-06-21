@@ -87,6 +87,7 @@ Public Class frmMsImagingViewer
         WindowModules.msImageParameters.DockState = DockState.DockLeft
 
         Call ApplyVsTheme(ContextMenuStrip1)
+        Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
     End Sub
 
     Public Sub loadRaw(file As String)

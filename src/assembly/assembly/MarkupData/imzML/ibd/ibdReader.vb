@@ -137,8 +137,16 @@ Namespace MarkupData.imzML
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Open(ibd As String) As ibdReader
-            Return New ibdReader(ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Processed)
+        Public Shared Function Open(ibd As String, Optional memoryCache As Boolean = False) As ibdReader
+            Dim file As Stream
+
+            If memoryCache Then
+                file = New MemoryStream(ibd.ReadBinary)
+            Else
+                file = ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            End If
+
+            Return New ibdReader(file, Format.Processed)
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
