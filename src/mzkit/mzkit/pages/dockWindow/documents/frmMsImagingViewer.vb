@@ -48,6 +48,8 @@
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
@@ -91,7 +93,12 @@ Public Class frmMsImagingViewer
         Dim getSize As New InputMSIDimension
 
         If getSize.ShowDialog = DialogResult.OK Then
+            Using raw As New MSFileReader(file)
+                Dim mzpack As mzPack = raw.LoadFromXMSIRaw(getSize.Dims.SizeParser)
+                Dim render As New Drawer(mzpack)
 
+                Call LoadRender(render, file)
+            End Using
         End If
     End Sub
 

@@ -13,6 +13,14 @@ Namespace Reader
 
         Dim pixels As mzPackPixel()
 
+        Sub New(mzpack As Assembly.mzPack)
+            Me.pixels = mzpack.MS _
+                .Select(Function(pixel)
+                            Return New mzPackPixel(pixel)
+                        End Function) _
+                .ToArray
+        End Sub
+
         Sub New(mzpack As String)
             Using file As Stream = mzpack.Open
                 Me.pixels = Assembly.mzPack _

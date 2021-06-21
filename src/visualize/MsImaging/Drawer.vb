@@ -53,6 +53,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -91,6 +92,10 @@ Public Class Drawer : Implements IDisposable
         Else
             Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
         End If
+    End Sub
+
+    Sub New(mzpack As mzPack)
+        pixelReader = New ReadRawPack(mzpack)
     End Sub
 
     Sub New(reader As PixelReader)

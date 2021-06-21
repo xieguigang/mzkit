@@ -96,7 +96,7 @@ Module RibbonEvents
 
     Public Sub OpenMSIRaw()
         Using file As New OpenFileDialog() With {
-            .Filter = "Thermo Raw(*.raw)|*.raw|mzML Raw(*.mzML)|*.mzML|Imaging mzML(*.imzML)|*.imzML",
+            .Filter = "Thermo Raw(*.raw)|*.raw|Imaging mzML(*.imzML)|*.imzML",
             .Title = "Open MS-imaging Raw Data File"
         }
             If file.ShowDialog = DialogResult.OK Then
