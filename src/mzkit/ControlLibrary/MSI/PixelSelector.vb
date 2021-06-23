@@ -8,18 +8,28 @@
     End Sub
 
     Dim orginal_image As Size
+    Dim dimension As Size
 
-    Public Property MSImage As Image
+    Public Property MSImage(Optional dimsize As Size = Nothing) As Image
         Get
             Return picCanvas.BackgroundImage
         End Get
         Set(value As Image)
             picCanvas.BackgroundImage = value
+            dimension = dimsize
+
+            If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
+                Throw New InvalidExpressionException("dimension size can not be ZERO!")
+            End If
 
             If value Is Nothing Then
                 orginal_image = Nothing
             Else
                 orginal_image = value.Size
+                orginal_image = New Size With {
+                    .Width = orginal_image.Width / dimension.Width,
+                    .Height = orginal_image.Height / dimension.Height
+                }
             End If
         End Set
     End Property
@@ -36,19 +46,6 @@
         startPoint = e.Location
         DrawSelectionBox(startPoint)
     End Sub
-
-
-    ''' <summary>
-    ''' Round the point to the nearest unscaled pixel location.
-    ''' </summary>
-    ''' <param name="Point"></param>
-    ''' <returns></returns>
-    Private Shared Function RoundPoint(Point As Point, imageScale As Size) As Point
-        Dim x = (imageScale.Width * (Point.X / imageScale.Width))
-        Dim y = (imageScale.Height * (Point.Y / imageScale.Height))
-
-        Return New Point(x, y)
-    End Function
 
     Private Sub picCanvas_MouseMove(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseMove
         If Not picCanvas.BackgroundImage Is Nothing Then

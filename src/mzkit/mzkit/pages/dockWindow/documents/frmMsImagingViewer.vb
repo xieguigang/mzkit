@@ -228,7 +228,7 @@ Public Class frmMsImagingViewer
 
                            image = params.Smooth(image)
 
-                           PixelSelector1.MSImage = image
+                           PixelSelector1.MSImage(size.SizeParser) = image
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -324,7 +324,7 @@ Public Class frmMsImagingViewer
 
                            image = params.Smooth(image)
 
-                           PixelSelector1.MSImage = image
+                           PixelSelector1.MSImage(size.SizeParser) = image
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
