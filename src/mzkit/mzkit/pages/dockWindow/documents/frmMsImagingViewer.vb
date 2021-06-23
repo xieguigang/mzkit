@@ -194,7 +194,7 @@ Public Class frmMsImagingViewer
         Dim ms As New LibraryMatrix With {.ms2 = pixel.GetMs}
 
         Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
-        Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms)
+        Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms, focusOn:=False)
     End Sub
 
     Friend Sub renderRGB(r As Double, g As Double, b As Double)

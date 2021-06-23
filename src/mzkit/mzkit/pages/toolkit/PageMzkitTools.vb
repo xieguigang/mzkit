@@ -208,7 +208,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Public Sub PlotMatrx(title1$, title2$, scanData As LibraryMatrix)
+    Public Sub PlotMatrx(title1$, title2$, scanData As LibraryMatrix, Optional focusOn As Boolean = True)
         Call MyApplication.RegisterPlot(
             Sub(args)
                 PictureBox1.BackgroundImage = scanData _
@@ -229,7 +229,9 @@ Public Class PageMzkitTools
             title:="BioDeep™ MS/MS alignment Viewer"
         )
 
-        ShowTabPage(TabPage5)
+        If focusOn Then
+            Call ShowTabPage(TabPage5)
+        End If
     End Sub
 
     Friend Sub ShowMatrix(PDA As PDAPoint(), name As String)
