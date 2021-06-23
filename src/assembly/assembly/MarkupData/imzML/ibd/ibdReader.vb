@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::7219f3aed924f5b36dd6b6cf7f2950b4, src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ibdReader
-    ' 
-    '         Properties: size, UUID
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetMSMS, Open, (+2 Overloads) ReadArray, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ibdReader
+' 
+'         Properties: size, UUID
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetMSMS, Open, (+2 Overloads) ReadArray, ToString
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Namespace MarkupData.imzML
     Public Class ibdReader : Implements IDisposable
 
         ReadOnly stream As BinaryDataReader
+        ReadOnly filepath As String
 
         Dim disposedValue As Boolean
 
@@ -82,7 +83,15 @@ Namespace MarkupData.imzML
 
         Public ReadOnly Property size As Long
             Get
-                Return stream.Length
+                If stream.BaseStream Is Nothing Then
+                    If filepath.FileExists Then
+                        Return filepath.FileLength
+                    Else
+                        Return 0
+                    End If
+                Else
+                    Return stream.Length
+                End If
             End Get
         End Property
 
@@ -91,6 +100,10 @@ Namespace MarkupData.imzML
             stream.ByteOrder = ByteOrder.LittleEndian
             format = layout
             magic = New Guid(stream.ReadBytes(16))
+
+            If TypeOf file Is FileStream Then
+                filepath = DirectCast(file, FileStream).Name
+            End If
         End Sub
 
         ''' <summary>
@@ -137,16 +150,11 @@ Namespace MarkupData.imzML
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Open(ibd As String, Optional memoryCache As Boolean = False) As ibdReader
-            Dim file As Stream
+        Public Shared Function Open(ibd As String) As ibdReader
+            Dim file As Stream = ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim reader As New ibdReader(file, Format.Processed)
 
-            If memoryCache Then
-                file = New MemoryStream(ibd.ReadBinary)
-            Else
-                file = ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            End If
-
-            Return New ibdReader(file, Format.Processed)
+            Return reader
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
