@@ -52,5 +52,9 @@ Namespace Pixel
                          Return mzlist.Any(Function(zzz) tolerance(zzz, mzi))
                      End Function)
         End Function
+
+        Protected Friend Overrides Sub release()
+            Erase memoryCache
+        End Sub
     End Class
 End Namespace

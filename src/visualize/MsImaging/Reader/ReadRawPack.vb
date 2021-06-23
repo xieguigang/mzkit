@@ -49,6 +49,10 @@ Namespace Reader
         End Sub
 
         Protected Overrides Sub release()
+            For Each p In pixels
+                Call p.release()
+            Next
+
             Erase pixels
         End Sub
 

@@ -69,6 +69,12 @@ Namespace Reader
 
         Protected Overrides Sub release()
             Call ibd.Dispose()
+
+            For Each p As ibdPixel In pixels
+                Call p.release()
+            Next
+
+            Erase pixels
         End Sub
 
         Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)

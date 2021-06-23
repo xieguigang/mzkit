@@ -56,5 +56,13 @@ Namespace Pixel
                          Return scan.mz.Any(Function(zzz) tolerance(zzz, mzi))
                      End Function)
         End Function
+
+        Protected Overrides Sub release()
+            If Not scan Is Nothing Then
+                Erase scan.into
+                Erase scan.mz
+                Erase scan.products
+            End If
+        End Sub
     End Class
 End Namespace
