@@ -36,6 +36,10 @@ Namespace Reader
             Call ReadDimensions()
         End Sub
 
+        Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
+            Return pixels.Where(Function(p) p.X = x AndAlso p.Y = y).FirstOrDefault
+        End Function
+
         Private Sub ReadDimensions()
             Dim width As Integer = pixels.Select(Function(p) p.X).Max
             Dim height As Integer = pixels.Select(Function(p) p.Y).Max

@@ -1,4 +1,7 @@
 ﻿Public Class PixelSelector
+
+    Public Event SelectPixel(x As Integer, y As Integer)
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -44,17 +47,16 @@
     Sub canvasMouseDown(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseDown
         drawing = True
         startPoint = e.Location
+
         DrawSelectionBox(startPoint)
     End Sub
 
     Private Sub picCanvas_MouseMove(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseMove
         If Not picCanvas.BackgroundImage Is Nothing Then
-            Dim Pic_width = orginal_image.Width / picCanvas.Width
-            Dim Pic_height = orginal_image.Height / picCanvas.Height
-            ' 得到图片上的坐标点
-            Dim xpoint As Integer = e.X * Pic_width
-            Dim ypoint As Integer = e.Y * Pic_height
+            Dim xpoint = 0
+            Dim ypoint = 0
 
+            getPoint(e, xpoint, ypoint)
             ToolStripStatusLabel2.Text = $"[{xpoint}, {ypoint}]"
         End If
 
@@ -65,11 +67,20 @@
         DrawSelectionBox(e.Location)
     End Sub
 
+    Private Sub getPoint(e As MouseEventArgs, ByRef xpoint As Integer, ByRef ypoint As Integer)
+        Dim Pic_width = orginal_image.Width / picCanvas.Width
+        Dim Pic_height = orginal_image.Height / picCanvas.Height
+
+        ' 得到图片上的坐标点
+        xpoint = e.X * Pic_width
+        ypoint = e.Y * Pic_height
+    End Sub
+
     ' Draw the area selected.
     Private Sub DrawSelectionBox(end_point As Point)
-
         ' Save the end point.
         endPoint = end_point
+
         If (endPoint.X < 0) Then endPoint.X = 0
         If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
         If (endPoint.Y < 0) Then endPoint.Y = 0
@@ -80,6 +91,7 @@
         Dim y = Math.Min(startPoint.Y, endPoint.Y)
         Dim width = Math.Abs(startPoint.X - endPoint.X)
         Dim height = Math.Abs(startPoint.Y - endPoint.Y)
+
         picCanvas.CreateGraphics.DrawRectangle(Pens.Red, x, y, width, height)
         picCanvas.Refresh()
     End Sub
@@ -90,5 +102,14 @@
         Else
             drawing = False
         End If
+    End Sub
+
+    Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
+        Dim xpoint = 0
+        Dim ypoint = 0
+
+        Call getPoint(e, xpoint, ypoint)
+
+        RaiseEvent SelectPixel(xpoint, ypoint)
     End Sub
 End Class

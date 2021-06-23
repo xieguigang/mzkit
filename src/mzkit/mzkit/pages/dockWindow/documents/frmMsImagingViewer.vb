@@ -51,7 +51,9 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
@@ -177,6 +179,23 @@ Public Class frmMsImagingViewer
         End If
     End Sub
 
+    Private Sub showPixel(x As Integer, y As Integer) Handles PixelSelector1.SelectPixel
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim pixel As PixelScan = render.pixelReader.GetPixel(x, y)
+
+        If pixel Is Nothing Then
+            Return
+        End If
+
+        Dim ms As ms2() = pixel.GetMs
+
+        Call MyApplication.host.mzkitTool.showMatrix(ms, $"Pixel [{x}, {y}]")
+    End Sub
+
     Friend Sub renderRGB(r As Double, g As Double, b As Double)
         Dim selectedMz As Double() = {r, g, b}.Where(Function(mz) mz > 0).ToArray
         Dim progress As New frmProgressSpinner
@@ -284,7 +303,7 @@ Public Class frmMsImagingViewer
         Call params.SetIntensityMax(Aggregate pm As PixelData In pixels Into Max(pm.intensity))
         Call params.Reset(MsiDim, "N/A", "N/A")
 
-        rendering = createRenderTask(pixels, "", MsiDim)
+        rendering = createRenderTask(pixels, $"{params.pixel_width},{params.pixel_height}", MsiDim)
         rendering()
 
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)

@@ -45,6 +45,10 @@ Namespace Reader
             End If
         End Sub
 
+        Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
+            Return pixels.Where(Function(p) p.X = x AndAlso p.Y = y).FirstOrDefault
+        End Function
+
         ''' <summary>
         ''' load all ions m/z in the raw data file
         ''' </summary>

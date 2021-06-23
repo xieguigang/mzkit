@@ -16,9 +16,9 @@ Namespace Reader
         Private disposedValue As Boolean
 
         Public MustOverride ReadOnly Property dimension As Size
+        Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 
         Protected MustOverride Sub release()
-
         Protected MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
 
         Private Iterator Function FindMatchedPixels(mz As Double(), tolerance As Tolerance) As IEnumerable(Of PixelScan)
