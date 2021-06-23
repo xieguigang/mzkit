@@ -283,6 +283,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndexedCache\XICReader.vb" />
+    <Compile Include="IndexedCache\XICIndex.vb" />
+    <Compile Include="IndexedCache\XICWriter.vb" />
+    <Compile Include="IndexedCache\XIC.vb" />
     <Compile Include="PixelsCDF.vb" />
     <Compile Include="Reader\ReadRawPack.vb" />
     <Compile Include="Reader\ReadIbd.vb" />
