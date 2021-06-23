@@ -191,9 +191,10 @@ Public Class frmMsImagingViewer
             Return
         End If
 
-        Dim ms As ms2() = pixel.GetMs
+        Dim ms As New LibraryMatrix With {.ms2 = pixel.GetMs}
 
-        Call MyApplication.host.mzkitTool.showMatrix(ms, $"Pixel [{x}, {y}]")
+        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
+        Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms)
     End Sub
 
     Friend Sub renderRGB(r As Double, g As Double, b As Double)
@@ -272,13 +273,19 @@ Public Class frmMsImagingViewer
             Sub()
                 Dim err As Tolerance = params.GetTolerance
                 Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
-                Dim maxInto As Double = Aggregate pm As PixelData
-                                        In pixels
-                                        Into Max(pm.intensity)
 
-                Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                Call Invoke(Sub() rendering = createRenderTask(pixels, size, render.dimension))
-                Call Invoke(rendering)
+                If pixels.IsNullOrEmpty Then
+                    Call MyApplication.host.showStatusMessage("no pixel data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    Dim maxInto As Double = Aggregate pm As PixelData
+                                            In pixels
+                                            Into Max(pm.intensity)
+
+                    Call Invoke(Sub() params.SetIntensityMax(maxInto))
+                    Call Invoke(Sub() rendering = createRenderTask(pixels, size, render.dimension))
+                    Call Invoke(rendering)
+                End If
+
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
