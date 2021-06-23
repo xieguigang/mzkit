@@ -21,21 +21,31 @@ Namespace Pixel
         ReadOnly i As ScanData
         ReadOnly raw As ibdReader
 
+        Dim memoryCache As ms2()
+
         Sub New(ibd As ibdReader, pixel As ScanData)
             i = pixel
             raw = ibd
         End Sub
 
         Public Overrides Function GetMs() As ms2()
-            Return raw.GetMSMS(i)
+            If memoryCache.IsNullOrEmpty Then
+                memoryCache = raw.GetMSMS(i)
+            End If
+
+            Return memoryCache
         End Function
 
         Public Function ReadMz() As Double()
-            Return raw.ReadArray(i.MzPtr)
+            If memoryCache.IsNullOrEmpty Then
+                Return raw.ReadArray(i.MzPtr)
+            Else
+                Return (From m As ms2 In memoryCache Select m.mz).ToArray
+            End If
         End Function
 
         Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
-            Dim mzlist As Double() = raw.ReadArray(i.MzPtr)
+            Dim mzlist As Double() = ReadMz()
 
             Return mz _
                 .Any(Function(mzi)

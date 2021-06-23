@@ -32,6 +32,16 @@ Namespace Reader
                 .Width = pixels.Select(Function(p) p.X).Max,
                 .Height = pixels.Select(Function(p) p.Y).Max
             }
+
+            If memoryCache Then
+                Call "loading raw data into memory cache...".__DEBUG_ECHO
+
+                For Each p As ibdPixel In pixels
+                    Call p.GetMs()
+                Next
+
+                Call "cache done!".__DEBUG_ECHO
+            End If
         End Sub
 
         ''' <summary>
