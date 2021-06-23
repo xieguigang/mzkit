@@ -57,7 +57,7 @@ Namespace Pixel
                      End Function)
         End Function
 
-        Protected Overrides Sub release()
+        Protected Friend Overrides Sub release()
             If Not scan Is Nothing Then
                 Erase scan.into
                 Erase scan.mz
