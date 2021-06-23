@@ -92,7 +92,9 @@ Public Class frmSRMIonsExplorer
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim display As String
 
-        For Each chr As chromatogram In list.Where(Function(i) Not i.id.TextEquals("TIC"))
+        For Each chr As chromatogram In list.Where(Function(i)
+                                                       Return Not (i.id.TextEquals("TIC") OrElse i.id.TextEquals("BPC"))
+                                                   End Function)
             Dim ionRef As New IonPair With {
                 .precursor = chr.precursor.MRMTargetMz,
                 .product = chr.product.MRMTargetMz
