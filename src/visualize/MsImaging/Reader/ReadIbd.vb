@@ -40,6 +40,7 @@ Namespace Reader
                     Call p.GetMs()
                 Next
 
+                Call ibd.Dispose()
                 Call "cache done!".__DEBUG_ECHO
             End If
         End Sub

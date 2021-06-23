@@ -140,6 +140,14 @@ Public Class frmMsImagingViewer
     Public Sub LoadRender(render As Drawer, filePath As String)
         Dim checks As Win7StyleTreeView = WindowModules.msImageParameters.Win7StyleTreeView1
 
+        If Not Me.render Is Nothing Then
+            Try
+                Call Me.render.Dispose()
+            Catch ex As Exception
+
+            End Try
+        End If
+
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
         Me.params = New MsImageProperty(render)
