@@ -24,11 +24,13 @@ Namespace IndexedCache
 
             Using out As New BinaryDataWriter(file) With {.ByteOrder = ByteOrder.BigEndian}
                 Call out.Write(MagicHeader, BinaryStringFormat.NoPrefixOrTermination)
+                ' write meta data
                 Call out.Write(nfeatures)
                 Call out.Write(cache.width)
                 Call out.Write(cache.height)
                 Call out.Write(cache.src, BinaryStringFormat.ZeroTerminated)
                 Call out.Write(cache.tolerance.GetScript, BinaryStringFormat.ZeroTerminated)
+                Call out.Write(Now.ToString, BinaryStringFormat.ZeroTerminated)
                 Call out.Write(CByte(0))
                 Call out.Write(mz)
                 Call out.Flush()
