@@ -47,6 +47,8 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -64,6 +66,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Module MsImaging
 
     <ExportAPI("write.MSI_XIC")>
+    <RApiReturn(GetType(XICWriter))>
     Public Function WriteXICCache(<RRawVectorArgument> pixels As Object, ibd As ibdReader, Optional env As Environment = Nothing) As Object
         Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of ScanData)(pixels, env)
 
@@ -71,7 +74,16 @@ Module MsImaging
             Return pixelData.getError
         End If
 
+        Dim allPixels As ScanData() = pixelData.populates(Of ScanData)(env).ToArray
+        Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
+        Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
+        Dim cache As New XICWriter(width, height)
 
+        For Each pixel As ScanData In allPixels
+            Call cache.WritePixels(New ibdPixel(ibd, pixel))
+        Next
+
+        Return cache
     End Function
 
     ''' <summary>
