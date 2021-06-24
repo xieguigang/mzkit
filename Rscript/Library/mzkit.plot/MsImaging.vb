@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -115,6 +116,18 @@ Module MsImaging
         'End If
 
         Return True
+    End Function
+
+    <ExportAPI("open.MSI")>
+    <RApiReturn(GetType(XICReader))>
+    Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim stream = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env)
+
+        If stream Like GetType(Message) Then
+            Return stream.TryCast(Of Message)
+        End If
+
+        Return New XICReader(stream.TryCast(Of Stream))
     End Function
 
     ''' <summary>
