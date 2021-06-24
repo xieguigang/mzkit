@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 
 Namespace IndexedCache
 
@@ -50,7 +51,28 @@ Namespace IndexedCache
         End Sub
 
         Public Function GetIonLayer(mz As Double, tolerance As Tolerance) As PixelData()
+            Return meta.GetOffsets(mz, tolerance) _
+                .Select(Function(offset)
+                            file.Seek(offset, SeekOrigin.Begin)
 
+                            Dim mzi As Double = file.ReadDouble
+                            Dim nlen As Integer = file.ReadInt32
+                            Dim intensity As Double() = file.ReadDoubles(nlen)
+                            Dim x As Integer() = file.ReadInt32s(nlen)
+                            Dim y As Integer() = file.ReadInt32s(nlen)
+
+                            Return intensity _
+                                .Select(Function(into, i)
+                                            Return New PixelData With {
+                                                .intensity = into,
+                                                .mz = mzi,
+                                                .x = x(i),
+                                                .y = y(i)
+                                            }
+                                        End Function)
+                        End Function) _
+                .IteratesALL _
+                .ToArray
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)

@@ -151,7 +151,7 @@ Module MsImaging
     <ExportAPI("pixels")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(PixelData))>
-    Public Function LoadPixels(imzML As Drawer, mz As Double(),
+    Public Function LoadPixels(imzML As Object, mz As Double(),
                                Optional tolerance As Object = "da:0.1",
                                Optional skip_zero As Boolean = True,
                                Optional env As Environment = Nothing) As pipeline
@@ -162,9 +162,22 @@ Module MsImaging
             Return errors.TryCast(Of Message)
         End If
 
-        Return imzML _
-            .LoadPixels(mz, errors, skip_zero) _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+        If imzML Is Nothing Then
+            Return Internal.debug.stop("the required imzML data can not be nothing!", env)
+        ElseIf TypeOf imzML Is Drawer Then
+            Return DirectCast(imzML, Drawer) _
+                .LoadPixels(mz, errors, skip_zero) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        ElseIf TypeOf imzML Is XICReader Then
+            Return mz _
+                .Select(Function(mzi)
+                            Return DirectCast(imzML, XICReader).GetIonLayer(mzi, errors)
+                        End Function) _
+                .IteratesALL _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
+        End If
     End Function
 
     ''' <summary>

@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace IndexedCache
@@ -35,6 +36,14 @@ Namespace IndexedCache
             Me.source = source
             Me.tolerance = tolerance
         End Sub
+
+        Public Iterator Function GetOffsets(mz As Double, tolerance As Tolerance) As IEnumerable(Of Long)
+            For i As Integer = 0 To Me.mz.Length - 1
+                If tolerance(_mz(i), mz) Then
+                    Yield _offset(i)
+                End If
+            Next
+        End Function
 
         Public Shared Sub WriteIndexFile(cache As XICWriter, file As Stream)
             Dim mz As Double() = cache.offsets.Keys.ToArray
