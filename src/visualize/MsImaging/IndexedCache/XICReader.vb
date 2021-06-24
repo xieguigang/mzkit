@@ -70,8 +70,12 @@ Namespace IndexedCache
             _meta = New XICIndex(mz, offset, width, height, source, tolerance, Date.Parse(time))
         End Sub
 
+        Public Function GetMz() As Double()
+            Return meta.mz.ToArray
+        End Function
+
         Public Function GetPixel(x As Integer, y As Integer) As ibdPixel
-            Dim offset As Long = pixeloffset(y)(x)
+            Dim offset As Long = pixeloffset(y - 1)(x - 1)
 
             file.Seek(offset, SeekOrigin.Begin)
             file.ReadInt32s(2)
