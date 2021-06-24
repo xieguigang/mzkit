@@ -7,16 +7,7 @@ Namespace Pixel
     Public Class ibdPixel : Inherits PixelScan
 
         Public Overrides ReadOnly Property X As Integer
-            Get
-                Return i.x
-            End Get
-        End Property
-
         Public Overrides ReadOnly Property Y As Integer
-            Get
-                Return i.y
-            End Get
-        End Property
 
         ReadOnly i As ScanData
         ReadOnly raw As ibdReader
@@ -28,12 +19,15 @@ Namespace Pixel
             Me.i = pixel
             Me.raw = ibd
             Me.enableCache = enableCache
+            Me.X = i.x
+            Me.Y = i.y
         End Sub
 
         Sub New(x As Integer, y As Integer, cache As ms2())
             Me.memoryCache = cache
             Me.enableCache = True
-            Me.i = New ScanData With {.x = x, .y = y}
+            Me.X = x
+            Me.Y = y
         End Sub
 
         Public Overrides Function GetMs() As ms2()
