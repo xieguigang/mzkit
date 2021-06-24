@@ -38,10 +38,14 @@ Namespace IndexedCache
 
         Public Sub WritePixels(pixel As PixelScan)
             Dim xy As Integer() = {pixel.X, pixel.Y}
+            Dim rawMsMatrix As ms2() = pixel.GetMs
 
-            For Each mz As NamedCollection(Of ms2) In pixel.GetMs.GroupBy(Function(i) i.mz, tolerance)
+            For Each mz As NamedCollection(Of ms2) In rawMsMatrix.GroupBy(Function(i) i.mz, tolerance)
                 Dim mzi As Double = stdNum.Round(Val(mz.name), 4)
                 Dim offset As Long
+                Dim into As Double = Aggregate i As ms2
+                                     In mz
+                                     Into Max(i.intensity)
 
                 If offsets.ContainsKey(mzi) Then
                     offset = offsets(mzi).position
@@ -59,7 +63,7 @@ Namespace IndexedCache
 
                 cachefile.Seek(offset, SeekOrigin.Begin)
                 cachefile.Write(xy)
-                cachefile.Write(Aggregate i In mz Into Max(i.intensity))
+                cachefile.Write(into)
             Next
         End Sub
 
