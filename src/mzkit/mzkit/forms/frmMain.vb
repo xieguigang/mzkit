@@ -64,7 +64,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -83,6 +82,7 @@ Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class frmMain
 
@@ -253,19 +253,32 @@ Public Class frmMain
                     Dim cachefile As String = App.AppSystemTemp & "/MSI_imzML/" & uid
 
                     If cachefile.FileLength > 1024 Then
+                        Call progress.ShowProgressDetails("Load cache!")
                         ' use cache file
                         ibd.Dispose()
                         canvas = New Drawer(New IndexReader(New XICReader(cachefile)))
                     Else
-                        progress.ShowProgressDetails("Create workspace cache file, wait for a while...")
+                        progress.ShowProgressDetails("Initialize reader...")
 
                         Dim allPixels As ScanData() = XML.LoadScans(imzML).ToArray
                         Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
                         Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
                         Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
+                        Dim i As Integer = 1
+                        Dim d As Integer = allPixels.Length / 25
+                        Dim j As i32 = 0
+
+                        progress.ShowProgressDetails("Create workspace cache file, wait for a while...")
 
                         For Each pixel As ScanData In allPixels
                             Call cache.WritePixels(New ibdPixel(ibd, pixel))
+
+                            i += 1
+
+                            If ++j = d Then
+                                j = 0
+                                progress.ShowProgressDetails($"Create workspace cache file, wait for a while... {stdNum.Round(i / allPixels.Length * 100)}% [{i}/{allPixels.Length}]")
+                            End If
                         Next
 
                         Call cache.Flush()
