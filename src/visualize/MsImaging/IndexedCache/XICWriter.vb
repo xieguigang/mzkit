@@ -3,7 +3,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 Namespace IndexedCache
@@ -24,23 +26,27 @@ Namespace IndexedCache
         ''' </summary>
         Const delta As Integer = 4 + 4 + 8
 
-        Sub New(Optional bufferSize As Long = 1024 * 1024 * 2)
-            Me.bufferSize = bufferSize
+        Sub New(width As Integer, height As Integer)
+            Me.bufferSize = delta * width * height
             Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID, "MSI_XIC_")
             Me.cachefile = New BinaryDataWriter(cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"buffer size for each m/z: {Lanudry(bufferSize)}"
+        End Function
+
         Public Sub WritePixels(pixel As PixelScan)
             Dim xy As Integer() = {pixel.X, pixel.Y}
 
-            For Each mz As ms2 In pixel.GetMs
-                Dim mzi As Double = stdNum.Round(mz.mz, 4)
+            For Each mz As NamedCollection(Of ms2) In pixel.GetMs.GroupBy(Function(i) i.mz, tolerance)
+                Dim mzi As Double = stdNum.Round(Val(mz.name), 4)
                 Dim offset As Long
 
                 If offsets.ContainsKey(mzi) Then
                     offset = offsets(mzi).position
                 Else
-                    offset = Allocates(bufferSize)
+                    offset = Allocates()
 
                     length(mzi) = 0
                     offsets(mzi) = New BufferRegion With {
@@ -53,12 +59,19 @@ Namespace IndexedCache
 
                 cachefile.Seek(offset, SeekOrigin.Begin)
                 cachefile.Write(xy)
-                cachefile.Write(mz.intensity)
+                cachefile.Write(Aggregate i In mz Into Max(i.intensity))
             Next
         End Sub
 
-        Private Function Allocates(bufferSize As Long) As Long
-
+        Private Function Allocates() As Long
+            If offsets.Count = 0 Then
+                Return 0
+            Else
+                Return offsets _
+                    .Select(Function(b) b.Value.nextBlock) _
+                    .OrderByDescending(Function(b) b) _
+                    .First
+            End If
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
