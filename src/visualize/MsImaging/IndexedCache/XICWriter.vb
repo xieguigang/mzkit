@@ -12,12 +12,16 @@ Namespace IndexedCache
 
     Public Class XICWriter : Implements IDisposable
 
-        ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
-        ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
-        ReadOnly length As New Dictionary(Of Double, Integer)
         ReadOnly bufferSize As Long
-        ReadOnly cache As String
         ReadOnly cachefile As BinaryDataWriter
+
+        Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
+        Friend ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
+        Friend ReadOnly length As New Dictionary(Of Double, Integer)
+        Friend ReadOnly cache As String
+        Friend ReadOnly width As Integer
+        Friend ReadOnly height As Integer
+        Friend ReadOnly src As String
 
         Private disposedValue As Boolean
 
@@ -26,8 +30,11 @@ Namespace IndexedCache
         ''' </summary>
         Const delta As Integer = 4 + 4 + 8
 
-        Sub New(width As Integer, height As Integer)
+        Sub New(width As Integer, height As Integer, Optional sourceName As String = "n/a")
             Me.bufferSize = delta * width * height
+            Me.width = width
+            Me.height = height
+            Me.src = sourceName.FileName
             Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID, "MSI_XIC_")
             Me.cachefile = New BinaryDataWriter(cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
@@ -47,6 +54,10 @@ Namespace IndexedCache
                                      In mz
                                      Into Max(i.intensity)
 
+                If into = 0.0 Then
+                    Continue For
+                End If
+
                 If offsets.ContainsKey(mzi) Then
                     offset = offsets(mzi).position
                 Else
@@ -60,11 +71,16 @@ Namespace IndexedCache
                 End If
 
                 offset += length(mzi) * delta
+                length(mzi) += 1
 
                 cachefile.Seek(offset, SeekOrigin.Begin)
                 cachefile.Write(xy)
                 cachefile.Write(into)
             Next
+        End Sub
+
+        Public Sub Flush()
+            Call cachefile.Flush()
         End Sub
 
         Private Function Allocates() As Long

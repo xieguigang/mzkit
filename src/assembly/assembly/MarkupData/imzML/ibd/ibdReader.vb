@@ -81,6 +81,16 @@ Namespace MarkupData.imzML
             End Get
         End Property
 
+        Public ReadOnly Property fileName As String
+            Get
+                If filepath.StringEmpty Then
+                    Return ""
+                Else
+                    Return filepath.FileName
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property size As Long
             Get
                 If stream.BaseStream Is Nothing Then

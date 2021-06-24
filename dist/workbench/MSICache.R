@@ -7,4 +7,4 @@ const cache = write.MSI_XIC(
 	ibd    = raw$ibd
 ); 
 
-
+write.MSI(cache, file = `${dirname(@script)}/demo.MSI`);

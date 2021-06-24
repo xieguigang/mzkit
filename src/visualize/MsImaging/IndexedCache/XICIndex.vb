@@ -1,4 +1,6 @@
-﻿Namespace IndexedCache
+﻿Imports System.IO
+
+Namespace IndexedCache
 
     Public Class XICIndex
 
@@ -11,6 +13,11 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property source As String
+        Public Property tolerance As String
+
+        Public Shared Sub WriteIndexFile(cache As XICWriter, file As Stream)
+
+        End Sub
 
     End Class
 End Namespace
