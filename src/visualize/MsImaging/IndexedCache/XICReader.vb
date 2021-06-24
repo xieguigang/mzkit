@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 
@@ -9,6 +11,8 @@ Namespace IndexedCache
 
         Dim disposedValue As Boolean
         Dim file As BinaryDataReader
+        Dim pixeloffset As Long()()
+        Dim pixelCache As Long
 
         Public ReadOnly Property meta As XICIndex
 
@@ -18,6 +22,7 @@ Namespace IndexedCache
             }
 
             Call loadIndex()
+            Call loadPixels()
         End Sub
 
         Sub New(file As Stream)
@@ -26,6 +31,20 @@ Namespace IndexedCache
             }
 
             Call loadIndex()
+            Call loadPixels()
+        End Sub
+
+        Private Sub loadPixels()
+            Dim loading As New List(Of Long())
+
+            Call file.Seek(pixelCache, SeekOrigin.Begin)
+
+            ' width in each row
+            For i As Integer = 1 To meta.height
+                loading.Add(file.ReadInt64s(meta.width))
+            Next
+
+            pixeloffset = loading.ToArray
         End Sub
 
         Private Sub loadIndex()
@@ -45,10 +64,24 @@ Namespace IndexedCache
             Dim mz As Double() = file.ReadDoubles(nsize)
             Dim offset As Long() = file.ReadInt64s(nsize)
 
-            Call file.ReadByte()
+            pixelCache = file.ReadInt64
+            file.ReadByte()
 
             _meta = New XICIndex(mz, offset, width, height, source, tolerance, Date.Parse(time))
         End Sub
+
+        Public Function GetPixel(x As Integer, y As Integer) As ibdPixel
+            Dim offset As Long = pixeloffset(y)(x)
+
+            file.Seek(offset, SeekOrigin.Begin)
+            file.ReadInt32s(2)
+
+            Dim nsize As Integer = file.ReadInt32
+            Dim mz As Double() = file.ReadDoubles(nsize)
+            Dim into As Double() = file.ReadDoubles(nsize)
+
+            Return New ibdPixel(x, y, mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}))
+        End Function
 
         Public Function GetIonLayer(mz As Double, tolerance As Tolerance) As PixelData()
             Return meta.GetOffsets(mz, tolerance) _

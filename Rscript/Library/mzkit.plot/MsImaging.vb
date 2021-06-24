@@ -141,6 +141,11 @@ Module MsImaging
         Return New Drawer(imzML)
     End Function
 
+    <ExportAPI("pixel")>
+    Public Function GetPixel(data As XICReader, x As Integer, y As Integer)
+        Return data.GetPixel(x, y)
+    End Function
+
     ''' <summary>
     ''' load the raw pixels data from imzML file 
     ''' </summary>
@@ -148,7 +153,7 @@ Module MsImaging
     ''' <param name="tolerance">m/z tolerance error for get layer data</param>
     ''' <param name="skip_zero"></param>
     ''' <returns></returns>
-    <ExportAPI("pixels")>
+    <ExportAPI("ionLayers")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(PixelData))>
     Public Function LoadPixels(imzML As Object, mz As Double(),

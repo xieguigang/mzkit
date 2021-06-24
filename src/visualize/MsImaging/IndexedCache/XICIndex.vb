@@ -132,7 +132,7 @@ Namespace IndexedCache
                         .OrderBy(Function(y) y.Key)
 
                         For Each y As ibdPixel In yPixels
-                            pixelsMatrix(yPixels.Key)(x.Key) = out.Position
+                            pixelsMatrix(yPixels.Key - 1)(x.Key - 1) = out.Position
                             writePixel(out, y)
                         Next
                     Next
