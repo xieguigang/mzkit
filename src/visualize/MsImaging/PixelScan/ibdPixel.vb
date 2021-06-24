@@ -30,6 +30,12 @@ Namespace Pixel
             Me.enableCache = enableCache
         End Sub
 
+        Sub New(x As Integer, y As Integer, cache As ms2())
+            Me.memoryCache = cache
+            Me.enableCache = True
+            Me.i = New ScanData With {.x = x, .y = y}
+        End Sub
+
         Public Overrides Function GetMs() As ms2()
             If Not enableCache Then
                 Return raw.GetMSMS(i)
