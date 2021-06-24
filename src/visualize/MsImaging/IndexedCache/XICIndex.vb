@@ -5,18 +5,27 @@ Namespace IndexedCache
 
     Public Class XICIndex
 
-        Public Property mz As Double()
-        Public Property offset As Long()
-        Public Property width As Integer
-        Public Property height As Integer
+        Public ReadOnly Property mz As Double()
+        Public ReadOnly Property offset As Long()
+        Public ReadOnly Property width As Integer
+        Public ReadOnly Property height As Integer
         ''' <summary>
         ''' the file name of the upstream source file
         ''' </summary>
         ''' <returns></returns>
-        Public Property source As String
-        Public Property tolerance As String
+        Public ReadOnly Property source As String
+        Public ReadOnly Property tolerance As String
 
         Public Const MagicHeader As String = "BioNovoGene/MSI"
+
+        Sub New(mz As Double(), offset As Long(), width As Integer, height As Integer, source As String, tolerance As String)
+            Me.mz = mz
+            Me.offset = offset
+            Me.width = width
+            Me.height = height
+            Me.source = source
+            Me.tolerance = tolerance
+        End Sub
 
         Public Shared Sub WriteIndexFile(cache As XICWriter, file As Stream)
             Dim mz As Double() = cache.offsets.Keys.ToArray

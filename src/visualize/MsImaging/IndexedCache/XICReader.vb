@@ -27,7 +27,25 @@ Namespace IndexedCache
         End Sub
 
         Private Sub loadIndex()
+            If file.ReadString(XICIndex.MagicHeader.Length) <> XICIndex.MagicHeader Then
+                Throw New InvalidProgramException("invalid magic header data!")
+            End If
 
+            Dim nsize As Integer = file.ReadInt32
+            Dim width As Integer = file.ReadInt32
+            Dim height As Integer = file.ReadInt32
+            Dim source As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+            Dim tolerance As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+            Dim time As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+
+            Call file.ReadByte()
+
+            Dim mz As Double() = file.ReadDoubles(nsize)
+            Dim offset As Long() = file.ReadInt64s(nsize)
+
+            Call file.ReadByte()
+
+            _meta = New XICIndex(mz, offset, width, height, source, tolerance)
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
