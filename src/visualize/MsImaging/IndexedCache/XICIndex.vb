@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace IndexedCache
@@ -66,6 +68,8 @@ Namespace IndexedCache
 
                 ' write placeholder
                 Call out.Write(mz.Select(Function(any) 0&).ToArray)
+                ' placeholder of offset to pixel cache
+                Call out.Write(0&)
                 Call out.Write(CByte(0))
                 Call out.Flush()
 
@@ -108,10 +112,57 @@ Namespace IndexedCache
                     Next
                 End Using
 
+                Dim pixelsOffset As Long = out.Position
+                Dim centroid = cache.centroidPixels _
+                    .GroupBy(Function(p) p.X) _
+                    .OrderBy(Function(x) x.Key) _
+                    .ToArray
+                Dim pixelsMatrix As Long()() = MAT(Of Long)(cache.height, cache.width)
+
+                ' write placeholder
+                For Each row In pixelsMatrix
+                    Call out.Write(row)
+                Next
+
+                Call out.Flush()
+
+                For Each x In centroid
+                    For Each pixels As IGrouping(Of Integer, ibdPixel) In x _
+                        .GroupBy(Function(p) p.Y) _
+                        .OrderBy(Function(y) y.Key)
+
+                        For Each y In pixels
+                            pixelsMatrix(x.Key)(pixels.Key) = out.Position
+                            writePixel(out, y)
+                        Next
+                    Next
+                Next
+
+                Call out.Flush()
+                Call out.Seek(pixelsOffset, SeekOrigin.Begin)
+
+                For Each row In pixelsMatrix
+                    Call out.Write(row)
+                Next
+
+                Call out.Flush()
+
                 out.Seek(offsetPos, SeekOrigin.Begin)
                 out.Write(mz.Select(Function(mzi) offsets(mzi)).ToArray)
+                out.Write(pixelsOffset)
                 out.Flush()
             End Using
+        End Sub
+
+        Private Shared Sub writePixel(out As BinaryDataWriter, pixel As ibdPixel)
+            Dim matrix = pixel.GetMs
+
+            Call out.Write(pixel.X)
+            Call out.Write(pixel.Y)
+            Call out.Write(matrix.Length)
+            Call out.Write(matrix.Select(Function(m) m.mz).ToArray)
+            Call out.Write(matrix.Select(Function(m) m.intensity).ToArray)
+            Call out.Flush()
         End Sub
 
     End Class
