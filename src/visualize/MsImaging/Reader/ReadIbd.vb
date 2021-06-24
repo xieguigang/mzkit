@@ -26,7 +26,7 @@ Namespace Reader
         Sub New(imzML As String, Optional memoryCache As Boolean = False)
             ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
             pixels = XML.LoadScans(file:=imzML) _
-                .Select(Function(p) New ibdPixel(ibd, p)) _
+                .Select(Function(p) New ibdPixel(ibd, p, enableCache:=memoryCache)) _
                 .ToArray
             dimension = New Size With {
                 .Width = pixels.Select(Function(p) p.X).Max,

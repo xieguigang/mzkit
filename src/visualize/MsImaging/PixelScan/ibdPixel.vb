@@ -22,22 +22,30 @@ Namespace Pixel
         ReadOnly raw As ibdReader
 
         Dim memoryCache As ms2()
+        Dim enableCache As Boolean = False
 
-        Sub New(ibd As ibdReader, pixel As ScanData)
-            i = pixel
-            raw = ibd
+        Sub New(ibd As ibdReader, pixel As ScanData, enableCache As Boolean)
+            Me.i = pixel
+            Me.raw = ibd
+            Me.enableCache = enableCache
         End Sub
 
         Public Overrides Function GetMs() As ms2()
-            If memoryCache.IsNullOrEmpty Then
-                memoryCache = raw.GetMSMS(i)
-            End If
+            If Not enableCache Then
+                Return raw.GetMSMS(i)
+            Else
+                If memoryCache.IsNullOrEmpty Then
+                    memoryCache = raw.GetMSMS(i)
+                End If
 
-            Return memoryCache
+                Return memoryCache
+            End If
         End Function
 
         Public Function ReadMz() As Double()
-            If memoryCache.IsNullOrEmpty Then
+            If Not enableCache Then
+                Return raw.ReadArray(i.MzPtr)
+            ElseIf memoryCache.IsNullOrEmpty Then
                 Return raw.ReadArray(i.MzPtr)
             Else
                 Return (From m As ms2 In memoryCache Select m.mz).ToArray
