@@ -24,7 +24,7 @@ Namespace Pixel
         End Sub
 
         Sub New(x As Integer, y As Integer, cache As IEnumerable(Of ms2))
-            Me.memoryCache = cache
+            Me.memoryCache = cache.ToArray
             Me.enableCache = True
             Me.X = x
             Me.Y = y
