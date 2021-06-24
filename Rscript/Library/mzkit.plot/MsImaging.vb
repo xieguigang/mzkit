@@ -108,11 +108,11 @@ Module MsImaging
         End If
 
         Call XICIndex.WriteIndexFile(cache, stream)
-        Call stream.Flush()
+        'Call stream.Flush()
 
-        If autoClose Then
-            Call stream.Close()
-        End If
+        'If autoClose Then
+        '    Call stream.Close()
+        'End If
 
         Return True
     End Function
