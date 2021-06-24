@@ -23,7 +23,7 @@ Namespace Pixel
             Me.Y = i.y
         End Sub
 
-        Sub New(x As Integer, y As Integer, cache As ms2())
+        Sub New(x As Integer, y As Integer, cache As IEnumerable(Of ms2))
             Me.memoryCache = cache
             Me.enableCache = True
             Me.X = x

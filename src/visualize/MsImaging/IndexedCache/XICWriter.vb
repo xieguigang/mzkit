@@ -14,6 +14,8 @@ Namespace IndexedCache
 
         ReadOnly bufferSize As Long
         ReadOnly cachefile As BinaryDataWriter
+        ReadOnly centroid As Tolerance = Tolerance.DeltaMass(0.3)
+        ReadOnly intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.Default
 
         Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
         Friend ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
@@ -22,6 +24,8 @@ Namespace IndexedCache
         Friend ReadOnly width As Integer
         Friend ReadOnly height As Integer
         Friend ReadOnly src As String
+
+        Friend ReadOnly centroidPixels As New List(Of ibdPixel)
 
         Private disposedValue As Boolean
 
@@ -78,6 +82,7 @@ Namespace IndexedCache
                 cachefile.Write(into)
             Next
 
+            Call centroidPixels.Add(New ibdPixel(pixel.X, pixel.Y, rawMsMatrix.Centroid(centroid, intocutoff)))
             Call cachefile.Flush()
         End Sub
 
