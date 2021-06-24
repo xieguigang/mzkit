@@ -28,7 +28,7 @@ Namespace IndexedCache
         ''' <summary>
         ''' [x,y]intensity
         ''' </summary>
-        Const delta As Integer = 4 + 4 + 8
+        Public Const delta As Integer = 4 + 4 + 8
 
         Sub New(width As Integer, height As Integer, Optional sourceName As String = "n/a")
             Me.bufferSize = delta * width * height
@@ -77,6 +77,8 @@ Namespace IndexedCache
                 cachefile.Write(xy)
                 cachefile.Write(into)
             Next
+
+            Call cachefile.Flush()
         End Sub
 
         Public Sub Flush()
