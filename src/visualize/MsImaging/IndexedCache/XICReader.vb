@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace IndexedCache
@@ -45,8 +46,12 @@ Namespace IndexedCache
 
             Call file.ReadByte()
 
-            _meta = New XICIndex(mz, offset, width, height, source, tolerance)
+            _meta = New XICIndex(mz, offset, width, height, source, tolerance, Date.Parse(time))
         End Sub
+
+        Public Function GetIonLayer(mz As Double, tolerance As Tolerance) As PixelData()
+
+        End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then

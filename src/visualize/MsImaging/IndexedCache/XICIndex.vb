@@ -15,10 +15,19 @@ Namespace IndexedCache
         ''' <returns></returns>
         Public ReadOnly Property source As String
         Public ReadOnly Property tolerance As String
+        Public ReadOnly Property time As Date
 
         Public Const MagicHeader As String = "BioNovoGene/MSI"
 
-        Sub New(mz As Double(), offset As Long(), width As Integer, height As Integer, source As String, tolerance As String)
+        Sub New(mz As Double(),
+                offset As Long(),
+                width As Integer,
+                height As Integer,
+                source As String,
+                tolerance As String,
+                time As Date)
+
+            Me.time = time
             Me.mz = mz
             Me.offset = offset
             Me.width = width
