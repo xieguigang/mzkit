@@ -15,6 +15,10 @@ Namespace Reader
 
         Dim reader As XICReader
 
+        Sub New(reader As XICReader)
+            Me.reader = reader
+        End Sub
+
         Protected Overrides Sub release()
             Call reader.Dispose()
         End Sub
