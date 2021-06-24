@@ -15,7 +15,7 @@ Namespace Pixel
         Dim memoryCache As ms2()
         Dim enableCache As Boolean = False
 
-        Sub New(ibd As ibdReader, pixel As ScanData, enableCache As Boolean)
+        Sub New(ibd As ibdReader, pixel As ScanData, Optional enableCache As Boolean = False)
             Me.i = pixel
             Me.raw = ibd
             Me.enableCache = enableCache
@@ -34,7 +34,9 @@ Namespace Pixel
             If Not enableCache Then
                 Return raw.GetMSMS(i)
             Else
-                If memoryCache.IsNullOrEmpty Then
+                ' 有些像素点是空向量
+                ' 所以就只判断nothing而不判断empty了
+                If memoryCache Is Nothing Then
                     memoryCache = raw.GetMSMS(i)
                 End If
 
@@ -45,6 +47,8 @@ Namespace Pixel
         Public Function ReadMz() As Double()
             If Not enableCache Then
                 Return raw.ReadArray(i.MzPtr)
+                ' 有些像素点是空向量
+                ' 所以就只判断nothing而不判断empty了
             ElseIf memoryCache.IsNullOrEmpty Then
                 Return raw.ReadArray(i.MzPtr)
             Else

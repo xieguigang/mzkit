@@ -127,12 +127,12 @@ Namespace IndexedCache
                 Call out.Flush()
 
                 For Each x In centroid
-                    For Each pixels As IGrouping(Of Integer, ibdPixel) In x _
+                    For Each yPixels As IGrouping(Of Integer, ibdPixel) In x _
                         .GroupBy(Function(p) p.Y) _
                         .OrderBy(Function(y) y.Key)
 
-                        For Each y In pixels
-                            pixelsMatrix(x.Key)(pixels.Key) = out.Position
+                        For Each y As ibdPixel In yPixels
+                            pixelsMatrix(yPixels.Key)(x.Key) = out.Position
                             writePixel(out, y)
                         Next
                     Next
