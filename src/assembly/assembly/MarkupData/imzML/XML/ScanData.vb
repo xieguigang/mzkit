@@ -51,14 +51,33 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.imzML
 
-    ''' <summary>
-    ''' a single pixel pointer data in the generated image
-    ''' </summary>
-    Public Class ScanData
+    Public Class PixelScanIntensity
 
+        ''' <summary>
+        ''' TIC
+        ''' </summary>
+        ''' <returns></returns>
         Public Property totalIon As Double
         Public Property x As Integer
         Public Property y As Integer
+
+    End Class
+
+    Public Class iPixelIntensity : Inherits PixelScanIntensity
+
+        ''' <summary>
+        ''' BPC
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property basePeakIntensity As Double
+        Public Property average As Double
+
+    End Class
+
+    ''' <summary>
+    ''' a single pixel pointer data in the generated image
+    ''' </summary>
+    Public Class ScanData : Inherits PixelScanIntensity
 
         Public Property MzPtr As ibdPtr
         Public Property IntPtr As ibdPtr
