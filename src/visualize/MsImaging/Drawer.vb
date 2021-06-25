@@ -207,7 +207,8 @@ Public Class Drawer : Implements IDisposable
                                         Optional mapLevels% = 25,
                                         Optional threshold As Double = 0.1,
                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                        Optional defaultFill As String = "Transparent") As Bitmap
+                                        Optional defaultFill As String = "Transparent",
+                                        Optional cutoff As Double = 1) As Bitmap
         Dim color As Color
         Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
         Dim index As Integer
@@ -218,7 +219,7 @@ Public Class Drawer : Implements IDisposable
         Dim defaultColor As Color = defaultFill.TranslateColor
 
         Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-            For Each point As PixelData In PixelData.ScalePixels(pixels)
+            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
                 level = point.level
 
                 If level < threshold Then

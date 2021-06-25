@@ -68,16 +68,25 @@ Public Class PixelData
     ''' </summary>
     ''' <param name="pixels"></param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(pixels As PixelData()) As PixelData()
+    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As Double = 1) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p) p.intensity) _
             .Range
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
 
+        If cutoff < 1 Then
+            intensityRange = New DoubleRange(intensityRange.Min, intensityRange.Max * cutoff)
+        End If
+
         For Each point As PixelData In pixels
             level = intensityRange.ScaleMapping(point.intensity, levelRange)
-            point.level = level
+
+            If level > 1 Then
+                point.level = 1
+            Else
+                point.level = level
+            End If
         Next
 
         Return pixels
