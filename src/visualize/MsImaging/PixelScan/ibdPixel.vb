@@ -7,37 +7,49 @@ Namespace Pixel
     Public Class ibdPixel : Inherits PixelScan
 
         Public Overrides ReadOnly Property X As Integer
-            Get
-                Return i.x
-            End Get
-        End Property
-
         Public Overrides ReadOnly Property Y As Integer
-            Get
-                Return i.y
-            End Get
-        End Property
 
         ReadOnly i As ScanData
         ReadOnly raw As ibdReader
 
         Dim memoryCache As ms2()
+        Dim enableCache As Boolean = False
 
-        Sub New(ibd As ibdReader, pixel As ScanData)
-            i = pixel
-            raw = ibd
+        Sub New(ibd As ibdReader, pixel As ScanData, Optional enableCache As Boolean = False)
+            Me.i = pixel
+            Me.raw = ibd
+            Me.enableCache = enableCache
+            Me.X = i.x
+            Me.Y = i.y
+        End Sub
+
+        Sub New(x As Integer, y As Integer, cache As IEnumerable(Of ms2))
+            Me.memoryCache = cache.ToArray
+            Me.enableCache = True
+            Me.X = x
+            Me.Y = y
         End Sub
 
         Public Overrides Function GetMs() As ms2()
-            If memoryCache.IsNullOrEmpty Then
-                memoryCache = raw.GetMSMS(i)
-            End If
+            If Not enableCache Then
+                Return raw.GetMSMS(i)
+            Else
+                ' 有些像素点是空向量
+                ' 所以就只判断nothing而不判断empty了
+                If memoryCache Is Nothing Then
+                    memoryCache = raw.GetMSMS(i)
+                End If
 
-            Return memoryCache
+                Return memoryCache
+            End If
         End Function
 
         Public Function ReadMz() As Double()
-            If memoryCache.IsNullOrEmpty Then
+            If Not enableCache Then
+                Return raw.ReadArray(i.MzPtr)
+                ' 有些像素点是空向量
+                ' 所以就只判断nothing而不判断empty了
+            ElseIf memoryCache.IsNullOrEmpty Then
                 Return raw.ReadArray(i.MzPtr)
             Else
                 Return (From m As ms2 In memoryCache Select m.mz).ToArray

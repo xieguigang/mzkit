@@ -288,6 +288,7 @@
     <Compile Include="IndexedCache\XICWriter.vb" />
     <Compile Include="IndexedCache\XIC.vb" />
     <Compile Include="PixelsCDF.vb" />
+    <Compile Include="Reader\IndexReader.vb" />
     <Compile Include="Reader\ReadRawPack.vb" />
     <Compile Include="Reader\ReadIbd.vb" />
     <Compile Include="Reader\PixelReader.vb" />

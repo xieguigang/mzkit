@@ -61,10 +61,13 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
@@ -79,6 +82,7 @@ Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class frmMain
 
@@ -175,7 +179,7 @@ Public Class frmMain
                 Call mzPack.Write(temp)
             End Using
 
-            Call WindowModules.rawFeaturesList.LoadRaw(Raw)
+            Call WindowModules.rawFeaturesList.LoadRaw(raw)
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         Else
             Call WindowModules.fileExplorer.ImportsRaw(fileName)
@@ -230,25 +234,82 @@ Public Class frmMain
     End Sub
 
     Friend Sub showMsImaging(imzML As String)
-        Dim progress As New frmProgressSpinner
+        Dim progress As New frmTaskProgress
 
-        Call WindowModules.viewer.Show(dockPanel)
-        Call WindowModules.msImageParameters.Show(dockPanel)
+        progress.ShowProgressTitle("Open imzML...", directAccess:=True)
+        progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
+
         Call New Thread(
             Sub()
-                Dim canvas As New Drawer(imzML, memoryCache:=True)
+                Call Thread.Sleep(100)
+
+                Dim canvas As Drawer
+
+                If imzML.ExtensionSuffix("mzpack") Then
+                    canvas = New Drawer(imzML, memoryCache:=True)
+                Else
+                    Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
+                    Dim uid As String = ibd.UUID
+                    Dim cachefile As String = App.AppSystemTemp & "/MSI_imzML/" & uid
+
+                    If cachefile.FileLength > 1024 Then
+                        Call progress.ShowProgressDetails("Load cache!")
+                        ' use cache file
+                        ibd.Dispose()
+                        canvas = New Drawer(New IndexReader(New XICReader(cachefile)))
+                    Else
+                        progress.ShowProgressDetails("Initialize reader...")
+
+                        Dim allPixels As ScanData() = XML.LoadScans(imzML).ToArray
+                        Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
+                        Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
+                        Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
+                        Dim i As Integer = 1
+                        Dim d As Integer = allPixels.Length / 25
+                        Dim j As i32 = 0
+
+                        progress.ShowProgressDetails("Create workspace cache file, wait for a while...")
+
+                        For Each pixel As ScanData In allPixels
+                            Call cache.WritePixels(New ibdPixel(ibd, pixel))
+
+                            i += 1
+
+                            If ++j = d Then
+                                j = 0
+                                progress.ShowProgressDetails($"Create workspace cache file, wait for a while... {stdNum.Round(i / allPixels.Length * 100)}% [{i}/{allPixels.Length}]")
+                            End If
+                        Next
+
+                        Call cache.Flush()
+                        Call progress.ShowProgressDetails("build pixels index...")
+
+                        Try
+                            Using temp As Stream = cachefile.Open(FileMode.OpenOrCreate, doClear:=True)
+                                Call XICIndex.WriteIndexFile(cache, temp)
+                            End Using
+                        Catch ex As Exception
+                        Finally
+                            Call progress.ShowProgressDetails("Job done!")
+                        End Try
+
+                        canvas = New Drawer(New IndexReader(New XICReader(cachefile)))
+                    End If
+                End If
 
                 Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
                 Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
 
+                Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
                 Call progress.Invoke(Sub() progress.Close())
-
-                Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
             End Sub).Start()
 
-        WindowModules.msImageParameters.DockState = DockState.DockLeft
-
         Call progress.ShowDialog()
+
+        Call WindowModules.viewer.Show(dockPanel)
+        Call WindowModules.msImageParameters.Show(dockPanel)
+
+        WindowModules.msImageParameters.DockState = DockState.DockLeft
     End Sub
 
     Friend Sub saveCurrentScript()
