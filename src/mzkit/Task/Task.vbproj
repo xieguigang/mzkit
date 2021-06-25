@@ -157,6 +157,8 @@
     <Compile Include="IonLibrary.vb" />
     <Compile Include="GCMSQuantifyIon.vb" />
     <Compile Include="MetaDNASearch.vb" />
+    <Compile Include="Studio\PipelineTask.vb" />
+    <Compile Include="Studio\Rscript.vb" />
     <Compile Include="Studio\WorkStudio.vb" />
     <Compile Include="Studio\Notification.vb" />
     <Compile Include="ParentMatch.vb" />
