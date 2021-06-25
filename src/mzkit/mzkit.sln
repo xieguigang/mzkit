@@ -181,6 +181,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphQuery", "..\..\..\GCMo
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "markdown", "..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.vbproj", "{83EC1406-FE08-46A1-88B3-CE56D7E9961C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rscript", "Rscript", "{D0E171FC-329C-486D-BB2F-98268C3FAF9E}"
+	ProjectSection(SolutionItems) = preProject
+		TaskScript\buildMSIIndex.R = TaskScript\buildMSIIndex.R
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
