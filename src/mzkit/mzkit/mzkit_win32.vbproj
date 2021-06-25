@@ -316,6 +316,8 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Task\RscriptProgressTask.vb" />
+    <Compile Include="forms\Task\RscriptPipelineTask.vb" />
     <Compile Include="forms\Task\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </Compile>
