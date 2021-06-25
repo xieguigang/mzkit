@@ -162,11 +162,19 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         Else
             Dim offset As Long
             Dim bytes As Byte()
+            Dim nsize As Long
 
             file.Seek(file.Length - 8, SeekOrigin.Begin)
             offset = file.ReadInt64
             file.Seek(offset, SeekOrigin.Begin)
-            bytes = file.ReadBytes(file.Length - 8 - offset)
+            nsize = file.Length - 8 - offset
+
+            If nsize <= 0 Then
+                Call "negative bytes count?".Warning
+                Return Nothing
+            End If
+
+            bytes = file.ReadBytes(nsize)
 
             If bytes.IsNullOrEmpty Then
                 Return Nothing
