@@ -1,4 +1,8 @@
-﻿Public Class RscriptPipelineTask
+﻿Imports Task.CLI
+
+Public Class RscriptPipelineTask
+
+    Friend Shared ReadOnly Rscript As Rscript = Rscript.FromEnvironment(App.HOME)
 
     Public Shared Function GetRScript(filename As String) As String
         Dim filepath As String = $"{App.HOME}/Rstudio/Pipeline/{filename}"

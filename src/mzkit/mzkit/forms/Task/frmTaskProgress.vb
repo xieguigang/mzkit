@@ -53,6 +53,19 @@ Public Class frmTaskProgress
 
     Public TaskCancel As Action
 
+    Public Sub SetProgressMode()
+        ProgressBar1.Maximum = 100
+        ProgressBar1.Style = ProgressBarStyle.Continuous
+    End Sub
+
+    Public Sub SetProgress(p As Integer, message As String)
+        Call Invoke(
+            Sub()
+                ProgressBar1.Value = p
+                Label1.Text = message
+            End Sub)
+    End Sub
+
     Private Sub frmImportTaskProgress_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         e.Graphics.DrawRectangle(New Pen(Color.Black, 1), New Rectangle(0, 0, Width - 1, Height - 1))
     End Sub
@@ -107,17 +120,17 @@ Public Class frmTaskProgress
         Dim tmp As T
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub()
-                            Call Thread.Sleep(100)
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
 
-                            Call progress.ShowProgressTitle(title)
-                            Call progress.ShowProgressDetails(info)
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
 
-                            tmp = streamLoad()
+                tmp = streamLoad()
 
-                            Call progress.Invoke(Sub() progress.Close())
-                        End Sub) _
-             .Start()
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
 
@@ -127,17 +140,17 @@ Public Class frmTaskProgress
     Public Shared Sub RunAction(run As Action, Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...")
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub()
-                            Call Thread.Sleep(100)
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
 
-                            Call progress.ShowProgressTitle(title)
-                            Call progress.ShowProgressDetails(info)
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
 
-                            Call run()
+                Call run()
 
-                            Call progress.Invoke(Sub() progress.Close())
-                        End Sub) _
-             .Start()
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
     End Sub
