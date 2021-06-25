@@ -20,4 +20,15 @@ Module MSI
             }
         }
     End Function
+
+    ''' <summary>
+    ''' each raw data file is a row scan data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("row.scans")>
+    Public Function rowScans(raw As String, y As Integer, Optional env As Environment = Nothing) As Object
+
+    End Function
 End Module
