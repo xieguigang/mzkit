@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -237,7 +238,12 @@ Module MsImaging
     End Function
 
     <ExportAPI("render")>
-    Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary, Optional colorSet$ = "Jet", Optional env As Environment = Nothing) As Object
+    Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary,
+                                   Optional colorSet$ = "Jet",
+                                   Optional defaultFill As String = "Transparent",
+                                   Optional pixelSize$ = "5,5",
+                                   Optional env As Environment = Nothing) As Object
+
         Dim layer = data.GetLayer(intensity).ToArray
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
@@ -249,7 +255,14 @@ Module MsImaging
                     End Function) _
             .ToArray
 
-        Return Drawer.RenderPixels(pixels, data.size, New Size(5, 5), colorSet:=colorSet, threshold:=0)
+        Return Drawer.RenderPixels(
+            pixels:=pixels,
+            dimension:=data.size,
+            dimSize:=pixelSize.SizeParser,
+            colorSet:=colorSet,
+            threshold:=0,
+            defaultFill:=defaultFill
+        )
     End Function
 
     ''' <summary>
