@@ -184,6 +184,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rscript", "Rscript", "{D0E171FC-329C-486D-BB2F-98268C3FAF9E}"
 	ProjectSection(SolutionItems) = preProject
 		TaskScript\buildMSIIndex.R = TaskScript\buildMSIIndex.R
+		TaskScript\mzpack.R = TaskScript\mzpack.R
 	EndProjectSection
 EndProject
 Global
