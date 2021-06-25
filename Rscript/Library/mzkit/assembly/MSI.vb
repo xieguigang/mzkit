@@ -1,4 +1,5 @@
 ﻿
+Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
@@ -53,6 +54,23 @@ Module MSI
 
     <ExportAPI("scanMatrix")>
     Public Function MSIScanMatrix(<RRawVectorArgument> rowScans As Object, Optional env As Environment = Nothing) As Object
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of iPixelIntensity)(rowScans, env)
 
+        If data.isError Then
+            Return data.getError
+        End If
+
+        Dim rows = data _
+            .populates(Of iPixelIntensity)(env) _
+            .GroupBy(Function(p) p.y) _
+            .Select(Function(r) r.ToArray) _
+            .ToArray
+        Dim width As Integer = rows.Select(Function(p) p.Select(Function(pi) pi.x).Max).Max
+        Dim height As Integer = rows.Select(Function(p) p.Select(Function(pi) pi.y).Max).Max
+
+        Return New MSISummary With {
+            .rowScans = rows,
+            .size = New Size(width, height)
+        }
     End Function
 End Module

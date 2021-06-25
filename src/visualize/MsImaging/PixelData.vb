@@ -63,6 +63,11 @@ Public Class PixelData
         Return $"Dim [{x},{y}] as intensity = {intensity}"
     End Function
 
+    ''' <summary>
+    ''' 将响应度数据统一缩放到[0,1]之间
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <returns></returns>
     Public Shared Function ScalePixels(pixels As PixelData()) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p) p.intensity) _

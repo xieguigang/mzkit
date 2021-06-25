@@ -237,8 +237,19 @@ Module MsImaging
     End Function
 
     <ExportAPI("render")>
-    Public Function renderRowScans(data As Object, intensity As String, Optional env As Environment = Nothing) As Object
+    Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary, Optional colorSet$ = "Jet", Optional env As Environment = Nothing) As Object
+        Dim layer = data.GetLayer(intensity).ToArray
+        Dim pixels As PixelData() = layer _
+            .Select(Function(p)
+                        Return New PixelData With {
+                            .intensity = p.totalIon,
+                            .x = p.x,
+                            .y = p.y
+                        }
+                    End Function) _
+            .ToArray
 
+        Return Drawer.RenderPixels(pixels, data.size, New Size(5, 5), colorSet:=colorSet, threshold:=0)
     End Function
 
     ''' <summary>

@@ -1,10 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.imzML
 
     Public Class MSISummary
 
         Public Property rowScans As iPixelIntensity()()
+        Public Property size As Size
 
         Public Function GetLayer(summary As IntensitySummary) As IEnumerable(Of PixelScanIntensity)
             Return rowScans _
