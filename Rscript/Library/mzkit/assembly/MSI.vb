@@ -3,7 +3,9 @@ Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -38,12 +40,15 @@ Module MSI
             Dim mzpack As mzPack = mzPack.ReadAll(file, ignoreThumbnail:=True)
             Dim pixels As iPixelIntensity() = mzpack.MS _
                 .Select(Function(col, i)
+                            Dim basePeakMz As Double = col.mz(which.Max(col.into))
+
                             Return New iPixelIntensity With {
                                 .average = col.into.Average,
                                 .basePeakIntensity = col.into.Max,
                                 .totalIon = col.into.Sum,
                                 .x = If(correction Is Nothing, i + 1, correction.GetPixel(col.rt)),
-                                .y = y
+                                .y = y,
+                                .basePeakMz = basePeakMz
                             }
                         End Function) _
                 .ToArray
@@ -55,6 +60,11 @@ Module MSI
     <ExportAPI("correction")>
     Public Function Correction(totalTime As Double, pixels As Integer) As Correction
         Return New Correction(totalTime, pixels)
+    End Function
+
+    <ExportAPI("basePeakMz")>
+    Public Function basePeakMz(summary As MSISummary) As LibraryMatrix
+        Return summary.GetBasePeakMz
     End Function
 
     <ExportAPI("scanMatrix")>

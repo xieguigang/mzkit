@@ -71,6 +71,7 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public Property basePeakIntensity As Double
         Public Property average As Double
+        Public Property basePeakMz As Double
 
     End Class
 

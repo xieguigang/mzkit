@@ -68,7 +68,18 @@ Module data
     <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
     End Sub
+
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
+        table.columns("intensity") = matrix.Select(Function(m) m.intensity).ToArray
+        table.columns("info") = matrix.Select(Function(m) m.Annotation).ToArray
+
+        Return table
+    End Function
 
     Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
