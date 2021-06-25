@@ -168,6 +168,10 @@ Public Class mzPackReader : Inherits BinaryStreamReader
             file.Seek(offset, SeekOrigin.Begin)
             bytes = file.ReadBytes(file.Length - 8 - offset)
 
+            If bytes.IsNullOrEmpty Then
+                Return Nothing
+            End If
+
             Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
                 Return Image.FromStream(img)
             End Using
