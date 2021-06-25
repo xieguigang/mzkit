@@ -33,7 +33,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("row.scans")>
-    Public Function rowScans(raw As String, y As Integer, Optional env As Environment = Nothing) As Object
+    Public Function rowScans(raw As String, y As Integer, Optional correction As Correction = Nothing, Optional env As Environment = Nothing) As Object
         Using file As FileStream = raw.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Dim mzpack As mzPack = mzPack.ReadAll(file, ignoreThumbnail:=True)
             Dim pixels As iPixelIntensity() = mzpack.MS _
@@ -42,7 +42,7 @@ Module MSI
                                 .average = col.into.Average,
                                 .basePeakIntensity = col.into.Max,
                                 .totalIon = col.into.Sum,
-                                .x = i + 1,
+                                .x = If(correction Is Nothing, i + 1, correction.GetPixel(col.rt)),
                                 .y = y
                             }
                         End Function) _
@@ -50,6 +50,11 @@ Module MSI
 
             Return pixels
         End Using
+    End Function
+
+    <ExportAPI("Correction")>
+    Public Function Correction(totalTime As Double, pixels As Integer) As Correction
+        Return New Correction(totalTime, pixels)
     End Function
 
     <ExportAPI("scanMatrix")>
@@ -74,3 +79,21 @@ Module MSI
         }
     End Function
 End Module
+
+Public Class Correction
+
+    Public ReadOnly Property totalTime As Double
+    Public ReadOnly Property pixels As Integer
+    Public ReadOnly Property pixelsTime As Double
+
+    Sub New(totalTime As Double, pixels As Integer)
+        Me.totalTime = totalTime
+        Me.pixels = pixels
+        Me.pixelsTime = totalTime / pixels
+    End Sub
+
+    Public Function GetPixel(rt As Double) As Integer
+        Return 1 + CInt(rt / pixelsTime)
+    End Function
+
+End Class
