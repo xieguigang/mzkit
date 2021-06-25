@@ -137,7 +137,7 @@ Public Class mzPack
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    Public Shared Function ReadAll(file As Stream) As mzPack
+    Public Shared Function ReadAll(file As Stream, Optional ignoreThumbnail As Boolean = False) As mzPack
         Using mzpack As New mzPackReader(file)
             Dim allMSscans As ScanMS1() = mzpack _
                 .EnumerateIndex _
@@ -152,7 +152,7 @@ Public Class mzPack
             Next
 
             Return New mzPack With {
-                .Thumbnail = mzpack.GetThumbnail,
+                .Thumbnail = If(ignoreThumbnail, Nothing, mzpack.GetThumbnail),
                 .MS = allMSscans,
                 .Scanners = scanners,
                 .Chromatogram = mzpack.chromatogram

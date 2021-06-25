@@ -236,6 +236,11 @@ Module MsImaging
         End If
     End Function
 
+    <ExportAPI("render")>
+    Public Function renderRowScans(data As Object, intensity As String, Optional env As Environment = Nothing) As Object
+
+    End Function
+
     ''' <summary>
     ''' flatten image layers
     ''' </summary>

@@ -4,7 +4,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 
 <Package("MSI")>
@@ -32,7 +34,7 @@ Module MSI
     <ExportAPI("row.scans")>
     Public Function rowScans(raw As String, y As Integer, Optional env As Environment = Nothing) As Object
         Using file As FileStream = raw.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Dim mzpack As mzPack = mzPack.ReadAll(file)
+            Dim mzpack As mzPack = mzPack.ReadAll(file, ignoreThumbnail:=True)
             Dim pixels As iPixelIntensity() = mzpack.MS _
                 .Select(Function(col, i)
                             Return New iPixelIntensity With {
@@ -47,5 +49,10 @@ Module MSI
 
             Return pixels
         End Using
+    End Function
+
+    <ExportAPI("scanMatrix")>
+    Public Function MSIScanMatrix(<RRawVectorArgument> rowScans As Object, Optional env As Environment = Nothing) As Object
+
     End Function
 End Module
