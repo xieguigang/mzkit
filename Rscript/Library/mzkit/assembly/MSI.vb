@@ -52,7 +52,7 @@ Module MSI
         End Using
     End Function
 
-    <ExportAPI("Correction")>
+    <ExportAPI("correction")>
     Public Function Correction(totalTime As Double, pixels As Integer) As Correction
         Return New Correction(totalTime, pixels)
     End Function
