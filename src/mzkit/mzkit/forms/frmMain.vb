@@ -61,6 +61,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
@@ -245,6 +246,7 @@ Public Class frmMain
             Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]"
         End If
 
+        WindowModules.viewer.RenderSummary(IntensitySummary.BasePeak)
         WindowModules.viewer.DockState = DockState.Document
         WindowModules.msImageParameters.DockState = DockState.DockLeft
     End Sub

@@ -49,6 +49,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -195,6 +196,36 @@ Public Class frmMsImagingViewer
 
         Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
         Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms, focusOn:=False)
+    End Sub
+
+    Friend Sub RenderSummary(summary As IntensitySummary)
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("please load MSI raw data at first!")
+            Return
+        End If
+
+        Dim progress As New frmProgressSpinner
+
+        Call New Thread(
+           Sub()
+               Call Invoke(Sub() rendering = Sub()
+                                                 Call MyApplication.RegisterPlot(
+                                                   Sub(args)
+                                                       Dim image As Bitmap = render.ShowSummaryRendering(summary,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+
+                                                       image = params.Smooth(image)
+
+                                                       PixelSelector1.MSImage(render.dimension) = image
+                                                       PixelSelector1.BackColor = params.background
+                                                   End Sub)
+                                             End Sub)
+               Call Invoke(rendering)
+               Call progress.Invoke(Sub() progress.Close())
+           End Sub).Start()
+
+        Call progress.ShowDialog()
+        Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+        Call PixelSelector1.ShowMessage($"Render MSI in {summary.Description} mode.")
     End Sub
 
     Friend Sub renderRGB(r As Double, g As Double, b As Double)
