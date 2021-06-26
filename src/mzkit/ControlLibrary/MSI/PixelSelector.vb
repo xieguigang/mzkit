@@ -1,6 +1,7 @@
 ﻿Public Class PixelSelector
 
     Public Event SelectPixel(x As Integer, y As Integer)
+    Public Event SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
 
     Public Sub New()
 
@@ -43,12 +44,20 @@
 
     Dim drawing As Boolean = False
     Dim startPoint, endPoint As Point
+    Dim rangeStart As Point
+    Dim rangeEnd As Point
 
     Sub canvasMouseDown(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseDown
+        Dim xpoint = 0
+        Dim ypoint = 0
+
         drawing = True
         startPoint = e.Location
 
+        getPoint(e, xpoint, ypoint)
         DrawSelectionBox(startPoint)
+
+        rangeStart = New Point(xpoint, ypoint)
     End Sub
 
     Private Sub picCanvas_MouseMove(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseMove
@@ -100,7 +109,15 @@
         If Not drawing Then
             Return
         Else
+            Dim xpoint = 0
+            Dim ypoint = 0
+
+            getPoint(e, xpoint, ypoint)
+
+            rangeEnd = New Point(xpoint, ypoint)
             drawing = False
+
+            RaiseEvent SelectPixelRegion(rangeStart.X, rangeStart.Y, rangeEnd.X, rangeEnd.Y)
         End If
     End Sub
 
