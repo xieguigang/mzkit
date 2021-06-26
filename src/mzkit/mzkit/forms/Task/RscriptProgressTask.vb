@@ -6,11 +6,16 @@ Public Class RscriptProgressTask
 
     Public Shared Function CreateMSIIndex(imzML As String) As String
         Dim Rscript As String = RscriptPipelineTask.GetRScript("buildMSIIndex.R")
-        Dim progress As New frmTaskProgress
         Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
         Dim uid As String = ibd.UUID
         Dim cachefile As String = App.AppSystemTemp & "/MSI_imzML/" & uid
         Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, $"""{Rscript}"" --imzML ""{imzML}"" --cache ""{cachefile}""")
+
+        If cachefile.FileLength > 1024 Then
+            Return cachefile
+        End If
+
+        Dim progress As New frmTaskProgress
 
         progress.ShowProgressTitle("Open imzML...", directAccess:=True)
         progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)

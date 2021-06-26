@@ -17,8 +17,11 @@ Namespace IndexedCache
         ReadOnly centroid As Tolerance = Tolerance.DeltaMass(0.3)
         ReadOnly intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.Default
 
-        Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
-        Friend ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
+        ''' <summary>
+        ''' 会极大的影响文件的缓存大小以及缓存的生成速度
+        ''' </summary>
+        Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(50)
+        Friend ReadOnly offsets As New SortedDictionary(Of Double, BufferRegion)
         Friend ReadOnly length As New Dictionary(Of Double, Integer)
 
         ''' <summary>
@@ -57,7 +60,7 @@ Namespace IndexedCache
             Dim dataGroup = rawMsMatrix.GroupBy(Function(i) i.mz, tolerance).ToArray
 
             For Each mz As NamedCollection(Of ms2) In dataGroup
-                Dim mzi As Double = stdNum.Round(Val(mz.name), 4)
+                Dim mzi As Double = Val(mz.name)
                 Dim offset As Long
                 Dim into As Double = Aggregate i As ms2
                                      In mz
@@ -65,6 +68,12 @@ Namespace IndexedCache
 
                 If into = 0.0 Then
                     Continue For
+                Else
+                    Dim find = offsets.Keys.Where(Function(mzz) tolerance(mzz, mzi)).FirstOrDefault
+
+                    If find > 0 Then
+                        mzi = find
+                    End If
                 End If
 
                 If offsets.ContainsKey(mzi) Then

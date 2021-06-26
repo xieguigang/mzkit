@@ -20,7 +20,7 @@ Module TaskScript
         Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
         Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
         Dim i As Integer = 1
-        Dim d As Integer = allPixels.Length / 25
+        Dim d As Integer = allPixels.Length / 100
         Dim j As i32 = 0
 
         RunSlavePipeline.SendProgress(0, "Create workspace cache file, wait for a while...")

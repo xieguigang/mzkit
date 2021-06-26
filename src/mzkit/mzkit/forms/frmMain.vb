@@ -234,6 +234,9 @@ Public Class frmMain
     End Sub
 
     Friend Sub showMsImaging(imzML As String)
+        WindowModules.viewer.Show(dockPanel)
+        WindowModules.msImageParameters.Show(dockPanel)
+
         If imzML.ExtensionSuffix("mzpack") Then
             Call showMzPackMSI(imzML)
         Else
@@ -241,14 +244,11 @@ Public Class frmMain
             Dim canvas As New Drawer(New IndexReader(New XICReader(cachefile)))
 
             WindowModules.viewer.LoadRender(canvas, imzML)
-            WindowModules.viewer.DockState = DockState.Document
 
             Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]"
         End If
 
-        Call WindowModules.viewer.Show(dockPanel)
-        Call WindowModules.msImageParameters.Show(dockPanel)
-
+        WindowModules.viewer.DockState = DockState.Document
         WindowModules.msImageParameters.DockState = DockState.DockLeft
     End Sub
 
@@ -265,10 +265,7 @@ Public Class frmMain
                Dim canvas As Drawer = New Drawer(mzpack, memoryCache:=True)
 
                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, mzpack))
-               Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
-
                Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {mzpack.FileName}]")
-
                Call progress.Invoke(Sub() progress.Close())
            End Sub).Start()
 
