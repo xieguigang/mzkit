@@ -13,8 +13,8 @@ Imports RibbonLib
 Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
-Namespace RibbonLib.Controls
-    Partial Class RibbonItems
+
+Partial Class RibbonItems
         Private Class Cmd
             Public Const cmdRecentItems As UInteger = 1014
             Public Const cmdMenuGroupFile As UInteger = 1005
@@ -950,4 +950,4 @@ Namespace RibbonLib.Controls
         End Sub
 
     End Class
-End Namespace
+
