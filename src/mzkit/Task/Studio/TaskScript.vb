@@ -2,15 +2,66 @@
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Package("task")>
 Module TaskScript
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw">the file path of *.mzpack</param>
+    ''' <param name="outputdir"></param>
+    <ExportAPI("metaDNA")>
+    Public Sub MetaDNASearch(raw As String, outputdir As String)
+        Dim metaDNA As New Algorithm(Tolerance.PPM(20), 0.4, Tolerance.DeltaMass(0.3))
+        Dim mzpack As mzPack
+        Dim range As String()
+
+        Using file As Stream = raw.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            mzpack = mzPack.ReadAll(file)
+        End Using
+
+        Dim ionMode As Integer = mzpack.MS _
+            .Select(Function(a) a.products) _
+            .IteratesALL _
+            .First _
+            .polarity
+
+        If ionMode = 1 Then
+            range = {"[M]+", "[M+H]+"}
+        Else
+            range = {"[M]-", "[M-H]-"}
+        End If
+
+        Dim println As Action(Of String) = AddressOf RunSlavePipeline.SendMessage
+        Dim infer As CandidateInfer() = metaDNA _
+            .SetSearchRange(range) _
+            .SetNetwork(KEGGRepo.RequestKEGGReactions(println)) _
+            .SetKeggLibrary(KEGGRepo.RequestKEGGcompounds(println)) _
+            .SetSamples(mzpack.GetMs2Peaks, autoROIid:=True) _
+            .SetReportHandler(println) _
+            .DIASearch() _
+            .ToArray
+
+        Dim output As MetaDNAResult() = metaDNA _
+            .ExportTable(infer, unique:=True) _
+            .ToArray
+
+        Call output.SaveTo($"{outputdir}/metaDNA_annotation.csv")
+        Call infer.GetJson.SaveTo($"{outputdir}/infer_network.json")
+    End Sub
 
     <ExportAPI("cache.mzpack")>
     Public Sub CreateMzpack(raw As String, cacheFile As String)

@@ -53,36 +53,11 @@ Public Module MetaDNASearch
 
     <Extension>
     Public Sub RunDIA(raw As Raw, println As Action(Of String), ByRef output As MetaDNAResult(), ByRef infer As CandidateInfer())
-        Dim metaDNA As New Algorithm(Tolerance.PPM(20), 0.4, Tolerance.DeltaMass(0.3))
-        Dim mzpack As mzPack
-
         If Not raw.isLoaded Then
             raw = raw.LoadMzpack
         End If
 
-        mzpack = raw.loaded
-
-        Dim ionMode As Integer = mzpack.MS.Select(Function(a) a.products).IteratesALL.First.polarity
-        Dim range As String()
-
-        If ionMode = 1 Then
-            range = {"[M]+", "[M+H]+"}
-        Else
-            range = {"[M]-", "[M-H]-"}
-        End If
-
-        infer = metaDNA _
-            .SetSearchRange(range) _
-            .SetNetwork(KEGGRepo.RequestKEGGReactions(println)) _
-            .SetKeggLibrary(KEGGRepo.RequestKEGGcompounds(println)) _
-            .SetSamples(mzpack.GetMs2Peaks, autoROIid:=True) _
-            .SetReportHandler(println) _
-            .DIASearch() _
-            .ToArray
-
-        output = metaDNA _
-            .ExportTable(infer, unique:=True) _
-            .ToArray
+        mzPack = raw.loaded
     End Sub
 End Module
 
