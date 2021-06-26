@@ -54,6 +54,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -105,6 +106,10 @@ Public Class Drawer : Implements IDisposable
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Return pixelReader.LoadPixels(mz, tolerance, skipZero)
+    End Function
+
+    Public Function ShowSummaryRendering(summary As IntensitySummary) As Bitmap
+        Dim layer = DATA.GetLayer(intensity).ToArray
     End Function
 
     Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
