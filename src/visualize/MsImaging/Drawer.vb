@@ -108,8 +108,31 @@ Public Class Drawer : Implements IDisposable
         Return pixelReader.LoadPixels(mz, tolerance, skipZero)
     End Function
 
-    Public Function ShowSummaryRendering(summary As IntensitySummary) As Bitmap
-        Dim layer = DATA.GetLayer(intensity).ToArray
+    Public Function ShowSummaryRendering(summary As IntensitySummary,
+                                         Optional cutoff# = 0.65,
+                                         Optional colorSet$ = "Jet",
+                                         Optional pixelSize$ = "3,3") As Bitmap
+
+        Dim layer = pixelReader.GetSummary.GetLayer(summary).ToArray
+        Dim pixels As PixelData() = layer _
+            .Select(Function(p)
+                        Return New PixelData With {
+                            .intensity = p.totalIon,
+                            .x = p.x,
+                            .y = p.y
+                        }
+                    End Function) _
+            .ToArray
+
+        Return Drawer.RenderPixels(
+            pixels:=pixels,
+            dimension:=dimension,
+            dimSize:=pixelSize.SizeParser,
+            colorSet:=colorSet,
+            threshold:=0,
+            defaultFill:="black",
+            cutoff:=cutoff
+        )
     End Function
 
     Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
