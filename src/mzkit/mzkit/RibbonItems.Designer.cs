@@ -107,6 +107,10 @@ namespace RibbonLib.Controls
             public const uint cmdTabMSIPage = 121;
             public const uint cmdGroupMSIFile = 122;
             public const uint cmdButtonOpenMSIRaw = 119;
+            public const uint cmdTabMSISnapshot = 126;
+            public const uint cmdButtonMSITotalIon = 123;
+            public const uint cmdButtonMSIBasePeakIon = 124;
+            public const uint cmdButtonMSIAverageIon = 125;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -229,6 +233,10 @@ namespace RibbonLib.Controls
         public RibbonTab TabMSIPage { get; private set; }
         public RibbonGroup GroupMSIFile { get; private set; }
         public RibbonButton ButtonOpenMSIRaw { get; private set; }
+        public RibbonGroup TabMSISnapshot { get; private set; }
+        public RibbonButton ButtonMSITotalIon { get; private set; }
+        public RibbonButton ButtonMSIBasePeakIon { get; private set; }
+        public RibbonButton ButtonMSIAverageIon { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -349,6 +357,10 @@ namespace RibbonLib.Controls
             TabMSIPage = new RibbonTab(ribbon, Cmd.cmdTabMSIPage);
             GroupMSIFile = new RibbonGroup(ribbon, Cmd.cmdGroupMSIFile);
             ButtonOpenMSIRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenMSIRaw);
+            TabMSISnapshot = new RibbonGroup(ribbon, Cmd.cmdTabMSISnapshot);
+            ButtonMSITotalIon = new RibbonButton(ribbon, Cmd.cmdButtonMSITotalIon);
+            ButtonMSIBasePeakIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIBasePeakIon);
+            ButtonMSIAverageIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIAverageIon);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
