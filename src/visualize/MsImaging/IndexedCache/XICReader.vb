@@ -75,7 +75,16 @@ Namespace IndexedCache
         End Function
 
         Public Function GetPixel(x As Integer, y As Integer) As ibdPixel
-            Dim offset As Long = pixeloffset(y - 1)(x - 1)
+            Dim offset As Long
+
+            If x <= 0 Then
+                x = 1
+            End If
+            If y <= 0 Then
+                y = 1
+            End If
+
+            offset = pixeloffset(y - 1)(x - 1)
 
             file.Seek(offset, SeekOrigin.Begin)
             file.ReadInt32s(2)
