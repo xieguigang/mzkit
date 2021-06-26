@@ -17,6 +17,7 @@ Public Class RscriptProgressTask
         progress.SetProgressMode()
 
         AddHandler pipeline.SetProgress, AddressOf progress.SetProgress
+        AddHandler pipeline.Finish, Sub() progress.Invoke(Sub() progress.Close())
 
         Call New Thread(AddressOf pipeline.Run).Start()
         Call progress.ShowDialog()
