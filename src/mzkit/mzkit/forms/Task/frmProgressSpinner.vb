@@ -74,5 +74,10 @@ Public Class frmProgressSpinner
         Me.DoubleBuffered = False
 
         RunAnimation()
+        TaskbarStatus.SetLoopStatus()
+    End Sub
+
+    Private Sub frmProgressSpinner_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        TaskbarStatus.Stop()
     End Sub
 End Class

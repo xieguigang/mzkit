@@ -56,6 +56,7 @@ Public Class frmTaskProgress
     Public Sub SetProgressMode()
         ProgressBar1.Maximum = 100
         ProgressBar1.Style = ProgressBarStyle.Continuous
+        TaskbarStatus.SetProgress(0)
     End Sub
 
     Public Sub SetProgress(p As Integer, message As String)
@@ -63,6 +64,7 @@ Public Class frmTaskProgress
             Sub()
                 ProgressBar1.Value = p
                 Label1.Text = message
+                TaskbarStatus.SetProgress(p)
             End Sub)
     End Sub
 
@@ -114,6 +116,7 @@ Public Class frmTaskProgress
 
     Private Sub frmTaskProgress_Load(sender As Object, e As EventArgs) Handles Me.Load
         DoubleBuffered = True
+        TaskbarStatus.SetLoopStatus()
     End Sub
 
     Public Shared Function LoadData(Of T)(streamLoad As Func(Of T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
@@ -153,5 +156,9 @@ Public Class frmTaskProgress
             End Sub).Start()
 
         Call progress.ShowDialog()
+    End Sub
+
+    Private Sub frmTaskProgress_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        TaskbarStatus.Stop()
     End Sub
 End Class
