@@ -63,7 +63,7 @@ Public Class Raw
     ''' <returns></returns>
     Public Property source As String
     ''' <summary>
-    ''' 二进制缓存文件位置
+    ''' mzpack二进制缓存文件位置
     ''' </summary>
     ''' <returns></returns>
     Public Property cache As String

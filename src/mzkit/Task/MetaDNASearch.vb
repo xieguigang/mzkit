@@ -47,17 +47,29 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module MetaDNASearch
 
     <Extension>
     Public Sub RunDIA(raw As Raw, println As Action(Of String), ByRef output As MetaDNAResult(), ByRef infer As CandidateInfer())
-        If Not raw.isLoaded Then
-            raw = raw.LoadMzpack
-        End If
+        Dim cacheRaw As String = raw.cache
+        Dim ssid As String = SingletonHolder(Of BioDeepSession).Instance.ssid
+        Dim outputdir As String = TempFileSystem.GetAppSysTempFile("__save", App.PID.ToHexString, "metadna_")
+        Dim cli As String = $"""{RscriptPipelineTask.GetRScript("metadna")}"" --biodeep_ssid ""{ssid}"" --raw ""{cacheRaw}"" --save ""{outputdir}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
-        mzPack = raw.loaded
+        AddHandler pipeline.SetMessage, AddressOf println.Invoke
+
+        Call pipeline.Run()
+
+        output = $"{outputdir}/metaDNA_annotation.csv".LoadCsv(Of MetaDNAResult)
+        infer = $"{outputdir}/infer_network.json".LoadJsonFile(Of CandidateInfer())
     End Sub
 End Module
 

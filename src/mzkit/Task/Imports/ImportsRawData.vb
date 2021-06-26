@@ -75,7 +75,7 @@ Public Class ImportsRawData
     Public Sub RunImports()
         Dim Rscript As String = RscriptPipelineTask.GetRScript("mzpack.R")
         Dim cli As String = $"""{Rscript}"" --mzXML ""{raw.source}"" --cache ""{raw.cache}"""
-        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, CLI)
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
         AddHandler pipeline.Finish, AddressOf success.Invoke
         AddHandler pipeline.SetMessage, AddressOf showProgress.Invoke

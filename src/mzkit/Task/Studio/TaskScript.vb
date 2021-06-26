@@ -12,11 +12,17 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Package("task")>
 Module TaskScript
+
+    <ExportAPI("biodeep.session")>
+    Public Sub SetBioDeepSession(ssid As String)
+        SingletonHolder(Of BioDeepSession).Instance.ssid = ssid
+    End Sub
 
     ''' <summary>
     ''' 
