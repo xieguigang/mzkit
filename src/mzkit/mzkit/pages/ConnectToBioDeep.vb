@@ -43,11 +43,8 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.My
 Imports mzkit.DockSample
 Imports mzkit.My
@@ -70,108 +67,112 @@ Public Class ConnectToBioDeep
     End Sub
 
     Public Shared Sub RunMetaDNA(raw As Raw)
-        If Not SingletonHolder(Of BioDeepSession).Instance.CheckSession Then
-            Call New frmLogin().ShowDialog()
-        End If
+        Call OpenAdvancedFunction(Sub() RunMetaDNAImpl(raw))
+    End Sub
 
-        If SingletonHolder(Of BioDeepSession).Instance.CheckSession Then
-            ' work in background
-            Dim taskList As TaskListWindow = WindowModules.taskWin
-            Dim task As TaskUI = taskList.Add("MetaDNA Search", raw.source.GetFullPath)
-            Dim log As OutputWindow = WindowModules.output
-            Dim println As Action(Of String) =
-                Sub(message)
-                    Call task.ProgressMessage(message)
-                    Call log.AppendMessage(message)
-                End Sub
-            Dim table = VisualStudio.ShowDocument(Of frmTableViewer)
+    Private Shared Sub RunMetaDNAImpl(raw As Raw)
+        ' work in background
+        Dim taskList As TaskListWindow = WindowModules.taskWin
+        Dim task As TaskUI = taskList.Add("MetaDNA Search", raw.source.GetFullPath)
+        Dim log As OutputWindow = WindowModules.output
+        Dim println As Action(Of String) =
+            Sub(message)
+                Call task.ProgressMessage(message)
+                Call log.AppendMessage(message)
+            End Sub
+        Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
 
-            table.DockState = DockState.Hidden
+        table.DockState = DockState.Hidden
+        taskList.Show(MyApplication.host.dockPanel)
 
-            taskList.Show(MyApplication.host.dockPanel)
-            VisualStudio.Dock(taskList, DockState.DockBottom)
+        VisualStudio.Dock(taskList, DockState.DockBottom)
 
-            ' Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
-            Call MyApplication.TaskQueue.AddToQueue(
-                Sub()
-                    Dim result As MetaDNAResult() = Nothing
-                    Dim infer As CandidateInfer() = Nothing
+        ' Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
+        Call MyApplication.TaskQueue.AddToQueue(
+            Sub()
+                Dim result As MetaDNAResult() = Nothing
+                Dim infer As CandidateInfer() = Nothing
 
-                    Call task.Running()
-                    Call MetaDNASearch.RunDIA(raw, println, result, infer)
-                    Call table.Invoke(Sub()
-                                          table.DockState = DockState.Document
-                                          table.Show(MyApplication.host.dockPanel)
-                                          table.TabText = $"[MetaDNA] {raw.source.FileName}"
-                                      End Sub)
+                Call task.Running()
+                Call MetaDNASearch.RunDIA(raw, println, result, infer)
+                Call table.Invoke(Sub()
+                                      table.DockState = DockState.Document
+                                      table.Show(MyApplication.host.dockPanel)
+                                      table.TabText = $"[MetaDNA] {raw.source.FileName}"
+                                  End Sub)
 
-                    Call println("output result table")
+                Call println("output result table")
 
-                    Call table.Invoke(
-                        Sub()
-                            Dim grid = table.DataGridView1
+                Call table.Invoke(Sub() showTable(table, result))
+                Call table.Invoke(Sub()
+                                      Call ShowInferAlignment(table, result, infer)
+                                  End Sub)
 
-                            grid.Columns.Add(NameOf(MetaDNAResult.ROI_id), NameOf(MetaDNAResult.ROI_id))
-                            grid.Columns.Add(NameOf(MetaDNAResult.query_id), NameOf(MetaDNAResult.query_id))
-                            grid.Columns.Add(NameOf(MetaDNAResult.mz), NameOf(MetaDNAResult.mz))
-                            grid.Columns.Add(NameOf(MetaDNAResult.rt), NameOf(MetaDNAResult.rt))
-                            grid.Columns.Add(NameOf(MetaDNAResult.intensity), NameOf(MetaDNAResult.intensity))
-                            grid.Columns.Add(NameOf(MetaDNAResult.KEGGId), NameOf(MetaDNAResult.KEGGId))
-                            grid.Columns.Add(NameOf(MetaDNAResult.exactMass), NameOf(MetaDNAResult.exactMass))
-                            grid.Columns.Add(NameOf(MetaDNAResult.formula), NameOf(MetaDNAResult.formula))
-                            grid.Columns.Add(NameOf(MetaDNAResult.name), NameOf(MetaDNAResult.name))
-                            grid.Columns.Add(NameOf(MetaDNAResult.precursorType), NameOf(MetaDNAResult.precursorType))
-                            grid.Columns.Add(NameOf(MetaDNAResult.mzCalc), NameOf(MetaDNAResult.mzCalc))
-                            grid.Columns.Add(NameOf(MetaDNAResult.ppm), NameOf(MetaDNAResult.ppm))
-                            grid.Columns.Add(NameOf(MetaDNAResult.inferLevel), NameOf(MetaDNAResult.inferLevel))
-                            grid.Columns.Add(NameOf(MetaDNAResult.forward), NameOf(MetaDNAResult.forward))
-                            grid.Columns.Add(NameOf(MetaDNAResult.reverse), NameOf(MetaDNAResult.reverse))
-                            grid.Columns.Add(NameOf(MetaDNAResult.jaccard), NameOf(MetaDNAResult.jaccard))
-                            grid.Columns.Add(NameOf(MetaDNAResult.parentTrace), NameOf(MetaDNAResult.parentTrace))
-                            grid.Columns.Add(NameOf(MetaDNAResult.inferSize), NameOf(MetaDNAResult.inferSize))
-                            grid.Columns.Add(NameOf(MetaDNAResult.score1), NameOf(MetaDNAResult.score1))
-                            grid.Columns.Add(NameOf(MetaDNAResult.score2), NameOf(MetaDNAResult.score2))
-                            grid.Columns.Add(NameOf(MetaDNAResult.pvalue), NameOf(MetaDNAResult.pvalue))
-                            grid.Columns.Add(NameOf(MetaDNAResult.seed), NameOf(MetaDNAResult.seed))
-                            grid.Columns.Add(NameOf(MetaDNAResult.partnerKEGGId), NameOf(MetaDNAResult.partnerKEGGId))
-                            grid.Columns.Add(NameOf(MetaDNAResult.KEGG_reaction), NameOf(MetaDNAResult.KEGG_reaction))
-                            grid.Columns.Add(NameOf(MetaDNAResult.reaction), NameOf(MetaDNAResult.reaction))
-                            grid.Columns.Add(NameOf(MetaDNAResult.fileName), NameOf(MetaDNAResult.fileName))
+                Call println("MetaDNA search job done!")
 
-                            For Each line As MetaDNAResult In result
-                                Call grid.Rows.Add(line.ROI_id, line.query_id, line.mz, line.rt, line.intensity, line.KEGGId, line.exactMass, line.formula, line.name, line.precursorType, line.mzCalc, line.ppm, line.inferLevel, line.forward, line.reverse, line.jaccard, line.parentTrace, line.inferSize, line.score1, line.score2, line.pvalue, line.seed, line.partnerKEGGId, line.KEGG_reaction, line.reaction, line.fileName)
-                                Call Application.DoEvents()
-                            Next
-                        End Sub)
+                Call MessageBox.Show($"MetaDNA search done!" & vbCrLf & $"Found {result.Length} DIA annotation hits.", "MetaDNA Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End Sub)
+    End Sub
 
-                    Call table.Invoke(Sub()
-                                          Dim inferIndex As Dictionary(Of String, Candidate) = infer _
-                                              .ExportInferRaw(result) _
-                                              .Inference _
-                                              .ToDictionary(Function(a) $"{a.ROI}|{a.infer.kegg.kegg_id}|{a.precursorType}|{a.infer.reference.id}|{a.infer.rawFile}")
+    Private Shared Sub ShowInferAlignment(table As frmTableViewer, result As MetaDNAResult(), infer As CandidateInfer())
+        Dim inferIndex As Dictionary(Of String, Candidate) = infer _
+            .ExportInferRaw(result) _
+            .Inference _
+            .ToDictionary(Function(a)
+                              Return $"{a.ROI}|{a.infer.kegg.kegg_id}|{a.precursorType}|{a.infer.reference.id}|{a.infer.rawFile}"
+                          End Function)
 
-                                          table.ViewRow = Sub(obj)
-                                                              Dim uidRef As String = $"{obj!ROI_id}|{obj!KEGGId}|{obj!precursorType}|{obj!seed}|{obj!fileName}"
-                                                              Dim align As Candidate = inferIndex(uidRef)
+        table.ViewRow = Sub(obj)
+                            Dim uidRef As String = $"{obj!ROI_id}|{obj!KEGGId}|{obj!precursorType}|{obj!seed}|{obj!fileName}"
+                            Dim align As Candidate = inferIndex(uidRef)
 
-                                                              If align.infer.level <> InferLevel.Ms1 Then
-                                                                  Dim qvsref = align.infer.GetAlignmentMirror
+                            If align.infer.level <> InferLevel.Ms1 Then
+                                Dim qvsref = align.infer.GetAlignmentMirror
 
-                                                                  Call MyApplication.host.Invoke(
-                                                                      Sub()
-                                                                          Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
-                                                                      End Sub)
-                                                              Else
-                                                                  Call MyApplication.host.showStatusMessage($"MS1 level metaDNA infer did'nt have MS/MS alignment data...")
-                                                              End If
-                                                          End Sub
-                                      End Sub)
+                                Call MyApplication.host.Invoke(
+                                    Sub()
+                                        Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
+                                    End Sub)
+                            Else
+                                Call MyApplication.host.showStatusMessage($"MS1 level metaDNA infer did'nt have MS/MS alignment data...")
+                            End If
+                        End Sub
+    End Sub
 
-                    Call println("MetaDNA search job done!")
+    Private Shared Sub showTable(table As frmTableViewer, result As MetaDNAResult())
+        Dim grid = table.DataGridView1
 
-                    Call MessageBox.Show($"MetaDNA search done!" & vbCrLf & $"Found {result.Length} DIA annotation hits.", "MetaDNA Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End Sub)
-        End If
+        grid.Columns.Add(NameOf(MetaDNAResult.ROI_id), NameOf(MetaDNAResult.ROI_id))
+        grid.Columns.Add(NameOf(MetaDNAResult.query_id), NameOf(MetaDNAResult.query_id))
+        grid.Columns.Add(NameOf(MetaDNAResult.mz), NameOf(MetaDNAResult.mz))
+        grid.Columns.Add(NameOf(MetaDNAResult.rt), NameOf(MetaDNAResult.rt))
+        grid.Columns.Add(NameOf(MetaDNAResult.intensity), NameOf(MetaDNAResult.intensity))
+        grid.Columns.Add(NameOf(MetaDNAResult.KEGGId), NameOf(MetaDNAResult.KEGGId))
+        grid.Columns.Add(NameOf(MetaDNAResult.exactMass), NameOf(MetaDNAResult.exactMass))
+        grid.Columns.Add(NameOf(MetaDNAResult.formula), NameOf(MetaDNAResult.formula))
+        grid.Columns.Add(NameOf(MetaDNAResult.name), NameOf(MetaDNAResult.name))
+        grid.Columns.Add(NameOf(MetaDNAResult.precursorType), NameOf(MetaDNAResult.precursorType))
+        grid.Columns.Add(NameOf(MetaDNAResult.mzCalc), NameOf(MetaDNAResult.mzCalc))
+        grid.Columns.Add(NameOf(MetaDNAResult.ppm), NameOf(MetaDNAResult.ppm))
+        grid.Columns.Add(NameOf(MetaDNAResult.inferLevel), NameOf(MetaDNAResult.inferLevel))
+        grid.Columns.Add(NameOf(MetaDNAResult.forward), NameOf(MetaDNAResult.forward))
+        grid.Columns.Add(NameOf(MetaDNAResult.reverse), NameOf(MetaDNAResult.reverse))
+        grid.Columns.Add(NameOf(MetaDNAResult.jaccard), NameOf(MetaDNAResult.jaccard))
+        grid.Columns.Add(NameOf(MetaDNAResult.parentTrace), NameOf(MetaDNAResult.parentTrace))
+        grid.Columns.Add(NameOf(MetaDNAResult.inferSize), NameOf(MetaDNAResult.inferSize))
+        grid.Columns.Add(NameOf(MetaDNAResult.score1), NameOf(MetaDNAResult.score1))
+        grid.Columns.Add(NameOf(MetaDNAResult.score2), NameOf(MetaDNAResult.score2))
+        grid.Columns.Add(NameOf(MetaDNAResult.pvalue), NameOf(MetaDNAResult.pvalue))
+        grid.Columns.Add(NameOf(MetaDNAResult.seed), NameOf(MetaDNAResult.seed))
+        grid.Columns.Add(NameOf(MetaDNAResult.partnerKEGGId), NameOf(MetaDNAResult.partnerKEGGId))
+        grid.Columns.Add(NameOf(MetaDNAResult.KEGG_reaction), NameOf(MetaDNAResult.KEGG_reaction))
+        grid.Columns.Add(NameOf(MetaDNAResult.reaction), NameOf(MetaDNAResult.reaction))
+        grid.Columns.Add(NameOf(MetaDNAResult.fileName), NameOf(MetaDNAResult.fileName))
+
+        For Each line As MetaDNAResult In result
+            Call grid.Rows.Add(line.ROI_id, line.query_id, line.mz, line.rt, line.intensity, line.KEGGId, line.exactMass, line.formula, line.name, line.precursorType, line.mzCalc, line.ppm, line.inferLevel, line.forward, line.reverse, line.jaccard, line.parentTrace, line.inferSize, line.score1, line.score2, line.pvalue, line.seed, line.partnerKEGGId, line.KEGG_reaction, line.reaction, line.fileName)
+            Call Application.DoEvents()
+        Next
     End Sub
 End Class
 
