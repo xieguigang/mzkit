@@ -54,6 +54,7 @@
 Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -216,8 +217,8 @@ Public Class frmFileExplorer
     ''' </summary>
     ''' <param name="fileName"></param>
     ''' <returns></returns>
-    Public Function getRawCache(fileName As String) As Raw
-        Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
+    Public Function getRawCache(fileName As String, Optional titleTemplate$ = "Imports raw data [%s]") As Raw
+        Dim progress As New frmTaskProgress() With {.Text = sprintf(titleTemplate, fileName)}
         Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
         Dim runTask As New Thread(AddressOf task.RunImports)
@@ -247,7 +248,7 @@ Public Class frmFileExplorer
         If lockFileDelete Then
             Return
         ElseIf Not raw.cacheFileExists Then
-
+            raw.cache = getRawCache(raw.source, titleTemplate:="Re-Build file cache [%s]").cache
         End If
 
         Call WindowModules.rawFeaturesList.LoadRaw(raw)
