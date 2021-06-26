@@ -43,7 +43,7 @@ Namespace IndexedCache
             Me.width = width
             Me.height = height
             Me.src = sourceName.FileName
-            Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID, "MSI_XIC_")
+            Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID.ToHexString, "MSI_XIC_")
             Me.cachefile = New BinaryDataWriter(cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
 
@@ -54,8 +54,9 @@ Namespace IndexedCache
         Public Sub WritePixels(pixel As PixelScan)
             Dim xy As Integer() = {pixel.X, pixel.Y}
             Dim rawMsMatrix As ms2() = pixel.GetMs
+            Dim dataGroup = rawMsMatrix.GroupBy(Function(i) i.mz, tolerance).ToArray
 
-            For Each mz As NamedCollection(Of ms2) In rawMsMatrix.GroupBy(Function(i) i.mz, tolerance)
+            For Each mz As NamedCollection(Of ms2) In dataGroup
                 Dim mzi As Double = stdNum.Round(Val(mz.name), 4)
                 Dim offset As Long
                 Dim into As Double = Aggregate i As ms2

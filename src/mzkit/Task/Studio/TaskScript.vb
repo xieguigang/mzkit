@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("task")>
-Public Class TaskScript
+Module TaskScript
 
     <ExportAPI("cache.MSI")>
     Public Sub CreateMSIIndex(imzML As String, cacheFile As String)
@@ -56,4 +56,4 @@ Public Class TaskScript
         End Try
     End Sub
 
-End Class
+End Module

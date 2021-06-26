@@ -15,6 +15,7 @@ Namespace Pixel
         Dim memoryCache As ms2()
         Dim enableCache As Boolean = False
 
+        <DebuggerStepThrough>
         Sub New(ibd As ibdReader, pixel As ScanData, Optional enableCache As Boolean = False)
             Me.i = pixel
             Me.raw = ibd
@@ -23,6 +24,7 @@ Namespace Pixel
             Me.Y = i.y
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(x As Integer, y As Integer, cache As IEnumerable(Of ms2))
             Me.memoryCache = cache.ToArray
             Me.enableCache = True
