@@ -110,6 +110,8 @@ Public Class ConnectToBioDeep
 
                 Call println("MetaDNA search job done!")
 
+                Call task.Finish()
+
                 Call MessageBox.Show($"MetaDNA search done!" & vbCrLf & $"Found {result.Length} DIA annotation hits.", "MetaDNA Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End Sub)
     End Sub
