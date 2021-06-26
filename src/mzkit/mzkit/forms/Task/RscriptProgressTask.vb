@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Task
 
 Public Class RscriptProgressTask
 
@@ -9,7 +10,8 @@ Public Class RscriptProgressTask
         Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
         Dim uid As String = ibd.UUID
         Dim cachefile As String = App.AppSystemTemp & "/MSI_imzML/" & uid
-        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, $"""{Rscript}"" --imzML ""{imzML}"" --cache ""{cachefile}""")
+        Dim cli As String = $"""{Rscript}"" --imzML ""{imzML}"" --cache ""{cachefile}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
         If cachefile.FileLength > 1024 Then
             Return cachefile

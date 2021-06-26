@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::948a90b7d60294cf7f784c5283ccafab, src\mzkit\Task\Imports\ImportsRawData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ImportsRawData
-    ' 
-    '     Properties: raw
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: RunImports
-    ' 
-    ' /********************************************************************************/
+' Class ImportsRawData
+' 
+'     Properties: raw
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: RunImports
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 
 Public Class ImportsRawData
 
@@ -72,20 +73,13 @@ Public Class ImportsRawData
     End Sub
 
     Public Sub RunImports()
-        Dim mzpack As mzPack = Converter.LoadRawFileAuto(source, showProgress)
+        Dim Rscript As String = RscriptPipelineTask.GetRScript("mzpack.R")
+        Dim cli As String = $"""{Rscript}"" --mzXML ""{raw.source}"" --cache ""{raw.cache}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, CLI)
 
-        If Not mzpack.MS.IsNullOrEmpty Then
-            showProgress("Create snapshot...")
-            mzpack.Thumbnail = mzpack.DrawScatter
-        End If
+        AddHandler pipeline.Finish, AddressOf success.Invoke
+        AddHandler pipeline.SetMessage, AddressOf showProgress.Invoke
 
-        Using file As Stream = cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-            Call showProgress("Write mzPack cache data...")
-            Call mzpack.Write(file)
-        End Using
-
-        Call showProgress("Job Done!")
-        Call Thread.Sleep(1500)
-        Call success()
+        Call pipeline.Run()
     End Sub
 End Class

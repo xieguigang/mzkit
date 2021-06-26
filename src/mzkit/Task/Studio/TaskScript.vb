@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -9,6 +11,24 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("task")>
 Module TaskScript
+
+    <ExportAPI("cache.mzpack")>
+    Public Sub CreateMzpack(raw As String, cacheFile As String)
+        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, AddressOf RunSlavePipeline.SendMessage)
+
+        If Not mzpack.MS.IsNullOrEmpty Then
+            RunSlavePipeline.SendMessage("Create snapshot...")
+            mzpack.Thumbnail = mzpack.DrawScatter
+        End If
+
+        Using file As Stream = cacheFile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call RunSlavePipeline.SendMessage("Write mzPack cache data...")
+            Call mzpack.Write(file)
+        End Using
+
+        Call Thread.Sleep(1500)
+        Call RunSlavePipeline.SendMessage("Job Done!")
+    End Sub
 
     <ExportAPI("cache.MSI")>
     Public Sub CreateMSIIndex(imzML As String, cacheFile As String)

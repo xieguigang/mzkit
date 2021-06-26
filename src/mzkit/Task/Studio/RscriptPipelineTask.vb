@@ -1,4 +1,7 @@
-﻿Imports Task.CLI
+﻿Imports System.Runtime.CompilerServices
+Imports Task.CLI
+
+<Assembly: InternalsVisibleTo("mzkit_win32")>
 
 Public Class RscriptPipelineTask
 
