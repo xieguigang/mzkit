@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41ba9f45bc8152f6f446f03beea604a6, src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
+﻿#Region "Microsoft.VisualBasic::2e14e987e226b04f165cc3d5be7991d7, src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@
 
     '     Class ScanMS1
     ' 
-    '         Properties: BPC, products, TIC
+    '         Properties: BPC, meta, products, TIC
     ' 
-    '         Function: GetMs1Scans
+    '         Function: GetMs1Scans, hasMetaKeys
     ' 
     ' 
     ' /********************************************************************************/

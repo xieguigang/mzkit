@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6460d9a09995bf49d2b1ac7e83c1fbe4, src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::7e3db61e5006b3d8f2c18f5eb1611b37, src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,6 @@
     ' Class PeakAnnotation
     ' 
     '     Function: MatchElementGroups, MeasureFormula, MeasureIsotopePeaks, RunAnnotation
-    ' 
-    ' Class Annotation
-    ' 
-    '     Properties: formula, products
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
@@ -132,4 +125,3 @@ Public Class PeakAnnotation
         Return products
     End Function
 End Class
-

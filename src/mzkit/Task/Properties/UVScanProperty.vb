@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12198eaf3d3fb4eb065230cb13cb9f49, src\mzkit\Task\Properties\UVScanProperty.vb"
+﻿#Region "Microsoft.VisualBasic::b9f432d3e0b7e65399833eb6aca543bf, src\mzkit\Task\Properties\UVScanProperty.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class UVScanProperty
         End If
     End Sub
 End Class
-

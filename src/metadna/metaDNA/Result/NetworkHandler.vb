@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::721886279fa9f56bd3f0f834c26c2095, src\metadna\metaDNA\Result\NetworkHandler.vb"
+﻿#Region "Microsoft.VisualBasic::e00e760e808074210f43b66f560ab893, src\metadna\metaDNA\Result\NetworkHandler.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public Module NetworkHandler
         Return g
     End Function
 End Module
-

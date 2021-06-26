@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80c413e07d7b7c29a6d989fe97b9ece8, src\mzkit\mzkit\pages\dockWindow\documents\frmRScriptEdit.vb"
+﻿#Region "Microsoft.VisualBasic::99ef1a048ec6306cc8661d6aecb8602d, src\mzkit\mzkit\pages\dockWindow\documents\frmRScriptEdit.vb"
 
     ' Author:
     ' 

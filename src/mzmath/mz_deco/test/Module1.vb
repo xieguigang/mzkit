@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57c5962421216c432b41be76c4db1f72, src\mzmath\mz_deco\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::8f577b3d692b5ea0b56a36532cd36b5b, src\mzmath\mz_deco\test\Module1.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Module Module1
     End Sub
 
 End Module
-

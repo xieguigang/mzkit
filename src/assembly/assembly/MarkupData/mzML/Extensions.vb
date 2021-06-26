@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::756872d1fdd6c9cf5c5a6bb56b0db09d, src\assembly\assembly\MarkupData\mzML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3b7b3c7547f5be7457622b23852d5f03, src\assembly\assembly\MarkupData\mzML\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Module Extensions
     ' 
-    '         Function: ByteArray, FilterAllSpectrum, GetAllMs1, GetAllMs2, LoadChromatogramList
-    '                   MRMTargetMz, PopulateMS1, PopulateMS2, Ticks
+    '         Function: ByteArray, FilterAllSpectrum, GetAllMs1, GetAllMs2, (+2 Overloads) GetIonsChromatogram
+    '                   LoadChromatogramList, MRMTargetMz, PopulateMS1, PopulateMS2, Ticks
     ' 
     ' 
     ' /********************************************************************************/

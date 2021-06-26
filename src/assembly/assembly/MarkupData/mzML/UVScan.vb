@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea7901349ffa8e16db57ebc4c5d65378, src\assembly\assembly\MarkupData\mzML\UVScan.vb"
+﻿#Region "Microsoft.VisualBasic::5f1fac21ff6f7c4e0508edd687059ded, src\assembly\assembly\MarkupData\mzML\UVScan.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 

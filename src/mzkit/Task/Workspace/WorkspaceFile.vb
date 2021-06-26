@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddec458d45b5ec19c95c5770d18f5bfb, src\mzkit\Task\Workspace\WorkspaceFile.vb"
+﻿#Region "Microsoft.VisualBasic::c3320b24927e7ca40575c6b7d333807a, src\mzkit\Task\Workspace\WorkspaceFile.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Class WorkspaceFile
     Public Property unsavedScripts As NamedValue() = {}
 
 End Class
-

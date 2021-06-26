@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ad9f2417faa87ad1800263ea53e40d6, src\mzkit\mzkit\forms\Task\frmTaskProgress.vb"
+﻿#Region "Microsoft.VisualBasic::12d23f35af1f47c766ee7022a4fe0271, src\mzkit\mzkit\forms\Task\frmTaskProgress.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     ' 
     '     Function: LoadData
     ' 
-    '     Sub: frmImportTaskProgress_Paint, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction, ShowProgressDetails
-    '          ShowProgressTitle
+    '     Sub: frmImportTaskProgress_Paint, frmTaskProgress_Closed, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction
+    '          SetProgress, SetProgressMode, ShowProgressDetails, ShowProgressTitle
     ' 
     ' /********************************************************************************/
 

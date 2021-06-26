@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c057a2d44b4cb5aba4109edff3f2ff1a, src\mzkit\Task\Studio\Notification.vb"
+﻿#Region "Microsoft.VisualBasic::2f23fd3f8b035d8662fbbaafe47f7b80, src\mzkit\Task\Studio\Notification.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Module Notification
         Call Alert.ShowSucess(message)
     End Sub
 End Module
-

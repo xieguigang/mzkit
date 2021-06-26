@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::696a634bb355aed0a7a86cf37f5736ac, src\mzkit\Task\GCMSQuantifyIon.vb"
+﻿#Region "Microsoft.VisualBasic::ed804410692e8e86cd05e83be552600c, src\mzkit\Task\GCMSQuantifyIon.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public Module GCMSQuantifyIon
         Return ion
     End Function
 End Module
-

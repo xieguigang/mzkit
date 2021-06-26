@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aefeedeaa033476ef98b9b8986c7ecb3, src\metadna\metaDNA\Result\ResultHandler.vb"
+﻿#Region "Microsoft.VisualBasic::17975c983d229e883049a1a93d081d21, src\metadna\metaDNA\Result\ResultHandler.vb"
 
     ' Author:
     ' 
@@ -142,4 +142,3 @@ Module ResultHandler
         Next
     End Function
 End Module
-

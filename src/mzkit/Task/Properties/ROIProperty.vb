@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2532f140986787c07fc4d1e1697b581a, src\mzkit\Task\Properties\ROIProperty.vb"
+﻿#Region "Microsoft.VisualBasic::ec9fea590615845c3287f5005b8d1e31, src\mzkit\Task\Properties\ROIProperty.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Class ROIProperty
         baseline = ROI.baseline
     End Sub
 End Class
-

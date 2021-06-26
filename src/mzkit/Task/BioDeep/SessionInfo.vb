@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f79845d3fa7d2ead06148f103cb7ba6, src\mzkit\Task\BioDeep\SessionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::32d3be0b3766ae087b820a268dd2f2e0, src\mzkit\Task\BioDeep\SessionInfo.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Public Class adminlogin
     Public Property userid As Integer
 
 End Class
-

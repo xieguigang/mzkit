@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ef1a8c397e3dab7ca35701822415a01, src\metadb\FooDB\FooDB\StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::1f650a29b961518737634d6a47a281ee, src\metadb\FooDB\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module StoredProcedure
     ' 
-    '         Function: GetAssociatedFoods, UnitConversion
+    '         Function: UnitConversion
     ' 
     ' 
     ' /********************************************************************************/

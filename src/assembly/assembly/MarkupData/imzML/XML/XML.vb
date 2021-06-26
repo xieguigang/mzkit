@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69cda940bb0b6e74c5a6d6aa98c540ad, src\assembly\assembly\MarkupData\imzML\XML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::8133ae1a2432a372c312ec5b5d161f30, src\assembly\assembly\MarkupData\imzML\XML\XML.vb"
 
     ' Author:
     ' 
@@ -39,11 +39,6 @@
     '         Properties: version
     ' 
     '         Function: LoadScanData, LoadScans
-    ' 
-    '     Class ScanReader
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: LoadMsData, ToString
     ' 
     ' 
     ' /********************************************************************************/

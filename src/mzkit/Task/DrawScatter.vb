@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd6b0ef538e99977e01e2e82ba76be1, src\mzkit\Task\DrawScatter.vb"
+﻿#Region "Microsoft.VisualBasic::465641a8d25114973408b52d29ab596f, src\mzkit\Task\DrawScatter.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Module DrawScatter
         Return RawScatterPlot.Plot(samples:=ms1).AsGDIImage
     End Function
 End Module
-

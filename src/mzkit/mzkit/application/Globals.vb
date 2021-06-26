@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88038cff66906003c11cb589b52e054d, src\mzkit\mzkit\application\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::454a501bab224108b6cfc8b027d8cb35, src\mzkit\mzkit\application\Globals.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module Globals
     ' 
-    '     Properties: Settings, workspace
+    '     Properties: loadedSettings, Settings, workspace
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

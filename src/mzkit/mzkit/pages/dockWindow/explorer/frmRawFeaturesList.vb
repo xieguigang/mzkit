@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a0fb15248b52e8867667d8ad057fa4a, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
+﻿#Region "Microsoft.VisualBasic::8106965623d360393c9c6a655577a751, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,11 @@
     '     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CustomToolStripMenuItem_Click
     '          DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click, frmFileExplorer_Activated
     '          frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click, IonSearchToolStripMenuItem_Click
-    '          IonTableToolStripMenuItem_Click, LoadRaw, MetaDNASearchToolStripMenuItem_Click, MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click
-    '          OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click
-    '          ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click, TextBox2_Click
-    '          TreeView1_AfterCheck, treeView1_AfterSelect, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
+    '          IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, MetaDNASearchToolStripMenuItem_Click, MolecularNetworkingToolStripMenuItem_Click
+    '          NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click
+    '          ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click
+    '          TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, TreeView1_AfterCheck, treeView1_AfterSelect
+    '          treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 

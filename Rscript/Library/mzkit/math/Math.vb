@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::498f56fc43df91d81af63f45a8ade42d, Rscript\Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::151a4e7ec6fd3be7fba8fa3ffc420596, Rscript\Library\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,8 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: centroid, createTolerance, exact_mass, GetClusters, ms1Scans
     '               mz, mz_deco, mz_groups, MzUnique, peaktable
-    '               ppm, printLib, printMzTable, sequenceOrder, SpectrumTreeCluster
-    '               SSMCompares, XICTable
+    '               ppm, precursorTypes, printCalculator, printMzTable, sequenceOrder
+    '               SpectrumTreeCluster, SSMCompares, XICTable
     ' 
     ' /********************************************************************************/
 

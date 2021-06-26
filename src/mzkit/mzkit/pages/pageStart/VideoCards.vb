@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::157345599fd0a334c4d99e8594e2f9ec, src\mzkit\mzkit\pages\pageStart\VideoCards.vb"
+﻿#Region "Microsoft.VisualBasic::1858314432e7d362a95bfd78dccf9a29, src\mzkit\mzkit\pages\pageStart\VideoCards.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Class VideoCards
         Call Process.Start(url)
     End Sub
 End Class
-
