@@ -122,7 +122,7 @@ Public Class frmMsImagingTweaks
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Dim mz As Double = Val(ToolStripSpringTextBox1.Text)
-            Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+            Dim viewer = WindowModules.viewer
 
             If TypeOf viewer Is frmMsImagingViewer Then
                 Call DirectCast(viewer, frmMsImagingViewer).renderByMzList({mz})
@@ -165,13 +165,7 @@ Public Class frmMsImagingTweaks
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
         Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)
         Dim b As Double = mz3.ElementAtOrDefault(2, [default]:=-1)
-        Dim viewer = Me.viewer
-
-        If viewer Is Nothing Then
-            If TypeOf MyApplication.host.dockPanel.ActiveDocument Is frmMsImagingViewer Then
-                viewer = DirectCast(MyApplication.host.dockPanel.ActiveDocument, frmMsImagingViewer)
-            End If
-        End If
+        Dim viewer = WindowModules.viewer
 
         Call viewer.renderRGB(r, g, b)
     End Sub
@@ -195,7 +189,7 @@ Public Class frmMsImagingTweaks
         Using cdf As New netCDFReader(firstFile)
             Dim size As Size = cdf.GetMsiDimension
             Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-            Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+            Dim viewer = WindowModules.viewer
             Dim mzpack As ReadRawPack = cdf.CreatePixelReader
             Dim render As New Drawer(mzpack)
 
