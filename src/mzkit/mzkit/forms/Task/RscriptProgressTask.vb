@@ -16,6 +16,8 @@ Public Class RscriptProgressTask
         progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
         progress.SetProgressMode()
 
+        Call pipeline.CommandLine.__DEBUG_ECHO
+
         AddHandler pipeline.SetProgress, AddressOf progress.SetProgress
         AddHandler pipeline.Finish, Sub() progress.Invoke(Sub() progress.Close())
 
