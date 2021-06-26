@@ -13,7 +13,8 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -139,8 +140,6 @@ using RibbonLib.Interop;
         // ContextPopup CommandName
         public const uint cmdContextMap = Cmd.cmdContextMap;
 
-        private static bool initialized;
-
         public Ribbon Ribbon { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
@@ -261,8 +260,6 @@ using RibbonLib.Interop;
         {
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
-            if (initialized)
-                return;
             this.Ribbon = ribbon;
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
@@ -378,7 +375,7 @@ using RibbonLib.Interop;
             GroupExport = new RibbonDropDownButton(ribbon, Cmd.cmdGroupExport);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
             ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);
-            initialized = true;
         }
 
     }
+}

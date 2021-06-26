@@ -1653,6 +1653,17 @@
             <param name="newValue">When this method returns, contains a pointer to the new value for key</param>
             <returns>Returns S_OK if successful, or an error value otherwise</returns>
         </member>
+        <member name="P:RibbonLib.Controls.BaseRibbonControl.Tag">
+            <summary>
+            Gets or sets the object that contains data about the control
+            </summary>
+        </member>
+        <member name="P:RibbonLib.Controls.BaseRibbonControl.CommandType">
+            <summary>
+            The CommandType of the Control
+            If the CommandType is CommandType.Unknown then the Control is not initialized by the Framework
+            </summary>
+        </member>
         <member name="T:RibbonLib.Controls.RibbonButton">
             <summary>
             Helper class that wraps a ribbon button control.
@@ -1734,16 +1745,6 @@
             Helper class that wraps the ribbon quick access toolbar.
             </summary>
         </member>
-        <member name="F:RibbonLib.Controls.RibbonQuickAccessToolbar._ribbon">
-            <summary>
-            reference for parent ribbon class
-            </summary>
-        </member>
-        <member name="F:RibbonLib.Controls.RibbonQuickAccessToolbar._commandID">
-            <summary>
-            QAT command id
-            </summary>
-        </member>
         <member name="F:RibbonLib.Controls.RibbonQuickAccessToolbar._customizeButton">
             <summary>
             handler for the customize button
@@ -1763,11 +1764,6 @@
             <param name="ribbon">Parent Ribbon control</param>
             <param name="commandId">Command id attached to this control</param>
             <param name="customizeCommandId">Customize Command id attached to this control</param>
-        </member>
-        <member name="P:RibbonLib.Controls.RibbonQuickAccessToolbar.CommandID">
-            <summary>
-            The command Id.
-            </summary>
         </member>
         <member name="M:RibbonLib.Controls.RibbonQuickAccessToolbar.Execute(RibbonLib.Interop.ExecutionVerb,RibbonLib.Interop.PropertyKeyRef,RibbonLib.Interop.PropVariantRef,RibbonLib.Interop.IUISimplePropertySet)">
             <summary>
@@ -2015,15 +2011,15 @@
         <member name="E:RibbonLib.Controls.RibbonDropDownGallery.CategoriesReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the Categories
             Now one can work with the Categories.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="E:RibbonLib.Controls.RibbonDropDownGallery.ItemsSourceReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the ItemsSource
             Now one can work with the ItemsSource.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="P:RibbonLib.Controls.RibbonDropDownGallery.Enabled">
@@ -2193,15 +2189,15 @@
         <member name="E:RibbonLib.Controls.RibbonInRibbonGallery.CategoriesReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the Categories
             Now one can work with the Categories.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="E:RibbonLib.Controls.RibbonInRibbonGallery.ItemsSourceReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the ItemsSource
             Now one can work with the ItemsSource.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="P:RibbonLib.Controls.RibbonInRibbonGallery.Enabled">
@@ -2315,15 +2311,15 @@
         <member name="E:RibbonLib.Controls.RibbonSplitButtonGallery.CategoriesReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the Categories
             Now one can work with the Categories.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="E:RibbonLib.Controls.RibbonSplitButtonGallery.ItemsSourceReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the ItemsSource
             Now one can work with the ItemsSource.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="P:RibbonLib.Controls.RibbonSplitButtonGallery.Enabled">
@@ -2469,15 +2465,15 @@
         <member name="E:RibbonLib.Controls.RibbonComboBox.CategoriesReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the Categories
             Now one can work with the Categories.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="E:RibbonLib.Controls.RibbonComboBox.ItemsSourceReady">
             <summary>
             Event provider which only fired once.
+            In this event you can initialize the ItemsSource
             Now one can work with the ItemsSource.
-            After Ribbon.Initialize one can do this too.
             </summary>
         </member>
         <member name="P:RibbonLib.Controls.RibbonComboBox.StringValue">
@@ -4406,6 +4402,12 @@
             The Changed event
             </summary>
         </member>
+        <member name="T:RibbonLib.IRibbonControl">
+            <summary>
+            Each ribbon control helper class should implement this
+            interface according to the control's actions and properties.
+            </summary>
+        </member>
         <member name="P:RibbonLib.IRibbonControl.CommandID">
             <summary>
             Command id of the Ribbon control 
@@ -4630,12 +4632,6 @@
             </summary>
             <returns>image-from-bitmap factory object</returns>
         </member>
-        <member name="M:RibbonLib.Ribbon.GenerateDefaultRibbonDllName">
-            <summary>
-            Generates a default ribbon dll name
-            </summary>
-            <returns>name of the dll</returns>
-        </member>
         <member name="M:RibbonLib.Ribbon.AddRibbonControl(RibbonLib.IRibbonControl)">
             <summary>
             Adds a ribbon control to the internal map
@@ -4676,6 +4672,23 @@
             <summary>
             Event fires when the View is created
             </summary>
+        </member>
+        <member name="E:RibbonLib.Ribbon.ViewDestroy">
+            <summary>
+            Event fires when the View is in destroy
+            </summary>
+        </member>
+        <member name="E:RibbonLib.Ribbon.RibbonHeightChanged">
+            <summary>
+            Event fires when the Ribbon height changed
+            </summary>
+        </member>
+        <member name="P:RibbonLib.Ribbon.MarkupHandle">
+            <summary>
+            Returns the Dll Handle for the culture specific RibbonMarkup.ribbon file.
+            One can use this handle to get Strings, Bitmaps.
+            </summary>
+            <returns>The Dll Handle of the Ribbon resource</returns>
         </member>
         <member name="M:RibbonLib.RibbonUIApplication.#ctor(RibbonLib.Ribbon,RibbonLib.Ribbon)">
             <summary>
