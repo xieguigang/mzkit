@@ -20,6 +20,10 @@ Namespace IndexedCache
         Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
         Friend ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
         Friend ReadOnly length As New Dictionary(Of Double, Integer)
+
+        ''' <summary>
+        ''' temp file path
+        ''' </summary>
         Friend ReadOnly cache As String
         Friend ReadOnly width As Integer
         Friend ReadOnly height As Integer
@@ -84,6 +88,10 @@ Namespace IndexedCache
 
             Call centroidPixels.Add(New ibdPixel(pixel.X, pixel.Y, rawMsMatrix.Centroid(centroid, intocutoff)))
             Call cachefile.Flush()
+        End Sub
+
+        Public Sub Clear()
+            Call "".SaveTo(cache)
         End Sub
 
         Public Sub Flush()
