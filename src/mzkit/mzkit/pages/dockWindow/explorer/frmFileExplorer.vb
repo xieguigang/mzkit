@@ -221,19 +221,12 @@ Public Class frmFileExplorer
         Dim progress As New frmTaskProgress() With {.Text = sprintf(titleTemplate, fileName)}
         Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
-        Dim runTask As New Thread(AddressOf task.RunImports)
 
-        MyApplication.host.showStatusMessage("Run Raw Data Imports")
-        progress.ShowProgressTitle(progress.Text, directAccess:=True)
-
-        Call runTask.Start()
+        Call MyApplication.host.showStatusMessage("Run Raw Data Imports")
+        Call progress.ShowProgressTitle(progress.Text, directAccess:=True)
+        Call New Thread(AddressOf task.RunImports).Start()
         Call progress.ShowDialog()
 
-        'Call New frmRawViewer() With {
-        '    .MdiParent = Me,
-        '    .Text = file.FileName,
-        '    .rawFile = task.raw
-        '}.Show()
         Return task.raw
     End Function
 
