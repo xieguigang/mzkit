@@ -65,6 +65,20 @@ Namespace mzData.mzWebCache
         ''' <returns></returns>
         Public Property meta As Dictionary(Of String, String)
 
+        ''' <summary>
+        ''' get meta data from <see cref="meta"/>
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Default Public Property value(key As String) As String
+            Get
+                Return meta.TryGetValue(key)
+            End Get
+            Set(value As String)
+                meta(key) = value
+            End Set
+        End Property
+
         Public Iterator Function GetMs1Scans() As IEnumerable(Of ms1_scan)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms1_scan With {
