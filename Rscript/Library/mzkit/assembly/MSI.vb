@@ -46,7 +46,7 @@ Module MSI
                                 .average = col.into.Average,
                                 .basePeakIntensity = col.into.Max,
                                 .totalIon = col.into.Sum,
-                                .x = If(correction Is Nothing, i + 1, correction.GetPixel(col.rt)),
+                                .x = If(correction Is Nothing, i + 1, correction.GetPixelRow(col.rt)),
                                 .y = y,
                                 .basePeakMz = basePeakMz
                             }
@@ -93,6 +93,10 @@ End Module
 Public Class Correction
 
     Public ReadOnly Property totalTime As Double
+    ''' <summary>
+    ''' pixels in row or total pixels by width times height
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property pixels As Integer
     Public ReadOnly Property pixelsTime As Double
 
@@ -102,8 +106,23 @@ Public Class Correction
         Me.pixelsTime = totalTime / pixels
     End Sub
 
-    Public Function GetPixel(rt As Double) As Integer
+    ''' <summary>
+    ''' if the raw data file is row scans
+    ''' </summary>
+    ''' <param name="rt"></param>
+    ''' <returns></returns>
+    Public Function GetPixelRow(rt As Double) As Integer
         Return 1 + CInt(rt / pixelsTime)
+    End Function
+
+    ''' <summary>
+    ''' if the raw data file is 2D scans
+    ''' </summary>
+    ''' <param name="rt"></param>
+    ''' <returns></returns>
+    Public Function GetPixelPoint(rt As Double, width As Integer, height As Integer) As Point
+        Dim n As Integer = GetPixelRow(rt)
+
     End Function
 
 End Class
