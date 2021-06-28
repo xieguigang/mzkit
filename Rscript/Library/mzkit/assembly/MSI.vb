@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
@@ -173,6 +174,8 @@ Module MSI
                 .Match("\d+") _
                 .DoCall(AddressOf Integer.Parse)
             Dim i As i32 = 1
+
+            Call base.print($"load: {row.source}...", env)
 
             For Each scan As ScanMS1 In row.MS
                 Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRow(scan.rt))
