@@ -189,7 +189,7 @@ Module MSI
                     .mz = mz,
                     .meta = New Dictionary(Of String, String) From {{NameOf(x), x}, {NameOf(y), y}},
                     .rt = scan.rt,
-                    .scan_id = scan.scan_id,
+                    .scan_id = $"[{row.source}] {scan.scan_id}",
                     .TIC = scan.TIC
                 }
             Next
