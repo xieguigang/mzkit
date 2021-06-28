@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::9ca112abf8edd8b301badaf61568927b, src\visualize\MsImaging\Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::9c6b713d21dc269c8dfd3ef9d6566e8d, src\visualize\MsImaging\Drawer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class Drawer
-' 
-'     Properties: dimension, ibd, UUID
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, LoadMzArray, LoadPixels, RenderPixels
-'               ScalePixels
-' 
-'     Sub: (+2 Overloads) Dispose
-' 
-' /********************************************************************************/
+    ' Class Drawer
+    ' 
+    '     Properties: dimension, pixelReader
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: ChannelCompositions, (+2 Overloads) DrawLayer, GetPixelChannelReader, GetPixelsMatrix, LoadPixels
+    '               RenderPixels, ScaleLayer, ScalePixels, ShowSummaryRendering
+    ' 
+    '     Sub: (+2 Overloads) Dispose
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -105,6 +106,33 @@ Public Class Drawer : Implements IDisposable
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Return pixelReader.LoadPixels(mz, tolerance, skipZero)
+    End Function
+
+    Public Function ShowSummaryRendering(summary As IntensitySummary,
+                                         Optional cutoff# = 0.65,
+                                         Optional colorSet$ = "Jet",
+                                         Optional pixelSize$ = "3,3") As Bitmap
+
+        Dim layer = pixelReader.GetSummary.GetLayer(summary).ToArray
+        Dim pixels As PixelData() = layer _
+            .Select(Function(p)
+                        Return New PixelData With {
+                            .intensity = p.totalIon,
+                            .x = p.x,
+                            .y = p.y
+                        }
+                    End Function) _
+            .ToArray
+
+        Return Drawer.RenderPixels(
+            pixels:=pixels,
+            dimension:=dimension,
+            dimSize:=pixelSize.SizeParser,
+            colorSet:=colorSet,
+            threshold:=0,
+            defaultFill:="black",
+            cutoff:=cutoff
+        )
     End Function
 
     Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
@@ -362,4 +390,3 @@ Public Class Drawer : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6220c74c8b71e5cf62db129153d18e04, src\mzkit\Task\Properties\RawFileProperty.vb"
+﻿#Region "Microsoft.VisualBasic::65d3815e136ea4d23705869f42bb36ec, src\mzkit\Task\Properties\RawFileProperty.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class RawFileProperty
         Return raw
     End Function
 End Class
-

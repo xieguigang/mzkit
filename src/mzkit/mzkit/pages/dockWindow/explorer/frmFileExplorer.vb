@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::0dfabc76be04a6868d54717ab8b21c5d, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::dbf8a64e6f27f720119adb1f762a7d41, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmFileExplorer
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
-'               GetSelectedRaws, GetTotalCacheSize
-' 
-'     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, DeleteToolStripMenuItem_Click
-'          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw, ImportsToolStripMenuItem_Click
-'          InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click, SaveFileCache
-'          selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck, treeView1_AfterSelect
-'          treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
-' 
-' /********************************************************************************/
+    ' Class frmFileExplorer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
+    '               GetSelectedRaws, GetTotalCacheSize
+    ' 
+    '     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, DeleteToolStripMenuItem_Click
+    '          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw, ImportsToolStripMenuItem_Click
+    '          InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click, SaveFileCache
+    '          selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck, treeView1_AfterSelect
+    '          treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -216,23 +217,16 @@ Public Class frmFileExplorer
     ''' </summary>
     ''' <param name="fileName"></param>
     ''' <returns></returns>
-    Public Function getRawCache(fileName As String) As Raw
-        Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
+    Public Function getRawCache(fileName As String, Optional titleTemplate$ = "Imports raw data [%s]") As Raw
+        Dim progress As New frmTaskProgress() With {.Text = sprintf(titleTemplate, fileName)}
         Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
-        Dim runTask As New Thread(AddressOf task.RunImports)
 
-        MyApplication.host.showStatusMessage("Run Raw Data Imports")
-        progress.ShowProgressTitle(progress.Text, directAccess:=True)
-
-        Call runTask.Start()
+        Call MyApplication.host.showStatusMessage("Run Raw Data Imports")
+        Call progress.ShowProgressTitle(progress.Text, directAccess:=True)
+        Call New Thread(AddressOf task.RunImports).Start()
         Call progress.ShowDialog()
 
-        'Call New frmRawViewer() With {
-        '    .MdiParent = Me,
-        '    .Text = file.FileName,
-        '    .rawFile = task.raw
-        '}.Show()
         Return task.raw
     End Function
 
@@ -247,7 +241,7 @@ Public Class frmFileExplorer
         If lockFileDelete Then
             Return
         ElseIf Not raw.cacheFileExists Then
-
+            raw.cache = getRawCache(raw.source, titleTemplate:="Re-Build file cache [%s]").cache
         End If
 
         Call WindowModules.rawFeaturesList.LoadRaw(raw)

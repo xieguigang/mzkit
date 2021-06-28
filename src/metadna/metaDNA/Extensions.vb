@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8152f7f27dbc37312d64ddc1aae9981a, src\metadna\metaDNA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a79db58a41dafad9580e8a2677da66d8, src\metadna\metaDNA\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: MgfSeed, MgfSeeds
+    '     Function: ExportInferRaw, GetRaw, MgfSeed, MgfSeeds
     ' 
     ' /********************************************************************************/
 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Linq
 
 <HideModuleName> Public Module Extensions
 
@@ -92,14 +93,14 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
         Dim resultIndex As New Dictionary(Of String, Candidate)
 
         ' create unique index of the plot result raw data
-        For Each infer As CandidateInfer In raw
+        For Each infer As CandidateInfer In raw.SafeQuery
             For Each candidate As Candidate In infer.infers
                 resultIndex($"{infer.kegg_id}|{candidate.precursorType}|{candidate.ROI}|{candidate.infer.rawFile}|{candidate.infer.reference.id}") = candidate
             Next
         Next
 
         ' populate raw in result table row orders
-        For Each row As MetaDNAResult In result
+        For Each row As MetaDNAResult In result.SafeQuery
             Dim keyId As String = $"{row.KEGGId}|{row.precursorType}|{row.ROI_id}|{row.fileName}|{row.seed}"
             Dim align As Candidate = resultIndex(keyId)
 
@@ -107,4 +108,3 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
         Next
     End Function
 End Module
-

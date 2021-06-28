@@ -409,3 +409,8 @@ Just click ``OK`` on the dialog:
 		document.getElementById("sidebar").style.display = "none";
 	}
 </script>
+
+### UI Framework
+
++ Windows Ribbon: https://github.com/harborsiem/WindowsRibbon
++ DockPanel: https://github.com/dockpanelsuite/dockpanelsuite

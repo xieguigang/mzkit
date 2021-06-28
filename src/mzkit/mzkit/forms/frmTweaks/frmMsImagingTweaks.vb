@@ -1,46 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::b574d4c61bfa8dcd7a0a453dc7d96896, src\mzkit\mzkit\forms\frmTweaks\frmMsImagingTweaks.vb"
+﻿#Region "Microsoft.VisualBasic::ec6827293e3b2f707991c9ea95eb865b, src\mzkit\mzkit\forms\frmTweaks\frmMsImagingTweaks.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmMsImagingTweaks
-' 
-'     Function: GetSelectedIons
-' 
-'     Sub: ClearSelectionToolStripMenuItem_Click, frmMsImagingTweaks_Load, Win7StyleTreeView1_AfterCheck
-' 
-' /********************************************************************************/
+    ' Class frmMsImagingTweaks
+    ' 
+    '     Function: GetSelectedIons
+    ' 
+    '     Sub: AddIonMzLayer, ClearSelectionToolStripMenuItem_Click, frmMsImagingTweaks_Load, loadRenderFromCDF, PropertyGrid1_DragDrop
+    '          PropertyGrid1_DragEnter, RGBLayers, ToolStripButton1_Click, ToolStripButton2_Click, Win7StyleTreeView1_AfterCheck
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -122,7 +123,7 @@ Public Class frmMsImagingTweaks
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Dim mz As Double = Val(ToolStripSpringTextBox1.Text)
-            Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+            Dim viewer = WindowModules.viewer
 
             If TypeOf viewer Is frmMsImagingViewer Then
                 Call DirectCast(viewer, frmMsImagingViewer).renderByMzList({mz})
@@ -165,13 +166,7 @@ Public Class frmMsImagingTweaks
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
         Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)
         Dim b As Double = mz3.ElementAtOrDefault(2, [default]:=-1)
-        Dim viewer = Me.viewer
-
-        If viewer Is Nothing Then
-            If TypeOf MyApplication.host.dockPanel.ActiveDocument Is frmMsImagingViewer Then
-                viewer = DirectCast(MyApplication.host.dockPanel.ActiveDocument, frmMsImagingViewer)
-            End If
-        End If
+        Dim viewer = WindowModules.viewer
 
         Call viewer.renderRGB(r, g, b)
     End Sub
@@ -195,7 +190,7 @@ Public Class frmMsImagingTweaks
         Using cdf As New netCDFReader(firstFile)
             Dim size As Size = cdf.GetMsiDimension
             Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-            Dim viewer = MyApplication.host.dockPanel.ActiveDocument
+            Dim viewer = WindowModules.viewer
             Dim mzpack As ReadRawPack = cdf.CreatePixelReader
             Dim render As New Drawer(mzpack)
 

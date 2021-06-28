@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7f300d3c787b104707fb6239fca9325, src\mzkit\Task\BioDeep\BioDeepSession.vb"
+﻿#Region "Microsoft.VisualBasic::80ff1c3b1ebd257e7a67ec82bc675568, src\mzkit\Task\BioDeep\BioDeepSession.vb"
 
     ' Author:
     ' 
@@ -38,16 +38,19 @@
     ' 
     '     Properties: cookieName, ssid
     ' 
-    '     Function: CheckSession, GetSessionInfo, headerProvider, Request, RequestStream
-    ' 
+    '     Function: CheckSession, GetSessionInfo, headerProvider, Login, Request
+    '               RequestStream
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Collections.Specialized
 Imports System.IO
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Net.Http
@@ -129,6 +132,28 @@ Public Class BioDeepSession
         Return buffer '.UnGzipStream
     End Function
 
+    Public Shared Function Login(account As String, passwordMd5 As String) As String
+        Dim post As New NameValueCollection
+
+        Call post.Add("account", account)
+        Call post.Add("password", passwordMd5)
+
+        Dim result As WebResponseResult = $"http://passport.biodeep.cn/passport/verify.vbs".POST(params:=post)
+        Dim json As JsonObject = New JsonParser().OpenJSON(result.html)
+
+        If json!code.AsString <> 0 Then
+            Call MessageBox.Show("Account not found or incorrect password...", "BioDeep Login", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            ' session_id
+            ' cookie_name
+            json = json!debug
+
+            SingletonHolder(Of BioDeepSession).Instance.cookieName = json!cookie_name.AsString
+            SingletonHolder(Of BioDeepSession).Instance.ssid = json!session_id.AsString
+
+            Return SingletonHolder(Of BioDeepSession).Instance.ssid
+        End If
+
+        Return Nothing
+    End Function
 End Class
-
-

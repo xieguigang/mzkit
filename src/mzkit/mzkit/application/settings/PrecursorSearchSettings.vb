@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::640250dd29a6a603d29e00b4710da145, src\mzkit\mzkit\application\settings\PrecursorSearchSettings.vb"
+﻿#Region "Microsoft.VisualBasic::6586b804162e2aeebb3a76a921391c38, src\mzkit\mzkit\application\settings\PrecursorSearchSettings.vb"
 
     ' Author:
     ' 

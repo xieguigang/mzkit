@@ -1,58 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::4e2082ece7a24b1de9541cd4687de065, src\mzkit\mzkit\forms\frmMain.vb"
+﻿#Region "Microsoft.VisualBasic::bc27448b0b12604f59b6638fe1087316, src\mzkit\mzkit\forms\frmMain.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmMain
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: GetPPMError
-' 
-'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, CreateNewScript, EnableVSRenderer
-'          ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing, frmMain_KeyUp
-'          frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd, ImportsFiles
-'          InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click
-'          MzCalculatorToolStripMenuItem_Click, NavBack_Click, (+2 Overloads) OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click
-'          resetLayout, RunCurrentScript, saveCurrentDocument, saveCurrentFile, saveCurrentScript
-'          SaveScript, SaveSettings, SetSchema, ShowExplorer, ShowGCMSSIM
-'          showHelp, showLoggingWindow, ShowMRMIons, showMsImaging, ShowMzkitToolkit
-'          ShowPage, ShowProperties, ShowPropertyWindow, showRTerm, ShowSearchList
-'          ShowSettings, showStartPage, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
-'          ToolStripStatusLabel4_Click, UpdateCacheSize
-' 
-' /********************************************************************************/
+    ' Class frmMain
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetPPMError
+    ' 
+    '     Sub: EnableVSRenderer, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing, frmMain_KeyUp
+    '          frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd, ImportsFiles
+    '          InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click
+    '          MzCalculatorToolStripMenuItem_Click, OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click, saveCurrentDocument
+    '          saveCurrentFile, saveCurrentScript, SaveScript, SaveSettings, SetSchema
+    '          ShowGCMSSIM, ShowMRMIons, showMsImaging, ShowMzkitToolkit, showMzPackMSI
+    '          ShowPage, ShowPropertyWindow, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
+    '          ToolStripStatusLabel4_Click, UpdateCacheSize
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -66,7 +63,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
@@ -82,7 +78,6 @@ Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
-Imports stdNum = System.Math
 
 Public Class frmMain
 
@@ -234,82 +229,43 @@ Public Class frmMain
     End Sub
 
     Friend Sub showMsImaging(imzML As String)
+        WindowModules.viewer.Show(dockPanel)
+        WindowModules.msImageParameters.Show(dockPanel)
+
+        If imzML.ExtensionSuffix("mzpack") Then
+            Call showMzPackMSI(imzML)
+        Else
+            Dim cachefile As String = RscriptProgressTask.CreateMSIIndex(imzML)
+            Dim canvas As New Drawer(New IndexReader(New XICReader(cachefile)))
+
+            WindowModules.viewer.LoadRender(canvas, imzML)
+
+            Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]"
+        End If
+
+        WindowModules.viewer.RenderSummary(IntensitySummary.BasePeak)
+        WindowModules.viewer.DockState = DockState.Document
+        WindowModules.msImageParameters.DockState = DockState.DockLeft
+    End Sub
+
+    Friend Sub showMzPackMSI(mzpack As String)
         Dim progress As New frmTaskProgress
 
-        progress.ShowProgressTitle("Open imzML...", directAccess:=True)
+        progress.ShowProgressTitle("Open mzPack for MSI...", directAccess:=True)
         progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
 
         Call New Thread(
-            Sub()
-                Call Thread.Sleep(100)
+           Sub()
+               Call Thread.Sleep(100)
 
-                Dim canvas As Drawer
+               Dim canvas As Drawer = New Drawer(mzpack, memoryCache:=True)
 
-                If imzML.ExtensionSuffix("mzpack") Then
-                    canvas = New Drawer(imzML, memoryCache:=True)
-                Else
-                    Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
-                    Dim uid As String = ibd.UUID
-                    Dim cachefile As String = App.AppSystemTemp & "/MSI_imzML/" & uid
-
-                    If cachefile.FileLength > 1024 Then
-                        Call progress.ShowProgressDetails("Load cache!")
-                        ' use cache file
-                        ibd.Dispose()
-                        canvas = New Drawer(New IndexReader(New XICReader(cachefile)))
-                    Else
-                        progress.ShowProgressDetails("Initialize reader...")
-
-                        Dim allPixels As ScanData() = XML.LoadScans(imzML).ToArray
-                        Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
-                        Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
-                        Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
-                        Dim i As Integer = 1
-                        Dim d As Integer = allPixels.Length / 25
-                        Dim j As i32 = 0
-
-                        progress.ShowProgressDetails("Create workspace cache file, wait for a while...")
-
-                        For Each pixel As ScanData In allPixels
-                            Call cache.WritePixels(New ibdPixel(ibd, pixel))
-
-                            i += 1
-
-                            If ++j = d Then
-                                j = 0
-                                progress.ShowProgressDetails($"Create workspace cache file, wait for a while... {stdNum.Round(i / allPixels.Length * 100)}% [{i}/{allPixels.Length}]")
-                            End If
-                        Next
-
-                        Call cache.Flush()
-                        Call progress.ShowProgressDetails("build pixels index...")
-
-                        Try
-                            Using temp As Stream = cachefile.Open(FileMode.OpenOrCreate, doClear:=True)
-                                Call XICIndex.WriteIndexFile(cache, temp)
-                            End Using
-                        Catch ex As Exception
-                        Finally
-                            Call progress.ShowProgressDetails("Job done!")
-                        End Try
-
-                        canvas = New Drawer(New IndexReader(New XICReader(cachefile)))
-                    End If
-                End If
-
-                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
-                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
-
-                Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
-                Call progress.Invoke(Sub() progress.Close())
-            End Sub).Start()
+               Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, mzpack))
+               Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {mzpack.FileName}]")
+               Call progress.Invoke(Sub() progress.Close())
+           End Sub).Start()
 
         Call progress.ShowDialog()
-
-        Call WindowModules.viewer.Show(dockPanel)
-        Call WindowModules.msImageParameters.Show(dockPanel)
-
-        WindowModules.msImageParameters.DockState = DockState.DockLeft
     End Sub
 
     Friend Sub saveCurrentScript()

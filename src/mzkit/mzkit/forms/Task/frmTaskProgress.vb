@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ad9f2417faa87ad1800263ea53e40d6, src\mzkit\mzkit\forms\Task\frmTaskProgress.vb"
+﻿#Region "Microsoft.VisualBasic::12d23f35af1f47c766ee7022a4fe0271, src\mzkit\mzkit\forms\Task\frmTaskProgress.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     ' 
     '     Function: LoadData
     ' 
-    '     Sub: frmImportTaskProgress_Paint, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction, ShowProgressDetails
-    '          ShowProgressTitle
+    '     Sub: frmImportTaskProgress_Paint, frmTaskProgress_Closed, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction
+    '          SetProgress, SetProgressMode, ShowProgressDetails, ShowProgressTitle
     ' 
     ' /********************************************************************************/
 
@@ -52,6 +52,21 @@ Public Class frmTaskProgress
     Dim dialogClosed As Boolean = False
 
     Public TaskCancel As Action
+
+    Public Sub SetProgressMode()
+        ProgressBar1.Maximum = 100
+        ProgressBar1.Style = ProgressBarStyle.Continuous
+        TaskbarStatus.SetProgress(0)
+    End Sub
+
+    Public Sub SetProgress(p As Integer, message As String)
+        Call Invoke(
+            Sub()
+                ProgressBar1.Value = p
+                Label1.Text = message
+                TaskbarStatus.SetProgress(p)
+            End Sub)
+    End Sub
 
     Private Sub frmImportTaskProgress_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         e.Graphics.DrawRectangle(New Pen(Color.Black, 1), New Rectangle(0, 0, Width - 1, Height - 1))
@@ -101,23 +116,24 @@ Public Class frmTaskProgress
 
     Private Sub frmTaskProgress_Load(sender As Object, e As EventArgs) Handles Me.Load
         DoubleBuffered = True
+        TaskbarStatus.SetLoopStatus()
     End Sub
 
     Public Shared Function LoadData(Of T)(streamLoad As Func(Of T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
         Dim tmp As T
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub()
-                            Call Thread.Sleep(100)
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
 
-                            Call progress.ShowProgressTitle(title)
-                            Call progress.ShowProgressDetails(info)
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
 
-                            tmp = streamLoad()
+                tmp = streamLoad()
 
-                            Call progress.Invoke(Sub() progress.Close())
-                        End Sub) _
-             .Start()
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
 
@@ -127,18 +143,22 @@ Public Class frmTaskProgress
     Public Shared Sub RunAction(run As Action, Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...")
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub()
-                            Call Thread.Sleep(100)
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
 
-                            Call progress.ShowProgressTitle(title)
-                            Call progress.ShowProgressDetails(info)
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
 
-                            Call run()
+                Call run()
 
-                            Call progress.Invoke(Sub() progress.Close())
-                        End Sub) _
-             .Start()
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
+    End Sub
+
+    Private Sub frmTaskProgress_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        TaskbarStatus.Stop()
     End Sub
 End Class

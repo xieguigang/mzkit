@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b6e4f99ca61d0105ca085be35855c1c, src\mzkit\Task\IonLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::d7d395e54043e8330c780cdff7c2f091, src\mzkit\Task\IonLibrary.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Class IonLibrary : Implements Enumeration(Of IonPair)
         Yield GenericEnumerator()
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee587c079d2d6ceebb3dc41d5bb6420, src\mzkit\Task\Studio\WorkStudio.vb"
+﻿#Region "Microsoft.VisualBasic::0224131679af9a5d60b7c7f3645e36d2, src\mzkit\Task\Studio\WorkStudio.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Class WorkStudio
         Call CommandLine.Call($"{App.HOME}/R#.exe", args)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d1218f087c72e6195c79de9403cfa1f, src\mzkit\Task\Properties\MRMROIProperty.vb"
+﻿#Region "Microsoft.VisualBasic::753222a02796d1f3550a41cc680960f2, src\mzkit\Task\Properties\MRMROIProperty.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Public Class MRMROIProperty
         End If
     End Sub
 End Class
-

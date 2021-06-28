@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8122d131152eb86d52164e178ed9f1f, src\mzkit\Task\ParentMatch.vb"
+﻿#Region "Microsoft.VisualBasic::4e12cd8d9301871b64b9b65ad624427d, src\mzkit\Task\ParentMatch.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Public Class ParentMatch : Inherits ScanMS2
     Public Property XIC As Double
 
 End Class
-

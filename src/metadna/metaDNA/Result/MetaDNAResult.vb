@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36a1eb45dfa0ca64311b9f5d4e8c719, src\metadna\metaDNA\Result\MetaDNAResult.vb"
+﻿#Region "Microsoft.VisualBasic::86b23c33e2d41e238c6908b6d7b7e744, src\metadna\metaDNA\Result\MetaDNAResult.vb"
 
     ' Author:
     ' 
@@ -38,17 +38,18 @@
     ' 
     '     Properties: exactMass, fileName, formula, forward, inferLevel
     '                 inferSize, intensity, jaccard, KEGG_reaction, KEGGId
-    '                 mz, mzCalc, name, parentTrace, partnerKEGGId
-    '                 ppm, precursorType, pvalue, query_id, reaction
-    '                 reverse, ROI_id, rt, rt_adjust, score1
-    '                 score2, seed
+    '                 mirror, mz, mzCalc, name, parentTrace
+    '                 partnerKEGGId, ppm, precursorType, pvalue, query_id
+    '                 reaction, reverse, ROI_id, rt, rt_adjust
+    '                 score1, score2, seed
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.BioDeep.MetaDNA.Infer
-
+''' <summary>
+''' table output of the metaDNA infer annotation result
+''' </summary>
 Public Class MetaDNAResult
 
     ''' <summary>
@@ -97,4 +98,3 @@ Public Class MetaDNAResult
     Public Property fileName As String
 
 End Class
-

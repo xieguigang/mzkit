@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31872ae747ddbfb841ff1da9fea8f7c8, src\mzkit\Task\BioDeep\MessageParser.vb"
+﻿#Region "Microsoft.VisualBasic::da74beb8de4eb4c347d8bcc1e2b33c1d, src\mzkit\Task\BioDeep\MessageParser.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Module MessageParser
         End If
     End Function
 End Module
-

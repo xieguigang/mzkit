@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75935dd1ce2552c07becfa18ea5694bc, src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::be2888f51def817d8ee40eeb6a9977f9, src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     '         Properties: charge, HCRatio, ppm
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AppendElement, GetCopy
+    '         Function: AppendElement, GetCopy, Ratio
     ' 
     ' 
     ' /********************************************************************************/

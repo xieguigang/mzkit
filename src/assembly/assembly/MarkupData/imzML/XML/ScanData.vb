@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2556582621377b15e3f915760693f17, src\assembly\assembly\MarkupData\imzML\XML\ScanData.vb"
+﻿#Region "Microsoft.VisualBasic::3878941539af6b067b94618decdd4e17, src\assembly\assembly\MarkupData\imzML\XML\ScanData.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,17 @@
 
     ' Summaries:
 
+    '     Class PixelScanIntensity
+    ' 
+    '         Properties: totalIon, x, y
+    ' 
+    '     Class iPixelIntensity
+    ' 
+    '         Properties: average, basePeakIntensity, basePeakMz
+    ' 
     '     Class ScanData
     ' 
-    '         Properties: IntPtr, MzPtr, totalIon, x, y
+    '         Properties: IntPtr, MzPtr
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString

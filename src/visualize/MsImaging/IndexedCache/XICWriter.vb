@@ -1,4 +1,53 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::1867328fc7c9c7254069ef9f9852ab74, src\visualize\MsImaging\IndexedCache\XICWriter.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class XICWriter
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Allocates, ToString
+    ' 
+    '         Sub: Clear, (+2 Overloads) Dispose, Flush, WritePixels
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -17,9 +66,16 @@ Namespace IndexedCache
         ReadOnly centroid As Tolerance = Tolerance.DeltaMass(0.3)
         ReadOnly intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.Default
 
-        Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(10)
-        Friend ReadOnly offsets As New Dictionary(Of Double, BufferRegion)
+        ''' <summary>
+        ''' 会极大的影响文件的缓存大小以及缓存的生成速度
+        ''' </summary>
+        Friend ReadOnly tolerance As Tolerance = Tolerance.PPM(50)
+        Friend ReadOnly offsets As New SortedDictionary(Of Double, BufferRegion)
         Friend ReadOnly length As New Dictionary(Of Double, Integer)
+
+        ''' <summary>
+        ''' temp file path
+        ''' </summary>
         Friend ReadOnly cache As String
         Friend ReadOnly width As Integer
         Friend ReadOnly height As Integer
@@ -39,7 +95,7 @@ Namespace IndexedCache
             Me.width = width
             Me.height = height
             Me.src = sourceName.FileName
-            Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID, "MSI_XIC_")
+            Me.cache = TempFileSystem.GetAppSysTempFile(, App.PID.ToHexString, "MSI_XIC_")
             Me.cachefile = New BinaryDataWriter(cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
 
@@ -50,9 +106,10 @@ Namespace IndexedCache
         Public Sub WritePixels(pixel As PixelScan)
             Dim xy As Integer() = {pixel.X, pixel.Y}
             Dim rawMsMatrix As ms2() = pixel.GetMs
+            Dim dataGroup = rawMsMatrix.GroupBy(Function(i) i.mz, tolerance).ToArray
 
-            For Each mz As NamedCollection(Of ms2) In rawMsMatrix.GroupBy(Function(i) i.mz, tolerance)
-                Dim mzi As Double = stdNum.Round(Val(mz.name), 4)
+            For Each mz As NamedCollection(Of ms2) In dataGroup
+                Dim mzi As Double = Val(mz.name)
                 Dim offset As Long
                 Dim into As Double = Aggregate i As ms2
                                      In mz
@@ -60,6 +117,12 @@ Namespace IndexedCache
 
                 If into = 0.0 Then
                     Continue For
+                Else
+                    Dim find = offsets.Keys.Where(Function(mzz) tolerance(mzz, mzi)).FirstOrDefault
+
+                    If find > 0 Then
+                        mzi = find
+                    End If
                 End If
 
                 If offsets.ContainsKey(mzi) Then
@@ -84,6 +147,10 @@ Namespace IndexedCache
 
             Call centroidPixels.Add(New ibdPixel(pixel.X, pixel.Y, rawMsMatrix.Centroid(centroid, intocutoff)))
             Call cachefile.Flush()
+        End Sub
+
+        Public Sub Clear()
+            Call "".SaveTo(cache)
         End Sub
 
         Public Sub Flush()

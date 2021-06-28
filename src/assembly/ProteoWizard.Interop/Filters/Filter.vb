@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b64f843a40d3865202f2491323064d44, src\assembly\ProteoWizard.Interop\filters.vb"
+﻿#Region "Microsoft.VisualBasic::c51226803a0ad5ed3bbc1d7e75366b9f, src\assembly\ProteoWizard.Interop\Filters\Filter.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,9 @@
 
     ' Summaries:
 
-    '     Class filter
+    '     Class Filter
     ' 
     '         Function: GetFilters, ToString
-    ' 
-    '     Class msLevel
-    ' 
-    '         Properties: levels
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: getFilterArgs, getFilterName
-    ' 
-    '     Class scanTime
-    ' 
-    '         Properties: timeRange
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: getFilterArgs, getFilterName
     ' 
     ' 
     ' /********************************************************************************/

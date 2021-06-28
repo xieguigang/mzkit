@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::048c6fb372e71aa9d681bf563a2b8e5c, src\mzmath\mz_deco\Models\MzGroup.vb"
+﻿#Region "Microsoft.VisualBasic::7755755ecd70ff9dd096754324b7fc87, src\mzmath\mz_deco\Models\MzGroup.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
 Public Class MzGroup
@@ -51,4 +50,3 @@ Public Class MzGroup
     Public Property XIC As ChromatogramTick()
 
 End Class
-

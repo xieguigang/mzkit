@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edb41e1bff8985ee45431d4a9d40d946, src\mzkit\Task\Workspace\ViewerProject.vb"
+﻿#Region "Microsoft.VisualBasic::f451b57994a2823fb5072f59283fef4c, src\mzkit\Task\Workspace\ViewerProject.vb"
 
     ' Author:
     ' 
@@ -201,4 +201,3 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
         Return Save(path, encoding.CodePage)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33f09f7a080b01bc9ab11b150d0d373f, src\mzkit\mzkit\pages\dockWindow\documents\frmPlotViewer.vb"
+﻿#Region "Microsoft.VisualBasic::3e7af2a51710ba94318dc2d062bcc7d1, src\mzkit\mzkit\pages\dockWindow\documents\frmPlotViewer.vb"
 
     ' Author:
     ' 

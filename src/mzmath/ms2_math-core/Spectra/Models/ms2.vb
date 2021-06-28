@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ab35b01ef94bc66dced6319f3f75b07, src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::f78dc4289a8df7131776712a9ff85fb7, src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 

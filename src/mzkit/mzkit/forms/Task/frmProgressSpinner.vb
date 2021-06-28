@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce827eca06a57543240bf90bf014b45, src\mzkit\mzkit\forms\Task\frmProgressSpinner.vb"
+﻿#Region "Microsoft.VisualBasic::88f3bfc9239350853ae66e43392ea5b2, src\mzkit\mzkit\forms\Task\frmProgressSpinner.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Class frmProgressSpinner
     ' 
-    '     Sub: frmProgressSpinner_Load, frmProgressSpinner_Paint, OnFrameChanged, RunAnimation
+    '     Sub: frmProgressSpinner_Closed, frmProgressSpinner_Load, frmProgressSpinner_Paint, OnFrameChanged, RunAnimation
     ' 
     ' /********************************************************************************/
 
@@ -74,5 +74,10 @@ Public Class frmProgressSpinner
         Me.DoubleBuffered = False
 
         RunAnimation()
+        TaskbarStatus.SetLoopStatus()
+    End Sub
+
+    Private Sub frmProgressSpinner_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        TaskbarStatus.Stop()
     End Sub
 End Class

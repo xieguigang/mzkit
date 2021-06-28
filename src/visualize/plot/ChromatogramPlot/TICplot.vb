@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81b6f269448c4e675140294757e60a8b, src\visualize\plot\ChromatogramPlot\TICplot.vb"
+﻿#Region "Microsoft.VisualBasic::c9664345eaf951b363629b3b6fd165be, src\visualize\plot\ChromatogramPlot\TICplot.vb"
 
     ' Author:
     ' 
@@ -342,4 +342,3 @@ Public Class TICplot : Inherits Plot
         Next
     End Sub
 End Class
-

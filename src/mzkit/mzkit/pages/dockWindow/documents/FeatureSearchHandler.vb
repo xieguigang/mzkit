@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf3716c44fe196d437269e692b1f9d92, src\mzkit\mzkit\pages\dockWindow\documents\FeatureSearchHandler.vb"
+﻿#Region "Microsoft.VisualBasic::b4de520e0061ad3008e81bf3cda65bf1, src\mzkit\mzkit\pages\dockWindow\documents\FeatureSearchHandler.vb"
 
     ' Author:
     ' 

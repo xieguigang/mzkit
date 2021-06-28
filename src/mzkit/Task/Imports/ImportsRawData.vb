@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::948a90b7d60294cf7f784c5283ccafab, src\mzkit\Task\Imports\ImportsRawData.vb"
+﻿#Region "Microsoft.VisualBasic::af3500fe8d3ca74ca9cc635396779d13, src\mzkit\Task\Imports\ImportsRawData.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@
 Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 
 Public Class ImportsRawData
 
@@ -72,20 +73,13 @@ Public Class ImportsRawData
     End Sub
 
     Public Sub RunImports()
-        Dim mzpack As mzPack = Converter.LoadRawFileAuto(source, showProgress)
+        Dim Rscript As String = RscriptPipelineTask.GetRScript("mzpack.R")
+        Dim cli As String = $"""{Rscript}"" --mzXML ""{raw.source}"" --cache ""{raw.cache}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
-        If Not mzpack.MS.IsNullOrEmpty Then
-            showProgress("Create snapshot...")
-            mzpack.Thumbnail = mzpack.DrawScatter
-        End If
+        AddHandler pipeline.Finish, AddressOf success.Invoke
+        AddHandler pipeline.SetMessage, AddressOf showProgress.Invoke
 
-        Using file As Stream = cache.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-            Call showProgress("Write mzPack cache data...")
-            Call mzpack.Write(file)
-        End Using
-
-        Call showProgress("Job Done!")
-        Call Thread.Sleep(1500)
-        Call success()
+        Call pipeline.Run()
     End Sub
 End Class

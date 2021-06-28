@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66b2d4e42c1ffd9fdfca09accf794245, Rscript\Library\mzkit\PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::86bef1e93dbd834281582480ee924277, Rscript\Library\mzkit\PubChem.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' Module PubChemToolKit
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: ImageFlyGetImages, pugView, queryPubChem, ReadSIDMap, SIDMapTable
+    '     Function: CID, ImageFlyGetImages, pubchemUrl, pugView, queryPubChem
+    '               ReadSIDMap, SIDMapTable
     ' 
     ' /********************************************************************************/
 

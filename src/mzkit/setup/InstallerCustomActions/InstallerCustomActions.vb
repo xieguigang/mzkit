@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e77c39170054e23ead1872192abe1fc5, src\mzkit\setup\InstallerCustomActions\InstallerCustomActions.vb"
+﻿#Region "Microsoft.VisualBasic::da420d83450f2f01c0395bd86f86b004, src\mzkit\setup\InstallerCustomActions\InstallerCustomActions.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Class InstallerCustomActions
         Call Process.Start("http://www.biodeep.cn/")
     End Sub
 End Class
-

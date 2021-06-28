@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::810f1ac25fba33f00dc33cabda8dafa9, src\assembly\mzPack\PackCDF.vb"
+﻿#Region "Microsoft.VisualBasic::21fe4e089221091621bcf6be0f53fe6b, src\assembly\mzPack\PackCDF.vb"
 
     ' Author:
     ' 
@@ -155,4 +155,3 @@ Public Module PackCDF
         End Using
     End Function
 End Module
-

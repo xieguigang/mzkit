@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8428ae0701c55f8ba946579175835c6d, src\assembly\mzPack\Converter.vb"
+﻿#Region "Microsoft.VisualBasic::ba17996f9f7b02287916da7cbbbe0d48, src\assembly\mzPack\Converter.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Public Module Converter
         Next
     End Function
 End Module
-

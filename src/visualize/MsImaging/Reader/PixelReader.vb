@@ -1,9 +1,58 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::efe2e56359772d3fe88879350dea8caf, src\visualize\MsImaging\Reader\PixelReader.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class PixelReader
+    ' 
+    '         Function: FindMatchedPixels, GetSummary, LoadPixels
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace Reader
@@ -13,10 +62,43 @@ Namespace Reader
     ''' </summary>
     Public MustInherit Class PixelReader : Implements IDisposable
 
-        Private disposedValue As Boolean
+        Dim disposedValue As Boolean
+        Dim summary As MSISummary
 
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
+
+        Public Function GetSummary() As MSISummary
+            If summary Is Nothing Then
+                Dim rows = AllPixels _
+                    .GroupBy(Function(p) p.Y) _
+                    .Select(Function(r)
+                                Return r.Select(Function(p)
+                                                    Dim matrix = p.GetMs
+                                                    Dim into As Double() = matrix.Select(Function(i) i.intensity).ToArray
+                                                    Dim mz As Double() = matrix.Select(Function(i) i.mz).ToArray
+
+                                                    Return New iPixelIntensity With {
+                                                        .average = into.Average,
+                                                        .basePeakIntensity = into.Max,
+                                                        .basePeakMz = mz(which.Max(into)),
+                                                        .totalIon = into.Sum,
+                                                        .x = p.X,
+                                                        .y = p.Y
+                                                    }
+                                                End Function) _
+                                        .ToArray
+                            End Function) _
+                    .ToArray
+
+                summary = New MSISummary With {
+                    .rowScans = rows,
+                    .size = dimension
+                }
+            End If
+
+            Return summary
+        End Function
 
         Protected MustOverride Sub release()
         Protected MustOverride Function AllPixels() As IEnumerable(Of PixelScan)

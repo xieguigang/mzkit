@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4608e4700e591828168c04e0e361fa1b, src\mzkit\mzkit\pages\dockWindow\tools\OutputWindow.vb"
+﻿#Region "Microsoft.VisualBasic::6829a17f5766f8c2f8a089f937832aa3, src\mzkit\mzkit\pages\dockWindow\tools\OutputWindow.vb"
 
     ' Author:
     ' 

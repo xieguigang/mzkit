@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce062dbd4fc89469cc4c3e3979410de7, src\mzkit\mzkit\application\settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::2c0e4b525fdd13a9adc1ed26be1cae4a, src\mzkit\mzkit\application\settings\Settings.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,11 @@
 
     '     Class Settings
     ' 
-    '         Properties: configFile, formula_search, MRMLibfile, network, precursor_search
-    '                     QuantifyIonLibfile, recentFiles, ui, viewer, workspaceFile
+    '         Properties: biodeep, configFile, formula_search, licensed, MRMLibfile
+    '                     network, precursor_search, QuantifyIonLibfile, random, recentFiles
+    '                     ui, viewer, workspaceFile
     ' 
-    '         Function: DefaultProfile, GetConfiguration, Save
+    '         Function: DefaultProfile, GetConfiguration, Reset, Save
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5af1c21d23ada7384553b28c9c245924, src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::b85d85283622f39885d78bf4b60dc2e8, src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFReader.vb"
 
     ' Author:
     ' 

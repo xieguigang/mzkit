@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f004ac0e4055597b9215a5ec58e1b631, src\mzkit\Task\Properties\AlignmentProperty.vb"
+﻿#Region "Microsoft.VisualBasic::949aecc8a3bb74e6d3aef08843e9af97, src\mzkit\Task\Properties\AlignmentProperty.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Public Class AlignmentProperty
         jaccard = shares / all
     End Sub
 End Class
-
