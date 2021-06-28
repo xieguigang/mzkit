@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' mzPack文件格式模型
@@ -81,6 +82,17 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+
+    Public Function GetAllParentMz(tolerance As Tolerance) As Double()
+        Return MS _
+            .Select(Function(scan) scan.mz) _
+            .IteratesALL _
+            .GroupBy(tolerance) _
+            .Select(Function(mz)
+                        Return Double.Parse(mz.name)
+                    End Function) _
+            .ToArray
+    End Function
 
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
