@@ -60,6 +60,10 @@ Namespace mzData.mzWebCache
             Return scan_id
         End Function
 
+        ''' <summary>
+        ''' create matrix from [<see cref="mz"/>...] and [<see cref="into"/>...] these two vector
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetMs() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2 With {

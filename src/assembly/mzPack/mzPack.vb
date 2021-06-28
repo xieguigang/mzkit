@@ -70,6 +70,11 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Chromatogram As Chromatogram
+    ''' <summary>
+    ''' the file name of the raw data source file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property source As String
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描
@@ -144,6 +149,11 @@ Public Class mzPack
                 .Select(AddressOf mzpack.ReadScan) _
                 .ToArray
             Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
+            Dim source As String = Nothing
+
+            If TypeOf file Is FileStream Then
+                source = DirectCast(file, FileStream).Name.FileName
+            End If
 
             For Each id As String In mzpack.ChromatogramScanners
                 Using buffer As Stream = mzpack.OpenScannerData(id)
@@ -155,7 +165,8 @@ Public Class mzPack
                 .Thumbnail = If(ignoreThumbnail, Nothing, mzpack.GetThumbnail),
                 .MS = allMSscans,
                 .Scanners = scanners,
-                .Chromatogram = mzpack.chromatogram
+                .Chromatogram = mzpack.chromatogram,
+                .source = source
             }
         End Using
     End Function
@@ -172,6 +183,7 @@ Public Class mzPack
 
             Call mzpack.SetChromatogram(Chromatogram)
             Call mzpack.SetThumbnail(Thumbnail)
+            Call file.Flush()
         End Using
 
         Return True
