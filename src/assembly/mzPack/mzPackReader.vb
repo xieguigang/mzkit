@@ -139,7 +139,7 @@ Public Class mzPackReader : Inherits BinaryStreamReader
     End Sub
 
     Private Sub loadChromatogram(file As BinaryDataReader)
-        If file.ReadInt64 <> 0 Then
+        If file.EndOfStream OrElse file.ReadInt64 <> 0 Then
             Return
         End If
 
