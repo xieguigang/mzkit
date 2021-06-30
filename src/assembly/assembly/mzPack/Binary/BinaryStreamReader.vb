@@ -116,6 +116,10 @@ Namespace mzData.mzWebCache
             End If
         End Sub
 
+        Public Function GetMetadata(index As String) As Dictionary(Of String, String)
+            Return metadata(index)
+        End Function
+
         ''' <summary>
         ''' load MS scanner index
         ''' </summary>
