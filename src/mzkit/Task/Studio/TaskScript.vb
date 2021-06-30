@@ -177,5 +177,14 @@ Module TaskScript
         End Try
     End Sub
 
+    <ExportAPI("formula")>
+    Public Sub formulaSearch()
+
+    End Sub
+
+    Public Sub DrawMs1Contour()
+
+    End Sub
+
 End Module
 

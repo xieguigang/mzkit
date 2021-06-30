@@ -76,7 +76,7 @@ Public Module DrawScatter
                             .Select(Function(p)
                                         Return New ms1_scan With {
                                             .mz = Val(mz.name),
-                                            .intensity = p.Select(Function(t) t.intensity).Sum,
+                                            .intensity = p.Select(Function(t) t.intensity).Average,
                                             .scan_time = Val(p.name)
                                         }
                                     End Function)
