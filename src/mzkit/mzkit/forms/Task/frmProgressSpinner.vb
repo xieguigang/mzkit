@@ -46,18 +46,21 @@ Public Class frmProgressSpinner
 
     Dim theImage As Image = My.Resources.spinner
 
+    <DebuggerStepThrough>
     Sub RunAnimation()
         ' the image Is set up for animation using the
         ' ImageAnimator class And an event handler
         ImageAnimator.Animate(theImage, New EventHandler(AddressOf OnFrameChanged))
     End Sub
 
+    <DebuggerStepThrough>
     Private Sub OnFrameChanged(o As Object, e As EventArgs)
         Me.Invalidate()
 
         ' BackgroundImage = theImage
     End Sub
 
+    <DebuggerStepThrough>
     Private Sub frmProgressSpinner_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         Dim g = e.Graphics
 
