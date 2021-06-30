@@ -237,7 +237,7 @@ Public Class frmFileExplorer
 
     Dim lockFileDelete As Boolean = False
 
-    Public Sub showRawFile(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
+    Public Sub showRawFile(raw As Raw, XIC As Boolean, directSnapshot As Boolean, contour As Boolean)
         If lockFileDelete Then
             Return
         ElseIf Not raw.cacheFileExists Then
@@ -245,7 +245,7 @@ Public Class frmFileExplorer
         End If
 
         Call WindowModules.rawFeaturesList.LoadRaw(raw)
-        Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot)
+        Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot, contour)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
         Call UpdateMainTitle(raw.source)
@@ -257,7 +257,7 @@ Public Class frmFileExplorer
         End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False, contour:=False)
         End If
     End Sub
 
@@ -267,7 +267,7 @@ Public Class frmFileExplorer
         End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True, directSnapshot:=False)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True, directSnapshot:=False, contour:=False)
         End If
     End Sub
 
@@ -295,7 +295,7 @@ Public Class frmFileExplorer
         'End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=True)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=True, contour:=False)
 
             '  treeView1.ContextMenuStrip = ContextMenuStrip1
 
@@ -487,5 +487,15 @@ Public Class frmFileExplorer
         Dim viewer = VisualStudio.ShowDocument(Of frmUntargettedViewer)()
 
         viewer.loadRaw(raw)
+    End Sub
+
+    Private Sub ContourPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContourPlotToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False, contour:=True)
+        End If
     End Sub
 End Class

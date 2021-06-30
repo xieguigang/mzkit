@@ -108,7 +108,7 @@ Public Class PageMzkitTools
         MyApplication.host.ShowPage(Me)
     End Sub
 
-    Public Sub showScatter(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
+    Public Sub showScatter(raw As Raw, XIC As Boolean, directSnapshot As Boolean, contour As Boolean)
         If Not raw.cacheFileExists Then
             MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
@@ -119,6 +119,8 @@ Public Class PageMzkitTools
 
             If XIC Then
                 colorSet = "YlGnBu:c8"
+            ElseIf contour Then
+                colorSet = "Jet"
             Else
                 colorSet = "darkblue,blue,skyblue,green,orange,red,darkred"
             End If
@@ -130,7 +132,9 @@ Public Class PageMzkitTools
                         Sub()
                             Dim image As Image
 
-                            If XIC Then
+                            If contour Then
+                                image = raw.DrawContour(colorSet:=args.GetColorSetName)
+                            ElseIf XIC Then
                                 image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName)
                             Else
                                 image = raw.DrawScatter(colorSet:=args.GetColorSetName)
