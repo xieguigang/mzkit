@@ -1,7 +1,11 @@
 ﻿Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Public Class PixelsSampler
 
@@ -28,10 +32,16 @@ Public Class PixelsSampler
         Next
     End Function
 
-    Public Iterator Function GetBlock(o As Point, width As Integer, height As Integer) As IEnumerable(Of PixelScan)
-        For x As Integer = o.X To o.X + width
-            For y As Integer = o.Y To o.Y + height
-                Yield col_scans(x)(y)
+    Public Function GetBlock(o As Point, width As Integer, height As Integer) As IEnumerable(Of PixelScan)
+        Return GetBlock(o.X, o.Y, width, height)
+    End Function
+
+    Public Iterator Function GetBlock(px As Integer, py As Integer, width As Integer, height As Integer) As IEnumerable(Of PixelScan)
+        For x As Integer = px To px + width
+            For y As Integer = py To py + height
+                If Not col_scans(x)(y) Is Nothing Then
+                    Yield col_scans(x)(y)
+                End If
             Next
         Next
     End Function
@@ -42,7 +52,30 @@ Public Class PixelsSampler
     ''' </summary>
     ''' <param name="samplingSize"></param>
     ''' <returns></returns>
-    Public Iterator Function Sampling(samplingSize As Size, tolerance As Tolerance) As IEnumerable(Of mzPackPixel)
-        For x As Integer = 1 To 
+    Public Iterator Function Sampling(samplingSize As Size, tolerance As Tolerance) As IEnumerable(Of InMemoryPixel)
+        Dim dw As Integer = samplingSize.Width
+        Dim dh As Integer = samplingSize.Height
+
+        For x As Integer = 1 To dims.Width Step dw
+            For y As Integer = 1 To dims.Height Step dh
+                Dim block = GetBlock(x, y, dw, dh) _
+                    .Select(Function(p) p.GetMsPipe) _
+                    .IteratesALL _
+                    .GroupBy(tolerance) _
+                    .ToArray
+                Dim mz As Double() = block.Select(Function(d) Aggregate p In d Into Average(p.mz)).ToArray
+                Dim into As Double() = block.Select(Function(d) Aggregate p In d Into Max(p.intensity)).ToArray
+                Dim matrix As ms2() = mz _
+                    .Select(Function(mzi, i)
+                                Return New ms2 With {
+                                    .mz = mzi,
+                                    .intensity = into(i)
+                                }
+                            End Function) _
+                    .ToArray
+
+                Yield New InMemoryPixel(x, y, matrix)
+            Next
+        Next
     End Function
 End Class

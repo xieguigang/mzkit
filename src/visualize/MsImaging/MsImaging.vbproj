@@ -283,6 +283,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PixelScan\InMemoryPixel.vb" />
     <Compile Include="PixelsSampler.vb" />
     <Compile Include="IndexedCache\XICReader.vb" />
     <Compile Include="IndexedCache\XICIndex.vb" />

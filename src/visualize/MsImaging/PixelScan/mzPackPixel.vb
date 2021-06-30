@@ -97,8 +97,8 @@ Namespace Pixel
             End If
         End Sub
 
-        Public Overrides Function GetMs() As ms2()
-            Return scan.GetMs.ToArray
+        Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
+            Return scan.GetMs
         End Function
 
         Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
