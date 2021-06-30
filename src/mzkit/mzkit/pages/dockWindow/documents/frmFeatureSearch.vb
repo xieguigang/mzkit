@@ -139,7 +139,7 @@ Public Class frmFeatureSearch
             End If
 
             If Not raw Is Nothing Then
-                Call MyApplication.mzkitRawViewer.showScatter(raw, XIC:=False, directSnapshot:=True)
+                Call MyApplication.mzkitRawViewer.showScatter(raw, XIC:=False, directSnapshot:=True, contour:=False)
             End If
         Else
             ' 选择的是一个scan数据节点

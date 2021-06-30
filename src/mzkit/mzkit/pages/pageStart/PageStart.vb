@@ -70,7 +70,7 @@ Public Class PageStart
             Dim firstFile = fileExplorer.treeView1.Nodes(0).Nodes(0)
 
             fileExplorer.treeView1.SelectedNode = firstFile
-            fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw), False, directSnapshot:=True)
+            fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw), False, directSnapshot:=True, contour:=False)
         End If
 
         MyApplication.host.ShowMzkitToolkit()

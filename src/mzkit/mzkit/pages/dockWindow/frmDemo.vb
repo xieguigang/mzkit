@@ -155,7 +155,7 @@ Blue: 741.5307(SM(34:1) [M+K]+)
                 End If
 
                 fileExplorer.treeView1.SelectedNode = findRaw
-                fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True)
+                fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True, contour:=False)
                 MyApplication.host.ShowMzkitToolkit()
 
             Case 2

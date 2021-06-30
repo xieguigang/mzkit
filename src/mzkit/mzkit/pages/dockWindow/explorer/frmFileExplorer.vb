@@ -88,7 +88,7 @@ Public Class frmFileExplorer
         Dim raw As TreeNode = treeView1.Nodes.Item(0)
 
         treeView1.SelectedNode = raw.Nodes.Item(index)
-        showRawFile(treeView1.SelectedNode.Tag, XIC:=False, directSnapshot:=True)
+        showRawFile(treeView1.SelectedNode.Tag, XIC:=False, directSnapshot:=True, contour:=False)
     End Sub
 
     Public Function GetTotalCacheSize() As String
