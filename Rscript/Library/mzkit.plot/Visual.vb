@@ -248,7 +248,7 @@ Module Visual
                                    Optional contour As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim schema As String = InteropArgumentHelper.getColorSet(colorSet)
+        Dim schema As String = RColorPalette.getColorSet(colorSet)
         Dim matrix As ms1_scan()
 
         If TypeOf ms1_scans Is mzPack Then
