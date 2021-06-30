@@ -37,9 +37,17 @@ Public Class PixelsSampler
 
     Public Iterator Function GetBlock(px As Integer, py As Integer, width As Integer, height As Integer) As IEnumerable(Of PixelScan)
         For x As Integer = px To px + width
+            If x > dims.Width Then
+                Exit For
+            End If
+
             For y As Integer = py To py + height
-                If Not col_scans(x)(y) Is Nothing Then
-                    Yield col_scans(x)(y)
+                If y > dims.Height Then
+                    Exit For
+                End If
+
+                If Not col_scans(x - 1)(y - 1) Is Nothing Then
+                    Yield col_scans(x - 1)(y - 1)
                 End If
             Next
         Next

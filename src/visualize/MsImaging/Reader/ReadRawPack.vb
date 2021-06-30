@@ -98,7 +98,12 @@ Namespace Reader
         End Sub
 
         Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
-
+            Me.pixels = pixels _
+                .GroupBy(Function(p) p.X) _
+                .ToDictionary(Function(p) p.Key,
+                              Function(p)
+                                  Return p.ToArray
+                              End Function)
         End Sub
 
         Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
