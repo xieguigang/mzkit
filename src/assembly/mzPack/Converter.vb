@@ -89,7 +89,7 @@ Public Module Converter
                     {"y", scan.y}
                 },
                 .TIC = scan.totalIon,
-                .scan_id = $"[{scan.x},{scan.y}] totalIon: {scan.totalIon}",
+                .scan_id = $"[{scan.x},{scan.y}] totalIon: {scan.totalIon.ToString("G2")}",
                 .mz = ms.Select(Function(m) m.mz).ToArray,
                 .into = ms.Select(Function(m) m.intensity).ToArray
             }
