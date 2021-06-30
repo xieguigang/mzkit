@@ -51,7 +51,7 @@ Public Class PixelsSampler
     ''' </summary>
     ''' <param name="samplingSize"></param>
     ''' <returns></returns>
-    Public Iterator Function Sampling(samplingSize As Size, tolerance As Tolerance) As IEnumerable(Of InMemoryPixel)
+    Public Iterator Function Sampling(samplingSize As Size, tolerance As Tolerance) As IEnumerable(Of InMemoryVectorPixel)
         Dim dw As Integer = samplingSize.Width
         Dim dh As Integer = samplingSize.Height
 
@@ -64,16 +64,8 @@ Public Class PixelsSampler
                     .ToArray
                 Dim mz As Double() = block.Select(Function(d) Aggregate p In d Into Average(p.mz)).ToArray
                 Dim into As Double() = block.Select(Function(d) Aggregate p In d Into Max(p.intensity)).ToArray
-                Dim matrix As ms2() = mz _
-                    .Select(Function(mzi, i)
-                                Return New ms2 With {
-                                    .mz = mzi,
-                                    .intensity = into(i)
-                                }
-                            End Function) _
-                    .ToArray
 
-                Yield New InMemoryPixel(x, y, matrix)
+                Yield New InMemoryVectorPixel(x, y, mz, into)
             Next
         Next
     End Function
