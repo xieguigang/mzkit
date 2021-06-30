@@ -196,7 +196,7 @@ Module MzWeb
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
     Public Function Open(file As String) As mzPack
-        If file.ExtensionSuffix("mzXML", "mzML") Then
+        If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
