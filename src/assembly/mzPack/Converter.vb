@@ -1,51 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::ba17996f9f7b02287916da7cbbbe0d48, src\assembly\mzPack\Converter.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Converter
-    ' 
-    '     Function: GetUVScans, LoadMzML, LoadRawFileAuto
-    ' 
-    ' /********************************************************************************/
+' Module Converter
+' 
+'     Function: GetUVScans, LoadMzML, LoadRawFileAuto
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -64,9 +68,44 @@ Public Module Converter
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
             Return LoadMzML(xml, progress)
+        ElseIf xml.ExtensionSuffix("imzML") Then
+            Return LoadimzML(xml, progress)
         Else
             Throw New NotImplementedException(xml.ExtensionSuffix)
         End If
+    End Function
+
+    Public Function LoadimzML(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack
+        Dim scans As New List(Of ScanMS1)
+        Dim ibd As New ibdReader(xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Continuous)
+        Dim pixel As ScanMS1
+        Dim ms As ms2()
+
+        For Each scan As ScanData In imzML.XML.LoadScans(xml)
+            ms = ibd.GetMSMS(scan)
+            pixel = New ScanMS1 With {
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", scan.x},
+                    {"y", scan.y}
+                },
+                .TIC = scan.totalIon,
+                .scan_id = $"[{scan.x},{scan.y}] totalIon: {scan.totalIon.ToString("G2")}",
+                .mz = ms.Select(Function(m) m.mz).ToArray,
+                .into = ms.Select(Function(m) m.intensity).ToArray
+            }
+            scans.Add(pixel)
+
+            If Not progress Is Nothing Then
+                Call progress(pixel.scan_id)
+            End If
+        Next
+
+        Call ibd.Dispose()
+
+        Return New mzPack With {
+            .MS = scans.ToArray,
+            .source = xml.FileName
+        }
     End Function
 
     Public Function LoadMzML(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack

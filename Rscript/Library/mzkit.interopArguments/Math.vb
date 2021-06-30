@@ -51,6 +51,14 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
 Module Math
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="val"></param>
+    ''' <param name="env">
+    ''' apply for throw exception message
+    ''' </param>
+    ''' <returns></returns>
     Public Function getTolerance(val As Object, env As Environment) As [Variant](Of Tolerance, Message)
         If val Is Nothing Then
             Return Tolerance.DefaultTolerance.DefaultValue

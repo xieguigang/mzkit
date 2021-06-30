@@ -121,19 +121,25 @@ Namespace MarkupData.imzML
         ''' </summary>
         ''' <param name="scan">[x, y] of a pixel point</param>
         ''' <returns></returns>
-        Public Function GetMSMS(scan As ScanData) As ms2()
+        Public Iterator Function GetMSMSPipe(scan As ScanData) As IEnumerable(Of ms2)
             Dim mz As Double() = ReadArray(scan.MzPtr)
             Dim intensity As Double() = ReadArray(scan.IntPtr)
-            Dim data As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = intensity(i)
-                            }
-                        End Function) _
-                .ToArray
 
-            Return data
+            For i As Integer = 0 To mz.Length - 1
+                Yield New ms2 With {
+                    .mz = mz(i),
+                    .intensity = intensity(i)
+                }
+            Next
+        End Function
+
+        ''' <summary>
+        ''' Get spectrum data of a pixel point
+        ''' </summary>
+        ''' <param name="scan">[x, y] of a pixel point</param>
+        ''' <returns></returns>
+        Public Function GetMSMS(scan As ScanData) As ms2()
+            Return GetMSMSPipe(scan).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

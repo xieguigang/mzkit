@@ -57,7 +57,9 @@ Namespace Pixel
         Public MustOverride ReadOnly Property X As Integer
         Public MustOverride ReadOnly Property Y As Integer
 
-        Public MustOverride Function GetMs() As ms2()
+        Public Overridable Function GetMs() As ms2()
+            Return GetMsPipe.ToArray
+        End Function
 
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
 
@@ -65,6 +67,7 @@ Namespace Pixel
             Return $"[{X},{Y}]"
         End Function
 
+        Protected Friend MustOverride Function GetMsPipe() As IEnumerable(Of ms2)
         Protected Friend MustOverride Sub release()
 
         Private Sub Dispose(disposing As Boolean)

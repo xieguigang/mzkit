@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' mzPack文件格式模型
@@ -70,6 +71,11 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Chromatogram As Chromatogram
+    ''' <summary>
+    ''' the file name of the raw data source file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property source As String
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描
@@ -77,25 +83,20 @@ Public Class mzPack
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
 
+    Public Function GetAllParentMz(tolerance As Tolerance) As Double()
+        Return MS _
+            .Select(Function(scan) scan.mz) _
+            .IteratesALL _
+            .GroupBy(tolerance) _
+            .Select(Function(mz)
+                        Return Double.Parse(mz.name)
+                    End Function) _
+            .ToArray
+    End Function
+
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
-            Return MS _
-                .Select(Function(scan)
-                            Dim MSproducts As ms2() = scan.GetMs _
-                                .ToArray _
-                                .Centroid(centroid, LowAbundanceTrimming.intoCutff) _
-                                .ToArray
-
-                            Return MSproducts _
-                                .Select(Function(mzi)
-                                            Return New ms1_scan With {
-                                                .mz = mzi.mz,
-                                                .intensity = mzi.intensity,
-                                                .scan_time = scan.rt
-                                            }
-                                        End Function)
-                        End Function) _
-                .IteratesALL
+            Return MS.GetAllCentroidScanMs1(centroid)
         Else
             Return MS _
                 .Select(Function(scan)
@@ -132,6 +133,12 @@ Public Class mzPack
         Next
     End Function
 
+    Public Shared Function Read(filepath As String, Optional ignoreThumbnail As Boolean = False) As mzPack
+        Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return ReadAll(file, ignoreThumbnail)
+        End Using
+    End Function
+
     ''' <summary>
     ''' 一次性加载所有原始数据
     ''' </summary>
@@ -144,6 +151,11 @@ Public Class mzPack
                 .Select(AddressOf mzpack.ReadScan) _
                 .ToArray
             Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
+            Dim source As String = Nothing
+
+            If TypeOf file Is FileStream Then
+                source = DirectCast(file, FileStream).Name.FileName
+            End If
 
             For Each id As String In mzpack.ChromatogramScanners
                 Using buffer As Stream = mzpack.OpenScannerData(id)
@@ -155,7 +167,8 @@ Public Class mzPack
                 .Thumbnail = If(ignoreThumbnail, Nothing, mzpack.GetThumbnail),
                 .MS = allMSscans,
                 .Scanners = scanners,
-                .Chromatogram = mzpack.chromatogram
+                .Chromatogram = mzpack.chromatogram,
+                .source = source
             }
         End Using
     End Function
@@ -172,6 +185,7 @@ Public Class mzPack
 
             Call mzpack.SetChromatogram(Chromatogram)
             Call mzpack.SetThumbnail(Thumbnail)
+            Call file.Flush()
         End Using
 
         Return True

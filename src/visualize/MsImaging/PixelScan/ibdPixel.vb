@@ -85,16 +85,20 @@ Namespace Pixel
 
         Public Overrides Function GetMs() As ms2()
             If Not enableCache Then
-                Return raw.GetMSMS(i)
+                Return raw.GetMSMSPipe(i).ToArray
             Else
                 ' 有些像素点是空向量
                 ' 所以就只判断nothing而不判断empty了
                 If memoryCache Is Nothing Then
-                    memoryCache = raw.GetMSMS(i)
+                    memoryCache = raw.GetMSMSPipe(i).ToArray
                 End If
 
                 Return memoryCache
             End If
+        End Function
+
+        Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
+            Return raw.GetMSMSPipe(i)
         End Function
 
         Public Function ReadMz() As Double()

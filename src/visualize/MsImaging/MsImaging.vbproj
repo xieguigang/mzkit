@@ -283,10 +283,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
+    <Compile Include="PixelScan\InMemoryPixel.vb" />
+    <Compile Include="PixelsSampler.vb" />
     <Compile Include="IndexedCache\XICReader.vb" />
     <Compile Include="IndexedCache\XICIndex.vb" />
     <Compile Include="IndexedCache\XICWriter.vb" />
     <Compile Include="IndexedCache\XIC.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="PixelsCDF.vb" />
     <Compile Include="Reader\IndexReader.vb" />
     <Compile Include="Reader\ReadRawPack.vb" />
