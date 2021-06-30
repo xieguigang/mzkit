@@ -96,23 +96,7 @@ Public Class mzPack
 
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
-            Return MS _
-                .Select(Function(scan)
-                            Dim MSproducts As ms2() = scan.GetMs _
-                                .ToArray _
-                                .Centroid(centroid, LowAbundanceTrimming.intoCutff) _
-                                .ToArray
-
-                            Return MSproducts _
-                                .Select(Function(mzi)
-                                            Return New ms1_scan With {
-                                                .mz = mzi.mz,
-                                                .intensity = mzi.intensity,
-                                                .scan_time = scan.rt
-                                            }
-                                        End Function)
-                        End Function) _
-                .IteratesALL
+            Return MS.GetAllCentroidScanMs1(centroid)
         Else
             Return MS _
                 .Select(Function(scan)
