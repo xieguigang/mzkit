@@ -100,6 +100,8 @@ Public Module Converter
             End If
         Next
 
+        Call ibd.Dispose()
+
         Return New mzPack With {
             .MS = scans.ToArray,
             .source = xml.FileName
