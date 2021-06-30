@@ -63,7 +63,7 @@ Public Module DrawScatter
     <Extension>
     Public Function DrawContour(raw As Raw, colorSet As String) As Image
         Dim ms1 As ms1_scan() = GetMs1Points(raw) _
-            .GroupBy(Tolerance.DeltaMass(0.3)) _
+            .GroupBy(Tolerance.DeltaMass(1.125)) _
             .AsParallel _
             .Select(Function(mz)
                         Return mz _
@@ -71,7 +71,7 @@ Public Module DrawScatter
                                          Return t.scan_time
                                      End Function,
                                      Function(a, b)
-                                         Return stdNum.Abs(a - b) <= 1
+                                         Return stdNum.Abs(a - b) <= 5
                                      End Function) _
                             .Select(Function(p)
                                         Return New ms1_scan With {
