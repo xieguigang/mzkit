@@ -88,7 +88,9 @@ Namespace Reader
         End Sub
 
         Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
-            Return pixels.Where(Function(p) p.X = x AndAlso p.Y = y).FirstOrDefault
+            Return pixels _
+                .Where(Function(p) p.X = x AndAlso p.Y = y) _
+                .FirstOrDefault
         End Function
 
         Private Sub ReadDimensions()
