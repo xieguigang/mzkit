@@ -85,7 +85,7 @@ Public Module DrawScatter
             .ToArray
         Dim data As MeasureData() = ms1 _
             .Select(Function(p)
-                        Return New MeasureData(p.scan_time, p.mz, p.intensity)
+                        Return New MeasureData(p.scan_time, p.mz, If(p.intensity <= 1, 0, stdNum.Log(p.intensity)))
                     End Function) _
             .ToArray
 
