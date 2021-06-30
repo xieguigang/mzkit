@@ -57,9 +57,9 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' [mz, rt, intensity]
 ''' </summary>
-Public Class ms1_scan : Implements IMs1, IMs1Scan
+Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey
 
-    <XmlAttribute> Public Property mz As Double Implements IMs1.mz
+    <XmlAttribute> Public Property mz As Double Implements IMs1.mz, INumericKey.key
     <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt
     <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity
 

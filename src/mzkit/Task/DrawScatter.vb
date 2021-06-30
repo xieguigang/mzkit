@@ -56,12 +56,33 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports stdNum = System.Math
 
 Public Module DrawScatter
 
     <Extension>
     Public Function DrawContour(raw As Raw, colorSet As String) As Image
-        Dim ms1 As ms1_scan() = GetMs1Points(raw)
+        Dim ms1 As ms1_scan() = GetMs1Points(raw) _
+            .GroupBy(Tolerance.DeltaMass(0.3)) _
+            .AsParallel _
+            .Select(Function(mz)
+                        Return mz _
+                            .GroupBy(Function(t)
+                                         Return t.scan_time
+                                     End Function,
+                                     Function(a, b)
+                                         Return stdNum.Abs(a - b) <= 1
+                                     End Function) _
+                            .Select(Function(p)
+                                        Return New ms1_scan With {
+                                            .mz = Val(mz.name),
+                                            .intensity = p.Select(Function(t) t.intensity).Sum,
+                                            .scan_time = Val(p.name)
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .ToArray
         Dim data As MeasureData() = ms1 _
             .Select(Function(p)
                         Return New MeasureData(p.scan_time, p.mz, p.intensity)
