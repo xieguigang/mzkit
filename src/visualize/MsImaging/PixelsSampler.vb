@@ -67,6 +67,8 @@ Public Class PixelsSampler
 
                 Yield New InMemoryVectorPixel(x, y, mz, into)
             Next
+
+            Call Console.Write(x & vbTab)
         Next
     End Function
 End Class
