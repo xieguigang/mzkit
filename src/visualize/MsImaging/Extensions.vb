@@ -1,37 +1,29 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 
 Public Module Extensions
 
     ''' <summary>
-    ''' scale to new size for reduce data for downstream analysis
+    ''' parse pixel mapping from 
     ''' </summary>
-    ''' <param name="pixels"></param>
-    ''' <param name="scaleTo"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' [xy => index]
+    ''' </returns>
     <Extension>
-    Public Function JoinPixels(pixels As IEnumerable(Of PixelScan), scaleTo As Size) As mzPackPixel
+    Public Function GetPixelKeys(raw As BinaryStreamReader) As Dictionary(Of String, String())
+        Return raw.EnumerateIndex _
+            .Select(Function(id)
+                        Dim meta = raw.GetMetadata(id)
+                        Dim pxy = $"{meta!x},{meta!y}"
 
-    End Function
-
-    ''' <summary>
-    ''' scale to new size for reduce data size for downstream analysis by
-    ''' pixels sampling
-    ''' </summary>
-    ''' <param name="pixels"></param>
-    ''' <param name="samplingSize"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Iterator Function Sampling(pixels As IEnumerable(Of PixelScan), samplingSize As Size) As IEnumerable(Of PixelScan)
-        For Each pixel As PixelScan In pixels
-            If pixel.X Mod samplingSize.Width <> 0 Then
-                Continue For
-            ElseIf pixel.Y Mod samplingSize.Height <> 0 Then
-                Continue For
-            End If
-
-            Yield pixel
-        Next
+                        Return (id, pxy)
+                    End Function) _
+            .GroupBy(Function(t) t.pxy) _
+            .ToDictionary(Function(t) t.Key,
+                            Function(t)
+                                Return t.Select(Function(i) i.id).ToArray
+                            End Function)
     End Function
 End Module
