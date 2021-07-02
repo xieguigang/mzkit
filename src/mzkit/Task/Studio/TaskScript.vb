@@ -47,6 +47,7 @@ Imports System.Threading
 Imports BioDeep
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -55,11 +56,15 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 <Package("task")>
 Module TaskScript
@@ -184,8 +189,41 @@ Module TaskScript
     End Sub
 
     <ExportAPI("Ms1Contour")>
-    Public Sub DrawMs1Contour()
+    Public Sub DrawMs1Contour(mzpackFile As String, cache As String)
+        Dim ms1 As ms1_scan() = mzPack _
+            .Read(mzpackFile, ignoreThumbnail:=True).MS _
+            .GetMs1Points() _
+            .GroupBy(Tolerance.DeltaMass(1.125)) _
+            .AsParallel _
+            .Select(Function(mz)
+                        Return mz _
+                            .GroupBy(Function(t)
+                                         Return t.scan_time
+                                     End Function,
+                                     Function(a, b)
+                                         Return stdNum.Abs(a - b) <= 5
+                                     End Function) _
+                            .Select(Function(p)
+                                        Return New ms1_scan With {
+                                            .mz = Val(mz.name),
+                                            .intensity = p.Select(Function(t) t.intensity).Average,
+                                            .scan_time = Val(p.name)
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+        Dim data As MeasureData() = ms1 _
+            .Select(Function(p)
+                        Return New MeasureData(p.scan_time, p.mz, If(p.intensity <= 1, 0, stdNum.Log(p.intensity)))
+                    End Function) _
+            .ToArray
+        Dim layers = ContourLayer _
+            .GetContours(data) _
+            .Select(Function(g) g.GetContour) _
+            .ToArray
 
+        Call layers.GetJson.SaveTo(cache)
     End Sub
 
 End Module

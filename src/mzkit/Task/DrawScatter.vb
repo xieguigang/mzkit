@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -62,34 +63,9 @@ Public Module DrawScatter
 
     <Extension>
     Public Function DrawContour(raw As Raw, colorSet As String) As Image
-        Dim ms1 As ms1_scan() = GetMs1Points(raw) _
-            .GroupBy(Tolerance.DeltaMass(1.125)) _
-            .AsParallel _
-            .Select(Function(mz)
-                        Return mz _
-                            .GroupBy(Function(t)
-                                         Return t.scan_time
-                                     End Function,
-                                     Function(a, b)
-                                         Return stdNum.Abs(a - b) <= 5
-                                     End Function) _
-                            .Select(Function(p)
-                                        Return New ms1_scan With {
-                                            .mz = Val(mz.name),
-                                            .intensity = p.Select(Function(t) t.intensity).Average,
-                                            .scan_time = Val(p.name)
-                                        }
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .ToArray
-        Dim data As MeasureData() = ms1 _
-            .Select(Function(p)
-                        Return New MeasureData(p.scan_time, p.mz, If(p.intensity <= 1, 0, stdNum.Log(p.intensity)))
-                    End Function) _
-            .ToArray
 
-        Return PlotContour.Plot(data, colorSet:=colorSet).AsGDIImage
+
+        Return PlotContour.Plot(DATA, colorSet:=colorSet).AsGDIImage
     End Function
 
     <Extension>
@@ -125,10 +101,21 @@ Public Module DrawScatter
     End Function
 
     Private Function GetMs1Points(raw As Raw) As ms1_scan()
+        Return raw.GetMs1Scans.GetMs1Points
+    End Function
+
+    <Extension>
+    Public Function GetMs1Points(raw As IEnumerable(Of ScanMS1)) As ms1_scan()
         Return raw _
-            .GetMs1Scans _
             .Select(Function(m1)
-                        Return m1.mz.Select(Function(mzi, i) New ms1_scan With {.mz = mzi, .intensity = m1.into(i), .scan_time = m1.rt})
+                        Return m1.mz _
+                            .Select(Function(mzi, i)
+                                        Return New ms1_scan With {
+                                            .mz = mzi,
+                                            .intensity = m1.into(i),
+                                            .scan_time = m1.rt
+                                        }
+                                    End Function)
                     End Function) _
             .IteratesALL _
             .ToArray
