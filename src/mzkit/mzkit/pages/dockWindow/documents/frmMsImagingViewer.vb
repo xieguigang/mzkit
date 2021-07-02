@@ -196,10 +196,13 @@ Public Class frmMsImagingViewer
             Return
         End If
 
-        Dim ms As New LibraryMatrix With {.ms2 = pixel.GetMs}
+        Dim ms As New LibraryMatrix With {
+            .ms2 = pixel.GetMs,
+            .name = $"Pixel[{x}, {y}]"
+        }
 
         Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
-        Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms, focusOn:=False)
+        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
     End Sub
 
     Friend Sub RenderSummary(summary As IntensitySummary)

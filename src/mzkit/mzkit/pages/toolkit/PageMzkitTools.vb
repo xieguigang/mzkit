@@ -242,11 +242,11 @@ Public Class PageMzkitTools
                       ) _
                       .AsGDIImage
               End Sub,
-          width:=1200,
-          height:=800,
+          width:=2100,
+          height:=1200,
           padding:="padding: 100px 30px 50px 100px;",
           bg:="white",
-          title:="BioDeep™ MS/MS alignment Viewer"
+          title:=scanData.name
       )
 
         If focusOn Then
