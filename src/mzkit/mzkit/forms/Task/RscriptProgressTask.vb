@@ -49,6 +49,11 @@ Imports Task
 
 Public Class RscriptProgressTask
 
+    ''' <summary>
+    ''' convert imzML to mzpack
+    ''' </summary>
+    ''' <param name="imzML"></param>
+    ''' <returns></returns>
     Public Shared Function CreateMSIIndex(imzML As String) As String
         Dim Rscript As String = RscriptPipelineTask.GetRScript("buildMSIIndex.R")
         Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))

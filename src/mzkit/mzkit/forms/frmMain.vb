@@ -236,7 +236,7 @@ Public Class frmMain
             Call showMzPackMSI(imzML)
         Else
             Dim cachefile As String = RscriptProgressTask.CreateMSIIndex(imzML)
-            Dim canvas As New Drawer(New IndexReader(New XICReader(cachefile)))
+            Dim canvas As New Drawer(New ReadRawPack(cachefile))
 
             WindowModules.viewer.LoadRender(canvas, imzML)
 
