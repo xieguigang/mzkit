@@ -182,6 +182,7 @@ Module TaskScript
 
     End Sub
 
+    <ExportAPI("Ms1Contour")>
     Public Sub DrawMs1Contour()
 
     End Sub
