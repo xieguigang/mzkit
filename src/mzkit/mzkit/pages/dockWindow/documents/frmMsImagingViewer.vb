@@ -216,19 +216,36 @@ Public Class frmMsImagingViewer
             Return
         End If
 
-        Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
+        Dim progress As New frmProgressSpinner
 
-        If rangePixels.IsNullOrEmpty Then
-            Return
-        End If
+        Call New Thread(
+            Sub()
+                Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
 
-        Dim ms As New LibraryMatrix With {
-            .ms2 = rangePixels.Select(Function(p) p.GetMs).IteratesALL.ToArray,
-            .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
-        }
+                If rangePixels.IsNullOrEmpty Then
+                    Return
+                End If
 
-        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
-        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+                Dim ms As New LibraryMatrix With {
+                    .ms2 = rangePixels _
+                        .Select(Function(p) p.GetMs) _
+                        .IteratesALL _
+                        .ToArray _
+                        .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
+                        .ToArray,
+                    .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
+                }
+
+                Call MyApplication.host.Invoke(
+                    Sub()
+                        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
+                        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+                    End Sub)
+
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
+
+        Call progress.ShowDialog()
     End Sub
 
     Friend Sub RenderSummary(summary As IntensitySummary)

@@ -103,6 +103,10 @@ Public Class PixelSelector
     Dim rangeEnd As Point
 
     Sub canvasMouseDown(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseDown
+        If e.Button <> MouseButtons.Left Then
+            Return
+        End If
+
         Dim xpoint = 0
         Dim ypoint = 0
 
@@ -181,6 +185,12 @@ Public Class PixelSelector
     End Sub
 
     Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
+        If e.Button <> MouseButtons.Left Then
+            Return
+        Else
+            drawing = False
+        End If
+
         Dim xpoint = 0
         Dim ypoint = 0
 

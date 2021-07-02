@@ -646,6 +646,7 @@ Public Class PageMzkitTools
 
         For Each tick As ms2 In matrix
             DataGridView1.Rows.Add({tick.mz, tick.intensity, CInt(tick.intensity / max * 100), tick.Annotation})
+            Application.DoEvents()
         Next
     End Sub
 

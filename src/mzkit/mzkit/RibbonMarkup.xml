@@ -1338,7 +1338,7 @@
     <Command Name="cmdTabGroupMSI" Id="120" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
     <Command Name="cmdTabMSIPage" Id="121" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
     <Command Name="cmdGroupMSIFile" Id="122" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
-    <Command Name="cmdButtonMSITotalIon" Id="123" LabelTitle="Render Total Ions" LabelDescription="Render Total Ions" TooltipTitle="Render Total Ions" TooltipDescription="Render Total Ions">
+    <Command Name="cmdButtonMSITotalIon" Id="123" LabelTitle="Total Ions" LabelDescription="Render Total Ions" TooltipTitle="Render Total Ions" TooltipDescription="Render Total Ions">
       <Command.SmallImages>
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
@@ -1346,7 +1346,7 @@
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonMSIBasePeakIon" Id="124" LabelTitle="Render BasePeakIon" LabelDescription="Render BasePeakIon" TooltipTitle="Render BasePeakIon" TooltipDescription="Render BasePeakIon">
+    <Command Name="cmdButtonMSIBasePeakIon" Id="124" LabelTitle="BasePeakIon" LabelDescription="Render BasePeakIon" TooltipTitle="Render BasePeakIon" TooltipDescription="Render BasePeakIon">
       <Command.SmallImages>
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
@@ -1354,7 +1354,7 @@
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonMSIAverageIon" Id="125" LabelTitle="Render Average Ion" LabelDescription="Render Average Ion" TooltipTitle="Render Average Ion" TooltipDescription="Render Average Ion">
+    <Command Name="cmdButtonMSIAverageIon" Id="125" LabelTitle="Average Ion" LabelDescription="Render Average Ion" TooltipTitle="Render Average Ion" TooltipDescription="Render Average Ion">
       <Command.SmallImages>
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
