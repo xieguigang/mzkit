@@ -14535,8 +14535,8 @@ Global
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit_UnixDocker|x64.Build.0 = MetaCardio|x64
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit_UnixDocker|x86.ActiveCfg = MetaCardio|Any CPU
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit_UnixDocker|x86.Build.0 = MetaCardio|Any CPU
-		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|Any CPU.ActiveCfg = MetaCardio|Any CPU
-		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|Any CPU.Build.0 = MetaCardio|Any CPU
+		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|x64.ActiveCfg = mzkit|x64
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|x64.Build.0 = mzkit|x64
 		{83EC1406-FE08-46A1-88B3-CE56D7E9961C}.mzkit|x86.ActiveCfg = MetaCardio|Any CPU
