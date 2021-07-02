@@ -51,22 +51,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports stdNum = System.Math
 
 Public Module DrawScatter
-
-    <Extension>
-    Public Function DrawContour(raw As Raw, colorSet As String) As Image
-
-
-        Return PlotContour.Plot(DATA, colorSet:=colorSet).AsGDIImage
-    End Function
 
     <Extension>
     Public Function Draw3DPeaks(raw As Raw, colorSet As String) As Image

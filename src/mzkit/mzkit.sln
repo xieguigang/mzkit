@@ -185,6 +185,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipeline", "Pipeline", "{D0
 	ProjectSection(SolutionItems) = preProject
 		Pipeline\buildMSIIndex.R = Pipeline\buildMSIIndex.R
 		Pipeline\metadna.R = Pipeline\metadna.R
+		Pipeline\ms1_contour.R = Pipeline\ms1_contour.R
 		Pipeline\mzpack.R = Pipeline\mzpack.R
 	EndProjectSection
 EndProject
