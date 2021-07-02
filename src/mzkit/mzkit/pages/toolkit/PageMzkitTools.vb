@@ -223,10 +223,34 @@ Public Class PageMzkitTools
             End If
 
             Call VisualStudio.ShowProperties(prop)
-            Call PlotMatrx(title1, title2, scanData)
+            Call PlotSpectrum(scanData)
             ' Call MyApplication.host.ShowPropertyWindow()
         Else
             Call missingCacheFile(raw)
+        End If
+    End Sub
+
+    Public Sub PlotSpectrum(scanData As LibraryMatrix, Optional focusOn As Boolean = True)
+        Call MyApplication.RegisterPlot(
+              Sub(args)
+                  scanData.name = args.title
+                  PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(
+                          scanData,
+                          padding:=args.GetPadding.ToString,
+                          bg:=args.background.ToHtmlColor,
+                          size:=$"{args.width},{args.height}"
+                      ) _
+                      .AsGDIImage
+              End Sub,
+          width:=1200,
+          height:=800,
+          padding:="padding: 100px 30px 50px 100px;",
+          bg:="white",
+          title:="BioDeep™ MS/MS alignment Viewer"
+      )
+
+        If focusOn Then
+            Call ShowTabPage(TabPage5)
         End If
     End Sub
 
