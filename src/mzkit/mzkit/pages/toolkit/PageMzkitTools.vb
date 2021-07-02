@@ -149,7 +149,8 @@ Public Class PageMzkitTools
                                 image = data.Plot(
                                     size:=$"{args.width},{args.height}",
                                     padding:=args.GetPadding.ToString,
-                                    colorSet:=args.colors
+                                    colorSet:=args.GetColorSetName,
+                                    ppi:=200
                                 ).AsGDIImage
                             ElseIf XIC Then
                                 image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName)
