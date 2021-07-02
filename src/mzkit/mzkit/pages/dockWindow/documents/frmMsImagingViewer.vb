@@ -75,7 +75,7 @@ Public Class frmMsImagingViewer
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
-    Dim render As Drawer
+    Friend render As Drawer
     Dim params As MsImageProperty
     Dim WithEvents checks As ToolStripMenuItem
     Dim WithEvents tweaks As PropertyGrid
