@@ -86,6 +86,8 @@ Public Class PixelSelector
         End Set
     End Property
 
+    Dim oldMessage As String = "MSI Viewer"
+
     Public Sub ShowMessage(text As String)
         ToolStripStatusLabel1.Text = text
     End Sub
@@ -106,6 +108,9 @@ Public Class PixelSelector
         DrawSelectionBox(startPoint)
 
         rangeStart = New Point(xpoint, ypoint)
+
+        oldMessage = ToolStripStatusLabel1.Text
+        ShowMessage("Select Pixels By Range.")
     End Sub
 
     Private Sub picCanvas_MouseMove(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseMove
@@ -161,6 +166,7 @@ Public Class PixelSelector
             Dim ypoint = 0
 
             getPoint(e, xpoint, ypoint)
+            ShowMessage(oldMessage)
 
             rangeEnd = New Point(xpoint, ypoint)
             drawing = False

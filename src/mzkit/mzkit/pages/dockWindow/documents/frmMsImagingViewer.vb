@@ -205,6 +205,27 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
     End Sub
 
+    Private Sub PixelSelector1_SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) Handles PixelSelector1.SelectPixelRegion
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
+
+        If rangePixels.IsNullOrEmpty Then
+            Return
+        End If
+
+        Dim ms As New LibraryMatrix With {
+            .ms2 = rangePixels.Select(Function(p) p.GetMs).IteratesALL.ToArray,
+            .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
+        }
+
+        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
+        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+    End Sub
+
     Friend Sub RenderSummary(summary As IntensitySummary)
         If render Is Nothing Then
             Call MyApplication.host.showStatusMessage("please load MSI raw data at first!")
