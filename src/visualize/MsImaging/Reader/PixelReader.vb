@@ -85,6 +85,7 @@ Namespace Reader
                 Dim rows = AllPixels _
                     .GroupBy(Function(p) p.Y) _
                     .Select(Function(r)
+                                Call Application.DoEvents()
                                 Return GetIntensitySummary(r)
                             End Function) _
                     .ToArray

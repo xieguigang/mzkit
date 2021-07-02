@@ -62,13 +62,18 @@ Public Class PixelSelector
     Dim orginal_image As Size
     Dim dimension As Size
 
-    Public Property MSImage(Optional dimsize As Size = Nothing) As Image
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pixel_size"></param>
+    ''' <returns></returns>
+    Public Property MSImage(Optional pixel_size As Size = Nothing) As Image
         Get
             Return picCanvas.BackgroundImage
         End Get
         Set(value As Image)
             picCanvas.BackgroundImage = value
-            dimension = dimsize
+            dimension = pixel_size
 
             If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
                 Throw New InvalidExpressionException("dimension size can not be ZERO!")
