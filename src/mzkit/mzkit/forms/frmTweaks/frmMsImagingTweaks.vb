@@ -54,8 +54,7 @@ Imports RibbonLib.Interop
 
 Public Class frmMsImagingTweaks
 
-    Dim checkedMz As New List(Of TreeNode)
-
+    Friend checkedMz As New List(Of TreeNode)
     Friend viewer As frmMsImagingViewer
 
     Public Iterator Function GetSelectedIons() As IEnumerable(Of Double)
