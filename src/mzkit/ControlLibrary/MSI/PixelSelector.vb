@@ -57,6 +57,7 @@ Public Class PixelSelector
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+        picCanvas.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
 
     Dim orginal_image As Size

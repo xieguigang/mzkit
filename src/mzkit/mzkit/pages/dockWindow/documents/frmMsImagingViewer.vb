@@ -292,16 +292,22 @@ Public Class frmMsImagingViewer
             Sub()
                 Dim err As Tolerance = params.GetTolerance
                 Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
-                Dim maxInto As Double = Aggregate pm As PixelData
-                                        In pixels
-                                        Into Max(pm.intensity)
-                Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
-                Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
-                Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
 
-                Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
-                Call Invoke(rendering)
+                If pixels.IsNullOrEmpty Then
+                    Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    Dim maxInto As Double = Aggregate pm As PixelData
+                                       In pixels
+                                       Into Max(pm.intensity)
+                    Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
+                    Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
+                    Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
+
+                    Call Invoke(Sub() params.SetIntensityMax(maxInto))
+                    Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
+                    Call Invoke(rendering)
+                End If
+
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
