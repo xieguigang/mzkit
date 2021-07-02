@@ -90,6 +90,16 @@ Namespace mzData.mzWebCache
 
         Public ReadOnly Property filepath As String
 
+        Public ReadOnly Property source As String
+            Get
+                If filepath.StringEmpty Then
+                    Return "n/a"
+                Else
+                    Return filepath.FileName
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' 以只读的形式打开文件
         ''' </summary>
@@ -108,6 +118,10 @@ Namespace mzData.mzWebCache
                 encoding:=Encodings.ASCII
             )
             Me.file.ByteOrder = ByteOrder.LittleEndian
+
+            If TypeOf file Is FileStream Then
+                Me.filepath = DirectCast(file, FileStream).Name
+            End If
 
             If Not Me.VerifyMagicSignature(Me.file) Then
                 Throw New InvalidProgramException("invalid magic header!")

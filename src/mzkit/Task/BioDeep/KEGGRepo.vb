@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
+Imports biodeep
 
 Module KEGGRepo
 
