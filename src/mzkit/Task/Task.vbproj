@@ -150,10 +150,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BioDeep\BioDeepSession.vb" />
     <Compile Include="BioDeep\KEGGRepo.vb" />
-    <Compile Include="BioDeep\SessionInfo.vb" />
-    <Compile Include="BioDeep\MessageParser.vb" />
     <Compile Include="IonLibrary.vb" />
     <Compile Include="GCMSQuantifyIon.vb" />
     <Compile Include="MetaDNASearch.vb" />
@@ -328,6 +325,10 @@
     <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msplots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BioDeep\BioDeep.vbproj">
+      <Project>{04497d3c-ae08-4df2-be29-e5b572daa5b6}</Project>
+      <Name>BioDeep</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
