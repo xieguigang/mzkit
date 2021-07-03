@@ -105,6 +105,7 @@ Public Class MSSelector
 
     Private Sub MSSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
         BackColor = Color.White
+        FillColor = Color.SteelBlue
     End Sub
 
     Dim rawTIC As ChromatogramTick()

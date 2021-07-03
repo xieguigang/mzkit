@@ -78,8 +78,8 @@ Public Class frmUntargettedViewer
             .ToArray
 
         If MS1.Length > 0 Then
-            Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = "MS1"}
-            Dim plot As Image = msLib.MirrorPlot(titles:={"MS1", $"Rt: {CInt(min)} ~ {CInt(max)} sec"}).AsGDIImage
+            Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = $"Rt: {CInt(min)} ~ {CInt(max)} sec"}
+            Dim plot As Image = PeakAssign.DrawSpectrumPeaks(msLib, size:="3600,1200").AsGDIImage
 
             PictureBox1.BackgroundImage = plot
         End If
