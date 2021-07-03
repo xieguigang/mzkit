@@ -226,6 +226,10 @@ Public Class RtRangeSelector
     End Sub
 
     Sub updatelabel(left As Integer, right As Integer)
+        If TIC.IsNullOrEmpty Then
+            Return
+        End If
+
         ' update label
         Dim length As Double = Width
 
