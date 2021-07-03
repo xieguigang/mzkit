@@ -86,7 +86,7 @@ Namespace mzData.mzWebCache
             For i As Integer = 0 To Me.mz.Length - 1
                 If tolerance(mz, Me.mz(i)) Then
                     If max < into(i) Then
-                        mz = into(i)
+                        max = into(i)
                     End If
                 End If
             Next
