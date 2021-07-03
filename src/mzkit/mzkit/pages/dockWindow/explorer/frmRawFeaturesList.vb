@@ -689,7 +689,7 @@ Public Class frmRawFeaturesList
     ''' <param name="e"></param>
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
         Dim mz As Double
-        Dim ppm As Tolerance = Tolerance.PPM(MyApplication.host.GetPPMError)
+        Dim ppm As Tolerance = Tolerance.DeltaMass(0.05)
 
         If Not checkIon(mz) Then
             Return

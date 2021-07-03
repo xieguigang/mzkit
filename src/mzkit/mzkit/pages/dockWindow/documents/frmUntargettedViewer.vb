@@ -87,7 +87,7 @@ Public Class frmUntargettedViewer
                 .name = $"Rt: {CInt(min)} ~ {CInt(max)} sec"
             }
             Dim plot As Image = PeakAssign _
-                .DrawSpectrumPeaks(msLib, size:=$"{PictureBox1.Width},{PictureBox1.Height}") _
+                .DrawSpectrumPeaks(msLib, size:=$"{PictureBox1.Width * 2.5},{PictureBox1.Height * 2.5}") _
                 .AsGDIImage
 
             matrix = msLib
