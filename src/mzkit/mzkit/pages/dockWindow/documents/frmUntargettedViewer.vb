@@ -68,6 +68,8 @@ Public Class frmUntargettedViewer
         End If
     End Sub
 
+    Dim matrix As LibraryMatrix
+
     Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles MsSelector1.RangeSelect
         Dim MS1 = raw.GetMs1Scans _
             .Where(Function(m1) m1.rt >= min AndAlso m1.rt <= max) _
@@ -78,9 +80,16 @@ Public Class frmUntargettedViewer
             .ToArray
 
         If MS1.Length > 0 Then
-            Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = $"Rt: {CInt(min)} ~ {CInt(max)} sec"}
-            Dim plot As Image = PeakAssign.DrawSpectrumPeaks(msLib, size:="3600,1200").AsGDIImage
+            Dim msLib As New LibraryMatrix With {
+                .centroid = True,
+                .ms2 = MS1,
+                .name = $"Rt: {CInt(min)} ~ {CInt(max)} sec"
+            }
+            Dim plot As Image = PeakAssign _
+                .DrawSpectrumPeaks(msLib, size:=$"{PictureBox1.Width},{PictureBox1.Height}") _
+                .AsGDIImage
 
+            matrix = msLib
             PictureBox1.BackgroundImage = plot
         End If
     End Sub
