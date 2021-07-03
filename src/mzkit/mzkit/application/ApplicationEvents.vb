@@ -109,7 +109,8 @@ Namespace My
                                        Optional gridFill$ = "white",
                                        Optional xlab$ = "X",
                                        Optional ylab$ = "Y",
-                                       Optional colorSet As String = Nothing)
+                                       Optional colorSet As String = Nothing,
+                                       Optional legendTitle As String = Nothing)
 
             Dim margin As Padding = padding
 
@@ -121,6 +122,7 @@ Namespace My
                 .xlabel = xlab
                 .ylabel = ylab
                 .gridFill = gridFill.TranslateColor
+                .legend_title = legendTitle
 
                 .show_legend = showLegend
                 .show_grid = showGrid

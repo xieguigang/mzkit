@@ -60,6 +60,7 @@ Public Class PlotProperty
     <Category("Plot")> <Description("The height of the plot image in pixels")> Public Property height As Integer = 1600
     <Category("Plot")> <Description("The background color of the plot image")> Public Property background As Color = Color.White
     <Category("Plot")> <Description("Text of the plot its main title")> Public Property title As String
+    <Category("Plot")> <Description("Text of the plot its legend title")> Public Property legend_title As String
     <Category("Plot")> <Description("Text label of the X axis")> Public Property xlabel As String = "X"
     <Category("Plot")> <Description("Text label of the Y axis")> Public Property ylabel As String = "Y"
 

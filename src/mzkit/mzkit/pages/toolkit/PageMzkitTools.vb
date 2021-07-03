@@ -119,9 +119,13 @@ Public Class PageMzkitTools
         Else
             Dim colorSet As String
             Dim data As ContourLayer() = Nothing
+            Dim width As Integer = 2048
+            Dim height As Integer = 1600
+            Dim padding As String = "padding:100px 400px 100px 100px;"
 
             If XIC Then
                 colorSet = "YlGnBu:c8"
+                width = 2400
             ElseIf contour Then
                 colorSet = "Jet"
 
@@ -134,6 +138,10 @@ Public Class PageMzkitTools
 
                 Call task.Start()
                 Call spinner.ShowDialog()
+
+                width = 3600
+                height = 2700
+                padding = "padding:100px 750px 100px 100px;"
             Else
                 colorSet = "darkblue,blue,skyblue,green,orange,red,darkred"
             End If
@@ -150,10 +158,11 @@ Public Class PageMzkitTools
                                     size:=$"{args.width},{args.height}",
                                     padding:=args.GetPadding.ToString,
                                     colorSet:=args.GetColorSetName,
-                                    ppi:=200
+                                    ppi:=200,
+                                    legendTitle:=args.legend_title
                                 ).AsGDIImage
                             ElseIf XIC Then
-                                image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName)
+                                image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName, size:=$"{args.width},{args.height}", args.GetPadding.ToString)
                             Else
                                 image = raw.DrawScatter(colorSet:=args.GetColorSetName)
                             End If
@@ -164,7 +173,7 @@ Public Class PageMzkitTools
 
                     Call task.Start()
                     Call spinner.ShowDialog()
-                End Sub, colorSet:=colorSet)
+                End Sub, colorSet:=colorSet, width:=width, height:=height, padding:=padding, legendTitle:="Levels")
         End If
 
         Me.matrixName = $"{raw.source.FileName}_{If(XIC, "XICPeaks", "rawscatter_2D")}"

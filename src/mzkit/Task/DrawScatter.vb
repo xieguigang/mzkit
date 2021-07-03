@@ -76,9 +76,9 @@ Public Module DrawScatter
     End Function
 
     <Extension>
-    Public Function Draw3DPeaks(raw As Raw, colorSet As String) As Image
+    Public Function Draw3DPeaks(raw As Raw, colorSet As String, size$, padding$) As Image
         Dim ms1 As ms1_scan() = GetMs1Points(raw)
-        Dim maxinto As Double = ms1.Select(Function(x) x.intensity).GKQuantile.Query(0.8)
+        Dim maxinto As Double = ms1.Select(Function(x) x.intensity).Quartile.Q3
         Dim XIC = ms1 _
             .GroupBy(Function(m) m.mz, Tolerance.DeltaMass(0.1)) _
             .Select(Function(mz)
@@ -102,8 +102,9 @@ Public Module DrawScatter
             showLegends:=False,
             colorsSchema:=colorSet,
             fillAlpha:=60,
-            margin:="padding:100px 100px 125px 150px;",
-            gridFill:="white"
+            margin:=padding,
+            gridFill:="white",
+            size:=size
         ).AsGDIImage
     End Function
 
