@@ -101,7 +101,7 @@ Module ThermoRaw
     End Function
 
     <ExportAPI("load_MSI")>
-    <RApiReturn(GetType(mzPack))>
+    <RApiReturn(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack))>
     Public Function readAsMSI(raw As MSFileReader, <RRawVectorArgument> pixels As Object, Optional env As Environment = Nothing) As Object
         Dim size As Size = InteropArgumentHelper.getSize(pixels, "-1,-1").SizeParser
 
@@ -113,7 +113,7 @@ Module ThermoRaw
     End Function
 
     <ExportAPI("MSI_pixels")>
-    Public Function MSIPixels(mzpack As mzPack) As DataSet()
+    Public Function MSIPixels(mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) As DataSet()
         Return mzpack.ExactPixelTable
     End Function
 End Module

@@ -86,10 +86,10 @@ Module MzWeb
     <ExportAPI("load.chromatogram")>
     <RApiReturn(GetType(Chromatogram))>
     Public Function GetChromatogram(scans As Object, Optional env As Environment = Nothing) As Object
-        If TypeOf scans Is mzPack Then
-            Return DirectCast(scans, mzPack).GetChromatogram
+        If TypeOf scans Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
+            Return DirectCast(scans, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).GetChromatogram
         ElseIf Not TypeOf scans Is pipeline Then
-            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
+            Return Message.InCompatibleType(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack), scans.GetType, env)
         Else
             Dim scanPip As pipeline = DirectCast(scans, pipeline)
 
@@ -178,7 +178,7 @@ Module MzWeb
     End Sub
 
     <ExportAPI("write.mzPack")>
-    Public Function writeMzpack(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeMzpack(mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack, file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then
@@ -195,7 +195,7 @@ Module MzWeb
     ''' <param name="file">the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file</param>
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
-    Public Function Open(file As String) As mzPack
+    Public Function Open(file As String) As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
         ElseIf file.ExtensionSuffix("raw") Then
@@ -204,13 +204,13 @@ Module MzWeb
             End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return mzPack.ReadAll(file:=stream)
+                Return BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.ReadAll(file:=stream)
             End Using
         End If
     End Function
 
     <ExportAPI("setThumbnail")>
-    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
+    Public Function setMzpackThumbnail(mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack, thumb As Object) As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack
         If TypeOf thumb Is GraphicsData Then
             thumb = DirectCast(thumb, GraphicsData).AsGDIImage
         End If
@@ -220,12 +220,12 @@ Module MzWeb
     End Function
 
     <ExportAPI("ms1_scans")>
-    Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
+    Public Function Ms1ScanPoints(mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
     End Function
 
     <ExportAPI("ms2_peaks")>
-    Public Function Ms2ScanPeaks(mzpack As mzPack) As PeakMs2()
+    Public Function Ms2ScanPeaks(mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack) As PeakMs2()
         Return mzpack.GetMs2Peaks.ToArray
     End Function
 
@@ -236,7 +236,7 @@ Module MzWeb
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
-    <RApiReturn(GetType(mzPack))>
+    <RApiReturn(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack))>
     Public Function ToMzPack(assembly As Object, Optional env As Environment = Nothing) As Object
         If TypeOf assembly Is netCDFReader Then
             Return GC2Dimensional.ToMzPack(agilentGC:=assembly)

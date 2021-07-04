@@ -106,10 +106,10 @@ Module MSI
                 Return Internal.debug.stop("the pixels of column must be specific!", env)
             End If
         Else
-            Dim loader = Iterator Function() As IEnumerable(Of mzPack)
+            Dim loader = Iterator Function() As IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)
                              For Each path As String In raw
                                  Using file As FileStream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                                     Yield mzPack.ReadAll(file, ignoreThumbnail:=True)
+                                     Yield mzpack.ReadAll(file, ignoreThumbnail:=True)
                                  End Using
                              Next
                          End Function
@@ -119,7 +119,7 @@ Module MSI
 
     <Extension>
     Private Function loadRowSummary(file As Stream, y As Integer, correction As Correction) As iPixelIntensity()
-        Dim mzpack As mzPack = mzPack.ReadAll(file, ignoreThumbnail:=True)
+        Dim mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack = BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.ReadAll(file, ignoreThumbnail:=True)
         Dim pixels As iPixelIntensity() = mzpack.MS _
             .Select(Function(col, i)
                         Dim basePeakMz As Double = col.mz(which.Max(col.into))
@@ -160,7 +160,7 @@ Module MSI
                              Optional intocutoff As Double = 0.05,
                              Optional env As Environment = Nothing) As Object
 
-        Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
+        Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)(rowScans, env)
 
         If pipeline.isError Then
             Return pipeline
@@ -169,7 +169,7 @@ Module MSI
         Dim pixels As New List(Of ScanMS1)
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
 
-        For Each row As mzPack In pipeline.populates(Of mzPack)(env)
+        For Each row As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack In pipeline.populates(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)(env)
             Dim y As Integer = row.source _
                 .Match("\d+") _
                 .DoCall(AddressOf Integer.Parse)

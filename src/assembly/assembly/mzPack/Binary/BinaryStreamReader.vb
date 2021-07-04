@@ -131,8 +131,15 @@ Namespace mzData.mzWebCache
             End If
         End Sub
 
+        ''' <summary>
+        ''' get meta data of a specific MS1 scan
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns>
+        ''' returns NULL if the meta data is not found
+        ''' </returns>
         Public Function GetMetadata(index As String) As Dictionary(Of String, String)
-            Return metadata(index)
+            Return metadata.TryGetValue(index)
         End Function
 
         ''' <summary>

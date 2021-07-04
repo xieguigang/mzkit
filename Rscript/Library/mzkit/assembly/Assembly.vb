@@ -412,8 +412,8 @@ Module Assembly
     Public Function ionMode(scans As Object, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
 
-        If TypeOf scans Is mzPack Then
-            Dim ms = DirectCast(scans, mzPack).MS
+        If TypeOf scans Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
+            Dim ms = DirectCast(scans, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).MS
 
             For Each Ms1 As ScanMS1 In ms
                 For Each ms2 In Ms1.products
@@ -424,10 +424,10 @@ Module Assembly
         ElseIf TypeOf scans Is pipeline Then
             Dim scanPip As pipeline = DirectCast(scans, pipeline)
 
-            If scanPip.elementType Like GetType(mzXML.scan) Then
-                Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+            If scanPip.elementType Like GetType(mzXMLAssembly.scan) Then
+                Dim reader As mzXMLScan = MsDataReader(Of mzXMLAssembly.scan).ScanProvider()
 
-                For Each scanVal As mzXML.scan In scanPip.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                For Each scanVal As mzXMLAssembly.scan In scanPip.populates(Of mzXMLAssembly.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                     Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
                 Next
             ElseIf scanPip.elementType Like GetType(spectrum) Then
@@ -437,10 +437,10 @@ Module Assembly
                     Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
                 Next
             Else
-                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+                Return Message.InCompatibleType(GetType(mzXMLAssembly.scan), scanPip.elementType, env)
             End If
         Else
-            Return Message.InCompatibleType(GetType(mzPack), scans.GetType, env)
+            Return Message.InCompatibleType(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack), scans.GetType, env)
         End If
 
         Return polar.ToArray
@@ -476,8 +476,8 @@ Module Assembly
             End With
         End If
 
-        If TypeOf raw Is mzPack Then
-            ms1.AddRange(DirectCast(raw, mzPack).GetAllScanMs1(tolerance))
+        If TypeOf raw Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
+            ms1.AddRange(DirectCast(raw, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).GetAllScanMs1(tolerance))
         ElseIf TypeOf raw Is vector OrElse TypeOf raw Is String() Then
             Dim files As String() = REnv.asVector(Of String)(raw)
 
@@ -494,8 +494,8 @@ Module Assembly
         ElseIf TypeOf raw Is pipeline Then
             Dim scanPip As pipeline = DirectCast(raw, pipeline)
 
-            If scanPip.elementType Like GetType(mzXML.scan) Then
-                Call scanPip.populates(Of mzXML.scan)(env) _
+            If scanPip.elementType Like GetType(mzXMLAssembly.scan) Then
+                Call scanPip.populates(Of mzXMLAssembly.scan)(env) _
                     .mzXMLMs1(tolerance) _
                     .IteratesALL _
                     .DoCall(AddressOf ms1.AddRange)
@@ -505,10 +505,10 @@ Module Assembly
                     .IteratesALL _
                     .DoCall(AddressOf ms1.AddRange)
             Else
-                Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
+                Return Message.InCompatibleType(GetType(mzXMLAssembly.scan), scanPip.elementType, env)
             End If
         Else
-            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
+            Return Message.InCompatibleType(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack), raw.GetType, env)
         End If
 
         Return ms1.ToArray
