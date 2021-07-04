@@ -1363,6 +1363,14 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdTabMSISnapshot" Id="126" LabelTitle="MSI Snapshot" LabelDescription="MSI Snapshot" TooltipTitle="MSI Snapshot" TooltipDescription="MSI Snapshot" />
+    <Command Name="cmdButtonExportMSIMzpack" Id="127" LabelTitle="Export mzPack" LabelDescription="Export mzPack" TooltipTitle="Export mzPack" TooltipDescription="Export mzPack">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/document-save.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/document-save.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1543,8 +1551,10 @@
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupMSI">
           <Tab CommandName="cmdTabMSIPage">
-            <Group CommandName="cmdGroupMSIFile" SizeDefinition="OneButton">
+            <Group CommandName="cmdGroupMSIFile" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonOpenMSIRaw" />
+              <Button CommandName="cmdButtonExportMSIMzpack" />
+              <Button CommandName="cmdButtonMsImaging" />
             </Group>
             <Group CommandName="cmdTabMSISnapshot" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonMSITotalIon" />
