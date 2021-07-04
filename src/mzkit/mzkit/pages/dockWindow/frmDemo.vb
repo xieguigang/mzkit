@@ -203,20 +203,21 @@ Blue: 741.5307(SM(34:1) [M+K]+)
                 ' UV scans
                 Dim demopath As String = $"{App.HOME}/demo/DEMO.mzPack".GetFullPath
                 Dim cache As String
+                Dim findRaw = fileExplorer.findRawFileNode("DEMO.mzPack")
 
-                If Not demopath.FileExists Then
-                    MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                    Return
-                Else
+                If findRaw Is Nothing Then
+                    If Not demopath.FileExists Then
+                        MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                        Return
+                    End If
                     cache = ImportsRawData.GetCachePath(demopath)
                     demopath.FileCopy(cache)
+                    fileExplorer.addFileNode(New Raw With {
+                        .cache = cache.GetFullPath,
+                        .source = demopath
+                    })
+                    findRaw = fileExplorer.findRawFileNode("DEMO.mzPack")
                 End If
-
-                fileExplorer.addFileNode(New Raw With {
-                    .cache = cache.GetFullPath,
-                    .source = demopath
-                })
-                Dim findRaw = fileExplorer.findRawFileNode("DEMO.mzPack")
 
                 fileExplorer.treeView1.SelectedNode = findRaw
                 fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True, contour:=False)
