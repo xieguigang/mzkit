@@ -57,9 +57,13 @@ Public Class NewsFeed
     Public Property [date] As String
     Public Property url As String
 
+    Public Shared ReadOnly Property html As String
+
     Public Shared Iterator Function ParseLatest() As IEnumerable(Of NewsFeed)
         Dim html As String = latestNewsPageUrl.GET
         Dim items As String() = Strings.Split(html, "<div class=""product-set-item-info-inner-container"">")
+
+        NewsFeed._html = html
 
         For Each item As String In items.Skip(1)
             Dim url As String = item.Match("[<]a.+?[<]/a[>]")
