@@ -329,8 +329,16 @@ Type 'q()' to quit R.
             End If
         End Sub
 
-        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        Friend Shared afterLoad As Action
 
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            Dim cli = App.CommandLine
+
+            If Not (cli Is Nothing OrElse cli.IsNullOrEmpty) Then
+                If cli.Name.FileExists Then
+                    Call mzkit.CLI.openRawFile(cli.Name, cli)
+                End If
+            End If
         End Sub
     End Class
 End Namespace

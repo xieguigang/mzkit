@@ -286,6 +286,7 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="application\ApplicationEvents.vb" />
+    <Compile Include="application\CLI.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\WindowModules.vb" />
     <Compile Include="application\TaskbarWindow.vb" />
