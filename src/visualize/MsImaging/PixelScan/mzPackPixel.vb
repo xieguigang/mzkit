@@ -72,7 +72,8 @@ Namespace Pixel
             End Get
         End Property
 
-        ReadOnly scan As ScanMS1
+        Public ReadOnly Property scan As ScanMS1
+
         ReadOnly pixel As Point
 
         Public ReadOnly Property mz As Double()

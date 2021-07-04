@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
@@ -98,8 +99,28 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonMSIBasePeakIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.BasePeak)
         AddHandler RibbonEvents.ribbonItems.ButtonMSIAverageIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.Average)
 
+        AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
+
         Call ApplyVsTheme(ContextMenuStrip1)
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+    End Sub
+
+    Sub exportMzPack()
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No MSI raw data was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Using buffer As Stream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                        Call New mzPack With {
+                            .MS = DirectCast(render.pixelReader, ReadRawPack) _
+                                .GetScans _
+                                .ToArray
+                        }.Write(buffer)
+                    End Using
+                End If
+            End Using
+        End If
     End Sub
 
     Public Sub loadRaw(file As String)
