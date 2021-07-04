@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine
 Imports mzkit.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Module CLI
 
@@ -8,7 +9,9 @@ Module CLI
             Sub()
                 Select Case filepath.ExtensionSuffix.ToLower
                     Case "mzpack"
-                        Call MyApplication.host.OpenFile(filepath, showDocument:=True)
+                        MyApplication.host.OpenFile(filepath, showDocument:=True)
+                        WindowModules.panelMain.Show(MyApplication.host.dockPanel)
+                        WindowModules.panelMain.DockState = DockState.Document
                 End Select
             End Sub
 
