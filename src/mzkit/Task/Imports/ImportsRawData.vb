@@ -57,10 +57,8 @@ Public Class ImportsRawData
     Public ReadOnly Property raw As Raw
 
     Sub New(file As String, progress As Action(Of String), finished As Action)
-        Dim cacheKey As String = file.GetFullPath.MD5
-
         source = file
-        cache = App.AppSystemTemp & $"/.cache/{cacheKey.Substring(0, 2)}/" & cacheKey & ".mzPack"
+        cache = GetCachePath(file)
         showProgress = progress
         success = finished
         raw = New Raw With {
@@ -68,6 +66,13 @@ Public Class ImportsRawData
             .source = source.GetFullPath
         }
     End Sub
+
+    Public Shared Function GetCachePath(file As String) As String
+        Dim cacheKey As String = file.GetFullPath.MD5
+        Dim path As String = App.AppSystemTemp & $"/.cache/{cacheKey.Substring(0, 2)}/" & cacheKey & ".mzPack"
+
+        Return path
+    End Function
 
     Public Sub RunImports()
         Dim Rscript As String = RscriptPipelineTask.GetRScript("mzpack.R")

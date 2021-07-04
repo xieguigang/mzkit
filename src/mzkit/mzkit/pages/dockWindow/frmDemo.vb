@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::db4de61a134b5ec4d811807255285a38, src\mzkit\mzkit\pages\dockWindow\frmDemo.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmDemo
-    ' 
-    '     Sub: frmDemo_Closing, frmDemo_Load, ListView1_DoubleClick, ListView1_SelectedIndexChanged, OpenContainingFolder
-    '          ShowInExplorerToolStripMenuItem_Click, ShowPage
-    ' 
-    ' /********************************************************************************/
+' Class frmDemo
+' 
+'     Sub: frmDemo_Closing, frmDemo_Load, ListView1_DoubleClick, ListView1_SelectedIndexChanged, OpenContainingFolder
+'          ShowInExplorerToolStripMenuItem_Click, ShowPage
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -121,6 +121,21 @@ Blue: 741.5307(SM(34:1) [M+K]+)
 "
                 info.Application = "Mzkit MSI viewer"
 
+            Case 5
+
+                ' UV scans
+                info.Title = "mzPack DEMO file with UV scans"
+                info.Url = $"{App.HOME}/demo/DEMO.mzPack".GetFullPath
+                info.Information = "UV scans demo data"
+                info.Application = "Mzkit Raw Data Viewer"
+
+            Case 6
+
+                info.Title = "S043_Processed_imzML1.1.1.mzPack"
+                info.Url = $"{App.HOME}/demo/S043_Processed_imzML1.1.1.mzPack".GetFullPath
+                info.Information = "S043_Processed"
+                info.Application = "Mzkit MSI viewer"
+
         End Select
 
         PropertyGrid1.SelectedObject = info
@@ -181,6 +196,43 @@ Blue: 741.5307(SM(34:1) [M+K]+)
                     Call RibbonEvents.showMsImaging()
                     Call WindowModules.msImageParameters.loadRenderFromCDF(demopath)
                 End If
+
+
+            Case 5
+
+                ' UV scans
+                Dim demopath As String = $"{App.HOME}/demo/DEMO.mzPack".GetFullPath
+                Dim cache As String
+
+                If Not demopath.FileExists Then
+                    MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                    Return
+                Else
+                    cache = ImportsRawData.GetCachePath(demopath)
+                    demopath.FileCopy(cache)
+                End If
+
+                fileExplorer.addFileNode(New Raw With {
+                    .cache = cache.GetFullPath,
+                    .source = demopath
+                })
+                Dim findRaw = fileExplorer.findRawFileNode("DEMO.mzPack")
+
+                fileExplorer.treeView1.SelectedNode = findRaw
+                fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True, contour:=False)
+                MyApplication.host.ShowMzkitToolkit()
+
+            Case 6
+
+                Dim demopath As String = $"{App.HOME}/demo/S043_Processed_imzML1.1.1.mzPack".GetFullPath
+
+                If Not demopath.FileExists Then
+                    MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    Call RibbonEvents.showMsImaging()
+                    Call MyApplication.host.showMzPackMSI(demopath)
+                End If
+
         End Select
     End Sub
 

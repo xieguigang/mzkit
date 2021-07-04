@@ -32,8 +32,8 @@ Partial Class frmDemo
         Dim ListViewItem3 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("LC-MS/MS SRM Demo", 4)
         Dim ListViewItem4 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("GC-MS SIM Demo", 3)
         Dim ListViewItem5 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("HR2MSI mouse urinary bladder S096 - Figure1", "HR2MSI mouse urinary bladder S096 - optical image.jpg")
-        Dim ListViewItem6 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("mzPack DEMO")
-        Dim ListViewItem7 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("S043_Processed_imzML1.1.1.mzPack")
+        Dim ListViewItem6 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("mzPack DEMO", "D065.mzML_XICPeaks.png")
+        Dim ListViewItem7 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("S043_Processed_imzML1.1.1.mzPack", "S043.png")
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDemo))
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -113,6 +113,8 @@ Partial Class frmDemo
         Me.ImageList1.Images.SetKeyName(3, "GCMS_Targeted.png")
         Me.ImageList1.Images.SetKeyName(4, "MRM_Ions.png")
         Me.ImageList1.Images.SetKeyName(5, "HR2MSI mouse urinary bladder S096 - optical image.jpg")
+        Me.ImageList1.Images.SetKeyName(6, "S043.png")
+        Me.ImageList1.Images.SetKeyName(7, "D065.mzML_XICPeaks.png")
         '
         'PropertyGrid1
         '
