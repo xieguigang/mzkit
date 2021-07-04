@@ -471,6 +471,16 @@ Public Class frmMsImagingViewer
     Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
 
+        If render Is Nothing Then
+            WindowModules.msImageParameters.DockState = DockState.Hidden
+            WindowModules.msImageParameters.checkedMz.Clear()
+            WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+
+            Me.DockState = DockState.Hidden
+
+            Return
+        End If
+
         If MessageBox.Show("Going to close current MS-imaging viewer?", FilePath.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
         Else
             WindowModules.msImageParameters.DockState = DockState.Hidden
