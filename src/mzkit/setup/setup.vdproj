@@ -2366,7 +2366,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.ChartPlots, Version=1.23.7854.29799, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.ChartPlots, Version=1.23.7855.1528, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_007CC57F5071F45BB6E36217E2E0AACB"
@@ -2787,7 +2787,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Imaging, Version=4.7.7854.29798, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Imaging, Version=4.7.7855.1527, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_2AD640095B38E13CCB7148B3573306AF"
@@ -2962,7 +2962,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:REnv, Version=2.333.7854.29797, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:REnv, Version=2.333.7855.1525, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_35306309CD54CF32A4AEB4F936F88D87"
@@ -3126,7 +3126,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7854.29798, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7855.1527, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_522499B83C6E5A7347AE0B009DA2B54E"
@@ -3753,7 +3753,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7854.29799, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7855.1527, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_90C36BEDC22165B835AC4C21CF694615"
@@ -3815,7 +3815,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Math.Core, Version=10.1.7854.29797, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Math.Core, Version=10.1.7855.1524, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_95BB91C2C95DF8AABAF68E6D60659B8D"
@@ -3866,7 +3866,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.visualize.Network.Visualizer, Version=4.1230.7854.29801, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.visualize.Network.Visualizer, Version=4.1230.7855.1528, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_A0FAF170EEB4E39C933AA989AF0E2514"
@@ -4101,7 +4101,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7854.29800, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7855.1530, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_BA8D1A2A353671AD88AE12296D8E379A"
@@ -4254,7 +4254,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SMRUCC.genomics.Core, Version=2.33.7854.29798, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:SMRUCC.genomics.Core, Version=2.33.7855.1525, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_C84106B4B594AC7E52E3C6713C996E21"
@@ -4285,7 +4285,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a, Version=4.7.7854.29796, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a, Version=4.7.7855.1523, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_CE499BA9555ABF037F57C4305C32345C"
@@ -4378,7 +4378,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BioNovoGene.Analytical.MassSpectrometry.Math, Version=1.231.7854.29798, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:BioNovoGene.Analytical.MassSpectrometry.Math, Version=1.231.7855.1525, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_D01E957CCF1621DD84F4737C5945A930"
@@ -4635,7 +4635,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BioNovoGene.BioDeep.MetaDNA, Version=1.1254.7854.29800, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:BioNovoGene.BioDeep.MetaDNA, Version=1.1254.7855.1531, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_E5BC9A30E3C8FC53E4377A4EFE63AE3C"
@@ -5187,6 +5187,20 @@
             "Folder" = "8:_818F84AEFC9F4041843C3E3A332BA1CB"
             "WorkingFolder" = "8:_DFC62C483790469DA2EF3F39E6499DDA"
             "Icon" = "8:_A8B8229CBDA14E548368809F42BDD363"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C9B055A3E7BA416E9FD3368C9EB626AF"
+            {
+            "Name" = "8:User Manual.pptx"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_EB0F9C9E148A40538CEF4A9A2EEEAF17"
+            "Folder" = "8:_818F84AEFC9F4041843C3E3A332BA1CB"
+            "WorkingFolder" = "8:_DFC62C483790469DA2EF3F39E6499DDA"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CE95529F6CB745F392E1897682F71FBC"
