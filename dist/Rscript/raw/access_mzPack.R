@@ -1,9 +1,9 @@
 library("mzkit/mzPack");
 
-using mzpack as mzpack(file("F:\TEMP\mzkit_win32\MSI_imzML\c13779f1-6cbb-7e40-85ae-cfad49ba095d")) {
+using mzpack as mzpack(file("MSI_imzML\c13779f1-6cbb-7e40-85ae-cfad49ba095d")) {
 	mzpack
 	|> mzPack::ls()
-	|> print
+	|> str
 	;
 	
 	str(mzpack |> metadata(mzPack::ls(mzpack)[1]));
@@ -17,5 +17,6 @@ using mzpack as mzpack(file("F:\TEMP\mzkit_win32\MSI_imzML\c13779f1-6cbb-7e40-85
 	str(ms1_scan);
 	
 	print("MS1 matrix:");
-	print(matrix);
+	print(head(matrix));
 } 
+
