@@ -634,19 +634,35 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
-    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        Dim mz As Double = Val(Strings.Trim(ToolStripSpringTextBox1.Text))
-        Dim ppm As Double = MyApplication.host.GetPPMError
+    Private Function checkIon(ByRef mz As Double) As Boolean
+        mz = Val(Strings.Trim(ToolStripSpringTextBox1.Text))
 
         If mz = 0.0 Then
             Call MyApplication.host.showStatusMessage($"M/z value expression '{ToolStripSpringTextBox1.Text}' is not a valid number expression, please input a valid m/z value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
+            Return False
         ElseIf CurrentRawFile Is Nothing Then
             Call MyApplication.host.showStatusMessage("Please load a raw data file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Dim mz As Double
+        Dim ppm As Double = MyApplication.host.GetPPMError
+
+        If Not checkIon(mz) Then
             Return
         End If
 
-        Dim Ms2 = CurrentRawFile.LoadMzpack.GetMs2Scans.Where(Function(m) PPMmethod.PPM(m.parentMz, mz) <= ppm).OrderBy(Function(m) m.rt).ToArray
+        Dim Ms2 = CurrentRawFile.LoadMzpack _
+            .GetMs2Scans _
+            .Where(Function(m)
+                       Return PPMmethod.PPM(m.parentMz, mz) <= ppm
+                   End Function) _
+            .OrderBy(Function(m) m.rt) _
+            .ToArray
 
         Call treeView1.Nodes.Clear()
 
@@ -664,6 +680,29 @@ Public Class frmRawFeaturesList
         If Not firstFile Is Nothing Then
             Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 从原始数据文件中挑出目标一级离子作图
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
+        Dim mz As Double
+        Dim ppm As Tolerance = Tolerance.DeltaMass(0.05)
+
+        If Not checkIon(mz) Then
+            Return
+        End If
+
+        Dim XIC = CurrentRawFile.LoadMzpack.loaded.MS _
+            .Select(Function(scan) (scan.rt, scan.GetIntensity(mz, ppm))) _
+            .Where(Function(p) p.Item2 > 0) _
+            .OrderBy(Function(p) p.rt) _
+            .Select(Function(p) New ChromatogramTick With {.Time = p.rt, .Intensity = p.Item2}) _
+            .ToArray
+
+        Call MyApplication.mzkitRawViewer.TIC({New NamedCollection(Of ChromatogramTick)($"XIC m/z: {mz.ToString("F4")}", XIC)})
     End Sub
 
     Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter

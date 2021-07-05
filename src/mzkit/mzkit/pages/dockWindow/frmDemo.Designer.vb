@@ -32,6 +32,8 @@ Partial Class frmDemo
         Dim ListViewItem3 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("LC-MS/MS SRM Demo", 4)
         Dim ListViewItem4 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("GC-MS SIM Demo", 3)
         Dim ListViewItem5 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("HR2MSI mouse urinary bladder S096 - Figure1", "HR2MSI mouse urinary bladder S096 - optical image.jpg")
+        Dim ListViewItem6 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("mzPack DEMO", "D065.mzML_XICPeaks.png")
+        Dim ListViewItem7 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem("S043_Processed_imzML1.1.1.mzPack", "S043.png")
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDemo))
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -68,7 +70,8 @@ Partial Class frmDemo
         ListViewItem4.StateImageIndex = 0
         ListViewItem5.Group = ListViewGroup1
         ListViewItem5.ToolTipText = "HR2MSI mouse urinary bladder S096 - Figure1"
-        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1, ListViewItem2, ListViewItem3, ListViewItem4, ListViewItem5})
+        ListViewItem7.Group = ListViewGroup1
+        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1, ListViewItem2, ListViewItem3, ListViewItem4, ListViewItem5, ListViewItem6, ListViewItem7})
         Me.ListView1.LargeImageList = Me.ImageList1
         Me.ListView1.Location = New System.Drawing.Point(0, 0)
         Me.ListView1.MultiSelect = False
@@ -110,6 +113,8 @@ Partial Class frmDemo
         Me.ImageList1.Images.SetKeyName(3, "GCMS_Targeted.png")
         Me.ImageList1.Images.SetKeyName(4, "MRM_Ions.png")
         Me.ImageList1.Images.SetKeyName(5, "HR2MSI mouse urinary bladder S096 - optical image.jpg")
+        Me.ImageList1.Images.SetKeyName(6, "S043.png")
+        Me.ImageList1.Images.SetKeyName(7, "D065.mzML_XICPeaks.png")
         '
         'PropertyGrid1
         '

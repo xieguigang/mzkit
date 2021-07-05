@@ -57,18 +57,24 @@ Public Class PixelSelector
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+        picCanvas.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
 
     Dim orginal_image As Size
     Dim dimension As Size
 
-    Public Property MSImage(Optional dimsize As Size = Nothing) As Image
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pixel_size"></param>
+    ''' <returns></returns>
+    Public Property MSImage(Optional pixel_size As Size = Nothing) As Image
         Get
             Return picCanvas.BackgroundImage
         End Get
         Set(value As Image)
             picCanvas.BackgroundImage = value
-            dimension = dimsize
+            dimension = pixel_size
 
             If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
                 Throw New InvalidExpressionException("dimension size can not be ZERO!")
@@ -86,6 +92,8 @@ Public Class PixelSelector
         End Set
     End Property
 
+    Dim oldMessage As String = "MSI Viewer"
+
     Public Sub ShowMessage(text As String)
         ToolStripStatusLabel1.Text = text
     End Sub
@@ -96,6 +104,10 @@ Public Class PixelSelector
     Dim rangeEnd As Point
 
     Sub canvasMouseDown(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseDown
+        If e.Button <> MouseButtons.Left Then
+            Return
+        End If
+
         Dim xpoint = 0
         Dim ypoint = 0
 
@@ -106,6 +118,9 @@ Public Class PixelSelector
         DrawSelectionBox(startPoint)
 
         rangeStart = New Point(xpoint, ypoint)
+
+        oldMessage = ToolStripStatusLabel1.Text
+        ShowMessage("Select Pixels By Range.")
     End Sub
 
     Private Sub picCanvas_MouseMove(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseMove
@@ -161,6 +176,7 @@ Public Class PixelSelector
             Dim ypoint = 0
 
             getPoint(e, xpoint, ypoint)
+            ShowMessage(oldMessage)
 
             rangeEnd = New Point(xpoint, ypoint)
             drawing = False
@@ -170,6 +186,12 @@ Public Class PixelSelector
     End Sub
 
     Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
+        If e.Button <> MouseButtons.Left Then
+            Return
+        Else
+            drawing = False
+        End If
+
         Dim xpoint = 0
         Dim ypoint = 0
 

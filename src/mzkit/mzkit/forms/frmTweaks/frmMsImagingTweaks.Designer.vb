@@ -45,6 +45,7 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.LoadAllIonsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -65,9 +66,9 @@ Partial Class frmMsImagingTweaks
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderLayerCompositionModeToolStripMenuItem, Me.RenderingToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearSelectionToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderLayerCompositionModeToolStripMenuItem, Me.RenderingToolStripMenuItem, Me.ToolStripMenuItem1, Me.LoadAllIonsToolStripMenuItem, Me.ClearSelectionToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 76)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 120)
         '
         'RenderLayerCompositionModeToolStripMenuItem
         '
@@ -186,6 +187,12 @@ Partial Class frmMsImagingTweaks
         Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton3.Text = "Clear Layers"
         '
+        'LoadAllIonsToolStripMenuItem
+        '
+        Me.LoadAllIonsToolStripMenuItem.Name = "LoadAllIonsToolStripMenuItem"
+        Me.LoadAllIonsToolStripMenuItem.Size = New System.Drawing.Size(261, 22)
+        Me.LoadAllIonsToolStripMenuItem.Text = "Load All Ions"
+        '
         'frmMsImagingTweaks
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -224,4 +231,5 @@ Partial Class frmMsImagingTweaks
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents Win7StyleTreeView1 As Win7StyleTreeView
     Friend WithEvents RenderLayerCompositionModeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LoadAllIonsToolStripMenuItem As ToolStripMenuItem
 End Class

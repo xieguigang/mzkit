@@ -68,11 +68,24 @@ Namespace Reader
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 
+        Public Iterator Function GetPixel(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) As IEnumerable(Of PixelScan)
+            For i As Integer = x1 To x2
+                For j As Integer = y1 To y2
+                    Dim pixel As PixelScan = GetPixel(i, j)
+
+                    If Not pixel Is Nothing Then
+                        Yield pixel
+                    End If
+                Next
+            Next
+        End Function
+
         Public Function GetSummary() As MSISummary
             If summary Is Nothing Then
                 Dim rows = AllPixels _
                     .GroupBy(Function(p) p.Y) _
                     .Select(Function(r)
+                                Call Application.DoEvents()
                                 Return GetIntensitySummary(r)
                             End Function) _
                     .ToArray

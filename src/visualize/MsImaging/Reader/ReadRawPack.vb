@@ -52,6 +52,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Linq
@@ -96,6 +97,12 @@ Namespace Reader
 
             Call loadPixelsArray(pixels)
         End Sub
+
+        Public Iterator Function GetScans() As IEnumerable(Of ScanMS1)
+            For Each row In pixels.Values.IteratesALL
+                Yield row.scan
+            Next
+        End Function
 
         Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
             Me.pixels = pixels _

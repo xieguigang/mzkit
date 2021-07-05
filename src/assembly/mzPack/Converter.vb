@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -69,19 +70,23 @@ Public Module Converter
         ElseIf xml.ExtensionSuffix("mzML") Then
             Return LoadMzML(xml, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-            Return LoadimzML(xml, progress)
+            Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             Throw New NotImplementedException(xml.ExtensionSuffix)
         End If
     End Function
 
-    Public Function LoadimzML(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack
+    Public Function LoadimzML(xml As String, Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
         Dim scans As New List(Of ScanMS1)
         Dim ibd As New ibdReader(xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Continuous)
         Dim pixel As ScanMS1
         Dim ms As ms2()
+        Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
+        Dim i As Integer = 0
+        Dim d As Integer = allscans.Length / 100
+        Dim j As i32 = 0
 
-        For Each scan As ScanData In imzML.XML.LoadScans(xml)
+        For Each scan As ScanData In allscans
             ms = ibd.GetMSMS(scan)
             pixel = New ScanMS1 With {
                 .meta = New Dictionary(Of String, String) From {
@@ -94,9 +99,11 @@ Public Module Converter
                 .into = ms.Select(Function(m) m.intensity).ToArray
             }
             scans.Add(pixel)
+            i += 1
 
-            If Not progress Is Nothing Then
-                Call progress(pixel.scan_id)
+            If Not progress Is Nothing AndAlso ++j = d Then
+                j = 0
+                progress(100 * (i / allscans.Length), pixel.scan_id & $" ({i}/{allscans.Length})")
             End If
         Next
 

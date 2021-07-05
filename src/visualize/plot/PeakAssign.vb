@@ -319,7 +319,7 @@ Public Class PeakAssign : Inherits Plot
                                              Optional bg$ = "white",
                                              Optional gridFill$ = "white",
                                              Optional barHighlight$ = NameOf(Color.DarkRed),
-                                             Optional barStroke$ = "stroke: skyblue; stroke-width: 5px; stroke-dash: solid;",
+                                             Optional barStroke$ = "stroke: steelblue; stroke-width: 5px; stroke-dash: solid;",
                                              Optional titleCSS$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional labelCSS$ = "font-style: normal; font-size: 8; font-family: " & FontFace.MicrosoftYaHei & ";",
                                              Optional axisLabelCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";",

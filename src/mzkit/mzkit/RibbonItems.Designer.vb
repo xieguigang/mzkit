@@ -104,6 +104,7 @@ Partial Class RibbonItems
         Public Const cmdTabMSIPage As UInteger = 121
         Public Const cmdGroupMSIFile As UInteger = 122
         Public Const cmdButtonOpenMSIRaw As UInteger = 119
+        Public Const cmdButtonExportMSIMzpack As UInteger = 127
         Public Const cmdTabMSISnapshot As UInteger = 126
         Public Const cmdButtonMSITotalIon As UInteger = 123
         Public Const cmdButtonMSIBasePeakIon As UInteger = 124
@@ -675,6 +676,12 @@ Partial Class RibbonItems
             Return _ButtonOpenMSIRaw
         End Get
     End Property
+    Private _ButtonExportMSIMzpack As RibbonButton
+    Public ReadOnly Property ButtonExportMSIMzpack As RibbonButton
+        Get
+            Return _ButtonExportMSIMzpack
+        End Get
+    End Property
     Private _TabMSISnapshot As RibbonGroup
     Public ReadOnly Property TabMSISnapshot As RibbonGroup
         Get
@@ -949,6 +956,7 @@ Partial Class RibbonItems
         _TabMSIPage = New RibbonTab(_ribbon, Cmd.cmdTabMSIPage)
         _GroupMSIFile = New RibbonGroup(_ribbon, Cmd.cmdGroupMSIFile)
         _ButtonOpenMSIRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenMSIRaw)
+        _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
         _TabMSISnapshot = New RibbonGroup(_ribbon, Cmd.cmdTabMSISnapshot)
         _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
         _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
@@ -982,3 +990,4 @@ Partial Class RibbonItems
     End Sub
 
 End Class
+

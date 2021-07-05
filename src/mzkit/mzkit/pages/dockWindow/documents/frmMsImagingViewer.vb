@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::71d61299d4a15b6f17c423d15bc4d14f, src\mzkit\mzkit\pages\dockWindow\documents\frmMsImagingViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMsImagingViewer
-    ' 
-    '     Properties: FilePath, MimeType
-    ' 
-    '     Function: (+2 Overloads) createRenderTask
-    ' 
-    '     Sub: checks_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, frmMsImagingViewer_Closing, frmMsImagingViewer_Load
-    '          loadimzML, loadmzML, loadRaw, LoadRender, OpenContainingFolder
-    '          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
-    '          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
-    ' 
-    ' /********************************************************************************/
+' Class frmMsImagingViewer
+' 
+'     Properties: FilePath, MimeType
+' 
+'     Function: (+2 Overloads) createRenderTask
+' 
+'     Sub: checks_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, frmMsImagingViewer_Closing, frmMsImagingViewer_Load
+'          loadimzML, loadmzML, loadRaw, LoadRender, OpenContainingFolder
+'          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
+'          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
@@ -75,7 +76,7 @@ Public Class frmMsImagingViewer
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
-    Dim render As Drawer
+    Friend render As Drawer
     Dim params As MsImageProperty
     Dim WithEvents checks As ToolStripMenuItem
     Dim WithEvents tweaks As PropertyGrid
@@ -91,10 +92,35 @@ Public Class frmMsImagingViewer
 
     Private Sub frmMsImagingViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = Text
+
         WindowModules.msImageParameters.DockState = DockState.DockLeft
+
+        AddHandler RibbonEvents.ribbonItems.ButtonMSITotalIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.Total)
+        AddHandler RibbonEvents.ribbonItems.ButtonMSIBasePeakIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.BasePeak)
+        AddHandler RibbonEvents.ribbonItems.ButtonMSIAverageIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.Average)
+
+        AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+    End Sub
+
+    Sub exportMzPack()
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No MSI raw data was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Using buffer As Stream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                        Call New mzPack With {
+                            .MS = DirectCast(render.pixelReader, ReadRawPack) _
+                                .GetScans _
+                                .ToArray
+                        }.Write(buffer)
+                    End Using
+                End If
+            End Using
+        End If
     End Sub
 
     Public Sub loadRaw(file As String)
@@ -196,38 +222,75 @@ Public Class frmMsImagingViewer
             Return
         End If
 
-        Dim ms As New LibraryMatrix With {.ms2 = pixel.GetMs}
+        Dim ms As New LibraryMatrix With {
+            .ms2 = pixel.GetMs,
+            .name = $"Pixel[{x}, {y}]"
+        }
 
         Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
-        Call MyApplication.host.mzkitTool.PlotMatrx($"Pixel[{x}, {y}]", FilePath.FileName, ms, focusOn:=False)
+        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
     End Sub
 
-    Friend Sub RenderSummary(summary As IntensitySummary)
+    Private Sub PixelSelector1_SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) Handles PixelSelector1.SelectPixelRegion
         If render Is Nothing Then
-            Call MyApplication.host.showStatusMessage("please load MSI raw data at first!")
+            Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         End If
 
         Dim progress As New frmProgressSpinner
 
         Call New Thread(
-           Sub()
-               Call Invoke(Sub() rendering = Sub()
-                                                 Call MyApplication.RegisterPlot(
-                                                   Sub(args)
-                                                       Dim image As Bitmap = render.ShowSummaryRendering(summary,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+            Sub()
+                Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
 
-                                                       image = params.Smooth(image)
+                If rangePixels.IsNullOrEmpty Then
+                    Return
+                End If
 
-                                                       PixelSelector1.MSImage(render.dimension) = image
-                                                       PixelSelector1.BackColor = params.background
-                                                   End Sub)
-                                             End Sub)
-               Call Invoke(rendering)
-               Call progress.Invoke(Sub() progress.Close())
-           End Sub).Start()
+                Dim ms As New LibraryMatrix With {
+                    .ms2 = rangePixels _
+                        .Select(Function(p) p.GetMs) _
+                        .IteratesALL _
+                        .ToArray _
+                        .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
+                        .ToArray,
+                    .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
+                }
+
+                Call MyApplication.host.Invoke(
+                    Sub()
+                        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
+                        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+                    End Sub)
+
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
+    End Sub
+
+    Friend Sub RenderSummary(summary As IntensitySummary)
+        If render Is Nothing Then
+            Call MyApplication.host.showStatusMessage("please load MSI raw data at first!")
+            Return
+        Else
+            Call frmTaskProgress.RunAction(
+                Sub()
+                    Call Invoke(Sub() rendering = Sub()
+                                                      Call MyApplication.RegisterPlot(
+                                                        Sub(args)
+                                                            Dim image As Bitmap = render.ShowSummaryRendering(summary,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+
+                                                            image = params.Smooth(image)
+
+                                                            PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
+                                                            PixelSelector1.BackColor = params.background
+                                                        End Sub)
+                                                  End Sub)
+                    Call Invoke(rendering)
+                End Sub, "Render MSI", $"Rendering MSI in {summary.Description} mode...")
+        End If
+
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
         Call PixelSelector1.ShowMessage($"Render MSI in {summary.Description} mode.")
     End Sub
@@ -250,16 +313,22 @@ Public Class frmMsImagingViewer
             Sub()
                 Dim err As Tolerance = params.GetTolerance
                 Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
-                Dim maxInto As Double = Aggregate pm As PixelData
-                                        In pixels
-                                        Into Max(pm.intensity)
-                Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
-                Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
-                Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
 
-                Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
-                Call Invoke(rendering)
+                If pixels.IsNullOrEmpty Then
+                    Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    Dim maxInto As Double = Aggregate pm As PixelData
+                                       In pixels
+                                       Into Max(pm.intensity)
+                    Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
+                    Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
+                    Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
+
+                    Call Invoke(Sub() params.SetIntensityMax(maxInto))
+                    Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
+                    Call Invoke(rendering)
+                End If
+
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
@@ -423,10 +492,26 @@ Public Class frmMsImagingViewer
     Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
 
+        If render Is Nothing Then
+            WindowModules.msImageParameters.DockState = DockState.Hidden
+            WindowModules.msImageParameters.checkedMz.Clear()
+            WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+
+            Me.DockState = DockState.Hidden
+
+            Return
+        End If
+
         If MessageBox.Show("Going to close current MS-imaging viewer?", FilePath.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
         Else
             WindowModules.msImageParameters.DockState = DockState.Hidden
+            WindowModules.msImageParameters.checkedMz.Clear()
+            WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+
             Me.DockState = DockState.Hidden
+
+            render.Dispose()
+            render.Free
         End If
     End Sub
 

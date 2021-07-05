@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::180af2ca084648cb7795e7190ea23271, src\mzkit\mzkit\pages\toolkit\PageMzkitTools.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzkitTools
-    ' 
-    '     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
-    ' 
-    '     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
-    '          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, Ribbon_Load
-    '          SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, (+2 Overloads) showAlignment, (+3 Overloads) showMatrix, (+2 Overloads) ShowMatrix
-    '          ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter, showSpectrum
-    '          ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
-    ' 
-    ' /********************************************************************************/
+' Class PageMzkitTools
+' 
+'     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
+' 
+'     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
+'          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, Ribbon_Load
+'          SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, (+2 Overloads) showAlignment, (+3 Overloads) showMatrix, (+2 Overloads) ShowMatrix
+'          ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter, showSpectrum
+'          ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,10 +60,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -116,11 +118,30 @@ Public Class PageMzkitTools
             PictureBox1.BackgroundImage = raw.GetSnapshot
         Else
             Dim colorSet As String
+            Dim data As ContourLayer() = Nothing
+            Dim width As Integer = 2048
+            Dim height As Integer = 1600
+            Dim padding As String = "padding:100px 400px 100px 100px;"
 
             If XIC Then
                 colorSet = "YlGnBu:c8"
+                width = 2400
             ElseIf contour Then
                 colorSet = "Jet"
+
+                Dim spinner As New frmProgressSpinner
+                Dim task As New Thread(
+                    Sub()
+                        data = raw.GetContourData
+                        spinner.Invoke(Sub() Call spinner.Close())
+                    End Sub)
+
+                Call task.Start()
+                Call spinner.ShowDialog()
+
+                width = 3600
+                height = 2700
+                padding = "padding:100px 750px 100px 100px;"
             Else
                 colorSet = "darkblue,blue,skyblue,green,orange,red,darkred"
             End If
@@ -133,9 +154,15 @@ Public Class PageMzkitTools
                             Dim image As Image
 
                             If contour Then
-                                image = raw.DrawContour(colorSet:=args.GetColorSetName)
+                                image = data.Plot(
+                                    size:=$"{args.width},{args.height}",
+                                    padding:=args.GetPadding.ToString,
+                                    colorSet:=args.GetColorSetName,
+                                    ppi:=200,
+                                    legendTitle:=args.legend_title
+                                ).AsGDIImage
                             ElseIf XIC Then
-                                image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName)
+                                image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName, size:=$"{args.width},{args.height}", args.GetPadding.ToString)
                             Else
                                 image = raw.DrawScatter(colorSet:=args.GetColorSetName)
                             End If
@@ -146,7 +173,7 @@ Public Class PageMzkitTools
 
                     Call task.Start()
                     Call spinner.ShowDialog()
-                End Sub, colorSet:=colorSet)
+                End Sub, colorSet:=colorSet, width:=width, height:=height, padding:=padding, legendTitle:="Levels")
         End If
 
         Me.matrixName = $"{raw.source.FileName}_{If(XIC, "XICPeaks", "rawscatter_2D")}"
@@ -205,10 +232,34 @@ Public Class PageMzkitTools
             End If
 
             Call VisualStudio.ShowProperties(prop)
-            Call PlotMatrx(title1, title2, scanData)
+            Call PlotSpectrum(scanData)
             ' Call MyApplication.host.ShowPropertyWindow()
         Else
             Call missingCacheFile(raw)
+        End If
+    End Sub
+
+    Public Sub PlotSpectrum(scanData As LibraryMatrix, Optional focusOn As Boolean = True)
+        Call MyApplication.RegisterPlot(
+              Sub(args)
+                  scanData.name = args.title
+                  PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(
+                          scanData,
+                          padding:=args.GetPadding.ToString,
+                          bg:=args.background.ToHtmlColor,
+                          size:=$"{args.width},{args.height}"
+                      ) _
+                      .AsGDIImage
+              End Sub,
+          width:=2100,
+          height:=1200,
+          padding:="padding: 100px 30px 50px 100px;",
+          bg:="white",
+          title:=scanData.name
+      )
+
+        If focusOn Then
+            Call ShowTabPage(TabPage5)
         End If
     End Sub
 
@@ -604,6 +655,7 @@ Public Class PageMzkitTools
 
         For Each tick As ms2 In matrix
             DataGridView1.Rows.Add({tick.mz, tick.intensity, CInt(tick.intensity / max * 100), tick.Annotation})
+            Application.DoEvents()
         Next
     End Sub
 

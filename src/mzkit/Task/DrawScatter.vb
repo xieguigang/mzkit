@@ -45,57 +45,40 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module DrawScatter
 
     <Extension>
-    Public Function DrawContour(raw As Raw, colorSet As String) As Image
-        Dim ms1 As ms1_scan() = GetMs1Points(raw) _
-            .GroupBy(Tolerance.DeltaMass(1.125)) _
-            .AsParallel _
-            .Select(Function(mz)
-                        Return mz _
-                            .GroupBy(Function(t)
-                                         Return t.scan_time
-                                     End Function,
-                                     Function(a, b)
-                                         Return stdNum.Abs(a - b) <= 5
-                                     End Function) _
-                            .Select(Function(p)
-                                        Return New ms1_scan With {
-                                            .mz = Val(mz.name),
-                                            .intensity = p.Select(Function(t) t.intensity).Average,
-                                            .scan_time = Val(p.name)
-                                        }
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .ToArray
-        Dim data As MeasureData() = ms1 _
-            .Select(Function(p)
-                        Return New MeasureData(p.scan_time, p.mz, If(p.intensity <= 1, 0, stdNum.Log(p.intensity)))
-                    End Function) _
-            .ToArray
+    Public Function GetContourData(raw As Raw) As ContourLayer()
+        Dim cacheRaw As String = raw.cache
+        Dim output_cache As String = TempFileSystem.GetAppSysTempFile("__save.json", App.PID.ToHexString, "contour_layers_")
+        Dim cli As String = $"""{RscriptPipelineTask.GetRScript("ms1_contour.R")}"" --mzPack ""{cacheRaw}"" --cache ""{output_cache}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
-        Return PlotContour.Plot(data, colorSet:=colorSet).AsGDIImage
+        Call cli.__DEBUG_ECHO
+        Call pipeline.Run()
+
+        Return output_cache.LoadJsonFile(Of ContourLayer())
     End Function
 
     <Extension>
-    Public Function Draw3DPeaks(raw As Raw, colorSet As String) As Image
+    Public Function Draw3DPeaks(raw As Raw, colorSet As String, size$, padding$) As Image
         Dim ms1 As ms1_scan() = GetMs1Points(raw)
-        Dim maxinto As Double = ms1.Select(Function(x) x.intensity).GKQuantile.Query(0.8)
+        Dim maxinto As Double = ms1.Select(Function(x) x.intensity).Quartile.Q3
         Dim XIC = ms1 _
             .GroupBy(Function(m) m.mz, Tolerance.DeltaMass(0.1)) _
             .Select(Function(mz)
@@ -119,16 +102,28 @@ Public Module DrawScatter
             showLegends:=False,
             colorsSchema:=colorSet,
             fillAlpha:=60,
-            margin:="padding:100px 100px 125px 150px;",
-            gridFill:="white"
+            margin:=padding,
+            gridFill:="white",
+            size:=size
         ).AsGDIImage
     End Function
 
     Private Function GetMs1Points(raw As Raw) As ms1_scan()
+        Return raw.GetMs1Scans.GetMs1Points
+    End Function
+
+    <Extension>
+    Public Function GetMs1Points(raw As IEnumerable(Of ScanMS1)) As ms1_scan()
         Return raw _
-            .GetMs1Scans _
             .Select(Function(m1)
-                        Return m1.mz.Select(Function(mzi, i) New ms1_scan With {.mz = mzi, .intensity = m1.into(i), .scan_time = m1.rt})
+                        Return m1.mz _
+                            .Select(Function(mzi, i)
+                                        Return New ms1_scan With {
+                                            .mz = mzi,
+                                            .intensity = m1.into(i),
+                                            .scan_time = m1.rt
+                                        }
+                                    End Function)
                     End Function) _
             .IteratesALL _
             .ToArray

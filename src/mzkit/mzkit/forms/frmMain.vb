@@ -236,7 +236,7 @@ Public Class frmMain
             Call showMzPackMSI(imzML)
         Else
             Dim cachefile As String = RscriptProgressTask.CreateMSIIndex(imzML)
-            Dim canvas As New Drawer(New IndexReader(New XICReader(cachefile)))
+            Dim canvas As New Drawer(New ReadRawPack(cachefile))
 
             WindowModules.viewer.LoadRender(canvas, imzML)
 
@@ -456,6 +456,10 @@ Public Class frmMain
         splashScreen.UpdateInformation("Ready!")
         showStatusMessage("Ready!")
         splashScreen.Invoke(Sub() Call splashScreen.Close())
+
+        If Not MyApplication.afterLoad Is Nothing Then
+            Call MyApplication.afterLoad()
+        End If
     End Sub
 
     Private Sub InitializeFormulaProfile()

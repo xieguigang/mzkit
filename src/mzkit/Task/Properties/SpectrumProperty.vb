@@ -49,39 +49,38 @@
 
 Imports System.ComponentModel
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
 Public Class SpectrumProperty
 
     <Description("The ms level of current scan data.")>
-    <Category("Precursor Ion")> Public Property msLevel As Integer
+    <Category("Precursor Ion")> Public ReadOnly Property msLevel As Integer
     <Description("M/z of current ion scan.")>
-    <Category("Precursor Ion")> Public Property precursorMz As Double
+    <Category("Precursor Ion")> Public ReadOnly Property precursorMz As Double
     <Description("The retension time in seconds.")>
-    <Category("Precursor Ion")> Public Property retentionTime As Double
+    <Category("Precursor Ion")> Public ReadOnly Property retentionTime As Double
     <Description("The retension time in minute.")>
-    <Category("Precursor Ion")> Public Property rtmin As Double
+    <Category("Precursor Ion")> Public ReadOnly Property rtmin As Double
 
     <Description("The charge value of current ion.")>
-    <Category("Precursor Ion")> Public Property precursorCharge As Double
+    <Category("Precursor Ion")> Public ReadOnly Property precursorCharge As Double
     <Description("The charge polarity of current ion.")>
-    <Category("Precursor Ion")> Public Property polarity As String
+    <Category("Precursor Ion")> Public ReadOnly Property polarity As String
 
     <Description("Activation method for produce the product fragments of current ion's scan.")>
-    <Category("MS/MS")> Public Property activationMethod As String
+    <Category("MS/MS")> Public ReadOnly Property activationMethod As String
     <Description("Energy level that used for produce the product fragments of current ion's scan.")>
-    <Category("MS/MS")> Public Property collisionEnergy As String
+    <Category("MS/MS")> Public ReadOnly Property collisionEnergy As String
     <Description("Current ion scan is in centroid mode? False means in profile mode.")>
-    <Category("MS/MS")> Public Property centroided As String
+    <Category("MS/MS")> Public ReadOnly Property centroided As String
 
-    Public Property rawfile As String
-    Public Property scanId As String
+    Public ReadOnly Property rawfile As String
+    Public ReadOnly Property scanId As String
 
     Sub New(scanId As String, rawfile As String, msLevel As Integer, attrs As ScanMS2)
         With attrs
-            msLevel = msLevel
+            Me.msLevel = msLevel
             collisionEnergy = .collisionEnergy
             centroided = .centroided
             precursorMz = .parentMz.ToString("F4")

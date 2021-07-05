@@ -536,5 +536,12 @@
 #define cmdTabMSISnapshot_LabelDescription_RESID 60038
 #define cmdTabMSISnapshot_TooltipTitle_RESID 60039
 #define cmdTabMSISnapshot_TooltipDescription_RESID 60040
-#define InternalCmd2_LabelTitle_RESID 60041
-#define InternalCmd4_LabelTitle_RESID 60042
+#define cmdButtonExportMSIMzpack 127 
+#define cmdButtonExportMSIMzpack_LabelTitle_RESID 60041
+#define cmdButtonExportMSIMzpack_LabelDescription_RESID 60042
+#define cmdButtonExportMSIMzpack_TooltipTitle_RESID 60043
+#define cmdButtonExportMSIMzpack_TooltipDescription_RESID 60044
+#define cmdButtonExportMSIMzpack_SmallImages_192__RESID 60045
+#define cmdButtonExportMSIMzpack_LargeImages_192__RESID 60046
+#define InternalCmd2_LabelTitle_RESID 60047
+#define InternalCmd4_LabelTitle_RESID 60048

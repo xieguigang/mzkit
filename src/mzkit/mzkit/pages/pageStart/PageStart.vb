@@ -94,6 +94,10 @@ Public Class PageStart
     Private Sub BackgroundWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Dim news As NewsFeed() = NewsFeed.ParseLatest().ToArray
 
+        If news.IsNullOrEmpty Then
+            Call MyApplication.LogText(NewsFeed.html)
+        End If
+
         Invoke(Sub()
                    If news.Length = 0 Then
                        hideNewsFeeds()

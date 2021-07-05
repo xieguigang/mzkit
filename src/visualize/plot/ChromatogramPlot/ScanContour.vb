@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::edab5c44f276e99aeb2f1f25835cd8c5, src\visualize\plot\ChromatogramPlot\ScanContour.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ScanContour
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CreateMatrix, Plot
-    ' 
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Class ScanContour
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CreateMatrix, Plot
+' 
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
@@ -81,7 +82,7 @@ Public Class ScanContour : Inherits Plot
     ''' group by mz/rt
     ''' </summary>
     ''' <returns></returns>
-    Private Iterator Function CreateMatrix() As IEnumerable(Of DataSet)
+    Private Iterator Function CreateMatrix() As IEnumerable(Of MeasureData)
         Dim rtLeft As Double = 0
         Dim mzLeft As Double = 0
         Dim mzi As Double
@@ -91,12 +92,8 @@ Public Class ScanContour : Inherits Plot
             Dim rtRow As ms1_scan() = scans _
                 .Where(Function(x) x.scan_time >= rtLeft AndAlso x.scan_time < rti) _
                 .ToArray
-            Dim row As New DataSet With {
-                .ID = rti.ToString
-            }
 
             If rtRow.Length = 0 Then
-                Yield row
                 Continue For
             End If
 
@@ -110,13 +107,13 @@ Public Class ScanContour : Inherits Plot
                     .ToArray
 
                     If .Length = 0 Then
-                        row(mz.ToString) = 0.0
-                    Else
-                        row(mz.ToString) =
-                            .OrderByDescending(Function(x) x.intensity) _
-                            .First _
-                            .intensity _
-                            .DoCall(AddressOf stdNum.Log10)
+                        Yield New MeasureData(
+                            rt, mz,
+                            z:= .OrderByDescending(Function(x) x.intensity) _
+                                .First _
+                                .intensity _
+                                .DoCall(AddressOf stdNum.Log10)
+                        )
                     End If
                 End With
 
@@ -125,25 +122,16 @@ Public Class ScanContour : Inherits Plot
 
             mzLeft = 0
             rtLeft = rt
-
-            Yield row
         Next
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim matrix As DataSet() = CreateMatrix.ToArray
+        Dim matrix As MeasureData() = CreateMatrix.ToArray
+        Dim app As New ContourPlot(matrix, theme) With {
+            .legendTitle = "Scale Intensity"
+        }
 
-        Call Contour.CreatePlot(
-            matrix:=matrix,
-            legendTitle:="Scan Contour",
-            xlabel:="scan_time(seconds)",
-            ylabel:="m/z",
-            unit:=stdNum.Max(xsteps, ysteps),
-            legendTickFormat:="G2",
-            colorMap:=theme.colorSet,
-            xsteps:=xsteps,
-            ysteps:=ysteps
-        ).Plot(g, canvas)
+        Call app.Plot(g, canvas)
     End Sub
 
     Public Overloads Shared Function Plot(data As IEnumerable(Of ms1_scan),
