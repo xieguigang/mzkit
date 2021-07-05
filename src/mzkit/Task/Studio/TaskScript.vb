@@ -144,14 +144,6 @@ Module TaskScript
     ''' <param name="cacheFile"></param>
     <ExportAPI("cache.MSI")>
     Public Sub CreateMSIIndex(imzML As String, cacheFile As String)
-        RunSlavePipeline.SendProgress(0, "Initialize reader...")
-
-        Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
-        Dim allPixels As ScanData() = XML.LoadScans(imzML).ToArray
-        Dim i As Integer = 1
-        Dim d As Integer = allPixels.Length / 100
-        Dim j As i32 = 0
-
         RunSlavePipeline.SendProgress(0, "Create workspace cache file, wait for a while...")
 
         Dim mzpack As mzPack = Converter.LoadimzML(imzML, AddressOf RunSlavePipeline.SendProgress)
