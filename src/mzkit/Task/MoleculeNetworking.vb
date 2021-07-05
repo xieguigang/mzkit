@@ -98,7 +98,9 @@ Public Module MoleculeNetworking
             Call raw.LoadMzpack()
         End If
 
-        If scanId.Contains("[MS1]") Then
+        attrs = raw.FindMs2Scan(scanId)
+
+        If attrs Is Nothing OrElse scanId.Contains("[MS1]") Then
             Dim ms1 = raw.FindMs1Scan(scanId)
 
             msLevel = 1
@@ -116,7 +118,6 @@ Public Module MoleculeNetworking
                 .into = ms1.into
             }
         Else
-            attrs = raw.FindMs2Scan(scanId)
             msLevel = 2
         End If
 
