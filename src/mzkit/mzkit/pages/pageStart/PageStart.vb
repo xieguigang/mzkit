@@ -77,13 +77,30 @@ Public Class PageStart
     End Sub
 
     Private Sub PageStart_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        hideNewsFeeds()
         BackgroundWorker.RunWorkerAsync()
+    End Sub
+
+    Private Sub hideNewsFeeds()
+        LinkLabel2.Visible = False
+        FlowLayoutPanel1.Visible = False
+    End Sub
+
+    Private Sub showNewsFeeds()
+        LinkLabel2.Visible = True
+        FlowLayoutPanel1.Visible = True
     End Sub
 
     Private Sub BackgroundWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Dim news As NewsFeed() = NewsFeed.ParseLatest().ToArray
 
         Invoke(Sub()
+                   If news.Length = 0 Then
+                       hideNewsFeeds()
+                   Else
+                       showNewsFeeds()
+                   End If
+
                    For Each newsItem As NewsFeed In news
                        Dim display As New NewsFeedDisplay
                        FlowLayoutPanel1.Controls.Add(display)
