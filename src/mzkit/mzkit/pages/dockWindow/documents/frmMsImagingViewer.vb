@@ -111,13 +111,19 @@ Public Class frmMsImagingViewer
         Else
             Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
                 If file.ShowDialog = DialogResult.OK Then
-                    Using buffer As Stream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                        Call New mzPack With {
-                            .MS = DirectCast(render.pixelReader, ReadRawPack) _
-                                .GetScans _
-                                .ToArray
-                        }.Write(buffer)
-                    End Using
+                    Dim fileName As String = file.FileName
+
+                    Call frmTaskProgress.RunAction(
+                        Sub(update)
+                            Using buffer As Stream = fileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                                Call New mzPack With {
+                                    .MS = DirectCast(render.pixelReader, ReadRawPack) _
+                                        .GetScans _
+                                        .ToArray
+                                }.Write(buffer, progress:=update)
+                            End Using
+                        End Sub, title:="Export mzPack data...", info:="Save mzPack!")
+                    Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             End Using
         End If

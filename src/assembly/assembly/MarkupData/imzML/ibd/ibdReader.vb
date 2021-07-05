@@ -126,6 +126,10 @@ Namespace MarkupData.imzML
             Dim intensity As Double() = ReadArray(scan.IntPtr)
 
             For i As Integer = 0 To mz.Length - 1
+                If intensity(i) = 0.0 Then
+                    Continue For
+                End If
+
                 Yield New ms2 With {
                     .mz = mz(i),
                     .intensity = intensity(i)

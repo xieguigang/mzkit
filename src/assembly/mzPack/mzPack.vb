@@ -173,10 +173,14 @@ Public Class mzPack
         End Using
     End Function
 
-    Public Function Write(file As Stream) As Boolean
+    Public Function Write(file As Stream, Optional progress As Action(Of String) = Nothing) As Boolean
         Using mzpack As New mzPackWriter(file)
             For Each scan As ScanMS1 In MS
                 Call mzpack.Write(scan)
+
+                If Not progress Is Nothing Then
+                    Call progress("write: " & scan.scan_id)
+                End If
             Next
 
             For Each scanner In Scanners.SafeQuery

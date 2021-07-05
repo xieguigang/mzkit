@@ -140,7 +140,7 @@ Public Class frmTaskProgress
         Return tmp
     End Function
 
-    Public Shared Sub RunAction(run As Action, Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...")
+    Public Shared Sub RunAction(run As Action(Of Action(Of String)), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...")
         Dim progress As New frmTaskProgress
 
         Call New Thread(
@@ -150,7 +150,7 @@ Public Class frmTaskProgress
                 Call progress.ShowProgressTitle(title)
                 Call progress.ShowProgressDetails(info)
 
-                Call run()
+                Call run(AddressOf progress.ShowProgressDetails)
 
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
