@@ -57,6 +57,11 @@ Namespace MarkupData.imzML
         <XmlAttribute>
         Public Property version As String
 
+        ''' <summary>
+        ''' just load the scan meta from the imzML file
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
             Return mzML.indexedmzML.LoadScans(file).Select(Function(scan) New ScanData(scan))
