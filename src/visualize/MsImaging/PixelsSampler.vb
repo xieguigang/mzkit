@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
@@ -65,7 +66,7 @@ Public Class PixelsSampler
 
         For x As Integer = 1 To dims.Width Step dw
             For y As Integer = 1 To dims.Height Step dh
-                Dim block = GetBlock(x, y, dw, dh) _
+                Dim block As NamedCollection(Of ms2)() = GetBlock(x, y, dw, dh) _
                     .Select(Function(p) p.GetMsPipe) _
                     .IteratesALL _
                     .GroupBy(tolerance) _
