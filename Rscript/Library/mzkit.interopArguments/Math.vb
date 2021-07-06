@@ -52,7 +52,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Module Math
 
     ''' <summary>
-    ''' 
+    ''' this helper function will always returns a <see cref="Tolerance"/> 
+    ''' value or message if the type cast failure.
     ''' </summary>
     ''' <param name="val"></param>
     ''' <param name="env">
