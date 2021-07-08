@@ -135,12 +135,14 @@ Module MsImaging
     ''' <summary>
     ''' load imzML data into the ms-imaging render
     ''' </summary>
-    ''' <param name="imzML"></param>
+    ''' <param name="imzML">
+    ''' *.imzML;*.mzPack
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function viewer(imzML As String) As Drawer
-        Return New Drawer(imzML)
+        Return New Drawer(file:=imzML)
     End Function
 
     <ExportAPI("pixel")>
@@ -185,6 +187,28 @@ Module MsImaging
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
         End If
+    End Function
+
+    <ExportAPI("rgb")>
+    <RApiReturn(GetType(Bitmap))>
+    Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
+                        <RRawVectorArgument>
+                        Optional pixelSize As Object = "5,5",
+                        Optional tolerance As Object = "da:0.1",
+                        Optional env As Environment = Nothing) As Object
+
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+        Dim psize As Size = InteropArgumentHelper.getSize(pixelSize, "5,5").SizeParser
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
+
+        Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
+        Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
+        Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
+
+        Return Drawer.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
     End Function
 
     ''' <summary>
