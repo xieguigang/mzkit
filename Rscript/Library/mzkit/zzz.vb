@@ -55,6 +55,8 @@ Public Class zzz
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
+
+        Call data.Main()
     End Sub
 
     Private Shared Function printMSScan(scan As MSScan) As String
