@@ -134,7 +134,7 @@ Namespace Reader
             Erase pixels
         End Sub
 
-        Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)
+        Public Overrides Function AllPixels() As IEnumerable(Of PixelScan)
             Return pixels.Select(Function(p) DirectCast(p, PixelScan))
         End Function
     End Class

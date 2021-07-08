@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0c4435f25eca91e71e5f18564c0e113f, Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MsImaging
-    ' 
-    '     Function: flatten, GetPixel, layer, LoadPixels, openIndexedCacheFile
-    '               renderRowScans, viewer, writeIndexCacheFile, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Module MsImaging
+' 
+'     Function: flatten, GetPixel, layer, LoadPixels, openIndexedCacheFile
+'               renderRowScans, viewer, writeIndexCacheFile, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -132,19 +133,79 @@ Module MsImaging
         Return New XICReader(stream.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("FilterMz")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function FilterMz(viewer As Drawer, mz As Double(),
+                             Optional tolerance As Object = "ppm:20",
+                             Optional env As Environment = Nothing) As Object
+
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
+
+        Dim rawPixels As PixelScan() = viewer.pixelReader _
+            .FindMatchedPixels(mz, errors.TryCast(Of Tolerance)) _
+            .ToArray
+        Dim ms1 As ms2() = rawPixels _
+            .Select(Function(p) p.GetMs) _
+            .IteratesALL _
+            .ToArray
+
+        Return New LibraryMatrix With {
+            .centroid = True,
+            .ms2 = ms1 _
+                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(0.01)) _
+                .ToArray,
+            .name = "FilterMz"
+        }
+    End Function
+
+    <ExportAPI("MS1")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
+                               Optional tolerance As Object = "da:0.1",
+                               Optional threshold As Double = 0.01,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim ms As New List(Of ms2)
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        ElseIf x.Length <> y.Length Then
+            Return Internal.debug.stop("the vector size of x should be equals to vector y!", env)
+        End If
+
+        For i As Integer = 0 To x.Length - 1
+            ms += viewer.ReadXY(x(i), y(i))
+        Next
+
+        Return New LibraryMatrix With {
+            .centroid = True,
+            .ms2 = ms.ToArray _
+                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                .ToArray,
+            .name = "MS1"
+        }
+    End Function
+
     ''' <summary>
     ''' load imzML data into the ms-imaging render
     ''' </summary>
-    ''' <param name="imzML"></param>
+    ''' <param name="imzML">
+    ''' *.imzML;*.mzPack
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function viewer(imzML As String) As Drawer
-        Return New Drawer(imzML)
+        Return New Drawer(file:=imzML)
     End Function
 
     <ExportAPI("pixel")>
-    Public Function GetPixel(data As XICReader, x As Integer, y As Integer)
+    Public Function GetPixel(data As XICReader, x As Integer, y As Integer) As ibdPixel
         Return data.GetPixel(x, y)
     End Function
 
@@ -185,6 +246,28 @@ Module MsImaging
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
         End If
+    End Function
+
+    <ExportAPI("rgb")>
+    <RApiReturn(GetType(Bitmap))>
+    Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
+                        <RRawVectorArgument>
+                        Optional pixelSize As Object = "5,5",
+                        Optional tolerance As Object = "da:0.1",
+                        Optional env As Environment = Nothing) As Object
+
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+        Dim psize As Size = InteropArgumentHelper.getSize(pixelSize, "5,5").SizeParser
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
+
+        Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
+        Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
+        Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
+
+        Return Drawer.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
     End Function
 
     ''' <summary>

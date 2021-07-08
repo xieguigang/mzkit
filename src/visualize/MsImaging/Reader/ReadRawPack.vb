@@ -155,7 +155,7 @@ Namespace Reader
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function AllPixels() As IEnumerable(Of PixelScan)
+        Public Overrides Function AllPixels() As IEnumerable(Of PixelScan)
             Return pixels _
                 .Select(Function(x) x.Value) _
                 .IteratesALL _
