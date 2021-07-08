@@ -133,6 +133,35 @@ Module MsImaging
         Return New XICReader(stream.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("FilterMz")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function FilterMz(viewer As Drawer, mz As Double(),
+                             Optional tolerance As Object = "ppm:20",
+                             Optional env As Environment = Nothing) As Object
+
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
+
+        Dim rawPixels As PixelScan() = viewer.pixelReader _
+            .FindMatchedPixels(mz, errors.TryCast(Of Tolerance)) _
+            .ToArray
+        Dim ms1 As ms2() = rawPixels _
+            .Select(Function(p) p.GetMs) _
+            .IteratesALL _
+            .ToArray
+
+        Return New LibraryMatrix With {
+            .centroid = True,
+            .ms2 = ms1 _
+                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(0.01)) _
+                .ToArray,
+            .name = "FilterMz"
+        }
+    End Function
+
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
