@@ -119,7 +119,8 @@ Namespace Reader
         End Function
 
         Protected MustOverride Sub release()
-        Protected MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
+
+        Public MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
 
         Public Iterator Function FindMatchedPixels(mz As Double(), tolerance As Tolerance) As IEnumerable(Of PixelScan)
             For Each pixel As PixelScan In AllPixels()
