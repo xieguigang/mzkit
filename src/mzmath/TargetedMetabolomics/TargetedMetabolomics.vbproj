@@ -499,7 +499,6 @@
     <Compile Include="RawFile.vb" />
     <Compile Include="MRM\Data\Extensions.vb" />
     <Compile Include="LinearQuantitative\Linear\Points\TargetPeakPoint.vb" />
-    <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="LinearQuantitative\Models\IonTPA.vb" />
     <Compile Include="LinearQuantitative\PeakAreaMethods.vb" />
     <Compile Include="LinearQuantitative\Models\StandardCurve.vb" />

@@ -89,6 +89,8 @@ Imports stdNum = System.Math
 
 Public Class frmTargetedQuantification
 
+    ReadOnly args As New QuantifyParameters
+
     Private Sub frmTargetedQuantification_Load(sender As Object, e As EventArgs) Handles Me.Load
         WindowModules.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
 
@@ -104,11 +106,22 @@ Public Class frmTargetedQuantification
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
 
         Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
-        Call WindowModules.parametersTool.SetParameterObject(New QuantifyParameters, AddressOf applyNewParameters)
+        Call WindowModules.parametersTool.SetParameterObject(args, AddressOf applyNewParameters)
     End Sub
 
+    ''' <summary>
+    ''' 调整参数后重新计算标准曲线
+    ''' </summary>
+    ''' <param name="args"></param>
     Private Sub applyNewParameters(args As QuantifyParameters)
+        If rowIndex >= 0 Then
+            ' 这个可能是因为之前的一批标准曲线计算留下来的
+            If DataGridView1.Rows.Count <= rowIndex Then
+                Return
+            End If
 
+            showLinear(args)
+        End If
     End Sub
 
     Private Sub reloadProfileNames()
@@ -149,70 +162,74 @@ Public Class frmTargetedQuantification
         }
 
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
-                Dim fakeLevels As Dictionary(Of String, Double)
-                Dim directMapName As Boolean = False
-
-                If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
-                    files = files _
-                        .Select(Function(file)
-                                    Return New NamedValue(Of String) With {
-                                        .Name = file.Value.BaseName,
-                                        .Value = file.Value,
-                                        .Description = file.Description
-                                    }
-                                End Function) _
-                        .ToArray
-                    fakeLevels = files _
-                        .ToDictionary(Function(file) file.Value.BaseName,
-                                      Function(file)
-                                          Return file.Value _
-                                              .BaseName _
-                                              .ParseContent _
-                                              .ScaleTo(ContentUnits.ppb) _
-                                              .Value
-                                      End Function)
-                    directMapName = True
-                Else
-                    fakeLevels = files _
-                        .ToDictionary(Function(file) file.Name,
-                                      Function()
-                                          Return 0.0
-                                      End Function)
-                End If
-
-                DataGridView1.Rows.Clear()
-                DataGridView1.Columns.Clear()
-
-                DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
-                DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
-
-                For Each file As NamedValue(Of String) In files
-                    Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
-
-                    If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
-                        isGCMS = True
-                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
-                    Else
-                        isGCMS = False
-                        Call MyApplication.host.ShowMRMIons(file.Value)
-                    End If
-                Next
-
-                Me.linearFiles = files
-                Me.linearPack = New LinearPack With {
-                    .reference = New Dictionary(Of String, SampleContentLevels) From {
-                        {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
-                    }
-                }
-
-                If isGCMS Then
-                    Call loadGCMSReference(files, directMapName)
-                Else
-                    Call loadMRMReference(files, directMapName)
-                End If
+                Call runLinearFileImports(importsFile.FileNames)
             End If
         End Using
+    End Sub
+
+    Private Sub runLinearFileImports(fileNames As String())
+        Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(fileNames)
+        Dim fakeLevels As Dictionary(Of String, Double)
+        Dim directMapName As Boolean = False
+
+        If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
+            files = files _
+                .Select(Function(file)
+                            Return New NamedValue(Of String) With {
+                                .Name = file.Value.BaseName,
+                                .Value = file.Value,
+                                .Description = file.Description
+                            }
+                        End Function) _
+                .ToArray
+            fakeLevels = files _
+                .ToDictionary(Function(file) file.Value.BaseName,
+                              Function(file)
+                                  Return file.Value _
+                                      .BaseName _
+                                      .ParseContent _
+                                      .ScaleTo(ContentUnits.ppb) _
+                                      .Value
+                              End Function)
+            directMapName = True
+        Else
+            fakeLevels = files _
+                .ToDictionary(Function(file) file.Name,
+                              Function()
+                                  Return 0.0
+                              End Function)
+        End If
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
+        DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
+
+        For Each file As NamedValue(Of String) In files
+            Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
+
+            If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
+                isGCMS = True
+                Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
+            Else
+                isGCMS = False
+                Call MyApplication.host.ShowMRMIons(file.Value)
+            End If
+        Next
+
+        Me.linearFiles = files
+        Me.linearPack = New LinearPack With {
+            .reference = New Dictionary(Of String, SampleContentLevels) From {
+                {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
+            }
+        }
+
+        If isGCMS Then
+            Call loadGCMSReference(files, directMapName)
+        Else
+            Call loadMRMReference(files, directMapName)
+        End If
     End Sub
 
     Private Function LoadGCMSIonLibrary() As QuantifyIon()
@@ -284,7 +301,7 @@ Public Class frmTargetedQuantification
         Dim allFeatures As IonPair() = files _
             .Select(Function(file) file.Value) _
             .GetAllFeatures
-        Dim contentLevels = linearPack.reference("n/a")
+        Dim contentLevels As SampleContentLevels = linearPack.reference("n/a")
 
         Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
 
@@ -585,18 +602,31 @@ Public Class frmTargetedQuantification
     End Function
 
     Dim standardCurve As StandardCurve
+    Dim rowIndex As Integer = -1
 
+    ''' <summary>
+    ''' 鼠标点击参考线性表格重新计算线性方程
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         If e.ColumnIndex <> 0 OrElse e.RowIndex < 0 Then
             Return
+        Else
+            rowIndex = e.RowIndex
+            showLinear(args)
         End If
+    End Sub
 
-        standardCurve = createLinear(DataGridView1.Rows(e.RowIndex))
+    Private Sub showLinear(args As QuantifyParameters)
+        ' 计算出线性方程
+        standardCurve = createLinear(DataGridView1.Rows(rowIndex), args)
 
         If standardCurve Is Nothing Then
             Return
         End If
 
+        ' 进行线性方程的可视化
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 size:="1920,1200",
@@ -608,6 +638,7 @@ Public Class frmTargetedQuantification
 
         Call DataGridView2.Rows.Clear()
 
+        ' 显示出线性方程的线性拟合建模表格
         For Each point As ReferencePoint In standardCurve.points
             Call DataGridView2.Rows.Add(point.ID, point.Name, point.AIS, point.Ati, point.cIS, point.Cti, point.Px, point.yfit, point.error, point.variant, point.valid, point.level)
         Next
@@ -634,7 +665,7 @@ Public Class frmTargetedQuantification
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                Dim line = createLinear(row, points)
+                Dim line = createLinear(row, args, points)
 
                 If Not line Is Nothing Then
                     linears.Add(line)
@@ -734,7 +765,7 @@ Public Class frmTargetedQuantification
     ''' <param name="refRow"></param>
     ''' <param name="refPoints"></param>
     ''' <returns></returns>
-    Private Function createLinear(refRow As DataGridViewRow, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
+    Private Function createLinear(refRow As DataGridViewRow, args As QuantifyParameters, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
         Dim id As String = any.ToString(refRow.Cells(0).Value)
         Dim isid As String = any.ToString(refRow.Cells(1).Value)
         Dim chr As New List(Of TargetPeakPoint)
@@ -781,9 +812,10 @@ Public Class frmTargetedQuantification
             Dim ionLib As IonLibrary = Globals.LoadIonLibrary
             Dim quantifyIon = ionLib.GetIonByKey(id)
             Dim quantifyIS = ionLib.GetIonByKey(isid)
-            Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+            Dim dadot3 As Tolerance = args.GetTolerance
 
             If linearFiles.IsNullOrEmpty Then
+                ' load from model files
                 Call linearPack.peakSamples _
                     .Select(Function(p)
                                 Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
@@ -809,10 +841,13 @@ Public Class frmTargetedQuantification
                     .Where(Function(p) Not p Is Nothing) _
                     .DoCall(AddressOf chr.AddRange)
             Else
-                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+                Dim arguments As MRMArguments = args.GetMRMArguments
+
+                ' load from raw data files
+                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon, arguments).DoCall(AddressOf chr.AddRange)
 
                 If Not isid.StringEmpty Then
-                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS, arguments).DoCall(AddressOf chr.AddRange)
                 End If
             End If
         End If
@@ -860,77 +895,82 @@ Public Class frmTargetedQuantification
             .Title = "Select linears"
         }
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files As NamedValue(Of String)() = importsFile.FileNames _
-                    .Select(Function(file)
-                                Return New NamedValue(Of String) With {
-                                    .Name = file.BaseName,
-                                    .Value = file
-                                }
-                            End Function) _
-                    .ToArray
-
-                ' add files to viewer
-                For Each file As NamedValue(Of String) In files
-                    Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
-                    Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
-                    Call Application.DoEvents()
-                Next
-
-                ' and then do quantify if the linear is exists
-                If Not linearPack Is Nothing Then
-                    Dim points As New List(Of TargetPeakPoint)
-                    Dim linears As New List(Of StandardCurve)
-                    Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-                    Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
-                    Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
-
-                    Call scans.Clear()
-
-                    For Each refRow As DataGridViewRow In DataGridView1.Rows
-                        If isValidLinearRow(refRow) Then
-                            Dim id As String = any.ToString(refRow.Cells(0).Value)
-                            Dim isid As String = any.ToString(refRow.Cells(1).Value)
-
-                            linears.Add(createLinear(refRow))
-
-                            If isGCMS Then
-                                Dim ion As QuantifyIon = GCMSIons.GetIon(id)
-                                Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
-
-                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
-                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
-                            Else
-                                Dim ion As IonPair = ionLib.GetIonByKey(id)
-                                Dim ISion As IonPair = ionLib.GetIonByKey(isid)
-
-                                points.AddRange(MRMIonExtract.LoadSamples(files, ion))
-
-                                If Not ISion Is Nothing Then
-                                    points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
-                                End If
-                            End If
-                        End If
-                    Next
-
-                    With linears.Where(Function(l) Not l Is Nothing).ToArray
-                        For Each file In points.GroupBy(Function(p) p.SampleName)
-                            Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
-                            Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
-
-                            If Not quantify Is Nothing Then
-                                scans.Add(quantify)
-                            End If
-                        Next
-                    End With
-                Else
-                    Call MyApplication.host.showStatusMessage("no linear model for run quantification, just open raw files viewer...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                End If
-
-                ToolStripComboBox2.SelectedIndex = 1
-
-                Call showQuanifyTable()
+                Call doLoadSampleFiles(importsFile.FileNames)
             End If
         End Using
+    End Sub
+
+    Private Sub doLoadSampleFiles(FileNames As String())
+        Dim files As NamedValue(Of String)() = FileNames _
+            .Select(Function(file)
+                        Return New NamedValue(Of String) With {
+                            .Name = file.BaseName,
+                            .Value = file
+                        }
+                    End Function) _
+            .ToArray
+
+        ' add files to viewer
+        For Each file As NamedValue(Of String) In files
+            Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
+            Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
+            Call Application.DoEvents()
+        Next
+
+        ' and then do quantify if the linear is exists
+        If Not linearPack Is Nothing Then
+            Dim points As New List(Of TargetPeakPoint)
+            Dim linears As New List(Of StandardCurve)
+            Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+            Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+            Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
+            Dim massError As MRMArguments = args.GetMRMArguments
+
+            Call scans.Clear()
+
+            For Each refRow As DataGridViewRow In DataGridView1.Rows
+                If isValidLinearRow(refRow) Then
+                    Dim id As String = any.ToString(refRow.Cells(0).Value)
+                    Dim isid As String = any.ToString(refRow.Cells(1).Value)
+
+                    linears.Add(createLinear(refRow, args))
+
+                    If isGCMS Then
+                        Dim ion As QuantifyIon = GCMSIons.GetIon(id)
+                        Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
+
+                        points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                        points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                    Else
+                        Dim ion As IonPair = ionLib.GetIonByKey(id)
+                        Dim ISion As IonPair = ionLib.GetIonByKey(isid)
+
+                        points.AddRange(MRMIonExtract.LoadSamples(files, ion, massError))
+
+                        If Not ISion Is Nothing Then
+                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion, massError))
+                        End If
+                    End If
+                End If
+            Next
+
+            With linears.Where(Function(l) Not l Is Nothing).ToArray
+                For Each file In points.GroupBy(Function(p) p.SampleName)
+                    Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
+                    Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
+
+                    If Not quantify Is Nothing Then
+                        scans.Add(quantify)
+                    End If
+                Next
+            End With
+        Else
+            Call MyApplication.host.showStatusMessage("no linear model for run quantification, just open raw files viewer...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
+        ToolStripComboBox2.SelectedIndex = 1
+
+        Call showQuanifyTable()
     End Sub
 
     Private Sub showQuanifyTable()
