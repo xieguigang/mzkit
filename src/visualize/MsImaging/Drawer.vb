@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
@@ -105,7 +106,13 @@ Public Class Drawer : Implements IDisposable
     End Sub
 
     Public Function ReadXY(x As Integer, y As Integer) As IEnumerable(Of ms2)
-        Return pixelReader.GetPixel(x, y).GetMsPipe
+        Dim pixel As PixelScan = pixelReader.GetPixel(x, y)
+
+        If pixel Is Nothing Then
+            Return {}
+        Else
+            Return pixel.GetMsPipe
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
