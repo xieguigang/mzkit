@@ -89,7 +89,7 @@ Imports stdNum = System.Math
 
 Public Class frmTargetedQuantification
 
-    ReadOnly args As QuantifyParameters
+    ReadOnly args As New QuantifyParameters
 
     Private Sub frmTargetedQuantification_Load(sender As Object, e As EventArgs) Handles Me.Load
         WindowModules.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
@@ -815,6 +815,7 @@ Public Class frmTargetedQuantification
             Dim dadot3 As Tolerance = args.GetTolerance
 
             If linearFiles.IsNullOrEmpty Then
+                ' load from model files
                 Call linearPack.peakSamples _
                     .Select(Function(p)
                                 Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
@@ -840,6 +841,7 @@ Public Class frmTargetedQuantification
                     .Where(Function(p) Not p Is Nothing) _
                     .DoCall(AddressOf chr.AddRange)
             Else
+                ' load from raw data files
                 Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
 
                 If Not isid.StringEmpty Then
