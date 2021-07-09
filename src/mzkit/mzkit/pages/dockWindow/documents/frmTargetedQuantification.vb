@@ -107,8 +107,14 @@ Public Class frmTargetedQuantification
         Call WindowModules.parametersTool.SetParameterObject(New QuantifyParameters, AddressOf applyNewParameters)
     End Sub
 
+    ''' <summary>
+    ''' 调整参数后重新计算标准曲线
+    ''' </summary>
+    ''' <param name="args"></param>
     Private Sub applyNewParameters(args As QuantifyParameters)
-
+        If rowIndex >= 0 Then
+            showLinear()
+        End If
     End Sub
 
     Private Sub reloadProfileNames()
@@ -589,18 +595,31 @@ Public Class frmTargetedQuantification
     End Function
 
     Dim standardCurve As StandardCurve
+    Dim rowIndex As Integer = -1
 
+    ''' <summary>
+    ''' 鼠标点击参考线性表格重新计算线性方程
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         If e.ColumnIndex <> 0 OrElse e.RowIndex < 0 Then
             Return
+        Else
+            rowIndex = e.RowIndex
+            showLinear()
         End If
+    End Sub
 
-        standardCurve = createLinear(DataGridView1.Rows(e.RowIndex))
+    Private Sub showLinear()
+        ' 计算出线性方程
+        standardCurve = createLinear(DataGridView1.Rows(rowIndex))
 
         If standardCurve Is Nothing Then
             Return
         End If
 
+        ' 进行线性方程的可视化
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 size:="1920,1200",
@@ -612,6 +631,7 @@ Public Class frmTargetedQuantification
 
         Call DataGridView2.Rows.Clear()
 
+        ' 显示出线性方程的线性拟合建模表格
         For Each point As ReferencePoint In standardCurve.points
             Call DataGridView2.Rows.Add(point.ID, point.Name, point.AIS, point.Ati, point.cIS, point.Cti, point.Px, point.yfit, point.error, point.variant, point.valid, point.level)
         Next
@@ -864,77 +884,81 @@ Public Class frmTargetedQuantification
             .Title = "Select linears"
         }
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files As NamedValue(Of String)() = importsFile.FileNames _
-                    .Select(Function(file)
-                                Return New NamedValue(Of String) With {
-                                    .Name = file.BaseName,
-                                    .Value = file
-                                }
-                            End Function) _
-                    .ToArray
-
-                ' add files to viewer
-                For Each file As NamedValue(Of String) In files
-                    Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
-                    Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
-                    Call Application.DoEvents()
-                Next
-
-                ' and then do quantify if the linear is exists
-                If Not linearPack Is Nothing Then
-                    Dim points As New List(Of TargetPeakPoint)
-                    Dim linears As New List(Of StandardCurve)
-                    Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-                    Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
-                    Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
-
-                    Call scans.Clear()
-
-                    For Each refRow As DataGridViewRow In DataGridView1.Rows
-                        If isValidLinearRow(refRow) Then
-                            Dim id As String = any.ToString(refRow.Cells(0).Value)
-                            Dim isid As String = any.ToString(refRow.Cells(1).Value)
-
-                            linears.Add(createLinear(refRow))
-
-                            If isGCMS Then
-                                Dim ion As QuantifyIon = GCMSIons.GetIon(id)
-                                Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
-
-                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
-                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
-                            Else
-                                Dim ion As IonPair = ionLib.GetIonByKey(id)
-                                Dim ISion As IonPair = ionLib.GetIonByKey(isid)
-
-                                points.AddRange(MRMIonExtract.LoadSamples(files, ion))
-
-                                If Not ISion Is Nothing Then
-                                    points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
-                                End If
-                            End If
-                        End If
-                    Next
-
-                    With linears.Where(Function(l) Not l Is Nothing).ToArray
-                        For Each file In points.GroupBy(Function(p) p.SampleName)
-                            Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
-                            Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
-
-                            If Not quantify Is Nothing Then
-                                scans.Add(quantify)
-                            End If
-                        Next
-                    End With
-                Else
-                    Call MyApplication.host.showStatusMessage("no linear model for run quantification, just open raw files viewer...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                End If
-
-                ToolStripComboBox2.SelectedIndex = 1
-
-                Call showQuanifyTable()
+                Call doLoadSampleFiles(importsFile.FileNames)
             End If
         End Using
+    End Sub
+
+    Private Sub doLoadSampleFiles(FileNames As String())
+        Dim files As NamedValue(Of String)() = FileNames _
+            .Select(Function(file)
+                        Return New NamedValue(Of String) With {
+                            .Name = file.BaseName,
+                            .Value = file
+                        }
+                    End Function) _
+            .ToArray
+
+        ' add files to viewer
+        For Each file As NamedValue(Of String) In files
+            Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
+            Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
+            Call Application.DoEvents()
+        Next
+
+        ' and then do quantify if the linear is exists
+        If Not linearPack Is Nothing Then
+            Dim points As New List(Of TargetPeakPoint)
+            Dim linears As New List(Of StandardCurve)
+            Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+            Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+            Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
+
+            Call scans.Clear()
+
+            For Each refRow As DataGridViewRow In DataGridView1.Rows
+                If isValidLinearRow(refRow) Then
+                    Dim id As String = any.ToString(refRow.Cells(0).Value)
+                    Dim isid As String = any.ToString(refRow.Cells(1).Value)
+
+                    linears.Add(createLinear(refRow))
+
+                    If isGCMS Then
+                        Dim ion As QuantifyIon = GCMSIons.GetIon(id)
+                        Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
+
+                        points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                        points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                    Else
+                        Dim ion As IonPair = ionLib.GetIonByKey(id)
+                        Dim ISion As IonPair = ionLib.GetIonByKey(isid)
+
+                        points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+
+                        If Not ISion Is Nothing Then
+                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                        End If
+                    End If
+                End If
+            Next
+
+            With linears.Where(Function(l) Not l Is Nothing).ToArray
+                For Each file In points.GroupBy(Function(p) p.SampleName)
+                    Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
+                    Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
+
+                    If Not quantify Is Nothing Then
+                        scans.Add(quantify)
+                    End If
+                Next
+            End With
+        Else
+            Call MyApplication.host.showStatusMessage("no linear model for run quantification, just open raw files viewer...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
+        ToolStripComboBox2.SelectedIndex = 1
+
+        Call showQuanifyTable()
     End Sub
 
     Private Sub showQuanifyTable()
