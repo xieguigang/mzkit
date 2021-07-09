@@ -841,11 +841,13 @@ Public Class frmTargetedQuantification
                     .Where(Function(p) Not p Is Nothing) _
                     .DoCall(AddressOf chr.AddRange)
             Else
+                Dim arguments As MRMArguments = args.GetMRMArguments
+
                 ' load from raw data files
-                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon, massError:=dadot3).DoCall(AddressOf chr.AddRange)
+                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon, arguments).DoCall(AddressOf chr.AddRange)
 
                 If Not isid.StringEmpty Then
-                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS, massError:=dadot3).DoCall(AddressOf chr.AddRange)
+                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS, arguments).DoCall(AddressOf chr.AddRange)
                 End If
             End If
         End If
@@ -922,7 +924,7 @@ Public Class frmTargetedQuantification
             Dim ionLib As IonLibrary = Globals.LoadIonLibrary
             Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
             Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
-            Dim massError = args.GetTolerance
+            Dim massError As MRMArguments = args.GetMRMArguments
 
             Call scans.Clear()
 

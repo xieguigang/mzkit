@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
 Public Class QuantifyParameters
@@ -50,15 +51,15 @@ Public Class QuantifyParameters
     <Category("Peak Width")>
     <DisplayName("min")>
     <Description("the min peak width in rt(seconds).")>
-    Public Property peakMin As Double
+    Public Property peakMin As Double = 5
     <Category("Peak Width")>
     <DisplayName("max")>
     <Description("the max peak width in rt(seconds).")>
-    Public Property peakMax As Double
+    Public Property peakMax As Double = 30
 
     <Category("Peak Finding")>
     <Description("The threshold value of sin(alpha) angle value, value of this parameter should be in range of [0,90]")>
-    Public Property angle_threshold As Double = 8
+    Public Property angle_threshold As Double = 6
 
     <Category("Peak Finding")>
     Public Property toleranceMethod As ToleranceMethods = ToleranceMethods.da
@@ -72,6 +73,16 @@ Public Class QuantifyParameters
             Case Else
                 Return New PPMmethod(tolerance)
         End Select
+    End Function
+
+    Public Function GetMRMArguments() As MRMArguments
+        Dim args As MRMArguments = MRMArguments.GetDefaultArguments
+
+        args.peakwidth = {peakMin, peakMax}
+        args.angleThreshold = angle_threshold
+        args.tolerance = GetTolerance()
+
+        Return args
     End Function
 
 End Class
