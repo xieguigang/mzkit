@@ -135,7 +135,11 @@ Namespace Chromatogram
         End Function
 
         Public Shared Narrowing Operator CType(ROI As ROI) As DoubleRange
-            Return ROI.time
+            If ROI Is Nothing Then
+                Return Nothing
+            Else
+                Return ROI.time
+            End If
         End Operator
     End Class
 End Namespace
