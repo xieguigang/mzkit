@@ -149,70 +149,74 @@ Public Class frmTargetedQuantification
         }
 
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
-                Dim fakeLevels As Dictionary(Of String, Double)
-                Dim directMapName As Boolean = False
-
-                If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
-                    files = files _
-                        .Select(Function(file)
-                                    Return New NamedValue(Of String) With {
-                                        .Name = file.Value.BaseName,
-                                        .Value = file.Value,
-                                        .Description = file.Description
-                                    }
-                                End Function) _
-                        .ToArray
-                    fakeLevels = files _
-                        .ToDictionary(Function(file) file.Value.BaseName,
-                                      Function(file)
-                                          Return file.Value _
-                                              .BaseName _
-                                              .ParseContent _
-                                              .ScaleTo(ContentUnits.ppb) _
-                                              .Value
-                                      End Function)
-                    directMapName = True
-                Else
-                    fakeLevels = files _
-                        .ToDictionary(Function(file) file.Name,
-                                      Function()
-                                          Return 0.0
-                                      End Function)
-                End If
-
-                DataGridView1.Rows.Clear()
-                DataGridView1.Columns.Clear()
-
-                DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
-                DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
-
-                For Each file As NamedValue(Of String) In files
-                    Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
-
-                    If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
-                        isGCMS = True
-                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
-                    Else
-                        isGCMS = False
-                        Call MyApplication.host.ShowMRMIons(file.Value)
-                    End If
-                Next
-
-                Me.linearFiles = files
-                Me.linearPack = New LinearPack With {
-                    .reference = New Dictionary(Of String, SampleContentLevels) From {
-                        {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
-                    }
-                }
-
-                If isGCMS Then
-                    Call loadGCMSReference(files, directMapName)
-                Else
-                    Call loadMRMReference(files, directMapName)
-                End If
+                Call runLinearFileImports(importsFile.FileNames)
             End If
         End Using
+    End Sub
+
+    Private Sub runLinearFileImports(fileNames As String())
+        Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(fileNames)
+        Dim fakeLevels As Dictionary(Of String, Double)
+        Dim directMapName As Boolean = False
+
+        If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
+            files = files _
+                .Select(Function(file)
+                            Return New NamedValue(Of String) With {
+                                .Name = file.Value.BaseName,
+                                .Value = file.Value,
+                                .Description = file.Description
+                            }
+                        End Function) _
+                .ToArray
+            fakeLevels = files _
+                .ToDictionary(Function(file) file.Value.BaseName,
+                              Function(file)
+                                  Return file.Value _
+                                      .BaseName _
+                                      .ParseContent _
+                                      .ScaleTo(ContentUnits.ppb) _
+                                      .Value
+                              End Function)
+            directMapName = True
+        Else
+            fakeLevels = files _
+                .ToDictionary(Function(file) file.Name,
+                              Function()
+                                  Return 0.0
+                              End Function)
+        End If
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
+        DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
+
+        For Each file As NamedValue(Of String) In files
+            Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
+
+            If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
+                isGCMS = True
+                Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
+            Else
+                isGCMS = False
+                Call MyApplication.host.ShowMRMIons(file.Value)
+            End If
+        Next
+
+        Me.linearFiles = files
+        Me.linearPack = New LinearPack With {
+            .reference = New Dictionary(Of String, SampleContentLevels) From {
+                {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
+            }
+        }
+
+        If isGCMS Then
+            Call loadGCMSReference(files, directMapName)
+        Else
+            Call loadMRMReference(files, directMapName)
+        End If
     End Sub
 
     Private Function LoadGCMSIonLibrary() As QuantifyIon()
@@ -284,7 +288,7 @@ Public Class frmTargetedQuantification
         Dim allFeatures As IonPair() = files _
             .Select(Function(file) file.Value) _
             .GetAllFeatures
-        Dim contentLevels = linearPack.reference("n/a")
+        Dim contentLevels As SampleContentLevels = linearPack.reference("n/a")
 
         Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
 
