@@ -89,6 +89,8 @@ Imports stdNum = System.Math
 
 Public Class frmTargetedQuantification
 
+    ReadOnly args As QuantifyParameters
+
     Private Sub frmTargetedQuantification_Load(sender As Object, e As EventArgs) Handles Me.Load
         WindowModules.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
 
@@ -104,7 +106,7 @@ Public Class frmTargetedQuantification
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
 
         Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
-        Call WindowModules.parametersTool.SetParameterObject(New QuantifyParameters, AddressOf applyNewParameters)
+        Call WindowModules.parametersTool.SetParameterObject(args, AddressOf applyNewParameters)
     End Sub
 
     ''' <summary>
@@ -113,7 +115,12 @@ Public Class frmTargetedQuantification
     ''' <param name="args"></param>
     Private Sub applyNewParameters(args As QuantifyParameters)
         If rowIndex >= 0 Then
-            showLinear()
+            ' 这个可能是因为之前的一批标准曲线计算留下来的
+            If DataGridView1.Rows.Count >= rowIndex Then
+                Return
+            End If
+
+            showLinear(args)
         End If
     End Sub
 
@@ -607,11 +614,11 @@ Public Class frmTargetedQuantification
             Return
         Else
             rowIndex = e.RowIndex
-            showLinear()
+            showLinear(args)
         End If
     End Sub
 
-    Private Sub showLinear()
+    Private Sub showLinear(args As QuantifyParameters)
         ' 计算出线性方程
         standardCurve = createLinear(DataGridView1.Rows(rowIndex))
 

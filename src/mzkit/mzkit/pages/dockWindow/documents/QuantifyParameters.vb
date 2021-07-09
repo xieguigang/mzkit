@@ -59,5 +59,14 @@ Public Class QuantifyParameters
     <Description("The threshold value of sin(alpha) angle value, value of this parameter should be in range of [0,90]")>
     Public Property angle_threshold As Double = 8
 
+    <Category("Peak Finding")>
+    Public Property toleranceMethod As ToleranceMethods = ToleranceMethods.da
+    <Category("Peak Finding")>
+    Public Property tolerance As Double = 0.3
+
 End Class
 
+Public Enum ToleranceMethods
+    da
+    ppm
+End Enum
