@@ -107,7 +107,9 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public ReadOnly Property snRatio As Double
             Get
-                Dim signal As Double = Aggregate tick In ticks Into Sum(tick.Intensity - baseline)
+                Dim signal As Double = Aggregate tick As ChromatogramTick
+                                       In ticks
+                                       Into Sum(tick.Intensity - baseline)
                 Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
 
                 Return sn

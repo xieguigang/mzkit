@@ -116,7 +116,7 @@ Public Class frmTargetedQuantification
     Private Sub applyNewParameters(args As QuantifyParameters)
         If rowIndex >= 0 Then
             ' 这个可能是因为之前的一批标准曲线计算留下来的
-            If DataGridView1.Rows.Count >= rowIndex Then
+            If DataGridView1.Rows.Count <= rowIndex Then
                 Return
             End If
 

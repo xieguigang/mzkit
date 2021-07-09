@@ -133,13 +133,17 @@ Namespace MRM
 
             Dim peak As ROIPeak = GetTargetROIPeak(ion, chr, args)
 
-            Return New TargetPeakPoint With {
-                .Name = If(preferName, ion.name, ion.accession),
-                .Peak = peak,
-                .ChromatogramSummary = peak.ticks _
-                    .Summary _
-                    .ToArray
-            }
+            If peak Is Nothing Then
+                Return Nothing
+            Else
+                Return New TargetPeakPoint With {
+                    .Name = If(preferName, ion.name, ion.accession),
+                    .Peak = peak,
+                    .ChromatogramSummary = peak.ticks _
+                        .Summary _
+                        .ToArray
+                }
+            End If
         End Function
 
         Public Overrides Iterator Function GetSamplePeaks(sample As indexedmzML) As IEnumerable(Of TargetPeakPoint)
@@ -175,9 +179,11 @@ Namespace MRM
                     .Where(Function(c) qIon.Assert(c, massError)) _
                     .FirstOrDefault
                 peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
-                peakTicks.SampleName = file.Name
 
-                Yield peakTicks
+                If Not peakTicks Is Nothing Then
+                    peakTicks.SampleName = file.Name
+                    Yield peakTicks
+                End If
             Next
         End Function
     End Class
