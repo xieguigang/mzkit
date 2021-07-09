@@ -620,7 +620,7 @@ Public Class frmTargetedQuantification
 
     Private Sub showLinear(args As QuantifyParameters)
         ' 计算出线性方程
-        standardCurve = createLinear(DataGridView1.Rows(rowIndex))
+        standardCurve = createLinear(DataGridView1.Rows(rowIndex), args)
 
         If standardCurve Is Nothing Then
             Return
@@ -665,7 +665,7 @@ Public Class frmTargetedQuantification
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                Dim line = createLinear(row, points)
+                Dim line = createLinear(row, args, points)
 
                 If Not line Is Nothing Then
                     linears.Add(line)
@@ -765,7 +765,7 @@ Public Class frmTargetedQuantification
     ''' <param name="refRow"></param>
     ''' <param name="refPoints"></param>
     ''' <returns></returns>
-    Private Function createLinear(refRow As DataGridViewRow, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
+    Private Function createLinear(refRow As DataGridViewRow, args As QuantifyParameters, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
         Dim id As String = any.ToString(refRow.Cells(0).Value)
         Dim isid As String = any.ToString(refRow.Cells(1).Value)
         Dim chr As New List(Of TargetPeakPoint)
@@ -812,7 +812,7 @@ Public Class frmTargetedQuantification
             Dim ionLib As IonLibrary = Globals.LoadIonLibrary
             Dim quantifyIon = ionLib.GetIonByKey(id)
             Dim quantifyIS = ionLib.GetIonByKey(isid)
-            Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+            Dim dadot3 As Tolerance = args.GetTolerance
 
             If linearFiles.IsNullOrEmpty Then
                 Call linearPack.peakSamples _
@@ -928,7 +928,7 @@ Public Class frmTargetedQuantification
                     Dim id As String = any.ToString(refRow.Cells(0).Value)
                     Dim isid As String = any.ToString(refRow.Cells(1).Value)
 
-                    linears.Add(createLinear(refRow))
+                    linears.Add(createLinear(refRow, args))
 
                     If isGCMS Then
                         Dim ion As QuantifyIon = GCMSIons.GetIon(id)
