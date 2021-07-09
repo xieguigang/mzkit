@@ -842,10 +842,10 @@ Public Class frmTargetedQuantification
                     .DoCall(AddressOf chr.AddRange)
             Else
                 ' load from raw data files
-                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon, massError:=dadot3).DoCall(AddressOf chr.AddRange)
 
                 If Not isid.StringEmpty Then
-                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS, massError:=dadot3).DoCall(AddressOf chr.AddRange)
                 End If
             End If
         End If
@@ -922,6 +922,7 @@ Public Class frmTargetedQuantification
             Dim ionLib As IonLibrary = Globals.LoadIonLibrary
             Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
             Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
+            Dim massError = args.GetTolerance
 
             Call scans.Clear()
 
@@ -942,10 +943,10 @@ Public Class frmTargetedQuantification
                         Dim ion As IonPair = ionLib.GetIonByKey(id)
                         Dim ISion As IonPair = ionLib.GetIonByKey(isid)
 
-                        points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+                        points.AddRange(MRMIonExtract.LoadSamples(files, ion, massError))
 
                         If Not ISion Is Nothing Then
-                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion, massError))
                         End If
                     End If
                 End If

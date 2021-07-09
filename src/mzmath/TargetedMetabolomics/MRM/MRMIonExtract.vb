@@ -119,8 +119,7 @@ Namespace MRM
         ''' <param name="files"></param>
         ''' <param name="qIon">the MRM quantify ion pair</param>
         ''' <returns></returns>
-        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As IonPair) As IEnumerable(Of TargetPeakPoint)
-            Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
+        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As IonPair, massError As Tolerance) As IEnumerable(Of TargetPeakPoint)
             Dim raw As indexedmzML
             Dim rawList As chromatogramTicks()
             Dim ionLine As chromatogramTicks
@@ -130,7 +129,7 @@ Namespace MRM
                 raw = indexedmzML.LoadFile(file)
                 rawList = raw.mzML.run.chromatogramList.list
                 ionLine = rawList _
-                    .Where(Function(c) qIon.Assert(c, da3)) _
+                    .Where(Function(c) qIon.Assert(c, massError)) _
                     .FirstOrDefault
                 peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, preferName:=True)
                 peakTicks.SampleName = file.Name
