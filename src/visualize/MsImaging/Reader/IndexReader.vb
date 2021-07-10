@@ -87,7 +87,7 @@ Namespace Reader
             Return reader.GetMz
         End Function
 
-        Protected Overrides Iterator Function AllPixels() As IEnumerable(Of PixelScan)
+        Public Overrides Iterator Function AllPixels() As IEnumerable(Of PixelScan)
             For x As Integer = 1 To reader.meta.width
                 For y As Integer = 1 To reader.meta.height
                     Yield reader.GetPixel(x, y)

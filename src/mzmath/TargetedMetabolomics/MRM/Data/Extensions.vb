@@ -84,19 +84,16 @@ Namespace MRM.Data
 
         <Extension>
         Public Function PopulatePeaks(ionPairs As IonPair(), raw$, tolerance As Tolerance, Optional baselineQuantile# = 0.65) As (ion As IsomerismIonPairs, peak As ROIPeak)()
+            Dim args As MRMArguments = MRMArguments.GetDefaultArguments
+
+            args.tolerance = tolerance
+            args.baselineQuantile = baselineQuantile
+
             Dim ionData = LoadChromatogramList(path:=raw) _
                 .MRMSelector(IonPair.GetIsomerism(ionPairs, tolerance), tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
                 .Select(Function(ion)
-                            Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Ticks.Shadows
-                            Dim peak = vector.MRMPeak(baselineQuantile:=baselineQuantile)
-                            Dim peakTicks = vector.PickArea(range:=peak)
-                            Dim mrm As New ROIPeak With {
-                                .window = peak,
-                                .base = vector.Baseline(baselineQuantile),
-                                .ticks = peakTicks,
-                                .peakHeight = Aggregate t In .ticks Into Max(t.Intensity)
-                            }
+                            Dim mrm As ROIPeak = MRMIonExtract.GetTargetROIPeak(ion.ion.target, ion.chromatogram, args)
 
                             Return (ion.ion, mrm)
                         End Function) _

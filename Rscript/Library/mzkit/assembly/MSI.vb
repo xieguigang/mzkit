@@ -49,7 +49,6 @@
 
 #End Region
 
-
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -69,6 +68,55 @@ Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzM
 
 <Package("MSI")>
 Module MSI
+
+    ''' <summary>
+    ''' get pixels size from the raw data file
+    ''' </summary>
+    ''' <param name="file">
+    ''' imML/mzPack
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("pixels")>
+    Public Function pixels(file As String, Optional env As Environment = Nothing) As Object
+        If file.ExtensionSuffix("imzml") Then
+            Dim allScans = XML.LoadScans(file).ToArray
+            Dim width As Integer = Aggregate p In allScans Into Max(p.x)
+            Dim height As Integer = Aggregate p In allScans Into Max(p.y)
+
+            Return New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"w", width},
+                    {"h", height}
+                }
+            }
+        ElseIf file.ExtensionSuffix("mzpack") Then
+            Using reader As New BinaryStreamReader(file)
+                Dim allMeta = reader.EnumerateIndex _
+                    .Select(AddressOf reader.GetMetadata) _
+                    .IteratesALL _
+                    .ToArray
+                Dim x As Integer() = allMeta _
+                    .Where(Function(p) p.Key.TextEquals("x")) _
+                    .Select(Function(p) p.Value) _
+                    .Select(AddressOf Integer.Parse) _
+                    .ToArray
+                Dim y As Integer() = allMeta _
+                    .Where(Function(p) p.Key.TextEquals("y")) _
+                    .Select(Function(p) p.Value) _
+                    .Select(AddressOf Integer.Parse) _
+                    .ToArray
+
+                Return New list With {
+                    .slots = New Dictionary(Of String, Object) From {
+                        {"w", x.Max},
+                        {"h", y.Max}
+                    }
+                }
+            End Using
+        Else
+            Return Internal.debug.stop("unsupported file!", env)
+        End If
+    End Function
 
     <ExportAPI("open.imzML")>
     Public Function open_imzML(file As String) As Object
@@ -106,10 +154,10 @@ Module MSI
                 Return Internal.debug.stop("the pixels of column must be specific!", env)
             End If
         Else
-            Dim loader = Iterator Function() As IEnumerable(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)
+            Dim loader = Iterator Function() As IEnumerable(Of mzPack)
                              For Each path As String In raw
                                  Using file As FileStream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                                     Yield mzpack.ReadAll(file, ignoreThumbnail:=True)
+                                     Yield mzPack.ReadAll(file, ignoreThumbnail:=True)
                                  End Using
                              Next
                          End Function
@@ -119,7 +167,7 @@ Module MSI
 
     <Extension>
     Private Function loadRowSummary(file As Stream, y As Integer, correction As Correction) As iPixelIntensity()
-        Dim mzpack As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack = BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.ReadAll(file, ignoreThumbnail:=True)
+        Dim mzpack As mzPack = mzPack.ReadAll(file, ignoreThumbnail:=True)
         Dim pixels As iPixelIntensity() = mzpack.MS _
             .Select(Function(col, i)
                         Dim basePeakMz As Double = col.mz(which.Max(col.into))
@@ -136,6 +184,31 @@ Module MSI
             .ToArray
 
         Return pixels
+    End Function
+
+    <ExportAPI("MSI_summary")>
+    Public Function MSI_summary(raw As mzPack) As MSISummary
+        Return New MSISummary With {
+            .rowScans = raw.MS _
+                .Select(Function(p)
+                            Return New iPixelIntensity With {
+                                .x = Integer.Parse(p.meta("x")),
+                                .y = Integer.Parse(p.meta("y")),
+                                .average = p.into.Average,
+                                .basePeakIntensity = p.into.Max,
+                                .totalIon = p.into.Sum,
+                                .basePeakMz = p.mz(which.Max(p.into))
+                            }
+                        End Function) _
+                .GroupBy(Function(p) p.y) _
+                .OrderBy(Function(p) p.Key) _
+                .Select(Function(y) y.OrderBy(Function(p) p.x).ToArray) _
+                .ToArray,
+            .size = New Size(
+                width:= .rowScans.IteratesALL.Select(Function(p) p.x).Max,
+                height:= .rowScans.IteratesALL.Select(Function(p) p.y).Max
+            )
+        }
     End Function
 
     <ExportAPI("correction")>
@@ -160,7 +233,7 @@ Module MSI
                              Optional intocutoff As Double = 0.05,
                              Optional env As Environment = Nothing) As Object
 
-        Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)(rowScans, env)
+        Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
 
         If pipeline.isError Then
             Return pipeline
@@ -169,7 +242,7 @@ Module MSI
         Dim pixels As New List(Of ScanMS1)
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
 
-        For Each row As BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack In pipeline.populates(Of BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack)(env)
+        For Each row As mzPack In pipeline.populates(Of mzPack)(env)
             Dim y As Integer = row.source _
                 .Match("\d+") _
                 .DoCall(AddressOf Integer.Parse)

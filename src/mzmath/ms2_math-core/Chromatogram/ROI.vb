@@ -107,7 +107,9 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public ReadOnly Property snRatio As Double
             Get
-                Dim signal As Double = Aggregate tick In ticks Into Sum(tick.Intensity - baseline)
+                Dim signal As Double = Aggregate tick As ChromatogramTick
+                                       In ticks
+                                       Into Sum(tick.Intensity - baseline)
                 Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
 
                 Return sn
@@ -135,7 +137,11 @@ Namespace Chromatogram
         End Function
 
         Public Shared Narrowing Operator CType(ROI As ROI) As DoubleRange
-            Return ROI.time
+            If ROI Is Nothing Then
+                Return Nothing
+            Else
+                Return ROI.time
+            End If
         End Operator
     End Class
 End Namespace
