@@ -138,7 +138,7 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
-    <ProjectReference Include="..\mzkit\mzkit-netcore5.vbproj" />
+    <ProjectReference Include="..\mzkit\mzkit.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{44104EDC-D
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "chemoinformatics-netcore5", "..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj", "{F6E91D23-F6AF-4D70-B2AD-6CC68BF747BD}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit-netcore5", "mzkit\mzkit-netcore5.vbproj", "{66FF7873-086B-420D-B440-FCB76A7E04EA}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit.NET5", "mzkit\mzkit.NET5.vbproj", "{66FF7873-086B-420D-B440-FCB76A7E04EA}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "binarydata-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj", "{7B4BF1C9-A5E8-4FB5-836C-BA1319D7A529}"
 EndProject
