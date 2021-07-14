@@ -4,7 +4,7 @@
 
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
-imports "assembly" from "mzkit.dll";
+imports "assembly" from "mzkit";
 
 # includes external helper script
 imports "plot_ionRaws.R";
