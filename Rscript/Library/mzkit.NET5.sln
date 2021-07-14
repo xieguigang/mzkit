@@ -109,7 +109,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\..\..\
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "randomizer-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj", "{7B0217BA-E7C4-4D17-B125-7600EA11EC22}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit.Plot-netcore5", "mzkit.plot\mzkit.Plot-netcore5.vbproj", "{DB3F88FC-B623-4A4C-83BF-9089D18823EC}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzplot.NET5", "mzkit.plot\mzplot.NET5.vbproj", "{DB3F88FC-B623-4A4C-83BF-9089D18823EC}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsImaging.NET5", "..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj", "{840FDA68-2ADC-4EB4-B369-B4364A136175}"
 EndProject
