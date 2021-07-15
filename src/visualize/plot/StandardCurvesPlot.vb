@@ -62,7 +62,9 @@ Public Module StandardCurvesPlot
                                    Optional factorFormat$ = "G4",
                                    Optional sampleLabelFont$ = CSSFont.Win10Normal,
                                    Optional labelerIterations% = 1000,
-                                   Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
+                                   Optional gridFill$ = NameOf(Color.LightGray),
+                                   Optional showLegend As Boolean = True,
+                                   Optional showYFitPoints As Boolean = True) As GraphicsData
 
         If model.requireISCalibration Then
             ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
@@ -80,7 +82,9 @@ Public Module StandardCurvesPlot
                       factorFormat:=factorFormat,
                       pointLabelFontCSS:=sampleLabelFont,
                       labelerIterations:=labelerIterations,
-                      gridFill:=gridFill
+                      gridFill:=gridFill,
+                      showLegend:=showLegend,
+                      showYFitPoints:=showYFitPoints
                 )
         Else
             ' 如果不做内标校正的话，则是直接[峰面积, 浓度]之间的线性关系了
@@ -98,7 +102,9 @@ Public Module StandardCurvesPlot
                       factorFormat:=factorFormat,
                       pointLabelFontCSS:=sampleLabelFont,
                       labelerIterations:=labelerIterations,
-                      gridFill:=gridFill
+                      gridFill:=gridFill,
+                      showLegend:=showLegend,
+                      showYFitPoints:=showYFitPoints
                 )
         End If
     End Function
