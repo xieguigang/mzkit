@@ -19,16 +19,24 @@ imports "assembly" from "mzkit";
 imports "plot_ionRaws.R";
 
 # config of the standard curve data files
-[@info "the folder path of the reference lines."]
-let wiff     as string = ?"--Cal"          || stop("No standard curve data provides!");
-[@info "the folder path of the sample data files."]
-let sample   as string = ?"--data"         || stop("No sample data files provided!");
-[@info "MRM ion information xlsx table file."]
-let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
+[@info "The folder path of the reference lines. you can set the reference name pattern via '--patternOfRef' parameter for matched the raw data files in this folder."]
+[@type "folder, *.mzML"]
+let wiff     as string = ?"--Cal"  || stop("No standard curve data provides!");
+
+[@info "The folder path of the sample data files."]
+[@type "folder, *.mzML"]
+let sample   as string = ?"--data" || stop("No sample data files provided!");
+
+[@info "MRM ion information xlsx table file. This table file must contains the linear reference content data of each targeted metabolite for create linear reference models."]
+[@type "*.xlsx"]
+let MRM.info as string = ?"--MRM"  || stop("Missing MRM information table file!");
 # use external MSL data file if there is no 
 # ion pair data in the MRM table file. 
+[@info "The *.MSL ion file for specific the MRM ion pairs data if there is no ion pair data in the MRM table."]
+[@type "*.MSL"]
 let ions     as string = ?"--ions";      
 [@info "folder location for save quantification result output."]   
+[@type "folder"]
 let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
@@ -54,10 +62,18 @@ let patternOf.Blank    = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
 [@info "the peak area integrator algorithm name."]
 [@type "term"]
 let integrator   as string  = ?"--integrator" || "NetPeakSum";
+[@info "Create of the linear reference in work curve mode?"]
 let isWorkCurve  as boolean = ?"--workMode";
+[@info "the window size for match the RT value in MSL ion data with the RT value that detected by the peak in samples. The data unit of this parameter should be in 'second', not 'minute'."]
+[@type "time window in seconds"]
 let rt_winSize   as double  = as.numeric(?"--rt.winsize" || "3"); 
+[@info "The m/z tolerance value for match the MRM ion pair in format of mzkit tolerance syntax. Value of this mass tolerance can be da:xxx (delta mass) or ppm:xxx (ppm precision)."]
+[@type "mzError"]
 let tolerance    as string  = ?"--mz.diff"      || "ppm:15";
+[@info "the time range of a peak, this parameter is consist with two number for speicifc the upper bound and lower bound of the peak width which is represented with RT dimension."]
+[@type "doublerange"]
 let peakwidth    as string  = ?"--peakwidth"    || "8,30";
+[@info "the threshold value for determine that a detected peak is noise data or not."]
 let sn_threshold as double  = ?"--sn_threshold" || "3";
 
 # Max number of points for removes in 
@@ -66,8 +82,9 @@ let sn_threshold as double  = ?"--sn_threshold" || "3";
 # + negative value for auto detects: n.points / 2 - 1
 # + ZERO for no points is removed
 # + positive value for specific a number for the deletion.
+[@info "Max number of reference points for removes in linear modelling. The default value '-1' means auto detects."]
 let maxNumOfPoint.delets as integer = ?"--max.deletes"       || -1;
-
+[@info "The angle threshold for detect a peak via the calculation of sin(x)."]
 let angle.threshold as double   = ?"--angle.threshold"   || 8;
 let baseline.quantile as double = ?"--baseline.quantile" || 0.65;
 
