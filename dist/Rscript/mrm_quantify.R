@@ -1,6 +1,15 @@
 #!REnv
 
-# title: MRM quantification
+#' title: MRM quantification
+#' author: xieguigang <gg.xie@bionovogene.com>
+#'
+#' description: do LC-MSMS targeted metabolomics quantitative analysis
+#'    base on the MRM ion pairs data. This script will take a set of 
+#'    *.mzML raw data files, and then create linear models based on the
+#'    linear reference raw data files, do sample quantitative evaluation
+#'    and QC assertion if the QC file is exists in your sample files.
+
+require(mzkit);
 
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
