@@ -218,6 +218,7 @@ Module Visual
         Dim title As String = args.getValue("title", env, "Mass Spectrum Plot")
         Dim mirror As Boolean = args.getValue("mirror", env, False)
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
+        Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
 
         If mirror Then
             Return SpectrumPlot(spectrum, title:=title)
@@ -228,7 +229,11 @@ Module Visual
                 Return ms.TryCast(Of Message)
             End If
 
-            Return PeakAssign.DrawSpectrumPeaks(ms, images:=annotateImages)
+            Return PeakAssign.DrawSpectrumPeaks(
+                matrix:=ms,
+                images:=annotateImages,
+                labelIntensity:=labeIntensity
+            )
         End If
     End Function
 

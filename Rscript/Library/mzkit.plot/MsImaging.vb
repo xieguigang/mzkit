@@ -137,6 +137,7 @@ Module MsImaging
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function FilterMz(viewer As Drawer, mz As Double(),
                              Optional tolerance As Object = "ppm:20",
+                             Optional title As String = "FilterMz",
                              Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -158,7 +159,7 @@ Module MsImaging
             .ms2 = ms1 _
                 .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(0.01)) _
                 .ToArray,
-            .name = "FilterMz"
+            .name = title
         }
     End Function
 

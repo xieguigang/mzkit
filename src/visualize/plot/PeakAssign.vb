@@ -71,6 +71,7 @@ Public Class PeakAssign : Inherits Plot
     ReadOnly title As String
     ReadOnly barHighlight As String
     ReadOnly images As Dictionary(Of String, Image)
+    ReadOnly labelIntensity As Double = 0.2
 
     ''' <summary>
     ''' 
@@ -80,9 +81,16 @@ Public Class PeakAssign : Inherits Plot
     ''' <param name="barHighlight"></param>
     ''' <param name="theme"></param>
     ''' <param name="images">the annotated molecular parts image</param>
-    Public Sub New(title$, matrix As IEnumerable(Of ms2), barHighlight As String, theme As Theme, images As Dictionary(Of String, Image))
+    Public Sub New(title$,
+                   matrix As IEnumerable(Of ms2),
+                   barHighlight As String,
+                   labelIntensity As Double,
+                   theme As Theme,
+                   images As Dictionary(Of String, Image))
+
         MyBase.New(theme)
 
+        Me.labelIntensity = labelIntensity
         Me.title = title
         Me.matrix = matrix.ToArray
         Me.barHighlight = barHighlight
@@ -192,7 +200,7 @@ Public Class PeakAssign : Inherits Plot
                 .Height = bottomY - pt.Y,
                 .Width = barStyle.width
             }
-            Dim drawMzLabel As Boolean = product.intensity / maxinto >= 0.2
+            Dim drawMzLabel As Boolean = product.intensity / maxinto >= labelIntensity
 
             label = product.Annotation
 
@@ -326,6 +334,7 @@ Public Class PeakAssign : Inherits Plot
                                              Optional axisTicksCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.SegoeUI & ";",
                                              Optional axisStroke$ = Stroke.AxisStroke,
                                              Optional connectorStroke$ = "stroke: gray; stroke-width: 3.5px; stroke-dash: dash;",
+                                             Optional labelIntensity As Double = 0.2,
                                              Optional images As Dictionary(Of String, Image) = Nothing) As GraphicsData
 
         Dim theme As New Theme With {
@@ -340,7 +349,14 @@ Public Class PeakAssign : Inherits Plot
             .axisLabelCSS = axisLabelCSS,
             .tagLinkStroke = connectorStroke
         }
-        Dim app As New PeakAssign(matrix.name, matrix.ms2, barHighlight, theme, images)
+        Dim app As New PeakAssign(
+            title:=matrix.name,
+            matrix:=matrix.ms2,
+            barHighlight:=barHighlight,
+            labelIntensity:=labelIntensity,
+            theme:=theme,
+            images:=images
+        )
 
         Return app.Plot(size, ppi:=200)
     End Function
