@@ -189,10 +189,10 @@ Namespace Reader
                 If skipZero AndAlso into.Length = 0 Then
                     Continue For
                 Else
-                    Dim a = into.Where(Function(i) tolerance(mz1, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).Max
-                    Dim b = into.Where(Function(i) tolerance(mz2, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).Max
+                    Dim a = into.Where(Function(i) tolerance(mz1, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).ToArray
+                    Dim b = into.Where(Function(i) tolerance(mz2, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).ToArray
 
-                    Yield (point.X, point.Y, a, b)
+                    Yield (point.X, point.Y, a.Max, b.Max)
                 End If
             Next
         End Function
