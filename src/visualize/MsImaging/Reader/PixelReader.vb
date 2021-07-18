@@ -192,7 +192,7 @@ Namespace Reader
                     Dim a = into.Where(Function(i) tolerance(mz1, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).ToArray
                     Dim b = into.Where(Function(i) tolerance(mz2, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).ToArray
 
-                    Yield (point.X, point.Y, a.Max, b.Max)
+                    Yield (point.X, point.Y, If(a.Length = 0, 0.0, a.Max), If(b.Length = 0, 0.0, b.Max))
                 End If
             Next
         End Function
