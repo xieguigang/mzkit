@@ -116,8 +116,11 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
-        Return pixelReader.LoadPixels(mz, tolerance, skipZero)
+    Public Function LoadPixels(mz As Double(), tolerance As Tolerance,
+                               Optional skipZero As Boolean = True,
+                               Optional polygonFilter As Point() = Nothing) As IEnumerable(Of PixelData)
+
+        Return pixelReader.LoadPixels(mz, tolerance, skipZero, polygonFilter)
     End Function
 
     Public Function ShowSummaryRendering(summary As IntensitySummary,
@@ -333,7 +336,10 @@ Public Class Drawer : Implements IDisposable
                             .Select(Function(point)
                                         ' [x, y] point
                                         ' get the max level pixel
-                                        Return (From pt In point Order By pt.level Descending).First
+                                        Return (From pt As PixelData
+                                                In point
+                                                Order By pt.level
+                                                Descending).First
                                     End Function)
                     End Function) _
             .IteratesALL _

@@ -51,9 +51,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace Reader
 
@@ -130,17 +132,102 @@ Namespace Reader
             Next
         End Function
 
+
+        Public Iterator Function LoadRatioPixels(mz1 As Double, mz2 As Double, tolerance As Tolerance,
+                                                 Optional skipZero As Boolean = True,
+                                                 Optional polygonFilter As Point() = Nothing) As IEnumerable(Of PixelData)
+
+            Dim all = LoadRatioPixelsInternal(mz1, mz2, tolerance, skipZero, polygonFilter).ToArray
+            Dim amin = all.Where(Function(i) i.a > 0).Select(Function(i) i.a).Min / 2
+            Dim bmin = all.Where(Function(i) i.b > 0).Select(Function(i) i.b).Min / 2
+
+            For Each p In all
+                Dim a As Double = If(p.a = 0.0, amin, p.a)
+                Dim b As Double = If(p.b = 0.0, bmin, p.b)
+
+                Yield New PixelData With {
+                    .intensity = stdNum.Log(a / b, 2),
+                    .x = p.x,
+                    .y = p.y
+                }
+            Next
+        End Function
+
+        Private Iterator Function LoadRatioPixelsInternal(mz1 As Double, mz2 As Double, tolerance As Tolerance,
+                                                          Optional skipZero As Boolean = True,
+                                                          Optional polygonFilter As Point() = Nothing) As IEnumerable(Of (x As Integer, y As Integer, a As Double, b As Double))
+
+            Dim filter As Index(Of String) = Nothing
+
+            If Not polygonFilter.IsNullOrEmpty Then
+                filter = polygonFilter _
+                    .Select(Function(p) $"{p.X},{p.Y}") _
+                    .Indexing
+            End If
+
+            Dim twoMz As Double() = {mz1, mz2}
+
+            For Each point As PixelScan In FindMatchedPixels(twoMz, tolerance) _
+                .Where(Function(p)
+                           If filter Is Nothing Then
+                               Return True
+                           Else
+                               Return $"{p.X},{p.Y}" Like filter
+                           End If
+                       End Function)
+
+                Dim msScan As ms2() = point.GetMs
+                Dim into As NamedCollection(Of ms2)() = msScan _
+                    .Where(Function(mzi)
+                               Return twoMz.Any(Function(dmz) tolerance(mzi.mz, dmz))
+                           End Function) _
+                    .GroupBy(Function(a) a.mz, tolerance) _
+                    .ToArray
+
+                Call Application.DoEvents()
+
+                If skipZero AndAlso into.Length = 0 Then
+                    Continue For
+                Else
+                    Dim a = into.Where(Function(i) tolerance(mz1, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).Max
+                    Dim b = into.Where(Function(i) tolerance(mz2, Val(i.name))).Select(Function(i) i.value).IteratesALL.Select(Function(i) i.intensity).Max
+
+                    Yield (point.X, point.Y, a, b)
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' load pixels data for match a given list of m/z ions with tolerance
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="tolerance"></param>
         ''' <param name="skipZero"></param>
+        ''' <param name="polygonFilter">
+        ''' Only select the pixels in this polygon
+        ''' </param>
         ''' <returns></returns>
-        Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+        Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance,
+                                            Optional skipZero As Boolean = True,
+                                            Optional polygonFilter As Point() = Nothing) As IEnumerable(Of PixelData)
             Dim pixel As PixelData
+            Dim filter As Index(Of String) = Nothing
 
-            For Each point As PixelScan In FindMatchedPixels(mz, tolerance)
+            If Not polygonFilter.IsNullOrEmpty Then
+                filter = polygonFilter _
+                    .Select(Function(p) $"{p.X},{p.Y}") _
+                    .Indexing
+            End If
+
+            For Each point As PixelScan In FindMatchedPixels(mz, tolerance) _
+                .Where(Function(p)
+                           If filter Is Nothing Then
+                               Return True
+                           Else
+                               Return $"{p.X},{p.Y}" Like filter
+                           End If
+                       End Function)
+
                 Dim msScan As ms2() = point.GetMs
                 Dim into As NamedCollection(Of ms2)() = msScan _
                     .Where(Function(mzi)
