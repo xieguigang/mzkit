@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::c05023d32ff309dbdd4f5972a4253767, src\metadb\Chemoinformatics\Formula\Element.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Element
-    ' 
-    '         Properties: charge, isotopic, name
-    ' 
-    '         Function: MemoryLoadElements, MemoryPopulateElements, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Element
+' 
+'         Properties: charge, isotopic, name
+' 
+'         Function: MemoryLoadElements, MemoryPopulateElements, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Formula
@@ -63,14 +65,25 @@ Namespace Formula
     ''' </summary>
     Public Class Element
 
+        ''' <summary>
+        ''' the element atom symbol
+        ''' </summary>
+        ''' <returns></returns>
         Public Property symbol As String
-
+        Public Property z As Integer
+        Public Property meta As Dictionary(Of String, Object)
+        ''' <summary>
+        ''' common name of current element atom symbol
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property name As String
         Public Property charge As Integer
         ''' <summary>
         ''' isotopic Element Weights
         ''' </summary>
         ''' <returns></returns>
         Public Property isotopic As Double
+        Public Property isotopes As Isotope()
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -82,10 +95,19 @@ Namespace Formula
 
         Public Const H As Double = 1.0078246
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function Isotope(mass As Double, prob As Double, num As Integer) As Isotope
+            Return New Isotope With {.Mass = mass, .Prob = prob, .NumNeutrons = num}
+        End Function
+
         Private Shared Iterator Function MemoryPopulateElements() As IEnumerable(Of Element)
-            Yield New Element With {.symbol = "H", .charge = 1, .isotopic = H}
-            Yield New Element With {.symbol = "He", .charge = 0, .isotopic = 4.0026029}
-            Yield New Element With {.symbol = "Li", .charge = 1, .isotopic = 7.016005}
+            Yield New Element With {.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = {Isotope(1.0078250321, 0.999885, 1),
+                Isotope(2.014101778, 0.000115, 2)}}
+            Yield New Element With {.symbol = "D", .name = "Deuterium", .charge = 1, .isotopic = 2.014101778, .isotopes = {Isotope(2.014101778, 0.000115, 2)}}
+            Yield New Element With {.symbol = "He", .name = "Helium", .charge = 0, .isotopic = 4.0026029, .isotopes = {Isotope(3.0160293097, 0.00000137, 3),
+                  Isotope(4.0026032497, 0.99999863, 4)}}
+            Yield New Element With {.symbol = "Li", .name = "Lithium", .charge = 1, .isotopic = 7.016005, .isotopes = {Isotope(6.0151223, 0.0759, 6),
+                  Isotope(7.016004, 0.9241, 7)}}
             Yield New Element With {.symbol = "Be", .charge = 2, .isotopic = 9.012183}
             Yield New Element With {.symbol = "B", .charge = 3, .isotopic = 11.009305}
             Yield New Element With {.symbol = "C", .charge = 4, .isotopic = 12}
