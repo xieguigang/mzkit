@@ -101,20 +101,17 @@ Namespace Formula
         End Function
 
         Private Shared Iterator Function MemoryPopulateElements() As IEnumerable(Of Element)
-            Yield New Element With {.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = {Isotope(1.0078250321, 0.999885, 1),
-                Isotope(2.014101778, 0.000115, 2)}}
+            Yield New Element With {.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = {Isotope(1.0078250321, 0.999885, 1), Isotope(2.014101778, 0.000115, 2)}}
             Yield New Element With {.symbol = "D", .name = "Deuterium", .charge = 1, .isotopic = 2.014101778, .isotopes = {Isotope(2.014101778, 0.000115, 2)}}
-            Yield New Element With {.symbol = "He", .name = "Helium", .charge = 0, .isotopic = 4.0026029, .isotopes = {Isotope(3.0160293097, 0.00000137, 3),
-                  Isotope(4.0026032497, 0.99999863, 4)}}
-            Yield New Element With {.symbol = "Li", .name = "Lithium", .charge = 1, .isotopic = 7.016005, .isotopes = {Isotope(6.0151223, 0.0759, 6),
-                  Isotope(7.016004, 0.9241, 7)}}
-            Yield New Element With {.symbol = "Be", .charge = 2, .isotopic = 9.012183}
-            Yield New Element With {.symbol = "B", .charge = 3, .isotopic = 11.009305}
-            Yield New Element With {.symbol = "C", .charge = 4, .isotopic = 12}
-            Yield New Element With {.symbol = "N", .charge = -3, .isotopic = 14.003074}
-            Yield New Element With {.symbol = "O", .charge = -2, .isotopic = 15.994915}
-            Yield New Element With {.symbol = "F", .charge = -1, .isotopic = 18.9984032}
-            Yield New Element With {.symbol = "Ne", .charge = 0, .isotopic = 19.992439}
+            Yield New Element With {.symbol = "He", .name = "Helium", .charge = 0, .isotopic = 4.0026029, .isotopes = {Isotope(3.0160293097, 0.00000137, 3), Isotope(4.0026032497, 0.99999863, 4)}}
+            Yield New Element With {.symbol = "Li", .name = "Lithium", .charge = 1, .isotopic = 7.016005, .isotopes = {Isotope(6.0151223, 0.0759, 6), Isotope(7.016004, 0.9241, 7)}}
+            Yield New Element With {.symbol = "Be", .name = "Beryllium", .charge = 2, .isotopic = 9.012183, .isotopes = {Isotope(9.0121821, 1.0, 9)}}
+            Yield New Element With {.symbol = "B", .name = "Boron", .charge = 3, .isotopic = 11.009305, .isotopes = {Isotope(10.012937, 0.199, 10), Isotope(11.0093055, 0.801, 11)}}
+            Yield New Element With {.symbol = "C", .name = "Carbon", .charge = 4, .isotopic = 12, .isotopes = {Isotope(12.0, 0.9893, 12), Isotope(13.0033548378, 0.0107, 13)}}
+            Yield New Element With {.symbol = "N", .name = "Nitrogen", .charge = -3, .isotopic = 14.003074, .isotopes = {Isotope(14.0030740052, 0.99632, 14), Isotope(15.0001088984, 0.00368, 15)}}
+            Yield New Element With {.symbol = "O", .name = "Oxygen", .charge = -2, .isotopic = 15.994915, .isotopes = {Isotope(15.9949146221, 0.99757, 16), Isotope(16.9991315, 0.00038, 17), Isotope(17.9991604, 0.00205, 18)}}
+            Yield New Element With {.symbol = "F", .name = "Fluorine", .charge = -1, .isotopic = 18.9984032, .isotopes = {Isotope(18.9984032, 1.0, 19)}}
+            Yield New Element With {.symbol = "Ne", .name = "Neon", .charge = 0, .isotopic = 19.992439, .isotopes = {Isotope(19.9924401759, 0.9048, 20), Isotope(20.99384674, 0.0027, 21), Isotope(21.99138551, 0.0925, 22)}}
             Yield New Element With {.symbol = "Na", .charge = 1, .isotopic = 22.98977}
             Yield New Element With {.symbol = "Mg", .charge = 2, .isotopic = 23.98505}
             Yield New Element With {.symbol = "Al", .charge = 3, .isotopic = 26.981541}
