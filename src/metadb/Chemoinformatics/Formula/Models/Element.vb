@@ -112,27 +112,65 @@ Namespace Formula
             Yield New Element With {.symbol = "O", .name = "Oxygen", .charge = -2, .isotopic = 15.994915, .isotopes = {Isotope(15.9949146221, 0.99757, 16), Isotope(16.9991315, 0.00038, 17), Isotope(17.9991604, 0.00205, 18)}}
             Yield New Element With {.symbol = "F", .name = "Fluorine", .charge = -1, .isotopic = 18.9984032, .isotopes = {Isotope(18.9984032, 1.0, 19)}}
             Yield New Element With {.symbol = "Ne", .name = "Neon", .charge = 0, .isotopic = 19.992439, .isotopes = {Isotope(19.9924401759, 0.9048, 20), Isotope(20.99384674, 0.0027, 21), Isotope(21.99138551, 0.0925, 22)}}
-            Yield New Element With {.symbol = "Na", .charge = 1, .isotopic = 22.98977}
-            Yield New Element With {.symbol = "Mg", .charge = 2, .isotopic = 23.98505}
-            Yield New Element With {.symbol = "Al", .charge = 3, .isotopic = 26.981541}
-            Yield New Element With {.symbol = "Si", .charge = 4, .isotopic = 27.976928}
-            Yield New Element With {.symbol = "P", .charge = -3, .isotopic = 30.973763}
-            Yield New Element With {.symbol = "S", .charge = -2, .isotopic = 31.972072}
-            Yield New Element With {.symbol = "Cl", .charge = -1, .isotopic = 34.968853}
-            Yield New Element With {.symbol = "Ar", .charge = 0, .isotopic = 39.962383}
-            Yield New Element With {.symbol = "K", .charge = 1, .isotopic = 38.963708}
-            Yield New Element With {.symbol = "Ca", .charge = 2, .isotopic = 39.962591}
-            Yield New Element With {.symbol = "Sc", .charge = 3, .isotopic = 44.955914}
-            Yield New Element With {.symbol = "Ti", .charge = 4, .isotopic = 47.947947}
-            Yield New Element With {.symbol = "V", .charge = 5, .isotopic = 50.943963}
-            Yield New Element With {.symbol = "Cr", .charge = 3, .isotopic = 51.94051}
-            Yield New Element With {.symbol = "Mn", .charge = 2, .isotopic = 54.938046}
-            Yield New Element With {.symbol = "Fe", .charge = 3, .isotopic = 55.934939}
-            Yield New Element With {.symbol = "Co", .charge = 2, .isotopic = 58.933198}
-            Yield New Element With {.symbol = "Ni", .charge = 2, .isotopic = 57.935347}
-            Yield New Element With {.symbol = "Cu", .charge = 2, .isotopic = 62.929599}
-            Yield New Element With {.symbol = "Zn", .charge = 2, .isotopic = 63.929145}
-            Yield New Element With {.symbol = "Ga", .charge = 3, .isotopic = 68.925581}
+            Yield New Element With {.symbol = "Na", .name = "Sodium", .charge = 1, .isotopic = 22.98977, .isotopes = {Isotope(22.98976967, 1.0, 23)}}
+            Yield New Element With {.symbol = "Mg", .name = "Magnesium", .charge = 2, .isotopic = 23.98505, .isotopes = {Isotope(23.9850419, 0.7899, 24),
+                   Isotope(24.98583702, 0.1, 25),
+                   Isotope(25.98259304, 0.1101, 26)}}
+            Yield New Element With {.symbol = "Al", .name = "Aluminium", .charge = 3, .isotopic = 26.981541, .isotopes = {Isotope(26.98153844, 1.0, 27)}}
+            Yield New Element With {.symbol = "Si", .name = "Silicon", .charge = 4, .isotopic = 27.976928, .isotopes = {Isotope(27.9769265327, 0.922297, 28),
+                   Isotope(28.97649472, 0.046832, 29),
+                   Isotope(29.97377022, 0.030871, 30)}}
+            Yield New Element With {.symbol = "P", .name = "Phosphorus", .charge = -3, .isotopic = 30.973763, .isotopes = {Isotope(30.97376151, 1.0, 31)}}
+            Yield New Element With {.symbol = "S", .name = "Sulfur", .charge = -2, .isotopic = 31.972072, .isotopes = {Isotope(31.97207069, 0.9493, 32),
+                   Isotope(32.9714585, 0.0076, 33),
+                   Isotope(33.96786683, 0.0429, 34),
+                   Isotope(35.96708088, 0.0002, 36)}}
+            Yield New Element With {.symbol = "Cl", .name = "Chlorine", .charge = -1, .isotopic = 34.968853, .isotopes = {Isotope(34.96885271, 0.7578, 35),
+                   Isotope(36.9659026, 0.2422, 37)}}
+            Yield New Element With {.symbol = "Ar", .name = "Argon", .charge = 0, .isotopic = 39.962383, .isotopes = {Isotope(35.96754628, 0.003365, 36),
+                  Isotope(37.9627322, 0.000632, 38),
+                   Isotope(39.962383123, 0.996003, 40)}}
+            Yield New Element With {.symbol = "K", .name = "Potassium", .charge = 1, .isotopic = 38.963708, .isotopes = {Isotope(38.9637069, 0.932581, 39),
+                   Isotope(39.96399867, 0.000117, 40),
+                   Isotope(40.96182597, 0.067302, 41)}}
+            Yield New Element With {.symbol = "Ca", .name = "Calcium", .charge = 2, .isotopic = 39.962591, .isotopes = {Isotope(39.9625912, 0.96941, 40),
+                   Isotope(41.9586183, 0.00647, 42),
+                   Isotope(42.9587668, 0.00135, 43),
+                   Isotope(43.9554811, 0.02086, 44),
+                   Isotope(45.9536928, 4e-05, 46),
+                   Isotope(47.952534, 0.00187, 48)}}
+            Yield New Element With {.symbol = "Sc", .name = "Scandium", .charge = 3, .isotopic = 44.955914, .isotopes = {Isotope(44.9559102, 1.0, 45)}}
+            Yield New Element With {.symbol = "Ti", .name = "Titanium", .charge = 4, .isotopic = 47.947947, .isotopes = {Isotope(45.9526295, 0.0825, 46),
+                   Isotope(46.9517638, 0.0744, 47),
+                   Isotope(47.9479471, 0.7372, 48),
+                   Isotope(48.9478708, 0.0541, 49),
+                   Isotope(49.9447921, 0.0518, 50)}}
+            Yield New Element With {.symbol = "V", .name = "Vanadium", .charge = 5, .isotopic = 50.943963, .isotopes = {Isotope(49.9471628, 0.0025, 50),
+                   Isotope(50.9439637, 0.9975, 51)}}
+            Yield New Element With {.symbol = "Cr", .name = "Chromium", .charge = 3, .isotopic = 51.94051, .isotopes = {Isotope(49.9460496, 0.04345, 50),
+                   Isotope(51.9405119, 0.83789, 52),
+                   Isotope(52.9406538, 0.09501, 53),
+                   Isotope(53.9388849, 0.02365, 54)}}
+            Yield New Element With {.symbol = "Mn", .name = "Manganese", .charge = 2, .isotopic = 54.938046, .isotopes = {Isotope(54.9380496, 1.0, 55)}}
+            Yield New Element With {.symbol = "Fe", .name = "Iron", .charge = 3, .isotopic = 55.934939, .isotopes = {Isotope(53.9396148, 0.05845, 54),
+                   Isotope(55.9349421, 0.91754, 56),
+                   Isotope(56.9353987, 0.02119, 57),
+                   Isotope(57.9332805, 0.00282, 58)}}
+            Yield New Element With {.symbol = "Co", .name = "Cobalt", .charge = 2, .isotopic = 58.933198, .isotopes = {Isotope(58.9332002, 1.0, 59)}}
+            Yield New Element With {.symbol = "Ni", .name = "Nickel", .charge = 2, .isotopic = 57.935347, .isotopes = {Isotope(57.9353479, 0.680769, 58),
+                   Isotope(59.9307906, 0.262231, 60),
+                   Isotope(60.9310604, 0.011399, 61),
+                   Isotope(61.9283488, 0.036345, 62),
+                   Isotope(63.9279696, 0.009256, 64)}}
+            Yield New Element With {.symbol = "Cu", .name = "Copper", .charge = 2, .isotopic = 62.929599, .isotopes = {Isotope(62.9296011, 0.6917, 63),
+                   Isotope(64.9277937, 0.3083, 65)}}
+            Yield New Element With {.symbol = "Zn", .name = "Zinc", .charge = 2, .isotopic = 63.929145, .isotopes = {Isotope(63.9291466, 0.4863, 64),
+                   Isotope(65.9260368, 0.279, 66),
+                   Isotope(66.9271309, 0.041, 67),
+                   Isotope(67.9248476, 0.1875, 68),
+                   Isotope(69.925325, 0.0062, 70)}}
+            Yield New Element With {.symbol = "Ga", .name = "Gallium", .charge = 3, .isotopic = 68.925581, .isotopes = {Isotope(68.925581, 0.60108, 69),
+                   Isotope(70.924705, 0.39892, 71)}}
             Yield New Element With {.symbol = "Ge", .charge = 4, .isotopic = 71.92208}
             Yield New Element With {.symbol = "As", .charge = -3, .isotopic = 74.921596}
             Yield New Element With {.symbol = "Se", .charge = -2, .isotopic = 79.916521}
