@@ -449,6 +449,7 @@
     <Compile Include="Formula\ElementNumType.vb" />
     <Compile Include="Formula\FormalCharge.vb" />
     <Compile Include="Formula\HeteroatomRatioCheck.vb" />
+    <Compile Include="Formula\Isotopic\Calculator.vb" />
     <Compile Include="Formula\Models\FormulaComposition.vb" />
     <Compile Include="Formula\SearchOption.vb" />
     <Compile Include="Formula\FormulaSearch.vb" />
@@ -516,5 +517,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
