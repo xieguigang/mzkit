@@ -67,6 +67,12 @@ Public Class MSFileReader : Implements IDisposable
         End Get
     End Property
 
+    Public ReadOnly Property FileName As String
+        Get
+            Return mRawFileReader.RawFilePath
+        End Get
+    End Property
+
     ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>
