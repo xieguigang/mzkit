@@ -9,7 +9,7 @@ Namespace Formula.IsotopicPatterns
         Shared ReadOnly pse As Dictionary(Of String, Element) = Element.MemoryLoadElements
         Shared ReadOnly _max_list_len As Integer = 100000
 
-        Public Property ds As Double()()
+        Public Property ds As CountItem()
         Public Property xs As Double()
         Public Property ys As Double()
 
@@ -18,12 +18,12 @@ Namespace Formula.IsotopicPatterns
                 Optional pad_right As Double = 3, Optional interpolate_grid As Double = 0.005) As IsotopeDistribution
             Console.WriteLine("Simulating isotopic distribution ...")
 
-            Dim ds As Double()() = _generate_dir(sum_formula, prob_threshold = prob_threshold)
+            Dim ds As CountItem() = _generate_dir(sum_formula, prob_threshold = prob_threshold)
 
             Console.WriteLine("Simulating gaussians...")
 
-            Dim xs As Double() = (From d In ds Select d(3)).ToArray
-            Dim ys As Double() = (From d In ds Select d(2)).ToArray
+            Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
+            Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
             Dim x_min = xs.Min - pad_left
             Dim x_max = xs.Max + pad_right
             Dim plot_xs = Calculator.frange(x_min, x_max, interpolate_grid).ToArray
@@ -48,7 +48,7 @@ Namespace Formula.IsotopicPatterns
             }
         End Function
 
-        Private Shared Function _generate_dir(sum_formula As Formula, Optional prob_threshold As Double = 0.001) As Double()()
+        Private Shared Function _generate_dir(sum_formula As Formula, Optional prob_threshold As Double = 0.001) As CountItem()
             Dim lst As New List(Of CountItem)
 
             For Each a As KeyValuePair(Of String, Integer) In sum_formula.CountsByElement
@@ -66,7 +66,7 @@ Namespace Formula.IsotopicPatterns
                     Dim items_to_append = New List(Of CountItem)
                     For Each itm In lst
                         For Each i In Range(1, num_atoms + 1)
-                            items_to_append.Append((itm(0) & [atom_type] & i, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
+                            items_to_append.Append(({itm(0)}.JoinIterates(RepeatString([atom_type], i)).ToArray, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
                         Next
                     Next
                     ' prevent addition Of very unlikely isotope distributions
@@ -81,10 +81,10 @@ Namespace Formula.IsotopicPatterns
                 lst = lst.Where(Function(itm) _contains_num_atoms_of_type(itm(0), num_atoms, atom_type))
             Next
 
-            Return _filter_according_to_sum_formula(lst, sum_formula)
+            Return _filter_according_to_sum_formula(lst, sum_formula).ToArray
         End Function
 
-        Public Shared Iterator Function _filter_according_to_sum_formula(lst As List(Of Object), sf As Formula) As IEnumerable
+        Private Shared Iterator Function _filter_according_to_sum_formula(lst As List(Of CountItem), sf As Formula) As IEnumerable(Of CountItem)
             For Each itm In lst
                 If (From tup In sf.CountsByElement Select _contains_num_atoms_of_type(itm(0), tup.Value, tup.Key)).All Then
                     Yield itm
@@ -92,15 +92,15 @@ Namespace Formula.IsotopicPatterns
             Next
         End Function
 
-        Private Shared Function _contains_num_atoms_of_type(lst_of_atom_types As IEnumerable(Of String), num_atoms As Integer, atom_type As String) As Boolean
+        Private Shared Function _contains_num_atoms_of_type(lst_of_atom_types As String(), num_atoms As Integer, atom_type As String) As Boolean
             Dim predicate = (From itm In lst_of_atom_types Where itm = atom_type).Count = num_atoms
             Return predicate
         End Function
     End Class
 
-    Friend Structure CountItem
+    Public Structure CountItem
 
-        Private atom_type$, nom_mass#, prob#, abs_mass#
+        Dim atom_type(), nom_mass#, prob#, abs_mass#
 
         Default Public ReadOnly Property Item(i As Integer) As Object
             Get
@@ -115,7 +115,16 @@ Namespace Formula.IsotopicPatterns
             End Get
         End Property
 
-        Public Shared Widening Operator CType(itm As (atom_type$, nom_mass#, prob#, abs_mass#)) As CountItem
+        Public Shared Widening Operator CType(itm As (atom_type As String, nom_mass#, prob#, abs_mass#)) As CountItem
+            Return New CountItem With {
+                .abs_mass = itm.abs_mass,
+                .atom_type = {itm.atom_type},
+                .nom_mass = itm.nom_mass,
+                .prob = itm.prob
+            }
+        End Operator
+
+        Public Shared Widening Operator CType(itm As (atom_type As String(), nom_mass#, prob#, abs_mass#)) As CountItem
             Return New CountItem With {
                 .abs_mass = itm.abs_mass,
                 .atom_type = itm.atom_type,
