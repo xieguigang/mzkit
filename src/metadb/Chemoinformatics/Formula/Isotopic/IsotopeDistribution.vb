@@ -49,24 +49,24 @@ Namespace Formula.IsotopicPatterns
         End Function
 
         Private Shared Function _generate_dir(sum_formula As Formula, Optional prob_threshold As Double = 0.001) As Double()()
-            Dim lst As New List(Of Object)
+            Dim lst As New List(Of CountItem)
 
-            For Each a In sum_formula.CountsByElement
+            For Each a As KeyValuePair(Of String, Integer) In sum_formula.CountsByElement
                 Dim atom_type = a.Key
                 Dim num_atoms = a.Value
-                Dim elt = pse(atom_type)
+                Dim elt As Element = pse(atom_type)
                 ' Iterate over isotopes indexed by nominal masses
-                For Each isotope In elt.isotopes
+                For Each isotope As Isotope In elt.isotopes
                     Dim prob = isotope.Prob
                     Dim abs_mass = isotope.Mass
-                    Dim nom_mass As Double = isotope.Mass
+                    Dim nom_mass As Double = isotope.NumNeutrons
                     ' Each iso dist Is made up Of atom types, nominal masses,
                     ' the probability And the mass Of all atoms together.
                     lst.Append(([atom_type], [nom_mass], prob, abs_mass))
-                    Dim items_to_append = New List(Of Object)
+                    Dim items_to_append = New List(Of CountItem)
                     For Each itm In lst
                         For Each i In Range(1, num_atoms + 1)
-                            items_to_append.Append((itm(0) + [atom_type] * i, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
+                            items_to_append.Append((itm(0) & [atom_type] & i, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
                         Next
                     Next
                     ' prevent addition Of very unlikely isotope distributions
@@ -74,7 +74,7 @@ Namespace Formula.IsotopicPatterns
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
 
-                    If Not (Len(lst) < _max_list_len) Then
+                    If Not (lst < _max_list_len) Then
                         Throw New NotImplementedException
                     End If
                 Next
@@ -97,4 +97,31 @@ Namespace Formula.IsotopicPatterns
             Return predicate
         End Function
     End Class
+
+    Friend Structure CountItem
+
+        Private atom_type$, nom_mass#, prob#, abs_mass#
+
+        Default Public ReadOnly Property Item(i As Integer) As Object
+            Get
+                Select Case i
+                    Case 0 : Return atom_type
+                    Case 1 : Return nom_mass
+                    Case 2 : Return prob
+                    Case 3 : Return abs_mass
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+            End Get
+        End Property
+
+        Public Shared Widening Operator CType(itm As (atom_type$, nom_mass#, prob#, abs_mass#)) As CountItem
+            Return New CountItem With {
+                .abs_mass = itm.abs_mass,
+                .atom_type = itm.atom_type,
+                .nom_mass = itm.nom_mass,
+                .prob = itm.prob
+            }
+        End Operator
+    End Structure
 End Namespace
