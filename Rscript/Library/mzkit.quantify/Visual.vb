@@ -177,7 +177,7 @@ Module Visual
                 title:=title,
                 showMRMRegion:=True,
                 showAccumulateLine:=True,
-                size:=InteropArgumentHelper.getSize(size, "2100,1650"),
+                size:=InteropArgumentHelper.getSize(size, env, "2100,1650"),
                 padding:=InteropArgumentHelper.getPadding(padding),
                 curveStyle:=lineStyle
             )
@@ -191,7 +191,7 @@ Module Visual
                         End Function) _
                 .ToArray _
                 .TICplot(
-                    size:=InteropArgumentHelper.getSize(size, "2200,1440"),
+                    size:=InteropArgumentHelper.getSize(size, env, "2200,1440"),
                     margin:=InteropArgumentHelper.getPadding(padding),
                     fillCurve:=fill,
                     gridFill:=gridFill,
