@@ -238,123 +238,99 @@ Namespace Formula
                    Isotope(135.90457, 0.07854, 136),
                    Isotope(136.905821, 0.11232, 137),
                    Isotope(137.905241, 0.71698, 138)}}
-            Yield New Element With {.symbol = "La", .name = "Lanthanum", .charge = 3, .isotopic = 138.906355, .isotopes = {138: Isotope(137.907107, 0.0009, 138),
-                  139: Isotope(138.906348, 0.9991, 139)}}
-            Yield New Element With {.symbol = "Ce", .name = "Cerium", .charge = 3, .isotopic = 139.905442, .isotopes = {136: Isotope(135.90714, 0.00185, 136),
-                  138: Isotope(137.905986, 0.00251, 138),
-                  140: Isotope(139.905434, 0.8845, 140),
-                  142: Isotope(141.90924, 0.11114, 142)}}
-            Yield New Element With {.symbol = "Pr", .name = "Praseodymium", .charge = 4, .isotopic = 140.907657, .isotopes = {141: Isotope(140.907648, 1.0, 141)}}
-            Yield New Element With {.symbol = "Nd", .name = "Neodymium", .charge = 3, .isotopic = 141.907731, .isotopes = {142: Isotope(141.907719, 0.272, 142),
-                  143: Isotope(142.90981, 0.122, 143),
-                  144: Isotope(143.910083, 0.238, 144),
-                  145: Isotope(144.912569, 0.083, 145),
-                  146: Isotope(145.913112, 0.172, 146),
-                  148: Isotope(147.916889, 0.057, 148),
-                  150: Isotope(149.920887, 0.056, 150)}}
-            Yield New Element With {.symbol = "Pm", .name = "Promethium", .charge = 3, .isotopic = 145, .isotopes = {145: Isotope(144.912744, 1.0, 145)}}
-            Yield New Element With {.symbol = "Sm", .name = "Samarium", .charge = 3, .isotopic = 151.919741, .isotopes = {144: Isotope(143.911995, 0.0307, 144),
-                  147: Isotope(146.914893, 0.1499, 147),
-                  148: Isotope(147.914818, 0.1124, 148),
-                  149: Isotope(148.91718, 0.1382, 149),
-                  150: Isotope(149.917271, 0.0738, 150),
-                  152: Isotope(151.919728, 0.2675, 152),
-                  154: Isotope(153.922205, 0.2275, 154)}}
-            Yield New Element With {.symbol = "Eu", .name = "Europium", .charge = 3, .isotopic = 152.921243, .isotopes = {151: Isotope(150.919846, 0.4781, 151),
-                  153: Isotope(152.921226, 0.5219, 153)}}
-            Yield New Element With {.symbol = "Gd", .name = "Gadolinium", .charge = 3, .isotopic = 157.924111, .isotopes = {152: Isotope(151.919788, 0.002, 152),
-                  154: Isotope(153.920862, 0.0218, 154),
-                  155: Isotope(154.922619, 0.148, 155),
-                  156: Isotope(155.92212, 0.2047, 156),
-                  157: Isotope(156.923957, 0.1565, 157),
-                  158: Isotope(157.924101, 0.2484, 158),
-                  160: Isotope(159.927051, 0.2186, 160)}}
-            Yield New Element With {.symbol = "Tb", .name = "Terbium", .charge = 3, .isotopic = 158.92535, .isotopes = {159: Isotope(158.925343, 1.0, 159)}}
-            Yield New Element With {.symbol = "Dy", .name = "Dysprosium", .charge = 3, .isotopic = 163.929183, .isotopes = {156: Isotope(155.924278, 0.0006, 156),
-                  158: Isotope(157.924405, 0.001, 158),
-                  160: Isotope(159.925194, 0.0234, 160),
-                  161: Isotope(160.92693, 0.1891, 161),
-                  162: Isotope(161.926795, 0.2551, 162),
-                  163: Isotope(162.928728, 0.249, 163),
-                  164: Isotope(163.929171, 0.2818, 164)}}
-            Yield New Element With {.symbol = "Ho", .name = "Holmium", .charge = 3, .isotopic = 164.930332, .isotopes = {165: Isotope(164.930319, 1.0, 165)}}
-            Yield New Element With {.symbol = "Er", .name = "Erbium", .charge = 3, .isotopic = 165.930305, .isotopes = {162: Isotope(161.928775, 0.0014, 162),
-                  164: Isotope(163.929197, 0.0161, 164),
-                  166: Isotope(165.93029, 0.3361, 166),
-                  167: Isotope(166.932045, 0.2293, 167),
-                  168: Isotope(167.932368, 0.2678, 168),
-                  170: Isotope(169.93546, 0.1493, 170)}}
-            Yield New Element With {.symbol = "Tm", .name = "Thulium", .charge = 3, .isotopic = 168.934225, .isotopes = {169: Isotope(168.934211, 1.0, 169)}}
-            Yield New Element With {.symbol = "Yb", .name = "Ytterbium", .charge = 3, .isotopic = 173.938873, .isotopes = {168: Isotope(167.933894, 0.0013, 168),
-                  170: Isotope(169.934759, 0.0304, 170),
-                  171: Isotope(170.936322, 0.1428, 171),
-                  172: Isotope(171.9363777, 0.2183, 172),
-                  173: Isotope(172.9382068, 0.1613, 173),
-                  174: Isotope(173.9388581, 0.3183, 174),
-                  176: Isotope(175.942568, 0.1276, 176)}}
-            Yield New Element With {.symbol = "Lu", .name = "Lutetium", .charge = 3, .isotopic = 174.940785, .isotopes = {175: Isotope(174.9407679, 0.9741, 175),
-                  176: Isotope(175.9426824, 0.0259, 176)}}
-            Yield New Element With {.symbol = "Hf", .name = "Hafnium", .charge = 4, .isotopic = 179.946561, .isotopes = {174: Isotope(173.94004, 0.0016, 174),
-                  176: Isotope(175.9414018, 0.0526, 176),
-                  177: Isotope(176.94322, 0.186, 177),
-                  178: Isotope(177.9436977, 0.2728, 178),
-                  179: Isotope(178.9458151, 0.1362, 179),
-                  180: Isotope(179.9465488, 0.3508, 180)}}
-            Yield New Element With {.symbol = "Ta", .name = "Tantalum", .charge = 5, .isotopic = 180.948014, .isotopes = {180: Isotope(179.947466, 0.00012, 180),
-                  181: Isotope(180.947996, 0.99988, 181)}}
-            Yield New Element With {.symbol = "W", .name = "Tungsten", .charge = 6, .isotopic = 183.950953, .isotopes = {180: Isotope(179.946706, 0.0012, 180),
+            Yield New Element With {.symbol = "La", .name = "Lanthanum", .charge = 3, .isotopic = 138.906355, .isotopes = {Isotope(137.907107, 0.0009, 138),
+                   Isotope(138.906348, 0.9991, 139)}}
+            Yield New Element With {.symbol = "Ce", .name = "Cerium", .charge = 3, .isotopic = 139.905442, .isotopes = {Isotope(135.90714, 0.00185, 136),
+                   Isotope(137.905986, 0.00251, 138),
+                   Isotope(139.905434, 0.8845, 140),
+                   Isotope(141.90924, 0.11114, 142)}}
+            Yield New Element With {.symbol = "Pr", .name = "Praseodymium", .charge = 4, .isotopic = 140.907657, .isotopes = {Isotope(140.907648, 1.0, 141)}}
+            Yield New Element With {.symbol = "Nd", .name = "Neodymium", .charge = 3, .isotopic = 141.907731, .isotopes = {Isotope(141.907719, 0.272, 142),
+                   Isotope(142.90981, 0.122, 143),
+                   Isotope(143.910083, 0.238, 144),
+                   Isotope(144.912569, 0.083, 145),
+                   Isotope(145.913112, 0.172, 146),
+                   Isotope(147.916889, 0.057, 148),
+                   Isotope(149.920887, 0.056, 150)}}
+            Yield New Element With {.symbol = "Pm", .name = "Promethium", .charge = 3, .isotopic = 145, .isotopes = {Isotope(144.912744, 1.0, 145)}}
+            Yield New Element With {.symbol = "Sm", .name = "Samarium", .charge = 3, .isotopic = 151.919741, .isotopes = {Isotope(143.911995, 0.0307, 144),
+                   Isotope(146.914893, 0.1499, 147),
+                   Isotope(147.914818, 0.1124, 148),
+                   Isotope(148.91718, 0.1382, 149),
+                   Isotope(149.917271, 0.0738, 150),
+                   Isotope(151.919728, 0.2675, 152),
+                   Isotope(153.922205, 0.2275, 154)}}
+            Yield New Element With {.symbol = "Eu", .name = "Europium", .charge = 3, .isotopic = 152.921243, .isotopes = {Isotope(150.919846, 0.4781, 151),
+                   Isotope(152.921226, 0.5219, 153)}}
+            Yield New Element With {.symbol = "Gd", .name = "Gadolinium", .charge = 3, .isotopic = 157.924111, .isotopes = {Isotope(151.919788, 0.002, 152),
+                   Isotope(153.920862, 0.0218, 154),
+                   Isotope(154.922619, 0.148, 155),
+                   Isotope(155.92212, 0.2047, 156),
+                   Isotope(156.923957, 0.1565, 157),
+                   Isotope(157.924101, 0.2484, 158),
+                   Isotope(159.927051, 0.2186, 160)}}
+            Yield New Element With {.symbol = "Tb", .name = "Terbium", .charge = 3, .isotopic = 158.92535, .isotopes = {Isotope(158.925343, 1.0, 159)}}
+            Yield New Element With {.symbol = "Dy", .name = "Dysprosium", .charge = 3, .isotopic = 163.929183, .isotopes = {Isotope(155.924278, 0.0006, 156),
+                   Isotope(157.924405, 0.001, 158),
+                   Isotope(159.925194, 0.0234, 160),
+                   Isotope(160.92693, 0.1891, 161),
+                   Isotope(161.926795, 0.2551, 162),
+                   Isotope(162.928728, 0.249, 163),
+                   Isotope(163.929171, 0.2818, 164)}}
+            Yield New Element With {.symbol = "Ho", .name = "Holmium", .charge = 3, .isotopic = 164.930332, .isotopes = {Isotope(164.930319, 1.0, 165)}}
+            Yield New Element With {.symbol = "Er", .name = "Erbium", .charge = 3, .isotopic = 165.930305, .isotopes = {Isotope(161.928775, 0.0014, 162),
+                   Isotope(163.929197, 0.0161, 164),
+                   Isotope(165.93029, 0.3361, 166),
+                   Isotope(166.932045, 0.2293, 167),
+                   Isotope(167.932368, 0.2678, 168),
+                   Isotope(169.93546, 0.1493, 170)}}
+            Yield New Element With {.symbol = "Tm", .name = "Thulium", .charge = 3, .isotopic = 168.934225, .isotopes = {Isotope(168.934211, 1.0, 169)}}
+            Yield New Element With {.symbol = "Yb", .name = "Ytterbium", .charge = 3, .isotopic = 173.938873, .isotopes = {Isotope(167.933894, 0.0013, 168),
+                   Isotope(169.934759, 0.0304, 170),
+                   Isotope(170.936322, 0.1428, 171),
+                   Isotope(171.9363777, 0.2183, 172),
+                   Isotope(172.9382068, 0.1613, 173),
+                   Isotope(173.9388581, 0.3183, 174),
+                   Isotope(175.942568, 0.1276, 176)}}
+            Yield New Element With {.symbol = "Lu", .name = "Lutetium", .charge = 3, .isotopic = 174.940785, .isotopes = {Isotope(174.9407679, 0.9741, 175),
+                   Isotope(175.9426824, 0.0259, 176)}}
+            Yield New Element With {.symbol = "Hf", .name = "Hafnium", .charge = 4, .isotopic = 179.946561, .isotopes = {Isotope(173.94004, 0.0016, 174),
+                   Isotope(175.9414018, 0.0526, 176),
+                   Isotope(176.94322, 0.186, 177),
+                   Isotope(177.9436977, 0.2728, 178),
+                   Isotope(178.9458151, 0.1362, 179),
+                   Isotope(179.9465488, 0.3508, 180)}}
+            Yield New Element With {.symbol = "Ta", .name = "Tantalum", .charge = 5, .isotopic = 180.948014, .isotopes = {Isotope(179.947466, 0.00012, 180),
+                   Isotope(180.947996, 0.99988, 181)}}
+            Yield New Element With {.symbol = "W", .name = "Tungsten", .charge = 6, .isotopic = 183.950953, .isotopes = {Isotope(179.946706, 0.0012, 180),
                    Isotope(181.948206, 0.265, 182),
                    Isotope(182.9502245, 0.1431, 183),
                    Isotope(183.9509326, 0.3064, 184),
                    Isotope(185.954362, 0.2843, 186)}}
-            Yield New Element With {.symbol = "Re", .name = "Rhenium", .charge = 7, .isotopic = 186.955765, .isotopes = {185: Isotope(184.9529557, 0.374, 185),
+            Yield New Element With {.symbol = "Re", .name = "Rhenium", .charge = 7, .isotopic = 186.955765, .isotopes = {Isotope(184.9529557, 0.374, 185),
                   Isotope(186.9557508, 0.626, 187)}}
-            Yield New Element With {.symbol = "Os", .name = "Osmium", .charge = 4, .isotopic = 191.960603, .isotopes = { Isotope(183.952491, 0.0002, 184),
-                   Isotope(185.953838, 0.0159, 186),
-                   Isotope(186.9557479, 0.0196, 187),
-                   Isotope(187.955836, 0.1324, 188),
-                   Isotope(188.9581449, 0.1615, 189),
-                   Isotope(189.958445, 0.2626, 190),
-                   Isotope(191.961479, 0.4078, 192)}}
-            Yield New Element With {.symbol = "Ir", .name = "Iridium", .charge = 4, .isotopic = 192.962942, .isotopes = { Isotope(190.960591, 0.373, 191),
-                   Isotope(192.962924, 0.627, 193)}}
-            Yield New Element With {.symbol = "Pt", .name = "Platinum", .charge = 4, .isotopic = 194.964785, .isotopes = { Isotope(189.95993, 0.00014, 190),
-                   Isotope(191.961035, 0.00782, 192),
-                   Isotope(193.962664, 0.32967, 194),
-                   Isotope(194.964774, 0.33832, 195),
-                   Isotope(195.964935, 0.25242, 196),
-                   Isotope(197.967876, 0.07163, 198)}}
-            Yield New Element With {.symbol = "Au", .name = "Gold", .charge = 3, .isotopic = 196.96656, .isotopes = { Isotope(196.966552, 1.0, 197)}}
-            Yield New Element With {.symbol = "Hg", .name = "Mercury", .charge = 2, .isotopic = 201.970632, .isotopes = { Isotope(195.965815, 0.0015, 196),
-                   Isotope(197.966752, 0.0997, 198),
-                   Isotope(198.968262, 0.1687, 199),
-                   Isotope(199.968309, 0.231, 200),
-                   Isotope(200.970285, 0.1318, 201),
-                   Isotope(201.970626, 0.2986, 202),
-                   Isotope(203.973476, 0.0687, 204)}}
-            Yield New Element With {.symbol = "Tl", .name = "Thallium", .charge = 1, .isotopic = 204.97441, .isotopes = { Isotope(202.972329, 0.29524, 203),
-                   Isotope(204.974412, 0.70476, 205)}}
-            Yield New Element With {.symbol = "Pb", .name = "Lead", .charge = 2, .isotopic = 207.976641, .isotopes = { Isotope(203.973029, 0.014, 204),
-                   Isotope(205.974449, 0.241, 206),
-                   Isotope(206.975881, 0.221, 207),
-                   Isotope(207.976636, 0.524, 208)}}
-            Yield New Element With {.symbol = "Bi", .name = "Bismuth", .charge = 3, .isotopic = 208.980388, .isotopes = { Isotope(208.980383, 1.0, 209)}}
-            Yield New Element With {.symbol = "Po", .name = "Polonium", .charge = 4, .isotopic = 209, .isotopes = { Isotope(208.982416, 1.0, 209)}}
-            Yield New Element With {.symbol = "At", .name = "Astatine", .charge = -1, .isotopic = 210, .isotopes = { Isotope(209.987131, 1.0, 210)}}
-            Yield New Element With {.symbol = "Rn", .name = "Radon", .charge = 0, .isotopic = 222, .isotopes = { Isotope(222.0175705, 1.0, 222)}}
-            Yield New Element With {.symbol = "Fr", .name = "Francium", .charge = 1, .isotopic = 223, .isotopes = { Isotope(223.0197307, 1.0, 223)}}
-            Yield New Element With {.symbol = "Ra", .name = "Radium", .charge = 2, .isotopic = 227, .isotopes = { Isotope(226.0254026, 1.0, 226)}}
-            Yield New Element With {.symbol = "Ac", .name = "Actinium", .charge = 3, .isotopic = 227, .isotopes = { Isotope(227.027747, 1.0, 227)}}
-            Yield New Element With {.symbol = "Th", .name = "Thorium", .charge = 4, .isotopic = 232.038054, .isotopes = { Isotope(232.0380504, 1.0, 232)}}
-            Yield New Element With {.symbol = "Pa", .name = "Protactinium", .charge = 5, .isotopic = 231, .isotopes = { Isotope(231.0358789, 1.0, 231)}}
-            Yield New Element With {.symbol = "U", .name = "Uranium", .charge = 6, .isotopic = 238.050786, .isotopes = { Isotope(234.0409456, 0.000055, 234),
-                   Isotope(235.0439231, 0.0072, 235),
-                   Isotope(238.0507826, 0.992745, 238)}}
-            Yield New Element With {.symbol = "Np", .name = "Neptunium", .charge = 5, .isotopic = 237, .isotopes = { Isotope(237.0481673, 1.0, 237)}}
-            Yield New Element With {.symbol = "Pu", .name = "Plutonium", .charge = 4, .isotopic = 244, .isotopes = { Isotope(244.064198, 1.0, 244)}}
-            Yield New Element With {.symbol = "Am", .name = "Americium", .charge = 3, .isotopic = 243, .isotopes = { Isotope(243.0613727, 1.0, 243)}}
-            Yield New Element With {.symbol = "Cm", .name = "Curium", .charge = 3, .isotopic = 247, .isotopes = { Isotope(247.070347, 1.0, 247)}}
-            Yield New Element With {.symbol = "Bk", .name = "Berkelium", .charge = 3, .isotopic = 247, .isotopes = { Isotope(247.070299, 1.0, 247)}}
+            Yield New Element With {.symbol = "Os", .name = "Osmium", .charge = 4, .isotopic = 191.960603, .isotopes = {Isotope(183.952491, 0.0002, 184), Isotope(185.953838, 0.0159, 186), Isotope(186.9557479, 0.0196, 187), Isotope(187.955836, 0.1324, 188), Isotope(188.9581449, 0.1615, 189), Isotope(189.958445, 0.2626, 190), Isotope(191.961479, 0.4078, 192)}}
+            Yield New Element With {.symbol = "Ir", .name = "Iridium", .charge = 4, .isotopic = 192.962942, .isotopes = {Isotope(190.960591, 0.373, 191), Isotope(192.962924, 0.627, 193)}}
+            Yield New Element With {.symbol = "Pt", .name = "Platinum", .charge = 4, .isotopic = 194.964785, .isotopes = {Isotope(189.95993, 0.00014, 190), Isotope(191.961035, 0.00782, 192), Isotope(193.962664, 0.32967, 194), Isotope(194.964774, 0.33832, 195), Isotope(195.964935, 0.25242, 196), Isotope(197.967876, 0.07163, 198)}}
+            Yield New Element With {.symbol = "Au", .name = "Gold", .charge = 3, .isotopic = 196.96656, .isotopes = {Isotope(196.966552, 1.0, 197)}}
+            Yield New Element With {.symbol = "Hg", .name = "Mercury", .charge = 2, .isotopic = 201.970632, .isotopes = {Isotope(195.965815, 0.0015, 196), Isotope(197.966752, 0.0997, 198), Isotope(198.968262, 0.1687, 199), Isotope(199.968309, 0.231, 200), Isotope(200.970285, 0.1318, 201), Isotope(201.970626, 0.2986, 202), Isotope(203.973476, 0.0687, 204)}}
+            Yield New Element With {.symbol = "Tl", .name = "Thallium", .charge = 1, .isotopic = 204.97441, .isotopes = {Isotope(202.972329, 0.29524, 203), Isotope(204.974412, 0.70476, 205)}}
+            Yield New Element With {.symbol = "Pb", .name = "Lead", .charge = 2, .isotopic = 207.976641, .isotopes = {Isotope(203.973029, 0.014, 204), Isotope(205.974449, 0.241, 206), Isotope(206.975881, 0.221, 207), Isotope(207.976636, 0.524, 208)}}
+            Yield New Element With {.symbol = "Bi", .name = "Bismuth", .charge = 3, .isotopic = 208.980388, .isotopes = {Isotope(208.980383, 1.0, 209)}}
+            Yield New Element With {.symbol = "Po", .name = "Polonium", .charge = 4, .isotopic = 209, .isotopes = {Isotope(208.982416, 1.0, 209)}}
+            Yield New Element With {.symbol = "At", .name = "Astatine", .charge = -1, .isotopic = 210, .isotopes = {Isotope(209.987131, 1.0, 210)}}
+            Yield New Element With {.symbol = "Rn", .name = "Radon", .charge = 0, .isotopic = 222, .isotopes = {Isotope(222.0175705, 1.0, 222)}}
+            Yield New Element With {.symbol = "Fr", .name = "Francium", .charge = 1, .isotopic = 223, .isotopes = {Isotope(223.0197307, 1.0, 223)}}
+            Yield New Element With {.symbol = "Ra", .name = "Radium", .charge = 2, .isotopic = 227, .isotopes = {Isotope(226.0254026, 1.0, 226)}}
+            Yield New Element With {.symbol = "Ac", .name = "Actinium", .charge = 3, .isotopic = 227, .isotopes = {Isotope(227.027747, 1.0, 227)}}
+            Yield New Element With {.symbol = "Th", .name = "Thorium", .charge = 4, .isotopic = 232.038054, .isotopes = {Isotope(232.0380504, 1.0, 232)}}
+            Yield New Element With {.symbol = "Pa", .name = "Protactinium", .charge = 5, .isotopic = 231, .isotopes = {Isotope(231.0358789, 1.0, 231)}}
+            Yield New Element With {.symbol = "U", .name = "Uranium", .charge = 6, .isotopic = 238.050786, .isotopes = {Isotope(234.0409456, 0.000055, 234), Isotope(235.0439231, 0.0072, 235), Isotope(238.0507826, 0.992745, 238)}}
+            Yield New Element With {.symbol = "Np", .name = "Neptunium", .charge = 5, .isotopic = 237, .isotopes = {Isotope(237.0481673, 1.0, 237)}}
+            Yield New Element With {.symbol = "Pu", .name = "Plutonium", .charge = 4, .isotopic = 244, .isotopes = {Isotope(244.064198, 1.0, 244)}}
+            Yield New Element With {.symbol = "Am", .name = "Americium", .charge = 3, .isotopic = 243, .isotopes = {Isotope(243.0613727, 1.0, 243)}}
+            Yield New Element With {.symbol = "Cm", .name = "Curium", .charge = 3, .isotopic = 247, .isotopes = {Isotope(247.070347, 1.0, 247)}}
+            Yield New Element With {.symbol = "Bk", .name = "Berkelium", .charge = 3, .isotopic = 247, .isotopes = {Isotope(247.070299, 1.0, 247)}}
             Yield New Element With {.symbol = "Cf", .name = "Californium", .charge = 3, .isotopic = 251, .isotopes = {Isotope(251.07958, 1.0, 251)}}
             Yield New Element With {.symbol = "Es", .name = "Einsteinium", .charge = 3, .isotopic = 252, .isotopes = {Isotope(252.08297, 1.0, 252)}}
             Yield New Element With {.symbol = "Fm", .name = "Fermium", .charge = 3, .isotopic = 257, .isotopes = {Isotope(257.095099, 1.0, 257)}}
