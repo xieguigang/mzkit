@@ -55,6 +55,10 @@ Namespace Formula
     <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
     Public Class Formula
 
+        ''' <summary>
+        ''' atom_count_tuples
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
         Public ReadOnly Property EmpiricalFormula As String
             Get
