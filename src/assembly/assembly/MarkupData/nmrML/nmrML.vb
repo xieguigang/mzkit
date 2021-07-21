@@ -18,7 +18,9 @@ Namespace MarkupData.nmrML
         Public Property fileDescription As fileDescription
         Public Property contactList As contactList
         Public Property sourceFileList As sourceFileList
-        Public Property acquisition As acquisition
+
+        <XmlElement(NameOf(acquisition))>
+        Public Property acquisition As acquisition()
 
     End Class
 
