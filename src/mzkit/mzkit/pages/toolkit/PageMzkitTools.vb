@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
+Imports mzkit.RibbonLib.Controls
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task

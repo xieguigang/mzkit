@@ -13,981 +13,997 @@ Imports RibbonLib
 Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
+Namespace RibbonLib.Controls
+    Partial Class RibbonItems
+        Private Class Cmd
+            Public Const cmdRecentItems As UInteger = 1014
+            Public Const cmdMenuGroupFile As UInteger = 1005
+            Public Const cmdButtonNew As UInteger = 1001
+            Public Const cmdButtonImportsRawFiles As UInteger = 1017
+            Public Const cmdButtonToolkits As UInteger = 1007
+            Public Const cmdButtonDropA As UInteger = 1008
+            Public Const cmdButtonDropB As UInteger = 1009
+            Public Const cmdButtonFormulaSearch As UInteger = 1010
+            Public Const cmdButtonDropD As UInteger = 5010
+            Public Const cmdButtonRsharp As UInteger = 1107
+            Public Const cmdButtonSettings As UInteger = 1051
+            Public Const cmdButtonAbout As UInteger = 1021
+            Public Const cmdButtonBioDeep As UInteger = 1022
+            Public Const cmdButtonLicense As UInteger = 1101
+            Public Const cmdMenuGroupExit As UInteger = 1006
+            Public Const cmdButtonExit As UInteger = 1004
+            Public Const cmdHelpButton As UInteger = 1016
+            Public Const cmdQAT As UInteger = 1015
+            Public Const cmdButtonPageNavBack As UInteger = 1053
+            Public Const cmdButtonOpenRaw As UInteger = 1002
+            Public Const cmdButtonSave As UInteger = 1003
+            Public Const cmdTabGroupTableTools As UInteger = 1031
+            Public Const cmdTabDesign As UInteger = 1032
+            Public Const cmdGroupDesign As UInteger = 1036
+            Public Const cmdPPMSpinner As UInteger = 1050
+            Public Const cmdGroupShowViewer As UInteger = 1110
+            Public Const cmdButtonShowPlotViewer As UInteger = 1111
+            Public Const cmdButtonShowMatrixViewer As UInteger = 1112
+            Public Const cmdGroupShowDockWindows As UInteger = 1120
+            Public Const cmdExplorers As UInteger = 114
+            Public Const cmdButtonShowExplorer As UInteger = 1121
+            Public Const cmdShowGCMSExplorer As UInteger = 113
+            Public Const cmdShowMRMExplorer As UInteger = 118
+            Public Const cmdButtonMsImaging As UInteger = 1167
+            Public Const cmdButtonShowSearchList As UInteger = 1122
+            Public Const cmdButtonShowProperties As UInteger = 1123
+            Public Const cmdTabLayout As UInteger = 1035
+            Public Const cmdGroupLayout As UInteger = 1037
+            Public Const cmdButtonLayout1 As UInteger = 1043
+            Public Const cmdButtonLayout2 As UInteger = 1044
+            Public Const cmdGroupChromatography As UInteger = 1141
+            Public Const cmdButtonBPC As UInteger = 1143
+            Public Const cmdButtonTIC As UInteger = 1144
+            Public Const cmdButtonXIC As UInteger = 1145
+            Public Const cmdPlotOptions As UInteger = 97
+            Public Const cmdCheckBoxXICRelative As UInteger = 96
+            Public Const cmdTabGroupCalculatorTools As UInteger = 1061
+            Public Const cmdTabCalculator As UInteger = 1062
+            Public Const cmdGroupCalculator As UInteger = 1063
+            Public Const cmdButtonCalculatorExport As UInteger = 1064
+            Public Const cmdTabGroupRscriptTools As UInteger = 1130
+            Public Const cmdTabRscriptTools As UInteger = 1131
+            Public Const cmdGroupRscript As UInteger = 1132
+            Public Const cmdButtonSaveScript As UInteger = 1134
+            Public Const cmdButtonRunScript As UInteger = 1133
+            Public Const cmdTabRStudio As UInteger = 111
+            Public Const cmdButtonInstallMzkitPackage As UInteger = 112
+            Public Const cmdTabGroupExactMassSearchTools As UInteger = 1071
+            Public Const cmdTabExactMassSearch As UInteger = 1072
+            Public Const cmdGroupExactMassSearch As UInteger = 1073
+            Public Const cmdButtonExactMassSearchExport As UInteger = 1074
+            Public Const cmdTabGroupNetworkTools As UInteger = 1081
+            Public Const cmdTabNetwork As UInteger = 1082
+            Public Const cmdGroupNetwork As UInteger = 1083
+            Public Const cmdButtonNetworkExport As UInteger = 1084
+            Public Const cmdButtonNetworkRender As UInteger = 1085
+            Public Const cmdGroupNetworkTools As UInteger = 1151
+            Public Const cmdSpinnerSimilarity As UInteger = 1153
+            Public Const cmdGroupNetworkRenderTool As UInteger = 1150
+            Public Const cmdButtonRefreshNetwork As UInteger = 1154
+            Public Const cmdTabGroupFormulaSearchTools As UInteger = 1091
+            Public Const cmdTabFormulaSearch As UInteger = 1092
+            Public Const cmdGroupFormulaSearch As UInteger = 1093
+            Public Const cmdButtonFormulaSearchExport As UInteger = 1094
+            Public Const cmdTargetedContex As UInteger = 101
+            Public Const cmdTabTargeted As UInteger = 102
+            Public Const cmdTabGroupTargeted As UInteger = 98
+            Public Const cmdImportsLinear As UInteger = 100
+            Public Const cmdSaveLinears As UInteger = 103
+            Public Const cmdTabGroupTargetedLibrary As UInteger = 107
+            Public Const cmdMRMLibrary As UInteger = 108
+            Public Const cmdQuantifyIons As UInteger = 109
+            Public Const cmdTagGroupParameterTool As UInteger = 117
+            Public Const cmdAdjustParameters As UInteger = 116
+            Public Const cmdTabGroupMSI As UInteger = 120
+            Public Const cmdTabMSIPage As UInteger = 121
+            Public Const cmdGroupMSIFile As UInteger = 122
+            Public Const cmdButtonOpenMSIRaw As UInteger = 119
+            Public Const cmdTabMSISnapshot As UInteger = 126
+            Public Const cmdButtonMSITotalIon As UInteger = 123
+            Public Const cmdButtonMSIBasePeakIon As UInteger = 124
+            Public Const cmdButtonMSIAverageIon As UInteger = 125
+            Public Const cmdTabMSIFile As UInteger = 129
+            Public Const cmdButtonMSIRowScans As UInteger = 128
+            Public Const cmdButtonExportMSIMzpack As UInteger = 127
+            Public Const cmdTabMain As UInteger = 1011
+            Public Const cmdGroupFileActions As UInteger = 1045
+            Public Const cmdTabGroupWindowTools As UInteger = 1023
+            Public Const cmdButtonShowStartPage As UInteger = 1108
+            Public Const cmdButtonShowLogWindow As UInteger = 1109
+            Public Const cmdButtonResetLayout As UInteger = 1019
+            Public Const cmdTabGroupBioDeep As UInteger = 105
+            Public Const cmdLogInBioDeep As UInteger = 106
+            Public Const cmdTabTools As UInteger = 1012
+            Public Const cmdGroupToolsActions As UInteger = 1046
+            Public Const cmdButtonMzCalculator As UInteger = 1013
+            Public Const cmdButtonMzSearch As UInteger = 1052
+            Public Const cmdButtonShowSpectrumSearchPage As UInteger = 1102
+            Public Const cmdTargeted As UInteger = 99
+            Public Const cmdTabAbout As UInteger = 1020
+            Public Const cmdGroupAboutActions As UInteger = 1047
+            Public Const cmdTutorials As UInteger = 115
+            Public Const cmdTabDemo As UInteger = 110
+            Public Const cmdButtonMsDemo As UInteger = 1168
+            Public Const cmdFontControl As UInteger = 1165
+            Public Const cmdLegendCheckBox As UInteger = 1166
+            Public Const cmdTweaksImage As UInteger = 93
+            Public Const cmdShowProperty As UInteger = 3
+            Public Const cmdGroupExport As UInteger = 2
+            Public Const cmdButtonExportImage As UInteger = 1104
+            Public Const cmdButtonExportMatrix As UInteger = 1105
+            Public Const cmdContextMap As UInteger = 1106
+            Public Const cmdCustomizeQAT As UInteger = 1018
+        End Class
 
-Partial Class RibbonItems
-    Private Class Cmd
-        Public Const cmdRecentItems As UInteger = 1014
-        Public Const cmdMenuGroupFile As UInteger = 1005
-        Public Const cmdButtonNew As UInteger = 1001
-        Public Const cmdButtonImportsRawFiles As UInteger = 1017
-        Public Const cmdButtonToolkits As UInteger = 1007
-        Public Const cmdButtonDropA As UInteger = 1008
-        Public Const cmdButtonDropB As UInteger = 1009
-        Public Const cmdButtonFormulaSearch As UInteger = 1010
-        Public Const cmdButtonDropD As UInteger = 5010
-        Public Const cmdButtonRsharp As UInteger = 1107
-        Public Const cmdButtonSettings As UInteger = 1051
-        Public Const cmdButtonAbout As UInteger = 1021
-        Public Const cmdButtonBioDeep As UInteger = 1022
-        Public Const cmdButtonLicense As UInteger = 1101
-        Public Const cmdMenuGroupExit As UInteger = 1006
-        Public Const cmdButtonExit As UInteger = 1004
-        Public Const cmdHelpButton As UInteger = 1016
-        Public Const cmdQAT As UInteger = 1015
-        Public Const cmdButtonPageNavBack As UInteger = 1053
-        Public Const cmdButtonOpenRaw As UInteger = 1002
-        Public Const cmdButtonSave As UInteger = 1003
-        Public Const cmdTabGroupTableTools As UInteger = 1031
-        Public Const cmdTabDesign As UInteger = 1032
-        Public Const cmdGroupDesign As UInteger = 1036
-        Public Const cmdPPMSpinner As UInteger = 1050
-        Public Const cmdGroupShowViewer As UInteger = 1110
-        Public Const cmdButtonShowPlotViewer As UInteger = 1111
-        Public Const cmdButtonShowMatrixViewer As UInteger = 1112
-        Public Const cmdGroupShowDockWindows As UInteger = 1120
-        Public Const cmdExplorers As UInteger = 114
-        Public Const cmdButtonShowExplorer As UInteger = 1121
-        Public Const cmdShowGCMSExplorer As UInteger = 113
-        Public Const cmdShowMRMExplorer As UInteger = 118
-        Public Const cmdButtonMsImaging As UInteger = 1167
-        Public Const cmdButtonShowSearchList As UInteger = 1122
-        Public Const cmdButtonShowProperties As UInteger = 1123
-        Public Const cmdTabLayout As UInteger = 1035
-        Public Const cmdGroupLayout As UInteger = 1037
-        Public Const cmdButtonLayout1 As UInteger = 1043
-        Public Const cmdButtonLayout2 As UInteger = 1044
-        Public Const cmdGroupChromatography As UInteger = 1141
-        Public Const cmdButtonBPC As UInteger = 1143
-        Public Const cmdButtonTIC As UInteger = 1144
-        Public Const cmdButtonXIC As UInteger = 1145
-        Public Const cmdPlotOptions As UInteger = 97
-        Public Const cmdCheckBoxXICRelative As UInteger = 96
-        Public Const cmdTabGroupCalculatorTools As UInteger = 1061
-        Public Const cmdTabCalculator As UInteger = 1062
-        Public Const cmdGroupCalculator As UInteger = 1063
-        Public Const cmdButtonCalculatorExport As UInteger = 1064
-        Public Const cmdTabGroupRscriptTools As UInteger = 1130
-        Public Const cmdTabRscriptTools As UInteger = 1131
-        Public Const cmdGroupRscript As UInteger = 1132
-        Public Const cmdButtonSaveScript As UInteger = 1134
-        Public Const cmdButtonRunScript As UInteger = 1133
-        Public Const cmdTabRStudio As UInteger = 111
-        Public Const cmdButtonInstallMzkitPackage As UInteger = 112
-        Public Const cmdTabGroupExactMassSearchTools As UInteger = 1071
-        Public Const cmdTabExactMassSearch As UInteger = 1072
-        Public Const cmdGroupExactMassSearch As UInteger = 1073
-        Public Const cmdButtonExactMassSearchExport As UInteger = 1074
-        Public Const cmdTabGroupNetworkTools As UInteger = 1081
-        Public Const cmdTabNetwork As UInteger = 1082
-        Public Const cmdGroupNetwork As UInteger = 1083
-        Public Const cmdButtonNetworkExport As UInteger = 1084
-        Public Const cmdButtonNetworkRender As UInteger = 1085
-        Public Const cmdGroupNetworkTools As UInteger = 1151
-        Public Const cmdSpinnerSimilarity As UInteger = 1153
-        Public Const cmdGroupNetworkRenderTool As UInteger = 1150
-        Public Const cmdButtonRefreshNetwork As UInteger = 1154
-        Public Const cmdTabGroupFormulaSearchTools As UInteger = 1091
-        Public Const cmdTabFormulaSearch As UInteger = 1092
-        Public Const cmdGroupFormulaSearch As UInteger = 1093
-        Public Const cmdButtonFormulaSearchExport As UInteger = 1094
-        Public Const cmdTargetedContex As UInteger = 101
-        Public Const cmdTabTargeted As UInteger = 102
-        Public Const cmdTabGroupTargeted As UInteger = 98
-        Public Const cmdImportsLinear As UInteger = 100
-        Public Const cmdSaveLinears As UInteger = 103
-        Public Const cmdTabGroupTargetedLibrary As UInteger = 107
-        Public Const cmdMRMLibrary As UInteger = 108
-        Public Const cmdQuantifyIons As UInteger = 109
-        Public Const cmdTagGroupParameterTool As UInteger = 117
-        Public Const cmdAdjustParameters As UInteger = 116
-        Public Const cmdTabGroupMSI As UInteger = 120
-        Public Const cmdTabMSIPage As UInteger = 121
-        Public Const cmdGroupMSIFile As UInteger = 122
-        Public Const cmdButtonOpenMSIRaw As UInteger = 119
-        Public Const cmdButtonExportMSIMzpack As UInteger = 127
-        Public Const cmdTabMSISnapshot As UInteger = 126
-        Public Const cmdButtonMSITotalIon As UInteger = 123
-        Public Const cmdButtonMSIBasePeakIon As UInteger = 124
-        Public Const cmdButtonMSIAverageIon As UInteger = 125
-        Public Const cmdTabMain As UInteger = 1011
-        Public Const cmdGroupFileActions As UInteger = 1045
-        Public Const cmdTabGroupWindowTools As UInteger = 1023
-        Public Const cmdButtonShowStartPage As UInteger = 1108
-        Public Const cmdButtonShowLogWindow As UInteger = 1109
-        Public Const cmdButtonResetLayout As UInteger = 1019
-        Public Const cmdTabGroupBioDeep As UInteger = 105
-        Public Const cmdLogInBioDeep As UInteger = 106
-        Public Const cmdTabTools As UInteger = 1012
-        Public Const cmdGroupToolsActions As UInteger = 1046
-        Public Const cmdButtonMzCalculator As UInteger = 1013
-        Public Const cmdButtonMzSearch As UInteger = 1052
-        Public Const cmdButtonShowSpectrumSearchPage As UInteger = 1102
-        Public Const cmdTargeted As UInteger = 99
-        Public Const cmdTabAbout As UInteger = 1020
-        Public Const cmdGroupAboutActions As UInteger = 1047
-        Public Const cmdTutorials As UInteger = 115
-        Public Const cmdTabDemo As UInteger = 110
-        Public Const cmdButtonMsDemo As UInteger = 1168
-        Public Const cmdFontControl As UInteger = 1165
-        Public Const cmdLegendCheckBox As UInteger = 1166
-        Public Const cmdTweaksImage As UInteger = 93
-        Public Const cmdShowProperty As UInteger = 3
-        Public Const cmdGroupExport As UInteger = 2
-        Public Const cmdButtonExportImage As UInteger = 1104
-        Public Const cmdButtonExportMatrix As UInteger = 1105
-        Public Const cmdContextMap As UInteger = 1106
-        Public Const cmdCustomizeQAT As UInteger = 1018
+        ' ContextPopup CommandName
+        Public Const cmdContextMap As UInteger = Cmd.cmdContextMap
+
+        Private _ribbon As Ribbon
+        Public ReadOnly Property Ribbon As Ribbon
+            Get
+                Return _ribbon
+            End Get
+        End Property
+        Private _RecentItems As RibbonRecentItems
+        Public ReadOnly Property RecentItems As RibbonRecentItems
+            Get
+                Return _RecentItems
+            End Get
+        End Property
+        Private _MenuGroupFile As RibbonMenuGroup
+        Public ReadOnly Property MenuGroupFile As RibbonMenuGroup
+            Get
+                Return _MenuGroupFile
+            End Get
+        End Property
+        Private _ButtonNew As RibbonButton
+        Public ReadOnly Property ButtonNew As RibbonButton
+            Get
+                Return _ButtonNew
+            End Get
+        End Property
+        Private _ButtonImportsRawFiles As RibbonButton
+        Public ReadOnly Property ButtonImportsRawFiles As RibbonButton
+            Get
+                Return _ButtonImportsRawFiles
+            End Get
+        End Property
+        Private _ButtonToolkits As RibbonDropDownButton
+        Public ReadOnly Property ButtonToolkits As RibbonDropDownButton
+            Get
+                Return _ButtonToolkits
+            End Get
+        End Property
+        Private _ButtonDropA As RibbonButton
+        Public ReadOnly Property ButtonDropA As RibbonButton
+            Get
+                Return _ButtonDropA
+            End Get
+        End Property
+        Private _ButtonDropB As RibbonButton
+        Public ReadOnly Property ButtonDropB As RibbonButton
+            Get
+                Return _ButtonDropB
+            End Get
+        End Property
+        Private _ButtonFormulaSearch As RibbonButton
+        Public ReadOnly Property ButtonFormulaSearch As RibbonButton
+            Get
+                Return _ButtonFormulaSearch
+            End Get
+        End Property
+        Private _ButtonDropD As RibbonButton
+        Public ReadOnly Property ButtonDropD As RibbonButton
+            Get
+                Return _ButtonDropD
+            End Get
+        End Property
+        Private _ButtonRsharp As RibbonButton
+        Public ReadOnly Property ButtonRsharp As RibbonButton
+            Get
+                Return _ButtonRsharp
+            End Get
+        End Property
+        Private _ButtonSettings As RibbonButton
+        Public ReadOnly Property ButtonSettings As RibbonButton
+            Get
+                Return _ButtonSettings
+            End Get
+        End Property
+        Private _ButtonAbout As RibbonButton
+        Public ReadOnly Property ButtonAbout As RibbonButton
+            Get
+                Return _ButtonAbout
+            End Get
+        End Property
+        Private _ButtonBioDeep As RibbonButton
+        Public ReadOnly Property ButtonBioDeep As RibbonButton
+            Get
+                Return _ButtonBioDeep
+            End Get
+        End Property
+        Private _ButtonLicense As RibbonButton
+        Public ReadOnly Property ButtonLicense As RibbonButton
+            Get
+                Return _ButtonLicense
+            End Get
+        End Property
+        Private _MenuGroupExit As RibbonMenuGroup
+        Public ReadOnly Property MenuGroupExit As RibbonMenuGroup
+            Get
+                Return _MenuGroupExit
+            End Get
+        End Property
+        Private _ButtonExit As RibbonButton
+        Public ReadOnly Property ButtonExit As RibbonButton
+            Get
+                Return _ButtonExit
+            End Get
+        End Property
+        Private _HelpButton As RibbonHelpButton
+        Public ReadOnly Property HelpButton As RibbonHelpButton
+            Get
+                Return _HelpButton
+            End Get
+        End Property
+        Private _QAT As RibbonQuickAccessToolbar
+        Public ReadOnly Property QAT As RibbonQuickAccessToolbar
+            Get
+                Return _QAT
+            End Get
+        End Property
+        Private _ButtonPageNavBack As RibbonButton
+        Public ReadOnly Property ButtonPageNavBack As RibbonButton
+            Get
+                Return _ButtonPageNavBack
+            End Get
+        End Property
+        Private _ButtonOpenRaw As RibbonButton
+        Public ReadOnly Property ButtonOpenRaw As RibbonButton
+            Get
+                Return _ButtonOpenRaw
+            End Get
+        End Property
+        Private _ButtonSave As RibbonButton
+        Public ReadOnly Property ButtonSave As RibbonButton
+            Get
+                Return _ButtonSave
+            End Get
+        End Property
+        Private _TabGroupTableTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupTableTools As RibbonTabGroup
+            Get
+                Return _TabGroupTableTools
+            End Get
+        End Property
+        Private _TabDesign As RibbonTab
+        Public ReadOnly Property TabDesign As RibbonTab
+            Get
+                Return _TabDesign
+            End Get
+        End Property
+        Private _GroupDesign As RibbonGroup
+        Public ReadOnly Property GroupDesign As RibbonGroup
+            Get
+                Return _GroupDesign
+            End Get
+        End Property
+        Private _PPMSpinner As RibbonSpinner
+        Public ReadOnly Property PPMSpinner As RibbonSpinner
+            Get
+                Return _PPMSpinner
+            End Get
+        End Property
+        Private _GroupShowViewer As RibbonGroup
+        Public ReadOnly Property GroupShowViewer As RibbonGroup
+            Get
+                Return _GroupShowViewer
+            End Get
+        End Property
+        Private _ButtonShowPlotViewer As RibbonButton
+        Public ReadOnly Property ButtonShowPlotViewer As RibbonButton
+            Get
+                Return _ButtonShowPlotViewer
+            End Get
+        End Property
+        Private _ButtonShowMatrixViewer As RibbonButton
+        Public ReadOnly Property ButtonShowMatrixViewer As RibbonButton
+            Get
+                Return _ButtonShowMatrixViewer
+            End Get
+        End Property
+        Private _GroupShowDockWindows As RibbonGroup
+        Public ReadOnly Property GroupShowDockWindows As RibbonGroup
+            Get
+                Return _GroupShowDockWindows
+            End Get
+        End Property
+        Private _Explorers As RibbonSplitButtonGallery
+        Public ReadOnly Property Explorers As RibbonSplitButtonGallery
+            Get
+                Return _Explorers
+            End Get
+        End Property
+        Private _ButtonShowExplorer As RibbonButton
+        Public ReadOnly Property ButtonShowExplorer As RibbonButton
+            Get
+                Return _ButtonShowExplorer
+            End Get
+        End Property
+        Private _ShowGCMSExplorer As RibbonButton
+        Public ReadOnly Property ShowGCMSExplorer As RibbonButton
+            Get
+                Return _ShowGCMSExplorer
+            End Get
+        End Property
+        Private _ShowMRMExplorer As RibbonButton
+        Public ReadOnly Property ShowMRMExplorer As RibbonButton
+            Get
+                Return _ShowMRMExplorer
+            End Get
+        End Property
+        Private _ButtonMsImaging As RibbonButton
+        Public ReadOnly Property ButtonMsImaging As RibbonButton
+            Get
+                Return _ButtonMsImaging
+            End Get
+        End Property
+        Private _ButtonShowSearchList As RibbonButton
+        Public ReadOnly Property ButtonShowSearchList As RibbonButton
+            Get
+                Return _ButtonShowSearchList
+            End Get
+        End Property
+        Private _ButtonShowProperties As RibbonButton
+        Public ReadOnly Property ButtonShowProperties As RibbonButton
+            Get
+                Return _ButtonShowProperties
+            End Get
+        End Property
+        Private _TabLayout As RibbonTab
+        Public ReadOnly Property TabLayout As RibbonTab
+            Get
+                Return _TabLayout
+            End Get
+        End Property
+        Private _GroupLayout As RibbonGroup
+        Public ReadOnly Property GroupLayout As RibbonGroup
+            Get
+                Return _GroupLayout
+            End Get
+        End Property
+        Private _ButtonLayout1 As RibbonButton
+        Public ReadOnly Property ButtonLayout1 As RibbonButton
+            Get
+                Return _ButtonLayout1
+            End Get
+        End Property
+        Private _ButtonLayout2 As RibbonButton
+        Public ReadOnly Property ButtonLayout2 As RibbonButton
+            Get
+                Return _ButtonLayout2
+            End Get
+        End Property
+        Private _GroupChromatography As RibbonGroup
+        Public ReadOnly Property GroupChromatography As RibbonGroup
+            Get
+                Return _GroupChromatography
+            End Get
+        End Property
+        Private _ButtonBPC As RibbonButton
+        Public ReadOnly Property ButtonBPC As RibbonButton
+            Get
+                Return _ButtonBPC
+            End Get
+        End Property
+        Private _ButtonTIC As RibbonButton
+        Public ReadOnly Property ButtonTIC As RibbonButton
+            Get
+                Return _ButtonTIC
+            End Get
+        End Property
+        Private _ButtonXIC As RibbonButton
+        Public ReadOnly Property ButtonXIC As RibbonButton
+            Get
+                Return _ButtonXIC
+            End Get
+        End Property
+        Private _PlotOptions As RibbonGroup
+        Public ReadOnly Property PlotOptions As RibbonGroup
+            Get
+                Return _PlotOptions
+            End Get
+        End Property
+        Private _CheckBoxXICRelative As RibbonCheckBox
+        Public ReadOnly Property CheckBoxXICRelative As RibbonCheckBox
+            Get
+                Return _CheckBoxXICRelative
+            End Get
+        End Property
+        Private _TabGroupCalculatorTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupCalculatorTools As RibbonTabGroup
+            Get
+                Return _TabGroupCalculatorTools
+            End Get
+        End Property
+        Private _TabCalculator As RibbonTab
+        Public ReadOnly Property TabCalculator As RibbonTab
+            Get
+                Return _TabCalculator
+            End Get
+        End Property
+        Private _GroupCalculator As RibbonGroup
+        Public ReadOnly Property GroupCalculator As RibbonGroup
+            Get
+                Return _GroupCalculator
+            End Get
+        End Property
+        Private _ButtonCalculatorExport As RibbonButton
+        Public ReadOnly Property ButtonCalculatorExport As RibbonButton
+            Get
+                Return _ButtonCalculatorExport
+            End Get
+        End Property
+        Private _TabGroupRscriptTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupRscriptTools As RibbonTabGroup
+            Get
+                Return _TabGroupRscriptTools
+            End Get
+        End Property
+        Private _TabRscriptTools As RibbonTab
+        Public ReadOnly Property TabRscriptTools As RibbonTab
+            Get
+                Return _TabRscriptTools
+            End Get
+        End Property
+        Private _GroupRscript As RibbonGroup
+        Public ReadOnly Property GroupRscript As RibbonGroup
+            Get
+                Return _GroupRscript
+            End Get
+        End Property
+        Private _ButtonSaveScript As RibbonButton
+        Public ReadOnly Property ButtonSaveScript As RibbonButton
+            Get
+                Return _ButtonSaveScript
+            End Get
+        End Property
+        Private _ButtonRunScript As RibbonButton
+        Public ReadOnly Property ButtonRunScript As RibbonButton
+            Get
+                Return _ButtonRunScript
+            End Get
+        End Property
+        Private _TabRStudio As RibbonGroup
+        Public ReadOnly Property TabRStudio As RibbonGroup
+            Get
+                Return _TabRStudio
+            End Get
+        End Property
+        Private _ButtonInstallMzkitPackage As RibbonButton
+        Public ReadOnly Property ButtonInstallMzkitPackage As RibbonButton
+            Get
+                Return _ButtonInstallMzkitPackage
+            End Get
+        End Property
+        Private _TabGroupExactMassSearchTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupExactMassSearchTools As RibbonTabGroup
+            Get
+                Return _TabGroupExactMassSearchTools
+            End Get
+        End Property
+        Private _TabExactMassSearch As RibbonTab
+        Public ReadOnly Property TabExactMassSearch As RibbonTab
+            Get
+                Return _TabExactMassSearch
+            End Get
+        End Property
+        Private _GroupExactMassSearch As RibbonGroup
+        Public ReadOnly Property GroupExactMassSearch As RibbonGroup
+            Get
+                Return _GroupExactMassSearch
+            End Get
+        End Property
+        Private _ButtonExactMassSearchExport As RibbonButton
+        Public ReadOnly Property ButtonExactMassSearchExport As RibbonButton
+            Get
+                Return _ButtonExactMassSearchExport
+            End Get
+        End Property
+        Private _TabGroupNetworkTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupNetworkTools As RibbonTabGroup
+            Get
+                Return _TabGroupNetworkTools
+            End Get
+        End Property
+        Private _TabNetwork As RibbonTab
+        Public ReadOnly Property TabNetwork As RibbonTab
+            Get
+                Return _TabNetwork
+            End Get
+        End Property
+        Private _GroupNetwork As RibbonGroup
+        Public ReadOnly Property GroupNetwork As RibbonGroup
+            Get
+                Return _GroupNetwork
+            End Get
+        End Property
+        Private _ButtonNetworkExport As RibbonButton
+        Public ReadOnly Property ButtonNetworkExport As RibbonButton
+            Get
+                Return _ButtonNetworkExport
+            End Get
+        End Property
+        Private _ButtonNetworkRender As RibbonButton
+        Public ReadOnly Property ButtonNetworkRender As RibbonButton
+            Get
+                Return _ButtonNetworkRender
+            End Get
+        End Property
+        Private _GroupNetworkTools As RibbonGroup
+        Public ReadOnly Property GroupNetworkTools As RibbonGroup
+            Get
+                Return _GroupNetworkTools
+            End Get
+        End Property
+        Private _SpinnerSimilarity As RibbonSpinner
+        Public ReadOnly Property SpinnerSimilarity As RibbonSpinner
+            Get
+                Return _SpinnerSimilarity
+            End Get
+        End Property
+        Private _GroupNetworkRenderTool As RibbonGroup
+        Public ReadOnly Property GroupNetworkRenderTool As RibbonGroup
+            Get
+                Return _GroupNetworkRenderTool
+            End Get
+        End Property
+        Private _ButtonRefreshNetwork As RibbonButton
+        Public ReadOnly Property ButtonRefreshNetwork As RibbonButton
+            Get
+                Return _ButtonRefreshNetwork
+            End Get
+        End Property
+        Private _TabGroupFormulaSearchTools As RibbonTabGroup
+        Public ReadOnly Property TabGroupFormulaSearchTools As RibbonTabGroup
+            Get
+                Return _TabGroupFormulaSearchTools
+            End Get
+        End Property
+        Private _TabFormulaSearch As RibbonTab
+        Public ReadOnly Property TabFormulaSearch As RibbonTab
+            Get
+                Return _TabFormulaSearch
+            End Get
+        End Property
+        Private _GroupFormulaSearch As RibbonGroup
+        Public ReadOnly Property GroupFormulaSearch As RibbonGroup
+            Get
+                Return _GroupFormulaSearch
+            End Get
+        End Property
+        Private _ButtonFormulaSearchExport As RibbonButton
+        Public ReadOnly Property ButtonFormulaSearchExport As RibbonButton
+            Get
+                Return _ButtonFormulaSearchExport
+            End Get
+        End Property
+        Private _TargetedContex As RibbonTabGroup
+        Public ReadOnly Property TargetedContex As RibbonTabGroup
+            Get
+                Return _TargetedContex
+            End Get
+        End Property
+        Private _TabTargeted As RibbonTab
+        Public ReadOnly Property TabTargeted As RibbonTab
+            Get
+                Return _TabTargeted
+            End Get
+        End Property
+        Private _TabGroupTargeted As RibbonGroup
+        Public ReadOnly Property TabGroupTargeted As RibbonGroup
+            Get
+                Return _TabGroupTargeted
+            End Get
+        End Property
+        Private _ImportsLinear As RibbonButton
+        Public ReadOnly Property ImportsLinear As RibbonButton
+            Get
+                Return _ImportsLinear
+            End Get
+        End Property
+        Private _SaveLinears As RibbonButton
+        Public ReadOnly Property SaveLinears As RibbonButton
+            Get
+                Return _SaveLinears
+            End Get
+        End Property
+        Private _TabGroupTargetedLibrary As RibbonGroup
+        Public ReadOnly Property TabGroupTargetedLibrary As RibbonGroup
+            Get
+                Return _TabGroupTargetedLibrary
+            End Get
+        End Property
+        Private _MRMLibrary As RibbonButton
+        Public ReadOnly Property MRMLibrary As RibbonButton
+            Get
+                Return _MRMLibrary
+            End Get
+        End Property
+        Private _QuantifyIons As RibbonButton
+        Public ReadOnly Property QuantifyIons As RibbonButton
+            Get
+                Return _QuantifyIons
+            End Get
+        End Property
+        Private _TagGroupParameterTool As RibbonGroup
+        Public ReadOnly Property TagGroupParameterTool As RibbonGroup
+            Get
+                Return _TagGroupParameterTool
+            End Get
+        End Property
+        Private _AdjustParameters As RibbonButton
+        Public ReadOnly Property AdjustParameters As RibbonButton
+            Get
+                Return _AdjustParameters
+            End Get
+        End Property
+        Private _TabGroupMSI As RibbonTabGroup
+        Public ReadOnly Property TabGroupMSI As RibbonTabGroup
+            Get
+                Return _TabGroupMSI
+            End Get
+        End Property
+        Private _TabMSIPage As RibbonTab
+        Public ReadOnly Property TabMSIPage As RibbonTab
+            Get
+                Return _TabMSIPage
+            End Get
+        End Property
+        Private _GroupMSIFile As RibbonGroup
+        Public ReadOnly Property GroupMSIFile As RibbonGroup
+            Get
+                Return _GroupMSIFile
+            End Get
+        End Property
+        Private _ButtonOpenMSIRaw As RibbonButton
+        Public ReadOnly Property ButtonOpenMSIRaw As RibbonButton
+            Get
+                Return _ButtonOpenMSIRaw
+            End Get
+        End Property
+        Private _TabMSISnapshot As RibbonGroup
+        Public ReadOnly Property TabMSISnapshot As RibbonGroup
+            Get
+                Return _TabMSISnapshot
+            End Get
+        End Property
+        Private _ButtonMSITotalIon As RibbonButton
+        Public ReadOnly Property ButtonMSITotalIon As RibbonButton
+            Get
+                Return _ButtonMSITotalIon
+            End Get
+        End Property
+        Private _ButtonMSIBasePeakIon As RibbonButton
+        Public ReadOnly Property ButtonMSIBasePeakIon As RibbonButton
+            Get
+                Return _ButtonMSIBasePeakIon
+            End Get
+        End Property
+        Private _ButtonMSIAverageIon As RibbonButton
+        Public ReadOnly Property ButtonMSIAverageIon As RibbonButton
+            Get
+                Return _ButtonMSIAverageIon
+            End Get
+        End Property
+        Private _TabMSIFile As RibbonGroup
+        Public ReadOnly Property TabMSIFile As RibbonGroup
+            Get
+                Return _TabMSIFile
+            End Get
+        End Property
+        Private _ButtonMSIRowScans As RibbonButton
+        Public ReadOnly Property ButtonMSIRowScans As RibbonButton
+            Get
+                Return _ButtonMSIRowScans
+            End Get
+        End Property
+        Private _ButtonExportMSIMzpack As RibbonButton
+        Public ReadOnly Property ButtonExportMSIMzpack As RibbonButton
+            Get
+                Return _ButtonExportMSIMzpack
+            End Get
+        End Property
+        Private _TabMain As RibbonTab
+        Public ReadOnly Property TabMain As RibbonTab
+            Get
+                Return _TabMain
+            End Get
+        End Property
+        Private _GroupFileActions As RibbonGroup
+        Public ReadOnly Property GroupFileActions As RibbonGroup
+            Get
+                Return _GroupFileActions
+            End Get
+        End Property
+        Private _TabGroupWindowTools As RibbonGroup
+        Public ReadOnly Property TabGroupWindowTools As RibbonGroup
+            Get
+                Return _TabGroupWindowTools
+            End Get
+        End Property
+        Private _ButtonShowStartPage As RibbonButton
+        Public ReadOnly Property ButtonShowStartPage As RibbonButton
+            Get
+                Return _ButtonShowStartPage
+            End Get
+        End Property
+        Private _ButtonShowLogWindow As RibbonButton
+        Public ReadOnly Property ButtonShowLogWindow As RibbonButton
+            Get
+                Return _ButtonShowLogWindow
+            End Get
+        End Property
+        Private _ButtonResetLayout As RibbonButton
+        Public ReadOnly Property ButtonResetLayout As RibbonButton
+            Get
+                Return _ButtonResetLayout
+            End Get
+        End Property
+        Private _TabGroupBioDeep As RibbonGroup
+        Public ReadOnly Property TabGroupBioDeep As RibbonGroup
+            Get
+                Return _TabGroupBioDeep
+            End Get
+        End Property
+        Private _LogInBioDeep As RibbonButton
+        Public ReadOnly Property LogInBioDeep As RibbonButton
+            Get
+                Return _LogInBioDeep
+            End Get
+        End Property
+        Private _TabTools As RibbonTab
+        Public ReadOnly Property TabTools As RibbonTab
+            Get
+                Return _TabTools
+            End Get
+        End Property
+        Private _GroupToolsActions As RibbonGroup
+        Public ReadOnly Property GroupToolsActions As RibbonGroup
+            Get
+                Return _GroupToolsActions
+            End Get
+        End Property
+        Private _ButtonMzCalculator As RibbonButton
+        Public ReadOnly Property ButtonMzCalculator As RibbonButton
+            Get
+                Return _ButtonMzCalculator
+            End Get
+        End Property
+        Private _ButtonMzSearch As RibbonButton
+        Public ReadOnly Property ButtonMzSearch As RibbonButton
+            Get
+                Return _ButtonMzSearch
+            End Get
+        End Property
+        Private _ButtonShowSpectrumSearchPage As RibbonButton
+        Public ReadOnly Property ButtonShowSpectrumSearchPage As RibbonButton
+            Get
+                Return _ButtonShowSpectrumSearchPage
+            End Get
+        End Property
+        Private _Targeted As RibbonButton
+        Public ReadOnly Property Targeted As RibbonButton
+            Get
+                Return _Targeted
+            End Get
+        End Property
+        Private _TabAbout As RibbonTab
+        Public ReadOnly Property TabAbout As RibbonTab
+            Get
+                Return _TabAbout
+            End Get
+        End Property
+        Private _GroupAboutActions As RibbonGroup
+        Public ReadOnly Property GroupAboutActions As RibbonGroup
+            Get
+                Return _GroupAboutActions
+            End Get
+        End Property
+        Private _Tutorials As RibbonButton
+        Public ReadOnly Property Tutorials As RibbonButton
+            Get
+                Return _Tutorials
+            End Get
+        End Property
+        Private _TabDemo As RibbonGroup
+        Public ReadOnly Property TabDemo As RibbonGroup
+            Get
+                Return _TabDemo
+            End Get
+        End Property
+        Private _ButtonMsDemo As RibbonButton
+        Public ReadOnly Property ButtonMsDemo As RibbonButton
+            Get
+                Return _ButtonMsDemo
+            End Get
+        End Property
+        Private _FontControl As RibbonFontControl
+        Public ReadOnly Property FontControl As RibbonFontControl
+            Get
+                Return _FontControl
+            End Get
+        End Property
+        Private _LegendCheckBox As RibbonCheckBox
+        Public ReadOnly Property LegendCheckBox As RibbonCheckBox
+            Get
+                Return _LegendCheckBox
+            End Get
+        End Property
+        Private _TweaksImage As RibbonButton
+        Public ReadOnly Property TweaksImage As RibbonButton
+            Get
+                Return _TweaksImage
+            End Get
+        End Property
+        Private _ShowProperty As RibbonButton
+        Public ReadOnly Property ShowProperty As RibbonButton
+            Get
+                Return _ShowProperty
+            End Get
+        End Property
+        Private _GroupExport As RibbonDropDownButton
+        Public ReadOnly Property GroupExport As RibbonDropDownButton
+            Get
+                Return _GroupExport
+            End Get
+        End Property
+        Private _ButtonExportImage As RibbonButton
+        Public ReadOnly Property ButtonExportImage As RibbonButton
+            Get
+                Return _ButtonExportImage
+            End Get
+        End Property
+        Private _ButtonExportMatrix As RibbonButton
+        Public ReadOnly Property ButtonExportMatrix As RibbonButton
+            Get
+                Return _ButtonExportMatrix
+            End Get
+        End Property
+
+        Public Sub New(ByVal ribbon As Ribbon)
+            If ribbon Is Nothing Then
+                Throw New ArgumentNullException(NameOf(ribbon), "Parameter is Nothing")
+            End If
+            _ribbon = ribbon
+            _RecentItems = New RibbonRecentItems(_ribbon, Cmd.cmdRecentItems)
+            _MenuGroupFile = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupFile)
+            _ButtonNew = New RibbonButton(_ribbon, Cmd.cmdButtonNew)
+            _ButtonImportsRawFiles = New RibbonButton(_ribbon, Cmd.cmdButtonImportsRawFiles)
+            _ButtonToolkits = New RibbonDropDownButton(_ribbon, Cmd.cmdButtonToolkits)
+            _ButtonDropA = New RibbonButton(_ribbon, Cmd.cmdButtonDropA)
+            _ButtonDropB = New RibbonButton(_ribbon, Cmd.cmdButtonDropB)
+            _ButtonFormulaSearch = New RibbonButton(_ribbon, Cmd.cmdButtonFormulaSearch)
+            _ButtonDropD = New RibbonButton(_ribbon, Cmd.cmdButtonDropD)
+            _ButtonRsharp = New RibbonButton(_ribbon, Cmd.cmdButtonRsharp)
+            _ButtonSettings = New RibbonButton(_ribbon, Cmd.cmdButtonSettings)
+            _ButtonAbout = New RibbonButton(_ribbon, Cmd.cmdButtonAbout)
+            _ButtonBioDeep = New RibbonButton(_ribbon, Cmd.cmdButtonBioDeep)
+            _ButtonLicense = New RibbonButton(_ribbon, Cmd.cmdButtonLicense)
+            _MenuGroupExit = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupExit)
+            _ButtonExit = New RibbonButton(_ribbon, Cmd.cmdButtonExit)
+            _HelpButton = New RibbonHelpButton(_ribbon, Cmd.cmdHelpButton)
+            _QAT = New RibbonQuickAccessToolbar(_ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
+            _ButtonPageNavBack = New RibbonButton(_ribbon, Cmd.cmdButtonPageNavBack)
+            _ButtonOpenRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenRaw)
+            _ButtonSave = New RibbonButton(_ribbon, Cmd.cmdButtonSave)
+            _TabGroupTableTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupTableTools)
+            _TabDesign = New RibbonTab(_ribbon, Cmd.cmdTabDesign)
+            _GroupDesign = New RibbonGroup(_ribbon, Cmd.cmdGroupDesign)
+            _PPMSpinner = New RibbonSpinner(_ribbon, Cmd.cmdPPMSpinner)
+            _GroupShowViewer = New RibbonGroup(_ribbon, Cmd.cmdGroupShowViewer)
+            _ButtonShowPlotViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowPlotViewer)
+            _ButtonShowMatrixViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowMatrixViewer)
+            _GroupShowDockWindows = New RibbonGroup(_ribbon, Cmd.cmdGroupShowDockWindows)
+            _Explorers = New RibbonSplitButtonGallery(_ribbon, Cmd.cmdExplorers)
+            _ButtonShowExplorer = New RibbonButton(_ribbon, Cmd.cmdButtonShowExplorer)
+            _ShowGCMSExplorer = New RibbonButton(_ribbon, Cmd.cmdShowGCMSExplorer)
+            _ShowMRMExplorer = New RibbonButton(_ribbon, Cmd.cmdShowMRMExplorer)
+            _ButtonMsImaging = New RibbonButton(_ribbon, Cmd.cmdButtonMsImaging)
+            _ButtonShowSearchList = New RibbonButton(_ribbon, Cmd.cmdButtonShowSearchList)
+            _ButtonShowProperties = New RibbonButton(_ribbon, Cmd.cmdButtonShowProperties)
+            _TabLayout = New RibbonTab(_ribbon, Cmd.cmdTabLayout)
+            _GroupLayout = New RibbonGroup(_ribbon, Cmd.cmdGroupLayout)
+            _ButtonLayout1 = New RibbonButton(_ribbon, Cmd.cmdButtonLayout1)
+            _ButtonLayout2 = New RibbonButton(_ribbon, Cmd.cmdButtonLayout2)
+            _GroupChromatography = New RibbonGroup(_ribbon, Cmd.cmdGroupChromatography)
+            _ButtonBPC = New RibbonButton(_ribbon, Cmd.cmdButtonBPC)
+            _ButtonTIC = New RibbonButton(_ribbon, Cmd.cmdButtonTIC)
+            _ButtonXIC = New RibbonButton(_ribbon, Cmd.cmdButtonXIC)
+            _PlotOptions = New RibbonGroup(_ribbon, Cmd.cmdPlotOptions)
+            _CheckBoxXICRelative = New RibbonCheckBox(_ribbon, Cmd.cmdCheckBoxXICRelative)
+            _TabGroupCalculatorTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupCalculatorTools)
+            _TabCalculator = New RibbonTab(_ribbon, Cmd.cmdTabCalculator)
+            _GroupCalculator = New RibbonGroup(_ribbon, Cmd.cmdGroupCalculator)
+            _ButtonCalculatorExport = New RibbonButton(_ribbon, Cmd.cmdButtonCalculatorExport)
+            _TabGroupRscriptTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupRscriptTools)
+            _TabRscriptTools = New RibbonTab(_ribbon, Cmd.cmdTabRscriptTools)
+            _GroupRscript = New RibbonGroup(_ribbon, Cmd.cmdGroupRscript)
+            _ButtonSaveScript = New RibbonButton(_ribbon, Cmd.cmdButtonSaveScript)
+            _ButtonRunScript = New RibbonButton(_ribbon, Cmd.cmdButtonRunScript)
+            _TabRStudio = New RibbonGroup(_ribbon, Cmd.cmdTabRStudio)
+            _ButtonInstallMzkitPackage = New RibbonButton(_ribbon, Cmd.cmdButtonInstallMzkitPackage)
+            _TabGroupExactMassSearchTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupExactMassSearchTools)
+            _TabExactMassSearch = New RibbonTab(_ribbon, Cmd.cmdTabExactMassSearch)
+            _GroupExactMassSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupExactMassSearch)
+            _ButtonExactMassSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonExactMassSearchExport)
+            _TabGroupNetworkTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupNetworkTools)
+            _TabNetwork = New RibbonTab(_ribbon, Cmd.cmdTabNetwork)
+            _GroupNetwork = New RibbonGroup(_ribbon, Cmd.cmdGroupNetwork)
+            _ButtonNetworkExport = New RibbonButton(_ribbon, Cmd.cmdButtonNetworkExport)
+            _ButtonNetworkRender = New RibbonButton(_ribbon, Cmd.cmdButtonNetworkRender)
+            _GroupNetworkTools = New RibbonGroup(_ribbon, Cmd.cmdGroupNetworkTools)
+            _SpinnerSimilarity = New RibbonSpinner(_ribbon, Cmd.cmdSpinnerSimilarity)
+            _GroupNetworkRenderTool = New RibbonGroup(_ribbon, Cmd.cmdGroupNetworkRenderTool)
+            _ButtonRefreshNetwork = New RibbonButton(_ribbon, Cmd.cmdButtonRefreshNetwork)
+            _TabGroupFormulaSearchTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupFormulaSearchTools)
+            _TabFormulaSearch = New RibbonTab(_ribbon, Cmd.cmdTabFormulaSearch)
+            _GroupFormulaSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupFormulaSearch)
+            _ButtonFormulaSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonFormulaSearchExport)
+            _TargetedContex = New RibbonTabGroup(_ribbon, Cmd.cmdTargetedContex)
+            _TabTargeted = New RibbonTab(_ribbon, Cmd.cmdTabTargeted)
+            _TabGroupTargeted = New RibbonGroup(_ribbon, Cmd.cmdTabGroupTargeted)
+            _ImportsLinear = New RibbonButton(_ribbon, Cmd.cmdImportsLinear)
+            _SaveLinears = New RibbonButton(_ribbon, Cmd.cmdSaveLinears)
+            _TabGroupTargetedLibrary = New RibbonGroup(_ribbon, Cmd.cmdTabGroupTargetedLibrary)
+            _MRMLibrary = New RibbonButton(_ribbon, Cmd.cmdMRMLibrary)
+            _QuantifyIons = New RibbonButton(_ribbon, Cmd.cmdQuantifyIons)
+            _TagGroupParameterTool = New RibbonGroup(_ribbon, Cmd.cmdTagGroupParameterTool)
+            _AdjustParameters = New RibbonButton(_ribbon, Cmd.cmdAdjustParameters)
+            _TabGroupMSI = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupMSI)
+            _TabMSIPage = New RibbonTab(_ribbon, Cmd.cmdTabMSIPage)
+            _GroupMSIFile = New RibbonGroup(_ribbon, Cmd.cmdGroupMSIFile)
+            _ButtonOpenMSIRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenMSIRaw)
+            _TabMSISnapshot = New RibbonGroup(_ribbon, Cmd.cmdTabMSISnapshot)
+            _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
+            _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
+            _ButtonMSIAverageIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIAverageIon)
+            _TabMSIFile = New RibbonGroup(_ribbon, Cmd.cmdTabMSIFile)
+            _ButtonMSIRowScans = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRowScans)
+            _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
+            _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
+            _GroupFileActions = New RibbonGroup(_ribbon, Cmd.cmdGroupFileActions)
+            _TabGroupWindowTools = New RibbonGroup(_ribbon, Cmd.cmdTabGroupWindowTools)
+            _ButtonShowStartPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowStartPage)
+            _ButtonShowLogWindow = New RibbonButton(_ribbon, Cmd.cmdButtonShowLogWindow)
+            _ButtonResetLayout = New RibbonButton(_ribbon, Cmd.cmdButtonResetLayout)
+            _TabGroupBioDeep = New RibbonGroup(_ribbon, Cmd.cmdTabGroupBioDeep)
+            _LogInBioDeep = New RibbonButton(_ribbon, Cmd.cmdLogInBioDeep)
+            _TabTools = New RibbonTab(_ribbon, Cmd.cmdTabTools)
+            _GroupToolsActions = New RibbonGroup(_ribbon, Cmd.cmdGroupToolsActions)
+            _ButtonMzCalculator = New RibbonButton(_ribbon, Cmd.cmdButtonMzCalculator)
+            _ButtonMzSearch = New RibbonButton(_ribbon, Cmd.cmdButtonMzSearch)
+            _ButtonShowSpectrumSearchPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowSpectrumSearchPage)
+            _Targeted = New RibbonButton(_ribbon, Cmd.cmdTargeted)
+            _TabAbout = New RibbonTab(_ribbon, Cmd.cmdTabAbout)
+            _GroupAboutActions = New RibbonGroup(_ribbon, Cmd.cmdGroupAboutActions)
+            _Tutorials = New RibbonButton(_ribbon, Cmd.cmdTutorials)
+            _TabDemo = New RibbonGroup(_ribbon, Cmd.cmdTabDemo)
+            _ButtonMsDemo = New RibbonButton(_ribbon, Cmd.cmdButtonMsDemo)
+            _FontControl = New RibbonFontControl(_ribbon, Cmd.cmdFontControl)
+            _LegendCheckBox = New RibbonCheckBox(_ribbon, Cmd.cmdLegendCheckBox)
+            _TweaksImage = New RibbonButton(_ribbon, Cmd.cmdTweaksImage)
+            _ShowProperty = New RibbonButton(_ribbon, Cmd.cmdShowProperty)
+            _GroupExport = New RibbonDropDownButton(_ribbon, Cmd.cmdGroupExport)
+            _ButtonExportImage = New RibbonButton(_ribbon, Cmd.cmdButtonExportImage)
+            _ButtonExportMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonExportMatrix)
+        End Sub
+
     End Class
-
-    ' ContextPopup CommandName
-    Public Const cmdContextMap As UInteger = Cmd.cmdContextMap
-
-    Private _ribbon As Ribbon
-    Public ReadOnly Property Ribbon As Ribbon
-        Get
-            Return _ribbon
-        End Get
-    End Property
-    Private _RecentItems As RibbonRecentItems
-    Public ReadOnly Property RecentItems As RibbonRecentItems
-        Get
-            Return _RecentItems
-        End Get
-    End Property
-    Private _MenuGroupFile As RibbonMenuGroup
-    Public ReadOnly Property MenuGroupFile As RibbonMenuGroup
-        Get
-            Return _MenuGroupFile
-        End Get
-    End Property
-    Private _ButtonNew As RibbonButton
-    Public ReadOnly Property ButtonNew As RibbonButton
-        Get
-            Return _ButtonNew
-        End Get
-    End Property
-    Private _ButtonImportsRawFiles As RibbonButton
-    Public ReadOnly Property ButtonImportsRawFiles As RibbonButton
-        Get
-            Return _ButtonImportsRawFiles
-        End Get
-    End Property
-    Private _ButtonToolkits As RibbonDropDownButton
-    Public ReadOnly Property ButtonToolkits As RibbonDropDownButton
-        Get
-            Return _ButtonToolkits
-        End Get
-    End Property
-    Private _ButtonDropA As RibbonButton
-    Public ReadOnly Property ButtonDropA As RibbonButton
-        Get
-            Return _ButtonDropA
-        End Get
-    End Property
-    Private _ButtonDropB As RibbonButton
-    Public ReadOnly Property ButtonDropB As RibbonButton
-        Get
-            Return _ButtonDropB
-        End Get
-    End Property
-    Private _ButtonFormulaSearch As RibbonButton
-    Public ReadOnly Property ButtonFormulaSearch As RibbonButton
-        Get
-            Return _ButtonFormulaSearch
-        End Get
-    End Property
-    Private _ButtonDropD As RibbonButton
-    Public ReadOnly Property ButtonDropD As RibbonButton
-        Get
-            Return _ButtonDropD
-        End Get
-    End Property
-    Private _ButtonRsharp As RibbonButton
-    Public ReadOnly Property ButtonRsharp As RibbonButton
-        Get
-            Return _ButtonRsharp
-        End Get
-    End Property
-    Private _ButtonSettings As RibbonButton
-    Public ReadOnly Property ButtonSettings As RibbonButton
-        Get
-            Return _ButtonSettings
-        End Get
-    End Property
-    Private _ButtonAbout As RibbonButton
-    Public ReadOnly Property ButtonAbout As RibbonButton
-        Get
-            Return _ButtonAbout
-        End Get
-    End Property
-    Private _ButtonBioDeep As RibbonButton
-    Public ReadOnly Property ButtonBioDeep As RibbonButton
-        Get
-            Return _ButtonBioDeep
-        End Get
-    End Property
-    Private _ButtonLicense As RibbonButton
-    Public ReadOnly Property ButtonLicense As RibbonButton
-        Get
-            Return _ButtonLicense
-        End Get
-    End Property
-    Private _MenuGroupExit As RibbonMenuGroup
-    Public ReadOnly Property MenuGroupExit As RibbonMenuGroup
-        Get
-            Return _MenuGroupExit
-        End Get
-    End Property
-    Private _ButtonExit As RibbonButton
-    Public ReadOnly Property ButtonExit As RibbonButton
-        Get
-            Return _ButtonExit
-        End Get
-    End Property
-    Private _HelpButton As RibbonHelpButton
-    Public ReadOnly Property HelpButton As RibbonHelpButton
-        Get
-            Return _HelpButton
-        End Get
-    End Property
-    Private _QAT As RibbonQuickAccessToolbar
-    Public ReadOnly Property QAT As RibbonQuickAccessToolbar
-        Get
-            Return _QAT
-        End Get
-    End Property
-    Private _ButtonPageNavBack As RibbonButton
-    Public ReadOnly Property ButtonPageNavBack As RibbonButton
-        Get
-            Return _ButtonPageNavBack
-        End Get
-    End Property
-    Private _ButtonOpenRaw As RibbonButton
-    Public ReadOnly Property ButtonOpenRaw As RibbonButton
-        Get
-            Return _ButtonOpenRaw
-        End Get
-    End Property
-    Private _ButtonSave As RibbonButton
-    Public ReadOnly Property ButtonSave As RibbonButton
-        Get
-            Return _ButtonSave
-        End Get
-    End Property
-    Private _TabGroupTableTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupTableTools As RibbonTabGroup
-        Get
-            Return _TabGroupTableTools
-        End Get
-    End Property
-    Private _TabDesign As RibbonTab
-    Public ReadOnly Property TabDesign As RibbonTab
-        Get
-            Return _TabDesign
-        End Get
-    End Property
-    Private _GroupDesign As RibbonGroup
-    Public ReadOnly Property GroupDesign As RibbonGroup
-        Get
-            Return _GroupDesign
-        End Get
-    End Property
-    Private _PPMSpinner As RibbonSpinner
-    Public ReadOnly Property PPMSpinner As RibbonSpinner
-        Get
-            Return _PPMSpinner
-        End Get
-    End Property
-    Private _GroupShowViewer As RibbonGroup
-    Public ReadOnly Property GroupShowViewer As RibbonGroup
-        Get
-            Return _GroupShowViewer
-        End Get
-    End Property
-    Private _ButtonShowPlotViewer As RibbonButton
-    Public ReadOnly Property ButtonShowPlotViewer As RibbonButton
-        Get
-            Return _ButtonShowPlotViewer
-        End Get
-    End Property
-    Private _ButtonShowMatrixViewer As RibbonButton
-    Public ReadOnly Property ButtonShowMatrixViewer As RibbonButton
-        Get
-            Return _ButtonShowMatrixViewer
-        End Get
-    End Property
-    Private _GroupShowDockWindows As RibbonGroup
-    Public ReadOnly Property GroupShowDockWindows As RibbonGroup
-        Get
-            Return _GroupShowDockWindows
-        End Get
-    End Property
-    Private _Explorers As RibbonSplitButtonGallery
-    Public ReadOnly Property Explorers As RibbonSplitButtonGallery
-        Get
-            Return _Explorers
-        End Get
-    End Property
-    Private _ButtonShowExplorer As RibbonButton
-    Public ReadOnly Property ButtonShowExplorer As RibbonButton
-        Get
-            Return _ButtonShowExplorer
-        End Get
-    End Property
-    Private _ShowGCMSExplorer As RibbonButton
-    Public ReadOnly Property ShowGCMSExplorer As RibbonButton
-        Get
-            Return _ShowGCMSExplorer
-        End Get
-    End Property
-    Private _ShowMRMExplorer As RibbonButton
-    Public ReadOnly Property ShowMRMExplorer As RibbonButton
-        Get
-            Return _ShowMRMExplorer
-        End Get
-    End Property
-    Private _ButtonMsImaging As RibbonButton
-    Public ReadOnly Property ButtonMsImaging As RibbonButton
-        Get
-            Return _ButtonMsImaging
-        End Get
-    End Property
-    Private _ButtonShowSearchList As RibbonButton
-    Public ReadOnly Property ButtonShowSearchList As RibbonButton
-        Get
-            Return _ButtonShowSearchList
-        End Get
-    End Property
-    Private _ButtonShowProperties As RibbonButton
-    Public ReadOnly Property ButtonShowProperties As RibbonButton
-        Get
-            Return _ButtonShowProperties
-        End Get
-    End Property
-    Private _TabLayout As RibbonTab
-    Public ReadOnly Property TabLayout As RibbonTab
-        Get
-            Return _TabLayout
-        End Get
-    End Property
-    Private _GroupLayout As RibbonGroup
-    Public ReadOnly Property GroupLayout As RibbonGroup
-        Get
-            Return _GroupLayout
-        End Get
-    End Property
-    Private _ButtonLayout1 As RibbonButton
-    Public ReadOnly Property ButtonLayout1 As RibbonButton
-        Get
-            Return _ButtonLayout1
-        End Get
-    End Property
-    Private _ButtonLayout2 As RibbonButton
-    Public ReadOnly Property ButtonLayout2 As RibbonButton
-        Get
-            Return _ButtonLayout2
-        End Get
-    End Property
-    Private _GroupChromatography As RibbonGroup
-    Public ReadOnly Property GroupChromatography As RibbonGroup
-        Get
-            Return _GroupChromatography
-        End Get
-    End Property
-    Private _ButtonBPC As RibbonButton
-    Public ReadOnly Property ButtonBPC As RibbonButton
-        Get
-            Return _ButtonBPC
-        End Get
-    End Property
-    Private _ButtonTIC As RibbonButton
-    Public ReadOnly Property ButtonTIC As RibbonButton
-        Get
-            Return _ButtonTIC
-        End Get
-    End Property
-    Private _ButtonXIC As RibbonButton
-    Public ReadOnly Property ButtonXIC As RibbonButton
-        Get
-            Return _ButtonXIC
-        End Get
-    End Property
-    Private _PlotOptions As RibbonGroup
-    Public ReadOnly Property PlotOptions As RibbonGroup
-        Get
-            Return _PlotOptions
-        End Get
-    End Property
-    Private _CheckBoxXICRelative As RibbonCheckBox
-    Public ReadOnly Property CheckBoxXICRelative As RibbonCheckBox
-        Get
-            Return _CheckBoxXICRelative
-        End Get
-    End Property
-    Private _TabGroupCalculatorTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupCalculatorTools As RibbonTabGroup
-        Get
-            Return _TabGroupCalculatorTools
-        End Get
-    End Property
-    Private _TabCalculator As RibbonTab
-    Public ReadOnly Property TabCalculator As RibbonTab
-        Get
-            Return _TabCalculator
-        End Get
-    End Property
-    Private _GroupCalculator As RibbonGroup
-    Public ReadOnly Property GroupCalculator As RibbonGroup
-        Get
-            Return _GroupCalculator
-        End Get
-    End Property
-    Private _ButtonCalculatorExport As RibbonButton
-    Public ReadOnly Property ButtonCalculatorExport As RibbonButton
-        Get
-            Return _ButtonCalculatorExport
-        End Get
-    End Property
-    Private _TabGroupRscriptTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupRscriptTools As RibbonTabGroup
-        Get
-            Return _TabGroupRscriptTools
-        End Get
-    End Property
-    Private _TabRscriptTools As RibbonTab
-    Public ReadOnly Property TabRscriptTools As RibbonTab
-        Get
-            Return _TabRscriptTools
-        End Get
-    End Property
-    Private _GroupRscript As RibbonGroup
-    Public ReadOnly Property GroupRscript As RibbonGroup
-        Get
-            Return _GroupRscript
-        End Get
-    End Property
-    Private _ButtonSaveScript As RibbonButton
-    Public ReadOnly Property ButtonSaveScript As RibbonButton
-        Get
-            Return _ButtonSaveScript
-        End Get
-    End Property
-    Private _ButtonRunScript As RibbonButton
-    Public ReadOnly Property ButtonRunScript As RibbonButton
-        Get
-            Return _ButtonRunScript
-        End Get
-    End Property
-    Private _TabRStudio As RibbonGroup
-    Public ReadOnly Property TabRStudio As RibbonGroup
-        Get
-            Return _TabRStudio
-        End Get
-    End Property
-    Private _ButtonInstallMzkitPackage As RibbonButton
-    Public ReadOnly Property ButtonInstallMzkitPackage As RibbonButton
-        Get
-            Return _ButtonInstallMzkitPackage
-        End Get
-    End Property
-    Private _TabGroupExactMassSearchTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupExactMassSearchTools As RibbonTabGroup
-        Get
-            Return _TabGroupExactMassSearchTools
-        End Get
-    End Property
-    Private _TabExactMassSearch As RibbonTab
-    Public ReadOnly Property TabExactMassSearch As RibbonTab
-        Get
-            Return _TabExactMassSearch
-        End Get
-    End Property
-    Private _GroupExactMassSearch As RibbonGroup
-    Public ReadOnly Property GroupExactMassSearch As RibbonGroup
-        Get
-            Return _GroupExactMassSearch
-        End Get
-    End Property
-    Private _ButtonExactMassSearchExport As RibbonButton
-    Public ReadOnly Property ButtonExactMassSearchExport As RibbonButton
-        Get
-            Return _ButtonExactMassSearchExport
-        End Get
-    End Property
-    Private _TabGroupNetworkTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupNetworkTools As RibbonTabGroup
-        Get
-            Return _TabGroupNetworkTools
-        End Get
-    End Property
-    Private _TabNetwork As RibbonTab
-    Public ReadOnly Property TabNetwork As RibbonTab
-        Get
-            Return _TabNetwork
-        End Get
-    End Property
-    Private _GroupNetwork As RibbonGroup
-    Public ReadOnly Property GroupNetwork As RibbonGroup
-        Get
-            Return _GroupNetwork
-        End Get
-    End Property
-    Private _ButtonNetworkExport As RibbonButton
-    Public ReadOnly Property ButtonNetworkExport As RibbonButton
-        Get
-            Return _ButtonNetworkExport
-        End Get
-    End Property
-    Private _ButtonNetworkRender As RibbonButton
-    Public ReadOnly Property ButtonNetworkRender As RibbonButton
-        Get
-            Return _ButtonNetworkRender
-        End Get
-    End Property
-    Private _GroupNetworkTools As RibbonGroup
-    Public ReadOnly Property GroupNetworkTools As RibbonGroup
-        Get
-            Return _GroupNetworkTools
-        End Get
-    End Property
-    Private _SpinnerSimilarity As RibbonSpinner
-    Public ReadOnly Property SpinnerSimilarity As RibbonSpinner
-        Get
-            Return _SpinnerSimilarity
-        End Get
-    End Property
-    Private _GroupNetworkRenderTool As RibbonGroup
-    Public ReadOnly Property GroupNetworkRenderTool As RibbonGroup
-        Get
-            Return _GroupNetworkRenderTool
-        End Get
-    End Property
-    Private _ButtonRefreshNetwork As RibbonButton
-    Public ReadOnly Property ButtonRefreshNetwork As RibbonButton
-        Get
-            Return _ButtonRefreshNetwork
-        End Get
-    End Property
-    Private _TabGroupFormulaSearchTools As RibbonTabGroup
-    Public ReadOnly Property TabGroupFormulaSearchTools As RibbonTabGroup
-        Get
-            Return _TabGroupFormulaSearchTools
-        End Get
-    End Property
-    Private _TabFormulaSearch As RibbonTab
-    Public ReadOnly Property TabFormulaSearch As RibbonTab
-        Get
-            Return _TabFormulaSearch
-        End Get
-    End Property
-    Private _GroupFormulaSearch As RibbonGroup
-    Public ReadOnly Property GroupFormulaSearch As RibbonGroup
-        Get
-            Return _GroupFormulaSearch
-        End Get
-    End Property
-    Private _ButtonFormulaSearchExport As RibbonButton
-    Public ReadOnly Property ButtonFormulaSearchExport As RibbonButton
-        Get
-            Return _ButtonFormulaSearchExport
-        End Get
-    End Property
-    Private _TargetedContex As RibbonTabGroup
-    Public ReadOnly Property TargetedContex As RibbonTabGroup
-        Get
-            Return _TargetedContex
-        End Get
-    End Property
-    Private _TabTargeted As RibbonTab
-    Public ReadOnly Property TabTargeted As RibbonTab
-        Get
-            Return _TabTargeted
-        End Get
-    End Property
-    Private _TabGroupTargeted As RibbonGroup
-    Public ReadOnly Property TabGroupTargeted As RibbonGroup
-        Get
-            Return _TabGroupTargeted
-        End Get
-    End Property
-    Private _ImportsLinear As RibbonButton
-    Public ReadOnly Property ImportsLinear As RibbonButton
-        Get
-            Return _ImportsLinear
-        End Get
-    End Property
-    Private _SaveLinears As RibbonButton
-    Public ReadOnly Property SaveLinears As RibbonButton
-        Get
-            Return _SaveLinears
-        End Get
-    End Property
-    Private _TabGroupTargetedLibrary As RibbonGroup
-    Public ReadOnly Property TabGroupTargetedLibrary As RibbonGroup
-        Get
-            Return _TabGroupTargetedLibrary
-        End Get
-    End Property
-    Private _MRMLibrary As RibbonButton
-    Public ReadOnly Property MRMLibrary As RibbonButton
-        Get
-            Return _MRMLibrary
-        End Get
-    End Property
-    Private _QuantifyIons As RibbonButton
-    Public ReadOnly Property QuantifyIons As RibbonButton
-        Get
-            Return _QuantifyIons
-        End Get
-    End Property
-    Private _TagGroupParameterTool As RibbonGroup
-    Public ReadOnly Property TagGroupParameterTool As RibbonGroup
-        Get
-            Return _TagGroupParameterTool
-        End Get
-    End Property
-    Private _AdjustParameters As RibbonButton
-    Public ReadOnly Property AdjustParameters As RibbonButton
-        Get
-            Return _AdjustParameters
-        End Get
-    End Property
-    Private _TabGroupMSI As RibbonTabGroup
-    Public ReadOnly Property TabGroupMSI As RibbonTabGroup
-        Get
-            Return _TabGroupMSI
-        End Get
-    End Property
-    Private _TabMSIPage As RibbonTab
-    Public ReadOnly Property TabMSIPage As RibbonTab
-        Get
-            Return _TabMSIPage
-        End Get
-    End Property
-    Private _GroupMSIFile As RibbonGroup
-    Public ReadOnly Property GroupMSIFile As RibbonGroup
-        Get
-            Return _GroupMSIFile
-        End Get
-    End Property
-    Private _ButtonOpenMSIRaw As RibbonButton
-    Public ReadOnly Property ButtonOpenMSIRaw As RibbonButton
-        Get
-            Return _ButtonOpenMSIRaw
-        End Get
-    End Property
-    Private _ButtonExportMSIMzpack As RibbonButton
-    Public ReadOnly Property ButtonExportMSIMzpack As RibbonButton
-        Get
-            Return _ButtonExportMSIMzpack
-        End Get
-    End Property
-    Private _TabMSISnapshot As RibbonGroup
-    Public ReadOnly Property TabMSISnapshot As RibbonGroup
-        Get
-            Return _TabMSISnapshot
-        End Get
-    End Property
-    Private _ButtonMSITotalIon As RibbonButton
-    Public ReadOnly Property ButtonMSITotalIon As RibbonButton
-        Get
-            Return _ButtonMSITotalIon
-        End Get
-    End Property
-    Private _ButtonMSIBasePeakIon As RibbonButton
-    Public ReadOnly Property ButtonMSIBasePeakIon As RibbonButton
-        Get
-            Return _ButtonMSIBasePeakIon
-        End Get
-    End Property
-    Private _ButtonMSIAverageIon As RibbonButton
-    Public ReadOnly Property ButtonMSIAverageIon As RibbonButton
-        Get
-            Return _ButtonMSIAverageIon
-        End Get
-    End Property
-    Private _TabMain As RibbonTab
-    Public ReadOnly Property TabMain As RibbonTab
-        Get
-            Return _TabMain
-        End Get
-    End Property
-    Private _GroupFileActions As RibbonGroup
-    Public ReadOnly Property GroupFileActions As RibbonGroup
-        Get
-            Return _GroupFileActions
-        End Get
-    End Property
-    Private _TabGroupWindowTools As RibbonGroup
-    Public ReadOnly Property TabGroupWindowTools As RibbonGroup
-        Get
-            Return _TabGroupWindowTools
-        End Get
-    End Property
-    Private _ButtonShowStartPage As RibbonButton
-    Public ReadOnly Property ButtonShowStartPage As RibbonButton
-        Get
-            Return _ButtonShowStartPage
-        End Get
-    End Property
-    Private _ButtonShowLogWindow As RibbonButton
-    Public ReadOnly Property ButtonShowLogWindow As RibbonButton
-        Get
-            Return _ButtonShowLogWindow
-        End Get
-    End Property
-    Private _ButtonResetLayout As RibbonButton
-    Public ReadOnly Property ButtonResetLayout As RibbonButton
-        Get
-            Return _ButtonResetLayout
-        End Get
-    End Property
-    Private _TabGroupBioDeep As RibbonGroup
-    Public ReadOnly Property TabGroupBioDeep As RibbonGroup
-        Get
-            Return _TabGroupBioDeep
-        End Get
-    End Property
-    Private _LogInBioDeep As RibbonButton
-    Public ReadOnly Property LogInBioDeep As RibbonButton
-        Get
-            Return _LogInBioDeep
-        End Get
-    End Property
-    Private _TabTools As RibbonTab
-    Public ReadOnly Property TabTools As RibbonTab
-        Get
-            Return _TabTools
-        End Get
-    End Property
-    Private _GroupToolsActions As RibbonGroup
-    Public ReadOnly Property GroupToolsActions As RibbonGroup
-        Get
-            Return _GroupToolsActions
-        End Get
-    End Property
-    Private _ButtonMzCalculator As RibbonButton
-    Public ReadOnly Property ButtonMzCalculator As RibbonButton
-        Get
-            Return _ButtonMzCalculator
-        End Get
-    End Property
-    Private _ButtonMzSearch As RibbonButton
-    Public ReadOnly Property ButtonMzSearch As RibbonButton
-        Get
-            Return _ButtonMzSearch
-        End Get
-    End Property
-    Private _ButtonShowSpectrumSearchPage As RibbonButton
-    Public ReadOnly Property ButtonShowSpectrumSearchPage As RibbonButton
-        Get
-            Return _ButtonShowSpectrumSearchPage
-        End Get
-    End Property
-    Private _Targeted As RibbonButton
-    Public ReadOnly Property Targeted As RibbonButton
-        Get
-            Return _Targeted
-        End Get
-    End Property
-    Private _TabAbout As RibbonTab
-    Public ReadOnly Property TabAbout As RibbonTab
-        Get
-            Return _TabAbout
-        End Get
-    End Property
-    Private _GroupAboutActions As RibbonGroup
-    Public ReadOnly Property GroupAboutActions As RibbonGroup
-        Get
-            Return _GroupAboutActions
-        End Get
-    End Property
-    Private _Tutorials As RibbonButton
-    Public ReadOnly Property Tutorials As RibbonButton
-        Get
-            Return _Tutorials
-        End Get
-    End Property
-    Private _TabDemo As RibbonGroup
-    Public ReadOnly Property TabDemo As RibbonGroup
-        Get
-            Return _TabDemo
-        End Get
-    End Property
-    Private _ButtonMsDemo As RibbonButton
-    Public ReadOnly Property ButtonMsDemo As RibbonButton
-        Get
-            Return _ButtonMsDemo
-        End Get
-    End Property
-    Private _FontControl As RibbonFontControl
-    Public ReadOnly Property FontControl As RibbonFontControl
-        Get
-            Return _FontControl
-        End Get
-    End Property
-    Private _LegendCheckBox As RibbonCheckBox
-    Public ReadOnly Property LegendCheckBox As RibbonCheckBox
-        Get
-            Return _LegendCheckBox
-        End Get
-    End Property
-    Private _TweaksImage As RibbonButton
-    Public ReadOnly Property TweaksImage As RibbonButton
-        Get
-            Return _TweaksImage
-        End Get
-    End Property
-    Private _ShowProperty As RibbonButton
-    Public ReadOnly Property ShowProperty As RibbonButton
-        Get
-            Return _ShowProperty
-        End Get
-    End Property
-    Private _GroupExport As RibbonDropDownButton
-    Public ReadOnly Property GroupExport As RibbonDropDownButton
-        Get
-            Return _GroupExport
-        End Get
-    End Property
-    Private _ButtonExportImage As RibbonButton
-    Public ReadOnly Property ButtonExportImage As RibbonButton
-        Get
-            Return _ButtonExportImage
-        End Get
-    End Property
-    Private _ButtonExportMatrix As RibbonButton
-    Public ReadOnly Property ButtonExportMatrix As RibbonButton
-        Get
-            Return _ButtonExportMatrix
-        End Get
-    End Property
-
-    Public Sub New(ByVal ribbon As Ribbon)
-        If ribbon Is Nothing Then
-            Throw New ArgumentNullException(NameOf(ribbon), "Parameter is Nothing")
-        End If
-        _ribbon = ribbon
-        _RecentItems = New RibbonRecentItems(_ribbon, Cmd.cmdRecentItems)
-        _MenuGroupFile = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupFile)
-        _ButtonNew = New RibbonButton(_ribbon, Cmd.cmdButtonNew)
-        _ButtonImportsRawFiles = New RibbonButton(_ribbon, Cmd.cmdButtonImportsRawFiles)
-        _ButtonToolkits = New RibbonDropDownButton(_ribbon, Cmd.cmdButtonToolkits)
-        _ButtonDropA = New RibbonButton(_ribbon, Cmd.cmdButtonDropA)
-        _ButtonDropB = New RibbonButton(_ribbon, Cmd.cmdButtonDropB)
-        _ButtonFormulaSearch = New RibbonButton(_ribbon, Cmd.cmdButtonFormulaSearch)
-        _ButtonDropD = New RibbonButton(_ribbon, Cmd.cmdButtonDropD)
-        _ButtonRsharp = New RibbonButton(_ribbon, Cmd.cmdButtonRsharp)
-        _ButtonSettings = New RibbonButton(_ribbon, Cmd.cmdButtonSettings)
-        _ButtonAbout = New RibbonButton(_ribbon, Cmd.cmdButtonAbout)
-        _ButtonBioDeep = New RibbonButton(_ribbon, Cmd.cmdButtonBioDeep)
-        _ButtonLicense = New RibbonButton(_ribbon, Cmd.cmdButtonLicense)
-        _MenuGroupExit = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupExit)
-        _ButtonExit = New RibbonButton(_ribbon, Cmd.cmdButtonExit)
-        _HelpButton = New RibbonHelpButton(_ribbon, Cmd.cmdHelpButton)
-        _QAT = New RibbonQuickAccessToolbar(_ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
-        _ButtonPageNavBack = New RibbonButton(_ribbon, Cmd.cmdButtonPageNavBack)
-        _ButtonOpenRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenRaw)
-        _ButtonSave = New RibbonButton(_ribbon, Cmd.cmdButtonSave)
-        _TabGroupTableTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupTableTools)
-        _TabDesign = New RibbonTab(_ribbon, Cmd.cmdTabDesign)
-        _GroupDesign = New RibbonGroup(_ribbon, Cmd.cmdGroupDesign)
-        _PPMSpinner = New RibbonSpinner(_ribbon, Cmd.cmdPPMSpinner)
-        _GroupShowViewer = New RibbonGroup(_ribbon, Cmd.cmdGroupShowViewer)
-        _ButtonShowPlotViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowPlotViewer)
-        _ButtonShowMatrixViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowMatrixViewer)
-        _GroupShowDockWindows = New RibbonGroup(_ribbon, Cmd.cmdGroupShowDockWindows)
-        _Explorers = New RibbonSplitButtonGallery(_ribbon, Cmd.cmdExplorers)
-        _ButtonShowExplorer = New RibbonButton(_ribbon, Cmd.cmdButtonShowExplorer)
-        _ShowGCMSExplorer = New RibbonButton(_ribbon, Cmd.cmdShowGCMSExplorer)
-        _ShowMRMExplorer = New RibbonButton(_ribbon, Cmd.cmdShowMRMExplorer)
-        _ButtonMsImaging = New RibbonButton(_ribbon, Cmd.cmdButtonMsImaging)
-        _ButtonShowSearchList = New RibbonButton(_ribbon, Cmd.cmdButtonShowSearchList)
-        _ButtonShowProperties = New RibbonButton(_ribbon, Cmd.cmdButtonShowProperties)
-        _TabLayout = New RibbonTab(_ribbon, Cmd.cmdTabLayout)
-        _GroupLayout = New RibbonGroup(_ribbon, Cmd.cmdGroupLayout)
-        _ButtonLayout1 = New RibbonButton(_ribbon, Cmd.cmdButtonLayout1)
-        _ButtonLayout2 = New RibbonButton(_ribbon, Cmd.cmdButtonLayout2)
-        _GroupChromatography = New RibbonGroup(_ribbon, Cmd.cmdGroupChromatography)
-        _ButtonBPC = New RibbonButton(_ribbon, Cmd.cmdButtonBPC)
-        _ButtonTIC = New RibbonButton(_ribbon, Cmd.cmdButtonTIC)
-        _ButtonXIC = New RibbonButton(_ribbon, Cmd.cmdButtonXIC)
-        _PlotOptions = New RibbonGroup(_ribbon, Cmd.cmdPlotOptions)
-        _CheckBoxXICRelative = New RibbonCheckBox(_ribbon, Cmd.cmdCheckBoxXICRelative)
-        _TabGroupCalculatorTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupCalculatorTools)
-        _TabCalculator = New RibbonTab(_ribbon, Cmd.cmdTabCalculator)
-        _GroupCalculator = New RibbonGroup(_ribbon, Cmd.cmdGroupCalculator)
-        _ButtonCalculatorExport = New RibbonButton(_ribbon, Cmd.cmdButtonCalculatorExport)
-        _TabGroupRscriptTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupRscriptTools)
-        _TabRscriptTools = New RibbonTab(_ribbon, Cmd.cmdTabRscriptTools)
-        _GroupRscript = New RibbonGroup(_ribbon, Cmd.cmdGroupRscript)
-        _ButtonSaveScript = New RibbonButton(_ribbon, Cmd.cmdButtonSaveScript)
-        _ButtonRunScript = New RibbonButton(_ribbon, Cmd.cmdButtonRunScript)
-        _TabRStudio = New RibbonGroup(_ribbon, Cmd.cmdTabRStudio)
-        _ButtonInstallMzkitPackage = New RibbonButton(_ribbon, Cmd.cmdButtonInstallMzkitPackage)
-        _TabGroupExactMassSearchTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupExactMassSearchTools)
-        _TabExactMassSearch = New RibbonTab(_ribbon, Cmd.cmdTabExactMassSearch)
-        _GroupExactMassSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupExactMassSearch)
-        _ButtonExactMassSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonExactMassSearchExport)
-        _TabGroupNetworkTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupNetworkTools)
-        _TabNetwork = New RibbonTab(_ribbon, Cmd.cmdTabNetwork)
-        _GroupNetwork = New RibbonGroup(_ribbon, Cmd.cmdGroupNetwork)
-        _ButtonNetworkExport = New RibbonButton(_ribbon, Cmd.cmdButtonNetworkExport)
-        _ButtonNetworkRender = New RibbonButton(_ribbon, Cmd.cmdButtonNetworkRender)
-        _GroupNetworkTools = New RibbonGroup(_ribbon, Cmd.cmdGroupNetworkTools)
-        _SpinnerSimilarity = New RibbonSpinner(_ribbon, Cmd.cmdSpinnerSimilarity)
-        _GroupNetworkRenderTool = New RibbonGroup(_ribbon, Cmd.cmdGroupNetworkRenderTool)
-        _ButtonRefreshNetwork = New RibbonButton(_ribbon, Cmd.cmdButtonRefreshNetwork)
-        _TabGroupFormulaSearchTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupFormulaSearchTools)
-        _TabFormulaSearch = New RibbonTab(_ribbon, Cmd.cmdTabFormulaSearch)
-        _GroupFormulaSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupFormulaSearch)
-        _ButtonFormulaSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonFormulaSearchExport)
-        _TargetedContex = New RibbonTabGroup(_ribbon, Cmd.cmdTargetedContex)
-        _TabTargeted = New RibbonTab(_ribbon, Cmd.cmdTabTargeted)
-        _TabGroupTargeted = New RibbonGroup(_ribbon, Cmd.cmdTabGroupTargeted)
-        _ImportsLinear = New RibbonButton(_ribbon, Cmd.cmdImportsLinear)
-        _SaveLinears = New RibbonButton(_ribbon, Cmd.cmdSaveLinears)
-        _TabGroupTargetedLibrary = New RibbonGroup(_ribbon, Cmd.cmdTabGroupTargetedLibrary)
-        _MRMLibrary = New RibbonButton(_ribbon, Cmd.cmdMRMLibrary)
-        _QuantifyIons = New RibbonButton(_ribbon, Cmd.cmdQuantifyIons)
-        _TagGroupParameterTool = New RibbonGroup(_ribbon, Cmd.cmdTagGroupParameterTool)
-        _AdjustParameters = New RibbonButton(_ribbon, Cmd.cmdAdjustParameters)
-        _TabGroupMSI = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupMSI)
-        _TabMSIPage = New RibbonTab(_ribbon, Cmd.cmdTabMSIPage)
-        _GroupMSIFile = New RibbonGroup(_ribbon, Cmd.cmdGroupMSIFile)
-        _ButtonOpenMSIRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenMSIRaw)
-        _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
-        _TabMSISnapshot = New RibbonGroup(_ribbon, Cmd.cmdTabMSISnapshot)
-        _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
-        _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
-        _ButtonMSIAverageIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIAverageIon)
-        _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
-        _GroupFileActions = New RibbonGroup(_ribbon, Cmd.cmdGroupFileActions)
-        _TabGroupWindowTools = New RibbonGroup(_ribbon, Cmd.cmdTabGroupWindowTools)
-        _ButtonShowStartPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowStartPage)
-        _ButtonShowLogWindow = New RibbonButton(_ribbon, Cmd.cmdButtonShowLogWindow)
-        _ButtonResetLayout = New RibbonButton(_ribbon, Cmd.cmdButtonResetLayout)
-        _TabGroupBioDeep = New RibbonGroup(_ribbon, Cmd.cmdTabGroupBioDeep)
-        _LogInBioDeep = New RibbonButton(_ribbon, Cmd.cmdLogInBioDeep)
-        _TabTools = New RibbonTab(_ribbon, Cmd.cmdTabTools)
-        _GroupToolsActions = New RibbonGroup(_ribbon, Cmd.cmdGroupToolsActions)
-        _ButtonMzCalculator = New RibbonButton(_ribbon, Cmd.cmdButtonMzCalculator)
-        _ButtonMzSearch = New RibbonButton(_ribbon, Cmd.cmdButtonMzSearch)
-        _ButtonShowSpectrumSearchPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowSpectrumSearchPage)
-        _Targeted = New RibbonButton(_ribbon, Cmd.cmdTargeted)
-        _TabAbout = New RibbonTab(_ribbon, Cmd.cmdTabAbout)
-        _GroupAboutActions = New RibbonGroup(_ribbon, Cmd.cmdGroupAboutActions)
-        _Tutorials = New RibbonButton(_ribbon, Cmd.cmdTutorials)
-        _TabDemo = New RibbonGroup(_ribbon, Cmd.cmdTabDemo)
-        _ButtonMsDemo = New RibbonButton(_ribbon, Cmd.cmdButtonMsDemo)
-        _FontControl = New RibbonFontControl(_ribbon, Cmd.cmdFontControl)
-        _LegendCheckBox = New RibbonCheckBox(_ribbon, Cmd.cmdLegendCheckBox)
-        _TweaksImage = New RibbonButton(_ribbon, Cmd.cmdTweaksImage)
-        _ShowProperty = New RibbonButton(_ribbon, Cmd.cmdShowProperty)
-        _GroupExport = New RibbonDropDownButton(_ribbon, Cmd.cmdGroupExport)
-        _ButtonExportImage = New RibbonButton(_ribbon, Cmd.cmdButtonExportImage)
-        _ButtonExportMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonExportMatrix)
-    End Sub
-
-End Class
-
+End Namespace

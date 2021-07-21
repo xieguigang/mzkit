@@ -1327,48 +1327,202 @@
         <Image Id="475" MinDPI="192">Res/applications-system.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenMSIRaw" Id="119" LabelTitle="Open MSI File" LabelDescription="Open MSI Raw Data File" TooltipTitle="Open MSI Raw Data File" TooltipDescription="Open MSI Raw Data File">
+    <Command Name="cmdButtonOpenMSIRaw" Id="119">
+      <Command.LabelTitle>
+        <String Id="476">Open MSI File</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="477">Open MSI Raw Data File</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="478">Open MSI Raw Data File</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="479">Open MSI Raw Data File</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+        <Image Id="480" MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+        <Image Id="481" MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdTabGroupMSI" Id="120" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
-    <Command Name="cmdTabMSIPage" Id="121" LabelTitle="MSI" LabelDescription="MSI" TooltipTitle="MSI" TooltipDescription="MSI" />
-    <Command Name="cmdGroupMSIFile" Id="122" LabelTitle="MS Imaging" LabelDescription="MS Imaging" TooltipTitle="MS Imaging" TooltipDescription="MS Imaging" />
-    <Command Name="cmdButtonMSITotalIon" Id="123" LabelTitle="Total Ions" LabelDescription="Render Total Ions" TooltipTitle="Render Total Ions" TooltipDescription="Render Total Ions">
+    <Command Name="cmdTabGroupMSI" Id="120">
+      <Command.LabelTitle>
+        <String Id="482">MS Imaging</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="483">MS Imaging</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="484">MS Imaging</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="485">MS Imaging</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdTabMSIPage" Id="121">
+      <Command.LabelTitle>
+        <String Id="486">MSI</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="487">MSI</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="488">MSI</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="489">MSI</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdGroupMSIFile" Id="122">
+      <Command.LabelTitle>
+        <String Id="490">MS Imaging</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="491">MS Imaging</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="492">MS Imaging</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="493">MS Imaging</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdButtonMSITotalIon" Id="123">
+      <Command.LabelTitle>
+        <String Id="494">Total Ions</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="495">Render Total Ions</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="496">Render Total Ions</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="497">Render Total Ions</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="498" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="499" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonMSIBasePeakIon" Id="124" LabelTitle="BasePeakIon" LabelDescription="Render BasePeakIon" TooltipTitle="Render BasePeakIon" TooltipDescription="Render BasePeakIon">
+    <Command Name="cmdButtonMSIBasePeakIon" Id="124">
+      <Command.LabelTitle>
+        <String Id="500">BasePeakIon</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="501">Render BasePeakIon</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="502">Render BasePeakIon</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="503">Render BasePeakIon</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="504" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="505" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonMSIAverageIon" Id="125" LabelTitle="Average Ion" LabelDescription="Render Average Ion" TooltipTitle="Render Average Ion" TooltipDescription="Render Average Ion">
+    <Command Name="cmdButtonMSIAverageIon" Id="125">
+      <Command.LabelTitle>
+        <String Id="506">Average Ion</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="507">Render Average Ion</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="508">Render Average Ion</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="509">Render Average Ion</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="510" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Res/applets-screenshooter.png</Image>
+        <Image Id="511" MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdTabMSISnapshot" Id="126" LabelTitle="MSI Snapshot" LabelDescription="MSI Snapshot" TooltipTitle="MSI Snapshot" TooltipDescription="MSI Snapshot" />
-    <Command Name="cmdButtonExportMSIMzpack" Id="127" LabelTitle="Export mzPack" LabelDescription="Export mzPack" TooltipTitle="Export mzPack" TooltipDescription="Export mzPack">
+    <Command Name="cmdTabMSISnapshot" Id="126">
+      <Command.LabelTitle>
+        <String Id="512">MSI Snapshot</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="513">MSI Snapshot</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="514">MSI Snapshot</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="515">MSI Snapshot</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdButtonExportMSIMzpack" Id="127">
+      <Command.LabelTitle>
+        <String Id="516">Export mzPack</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="517">Export mzPack</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="518">Export mzPack</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="519">Export mzPack</String>
+      </Command.TooltipDescription>
       <Command.SmallImages>
-        <Image MinDPI="192">Res/document-save.png</Image>
+        <Image Id="520" MinDPI="192">Res/document-save.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Res/document-save.png</Image>
+        <Image Id="521" MinDPI="192">Res/document-save.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonMSIRowScans" Id="128">
+      <Command.LabelTitle>
+        <String Id="522">Row Scans</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="523">Combine Row Scan MSI raw data files</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="524">Combine Row Scan MSI raw data files</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="525">Combine Row Scan MSI raw data files into a single mzPack raw data file</String>
+      </Command.TooltipDescription>
+      <Command.SmallImages>
+        <Image Id="526" MinDPI="192">Res/emblem-synchronizing.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image Id="527" MinDPI="192">Res/emblem-synchronizing.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabMSIFile" Id="129">
+      <Command.LabelTitle>
+        <String Id="528">MSI File</String>
+      </Command.LabelTitle>
+      <Command.LabelDescription>
+        <String Id="529">MSI File</String>
+      </Command.LabelDescription>
+      <Command.TooltipTitle>
+        <String Id="530">MSI File</String>
+      </Command.TooltipTitle>
+      <Command.TooltipDescription>
+        <String Id="531">MSI File</String>
+      </Command.TooltipDescription>
+    </Command>
+    <Command Name="cmdButtonShowRegionOverlap" Id="130" LabelTitle="Region Overlap" LabelDescription="Toggle display feature region overlap" TooltipTitle="Region Overlap" TooltipDescription="Toggle display feature region overlap">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/pin-icon.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/pin-icon.png</Image>
       </Command.LargeImages>
     </Command>
   </Application.Commands>
@@ -1551,15 +1705,18 @@
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupMSI">
           <Tab CommandName="cmdTabMSIPage">
-            <Group CommandName="cmdGroupMSIFile" SizeDefinition="ThreeButtons">
+            <Group CommandName="cmdGroupMSIFile" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonOpenMSIRaw" />
-              <Button CommandName="cmdButtonExportMSIMzpack" />
               <Button CommandName="cmdButtonMsImaging" />
             </Group>
             <Group CommandName="cmdTabMSISnapshot" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonMSITotalIon" />
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSIAverageIon" />
+            </Group>
+            <Group CommandName="cmdTabMSIFile" SizeDefinition="TwoButtons">
+              <Button CommandName="cmdButtonMSIRowScans" />
+              <Button CommandName="cmdButtonExportMSIMzpack" />
             </Group>
           </Tab>
         </TabGroup>

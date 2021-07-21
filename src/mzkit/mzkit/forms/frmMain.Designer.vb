@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports RibbonLib
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmMain
     ' Inherits System.Windows.Forms.Form
     Inherits Form
@@ -38,7 +40,7 @@ Partial Class frmMain
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Ribbon1 = New RibbonLib.Ribbon()
+        Me.Ribbon1 = New Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip.SuspendLayout()
@@ -170,7 +172,7 @@ Partial Class frmMain
     End Sub
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
     Friend WithEvents StatusStrip As System.Windows.Forms.StatusStrip
-    Friend WithEvents Ribbon1 As RibbonLib.Ribbon
+    Friend WithEvents Ribbon1 As Ribbon
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
     Friend WithEvents FormulaSearchToolToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MzCalculatorToolStripMenuItem As ToolStripMenuItem
