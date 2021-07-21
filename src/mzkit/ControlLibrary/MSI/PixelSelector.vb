@@ -185,19 +185,22 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
-        If e.Button <> MouseButtons.Left Then
-            Return
-        Else
-            drawing = False
-        End If
+    Public ReadOnly Property Pixel As Point
 
+    Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
         Dim xpoint = 0
         Dim ypoint = 0
 
         Call getPoint(e, xpoint, ypoint)
 
-        RaiseEvent SelectPixel(xpoint, ypoint)
+        _Pixel = New Point(xpoint, ypoint)
+
+        If e.Button <> MouseButtons.Left Then
+            Return
+        Else
+            drawing = False
+            RaiseEvent SelectPixel(xpoint, ypoint)
+        End If
     End Sub
 End Class
 

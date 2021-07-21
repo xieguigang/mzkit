@@ -539,4 +539,10 @@ Public Class frmMsImagingViewer
             End If
         End Using
     End Sub
+
+    Dim pinedPixel As LibraryMatrix
+
+    Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
+        Dim pos As Point = PixelSelector1.
+    End Sub
 End Class
