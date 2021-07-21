@@ -48,6 +48,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Linq
 Imports mzkit.My
 Imports mzkit.RibbonLib.Controls
@@ -127,6 +128,7 @@ Module RibbonEvents
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
         AddHandler ribbonItems.ButtonOpenMSIRaw.ExecuteEvent, AddressOf OpenMSIRaw
+        AddHandler ribbonItems.ButtonMSIRowScans.ExecuteEvent, AddressOf CombineRowScanTask
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() WindowModules.msDemo.ShowPage()
         AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call ConnectToBioDeep.OpenAdvancedFunction(AddressOf VisualStudio.ShowSingleDocument(Of frmTargetedQuantification))
 
@@ -142,6 +144,21 @@ Module RibbonEvents
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+    End Sub
+
+    Public Sub CombineRowScanTask()
+        Using file As New OpenFileDialog With {
+            .Filter = "Thermo Raw(*.raw)|*.raw|BioNovoGene mzPack(*.mzPack)|*.mzPack",
+            .Title = "Open MSI row scan raw data files",
+            .Multiselect = True
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".input_files", sessionID:=App.PID.ToHexString, prefix:="CombineRowScans_")
+
+                Call file.FileNames.SaveTo(tempfile)
+
+            End If
+        End Using
     End Sub
 
     Public Sub OpenMSIRaw()
