@@ -96,13 +96,12 @@ Namespace MarkupData.mzML.ControlVocabulary
 
     Public Class Params
 
-        <XmlElement(NameOf(cvParam))>
-        Public Property cvParams As cvParam()
-
-        <XmlElement(NameOf(userParam))>
-        Public Property userParams As userParam()
+        <XmlElement(NameOf(cvParam))> Public Property cvParams As cvParam()
+        <XmlElement(NameOf(cvTerm))> Public Property cvTerm As cvParam()
+        <XmlElement(NameOf(userParam))> Public Property userParams As userParam()
 
     End Class
+
 
     Public Class userParam : Implements INamedValue
 
