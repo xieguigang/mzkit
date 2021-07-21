@@ -246,7 +246,7 @@ Public Class frmMsImagingTweaks
     End Sub
 
     Private Sub loadAllMzIons()
-        Dim layers = Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
 
         For Each mz As Double In viewer.render.pixelReader.LoadMzArray(30)
             layers.Nodes.Add(mz.ToString("F4")).Tag = mz
@@ -273,7 +273,7 @@ Public Class frmMsImagingTweaks
 
     Private Sub loadBasePeakMz()
         Dim data As New List(Of ms2)
-        Dim layers = Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
 
         For Each px As PixelScan In viewer.render.pixelReader.AllPixels
             Dim mz As ms2 = px.GetMs.OrderByDescending(Function(a) a.intensity).FirstOrDefault
