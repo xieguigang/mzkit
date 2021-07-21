@@ -5,6 +5,7 @@ Namespace MarkupData.nmrML
     Public Class acquisition
 
         Public Property acquisitionMultiD As acquisitionMultiD
+        Public Property acquisition1D As acquisitionMultiD
 
     End Class
 

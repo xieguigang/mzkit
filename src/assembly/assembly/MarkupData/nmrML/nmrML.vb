@@ -4,8 +4,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.Control
 
 Namespace MarkupData.nmrML
 
-    <XmlRoot("nmrML")>
+    <XmlRoot("nmrML", [Namespace]:=nmrML.XML.namespace)>
     Public Class XML
+
+        Public Const [namespace] As String = "http://nmrml.org/schema"
 
         <XmlAttribute> Public Property accession As String
         <XmlAttribute> Public Property accession_url As String
