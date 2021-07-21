@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining.Clustering
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -295,10 +296,22 @@ Public Class frmMsImagingTweaks
 
         Dim da = Tolerance.DeltaMass(0.05)
         Dim mzGroup = pointTagged.GroupBy(Function(p) p.mz.mz, da).Select(Function(a) (Val(a.name), a.ToArray)).ToArray
-        'Dim densityData = data.Select(Function(mz)
-        '                                  Dim points = mzGroup.Where(Function(a) da(a.Item1, mz.mz)).SelectMany(Function(a) a.ToArray).ToArray
-        '                                  Dim densityMax = Density.GetDensity
-        '                              End Function)
+        Dim densityData = data.Select(Function(mz)
+                                          Dim points = mzGroup.Where(Function(a) da(a.Item1, mz.mz)).SelectMany(Function(a) a.ToArray).Select(Function(a) New ClusterEntity With {.uid = $"{a.X},{a.Y}", .entityVector = {a.X, a.Y}}).ToArray
+                                          Dim densityMax = Density.GetDensity(points, k:=16).Select(Function(a) a.Value).Max
+
+                                          Return (mz.mz, densityMax)
+                                      End Function).ToArray
+
+        data.OrderByDescending(Function(a)
+                                   Dim find = densityData.Where(Function(i) da(i.mz, a.mz)).ToArray
+
+                                   If find.Length = 0 Then
+                                       Return 0
+                                   Else
+                                       Return find.OrderByDescending(Function(i) i.densityMax).First.densityMax
+                                   End If
+                               End Function).AsList
 
         For Each p As ms2 In data
             layers.Nodes.Add(p.mz.ToString("F4")).Tag = p.mz
