@@ -47,8 +47,11 @@ Imports System.Threading
 Imports BioDeep
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -158,6 +161,71 @@ Module TaskScript
         Finally
             Call RunSlavePipeline.SendProgress(100, "Job done!")
         End Try
+    End Sub
+
+    <ExportAPI("MSI_rowbind")>
+    Public Sub MSI_rowbind(files As String(), save As String)
+        Dim exttype As String() = files.Select(Function(path) path.ExtensionSuffix.ToLower).Distinct.ToArray
+        Dim combineMzPack As Func(Of IEnumerable(Of mzPack), Correction, mzPack) =
+            Function(pip, cor)
+                Return pip.MSICombineRowScans(cor, 0.05, AddressOf RunSlavePipeline.SendMessage)
+            End Function
+
+        If exttype.Length = 1 Then
+            Using file As FileStream = save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Dim scans As New List(Of Integer)
+                Dim maxrt As New List(Of Double)
+
+                Select Case exttype(Scan0)
+                    Case "raw"
+
+                        For Each path As String In files
+                            Dim raw As New MSFileReader(path)
+
+                            scans.Add(raw.ThermoReader.GetNumScans)
+                            maxrt.Add(raw.ScanTimeMax)
+                            raw.Dispose()
+                        Next
+
+                        Call combineMzPack(
+                           Iterator Function() As IEnumerable(Of mzPack)
+                               For Each path As String In files
+                                   Dim raw As New MSFileReader(path)
+                                   Dim cache As mzPack = raw.LoadFromXRaw
+
+                                   Try
+                                       raw.Dispose()
+                                   Catch ex As Exception
+
+                                   End Try
+                               Next
+                           End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
+
+                    Case "mzpack"
+
+                        For Each path As String In files
+                            Using bin As New BinaryStreamReader(path)
+                                scans.Add(bin.EnumerateIndex.Count)
+                                maxrt.Add(bin.rtmax)
+                            End Using
+                        Next
+
+                        Call combineMzPack(
+                            Iterator Function() As IEnumerable(Of mzPack)
+                                For Each path As String In files
+                                    Using buffer As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                                        Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
+                                    End Using
+                                Next
+                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
+
+                    Case Else
+                        Call RunSlavePipeline.SendMessage($"Unsupported file type: {exttype(Scan0)}!")
+                End Select
+            End Using
+        Else
+            Call RunSlavePipeline.SendMessage($"Multipe file type is not allowed!")
+        End If
     End Sub
 
     <ExportAPI("formula")>

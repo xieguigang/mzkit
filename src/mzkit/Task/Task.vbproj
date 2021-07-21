@@ -302,6 +302,10 @@
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\assembly\ThermoRawFileReader\ThermoRawFileReader.vbproj">
+      <Project>{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}</Project>
+      <Name>ThermoRawFileReader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}</Project>
       <Name>Chemoinformatics</Name>

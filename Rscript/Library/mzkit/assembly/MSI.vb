@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -238,39 +239,12 @@ Module MSI
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
 
         If pipeline.isError Then
-            Return pipeline
+            Return pipeline.getError
+        Else
+            Return pipeline _
+                .populates(Of mzPack)(env) _
+                .MSICombineRowScans(correction, intocutoff, progress:=Sub(msg) Call base.print(msg, env))
         End If
-
-        Dim pixels As New List(Of ScanMS1)
-        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
-
-        For Each row As mzPack In pipeline.populates(Of mzPack)(env)
-            Dim y As Integer = row.source _
-                .Match("\d+") _
-                .DoCall(AddressOf Integer.Parse)
-            Dim i As i32 = 1
-
-            Call base.print($"load: {row.source}...", env)
-
-            For Each scan As ScanMS1 In row.MS
-                Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRow(scan.rt))
-                Dim ms As ms2() = cutoff.Trim(scan.GetMs)
-                Dim mz As Double() = ms.Select(Function(m) m.mz).ToArray
-                Dim into As Double() = ms.Select(Function(m) m.intensity).ToArray
-
-                pixels += New ScanMS1 With {
-                    .BPC = scan.BPC,
-                    .into = into,
-                    .mz = mz,
-                    .meta = New Dictionary(Of String, String) From {{NameOf(x), x}, {NameOf(y), y}},
-                    .rt = scan.rt,
-                    .scan_id = $"[{row.source}] {scan.scan_id}",
-                    .TIC = scan.TIC
-                }
-            Next
-        Next
-
-        Return New mzPack With {.MS = pixels.ToArray}
     End Function
 
     ''' <summary>
