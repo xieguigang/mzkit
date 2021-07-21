@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -274,9 +275,12 @@ Public Class frmMsImagingTweaks
     Private Sub loadBasePeakMz()
         Dim data As New List(Of ms2)
         Dim layers = Win7StyleTreeView1.Nodes.Item(0)
+        Dim pointTagged As New List(Of (X!, Y!, mz As ms2))
 
         For Each px As PixelScan In viewer.render.pixelReader.AllPixels
             Dim mz As ms2 = px.GetMs.OrderByDescending(Function(a) a.intensity).FirstOrDefault
+
+            pointTagged.Add((px.X, px.Y, mz))
 
             If Not mz Is Nothing Then
                 data.Add(mz)
@@ -287,8 +291,14 @@ Public Class frmMsImagingTweaks
 
         data = data.ToArray _
              .Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)) _
-             .OrderBy(Function(d) d.mz) _
              .AsList
+
+        Dim da = Tolerance.DeltaMass(0.05)
+        Dim mzGroup = pointTagged.GroupBy(Function(p) p.mz.mz, da).Select(Function(a) (Val(a.name), a.ToArray)).ToArray
+        'Dim densityData = data.Select(Function(mz)
+        '                                  Dim points = mzGroup.Where(Function(a) da(a.Item1, mz.mz)).SelectMany(Function(a) a.ToArray).ToArray
+        '                                  Dim densityMax = Density.GetDensity
+        '                              End Function)
 
         For Each p As ms2 In data
             layers.Nodes.Add(p.mz.ToString("F4")).Tag = p.mz
