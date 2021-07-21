@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -233,8 +234,18 @@ Public Class frmMsImagingViewer
             .name = $"Pixel[{x}, {y}]"
         }
 
-        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
-        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+        If pinedPixel Is Nothing Then
+            Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, $"Pixel[{x}, {y}]")
+            Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+        Else
+            Dim handler As New CosAlignment(Tolerance.PPM(20), New RelativeIntensityCutoff(0.05))
+            Dim align As AlignmentOutput = handler.CreateAlignment(ms.ms2, pinedPixel.ms2)
+
+            align.query = New Meta With {.id = ms.name}
+            align.reference = New Meta With {.id = pinedPixel.name}
+
+            Call MyApplication.host.mzkitTool.showAlignment(align)
+        End If
     End Sub
 
     Private Sub PixelSelector1_SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) Handles PixelSelector1.SelectPixelRegion
@@ -430,41 +441,42 @@ Public Class frmMsImagingViewer
         loadedPixels = pixels
 
         Return Sub()
-                   Call MyApplication.RegisterPlot(
-                       Sub(args)
-                           Dim pixelFilter As PixelData() = (
-                              From pm As PixelData
-                              In pixels
-                              Where pm.intensity >= params.lowerbound
-                              Select If(pm.intensity > params.upperbound, New PixelData With {
-                                  .intensity = params.upperbound,
-                                  .level = pm.level,
-                                  .mz = pm.mz,
-                                  .x = pm.x,
-                                  .y = pm.y
-                              }, pm)
-                           ).ToArray
-
-                           pixelFilter = Drawer.ScalePixels(pixelFilter, params.GetTolerance)
-                           pixelFilter = Drawer.GetPixelsMatrix(pixelFilter)
-
-                           Dim image As Bitmap = Drawer.RenderPixels(
-                               pixels:=pixelFilter,
-                               dimension:=dimensionSize,
-                               dimSize:=size.SizeParser,
-                               threshold:=params.threshold,
-                               mapLevels:=params.mapLevels,
-                               colorSet:=params.colors.Description,
-                               scale:=params.scale
-                           )
-
-                           image = params.Smooth(image)
-
-                           PixelSelector1.MSImage(size.SizeParser) = image
-                           PixelSelector1.BackColor = params.background
-                       End Sub)
+                   Call MyApplication.RegisterPlot(Sub(args) Call Plot(args, pixels, size, dimensionSize))
                End Sub
     End Function
+
+    Private Sub Plot(args As PlotProperty, pixels As PixelData(), size$, dimensionSize As Size)
+        Dim pixelFilter As PixelData() = (
+            From pm As PixelData
+            In pixels
+            Where pm.intensity >= params.lowerbound
+            Select If(pm.intensity > params.upperbound, New PixelData With {
+                .intensity = params.upperbound,
+                .level = pm.level,
+                .mz = pm.mz,
+                .x = pm.x,
+                .y = pm.y
+            }, pm)
+        ).ToArray
+
+        pixelFilter = Drawer.ScalePixels(pixelFilter, params.GetTolerance)
+        pixelFilter = Drawer.GetPixelsMatrix(pixelFilter)
+
+        Dim image As Bitmap = Drawer.RenderPixels(
+            pixels:=pixelFilter,
+            dimension:=dimensionSize,
+            dimSize:=size.SizeParser,
+            threshold:=params.threshold,
+            mapLevels:=params.mapLevels,
+            colorSet:=params.colors.Description,
+            scale:=params.scale
+        )
+
+        image = params.Smooth(image)
+
+        PixelSelector1.MSImage(size.SizeParser) = image
+        PixelSelector1.BackColor = params.background
+    End Sub
 
     Protected Overrides Sub OpenContainingFolder()
         Call Process.Start(FilePath.ParentPath)
@@ -552,6 +564,11 @@ Public Class frmMsImagingViewer
                 .ms2 = render.ReadXY(pos.X, pos.Y).ToArray,
                 .name = $"Select Pixel: [{pos.X},{pos.Y}]"
             }
+
+            If pinedPixel.ms2.Length = 0 Then
+                pinedPixel = Nothing
+                MyApplication.host.showStatusMessage("There is no MS data in current pixel?", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            End If
         End If
     End Sub
 End Class
