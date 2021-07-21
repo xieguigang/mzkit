@@ -1,27 +1,26 @@
-﻿Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics
 
 Namespace Formula.IsotopicPatterns
 
     Public Class IsotopeDistribution
 
-        Shared ReadOnly pse As Dictionary(Of String, Element) = Element.MemoryLoadElements
-        Shared ReadOnly _max_list_len As Integer = 100000
+        Shared ReadOnly PeriodicTable As Dictionary(Of String, Element) = Element.MemoryLoadElements
+        Shared ReadOnly MaxListLen As Integer = 100000
 
-        Public Property ds As CountItem()
-        Public Property xs As Double()
-        Public Property ys As Double()
+        Public Property data As CountItem()
+        Public Property mz As Double()
+        Public Property intensity As Double()
 
-        Public Shared Function generate(sum_formula As Formula, Optional prob_threshold As Double = 0.001, Optional fwhm As Double = 0.1,
-                                Optional pad_left As Double = 3,
-                Optional pad_right As Double = 3, Optional interpolate_grid As Double = 0.005) As IsotopeDistribution
-            Console.WriteLine("Simulating isotopic distribution ...")
+        Public Shared Function GenerateDistribution(formula As Formula,
+                                                    Optional prob_threshold As Double = 0.001,
+                                                    Optional fwhm As Double = 0.1,
+                                                    Optional pad_left As Double = 3,
+                                                    Optional pad_right As Double = 3,
+                                                    Optional interpolate_grid As Double = 0.005) As IsotopeDistribution
 
-            Dim ds As CountItem() = _generate_dir(sum_formula, prob_threshold = prob_threshold)
-
-            Console.WriteLine("Simulating gaussians...")
-
+            Dim ds As CountItem() = dir(formula, prob_threshold = prob_threshold)
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
             Dim x_min = xs.Min - pad_left
@@ -42,19 +41,19 @@ Namespace Formula.IsotopicPatterns
             Next
 
             Return New IsotopeDistribution With {
-                .ds = ds,
-                .xs = plot_xs,
-                .ys = plot_ys
+                .data = ds,
+                .mz = plot_xs,
+                .intensity = plot_ys
             }
         End Function
 
-        Private Shared Function _generate_dir(sum_formula As Formula, Optional prob_threshold As Double = 0.001) As CountItem()
+        Private Shared Function dir(formula As Formula, Optional prob_threshold As Double = 0.001) As CountItem()
             Dim lst As New List(Of CountItem)
 
-            For Each a As KeyValuePair(Of String, Integer) In sum_formula.CountsByElement
+            For Each a As KeyValuePair(Of String, Integer) In formula.CountsByElement
                 Dim atom_type = a.Key
                 Dim num_atoms = a.Value
-                Dim elt As Element = pse(atom_type)
+                Dim elt As Element = PeriodicTable(atom_type)
                 ' Iterate over isotopes indexed by nominal masses
                 For Each isotope As Isotope In elt.isotopes
                     Dim prob = isotope.Prob
@@ -74,14 +73,14 @@ Namespace Formula.IsotopicPatterns
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
 
-                    If Not (lst < _max_list_len) Then
+                    If Not (lst < MaxListLen) Then
                         Throw New NotImplementedException
                     End If
                 Next
                 lst = lst.Where(Function(itm) _contains_num_atoms_of_type(itm(0), num_atoms, atom_type))
             Next
 
-            Return _filter_according_to_sum_formula(lst, sum_formula).ToArray
+            Return _filter_according_to_sum_formula(lst, formula).ToArray
         End Function
 
         Private Shared Iterator Function _filter_according_to_sum_formula(lst As List(Of CountItem), sf As Formula) As IEnumerable(Of CountItem)
