@@ -52,8 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
-Imports Microsoft.VisualBasic.DataMining.Clustering
-Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -294,23 +293,16 @@ Public Class frmMsImagingTweaks
              .Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)) _
              .AsList
 
+        Call Application.DoEvents()
+
         Dim da = Tolerance.DeltaMass(0.05)
         Dim mzGroup = pointTagged.GroupBy(Function(p) p.mz.mz, da).Select(Function(a) (Val(a.name), a.ToArray)).ToArray
-        Dim densityData = data.Select(Function(mz)
-                                          Dim points = mzGroup.Where(Function(a) da(a.Item1, mz.mz)).SelectMany(Function(a) a.ToArray).Select(Function(a) New ClusterEntity With {.uid = $"{a.X},{a.Y}", .entityVector = {a.X, a.Y}}).ToArray
-                                          Dim densityMax = Density.GetDensity(points, k:=16).Select(Function(a) a.Value).Max
 
-                                          Return (mz.mz, densityMax)
-                                      End Function).ToArray
+        Call Application.DoEvents()
 
         data.OrderByDescending(Function(a)
-                                   Dim find = densityData.Where(Function(i) da(i.mz, a.mz)).ToArray
-
-                                   If find.Length = 0 Then
-                                       Return 0
-                                   Else
-                                       Return find.OrderByDescending(Function(i) i.densityMax).First.densityMax
-                                   End If
+                                   Call Application.DoEvents()
+                                   Return mzGroup.Where(Function(i) da(i.Item1, a.mz)).Select(Function(p) p.ToArray).IteratesALL.Count
                                End Function).AsList
 
         For Each p As ms2 In data
