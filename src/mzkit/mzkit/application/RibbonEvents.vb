@@ -153,10 +153,14 @@ Module RibbonEvents
             .Multiselect = True
         }
             If file.ShowDialog = DialogResult.OK Then
-                Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".input_files", sessionID:=App.PID.ToHexString, prefix:="CombineRowScans_")
-
-                Call file.FileNames.SaveTo(tempfile)
-
+                Using savefile As New SaveFileDialog With {
+                    .Filter = "BioNovoGene mzPack(*.mzPack)|*.mzPack",
+                    .Title = "Save MSI raw data file"
+                }
+                    If savefile.ShowDialog = DialogResult.OK Then
+                        Call RscriptProgressTask.CreateMSIRawFromRowBinds(file.FileNames, savefile.FileName)
+                    End If
+                End Using
             End If
         End Using
     End Sub

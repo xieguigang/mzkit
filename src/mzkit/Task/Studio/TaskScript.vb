@@ -185,10 +185,14 @@ Module TaskScript
                             scans.Add(raw.ThermoReader.GetNumScans)
                             maxrt.Add(raw.ScanTimeMax)
                             raw.Dispose()
+
+                            Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
                         Next
 
                         Call combineMzPack(
                            Iterator Function() As IEnumerable(Of mzPack)
+                               Dim i As Integer = 0
+
                                For Each path As String In files
                                    Dim raw As New MSFileReader(path)
                                    Dim cache As mzPack = raw.LoadFromXRaw
@@ -196,7 +200,8 @@ Module TaskScript
                                    Try
                                        raw.Dispose()
                                    Catch ex As Exception
-
+                                   Finally
+                                       Call RunSlavePipeline.SendProgress(i / files.Length * 100, $"Combine Raw Data Files... {path.BaseName}")
                                    End Try
                                Next
                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
