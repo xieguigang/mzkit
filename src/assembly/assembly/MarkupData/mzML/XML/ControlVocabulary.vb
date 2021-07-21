@@ -102,7 +102,6 @@ Namespace MarkupData.mzML.ControlVocabulary
 
     End Class
 
-
     Public Class userParam : Implements INamedValue
 
         <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
