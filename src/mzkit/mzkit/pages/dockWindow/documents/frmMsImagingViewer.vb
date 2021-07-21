@@ -543,6 +543,15 @@ Public Class frmMsImagingViewer
     Dim pinedPixel As LibraryMatrix
 
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
-        Dim pos As Point = PixelSelector1.
+        Dim pos As Point = PixelSelector1.Pixel
+
+        If render Is Nothing Then
+            Return
+        Else
+            pinedPixel = New LibraryMatrix With {
+                .ms2 = render.ReadXY(pos.X, pos.Y).ToArray,
+                .name = $"Select Pixel: [{pos.X},{pos.Y}]"
+            }
+        End If
     End Sub
 End Class

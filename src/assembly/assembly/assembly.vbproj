@@ -516,6 +516,7 @@
     <Compile Include="MarkupData\imzML\Correction.vb" />
     <Compile Include="MarkupData\imzML\XML\MSISummary.vb" />
     <Compile Include="MarkupData\imzML\XML\ScanReader.vb" />
+    <Compile Include="MarkupData\nmrML\nmrML.vb" />
     <Compile Include="MarkupData\XmlParser.vb" />
     <Compile Include="MarkupData\imzML\ibd\Format.vb" />
     <Compile Include="MarkupData\imzML\ibd\ibdReader.vb" />
