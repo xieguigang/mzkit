@@ -47,6 +47,8 @@
 
 Imports System.Drawing.Drawing2D
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -57,9 +59,12 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports RibbonLib.Interop
+Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
 Public Class PageMzSearch
@@ -264,7 +269,10 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim vs_win As DocumentWindow = DirectCast(ParentForm, DocumentWindow)
+
         ComboBox1.SelectedIndex = 0
+        vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -302,7 +310,7 @@ Public Class PageMzSearch
             DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
         Next
 
-        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1).AsGDIImage
+        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1, labelIntensity:=0.01).AsGDIImage
 
         PictureBox1.BackgroundImage = peakPlot
     End Sub
@@ -338,8 +346,12 @@ Public Class PageMzSearch
     End Function
 
     Private Sub MS1PlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1PlotToolStripMenuItem.Click
+        If MS1PlotToolStripMenuItem.Checked Then
+            Return
+        End If
+
         If Not isotope Is Nothing Then
-            PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1).AsGDIImage
+            PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1, labelIntensity:=0.01).AsGDIImage
         End If
 
         GaussianPlotToolStripMenuItem.Checked = MS1PlotToolStripMenuItem.Checked
@@ -347,11 +359,50 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub GaussianPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GaussianPlotToolStripMenuItem.Click
+        If GaussianPlotToolStripMenuItem.Checked Then
+            Return
+        End If
+
         If Not isotope Is Nothing Then
-            PictureBox1.BackgroundImage = Scatter.Plot({GetIsotopeGaussianLine()}, fill:=True).AsGDIImage
+            PictureBox1.BackgroundImage = Scatter.Plot(
+                c:={GetIsotopeGaussianLine()},
+                fill:=True,
+                size:="2100,1400",
+                gridFill:="white",
+                Xlabel:="M/Z",
+                Ylabel:="Gaussian Probability",
+                axisLabelCSS:=CSSFont.Win7LargeBold
+            ).AsGDIImage
         End If
 
         MS1PlotToolStripMenuItem.Checked = GaussianPlotToolStripMenuItem.Checked
         GaussianPlotToolStripMenuItem.Checked = Not GaussianPlotToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+        If isotope Is Nothing Then
+            Return
+        End If
+
+        If MS1PlotToolStripMenuItem.Checked Then
+            Dim ion As New MGF.Ions With {
+                .Accession = isotope.Formula,
+                .Charge = 1,
+                .Database = "IsotopeDistribution",
+                .Locus = isotope.Formula,
+                .Title = $"{isotope.ToString} [MS1]",
+                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.Formula).ExactMass, 1),
+                .Peaks = isotope.data _
+                    .Select(Function(i)
+                                Return New ms2 With {
+                                    .mz = i.abs_mass,
+                                    .intensity = i.abundance
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        Else
+            Call DataGridView2.SaveDataGrid("Save Gaussian Data")
+        End If
     End Sub
 End Class

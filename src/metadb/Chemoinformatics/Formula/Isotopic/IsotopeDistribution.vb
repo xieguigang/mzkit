@@ -21,15 +21,14 @@ Namespace Formula.IsotopicPatterns
         End Property
 
         Public Shared Function GenerateDistribution(formula As Formula,
-                                                    Optional prob_threshold As Double = 0.001,
+                                                    Optional prob_threshold As Double = 0.0000000001,
                                                     Optional fwhm As Double = 0.1,
                                                     Optional pad_left As Double = 3,
                                                     Optional pad_right As Double = 3,
                                                     Optional interpolate_grid As Double = 0.1) As IsotopeDistribution
 
-            Dim ds As IsotopeCount() = Distribution(formula) _
+            Dim ds As IsotopeCount() = Distribution(formula, prob_threshold:=prob_threshold) _
                 .DoCall(AddressOf IsotopeCount.Normalize) _
-                .Where(Function(i) i.abundance >= prob_threshold) _
                 .ToArray
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
@@ -89,7 +88,7 @@ Namespace Formula.IsotopicPatterns
             }
         End Function
 
-        Public Shared Function Distribution(formula As Formula) As IsotopeCount()
+        Public Shared Function Distribution(formula As Formula, Optional prob_threshold As Double = 0.0000000001) As IsotopeCount()
             Dim lst As New List(Of IsotopeCount)
             Dim atom_types As String()
 
@@ -118,11 +117,18 @@ Namespace Formula.IsotopicPatterns
                             atom_types = itm.atoms _
                                 .JoinIterates([atom_type].Repeats(i)) _
                                 .ToArray
-                            isotopeProb = itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms)
+
+                            ' isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
+                            isotopeProb = 1
+                            isotopeProb = itm(2) * (prob ^ i) * isotopeProb
                             items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
                         Next
                     Next
 
+                    ' prevent addition Of very unlikely isotope distributions
+                    items_to_append = items_to_append _
+                        .Where(Function(itm) itm(2) >= prob_threshold) _
+                        .AsList
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
                 Next

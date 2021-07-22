@@ -23,6 +23,7 @@ Partial Class PageMzSearch
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageMzSearch))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -34,23 +35,26 @@ Partial Class PageMzSearch
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.GaussianPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS1PlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.GaussianPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MS1PlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MSISearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -175,6 +179,26 @@ Partial Class PageMzSearch
         Me.PictureBox1.TabIndex = 36
         Me.PictureBox1.TabStop = False
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GaussianPlotToolStripMenuItem, Me.MS1PlotToolStripMenuItem, Me.ToolStripMenuItem1, Me.ExportToolStripMenuItem, Me.MSISearchToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
+        '
+        'GaussianPlotToolStripMenuItem
+        '
+        Me.GaussianPlotToolStripMenuItem.Name = "GaussianPlotToolStripMenuItem"
+        Me.GaussianPlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.GaussianPlotToolStripMenuItem.Text = "Gaussian Plot"
+        '
+        'MS1PlotToolStripMenuItem
+        '
+        Me.MS1PlotToolStripMenuItem.Checked = True
+        Me.MS1PlotToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1PlotToolStripMenuItem.Name = "MS1PlotToolStripMenuItem"
+        Me.MS1PlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1PlotToolStripMenuItem.Text = "MS1 Plot"
+        '
         'DataGridView2
         '
         Me.DataGridView2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -187,6 +211,17 @@ Partial Class PageMzSearch
         Me.DataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DataGridView2.Size = New System.Drawing.Size(355, 515)
         Me.DataGridView2.TabIndex = 35
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "M/z"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Intensity"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Width = 200
         '
         'Label4
         '
@@ -223,36 +258,24 @@ Partial Class PageMzSearch
         Me.Button2.Text = "Isotope Pattern"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'ContextMenuStrip1
+        'ToolStripMenuItem1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GaussianPlotToolStripMenuItem, Me.MS1PlotToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
-        'GaussianPlotToolStripMenuItem
+        'ExportToolStripMenuItem
         '
-        Me.GaussianPlotToolStripMenuItem.Name = "GaussianPlotToolStripMenuItem"
-        Me.GaussianPlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.GaussianPlotToolStripMenuItem.Text = "Gaussian Plot"
+        Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
+        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportToolStripMenuItem.Text = "Export"
         '
-        'MS1PlotToolStripMenuItem
+        'MSISearchToolStripMenuItem
         '
-        Me.MS1PlotToolStripMenuItem.Checked = True
-        Me.MS1PlotToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS1PlotToolStripMenuItem.Name = "MS1PlotToolStripMenuItem"
-        Me.MS1PlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.MS1PlotToolStripMenuItem.Text = "MS1 Plot"
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "M/z"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Intensity"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Width = 200
+        Me.MSISearchToolStripMenuItem.Image = CType(resources.GetObject("MSISearchToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.MSISearchToolStripMenuItem.Name = "MSISearchToolStripMenuItem"
+        Me.MSISearchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MSISearchToolStripMenuItem.Text = "MSI Search"
         '
         'PageMzSearch
         '
@@ -270,8 +293,8 @@ Partial Class PageMzSearch
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -296,4 +319,7 @@ Partial Class PageMzSearch
     Friend WithEvents MS1PlotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MSISearchToolStripMenuItem As ToolStripMenuItem
 End Class
