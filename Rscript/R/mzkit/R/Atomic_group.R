@@ -61,8 +61,8 @@ atomic_group <- function() {
 #' A in-memory Periodic Table
 #'
 atomics = function() {
-    list(
-        .Element(.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = list(.Isotope(1.0078250321, 0.999885, 1), .Isotope(2.014101778, 0.000115, 2))),
+    load = list(
+        .Element(.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = 1.007825, .isotopes = list(.Isotope(1.0078250321, 0.999885, 1), .Isotope(2.014101778, 0.000115, 2))),
         .Element(.symbol = "D", .name = "Deuterium", .charge = 1, .isotopic = 2.014101778, .isotopes = list(.Isotope(2.014101778, 0.000115, 2))),
         .Element(.symbol = "He", .name = "Helium", .charge = 0, .isotopic = 4.0026029, .isotopes = list(.Isotope(3.0160293097, 0.00000137, 3), .Isotope(4.0026032497, 0.99999863, 4))),
         .Element(.symbol = "Li", .name = "Lithium", .charge = 1, .isotopic = 7.016005, .isotopes = list(.Isotope(6.0151223, 0.0759, 6), .Isotope(7.016004, 0.9241, 7))),
@@ -298,7 +298,27 @@ atomics = function() {
         .Element(.symbol = "Md", .name = "Mendelevium", .charge = 3, .isotopic = 258, .isotopes = list(.Isotope(258.098425, 1.0, 258))),
         .Element(.symbol = "No", .name = "Nobelium", .charge = 3, .isotopic = 269, .isotopes = list(.Isotope(259.10102, 1.0, 259))),
         .Element(.symbol = "Lr", .name = "Lawrencium", .charge = 3, .isotopic = 260, .isotopes = list(.Isotope(262.10969, 1.0, 262)))
-    )
+    );
+	
+	names(load) = sapply(load, function(i) i$symbol);
+	load;
+}
+
+exactMass = function(formula) {
+	if(class(formula) == "character") {
+		formula = parseFormula(formula);
+	}
+	
+	atoms = atomics();
+	exact = 0;
+	
+	for(atom in names(formula)) {
+		n = formula[[atom]];
+		a = atoms[[atom]];
+		exact = exact + a$isotopic * n;
+	}
+	
+	exact;
 }
 
 # 计算出指定的原子基团的分子质量大小
@@ -311,3 +331,4 @@ atomics_group.Weight <- function(group, name) {
 
     weight;
 }
+
