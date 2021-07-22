@@ -69,7 +69,7 @@ Module DataControlHandler
 
     <Extension>
     Public Sub WriteTableToFile(table As DataGridView, fileName As String)
-        Using writeTsv As StreamWriter = fileName.OpenWriter
+        Using writeTsv As StreamWriter = fileName.OpenWriter(encoding:=Encodings.UTF8WithoutBOM)
             Dim row As New List(Of String)
 
             For i As Integer = 0 To table.Columns.Count - 1

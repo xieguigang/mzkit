@@ -404,7 +404,7 @@ Public Class PageMzSearch
             }
 
             Using file As New SaveFileDialog With {
-                .Filter = "MGF Ion(*.mgf)|*mgf"
+                .Filter = "MGF Ion(*.mgf)|*.mgf"
             }
                 If file.ShowDialog = DialogResult.OK Then
                     Call ion.SaveTo(file.FileName)
