@@ -22,6 +22,7 @@ Partial Class PageMzSearch
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -32,20 +33,24 @@ Partial Class PageMzSearch
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.GaussianPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS1PlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -157,6 +162,32 @@ Partial Class PageMzSearch
         Me.TabPage2.Text = "DIA Annotation"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.PictureBox1.Location = New System.Drawing.Point(371, 99)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(662, 516)
+        Me.PictureBox1.TabIndex = 36
+        Me.PictureBox1.TabStop = False
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
+        Me.DataGridView2.Location = New System.Drawing.Point(8, 99)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.RowTemplate.Height = 23
+        Me.DataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.DataGridView2.Size = New System.Drawing.Size(355, 515)
+        Me.DataGridView2.TabIndex = 35
+        '
         'Label4
         '
         Me.Label4.AutoSize = True
@@ -192,29 +223,25 @@ Partial Class PageMzSearch
         Me.Button2.Text = "Isotope Pattern"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'DataGridView2
+        'ContextMenuStrip1
         '
-        Me.DataGridView2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
-        Me.DataGridView2.Location = New System.Drawing.Point(8, 99)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.RowTemplate.Height = 23
-        Me.DataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.DataGridView2.Size = New System.Drawing.Size(355, 515)
-        Me.DataGridView2.TabIndex = 35
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GaussianPlotToolStripMenuItem, Me.MS1PlotToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
         '
-        'PictureBox1
+        'GaussianPlotToolStripMenuItem
         '
-        Me.PictureBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(371, 99)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(662, 516)
-        Me.PictureBox1.TabIndex = 36
-        Me.PictureBox1.TabStop = False
+        Me.GaussianPlotToolStripMenuItem.Name = "GaussianPlotToolStripMenuItem"
+        Me.GaussianPlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.GaussianPlotToolStripMenuItem.Text = "Gaussian Plot"
+        '
+        'MS1PlotToolStripMenuItem
+        '
+        Me.MS1PlotToolStripMenuItem.Checked = True
+        Me.MS1PlotToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1PlotToolStripMenuItem.Name = "MS1PlotToolStripMenuItem"
+        Me.MS1PlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1PlotToolStripMenuItem.Text = "MS1 Plot"
         '
         'Column1
         '
@@ -225,6 +252,7 @@ Partial Class PageMzSearch
         '
         Me.Column2.HeaderText = "Intensity"
         Me.Column2.Name = "Column2"
+        Me.Column2.Width = 200
         '
         'PageMzSearch
         '
@@ -241,8 +269,9 @@ Partial Class PageMzSearch
         Me.TabPage1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -262,6 +291,9 @@ Partial Class PageMzSearch
     Friend WithEvents Button2 As Button
     Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents GaussianPlotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MS1PlotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
 End Class

@@ -45,14 +45,18 @@
 
 #End Region
 
+Imports System.Drawing.Drawing2D
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -278,20 +282,19 @@ Public Class PageMzSearch
         Call doExactMassSearch(mz, ppm)
     End Sub
 
+    Dim isotope As IsotopeDistribution
+
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim formulaStr As String = Strings.Trim(TextBox2.Text)
 
         If formulaStr.StringEmpty Then
             Call MyApplication.host.showStatusMessage("No formula input!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
+        Else
+            isotope = FormulaScanner _
+                .ScanFormula(formulaStr) _
+                .DoCall(AddressOf IsotopeDistribution.GenerateDistribution)
         End If
-
-        Dim formula As Formula = FormulaScanner.ScanFormula(formulaStr)
-        Dim isotope As IsotopeDistribution = IsotopeDistribution.GenerateDistribution(formula)
-        Dim library As New LibraryMatrix With {
-            .ms2 = isotope.mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = isotope.intensity(i)}).ToArray,
-            .name = formulaStr
-        }
 
         Call DataGridView2.Rows.Clear()
 
@@ -299,8 +302,56 @@ Public Class PageMzSearch
             DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
         Next
 
-        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(library).AsGDIImage
+        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1).AsGDIImage
 
         PictureBox1.BackgroundImage = peakPlot
+    End Sub
+
+    Private Function GetIsotopeMS1() As LibraryMatrix
+        Return New LibraryMatrix With {
+            .ms2 = isotope.mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = isotope.intensity(i)
+                            }
+                        End Function) _
+                .ToArray,
+            .name = isotope.Formula & " [MS1]"
+        }
+    End Function
+
+    Private Function GetIsotopeGaussianLine() As SerialData
+        Return New SerialData With {
+            .color = Color.SteelBlue,
+            .lineType = DashStyle.Dash,
+            .pointSize = 5,
+            .pts = isotope.mz _
+                .Select(Function(mzi, i)
+                            Return New PointData(mzi, isotope.intensity(i))
+                        End Function) _
+                .ToArray,
+            .shape = LegendStyles.Diamond,
+            .title = $"{isotope.Formula}'s Gaussian Plot",
+            .width = 3
+        }
+    End Function
+
+    Private Sub MS1PlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1PlotToolStripMenuItem.Click
+        If Not isotope Is Nothing Then
+            PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1).AsGDIImage
+        End If
+
+        GaussianPlotToolStripMenuItem.Checked = MS1PlotToolStripMenuItem.Checked
+        MS1PlotToolStripMenuItem.Checked = Not MS1PlotToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub GaussianPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GaussianPlotToolStripMenuItem.Click
+        If Not isotope Is Nothing Then
+            PictureBox1.BackgroundImage = Scatter.Plot({GetIsotopeGaussianLine()}, fill:=True).AsGDIImage
+        End If
+
+        MS1PlotToolStripMenuItem.Checked = GaussianPlotToolStripMenuItem.Checked
+        GaussianPlotToolStripMenuItem.Checked = Not GaussianPlotToolStripMenuItem.Checked
     End Sub
 End Class

@@ -12,6 +12,7 @@ Namespace Formula.IsotopicPatterns
         Public Property data As IsotopeCount()
         Public Property mz As Double()
         Public Property intensity As Double()
+        Public Property Formula As String
 
         Public ReadOnly Property Size As Integer
             Get
@@ -53,7 +54,8 @@ Namespace Formula.IsotopicPatterns
                     .OrderBy(Function(a) a.nom_mass) _
                     .ToArray,
                 .mz = plot_xs,
-                .intensity = plot_ys
+                .intensity = plot_ys,
+                .Formula = formula.ToString
             }
         End Function
 
