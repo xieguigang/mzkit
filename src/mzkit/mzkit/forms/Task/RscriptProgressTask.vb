@@ -88,7 +88,7 @@ Public Class RscriptProgressTask
         Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".input_files", sessionID:=App.PID.ToHexString, prefix:="CombineRowScans_")
         Dim Rscript As String = RscriptPipelineTask.GetRScript("MSI_rbind.R")
         Dim cli As String = $"""{Rscript}"" --files ""{tempfile}"" --save ""{savefile}"""
-        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, CLI)
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
         Call files.SaveTo(tempfile)
 
@@ -107,7 +107,10 @@ Public Class RscriptProgressTask
         Call New Thread(AddressOf pipeline.Run).Start()
         Call progress.ShowDialog()
 
-        Call MessageBox.Show("MSI Raw Convert Job Done!", "MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If MessageBox.Show("MSI Raw Convert Job Done!" & vbCrLf & "Open MSI raw data file in MSI Viewer?", "MSI Viewer", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+            Call RibbonEvents.showMsImaging()
+            Call WindowModules.viewer.loadimzML(savefile)
+        End If
     End Sub
 End Class
 

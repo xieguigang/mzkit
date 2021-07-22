@@ -183,7 +183,7 @@ Module TaskScript
                             Dim raw As New MSFileReader(path)
 
                             scans.Add(raw.ThermoReader.GetNumScans)
-                            maxrt.Add(raw.ScanTimeMax)
+                            maxrt.Add(raw.ScanTimeMax * 60)
                             raw.Dispose()
 
                             Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
@@ -191,17 +191,19 @@ Module TaskScript
 
                         Call combineMzPack(
                            Iterator Function() As IEnumerable(Of mzPack)
-                               Dim i As Integer = 0
+                               Dim i As i32 = 0
 
                                For Each path As String In files
                                    Dim raw As New MSFileReader(path)
                                    Dim cache As mzPack = raw.LoadFromXRaw
 
+                                   Yield cache
+
                                    Try
                                        raw.Dispose()
                                    Catch ex As Exception
                                    Finally
-                                       Call RunSlavePipeline.SendProgress(i / files.Length * 100, $"Combine Raw Data Files... {path.BaseName}")
+                                       Call RunSlavePipeline.SendProgress((++i / files.Length) * 100, $"Combine Raw Data Files... {path.BaseName}")
                                    End Try
                                Next
                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
@@ -210,15 +212,19 @@ Module TaskScript
 
                         For Each path As String In files
                             Using bin As New BinaryStreamReader(path)
-                                scans.Add(bin.EnumerateIndex.Count)
-                                maxrt.Add(bin.rtmax)
+                                Call scans.Add(bin.EnumerateIndex.Count)
+                                Call maxrt.Add(bin.rtmax)
+                                Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
                             End Using
                         Next
 
                         Call combineMzPack(
                             Iterator Function() As IEnumerable(Of mzPack)
+                                Dim i As i32 = 0
+
                                 For Each path As String In files
                                     Using buffer As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                                        Call RunSlavePipeline.SendProgress((++i / files.Length) * 100, $"Combine Raw Data Files... {path.BaseName}")
                                         Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
                                     End Using
                                 Next
