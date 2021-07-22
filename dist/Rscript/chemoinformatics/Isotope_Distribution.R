@@ -1,7 +1,7 @@
 imports ["formula", "math"] from "mzkit";
 
 const isotope = "CHCl3"
-|> isotope_distribution(prob_threshold = 0)
+|> isotope_distribution(prob_threshold = 0.00001)
 |> toMS
 |> centroid
 ;

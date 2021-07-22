@@ -26,8 +26,9 @@ Namespace Formula.IsotopicPatterns
                                                     Optional pad_right As Double = 3,
                                                     Optional interpolate_grid As Double = 0.1) As IsotopeDistribution
 
-            Dim ds As IsotopeCount() = dir(formula, prob_threshold:=prob_threshold) _
+            Dim ds As IsotopeCount() = Distribution(formula) _
                 .DoCall(AddressOf IsotopeCount.Normalize) _
+                .Where(Function(i) i.abundance >= prob_threshold) _
                 .ToArray
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
@@ -86,11 +87,11 @@ Namespace Formula.IsotopicPatterns
             }
         End Function
 
-        Private Shared Function dir(formula As Formula, Optional prob_threshold As Double = 0.001) As IsotopeCount()
+        Public Shared Function Distribution(formula As Formula) As IsotopeCount()
             Dim lst As New List(Of IsotopeCount)
             Dim atom_types As String()
 
-            lst += GetMostAbundance(formula)
+            ' lst += GetMostAbundance(formula)
 
             For Each atom As KeyValuePair(Of String, Integer) In formula.CountsByElement
                 Dim atom_type As String = atom.Key
@@ -119,11 +120,6 @@ Namespace Formula.IsotopicPatterns
                             items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
                         Next
                     Next
-
-                    ' prevent addition Of very unlikely isotope distributions
-                    items_to_append = items_to_append _
-                        .Where(Function(itm) itm(2) >= prob_threshold) _
-                        .AsList
 
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
