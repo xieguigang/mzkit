@@ -85,7 +85,7 @@ Module DataControlHandler
                     row.Add(any.ToString(rowObj.Cells(i).Value))
                 Next
 
-                writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(vbTab))
+                writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
             Next
         End Using
     End Sub

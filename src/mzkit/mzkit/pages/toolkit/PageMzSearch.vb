@@ -48,6 +48,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -401,6 +402,14 @@ Public Class PageMzSearch
                             End Function) _
                     .ToArray
             }
+
+            Using file As New SaveFileDialog With {
+                .Filter = "MGF Ion(*.mgf)|*mgf"
+            }
+                If file.ShowDialog = DialogResult.OK Then
+                    Call ion.SaveTo(file.FileName)
+                End If
+            End Using
         Else
             Call DataGridView2.SaveDataGrid("Save Gaussian Data")
         End If
