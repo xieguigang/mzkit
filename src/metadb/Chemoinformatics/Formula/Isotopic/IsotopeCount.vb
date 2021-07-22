@@ -2,7 +2,7 @@
 
 Namespace Formula.IsotopicPatterns
 
-    Public Structure CountItem
+    Public Structure IsotopeCount
 
         Dim atoms As String()
         Dim nom_mass#, prob#
@@ -32,11 +32,11 @@ Namespace Formula.IsotopicPatterns
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"[{Formula.ToString}, {abs_mass}], prob = {prob}"
+            Return $"[{nom_mass}][{Formula.ToString}, {abs_mass}], prob = {prob}"
         End Function
 
-        Public Shared Widening Operator CType(itm As (atom_type As String, nom_mass#, prob#, abs_mass#)) As CountItem
-            Return New CountItem With {
+        Public Shared Widening Operator CType(itm As (atom_type As String, nom_mass#, prob#, abs_mass#)) As IsotopeCount
+            Return New IsotopeCount With {
                 .abs_mass = itm.abs_mass,
                 .atoms = {itm.atom_type},
                 .nom_mass = itm.nom_mass,
@@ -44,8 +44,8 @@ Namespace Formula.IsotopicPatterns
             }
         End Operator
 
-        Public Shared Widening Operator CType(itm As (atom_type As String(), nom_mass#, prob#, abs_mass#)) As CountItem
-            Return New CountItem With {
+        Public Shared Widening Operator CType(itm As (atom_type As String(), nom_mass#, prob#, abs_mass#)) As IsotopeCount
+            Return New IsotopeCount With {
                 .abs_mass = itm.abs_mass,
                 .atoms = itm.atom_type,
                 .nom_mass = itm.nom_mass,

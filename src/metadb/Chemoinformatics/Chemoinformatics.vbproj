@@ -450,7 +450,7 @@
     <Compile Include="Formula\FormalCharge.vb" />
     <Compile Include="Formula\HeteroatomRatioCheck.vb" />
     <Compile Include="Formula\Isotopic\Calculator.vb" />
-    <Compile Include="Formula\Isotopic\CountItem.vb" />
+    <Compile Include="Formula\Isotopic\IsotopeCount.vb" />
     <Compile Include="Formula\Isotopic\IsotopeDistribution.vb" />
     <Compile Include="Formula\Isotopic\Isotope.vb" />
     <Compile Include="Formula\Models\FormulaComposition.vb" />

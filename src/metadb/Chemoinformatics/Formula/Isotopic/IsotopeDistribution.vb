@@ -9,7 +9,7 @@ Namespace Formula.IsotopicPatterns
 
         Shared ReadOnly PeriodicTable As Dictionary(Of String, Element) = Element.MemoryLoadElements
 
-        Public Property data As CountItem()
+        Public Property data As IsotopeCount()
         Public Property mz As Double()
         Public Property intensity As Double()
 
@@ -26,7 +26,7 @@ Namespace Formula.IsotopicPatterns
                                                     Optional pad_right As Double = 3,
                                                     Optional interpolate_grid As Double = 0.1) As IsotopeDistribution
 
-            Dim ds As CountItem() = dir(formula, prob_threshold:=prob_threshold)
+            Dim ds As IsotopeCount() = dir(formula, prob_threshold:=prob_threshold)
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
             Dim x_min = xs.Min - pad_left
@@ -46,15 +46,34 @@ Namespace Formula.IsotopicPatterns
             Next
 
             Return New IsotopeDistribution With {
-                .data = ds,
+                .data = ds _
+                    .OrderBy(Function(a) a.nom_mass) _
+                    .ToArray,
                 .mz = plot_xs,
                 .intensity = plot_ys
             }
         End Function
 
-        Private Shared Function dir(formula As Formula, Optional prob_threshold As Double = 0.001) As CountItem()
-            Dim lst As New List(Of CountItem)
+        Private Shared Function dir(formula As Formula, Optional prob_threshold As Double = 0.001) As IsotopeCount()
+            Dim lst As New List(Of IsotopeCount)
             Dim atom_types As String()
+
+            lst += New IsotopeCount With {
+                .abs_mass = formula.ExactMass,
+                .atoms = formula.CountsByElement _
+                    .Select(Function(a) a.Key.Repeats(a.Value)) _
+                    .IteratesALL _
+                    .ToArray,
+                .prob = 1,
+                .nom_mass = .atoms _
+                            .Select(Function(a)
+                                        Return IsotopeDistribution.PeriodicTable(a).isotopes _
+                                            .OrderByDescending(Function(i) i.Prob) _
+                                            .First _
+                                            .NumNeutrons
+                                    End Function) _
+                            .Sum
+            }
 
             For Each atom As KeyValuePair(Of String, Integer) In formula.CountsByElement
                 Dim atom_type As String = atom.Key
@@ -71,9 +90,9 @@ Namespace Formula.IsotopicPatterns
                     ' the probability And the mass Of all atoms together.
                     Call lst.Add(([atom_type], [nom_mass], prob, abs_mass))
 
-                    Dim items_to_append As New List(Of CountItem)
+                    Dim items_to_append As New List(Of IsotopeCount)
 
-                    For Each itm As CountItem In lst
+                    For Each itm As IsotopeCount In lst
                         For Each i As Integer In Range(1, num_atoms + 1)
                             atom_types = itm.atoms _
                                 .JoinIterates([atom_type].Repeats(i)) _
@@ -84,14 +103,14 @@ Namespace Formula.IsotopicPatterns
 
                     ' prevent addition Of very unlikely isotope distributions
                     items_to_append = items_to_append _
-                        .Where(Function(itm) itm(2) > prob_threshold) _
+                        .Where(Function(itm) itm(2) >= prob_threshold) _
                         .AsList
 
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
                 Next
 
-                lst = (From itm As CountItem
+                lst = (From itm As IsotopeCount
                        In lst
                        Where ContainsNumAtomsOfType(itm(0), num_atoms, atom_type)).AsList
             Next
@@ -100,8 +119,8 @@ Namespace Formula.IsotopicPatterns
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Iterator Function FilterAccordingToSumFormula(lst As List(Of CountItem), sf As Formula) As IEnumerable(Of CountItem)
-            For Each itm As CountItem In lst
+        Private Shared Iterator Function FilterAccordingToSumFormula(lst As List(Of IsotopeCount), sf As Formula) As IEnumerable(Of IsotopeCount)
+            For Each itm As IsotopeCount In lst
                 If (From tup In sf.CountsByElement Select ContainsNumAtomsOfType(itm(0), tup.Value, tup.Key)).All Then
                     Yield itm
                 End If
