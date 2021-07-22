@@ -111,7 +111,8 @@ Public Class XRawStream
                 .BPC = BPC.PopAll,
                 .TIC = TIC.PopAll,
                 .scan_time = scan_times.PopAll
-            }
+            },
+            .source = raw.FileName.FileName
         }
     End Function
 

@@ -13,6 +13,12 @@ Namespace Formula.IsotopicPatterns
         Public Property mz As Double()
         Public Property intensity As Double()
 
+        Public ReadOnly Property Size As Integer
+            Get
+                Return mz.Length
+            End Get
+        End Property
+
         Public Shared Function GenerateDistribution(formula As Formula,
                                                     Optional prob_threshold As Double = 0.001,
                                                     Optional fwhm As Double = 0.1,
@@ -20,7 +26,7 @@ Namespace Formula.IsotopicPatterns
                                                     Optional pad_right As Double = 3,
                                                     Optional interpolate_grid As Double = 0.005) As IsotopeDistribution
 
-            Dim ds As CountItem() = dir(formula, prob_threshold = prob_threshold)
+            Dim ds As CountItem() = dir(formula, prob_threshold:=prob_threshold)
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
             Dim x_min = xs.Min - pad_left

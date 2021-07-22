@@ -1,53 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::47d55ba4eea518ca4590d35055061cb2, src\mzkit\mzkit\pages\toolkit\PageMzSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzSearch
-    ' 
-    '     Function: GetFormulaSearchProfileName, GetProfile
-    ' 
-    '     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
-    '          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
-    ' 
-    ' /********************************************************************************/
+' Class PageMzSearch
+' 
+'     Function: GetFormulaSearchProfileName, GetProfile
+' 
+'     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
+'          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.Configuration
 Imports mzkit.My
@@ -272,5 +276,31 @@ Public Class PageMzSearch
         Dim ppm As Double = 1
 
         Call doExactMassSearch(mz, ppm)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim formulaStr As String = Strings.Trim(TextBox2.Text)
+
+        If formulaStr.StringEmpty Then
+            Call MyApplication.host.showStatusMessage("No formula input!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim formula As Formula = FormulaScanner.ScanFormula(formulaStr)
+        Dim isotope As IsotopeDistribution = IsotopeDistribution.GenerateDistribution(formula)
+        Dim library As New LibraryMatrix With {
+            .ms2 = isotope.mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = isotope.intensity(i)}).ToArray,
+            .name = formulaStr
+        }
+
+        Call DataGridView2.Rows.Clear()
+
+        For i As Integer = 0 To isotope.Size - 1
+            DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
+        Next
+
+        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(library).AsGDIImage
+
+        PictureBox1.BackgroundImage = peakPlot
     End Sub
 End Class

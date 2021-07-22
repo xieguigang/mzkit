@@ -186,7 +186,7 @@ Module TaskScript
                             maxrt.Add(raw.ScanTimeMax * 60)
                             raw.Dispose()
 
-                            Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
+                            Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
                         Next
 
                         Call combineMzPack(
@@ -203,7 +203,7 @@ Module TaskScript
                                        raw.Dispose()
                                    Catch ex As Exception
                                    Finally
-                                       Call RunSlavePipeline.SendProgress((++i / files.Length) * 100, $"Combine Raw Data Files... {path.BaseName}")
+                                       Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
                                    End Try
                                Next
                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
@@ -224,7 +224,7 @@ Module TaskScript
 
                                 For Each path As String In files
                                     Using buffer As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                                        Call RunSlavePipeline.SendProgress((++i / files.Length) * 100, $"Combine Raw Data Files... {path.BaseName}")
+                                        Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
                                         Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
                                     End Using
                                 Next
