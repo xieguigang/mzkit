@@ -28,3 +28,11 @@ Enumerate.Formula.mass <- function(mass, charges = NULL, tolerance = function(m1
 Enumerate.Formula.MZ <- function(mz, tolerance = function(mz1, mz2) ppm(mz1 - mz2) <= 20) {
 
 }
+
+#' Parse formula string
+#' 
+#' @return a key-value pair list of \code{atom} -> \code{count}
+#' 
+parseFormula = function(str) {
+
+}
