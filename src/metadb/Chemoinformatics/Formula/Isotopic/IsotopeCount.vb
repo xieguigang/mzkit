@@ -5,7 +5,16 @@ Namespace Formula.IsotopicPatterns
     Public Structure IsotopeCount
 
         Dim atoms As String()
-        Dim nom_mass#, prob#
+        Dim nom_mass#
+
+        ''' <summary>
+        ''' probility
+        ''' </summary>
+        Dim prob#
+        ''' <summary>
+        ''' normalized by <see cref="prob"/>
+        ''' </summary>
+        Dim abundance As Double
 
         ''' <summary>
         ''' exact mass
@@ -33,6 +42,21 @@ Namespace Formula.IsotopicPatterns
 
         Public Overrides Function ToString() As String
             Return $"[{nom_mass}][{Formula.ToString}, {abs_mass}], prob = {prob}"
+        End Function
+
+        Public Shared Iterator Function Normalize(isotopes As IEnumerable(Of IsotopeCount)) As IEnumerable(Of IsotopeCount)
+            Dim all As IsotopeCount() = isotopes.ToArray
+            Dim maxProb As Double = Aggregate i In all Into Max(i.prob)
+
+            For Each i As IsotopeCount In all
+                Yield New IsotopeCount With {
+                    .abs_mass = i.abs_mass,
+                    .abundance = i.prob / maxProb,
+                    .atoms = i.atoms,
+                    .prob = i.prob,
+                    .nom_mass = i.nom_mass
+                }
+            Next
         End Function
 
         Public Shared Widening Operator CType(itm As (atom_type As String, nom_mass#, prob#, abs_mass#)) As IsotopeCount

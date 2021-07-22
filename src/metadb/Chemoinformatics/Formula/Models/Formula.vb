@@ -68,7 +68,13 @@ Namespace Formula
 
         Friend m_formula As String
 
-        Public Shared ReadOnly Property Elements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
+        Public ReadOnly Property Elements As String()
+            Get
+                Return CountsByElement.Keys.ToArray
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
         Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -85,7 +91,7 @@ Namespace Formula
             Get
                 Return Aggregate element
                        In CountsByElement
-                       Let mass As Double = Elements(element.Key).isotopic * element.Value
+                       Let mass As Double = AllAtomElements(element.Key).isotopic * element.Value
                        Into Sum(mass)
             End Get
         End Property

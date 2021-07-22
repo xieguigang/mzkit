@@ -26,7 +26,9 @@ Namespace Formula.IsotopicPatterns
                                                     Optional pad_right As Double = 3,
                                                     Optional interpolate_grid As Double = 0.1) As IsotopeDistribution
 
-            Dim ds As IsotopeCount() = dir(formula, prob_threshold:=prob_threshold)
+            Dim ds As IsotopeCount() = dir(formula, prob_threshold:=prob_threshold) _
+                .DoCall(AddressOf IsotopeCount.Normalize) _
+                .ToArray
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
             Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
             Dim x_min = xs.Min - pad_left
@@ -54,26 +56,41 @@ Namespace Formula.IsotopicPatterns
             }
         End Function
 
+        Private Shared Function GetMostAbundance(formula As Formula) As IsotopeCount
+            Dim topAtoms As Dictionary(Of String, Isotope) = formula.Elements _
+                .ToDictionary(Function(a) a,
+                              Function(a)
+                                  Return IsotopeDistribution.PeriodicTable(a).isotopes _
+                                      .OrderByDescending(Function(i) i.Prob) _
+                                      .First
+                              End Function)
+            Dim allAtoms As String() = formula.CountsByElement _
+                .Select(Function(a) a.Key.Repeats(a.Value)) _
+                .IteratesALL _
+                .ToArray
+            Dim prob As Double = 1
+
+            For Each atom As String In allAtoms
+                prob *= topAtoms(atom).Prob
+            Next
+
+            Return New IsotopeCount With {
+                .abs_mass = formula.ExactMass,
+                .atoms = allAtoms,
+                .prob = prob,
+                .nom_mass = .atoms _
+                            .Select(Function(a)
+                                        Return topAtoms(a).NumNeutrons
+                                    End Function) _
+                            .Sum
+            }
+        End Function
+
         Private Shared Function dir(formula As Formula, Optional prob_threshold As Double = 0.001) As IsotopeCount()
             Dim lst As New List(Of IsotopeCount)
             Dim atom_types As String()
 
-            lst += New IsotopeCount With {
-                .abs_mass = formula.ExactMass,
-                .atoms = formula.CountsByElement _
-                    .Select(Function(a) a.Key.Repeats(a.Value)) _
-                    .IteratesALL _
-                    .ToArray,
-                .prob = 1,
-                .nom_mass = .atoms _
-                            .Select(Function(a)
-                                        Return IsotopeDistribution.PeriodicTable(a).isotopes _
-                                            .OrderByDescending(Function(i) i.Prob) _
-                                            .First _
-                                            .NumNeutrons
-                                    End Function) _
-                            .Sum
-            }
+            lst += GetMostAbundance(formula)
 
             For Each atom As KeyValuePair(Of String, Integer) In formula.CountsByElement
                 Dim atom_type As String = atom.Key
@@ -91,13 +108,15 @@ Namespace Formula.IsotopicPatterns
                     Call lst.Add(([atom_type], [nom_mass], prob, abs_mass))
 
                     Dim items_to_append As New List(Of IsotopeCount)
+                    Dim isotopeProb As Double
 
                     For Each itm As IsotopeCount In lst
                         For Each i As Integer In Range(1, num_atoms + 1)
                             atom_types = itm.atoms _
                                 .JoinIterates([atom_type].Repeats(i)) _
                                 .ToArray
-                            items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
+                            isotopeProb = itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms)
+                            items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
                         Next
                     Next
 
