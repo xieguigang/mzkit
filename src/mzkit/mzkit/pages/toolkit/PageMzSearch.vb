@@ -308,11 +308,15 @@ Public Class PageMzSearch
         Call DataGridView2.Rows.Clear()
 
         For i As Integer = 0 To isotope.Size - 1
-            DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
+            If isotope.intensity(i) > 0 Then
+                DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
+            End If
         Next
 
         Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1, labelIntensity:=0.01).AsGDIImage
 
+        MS1PlotToolStripMenuItem.Checked = True
+        GaussianPlotToolStripMenuItem.Checked = False
         PictureBox1.BackgroundImage = peakPlot
     End Sub
 
@@ -339,6 +343,7 @@ Public Class PageMzSearch
                 .Select(Function(mzi, i)
                             Return New PointData(mzi, isotope.intensity(i))
                         End Function) _
+                .Where(Function(p) p.pt.Y > 0) _
                 .ToArray,
             .shape = LegendStyles.Diamond,
             .title = $"{isotope.Formula}'s Gaussian Plot",
