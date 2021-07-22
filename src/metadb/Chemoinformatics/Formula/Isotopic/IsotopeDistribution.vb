@@ -69,19 +69,24 @@ Namespace Formula.IsotopicPatterns
 
                     ' Each iso dist Is made up Of atom types, nominal masses,
                     ' the probability And the mass Of all atoms together.
-                    lst.Add(([atom_type], [nom_mass], prob, abs_mass))
+                    Call lst.Add(([atom_type], [nom_mass], prob, abs_mass))
 
                     Dim items_to_append As New List(Of CountItem)
 
                     For Each itm As CountItem In lst
                         For Each i As Integer In Range(1, num_atoms + 1)
-                            atom_types = itm.atoms.JoinIterates([atom_type].Repeats(i)).ToArray
+                            atom_types = itm.atoms _
+                                .JoinIterates([atom_type].Repeats(i)) _
+                                .ToArray
                             items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, itm(2) * ((prob) ^ i) * SpecialFunctions.Binom(num_atoms - i, num_atoms), itm(3) + abs_mass * i))
                         Next
                     Next
 
                     ' prevent addition Of very unlikely isotope distributions
-                    items_to_append = items_to_append.Where(Function(itm) itm(2) > prob_threshold).AsList
+                    items_to_append = items_to_append _
+                        .Where(Function(itm) itm(2) > prob_threshold) _
+                        .AsList
+
                     ' prevent duplicates
                     lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
                 Next
@@ -91,11 +96,11 @@ Namespace Formula.IsotopicPatterns
                        Where ContainsNumAtomsOfType(itm(0), num_atoms, atom_type)).AsList
             Next
 
-            Return filterAccordingToSumFormula(lst, formula).ToArray
+            Return FilterAccordingToSumFormula(lst, formula).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Iterator Function filterAccordingToSumFormula(lst As List(Of CountItem), sf As Formula) As IEnumerable(Of CountItem)
+        Private Shared Iterator Function FilterAccordingToSumFormula(lst As List(Of CountItem), sf As Formula) As IEnumerable(Of CountItem)
             For Each itm As CountItem In lst
                 If (From tup In sf.CountsByElement Select ContainsNumAtomsOfType(itm(0), tup.Value, tup.Key)).All Then
                     Yield itm

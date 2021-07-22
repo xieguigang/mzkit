@@ -382,7 +382,7 @@ Module FormulaTools
         Return SMILES.GetFormula
     End Function
 
-    <ExportAPI("IsotopeDistribution")>
+    <ExportAPI("isotope_distribution")>
     Public Function IsotopeDistributionSearch(formula As Object,
                                               Optional prob_threshold As Double = 0.001,
                                               Optional fwhm As Double = 0.1,

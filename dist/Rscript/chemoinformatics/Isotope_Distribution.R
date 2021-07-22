@@ -1,6 +1,12 @@
-imports "formula" from "mzkit";
+imports ["formula", "math"] from "mzkit";
 
-print(IsotopeDistribution("CHCl3"));
+const isotope = "CHCl3"
+|> isotope_distribution
+|> toMS
+|> centroid
+;
+
+print(ms1);
 
 # 118 100
 # 119 1.1
@@ -9,3 +15,5 @@ print(IsotopeDistribution("CHCl3"));
 # 122 31.5
 # 123 0.3
 # 124 3.4
+
+pause();
