@@ -121,15 +121,13 @@ mzPackReader:
                                   End Function)
             End Using
         Catch ex As Exception
-            If MessageBox.Show($"It seems that mzPack cache file of {source} is damaged, reload of the source file?", "mzPack Reader", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) = DialogResult.OK Then
-                SyncLock reload
-                    Call reload(source, cache)
-                End SyncLock
+            Call ($"It seems that mzPack cache file of {source} is damaged,{vbCrLf} mzkit will going to reload of the source file.").PrintException
 
-                GoTo mzPackReader
-            Else
-                Return Nothing
-            End If
+            SyncLock reload
+                Call reload(source, cache)
+            End SyncLock
+
+            GoTo mzPackReader
         End Try
 
         Return Me
