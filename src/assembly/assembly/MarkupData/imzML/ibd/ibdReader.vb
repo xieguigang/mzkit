@@ -120,7 +120,9 @@ Namespace MarkupData.imzML
         ''' Get spectrum data of a pixel point
         ''' </summary>
         ''' <param name="scan">[x, y] of a pixel point</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' will skip of the m/z fragments in ZERO intensity value.
+        ''' </returns>
         Public Iterator Function GetMSMSPipe(scan As ScanData) As IEnumerable(Of ms2)
             Dim mz As Double() = ReadArray(scan.MzPtr)
             Dim intensity As Double() = ReadArray(scan.IntPtr)

@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -418,5 +419,19 @@ Public Class PageMzSearch
         Else
             Call DataGridView2.SaveDataGrid("Save Gaussian Data")
         End If
+    End Sub
+
+    Private Sub MSISearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MSISearchToolStripMenuItem.Click
+        If isotope Is Nothing Then
+            Return
+        End If
+
+        Dim centroid As LibraryMatrix = GetIsotopeMS1() _
+            .CentroidMode(
+                tolerance:=Tolerance.DeltaMass(0.01),
+                cutoff:=New RelativeIntensityCutoff(0.001)
+            )
+
+
     End Sub
 End Class
