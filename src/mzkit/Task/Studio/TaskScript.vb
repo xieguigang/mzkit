@@ -180,13 +180,17 @@ Module TaskScript
                     Case "raw"
 
                         For Each path As String In files
-                            Dim raw As New MSFileReader(path)
+                            If path.FileExists Then
+                                Dim raw As New MSFileReader(path)
 
-                            scans.Add(raw.ThermoReader.GetNumScans)
-                            maxrt.Add(raw.ScanTimeMax * 60)
-                            raw.Dispose()
+                                scans.Add(raw.ThermoReader.GetNumScans)
+                                maxrt.Add(raw.ScanTimeMax * 60)
+                                raw.Dispose()
 
-                            Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                                Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                            Else
+                                Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
+                            End If
                         Next
 
                         Call combineMzPack(

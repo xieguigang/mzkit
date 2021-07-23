@@ -46,6 +46,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Text
 Imports Task
 
 Public Class RscriptProgressTask
@@ -90,7 +91,7 @@ Public Class RscriptProgressTask
         Dim cli As String = $"""{Rscript}"" --files ""{tempfile}"" --save ""{savefile}"""
         Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
 
-        Call files.SaveTo(tempfile)
+        Call files.SaveTo(tempfile, encoding:=Encodings.UTF8.CodePage)
 
         Dim progress As New frmTaskProgress
 
