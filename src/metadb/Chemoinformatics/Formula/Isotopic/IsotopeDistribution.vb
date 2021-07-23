@@ -118,8 +118,7 @@ Namespace Formula.IsotopicPatterns
                                 .JoinIterates([atom_type].Repeats(i)) _
                                 .ToArray
 
-                            ' isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
-                            isotopeProb = 1
+                            isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
                             isotopeProb = itm(2) * (prob ^ i) * isotopeProb
                             items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
                         Next
