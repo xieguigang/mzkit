@@ -90,12 +90,12 @@ Public Module MoleculeNetworking
     End Function
 
     <Extension>
-    Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
+    Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, reload As Action(Of String, String), Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
         Dim attrs As ScanMS2
         Dim msLevel As Integer
 
         If Not raw.isLoaded Then
-            Call raw.LoadMzpack()
+            Call raw.LoadMzpack(reload)
         End If
 
         attrs = raw.FindMs2Scan(scanId)
@@ -142,11 +142,12 @@ Public Module MoleculeNetworking
                                          files As IEnumerable(Of Raw),
                                          tolerance As Tolerance,
                                          dotcutoff As Double,
-                                         progress As Action(Of String)) As IEnumerable(Of NamedCollection(Of AlignmentOutput))
+                                         progress As Action(Of String),
+                                         reload As Action(Of String, String)) As IEnumerable(Of NamedCollection(Of AlignmentOutput))
 
         For Each result As NamedCollection(Of AlignmentOutput) In files _
             .AsParallel _
-            .Select(Function(a) spectrum.alignSearch(a, tolerance, dotcutoff))
+            .Select(Function(a) spectrum.alignSearch(a, tolerance, dotcutoff, reload))
 
             Call progress($"Spectrum search job done! [{result.name}]")
 
@@ -158,13 +159,14 @@ Public Module MoleculeNetworking
     Private Function alignSearch(spectrum As LibraryMatrix,
                                  file As Raw,
                                  tolerance As Tolerance,
-                                 dotcutoff As Double) As NamedCollection(Of AlignmentOutput)
+                                 dotcutoff As Double,
+                                 reload As Action(Of String, String)) As NamedCollection(Of AlignmentOutput)
 
         Dim alignments As New List(Of AlignmentOutput)
         Dim ref As ms2()
 
         If Not file.isLoaded Then
-            Call file.LoadMzpack()
+            Call file.LoadMzpack(reload)
         End If
 
         For Each scan As ScanMS1 In file.GetMs1Scans

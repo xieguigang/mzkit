@@ -656,7 +656,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        Dim Ms2 = CurrentRawFile.LoadMzpack _
+        Dim Ms2 = CurrentRawFile.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)) _
             .GetMs2Scans _
             .Where(Function(m)
                        Return PPMmethod.PPM(m.parentMz, mz) <= ppm
@@ -695,7 +695,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        Dim XIC = CurrentRawFile.LoadMzpack.loaded.MS _
+        Dim XIC = CurrentRawFile.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)).loaded.MS _
             .Select(Function(scan) (scan.rt, scan.GetIntensity(mz, ppm))) _
             .Where(Function(p) p.Item2 > 0) _
             .OrderBy(Function(p) p.rt) _
