@@ -48,6 +48,12 @@ Namespace Formula.IsotopicPatterns
                 Next
             Next
 
+            Dim ymax As Double = plot_ys.Max
+
+            plot_ys = plot_ys _
+                .Select(Function(y) y / ymax * 100) _
+                .ToArray
+
             Return New IsotopeDistribution With {
                 .data = ds _
                     .OrderBy(Function(a) a.nom_mass) _
