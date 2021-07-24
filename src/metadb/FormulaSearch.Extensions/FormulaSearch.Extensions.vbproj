@@ -150,6 +150,7 @@
     <Compile Include="AtomGroups\Others.vb" />
     <Compile Include="AtomGroups\Ketones.vb" />
     <Compile Include="Annotation.vb" />
+    <Compile Include="IsotopicAlignment.vb" />
     <Compile Include="PeakAnnotation.vb" />
     <Compile Include="PrecursorIonComposition.vb" />
     <Compile Include="PrecursorIonSearch.vb" />

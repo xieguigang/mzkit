@@ -63,7 +63,7 @@ Public Module MSIRawPack
     ''' <returns></returns>
     <Extension>
     Public Function LoadFromXMSIRaw(raw As MSFileReader, pixels As Size) As mzPack
-        Dim loader As New XRawStream(raw, PixelScanId(pixels, maxrt:=raw.))
+        Dim loader As New XRawStream(raw, PixelScanId(pixels, maxrt:=raw.ScanTimeMax))
         Dim pack As mzPack = loader.StreamTo(skipEmptyScan:=False)
 
         If pixels.Width * pixels.Height <> pack.MS.Length Then
