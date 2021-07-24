@@ -49,6 +49,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
@@ -182,9 +183,21 @@ Public Module MoleculeNetworking
                                  dotcutoff As Double,
                                  reload As Action(Of String, String)) As NamedCollection(Of AlignmentOutput)
 
+        Static pos As MzCalculator() = {"[M]+", "[M+H]+"} _
+            .Select(Function(name)
+                        Return Parser.ParseMzCalculator(name, "+")
+                    End Function) _
+            .ToArray
+        Static neg As MzCalculator() = {"[M]-", "[M-H]-"} _
+            .Select(Function(name)
+                        Return Parser.ParseMzCalculator(name, "-")
+                    End Function) _
+            .ToArray
+
         Dim alignments As New List(Of AlignmentOutput)
         Dim cos As New CosAlignment(tolerance, New RelativeIntensityCutoff(0.01))
         Dim align As AlignmentOutput
+        Dim types As MzCalculator()
 
         If Not file.isLoaded Then
             Call file.LoadMzpack(reload)
@@ -192,6 +205,16 @@ Public Module MoleculeNetworking
 
         For Each scan As ScanMS1 In file.GetMs1Scans
             For Each subject As ScanMS2 In scan.products.SafeQuery
+                If subject.polarity > -1 Then
+                    types = pos
+                Else
+                    types = neg
+                End If
+
+                If Not types.Any(Function(a) stdNum.Abs(a.CalcMZ(isotopic.exactMass) - subject.parentMz) < 0.3) Then
+                    Continue For
+                End If
+
                 align = isotopic.AlignIsotopic(subject.GetMatrix, cos)
 
                 If stdNum.Min(align.forward, align.reverse) >= dotcutoff Then
