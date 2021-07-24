@@ -121,6 +121,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="query.biodeep.cn\KEGG.vb" />
     <Compile Include="SessionInfo.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -152,5 +153,6 @@
       <Name>application.json</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
