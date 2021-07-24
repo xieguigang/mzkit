@@ -426,8 +426,10 @@ Public Class PageMzSearch
             Return
         End If
 
+        Dim searchPage As New frmSpectrumSearch
 
-
-
+        searchPage.Show(MyApplication.host.dockPanel)
+        searchPage.page.loadMs2(isotope.GetMS)
+        searchPage.page.runSearch(isotope)
     End Sub
 End Class

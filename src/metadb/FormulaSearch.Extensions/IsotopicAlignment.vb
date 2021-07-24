@@ -39,6 +39,11 @@ Public Module IsotopicAlignment
         Return output
     End Function
 
+    ''' <summary>
+    ''' convert <see cref="IsotopeDistribution.data"/> as <see cref="ms2"/> vector.
+    ''' </summary>
+    ''' <param name="isotopic"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function GetMS(isotopic As IsotopeDistribution) As IEnumerable(Of ms2)
         For Each count As IsotopeCount In isotopic.data
