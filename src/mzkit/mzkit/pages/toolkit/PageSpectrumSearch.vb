@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::3b7fbd2b762b940cd989b28a22da1a3c, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageSpectrumSearch
-    ' 
-    '     Function: getSpectrumInput
-    ' 
-    '     Sub: Button1_Click, DataGridView1_CellEndEdit, loadFromMgfIon, loadMs2, PageSpectrumSearch_Load
-    '          PasteMgfTextToolStripMenuItem_Click, refreshPreviews, runSearch, SavePreviewPlotToolStripMenuItem_Click, TabPage1_KeyDown
-    '          ViewAlignmentToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class PageSpectrumSearch
+' 
+'     Function: getSpectrumInput
+' 
+'     Sub: Button1_Click, DataGridView1_CellEndEdit, loadFromMgfIon, loadMs2, PageSpectrumSearch_Load
+'          PasteMgfTextToolStripMenuItem_Click, refreshPreviews, runSearch, SavePreviewPlotToolStripMenuItem_Click, TabPage1_KeyDown
+'          ViewAlignmentToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -161,54 +162,53 @@ Public Class PageSpectrumSearch
     End Sub
 
     Public Sub runSearch()
-        Dim raws = Globals.workspace.GetRawDataFiles
+        Dim raws As IEnumerable(Of Task.Raw) = Globals.workspace.GetRawDataFiles
         Dim progress As New frmTaskProgress
 
         progress.ShowProgressTitle("Run spectrum similarity search...", directAccess:=True)
         progress.ShowProgressDetails("Running...", directAccess:=True)
 
-        TreeListView1.Items.Clear()
-
-        Call New Thread(
-            Sub()
-                For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
-                    Dim fileRow As New TreeListViewItem With {
-                        .Text = fileSearch.name,
-                        .ToolTipText = fileSearch.description,
-                        .ImageIndex = 0,
-                        .StateImageIndex = 0
-                    }
-                    Dim i As i32 = 1
-
-                    fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
-
-                    For Each result As AlignmentOutput In fileSearch
-                        Dim alignRow As New TreeListViewItem With {
-                            .Text = result.reference.id,
-                            .Tag = result,
-                            .ImageIndex = 1,
-                            .StateImageIndex = 1
-                        }
-
-                        alignRow.SubItems.Add(++i)
-                        alignRow.SubItems.Add(result.forward)
-                        alignRow.SubItems.Add(result.reverse)
-                        alignRow.SubItems.Add(result.reference.mz)
-                        alignRow.SubItems.Add(result.reference.scan_time)
-
-                        fileRow.Items.Add(alignRow)
-                    Next
-
-                    Me.Invoke(Sub() Call TreeListView1.Items.Add(fileRow))
-                Next
-
-                Call progress.ShowProgressDetails("Search job done!")
-                Call progress.Invoke(Sub() Call progress.Close())
-            End Sub).Start()
-
+        Call TreeListView1.Items.Clear()
+        Call New Thread(Sub() Call SearchThread(raws, progress)).Start()
         Call progress.ShowDialog()
 
         TabControl1.SelectedTab = TabPage2
+    End Sub
+
+    Private Sub SearchThread(raws As IEnumerable(Of Task.Raw), progress As frmTaskProgress)
+        For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
+            Dim fileRow As New TreeListViewItem With {
+                .Text = fileSearch.name,
+                .ToolTipText = fileSearch.description,
+                .ImageIndex = 0,
+                .StateImageIndex = 0
+            }
+            Dim i As i32 = 1
+
+            fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
+
+            For Each result As AlignmentOutput In fileSearch
+                Dim alignRow As New TreeListViewItem With {
+                    .Text = result.reference.id,
+                    .Tag = result,
+                    .ImageIndex = 1,
+                    .StateImageIndex = 1
+                }
+
+                alignRow.SubItems.Add(++i)
+                alignRow.SubItems.Add(result.forward)
+                alignRow.SubItems.Add(result.reverse)
+                alignRow.SubItems.Add(result.reference.mz)
+                alignRow.SubItems.Add(result.reference.scan_time)
+
+                fileRow.Items.Add(alignRow)
+            Next
+
+            Me.Invoke(Sub() Call TreeListView1.Items.Add(fileRow))
+        Next
+
+        Call progress.ShowProgressDetails("Search job done!")
+        Call progress.Invoke(Sub() Call progress.Close())
     End Sub
 
     Private Sub ViewAlignmentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewAlignmentToolStripMenuItem.Click
@@ -224,7 +224,7 @@ Public Class PageSpectrumSearch
         If cluster.ChildrenCount > 0 Then
             ' 选择的是一个文件节点
             Dim filePath As String = cluster.ToolTipText
-            Dim raw As Raw = Globals.workspace.FindRawFile(filePath)
+            Dim raw As Task.Raw = Globals.workspace.FindRawFile(filePath)
 
             If Not raw Is Nothing Then
                 Call MyApplication.mzkitRawViewer.showScatter(raw, False, directSnapshot:=True, contour:=False)
