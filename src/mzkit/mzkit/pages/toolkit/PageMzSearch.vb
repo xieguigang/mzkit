@@ -323,15 +323,15 @@ Public Class PageMzSearch
 
     Private Function GetIsotopeMS1() As LibraryMatrix
         Return New LibraryMatrix With {
-            .ms2 = isotope.mz _
-                .Select(Function(mzi, i)
+            .ms2 = isotope.data _
+                .Select(Function(mzi)
                             Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = isotope.intensity(i)
+                                .mz = mzi.abs_mass,
+                                .intensity = mzi.abundance
                             }
                         End Function) _
                 .ToArray,
-            .name = isotope.formula & " [MS1]"
+            .name = $"{isotope.formula} [MS1, {isotope.exactMass.ToString("F4")}]"
         }
     End Function
 
@@ -426,11 +426,7 @@ Public Class PageMzSearch
             Return
         End If
 
-        Dim centroid As LibraryMatrix = GetIsotopeMS1() _
-            .CentroidMode(
-                tolerance:=Tolerance.DeltaMass(0.01),
-                cutoff:=New RelativeIntensityCutoff(0.001)
-            )
+
 
 
     End Sub
