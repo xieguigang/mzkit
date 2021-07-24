@@ -53,6 +53,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -161,22 +163,53 @@ Public Class PageSpectrumSearch
         Call runSearch()
     End Sub
 
-    Public Sub runSearch()
+    Public Sub runSearch(Optional isotopic As IsotopeDistribution = Nothing)
         Dim raws As IEnumerable(Of Task.Raw) = Globals.workspace.GetRawDataFiles
         Dim progress As New frmTaskProgress
+        Dim query As [Variant](Of LibraryMatrix, IsotopeDistribution)
+
+        If isotopic Is Nothing Then
+            query = getSpectrumInput()
+        Else
+            query = isotopic
+        End If
 
         progress.ShowProgressTitle("Run spectrum similarity search...", directAccess:=True)
         progress.ShowProgressDetails("Running...", directAccess:=True)
 
         Call TreeListView1.Items.Clear()
-        Call New Thread(Sub() Call SearchThread(raws, progress)).Start()
+        Call New Thread(Sub() Call SearchThread(query, raws, progress)).Start()
         Call progress.ShowDialog()
 
         TabControl1.SelectedTab = TabPage2
     End Sub
 
-    Private Sub SearchThread(raws As IEnumerable(Of Task.Raw), progress As frmTaskProgress)
-        For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
+    Private Sub SearchThread(query As [Variant](Of LibraryMatrix, IsotopeDistribution), raws As IEnumerable(Of Task.Raw), progress As frmTaskProgress)
+        Dim runSearchResult As IEnumerable(Of NamedCollection(Of AlignmentOutput))
+
+        If query Like GetType(LibraryMatrix) Then
+            runSearchResult = query.TryCast(Of LibraryMatrix).SearchFiles(
+                files:=raws,
+                tolerance:=Tolerance.DeltaMass(0.3),
+                dotcutoff:=0.8,
+                progress:=AddressOf progress.ShowProgressDetails,
+                reload:=Sub(src, cache)
+                            frmFileExplorer.getRawCache(src,, cache)
+                        End Sub
+            )
+        Else
+            runSearchResult = query.TryCast(Of IsotopeDistribution).SearchFiles(
+                files:=raws,
+                tolerance:=Tolerance.DeltaMass(0.3),
+                dotcutoff:=0.8,
+                progress:=AddressOf progress.ShowProgressDetails,
+                reload:=Sub(src, cache)
+                            frmFileExplorer.getRawCache(src,, cache)
+                        End Sub
+            )
+        End If
+
+        For Each fileSearch As NamedCollection(Of AlignmentOutput) In runSearchResult
             Dim fileRow As New TreeListViewItem With {
                 .Text = fileSearch.name,
                 .ToolTipText = fileSearch.description,
