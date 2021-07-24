@@ -171,7 +171,7 @@ Public Class PageSpectrumSearch
 
         Call New Thread(
             Sub()
-                For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails)
+                For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
                     Dim fileRow As New TreeListViewItem With {
                         .Text = fileSearch.name,
                         .ToolTipText = fileSearch.description,

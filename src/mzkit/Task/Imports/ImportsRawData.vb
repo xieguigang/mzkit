@@ -56,9 +56,9 @@ Public Class ImportsRawData
 
     Public ReadOnly Property raw As Raw
 
-    Sub New(file As String, progress As Action(Of String), finished As Action)
+    Sub New(file As String, progress As Action(Of String), finished As Action, Optional cachePath As String = Nothing)
         source = file
-        cache = GetCachePath(file)
+        cache = If(cachePath, GetCachePath(file))
         showProgress = progress
         success = finished
         raw = New Raw With {

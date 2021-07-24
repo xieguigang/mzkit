@@ -110,7 +110,7 @@ Module Visual
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
-        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), "1600,1000")
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
@@ -503,7 +503,7 @@ Module Visual
 
         Return UVsignalPlot.Plot(
             signals:=signals.populates(Of GeneralSignal)(env),
-            size:=InteropArgumentHelper.getSize(size),
+            size:=InteropArgumentHelper.getSize(size, env),
             padding:=InteropArgumentHelper.getPadding(padding),
             colorSet:=colorSet,
             pt_size:=pt_size,

@@ -258,7 +258,7 @@ Module MsImaging
                         Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
-        Dim psize As Size = InteropArgumentHelper.getSize(pixelSize, "5,5").SizeParser
+        Dim psize As Size = InteropArgumentHelper.getSize(pixelSize, env, "5,5").SizeParser
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
@@ -305,7 +305,7 @@ Module MsImaging
             Return viewer.DrawLayer(
                 mz:=mz(Scan0),
                 threshold:=threshold,
-                pixelSize:=InteropArgumentHelper.getSize(pixelSize, "5,5"),
+                pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels
@@ -314,7 +314,7 @@ Module MsImaging
             Return viewer.DrawLayer(
                 mz:=mz,
                 threshold:=threshold,
-                pixelSize:=InteropArgumentHelper.getSize(pixelSize, "5,5"),
+                pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels

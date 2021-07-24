@@ -67,6 +67,26 @@ Public Class MSFileReader : Implements IDisposable
         End Get
     End Property
 
+    Public ReadOnly Property FileName As String
+        Get
+            Return mRawFileReader.RawFilePath
+        End Get
+    End Property
+
+    Public ReadOnly Property ThermoReader As XRawFileIO
+        Get
+            Return mRawFileReader
+        End Get
+    End Property
+
+    Public ReadOnly Property ScanTimeMax As Double
+        Get
+            Dim rtmax As Double = Nothing
+            Dim void = mRawFileReader.GetRetentionTime(mRawFileReader.ScanEnd, rtmax)
+            Return rtmax
+        End Get
+    End Property
+
     ''' <summary>
     ''' Open the raw file with a new instance of XRawFileIO
     ''' </summary>

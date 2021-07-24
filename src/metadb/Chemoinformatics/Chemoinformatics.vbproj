@@ -449,13 +449,17 @@
     <Compile Include="Formula\ElementNumType.vb" />
     <Compile Include="Formula\FormalCharge.vb" />
     <Compile Include="Formula\HeteroatomRatioCheck.vb" />
+    <Compile Include="Formula\Isotopic\Calculator.vb" />
+    <Compile Include="Formula\Isotopic\IsotopeCount.vb" />
+    <Compile Include="Formula\Isotopic\IsotopeDistribution.vb" />
+    <Compile Include="Formula\Isotopic\Isotope.vb" />
     <Compile Include="Formula\Models\FormulaComposition.vb" />
     <Compile Include="Formula\SearchOption.vb" />
     <Compile Include="Formula\FormulaSearch.vb" />
     <Compile Include="Formula\ElementSearchCandiate.vb" />
     <Compile Include="Formula\Models\Formula.vb" />
     <Compile Include="Formula\FormulaScanner.vb" />
-    <Compile Include="Formula\Element.vb" />
+    <Compile Include="Formula\Models\Element.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\InChI.vb" />
@@ -511,10 +515,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Math.Statistics.vbproj">
+      <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>
+      <Name>Math.Statistics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

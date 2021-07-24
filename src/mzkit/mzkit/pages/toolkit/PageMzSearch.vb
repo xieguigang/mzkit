@@ -1,57 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::47d55ba4eea518ca4590d35055061cb2, src\mzkit\mzkit\pages\toolkit\PageMzSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzSearch
-    ' 
-    '     Function: GetFormulaSearchProfileName, GetProfile
-    ' 
-    '     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
-    '          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
-    ' 
-    ' /********************************************************************************/
+' Class PageMzSearch
+' 
+'     Function: GetFormulaSearchProfileName, GetProfile
+' 
+'     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
+'          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing.Drawing2D
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports RibbonLib.Interop
+Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
 Public Class PageMzSearch
@@ -256,7 +271,10 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim vs_win As DocumentWindow = DirectCast(ParentForm, DocumentWindow)
+
         ComboBox1.SelectedIndex = 0
+        vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -272,5 +290,148 @@ Public Class PageMzSearch
         Dim ppm As Double = 1
 
         Call doExactMassSearch(mz, ppm)
+    End Sub
+
+    Dim isotope As IsotopeDistribution
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim formulaStr As String = Strings.Trim(TextBox2.Text)
+
+        If formulaStr.StringEmpty Then
+            Call MyApplication.host.showStatusMessage("No formula input!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        Else
+            isotope = FormulaScanner _
+                .ScanFormula(formulaStr) _
+                .DoCall(AddressOf IsotopeDistribution.GenerateDistribution)
+        End If
+
+        Call DataGridView2.Rows.Clear()
+
+        For i As Integer = 0 To isotope.Size - 1
+            If isotope.intensity(i) > 0 Then
+                DataGridView2.Rows.Add({isotope.mz(i), isotope.intensity(i)})
+            End If
+        Next
+
+        Dim peakPlot As Image = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1, labelIntensity:=0.01).AsGDIImage
+
+        MS1PlotToolStripMenuItem.Checked = True
+        GaussianPlotToolStripMenuItem.Checked = False
+        PictureBox1.BackgroundImage = peakPlot
+    End Sub
+
+    Private Function GetIsotopeMS1() As LibraryMatrix
+        Return New LibraryMatrix With {
+            .ms2 = isotope.mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = isotope.intensity(i)
+                            }
+                        End Function) _
+                .ToArray,
+            .name = isotope.Formula & " [MS1]"
+        }
+    End Function
+
+    Private Function GetIsotopeGaussianLine() As SerialData
+        Return New SerialData With {
+            .color = Color.SteelBlue,
+            .lineType = DashStyle.Dash,
+            .pointSize = 5,
+            .pts = isotope.mz _
+                .Select(Function(mzi, i)
+                            Return New PointData(mzi, isotope.intensity(i))
+                        End Function) _
+                .Where(Function(p) p.pt.Y > 0) _
+                .ToArray,
+            .shape = LegendStyles.Diamond,
+            .title = $"{isotope.Formula}'s Gaussian Plot",
+            .width = 3
+        }
+    End Function
+
+    Private Sub MS1PlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1PlotToolStripMenuItem.Click
+        If MS1PlotToolStripMenuItem.Checked Then
+            Return
+        End If
+
+        If Not isotope Is Nothing Then
+            PictureBox1.BackgroundImage = PeakAssign.DrawSpectrumPeaks(GetIsotopeMS1, labelIntensity:=0.01).AsGDIImage
+        End If
+
+        GaussianPlotToolStripMenuItem.Checked = MS1PlotToolStripMenuItem.Checked
+        MS1PlotToolStripMenuItem.Checked = Not MS1PlotToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub GaussianPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GaussianPlotToolStripMenuItem.Click
+        If GaussianPlotToolStripMenuItem.Checked Then
+            Return
+        End If
+
+        If Not isotope Is Nothing Then
+            PictureBox1.BackgroundImage = Scatter.Plot(
+                c:={GetIsotopeGaussianLine()},
+                fill:=True,
+                size:="2100,1400",
+                gridFill:="white",
+                Xlabel:="M/Z",
+                Ylabel:="Gaussian Probability",
+                axisLabelCSS:=CSSFont.Win7LargeBold
+            ).AsGDIImage
+        End If
+
+        MS1PlotToolStripMenuItem.Checked = GaussianPlotToolStripMenuItem.Checked
+        GaussianPlotToolStripMenuItem.Checked = Not GaussianPlotToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+        If isotope Is Nothing Then
+            Return
+        End If
+
+        If MS1PlotToolStripMenuItem.Checked Then
+            Dim ion As New MGF.Ions With {
+                .Accession = isotope.Formula,
+                .Charge = 1,
+                .Database = "IsotopeDistribution",
+                .Locus = isotope.Formula,
+                .Title = $"{isotope.ToString} [MS1]",
+                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.Formula).ExactMass, 1),
+                .Peaks = isotope.data _
+                    .Select(Function(i)
+                                Return New ms2 With {
+                                    .mz = i.abs_mass,
+                                    .intensity = i.abundance
+                                }
+                            End Function) _
+                    .ToArray
+            }
+
+            Using file As New SaveFileDialog With {
+                .Filter = "MGF Ion(*.mgf)|*.mgf"
+            }
+                If file.ShowDialog = DialogResult.OK Then
+                    Call ion.SaveTo(file.FileName)
+                End If
+            End Using
+        Else
+            Call DataGridView2.SaveDataGrid("Save Gaussian Data")
+        End If
+    End Sub
+
+    Private Sub MSISearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MSISearchToolStripMenuItem.Click
+        If isotope Is Nothing Then
+            Return
+        End If
+
+        Dim centroid As LibraryMatrix = GetIsotopeMS1() _
+            .CentroidMode(
+                tolerance:=Tolerance.DeltaMass(0.01),
+                cutoff:=New RelativeIntensityCutoff(0.001)
+            )
+
+
     End Sub
 End Class

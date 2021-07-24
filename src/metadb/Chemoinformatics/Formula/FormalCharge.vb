@@ -60,7 +60,7 @@ Namespace Formula
             Dim correctedCharge = totalCharge
 
             If elementNum.C + elementNum.Si >= 1 Then
-                If elementNum.H > 0 And stdNum.Abs(Formula.Elements("H").charge - 1) < Single.Epsilon Then
+                If elementNum.H > 0 And stdNum.Abs(Formula.AllAtomElements("H").charge - 1) < Single.Epsilon Then
                     ' Since carbon or silicon are present, assume the hydrogens should be negative
                     ' Subtract udtElementNum.H * 2 since hydrogen is assigned a +1 charge if ElementStats(1).Charge = 1
                     correctedCharge -= elementNum.H * 2
@@ -109,7 +109,7 @@ Namespace Formula
                     Continue For
                 End If
 
-                Dim singleCharge As Integer = Formula.Elements(element.Key).charge + 1
+                Dim singleCharge As Integer = Formula.AllAtomElements(element.Key).charge + 1
                 Dim deltaCharge As Integer = singleCharge * element.Value
 
                 totalCharge += deltaCharge

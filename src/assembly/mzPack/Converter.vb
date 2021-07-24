@@ -62,13 +62,16 @@ Public Module Converter
     ''' </summary>
     ''' <param name="xml">the file path of the raw mzXML/mzML data file.</param>
     ''' <returns></returns>
-    Public Function LoadRawFileAuto(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack
+    Public Function LoadRawFileAuto(xml As String,
+                                    Optional tolerance$ = "ppm:20",
+                                    Optional progress As Action(Of String) = Nothing) As mzPack
+
         If xml.ExtensionSuffix("mzXML") Then
             Return New mzPack With {
-                .MS = New mzXMLScans().Load(xml, progress).ToArray
+                .MS = New mzXMLScans(mzErr:=tolerance).Load(xml, progress).ToArray
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
-            Return LoadMzML(xml, progress)
+            Return LoadMzML(xml, tolerance, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
             Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
@@ -115,9 +118,9 @@ Public Module Converter
         }
     End Function
 
-    Public Function LoadMzML(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack
+    Public Function LoadMzML(xml As String, Optional tolerance$ = "ppm:20", Optional progress As Action(Of String) = Nothing) As mzPack
         Dim UVdetecor As String = ExtractUVData.GetPhotodiodeArrayDetectorInstrumentConfigurationId(xml)
-        Dim scanLoader As New mzMLScans
+        Dim scanLoader As New mzMLScans(mzErr:=tolerance)
         Dim MS As ScanMS1() = scanLoader.Load(xml, progress).ToArray
         Dim UV As New ChromatogramOverlap
         Dim PDA As New List(Of ChromatogramTick)

@@ -69,7 +69,7 @@ Module DataControlHandler
 
     <Extension>
     Public Sub WriteTableToFile(table As DataGridView, fileName As String)
-        Using writeTsv As StreamWriter = fileName.OpenWriter
+        Using writeTsv As StreamWriter = fileName.OpenWriter(encoding:=Encodings.UTF8WithoutBOM)
             Dim row As New List(Of String)
 
             For i As Integer = 0 To table.Columns.Count - 1
@@ -85,7 +85,7 @@ Module DataControlHandler
                     row.Add(any.ToString(rowObj.Cells(i).Value))
                 Next
 
-                writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(vbTab))
+                writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
             Next
         End Using
     End Sub

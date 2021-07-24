@@ -103,7 +103,7 @@ Module ThermoRaw
     <ExportAPI("load_MSI")>
     <RApiReturn(GetType(mzPack))>
     Public Function readAsMSI(raw As MSFileReader, <RRawVectorArgument> pixels As Object, Optional env As Environment = Nothing) As Object
-        Dim size As Size = InteropArgumentHelper.getSize(pixels, "-1,-1").SizeParser
+        Dim size As Size = InteropArgumentHelper.getSize(pixels, env, "-1,-1").SizeParser
 
         If size.Width <= 0 OrElse size.Height <= 0 Then
             Return Internal.debug.stop({$"the given pixels size parameter value '{pixels}' is not a valid data!", $"value: {pixels}"}, env)

@@ -98,7 +98,7 @@ Namespace Formula
                 copy.CountsByElement(element) = count
             End If
 
-            copy.charge = copy.charge + Formula.Elements(element).charge * count
+            copy.charge = copy.charge + Formula.AllAtomElements(element).charge * count
             copy.m_formula = Formula.BuildFormula(copy.CountsByElement)
 
             Return copy

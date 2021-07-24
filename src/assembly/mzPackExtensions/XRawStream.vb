@@ -96,8 +96,14 @@ Public Class XRawStream
             End If
         Next
 
-        MS1.products = MS2.PopAll
-        MSscans += MS1
+        If Not MS2.IsNullOrEmpty AndAlso Not MS1 Is Nothing Then
+            MS1.products = MS2.PopAll
+            MSscans += MS1
+        End If
+
+        If MSscans = 0 Then
+            Call $"No MS scan data in raw data file: {raw.FileName}".Warning
+        End If
 
         Return New mzPack With {
             .MS = MSscans.PopAll,
@@ -105,7 +111,8 @@ Public Class XRawStream
                 .BPC = BPC.PopAll,
                 .TIC = TIC.PopAll,
                 .scan_time = scan_times.PopAll
-            }
+            },
+            .source = raw.FileName.FileName
         }
     End Function
 

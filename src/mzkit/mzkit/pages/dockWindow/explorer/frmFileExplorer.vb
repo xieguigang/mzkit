@@ -217,10 +217,15 @@ Public Class frmFileExplorer
     ''' </summary>
     ''' <param name="fileName"></param>
     ''' <returns></returns>
-    Public Function getRawCache(fileName As String, Optional titleTemplate$ = "Imports raw data [%s]") As Raw
+    Public Shared Function getRawCache(fileName As String, Optional titleTemplate$ = "Imports raw data [%s]", Optional cachePath As String = Nothing) As Raw
         Dim progress As New frmTaskProgress() With {.Text = sprintf(titleTemplate, fileName)}
         Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
-        Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
+        Dim task As New Task.ImportsRawData(
+            file:=fileName,
+            progress:=showProgress,
+            finished:=Sub() Call progress.Invoke(Sub() progress.Close()),
+            cachePath:=cachePath
+        )
 
         Call MyApplication.host.showStatusMessage("Run Raw Data Imports")
         Call progress.ShowProgressTitle(progress.Text, directAccess:=True)
@@ -483,7 +488,7 @@ Public Class frmFileExplorer
             Return
         End If
 
-        Dim raw As Raw = DirectCast(node.Tag, Raw).LoadMzpack
+        Dim raw As Raw = DirectCast(node.Tag, Raw).LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
         Dim viewer = VisualStudio.ShowDocument(Of frmUntargettedViewer)()
 
         viewer.loadRaw(raw)

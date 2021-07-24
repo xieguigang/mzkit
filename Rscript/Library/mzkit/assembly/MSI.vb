@@ -55,12 +55,15 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -236,39 +239,12 @@ Module MSI
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
 
         If pipeline.isError Then
-            Return pipeline
+            Return pipeline.getError
+        Else
+            Return pipeline _
+                .populates(Of mzPack)(env) _
+                .MSICombineRowScans(correction, intocutoff, progress:=Sub(msg) Call base.print(msg, env))
         End If
-
-        Dim pixels As New List(Of ScanMS1)
-        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
-
-        For Each row As mzPack In pipeline.populates(Of mzPack)(env)
-            Dim y As Integer = row.source _
-                .Match("\d+") _
-                .DoCall(AddressOf Integer.Parse)
-            Dim i As i32 = 1
-
-            Call base.print($"load: {row.source}...", env)
-
-            For Each scan As ScanMS1 In row.MS
-                Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRow(scan.rt))
-                Dim ms As ms2() = cutoff.Trim(scan.GetMs)
-                Dim mz As Double() = ms.Select(Function(m) m.mz).ToArray
-                Dim into As Double() = ms.Select(Function(m) m.intensity).ToArray
-
-                pixels += New ScanMS1 With {
-                    .BPC = scan.BPC,
-                    .into = into,
-                    .mz = mz,
-                    .meta = New Dictionary(Of String, String) From {{NameOf(x), x}, {NameOf(y), y}},
-                    .rt = scan.rt,
-                    .scan_id = $"[{row.source}] {scan.scan_id}",
-                    .TIC = scan.TIC
-                }
-            Next
-        Next
-
-        Return New mzPack With {.MS = pixels.ToArray}
     End Function
 
     ''' <summary>
@@ -297,5 +273,42 @@ Module MSI
             .rowScans = rows,
             .size = New Size(width, height)
         }
+    End Function
+
+    <ExportAPI("pixelMatrix")>
+    Public Function PixelMatrix(raw As mzPack, file As Stream, Optional tolerance As Object = "da:0.05", Optional env As Environment = Nothing) As Message
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim da As Tolerance = mzErr.TryCast(Of Tolerance)
+        Dim allMz As ms2() = raw.MS.Select(Function(i) i.GetMs).IteratesALL.ToArray.Centroid(da, New RelativeIntensityCutoff(0.01)).OrderBy(Function(i) i.mz).ToArray
+        Dim text As New StreamWriter(file)
+
+        Call text.WriteLine({""}.JoinIterates(allMz.Select(Function(a) a.mz.ToString("F4"))).JoinBy(","))
+        Call text.Flush()
+
+        For Each pixel As ScanMS1 In raw.MS
+            Dim pid As String = $"{pixel.meta!x};{pixel.meta!y}"
+            Dim msData = pixel.GetMs.ToArray
+            Dim vec As String() = allMz.Select(Function(mzi)
+                                                   Dim mz = msData.Where(Function(i) da(i.mz, mzi.mz)).FirstOrDefault
+
+                                                   If mz Is Nothing Then
+                                                       Return "0"
+                                                   Else
+                                                       Return mz.intensity.ToString
+                                                   End If
+                                               End Function).ToArray
+
+            Call text.WriteLine({pid}.JoinIterates(vec).JoinBy(","))
+            Call Console.WriteLine(pixel.scan_id)
+        Next
+
+        Call text.Flush()
+
+        Return Nothing
     End Function
 End Module

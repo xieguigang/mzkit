@@ -381,6 +381,7 @@
     <Compile Include="assembly\ERS.vb" />
     <Compile Include="assembly\data.vb" />
     <Compile Include="assembly\Chromatogram.vb" />
+    <Compile Include="assembly\NMR.vb" />
     <Compile Include="assembly\MzPackAccess.vb" />
     <Compile Include="assembly\MSI.vb" />
     <Compile Include="assembly\ThermoRaw.vb" />
@@ -537,6 +538,10 @@
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF.IO.vbproj">
       <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
       <Name>KCF.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.vbproj">
+      <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
+      <Name>MsImaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.vbproj">
       <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>

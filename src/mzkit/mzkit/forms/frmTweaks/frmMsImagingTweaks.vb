@@ -46,9 +46,13 @@
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -85,7 +89,7 @@ Public Class frmMsImagingTweaks
         RibbonEvents.ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
     End Sub
 
-    Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
+    Private Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
         Win7StyleTreeView1.Nodes.Clear()
         checkedMz.Clear()
         Win7StyleTreeView1.Nodes.Add("Ion Layers")
@@ -222,23 +226,88 @@ Public Class frmMsImagingTweaks
     End Sub
 
     Private Sub LoadAllIonsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadAllIonsToolStripMenuItem.Click
-        Win7StyleTreeView1.Nodes.Clear()
+        If MessageBox.Show("Mzkit will takes a long time to load all ions from your raw data file," & vbCrLf & "Continue to process?", "MSI Viewer", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) <> DialogResult.OK Then
+            Return
+        End If
+
+        Call ClearIons()
 
         If Not viewer.render Is Nothing Then
             Dim progress As New frmProgressSpinner
-            Dim layers = Win7StyleTreeView1.Nodes.Add("Ion Layers")
 
             Call New Thread(Sub()
-                                Call Me.Invoke(Sub()
-                                                   For Each mz As Double In viewer.render.pixelReader.LoadMzArray(30)
-                                                       layers.Nodes.Add(mz.ToString("F4")).Tag = mz
-                                                       Application.DoEvents()
-                                                   Next
-                                               End Sub)
+                                Call Me.Invoke(Sub() Call loadAllMzIons())
                                 Call progress.Invoke(Sub() progress.Close())
                             End Sub).Start()
 
             Call progress.ShowDialog()
+        Else
+            Call MyApplication.host.showStatusMessage("No MSI raw data file was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
+    End Sub
+
+    Private Sub loadAllMzIons()
+        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
+
+        For Each mz As Double In viewer.render.pixelReader.LoadMzArray(30)
+            layers.Nodes.Add(mz.ToString("F4")).Tag = mz
+            Application.DoEvents()
+        Next
+    End Sub
+
+    Private Sub LoadBasePeakIonsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadBasePeakIonsToolStripMenuItem.Click
+        Call ClearIons()
+
+        If Not viewer.render Is Nothing Then
+            Dim progress As New frmProgressSpinner
+
+            Call New Thread(Sub()
+                                Call Me.Invoke(Sub() Call loadBasePeakMz())
+                                Call progress.Invoke(Sub() progress.Close())
+                            End Sub).Start()
+
+            Call progress.ShowDialog()
+        Else
+            Call MyApplication.host.showStatusMessage("No MSI raw data file was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+    End Sub
+
+    Private Sub loadBasePeakMz()
+        Dim data As New List(Of ms2)
+        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
+        Dim pointTagged As New List(Of (X!, Y!, mz As ms2))
+
+        For Each px As PixelScan In viewer.render.pixelReader.AllPixels
+            Dim mz As ms2 = px.GetMs.OrderByDescending(Function(a) a.intensity).FirstOrDefault
+
+            pointTagged.Add((px.X, px.Y, mz))
+
+            If Not mz Is Nothing Then
+                data.Add(mz)
+            End If
+
+            Call Application.DoEvents()
+        Next
+
+        data = data.ToArray _
+             .Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)) _
+             .AsList
+
+        Call Application.DoEvents()
+
+        Dim da = Tolerance.DeltaMass(0.05)
+        Dim mzGroup = pointTagged.GroupBy(Function(p) p.mz.mz, da).Select(Function(a) (Val(a.name), a.ToArray)).ToArray
+
+        Call Application.DoEvents()
+
+        data.OrderByDescending(Function(a)
+                                   Call Application.DoEvents()
+                                   Return mzGroup.Where(Function(i) da(i.Item1, a.mz)).Select(Function(p) p.ToArray).IteratesALL.Count
+                               End Function).AsList
+
+        For Each p As ms2 In data
+            layers.Nodes.Add(p.mz.ToString("F4")).Tag = p.mz
+            Application.DoEvents()
+        Next
     End Sub
 End Class

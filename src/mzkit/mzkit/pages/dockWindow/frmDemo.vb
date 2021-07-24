@@ -165,7 +165,7 @@ Blue: 741.5307(SM(34:1) [M+K]+)
                         MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                         Return
                     End If
-                    fileExplorer.addFileNode(fileExplorer.getRawCache(demoPath))
+                    fileExplorer.addFileNode(frmFileExplorer.getRawCache(demoPath))
                     findRaw = fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
                 End If
 

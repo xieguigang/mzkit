@@ -22,7 +22,7 @@ MolWeight <- function() {
   weights    <- list(
     # M is the target molecule, do not calculate!
     "M"       = 0,
-    "H"       = 1.007276,
+    "H"       = 1.007825,
     "Na"      = 22.98976928,
     "NH4"     = 18.035534,
     "K"       = 39.0983,

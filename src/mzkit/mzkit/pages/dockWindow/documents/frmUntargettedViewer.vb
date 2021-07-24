@@ -59,7 +59,7 @@ Public Class frmUntargettedViewer
 
     Public Sub loadRaw(raw As Raw)
         Me.raw = raw
-        Me.raw.LoadMzpack()
+        Me.raw.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
         Me.TabText = raw.source.FileName
 
         Call showTIC()
