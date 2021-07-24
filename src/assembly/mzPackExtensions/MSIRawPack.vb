@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::f993113438f9c891f77d10c2755fb939, src\assembly\mzPackExtensions\MSIRawPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MSIRawPack
-    ' 
-    '     Function: ExactPixelTable, LoadFromXMSIRaw, PixelScanId
-    ' 
-    ' /********************************************************************************/
+' Module MSIRawPack
+' 
+'     Function: ExactPixelTable, LoadFromXMSIRaw, PixelScanId
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
@@ -62,7 +63,7 @@ Public Module MSIRawPack
     ''' <returns></returns>
     <Extension>
     Public Function LoadFromXMSIRaw(raw As MSFileReader, pixels As Size) As mzPack
-        Dim loader As New XRawStream(raw, PixelScanId(pixels))
+        Dim loader As New XRawStream(raw, PixelScanId(pixels, maxrt:=raw.))
         Dim pack As mzPack = loader.StreamTo(skipEmptyScan:=False)
 
         If pixels.Width * pixels.Height <> pack.MS.Length Then
@@ -72,13 +73,14 @@ Public Module MSIRawPack
         Return pack
     End Function
 
-    Private Function PixelScanId(pixels As Size) As Func(Of SingleScanInfo, Integer, String)
+    Private Function PixelScanId(pixels As Size, maxrt As Double) As Func(Of SingleScanInfo, Integer, String)
+        Dim cal As New Correction(totalTime:=maxrt, pixels:=pixels.Width)
+
         Return Function(scan, n)
                    If scan.MSLevel = 1 Then
-                       Dim y As Integer = stdNum.Floor(n / pixels.Width) + 1
-                       Dim x As Integer = n - (y - 1) * pixels.Width + 1
+                       Dim pt As Point = cal.GetPixelPoint(scan.RetentionTime)
 
-                       Return $"[MS1][Scan_{scan.ScanNumber}][{x},{y}] {scan.FilterText}"
+                       Return $"[MS1][Scan_{scan.ScanNumber}][{pt.X},{pt.Y}] {scan.FilterText}"
                    Else
                        Return $"[MSn][Scan_{scan.ScanNumber}] {scan.FilterText}"
                    End If

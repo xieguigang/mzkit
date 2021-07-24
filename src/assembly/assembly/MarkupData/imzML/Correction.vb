@@ -1,7 +1,11 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace MarkupData.imzML
 
+    ''' <summary>
+    ''' 在这里必须要假设每一个像素点的扫描时间是等长的
+    ''' </summary>
     Public Class Correction
 
         Public ReadOnly Property totalTime As Double
@@ -32,10 +36,12 @@ Namespace MarkupData.imzML
         ''' </summary>
         ''' <param name="rt"></param>
         ''' <returns>[x, y]</returns>
-        Public Function GetPixelPoint(rt As Double, width As Integer, height As Integer) As Point
+        Public Function GetPixelPoint(rt As Double) As Point
+            ' 在这个二维扫描之中，已经有了n个像素点了
             Dim n As Integer = GetPixelRow(rt)
+            Dim pt As Point = BitmapBuffer.ToPixel2D(n, width:=pixels, channels:=1)
 
-            Throw New NotImplementedException
+            Return pt
         End Function
 
     End Class
