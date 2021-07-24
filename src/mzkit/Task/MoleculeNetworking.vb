@@ -183,7 +183,8 @@ Public Module MoleculeNetworking
                                  reload As Action(Of String, String)) As NamedCollection(Of AlignmentOutput)
 
         Dim alignments As New List(Of AlignmentOutput)
-        Dim cos As New CosAlignment(tolerance, New RelativeIntensityCutoff(dotcutoff))
+        Dim cos As New CosAlignment(tolerance, New RelativeIntensityCutoff(0.01))
+        Dim align As AlignmentOutput
 
         If Not file.isLoaded Then
             Call file.LoadMzpack(reload)
@@ -191,7 +192,11 @@ Public Module MoleculeNetworking
 
         For Each scan As ScanMS1 In file.GetMs1Scans
             For Each subject As ScanMS2 In scan.products.SafeQuery
-                alignments += isotopic.AlignIsotopic(subject.GetMatrix, cos)
+                align = isotopic.AlignIsotopic(subject.GetMatrix, cos)
+
+                If stdNum.Min(align.forward, align.reverse) >= dotcutoff Then
+                    alignments += align
+                End If
             Next
         Next
 

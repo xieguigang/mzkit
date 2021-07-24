@@ -200,8 +200,8 @@ Public Class PageSpectrumSearch
         Else
             runSearchResult = query.TryCast(Of IsotopeDistribution).SearchFiles(
                 files:=raws,
-                tolerance:=Tolerance.DeltaMass(0.3),
-                dotcutoff:=0.8,
+                tolerance:=Tolerance.DeltaMass(0.05),
+                dotcutoff:=0.3,
                 progress:=AddressOf progress.ShowProgressDetails,
                 reload:=Sub(src, cache)
                             frmFileExplorer.getRawCache(src,, cache)
