@@ -331,7 +331,7 @@ Public Class PageMzSearch
                             }
                         End Function) _
                 .ToArray,
-            .name = isotope.Formula & " [MS1]"
+            .name = isotope.formula & " [MS1]"
         }
     End Function
 
@@ -347,7 +347,7 @@ Public Class PageMzSearch
                 .Where(Function(p) p.pt.Y > 0) _
                 .ToArray,
             .shape = LegendStyles.Diamond,
-            .title = $"{isotope.Formula}'s Gaussian Plot",
+            .title = $"{isotope.formula}'s Gaussian Plot",
             .width = 3
         }
     End Function
@@ -393,12 +393,12 @@ Public Class PageMzSearch
 
         If MS1PlotToolStripMenuItem.Checked Then
             Dim ion As New MGF.Ions With {
-                .Accession = isotope.Formula,
+                .Accession = isotope.formula,
                 .Charge = 1,
                 .Database = "IsotopeDistribution",
-                .Locus = isotope.Formula,
+                .Locus = isotope.formula,
                 .Title = $"{isotope.ToString} [MS1]",
-                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.Formula).ExactMass, 1),
+                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.formula).ExactMass, 1),
                 .Peaks = isotope.data _
                     .Select(Function(i)
                                 Return New ms2 With {

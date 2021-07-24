@@ -12,7 +12,8 @@ Namespace Formula.IsotopicPatterns
         Public Property data As IsotopeCount()
         Public Property mz As Double()
         Public Property intensity As Double()
-        Public Property Formula As String
+        Public Property formula As String
+        Public Property exactMass As Double
 
         Public ReadOnly Property Size As Integer
             Get
@@ -60,7 +61,8 @@ Namespace Formula.IsotopicPatterns
                     .ToArray,
                 .mz = plot_xs,
                 .intensity = plot_ys,
-                .Formula = formula.ToString
+                .formula = formula.ToString,
+                .exactMass = formula.ExactMass
             }
         End Function
 
