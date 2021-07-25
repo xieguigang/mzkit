@@ -46,6 +46,11 @@ Namespace Formula.IsotopicPatterns
 
         Public Shared Iterator Function Normalize(isotopes As IEnumerable(Of IsotopeCount)) As IEnumerable(Of IsotopeCount)
             Dim all As IsotopeCount() = isotopes.ToArray
+
+            If all.IsNullOrEmpty Then
+                Return
+            End If
+
             Dim maxProb As Double = Aggregate i In all Into Max(i.prob)
 
             For Each i As IsotopeCount In all
