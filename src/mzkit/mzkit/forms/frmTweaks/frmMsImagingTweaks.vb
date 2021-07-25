@@ -64,14 +64,19 @@ Public Class frmMsImagingTweaks
 
     Public Iterator Function GetSelectedIons() As IEnumerable(Of Double)
         If Not Win7StyleTreeView1.SelectedNode Is Nothing Then
-            If Win7StyleTreeView1.SelectedNode.Tag Is Nothing Then
-                For Each node As TreeNode In Win7StyleTreeView1.SelectedNode.Nodes
-                    Yield DirectCast(node.Tag, Double)
-                Next
+            If Not Win7StyleTreeView1.SelectedNode.Checked Then
+                If Win7StyleTreeView1.SelectedNode.Tag Is Nothing Then
+                    For Each node As TreeNode In Win7StyleTreeView1.SelectedNode.Nodes
+                        Yield DirectCast(node.Tag, Double)
+                    Next
+                Else
+                    Yield DirectCast(Win7StyleTreeView1.SelectedNode.Tag, Double)
+                End If
             Else
-                Yield DirectCast(Win7StyleTreeView1.SelectedNode.Tag, Double)
+                GoTo UseCheckedList
             End If
         Else
+UseCheckedList:
             If checkedMz.Count > 0 Then
                 For Each node In checkedMz
                     Yield DirectCast(node.Tag, Double)
