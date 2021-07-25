@@ -80,19 +80,23 @@ Public Class frmMsImagingTweaks
         End If
     End Function
 
+    Public Const Ion_Layers As String = "Ion Layers"
+    Public Const Pinned_Pixels As String = "Pinned Pixels"
+
     Private Sub frmMsImagingTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "MsImage Parameters"
 
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
 
-        Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Win7StyleTreeView1.Nodes.Add(Ion_Layers)
+        Win7StyleTreeView1.Nodes.Add(Pinned_Pixels)
         RibbonEvents.ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
     End Sub
 
     Private Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
-        Win7StyleTreeView1.Nodes.Clear()
         checkedMz.Clear()
-        Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
+        Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
@@ -151,12 +155,7 @@ Public Class frmMsImagingTweaks
     End Sub
 
     Private Sub AddIonMzLayer(mz As Double)
-        If Win7StyleTreeView1.Nodes.Count = 0 Then
-            Win7StyleTreeView1.Nodes.Add("Ion Layers")
-        End If
-
         Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
-
         node.Tag = mz
     End Sub
 
@@ -206,7 +205,7 @@ Public Class frmMsImagingTweaks
                 Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
             End If
 
-            Win7StyleTreeView1.Nodes.Clear()
+            Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
 
             For Each mz As Double In pixels _
                 .GroupBy(Function(p) p.mz, cdf.GetMzTolerance) _
@@ -274,7 +273,7 @@ Public Class frmMsImagingTweaks
 
     Private Sub loadBasePeakMz()
         Dim data As New List(Of ms2)
-        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
+        Dim layers As TreeNode = Win7StyleTreeView1.Nodes.Item(0)
         Dim pointTagged As New List(Of (X!, Y!, mz As ms2))
 
         For Each px As PixelScan In viewer.render.pixelReader.AllPixels

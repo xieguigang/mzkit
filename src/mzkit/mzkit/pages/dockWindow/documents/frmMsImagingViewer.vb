@@ -571,4 +571,9 @@ Public Class frmMsImagingViewer
             End If
         End If
     End Sub
+
+    Private Sub ClearPinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearPinToolStripMenuItem.Click
+        pinedPixel = Nothing
+
+    End Sub
 End Class
