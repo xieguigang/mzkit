@@ -82,10 +82,14 @@ Namespace ASCII.MGF
         <Extension>
         Public Function MgfIon(matrix As LibraryMatrix, Optional precursor As ms2 = Nothing) As Ions
             If precursor Is Nothing Then
-                precursor = New ms2 With {
-                    .mz = matrix.ms2.Max(Function(m) m.mz),
-                    .intensity = 1
-                }
+                If Not matrix.ms2.IsNullOrEmpty Then
+                    precursor = New ms2 With {
+                        .mz = matrix.ms2.Max(Function(m) m.mz),
+                        .intensity = 1
+                    }
+                Else
+                    precursor = New ms2
+                End If
             End If
 
             Return New Ions With {

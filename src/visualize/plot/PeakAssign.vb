@@ -140,6 +140,12 @@ Public Class PeakAssign : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim images = ResizeImages(canvas, ratio:=0.2)
+
+        If matrix.Length = 0 Then
+            Call "MS matrix is empty in peak assign plot!".Warning
+            Return
+        End If
+
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
         Dim rect As RectangleF = canvas.PlotRegion.ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
