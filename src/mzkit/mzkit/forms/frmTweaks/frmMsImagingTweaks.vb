@@ -63,19 +63,21 @@ Public Class frmMsImagingTweaks
     Friend viewer As frmMsImagingViewer
 
     Public Iterator Function GetSelectedIons() As IEnumerable(Of Double)
-        If checkedMz.Count > 0 Then
-            For Each node In checkedMz
-                Yield DirectCast(node.Tag, Double)
-            Next
+        If Not Win7StyleTreeView1.SelectedNode Is Nothing Then
+            If Win7StyleTreeView1.SelectedNode.Tag Is Nothing Then
+                For Each node As TreeNode In Win7StyleTreeView1.SelectedNode.Nodes
+                    Yield DirectCast(node.Tag, Double)
+                Next
+            Else
+                Yield DirectCast(Win7StyleTreeView1.SelectedNode.Tag, Double)
+            End If
         Else
-            If Not Win7StyleTreeView1.SelectedNode Is Nothing Then
-                If Win7StyleTreeView1.SelectedNode.Tag Is Nothing Then
-                    For Each node As TreeNode In Win7StyleTreeView1.SelectedNode.Nodes
-                        Yield DirectCast(node.Tag, Double)
-                    Next
-                Else
-                    Yield DirectCast(Win7StyleTreeView1.SelectedNode.Tag, Double)
-                End If
+            If checkedMz.Count > 0 Then
+                For Each node In checkedMz
+                    Yield DirectCast(node.Tag, Double)
+                Next
+            Else
+
             End If
         End If
     End Function
@@ -174,6 +176,11 @@ Public Class frmMsImagingTweaks
     ''' <param name="e"></param>
     Private Sub RGBLayers(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
         Dim mz3 As Double() = GetSelectedIons.Take(3).ToArray
+
+        If mz3.Length = 0 Then
+            Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
         Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)
         Dim b As Double = mz3.ElementAtOrDefault(2, [default]:=-1)
