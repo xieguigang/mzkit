@@ -283,6 +283,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureRegions.vb" />
     <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
     <Compile Include="PixelScan\InMemoryPixel.vb" />
     <Compile Include="PixelsSampler.vb" />
