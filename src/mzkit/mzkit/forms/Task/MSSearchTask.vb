@@ -1,0 +1,3 @@
+﻿Module MSSearchTask
+
+End Module

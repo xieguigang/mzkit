@@ -84,19 +84,22 @@ Namespace Pixel
 
         Sub New(scan As ScanMS1)
             Me.scan = scan
+            Me.pixel = GetPixelPoint(scan)
+        End Sub
 
+        Public Shared Function GetPixelPoint(scan As ScanMS1) As Point
             If scan.hasMetaKeys("x", "y") Then
-                Me.pixel = New Point With {
+                Return New Point With {
                     .X = CInt(Val(scan.meta!x)),
                     .Y = CInt(Val(scan.meta!y))
                 }
             Else
-                Me.pixel = scan.scan_id _
+                Return scan.scan_id _
                     .Match("\[\d+,\d+\]") _
                     .GetStackValue("[", "]") _
                     .DoCall(AddressOf Casting.PointParser)
             End If
-        End Sub
+        End Function
 
         Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
             Return scan.GetMs

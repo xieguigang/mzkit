@@ -54,6 +54,12 @@ Namespace Spectra
         Protected intocutoff As LowAbundanceTrimming
         Protected mzwidth As Tolerance
 
+        Public ReadOnly Property Tolerance As Tolerance
+            Get
+                Return mzwidth
+            End Get
+        End Property
+
         Sub New(mzwidth As Tolerance, intocutoff As LowAbundanceTrimming)
             Me.mzwidth = mzwidth
             Me.intocutoff = intocutoff

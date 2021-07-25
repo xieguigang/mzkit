@@ -323,15 +323,15 @@ Public Class PageMzSearch
 
     Private Function GetIsotopeMS1() As LibraryMatrix
         Return New LibraryMatrix With {
-            .ms2 = isotope.mz _
-                .Select(Function(mzi, i)
+            .ms2 = isotope.data _
+                .Select(Function(mzi)
                             Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = isotope.intensity(i)
+                                .mz = mzi.abs_mass,
+                                .intensity = mzi.abundance
                             }
                         End Function) _
                 .ToArray,
-            .name = isotope.Formula & " [MS1]"
+            .name = $"{isotope.formula} [MS1, {isotope.exactMass.ToString("F4")}]"
         }
     End Function
 
@@ -347,7 +347,7 @@ Public Class PageMzSearch
                 .Where(Function(p) p.pt.Y > 0) _
                 .ToArray,
             .shape = LegendStyles.Diamond,
-            .title = $"{isotope.Formula}'s Gaussian Plot",
+            .title = $"{isotope.formula}'s Gaussian Plot",
             .width = 3
         }
     End Function
@@ -393,12 +393,12 @@ Public Class PageMzSearch
 
         If MS1PlotToolStripMenuItem.Checked Then
             Dim ion As New MGF.Ions With {
-                .Accession = isotope.Formula,
+                .Accession = isotope.formula,
                 .Charge = 1,
                 .Database = "IsotopeDistribution",
-                .Locus = isotope.Formula,
+                .Locus = isotope.formula,
                 .Title = $"{isotope.ToString} [MS1]",
-                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.Formula).ExactMass, 1),
+                .PepMass = New NamedValue(FormulaScanner.ScanFormula(isotope.formula).ExactMass, 1),
                 .Peaks = isotope.data _
                     .Select(Function(i)
                                 Return New ms2 With {
@@ -426,12 +426,10 @@ Public Class PageMzSearch
             Return
         End If
 
-        Dim centroid As LibraryMatrix = GetIsotopeMS1() _
-            .CentroidMode(
-                tolerance:=Tolerance.DeltaMass(0.01),
-                cutoff:=New RelativeIntensityCutoff(0.001)
-            )
+        Dim searchPage As New frmSpectrumSearch
 
-
+        searchPage.Show(MyApplication.host.dockPanel)
+        searchPage.page.loadMs2(isotope.GetMS)
+        searchPage.page.runSearch(isotope)
     End Sub
 End Class

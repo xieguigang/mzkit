@@ -1,55 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::8817682f76bb56b75cb1957734ec4d6d, src\mzkit\Task\MoleculeNetworking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MoleculeNetworking
-    ' 
-    '     Function: alignSearch, CreateMatrix, GetSpectrum, RunMetaDNA, SearchFiles
-    ' 
-    ' /********************************************************************************/
+' Module MoleculeNetworking
+' 
+'     Function: alignSearch, CreateMatrix, GetSpectrum, RunMetaDNA, SearchFiles
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -153,6 +156,74 @@ Public Module MoleculeNetworking
 
             Yield result
         Next
+    End Function
+
+    <Extension>
+    Public Iterator Function SearchFiles(isotopic As IsotopeDistribution,
+                                         files As IEnumerable(Of Raw),
+                                         tolerance As Tolerance,
+                                         dotcutoff As Double,
+                                         progress As Action(Of String),
+                                         reload As Action(Of String, String)) As IEnumerable(Of NamedCollection(Of AlignmentOutput))
+
+        For Each result As NamedCollection(Of AlignmentOutput) In files _
+            .AsParallel _
+            .Select(Function(a) isotopic.alignSearch(a, tolerance, dotcutoff, reload))
+
+            Call progress($"Spectrum search job done! [{result.name}]")
+
+            Yield result
+        Next
+    End Function
+
+    <Extension>
+    Private Function alignSearch(isotopic As IsotopeDistribution,
+                                 file As Raw,
+                                 tolerance As Tolerance,
+                                 dotcutoff As Double,
+                                 reload As Action(Of String, String)) As NamedCollection(Of AlignmentOutput)
+
+        Static pos As MzCalculator() = {"[M]+", "[M+H]+"} _
+            .Select(Function(name)
+                        Return Parser.ParseMzCalculator(name, "+")
+                    End Function) _
+            .ToArray
+        Static neg As MzCalculator() = {"[M]-", "[M-H]-"} _
+            .Select(Function(name)
+                        Return Parser.ParseMzCalculator(name, "-")
+                    End Function) _
+            .ToArray
+
+        Dim alignments As New List(Of AlignmentOutput)
+        Dim cos As New CosAlignment(tolerance, New RelativeIntensityCutoff(0.01))
+        Dim align As AlignmentOutput
+        Dim types As MzCalculator()
+
+        If Not file.isLoaded Then
+            Call file.LoadMzpack(reload)
+        End If
+
+        For Each scan As ScanMS1 In file.GetMs1Scans
+            For Each subject As ScanMS2 In scan.products.SafeQuery
+                If subject.polarity > -1 Then
+                    types = pos
+                Else
+                    types = neg
+                End If
+
+                If Not types.Any(Function(a) stdNum.Abs(a.CalcMZ(isotopic.exactMass) - subject.parentMz) < 0.3) Then
+                    Continue For
+                End If
+
+                align = isotopic.AlignIsotopic(subject.GetMatrix, cos)
+
+                If stdNum.Min(align.forward, align.reverse) >= dotcutoff Then
+                    alignments += align
+                End If
+            Next
+        Next
+
+        Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments, file.source)
     End Function
 
     <Extension>
