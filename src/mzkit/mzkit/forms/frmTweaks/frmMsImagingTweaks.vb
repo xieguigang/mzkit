@@ -93,10 +93,18 @@ Public Class frmMsImagingTweaks
         RibbonEvents.ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
     End Sub
 
-    Private Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
+    Public Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
         checkedMz.Clear()
         Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
+        ' Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
+    End Sub
+
+    Public Sub LoadPinnedIons(ions As IEnumerable(Of ms2))
         Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
+
+        For Each i In ions.ToArray.Centroid(Tolerance.DeltaMass(0.0001), New RelativeIntensityCutoff(0.001)).OrderByDescending(Function(m) m.intensity)
+            Call AddIonMzLayer(i.mz, index:=1)
+        Next
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
@@ -154,8 +162,8 @@ Public Class frmMsImagingTweaks
         ToolStripSpringTextBox1.Text = ""
     End Sub
 
-    Private Sub AddIonMzLayer(mz As Double)
-        Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
+    Private Sub AddIonMzLayer(mz As Double, Optional index As Integer = 0)
+        Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(index).Nodes.Add(mz.ToString("F4"))
         node.Tag = mz
     End Sub
 
