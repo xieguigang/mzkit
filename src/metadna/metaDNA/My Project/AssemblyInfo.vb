@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#if netcore5=0 then
 <Assembly: AssemblyTitle("Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics")>
 <Assembly: AssemblyDescription("Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics")>
 <Assembly: AssemblyCompany("ZhuLab")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.1254.*")>
 <Assembly: AssemblyFileVersion("1.0.*")>
+#end if
