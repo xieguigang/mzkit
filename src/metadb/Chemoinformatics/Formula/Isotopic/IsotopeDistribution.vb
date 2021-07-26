@@ -32,7 +32,7 @@ Namespace Formula.IsotopicPatterns
                 .DoCall(AddressOf IsotopeCount.Normalize) _
                 .ToArray
             Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
-            Dim ys As Double() = (From d In ds Select CDbl(d(2))).ToArray
+            Dim ys As Double() = (From d In ds Select CDbl(d.abundance)).ToArray
             Dim x_min = xs.Min - pad_left
             Dim x_max = xs.Max + pad_right
             Dim plot_xs = Calculator.frange(x_min, x_max, interpolate_grid).ToArray
@@ -126,8 +126,8 @@ Namespace Formula.IsotopicPatterns
                                 .JoinIterates([atom_type].Repeats(i)) _
                                 .ToArray
 
-                            ' isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
-                            isotopeProb = 1
+                            isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
+                            ' isotopeProb = 1
                             isotopeProb = itm(2) * (prob ^ i) * isotopeProb
                             items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
                         Next

@@ -1,4 +1,8 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace Formula.IsotopicPatterns
 
@@ -45,21 +49,25 @@ Namespace Formula.IsotopicPatterns
         End Function
 
         Public Shared Iterator Function Normalize(isotopes As IEnumerable(Of IsotopeCount)) As IEnumerable(Of IsotopeCount)
-            Dim all As IsotopeCount() = isotopes.ToArray
+            Dim all As NamedCollection(Of IsotopeCount)() = isotopes.GroupBy(Function(i) i.abs_mass, offsets:=0.3).ToArray
 
             If all.Length = 0 Then
                 Return
             End If
 
-            Dim maxProb As Double = Aggregate i In all Into Max(i.prob)
+            Dim j As i32 = 0
+            Dim prob As Double() = all.Select(Function(i) i.Sum(Function(a) a.prob)).ToArray
+            Dim maxProb As Double = Aggregate i In prob Into Max(i)
 
-            For Each i As IsotopeCount In all
+            For Each i As NamedCollection(Of IsotopeCount) In all
+                Dim top = i.OrderByDescending(Function(a) a.prob).First
+
                 Yield New IsotopeCount With {
-                    .abs_mass = i.abs_mass,
-                    .abundance = 100 * i.prob / maxProb,
-                    .atoms = i.atoms,
-                    .prob = i.prob,
-                    .nom_mass = i.nom_mass
+                    .abs_mass = top.abs_mass,
+                    .abundance = 100 * prob(j) / maxProb,' logRange.ScaleMapping(log(++j), percentage),
+                    .atoms = top.atoms,
+                    .prob = prob(++j),
+                    .nom_mass = top.nom_mass
                 }
             Next
         End Function
