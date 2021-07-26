@@ -316,17 +316,19 @@ Type 'q()' to quit R.
         End Sub
 
         Public Shared Sub InstallPackageRelease()
-            Dim file As String = $"{App.HOME}/Rstudio/mzkit.zip"
+            For Each fileName As String In {"mzkit.zip", "REnv.zip"}
+                Dim file As String = $"{App.HOME}/Rstudio/{fileName}"
 
-            If Not file.FileExists Then
-                file = $"{App.HOME}/../../src/mzkit/setup/mzkit.zip"
-            End If
+                If Not file.FileExists Then
+                    file = $"{App.HOME}/../../src/mzkit/setup/{fileName}"
+                End If
 
-            If file.FileExists Then
-                Call REngine.Invoke("install.packages", {file}, REngine.globalEnvir)
-            Else
-                host.showStatusMessage("missing R# package release file: mzkit.zip!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            End If
+                If file.FileExists Then
+                    Call REngine.Invoke("install.packages", {file}, REngine.globalEnvir)
+                Else
+                    host.showStatusMessage($"missing R# package release file: '{fileName}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                End If
+            Next
         End Sub
 
         Friend Shared afterLoad As Action
