@@ -1,18 +1,22 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
 
 Namespace Formula.IsotopicPatterns
 
     Public Structure IsotopeCount
 
+        ''' <summary>
+        ''' [0] atom_type
+        ''' </summary>
         Dim atoms As String()
-        Dim nom_mass#
+        ''' <summary>
+        ''' [1] nom_mass
+        ''' </summary>
+        Dim nom_mass As Double()
 
         ''' <summary>
-        ''' probility
+        ''' [2] probility
         ''' </summary>
         Dim prob#
         ''' <summary>
@@ -21,7 +25,7 @@ Namespace Formula.IsotopicPatterns
         Dim abundance As Double
 
         ''' <summary>
-        ''' exact mass
+        ''' [3] exact mass
         ''' </summary>
         Dim abs_mass#
 
@@ -45,7 +49,7 @@ Namespace Formula.IsotopicPatterns
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"[{nom_mass}][{Formula.ToString}, {abs_mass.ToString("F4")}], prob = {prob.ToString("G3")}, abundance = {(abundance * 100).ToString("F2")}"
+            Return $"[{nom_mass.Sum}][{Formula.ToString}, {abs_mass.ToString("F4")}], prob = {prob.ToString("G3")}, abundance = {(abundance * 100).ToString("F2")}"
         End Function
 
         Public Shared Iterator Function Normalize(isotopes As IEnumerable(Of IsotopeCount)) As IEnumerable(Of IsotopeCount)
@@ -72,16 +76,7 @@ Namespace Formula.IsotopicPatterns
             Next
         End Function
 
-        Public Shared Widening Operator CType(itm As (atom_type As String, nom_mass#, prob#, abs_mass#)) As IsotopeCount
-            Return New IsotopeCount With {
-                .abs_mass = itm.abs_mass,
-                .atoms = {itm.atom_type},
-                .nom_mass = itm.nom_mass,
-                .prob = itm.prob
-            }
-        End Operator
-
-        Public Shared Widening Operator CType(itm As (atom_type As String(), nom_mass#, prob#, abs_mass#)) As IsotopeCount
+        Public Shared Widening Operator CType(itm As (atom_type As String(), nom_mass As Double(), prob#, abs_mass#)) As IsotopeCount
             Return New IsotopeCount With {
                 .abs_mass = itm.abs_mass,
                 .atoms = itm.atom_type,

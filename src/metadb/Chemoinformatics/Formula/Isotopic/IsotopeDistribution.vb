@@ -57,7 +57,7 @@ Namespace Formula.IsotopicPatterns
 
             Return New IsotopeDistribution With {
                 .data = ds _
-                    .OrderBy(Function(a) a.nom_mass) _
+                    .OrderBy(Function(a) a.nom_mass.Sum) _
                     .ToArray,
                 .mz = plot_xs,
                 .intensity = plot_ys,
@@ -90,9 +90,9 @@ Namespace Formula.IsotopicPatterns
                 .prob = prob,
                 .nom_mass = .atoms _
                             .Select(Function(a)
-                                        Return topAtoms(a).NumNeutrons
+                                        Return CDbl(topAtoms(a).NumNeutrons)
                                     End Function) _
-                            .Sum
+                            .ToArray
             }
         End Function
 
@@ -115,21 +115,23 @@ Namespace Formula.IsotopicPatterns
 
                     ' Each iso dist Is made up Of atom types, nominal masses,
                     ' the probability And the mass Of all atoms together.
-                    Call lst.Add(([atom_type], [nom_mass], prob, abs_mass))
+                    Call lst.Add(({atom_type}, {nom_mass}, prob, abs_mass))
 
                     Dim items_to_append As New List(Of IsotopeCount)
                     Dim isotopeProb As Double
+                    Dim nom_massList As Double()
 
                     For Each itm As IsotopeCount In lst
                         For Each i As Integer In Range(1, num_atoms + 1)
                             atom_types = itm.atoms _
                                 .JoinIterates([atom_type].Repeats(i)) _
                                 .ToArray
+                            nom_massList = itm.nom_mass.JoinIterates(nom_mass.Repeats(i)).ToArray
 
                             isotopeProb = SpecialFunctions.Binom(num_atoms - i, num_atoms)
                             ' isotopeProb = 1
-                            isotopeProb = itm(2) * (prob ^ i) * isotopeProb
-                            items_to_append.Add((atom_types, itm(1) + [nom_mass] * i, isotopeProb, itm(3) + abs_mass * i))
+                            isotopeProb = itm.prob * (prob ^ i) * isotopeProb
+                            items_to_append.Add((atom_types, nom_massList, isotopeProb, itm.abs_mass + abs_mass * i))
                         Next
                     Next
 
