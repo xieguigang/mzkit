@@ -49,7 +49,7 @@ Namespace Formula.IsotopicPatterns
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"[{nom_mass.Sum}][{Formula.ToString}, {abs_mass.ToString("F4")}], prob = {prob.ToString("G3")}, abundance = {(abundance * 100).ToString("F2")}"
+            Return $"[{nom_mass.Sum}][{Formula.ToString}, {abs_mass.ToString("F4")}], prob = {prob.ToString("G3")}, abundance = {(abundance).ToString("F2")}"
         End Function
 
         Public Shared Iterator Function Normalize(isotopes As IEnumerable(Of IsotopeCount)) As IEnumerable(Of IsotopeCount)
