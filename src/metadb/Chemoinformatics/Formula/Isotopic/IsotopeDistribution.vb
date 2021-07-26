@@ -21,51 +21,6 @@ Namespace Formula.IsotopicPatterns
             End Get
         End Property
 
-        Public Shared Function GenerateDistribution(formula As Formula,
-                                                    Optional prob_threshold As Double = 0,
-                                                    Optional fwhm As Double = 0.1,
-                                                    Optional pad_left As Double = 3,
-                                                    Optional pad_right As Double = 3,
-                                                    Optional interpolate_grid As Double = 0.1) As IsotopeDistribution
-
-            Dim ds As IsotopeCount() = Distribution(formula, prob_threshold:=prob_threshold) _
-                .DoCall(AddressOf IsotopeCount.Normalize) _
-                .ToArray
-            Dim xs As Double() = (From d In ds Select CDbl(d(3))).ToArray
-            Dim ys As Double() = (From d In ds Select CDbl(d.abundance)).ToArray
-            Dim x_min = xs.Min - pad_left
-            Dim x_max = xs.Max + pad_right
-            Dim plot_xs = Calculator.frange(x_min, x_max, interpolate_grid).ToArray
-            Dim plot_ys = plot_xs.Select(Function(_any) 0.0).ToArray
-
-            For Each i As SeqValue(Of Double) In xs.SeqIterator
-                Dim peak_x = i.value
-                Dim b = peak_x
-                Dim a = ys(i)
-                Dim gauss_ys = Calculator.gaussian(plot_xs, a, b, fwhm)
-
-                For Each j In gauss_ys.SeqIterator
-                    plot_ys(j) += j.value
-                Next
-            Next
-
-            Dim ymax As Double = plot_ys.Max
-
-            plot_ys = plot_ys _
-                .Select(Function(y) y / ymax * 100) _
-                .ToArray
-
-            Return New IsotopeDistribution With {
-                .data = ds _
-                    .OrderBy(Function(a) a.nom_mass.Sum) _
-                    .ToArray,
-                .mz = plot_xs,
-                .intensity = plot_ys,
-                .formula = formula.ToString,
-                .exactMass = formula.ExactMass
-            }
-        End Function
-
         Public Shared Function Distribution(formula As Formula, Optional prob_threshold As Double = 0.0000000001) As IsotopeCount()
             Dim lst As New List(Of IsotopeCount)
             Dim atom_types As String()
