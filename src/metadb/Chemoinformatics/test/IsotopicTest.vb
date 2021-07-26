@@ -16,7 +16,7 @@ Public Module IsotopicTest
     ' 125    0.04  
 
     Sub Main()
-        Dim formula = FormulaScanner.ScanFormula("CHCl3")
+        Dim formula = FormulaScanner.ScanFormula("C10H16N5O13P3")
         Dim dist = IsotopicPatterns.IsotopeDistribution.GenerateDistribution(formula)
 
         For Each item In dist.data
