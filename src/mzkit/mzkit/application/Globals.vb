@@ -132,7 +132,7 @@ Module Globals
 
     <Extension>
     Public Iterator Function FindRaws(explorer As TreeView, sourceName As String) As IEnumerable(Of Raw)
-        For Each node As TreeNode In explorer.Nodes
+        For Each node As TreeNode In explorer.Nodes.Item(0).Nodes
             Dim raw As Raw = DirectCast(node.Tag, Raw)
 
             If raw.source.FileName = sourceName Then

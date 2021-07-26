@@ -258,8 +258,8 @@ Module RibbonEvents
             Else
                 Dim raw As Raw() = Globals.FindRaws(WindowModules.fileExplorer.treeView1, label).ToArray
 
-                If raw Is Nothing Then
-                    MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If raw.IsNullOrEmpty Then
+                    MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Call MyApplication.host.mzkitTool.TIC(raw)
                 End If
