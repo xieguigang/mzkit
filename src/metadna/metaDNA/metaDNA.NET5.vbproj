@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BioNovoGene.BioDeep.MetaDNA</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>BioNovoGene.BioDeep.MetaDNA</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+</Project>
