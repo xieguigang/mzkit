@@ -107,11 +107,17 @@ namespace RibbonLib.Controls
             public const uint cmdTabMSIPage = 121;
             public const uint cmdGroupMSIFile = 122;
             public const uint cmdButtonOpenMSIRaw = 119;
-            public const uint cmdButtonExportMSIMzpack = 127;
             public const uint cmdTabMSISnapshot = 126;
             public const uint cmdButtonMSITotalIon = 123;
             public const uint cmdButtonMSIBasePeakIon = 124;
             public const uint cmdButtonMSIAverageIon = 125;
+            public const uint cmdTabMSIFile = 129;
+            public const uint cmdButtonMSIRowScans = 128;
+            public const uint cmdButtonExportMSIMzpack = 127;
+            public const uint cmdGroupKEGG = 133;
+            public const uint cmdTabKEGG = 132;
+            public const uint cmdTabGroupKEGG = 134;
+            public const uint cmdButtonViewKEGGNetwork = 131;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -234,11 +240,17 @@ namespace RibbonLib.Controls
         public RibbonTab TabMSIPage { get; private set; }
         public RibbonGroup GroupMSIFile { get; private set; }
         public RibbonButton ButtonOpenMSIRaw { get; private set; }
-        public RibbonButton ButtonExportMSIMzpack { get; private set; }
         public RibbonGroup TabMSISnapshot { get; private set; }
         public RibbonButton ButtonMSITotalIon { get; private set; }
         public RibbonButton ButtonMSIBasePeakIon { get; private set; }
         public RibbonButton ButtonMSIAverageIon { get; private set; }
+        public RibbonGroup TabMSIFile { get; private set; }
+        public RibbonButton ButtonMSIRowScans { get; private set; }
+        public RibbonButton ButtonExportMSIMzpack { get; private set; }
+        public RibbonTabGroup GroupKEGG { get; private set; }
+        public RibbonTab TabKEGG { get; private set; }
+        public RibbonGroup TabGroupKEGG { get; private set; }
+        public RibbonButton ButtonViewKEGGNetwork { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -359,11 +371,17 @@ namespace RibbonLib.Controls
             TabMSIPage = new RibbonTab(ribbon, Cmd.cmdTabMSIPage);
             GroupMSIFile = new RibbonGroup(ribbon, Cmd.cmdGroupMSIFile);
             ButtonOpenMSIRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenMSIRaw);
-            ButtonExportMSIMzpack = new RibbonButton(ribbon, Cmd.cmdButtonExportMSIMzpack);
             TabMSISnapshot = new RibbonGroup(ribbon, Cmd.cmdTabMSISnapshot);
             ButtonMSITotalIon = new RibbonButton(ribbon, Cmd.cmdButtonMSITotalIon);
             ButtonMSIBasePeakIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIBasePeakIon);
             ButtonMSIAverageIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIAverageIon);
+            TabMSIFile = new RibbonGroup(ribbon, Cmd.cmdTabMSIFile);
+            ButtonMSIRowScans = new RibbonButton(ribbon, Cmd.cmdButtonMSIRowScans);
+            ButtonExportMSIMzpack = new RibbonButton(ribbon, Cmd.cmdButtonExportMSIMzpack);
+            GroupKEGG = new RibbonTabGroup(ribbon, Cmd.cmdGroupKEGG);
+            TabKEGG = new RibbonTab(ribbon, Cmd.cmdTabKEGG);
+            TabGroupKEGG = new RibbonGroup(ribbon, Cmd.cmdTabGroupKEGG);
+            ButtonViewKEGGNetwork = new RibbonButton(ribbon, Cmd.cmdButtonViewKEGGNetwork);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);

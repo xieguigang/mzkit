@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::4fc391da6516ec90ba9dec1ba1e3f357, src\mzkit\Task\Imports\Raw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Raw
-    ' 
-    '     Properties: cache, cacheFileExists, isLoaded, numOfScan1, numOfScan2
-    '                 rtmax, rtmin, source
-    ' 
-    '     Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetMs1Scans, GetMs2Scans
-    '               GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
-    ' 
-    '     Sub: SaveAs
-    ' 
-    ' /********************************************************************************/
+' Class Raw
+' 
+'     Properties: cache, cacheFileExists, isLoaded, numOfScan1, numOfScan2
+'                 rtmax, rtmin, source
+' 
+'     Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetMs1Scans, GetMs2Scans
+'               GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+' 
+'     Sub: SaveAs
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Windows.Forms
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -101,22 +102,33 @@ Public Class Raw
         Return loaded.Thumbnail
     End Function
 
-    Public Function LoadMzpack() As Raw
+    Public Function LoadMzpack(reload As Action(Of String, String)) As Raw
         If isLoaded Then
             Return Me
         End If
 
-        Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            loaded = mzPack.ReadAll(file)
+mzPackReader:
+        Try
+            Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                loaded = mzPack.ReadAll(file)
 
-            ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
-            ms2 = loaded.MS _
-                .Select(Function(m1) m1.products) _
-                .IteratesALL _
-                .ToDictionary(Function(m2)
-                                  Return m2.scan_id
-                              End Function)
-        End Using
+                ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
+                ms2 = loaded.MS _
+                    .Select(Function(m1) m1.products) _
+                    .IteratesALL _
+                    .ToDictionary(Function(m2)
+                                      Return m2.scan_id
+                                  End Function)
+            End Using
+        Catch ex As Exception
+            Call ($"It seems that mzPack cache file of {source} is damaged,{vbCrLf} mzkit will going to reload of the source file.").PrintException
+
+            SyncLock reload
+                Call reload(source, cache)
+            End SyncLock
+
+            GoTo mzPackReader
+        End Try
 
         Return Me
     End Function

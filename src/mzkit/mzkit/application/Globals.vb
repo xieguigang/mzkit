@@ -316,7 +316,7 @@ Module Globals
         rawFileNode.Nodes.Clear()
 
         If Not raw.isLoaded Then
-            Call raw.LoadMzpack()
+            Call raw.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache))
         End If
 
         For Each scan As ScanMS1 In raw.GetMs1Scans.Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax)

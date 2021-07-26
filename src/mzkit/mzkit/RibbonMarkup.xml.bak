@@ -1525,6 +1525,17 @@
         <Image MinDPI="192">Res/pin-icon.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonViewKEGGNetwork" Id="131" LabelTitle="KEGG Network" LabelDescription="View KEGG Pathway Network" TooltipTitle="KEGG Network" TooltipDescription="View KEGG Pathway Network">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/applications-utilities.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/applications-utilities.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabKEGG" Id="132" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
+    <Command Name="cmdGroupKEGG" Id="133" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
+    <Command Name="cmdTabGroupKEGG" Id="134" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1717,6 +1728,13 @@
             <Group CommandName="cmdTabMSIFile" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonMSIRowScans" />
               <Button CommandName="cmdButtonExportMSIMzpack" />
+            </Group>
+          </Tab>
+        </TabGroup>
+        <TabGroup CommandName="cmdGroupKEGG">
+          <Tab CommandName="cmdTabKEGG">
+            <Group CommandName="cmdTabGroupKEGG" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonViewKEGGNetwork" />
             </Group>
           </Tab>
         </TabGroup>

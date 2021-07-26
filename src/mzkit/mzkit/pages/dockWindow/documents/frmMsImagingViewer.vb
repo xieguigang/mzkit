@@ -178,8 +178,6 @@ Public Class frmMsImagingViewer
     End Sub
 
     Public Sub LoadRender(render As Drawer, filePath As String)
-        Dim checks As Win7StyleTreeView = WindowModules.msImageParameters.Win7StyleTreeView1
-
         If Not Me.render Is Nothing Then
             Try
                 Call Me.render.Dispose()
@@ -196,7 +194,7 @@ Public Class frmMsImagingViewer
 
         WindowModules.msImageParameters.viewer = Me
         WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
-        WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+        WindowModules.msImageParameters.ClearIons()
     End Sub
 
     ''' <summary>
@@ -568,7 +566,14 @@ Public Class frmMsImagingViewer
             If pinedPixel.ms2.Length = 0 Then
                 pinedPixel = Nothing
                 MyApplication.host.showStatusMessage("There is no MS data in current pixel?", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Else
+                Call WindowModules.msImageParameters.LoadPinnedIons(pinedPixel.ms2)
             End If
         End If
+    End Sub
+
+    Private Sub ClearPinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearPinToolStripMenuItem.Click
+        pinedPixel = Nothing
+
     End Sub
 End Class

@@ -96,7 +96,7 @@ Public Class PageMzkitTools
         Dim fileExplorer = WindowModules.fileExplorer
 
         If options = DialogResult.OK Then
-            Dim newRaw As Raw = fileExplorer.getRawCache(raw.source)
+            Dim newRaw As Raw = frmFileExplorer.getRawCache(raw.source)
 
             raw.cache = newRaw.cache
 
@@ -217,7 +217,7 @@ Public Class PageMzkitTools
     Friend Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
-            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
+            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache), prop)
 
             showMatrix(scanData.ms2, scanId)
 

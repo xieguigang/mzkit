@@ -12,7 +12,8 @@ Namespace Formula.IsotopicPatterns
         Public Property data As IsotopeCount()
         Public Property mz As Double()
         Public Property intensity As Double()
-        Public Property Formula As String
+        Public Property formula As String
+        Public Property exactMass As Double
 
         Public ReadOnly Property Size As Integer
             Get
@@ -21,7 +22,7 @@ Namespace Formula.IsotopicPatterns
         End Property
 
         Public Shared Function GenerateDistribution(formula As Formula,
-                                                    Optional prob_threshold As Double = 0.0000000001,
+                                                    Optional prob_threshold As Double = 0,
                                                     Optional fwhm As Double = 0.1,
                                                     Optional pad_left As Double = 3,
                                                     Optional pad_right As Double = 3,
@@ -48,13 +49,20 @@ Namespace Formula.IsotopicPatterns
                 Next
             Next
 
+            Dim ymax As Double = plot_ys.Max
+
+            plot_ys = plot_ys _
+                .Select(Function(y) y / ymax * 100) _
+                .ToArray
+
             Return New IsotopeDistribution With {
                 .data = ds _
                     .OrderBy(Function(a) a.nom_mass) _
                     .ToArray,
                 .mz = plot_xs,
                 .intensity = plot_ys,
-                .Formula = formula.ToString
+                .formula = formula.ToString,
+                .exactMass = formula.ExactMass
             }
         End Function
 
@@ -126,16 +134,14 @@ Namespace Formula.IsotopicPatterns
                     Next
 
                     ' prevent addition Of very unlikely isotope distributions
-                    items_to_append = items_to_append _
-                        .Where(Function(itm) itm(2) >= prob_threshold) _
-                        .AsList
-                    ' prevent duplicates
-                    lst = lst + items_to_append.Where(Function(itm) lst.IndexOf(itm) = -1)
+                    ' and prevent duplicates
+                    lst = lst + items_to_append _
+                        .Where(Function(itm)
+                                   Return itm(2) >= prob_threshold AndAlso
+                                       lst.IndexOf(itm) = -1 AndAlso
+                                       ContainsNumAtomsOfType(itm(0), num_atoms, atom_type)
+                               End Function)
                 Next
-
-                lst = (From itm As IsotopeCount
-                       In lst
-                       Where ContainsNumAtomsOfType(itm(0), num_atoms, atom_type)).AsList
             Next
 
             Return FilterAccordingToSumFormula(lst, formula).ToArray

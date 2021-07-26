@@ -63,12 +63,8 @@ Public Class frmMsImagingTweaks
     Friend viewer As frmMsImagingViewer
 
     Public Iterator Function GetSelectedIons() As IEnumerable(Of Double)
-        If checkedMz.Count > 0 Then
-            For Each node In checkedMz
-                Yield DirectCast(node.Tag, Double)
-            Next
-        Else
-            If Not Win7StyleTreeView1.SelectedNode Is Nothing Then
+        If Not Win7StyleTreeView1.SelectedNode Is Nothing Then
+            If Not Win7StyleTreeView1.SelectedNode.Checked Then
                 If Win7StyleTreeView1.SelectedNode.Tag Is Nothing Then
                     For Each node As TreeNode In Win7StyleTreeView1.SelectedNode.Nodes
                         Yield DirectCast(node.Tag, Double)
@@ -76,23 +72,46 @@ Public Class frmMsImagingTweaks
                 Else
                     Yield DirectCast(Win7StyleTreeView1.SelectedNode.Tag, Double)
                 End If
+            Else
+                GoTo UseCheckedList
+            End If
+        Else
+UseCheckedList:
+            If checkedMz.Count > 0 Then
+                For Each node In checkedMz
+                    Yield DirectCast(node.Tag, Double)
+                Next
+            Else
+
             End If
         End If
     End Function
+
+    Public Const Ion_Layers As String = "Ion Layers"
+    Public Const Pinned_Pixels As String = "Pinned Pixels"
 
     Private Sub frmMsImagingTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "MsImage Parameters"
 
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
 
-        Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Win7StyleTreeView1.Nodes.Add(Ion_Layers)
+        Win7StyleTreeView1.Nodes.Add(Pinned_Pixels)
         RibbonEvents.ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
     End Sub
 
-    Private Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
-        Win7StyleTreeView1.Nodes.Clear()
+    Public Sub ClearIons() Handles ClearSelectionToolStripMenuItem.Click, ToolStripButton3.Click
         checkedMz.Clear()
-        Win7StyleTreeView1.Nodes.Add("Ion Layers")
+        Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
+        ' Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
+    End Sub
+
+    Public Sub LoadPinnedIons(ions As IEnumerable(Of ms2))
+        Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
+
+        For Each i In ions.ToArray.Centroid(Tolerance.DeltaMass(0.0001), New RelativeIntensityCutoff(0.001)).OrderByDescending(Function(m) m.intensity)
+            Call AddIonMzLayer(i.mz, index:=1)
+        Next
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
@@ -150,13 +169,8 @@ Public Class frmMsImagingTweaks
         ToolStripSpringTextBox1.Text = ""
     End Sub
 
-    Private Sub AddIonMzLayer(mz As Double)
-        If Win7StyleTreeView1.Nodes.Count = 0 Then
-            Win7StyleTreeView1.Nodes.Add("Ion Layers")
-        End If
-
-        Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add(mz)
-
+    Private Sub AddIonMzLayer(mz As Double, Optional index As Integer = 0)
+        Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(index).Nodes.Add(mz.ToString("F4"))
         node.Tag = mz
     End Sub
 
@@ -167,6 +181,11 @@ Public Class frmMsImagingTweaks
     ''' <param name="e"></param>
     Private Sub RGBLayers(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
         Dim mz3 As Double() = GetSelectedIons.Take(3).ToArray
+
+        If mz3.Length = 0 Then
+            Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)
         Dim g As Double = mz3.ElementAtOrDefault(1, [default]:=-1)
         Dim b As Double = mz3.ElementAtOrDefault(2, [default]:=-1)
@@ -206,7 +225,7 @@ Public Class frmMsImagingTweaks
                 Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
             End If
 
-            Win7StyleTreeView1.Nodes.Clear()
+            Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
 
             For Each mz As Double In pixels _
                 .GroupBy(Function(p) p.mz, cdf.GetMzTolerance) _
@@ -274,7 +293,7 @@ Public Class frmMsImagingTweaks
 
     Private Sub loadBasePeakMz()
         Dim data As New List(Of ms2)
-        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
+        Dim layers As TreeNode = Win7StyleTreeView1.Nodes.Item(0)
         Dim pointTagged As New List(Of (X!, Y!, mz As ms2))
 
         For Each px As PixelScan In viewer.render.pixelReader.AllPixels

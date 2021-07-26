@@ -111,6 +111,10 @@ Namespace RibbonLib.Controls
             Public Const cmdTabMSIFile As UInteger = 129
             Public Const cmdButtonMSIRowScans As UInteger = 128
             Public Const cmdButtonExportMSIMzpack As UInteger = 127
+            Public Const cmdGroupKEGG As UInteger = 133
+            Public Const cmdTabKEGG As UInteger = 132
+            Public Const cmdTabGroupKEGG As UInteger = 134
+            Public Const cmdButtonViewKEGGNetwork As UInteger = 131
             Public Const cmdTabMain As UInteger = 1011
             Public Const cmdGroupFileActions As UInteger = 1045
             Public Const cmdTabGroupWindowTools As UInteger = 1023
@@ -720,6 +724,30 @@ Namespace RibbonLib.Controls
                 Return _ButtonExportMSIMzpack
             End Get
         End Property
+        Private _GroupKEGG As RibbonTabGroup
+        Public ReadOnly Property GroupKEGG As RibbonTabGroup
+            Get
+                Return _GroupKEGG
+            End Get
+        End Property
+        Private _TabKEGG As RibbonTab
+        Public ReadOnly Property TabKEGG As RibbonTab
+            Get
+                Return _TabKEGG
+            End Get
+        End Property
+        Private _TabGroupKEGG As RibbonGroup
+        Public ReadOnly Property TabGroupKEGG As RibbonGroup
+            Get
+                Return _TabGroupKEGG
+            End Get
+        End Property
+        Private _ButtonViewKEGGNetwork As RibbonButton
+        Public ReadOnly Property ButtonViewKEGGNetwork As RibbonButton
+            Get
+                Return _ButtonViewKEGGNetwork
+            End Get
+        End Property
         Private _TabMain As RibbonTab
         Public ReadOnly Property TabMain As RibbonTab
             Get
@@ -977,6 +1005,10 @@ Namespace RibbonLib.Controls
             _TabMSIFile = New RibbonGroup(_ribbon, Cmd.cmdTabMSIFile)
             _ButtonMSIRowScans = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRowScans)
             _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
+            _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
+            _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
+            _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)
+            _ButtonViewKEGGNetwork = New RibbonButton(_ribbon, Cmd.cmdButtonViewKEGGNetwork)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupFileActions = New RibbonGroup(_ribbon, Cmd.cmdGroupFileActions)
             _TabGroupWindowTools = New RibbonGroup(_ribbon, Cmd.cmdTabGroupWindowTools)

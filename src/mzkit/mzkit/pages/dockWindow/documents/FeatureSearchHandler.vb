@@ -132,7 +132,7 @@ Module FeatureSearchHandler
         display.Show(MyApplication.host.dockPanel)
 
         For Each file As Raw In raw
-            Dim result = file.LoadMzpack.GetMs2Scans.Where(Function(a) tolerance(a.parentMz, mz)).ToArray
+            Dim result = file.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)).GetMs2Scans.Where(Function(a) tolerance(a.parentMz, mz)).ToArray
 
             display.AddFileMatch(file.source, mz, result)
         Next

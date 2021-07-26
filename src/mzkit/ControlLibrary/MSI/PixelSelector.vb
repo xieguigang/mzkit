@@ -181,7 +181,12 @@ Public Class PixelSelector
             rangeEnd = New Point(xpoint, ypoint)
             drawing = False
 
-            RaiseEvent SelectPixelRegion(rangeStart.X, rangeStart.Y, rangeEnd.X, rangeEnd.Y)
+            RaiseEvent SelectPixelRegion(
+                x1:=If(rangeStart.X < 1, 1, rangeStart.X),
+                y1:=If(rangeStart.Y < 1, 1, rangeStart.Y),
+                x2:=If(rangeEnd.X < 1, 1, rangeEnd.X),
+                y2:=If(rangeEnd.Y < 1, 1, rangeEnd.Y)
+            )
         End If
     End Sub
 

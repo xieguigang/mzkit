@@ -9,7 +9,7 @@
 #'    linear reference raw data files, do sample quantitative evaluation
 #'    and QC assertion if the QC file is exists in your sample files.
 
-require(mzkit);
+# require(mzkit);
 
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";

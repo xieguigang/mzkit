@@ -122,9 +122,14 @@ Module TaskScript
         Call infer.GetJson.SaveTo($"{outputdir}/infer_network.json")
     End Sub
 
+    ''' <summary>
+    ''' convert any kind of raw data file as mzPack
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="cacheFile"></param>
     <ExportAPI("cache.mzpack")>
     Public Sub CreateMzpack(raw As String, cacheFile As String)
-        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, AddressOf RunSlavePipeline.SendMessage)
+        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, "ppm:20", AddressOf RunSlavePipeline.SendMessage)
 
         If Not mzpack.MS.IsNullOrEmpty Then
             RunSlavePipeline.SendMessage("Create snapshot...")
@@ -180,13 +185,17 @@ Module TaskScript
                     Case "raw"
 
                         For Each path As String In files
-                            Dim raw As New MSFileReader(path)
+                            If path.FileExists Then
+                                Dim raw As New MSFileReader(path)
 
-                            scans.Add(raw.ThermoReader.GetNumScans)
-                            maxrt.Add(raw.ScanTimeMax * 60)
-                            raw.Dispose()
+                                scans.Add(raw.ThermoReader.GetNumScans)
+                                maxrt.Add(raw.ScanTimeMax * 60)
+                                raw.Dispose()
 
-                            Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                                Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                            Else
+                                Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
+                            End If
                         Next
 
                         Call combineMzPack(
