@@ -56,6 +56,12 @@ Namespace mzData.mzWebCache
         Public Property mz As Double()
         Public Property into As Double()
 
+        Public ReadOnly Property size As Integer
+            Get
+                Return mz.Length
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return scan_id
         End Function
