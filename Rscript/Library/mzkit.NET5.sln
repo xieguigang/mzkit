@@ -77,7 +77,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "linear-netcore5", "..\..\..
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "odes-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj", "{E9C34925-B7B5-42AC-8AAA-8245DED4DB0F}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit.quantify-netcore5", "mzkit.quantify\mzkit.quantify-netcore5.vbproj", "{825DE123-936A-44D9-941D-26EF7BBBF14A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "quantify.NET5", "mzkit.quantify\quantify.NET5.vbproj", "{825DE123-936A-44D9-941D-26EF7BBBF14A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graphics", "graphics", "{A0BD071C-02D4-4D7A-94D0-06855CEB2478}"
 EndProject
