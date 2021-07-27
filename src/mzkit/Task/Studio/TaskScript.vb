@@ -130,7 +130,7 @@ Module TaskScript
     ''' <param name="cacheFile"></param>
     <ExportAPI("cache.mzpack")>
     Public Sub CreateMzpack(raw As String, cacheFile As String)
-        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, "ppm:20", AddressOf RunSlavePipeline.SendMessage)
+        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, "ppm:20", , AddressOf RunSlavePipeline.SendMessage)
 
         If Not mzpack.MS.IsNullOrEmpty Then
             RunSlavePipeline.SendMessage("Create snapshot...")

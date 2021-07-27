@@ -304,7 +304,7 @@ Public Class PageMzSearch
         Else
             isotope = FormulaScanner _
                 .ScanFormula(formulaStr) _
-                .DoCall(AddressOf IsotopeDistribution.GenerateDistribution)
+                .DoCall(AddressOf IsotopicPatterns.Calculator.GenerateDistribution)
         End If
 
         Call DataGridView2.Rows.Clear()
