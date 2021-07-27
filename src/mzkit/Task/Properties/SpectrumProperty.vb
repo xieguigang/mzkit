@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e5885f6472a268442804fe24c9582c9, src\mzkit\Task\Properties\SpectrumProperty.vb"
+﻿#Region "Microsoft.VisualBasic::708d60844086e0cd712b39baf440aa36, src\mzkit\Task\Properties\SpectrumProperty.vb"
 
     ' Author:
     ' 

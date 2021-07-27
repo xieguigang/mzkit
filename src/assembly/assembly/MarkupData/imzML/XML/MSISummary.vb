@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6957ad3de38926d15bec25a0bf3afcc2, src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::1528bf312888b3eac321e9cbc62c463b, src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 

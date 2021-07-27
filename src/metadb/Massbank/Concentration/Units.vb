@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d7aae5e3ec9f869ffcfb7706bbbdf9, src\metadb\Massbank\Concentration\Units.vb"
+﻿#Region "Microsoft.VisualBasic::6014c098c1f4fc70d51d2f4c2495db28, src\metadb\Massbank\Concentration\Units.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
@@ -148,4 +147,3 @@ Public Enum Units As Integer
     <Description("grams/tonne")> grams_tonne
 
 End Enum
-

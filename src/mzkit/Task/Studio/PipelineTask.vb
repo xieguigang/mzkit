@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b000aed540383f2b8128100fb0f4df82, src\mzkit\Task\Studio\PipelineTask.vb"
+﻿#Region "Microsoft.VisualBasic::71e54e4098201e39ceb0f3657185dbe3, src\mzkit\Task\Studio\PipelineTask.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,9 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 通过Rscript的命令行来执行比较耗时的后台任务
 ''' </summary>
 Public Class PipelineTask
 
 End Class
-

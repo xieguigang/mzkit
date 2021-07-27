@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec06d89bc55c33f5ca7c42e75cad2633, src\mzkit\Task\Studio\RscriptPipelineTask.vb"
+﻿#Region "Microsoft.VisualBasic::47e24edbd395a48cfb2958ae19c90c87, src\mzkit\Task\Studio\RscriptPipelineTask.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Public Class RscriptPipelineTask
     End Function
 
 End Class
-

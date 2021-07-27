@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cc2e0123425455589937995c78ff831, Rscript\Library\mzkit\math\TestFormulaSymbolLang.vb"
+﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, Rscript\Library\mzkit\math\TestFormulaSymbolLang.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Public Class TestFormulaSymbolLang : Implements ITestSymbolTarget
         Return True
     End Function
 End Class
-

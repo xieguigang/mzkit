@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97da3d74f6a7b3d9916bb129f48148d2, src\mzkit\ControlLibrary\MSSelector.vb"
+﻿#Region "Microsoft.VisualBasic::543fffe7147c964e6ade4704ea80f310, src\mzkit\ControlLibrary\MSSelector.vb"
 
     ' Author:
     ' 
@@ -180,4 +180,3 @@ Public Class MSSelector
         End If
     End Sub
 End Class
-

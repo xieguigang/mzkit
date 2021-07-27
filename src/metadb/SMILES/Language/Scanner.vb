@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::793f9d185967ffa1af07cb20386f3806, src\metadb\SMILES\Language\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::d962eee4634c16edc6e7e6659693bfcf, src\metadb\SMILES\Language\Scanner.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Public Class Scanner
         End Select
     End Function
 End Class
-

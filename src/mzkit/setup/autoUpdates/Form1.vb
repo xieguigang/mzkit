@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6f7675dab6b4d4c775ddc1c66ae593d, src\mzkit\setup\autoUpdates\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::5698255c1e1bf5639db77de980f1fc4e, src\mzkit\setup\autoUpdates\Form1.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class Form1
 
 End Class
-

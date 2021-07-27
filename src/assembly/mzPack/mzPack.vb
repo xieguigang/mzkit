@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85d1a10a767a51a58360904cf78f7e32, src\assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::a572d3757e2f7fe40f36d4dc562c566b, src\assembly\mzPack\mzPack.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,10 @@
 
     ' Class mzPack
     ' 
-    '     Properties: Chromatogram, MS, Scanners, Thumbnail
+    '     Properties: Chromatogram, MS, Scanners, source, Thumbnail
     ' 
-    '     Function: GetAllScanMs1, GetMs2Peaks, ReadAll, Write
+    '     Function: GetAllParentMz, GetAllScanMs1, GetMs2Peaks, Read, ReadAll
+    '               Write
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ff8a3f04e91427ca66c8fa3247d740, src\metadb\KNApSAcK\Web\Types.vb"
+﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, src\metadb\KNApSAcK\Web\Types.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Enum Types
     INCHI_CD
     SMILES
 End Enum
-

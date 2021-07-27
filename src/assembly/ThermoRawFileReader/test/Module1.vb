@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7257d0c2e38870a72150903a829ef4ce, src\assembly\ThermoRawFileReader\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ae899b272ef0ae9210a447bdcc6231b2, src\assembly\ThermoRawFileReader\test\Module1.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Module Module1
     End Sub
 
 End Module
-

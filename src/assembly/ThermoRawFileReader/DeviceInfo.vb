@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d00df184dab96bb06117b3184ffc2920, src\assembly\ThermoRawFileReader\DeviceInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d2aea20c6105b184bfce093374c18774, src\assembly\ThermoRawFileReader\DeviceInfo.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ Public Class DeviceInfo
         Return String.Format("{0} device", DeviceType.ToString())
     End Function
 End Class
-

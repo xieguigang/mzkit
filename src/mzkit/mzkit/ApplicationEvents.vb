@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4767d5aff043d07e0dfd1cb6587ca2c9, src\mzkit\mzkit\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::ace2505bcc568d6527f7978a6436d9be, src\mzkit\mzkit\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Namespace My
     Partial Friend Class MyApplication
     End Class
 End Namespace
-

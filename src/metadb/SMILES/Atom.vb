@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ec9f15ae5907344ae10430208b0a794, src\metadb\SMILES\Atom.vb"
+﻿#Region "Microsoft.VisualBasic::c00ccb7c395432c2e8d6d9ae4ddbf318, src\metadb\SMILES\Atom.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Public Class Atom
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b3e8583d4e7ffcd08d15e46f70e2617, src\metadb\SMILES\ParseChain.vb"
+﻿#Region "Microsoft.VisualBasic::020103f4c362555cc68d1fa690207686, src\metadb\SMILES\ParseChain.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Class ParseChain
     End Function
 
 End Class
-

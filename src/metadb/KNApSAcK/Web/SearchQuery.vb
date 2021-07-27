@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eae4d9504214a7fab018a51b981cb8d8, src\metadb\KNApSAcK\Web\SearchQuery.vb"
+﻿#Region "Microsoft.VisualBasic::afdaa7decf09a53352b879f6038a6401, src\metadb\KNApSAcK\Web\SearchQuery.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Public Class SearchQuery : Inherits WebQuery(Of QueryInput)
         Return sprintf(My.Resources.knapsack_search, q.type.Description, q.word.UrlEncode)
     End Function
 End Class
-

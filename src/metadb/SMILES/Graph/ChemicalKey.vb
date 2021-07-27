@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00da8ef130a7dc1959858edb694877ee, src\metadb\SMILES\Graph\ChemicalKey.vb"
+﻿#Region "Microsoft.VisualBasic::aac64ac5731b624d86d8aa24375f6e9c, src\metadb\SMILES\Graph\ChemicalKey.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
     End Function
 
 End Class
-

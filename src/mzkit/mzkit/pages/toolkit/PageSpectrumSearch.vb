@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::3b7fbd2b762b940cd989b28a22da1a3c, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::68e3c9c8a1d99bf7460eb21c8c765748, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class PageSpectrumSearch
-' 
-'     Function: getSpectrumInput
-' 
-'     Sub: Button1_Click, DataGridView1_CellEndEdit, loadFromMgfIon, loadMs2, PageSpectrumSearch_Load
-'          PasteMgfTextToolStripMenuItem_Click, refreshPreviews, runSearch, SavePreviewPlotToolStripMenuItem_Click, TabPage1_KeyDown
-'          ViewAlignmentToolStripMenuItem_Click
-' 
-' /********************************************************************************/
+    ' Class PageSpectrumSearch
+    ' 
+    '     Function: getSpectrumInput
+    ' 
+    '     Sub: Button1_Click, DataGridView1_CellEndEdit, loadFromMgfIon, loadMs2, PageSpectrumSearch_Load
+    '          PasteMgfTextToolStripMenuItem_Click, refreshPreviews, runSearch, SavePreviewPlotToolStripMenuItem_Click, SearchThread
+    '          TabPage1_KeyDown, ViewAlignmentToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

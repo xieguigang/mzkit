@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::694e5d6371254ebb2ce5bb7d2b71971a, src\visualize\MsImaging\Reader\IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::a6bbe3d66cfc99aa4253904c0c37788c, src\visualize\MsImaging\Reader\IndexReader.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache

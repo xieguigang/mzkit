@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8ccd6b9f77e1e73d43db4b7f7fe2cc8, src\assembly\mzPackExtensions\XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::efc19f6339732af855f2983e2720c8dd, src\assembly\mzPackExtensions\XRawStream.vb"
 
     ' Author:
     ' 
@@ -154,4 +154,3 @@ Public Class XRawStream
     End Sub
 
 End Class
-

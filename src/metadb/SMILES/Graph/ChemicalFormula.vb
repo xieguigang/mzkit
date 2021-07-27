@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f45ea120e8fc8f67b0e684ce2d7e45c2, src\metadb\SMILES\Graph\ChemicalFormula.vb"
+﻿#Region "Microsoft.VisualBasic::9c8107807060fd9760ff1057e9103e4c, src\metadb\SMILES\Graph\ChemicalFormula.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Return GetFormula.ToString
     End Function
 End Class
-

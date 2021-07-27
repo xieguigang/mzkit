@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::514a5ca7d0b3f1bf463d5aa414325417, src\mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
+﻿#Region "Microsoft.VisualBasic::682b47616065fa2bf349553abc91dd5b, src\mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' Summaries:
 
     '     Class AlignmentProvider
+    ' 
+    '         Properties: Tolerance
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) CreateAlignment, GetMeta

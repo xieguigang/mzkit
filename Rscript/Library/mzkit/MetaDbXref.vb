@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::763a76d325d93ceef84146079d1f4b88, Rscript\Library\mzkit\MetaDbXref.vb"
+﻿#Region "Microsoft.VisualBasic::1887377362559c382b1ee13475c90355, Rscript\Library\mzkit\MetaDbXref.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -53,4 +52,3 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module MetaDbXref
 
 End Module
-

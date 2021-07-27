@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46a8f66642f2243cbf2e44ceb0d87024, src\mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
+﻿#Region "Microsoft.VisualBasic::018ad030bdf646e57f501fdb930ad0d6, src\mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
 
     ' Author:
     ' 
@@ -69,5 +69,3 @@ Namespace Ms1.PrecursorType
         Negative = -1
     End Enum
 End Namespace
-
-

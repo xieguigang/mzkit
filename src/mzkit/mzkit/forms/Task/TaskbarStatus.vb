@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b31a7c062ac7d11ea1274b85b4253cef, src\mzkit\mzkit\forms\Task\TaskbarStatus.vb"
+﻿#Region "Microsoft.VisualBasic::8d9b208d4376f4463a75b6b2c3157db6, src\mzkit\mzkit\forms\Task\TaskbarStatus.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Module TaskbarStatus
     End Sub
 
 End Module
-

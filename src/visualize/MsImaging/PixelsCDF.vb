@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5366759148a9b3fd94be96031f9bf2b, src\visualize\MsImaging\PixelsCDF.vb"
+﻿#Region "Microsoft.VisualBasic::f755ee9aa53ea7df803ab50a52c60e5e, src\visualize\MsImaging\PixelsCDF.vb"
 
     ' Author:
     ' 
@@ -155,4 +155,3 @@ Public Module PixelsCDF
     End Function
 
 End Module
-

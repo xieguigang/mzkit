@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ff1c3b1ebd257e7a67ec82bc675568, src\mzkit\Task\BioDeep\BioDeepSession.vb"
+﻿#Region "Microsoft.VisualBasic::80ff1c3b1ebd257e7a67ec82bc675568, src\mzkit\BioDeep\BioDeepSession.vb"
 
     ' Author:
     ' 

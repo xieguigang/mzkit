@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::806bd9211cd9ee49d63d216b006e6c4d, src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
+﻿#Region "Microsoft.VisualBasic::b612b08b6f29f4575f16350cef0d4ada, src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetMSMS, Open, (+2 Overloads) ReadArray, ToString
+    '         Function: GetMSMS, GetMSMSPipe, Open, (+2 Overloads) ReadArray, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

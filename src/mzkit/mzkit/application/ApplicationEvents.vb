@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67e660db9d5680d2b5c31542d6b9def5, src\mzkit\mzkit\application\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::119dc19e3f6408bb196cd5611f5e5987, src\mzkit\mzkit\application\ApplicationEvents.vb"
 
     ' Author:
     ' 

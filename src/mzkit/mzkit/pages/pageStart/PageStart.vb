@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb10625f16808d4111022b2dd894ae1, src\mzkit\mzkit\pages\pageStart\PageStart.vb"
+﻿#Region "Microsoft.VisualBasic::7227bede08546142de7b4c93fffa4434, src\mzkit\mzkit\pages\pageStart\PageStart.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     ' Class PageStart
     ' 
-    '     Sub: BackgroundWorker_DoWork, LinkLabel1_LinkClicked, LinkLabel2_LinkClicked, LinkLabel3_LinkClicked, LinkLabel4_LinkClicked
-    '          PageStart_DragDrop, PageStart_DragEnter, PageStart_Load, PageStart_Resize
+    '     Sub: BackgroundWorker_DoWork, hideNewsFeeds, LinkLabel1_LinkClicked, LinkLabel2_LinkClicked, LinkLabel3_LinkClicked
+    '          LinkLabel4_LinkClicked, PageStart_DragDrop, PageStart_DragEnter, PageStart_Load, PageStart_Resize
+    '          showNewsFeeds
     ' 
     ' /********************************************************************************/
 

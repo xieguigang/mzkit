@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ba51c6cddd1728e70bbdea6fb11494, Rscript\Library\mzkit\assembly\ThermoRaw.vb"
+﻿#Region "Microsoft.VisualBasic::677ed5adce3af2c09f6fe28c1910051d, Rscript\Library\mzkit\assembly\ThermoRaw.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Module ThermoRaw
         Return mzpack.ExactPixelTable
     End Function
 End Module
-

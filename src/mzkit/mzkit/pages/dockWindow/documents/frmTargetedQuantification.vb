@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fae4a8a298f314cf69f72e7a0db38e7, src\mzkit\mzkit\pages\dockWindow\documents\frmTargetedQuantification.vb"
+﻿#Region "Microsoft.VisualBasic::06bbda836a7a6525ea35c62daab39ddc, src\mzkit\mzkit\pages\dockWindow\documents\frmTargetedQuantification.vb"
 
     ' Author:
     ' 
@@ -36,16 +36,18 @@
 
     ' Class frmTargetedQuantification
     ' 
-    '     Function: createLinear, GetContentTable, GetGCMSFeatureReader, GetGCMSFeatures, GetScans
-    '               GetTableLevelKeys, isValidLinearRow, linearProfileNames, LoadGCMSIonLibrary, unifyGetStandards
+    '     Function: createGCMSLinears, createLinear, createMRMLinears, GetContentTable, GetGCMSFeatureReader
+    '               GetGCMSFeatures, GetScans, GetStandardReference, GetTableLevelKeys, isValidLinearRow
+    '               linearProfileNames, LoadGCMSIonLibrary, unifyGetStandards
     ' 
     '     Sub: applyNewParameters, DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter
-    '          DataGridView1_DragOver, DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click
-    '          ExportLinearTableToolStripMenuItem_Click, ExportTableToolStripMenuItem_Click, frmTargetedQuantification_Closed, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load
-    '          ImportsLinearReferenceToolStripMenuItem_Click, loadGCMSReference, loadLinearRaw, loadLinears, loadMRMReference
-    '          LoadSamplesToolStripMenuItem_Click, reload, reloadProfileNames, SaveAsToolStripMenuItem_Click, SaveDocument
-    '          saveLinearPack, saveLinearsTable, showIonPeaksTable, showQuanifyTable, showRawXTable
-    '          ToolStripComboBox2_SelectedIndexChanged, unifyLoadLinears, ViewLinearReportToolStripMenuItem_Click
+    '          DataGridView1_DragOver, DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, doLoadSampleFiles
+    '          ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click, ExportTableToolStripMenuItem_Click, frmTargetedQuantification_Closed, frmTargetedQuantification_FormClosing
+    '          frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click, loadGCMSReference, loadLinearRaw, loadLinears
+    '          loadMRMReference, loadReferenceData, loadSampleFiles, LoadSamplesToolStripMenuItem_Click, reload
+    '          reloadProfileNames, runLinearFileImports, SaveAsToolStripMenuItem_Click, SaveDocument, saveLinearPack
+    '          saveLinearsTable, SetGCMSKeys, SetMRMKeys, showIonPeaksTable, showLinear
+    '          showQuanifyTable, showRawXTable, ToolStripComboBox2_SelectedIndexChanged, unifyLoadLinears, ViewLinearReportToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 

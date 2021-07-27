@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fa06d80f703c11468cb43546b23a394, src\visualize\MsImaging\PixelScan\ibdPixel.vb"
+﻿#Region "Microsoft.VisualBasic::513548d9b812a6a80e7a0e3cebdb45f2, src\visualize\MsImaging\PixelScan\ibdPixel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetMs, HasAnyMzIon, ReadMz
+    '         Function: GetMs, GetMsPipe, HasAnyMzIon, ReadMz
     ' 
     '         Sub: release
     ' 

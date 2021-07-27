@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::454a501bab224108b6cfc8b027d8cb35, src\mzkit\mzkit\application\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::6f725faf68d65379c36cbc53fbe0373a, src\mzkit\mzkit\application\Globals.vb"
 
     ' Author:
     ' 

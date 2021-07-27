@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88f3bfc9239350853ae66e43392ea5b2, src\mzkit\mzkit\forms\Task\frmProgressSpinner.vb"
+﻿#Region "Microsoft.VisualBasic::f88ba64f4ec71836891836bd3a85211a, src\mzkit\mzkit\forms\Task\frmProgressSpinner.vb"
 
     ' Author:
     ' 

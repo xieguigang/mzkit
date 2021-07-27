@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caf5abdddf0ef66aadd3b368efbfc29c, src\metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::fba2ab9d092ca559670365ed950bb295, src\metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Class Token : Inherits CodeToken(Of ElementTypes)
         Call MyBase.New(name, text)
     End Sub
 End Class
-

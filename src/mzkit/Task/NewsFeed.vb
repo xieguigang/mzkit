@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f9fc9e39f63f67392edf6b4c775971, src\mzkit\Task\NewsFeed.vb"
+﻿#Region "Microsoft.VisualBasic::87f72e1f3b1989379e841a5d9d73db55, src\mzkit\Task\NewsFeed.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Class NewsFeed
     ' 
-    '     Properties: [date], abstract, title, url
+    '     Properties: [date], abstract, html, title, url
     ' 
     '     Function: ParseLatest
     ' 

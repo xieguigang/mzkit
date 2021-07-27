@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::562c5e3989b91dccc3202c1e67f094d9, src\assembly\assembly\mzPack\Stream\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::9976bfd44446dbe289d60c1c7215b141, src\assembly\assembly\mzPack\Stream\MSScan.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Class MSScan
     ' 
-    '         Properties: into, mz, rt, scan_id
+    '         Properties: into, mz, rt, scan_id, size
     ' 
     '         Function: GetMs, ToString
     ' 

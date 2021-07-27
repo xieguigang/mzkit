@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3471ff36337c776c17993f24e14ef65d, src\metadb\SMILES\FormulaBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::649de142c48b98acf881f9493af76b54, src\metadb\SMILES\FormulaBuilder.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Class FormulaBuilder
         End If
     End Sub
 End Class
-

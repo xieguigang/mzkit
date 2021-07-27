@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b14053d70d0e457b0b1e21e53c83b7f, src\mzkit\setup\autoUpdates\AppVersion.vb"
+﻿#Region "Microsoft.VisualBasic::105312f649c714f112f9a5c2d54588e8, src\mzkit\setup\autoUpdates\AppVersion.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Class AppVersion
     Public Property changlog As String
 
 End Class
-
