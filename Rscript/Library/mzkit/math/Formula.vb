@@ -394,7 +394,7 @@ Module FormulaTools
             formula = FormulaScanner.ScanFormula(any.ToString(formula))
         End If
 
-        Return IsotopeDistribution.GenerateDistribution(
+        Return IsotopicPatterns.Calculator.GenerateDistribution(
             formula:=formula,
             prob_threshold:=prob_threshold,
             fwhm:=fwhm,

@@ -72,15 +72,16 @@ Namespace mzData.mzWebCache
 
         Protected ms1 As ScanMS1
         Protected products As New List(Of ScanMS2)
-        Protected trim As LowAbundanceTrimming = New RelativeIntensityCutoff(0.03)
+        Protected trim As LowAbundanceTrimming
         Protected ms1Err As Tolerance
 
         Protected ReadOnly reader As MsDataReader(Of Scan)
         Protected ReadOnly invalidScans As New List(Of Scan)
 
-        Sub New(mzErr As String)
+        Sub New(mzErr As String, intocutoff As Double)
             ms1Err = Tolerance.ParseScript(mzErr)
             reader = dataReader()
+            trim = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
         Protected MustOverride Function dataReader() As MsDataReader(Of Scan)

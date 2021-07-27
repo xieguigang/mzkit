@@ -52,8 +52,8 @@ Namespace mzData.mzWebCache
 
     Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
+        Public Sub New(Optional mzErr$ = "da:0.1", Optional intocutoff As Double = 0.0001)
+            MyBase.New(mzErr, intocutoff)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
