@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d9b8a7a19f42183a6b89b00d28c1cb, src\assembly\ThermoRawFileReader\Enums\MRMScanTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::22abfcd3abc0c49d29b4262692a49c3d, src\assembly\ThermoRawFileReader\Enums\MRMScanTypeConstants.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' MRM Scan Types

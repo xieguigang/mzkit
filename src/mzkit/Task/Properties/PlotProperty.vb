@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adca4130ffcfd18ebf16038d5367c8b0, src\mzkit\Task\Properties\PlotProperty.vb"
+﻿#Region "Microsoft.VisualBasic::e0e853c3a9b8d793bb63496cd316af93, src\mzkit\Task\Properties\PlotProperty.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
     ' Class PlotProperty
     ' 
     '     Properties: axis_label_font, background, colors, colorSet, gridFill
-    '                 height, label_font, legend_font, line_width, padding_bottom
-    '                 padding_left, padding_right, padding_top, point_size, show_grid
-    '                 show_legend, show_tag, title, width, xlabel
-    '                 ylabel
+    '                 height, label_font, legend_font, legend_title, line_width
+    '                 padding_bottom, padding_left, padding_right, padding_top, point_size
+    '                 show_grid, show_legend, show_tag, title, width
+    '                 xlabel, ylabel
     ' 
     '     Function: GetColorSetName, GetPadding
     ' 

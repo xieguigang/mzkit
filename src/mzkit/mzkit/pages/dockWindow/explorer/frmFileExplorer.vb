@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbf8a64e6f27f720119adb1f762a7d41, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::b9915dd37ef73c9580d33eba18ee1d16, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
 
     ' Author:
     ' 
@@ -41,11 +41,11 @@
     '     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
     '               GetSelectedRaws, GetTotalCacheSize
     ' 
-    '     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, DeleteToolStripMenuItem_Click
-    '          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw, ImportsToolStripMenuItem_Click
-    '          InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click, SaveFileCache
-    '          selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck, treeView1_AfterSelect
-    '          treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
+    '     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, ContourPlotToolStripMenuItem_Click
+    '          DeleteToolStripMenuItem_Click, frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw
+    '          ImportsToolStripMenuItem_Click, InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click
+    '          SaveFileCache, selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck
+    '          treeView1_AfterSelect, treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 

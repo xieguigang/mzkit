@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d38dfdc98bf714ba884cdf357424616b, src\metadb\SMILES\Language\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::dc91edfdedb339579074716deaa11b0b, src\metadb\SMILES\Language\Utils.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Module Utils
     }
 
 End Module
-

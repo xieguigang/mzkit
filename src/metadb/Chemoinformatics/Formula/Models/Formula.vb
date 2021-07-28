@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afecfe38c11908522708632754dde495, src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::b0a1cc195f8f26a52c3031a332667b90, src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     '     Class Formula
     ' 
-    '         Properties: Counts, CountsByElement, Elements, EmpiricalFormula, ExactMass
+    '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
+    '                     ExactMass
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: BuildFormula, ToString

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a99cfff737e2d2006975eb236b55af35, src\metadb\SMILES\Language\ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::a73b0e76be8e497a549d3918193c4bbe, src\metadb\SMILES\Language\ElementTypes.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Enum ElementTypes
     Element

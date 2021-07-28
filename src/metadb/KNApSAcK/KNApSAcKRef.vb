@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69b4e10cc7dbce325c59be5c441b5f57, src\metadb\KNApSAcK\KNApSAcKRef.vb"
+﻿#Region "Microsoft.VisualBasic::d5cb730119fd8bd0fca86c2e84878a47, src\metadb\KNApSAcK\KNApSAcKRef.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Class KNApSAcKRef : Implements IExactmassProvider
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::789441637e04ca169266b50e709e128b, src\metadb\Chemoinformatics\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::7d3ae3fc7301ee08cd5ff1ec1198bf46, src\metadb\Chemoinformatics\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Module nameTest
         Call Console.WriteLine(New String("-"c, 32))
     End Sub
 End Module
-

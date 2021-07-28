@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac9d06ca4cbb04d078d04315a434c125, src\metadb\KNApSAcK\Web\Search.vb"
+﻿#Region "Microsoft.VisualBasic::8c84238e07a568c5050cbbb1fb14b050, src\metadb\KNApSAcK\Web\Search.vb"
 
     ' Author:
     ' 
@@ -83,4 +83,3 @@ Public Class Search
         Return result
     End Function
 End Class
-

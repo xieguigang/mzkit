@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a3dd245529ef0e1201a382ee4c68ac9, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
+﻿#Region "Microsoft.VisualBasic::0aac3e1a21f7a789e7ccea9bf2c88cd4, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Class PixelSelector
     ' 
-    '     Properties: MSImage
+    '     Properties: MSImage, Pixel
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: canvasMouseDown, DrawSelectionBox, getPoint, picCanvas_MouseClick, picCanvas_MouseMove
@@ -208,4 +208,3 @@ Public Class PixelSelector
         End If
     End Sub
 End Class
-

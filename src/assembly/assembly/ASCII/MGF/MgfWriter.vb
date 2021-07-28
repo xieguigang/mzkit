@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e918ff6f89d1a99d85b18028fb2d93d6, src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::fb401e477db5a58ec155d1f30b5013dd, src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
 
     ' Author:
     ' 

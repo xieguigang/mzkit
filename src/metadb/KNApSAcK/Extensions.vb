@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c308b93270ab250aedcd5c3bc4233130, src\metadb\KNApSAcK\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a47c0eb0591723f26eeb2512f66b289f, src\metadb\KNApSAcK\Extensions.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Public Module Extensions
     End Function
 
 End Module
-

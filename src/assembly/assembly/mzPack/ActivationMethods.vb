@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54f39ce46e3e589df9b42b2baea932f0, src\assembly\assembly\mzPack\ActivationMethods.vb"
+﻿#Region "Microsoft.VisualBasic::fc47a1c7b72f817fa9bcbb2781424080, src\assembly\assembly\mzPack\ActivationMethods.vb"
 
     ' Author:
     ' 
@@ -295,4 +295,3 @@ Public Enum ActivationMethods As Byte
     ''' </summary>
     IRMPD
 End Enum
-

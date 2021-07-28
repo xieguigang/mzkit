@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d79e26582dfdff4a71b2eb91f9ede62c, src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::66207bf8066b3ad577eae29d6e6ead3f, src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
     ' 
     '     Class Params
     ' 
-    '         Properties: cvParams, userParams
+    '         Properties: cvParams, cvTerm, userParams
     ' 
     '     Class userParam
     ' 

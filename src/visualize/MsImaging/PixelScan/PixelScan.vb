@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e5d3dc62afa502f79178433210541f6, src\visualize\MsImaging\PixelScan\PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::b2d596326065e42436d53233f76cecaa, src\visualize\MsImaging\PixelScan\PixelScan.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Class PixelScan
     ' 
-    '         Function: ToString
+    '         Function: GetMs, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f7423984fa3dd7aae85fa1f441d15e3, src\metadb\Chemoinformatics\ExactMassProvider.vb"
+﻿#Region "Microsoft.VisualBasic::e9a38a51eaaf34366b2b28b27ddb16aa, src\metadb\Chemoinformatics\ExactMassProvider.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Public Interface IExactmassProvider
     ReadOnly Property ExactMass As Double
 
 End Interface
-

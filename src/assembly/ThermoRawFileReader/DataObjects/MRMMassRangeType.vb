@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe7bba02d37ca0a97f16cd89a36bccda, src\assembly\ThermoRawFileReader\DataObjects\MRMMassRangeType.vb"
+﻿#Region "Microsoft.VisualBasic::73314f2473beb3b87b43f47d855134e3, src\assembly\ThermoRawFileReader\DataObjects\MRMMassRangeType.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace DataObjects
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e00c4f466e62efba5fa49a5711951af, src\metadb\KNApSAcK\Web\InformationQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7d25d6a1458abbd3627606f9c38f1542, src\metadb\KNApSAcK\Web\InformationQuery.vb"
 
     ' Author:
     ' 
@@ -128,4 +128,3 @@ Public Class InformationQuery : Inherits WebQuery(Of String)
         }
     End Function
 End Class
-

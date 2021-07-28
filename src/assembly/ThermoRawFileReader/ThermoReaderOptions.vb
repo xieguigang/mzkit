@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1a6876c5f4e4c6b4c4cec6a45519c9, src\assembly\ThermoRawFileReader\ThermoReaderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::65fa889bca6b790972c1144a3cd2bbc3, src\assembly\ThermoRawFileReader\ThermoReaderOptions.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -161,4 +160,3 @@ Public Class ThermoReaderOptions
     End Function
 
 End Class
-

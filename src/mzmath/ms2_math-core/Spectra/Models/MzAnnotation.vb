@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce40d9448348d7b122e63092bd5ad104, src\mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::a07de538db045548c8f3aea4918816f7, src\mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aad52585750a335203d285270322d51b, src\assembly\mzPackExtensions\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::dce3d7d4eaa645bbfa140845179ba8ac, src\assembly\mzPackExtensions\RawStream.vb"
 
     ' Author:
     ' 
@@ -74,4 +74,3 @@ Public Module RawStream
         }
     End Function
 End Module
-

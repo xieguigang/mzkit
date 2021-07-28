@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::258997752ee6313daf8d17a182395289, src\assembly\ThermoRawFileReader\XRawFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::a6e2baa6688fd8961dd0074474bade6c, src\assembly\ThermoRawFileReader\XRawFileIO.vb"
 
     ' Author:
     ' 
@@ -2588,4 +2588,3 @@ Public Class XRawFileIO : Implements IDisposable
 
 #End Region
 End Class
-

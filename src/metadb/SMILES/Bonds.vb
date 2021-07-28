@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdb73214e2400a1f674ac073463739ab, src\metadb\SMILES\Bonds.vb"
+﻿#Region "Microsoft.VisualBasic::bf71606b1080c7925636612c6d11adaa, src\metadb\SMILES\Bonds.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Public Enum Bonds As Byte
     <Description("#")> triple = 3
     <Description(":")> aromatic = 4
 End Enum
-

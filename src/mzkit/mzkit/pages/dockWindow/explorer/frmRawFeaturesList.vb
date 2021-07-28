@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8106965623d360393c9c6a655577a751, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
+﻿#Region "Microsoft.VisualBasic::92f4df212e028c43a4de6dcb2876e073, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: GetSelectedNodes, GetXICCollection
+    '     Function: checkIon, GetSelectedNodes, GetXICCollection
     ' 
     '     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CustomToolStripMenuItem_Click
     '          DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click, frmFileExplorer_Activated
@@ -48,8 +48,8 @@
     '          IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, MetaDNASearchToolStripMenuItem_Click, MolecularNetworkingToolStripMenuItem_Click
     '          NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click
     '          ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click
-    '          TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, TreeView1_AfterCheck, treeView1_AfterSelect
-    '          treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
+    '          TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, ToolStripButton4_Click, TreeView1_AfterCheck
+    '          treeView1_AfterSelect, treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 

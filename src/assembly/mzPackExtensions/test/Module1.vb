@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a596dbc906b80a24e27492755916df57, src\assembly\mzPackExtensions\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::17539c6beb9396de7eae0b55beb83697, src\assembly\mzPackExtensions\test\Module1.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Module Module1
     End Sub
 
 End Module
-

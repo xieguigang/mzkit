@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87242074d83df1b4eed5c043fcf579b2, src\assembly\ThermoRawFileReader\MSFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::4be1d943f226edf0f7f624cb23fe1025, src\assembly\ThermoRawFileReader\MSFileReader.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     ' Class MSFileReader
     ' 
-    '     Properties: Options, ScanMax, ScanMin
+    '     Properties: FileName, Options, ScanMax, ScanMin, ScanTimeMax
+    '                 ThermoReader
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

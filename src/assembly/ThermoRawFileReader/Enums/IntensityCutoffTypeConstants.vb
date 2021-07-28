@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b713d060472924ebc54613ea74f7a61a, src\assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::0391611c8a80530eb641c7aa23638cae, src\assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Intensity Cutoff Types

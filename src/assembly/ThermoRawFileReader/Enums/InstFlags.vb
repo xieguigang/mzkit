@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6f0acccf77ed4f8102879dd94fb83a, src\assembly\ThermoRawFileReader\Enums\InstFlags.vb"
+﻿#Region "Microsoft.VisualBasic::7886f2d5f485d530be881114f302a11d, src\assembly\ThermoRawFileReader\Enums\InstFlags.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Instrument Flags

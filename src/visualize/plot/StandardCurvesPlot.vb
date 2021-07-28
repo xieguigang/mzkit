@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2a38ef885e890a0fbd6b68fbc462c2, src\visualize\plot\StandardCurvesPlot.vb"
+﻿#Region "Microsoft.VisualBasic::51914b6e60badcfe0e9403b8bfd5eada, src\visualize\plot\StandardCurvesPlot.vb"
 
     ' Author:
     ' 
