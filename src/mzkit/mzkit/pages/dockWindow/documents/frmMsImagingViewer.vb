@@ -226,6 +226,12 @@ Public Class frmMsImagingViewer
 
         If pixel Is Nothing Then
             Return
+        Else
+            If WindowModules.MSIPixelProperty.DockState = DockState.Hidden Then
+                WindowModules.MSIPixelProperty.DockState = DockState.DockRight
+            End If
+
+            WindowModules.MSIPixelProperty.SetPixel(pixel)
         End If
 
         Dim ms As New LibraryMatrix With {
