@@ -154,6 +154,7 @@
     <Compile Include="IonLibrary.vb" />
     <Compile Include="GCMSQuantifyIon.vb" />
     <Compile Include="MetaDNASearch.vb" />
+    <Compile Include="Properties\PixelProperty.vb" />
     <Compile Include="Studio\RscriptPipelineTask.vb" />
     <Compile Include="Studio\TaskScript.vb" />
     <Compile Include="Studio\PipelineTask.vb" />
