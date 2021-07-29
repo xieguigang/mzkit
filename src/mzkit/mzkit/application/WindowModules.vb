@@ -133,7 +133,7 @@ Friend MustInherit Class WindowModules
         msDemo.DockState = DockState.Hidden
 
         MSIPixelProperty.Show(dockPanel)
-        MSIPixelProperty.DockState = DockState.DockTopAutoHide
+        MSIPixelProperty.DockState = DockState.Hidden
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock

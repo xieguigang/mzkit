@@ -9,6 +9,8 @@ Imports Task
 
 Public Class MSIPixelPropertyWindow
 
+
+
     Public Sub SetPixel(pixel As PixelScan)
         PropertyGrid1.SelectedObject = New PixelProperty(pixel)
 
@@ -28,6 +30,10 @@ Public Class MSIPixelPropertyWindow
         }
 
         PictureBox1.BackgroundImage = {serial}.Plot(fill:=True).AsGDIImage
+        PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
 
+    Private Sub MSIPixelPropertyWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
+        TabText = "MSI Pixel Properties"
+    End Sub
 End Class

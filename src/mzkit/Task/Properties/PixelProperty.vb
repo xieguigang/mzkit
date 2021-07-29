@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports System.ComponentModel
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Math.Quantile
 
@@ -8,17 +9,17 @@ Public Class PixelProperty
     Public ReadOnly Property MaxIntensity As Double
     Public ReadOnly Property MinIntensity As Double
     Public ReadOnly Property NumOfIons As Integer
-    Public ReadOnly Property Q1 As Double
-    Public ReadOnly Property Q2 As Double
-    Public ReadOnly Property Q3 As Double
-    Public ReadOnly Property Q1Count As Integer
-    Public ReadOnly Property Q2Count As Integer
-    Public ReadOnly Property Q3Count As Integer
+    <Category("Intensity")> Public ReadOnly Property Q1 As Double
+    <Category("Intensity")> Public ReadOnly Property Q2 As Double
+    <Category("Intensity")> Public ReadOnly Property Q3 As Double
+    <Category("Intensity")> Public ReadOnly Property Q1Count As Integer
+    <Category("Intensity")> Public ReadOnly Property Q2Count As Integer
+    <Category("Intensity")> Public ReadOnly Property Q3Count As Integer
 
     Public ReadOnly Property AverageIons As Double
     Public ReadOnly Property TotalIon As Double
-    Public ReadOnly Property X As Integer
-    Public ReadOnly Property Y As Integer
+    <Category("Pixel")> Public ReadOnly Property X As Integer
+    <Category("Pixel")> Public ReadOnly Property Y As Integer
 
     Sub New(pixel As PixelScan)
         Dim ms As ms2() = pixel.GetMs
