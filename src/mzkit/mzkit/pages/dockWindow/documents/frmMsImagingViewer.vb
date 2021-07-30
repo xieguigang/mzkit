@@ -220,17 +220,20 @@ Public Class frmMsImagingViewer
         If render Is Nothing Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
+        Else
+            If WindowModules.MSIPixelProperty.DockState = DockState.Hidden Then
+                WindowModules.MSIPixelProperty.DockState = DockState.DockRight
+            End If
         End If
 
         Dim pixel As PixelScan = render.pixelReader.GetPixel(x, y)
 
         If pixel Is Nothing Then
+            Call MyApplication.host.showStatusMessage($"Pixels [{x}, {y}] not contains any data.", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}))
+
             Return
         Else
-            If WindowModules.MSIPixelProperty.DockState = DockState.Hidden Then
-                WindowModules.MSIPixelProperty.DockState = DockState.DockRight
-            End If
-
             WindowModules.MSIPixelProperty.SetPixel(pixel)
         End If
 

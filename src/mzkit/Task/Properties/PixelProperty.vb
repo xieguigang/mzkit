@@ -29,24 +29,23 @@ Public Class PixelProperty
         Y = pixel.Y
 
         If into.Length = 0 Then
-            Return
+        Else
+            NumOfIons = ms.Length
+            TopIonMz = ms.OrderByDescending(Function(i) i.intensity).First.mz
+            MaxIntensity = into.Max
+            MinIntensity = into.Min
+            TotalIon = into.Sum
+            AverageIons = into.Average
+
+            Dim quartile = into.Quartile
+
+            Q1 = quartile.Q1
+            Q2 = quartile.Q2
+            Q3 = quartile.Q3
+            Q1Count = into.Where(Function(i) i <= Q1).Count
+            Q2Count = into.Where(Function(i) i <= Q2).Count
+            Q3Count = into.Where(Function(i) i <= Q3).Count
         End If
-
-        NumOfIons = ms.Length
-        TopIonMz = ms.OrderByDescending(Function(i) i.intensity).First.mz
-        MaxIntensity = into.Max
-        MinIntensity = into.Min
-        TotalIon = into.Sum
-        AverageIons = into.Average
-
-        Dim quartile = into.Quartile
-
-        Q1 = quartile.Q1
-        Q2 = quartile.Q2
-        Q3 = quartile.Q3
-        Q1Count = into.Where(Function(i) i <= Q1).Count
-        Q2Count = into.Where(Function(i) i <= Q2).Count
-        Q3Count = into.Where(Function(i) i <= Q3).Count
     End Sub
 
 End Class

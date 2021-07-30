@@ -10,8 +10,6 @@ Imports Task
 
 Public Class MSIPixelPropertyWindow
 
-
-
     Public Sub SetPixel(pixel As PixelScan)
         PropertyGrid1.SelectedObject = New PixelProperty(pixel)
 
