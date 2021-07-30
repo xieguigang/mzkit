@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::fc8a2a4af12f4a344cc6c42d314bb21f, src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentGCMS.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module agilentGCMS
-    ' 
-    '         Function: Read
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module agilentGCMS
+' 
+'         Function: Read
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,8 +57,8 @@ Namespace GCMS.Vendors
             Dim tic As doubles = cdf.getDataVariable("total_intensity")
             Dim pointCount As integers = cdf.getDataVariable("point_count")
             Dim massValues As ICDFDataVector = cdf.getDataVariable("mass_values")
-            Dim intensityValues As floats = cdf.getDataVariable("intensity_values")
-            Dim scan_times As floats = cdf.getDataVariable("time_values")
+            Dim intensityValues As ICDFDataVector = cdf.getDataVariable("intensity_values")
+            Dim scan_times As ICDFDataVector = cdf.getDataVariable("time_values")
             Dim attrs As New Dictionary(Of String, String)
 
             For Each attr As attribute In cdf.globalAttributes
@@ -69,6 +69,8 @@ Namespace GCMS.Vendors
             Dim index As i32 = Scan0
             Dim size%
             Dim massReader As Func(Of Integer, Double) = readValue(massValues)
+            Dim intoReader As Func(Of Integer, Double) = readValue(intensityValues)
+            Dim timeReader As Func(Of Integer, Double) = readValue(scan_times)
 
             For i As Integer = 0 To ms.Length - 1
                 size = pointCount(i)
@@ -77,8 +79,8 @@ Namespace GCMS.Vendors
                 For j As Integer = 0 To size - 1
                     ms(i)(j) = New ms1_scan With {
                         .mz = massReader(index),
-                        .intensity = intensityValues(index),
-                        .scan_time = scan_times(++index)
+                        .intensity = intoReader(index),
+                        .scan_time = timeReader(++index)
                     }
                 Next
             Next
