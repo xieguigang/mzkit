@@ -71,6 +71,14 @@ Namespace Reader
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 
+        ''' <summary>
+        ''' get pixels in region range
+        ''' </summary>
+        ''' <param name="x1"></param>
+        ''' <param name="y1"></param>
+        ''' <param name="x2"></param>
+        ''' <param name="y2"></param>
+        ''' <returns></returns>
         Public Iterator Function GetPixel(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) As IEnumerable(Of PixelScan)
             For i As Integer = x1 To x2
                 For j As Integer = y1 To y2
