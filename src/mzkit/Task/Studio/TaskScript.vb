@@ -78,12 +78,18 @@ Module TaskScript
     <ExportAPI("MSI_peaktable")>
     Public Sub ExportMSISampleTable(raw As String, regions As Rectangle(), save As Stream)
         Dim data As New Dictionary(Of String, ms2())
+
+        Call RunSlavePipeline.SendMessage("Initialize raw data file...")
+
         Dim render As New Drawer(mzPack.ReadAll(raw.Open(FileMode.Open, doClear:=False, [readOnly]:=True), ignoreThumbnail:=True))
         Dim ppm20 As Tolerance = Tolerance.PPM(20)
         Dim j As i32 = 1
+        Dim regionId As String
 
         For Each region As Rectangle In regions
-            data.Add($"region_{++j}", render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
+            regionId = $"region_{++j}"
+            RunSlavePipeline.SendProgress(j / regions.Length * 100, $"scan for region {regionId}... [{j}/{regions.Length}]")
+            data.Add(regionId, render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
         Next
 
         Dim allMz As Double() = data.Values _
@@ -93,6 +99,9 @@ Module TaskScript
             .Select(Function(i) i.mz) _
             .OrderBy(Function(mz) mz) _
             .ToArray
+
+        RunSlavePipeline.SendProgress(100, $"Run peak alignment for {allMz.Length} m/z features!")
+
         Dim dataSet As DataSet() = allMz _
             .AsParallel _
             .Select(Function(mz)
@@ -108,6 +117,7 @@ Module TaskScript
             .ToArray
         Dim file As New StreamWriter(save)
 
+        Call RunSlavePipeline.SendProgress(100, $"Save peaktable!")
         Call file.WriteLine({"MID"}.JoinIterates(data.Keys).JoinBy(","))
 
         For Each line As DataSet In dataSet
