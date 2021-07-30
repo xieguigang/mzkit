@@ -329,6 +329,7 @@ Module MsImaging
                                    Optional defaultFill As String = "Transparent",
                                    Optional pixelSize$ = "5,5",
                                    Optional cutoff As Double = 1,
+                                   Optional logE As Boolean = True,
                                    Optional env As Environment = Nothing) As Object
 
         Dim layer = data.GetLayer(intensity).ToArray
@@ -347,7 +348,7 @@ Module MsImaging
             dimension:=data.size,
             dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
-            threshold:=0,
+            logE:=logE,
             defaultFill:=defaultFill,
             cutoff:=cutoff
         )
