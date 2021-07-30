@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::fdd119bccd56d041bf61f5a772f3ca41, src\visualize\MsImaging\Reader\PixelReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PixelReader
-    ' 
-    '         Function: FindMatchedPixels, GetIntensitySummary, GetPixel, GetSummary, LoadPixels
-    '                   LoadRatioPixels, LoadRatioPixelsInternal
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PixelReader
+' 
+'         Function: FindMatchedPixels, GetIntensitySummary, GetPixel, GetSummary, LoadPixels
+'                   LoadRatioPixels, LoadRatioPixelsInternal
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -71,6 +72,24 @@ Namespace Reader
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 
+        ''' <summary>
+        ''' get pixels in region range
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetPixel(region As Rectangle) As IEnumerable(Of PixelScan)
+            Return GetPixel(region.Left, region.Top, region.Right, region.Bottom)
+        End Function
+
+        ''' <summary>
+        ''' get pixels in region range
+        ''' </summary>
+        ''' <param name="x1"></param>
+        ''' <param name="y1"></param>
+        ''' <param name="x2"></param>
+        ''' <param name="y2"></param>
+        ''' <returns></returns>
         Public Iterator Function GetPixel(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) As IEnumerable(Of PixelScan)
             For i As Integer = x1 To x2
                 For j As Integer = y1 To y2

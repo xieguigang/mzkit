@@ -1536,6 +1536,14 @@
     <Command Name="cmdTabKEGG" Id="132" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
     <Command Name="cmdGroupKEGG" Id="133" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
     <Command Name="cmdTabGroupKEGG" Id="134" LabelTitle="KEGG" LabelDescription="KEGG" TooltipTitle="KEGG" TooltipDescription="KEGG" />
+    <Command Name="cmdButtonExportSample" Id="135" LabelTitle="Export Sample" LabelDescription="Export MSI dot samples" TooltipTitle="Export MSI sample" TooltipDescription="Export MSI dot sample table">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1725,9 +1733,10 @@
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSIAverageIon" />
             </Group>
-            <Group CommandName="cmdTabMSIFile" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdTabMSIFile" SizeDefinition="ThreeButtons-OneBigAndTwoSmall">
               <Button CommandName="cmdButtonMSIRowScans" />
               <Button CommandName="cmdButtonExportMSIMzpack" />
+              <Button CommandName="cmdButtonExportSample" />
             </Group>
           </Tab>
         </TabGroup>

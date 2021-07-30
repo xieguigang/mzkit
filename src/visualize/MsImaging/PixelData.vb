@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::9aa3937d871cdeb63f88bcb972f979a5, src\visualize\MsImaging\PixelData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PixelData
-    ' 
-    '     Properties: intensity, level, mz, x, y
-    ' 
-    '     Function: ScalePixels, SequenceIndex, ToString
-    ' 
-    ' /********************************************************************************/
+' Class PixelData
+' 
+'     Properties: intensity, level, mz, x, y
+' 
+'     Function: ScalePixels, SequenceIndex, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' a pixels point of [x,y,color]
@@ -68,9 +69,19 @@ Public Class PixelData
     ''' </summary>
     ''' <param name="pixels"></param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As Double = 1) As PixelData()
+    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As Double = 1, Optional logE As Boolean = False) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
-            .Select(Function(p) p.intensity) _
+            .Select(Function(p)
+                        If logE Then
+                            If p.intensity <= 1 Then
+                                Return 0
+                            Else
+                                Return stdNum.Log(p.intensity)
+                            End If
+                        Else
+                            Return p.intensity
+                        End If
+                    End Function) _
             .Range
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
@@ -80,7 +91,15 @@ Public Class PixelData
         End If
 
         For Each point As PixelData In pixels
-            level = intensityRange.ScaleMapping(point.intensity, levelRange)
+            If logE Then
+                If point.intensity <= 1 Then
+                    level = 0
+                Else
+                    level = intensityRange.ScaleMapping(stdNum.Log(point.intensity), levelRange)
+                End If
+            Else
+                level = intensityRange.ScaleMapping(point.intensity, levelRange)
+            End If
 
             If level > 1 Then
                 point.level = 1

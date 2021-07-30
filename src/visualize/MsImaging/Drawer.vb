@@ -126,7 +126,8 @@ Public Class Drawer : Implements IDisposable
     Public Function ShowSummaryRendering(summary As IntensitySummary,
                                          Optional cutoff# = 0.65,
                                          Optional colorSet$ = "Jet",
-                                         Optional pixelSize$ = "3,3") As Bitmap
+                                         Optional pixelSize$ = "3,3",
+                                         Optional logE As Boolean = True) As Bitmap
 
         Dim layer = pixelReader.GetSummary.GetLayer(summary).ToArray
         Dim pixels As PixelData() = layer _
@@ -144,9 +145,9 @@ Public Class Drawer : Implements IDisposable
             dimension:=dimension,
             dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
-            threshold:=0,
             defaultFill:="black",
-            cutoff:=cutoff
+            cutoff:=cutoff,
+            logE:=logE
         )
     End Function
 
@@ -243,12 +244,12 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="dimSize">pixel size</param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels"></param>
-    ''' <param name="threshold"></param>
+    ''' <param name="logE"></param>
     ''' <returns></returns>
     Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,
-                                        Optional threshold As Double = 0.1,
+                                        Optional logE As Boolean = False,
                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                         Optional defaultFill As String = "Transparent",
                                         Optional cutoff As Double = 1) As Bitmap
@@ -262,10 +263,10 @@ Public Class Drawer : Implements IDisposable
         Dim defaultColor As Color = defaultFill.TranslateColor
 
         Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
+            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
                 level = point.level
 
-                If level < threshold Then
+                If level = 0.0 Then
                     color = defaultColor
                 Else
                     index = levelRange.ScaleMapping(level, indexrange)

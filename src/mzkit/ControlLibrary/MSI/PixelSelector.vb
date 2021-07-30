@@ -1,55 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::0aac3e1a21f7a789e7ccea9bf2c88cd4, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PixelSelector
-    ' 
-    '     Properties: MSImage, Pixel
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: canvasMouseDown, DrawSelectionBox, getPoint, picCanvas_MouseClick, picCanvas_MouseMove
-    '          picCanvas_MouseUp, ShowMessage
-    ' 
-    ' /********************************************************************************/
+' Class PixelSelector
+' 
+'     Properties: MSImage, Pixel
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: canvasMouseDown, DrawSelectionBox, getPoint, picCanvas_MouseClick, picCanvas_MouseMove
+'          picCanvas_MouseUp, ShowMessage
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports stdNum = System.Math
 
 Public Class PixelSelector
 
     Public Event SelectPixel(x As Integer, y As Integer)
-    Public Event SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
+    Public Event SelectPixelRegion(region As Rectangle)
 
     Public Sub New()
 
@@ -103,8 +105,34 @@ Public Class PixelSelector
     Dim rangeStart As Point
     Dim rangeEnd As Point
 
+    Public ReadOnly Property HasRegionSelection As Boolean
+        Get
+            Return startPoint.IsEmpty OrElse endPoint.IsEmpty
+        End Get
+    End Property
+
+    Public ReadOnly Property RegionSelectin As Rectangle
+        Get
+            Dim left As Integer = stdNum.Min(startPoint.X, endPoint.X)
+            Dim top As Integer = stdNum.Min(startPoint.Y, endPoint.Y)
+            Dim right As Integer = stdNum.Max(startPoint.X, endPoint.X)
+            Dim bottom As Integer = stdNum.Max(startPoint.Y, endPoint.Y)
+
+            Return New Rectangle(left, top, right - left, bottom - top)
+        End Get
+    End Property
+
+    Public Sub ClearSelection()
+        startPoint = Nothing
+        endPoint = Nothing
+    End Sub
+
     Sub canvasMouseDown(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseDown
         If e.Button <> MouseButtons.Left Then
+            If e.Button = MouseButtons.Right Then
+                drawing = False
+            End If
+
             Return
         End If
 
@@ -148,7 +176,10 @@ Public Class PixelSelector
         ypoint = e.Y * Pic_height
     End Sub
 
-    ' Draw the area selected.
+    ''' <summary>
+    ''' Draw the area selected.
+    ''' </summary>
+    ''' <param name="end_point"></param>
     Private Sub DrawSelectionBox(end_point As Point)
         ' Save the end point.
         endPoint = end_point
@@ -181,12 +212,7 @@ Public Class PixelSelector
             rangeEnd = New Point(xpoint, ypoint)
             drawing = False
 
-            RaiseEvent SelectPixelRegion(
-                x1:=If(rangeStart.X < 1, 1, rangeStart.X),
-                y1:=If(rangeStart.Y < 1, 1, rangeStart.Y),
-                x2:=If(rangeEnd.X < 1, 1, rangeEnd.X),
-                y2:=If(rangeEnd.Y < 1, 1, rangeEnd.Y)
-            )
+            RaiseEvent SelectPixelRegion(RegionSelectin)
         End If
     End Sub
 
@@ -205,6 +231,17 @@ Public Class PixelSelector
         Else
             drawing = False
             RaiseEvent SelectPixel(xpoint, ypoint)
+        End If
+    End Sub
+
+    Private Sub PixelSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Timer1.Enabled = True
+        Timer1.Start()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If HasRegionSelection Then
+            DrawSelectionBox(endPoint)
         End If
     End Sub
 End Class

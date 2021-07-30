@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::bbb734cded1b830a28ec32418fc46733, src\mzkit\mzkit\pages\dockWindow\documents\frmMsImagingViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMsImagingViewer
-    ' 
-    '     Properties: FilePath, MimeType
-    ' 
-    '     Function: (+2 Overloads) createRenderTask
-    ' 
-    '     Sub: checks_Click, ClearPinToolStripMenuItem_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, exportMzPack
-    '          frmMsImagingViewer_Closing, frmMsImagingViewer_Load, loadimzML, loadmzML, loadRaw
-    '          LoadRender, OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, Plot
-    '          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
-    '          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
-    ' 
-    ' /********************************************************************************/
+' Class frmMsImagingViewer
+' 
+'     Properties: FilePath, MimeType
+' 
+'     Function: (+2 Overloads) createRenderTask
+' 
+'     Sub: checks_Click, ClearPinToolStripMenuItem_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, exportMzPack
+'          frmMsImagingViewer_Closing, frmMsImagingViewer_Load, loadimzML, loadmzML, loadRaw
+'          LoadRender, OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, Plot
+'          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
+'          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,6 +101,7 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonMSIBasePeakIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.BasePeak)
         AddHandler RibbonEvents.ribbonItems.ButtonMSIAverageIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.Average)
 
+        AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
 
         Call ApplyVsTheme(ContextMenuStrip1)
@@ -220,17 +221,20 @@ Public Class frmMsImagingViewer
         If render Is Nothing Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
+        Else
+            If WindowModules.MSIPixelProperty.DockState = DockState.Hidden Then
+                WindowModules.MSIPixelProperty.DockState = DockState.DockRight
+            End If
         End If
 
         Dim pixel As PixelScan = render.pixelReader.GetPixel(x, y)
 
         If pixel Is Nothing Then
+            Call MyApplication.host.showStatusMessage($"Pixels [{x}, {y}] not contains any data.", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}))
+
             Return
         Else
-            If WindowModules.MSIPixelProperty.DockState = DockState.Hidden Then
-                WindowModules.MSIPixelProperty.DockState = DockState.DockRight
-            End If
-
             WindowModules.MSIPixelProperty.SetPixel(pixel)
         End If
 
@@ -253,7 +257,7 @@ Public Class frmMsImagingViewer
         End If
     End Sub
 
-    Private Sub PixelSelector1_SelectPixelRegion(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer) Handles PixelSelector1.SelectPixelRegion
+    Private Sub PixelSelector1_SelectPixelRegion(region As Rectangle) Handles PixelSelector1.SelectPixelRegion
         If render Is Nothing Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
@@ -263,32 +267,41 @@ Public Class frmMsImagingViewer
 
         Call New Thread(
             Sub()
-                Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
-
-                If rangePixels.IsNullOrEmpty Then
-                    Return
-                End If
-
-                Dim ms As New LibraryMatrix With {
-                    .ms2 = rangePixels _
-                        .Select(Function(p) p.GetMs) _
-                        .IteratesALL _
-                        .ToArray _
-                        .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
-                        .ToArray,
-                    .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
-                }
-
-                Call MyApplication.host.Invoke(
-                    Sub()
-                        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
-                        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
-                    End Sub)
-
+                Call ShowRegion(region)
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
         Call progress.ShowDialog()
+    End Sub
+
+    Private Sub ShowRegion(region As Rectangle)
+        Dim x1 As Integer = region.Left
+        Dim y1 As Integer = region.Top
+        Dim x2 As Integer = region.Right
+        Dim y2 As Integer = region.Bottom
+        Dim rangePixels As PixelScan() = render.pixelReader _
+            .GetPixel(x1, y1, x2, y2) _
+            .ToArray
+
+        If Not rangePixels.IsNullOrEmpty Then
+            Dim ms As New LibraryMatrix With {
+                .ms2 = rangePixels _
+                    .Select(Function(p) p.GetMs) _
+                    .IteratesALL _
+                    .ToArray _
+                    .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
+                    .ToArray,
+                .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
+            }
+
+            Call MyApplication.host.Invoke(
+                Sub()
+                    Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
+                    Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+                End Sub)
+        Else
+            Call MyApplication.host.showStatusMessage($"target region [{x1}, {y1}, {x2}, {y2}] not contains any data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Friend Sub RenderSummary(summary As IntensitySummary)
@@ -471,7 +484,7 @@ Public Class frmMsImagingViewer
             pixels:=pixelFilter,
             dimension:=dimensionSize,
             dimSize:=size.SizeParser,
-            threshold:=params.threshold,
+            logE:=params.logE,
             mapLevels:=params.mapLevels,
             colorSet:=params.colors.Description,
             scale:=params.scale
@@ -582,5 +595,27 @@ Public Class frmMsImagingViewer
     Private Sub ClearPinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearPinToolStripMenuItem.Click
         pinedPixel = Nothing
 
+    End Sub
+
+    Dim sampleRegions As New List(Of Rectangle)
+
+    Private Sub ClearSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSamplesToolStripMenuItem.Click
+        sampleRegions.Clear()
+    End Sub
+
+    Private Sub AddSampleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddSampleToolStripMenuItem.Click
+        If PixelSelector1.HasRegionSelection Then
+            sampleRegions.Add(PixelSelector1.RegionSelectin)
+        End If
+    End Sub
+
+    Private Sub exportMSISampleTable()
+        If sampleRegions.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("No sample dot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+
+
+
+        End If
     End Sub
 End Class
