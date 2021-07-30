@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports stdNum = System.Math
 
 Public Class PixelProperty
 
@@ -31,20 +32,20 @@ Public Class PixelProperty
         If into.Length = 0 Then
         Else
             NumOfIons = ms.Length
-            TopIonMz = ms.OrderByDescending(Function(i) i.intensity).First.mz
-            MaxIntensity = into.Max
-            MinIntensity = into.Min
-            TotalIon = into.Sum
-            AverageIons = into.Average
+            TopIonMz = stdNum.Round(ms.OrderByDescending(Function(i) i.intensity).First.mz, 4)
+            MaxIntensity = stdNum.Round(into.Max)
+            MinIntensity = stdNum.Round(into.Min)
+            TotalIon = stdNum.Round(into.Sum)
+            AverageIons = stdNum.Round(into.Average)
 
             Dim quartile = into.Quartile
 
-            Q1 = quartile.Q1
-            Q2 = quartile.Q2
-            Q3 = quartile.Q3
-            Q1Count = into.Where(Function(i) i <= Q1).Count
-            Q2Count = into.Where(Function(i) i <= Q2).Count
-            Q3Count = into.Where(Function(i) i <= Q3).Count
+            Q1 = stdNum.Round(quartile.Q1)
+            Q2 = stdNum.Round(quartile.Q2)
+            Q3 = stdNum.Round(quartile.Q3)
+            Q1Count = into.Where(Function(i) i <= quartile.Q1).Count
+            Q2Count = into.Where(Function(i) i <= quartile.Q2).Count
+            Q3Count = into.Where(Function(i) i <= quartile.Q3).Count
         End If
     End Sub
 
