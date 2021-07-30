@@ -584,5 +584,12 @@
 #define cmdTabGroupKEGG_LabelDescription_RESID 60022
 #define cmdTabGroupKEGG_TooltipTitle_RESID 60023
 #define cmdTabGroupKEGG_TooltipDescription_RESID 60024
-#define InternalCmd2_LabelTitle_RESID 60025
-#define InternalCmd4_LabelTitle_RESID 60026
+#define cmdButtonExportSample 135 
+#define cmdButtonExportSample_LabelTitle_RESID 60025
+#define cmdButtonExportSample_LabelDescription_RESID 60026
+#define cmdButtonExportSample_TooltipTitle_RESID 60027
+#define cmdButtonExportSample_TooltipDescription_RESID 60028
+#define cmdButtonExportSample_SmallImages_192__RESID 60029
+#define cmdButtonExportSample_LargeImages_192__RESID 60030
+#define InternalCmd2_LabelTitle_RESID 60031
+#define InternalCmd4_LabelTitle_RESID 60032

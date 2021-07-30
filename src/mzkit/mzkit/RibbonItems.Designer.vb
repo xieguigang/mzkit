@@ -111,6 +111,7 @@ Namespace RibbonLib.Controls
             Public Const cmdTabMSIFile As UInteger = 129
             Public Const cmdButtonMSIRowScans As UInteger = 128
             Public Const cmdButtonExportMSIMzpack As UInteger = 127
+            Public Const cmdButtonExportSample As UInteger = 135
             Public Const cmdGroupKEGG As UInteger = 133
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
@@ -724,6 +725,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonExportMSIMzpack
             End Get
         End Property
+        Private _ButtonExportSample As RibbonButton
+        Public ReadOnly Property ButtonExportSample As RibbonButton
+            Get
+                Return _ButtonExportSample
+            End Get
+        End Property
         Private _GroupKEGG As RibbonTabGroup
         Public ReadOnly Property GroupKEGG As RibbonTabGroup
             Get
@@ -1005,6 +1012,7 @@ Namespace RibbonLib.Controls
             _TabMSIFile = New RibbonGroup(_ribbon, Cmd.cmdTabMSIFile)
             _ButtonMSIRowScans = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRowScans)
             _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
+            _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
             _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)

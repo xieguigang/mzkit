@@ -101,6 +101,7 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonMSIBasePeakIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.BasePeak)
         AddHandler RibbonEvents.ribbonItems.ButtonMSIAverageIon.ExecuteEvent, Sub() Call RenderSummary(IntensitySummary.Average)
 
+        AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
 
         Call ApplyVsTheme(ContextMenuStrip1)
@@ -605,6 +606,16 @@ Public Class frmMsImagingViewer
     Private Sub AddSampleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddSampleToolStripMenuItem.Click
         If PixelSelector1.HasRegionSelection Then
             sampleRegions.Add(PixelSelector1.RegionSelectin)
+        End If
+    End Sub
+
+    Private Sub exportMSISampleTable()
+        If sampleRegions.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("No sample dot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+
+
+
         End If
     End Sub
 End Class
