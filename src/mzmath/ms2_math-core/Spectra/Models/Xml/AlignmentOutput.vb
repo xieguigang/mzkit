@@ -77,6 +77,16 @@ Namespace Spectra.Xml
         <XmlArray("alignments")>
         Public Property alignments As SSM2MatrixFragment()
 
+        Public ReadOnly Property nhits As Integer
+            Get
+                Return alignments _
+                    .Where(Function(a)
+                               Return Not Double.Parse(a.da).IsNaNImaginary
+                           End Function) _
+                    .Count
+            End Get
+        End Property
+
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query.id)
