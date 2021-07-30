@@ -95,7 +95,9 @@ Public Class MsImageProperty
     <Category("Render")> Public Property background As Color
     <Category("Render")> <DisplayName("width")> Public Property pixel_width As Integer = 10
     <Category("Render")> <DisplayName("height")> Public Property pixel_height As Integer = 10
-    <Category("Render")> Public Property threshold As Double = 0.0
+
+    <Description("Log(e) transformation of the intensity value?")>
+    <Category("Render")> Public Property logE As Boolean = True
     <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
     <Category("Render")> Public Property imageSmooth As SmoothFilters
