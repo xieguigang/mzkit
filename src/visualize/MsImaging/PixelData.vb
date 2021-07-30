@@ -91,7 +91,15 @@ Public Class PixelData
         End If
 
         For Each point As PixelData In pixels
-            level = intensityRange.ScaleMapping(point.intensity, levelRange)
+            If logE Then
+                If point.intensity <= 1 Then
+                    level = 0
+                Else
+                    level = intensityRange.ScaleMapping(stdNum.Log(point.intensity), levelRange)
+                End If
+            Else
+                level = intensityRange.ScaleMapping(point.intensity, levelRange)
+            End If
 
             If level > 1 Then
                 point.level = 1
