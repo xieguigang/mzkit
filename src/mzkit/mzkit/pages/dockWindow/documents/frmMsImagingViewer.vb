@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::bbb734cded1b830a28ec32418fc46733, src\mzkit\mzkit\pages\dockWindow\documents\frmMsImagingViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMsImagingViewer
-    ' 
-    '     Properties: FilePath, MimeType
-    ' 
-    '     Function: (+2 Overloads) createRenderTask
-    ' 
-    '     Sub: checks_Click, ClearPinToolStripMenuItem_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, exportMzPack
-    '          frmMsImagingViewer_Closing, frmMsImagingViewer_Load, loadimzML, loadmzML, loadRaw
-    '          LoadRender, OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, Plot
-    '          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
-    '          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
-    ' 
-    ' /********************************************************************************/
+' Class frmMsImagingViewer
+' 
+'     Properties: FilePath, MimeType
+' 
+'     Function: (+2 Overloads) createRenderTask
+' 
+'     Sub: checks_Click, ClearPinToolStripMenuItem_Click, CopyFullPath, ExportMatrixToolStripMenuItem_Click, exportMzPack
+'          frmMsImagingViewer_Closing, frmMsImagingViewer_Load, loadimzML, loadmzML, loadRaw
+'          LoadRender, OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, Plot
+'          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
+'          SaveImageToolStripMenuItem_Click, showPixel, tweaks_PropertyValueChanged
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -265,25 +265,25 @@ Public Class frmMsImagingViewer
             Sub()
                 Dim rangePixels = render.pixelReader.GetPixel(x1, y1, x2, y2).ToArray
 
-                If rangePixels.IsNullOrEmpty Then
-                    Return
+                If Not rangePixels.IsNullOrEmpty Then
+                    Dim ms As New LibraryMatrix With {
+                        .ms2 = rangePixels _
+                            .Select(Function(p) p.GetMs) _
+                            .IteratesALL _
+                            .ToArray _
+                            .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
+                            .ToArray,
+                        .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
+                    }
+
+                    Call MyApplication.host.Invoke(
+                        Sub()
+                            Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
+                            Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
+                        End Sub)
+                Else
+                    Call MyApplication.host.showStatusMessage($"target region [{x1}, {y1}, {x2}, {y2}] not contains any data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 End If
-
-                Dim ms As New LibraryMatrix With {
-                    .ms2 = rangePixels _
-                        .Select(Function(p) p.GetMs) _
-                        .IteratesALL _
-                        .ToArray _
-                        .Centroid(Tolerance.DeltaMass(0.05), New RelativeIntensityCutoff(0.05)) _
-                        .ToArray,
-                    .name = $"Pixel [{x1},{y1} ~ {x2},{y2}]"
-                }
-
-                Call MyApplication.host.Invoke(
-                    Sub()
-                        Call MyApplication.host.mzkitTool.showMatrix(ms.ms2, ms.name)
-                        Call MyApplication.host.mzkitTool.PlotSpectrum(ms, focusOn:=False)
-                    End Sub)
 
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()

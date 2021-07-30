@@ -31,11 +31,16 @@ Public Class MSIPixelPropertyWindow
         }
         Dim Q2line As New Line(New PointF(0, q.Query(0.5)), New PointF(1, q.Query(0.5)), New Pen(Color.Red, 10))
 
-        PictureBox1.BackgroundImage = {serial}.Plot(size:="2700,2000", fill:=True, ablines:={Q2line}).AsGDIImage
-        PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
+        PictureBox1.BackgroundImage = {serial}.Plot(
+            size:="2700,2000",
+            padding:="padding:100px 100px 150px 150px;",
+            fill:=True,
+            ablines:={Q2line}
+        ).AsGDIImage
     End Sub
 
     Private Sub MSIPixelPropertyWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MSI Pixel Properties"
+        PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
 End Class
