@@ -45,6 +45,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports BioDeep
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
@@ -55,19 +56,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -80,21 +79,52 @@ Module TaskScript
     Public Sub ExportMSISampleTable(raw As String, regions As Rectangle(), save As Stream)
         Dim data As New Dictionary(Of String, ms2())
         Dim render As New Drawer(mzPack.ReadAll(raw.Open(FileMode.Open, doClear:=False, [readOnly]:=True), ignoreThumbnail:=True))
+        Dim ppm20 As Tolerance = Tolerance.PPM(20)
+        Dim j As i32 = 1
 
         For Each region As Rectangle In regions
-            data.Add(region.ToString, render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
+            data.Add($"region_{++j}", render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
         Next
 
         Dim allMz As Double() = data.Values _
             .IteratesALL _
             .ToArray _
-            .Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)) _
+            .Centroid(ppm20, New RelativeIntensityCutoff(0.01)) _
             .Select(Function(i) i.mz) _
             .OrderBy(Function(mz) mz) _
             .ToArray
+        Dim dataSet As DataSet() = allMz _
+            .AsParallel _
+            .Select(Function(mz)
+                        Return New DataSet With {
+                            .ID = $"MZ_{mz.ToString("F5")}",
+                            .Properties = data _
+                                .ToDictionary(Function(a) a.Key,
+                                              Function(a)
+                                                  Return a.Value.alignMz(mz, ppm20)
+                                              End Function)
+                        }
+                    End Function) _
+            .ToArray
+        Dim file As New StreamWriter(save)
 
+        Call file.WriteLine({"MID"}.JoinIterates(data.Keys).JoinBy(","))
 
+        For Each line As DataSet In dataSet
+            Call file.WriteLine({line.ID}.JoinIterates(line(data.Keys).Select(Function(d) d.ToString)).JoinBy(","))
+        Next
+
+        Call file.Flush()
     End Sub
+
+    <Extension>
+    Public Function alignMz(data As ms2(), mz As Double, tolerance As Tolerance) As Double
+        Return data _
+            .Where(Function(i) tolerance(mz, i.mz)) _
+            .OrderByDescending(Function(a) a.intensity) _
+            .Select(Function(a) a.intensity) _
+            .FirstOrDefault
+    End Function
 
     <ExportAPI("biodeep.session")>
     Public Sub SetBioDeepSession(ssid As String)
