@@ -56,7 +56,7 @@ Namespace GCMS.Vendors
             Dim time As doubles = cdf.getDataVariable("scan_acquisition_time")
             Dim tic As doubles = cdf.getDataVariable("total_intensity")
             Dim pointCount As integers = cdf.getDataVariable("point_count")
-            Dim massValues As floats = cdf.getDataVariable("mass_values")
+            Dim massValues As ICDFDataVector = cdf.getDataVariable("mass_values")
             Dim intensityValues As floats = cdf.getDataVariable("intensity_values")
             Dim scan_times As floats = cdf.getDataVariable("time_values")
             Dim attrs As New Dictionary(Of String, String)
@@ -68,6 +68,7 @@ Namespace GCMS.Vendors
             Dim ms As ms1_scan()() = New ms1_scan(pointCount.Length - 1)() {}
             Dim index As i32 = Scan0
             Dim size%
+            Dim massReader As Func(Of Integer, Double) = readValue(massValues)
 
             For i As Integer = 0 To ms.Length - 1
                 size = pointCount(i)
@@ -75,7 +76,7 @@ Namespace GCMS.Vendors
 
                 For j As Integer = 0 To size - 1
                     ms(i)(j) = New ms1_scan With {
-                        .mz = massValues(index),
+                        .mz = massReader(index),
                         .intensity = intensityValues(index),
                         .scan_time = scan_times(++index)
                     }
@@ -90,6 +91,16 @@ Namespace GCMS.Vendors
                 .attributes = attrs,
                 .mz = ms.MzList
             }
+        End Function
+
+        Private Function readValue(data As ICDFDataVector) As Func(Of Integer, Double)
+            If TypeOf data Is floats Then
+                Return Function(i) DirectCast(data, floats)(i)
+            ElseIf TypeOf data Is shorts Then
+                Return Function(i) DirectCast(data, shorts)(i)
+            Else
+                Throw New NotImplementedException
+            End If
         End Function
     End Module
 End Namespace
