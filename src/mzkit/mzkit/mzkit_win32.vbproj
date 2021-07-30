@@ -469,6 +469,12 @@
     <Compile Include="pages\dockWindow\tools\AdjustParameters.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\tools\NotificationWindow.Designer.vb">
+      <DependentUpon>NotificationWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\tools\NotificationWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\tools\MSIPixelPropertyWindow.Designer.vb">
       <DependentUpon>MSIPixelPropertyWindow.vb</DependentUpon>
     </Compile>

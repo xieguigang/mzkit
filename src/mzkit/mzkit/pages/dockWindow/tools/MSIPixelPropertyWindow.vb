@@ -29,12 +29,16 @@ Public Class MSIPixelPropertyWindow
         }
         Dim Q2line As New Line(New PointF(0, q.Query(0.5)), New PointF(1, q.Query(0.5)), New Pen(Color.Red, 10))
 
-        PictureBox1.BackgroundImage = {serial}.Plot(
-            size:="2100,1600",
-            padding:="padding:50px 50px 100px 100px;",
-            fill:=True,
-            ablines:={Q2line}
-        ).AsGDIImage
+        If DirectCast(PropertyGrid1.SelectedObject, PixelProperty).NumOfIons = 0 Then
+            PictureBox1.BackgroundImage = Nothing
+        Else
+            PictureBox1.BackgroundImage = {serial}.Plot(
+                size:="2100,1600",
+                padding:="padding:50px 50px 100px 100px;",
+                fill:=True,
+                ablines:={Q2line}
+            ).AsGDIImage
+        End If
     End Sub
 
     Private Sub MSIPixelPropertyWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
