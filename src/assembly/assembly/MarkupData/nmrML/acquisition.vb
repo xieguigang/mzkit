@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -78,6 +79,19 @@ Namespace MarkupData.nmrML
 
     End Class
 
+    Public Class acquisitionParameterSet
+
+        Public Property DirectDimensionParameterSet As DirectDimensionParameterSet
+
+    End Class
+
+    Public Class DirectDimensionParameterSet
+
+        Public Property sweepWidth As cvParam
+        Public Property irradiationFrequency As cvParam
+
+    End Class
+
     Public Class acquisitionMultiD
 
         ''' <summary>
@@ -85,6 +99,14 @@ Namespace MarkupData.nmrML
         ''' </summary>
         ''' <returns></returns>
         Public Property fidData As fidData
+        Public Property acquisitionParameterSet As acquisitionParameterSet
+
+        Public Function SW() As Double
+            Dim SFO1 As Double = acquisitionParameterSet.DirectDimensionParameterSet.irradiationFrequency.GetDouble
+            Dim SWH As Double = acquisitionParameterSet.DirectDimensionParameterSet.sweepWidth.GetDouble
+
+            Return SWH / SFO1
+        End Function
 
         Public Function ParseMatrix() As fidComplex()
             Dim rawComplex As New List(Of ms2)
