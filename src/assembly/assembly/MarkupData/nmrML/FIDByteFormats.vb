@@ -25,7 +25,7 @@ Namespace MarkupData.nmrML
 
         <Extension>
         Public Function DecodeDouble(fidData As fidData) As Double()
-            Using bytes As MemoryStream = Convert.FromBase64String(fidData.base64).UnZipStream(noMagic:=True)
+            Using bytes As MemoryStream = fidData.decodeStream
                 Return bytes.ToArray _
                     .Split(8) _
                     .Select(Function(byts)
@@ -37,8 +37,17 @@ Namespace MarkupData.nmrML
         End Function
 
         <Extension>
+        Private Function decodeStream(fidData As fidData) As MemoryStream
+            If fidData.compressed = "false" OrElse fidData.compressed = "none" Then
+                Return New MemoryStream(Convert.FromBase64String(fidData.base64))
+            Else
+                Return Convert.FromBase64String(fidData.base64).UnZipStream(noMagic:=True)
+            End If
+        End Function
+
+        <Extension>
         Public Function DecodeInteger(fidData As fidData) As Double()
-            Using bytes As MemoryStream = Convert.FromBase64String(fidData.base64).UnZipStream(noMagic:=True)
+            Using bytes As MemoryStream = fidData.decodeStream
                 Return bytes.ToArray _
                     .Split(4) _
                     .Select(Function(byts)
