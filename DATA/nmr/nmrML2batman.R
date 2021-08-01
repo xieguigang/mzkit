@@ -1,4 +1,5 @@
 #!/usr/bin/Rscript
+# https://github.com/jianlianggao/container-nmrML2BATMAN/blob/master/nmrML2batman.R
 
 ## import optparse library
 suppressPackageStartupMessages(library("optparse"))
