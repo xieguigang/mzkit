@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::a5aeaf70a63ac71740c5ad39e02e23e1, src\assembly\assembly\MarkupData\nmrML\acquisition.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class acquisition
-    ' 
-    '         Properties: acquisition1D, acquisitionMultiD
-    ' 
-    '         Function: ParseMatrix
-    ' 
-    '     Class acquisitionMultiD
-    ' 
-    '         Properties: fidData
-    ' 
-    '         Function: ParseMatrix
-    ' 
-    '     Class fidData
-    ' 
-    '         Properties: base64, byteFormat, compressed, encodedLength
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class acquisition
+' 
+'         Properties: acquisition1D, acquisitionMultiD
+' 
+'         Function: ParseMatrix
+' 
+'     Class acquisitionMultiD
+' 
+'         Properties: fidData
+' 
+'         Function: ParseMatrix
+' 
+'     Class fidData
+' 
+'         Properties: base64, byteFormat, compressed, encodedLength
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -88,29 +88,16 @@ Namespace MarkupData.nmrML
 
         Public Function ParseMatrix() As LibraryMatrix
             Dim FID As New List(Of ms2)
+            Dim vec As Double() = fidData.DecodeBytes
+            Dim freq As ms2
 
-            Using bytes As New BinaryDataReader(Convert.FromBase64String(fidData.base64).UnZipStream(noMagic:=True))
-                Dim n As Integer = bytes.Length / 16
-                Dim values As Double()
-                Dim freq As ms2
-
-                If n * 16 <> bytes.Length Then
-                    Throw New InvalidDataException
-                End If
-
-                bytes.ByteOrder = ByteOrder.LittleEndian
-                bytes.Seek(Scan0, SeekOrigin.Begin)
-
-                For i As Integer = 0 To n - 1
-                    values = bytes.ReadDoubles(2)
-                    freq = New ms2 With {
-                        .mz = values(Scan0),
-                        .intensity = values(1)
-                    }
-
-                    FID.Add(freq)
-                Next
-            End Using
+            For i As Integer = 0 To vec.Length - 1 Step 2
+                freq = New ms2 With {
+                    .mz = vec(i),
+                    .intensity = vec(i + 1)
+                }
+                FID.Add(freq)
+            Next
 
             Return New LibraryMatrix With {
                 .ms2 = FID.ToArray
