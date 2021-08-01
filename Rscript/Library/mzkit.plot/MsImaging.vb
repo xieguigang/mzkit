@@ -250,6 +250,17 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' rendering ions MSI in (R,G,B) color channels
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="r"></param>
+    ''' <param name="g"></param>
+    ''' <param name="b"></param>
+    ''' <param name="pixelSize"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("rgb")>
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
@@ -270,6 +281,30 @@ Module MsImaging
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
 
         Return Drawer.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
+    End Function
+
+    ''' <summary>
+    ''' get MSI pixels layer via given ``m/z`` value. 
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("MSIlayer")>
+    Public Function GetIonLayer(viewer As Drawer, mz As Double,
+                                Optional tolerance As Object = "da:0.1",
+                                Optional env As Environment = Nothing)
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim pixels As PixelData() = viewer _
+            .LoadPixels({mz}, mzErr.TryCast(Of Tolerance)) _
+            .ToArray
+
     End Function
 
     ''' <summary>
