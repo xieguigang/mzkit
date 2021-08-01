@@ -46,7 +46,7 @@ Namespace MarkupData.nmrML
             Dim dppm As Double = SW / (SI - 1)
             Dim ppm_max = startValue
             Dim ppm_min = endValue
-            Dim ppm As Double() = seq(from:=ppm_min, to:=ppm_max, by:=dppm)
+            Dim ppm As Double() = seq(from:=ppm_min, to:=ppm_max, by:=dppm).ToArray
 
             Return ppm
         End Function

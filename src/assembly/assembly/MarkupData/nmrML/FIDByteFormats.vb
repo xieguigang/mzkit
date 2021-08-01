@@ -1,7 +1,5 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace MarkupData.nmrML
@@ -13,10 +11,10 @@ Namespace MarkupData.nmrML
 
         <Extension>
         Public Function DecodeBytes(fidData As fidData) As Double()
-            Select Case fidData.byteFormat
-                Case "Complex128", "Complex64"
+            Select Case fidData.byteFormat.ToLower
+                Case "complex128", "complex64"
                     Return fidData.DecodeDouble
-                Case "Integer32", "Complex32int", "class java.lang.Integer"
+                Case "integer32", "complex32int", "class java.lang.integer"
                     Return fidData.DecodeInteger
                 Case Else
                     Throw New NotImplementedException(fidData.byteFormat)

@@ -77,5 +77,15 @@ Module NMR
         Return data.ParseMatrix
     End Function
 
+    <ExportAPI("spectrumList")>
+    Public Function spectrumList(nmrML As nmrML.XML) As spectrumList()
+        Return nmrML.spectrumList
+    End Function
+
+    <ExportAPI("spectrum")>
+    Public Function spectrumData(spectrum As spectrumList, nmrML As nmrML.XML) As LibraryMatrix
+        Return spectrum.spectrum1D(Scan0).ParseMatrix(SW:=nmrML.acquisition.First.acquisition1D.SW)
+    End Function
+
 End Module
 
