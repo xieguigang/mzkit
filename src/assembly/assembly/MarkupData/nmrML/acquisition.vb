@@ -55,11 +55,11 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace MarkupData.nmrML
 
@@ -68,7 +68,7 @@ Namespace MarkupData.nmrML
         Public Property acquisitionMultiD As acquisitionMultiD
         Public Property acquisition1D As acquisitionMultiD
 
-        Public Function ParseMatrix() As LibraryMatrix
+        Public Function ParseMatrix() As fidComplex()
             If acquisition1D Is Nothing Then
                 Return acquisitionMultiD.ParseMatrix
             Else
@@ -86,23 +86,43 @@ Namespace MarkupData.nmrML
         ''' <returns></returns>
         Public Property fidData As fidData
 
-        Public Function ParseMatrix() As LibraryMatrix
-            Dim FID As New List(Of ms2)
+        Public Function ParseMatrix() As fidComplex()
+            Dim rawComplex As New List(Of ms2)
             Dim vec As Double() = fidData.DecodeBytes
-            Dim freq As ms2
+            Dim rawR As Double() = New Double(vec.Length / 2 - 1) {}
+            Dim rawI As Double() = New Double(vec.Length / 2 - 1) {}
+            Dim j As i32 = Scan0
 
             For i As Integer = 0 To vec.Length - 1 Step 2
-                freq = New ms2 With {
-                    .mz = vec(i),
-                    .intensity = vec(i + 1)
-                }
-                FID.Add(freq)
+                rawR(j) = vec(i)
+                rawI(++j) = vec(i + 1)
             Next
 
-            Return New LibraryMatrix With {
-                .ms2 = FID.ToArray
-            }
+            Dim index As Integer() = seq(from:=3 * rawR.Length / 4, [to]:=rawR.Length, by:=1) _
+                .Select(Function(d) CInt(d) - 1) _
+                .ToArray
+            Dim mediaR = rawR.AsVector()(index).Average
+            Dim mediaI = -rawI.AsVector()(index).Average
+
+            rawR = rawR.AsVector - mediaR
+            rawI = rawI.AsVector - mediaI
+
+            Return rawR _
+                .Select(Function(r, i)
+                            Return New fidComplex With {
+                                .real = r,
+                                .imaging = rawI(i)
+                            }
+                        End Function) _
+                .ToArray
         End Function
+
+    End Class
+
+    Public Class fidComplex
+
+        Public Property real As Double
+        Public Property imaging As Double
 
     End Class
 

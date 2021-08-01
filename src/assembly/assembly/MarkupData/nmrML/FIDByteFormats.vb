@@ -30,7 +30,7 @@ Namespace MarkupData.nmrML
                     .Split(8) _
                     .Select(Function(byts)
                                 'Array.Reverse(byts)
-                                Return CDbl(BitConverter.ToInt64(byts, Scan0))
+                                Return BitConverter.ToDouble(byts, Scan0)
                             End Function) _
                     .ToArray
             End Using
