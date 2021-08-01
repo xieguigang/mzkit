@@ -151,9 +151,22 @@ Public Class Drawer : Implements IDisposable
         )
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="R"></param>
+    ''' <param name="G"></param>
+    ''' <param name="B"></param>
+    ''' <param name="dimension"></param>
+    ''' <param name="dimSize">
+    ''' set this parameter to value nothing to returns
+    ''' the raw image without any scale operation.
+    ''' </param>
+    ''' <param name="scale"></param>
+    ''' <returns></returns>
     Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                dimension As Size,
-                                               dimSize As Size,
+                                               Optional dimSize As Size = Nothing,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
 
         Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
@@ -217,9 +230,14 @@ Public Class Drawer : Implements IDisposable
                End Function
     End Function
 
-    Private Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
+    Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
         Dim newWidth As Integer = dimension.Width * dimSize.Width
         Dim newHeight As Integer = dimension.Height * dimSize.Height
+
+        Return ScaleLayer(raw, newWidth, newHeight, scale)
+    End Function
+
+    Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer, scale As InterpolationMode) As Bitmap
         Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
         Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
 
