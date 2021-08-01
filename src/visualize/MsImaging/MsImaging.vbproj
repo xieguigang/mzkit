@@ -283,6 +283,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SingleIonLayer.vb" />
+    <Compile Include="MSIPlot.vb" />
     <Compile Include="FeatureRegions.vb" />
     <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
     <Compile Include="PixelScan\InMemoryPixel.vb" />
