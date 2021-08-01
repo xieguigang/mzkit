@@ -283,6 +283,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RGBMSIPlot.vb" />
     <Compile Include="SingleIonLayer.vb" />
     <Compile Include="MSIPlot.vb" />
     <Compile Include="FeatureRegions.vb" />
