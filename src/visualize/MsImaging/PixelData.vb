@@ -64,6 +64,18 @@ Public Class PixelData
         Return $"Dim [{x},{y}] as intensity = {intensity}"
     End Function
 
+    Private Shared Function getIntensityAuto(p As PixelData, logE As Boolean) As Double
+        If logE Then
+            If p.intensity <= 1 Then
+                Return 0
+            Else
+                Return stdNum.Log(p.intensity)
+            End If
+        Else
+            Return p.intensity
+        End If
+    End Function
+
     ''' <summary>
     ''' 将响应度数据统一缩放到[0,1]之间
     ''' </summary>
@@ -72,15 +84,7 @@ Public Class PixelData
     Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As Double = 1, Optional logE As Boolean = False) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
-                        If logE Then
-                            If p.intensity <= 1 Then
-                                Return 0
-                            Else
-                                Return stdNum.Log(p.intensity)
-                            End If
-                        Else
-                            Return p.intensity
-                        End If
+                        Return getIntensityAuto(p, logE)
                     End Function) _
             .Range
         Dim level As Double
