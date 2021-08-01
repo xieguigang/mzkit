@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::76248b05807c093d28c7062c0a8875d4, Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MsImaging
-    ' 
-    '     Function: FilterMz, flatten, GetMsMatrx, GetPixel, layer
-    '               LoadPixels, openIndexedCacheFile, renderRowScans, RGB, viewer
-    '               writeIndexCacheFile, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Module MsImaging
+' 
+'     Function: FilterMz, flatten, GetMsMatrx, GetPixel, layer
+'               LoadPixels, openIndexedCacheFile, renderRowScans, RGB, viewer
+'               writeIndexCacheFile, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -70,6 +71,20 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("MsImaging")>
 Module MsImaging
+
+    Sub New()
+        Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+    End Sub
+
+    Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
+        Dim theme As New Theme With {
+            .padding = InteropArgumentHelper.getPadding(args!padding)
+        }
+        Dim app As New MSIPlot(ion, theme)
+        Dim size As String = InteropArgumentHelper.getSize(args!size, env)
+
+        Return app.Plot(size)
+    End Function
 
     <ExportAPI("write.MSI_XIC")>
     <RApiReturn(GetType(XICWriter))>
@@ -292,9 +307,10 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("MSIlayer")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function GetIonLayer(viewer As Drawer, mz As Double,
                                 Optional tolerance As Object = "da:0.1",
-                                Optional env As Environment = Nothing)
+                                Optional env As Environment = Nothing) As Object
         Dim mzErr = Math.getTolerance(tolerance, env)
 
         If mzErr Like GetType(Message) Then
@@ -305,6 +321,11 @@ Module MsImaging
             .LoadPixels({mz}, mzErr.TryCast(Of Tolerance)) _
             .ToArray
 
+        Return New SingleIonLayer With {
+            .IonMz = mz,
+            .DimensionSize = viewer.dimension,
+            .MSILayer = pixels
+        }
     End Function
 
     ''' <summary>
