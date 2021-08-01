@@ -29,6 +29,7 @@ Namespace MarkupData.nmrML
                 Return bytes.ToArray _
                     .Split(8) _
                     .Select(Function(byts)
+                                Array.Reverse(byts)
                                 Return BitConverter.ToDouble(byts, Scan0)
                             End Function) _
                     .ToArray
@@ -41,6 +42,7 @@ Namespace MarkupData.nmrML
                 Return bytes.ToArray _
                     .Split(4) _
                     .Select(Function(byts)
+                                Array.Reverse(byts)
                                 Return CDbl(BitConverter.ToInt32(byts, Scan0))
                             End Function) _
                     .ToArray
