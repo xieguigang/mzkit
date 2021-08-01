@@ -108,14 +108,23 @@ Public Class PixelsSampler
     Public Iterator Function Sampling(samplingSize As Size, tolerance As Tolerance) As IEnumerable(Of InMemoryVectorPixel)
         Dim dw As Integer = samplingSize.Width
         Dim dh As Integer = samplingSize.Height
+        Dim block As NamedCollection(Of ms2)()
 
         For x As Integer = 1 To dims.Width Step dw
             For y As Integer = 1 To dims.Height Step dh
-                Dim block As NamedCollection(Of ms2)() = GetBlock(x, y, dw, dh) _
-                    .Select(Function(p) p.GetMsPipe) _
-                    .IteratesALL _
-                    .GroupBy(tolerance) _
-                    .ToArray
+                If dw = 1 AndAlso dh = 1 Then
+                    block = col_scans(x - 1)(y - 1) _
+                        .GetMsPipe _
+                        .GroupBy(tolerance) _
+                        .ToArray
+                Else
+                    block = GetBlock(x, y, dw, dh) _
+                        .Select(Function(p) p.GetMsPipe) _
+                        .IteratesALL _
+                        .GroupBy(tolerance) _
+                        .ToArray
+                End If
+
                 Dim mz As Double() = block.Select(Function(d) Aggregate p In d Into Average(p.mz)).ToArray
                 Dim into As Double() = block.Select(Function(d) Aggregate p In d Into Max(p.intensity)).ToArray
 
