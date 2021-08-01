@@ -73,7 +73,7 @@ Module NMR
     ''' <param name="data"></param>
     ''' <returns></returns>
     <ExportAPI("FID")>
-    Public Function GetMatrix(data As acquisition) As LibraryMatrix
+    Public Function GetMatrix(data As acquisition) As fidComplex()
         Return data.ParseMatrix
     End Function
 
