@@ -1,19 +1,19 @@
 ﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
-#if netcore5=0 then
+#If netcore5 = 0 Then
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Comprehensive Chromatography")>
-<Assembly: AssemblyDescription("Comprehensive Chromatography")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Processing Comprehensive Chromatography Raw Data Files")>
+<Assembly: AssemblyDescription("Processing Comprehensive Chromatography Raw Data Files")>
+<Assembly: AssemblyCompany("BioNovoGene")>
 <Assembly: AssemblyProduct("Comprehensive")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2021")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 

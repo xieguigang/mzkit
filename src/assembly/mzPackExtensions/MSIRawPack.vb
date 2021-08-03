@@ -54,7 +54,7 @@ Imports stdNum = System.Math
 Public Module MSIRawPack
 
     ''' <summary>
-    ''' 
+    ''' single raw data file as MSI data
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="pixels">
