@@ -80,6 +80,7 @@ Module RibbonEvents
         AddHandler ribbonItems.ShowProperty.ExecuteEvent, AddressOf ShowProperties
         AddHandler ribbonItems.ButtonCopyProperties.ExecuteEvent, AddressOf CopyProperties
         AddHandler ribbonItems.ButtonCopyMatrix.ExecuteEvent, AddressOf CopyMatrix
+        AddHandler ribbonItems.ButtonCopyPlot.ExecuteEvent, AddressOf CopyPlotImage
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call MyApplication.host.ShowPage(MyApplication.host.mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
@@ -149,6 +150,16 @@ Module RibbonEvents
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+    End Sub
+
+    Public Sub CopyPlotImage()
+        Dim img As Image = MyApplication.host.mzkitTool.PictureBox1.BackgroundImage
+
+        If Not img Is Nothing Then
+            Call Clipboard.Clear()
+            Call Clipboard.SetImage(img)
+            Call MyApplication.host.showStatusMessage($"Plot image '{MyApplication.host.mzkitTool.matrixName}' is copy to clipboard!")
+        End If
     End Sub
 
     Public Sub CopyMatrix()
