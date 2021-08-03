@@ -215,8 +215,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MsImaging\Correction.vb" />
     <Compile Include="GC2Dimensional.vb" />
-    <Compile Include="MsImagingRaw.vb" />
+    <Compile Include="MsImaging\MsImagingRaw.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
