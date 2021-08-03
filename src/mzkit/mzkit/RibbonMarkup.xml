@@ -1544,6 +1544,14 @@
         <Image MinDPI="192">Res/excel-icon.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonCopyProperties" Id="136" LabelTitle="Copy Properties" LabelDescription="Copy Properties" TooltipTitle="Copy Properties" TooltipDescription="Copy Properties">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-paste.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-paste.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1565,6 +1573,7 @@
             <DropDownButton CommandName="cmdGroupExport">
               <Button CommandName="cmdButtonExportImage" />
               <Button CommandName="cmdButtonExportMatrix" />
+              <Button CommandName="cmdButtonCopyProperties" />
             </DropDownButton>
           </MenuGroup>
         </ContextMenu>
