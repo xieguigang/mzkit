@@ -49,7 +49,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
-Namespace MarkupData.imzML
+Namespace MsImaging
 
     ''' <summary>
     ''' 在这里必须要假设每一个像素点的扫描时间是等长的
@@ -91,6 +91,5 @@ Namespace MarkupData.imzML
 
             Return pt
         End Function
-
     End Class
 End Namespace
