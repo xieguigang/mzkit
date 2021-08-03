@@ -83,6 +83,8 @@ Namespace MarkupData.nmrML
 
         <XmlElement(NameOf(acquisition))>
         Public Property acquisition As acquisition()
+        <XmlElement(NameOf(spectrumList))>
+        Public Property spectrumList As spectrumList()
 
     End Class
 

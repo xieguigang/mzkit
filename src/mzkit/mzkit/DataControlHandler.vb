@@ -61,33 +61,35 @@ Module DataControlHandler
     Public Sub SaveDataGrid(table As DataGridView, title$)
         Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
             If file.ShowDialog = DialogResult.OK Then
-                Call table.WriteTableToFile(file.FileName)
-                Call MessageBox.Show(title.Replace("%s", file.FileName), "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Using writeTsv As StreamWriter = file.FileName.OpenWriter(encoding:=Encodings.UTF8WithoutBOM)
+                    Call table.WriteTableToFile(writeTsv)
+                    Call MessageBox.Show(title.Replace("%s", file.FileName), "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End Using
             End If
         End Using
     End Sub
 
     <Extension>
-    Public Sub WriteTableToFile(table As DataGridView, fileName As String)
-        Using writeTsv As StreamWriter = fileName.OpenWriter(encoding:=Encodings.UTF8WithoutBOM)
-            Dim row As New List(Of String)
+    Public Sub WriteTableToFile(table As DataGridView, writeTsv As TextWriter)
+        Dim row As New List(Of String)
 
-            For i As Integer = 0 To table.Columns.Count - 1
-                row.Add(table.Columns(i).HeaderText)
+        For i As Integer = 0 To table.Columns.Count - 1
+            row.Add(table.Columns(i).HeaderText)
+        Next
+
+        writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+
+        For j As Integer = 0 To table.Rows.Count - 1
+            Dim rowObj = table.Rows(j)
+
+            For i As Integer = 0 To rowObj.Cells.Count - 1
+                row.Add(any.ToString(rowObj.Cells(i).Value))
             Next
 
             writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+        Next
 
-            For j As Integer = 0 To table.Rows.Count - 1
-                Dim rowObj = table.Rows(j)
-
-                For i As Integer = 0 To rowObj.Cells.Count - 1
-                    row.Add(any.ToString(rowObj.Cells(i).Value))
-                Next
-
-                writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
-            Next
-        End Using
+        writeTsv.Flush()
     End Sub
 
     <Extension>
