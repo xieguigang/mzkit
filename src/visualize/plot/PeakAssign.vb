@@ -100,6 +100,9 @@ Public Class PeakAssign : Inherits Plot
         Else
             Me.images = images
         End If
+
+        xlabel = "M/z ratio"
+        ylabel = "Relative Intensity (%)"
     End Sub
 
     Private Function ResizeThisWidth(original As Image, maxwidth As Integer) As Size
@@ -165,8 +168,8 @@ Public Class PeakAssign : Inherits Plot
         Call Axis.DrawAxis(
             g, canvas, scaler,
             showGrid:=True,
-            xlabel:="M/z ratio",
-            ylabel:="Relative Intensity (%)",
+            xlabel:=xlabel,
+            ylabel:=ylabel,
             XtickFormat:="F4",
             YtickFormat:="F0",
             gridFill:=theme.gridFill,
@@ -189,7 +192,7 @@ Public Class PeakAssign : Inherits Plot
         Dim barHighlight As Brush = Me.barHighlight.GetBrush
         Dim label As String
 
-        label = "M/z ratio"
+        label = xlabel
         labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS))
         RIGHT = New PointF(rect.Right - labelSize.Width, rect.Bottom + 5)
 
@@ -341,8 +344,9 @@ Public Class PeakAssign : Inherits Plot
                                              Optional axisStroke$ = Stroke.AxisStroke,
                                              Optional connectorStroke$ = "stroke: gray; stroke-width: 3.5px; stroke-dash: dash;",
                                              Optional labelIntensity As Double = 0.2,
-                                             Optional images As Dictionary(Of String, Image) = Nothing) As GraphicsData
-
+                                             Optional images As Dictionary(Of String, Image) = Nothing,
+                                             Optional xlabel$ = "M/z ratio",
+                                             Optional ylabel$ = "Relative Intensity (%)") As GraphicsData
         Dim theme As New Theme With {
             .padding = padding,
             .background = bg,
@@ -362,7 +366,10 @@ Public Class PeakAssign : Inherits Plot
             labelIntensity:=labelIntensity,
             theme:=theme,
             images:=images
-        )
+        ) With {
+            .xlabel = xlabel,
+            .ylabel = ylabel
+        }
 
         Return app.Plot(size, ppi:=200)
     End Function
