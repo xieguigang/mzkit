@@ -51,6 +51,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.Dat
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports stdNum = System.Math
 
+''' <summary>
+''' read Xcalibur Raw data file for MS-imaging
+''' </summary>
 Public Module MSIRawPack
 
     ''' <summary>

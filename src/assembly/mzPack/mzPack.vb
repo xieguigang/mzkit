@@ -66,6 +66,7 @@ Public Class mzPack
     ''' <returns></returns>
     Public Property Thumbnail As Image
     Public Property MS As ScanMS1()
+    Public Property Application As FileApplicationClass
 
     ''' <summary>
     ''' TIC/BPC
