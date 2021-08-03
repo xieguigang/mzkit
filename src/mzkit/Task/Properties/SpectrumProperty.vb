@@ -1,58 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::708d60844086e0cd712b39baf440aa36, src\mzkit\Task\Properties\SpectrumProperty.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class SpectrumProperty
-    ' 
-    '     Properties: activationMethod, centroided, collisionEnergy, msLevel, polarity
-    '                 precursorCharge, precursorMz, rawfile, retentionTime, rtmin
-    '                 scanId
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
-    ' 
-    ' /********************************************************************************/
+' Class SpectrumProperty
+' 
+'     Properties: activationMethod, centroided, collisionEnergy, msLevel, polarity
+'                 precursorCharge, precursorMz, rawfile, retentionTime, rtmin
+'                 scanId
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports System.Text
+Imports System.Windows.Forms
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
-Public Class SpectrumProperty
+Public Class SpectrumProperty : Implements ICopyProperties
 
     <Description("The ms level of current scan data.")>
     <Category("Precursor Ion")> Public ReadOnly Property msLevel As Integer
@@ -98,4 +100,23 @@ Public Class SpectrumProperty
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function
+
+    Public Sub Copy() Implements ICopyProperties.Copy
+        Dim text As New StringBuilder($"spectrum property{vbTab}value")
+
+        Call text.AppendLine($"rawfile{vbTab}{rawfile}")
+        Call text.AppendLine($"scanId{vbTab}{scanId}")
+        Call text.AppendLine($"msLevel{vbTab}{msLevel}")
+        Call text.AppendLine($"precursorMz{vbTab}{precursorMz}")
+        Call text.AppendLine($"retentionTime{vbTab}{retentionTime}")
+        Call text.AppendLine($"rt(min){vbTab}{rtmin}")
+        Call text.AppendLine($"precursorCharge{vbTab}{precursorCharge}")
+        Call text.AppendLine($"polarity{vbTab}{polarity}")
+        Call text.AppendLine($"activationMethod{vbTab}{activationMethod}")
+        Call text.AppendLine($"collisionEnergy{vbTab}{collisionEnergy}")
+        Call text.AppendLine($"centroided{vbTab}{centroided}")
+
+        Call Clipboard.Clear()
+        Call Clipboard.SetText(text.ToString)
+    End Sub
 End Class
