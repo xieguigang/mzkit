@@ -87,7 +87,7 @@ Module TaskScript
         Dim regionId As String
 
         For Each region As Rectangle In regions
-            regionId = $"region_{++j}"
+            regionId = $"region[{region.Left},{region.Top},{region.Width},{region.Height}]_{++j}"
             RunSlavePipeline.SendProgress(j / regions.Length * 100, $"scan for region {regionId}... [{j}/{regions.Length}]")
             data.Add(regionId, render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
         Next
