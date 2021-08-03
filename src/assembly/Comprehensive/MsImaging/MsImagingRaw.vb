@@ -37,7 +37,7 @@ Namespace MsImaging
                 Call progress($"load: {row.source}...")
 
                 For Each scan As ScanMS1 In row.MS
-                    Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRow(scan.rt))
+                    Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRowX(scan))
                     Dim ms As ms2() = cutoff.Trim(scan.GetMs)
                     Dim mz As Double() = ms.Select(Function(m) m.mz).ToArray
                     Dim into As Double() = ms.Select(Function(m) m.intensity).ToArray
