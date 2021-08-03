@@ -241,7 +241,7 @@ Module TaskScript
                 Return pip.MSICombineRowScans(cor, 0.05, AddressOf RunSlavePipeline.SendMessage)
             End Function
 
-        If exttype.Length = 1 Then
+        If exttype.Length > 1 Then
             Call RunSlavePipeline.SendMessage($"Multipe file type is not allowed!")
             Return
         End If
