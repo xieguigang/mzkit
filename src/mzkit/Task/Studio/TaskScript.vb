@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Assembly.iGEM
 Imports stdNum = System.Math
 
 <Package("task")>
@@ -242,25 +243,23 @@ Module TaskScript
 
         If exttype.Length = 1 Then
             Using file As FileStream = save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                Dim scans As New List(Of Integer)
-                Dim maxrt As New List(Of Double)
 
                 Select Case exttype(Scan0)
                     Case "raw"
+                        Dim loadXRaw = Iterator Function() As IEnumerable(Of MSFileReader)
+                                           For Each path As String In files
+                                               If path.FileExists Then
+                                                   Using raw As New MSFileReader(path)
+                                                       Yield raw
+                                                   End Using
 
-                        For Each path As String In files
-                            If path.FileExists Then
-                                Dim raw As New MSFileReader(path)
-
-                                scans.Add(raw.ThermoReader.GetNumScans)
-                                maxrt.Add(raw.ScanTimeMax * 60)
-                                raw.Dispose()
-
-                                Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
-                            Else
-                                Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
-                            End If
-                        Next
+                                                   Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                                               Else
+                                                   Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
+                                               End If
+                                           Next
+                                       End Function
+                        Dim correction As Correction = MSIMeasurement.Measure(loadXRaw()).GetCorrection
 
                         Call combineMzPack(
                            Iterator Function() As IEnumerable(Of mzPack)
@@ -279,7 +278,7 @@ Module TaskScript
                                        Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
                                    End Try
                                Next
-                           End Function(), New ScanTimeCorrection(maxrt.Average, scans.Average)).Write(file)
+                           End Function(), correction).Write(file)
 
                     Case "mzpack"
 

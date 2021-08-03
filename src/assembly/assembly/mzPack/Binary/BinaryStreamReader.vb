@@ -215,6 +215,14 @@ Namespace mzData.mzWebCache
             Return dataSize
         End Function
 
+        Public Function hasMs2(Optional sampling As Integer = 64) As Boolean
+            For Each index As String In EnumerateIndex.Take(sampling)
+
+            Next
+
+            Return False
+        End Function
+
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 

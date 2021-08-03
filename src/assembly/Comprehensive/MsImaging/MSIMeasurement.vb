@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports stdNum = System.Math
 
 Namespace MsImaging
@@ -24,6 +25,25 @@ Namespace MsImaging
             Else
                 Return New ScanTimeCorrection(maxRt, maxScans)
             End If
+        End Function
+
+        Public Shared Function Measure(raw As IEnumerable(Of BinaryStreamReader)) As MSIMeasurement
+            Dim scans As New List(Of Integer)
+            Dim maxrt As New List(Of Double)
+            Dim maxScan As Integer
+            Dim scanMs2 As Boolean = False
+
+            For Each file As BinaryStreamReader In raw
+                maxScan = file.EnumerateIndex.Count
+                scans.Add(maxScan)
+                maxrt.Add(file.rtmax)
+
+                If Not scanMs2 Then
+                    scanMs2 = file.hasMs2
+                End If
+            Next
+
+            Return New MSIMeasurement(maxrt.Average, scans.Average, hasMs2:=scanMs2)
         End Function
 
         Public Shared Function Measure(raw As IEnumerable(Of mzPack)) As MSIMeasurement

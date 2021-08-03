@@ -36,6 +36,10 @@ Namespace MsImaging
 
                 Call progress($"load: {row.source}...")
 
+                If TypeOf correction Is ScanMs2Correction Then
+                    Call DirectCast(correction, ScanMs2Correction).SetMs1Scans(row.MS)
+                End If
+
                 For Each scan As ScanMS1 In row.MS
                     Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRowX(scan))
                     Dim ms As ms2() = cutoff.Trim(scan.GetMs)
