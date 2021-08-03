@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MsImaging\Correction.vb" />
+    <Compile Include="MsImaging\ScanTimeCorrection.vb" />
     <Compile Include="GC2Dimensional.vb" />
     <Compile Include="MsImaging\MsImagingRaw.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
