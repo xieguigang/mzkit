@@ -282,13 +282,16 @@ Module TaskScript
 
                     Case "mzpack"
 
-                        For Each path As String In files
-                            Using bin As New BinaryStreamReader(path)
-                                Call scans.Add(bin.EnumerateIndex.Count)
-                                Call maxrt.Add(bin.rtmax)
-                                Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
-                            End Using
-                        Next
+                        Dim loadRaw = Iterator Function() As IEnumerable(Of BinaryStreamReader)
+                                          For Each path As String In files
+                                              Using bin As New BinaryStreamReader(path)
+                                                  Yield bin
+                                              End Using
+
+                                              Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
+                                          Next
+                                      End Function
+                        Dim correction As Correction = MSIMeasurement.Measure(loadRaw()).GetCorrection
 
                         Call combineMzPack(
                             Iterator Function() As IEnumerable(Of mzPack)
@@ -300,7 +303,7 @@ Module TaskScript
                                         Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
                                     End Using
                                 Next
-                            End Function(), New ScanTimeCorrection(maxrt.Average, scans.Average)).Write(file)
+                            End Function(), correction).Write(file)
 
                     Case Else
                         Call RunSlavePipeline.SendMessage($"Unsupported file type: {exttype(Scan0)}!")
