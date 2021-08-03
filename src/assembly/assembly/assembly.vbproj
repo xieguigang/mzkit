@@ -551,6 +551,7 @@
     <Compile Include="mzPack\ActivationMethods.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamWriter.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamReader.vb" />
+    <Compile Include="mzPack\Binary\Version.vb" />
     <Compile Include="mzPack\Binary\NamespaceDoc.vb" />
     <Compile Include="mzPack\FileApplicationClass.vb" />
     <Compile Include="mzPack\Stream\ScanMS1.vb" />
