@@ -279,7 +279,7 @@ Module TaskScript
                                        Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
                                    End Try
                                Next
-                           End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
+                           End Function(), New ScanTimeCorrection(maxrt.Average, scans.Average)).Write(file)
 
                     Case "mzpack"
 
@@ -301,7 +301,7 @@ Module TaskScript
                                         Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
                                     End Using
                                 Next
-                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
+                            End Function(), New ScanTimeCorrection(maxrt.Average, scans.Average)).Write(file)
 
                     Case Else
                         Call RunSlavePipeline.SendMessage($"Unsupported file type: {exttype(Scan0)}!")
