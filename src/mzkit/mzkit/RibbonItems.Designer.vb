@@ -142,6 +142,7 @@ Namespace RibbonLib.Controls
             Public Const cmdGroupExport As UInteger = 2
             Public Const cmdButtonExportImage As UInteger = 1104
             Public Const cmdButtonExportMatrix As UInteger = 1105
+            Public Const cmdButtonCopyMatrix As UInteger = 137
             Public Const cmdButtonCopyProperties As UInteger = 136
             Public Const cmdContextMap As UInteger = 1106
             Public Const cmdCustomizeQAT As UInteger = 1018
@@ -912,6 +913,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonExportMatrix
             End Get
         End Property
+        Private _ButtonCopyMatrix As RibbonButton
+        Public ReadOnly Property ButtonCopyMatrix As RibbonButton
+            Get
+                Return _ButtonCopyMatrix
+            End Get
+        End Property
         Private _ButtonCopyProperties As RibbonButton
         Public ReadOnly Property ButtonCopyProperties As RibbonButton
             Get
@@ -1050,6 +1057,7 @@ Namespace RibbonLib.Controls
             _GroupExport = New RibbonDropDownButton(_ribbon, Cmd.cmdGroupExport)
             _ButtonExportImage = New RibbonButton(_ribbon, Cmd.cmdButtonExportImage)
             _ButtonExportMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonExportMatrix)
+            _ButtonCopyMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonCopyMatrix)
             _ButtonCopyProperties = New RibbonButton(_ribbon, Cmd.cmdButtonCopyProperties)
         End Sub
 

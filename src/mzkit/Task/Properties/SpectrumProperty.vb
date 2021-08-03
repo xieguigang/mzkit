@@ -104,6 +104,7 @@ Public Class SpectrumProperty : Implements ICopyProperties
     Public Sub Copy() Implements ICopyProperties.Copy
         Dim text As New StringBuilder($"spectrum property{vbTab}value")
 
+        Call text.AppendLine()
         Call text.AppendLine($"rawfile{vbTab}{rawfile}")
         Call text.AppendLine($"scanId{vbTab}{scanId}")
         Call text.AppendLine($"msLevel{vbTab}{msLevel}")

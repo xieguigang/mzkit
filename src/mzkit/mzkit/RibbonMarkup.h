@@ -598,5 +598,12 @@
 #define cmdButtonCopyProperties_TooltipDescription_RESID 60034
 #define cmdButtonCopyProperties_SmallImages_192__RESID 60035
 #define cmdButtonCopyProperties_LargeImages_144__RESID 60036
-#define InternalCmd2_LabelTitle_RESID 60037
-#define InternalCmd4_LabelTitle_RESID 60038
+#define cmdButtonCopyMatrix 137 
+#define cmdButtonCopyMatrix_LabelTitle_RESID 60037
+#define cmdButtonCopyMatrix_LabelDescription_RESID 60038
+#define cmdButtonCopyMatrix_TooltipTitle_RESID 60039
+#define cmdButtonCopyMatrix_TooltipDescription_RESID 60040
+#define cmdButtonCopyMatrix_SmallImages_192__RESID 60041
+#define cmdButtonCopyMatrix_LargeImages_192__RESID 60042
+#define InternalCmd2_LabelTitle_RESID 60043
+#define InternalCmd4_LabelTitle_RESID 60044

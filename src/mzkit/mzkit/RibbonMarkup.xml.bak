@@ -1552,6 +1552,14 @@
         <Image MinDPI="144">Res/edit-paste.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonCopyMatrix" Id="137" LabelTitle="Copy Matrix" LabelDescription="Copy Matrix" TooltipTitle="Copy Matrix" TooltipDescription="Copy Matrix">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1570,10 +1578,11 @@
           <MenuGroup>
             <Button CommandName="cmdTweaksImage" />
             <Button CommandName="cmdShowProperty" />
+            <Button CommandName="cmdButtonCopyMatrix" />
+            <Button CommandName="cmdButtonCopyProperties" />
             <DropDownButton CommandName="cmdGroupExport">
               <Button CommandName="cmdButtonExportImage" />
               <Button CommandName="cmdButtonExportMatrix" />
-              <Button CommandName="cmdButtonCopyProperties" />
             </DropDownButton>
           </MenuGroup>
         </ContextMenu>
