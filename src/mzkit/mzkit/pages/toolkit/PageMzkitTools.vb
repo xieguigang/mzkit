@@ -83,7 +83,8 @@ Public Class PageMzkitTools
 
     Dim RibbonItems As RibbonItems
     Dim matrix As Array
-    Dim matrixName As String
+
+    Friend matrixName As String
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 

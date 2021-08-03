@@ -49,7 +49,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports BioDeep
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Assembly.iGEM
 Imports stdNum = System.Math
 
 <Package("task")>
@@ -87,7 +88,7 @@ Module TaskScript
         Dim regionId As String
 
         For Each region As Rectangle In regions
-            regionId = $"region_{++j}"
+            regionId = $"region[{region.Left},{region.Top},{region.Width},{region.Height}]_{++j}"
             RunSlavePipeline.SendProgress(j / regions.Length * 100, $"scan for region {regionId}... [{j}/{regions.Length}]")
             data.Add(regionId, render.pixelReader.GetPixel(region).Select(Function(i) i.GetMs).IteratesALL.ToArray)
         Next
@@ -240,76 +241,77 @@ Module TaskScript
                 Return pip.MSICombineRowScans(cor, 0.05, AddressOf RunSlavePipeline.SendMessage)
             End Function
 
-        If exttype.Length = 1 Then
-            Using file As FileStream = save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                Dim scans As New List(Of Integer)
-                Dim maxrt As New List(Of Double)
-
-                Select Case exttype(Scan0)
-                    Case "raw"
-
-                        For Each path As String In files
-                            If path.FileExists Then
-                                Dim raw As New MSFileReader(path)
-
-                                scans.Add(raw.ThermoReader.GetNumScans)
-                                maxrt.Add(raw.ScanTimeMax * 60)
-                                raw.Dispose()
-
-                                Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
-                            Else
-                                Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
-                            End If
-                        Next
-
-                        Call combineMzPack(
-                           Iterator Function() As IEnumerable(Of mzPack)
-                               Dim i As i32 = 0
-
-                               For Each path As String In files
-                                   Dim raw As New MSFileReader(path)
-                                   Dim cache As mzPack = raw.LoadFromXRaw
-
-                                   Yield cache
-
-                                   Try
-                                       raw.Dispose()
-                                   Catch ex As Exception
-                                   Finally
-                                       Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
-                                   End Try
-                               Next
-                           End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
-
-                    Case "mzpack"
-
-                        For Each path As String In files
-                            Using bin As New BinaryStreamReader(path)
-                                Call scans.Add(bin.EnumerateIndex.Count)
-                                Call maxrt.Add(bin.rtmax)
-                                Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
-                            End Using
-                        Next
-
-                        Call combineMzPack(
-                            Iterator Function() As IEnumerable(Of mzPack)
-                                Dim i As i32 = 0
-
-                                For Each path As String In files
-                                    Using buffer As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                                        Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
-                                        Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
-                                    End Using
-                                Next
-                            End Function(), New Correction(maxrt.Average, scans.Average)).Write(file)
-
-                    Case Else
-                        Call RunSlavePipeline.SendMessage($"Unsupported file type: {exttype(Scan0)}!")
-                End Select
-            End Using
-        Else
+        If exttype.Length > 1 Then
             Call RunSlavePipeline.SendMessage($"Multipe file type is not allowed!")
+            Return
         End If
+
+        Using file As FileStream = save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Select Case exttype(Scan0)
+                Case "raw"
+                    Dim loadXRaw = Iterator Function() As IEnumerable(Of MSFileReader)
+                                       For Each path As String In files
+                                           If path.FileExists Then
+                                               Using raw As New MSFileReader(path)
+                                                   Yield raw
+                                               End Using
+
+                                               Call RunSlavePipeline.SendMessage($"Measuring MSI Information... {path.BaseName}")
+                                           Else
+                                               Call RunSlavePipeline.SendMessage($"Missing file in path: '{path}'!")
+                                           End If
+                                       Next
+                                   End Function
+                    Dim correction As Correction = MSIMeasurement.Measure(loadXRaw()).GetCorrection
+
+                    Call combineMzPack(
+                        Iterator Function() As IEnumerable(Of mzPack)
+                            Dim i As i32 = 0
+
+                            For Each path As String In files
+                                Dim raw As New MSFileReader(path)
+                                Dim cache As mzPack = raw.LoadFromXRaw
+
+                                Yield cache
+
+                                Try
+                                    raw.Dispose()
+                                Catch ex As Exception
+                                Finally
+                                    Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
+                                End Try
+                            Next
+                        End Function(), correction).Write(file)
+
+                Case "mzpack"
+
+                    Dim loadRaw = Iterator Function() As IEnumerable(Of BinaryStreamReader)
+                                      For Each path As String In files
+                                          Using bin As New BinaryStreamReader(path)
+                                              Yield bin
+                                          End Using
+
+                                          Call RunSlavePipeline.SendProgress(0, $"Measuring MSI Information... {path.BaseName}")
+                                      Next
+                                  End Function
+                    Dim correction As Correction = MSIMeasurement.Measure(loadRaw()).GetCorrection
+
+                    Call combineMzPack(
+                        Iterator Function() As IEnumerable(Of mzPack)
+                            Dim i As i32 = 0
+
+                            For Each path As String In files
+                                Using buffer As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                                    Call RunSlavePipeline.SendProgress(CInt((++i / files.Length) * 100), $"Combine Raw Data Files... {path.BaseName}")
+                                    Yield mzPack.ReadAll(buffer, ignoreThumbnail:=True)
+                                End Using
+                            Next
+                        End Function(), correction).Write(file)
+
+                Case Else
+                    Call RunSlavePipeline.SendMessage($"Unsupported file type: {exttype(Scan0)}!")
+            End Select
+        End Using
     End Sub
 
     <ExportAPI("formula")>

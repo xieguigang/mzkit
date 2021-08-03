@@ -513,7 +513,6 @@
     <Compile Include="ASCII\MSP\MspData.vb" />
     <Compile Include="MarkupData\Base64Decode.vb" />
     <Compile Include="MarkupData\FastSeekIndex.vb" />
-    <Compile Include="MarkupData\imzML\Correction.vb" />
     <Compile Include="MarkupData\imzML\XML\MSISummary.vb" />
     <Compile Include="MarkupData\imzML\XML\ScanReader.vb" />
     <Compile Include="MarkupData\nmrML\acquisition.vb" />
@@ -552,7 +551,9 @@
     <Compile Include="mzPack\ActivationMethods.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamWriter.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamReader.vb" />
+    <Compile Include="mzPack\Binary\Version.vb" />
     <Compile Include="mzPack\Binary\NamespaceDoc.vb" />
+    <Compile Include="mzPack\FileApplicationClass.vb" />
     <Compile Include="mzPack\Stream\ScanMS1.vb" />
     <Compile Include="mzPack\Stream\MSScan.vb" />
     <Compile Include="UnifyReader\Chromatogram.vb" />

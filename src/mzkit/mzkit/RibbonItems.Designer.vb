@@ -139,6 +139,10 @@ Namespace RibbonLib.Controls
             Public Const cmdLegendCheckBox As UInteger = 1166
             Public Const cmdTweaksImage As UInteger = 93
             Public Const cmdShowProperty As UInteger = 3
+            Public Const cmdGroupCopyData As UInteger = 139
+            Public Const cmdButtonCopyMatrix As UInteger = 137
+            Public Const cmdButtonCopyPlot As UInteger = 138
+            Public Const cmdButtonCopyProperties As UInteger = 136
             Public Const cmdGroupExport As UInteger = 2
             Public Const cmdButtonExportImage As UInteger = 1104
             Public Const cmdButtonExportMatrix As UInteger = 1105
@@ -893,6 +897,30 @@ Namespace RibbonLib.Controls
                 Return _ShowProperty
             End Get
         End Property
+        Private _GroupCopyData As RibbonDropDownButton
+        Public ReadOnly Property GroupCopyData As RibbonDropDownButton
+            Get
+                Return _GroupCopyData
+            End Get
+        End Property
+        Private _ButtonCopyMatrix As RibbonButton
+        Public ReadOnly Property ButtonCopyMatrix As RibbonButton
+            Get
+                Return _ButtonCopyMatrix
+            End Get
+        End Property
+        Private _ButtonCopyPlot As RibbonButton
+        Public ReadOnly Property ButtonCopyPlot As RibbonButton
+            Get
+                Return _ButtonCopyPlot
+            End Get
+        End Property
+        Private _ButtonCopyProperties As RibbonButton
+        Public ReadOnly Property ButtonCopyProperties As RibbonButton
+            Get
+                Return _ButtonCopyProperties
+            End Get
+        End Property
         Private _GroupExport As RibbonDropDownButton
         Public ReadOnly Property GroupExport As RibbonDropDownButton
             Get
@@ -1040,6 +1068,10 @@ Namespace RibbonLib.Controls
             _LegendCheckBox = New RibbonCheckBox(_ribbon, Cmd.cmdLegendCheckBox)
             _TweaksImage = New RibbonButton(_ribbon, Cmd.cmdTweaksImage)
             _ShowProperty = New RibbonButton(_ribbon, Cmd.cmdShowProperty)
+            _GroupCopyData = New RibbonDropDownButton(_ribbon, Cmd.cmdGroupCopyData)
+            _ButtonCopyMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonCopyMatrix)
+            _ButtonCopyPlot = New RibbonButton(_ribbon, Cmd.cmdButtonCopyPlot)
+            _ButtonCopyProperties = New RibbonButton(_ribbon, Cmd.cmdButtonCopyProperties)
             _GroupExport = New RibbonDropDownButton(_ribbon, Cmd.cmdGroupExport)
             _ButtonExportImage = New RibbonButton(_ribbon, Cmd.cmdButtonExportImage)
             _ButtonExportMatrix = New RibbonButton(_ribbon, Cmd.cmdButtonExportMatrix)

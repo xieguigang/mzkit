@@ -197,6 +197,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -215,7 +218,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MsImaging\MSIMeasurement.vb" />
+    <Compile Include="MsImaging\ScanMs2Correction.vb" />
+    <Compile Include="MsImaging\Correction.vb" />
+    <Compile Include="MsImaging\ScanTimeCorrection.vb" />
     <Compile Include="GC2Dimensional.vb" />
+    <Compile Include="MsImaging\MsImagingRaw.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -280,6 +288,10 @@
     <ProjectReference Include="..\mzPack\mzPack.vbproj">
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj">
+      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
+      <Name>ThermoRawFileReader</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

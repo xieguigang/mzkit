@@ -1,54 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::a7950c7dab84c511a469fbdaa9e5238d, src\mzkit\mzkit\application\RibbonEvents.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RibbonEvents
-    ' 
-    '     Properties: ribbonItems
-    ' 
-    '     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, AddHandlers, CombineRowScanTask
-    '          CreateNewScript, ExitToolsStripMenuItem_Click, NavBack_Click, OpenMSIRaw, resetLayout
-    '          RunCurrentScript, ShowExplorer, showHelp, showLoggingWindow, showMsImaging
-    '          ShowProperties, showRTerm, ShowSearchList, ShowSettings, showStartPage
-    ' 
-    ' /********************************************************************************/
+' Module RibbonEvents
+' 
+'     Properties: ribbonItems
+' 
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, AddHandlers, CombineRowScanTask
+'          CreateNewScript, ExitToolsStripMenuItem_Click, NavBack_Click, OpenMSIRaw, resetLayout
+'          RunCurrentScript, ShowExplorer, showHelp, showLoggingWindow, showMsImaging
+'          ShowProperties, showRTerm, ShowSearchList, ShowSettings, showStartPage
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports mzkit.My
 Imports mzkit.RibbonLib.Controls
@@ -75,6 +78,9 @@ Module RibbonEvents
 
         AddHandler ribbonItems.TweaksImage.ExecuteEvent, AddressOf MyApplication.host.mzkitTool.ShowPlotTweaks
         AddHandler ribbonItems.ShowProperty.ExecuteEvent, AddressOf ShowProperties
+        AddHandler ribbonItems.ButtonCopyProperties.ExecuteEvent, AddressOf CopyProperties
+        AddHandler ribbonItems.ButtonCopyMatrix.ExecuteEvent, AddressOf CopyMatrix
+        AddHandler ribbonItems.ButtonCopyPlot.ExecuteEvent, AddressOf CopyPlotImage
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call MyApplication.host.ShowPage(MyApplication.host.mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
@@ -144,6 +150,43 @@ Module RibbonEvents
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+    End Sub
+
+    Public Sub CopyPlotImage()
+        Dim img As Image = MyApplication.host.mzkitTool.PictureBox1.BackgroundImage
+
+        If Not img Is Nothing Then
+            Call Clipboard.Clear()
+            Call Clipboard.SetImage(img)
+            Call MyApplication.host.showStatusMessage($"Plot image '{MyApplication.host.mzkitTool.matrixName}' is copy to clipboard!")
+        End If
+    End Sub
+
+    Public Sub CopyMatrix()
+        Dim table As DataGridView = MyApplication.host.mzkitTool.DataGridView1
+
+        If Not table Is Nothing Then
+            Dim sb As New StringBuilder
+            Dim write As New StringWriter(sb)
+
+            Call table.WriteTableToFile(write)
+            Call Clipboard.Clear()
+            Call Clipboard.SetText(sb.ToString)
+            Call MyApplication.host.showStatusMessage("Matrix data is copy to clipboard!")
+        End If
+    End Sub
+
+    Public Sub CopyProperties()
+        Dim obj As Object = WindowModules.propertyWin.propertyGrid.SelectedObject
+
+        If obj Is Nothing Then
+            Return
+        ElseIf Not obj.GetType.ImplementInterface(Of ICopyProperties) Then
+            Return
+        Else
+            Call DirectCast(obj, ICopyProperties).Copy()
+            Call MyApplication.host.showStatusMessage("Property data is copy to clipboard!")
+        End If
     End Sub
 
     Public Sub CombineRowScanTask()

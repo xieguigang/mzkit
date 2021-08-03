@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::9ba8c7d723930bf9d50c5e352602115e, src\mzkit\mzkit\forms\Task\RscriptProgressTask.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class RscriptProgressTask
-    ' 
-    '     Function: CreateMSIIndex
-    ' 
-    '     Sub: CreateMSIRawFromRowBinds
-    ' 
-    ' /********************************************************************************/
+' Class RscriptProgressTask
+' 
+'     Function: CreateMSIIndex
+' 
+'     Sub: CreateMSIRawFromRowBinds
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Task
 
@@ -113,6 +114,35 @@ Public Class RscriptProgressTask
         If MessageBox.Show("MSI Raw Convert Job Done!" & vbCrLf & "Open MSI raw data file in MSI Viewer?", "MSI Viewer", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
             Call RibbonEvents.showMsImaging()
             Call WindowModules.viewer.loadimzML(savefile)
+        End If
+    End Sub
+
+    Public Shared Sub CreateMSIPeakTable(regions As Rectangle(), mzpack As String, saveAs As String)
+        Dim data As Dictionary(Of String, Integer()) = regions.ToDictionary(Function(r) $"{r.Left},{r.Top}", Function(r) {r.Left, r.Top, r.Width, r.Height})
+        Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".json", App.PID.ToHexString, prefix:="MSI_regions__")
+        Dim Rscript As String = RscriptPipelineTask.GetRScript("MSI_peaktable.R")
+        Dim cli As String = $"""{Rscript}"" --raw ""{mzpack}"" --save ""{saveAs}"" --regions ""{tempfile}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
+
+        Call data.GetJson.SaveTo(tempfile, encoding:=Encodings.UTF8.CodePage)
+
+        Dim progress As New frmTaskProgress
+
+        progress.ShowProgressTitle("Create MSI sampletable...", directAccess:=True)
+        progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
+        progress.SetProgressMode()
+
+        Call pipeline.CommandLine.__DEBUG_ECHO
+
+        AddHandler pipeline.SetMessage, AddressOf progress.ShowProgressDetails
+        AddHandler pipeline.SetProgress, AddressOf progress.SetProgress
+        AddHandler pipeline.Finish, Sub() progress.Invoke(Sub() progress.Close())
+
+        Call New Thread(AddressOf pipeline.Run).Start()
+        Call progress.ShowDialog()
+
+        If MessageBox.Show("Export MSI sampletable Job Done!" & vbCrLf & "Open MSI sample table data file?", "Open Excel", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+            Call Process.Start(saveAs.GetFullPath)
         End If
     End Sub
 End Class
