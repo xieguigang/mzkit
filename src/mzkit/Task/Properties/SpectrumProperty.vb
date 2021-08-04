@@ -86,7 +86,9 @@ Public Class SpectrumProperty : Implements ICopyProperties
     Public ReadOnly Property totalIons As Double
     <Category("Product Ions")>
     Public ReadOnly Property n_fragments As Integer
+    <Category("Product Ions")>
     Public ReadOnly Property lowMass As Double
+    <Category("Product Ions")>
     Public ReadOnly Property highMass As Double
 
     Public ReadOnly Property rawfile As String
