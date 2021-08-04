@@ -51,6 +51,7 @@ Imports System.ComponentModel
 Imports System.Text
 Imports System.Windows.Forms
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
@@ -71,11 +72,22 @@ Public Class SpectrumProperty : Implements ICopyProperties
     <Category("Precursor Ion")> Public ReadOnly Property polarity As String
 
     <Description("Activation method for produce the product fragments of current ion's scan.")>
-    <Category("MS/MS")> Public ReadOnly Property activationMethod As String
+    <Category("MSn")> Public ReadOnly Property activationMethod As String
     <Description("Energy level that used for produce the product fragments of current ion's scan.")>
-    <Category("MS/MS")> Public ReadOnly Property collisionEnergy As String
+    <Category("MSn")> Public ReadOnly Property collisionEnergy As String
     <Description("Current ion scan is in centroid mode? False means in profile mode.")>
-    <Category("MS/MS")> Public ReadOnly Property centroided As String
+    <Category("MSn")> Public ReadOnly Property centroided As String
+
+    <Category("Product Ions")>
+    Public ReadOnly Property basePeakMz As Double
+    <Category("Product Ions")>
+    Public ReadOnly Property maxIntensity As Double
+    <Category("Product Ions")>
+    Public ReadOnly Property totalIons As Double
+    <Category("Product Ions")>
+    Public ReadOnly Property n_fragments As Integer
+    Public ReadOnly Property lowMass As Double
+    Public ReadOnly Property highMass As Double
 
     Public ReadOnly Property rawfile As String
     Public ReadOnly Property scanId As String
@@ -92,6 +104,23 @@ Public Class SpectrumProperty : Implements ICopyProperties
             activationMethod = .activationMethod.Description
             rtmin = stdNum.Round(retentionTime / 60, 2)
         End With
+
+        Dim ms2 As ms2() = attrs.GetMs.ToArray
+
+        If ms2.Length > 0 Then
+            With ms2.OrderByDescending(Function(i) i.intensity).First
+                basePeakMz = .mz
+                maxIntensity = .intensity
+            End With
+
+            totalIons = Aggregate i In ms2 Into Sum(i.intensity)
+            n_fragments = ms2.Length
+
+            With ms2.Select(Function(i) i.mz).ToArray
+                lowMass = .Min
+                highMass = .Max
+            End With
+        End If
 
         Me.rawfile = rawfile
         Me.scanId = scanId
@@ -116,6 +145,12 @@ Public Class SpectrumProperty : Implements ICopyProperties
         Call text.AppendLine($"activationMethod{vbTab}{activationMethod}")
         Call text.AppendLine($"collisionEnergy{vbTab}{collisionEnergy}")
         Call text.AppendLine($"centroided{vbTab}{centroided}")
+        Call text.AppendLine($"basePeakMz{vbTab}{basePeakMz}")
+        Call text.AppendLine($"maxIntensity{vbTab}{maxIntensity}")
+        Call text.AppendLine($"totalIons{vbTab}{totalIons}")
+        Call text.AppendLine($"n_fragments{vbTab}{n_fragments}")
+        Call text.AppendLine($"lowMass{vbTab}{lowMass}")
+        Call text.AppendLine($"highMass{vbTab}{highMass}")
 
         Call Clipboard.Clear()
         Call Clipboard.SetText(text.ToString)

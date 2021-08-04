@@ -71,6 +71,10 @@ Namespace mzData.mzWebCache
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetMs() As IEnumerable(Of ms2)
+            If mz Is Nothing Then
+                Return
+            End If
+
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2 With {
                     .mz = mz(i),
