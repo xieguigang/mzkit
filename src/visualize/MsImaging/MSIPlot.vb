@@ -14,12 +14,24 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer
+    ReadOnly pixelScale As Size
 
-    Public Sub New(ion As SingleIonLayer, theme As Theme)
+    Public Sub New(ion As SingleIonLayer, pixelScale As Size, theme As Theme)
         Call MyBase.New(theme)
 
         Me.ion = ion
+        Me.pixelScale = pixelScale
     End Sub
+
+    Public Function MeasureSize() As Size
+        Dim padding As Padding = Padding.TryParse(theme.padding)
+        Dim size As Size = ion.DimensionSize
+
+        size = New Size(size.Width * pixelScale.Width, size.Height * pixelScale.Height)
+        size = New Size(size.Width + padding.Left + padding.Right, size.Height + padding.Top + padding.Bottom)
+
+        Return size
+    End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim Xtick As Double() = New DoubleRange({0, ion.DimensionSize.Width}).CreateAxisTicks()
@@ -40,7 +52,7 @@ Public Class MSIPlot : Inherits Plot
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
-        Call g.DrawImageUnscaled(MSI, rect)
+        Call g.DrawImage(MSI, rect)
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS)

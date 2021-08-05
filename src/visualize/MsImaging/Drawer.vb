@@ -264,6 +264,9 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mapLevels"></param>
     ''' <param name="logE"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
+    ''' </remarks>
     Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,

@@ -80,10 +80,11 @@ Module MsImaging
         Dim theme As New Theme With {
             .padding = InteropArgumentHelper.getPadding(args!padding)
         }
-        Dim app As New MSIPlot(ion, theme)
-        Dim size As String = InteropArgumentHelper.getSize(args!size, env)
+        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
+        Dim app As New MSIPlot(ion, scale.SizeParser, theme)
+        Dim size As Size = app.MeasureSize
 
-        Return app.Plot(size)
+        Return app.Plot($"{size.Width},{size.Height}")
     End Function
 
     <ExportAPI("write.MSI_XIC")>
@@ -379,6 +380,18 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' MS-imaging of the MSI summary data result.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="intensity"></param>
+    ''' <param name="colorSet$"></param>
+    ''' <param name="defaultFill"></param>
+    ''' <param name="pixelSize$"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="logE"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("render")>
     Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary,
                                    Optional colorSet$ = "Jet",
