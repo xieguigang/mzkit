@@ -47,6 +47,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -78,7 +79,9 @@ Module MsImaging
 
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(args!padding)
+            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 150px 400px 150px 200px"),
+            .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
+            .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
         Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
         Dim app As New MSIPlot(ion, scale.SizeParser, theme)
@@ -212,14 +215,23 @@ Module MsImaging
     ''' <summary>
     ''' load imzML data into the ms-imaging render
     ''' </summary>
-    ''' <param name="imzML">
+    ''' <param name="file">
     ''' *.imzML;*.mzPack
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function viewer(imzML As String) As Drawer
-        Return New Drawer(file:=imzML)
+    <RApiReturn(GetType(Drawer))>
+    Public Function viewer(file As Object, Optional env As Environment = Nothing) As Object
+        If file Is Nothing Then
+            Return Internal.debug.stop("the required file data can not be nothing!", env)
+        ElseIf TypeOf file Is String Then
+            Return New Drawer(file:=DirectCast(file, String))
+        ElseIf TypeOf file Is mzPack Then
+            Return New Drawer(DirectCast(file, mzPack))
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), file.GetType, env)
+        End If
     End Function
 
     <ExportAPI("pixel")>

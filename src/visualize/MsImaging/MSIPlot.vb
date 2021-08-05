@@ -51,7 +51,15 @@ Public Class MSIPlot : Inherits Plot
         MSI = Drawer.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, colorSet:=theme.colorSet)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
-        Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
+        Call g.DrawAxis(canvas, scale,
+                        showGrid:=True,
+                        gridFill:=theme.gridFill,
+                        xlabel:=xlabel,
+                        ylabel:=ylabel,
+                        XtickFormat:="F0",
+                        YtickFormat:="F0",
+                        htmlLabel:=False)
+
         Call g.DrawImage(MSI, rect)
 
         ' draw ion m/z
