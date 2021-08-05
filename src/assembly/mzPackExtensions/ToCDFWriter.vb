@@ -14,7 +14,7 @@ Public Module ToCDFWriter
     ''' <param name="mzpack"></param>
     ''' <param name="file"></param>
     <Extension>
-    Public Sub WriteCDF(mzpack As mzPack, file As Stream)
+    Public Sub WriteCDF(mzpack As mzPack, file As Stream, Optional ms2Only As Boolean = False)
         Using writer As New CDFWriter(file)
             Dim fileAttr As attribute() = mzpack.getFileAttributes.ToArray
             Dim i As i32 = 1
@@ -40,8 +40,11 @@ Public Module ToCDFWriter
                 meta.Add(New attribute With {.name = "tic", .type = CDFDataTypes.DOUBLE, .value = scan.TIC})
                 meta.Add(New attribute With {.name = "bpc", .type = CDFDataTypes.DOUBLE, .value = scan.BPC})
                 meta.Add(New attribute With {.name = "retention_time", .type = CDFDataTypes.DOUBLE, .value = scan.rt})
+                meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.INT, .value = 1})
 
-                writer.AddVariable(scan.scan_id, data, size, meta.ToArray)
+                If Not ms2Only Then
+                    writer.AddVariable(scan.scan_id, data, size, meta.ToArray)
+                End If
 
                 For Each ms2 As ScanMS2 In scan.products
                     data = New doubles(ms2.mz.JoinIterates(ms2.into))
@@ -51,6 +54,7 @@ Public Module ToCDFWriter
                     meta.Add(New attribute With {.name = "rt", .type = CDFDataTypes.DOUBLE, .value = ms2.rt})
                     meta.Add(New attribute With {.name = "n_fragments", .type = CDFDataTypes.DOUBLE, .value = ms2.size})
                     meta.Add(New attribute With {.name = "scan_ms1", .type = CDFDataTypes.CHAR, .value = scan.scan_id})
+                    meta.Add(New attribute With {.name = "mslevel", .type = CDFDataTypes.INT, .value = 2})
 
                     writer.AddVariable(ms2.scan_id, data, size, meta.ToArray)
                 Next
