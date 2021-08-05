@@ -17,6 +17,7 @@ Namespace MsImaging
         Public Function MSICombineRowScans(src As IEnumerable(Of mzPack),
                                            correction As Correction,
                                            Optional intocutoff As Double = 0.05,
+                                           Optional yscale As Double = 1,
                                            Optional progress As RunSlavePipeline.SetMessageEventHandler = Nothing) As mzPack
 
             Dim pixels As New List(Of ScanMS1)
@@ -29,36 +30,45 @@ Namespace MsImaging
             End If
 
             For Each row As mzPack In src
-                Dim i As i32 = 1
-                Dim y As Integer = row.source _
-                    .Match("\d+") _
-                    .DoCall(AddressOf Integer.Parse)
-
-                Call progress($"load: {row.source}...")
-
-                If TypeOf correction Is ScanMs2Correction Then
-                    Call DirectCast(correction, ScanMs2Correction).SetMs1Scans(row.MS)
-                End If
-
-                For Each scan As ScanMS1 In row.MS
-                    Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRowX(scan))
-                    Dim ms As ms2() = cutoff.Trim(scan.GetMs)
-                    Dim mz As Double() = ms.Select(Function(m) m.mz).ToArray
-                    Dim into As Double() = ms.Select(Function(m) m.intensity).ToArray
-
-                    pixels += New ScanMS1 With {
-                        .BPC = scan.BPC,
-                        .into = into,
-                        .mz = mz,
-                        .meta = New Dictionary(Of String, String) From {{NameOf(x), x}, {NameOf(y), y}},
-                        .rt = scan.rt,
-                        .scan_id = $"[{row.source}] {scan.scan_id}",
-                        .TIC = scan.TIC
-                    }
-                Next
+                pixels += row.MeasureRow(yscale, correction, cutoff, progress)
             Next
 
             Return New mzPack With {.MS = pixels.ToArray}
+        End Function
+
+        <Extension>
+        Private Iterator Function MeasureRow(row As mzPack,
+                                             yscale As Double,
+                                             correction As Correction,
+                                             cutoff As RelativeIntensityCutoff,
+                                             progress As RunSlavePipeline.SetMessageEventHandler) As IEnumerable(Of ScanMS1)
+            Dim i As i32 = 1
+            Dim y As Integer = row.source _
+                .Match("\d+") _
+                .DoCall(AddressOf Integer.Parse) * yscale
+
+            Call progress($"load: {row.source}...")
+
+            If TypeOf correction Is ScanMs2Correction Then
+                Call DirectCast(correction, ScanMs2Correction).SetMs1Scans(row.MS)
+            End If
+
+            For Each scan As ScanMS1 In row.MS
+                Dim x As Integer = If(correction Is Nothing, ++i, correction.GetPixelRowX(scan))
+                Dim ms As ms2() = cutoff.Trim(scan.GetMs)
+                Dim mz As Double() = ms.Select(Function(m) m.mz).ToArray
+                Dim into As Double() = ms.Select(Function(m) m.intensity).ToArray
+
+                Yield New ScanMS1 With {
+                    .BPC = scan.BPC,
+                    .into = into,
+                    .mz = mz,
+                    .meta = New Dictionary(Of String, String) From {{NameOf(x), x}, {NameOf(y), y}},
+                    .rt = scan.rt,
+                    .scan_id = $"[{row.source}] {scan.scan_id}",
+                    .TIC = scan.TIC
+                }
+            Next
         End Function
     End Module
 End Namespace

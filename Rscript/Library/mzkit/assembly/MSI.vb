@@ -52,9 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -132,7 +130,16 @@ Module MSI
     ''' <summary>
     ''' each raw data file is a row scan data
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="y">
+    ''' this function will returns the pixel summary data if the ``y`` parameter greater than ZERO.
+    ''' </param>
+    ''' <param name="correction">
+    ''' used for data summary, when the ``y`` parameter is greater than ZERO, 
+    ''' this parameter will works.
+    ''' </param>
+    ''' <param name="raw">
+    ''' a file list of mzpack data files
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("row.scans")>
@@ -159,6 +166,7 @@ Module MSI
                                  End Using
                              Next
                          End Function
+
             Return pipeline.CreateFromPopulator(loader())
         End If
     End Function
@@ -209,9 +217,20 @@ Module MSI
         }
     End Function
 
+    ''' <summary>
+    ''' calculate the X scale
+    ''' </summary>
+    ''' <param name="totalTime"></param>
+    ''' <param name="pixels"></param>
+    ''' <param name="hasMs2"></param>
+    ''' <returns></returns>
     <ExportAPI("correction")>
-    Public Function Correction(totalTime As Double, pixels As Integer) As Correction
-        Return New ScanTimeCorrection(totalTime, pixels)
+    Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Correction
+        If hasMs2 Then
+            Return New ScanMs2Correction(totalTime, pixels)
+        Else
+            Return New ScanTimeCorrection(totalTime, pixels)
+        End If
     End Function
 
     <ExportAPI("basePeakMz")>
@@ -222,23 +241,40 @@ Module MSI
     ''' <summary>
     ''' combine each row scan raw data files as the pixels 2D matrix
     ''' </summary>
-    ''' <param name="rowScans"></param>
+    ''' <param name="rowScans">
+    ''' data result comes from the function ``row.scans``.
+    ''' </param>
+    ''' <param name="yscale">
+    ''' apply for mapping smooth MS1 to ms2 scans
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("scans2D")>
     Public Function pixels2D(<RRawVectorArgument>
                              rowScans As Object,
                              Optional correction As Correction = Nothing,
                              Optional intocutoff As Double = 0.05,
+                             Optional yscale As Double = 1,
                              Optional env As Environment = Nothing) As Object
 
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
+
+        If yscale <> 1.0 Then
+            Call base.print($"yscale is {yscale}", env)
+        End If
 
         If pipeline.isError Then
             Return pipeline.getError
         Else
             Return pipeline _
                 .populates(Of mzPack)(env) _
-                .MSICombineRowScans(correction, intocutoff, progress:=Sub(msg) Call base.print(msg, env))
+                .MSICombineRowScans(
+                    correction:=correction,
+                    intocutoff:=intocutoff,
+                    yscale:=yscale,
+                    progress:=Sub(msg)
+                                  Call base.print(msg, env)
+                              End Sub
+                )
         End If
     End Function
 
@@ -249,6 +285,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("scanMatrix")>
+    <RApiReturn(GetType(MSISummary))>
     Public Function MSIScanMatrix(<RRawVectorArgument> rowScans As Object, Optional env As Environment = Nothing) As Object
         Dim data As pipeline = pipeline.TryCreatePipeline(Of iPixelIntensity)(rowScans, env)
 
@@ -270,8 +307,19 @@ Module MSI
         }
     End Function
 
+    ''' <summary>
+    ''' dumping raw data matrix as text table file. 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="file"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("pixelMatrix")>
-    Public Function PixelMatrix(raw As mzPack, file As Stream, Optional tolerance As Object = "da:0.05", Optional env As Environment = Nothing) As Message
+    Public Function PixelMatrix(raw As mzPack, file As Stream,
+                                Optional tolerance As Object = "da:0.05",
+                                Optional env As Environment = Nothing) As Message
+
         Dim mzErr = Math.getTolerance(tolerance, env)
 
         If mzErr Like GetType(Message) Then
@@ -279,7 +327,13 @@ Module MSI
         End If
 
         Dim da As Tolerance = mzErr.TryCast(Of Tolerance)
-        Dim allMz As ms2() = raw.MS.Select(Function(i) i.GetMs).IteratesALL.ToArray.Centroid(da, New RelativeIntensityCutoff(0.01)).OrderBy(Function(i) i.mz).ToArray
+        Dim allMz As ms2() = raw.MS _
+            .Select(Function(i) i.GetMs) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(da, New RelativeIntensityCutoff(0.01)) _
+            .OrderBy(Function(i) i.mz) _
+            .ToArray
         Dim text As New StreamWriter(file)
 
         Call text.WriteLine({""}.JoinIterates(allMz.Select(Function(a) a.mz.ToString("F4"))).JoinBy(","))
@@ -288,15 +342,17 @@ Module MSI
         For Each pixel As ScanMS1 In raw.MS
             Dim pid As String = $"{pixel.meta!x};{pixel.meta!y}"
             Dim msData = pixel.GetMs.ToArray
-            Dim vec As String() = allMz.Select(Function(mzi)
-                                                   Dim mz = msData.Where(Function(i) da(i.mz, mzi.mz)).FirstOrDefault
+            Dim vec As String() = allMz _
+                .Select(Function(mzi)
+                            Dim mz = msData.Where(Function(i) da(i.mz, mzi.mz)).FirstOrDefault
 
-                                                   If mz Is Nothing Then
-                                                       Return "0"
-                                                   Else
-                                                       Return mz.intensity.ToString
-                                                   End If
-                                               End Function).ToArray
+                            If mz Is Nothing Then
+                                Return "0"
+                            Else
+                                Return mz.intensity.ToString
+                            End If
+                        End Function) _
+                .ToArray
 
             Call text.WriteLine({pid}.JoinIterates(vec).JoinBy(","))
             Call Console.WriteLine(pixel.scan_id)
