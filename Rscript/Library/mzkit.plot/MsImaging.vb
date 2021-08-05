@@ -79,12 +79,13 @@ Module MsImaging
 
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 150px 400px 150px 200px"),
+            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 100px 700px 300px 300px"),
             .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
             .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
+        Dim cutoff As Double = args.getValue("into.cutoff", env, 0.75)
         Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
-        Dim app As New MSIPlot(ion, scale.SizeParser, theme)
+        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, theme)
         Dim size As Size = app.MeasureSize
 
         Return app.Plot($"{size.Width},{size.Height}")
@@ -355,12 +356,12 @@ Module MsImaging
     <ExportAPI("layer")>
     <RApiReturn(GetType(Bitmap))>
     Public Function layer(viewer As Drawer, mz As Double(),
-                          Optional threshold As Double = 0.05,
                           <RRawVectorArgument>
                           Optional pixelSize As Object = "5,5",
                           Optional tolerance As Object = "da:0.1",
                           Optional color$ = "YlGnBu:c8",
                           Optional levels% = 30,
+                          Optional cutoff As Double = 0.75,
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -374,20 +375,20 @@ Module MsImaging
         ElseIf mz.Length = 1 Then
             Return viewer.DrawLayer(
                 mz:=mz(Scan0),
-                threshold:=threshold,
                 pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
-                mapLevels:=levels
+                mapLevels:=levels,
+                cutoff:=cutoff
             )
         Else
             Return viewer.DrawLayer(
                 mz:=mz,
-                threshold:=threshold,
                 pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
-                mapLevels:=levels
+                mapLevels:=levels,
+                cutoff:=cutoff
             )
         End If
     End Function

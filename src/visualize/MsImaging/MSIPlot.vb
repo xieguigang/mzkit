@@ -15,10 +15,12 @@ Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer
     ReadOnly pixelScale As Size
+    ReadOnly cutoff As Double = 1
 
-    Public Sub New(ion As SingleIonLayer, pixelScale As Size, theme As Theme)
+    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As Double, theme As Theme)
         Call MyBase.New(theme)
 
+        Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
     End Sub
@@ -48,7 +50,7 @@ Public Class MSIPlot : Inherits Plot
 
         Dim MSI As Image
 
-        MSI = Drawer.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, colorSet:=theme.colorSet)
+        MSI = Drawer.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale,
@@ -75,9 +77,9 @@ Public Class MSIPlot : Inherits Plot
 
         Call Legend.DrawLegends(g, pos, {mzLegend}, $"{labelSize.Height},{labelSize.Height}")
 
-        Dim colors = Designer.GetColors(theme.colorSet, 30).Select(Function(c) New SolidBrush(c)).ToArray
+        Dim colors = Designer.GetColors(theme.colorSet, 120).Select(Function(c) New SolidBrush(c)).ToArray
         Dim intensityTicks As Double() = New DoubleRange(ion.GetIntensity).CreateAxisTicks
-        Dim layout As New Rectangle(pos.X, pos.Y + labelSize.Height * 2, canvas.Padding.Right * 0.8, rect.Height * 0.7)
+        Dim layout As New Rectangle(pos.X, pos.Y + labelSize.Height * 2, canvas.Padding.Right * 0.8, rect.Height * 0.5)
         Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
         Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
 

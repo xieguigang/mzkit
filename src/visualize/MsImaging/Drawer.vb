@@ -311,19 +311,18 @@ Public Class Drawer : Implements IDisposable
     ''' apply for metabolite rendering
     ''' </summary>
     ''' <param name="mz"></param>
-    ''' <param name="threshold"></param>
     ''' <param name="pixelSize$"></param>
     ''' <param name="toleranceErr"></param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double,
-                              Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                              Optional cutoff As Double = 1) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -334,7 +333,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold, scale)
+        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
     End Function
 
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
@@ -379,12 +378,12 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double(),
-                              Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                              Optional cutoff As Double = 1) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
@@ -401,7 +400,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, threshold, scale)
+        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
