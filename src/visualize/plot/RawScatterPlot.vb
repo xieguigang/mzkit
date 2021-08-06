@@ -109,8 +109,8 @@ Public Class RawScatterPlot : Inherits Plot
 
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
         Dim ticks = points.Select(Function(a) a.value ^ stdNum.E).CreateAxisTicks
-        Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject
-        Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject
+        Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+        Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
         Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",

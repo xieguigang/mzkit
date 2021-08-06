@@ -162,8 +162,8 @@ Public Class PeakAssign : Inherits Plot
         }
         Dim bottomY As Double = rect.Bottom
         Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
 
         Call Axis.DrawAxis(
             g, canvas, scaler,
@@ -193,10 +193,10 @@ Public Class PeakAssign : Inherits Plot
         Dim label As String
 
         label = xlabel
-        labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS))
+        labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi))
         RIGHT = New PointF(rect.Right - labelSize.Width, rect.Bottom + 5)
 
-        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS), Brushes.Black, RIGHT)
+        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi), Brushes.Black, RIGHT)
 
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)

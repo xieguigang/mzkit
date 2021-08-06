@@ -65,7 +65,7 @@ Public Class MSIPlot : Inherits Plot
         Call g.DrawImage(MSI, rect)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
+        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
         Dim labelSize As SizeF = g.MeasureString(ion.IonMz.ToString("F4"), labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzLegend As New LegendObject With {
@@ -80,7 +80,7 @@ Public Class MSIPlot : Inherits Plot
         Dim colors = Designer.GetColors(theme.colorSet, 120).Select(Function(c) New SolidBrush(c)).ToArray
         Dim intensityTicks As Double() = New DoubleRange(ion.GetIntensity).CreateAxisTicks
         Dim layout As New Rectangle(pos.X, pos.Y + labelSize.Height * 2, canvas.Padding.Right * 0.8, rect.Height * 0.5)
-        Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
+        Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
         Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
 
         Call g.ColorMapLegend(layout, colors, intensityTicks, labelFont, "Intensity", tickFont, tickPen, format:="G3")

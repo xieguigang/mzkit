@@ -102,7 +102,8 @@ Public Module ChromatogramPeakPlot
                          Optional angleThreshold# = 8,
                          Optional peakwidth As DoubleRange = Nothing,
                          Optional isMRM As Boolean = True,
-                         Optional sn_threshold As Double = 3) As GraphicsData
+                         Optional sn_threshold As Double = 3,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
@@ -118,8 +119,8 @@ Public Module ChromatogramPeakPlot
                      Return (accumulate / sumAll) * maxInto
                  End Function
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
-        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
+        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS).GDIObject(ppi)
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
         Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
         Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
@@ -246,6 +247,7 @@ Public Module ChromatogramPeakPlot
             size.SizeParser,
             padding,
             bg,
-            plotInternal)
+            plotInternal,
+            dpi:=$"{ppi},{ppi}")
     End Function
 End Module

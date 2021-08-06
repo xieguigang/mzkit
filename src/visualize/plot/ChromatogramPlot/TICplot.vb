@@ -269,7 +269,7 @@ Public Class TICplot : Inherits Plot
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
 
         For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
@@ -286,7 +286,7 @@ Public Class TICplot : Inherits Plot
     End Function
 
     Friend Shared Sub DrawLabels(g As IGraphics, rect As Rectangle, labels As Label(), theme As Theme, labelLayoutTicks As Integer)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
@@ -323,7 +323,7 @@ Public Class TICplot : Inherits Plot
         Dim left As Double
 
         If outside Then
-            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont).Width
+            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(g.Dpi)).Width
         Else
             left = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
         End If

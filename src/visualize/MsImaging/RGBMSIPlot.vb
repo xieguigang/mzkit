@@ -46,7 +46,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Call g.DrawImageUnscaled(MSI, rect)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
+        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
         Dim labelSize As SizeF = g.MeasureString(Me.R.IonMz.ToString("F4"), labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzR As New LegendObject With {
