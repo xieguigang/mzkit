@@ -347,7 +347,6 @@ Module MsImaging
     ''' </summary>
     ''' <param name="viewer"></param>
     ''' <param name="mz"></param>
-    ''' <param name="threshold"></param>
     ''' <param name="pixelSize"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="color$"></param>
