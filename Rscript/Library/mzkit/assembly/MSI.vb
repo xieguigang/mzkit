@@ -307,6 +307,17 @@ Module MSI
         }
     End Function
 
+    <ExportAPI("peakMatrix")>
+    Public Function PeakMatrix(raw As mzPack, Optional topN As Integer = 3, Optional mzError As Object = "da:0.05", Optional env As Environment = Nothing) As Object
+        Dim err = Math.getTolerance(mzError, env)
+
+        If err Like GetType(Message) Then
+            Return err.TryCast(Of Message)
+        End If
+
+        Return raw.TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript).ToArray
+    End Function
+
     ''' <summary>
     ''' dumping raw data matrix as text table file. 
     ''' </summary>
