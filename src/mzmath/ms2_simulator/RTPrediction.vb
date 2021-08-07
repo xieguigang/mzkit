@@ -102,7 +102,7 @@ Public Module RTPrediction
                         Return {1.0#}.Join(m.Item1)
                     End Function) _
             .ToArray
-        Dim matrix As New GeneralMatrix(rowVectors)
+        Dim matrix As New NumericMatrix(rowVectors)
         Dim RT As Vector = values.Select(Function(m) m.Item2).AsVector
         Dim fit = MLRFit.LinearFitting(matrix, RT)
 

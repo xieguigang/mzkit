@@ -186,6 +186,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ToCDFWriter.vb" />
     <Compile Include="XRawStream.vb" />
     <Compile Include="MSIRawPack.vb" />
     <Compile Include="RawStream.vb" />
