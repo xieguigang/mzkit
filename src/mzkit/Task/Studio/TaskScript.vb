@@ -238,7 +238,7 @@ Module TaskScript
         Dim exttype As String() = files.Select(Function(path) path.ExtensionSuffix.ToLower).Distinct.ToArray
         Dim combineMzPack As Func(Of IEnumerable(Of mzPack), Correction, mzPack) =
             Function(pip, cor)
-                Return pip.MSICombineRowScans(cor, 0.05, AddressOf RunSlavePipeline.SendMessage)
+                Return pip.MSICombineRowScans(cor, 0.05, progress:=AddressOf RunSlavePipeline.SendMessage)
             End Function
 
         If exttype.Length > 1 Then
