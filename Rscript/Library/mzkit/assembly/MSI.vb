@@ -52,7 +52,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -316,6 +319,27 @@ Module MSI
         End If
 
         Return raw.TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript).ToArray
+    End Function
+
+    <ExportAPI("peakSamples")>
+    Public Function peakSamples(raw As mzPack,
+                                Optional resolution As Integer = 100,
+                                Optional mzError As Object = "da:0.05",
+                                Optional cutoff As Double = 0.05,
+                                Optional env As Environment = Nothing) As Object
+        Dim err = Math.getTolerance(mzError, env)
+
+        If err Like GetType(Message) Then
+            Return err.TryCast(Of Message)
+        End If
+
+        Dim sampler As New PixelsSampler(New ReadRawPack(raw))
+        Dim samples = sampler.Sampling(New Size(resolution, resolution), err.TryCast(Of Tolerance)).ToArray
+        Dim matrix As DataSet() = samples _
+            .AlignMzPeaks(err.TryCast(Of Tolerance), cutoff, Function(p) p.GetMs, Function(p) $"{p.X},{p.Y}") _
+            .ToArray
+
+        Return matrix
     End Function
 
     ''' <summary>
