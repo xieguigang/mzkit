@@ -65,6 +65,13 @@ Public Class PixelsSampler
         col_scans = CreateColumns(reader, dims).ToArray
     End Sub
 
+    Public Function MeasureSamplingSize(resolution As Integer) As Size
+        Dim dw As Double = dims.Width / resolution
+        Dim dh As Double = dims.Height / resolution
+
+        Return New Size(dw, dh)
+    End Function
+
     Private Shared Iterator Function CreateColumns(reader As PixelReader, dims As Size) As IEnumerable(Of PixelScan())
         For x As Integer = 1 To dims.Width
             Dim column As PixelScan() = New PixelScan(dims.Height - 1) {}

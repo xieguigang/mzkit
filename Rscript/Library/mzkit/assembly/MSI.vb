@@ -334,7 +334,8 @@ Module MSI
         End If
 
         Dim sampler As New PixelsSampler(New ReadRawPack(raw))
-        Dim samples = sampler.Sampling(New Size(resolution, resolution), err.TryCast(Of Tolerance)).ToArray
+        Dim sampling As Size = sampler.MeasureSamplingSize(resolution)
+        Dim samples = sampler.Sampling(sampling, err.TryCast(Of Tolerance)).ToArray
         Dim matrix As DataSet() = samples _
             .AlignMzPeaks(err.TryCast(Of Tolerance), cutoff, Function(p) p.GetMs, Function(p) $"{p.X},{p.Y}") _
             .ToArray
