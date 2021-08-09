@@ -69,6 +69,17 @@ Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzM
 Module MSI
 
     ''' <summary>
+    ''' split the raw 2D MSI data into multiple parts with given parts
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="size"></param>
+    ''' <returns></returns>
+    <ExportAPI("splice")>
+    Public Function splice(raw As mzPack, Optional size As Integer = 5) As mzPack()
+
+    End Function
+
+    ''' <summary>
     ''' get pixels size from the raw data file
     ''' </summary>
     ''' <param name="file">
@@ -321,6 +332,15 @@ Module MSI
         Return raw.TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript).ToArray
     End Function
 
+    ''' <summary>
+    ''' split the raw MSI 2D data into multiple parts with given resolution parts
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="resolution"></param>
+    ''' <param name="mzError"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns>returns the raw matrix data that contains the peak samples.</returns>
     <ExportAPI("peakSamples")>
     Public Function peakSamples(raw As mzPack,
                                 Optional resolution As Integer = 100,
