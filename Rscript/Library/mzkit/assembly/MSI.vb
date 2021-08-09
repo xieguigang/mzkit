@@ -53,8 +53,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -72,11 +74,28 @@ Module MSI
     ''' split the raw 2D MSI data into multiple parts with given parts
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="size"></param>
+    ''' <param name="partition"></param>
     ''' <returns></returns>
     <ExportAPI("splice")>
-    Public Function splice(raw As mzPack, Optional size As Integer = 5) As mzPack()
+    Public Function splice(raw As mzPack, Optional partition As Integer = 5) As mzPack()
+        Dim sampler As New PixelsSampler(New ReadRawPack(raw))
+        Dim sampling As Size = sampler.MeasureSamplingSize(resolution:=partition)
+        Dim samples As NamedCollection(Of PixelScan)() = sampler.SamplingRaw(sampling).ToArray
+        Dim packList As mzPack() = samples _
+            .Select(Function(blockList)
+                        Return New mzPack With {
+                            .MS = blockList _
+                                .Select(Function(p)
+                                            Return DirectCast(p, mzPackPixel).scan
+                                        End Function) _
+                                .ToArray,
+                            .Application = FileApplicationClass.MSI,
+                            .source = blockList.name
+                        }
+                    End Function) _
+            .ToArray
 
+        Return packList
     End Function
 
     ''' <summary>
