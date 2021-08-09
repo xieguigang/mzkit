@@ -4,7 +4,7 @@
 \alias{parseFormula}
 \title{Parse formula string}
 \usage{
-parseFormula(str)
+parseFormula(formula)
 }
 \value{
 a key-value pair list of \code{atom} -> \code{count}
