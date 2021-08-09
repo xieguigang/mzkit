@@ -113,9 +113,9 @@ Public Class PixelsSampler
         For x As Integer = 1 To dims.Width Step dw
             For y As Integer = 1 To dims.Height Step dh
                 If dw = 1 AndAlso dh = 1 Then
-                    Yield New NamedCollection(Of PixelScan)($"[{x},{y},{x + dims.Width},{y + dims.Height}]", {col_scans(x - 1)(y - 1)})
+                    Yield New NamedCollection(Of PixelScan)($"[{x},{y},{x + dw},{y + dh}]", {col_scans(x - 1)(y - 1)})
                 Else
-                    Yield New NamedCollection(Of PixelScan)($"[{x},{y},{x + dims.Width},{y + dims.Height}]", GetBlock(x, y, dw, dh).ToArray)
+                    Yield New NamedCollection(Of PixelScan)($"[{x},{y},{x + dw},{y + dh}]", GetBlock(x, y, dw, dh).ToArray)
                 End If
             Next
 
