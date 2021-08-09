@@ -29,10 +29,12 @@ readMzPackCDF = function(cdf, verbose = TRUE) {
 	# read ms2 data
 	lapply(scans[ms2i], function(name) {
 		data = ncvar_get(nc, name);
+		meta = ncatt_get(nc, name);
 		n = length(data) / 2;
 		mz = data[1:n];
 		into = data[(n+1):length(data)];
+		matrix = data.frame(mz = mz, into = into);
 		
-		data.frame(mz = mz, into = into);
+		list(mz = meta$mz, ms2 = matrix);
 	});	
 }
