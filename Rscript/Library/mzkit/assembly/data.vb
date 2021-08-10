@@ -101,9 +101,9 @@ Module data
         Dim MS As ms2()
 
         If TypeOf matrix Is dataframe Then
-            Dim mz As Double() = DirectCast(matrix, dataframe)("mz")
-            Dim into As Double() = DirectCast(matrix, dataframe)("into")
-            Dim annotation As String() = DirectCast(matrix, dataframe)("annotation")
+            Dim mz As Double() = REnv.asVector(Of Double)(DirectCast(matrix, dataframe)("mz"))
+            Dim into As Double() = REnv.asVector(Of Double)(DirectCast(matrix, dataframe)("into"))
+            Dim annotation As String() = REnv.asVector(Of String)(DirectCast(matrix, dataframe)("annotation"))
 
             If annotation Is Nothing Then
                 annotation = {}

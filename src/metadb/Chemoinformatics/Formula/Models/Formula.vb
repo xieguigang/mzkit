@@ -90,10 +90,16 @@ Namespace Formula
         ''' <returns></returns>
         Public ReadOnly Property ExactMass As Double
             Get
-                Return Aggregate element
+                Try
+                    Return Aggregate element
                        In CountsByElement
                        Let mass As Double = AllAtomElements(element.Key).isotopic * element.Value
                        Into Sum(mass)
+                Catch ex As Exception
+                    Call $"element key: '{CountsByElement.Keys.Where(Function(e) Not AllAtomElements.ContainsKey(e)).First}' is not exists in hash table!".Warning
+                    Return -1
+                End Try
+
             End Get
         End Property
 
