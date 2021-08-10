@@ -17,6 +17,10 @@ readMzPackCDF = function(cdf, verbose = TRUE) {
   if (verbose) {
     print(paste("The file [", cdf ,"]has",nc$nvars,"variables,",nc$ndims,"dimensions and",nc$natts,"NetCDF attributes"));
   }
+  
+  if (nc$nvars == 0) {
+	return(list());
+  }
 
   scans = names(nc$var);
   ms2i = sapply(scans, function(name) {
