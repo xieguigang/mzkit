@@ -55,10 +55,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -83,12 +85,20 @@ Module MsImaging
             .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
             .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
-        Dim cutoff As Double = args.getValue("into.cutoff", env, 0.75)
+        Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
         Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
         Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, theme)
         Dim size As Size = app.MeasureSize
 
         Return app.Plot($"{size.Width},{size.Height}")
+    End Function
+
+    <ExportAPI("quartileRange")>
+    Public Function quartileRange(layer As SingleIonLayer) As Double()
+        Dim quartile As Quantile.DataQuartile = layer.GetQuartile
+        Dim range As Double() = {quartile.Q1, quartile.Q3}
+
+        Return range
     End Function
 
     <ExportAPI("write.MSI_XIC")>
@@ -360,13 +370,22 @@ Module MsImaging
                           Optional tolerance As Object = "da:0.1",
                           Optional color$ = "YlGnBu:c8",
                           Optional levels% = 30,
-                          Optional cutoff As Double = 0.75,
+                          <RRawVectorArgument(GetType(Double))>
+                          Optional cutoff As Object = "0.1,0.75",
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
+        Else
+            cutoff = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
+
+            If TryCast(cutoff, [Variant](Of DoubleRange, Message)) Like GetType(Message) Then
+                Return TryCast(cutoff, [Variant](Of DoubleRange, Message)).TryCast(Of Message)
+            Else
+                cutoff = TryCast(cutoff, [Variant](Of DoubleRange, Message)).TryCast(Of DoubleRange)
+            End If
         End If
 
         If mz.IsNullOrEmpty Then
@@ -409,7 +428,8 @@ Module MsImaging
                                    Optional colorSet$ = "Jet",
                                    Optional defaultFill As String = "Transparent",
                                    Optional pixelSize$ = "5,5",
-                                   Optional cutoff As Double = 1,
+                                   <RRawVectorArgument(GetType(Double))>
+                                   Optional cutoff As Object = "0.1,0.75",
                                    Optional logE As Boolean = True,
                                    Optional env As Environment = Nothing) As Object
 
@@ -423,6 +443,11 @@ Module MsImaging
                         }
                     End Function) _
             .ToArray
+        Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
+
+        If cutoffRange Like GetType(Message) Then
+            Return cutoffRange.TryCast(Of Message)
+        End If
 
         Return Drawer.RenderPixels(
             pixels:=pixels,
@@ -431,7 +456,7 @@ Module MsImaging
             colorSet:=colorSet,
             logE:=logE,
             defaultFill:=defaultFill,
-            cutoff:=cutoff
+            cutoff:=cutoffRange.TryCast(Of DoubleRange)
         )
     End Function
 
