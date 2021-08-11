@@ -81,7 +81,7 @@ Public Class PixelData
     ''' </summary>
     ''' <param name="pixels"></param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As Double = 1, Optional logE As Boolean = False) As PixelData()
+    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As DoubleRange = Nothing, Optional logE As Boolean = False) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
                         Return getIntensityAuto(p, logE)
@@ -90,19 +90,31 @@ Public Class PixelData
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
 
-        If cutoff < 1 Then
-            intensityRange = New DoubleRange(intensityRange.Min, intensityRange.Max * cutoff)
+        If Not cutoff Is Nothing Then
+            intensityRange = New DoubleRange(
+                intensityRange.Min + intensityRange.Length * cutoff.Min,
+                intensityRange.Min + intensityRange.Length * cutoff.Max
+            )
         End If
 
         For Each point As PixelData In pixels
+            Dim intensity As Double = point.intensity
+
+            If intensity < intensityRange.Min Then
+                intensity = intensityRange.Min
+            End If
+            If intensity > intensityRange.Max Then
+                intensity = intensityRange.Max
+            End If
+
             If logE Then
-                If point.intensity <= 1 Then
+                If intensity <= 1 Then
                     level = 0
                 Else
-                    level = intensityRange.ScaleMapping(stdNum.Log(point.intensity), levelRange)
+                    level = intensityRange.ScaleMapping(stdNum.Log(intensity), levelRange)
                 End If
             Else
-                level = intensityRange.ScaleMapping(point.intensity, levelRange)
+                level = intensityRange.ScaleMapping(intensity, levelRange)
             End If
 
             If level > 1 Then

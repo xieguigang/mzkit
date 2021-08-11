@@ -124,7 +124,7 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     Public Function ShowSummaryRendering(summary As IntensitySummary,
-                                         Optional cutoff# = 0.65,
+                                         Optional cutoff As DoubleRange = Nothing,
                                          Optional colorSet$ = "Jet",
                                          Optional pixelSize$ = "3,3",
                                          Optional logE As Boolean = True) As Bitmap
@@ -237,6 +237,14 @@ Public Class Drawer : Implements IDisposable
         Return ScaleLayer(raw, newWidth, newHeight, scale)
     End Function
 
+    ''' <summary>
+    ''' scale the layer size
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="newWidth"></param>
+    ''' <param name="newHeight"></param>
+    ''' <param name="scale"></param>
+    ''' <returns></returns>
     Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer, scale As InterpolationMode) As Bitmap
         Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
         Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
@@ -273,7 +281,7 @@ Public Class Drawer : Implements IDisposable
                                         Optional logE As Boolean = False,
                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                         Optional defaultFill As String = "Transparent",
-                                        Optional cutoff As Double = 1) As Bitmap
+                                        Optional cutoff As DoubleRange = Nothing) As Bitmap
         Dim color As Color
         Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
         Dim index As Integer
@@ -322,7 +330,7 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As Double = 1) As Bitmap
+                              Optional cutoff As DoubleRange = Nothing) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -382,7 +390,7 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As Double = 1) As Bitmap
+                              Optional cutoff As DoubleRange = Nothing) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()

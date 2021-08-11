@@ -619,4 +619,8 @@ Public Class frmMsImagingViewer
             End Using
         End If
     End Sub
+
+    Private Sub ExportPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportPlotToolStripMenuItem.Click
+
+    End Sub
 End Class

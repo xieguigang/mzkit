@@ -15,9 +15,9 @@ Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer
     ReadOnly pixelScale As Size
-    ReadOnly cutoff As Double = 1
+    ReadOnly cutoff As DoubleRange
 
-    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As Double, theme As Theme)
+    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As DoubleRange, theme As Theme)
         Call MyBase.New(theme)
 
         Me.cutoff = cutoff

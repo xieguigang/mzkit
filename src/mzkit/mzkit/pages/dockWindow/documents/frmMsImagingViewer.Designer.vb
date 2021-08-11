@@ -34,9 +34,9 @@ Partial Class frmMsImagingViewer
         Me.AddSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PixelSelector1 = New ControlLibrary.PixelSelector()
-        Me.ExportPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -89,6 +89,13 @@ Partial Class frmMsImagingViewer
         Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
+        'ExportPlotToolStripMenuItem
+        '
+        Me.ExportPlotToolStripMenuItem.Image = CType(resources.GetObject("ExportPlotToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ExportPlotToolStripMenuItem.Name = "ExportPlotToolStripMenuItem"
+        Me.ExportPlotToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.ExportPlotToolStripMenuItem.Text = "Export Plot"
+        '
         'ExportMatrixToolStripMenuItem
         '
         Me.ExportMatrixToolStripMenuItem.Name = "ExportMatrixToolStripMenuItem"
@@ -104,12 +111,6 @@ Partial Class frmMsImagingViewer
         Me.PixelSelector1.Name = "PixelSelector1"
         Me.PixelSelector1.Size = New System.Drawing.Size(700, 368)
         Me.PixelSelector1.TabIndex = 1
-        '
-        'ExportPlotToolStripMenuItem
-        '
-        Me.ExportPlotToolStripMenuItem.Name = "ExportPlotToolStripMenuItem"
-        Me.ExportPlotToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.ExportPlotToolStripMenuItem.Text = "Export Plot"
         '
         'frmMsImagingViewer
         '
