@@ -79,7 +79,12 @@ Public Class MSIPlot : Inherits Plot
 
         Dim colors = Designer.GetColors(theme.colorSet, 120).Select(Function(c) New SolidBrush(c)).ToArray
         Dim intensityTicks As Double() = New DoubleRange(ion.GetIntensity).CreateAxisTicks
-        Dim layout As New Rectangle(pos.X - canvas.Padding.Right / 3, pos.Y + labelSize.Height * 2, canvas.Padding.Right * 0.8, rect.Height * 0.5)
+        Dim layout As New Rectangle(
+            x:=pos.X - canvas.Padding.Right / 4,
+            y:=pos.Y + labelSize.Height * 2,
+            width:=canvas.Padding.Right * 0.8,
+            height:=rect.Height * 0.5
+        )
         Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
         Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
 
