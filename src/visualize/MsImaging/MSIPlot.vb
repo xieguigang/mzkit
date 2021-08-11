@@ -80,7 +80,7 @@ Public Class MSIPlot : Inherits Plot
         Dim colors = Designer.GetColors(theme.colorSet, 120).Select(Function(c) New SolidBrush(c)).ToArray
         Dim intensityTicks As Double() = New DoubleRange(ion.GetIntensity).CreateAxisTicks
         Dim layout As New Rectangle(
-            x:=pos.X - canvas.Padding.Right / 4,
+            x:=pos.X - canvas.Padding.Right / 5,
             y:=pos.Y + labelSize.Height * 2,
             width:=canvas.Padding.Right * 0.8,
             height:=rect.Height * 0.5
