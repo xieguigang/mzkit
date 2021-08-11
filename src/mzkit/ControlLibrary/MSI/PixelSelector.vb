@@ -107,7 +107,7 @@ Public Class PixelSelector
 
     Public ReadOnly Property HasRegionSelection As Boolean
         Get
-            Return startPoint.IsEmpty OrElse endPoint.IsEmpty
+            Return Not startPoint.IsEmpty OrElse endPoint.IsEmpty
         End Get
     End Property
 

@@ -592,9 +592,8 @@ Public Class frmMsImagingViewer
         End If
     End Sub
 
-    Private Sub ClearPinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearPinToolStripMenuItem.Click
+    Private Sub ClearPinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
         pinedPixel = Nothing
-
     End Sub
 
     Dim sampleRegions As New List(Of Rectangle)

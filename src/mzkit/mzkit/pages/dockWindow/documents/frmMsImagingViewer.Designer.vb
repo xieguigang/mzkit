@@ -27,47 +27,66 @@ Partial Class frmMsImagingViewer
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMsImagingViewer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ClearPinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearSamplesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PixelSelector1 = New ControlLibrary.PixelSelector()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ClearSamplesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddSampleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClearPinToolStripMenuItem, Me.PinToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearSamplesToolStripMenuItem, Me.AddSampleToolStripMenuItem, Me.ToolStripMenuItem2, Me.SaveImageToolStripMenuItem, Me.ExportMatrixToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearSamplesToolStripMenuItem, Me.AddSampleToolStripMenuItem, Me.ToolStripMenuItem2, Me.SaveImageToolStripMenuItem, Me.ExportPlotToolStripMenuItem, Me.ExportMatrixToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(197, 170)
         '
-        'ClearPinToolStripMenuItem
-        '
-        Me.ClearPinToolStripMenuItem.Name = "ClearPinToolStripMenuItem"
-        Me.ClearPinToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.ClearPinToolStripMenuItem.Text = "Clear Pin"
-        '
         'PinToolStripMenuItem
         '
+        Me.PinToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClearToolStripMenuItem})
         Me.PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), System.Drawing.Image)
         Me.PinToolStripMenuItem.Name = "PinToolStripMenuItem"
         Me.PinToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
         Me.PinToolStripMenuItem.Text = "Pin"
         '
+        'ClearToolStripMenuItem
+        '
+        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(106, 22)
+        Me.ClearToolStripMenuItem.Text = "Clear"
+        '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(152, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(193, 6)
+        '
+        'ClearSamplesToolStripMenuItem
+        '
+        Me.ClearSamplesToolStripMenuItem.Name = "ClearSamplesToolStripMenuItem"
+        Me.ClearSamplesToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.ClearSamplesToolStripMenuItem.Text = "Clear Samples"
+        '
+        'AddSampleToolStripMenuItem
+        '
+        Me.AddSampleToolStripMenuItem.Name = "AddSampleToolStripMenuItem"
+        Me.AddSampleToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.AddSampleToolStripMenuItem.Text = "Add Sample"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(193, 6)
         '
         'SaveImageToolStripMenuItem
         '
         Me.SaveImageToolStripMenuItem.Image = CType(resources.GetObject("SaveImageToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'ExportMatrixToolStripMenuItem
@@ -86,22 +105,11 @@ Partial Class frmMsImagingViewer
         Me.PixelSelector1.Size = New System.Drawing.Size(700, 368)
         Me.PixelSelector1.TabIndex = 1
         '
-        'ToolStripMenuItem2
+        'ExportPlotToolStripMenuItem
         '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(193, 6)
-        '
-        'ClearSamplesToolStripMenuItem
-        '
-        Me.ClearSamplesToolStripMenuItem.Name = "ClearSamplesToolStripMenuItem"
-        Me.ClearSamplesToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.ClearSamplesToolStripMenuItem.Text = "Clear Samples"
-        '
-        'AddSampleToolStripMenuItem
-        '
-        Me.AddSampleToolStripMenuItem.Name = "AddSampleToolStripMenuItem"
-        Me.AddSampleToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.AddSampleToolStripMenuItem.Text = "Add Sample"
+        Me.ExportPlotToolStripMenuItem.Name = "ExportPlotToolStripMenuItem"
+        Me.ExportPlotToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.ExportPlotToolStripMenuItem.Text = "Export Plot"
         '
         'frmMsImagingViewer
         '
@@ -122,8 +130,9 @@ Partial Class frmMsImagingViewer
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents PixelSelector1 As ControlLibrary.PixelSelector
     Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ClearPinToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearSamplesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AddSampleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExportPlotToolStripMenuItem As ToolStripMenuItem
 End Class
