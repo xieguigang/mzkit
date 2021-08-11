@@ -91,10 +91,14 @@ Public Class PixelData
         Dim levelRange As DoubleRange = New Double() {0, 1}
 
         If Not cutoff Is Nothing Then
-            intensityRange = New DoubleRange(
-                intensityRange.Min + intensityRange.Length * cutoff.Min,
-                intensityRange.Min + intensityRange.Length * cutoff.Max
-            )
+            If cutoff.Min > 1 Then
+                intensityRange = cutoff
+            Else
+                intensityRange = New DoubleRange(
+                    intensityRange.Min + intensityRange.Length * cutoff.Min,
+                    intensityRange.Min + intensityRange.Length * cutoff.Max
+                )
+            End If
         End If
 
         For Each point As PixelData In pixels
@@ -111,7 +115,10 @@ Public Class PixelData
                 If intensity <= 1 Then
                     level = 0
                 Else
-                    level = intensityRange.ScaleMapping(stdNum.Log(intensity), levelRange)
+                    level = intensityRange.ScaleMapping(
+                        x:=stdNum.Log(intensity),
+                        valueRange:=levelRange
+                    )
                 End If
             Else
                 level = intensityRange.ScaleMapping(intensity, levelRange)
