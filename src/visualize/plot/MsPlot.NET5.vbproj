@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Visualization</RootNamespace>
@@ -86,6 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
