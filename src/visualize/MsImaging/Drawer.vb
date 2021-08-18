@@ -291,6 +291,8 @@ Public Class Drawer : Implements IDisposable
         Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
         Dim defaultColor As Color = defaultFill.TranslateColor
 
+        Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(New Point, raw.Size))
+
         Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
             For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
                 level = point.level
