@@ -32,5 +32,39 @@ Namespace Imaging
                                                   Optional defaultFill As String = "Transparent",
                                                   Optional cutoff As DoubleRange = Nothing) As Bitmap
 
+        Protected Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
+            If channel.IsNullOrEmpty Then
+                Return Function(x, y) CByte(0)
+            End If
+
+            Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
+            Dim byteRange As DoubleRange = {0, 255}
+            Dim xy = channel _
+                .GroupBy(Function(p) p.x) _
+                .ToDictionary(Function(p) p.Key,
+                              Function(x)
+                                  Return x _
+                                      .GroupBy(Function(p) p.y) _
+                                      .ToDictionary(Function(p) p.Key,
+                                                    Function(p)
+                                                        Return p.Select(Function(pm) pm.intensity).Max
+                                                    End Function)
+                              End Function)
+
+            Return Function(x, y) As Byte
+                       If Not xy.ContainsKey(x) Then
+                           Return 0
+                       End If
+
+                       Dim ylist = xy.Item(x)
+
+                       If Not ylist.ContainsKey(y) Then
+                           Return 0
+                       End If
+
+                       Return CByte(intensityRange.ScaleMapping(ylist.Item(y), byteRange))
+                   End Function
+        End Function
+
     End Class
 End Namespace
