@@ -51,18 +51,16 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -127,7 +125,8 @@ Public Class Drawer : Implements IDisposable
                                          Optional cutoff As DoubleRange = Nothing,
                                          Optional colorSet$ = "Jet",
                                          Optional pixelSize$ = "3,3",
-                                         Optional logE As Boolean = True) As Bitmap
+                                         Optional logE As Boolean = True,
+                                         Optional pixelDrawer As Boolean = True) As Bitmap
 
         Dim layer = pixelReader.GetSummary.GetLayer(summary).ToArray
         Dim pixels As PixelData() = layer _
@@ -139,8 +138,9 @@ Public Class Drawer : Implements IDisposable
                         }
                     End Function) _
             .ToArray
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
-        Return Drawer.RenderPixels(
+        Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
             dimSize:=pixelSize.SizeParser,
@@ -149,85 +149,6 @@ Public Class Drawer : Implements IDisposable
             cutoff:=cutoff,
             logE:=logE
         )
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="R"></param>
-    ''' <param name="G"></param>
-    ''' <param name="B"></param>
-    ''' <param name="dimension"></param>
-    ''' <param name="dimSize">
-    ''' set this parameter to value nothing to returns
-    ''' the raw image without any scale operation.
-    ''' </param>
-    ''' <param name="scale"></param>
-    ''' <returns></returns>
-    Public Shared Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
-                                               dimension As Size,
-                                               Optional dimSize As Size = Nothing,
-                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
-
-        Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-        Dim Rchannel = GetPixelChannelReader(R)
-        Dim Gchannel = GetPixelChannelReader(G)
-        Dim Bchannel = GetPixelChannelReader(B)
-
-        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-            For x As Integer = 1 To dimension.Width
-                For y As Integer = 1 To dimension.Height
-                    Dim bR As Byte = Rchannel(x, y)
-                    Dim bG As Byte = Gchannel(x, y)
-                    Dim bB As Byte = Bchannel(x, y)
-                    Dim color As Color = Color.FromArgb(bR, bG, bB)
-
-                    ' imzXML里面的坐标是从1开始的
-                    ' 需要减一转换为.NET中从零开始的位置
-                    Call buffer.SetPixel(x - 1, y - 1, color)
-                Next
-            Next
-        End Using
-
-        If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-            Return raw
-        Else
-            Return ScaleLayer(raw, dimension, dimSize, scale)
-        End If
-    End Function
-
-    Private Shared Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
-        If channel.IsNullOrEmpty Then
-            Return Function(x, y) CByte(0)
-        End If
-
-        Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
-        Dim byteRange As DoubleRange = {0, 255}
-        Dim xy = channel _
-            .GroupBy(Function(p) p.x) _
-            .ToDictionary(Function(p) p.Key,
-                          Function(x)
-                              Return x _
-                                  .GroupBy(Function(p) p.y) _
-                                  .ToDictionary(Function(p) p.Key,
-                                                Function(p)
-                                                    Return p.Select(Function(pm) pm.intensity).Max
-                                                End Function)
-                          End Function)
-
-        Return Function(x, y) As Byte
-                   If Not xy.ContainsKey(x) Then
-                       Return 0
-                   End If
-
-                   Dim ylist = xy.Item(x)
-
-                   If Not ylist.ContainsKey(y) Then
-                       Return 0
-                   End If
-
-                   Return CByte(intensityRange.ScaleMapping(ylist.Item(y), byteRange))
-               End Function
     End Function
 
     Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
@@ -263,66 +184,6 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="pixels"></param>
-    ''' <param name="dimension">the scan size</param>
-    ''' <param name="dimSize">pixel size</param>
-    ''' <param name="colorSet"></param>
-    ''' <param name="mapLevels"></param>
-    ''' <param name="logE"></param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
-    ''' </remarks>
-    Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
-                                        Optional colorSet As String = "YlGnBu:c8",
-                                        Optional mapLevels% = 25,
-                                        Optional logE As Boolean = False,
-                                        Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                        Optional defaultFill As String = "Transparent",
-                                        Optional cutoff As DoubleRange = Nothing) As Bitmap
-        Dim color As Color
-        Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
-        Dim index As Integer
-        Dim level As Double
-        Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
-        Dim levelRange As DoubleRange = New Double() {0, 1}
-        Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-        Dim defaultColor As Color = defaultFill.TranslateColor
-
-        Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(New Point, raw.Size))
-
-        Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
-                level = point.level
-
-                If level <= 0.0 Then
-                    color = defaultColor
-                Else
-                    index = levelRange.ScaleMapping(level, indexrange)
-
-                    If index < 0 Then
-                        index = 0
-                    End If
-
-                    color = colors(index)
-                End If
-
-                ' imzXML里面的坐标是从1开始的
-                ' 需要减一转换为.NET中从零开始的位置
-                Call buffer.SetPixel(point.x - 1, point.y - 1, color)
-            Next
-        End Using
-
-        If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-            Return raw
-        Else
-            Return ScaleLayer(raw, dimension, dimSize, scale)
-        End If
-    End Function
-
-    ''' <summary>
     ''' apply for metabolite rendering
     ''' </summary>
     ''' <param name="mz"></param>
@@ -337,7 +198,8 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As DoubleRange = Nothing) As Bitmap
+                              Optional cutoff As DoubleRange = Nothing,
+                              Optional pixelDrawer As Boolean = True) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -345,10 +207,11 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
+        Return engine.RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
     End Function
 
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
@@ -397,7 +260,8 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As DoubleRange = Nothing) As Bitmap
+                              Optional cutoff As DoubleRange = Nothing,
+                              Optional pixelDrawer As Boolean = True) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
@@ -411,10 +275,11 @@ Public Class Drawer : Implements IDisposable
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
+        Return engine.RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
