@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -18,7 +17,6 @@ Namespace Imaging
                 dimSize = New Size(1, 1)
             End If
 
-            Dim raw As New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height, PixelFormat.Format32bppArgb)
             Dim Rchannel = GetPixelChannelReader(R)
             Dim Gchannel = GetPixelChannelReader(G)
             Dim Bchannel = GetPixelChannelReader(B)
@@ -30,7 +28,7 @@ Namespace Imaging
                         Dim bG As Byte = Gchannel(x, y)
                         Dim bB As Byte = Bchannel(x, y)
                         Dim color As Color = Color.FromArgb(bR, bG, bB)
-                        Dim rect As New Rectangle(New Point(x - 1, y - 1), dimSize)
+                        Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
 
                         ' imzXML里面的坐标是从1开始的
                         ' 需要减一转换为.NET中从零开始的位置
@@ -68,7 +66,7 @@ Namespace Imaging
             Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice
                 For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
                     level = point.level
-                    rect = New Rectangle(New Point(point.x - 1, point.y - 1), dimSize)
+                    rect = New Rectangle(New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height), dimSize)
 
                     If level <= 0.0 Then
                         color = defaultColor
