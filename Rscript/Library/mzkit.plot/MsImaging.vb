@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -87,7 +88,8 @@ Module MsImaging
         }
         Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
         Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
-        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, theme)
+        Dim pixelDrawer As Boolean = args.getValue("pixelDrawer", env, False)
+        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
         Dim size As Size = app.MeasureSize
 
         Return app.Plot($"{size.Width},{size.Height}")
@@ -312,6 +314,7 @@ Module MsImaging
                         <RRawVectorArgument>
                         Optional pixelSize As Object = "5,5",
                         Optional tolerance As Object = "da:0.1",
+                        Optional pixelDrawer As Boolean = True,
                         Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -324,8 +327,9 @@ Module MsImaging
         Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
-        Return Drawer.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
+        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
     End Function
 
     ''' <summary>
@@ -437,6 +441,7 @@ Module MsImaging
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
                                    Optional logE As Boolean = True,
+                                   Optional pixelDrawer As Boolean = True,
                                    Optional env As Environment = Nothing) As Object
 
         Dim layer = data.GetLayer(intensity).ToArray
@@ -450,12 +455,13 @@ Module MsImaging
                     End Function) _
             .ToArray
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
         End If
 
-        Return Drawer.RenderPixels(
+        Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=data.size,
             dimSize:=pixelSize.SizeParser,
