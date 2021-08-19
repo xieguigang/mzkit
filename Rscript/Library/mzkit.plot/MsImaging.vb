@@ -382,6 +382,7 @@ Module MsImaging
                           Optional levels% = 30,
                           <RRawVectorArgument(GetType(Double))>
                           Optional cutoff As Object = "0.1,0.75",
+                          Optional pixelDrawer As Boolean = True,
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -407,7 +408,8 @@ Module MsImaging
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
-                cutoff:=cutoff
+                cutoff:=cutoff,
+                pixelDrawer:=pixelDrawer
             )
         Else
             Return viewer.DrawLayer(
@@ -416,7 +418,8 @@ Module MsImaging
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
-                cutoff:=cutoff
+                cutoff:=cutoff,
+                pixelDrawer:=pixelDrawer
             )
         End If
     End Function
