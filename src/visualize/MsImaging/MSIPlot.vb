@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -16,10 +17,12 @@ Public Class MSIPlot : Inherits Plot
     ReadOnly ion As SingleIonLayer
     ReadOnly pixelScale As Size
     ReadOnly cutoff As DoubleRange
+    ReadOnly pixelDrawer As Boolean
 
-    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As DoubleRange, theme As Theme)
+    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As DoubleRange, pixelDrawer As Boolean, theme As Theme)
         Call MyBase.New(theme)
 
+        Me.pixelDrawer = pixelDrawer
         Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
@@ -47,10 +50,10 @@ Public Class MSIPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
-
         Dim MSI As Image
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
-        MSI = Drawer.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
+        MSI = engine.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale,

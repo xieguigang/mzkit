@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -14,10 +15,12 @@ Public Class RGBMSIPlot : Inherits Plot
 
     ReadOnly R, G, B As SingleIonLayer
     ReadOnly dimensionSize As Size
+    ReadOnly pixelDrawer As Boolean
 
-    Public Sub New(R As SingleIonLayer, G As SingleIonLayer, B As SingleIonLayer, theme As Theme)
+    Public Sub New(R As SingleIonLayer, G As SingleIonLayer, B As SingleIonLayer, pixelDrawer As Boolean, theme As Theme)
         MyBase.New(theme)
 
+        Me.pixelDrawer = pixelDrawer
         Me.R = R
         Me.G = G
         Me.B = B
@@ -36,10 +39,10 @@ Public Class RGBMSIPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
-
         Dim MSI As Image
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
-        MSI = Drawer.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, Nothing)
+        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, Nothing)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
