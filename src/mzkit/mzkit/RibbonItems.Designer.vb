@@ -112,6 +112,9 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonMSIRowScans As UInteger = 128
             Public Const cmdButtonExportMSIMzpack As UInteger = 127
             Public Const cmdButtonExportSample As UInteger = 135
+            Public Const cmdTabMSIAnalysis As UInteger = 141
+            Public Const cmdTabMenuMSIAnalysis As UInteger = 142
+            Public Const cmdButtonTogglePolygon As UInteger = 140
             Public Const cmdGroupKEGG As UInteger = 133
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
@@ -735,6 +738,24 @@ Namespace RibbonLib.Controls
                 Return _ButtonExportSample
             End Get
         End Property
+        Private _TabMSIAnalysis As RibbonTab
+        Public ReadOnly Property TabMSIAnalysis As RibbonTab
+            Get
+                Return _TabMSIAnalysis
+            End Get
+        End Property
+        Private _TabMenuMSIAnalysis As RibbonGroup
+        Public ReadOnly Property TabMenuMSIAnalysis As RibbonGroup
+            Get
+                Return _TabMenuMSIAnalysis
+            End Get
+        End Property
+        Private _ButtonTogglePolygon As RibbonToggleButton
+        Public ReadOnly Property ButtonTogglePolygon As RibbonToggleButton
+            Get
+                Return _ButtonTogglePolygon
+            End Get
+        End Property
         Private _GroupKEGG As RibbonTabGroup
         Public ReadOnly Property GroupKEGG As RibbonTabGroup
             Get
@@ -1041,6 +1062,9 @@ Namespace RibbonLib.Controls
             _ButtonMSIRowScans = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRowScans)
             _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
             _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
+            _TabMSIAnalysis = New RibbonTab(_ribbon, Cmd.cmdTabMSIAnalysis)
+            _TabMenuMSIAnalysis = New RibbonGroup(_ribbon, Cmd.cmdTabMenuMSIAnalysis)
+            _ButtonTogglePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonTogglePolygon)
             _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)

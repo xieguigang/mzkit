@@ -1576,6 +1576,16 @@
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonTogglePolygon" Id="140" LabelTitle="Toggle Polygon" LabelDescription="Toggle Polygon" TooltipTitle="Toggle Polygon" TooltipDescription="Toggle Polygon">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/insert-object.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/insert-object.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabMSIAnalysis" Id="141" LabelTitle="MSI Analysis" LabelDescription="MSI Analysis" TooltipTitle="MSI Analysis" TooltipDescription="MSI Analysis" />
+    <Command Name="cmdTabMenuMSIAnalysis" Id="142" LabelTitle="MSI Analysis" LabelDescription="MSI Analysis" TooltipTitle="MSI Analysis" TooltipDescription="MSI Analysis" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1774,6 +1784,11 @@
               <Button CommandName="cmdButtonMSIRowScans" />
               <Button CommandName="cmdButtonExportMSIMzpack" />
               <Button CommandName="cmdButtonExportSample" />
+            </Group>
+          </Tab>
+          <Tab CommandName="cmdTabMSIAnalysis">
+            <Group CommandName="cmdTabMenuMSIAnalysis" SizeDefinition="OneButton">
+              <ToggleButton CommandName="cmdButtonTogglePolygon" />
             </Group>
           </Tab>
         </TabGroup>
