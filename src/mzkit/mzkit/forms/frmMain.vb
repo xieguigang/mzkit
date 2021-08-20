@@ -578,6 +578,7 @@ Public Class frmMain
             End Sub).Start()
 
         Call progress.ShowDialog()
+        Call ServiceHub.CloseMSIEngine()
         Call App.Exit()
     End Sub
 
