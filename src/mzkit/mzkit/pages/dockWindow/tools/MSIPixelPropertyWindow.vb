@@ -7,10 +7,17 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class MSIPixelPropertyWindow
 
     Public Sub SetPixel(pixel As PixelScan)
+        Select Case Me.DockState
+            Case DockState.DockBottomAutoHide, DockState.DockLeftAutoHide, DockState.DockRightAutoHide, DockState.DockTopAutoHide, DockState.Hidden, DockState.Unknown
+                Return
+            Case Else
+        End Select
+
         PropertyGrid1.SelectedObject = New PixelProperty(pixel)
 
         Dim q As QuantileEstimationGK = pixel.GetMs.Select(Function(i) i.intensity).GKQuantile
