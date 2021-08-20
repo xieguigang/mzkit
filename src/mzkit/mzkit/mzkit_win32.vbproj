@@ -287,6 +287,7 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\CLI.vb" />
+    <Compile Include="application\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\WindowModules.vb" />
     <Compile Include="application\TaskbarWindow.vb" />
@@ -1029,6 +1030,10 @@
     <ProjectReference Include="..\ControlLibrary\ControlLibrary.vbproj">
       <Project>{df66aa70-9ab9-48d0-b492-9d0e0482a651}</Project>
       <Name>ControlLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceHub\ServiceHub.vbproj">
+      <Project>{54a151d4-f817-4fcf-aba1-66219b2b638c}</Project>
+      <Name>ServiceHub</Name>
     </ProjectReference>
     <ProjectReference Include="..\Task\Task.vbproj">
       <Project>{6e5bca87-358e-4ba5-b279-de17afa52c5c}</Project>

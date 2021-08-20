@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{54A151D4-F817-4FCF-ABA1-66219B2B638C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>ServiceHub.Program</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>ServiceHub</RootNamespace>
     <AssemblyName>ServiceHub</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -92,6 +93,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -110,11 +112,15 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceProtocols\MSI.vb" />
+    <Compile Include="ServiceProtocols\ServiceProtocol.vb" />
+    <Compile Include="Protocols.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -155,6 +161,18 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
       <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
       <Name>Microsoft.VisualBasic.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
+      <Project>{A1CB72F1-E918-4146-82A4-F409F31700B6}</Project>
+      <Name>mzPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
+      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
+      <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
+      <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
+      <Name>MsImaging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

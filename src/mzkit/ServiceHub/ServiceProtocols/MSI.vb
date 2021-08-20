@@ -1,0 +1,59 @@
+﻿Imports System.IO
+Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
+
+<Protocol(GetType(ServiceProtocol))>
+Public Class MSI : Implements ITaskDriver
+
+    Dim socket As TcpServicesSocket
+    Dim MSI As Drawer
+
+    Public ReadOnly Property TcpPort As Integer
+        Get
+            Return socket.LocalPort
+        End Get
+    End Property
+
+    Sub New()
+        Me.socket = New TcpServicesSocket(GetFirstAvailablePort())
+        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+    End Sub
+
+    Public Function Run() As Integer Implements ITaskDriver.Run
+        Return socket.Run
+    End Function
+
+    <Protocol(ServiceProtocol.LoadMSI)>
+    Public Function Load(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim filepath As String = request.GetString(Encoding.UTF8)
+        Dim mzpack As mzPack
+
+        Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True)
+            MSI = New Drawer(mzpack)
+        End Using
+
+        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
+    End Function
+
+    <Protocol(ServiceProtocol.UnloadMSI)>
+    Public Function Unload(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        MSI.Dispose()
+        MSI.Free
+
+        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
+    End Function
+
+    <Protocol(ServiceProtocol.LoadMSILayers)>
+    Public Function GetMSILayers(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim mz As Double()
+        Dim layers = MSI.LoadPixels(mz, Tolerance.DeltaMass(0.1)).ToArray
+
+    End Function
+End Class
