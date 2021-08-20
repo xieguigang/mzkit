@@ -1,59 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7c95bf0ba6962bca0df274a3c6253c83, src\mzkit\mzkit\application\RPackage.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MyApplication
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BPC, ListFiles, rawDataFrame, TIC, View
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MyApplication
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BPC, ListFiles, rawDataFrame, TIC, View
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports stdNum = System.Math
 
 Namespace My
 
@@ -81,6 +84,38 @@ Namespace My
             table.rownames = raws.Select(Function(a) a.source.FileName).ToArray
 
             Return table
+        End Function
+
+        <ExportAPI("filterMz")>
+        Public Shared Function FilterMz(ms2 As ScanMS2(), mz As Double, Optional da As Double = 0.5) As list()
+            Return ms2 _
+                .Where(Function(i) stdNum.Abs(mz - i.parentMz) <= da) _
+                .Select(Function(i)
+                            Dim topIons = i.GetMs.OrderByDescending(Function(m) m.intensity).Take(5).Select(Function(m) $"{m.mz.ToString("F4")}:{m.intensity.ToString("G3")}").ToArray
+
+                            Return New list With {
+                                .slots = New Dictionary(Of String, Object) From {
+                                    {"mz", i.parentMz},
+                                    {"rt", i.rt},
+                                    {"intensity", i.intensity},
+                                    {"top1", topIons.ElementAtOrDefault(0, "")},
+                                    {"top2", topIons.ElementAtOrDefault(1, "")},
+                                    {"top3", topIons.ElementAtOrDefault(2, "")},
+                                    {"top4", topIons.ElementAtOrDefault(3, "")},
+                                    {"top5", topIons.ElementAtOrDefault(4, "")}
+                                }
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
+        <ExportAPI("ms2")>
+        Public Shared Function LoadAllMs2(raw As Raw, Optional env As Environment = Nothing) As ScanMS2()
+            If Not raw.isLoaded Then
+                Call raw.LoadMzpack(Sub(tag, msg) base.print($"{tag}. {msg}", env))
+            End If
+
+            Return raw.GetMs2Scans().ToArray
         End Function
 
         <ExportAPI("TIC")>
