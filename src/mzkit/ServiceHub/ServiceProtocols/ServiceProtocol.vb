@@ -3,5 +3,5 @@
     UnloadMSI
 
     LoadMSILayers
-
+    ExitApp
 End Enum

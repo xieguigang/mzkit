@@ -11,6 +11,8 @@ Imports Microsoft.VisualBasic.Parallel
 <Protocol(GetType(ServiceProtocol))>
 Public Class MSI : Implements ITaskDriver
 
+    Public Shared ReadOnly Property Protocol As Long = New ProtocolAttribute(GetType(ServiceProtocol)).EntryPoint
+
     Dim socket As TcpServicesSocket
     Dim MSI As Drawer
 
@@ -47,6 +49,12 @@ Public Class MSI : Implements ITaskDriver
         MSI.Dispose()
         MSI.Free
 
+        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
+    End Function
+
+    <Protocol(ServiceProtocol.ExitApp)>
+    Public Function Quit(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Call socket.Dispose()
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 

@@ -4,7 +4,7 @@ Imports Task
 
 Public Module Protocols
 
-    Public Function StartServer(Rscript As String) As RunSlavePipeline
+    Public Function StartServer(Rscript As String, ByRef service As Integer) As RunSlavePipeline
         Dim cli As String = Rscript
         Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, $"""{cli}""")
 
