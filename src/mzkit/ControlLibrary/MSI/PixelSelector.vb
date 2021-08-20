@@ -52,6 +52,7 @@ Public Class PixelSelector
 
     Public Event SelectPixel(x As Integer, y As Integer)
     Public Event SelectPixelRegion(region As Rectangle)
+    Public Event SelectPolygon(polygon As PointF())
 
     Public Sub New()
 
@@ -104,6 +105,7 @@ Public Class PixelSelector
     Dim startPoint, endPoint As Point
     Dim rangeStart As Point
     Dim rangeEnd As Point
+    Dim polygons As New List(Of PointF)
 
     Public ReadOnly Property HasRegionSelection As Boolean
         Get
@@ -121,6 +123,8 @@ Public Class PixelSelector
             Return New Rectangle(left, top, right - left, bottom - top)
         End Get
     End Property
+
+    Public Property SelectPolygonMode As Boolean = False
 
     Public Sub ClearSelection()
         startPoint = Nothing
@@ -143,7 +147,7 @@ Public Class PixelSelector
         startPoint = e.Location
 
         getPoint(e, xpoint, ypoint)
-        DrawSelectionBox(startPoint)
+        DrawSelectionBox(startPoint, True)
 
         rangeStart = New Point(xpoint, ypoint)
 
@@ -164,7 +168,7 @@ Public Class PixelSelector
             Return
         End If
 
-        DrawSelectionBox(e.Location)
+        DrawSelectionBox(e.Location, False)
     End Sub
 
     Private Sub getPoint(e As MouseEventArgs, ByRef xpoint As Integer, ByRef ypoint As Integer)
@@ -180,23 +184,38 @@ Public Class PixelSelector
     ''' Draw the area selected.
     ''' </summary>
     ''' <param name="end_point"></param>
-    Private Sub DrawSelectionBox(end_point As Point)
-        ' Save the end point.
-        endPoint = end_point
+    Private Sub DrawSelectionBox(end_point As Point, push As Boolean)
+        If SelectPolygonMode Then
+            If push AndAlso Not endPoint.Equals(end_point) Then
+                polygons.Add(endPoint)
+                endPoint = end_point
+            End If
 
-        If (endPoint.X < 0) Then endPoint.X = 0
-        If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
-        If (endPoint.Y < 0) Then endPoint.Y = 0
-        If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
+            If (endPoint.X < 0) Then endPoint.X = 0
+            If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
+            If (endPoint.Y < 0) Then endPoint.Y = 0
+            If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
 
-        ' Draw the selection area.
-        Dim x = Math.Min(startPoint.X, endPoint.X)
-        Dim y = Math.Min(startPoint.Y, endPoint.Y)
-        Dim width = Math.Abs(startPoint.X - endPoint.X)
-        Dim height = Math.Abs(startPoint.Y - endPoint.Y)
+            picCanvas.CreateGraphics.FillPolygon(Brushes.Red, polygons.ToArray)
+            picCanvas.Refresh()
+        Else
+            ' Save the end point.
+            endPoint = end_point
 
-        picCanvas.CreateGraphics.DrawRectangle(Pens.Red, x, y, width, height)
-        picCanvas.Refresh()
+            If (endPoint.X < 0) Then endPoint.X = 0
+            If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
+            If (endPoint.Y < 0) Then endPoint.Y = 0
+            If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
+
+            ' Draw the selection area.
+            Dim x = Math.Min(startPoint.X, endPoint.X)
+            Dim y = Math.Min(startPoint.Y, endPoint.Y)
+            Dim width = Math.Abs(startPoint.X - endPoint.X)
+            Dim height = Math.Abs(startPoint.Y - endPoint.Y)
+
+            picCanvas.CreateGraphics.DrawRectangle(Pens.Red, x, y, width, height)
+            picCanvas.Refresh()
+        End If
     End Sub
 
     Private Sub picCanvas_MouseUp(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseUp
@@ -241,7 +260,7 @@ Public Class PixelSelector
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If HasRegionSelection Then
-            DrawSelectionBox(endPoint)
+            DrawSelectionBox(endPoint, False)
         End If
     End Sub
 End Class
