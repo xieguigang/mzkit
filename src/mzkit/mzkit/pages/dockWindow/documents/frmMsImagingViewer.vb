@@ -53,6 +53,7 @@
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
@@ -60,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports ControlLibrary
@@ -378,7 +380,8 @@ Public Class frmMsImagingViewer
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
-                           Dim image As Bitmap = Drawer.ChannelCompositions(
+                           Dim drawer As New PixelRender
+                           Dim image As Bitmap = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
                                dimSize:=size.SizeParser,
@@ -477,10 +480,11 @@ Public Class frmMsImagingViewer
             }, pm)
         ).ToArray
 
-        pixelFilter = Drawer.ScalePixels(pixelFilter, params.GetTolerance)
-        pixelFilter = Drawer.GetPixelsMatrix(pixelFilter)
+        pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance)
+        pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
 
-        Dim image As Bitmap = Drawer.RenderPixels(
+        Dim drawer As New PixelRender
+        Dim image As Bitmap = drawer.RenderPixels(
             pixels:=pixelFilter,
             dimension:=dimensionSize,
             dimSize:=size.SizeParser,
