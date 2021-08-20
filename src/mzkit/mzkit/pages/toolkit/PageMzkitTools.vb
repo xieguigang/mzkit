@@ -747,14 +747,15 @@ Public Class PageMzkitTools
 
             Yield New PeakMs2 With {
                 .mz = info.parentMz,
-                .scan = 0,
+                .scan = info.scan_id,
                 .activation = info.activationMethod,
                 .collisionEnergy = info.collisionEnergy,
                 .file = raw.source.FileName,
                 .lib_guid = guid,
                 .mzInto = info.GetMs.ToArray,
                 .precursor_type = "n/a",
-                .rt = info.rt
+                .rt = info.rt,
+                .intensity = info.intensity
             }
         Next
     End Function
