@@ -715,7 +715,7 @@ Public Class frmRawFeaturesList
         Dim da03 As Tolerance = DAmethod.DeltaMass(0.3)
         Dim intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.intoCutff
 
-        Call outfile.WriteLine($"ID,mz,rt,rt(min),intensity,Ion1,Ion2,Ion3,Ion4,Ion5")
+        Call outfile.WriteLine({"ID", "mz", "rt", "rt(min)", "intensity", "file", "Ion1", "Ion2", "Ion3", "Ion4", "Ion5"}.JoinBy(vbTab))
 
         For Each peak As PeakMs2 In MyApplication.mzkitRawViewer.getSelectedIonSpectrums(Nothing)
             Dim id As String = If(CInt(peak.rt) = 0, $"M{CInt(peak.mz)}", $"M{CInt(peak.mz)}T{CInt(peak.rt)}")
@@ -730,7 +730,7 @@ Public Class frmRawFeaturesList
                 .Select(Function(m) m.mz.ToString("F4")) _
                 .ToArray
 
-            Call outfile.WriteLine({id, mz, rt, rtmin, into}.JoinIterates(ions).JoinBy(vbTab))
+            Call outfile.WriteLine({id, mz, rt, rtmin, into, peak.file}.JoinIterates(ions).JoinBy(vbTab))
         Next
 
         Call Clipboard.Clear()
