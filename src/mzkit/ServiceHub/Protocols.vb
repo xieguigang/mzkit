@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Linq
 Imports Task
 
 Public Module Protocols
@@ -7,13 +8,21 @@ Public Module Protocols
     Public Function StartServer(Rscript As String, ByRef service As Integer) As RunSlavePipeline
         Dim cli As String = Rscript
         Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, $"""{cli}""")
+        Dim tcpPort As Integer = -1
 
         Call pipeline.CommandLine.__DEBUG_ECHO
 
-        ' AddHandler pipeline.SetProgress, AddressOf Progress.SetProgress
-        ' AddHandler pipeline.Finish, Sub() Progress.Invoke(Sub() Progress.Close())
+        AddHandler pipeline.SetMessage,
+            Sub(msg)
+                If msg.StartsWith("socket=") Then
+                    tcpPort = msg.Match("\d+").DoCall(AddressOf Integer.Parse)
+                End If
+            End Sub
 
         Call New Thread(AddressOf pipeline.Run).Start()
+        Call Thread.Sleep(1000)
+
+        service = tcpPort
 
         Return pipeline
     End Function

@@ -3,6 +3,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
@@ -25,6 +26,8 @@ Public Class MSI : Implements ITaskDriver
     Sub New()
         Me.socket = New TcpServicesSocket(GetFirstAvailablePort())
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+
+        Call RunSlavePipeline.SendMessage($"socket={TcpPort}")
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run

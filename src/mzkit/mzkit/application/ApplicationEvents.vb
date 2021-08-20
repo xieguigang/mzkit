@@ -266,7 +266,6 @@ Type 'q()' to quit R.
 
             Call New Thread(AddressOf New Shell(New PS1("> "), AddressOf doRunScriptWithSpecialCommand, dev:=console) With {.Quite = "!.R#::quit" & Rnd()}.Run).Start()
             Call DescriptionTooltip.SetEngine(REngine)
-            Call ServiceHub.StartMSIService()
         End Sub
 
         Private Shared Sub doRunScriptWithSpecialCommand(script As String)

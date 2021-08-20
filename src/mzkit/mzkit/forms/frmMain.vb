@@ -257,11 +257,13 @@ Public Class frmMain
 
         Call New Thread(
            Sub()
+               Call ServiceHub.StartMSIService()
                Call Thread.Sleep(100)
+               Call ServiceHub.LoadMSI(mzpack)
 
-               Dim canvas As Drawer = New Drawer(mzpack, memoryCache:=True)
+               'Dim canvas As Drawer = New Drawer(mzpack, memoryCache:=True)
 
-               Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, mzpack))
+               'Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, mzpack))
                Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {mzpack.FileName}]")
                Call progress.Invoke(Sub() progress.Close())
            End Sub).Start()
