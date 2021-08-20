@@ -174,6 +174,10 @@
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
       <Name>MsImaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Task\Task.vbproj">
+      <Project>{6E5BCA87-358E-4BA5-B279-DE17AFA52C5C}</Project>
+      <Name>Task</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
