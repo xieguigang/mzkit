@@ -211,6 +211,9 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Parallel", "..\..\..\GCModeller\src\runtime\Darwinism\Parallel\Parallel.vbproj", "{085171CA-6A65-494C-9B4A-477D35BCBC90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceHub", "ServiceHub", "{9958F5C7-C2D8-4BD7-AEE1-2706118E5F06}"
+	ProjectSection(SolutionItems) = preProject
+		Pipeline\ServiceHub\MSI-host.R = Pipeline\ServiceHub\MSI-host.R
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
