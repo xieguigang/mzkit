@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -9,6 +10,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
@@ -45,12 +47,23 @@ Public Class MSI : Implements ITaskDriver
     <Protocol(ServiceProtocol.LoadMSI)>
     Public Function Load(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim filepath As String = request.GetString(Encoding.UTF8)
-        Dim mzpack As mzPack
 
-        Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True)
-            MSI = New Drawer(mzpack)
-        End Using
+        If filepath.ExtensionSuffix("cdf") Then
+            Using cdf As New netCDFReader(filepath)
+                Dim size As Size = cdf.GetMsiDimension
+                Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
+                Dim mzpack As ReadRawPack = cdf.CreatePixelReader
+
+                MSI = New Drawer(mzpack)
+            End Using
+        Else
+            Dim mzpack As mzPack
+
+            Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True)
+                MSI = New Drawer(mzpack)
+            End Using
+        End If
 
         Dim info As Dictionary(Of String, String) = MsImageProperty.GetMSIInfo(MSI)
 

@@ -212,16 +212,10 @@ UseCheckedList:
 
     Public Sub loadRenderFromCDF(firstFile As String)
         Using cdf As New netCDFReader(firstFile)
-            Dim size As Size = cdf.GetMsiDimension
             Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-            Dim viewer = WindowModules.viewer
-            Dim mzpack As ReadRawPack = cdf.CreatePixelReader
-            Dim render As New Drawer(mzpack)
+            Dim size As Size = cdf.GetMsiDimension
 
-            If TypeOf viewer Is frmMsImagingViewer Then
-                Call DirectCast(viewer, frmMsImagingViewer).LoadRender(render, firstFile)
-            End If
-
+            viewer.LoadRender(firstFile, firstFile)
             viewer.renderByPixelsData(pixels, size)
             Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
 
