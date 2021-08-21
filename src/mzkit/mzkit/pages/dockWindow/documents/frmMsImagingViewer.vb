@@ -129,6 +129,10 @@ Public Class frmMsImagingViewer
         End Using
     End Sub
 
+    ''' <summary>
+    ''' load thermo raw
+    ''' </summary>
+    ''' <param name="file"></param>
     Public Sub loadRaw(file As String)
         Dim getSize As New InputMSIDimension
         Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
@@ -140,13 +144,10 @@ Public Class frmMsImagingViewer
             Call WindowModules.msImageParameters.Show(DockPanel)
             Call New Thread(
                 Sub()
-                    Using raw As New MSFileReader(file)
-                        Dim mzpack As mzPack = raw.LoadFromXMSIRaw(getSize.Dims.SizeParser)
-                        Dim render As New Drawer(mzpack)
+                    Dim info As MsImageProperty = ServiceHub.LoadMSI(file, getSize.Dims.SizeParser)
 
-                        Call WindowModules.viewer.Invoke(Sub() Call LoadRender(render, file))
-                        Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
-                    End Using
+                    Call WindowModules.viewer.Invoke(Sub() Call LoadRender(info, file))
+                    Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
 
                     Call progress.Invoke(Sub() progress.Close())
 
@@ -176,11 +177,23 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.showMsImaging(imzML:=file)
     End Sub
 
-    Public Sub LoadRender(filePath As String)
+    ''' <summary>
+    ''' load mzpack into MSI engine services
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    Public Sub LoadRender(mzpack As String, filePath As String)
+        LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
+    End Sub
+
+    ''' <summary>
+    ''' load mzpack into MSI engine services
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    Public Sub LoadRender(info As MsImageProperty, filePath As String)
         Call ServiceHub.CloseMSIEngine()
 
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
-        Me.params = New MsImageProperty(render)
+        Me.params = info
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
         Me.FilePath = filePath
 

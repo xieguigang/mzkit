@@ -237,9 +237,8 @@ Public Class frmMain
             Call showMzPackMSI(imzML)
         Else
             Dim cachefile As String = RscriptProgressTask.CreateMSIIndex(imzML)
-            Dim canvas As New Drawer(New ReadRawPack(cachefile))
 
-            WindowModules.viewer.LoadRender(canvas, imzML)
+            WindowModules.viewer.LoadRender(cachefile, imzML)
 
             Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]"
         End If

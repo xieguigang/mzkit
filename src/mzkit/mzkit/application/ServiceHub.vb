@@ -37,9 +37,22 @@ Module ServiceHub
     ''' <param name="raw">
     ''' filepath full name of the mzpack raw data file.
     ''' </param>
-    Public Sub LoadMSI(raw As String)
-        Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
-    End Sub
+    Public Function LoadMSI(raw As String, dimSize As Size) As MsImageProperty
+
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw">
+    ''' filepath full name of the mzpack raw data file.
+    ''' </param>
+    Public Function LoadMSI(raw As String) As MsImageProperty
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
+        Dim output As MsImageProperty
+
+        Return output
+    End Function
 
     Private Function handleServiceRequest(request As RequestStream) As RequestStream
         If MSI_service <= 0 Then
