@@ -2,12 +2,16 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
@@ -93,6 +97,47 @@ Public Class MSI : Implements ITaskDriver
         Dim config As LayerLoader
         Dim layers As PixelData() = MSI.LoadPixels(config.mz, config.GetTolerance).ToArray
 
+    End Function
+
+    <Protocol(ServiceProtocol.GetBasePeakMzList)>
+    Public Function GetBPCIons(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim data As New List(Of ms2)
+        Dim pointTagged As New List(Of (X!, Y!, mz As ms2))
+
+        For Each px As PixelScan In MSI.pixelReader.AllPixels
+            Dim mz As ms2 = px.GetMs.OrderByDescending(Function(a) a.intensity).FirstOrDefault
+
+            pointTagged.Add((px.X, px.Y, mz))
+
+            If Not mz Is Nothing Then
+                data.Add(mz)
+            End If
+        Next
+
+        data = data.ToArray _
+             .Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)) _
+             .AsList
+
+        Dim da As Tolerance = Tolerance.DeltaMass(0.1)
+        Dim mzGroup = pointTagged _
+            .GroupBy(Function(p) p.mz.mz, da) _
+            .Select(Function(a)
+                        Return (Val(a.name), a.ToArray)
+                    End Function) _
+            .ToArray
+
+        Dim mzList As Double() = data _
+            .OrderByDescending(Function(a)
+                                   Return mzGroup _
+                                       .Where(Function(i) da(i.Item1, a.mz)) _
+                                       .Select(Function(p) p.ToArray) _
+                                       .IteratesALL _
+                                       .Count
+                               End Function) _
+            .Select(Function(m) m.mz) _
+            .ToArray
+
+        Return New DataPipe(mzList)
     End Function
 End Class
 

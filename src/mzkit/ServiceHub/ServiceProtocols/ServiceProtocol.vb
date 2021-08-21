@@ -10,6 +10,7 @@
     UnloadMSI
     ExportMzpack
     LoadMSILayers
+    GetBasePeakMzList
     GetPixel
     GetPixelRectangle
     ExitApp
