@@ -182,7 +182,8 @@ Public Class frmMsImagingViewer
     ''' </summary>
     ''' <param name="filePath"></param>
     Public Sub LoadRender(mzpack As String, filePath As String)
-        LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
+        Call ServiceHub.CloseMSIEngine()
+        Call LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
     End Sub
 
     ''' <summary>
@@ -190,8 +191,6 @@ Public Class frmMsImagingViewer
     ''' </summary>
     ''' <param name="filePath"></param>
     Public Sub LoadRender(info As MsImageProperty, filePath As String)
-        Call ServiceHub.CloseMSIEngine()
-
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
         Me.params = info
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1

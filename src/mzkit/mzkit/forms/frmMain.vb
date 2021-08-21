@@ -251,18 +251,15 @@ Public Class frmMain
     Friend Sub showMzPackMSI(mzpack As String)
         Dim progress As New frmTaskProgress
 
-        progress.ShowProgressTitle("Open mzPack for MSI...", directAccess:=True)
-        progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
+        Call ServiceHub.CloseMSIEngine()
+        Call progress.ShowProgressTitle("Open mzPack for MSI...", directAccess:=True)
+        Call progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
 
         Call New Thread(
            Sub()
                Call ServiceHub.StartMSIService()
                Call Thread.Sleep(100)
-               Call ServiceHub.LoadMSI(mzpack)
-
-               'Dim canvas As Drawer = New Drawer(mzpack, memoryCache:=True)
-
-               'Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, mzpack))
+               Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(ServiceHub.LoadMSI(mzpack), mzpack))
                Call Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {mzpack.FileName}]")
                Call progress.Invoke(Sub() progress.Close())
            End Sub).Start()
