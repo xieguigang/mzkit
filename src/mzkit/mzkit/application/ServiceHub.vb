@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -128,6 +129,16 @@ Module ServiceHub
             Return {}
         Else
             Return data.GetDoubles
+        End If
+    End Function
+
+    Public Function LoadSummaryLayer(summary As IntensitySummary) As PixelScanIntensity()
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadSummaryLayer, BitConverter.GetBytes(CInt(summary))))
+
+        If data Is Nothing Then
+            Return {}
+        Else
+            Return PixelScanIntensity.Parse(data.ChunkBuffer)
         End If
     End Function
 

@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
@@ -128,6 +129,18 @@ Public Class MSI : Implements ITaskDriver
         Dim layers As PixelData() = MSI.LoadPixels(config.mz, config.GetTolerance).ToArray
 
         Return New DataPipe(PixelData.GetBuffer(layers))
+    End Function
+
+    <Protocol(ServiceProtocol.LoadSummaryLayer)>
+    Public Function LoadSummaryLayer(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim summaryType As IntensitySummary = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
+        Dim summary As PixelScanIntensity() = MSI.pixelReader _
+            .GetSummary _
+            .GetLayer(summaryType) _
+            .ToArray
+        Dim byts As Byte() = PixelScanIntensity.GetBuffer(summary)
+
+        Return New DataPipe(byts)
     End Function
 
     <Protocol(ServiceProtocol.GetBasePeakMzList)>
