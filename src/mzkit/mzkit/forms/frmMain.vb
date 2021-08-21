@@ -251,7 +251,6 @@ Public Class frmMain
     Friend Sub showMzPackMSI(mzpack As String)
         Dim progress As New frmTaskProgress
 
-        Call ServiceHub.CloseMSIEngine()
         Call progress.ShowProgressTitle("Open mzPack for MSI...", directAccess:=True)
         Call progress.ShowProgressDetails("Loading MSI raw data file into viewer workspace...", directAccess:=True)
 

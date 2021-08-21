@@ -142,6 +142,8 @@ Public Class frmMsImagingViewer
 
             Call WindowModules.viewer.Show(DockPanel)
             Call WindowModules.msImageParameters.Show(DockPanel)
+            Call ServiceHub.StartMSIService()
+
             Call New Thread(
                 Sub()
                     Dim info As MsImageProperty = ServiceHub.LoadMSI(file, getSize.Dims.SizeParser)
@@ -182,7 +184,7 @@ Public Class frmMsImagingViewer
     ''' </summary>
     ''' <param name="filePath"></param>
     Public Sub LoadRender(mzpack As String, filePath As String)
-        Call ServiceHub.CloseMSIEngine()
+        Call ServiceHub.StartMSIService()
         Call LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
     End Sub
 

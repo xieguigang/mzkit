@@ -26,6 +26,8 @@ Module ServiceHub
     Public MessageCallback As Action(Of String)
 
     Public Sub StartMSIService()
+        Call CloseMSIEngine()
+
         MSI_pipe = Global.ServiceHub.Protocols.StartServer(RscriptPipelineTask.GetRScript("ServiceHub/MSI-host.R"), MSI_service)
 
         If MSI_service <= 0 Then
