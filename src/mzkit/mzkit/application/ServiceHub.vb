@@ -6,6 +6,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports mzkit.My
@@ -59,7 +61,7 @@ Module ServiceHub
 
     Public Function LoadPixels(mz As IEnumerable(Of Double), mzErr As Tolerance) As PixelData()
         Dim config As New LayerLoader With {.mz = mz.ToArray, .method = If(TypeOf mzErr Is PPMmethod, "ppm", "da"), .mzErr = mzErr.DeltaTolerance}
-        Dim configBytes As Byte() = MsgPackSerializer.SerializeObject(config)
+        Dim configBytes As Byte() = BSON.GetBuffer(config.GetType.GetJsonElement(config, New JSONSerializerOptions)).ToArray
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSILayers, configBytes))
 
         If data Is Nothing Then
@@ -151,6 +153,10 @@ Module ServiceHub
     End Sub
 
     Private Sub MSI_pipe_SetMessage(message As String) Handles MSI_pipe.SetMessage
-        Call MessageCallback(message)
+        If MessageCallback Is Nothing Then
+            Call message.__DEBUG_ECHO
+        Else
+            Call MessageCallback(message)
+        End If
     End Sub
 End Module

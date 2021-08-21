@@ -178,6 +178,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26F1-44DF-8D40-347136C743CD}</Project>
+      <Name>application.json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
       <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
       <Name>Microsoft.VisualBasic.Network</Name>

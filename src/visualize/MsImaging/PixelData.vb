@@ -143,6 +143,14 @@ Public Class PixelData
         For Each point As PixelData In pixels
             Dim intensity As Double = point.intensity
 
+            If logE Then
+                If intensity <= 1 Then
+                    intensity = intensityRange.Min
+                Else
+                    intensity = stdNum.Log(intensity)
+                End If
+            End If
+
             If intensity < intensityRange.Min Then
                 intensity = intensityRange.Min
             End If
@@ -150,21 +158,12 @@ Public Class PixelData
                 intensity = intensityRange.Max
             End If
 
-            If logE Then
-                If intensity <= 1 Then
-                    level = 0
-                Else
-                    level = intensityRange.ScaleMapping(
-                        x:=stdNum.Log(intensity),
-                        valueRange:=levelRange
-                    )
-                End If
-            Else
-                level = intensityRange.ScaleMapping(intensity, levelRange)
-            End If
+            level = intensityRange.ScaleMapping(intensity, levelRange)
 
             If level > 1 Then
                 point.level = 1
+            ElseIf level < 0 Then
+                level = 0
             Else
                 point.level = level
             End If

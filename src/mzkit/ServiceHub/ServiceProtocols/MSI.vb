@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Text
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -15,6 +16,7 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
@@ -69,7 +71,7 @@ Public Class MSI : Implements ITaskDriver
 
         Dim info As Dictionary(Of String, String) = MsImageProperty.GetMSIInfo(MSI)
 
-        Return New DataPipe(info.GetJson)
+        Return New DataPipe(info.GetJson(indent:=False, simpleDict:=True))
     End Function
 
     <Protocol(ServiceProtocol.GetPixel)>
@@ -125,7 +127,7 @@ Public Class MSI : Implements ITaskDriver
 
     <Protocol(ServiceProtocol.LoadMSILayers)>
     Public Function GetMSILayers(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Dim config As LayerLoader = MsgPackSerializer.Deserialize(GetType(LayerLoader), request.ChunkBuffer)
+        Dim config As LayerLoader = BSON.Load(request.ChunkBuffer).CreateObject(Of LayerLoader)
         Dim layers As PixelData() = MSI.LoadPixels(config.mz, config.GetTolerance).ToArray
 
         Return New DataPipe(PixelData.GetBuffer(layers))
