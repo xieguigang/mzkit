@@ -357,7 +357,7 @@ Public Class frmMsImagingViewer
         Call New Thread(
             Sub()
                 Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -424,7 +424,7 @@ Public Class frmMsImagingViewer
         Call New Thread(
             Sub()
                 Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage("no pixel data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -448,9 +448,7 @@ Public Class frmMsImagingViewer
 
     Dim loadedPixels As PixelData()
 
-    Public Sub renderByPixelsData(pixels As PixelData())
-        Dim MsiDim As New Size(params.scan_x, params.scan_y)
-
+    Public Sub renderByPixelsData(pixels As PixelData(), MsiDim As Size)
         If params Is Nothing Then
             Me.params = New MsImageProperty
             Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
@@ -596,7 +594,7 @@ Public Class frmMsImagingViewer
             Return
         Else
             pinedPixel = New LibraryMatrix With {
-                .ms2 = render.ReadXY(pos.X, pos.Y).ToArray,
+                .ms2 = ServiceHub.GetPixel(pos.X, pos.Y).GetMs,
                 .name = $"Select Pixel: [{pos.X},{pos.Y}]"
             }
 

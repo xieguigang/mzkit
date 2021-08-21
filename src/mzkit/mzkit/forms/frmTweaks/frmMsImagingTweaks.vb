@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::ccaa241b26f635983c40482c205c27e8, src\mzkit\mzkit\forms\frmTweaks\frmMsImagingTweaks.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMsImagingTweaks
-    ' 
-    '     Function: GetSelectedIons
-    ' 
-    '     Sub: AddIonMzLayer, ClearIons, frmMsImagingTweaks_Load, LoadAllIonsToolStripMenuItem_Click, loadAllMzIons
-    '          LoadBasePeakIonsToolStripMenuItem_Click, loadBasePeakMz, LoadPinnedIons, loadRenderFromCDF, PropertyGrid1_DragDrop
-    '          PropertyGrid1_DragEnter, RGBLayers, ToolStripButton1_Click, ToolStripButton2_Click, Win7StyleTreeView1_AfterCheck
-    ' 
-    ' /********************************************************************************/
+' Class frmMsImagingTweaks
+' 
+'     Function: GetSelectedIons
+' 
+'     Sub: AddIonMzLayer, ClearIons, frmMsImagingTweaks_Load, LoadAllIonsToolStripMenuItem_Click, loadAllMzIons
+'          LoadBasePeakIonsToolStripMenuItem_Click, loadBasePeakMz, LoadPinnedIons, loadRenderFromCDF, PropertyGrid1_DragDrop
+'          PropertyGrid1_DragEnter, RGBLayers, ToolStripButton1_Click, ToolStripButton2_Click, Win7StyleTreeView1_AfterCheck
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -222,10 +222,7 @@ UseCheckedList:
                 Call DirectCast(viewer, frmMsImagingViewer).LoadRender(render, firstFile)
             End If
 
-            If TypeOf viewer Is frmMsImagingViewer Then
-                Call DirectCast(viewer, frmMsImagingViewer).renderByPixelsData(pixels, size)
-            End If
-
+            viewer.renderByPixelsData(pixels, size)
             Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
 
             For Each mz As Double In pixels _
@@ -243,36 +240,6 @@ UseCheckedList:
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy
         End If
-    End Sub
-
-    Private Sub LoadAllIonsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadAllIonsToolStripMenuItem.Click
-        If MessageBox.Show("Mzkit will takes a long time to load all ions from your raw data file," & vbCrLf & "Continue to process?", "MSI Viewer", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) <> DialogResult.OK Then
-            Return
-        End If
-
-        Call ClearIons()
-
-        If Not viewer.render Is Nothing Then
-            Dim progress As New frmProgressSpinner
-
-            Call New Thread(Sub()
-                                Call Me.Invoke(Sub() Call loadAllMzIons())
-                                Call progress.Invoke(Sub() progress.Close())
-                            End Sub).Start()
-
-            Call progress.ShowDialog()
-        Else
-            Call MyApplication.host.showStatusMessage("No MSI raw data file was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        End If
-    End Sub
-
-    Private Sub loadAllMzIons()
-        Dim layers = Win7StyleTreeView1.Nodes.Item(0)
-
-        For Each mz As Double In viewer.render.pixelReader.LoadMzArray(30)
-            layers.Nodes.Add(mz.ToString("F4")).Tag = mz
-            Application.DoEvents()
-        Next
     End Sub
 
     Private Sub LoadBasePeakIonsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadBasePeakIonsToolStripMenuItem.Click
@@ -294,9 +261,10 @@ UseCheckedList:
 
     Private Sub loadBasePeakMz()
         Dim layers As TreeNode = Win7StyleTreeView1.Nodes.Item(0)
+        Dim data As Double() = ServiceHub.LoadBasePeakMzList
 
-        For Each p As ms2 In data
-            layers.Nodes.Add(p.mz.ToString("F4")).Tag = p.mz
+        For Each p As Double In data
+            layers.Nodes.Add(p.ToString("F4")).Tag = p
             Application.DoEvents()
         Next
     End Sub

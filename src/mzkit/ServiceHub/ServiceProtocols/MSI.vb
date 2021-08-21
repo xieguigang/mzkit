@@ -6,7 +6,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
@@ -15,6 +14,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Task
 
 <Protocol(GetType(ServiceProtocol))>
 Public Class MSI : Implements ITaskDriver
@@ -51,7 +52,9 @@ Public Class MSI : Implements ITaskDriver
             MSI = New Drawer(mzpack)
         End Using
 
-        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
+        Dim info As Dictionary(Of String, String) = MsImageProperty.GetMSIInfo(MSI)
+
+        Return New DataPipe(info.GetJson)
     End Function
 
     <Protocol(ServiceProtocol.GetPixel)>
@@ -61,6 +64,13 @@ Public Class MSI : Implements ITaskDriver
         Dim cache As New InMemoryVectorPixel(pixel)
 
         Return New DataPipe(cache.GetBuffer)
+    End Function
+
+    <Protocol(ServiceProtocol.GetPixelRectangle)>
+    Public Function GetPixelRectangle(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim rect As Integer() = request.GetIntegers
+        Dim pixels As PixelScan() = MSI.pixelReader.GetPixel(rect(0), rect(1), rect(2), rect(3)).ToArray
+
     End Function
 
     <Protocol(ServiceProtocol.ExportMzpack)>

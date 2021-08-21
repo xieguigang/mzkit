@@ -7,6 +7,9 @@ Imports Task
 Imports mzkit.My
 Imports Microsoft.VisualBasic.Linq
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 
 Module ServiceHub
 
@@ -41,6 +44,10 @@ Module ServiceHub
 
     End Function
 
+    Public Function LoadPixels(mz As IEnumerable(Of Double), mzErr As Tolerance) As PixelData()
+
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -49,7 +56,12 @@ Module ServiceHub
     ''' </param>
     Public Function LoadMSI(raw As String) As MsImageProperty
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
-        Dim output As MsImageProperty
+        Dim output As MsImageProperty = data _
+            .GetString(Encoding.UTF8) _
+            .LoadJSON(Of Dictionary(Of String, String)) _
+            .DoCall(Function(info)
+                        Return New MsImageProperty(info)
+                    End Function)
 
         Return output
     End Function
@@ -79,6 +91,16 @@ Module ServiceHub
             Return Nothing
         Else
             Return InMemoryVectorPixel.Parse(output.ChunkBuffer)
+        End If
+    End Function
+
+    Public Function LoadBasePeakMzList() As Double()
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetBasePeakMzList, {}))
+
+        If data Is Nothing Then
+            Return {}
+        Else
+            Return data.GetDoubles
         End If
     End Function
 
