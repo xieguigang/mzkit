@@ -1,15 +1,16 @@
 ﻿Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports mzkit.My
 Imports mzkit.Tcp
 Imports ServiceHub
 Imports Task
-Imports mzkit.My
-Imports Microsoft.VisualBasic.Linq
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 
 Module ServiceHub
 
@@ -41,11 +42,28 @@ Module ServiceHub
     ''' filepath full name of the mzpack raw data file.
     ''' </param>
     Public Function LoadMSI(raw As String, dimSize As Size) As MsImageProperty
+        Dim config As String = $"{dimSize.Width},{dimSize.Height}={raw}"
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadThermoRawMSI, Encoding.UTF8.GetBytes(config)))
+        Dim output As MsImageProperty = data _
+            .GetString(Encoding.UTF8) _
+            .LoadJSON(Of Dictionary(Of String, String)) _
+            .DoCall(Function(info)
+                        Return New MsImageProperty(info)
+                    End Function)
 
+        Return output
     End Function
 
     Public Function LoadPixels(mz As IEnumerable(Of Double), mzErr As Tolerance) As PixelData()
+        Dim config As New LayerLoader With {.mz = mz.ToArray, .method = If(TypeOf mzErr Is PPMmethod, "ppm", "da"), .mzErr = mzErr.DeltaTolerance}
+        Dim configBytes As Byte() = MsgPackSerializer.SerializeObject(config)
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSILayers, configBytes))
 
+        If data Is Nothing Then
+            Return {}
+        Else
+            Return PixelData.Parse(data.ChunkBuffer)
+        End If
     End Function
 
     ''' <summary>
@@ -79,8 +97,15 @@ Module ServiceHub
         Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(fileName)))
     End Sub
 
-    Public Function GetPixel(x As Integer, y As Integer, w As Integer, h As Integer) As PixelScan()
+    Public Function GetPixel(x As Integer, y As Integer, w As Integer, h As Integer) As InMemoryVectorPixel()
+        Dim xy As Byte() = {x, y, w, h}.Select(AddressOf BitConverter.GetBytes).IteratesALL.ToArray
+        Dim output As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetPixelRectangle, xy))
 
+        If output Is Nothing Then
+            Return Nothing
+        Else
+            Return InMemoryVectorPixel.ParseVector(output.ChunkBuffer).ToArray
+        End If
     End Function
 
     Public Function GetPixel(x As Integer, y As Integer) As PixelScan

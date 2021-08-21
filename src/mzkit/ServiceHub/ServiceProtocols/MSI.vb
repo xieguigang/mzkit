@@ -9,6 +9,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
@@ -82,8 +83,14 @@ Public Class MSI : Implements ITaskDriver
     <Protocol(ServiceProtocol.GetPixelRectangle)>
     Public Function GetPixelRectangle(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim rect As Integer() = request.GetIntegers
-        Dim pixels As PixelScan() = MSI.pixelReader.GetPixel(rect(0), rect(1), rect(2), rect(3)).ToArray
+        Dim pixels As InMemoryVectorPixel() = MSI.pixelReader _
+            .GetPixel(rect(0), rect(1), rect(2), rect(3)) _
+            .Select(Function(p)
+                        Return New InMemoryVectorPixel(p)
+                    End Function) _
+            .ToArray
 
+        Return New DataPipe(InMemoryVectorPixel.GetBuffer(pixels))
     End Function
 
     <Protocol(ServiceProtocol.ExportMzpack)>
@@ -117,9 +124,10 @@ Public Class MSI : Implements ITaskDriver
 
     <Protocol(ServiceProtocol.LoadMSILayers)>
     Public Function GetMSILayers(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Dim config As LayerLoader
+        Dim config As LayerLoader = MsgPackSerializer.Deserialize(GetType(LayerLoader), request.ChunkBuffer)
         Dim layers As PixelData() = MSI.LoadPixels(config.mz, config.GetTolerance).ToArray
 
+        Return New DataPipe(PixelData.GetBuffer(layers))
     End Function
 
     <Protocol(ServiceProtocol.GetBasePeakMzList)>
@@ -173,6 +181,10 @@ Public Class LayerLoader
     Public Function GetTolerance() As Tolerance
         Return Tolerance.ParseScript($"{method}:{mzErr}")
     End Function
+
+    Shared Sub New()
+        Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Schema)
+    End Sub
 
     Private Class Schema : Inherits SchemaProvider(Of LayerLoader)
 

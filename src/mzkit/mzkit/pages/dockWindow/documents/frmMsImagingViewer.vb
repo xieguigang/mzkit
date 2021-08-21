@@ -282,7 +282,7 @@ Public Class frmMsImagingViewer
         Dim y1 As Integer = region.Top
         Dim x2 As Integer = region.Right
         Dim y2 As Integer = region.Bottom
-        Dim rangePixels As PixelScan() = ServiceHub _
+        Dim rangePixels As InMemoryVectorPixel() = ServiceHub _
             .GetPixel(x1, y1, x2, y2) _
             .ToArray
 

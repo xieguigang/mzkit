@@ -128,6 +128,35 @@ Namespace Pixel
             End Using
         End Function
 
+        Public Shared Iterator Function ParseVector(buffer As Byte()) As IEnumerable(Of InMemoryVectorPixel)
+            Using file As New BinaryDataReader(New MemoryStream(buffer))
+                Dim n As Integer = file.ReadInt32
+
+                For i As Integer = 0 To n - 1
+                    Dim byts As Byte() = file.ReadBytes(file.ReadInt32)
+
+                    Yield Parse(byts)
+                Next
+            End Using
+        End Function
+
+        Public Shared Function GetBuffer(data As InMemoryVectorPixel()) As Byte()
+            Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+                Call file.Write(data.Length)
+
+                For Each item In data
+                    Dim byts As Byte() = item.GetBuffer
+
+                    Call file.Write(byts.Length)
+                    Call file.Write(byts)
+                Next
+
+                Call file.Flush()
+
+                Return buf.ToArray
+            End Using
+        End Function
+
         Protected Friend Overrides Sub release()
             Erase _mz
             Erase _intensity
