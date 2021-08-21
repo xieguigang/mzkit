@@ -5,6 +5,8 @@ Imports mzkit.Tcp
 Imports ServiceHub
 Imports Task
 Imports mzkit.My
+Imports Microsoft.VisualBasic.Linq
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 
 Module ServiceHub
 
@@ -39,17 +41,29 @@ Module ServiceHub
         Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
     End Sub
 
-    Private Sub handleServiceRequest(request As RequestStream)
+    Private Function handleServiceRequest(request As RequestStream) As RequestStream
         If MSI_service <= 0 Then
             Call MyApplication.host.showStatusMessage("MS-imaging services is not started yet!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return Nothing
         Else
-            Call New TcpRequest("localhost", MSI_service).SendMessage(request)
+            Return New TcpRequest("localhost", MSI_service).SendMessage(request)
         End If
-    End Sub
+    End Function
 
     Public Sub ExportMzpack(fileName As String)
         Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(fileName)))
     End Sub
+
+    Public Function GetPixel(x As Integer, y As Integer) As PixelScan
+        Dim xy As Byte() = BitConverter.GetBytes(x).JoinIterates(BitConverter.GetBytes(y)).ToArray
+        Dim output As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetPixel, xy))
+
+        If output Is Nothing Then
+            Return Nothing
+        Else
+            Return InMemoryVectorPixel.Parse(output.ChunkBuffer)
+        End If
+    End Function
 
     Public Sub CloseMSIEngine()
         If MSI_service > 0 Then
