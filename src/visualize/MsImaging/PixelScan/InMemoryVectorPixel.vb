@@ -110,6 +110,7 @@ Namespace Pixel
                 file.Write(mz.Length)
                 file.Write(mz)
                 file.Write(intensity)
+                file.Flush()
 
                 Return buf.ToArray
             End Using

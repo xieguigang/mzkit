@@ -67,6 +67,10 @@ Module ServiceHub
         Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(fileName)))
     End Sub
 
+    Public Function GetPixel(x As Integer, y As Integer, w As Integer, h As Integer) As PixelScan()
+
+    End Function
+
     Public Function GetPixel(x As Integer, y As Integer) As PixelScan
         Dim xy As Byte() = BitConverter.GetBytes(x).JoinIterates(BitConverter.GetBytes(y)).ToArray
         Dim output As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetPixel, xy))

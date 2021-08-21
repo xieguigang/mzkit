@@ -11,5 +11,6 @@
     ExportMzpack
     LoadMSILayers
     GetPixel
+    GetPixelRectangle
     ExitApp
 End Enum

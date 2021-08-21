@@ -7,6 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
@@ -89,8 +90,31 @@ Public Class MSI : Implements ITaskDriver
 
     <Protocol(ServiceProtocol.LoadMSILayers)>
     Public Function GetMSILayers(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Dim mz As Double()
-        Dim layers = MSI.LoadPixels(mz, Tolerance.DeltaMass(0.1)).ToArray
+        Dim config As LayerLoader
+        Dim layers As PixelData() = MSI.LoadPixels(config.mz, config.GetTolerance).ToArray
 
     End Function
+End Class
+
+Public Class LayerLoader
+
+    Public Property mz As Double()
+    Public Property mzErr As Double
+    Public Property method As String
+
+    Public Function GetTolerance() As Tolerance
+        Return Tolerance.ParseScript($"{method}:{mzErr}")
+    End Function
+
+    Private Class Schema : Inherits SchemaProvider(Of LayerLoader)
+
+        Protected Overrides Iterator Function GetObjectSchema() As IEnumerable(Of (obj As Type, schema As Dictionary(Of String, NilImplication)))
+            Yield (GetType(LayerLoader), New Dictionary(Of String, NilImplication) From {
+                {NameOf(mz), NilImplication.MemberDefault},
+                {NameOf(mzErr), NilImplication.MemberDefault},
+                {NameOf(method), NilImplication.MemberDefault}
+            })
+        End Function
+    End Class
+
 End Class
