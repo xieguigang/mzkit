@@ -324,7 +324,7 @@ Public Class frmMsImagingViewer
         Call PixelSelector1.ShowMessage($"Render MSI in {summary.Description} mode.")
     End Sub
 
-    Private Function registerSummaryRender(summary As IntensitySummary)
+    Private Function registerSummaryRender(summary As IntensitySummary) As Action
         Dim summaryLayer As PixelScanIntensity()
         Dim dimSize As New Size(params.scan_x, params.scan_y)
 
