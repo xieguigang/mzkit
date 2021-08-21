@@ -147,6 +147,7 @@ Module ServiceHub
     Public Sub CloseMSIEngine()
         If MSI_service > 0 Then
             Dim request As New RequestStream(MSI.Protocol, ServiceProtocol.ExitApp, Encoding.UTF8.GetBytes("shut down!"))
+            Call handleServiceRequest(request)
             MSI_pipe = Nothing
             MSI_service = -1
         End If

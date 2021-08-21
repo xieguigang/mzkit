@@ -572,8 +572,8 @@ Public Class frmMain
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
-        Call progress.ShowDialog()
         Call ServiceHub.CloseMSIEngine()
+        Call progress.ShowDialog()
         Call App.Exit()
     End Sub
 
