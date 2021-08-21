@@ -3,6 +3,8 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
@@ -42,6 +44,28 @@ Public Class MSI : Implements ITaskDriver
         Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True)
             MSI = New Drawer(mzpack)
+        End Using
+
+        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
+    End Function
+
+    <Protocol(ServiceProtocol.GetPixel)>
+    Public Function GetPixel(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim xy As Integer() = request.GetIntegers
+        Dim pixel As PixelScan = MSI.pixelReader.GetPixel(xy(0), xy(1))
+
+    End Function
+
+    <Protocol(ServiceProtocol.ExportMzpack)>
+    Public Function ExportMzPack(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim filename As String = request.GetString(Encoding.UTF8)
+
+        Using buffer As Stream = filename.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call New mzPack With {
+                .MS = DirectCast(MSI.pixelReader, ReadRawPack) _
+                    .GetScans _
+                    .ToArray
+            }.Write(buffer, progress:=AddressOf RunSlavePipeline.SendMessage)
         End Using
 
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))

@@ -8,8 +8,16 @@ Imports mzkit.My
 
 Module ServiceHub
 
-    Dim MSI_pipe As RunSlavePipeline
+    Dim WithEvents MSI_pipe As RunSlavePipeline
     Dim MSI_service As Integer = -1
+
+    Public ReadOnly Property MSIEngineRunning As Boolean
+        Get
+            Return MSI_service > 0
+        End Get
+    End Property
+
+    Public MessageCallback As Action(Of String)
 
     Public Sub StartMSIService()
         MSI_pipe = Global.ServiceHub.Protocols.StartServer(RscriptPipelineTask.GetRScript("ServiceHub/MSI-host.R"), MSI_service)
@@ -28,13 +36,19 @@ Module ServiceHub
     ''' filepath full name of the mzpack raw data file.
     ''' </param>
     Public Sub LoadMSI(raw As String)
-        Dim request As New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw))
+        Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
+    End Sub
 
+    Private Sub handleServiceRequest(request As RequestStream)
         If MSI_service <= 0 Then
             Call MyApplication.host.showStatusMessage("MS-imaging services is not started yet!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Call New TcpRequest("localhost", MSI_service).SendMessage(request)
         End If
+    End Sub
+
+    Public Sub ExportMzpack(fileName As String)
+        Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(fileName)))
     End Sub
 
     Public Sub CloseMSIEngine()
@@ -45,4 +59,7 @@ Module ServiceHub
         End If
     End Sub
 
+    Private Sub MSI_pipe_SetMessage(message As String) Handles MSI_pipe.SetMessage
+        Call MessageCallback(message)
+    End Sub
 End Module

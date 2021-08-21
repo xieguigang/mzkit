@@ -16,13 +16,22 @@ Public Module Protocols
             Sub(msg)
                 If msg.StartsWith("socket=") Then
                     tcpPort = msg.Match("\d+").DoCall(AddressOf Integer.Parse)
+                Else
+                    Call msg.__DEBUG_ECHO
                 End If
             End Sub
 
         Call New Thread(AddressOf pipeline.Run).Start()
-        Call Thread.Sleep(1000)
 
-        service = tcpPort
+        For i As Integer = 0 To 1000
+            service = tcpPort
+
+            If service > 0 Then
+                Exit For
+            Else
+                Thread.Sleep(500)
+            End If
+        Next
 
         Return pipeline
     End Function

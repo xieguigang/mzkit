@@ -80,7 +80,6 @@ Public Class frmMsImagingViewer
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
-    Friend render As Drawer
     Dim params As MsImageProperty
     Dim WithEvents checks As ToolStripMenuItem
     Dim WithEvents tweaks As PropertyGrid
@@ -111,27 +110,23 @@ Public Class frmMsImagingViewer
     End Sub
 
     Sub exportMzPack()
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Call MyApplication.host.showStatusMessage("No MSI raw data was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        Else
-            Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Dim fileName As String = file.FileName
-
-                    Call frmTaskProgress.RunAction(
-                        Sub(update)
-                            Using buffer As Stream = fileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                                Call New mzPack With {
-                                    .MS = DirectCast(render.pixelReader, ReadRawPack) _
-                                        .GetScans _
-                                        .ToArray
-                                }.Write(buffer, progress:=update)
-                            End Using
-                        End Sub, title:="Export mzPack data...", info:="Save mzPack!")
-                    Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-            End Using
+            Return
         End If
+
+        Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
+            If file.ShowDialog = DialogResult.OK Then
+                Dim fileName As String = file.FileName
+
+                Call frmTaskProgress.RunAction(
+                    Sub(update)
+                        ServiceHub.MessageCallback = update
+                        ServiceHub.ExportMzpack(fileName)
+                    End Sub, title:="Export mzPack data...", info:="Save mzPack!")
+                Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Using
     End Sub
 
     Public Sub loadRaw(file As String)
@@ -181,17 +176,10 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.showMsImaging(imzML:=file)
     End Sub
 
-    Public Sub LoadRender(render As Drawer, filePath As String)
-        If Not Me.render Is Nothing Then
-            Try
-                Call Me.render.Dispose()
-            Catch ex As Exception
-
-            End Try
-        End If
+    Public Sub LoadRender(filePath As String)
+        Call ServiceHub.CloseMSIEngine()
 
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
-        Me.render = render
         Me.params = New MsImageProperty(render)
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
         Me.FilePath = filePath
@@ -220,7 +208,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub showPixel(x As Integer, y As Integer) Handles PixelSelector1.SelectPixel
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         Else

@@ -164,6 +164,10 @@
       <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
       <Name>Microsoft.VisualBasic.Network</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
+      <Project>{95F7D65E-9DB1-4605-9FD3-25433277AF88}</Project>
+      <Name>assembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
       <Project>{A1CB72F1-E918-4146-82A4-F409F31700B6}</Project>
       <Name>mzPack</Name>
