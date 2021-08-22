@@ -104,9 +104,18 @@ Public Class frmMsImagingViewer
 
         AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
+        AddHandler RibbonEvents.ribbonItems.ButtonTogglePolygon.ExecuteEvent, Sub() Call TogglePolygonMode()
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+    End Sub
+
+    Sub TogglePolygonMode()
+        PixelSelector1.SelectPolygonMode = RibbonEvents.ribbonItems.ButtonTogglePolygon.BooleanValue
+    End Sub
+
+    Private Sub PixelSelector1_SelectPolygon(polygon() As PointF) Handles PixelSelector1.SelectPolygon
+        PixelSelector1.SelectPolygonMode = False
     End Sub
 
     Sub exportMzPack()

@@ -13,6 +13,7 @@
     GetBasePeakMzList
     GetPixel
     GetPixelRectangle
+    GetPixelPolygon
     LoadSummaryLayer
     ExitApp
 End Enum
