@@ -104,17 +104,19 @@ Namespace RibbonLib.Controls
             Public Const cmdTabMSIPage As UInteger = 121
             Public Const cmdGroupMSIFile As UInteger = 122
             Public Const cmdButtonOpenMSIRaw As UInteger = 119
-            Public Const cmdTabMSISnapshot As UInteger = 126
-            Public Const cmdButtonMSITotalIon As UInteger = 123
-            Public Const cmdButtonMSIBasePeakIon As UInteger = 124
-            Public Const cmdButtonMSIAverageIon As UInteger = 125
             Public Const cmdTabMSIFile As UInteger = 129
             Public Const cmdButtonMSIRowScans As UInteger = 128
             Public Const cmdButtonExportMSIMzpack As UInteger = 127
-            Public Const cmdButtonExportSample As UInteger = 135
             Public Const cmdTabMSIAnalysis As UInteger = 141
+            Public Const cmdTabMSISnapshot As UInteger = 126
+            Public Const cmdButtonMSIAverageIon As UInteger = 125
+            Public Const cmdButtonMSIBasePeakIon As UInteger = 124
+            Public Const cmdButtonMSITotalIon As UInteger = 123
             Public Const cmdTabMenuMSIAnalysis As UInteger = 142
             Public Const cmdButtonTogglePolygon As UInteger = 140
+            Public Const cmdButtonExportSample As UInteger = 135
+            Public Const cmdTabPolygonEditor As UInteger = 144
+            Public Const cmdButtonPolygonEditorMoveVertex As UInteger = 145
             Public Const cmdGroupKEGG As UInteger = 133
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
@@ -690,30 +692,6 @@ Namespace RibbonLib.Controls
                 Return _ButtonOpenMSIRaw
             End Get
         End Property
-        Private _TabMSISnapshot As RibbonGroup
-        Public ReadOnly Property TabMSISnapshot As RibbonGroup
-            Get
-                Return _TabMSISnapshot
-            End Get
-        End Property
-        Private _ButtonMSITotalIon As RibbonButton
-        Public ReadOnly Property ButtonMSITotalIon As RibbonButton
-            Get
-                Return _ButtonMSITotalIon
-            End Get
-        End Property
-        Private _ButtonMSIBasePeakIon As RibbonButton
-        Public ReadOnly Property ButtonMSIBasePeakIon As RibbonButton
-            Get
-                Return _ButtonMSIBasePeakIon
-            End Get
-        End Property
-        Private _ButtonMSIAverageIon As RibbonButton
-        Public ReadOnly Property ButtonMSIAverageIon As RibbonButton
-            Get
-                Return _ButtonMSIAverageIon
-            End Get
-        End Property
         Private _TabMSIFile As RibbonGroup
         Public ReadOnly Property TabMSIFile As RibbonGroup
             Get
@@ -732,16 +710,34 @@ Namespace RibbonLib.Controls
                 Return _ButtonExportMSIMzpack
             End Get
         End Property
-        Private _ButtonExportSample As RibbonButton
-        Public ReadOnly Property ButtonExportSample As RibbonButton
-            Get
-                Return _ButtonExportSample
-            End Get
-        End Property
         Private _TabMSIAnalysis As RibbonTab
         Public ReadOnly Property TabMSIAnalysis As RibbonTab
             Get
                 Return _TabMSIAnalysis
+            End Get
+        End Property
+        Private _TabMSISnapshot As RibbonGroup
+        Public ReadOnly Property TabMSISnapshot As RibbonGroup
+            Get
+                Return _TabMSISnapshot
+            End Get
+        End Property
+        Private _ButtonMSIAverageIon As RibbonButton
+        Public ReadOnly Property ButtonMSIAverageIon As RibbonButton
+            Get
+                Return _ButtonMSIAverageIon
+            End Get
+        End Property
+        Private _ButtonMSIBasePeakIon As RibbonButton
+        Public ReadOnly Property ButtonMSIBasePeakIon As RibbonButton
+            Get
+                Return _ButtonMSIBasePeakIon
+            End Get
+        End Property
+        Private _ButtonMSITotalIon As RibbonButton
+        Public ReadOnly Property ButtonMSITotalIon As RibbonButton
+            Get
+                Return _ButtonMSITotalIon
             End Get
         End Property
         Private _TabMenuMSIAnalysis As RibbonGroup
@@ -754,6 +750,24 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonTogglePolygon As RibbonToggleButton
             Get
                 Return _ButtonTogglePolygon
+            End Get
+        End Property
+        Private _ButtonExportSample As RibbonButton
+        Public ReadOnly Property ButtonExportSample As RibbonButton
+            Get
+                Return _ButtonExportSample
+            End Get
+        End Property
+        Private _TabPolygonEditor As RibbonGroup
+        Public ReadOnly Property TabPolygonEditor As RibbonGroup
+            Get
+                Return _TabPolygonEditor
+            End Get
+        End Property
+        Private _ButtonPolygonEditorMoveVertex As RibbonButton
+        Public ReadOnly Property ButtonPolygonEditorMoveVertex As RibbonButton
+            Get
+                Return _ButtonPolygonEditorMoveVertex
             End Get
         End Property
         Private _GroupKEGG As RibbonTabGroup
@@ -1054,17 +1068,19 @@ Namespace RibbonLib.Controls
             _TabMSIPage = New RibbonTab(_ribbon, Cmd.cmdTabMSIPage)
             _GroupMSIFile = New RibbonGroup(_ribbon, Cmd.cmdGroupMSIFile)
             _ButtonOpenMSIRaw = New RibbonButton(_ribbon, Cmd.cmdButtonOpenMSIRaw)
-            _TabMSISnapshot = New RibbonGroup(_ribbon, Cmd.cmdTabMSISnapshot)
-            _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
-            _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
-            _ButtonMSIAverageIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIAverageIon)
             _TabMSIFile = New RibbonGroup(_ribbon, Cmd.cmdTabMSIFile)
             _ButtonMSIRowScans = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRowScans)
             _ButtonExportMSIMzpack = New RibbonButton(_ribbon, Cmd.cmdButtonExportMSIMzpack)
-            _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
             _TabMSIAnalysis = New RibbonTab(_ribbon, Cmd.cmdTabMSIAnalysis)
+            _TabMSISnapshot = New RibbonGroup(_ribbon, Cmd.cmdTabMSISnapshot)
+            _ButtonMSIAverageIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIAverageIon)
+            _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
+            _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
             _TabMenuMSIAnalysis = New RibbonGroup(_ribbon, Cmd.cmdTabMenuMSIAnalysis)
             _ButtonTogglePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonTogglePolygon)
+            _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
+            _TabPolygonEditor = New RibbonGroup(_ribbon, Cmd.cmdTabPolygonEditor)
+            _ButtonPolygonEditorMoveVertex = New RibbonButton(_ribbon, Cmd.cmdButtonPolygonEditorMoveVertex)
             _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)
