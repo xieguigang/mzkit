@@ -1596,6 +1596,14 @@
         <Image MinDPI="192">PolygonEditor/MoveComponentMenuItem.Image.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonClosePolygonEditor" Id="146" LabelTitle="Close" LabelDescription="Close Polygon Editor" TooltipTitle="Close Polygon Editor" TooltipDescription="Close Polygon Editor">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-delete.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-delete.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1790,17 +1798,18 @@
               <Button CommandName="cmdButtonExportMSIMzpack" />
             </Group>
           </Tab>
-          <Tab CommandName="cmdTabMSIAnalysis">
+          <Tab CommandName="cmdTabMSIAnalysis" ApplicationModes="0,1">
             <Group CommandName="cmdTabMSISnapshot" SizeDefinition="ThreeButtons-OneBigAndTwoSmall">
               <Button CommandName="cmdButtonMSIAverageIon" />
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSITotalIon" />
             </Group>
-            <Group CommandName="cmdTabMenuMSIAnalysis" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0" SizeDefinition="TwoButtons">
               <ToggleButton CommandName="cmdButtonTogglePolygon" />
               <Button CommandName="cmdButtonExportSample" />
             </Group>
-            <Group CommandName="cmdTabPolygonEditor">
+            <Group CommandName="cmdTabPolygonEditor" ApplicationModes="1">
+              <Button CommandName="cmdButtonClosePolygonEditor" />
               <Button CommandName="cmdButtonPolygonEditorMoveVertex" />
             </Group>
           </Tab>

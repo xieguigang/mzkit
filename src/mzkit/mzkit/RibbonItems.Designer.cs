@@ -119,6 +119,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonTogglePolygon = 140;
             public const uint cmdButtonExportSample = 135;
             public const uint cmdTabPolygonEditor = 144;
+            public const uint cmdButtonClosePolygonEditor = 146;
             public const uint cmdButtonPolygonEditorMoveVertex = 145;
             public const uint cmdGroupKEGG = 133;
             public const uint cmdTabKEGG = 132;
@@ -262,6 +263,7 @@ namespace RibbonLib.Controls
         public RibbonToggleButton ButtonTogglePolygon { get; private set; }
         public RibbonButton ButtonExportSample { get; private set; }
         public RibbonGroup TabPolygonEditor { get; private set; }
+        public RibbonButton ButtonClosePolygonEditor { get; private set; }
         public RibbonButton ButtonPolygonEditorMoveVertex { get; private set; }
         public RibbonTabGroup GroupKEGG { get; private set; }
         public RibbonTab TabKEGG { get; private set; }
@@ -403,6 +405,7 @@ namespace RibbonLib.Controls
             ButtonTogglePolygon = new RibbonToggleButton(ribbon, Cmd.cmdButtonTogglePolygon);
             ButtonExportSample = new RibbonButton(ribbon, Cmd.cmdButtonExportSample);
             TabPolygonEditor = new RibbonGroup(ribbon, Cmd.cmdTabPolygonEditor);
+            ButtonClosePolygonEditor = new RibbonButton(ribbon, Cmd.cmdButtonClosePolygonEditor);
             ButtonPolygonEditorMoveVertex = new RibbonButton(ribbon, Cmd.cmdButtonPolygonEditorMoveVertex);
             GroupKEGG = new RibbonTabGroup(ribbon, Cmd.cmdGroupKEGG);
             TabKEGG = new RibbonTab(ribbon, Cmd.cmdTabKEGG);
