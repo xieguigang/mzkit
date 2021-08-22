@@ -167,6 +167,9 @@ Public Class PixelSelector
         If Not drawing Then
             Return
         End If
+        If SelectPolygonMode Then
+            Return
+        End If
 
         DrawSelectionBox(e.Location, False)
     End Sub
@@ -262,7 +265,7 @@ Public Class PixelSelector
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If HasRegionSelection Then
-            DrawSelectionBox(endPoint, False)
+            ' DrawSelectionBox(endPoint, False)
         End If
     End Sub
 End Class
