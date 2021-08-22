@@ -196,8 +196,10 @@ Public Class PixelSelector
             If (endPoint.Y < 0) Then endPoint.Y = 0
             If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
 
-            picCanvas.CreateGraphics.FillPolygon(Brushes.Red, polygons.ToArray)
-            picCanvas.Refresh()
+            If polygons.Count >= 3 Then
+                picCanvas.CreateGraphics.FillPolygon(Brushes.Red, polygons.ToArray)
+                picCanvas.Refresh()
+            End If
         Else
             ' Save the end point.
             endPoint = end_point
