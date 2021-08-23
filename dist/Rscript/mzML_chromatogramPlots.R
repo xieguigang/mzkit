@@ -38,23 +38,27 @@ let plot.mzML as function(file, output) {
 	for(ion in raw :> projectAs(as.object)) {
 		let save as string = `${output}/chromatogramROI/${ion$name}.png`;
 		
-		# draw MRM peak for each metabolite ion
-		# 
-		# 1. [blue] Area Integration, is the peak area integration plot
-		# 2. [red] chromatography ROI, the region of interseted, MRM chromatogram peak region, from rtmin to rtmax
-		# 3. [green] baseline, The chromatogram signal baseline, the lower of the baseline it is, the better of the ion signal it is
-		# 4. [blank] chromatogram, The MRM ion chromatogram signal data
-		#
-		ion$chromatogram
-		:> MRM.chromatogramPeaks.plot(title = ion$description)
-		:> save.graphics(file = save)
-		;
+		bitmap(file = save) {
+		
+			# draw MRM peak for each metabolite ion
+			# 
+			# 1. [blue] Area Integration, is the peak area integration plot
+			# 2. [red] chromatography ROI, the region of interseted, MRM chromatogram peak region, from rtmin to rtmax
+			# 3. [green] baseline, The chromatogram signal baseline, the lower of the baseline it is, the better of the ion signal it is
+			# 4. [blank] chromatogram, The MRM ion chromatogram signal data
+			#
+			ion$chromatogram
+			:> MRM.chromatogramPeaks.plot(title = ion$description)
+			;
+		}
 	}
 
-	# Draw all of the MRM ions onto one chromatogram plot image
-	file
-	:> chromatogram.plot(ions, labelLayoutTicks = 3000) 
-	:> save.graphics(file = `${output}/chromatogram.png`);
+	bitmap(file = `${output}/chromatogram.png`) {
+		# Draw all of the MRM ions onto one chromatogram plot image
+		file
+		:> chromatogram.plot(ions, labelLayoutTicks = 3000) 
+		;
+	}
 }
 
 if (dir.exists(file.mzML)) {	

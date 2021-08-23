@@ -270,10 +270,11 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		# view summary result
 		print(line);
 		
-		line
-		:> standard_curve(title = `Standard Curve Of ${id}`)
-		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`)
-		;
+		bitmap(file = `${dir}/${subdir}/standard_curves/${id}.png`) {
+			line
+			:> standard_curve(title = `Standard Curve Of ${id}`)
+			;
+		}
 		
 		# save reference points
 		line
