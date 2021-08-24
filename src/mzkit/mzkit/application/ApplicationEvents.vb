@@ -302,6 +302,7 @@ Type 'q()' to quit R.
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Call App.LogException(e.Exception)
             Call MessageBox.Show(e.Exception.ToString, "Unknown Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Call ServiceHub.CloseMSIEngine()
 
             Try
                 Call host.SaveSettings()
@@ -341,6 +342,10 @@ Type 'q()' to quit R.
                     Call mzkit.CLI.openRawFile(cli.Name, cli)
                 End If
             End If
+        End Sub
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+            Call ServiceHub.CloseMSIEngine()
         End Sub
     End Class
 End Namespace

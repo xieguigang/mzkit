@@ -58,6 +58,9 @@ Public Class VisualStudio
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
     Public Shared Sub Dock(win As ToolWindow, prefer As DockState)
         Select Case win.DockState
             Case DockState.Hidden, DockState.Unknown

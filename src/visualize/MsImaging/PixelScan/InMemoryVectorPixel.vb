@@ -49,9 +49,11 @@
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Pixel
 
@@ -77,6 +79,83 @@ Namespace Pixel
         Sub New(scan As ScanMS1)
             Call Me.New(scan.meta!x, scan.meta!y, scan.mz, scan.into)
         End Sub
+
+        Sub New(pixel As PixelScan)
+            X = pixel.X
+            Y = pixel.Y
+
+            If TypeOf pixel Is mzPackPixel Then
+                Dim raw As mzPackPixel = DirectCast(pixel, mzPackPixel)
+
+                mz = raw.scan.mz
+                intensity = raw.scan.into
+            ElseIf TypeOf pixel Is ibdPixel Then
+                Dim ibd As ibdPixel = DirectCast(pixel, ibdPixel)
+                Dim data As ms2() = ibd.GetMs
+
+                mz = data.Select(Function(i) i.mz).ToArray
+                intensity = data.Select(Function(i) i.intensity).ToArray
+            Else
+                Throw New NotImplementedException(pixel.GetType.FullName)
+            End If
+        End Sub
+
+        Sub New()
+        End Sub
+
+        Public Function GetBuffer() As Byte()
+            Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+                file.Write(X)
+                file.Write(Y)
+                file.Write(mz.Length)
+                file.Write(mz)
+                file.Write(intensity)
+                file.Flush()
+
+                Return buf.ToArray
+            End Using
+        End Function
+
+        Public Shared Function Parse(buffer As Byte()) As InMemoryVectorPixel
+            Using file As New BinaryDataReader(New MemoryStream(buffer))
+                Dim x As Integer = file.ReadInt32
+                Dim y As Integer = file.ReadInt32
+                Dim size As Integer = file.ReadInt32
+                Dim mz As Double() = file.ReadDoubles(size)
+                Dim into As Double() = file.ReadDoubles(size)
+
+                Return New InMemoryVectorPixel(x, y, mz, into)
+            End Using
+        End Function
+
+        Public Shared Iterator Function ParseVector(buffer As Byte()) As IEnumerable(Of InMemoryVectorPixel)
+            Using file As New BinaryDataReader(New MemoryStream(buffer))
+                Dim n As Integer = file.ReadInt32
+
+                For i As Integer = 0 To n - 1
+                    Dim byts As Byte() = file.ReadBytes(file.ReadInt32)
+
+                    Yield Parse(byts)
+                Next
+            End Using
+        End Function
+
+        Public Shared Function GetBuffer(data As InMemoryVectorPixel()) As Byte()
+            Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+                Call file.Write(data.Length)
+
+                For Each item In data
+                    Dim byts As Byte() = item.GetBuffer
+
+                    Call file.Write(byts.Length)
+                    Call file.Write(byts)
+                Next
+
+                Call file.Flush()
+
+                Return buf.ToArray
+            End Using
+        End Function
 
         Protected Friend Overrides Sub release()
             Erase _mz

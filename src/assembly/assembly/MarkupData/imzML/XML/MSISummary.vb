@@ -118,7 +118,7 @@ Namespace MarkupData.imzML
     ''' <summary>
     ''' TIC/BPC/Average
     ''' </summary>
-    Public Enum IntensitySummary
+    Public Enum IntensitySummary As Integer
         Total
         BasePeak
         Average

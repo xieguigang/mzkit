@@ -45,8 +45,10 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.IO
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -62,6 +64,43 @@ Public Class PixelData
 
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"
+    End Function
+
+    Public Shared Function GetBuffer(data As PixelData()) As Byte()
+        Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+            file.Write(data.Length)
+            file.Write(data.Select(Function(i) i.x).ToArray)
+            file.Write(data.Select(Function(i) i.y).ToArray)
+            file.Write(data.Select(Function(i) i.intensity).ToArray)
+            file.Write(data.Select(Function(i) i.level).ToArray)
+            file.Write(data.Select(Function(i) i.mz).ToArray)
+            file.Flush()
+
+            Return buf.ToArray
+        End Using
+    End Function
+
+    Public Shared Function Parse(data As Byte()) As PixelData()
+        Using file As New BinaryDataReader(New MemoryStream(data))
+            Dim size As Integer = file.ReadInt32
+            Dim x As Integer() = file.ReadInt32s(size)
+            Dim y As Integer() = file.ReadInt32s(size)
+            Dim intensity As Double() = file.ReadDoubles(size)
+            Dim level As Double() = file.ReadDoubles(size)
+            Dim mz As Double() = file.ReadDoubles(size)
+
+            Return x _
+                .Select(Function(xi, i)
+                            Return New PixelData With {
+                                .x = xi,
+                                .y = y(i),
+                                .intensity = intensity(i),
+                                .level = level(i),
+                                .mz = mz(i)
+                            }
+                        End Function) _
+                .ToArray
+        End Using
     End Function
 
     Private Shared Function getIntensityAuto(p As PixelData, logE As Boolean) As Double
@@ -104,6 +143,14 @@ Public Class PixelData
         For Each point As PixelData In pixels
             Dim intensity As Double = point.intensity
 
+            If logE Then
+                If intensity <= 1 Then
+                    intensity = intensityRange.Min
+                Else
+                    intensity = stdNum.Log(intensity)
+                End If
+            End If
+
             If intensity < intensityRange.Min Then
                 intensity = intensityRange.Min
             End If
@@ -111,21 +158,12 @@ Public Class PixelData
                 intensity = intensityRange.Max
             End If
 
-            If logE Then
-                If intensity <= 1 Then
-                    level = 0
-                Else
-                    level = intensityRange.ScaleMapping(
-                        x:=stdNum.Log(intensity),
-                        valueRange:=levelRange
-                    )
-                End If
-            Else
-                level = intensityRange.ScaleMapping(intensity, levelRange)
-            End If
+            level = intensityRange.ScaleMapping(intensity, levelRange)
 
             If level > 1 Then
                 point.level = 1
+            ElseIf level < 0 Then
+                level = 0
             Else
                 point.level = level
             End If

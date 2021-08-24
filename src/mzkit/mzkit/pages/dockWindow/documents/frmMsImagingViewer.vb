@@ -80,7 +80,6 @@ Public Class frmMsImagingViewer
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
-    Friend render As Drawer
     Dim params As MsImageProperty
     Dim WithEvents checks As ToolStripMenuItem
     Dim WithEvents tweaks As PropertyGrid
@@ -105,35 +104,44 @@ Public Class frmMsImagingViewer
 
         AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
+        AddHandler RibbonEvents.ribbonItems.ButtonTogglePolygon.ExecuteEvent, Sub() Call TogglePolygonMode()
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
     End Sub
 
-    Sub exportMzPack()
-        If render Is Nothing Then
-            Call MyApplication.host.showStatusMessage("No MSI raw data was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        Else
-            Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Dim fileName As String = file.FileName
-
-                    Call frmTaskProgress.RunAction(
-                        Sub(update)
-                            Using buffer As Stream = fileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                                Call New mzPack With {
-                                    .MS = DirectCast(render.pixelReader, ReadRawPack) _
-                                        .GetScans _
-                                        .ToArray
-                                }.Write(buffer, progress:=update)
-                            End Using
-                        End Sub, title:="Export mzPack data...", info:="Save mzPack!")
-                    Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-            End Using
-        End If
+    Sub TogglePolygonMode()
+        PixelSelector1.SelectPolygonMode = RibbonEvents.ribbonItems.ButtonTogglePolygon.BooleanValue
     End Sub
 
+    Private Sub PixelSelector1_SelectPolygon(polygon() As PointF) Handles PixelSelector1.SelectPolygon
+        PixelSelector1.SelectPolygonMode = False
+    End Sub
+
+    Sub exportMzPack()
+        If Not ServiceHub.MSIEngineRunning Then
+            Call MyApplication.host.showStatusMessage("No MSI raw data was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Using file As New SaveFileDialog With {.Filter = "mzPack(*.mzPack)|*.mzPack"}
+            If file.ShowDialog = DialogResult.OK Then
+                Dim fileName As String = file.FileName
+
+                Call frmTaskProgress.RunAction(
+                    Sub(update)
+                        ServiceHub.MessageCallback = update
+                        ServiceHub.ExportMzpack(fileName)
+                    End Sub, title:="Export mzPack data...", info:="Save mzPack!")
+                Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' load thermo raw
+    ''' </summary>
+    ''' <param name="file"></param>
     Public Sub loadRaw(file As String)
         Dim getSize As New InputMSIDimension
         Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
@@ -143,15 +151,14 @@ Public Class frmMsImagingViewer
 
             Call WindowModules.viewer.Show(DockPanel)
             Call WindowModules.msImageParameters.Show(DockPanel)
+            Call ServiceHub.StartMSIService()
+
             Call New Thread(
                 Sub()
-                    Using raw As New MSFileReader(file)
-                        Dim mzpack As mzPack = raw.LoadFromXMSIRaw(getSize.Dims.SizeParser)
-                        Dim render As New Drawer(mzpack)
+                    Dim info As MsImageProperty = ServiceHub.LoadMSI(file, getSize.Dims.SizeParser)
 
-                        Call WindowModules.viewer.Invoke(Sub() Call LoadRender(render, file))
-                        Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
-                    End Using
+                    Call WindowModules.viewer.Invoke(Sub() Call LoadRender(info, file))
+                    Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
 
                     Call progress.Invoke(Sub() progress.Close())
 
@@ -181,18 +188,22 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.showMsImaging(imzML:=file)
     End Sub
 
-    Public Sub LoadRender(render As Drawer, filePath As String)
-        If Not Me.render Is Nothing Then
-            Try
-                Call Me.render.Dispose()
-            Catch ex As Exception
+    ''' <summary>
+    ''' load mzpack into MSI engine services
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    Public Sub LoadRender(mzpack As String, filePath As String)
+        Call ServiceHub.StartMSIService()
+        Call LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
+    End Sub
 
-            End Try
-        End If
-
+    ''' <summary>
+    ''' load mzpack into MSI engine services
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    Public Sub LoadRender(info As MsImageProperty, filePath As String)
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
-        Me.render = render
-        Me.params = New MsImageProperty(render)
+        Me.params = info
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
         Me.FilePath = filePath
 
@@ -220,7 +231,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub showPixel(x As Integer, y As Integer) Handles PixelSelector1.SelectPixel
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         Else
@@ -229,7 +240,7 @@ Public Class frmMsImagingViewer
             End If
         End If
 
-        Dim pixel As PixelScan = render.pixelReader.GetPixel(x, y)
+        Dim pixel As PixelScan = ServiceHub.GetPixel(x, y)
 
         If pixel Is Nothing Then
             Call MyApplication.host.showStatusMessage($"Pixels [{x}, {y}] not contains any data.", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -260,7 +271,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub PixelSelector1_SelectPixelRegion(region As Rectangle) Handles PixelSelector1.SelectPixelRegion
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Call MyApplication.host.showStatusMessage("Please load image file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         End If
@@ -281,7 +292,7 @@ Public Class frmMsImagingViewer
         Dim y1 As Integer = region.Top
         Dim x2 As Integer = region.Right
         Dim y2 As Integer = region.Bottom
-        Dim rangePixels As PixelScan() = render.pixelReader _
+        Dim rangePixels As InMemoryVectorPixel() = ServiceHub _
             .GetPixel(x1, y1, x2, y2) _
             .ToArray
 
@@ -307,23 +318,13 @@ Public Class frmMsImagingViewer
     End Sub
 
     Friend Sub RenderSummary(summary As IntensitySummary)
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Call MyApplication.host.showStatusMessage("please load MSI raw data at first!")
             Return
         Else
             Call frmTaskProgress.RunAction(
                 Sub()
-                    Call Invoke(Sub() rendering = Sub()
-                                                      Call MyApplication.RegisterPlot(
-                                                        Sub(args)
-                                                            Dim image As Bitmap = render.ShowSummaryRendering(summary,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
-
-                                                            image = params.Smooth(image)
-
-                                                            PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
-                                                            PixelSelector1.BackColor = params.background
-                                                        End Sub)
-                                                  End Sub)
+                    Call Invoke(Sub() rendering = registerSummaryRender(summary))
                     Call Invoke(rendering)
                 End Sub, "Render MSI", $"Rendering MSI in {summary.Description} mode...")
         End If
@@ -331,6 +332,23 @@ Public Class frmMsImagingViewer
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
         Call PixelSelector1.ShowMessage($"Render MSI in {summary.Description} mode.")
     End Sub
+
+    Private Function registerSummaryRender(summary As IntensitySummary) As Action
+        Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary)
+        Dim dimSize As New Size(params.scan_x, params.scan_y)
+
+        Return Sub()
+                   Call MyApplication.RegisterPlot(
+                       Sub(args)
+                           Dim image As Bitmap = Drawer.RenderSummaryLayer(summaryLayer, dimSize,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+
+                           image = params.Smooth(image)
+
+                           PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
+                           PixelSelector1.BackColor = params.background
+                       End Sub)
+               End Sub
+    End Function
 
     Friend Sub renderRGB(r As Double, g As Double, b As Double)
         Dim selectedMz As Double() = {r, g, b}.Where(Function(mz) mz > 0).ToArray
@@ -349,20 +367,20 @@ Public Class frmMsImagingViewer
         Call New Thread(
             Sub()
                 Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 Else
                     Dim maxInto As Double = Aggregate pm As PixelData
-                                       In pixels
-                                       Into Max(pm.intensity)
+                                            In pixels
+                                            Into Max(pm.intensity)
                     Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
                     Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
                     Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
 
                     Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                    Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size, render.dimension))
+                    Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size))
                     Call Invoke(rendering)
                 End If
 
@@ -374,7 +392,9 @@ Public Class frmMsImagingViewer
         Call PixelSelector1.ShowMessage($"Render in RGB Channel Composition Mode: {selectedMz.JoinBy(", ")}")
     End Sub
 
-    Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), size$, dimensionSize As Size) As Action
+    Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), pixelSize$) As Action
+        Dim dimensionSize As New Size(params.scan_x, params.scan_y)
+
         loadedPixels = R.JoinIterates(G).JoinIterates(B).ToArray
 
         Return Sub()
@@ -384,13 +404,13 @@ Public Class frmMsImagingViewer
                            Dim image As Bitmap = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
-                               dimSize:=size.SizeParser,
+                               dimSize:=pixelSize.SizeParser,
                                scale:=params.scale
                            )
 
                            image = params.Smooth(image)
 
-                           PixelSelector1.MSImage(size.SizeParser) = image
+                           PixelSelector1.MSImage(pixelSize.SizeParser) = image
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -414,7 +434,7 @@ Public Class frmMsImagingViewer
         Call New Thread(
             Sub()
                 Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = render.LoadPixels(selectedMz.ToArray, err).ToArray
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage("no pixel data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -424,7 +444,7 @@ Public Class frmMsImagingViewer
                                             Into Max(pm.intensity)
 
                     Call Invoke(Sub() params.SetIntensityMax(maxInto))
-                    Call Invoke(Sub() rendering = createRenderTask(pixels, size, render.dimension))
+                    Call Invoke(Sub() rendering = createRenderTask(pixels, size))
                     Call Invoke(rendering)
                 End If
 
@@ -452,21 +472,22 @@ Public Class frmMsImagingViewer
         Call params.SetIntensityMax(Aggregate pm As PixelData In pixels Into Max(pm.intensity))
         Call params.Reset(MsiDim, "N/A", "N/A")
 
-        rendering = createRenderTask(pixels, $"{params.pixel_width},{params.pixel_height}", MsiDim)
+        rendering = createRenderTask(pixels, $"{params.pixel_width},{params.pixel_height}")
         rendering()
 
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
     End Sub
 
-    Private Function createRenderTask(pixels As PixelData(), size$, dimensionSize As Size) As Action
+    Private Function createRenderTask(pixels As PixelData(), size$) As Action
         loadedPixels = pixels
 
         Return Sub()
-                   Call MyApplication.RegisterPlot(Sub(args) Call Plot(args, pixels, size, dimensionSize))
+                   Call MyApplication.RegisterPlot(Sub(args) Call Plot(args, pixels, size))
                End Sub
     End Function
 
-    Private Sub Plot(args As PlotProperty, pixels As PixelData(), size$, dimensionSize As Size)
+    Private Sub Plot(args As PlotProperty, pixels As PixelData(), size$)
+        Dim dimensionSize As New Size(params.scan_x, params.scan_y)
         Dim pixelFilter As PixelData() = (
             From pm As PixelData
             In pixels
@@ -532,7 +553,7 @@ Public Class frmMsImagingViewer
     Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
 
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             WindowModules.msImageParameters.DockState = DockState.Hidden
             WindowModules.msImageParameters.checkedMz.Clear()
             WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
@@ -548,10 +569,8 @@ Public Class frmMsImagingViewer
             WindowModules.msImageParameters.checkedMz.Clear()
             WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
 
+            ServiceHub.CloseMSIEngine()
             Me.DockState = DockState.Hidden
-
-            render.Dispose()
-            render.Free
         End If
     End Sub
 
@@ -565,10 +584,12 @@ Public Class frmMsImagingViewer
             Return
         End If
 
+        Dim dimension As New Size(params.scan_x, params.scan_y)
+
         Using file As New SaveFileDialog With {.Filter = "NetCDF(*.cdf)|*.cdf", .Title = "Save MS-Imaging Matrix"}
             If file.ShowDialog = DialogResult.OK Then
                 Using filesave As FileStream = file.FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                    Call loadedPixels.CreateCDF(filesave, render.dimension, params.GetTolerance)
+                    Call loadedPixels.CreateCDF(filesave, dimension, params.GetTolerance)
                 End Using
             End If
         End Using
@@ -579,11 +600,11 @@ Public Class frmMsImagingViewer
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
         Dim pos As Point = PixelSelector1.Pixel
 
-        If render Is Nothing Then
+        If Not ServiceHub.MSIEngineRunning Then
             Return
         Else
             pinedPixel = New LibraryMatrix With {
-                .ms2 = render.ReadXY(pos.X, pos.Y).ToArray,
+                .ms2 = ServiceHub.GetPixel(pos.X, pos.Y).GetMs,
                 .name = $"Select Pixel: [{pos.X},{pos.Y}]"
             }
 

@@ -128,7 +128,19 @@ Public Class Drawer : Implements IDisposable
                                          Optional logE As Boolean = True,
                                          Optional pixelDrawer As Boolean = True) As Bitmap
 
-        Dim layer = pixelReader.GetSummary.GetLayer(summary).ToArray
+        Dim layer As PixelScanIntensity() = pixelReader.GetSummary.GetLayer(summary).ToArray
+        Dim render As Bitmap = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer)
+
+        Return render
+    End Function
+
+    Public Shared Function RenderSummaryLayer(layer As PixelScanIntensity(), dimension As Size,
+                                              Optional cutoff As DoubleRange = Nothing,
+                                              Optional colorSet$ = "Jet",
+                                              Optional pixelSize$ = "3,3",
+                                              Optional logE As Boolean = True,
+                                              Optional pixelDrawer As Boolean = True) As Bitmap
+
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
                         Return New PixelData With {

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::91b3a2cfd142e35e2ebf5c4a74cb2692, src\mzkit\Task\Properties\MsImageProperty.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Enum SmoothFilters
-    ' 
-    '     Gauss, GaussMax, GaussMean, GaussMedian, GaussMin
-    '     Max, Mean, Median, Min, None
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class MsImageProperty
-    ' 
-    '     Properties: background, colors, fileSize, imageSmooth, lowerbound
-    '                 mapLevels, max, method, min, pixel_height
-    '                 pixel_width, scale, scan_x, scan_y, threshold
-    '                 tolerance, upperbound, UUID
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: GetTolerance, Smooth
-    ' 
-    '     Sub: Reset, SetIntensityMax
-    ' 
-    ' /********************************************************************************/
+' Enum SmoothFilters
+' 
+'     Gauss, GaussMax, GaussMean, GaussMedian, GaussMin
+'     Max, Mean, Median, Min, None
+' 
+'  
+' 
+' 
+' 
+' Class MsImageProperty
+' 
+'     Properties: background, colors, fileSize, imageSmooth, lowerbound
+'                 mapLevels, max, method, min, pixel_height
+'                 pixel_width, scale, scan_x, scan_y, threshold
+'                 tolerance, upperbound, UUID
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: GetTolerance, Smooth
+' 
+'     Sub: Reset, SetIntensityMax
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -128,6 +128,33 @@ Public Class MsImageProperty
 
     Sub New()
     End Sub
+
+    Sub New(info As Dictionary(Of String, String))
+        scan_x = Integer.Parse(info!scan_x)
+        scan_y = Integer.Parse(info!scan_y)
+        UUID = info!uuid
+        fileSize = info!fileSize
+    End Sub
+
+    Public Shared Function GetMSIInfo(render As Drawer) As Dictionary(Of String, String)
+        Dim uuid As String = ""
+        Dim fileSize As String = ""
+
+        If TypeOf render.pixelReader Is ReadIbd Then
+            uuid = DirectCast(render.pixelReader, ReadIbd).UUID
+            fileSize = DirectCast(render.pixelReader, ReadIbd) _
+                .ibd _
+                .size _
+                .DoCall(AddressOf StringFormats.Lanudry)
+        End If
+
+        Return New Dictionary(Of String, String) From {
+            {NameOf(scan_x), render.dimension.Width},
+            {NameOf(scan_y), render.dimension.Height},
+            {NameOf(uuid), uuid},
+            {NameOf(fileSize), fileSize}
+        }
+    End Function
 
     Public Sub Reset(MsiDim As Size, UUID As String, fileSize As String)
         _scan_x = MsiDim.Width

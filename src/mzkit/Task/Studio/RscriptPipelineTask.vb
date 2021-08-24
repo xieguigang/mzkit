@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports Task.CLI
 
 <Assembly: InternalsVisibleTo("mzkit_win32")>
+<Assembly: InternalsVisibleTo("ServiceHub")>
 
 Public Class RscriptPipelineTask
 
