@@ -239,6 +239,9 @@ Module MsImaging
     ''' *.imzML;*.mzPack
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function will load entire MSI matrix raw data into memory.
+    ''' </remarks>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(Drawer))>
