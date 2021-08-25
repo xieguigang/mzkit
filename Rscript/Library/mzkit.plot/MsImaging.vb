@@ -374,9 +374,12 @@ Module MsImaging
     ''' <returns></returns>
     ''' 
     <ExportAPI("assert")>
-    Public Function testLayer(layer As SingleIonLayer, xy As Index(Of String), Optional cutoff As Double = 0.8) As Boolean
+    Public Function testLayer(layer As SingleIonLayer,
+                              xy As Index(Of String),
+                              Optional cutoff As Double = 0.8,
+                              Optional samplingRegion As Boolean = True) As Boolean
         Dim layerXy As String() = layer.MSILayer.Select(Function(p) $"{p.x},{p.y}").ToArray
-        Dim union As Integer = xy.Objects.JoinIterates(layerXy).Distinct.Count
+        Dim union As Integer = If(samplingRegion, xy.Count, xy.Objects.JoinIterates(layerXy).Distinct.Count)
         Dim intersect As Integer = layerXy.Where(Function(i) i Like xy).Count
 
         Return intersect / union >= cutoff
