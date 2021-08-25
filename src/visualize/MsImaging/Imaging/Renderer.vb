@@ -32,7 +32,15 @@ Namespace Imaging
                                                   Optional defaultFill As String = "Transparent",
                                                   Optional cutoff As DoubleRange = Nothing) As Bitmap
 
-        Protected Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="channel"></param>
+        ''' <param name="cut">
+        ''' [0,1]
+        ''' </param>
+        ''' <returns></returns>
+        Protected Function GetPixelChannelReader(channel As PixelData(), cut As DoubleRange) As Func(Of Integer, Integer, Byte)
             If channel.IsNullOrEmpty Then
                 Return Function(x, y) CByte(0)
             End If
@@ -51,6 +59,14 @@ Namespace Imaging
                                                     End Function)
                               End Function)
 
+            If Not cut Is Nothing Then
+                Dim length As Double = intensityRange.Length
+                Dim dmin = intensityRange.Min + cut.Min * length
+                Dim dmax = intensityRange.Min + cut.Max * length
+
+                intensityRange = New DoubleRange(dmin, dmax)
+            End If
+
             Return Function(x, y) As Byte
                        If Not xy.ContainsKey(x) Then
                            Return 0
@@ -62,7 +78,17 @@ Namespace Imaging
                            Return 0
                        End If
 
-                       Return CByte(intensityRange.ScaleMapping(ylist.Item(y), byteRange))
+                       Dim into As Double = ylist.Item(y)
+
+                       If into <= intensityRange.Min Then
+                           into = intensityRange.Min
+                       ElseIf into >= intensityRange.Max Then
+                           into = intensityRange.Max
+                       Else
+                           ' do nothing
+                       End If
+
+                       Return CByte(intensityRange.ScaleMapping(into, byteRange))
                    End Function
         End Function
 
