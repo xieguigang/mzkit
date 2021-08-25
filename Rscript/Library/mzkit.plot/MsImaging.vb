@@ -56,6 +56,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
@@ -360,6 +361,22 @@ Module MsImaging
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }
+    End Function
+
+    ''' <summary>
+    ''' test of a given MSI layer is target? 
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="xy">a character vector of ``x,y``</param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("assert")>
+    Public Function testLayer(layer As SingleIonLayer, xy As Index(Of String), Optional cutoff As Double = 0.8) As Boolean
+        Dim layerXy As String() = layer.MSILayer.Select(Function(p) $"{p.x},{p.y}").ToArray
+        Dim union As Integer = xy.Objects.JoinIterates(layerXy).Distinct.Count
+        Dim intersect As Integer = layerXy.Where(Function(i) i Like xy).Count
+
+        Return intersect / union >= cutoff
     End Function
 
     ''' <summary>
