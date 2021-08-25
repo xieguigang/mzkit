@@ -11,15 +11,16 @@ Namespace Imaging
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
-                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                      Optional cut As DoubleRange = Nothing) As Bitmap
 
             If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
                 dimSize = New Size(1, 1)
             End If
 
-            Dim Rchannel = GetPixelChannelReader(R)
-            Dim Gchannel = GetPixelChannelReader(G)
-            Dim Bchannel = GetPixelChannelReader(B)
+            Dim Rchannel = GetPixelChannelReader(R, cut)
+            Dim Gchannel = GetPixelChannelReader(G, cut)
+            Dim Bchannel = GetPixelChannelReader(B, cut)
 
             Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(filled:=Color.Transparent)
                 For x As Integer = 1 To dimension.Width

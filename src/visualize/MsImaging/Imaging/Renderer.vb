@@ -9,7 +9,8 @@ Namespace Imaging
         Public MustOverride Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                          dimension As Size,
                                                          Optional dimSize As Size = Nothing,
-                                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+                                                         Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                         Optional cut As DoubleRange = Nothing) As Bitmap
 
         ''' <summary>
         ''' 
