@@ -21,7 +21,7 @@ Namespace Imaging
             Dim Gchannel = GetPixelChannelReader(G)
             Dim Bchannel = GetPixelChannelReader(B)
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice
+            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(filled:=Color.Transparent)
                 For x As Integer = 1 To dimension.Width
                     For y As Integer = 1 To dimension.Height
                         Dim bR As Byte = Rchannel(x, y)
@@ -63,7 +63,7 @@ Namespace Imaging
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
             Dim rect As Rectangle
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice
+            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
                 For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
                     level = point.level
                     rect = New Rectangle(New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height), dimSize)
