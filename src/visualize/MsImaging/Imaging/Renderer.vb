@@ -14,6 +14,13 @@ Namespace Imaging
         Public Property colorSet As Color()
         Public Property tolerance As Tolerance
 
+        Default Public ReadOnly Property GetColor(i As Integer) As Color
+            Get
+                Return colorSet(i)
+            End Get
+        End Property
+
+
         Public Function FindColor(mz As Double) As Color
             Dim i As Integer = which(Me.mz.Select(Function(mzi) tolerance(mz, mzi))).FirstOrDefault(-1)
 
@@ -44,7 +51,7 @@ Namespace Imaging
         ''' <param name="scale"></param>
         ''' <param name="cut"></param>
         ''' <returns></returns>
-        Public MustOverride Function LayerOverlaps(pixels As PixelData(), dimension As Size, colorSet As MzLayerColorSet,
+        Public MustOverride Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet,
                                                    Optional dimSize As Size = Nothing,
                                                    Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                    Optional cut As DoubleRange = Nothing,

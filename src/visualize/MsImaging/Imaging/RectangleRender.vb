@@ -1,14 +1,24 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace Imaging
+
+    Public Enum RenderingModes
+
+        RGBComposition
+        MixIons
+        LayerOverlaps
+
+    End Enum
 
     Public Class RectangleRender : Inherits Renderer
 
@@ -96,7 +106,33 @@ Namespace Imaging
             Next
         End Sub
 
-        Public Overrides Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
+        Public Overrides Function LayerOverlaps(layers()() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
+                                                Optional dimSize As Size = Nothing,
+                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                Optional cut As DoubleRange = Nothing,
+                                                Optional defaultFill As String = "Transparent",
+                                                Optional mapLevels As Integer = 25) As Bitmap
+
+            Dim defaultColor As SolidBrush = defaultFill.GetBrush
+            Dim i As i32 = Scan0
+
+            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
+                dimSize = New Size(1, 1)
+            End If
+
+            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
+                For Each layer As PixelData() In layers
+                    Dim baseColor As Color = colorSet(++i)
+                    Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels).Select(Function(a) New SolidBrush(baseColor.Alpha(a))).ToArray
+
+                    Call FillLayerInternal(gr, layer, defaultColor, colors, cut, False, dimSize)
+                Next
+
+                Return gr.ImageResource
+            End Using
+        End Function
+
+        Public Overloads Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
                                                 Optional dimSize As Size = Nothing,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
@@ -115,7 +151,7 @@ Namespace Imaging
                     Dim baseColor As Color = colorSet.FindColor(Val(layer.name))
                     Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels).Select(Function(a) New SolidBrush(baseColor.Alpha(a))).ToArray
 
-                    Call FillLayerInternal(gr, pixels, defaultColor, colors, cut, False, dimSize)
+                    Call FillLayerInternal(gr, layer.value, defaultColor, colors, cut, False, dimSize)
                 Next
 
                 Return gr.ImageResource
