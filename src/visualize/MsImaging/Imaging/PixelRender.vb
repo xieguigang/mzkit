@@ -119,7 +119,7 @@ Namespace Imaging
             End If
         End Function
 
-        Public Overrides Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet, Optional dimSize As Size = Nothing, Optional scale As InterpolationMode = InterpolationMode.Bilinear, Optional cut As DoubleRange = Nothing, Optional defaultFill As String = "Transparent", Optional mapLevels As Integer = 25) As Bitmap
+        Public Overrides Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet, Optional dimSize As Size = Nothing, Optional scale As InterpolationMode = InterpolationMode.Bilinear, Optional cut As DoubleRange = Nothing, Optional defaultFill As String = "Transparent", Optional mapLevels As Integer = 25) As Bitmap
             Throw New NotImplementedException()
         End Function
     End Class
