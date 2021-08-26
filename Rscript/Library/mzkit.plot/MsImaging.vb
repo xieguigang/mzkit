@@ -366,6 +366,16 @@ Module MsImaging
         }
     End Function
 
+    <ExportAPI("MSI_coverage")>
+    <Extension>
+    Public Function MSICoverage(layer As SingleIonLayer, xy As Index(Of String), Optional samplingRegion As Boolean = True) As Double
+        Dim layerXy As String() = layer.MSILayer.Select(Function(p) $"{p.x},{p.y}").ToArray
+        Dim union As Integer = If(samplingRegion, xy.Count, xy.Objects.JoinIterates(layerXy).Distinct.Count)
+        Dim intersect As Integer = layerXy.Where(Function(i) i Like xy).Count
+
+        Return intersect / union
+    End Function
+
     ''' <summary>
     ''' test of a given MSI layer is target? 
     ''' </summary>
@@ -379,11 +389,7 @@ Module MsImaging
                               Optional cutoff As Double = 0.8,
                               Optional samplingRegion As Boolean = True) As Boolean
 
-        Dim layerXy As String() = layer.MSILayer.Select(Function(p) $"{p.x},{p.y}").ToArray
-        Dim union As Integer = If(samplingRegion, xy.Count, xy.Objects.JoinIterates(layerXy).Distinct.Count)
-        Dim intersect As Integer = layerXy.Where(Function(i) i Like xy).Count
-
-        Return intersect / union >= cutoff
+        Return layer.MSICoverage(xy, samplingRegion) >= cutoff
     End Function
 
     ''' <summary>
