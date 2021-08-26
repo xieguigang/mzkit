@@ -113,6 +113,16 @@ Public Class Drawer : Implements IDisposable
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="skipZero"></param>
+    ''' <param name="polygonFilter">
+    ''' 默认的空值参数表示不做区域筛选
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadPixels(mz As Double(), tolerance As Tolerance,
                                Optional skipZero As Boolean = True,
