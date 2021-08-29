@@ -66,7 +66,6 @@ Public Class PixelSelector
     Private movingEdge As Edge = Nothing
     Private movingPolygon As Polygon = Nothing
     Private mouse As Vertex = New Vertex()
-    Private lastMenu As ToolStripMenuItem = Nothing
     Private ismouseDown As Boolean = False
     Private algorithmIndex As Integer = 0
 
@@ -93,83 +92,108 @@ Public Class PixelSelector
         polygons.Add(New Polygon(predefinedVertices, predefinedEdges))
         edgesInRelation.Add((predefinedEdges(0), predefinedEdges(2)))
         edgesInRelation.Add((predefinedEdges(3), predefinedEdges(4)))
-        SetMenuItemColor(MoveComponentMenuItem)
+
         RepaintPolygon()
     End Sub
 
 #Region "Polygon Editor"
-    Private Sub OnMoveComponentMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles MoveComponentMenuItem.Click
+    ''' <summary>
+    ''' MoveComponentMenuItem.Click
+    ''' </summary>
+    Public Sub OnMoveComponentMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.MoveComponent
-        SetMenuItemColor(MoveComponentMenuItem)
+
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
 
-    Private Sub OnAddVertexMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles AddVertexMenuItem.Click
+    ''' <summary>
+    ''' AddVertexMenuItem.Click
+    ''' </summary>
+    Private Sub OnAddVertexMenuItemClick()
         IsLastPolygonCorrect()
         Dim vertices As List(Of Vertex) = New List(Of Vertex)()
         Dim edges As List(Of Edge) = New List(Of Edge)()
         polygons.Add(New Polygon(vertices, edges))
         menuOption = MenuOption.AddVertex
-        SetMenuItemColor(AddVertexMenuItem)
+
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
 
-    Private Sub OnRemoveVertexMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles RemoveVertexMenuItem.Click
+    ''' <summary>
+    ''' RemoveVertexMenuItem.Click
+    ''' </summary>
+    Private Sub OnRemoveVertexMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.DeleteVertex
-        SetMenuItemColor(RemoveVertexMenuItem)
+
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
 
-    Private Sub OnMovePolygonMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles MovePolygonMenuItem.Click
+    ''' <summary>
+    ''' MovePolygonMenuItem.Click
+    ''' </summary>
+    Private Sub OnMovePolygonMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.MovePolygon
-        SetMenuItemColor(MovePolygonMenuItem)
+
         clickedEdges = New List(Of Edge)()
     End Sub
 
-    Private Sub OnRemovePolygonMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles RemovePolygonMenuItem.Click
+    ''' <summary>
+    ''' RemovePolygonMenuItem.Click
+    ''' </summary>
+    Private Sub OnRemovePolygonMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.RemovePolygon
-        SetMenuItemColor(RemovePolygonMenuItem)
+
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
 
-    Private Sub OnHalveEdgeMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles HalveEdgeMenuItem.Click
+    ''' <summary>
+    ''' HalveEdgeMenuItem.Click
+    ''' </summary>
+    Private Sub OnHalveEdgeMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.HalveEdge
-        SetMenuItemColor(HalveEdgeMenuItem)
+
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
 
-    Private Sub OnEqualEdgesMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles EqualEdgesMenuItem.Click
+    ''' <summary>
+    ''' EqualEdgesMenuItem.Click
+    ''' </summary>
+    Private Sub OnEqualEdgesMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         clickedEdges = New List(Of Edge)()
         menuOption = MenuOption.AddRelation
         relation = Relation.Equality
-        SetMenuItemColor(EqualEdgesMenuItem)
+
         RepaintPolygon()
     End Sub
 
-    Private Sub OnPerpendiculateEdgesMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles PerpendiculateEdgesMenuItem.Click
+    ''' <summary>
+    ''' PerpendiculateEdgesMenuItem.Click
+    ''' </summary>
+    Private Sub OnPerpendiculateEdgesMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         clickedEdges = New List(Of Edge)()
         menuOption = MenuOption.AddRelation
         relation = Relation.Perpendicular
-        SetMenuItemColor(PerpendiculateEdgesMenuItem)
         RepaintPolygon()
     End Sub
 
-    Private Sub OnRemoveRelationMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles RemoveRelationMenuItem.Click
+    ''' <summary>
+    ''' RemoveRelationMenuItem.Click
+    ''' </summary>
+    Public Sub OnRemoveRelationMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.RemoveRelation
-        SetMenuItemColor(RemoveRelationMenuItem)
         clickedEdges = New List(Of Edge)()
         RepaintPolygon()
     End Sub
@@ -556,7 +580,7 @@ Public Class PixelSelector
         RepaintPolygon()
     End Sub
 
-    Private Sub OnBoadMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Board.MouseClick
+    Private Sub OnBoadMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseClick
         Dim mouse As Vertex = New Vertex(e.X, e.Y)
 
         If menuOption = MenuOption.AddVertex Then
@@ -627,7 +651,7 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Private Sub OnBoadMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Board.MouseDown
+    Private Sub OnBoadMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseDown
         mouse = New Vertex(e.X, e.Y)
         ismouseDown = True
         Dim edgeToHalve As Edge = Nothing, polygon As Polygon = Nothing, index As Integer = Nothing
@@ -659,7 +683,7 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Private Sub OnBoardMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Board.MouseMove
+    Private Sub OnBoardMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseMove
         If menuOption = MenuOption.MoveComponent Then
             If ismouseDown AndAlso movingVertex IsNot Nothing Then
                 Me.MoveVertex(movingVertex, e.X, e.Y)
@@ -687,7 +711,7 @@ Public Class PixelSelector
         mouse = New Vertex(e.X, e.Y)
     End Sub
 
-    Private Sub OnBoardMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Board.MouseUp
+    Private Sub OnBoardMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseUp
         ismouseDown = False
         movingVertex = Nothing
         movingEdge = Nothing
@@ -695,7 +719,7 @@ Public Class PixelSelector
         mouse = New Vertex()
     End Sub
 
-    Private Sub OnBoardPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles Board.Paint
+    Private Sub OnBoardPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles picCanvas.Paint
         Dim g = e.Graphics
         If polygons.Count = 0 Then Return
 
@@ -743,7 +767,7 @@ Public Class PixelSelector
             Dim bitmap As Bitmap
 
             If e1.Relation = Relation.Equality Then
-                bitmap = New Bitmap(My.Resources.kisspng_equals_sign_clip_art_openclipart_equality_computer_equal_sign_png_transparent_images_pictures_photo_5c802b27ebae39_2271504615519035279654)
+                bitmap = New Bitmap(My.Resources.Equals_sign)
                 g.DrawString($"({equal})", New Font("Arial", 8), Brushes.Black, x1 + 10, y1 - 8)
                 g.DrawString($"({equal})", New Font("Arial", 8), Brushes.Black, x2 + 10, y2 - 8)
                 equal += 1
@@ -760,7 +784,7 @@ Public Class PixelSelector
     End Sub
 
     Private Sub RepaintPolygon()
-        Board.Invalidate()
+        picCanvas.Invalidate()
     End Sub
 
     Private Function IsLastPolygonCorrect() As Boolean
@@ -883,12 +907,6 @@ Public Class PixelSelector
         Return Math.Sqrt(Math.Abs(e.To.Y - e.From.Y) * Math.Abs(e.To.Y - e.From.Y) + Math.Abs(e.To.X - e.From.Coord.X) * Math.Abs(e.To.Coord.X - e.From.Coord.X))
     End Function
 
-    Private Sub SetMenuItemColor(ByVal menuItem As ToolStripMenuItem)
-        If lastMenu IsNot Nothing Then lastMenu.BackColor = Color.Transparent
-        lastMenu = menuItem
-        lastMenu.BackColor = Color.MediumBlue
-    End Sub
-
     Private Sub Bresenham(ByVal edge As Edge, ByVal graphics As Graphics, ByVal brush As Brush)
         Dim x0 As Integer = edge.From.X
         Dim y0 As Integer = edge.From.Y
@@ -919,7 +937,10 @@ Public Class PixelSelector
         graphics.FillRectangle(brush, x0, y0, 1, 1)
     End Sub
 
-    Private Sub toolStripMenuItem1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles toolStripMenuItem1.Click
+    ''' <summary>
+    ''' change polygon algorithm
+    ''' </summary>
+    Public Sub toolStripMenuItem1_Click()
         If Not IsLastPolygonCorrect() Then Return
         algorithmIndex = (algorithmIndex + 1) Mod 4
 
@@ -951,14 +972,8 @@ Public Class PixelSelector
     End Function
 
     Private Function RFrac(ByVal x As Double) As Double
-        Return 1 - PolygonEditor.Frac(x)
+        Return 1 - Frac(x)
     End Function
-
-    Public Shared Sub Swap(ByRef a As Double, ByRef b As Double)
-        Dim temp = a
-        a = b
-        b = temp
-    End Sub
 
     Private Sub Plot(ByVal g As Graphics, ByVal x As Double, ByVal y As Double, ByVal c As Double, ByVal main As Color)
         Dim alpha As Integer = c * 255
@@ -978,13 +993,13 @@ Public Class PixelSelector
         Dim steep = dy > dx
 
         If steep Then
-            PolygonEditor.Swap(x0, y0)
-            PolygonEditor.Swap(x1, y1)
+            x0.Swap(y0)
+            x1.Swap(y1)
         End If
 
         If x0 > x1 Then
-            PolygonEditor.Swap(x0, x1)
-            PolygonEditor.Swap(y0, y1)
+            x0.Swap(x1)
+            y0.Swap(y1)
         End If
 
         dx = x1 - x0
@@ -998,10 +1013,10 @@ Public Class PixelSelector
 
         If steep Then
             Plot(graphics, ypxl1, xpxl1, RFrac(yend) * xgap, color)
-            Me.Plot(graphics, ypxl1 + 1, xpxl1, PolygonEditor.Frac(yend) * xgap, color)
+            Me.Plot(graphics, ypxl1 + 1, xpxl1, Frac(yend) * xgap, color)
         Else
             Plot(graphics, xpxl1, ypxl1, RFrac(yend) * xgap, color)
-            Me.Plot(graphics, xpxl1, ypxl1 + 1, PolygonEditor.Frac(yend) * xgap, color)
+            Me.Plot(graphics, xpxl1, ypxl1 + 1, Frac(yend) * xgap, color)
         End If
 
         Dim intery = yend + gradient
@@ -1013,23 +1028,23 @@ Public Class PixelSelector
 
         If steep Then
             Plot(graphics, ypxl2, xpxl2, RFrac(yend) * xgap, color)
-            Me.Plot(graphics, ypxl2 + 1, xpxl2, PolygonEditor.Frac(yend) * xgap, color)
+            Me.Plot(graphics, ypxl2 + 1, xpxl2, Frac(yend) * xgap, color)
         Else
             Plot(graphics, xpxl2, ypxl2, RFrac(yend) * xgap, color)
-            Me.Plot(graphics, xpxl2, ypxl2 + 1, PolygonEditor.Frac(yend) * xgap, color)
+            Me.Plot(graphics, xpxl2, ypxl2 + 1, Frac(yend) * xgap, color)
         End If
 
         If steep Then
             For x As Integer = xpxl1 + 1 To xpxl2 - 1
                 Plot(graphics, Ipart(intery), x, RFrac(intery), color)
-                Me.Plot(graphics, Ipart(intery) + 1, x, PolygonEditor.Frac(intery), color)
+                Me.Plot(graphics, Ipart(intery) + 1, x, Frac(intery), color)
                 intery += gradient
             Next
         Else
 
             For x As Integer = xpxl1 + 1 To xpxl2 - 1
                 Plot(graphics, x, Ipart(intery), RFrac(intery), color)
-                Me.Plot(graphics, x, Ipart(intery) + 1, PolygonEditor.Frac(intery), color)
+                Me.Plot(graphics, x, Ipart(intery) + 1, Frac(intery), color)
                 intery += gradient
             Next
         End If
