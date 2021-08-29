@@ -29,12 +29,13 @@ Namespace Imaging
         Public Overrides Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
-                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear) As Bitmap
+                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                      Optional cut As DoubleRange = Nothing) As Bitmap
 
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-            Dim Rchannel = GetPixelChannelReader(R)
-            Dim Gchannel = GetPixelChannelReader(G)
-            Dim Bchannel = GetPixelChannelReader(B)
+            Dim Rchannel = GetPixelChannelReader(R, cut)
+            Dim Gchannel = GetPixelChannelReader(G, cut)
+            Dim Bchannel = GetPixelChannelReader(B, cut)
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For x As Integer = 1 To dimension.Width
@@ -116,6 +117,10 @@ Namespace Imaging
             Else
                 Return Drawer.ScaleLayer(raw, dimension, dimSize, scale)
             End If
+        End Function
+
+        Public Overrides Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet, Optional dimSize As Size = Nothing, Optional scale As InterpolationMode = InterpolationMode.Bilinear, Optional cut As DoubleRange = Nothing, Optional defaultFill As String = "Transparent", Optional mapLevels As Integer = 25) As Bitmap
+            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace

@@ -23,21 +23,21 @@ plot_ionRaws(MRM, list.files(mzML, pattern = "*.mzML"), tolerance, export);
 
 for(ion in MRM :> projectAs(as.object)) {
 	for(raw in list.files(mzML, pattern = "*.mzML")) {
-		let TIC = as.object(extract.ions(raw, ion, tolerance)[1])$chromatogram;
-		# let data = list();
-		
-		# data[[ion$accession]] <- TIC;
-		# str(data);
-		# data
-		TIC
-		:> MRM.chromatogramPeaks.plot(
-			fill              = FALSE, 
-			gridFill          = "white", 
-			lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
-			size              = [1600, 900],
-			relativeTimeScale = NULL
-		)
-		:> save.graphics(file = `${export}/${basename(raw)}/${ion$accession}.png`)
-		;
+		bitmap(file = `${export}/${basename(raw)}/${ion$accession}.png`) {
+			let TIC = as.object(extract.ions(raw, ion, tolerance)[1])$chromatogram;
+			# let data = list();
+			
+			# data[[ion$accession]] <- TIC;
+			# str(data);
+			# data
+			TIC
+			:> MRM.chromatogramPeaks.plot(
+				fill              = FALSE, 
+				gridFill          = "white", 
+				lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
+				size              = [1600, 900],
+				relativeTimeScale = NULL
+			);
+		}
 	}
 }

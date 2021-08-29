@@ -3,16 +3,16 @@ imports "assembly" from "mzkit";
 
 let plot_ionRaws as function(MRM, mzML, tolerance, export) {
 	for(ion in getIonsSampleRaw(MRM, mzML, tolerance)) {
-		ion$chromatograms 
-		:> MRM.chromatogramPeaks.plot(
-			fill              = FALSE, 
-			gridFill          = "white", 
-			lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
-			size              = [1600, 900],
-			relativeTimeScale = NULL
-		)
-		:> save.graphics(file = `${export}/${ion$id}.png`)
-		;
+		bitmap(file = `${export}/${ion$id}.png`) {
+			ion$chromatograms 
+			:> MRM.chromatogramPeaks.plot(
+				fill              = FALSE, 
+				gridFill          = "white", 
+				lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
+				size              = [1600, 900],
+				relativeTimeScale = NULL
+			);
+		}
 	}
 }
 

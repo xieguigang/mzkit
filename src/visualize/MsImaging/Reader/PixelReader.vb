@@ -250,6 +250,7 @@ Namespace Reader
 
                 Dim msScan As ms2() = point.GetMs
                 Dim into As NamedCollection(Of ms2)() = msScan _
+                    .Where(Function(m) m.intensity > 0) _
                     .Where(Function(mzi)
                                Return mz.Any(Function(dmz) tolerance(mzi.mz, dmz))
                            End Function) _

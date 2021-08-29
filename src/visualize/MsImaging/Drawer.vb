@@ -113,6 +113,16 @@ Public Class Drawer : Implements IDisposable
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="skipZero"></param>
+    ''' <param name="polygonFilter">
+    ''' 默认的空值参数表示不做区域筛选
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadPixels(mz As Double(), tolerance As Tolerance,
                                Optional skipZero As Boolean = True,
@@ -226,11 +236,11 @@ Public Class Drawer : Implements IDisposable
         Return engine.RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
     End Function
 
-    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
+    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance, cut As DoubleRange) As PixelData()
         Dim pixels As New List(Of PixelData)
 
         For Each mzi In rawPixels.GroupBy(Function(x) x.mz, tolerance).ToArray
-            rawPixels = PixelData.ScalePixels(mzi.ToArray)
+            rawPixels = PixelData.ScalePixels(mzi.ToArray, cutoff:=cut)
             pixels.AddRange(rawPixels)
         Next
 
@@ -282,7 +292,7 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
         rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
-        rawPixels = ScalePixels(rawPixels, tolerance)
+        rawPixels = ScalePixels(rawPixels, tolerance, cut:=cutoff)
 
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
@@ -291,7 +301,7 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return engine.RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
+        Return engine.RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
