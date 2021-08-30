@@ -135,7 +135,6 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "metaDNA.NET5", "..\..\src\m
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{08d2e718-d4bf-489b-9238-ddaecbb10a86}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
