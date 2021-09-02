@@ -163,7 +163,8 @@ Public Class mzPack
             Yield mzpack.ReadScan(id, skipMsn)
 
             If ++i = d Then
-                Call RunSlavePipeline.SendProgress(j / allIndex.Length, id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                RunSlavePipeline.SendProgress(j / allIndex.Length, id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                i = 0
             End If
         Next
     End Function
