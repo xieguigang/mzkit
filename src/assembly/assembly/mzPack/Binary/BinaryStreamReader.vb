@@ -247,7 +247,10 @@ Namespace mzData.mzWebCache
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
             Call pointTo(scanId)
+
+#If UNIX = 0 Then
             Call Application.DoEvents()
+#End If
 
             ms1.rt = file.ReadDouble
             ms1.BPC = file.ReadDouble
