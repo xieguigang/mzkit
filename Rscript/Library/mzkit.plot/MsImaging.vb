@@ -349,21 +349,14 @@ Module MsImaging
     Public Function GetIonLayer(viewer As Drawer, mz As Double,
                                 Optional tolerance As Object = "da:0.1",
                                 Optional env As Environment = Nothing) As Object
-        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        Dim mzErr As [Variant](Of Message, Tolerance) = Math.getTolerance(tolerance, env)
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        Else
+            Return SingleIonLayer.GetLayer(mz, viewer, mzErr.TryCast(Of Tolerance))
         End If
-
-        Dim pixels As PixelData() = viewer _
-            .LoadPixels({mz}, mzErr.TryCast(Of Tolerance)) _
-            .ToArray
-
-        Return New SingleIonLayer With {
-            .IonMz = mz,
-            .DimensionSize = viewer.dimension,
-            .MSILayer = pixels
-        }
     End Function
 
     <ExportAPI("MSI_coverage")>
