@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -28,7 +29,12 @@ Public Class MSIPlot : Inherits Plot
         Me.pixelScale = pixelScale
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function MeasureSize() As Size
+        Return MeasureSize(ion, pixelScale, theme)
+    End Function
+
+    Public Shared Function MeasureSize(ion As SingleIonLayer, pixelScale As Size, theme As Theme) As Size
         Dim padding As Padding = Padding.TryParse(theme.padding)
         Dim size As Size = ion.DimensionSize
 
