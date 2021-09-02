@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Class SingleIonLayer
@@ -19,6 +20,10 @@ Public Class SingleIonLayer
             Return DimensionSize.Width * DimensionSize.Height > MSILayer.Length
         End Get
     End Property
+
+    Public Function Trim(region As Polygon2D, unionSize As Integer) As SingleIonLayer
+
+    End Function
 
     Public Function GetIntensity() As Double()
         Return MSILayer.Select(Function(p) p.intensity).ToArray
