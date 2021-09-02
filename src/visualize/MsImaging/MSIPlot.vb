@@ -20,7 +20,12 @@ Public Class MSIPlot : Inherits Plot
     ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
 
-    Public Sub New(ion As SingleIonLayer, pixelScale As Size, cutoff As DoubleRange, pixelDrawer As Boolean, theme As Theme)
+    Public Sub New(ion As SingleIonLayer,
+                   pixelScale As Size,
+                   cutoff As DoubleRange,
+                   pixelDrawer As Boolean,
+                   theme As Theme)
+
         Call MyBase.New(theme)
 
         Me.pixelDrawer = pixelDrawer

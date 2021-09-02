@@ -55,6 +55,24 @@ Namespace Imaging
             End Using
         End Function
 
+        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
+                                               Optional logE As Boolean = False,
+                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                               Optional defaultFill As String = "Transparent",
+                                               Optional cutoff As DoubleRange = Nothing) As Bitmap
+
+            Dim defaultColor As SolidBrush = defaultFill.GetBrush
+
+            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
+                dimSize = New Size(1, 1)
+            End If
+
+            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
+                Call FillLayerInternal(gr, pixels, defaultColor, colorSet, cutoff, logE, dimSize)
+                Return gr.ImageResource
+            End Using
+        End Function
+
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,
@@ -66,16 +84,8 @@ Namespace Imaging
             Dim colors As SolidBrush() = Designer.GetColors(colorSet, mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
-            Dim defaultColor As SolidBrush = defaultFill.GetBrush
 
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
-                Call FillLayerInternal(gr, pixels, defaultColor, colors, cutoff, logE, dimSize)
-                Return gr.ImageResource
-            End Using
+            Return RenderPixels(pixels, dimension, dimSize, colors, logE, scale, defaultFill, cutoff)
         End Function
 
         Private Shared Sub FillLayerInternal(gr As Graphics2D, pixels() As PixelData, defaultColor As SolidBrush, colors As SolidBrush(), cutoff As DoubleRange, logE As Boolean, dimSize As Size)
