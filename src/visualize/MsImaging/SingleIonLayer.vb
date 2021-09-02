@@ -14,6 +14,12 @@ Public Class SingleIonLayer
     ''' <returns></returns>
     Public Property DimensionSize As Size
 
+    Public ReadOnly Property hasZeroPixels As Boolean
+        Get
+            Return DimensionSize.Width * DimensionSize.Height > MSILayer.Length
+        End Get
+    End Property
+
     Public Function GetIntensity() As Double()
         Return MSILayer.Select(Function(p) p.intensity).ToArray
     End Function

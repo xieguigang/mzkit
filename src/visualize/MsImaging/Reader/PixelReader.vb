@@ -256,9 +256,9 @@ Namespace Reader
                            End Function) _
                     .GroupBy(Function(a) a.mz, tolerance) _
                     .ToArray
-
+#If UNIX = 0 Then
                 Call Application.DoEvents()
-
+#End If
                 If skipZero AndAlso into.Length = 0 Then
                     Continue For
                 Else
