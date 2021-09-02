@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::aee93a73fe372603e3dd70febfc17bd0, Rscript\Library\mzkit.insilicons\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module metaDNAInfer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary, loadKeggNetwork
-    '               loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments
-    '               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Module metaDNAInfer
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary, loadKeggNetwork
+'               loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments
+'               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
-Imports MetaDNA.visual
+Imports BioNovoGene.BioDeep.MetaDNA.Visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -69,7 +70,7 @@ Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
-Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
+Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -100,14 +101,14 @@ Module metaDNAInfer
         If debugOutput Is Nothing Then
             Return Nothing
         ElseIf debugOutput.GetType Is GetType(String) Then
-            debugOutput = DirectCast(debugOutput, String).LoadXml(Of Global.MetaDNA.visual.XML)
+            debugOutput = DirectCast(debugOutput, String).LoadXml(Of MetaDNA.Visual.XML)
         End If
 
-        If Not TypeOf debugOutput Is Global.MetaDNA.visual.XML Then
+        If Not TypeOf debugOutput Is MetaDNA.Visual.XML Then
             Return REnv.Internal.debug.stop(New InvalidCastException, env)
         End If
 
-        Return DirectCast(debugOutput, Global.MetaDNA.visual.XML).CreateGraph
+        Return DirectCast(debugOutput, MetaDNA.Visual.XML).CreateGraph
     End Function
 
     ''' <summary>
@@ -168,7 +169,7 @@ Module metaDNAInfer
 
     <ExportAPI("range")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function SetSearchRange(metadna As MetaDNAAlgorithm,
+    Public Function SetSearchRange(metadna As Algorithm,
                                    <RRawVectorArgument>
                                    precursorTypes As Object,
                                    Optional env As Environment = Nothing) As Object
@@ -184,7 +185,7 @@ Module metaDNAInfer
 
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function SetKeggLibrary(metadna As MetaDNAAlgorithm,
+    Public Function SetKeggLibrary(metadna As Algorithm,
                                    <RRawVectorArgument> kegg As Object,
                                    Optional env As Environment = Nothing) As Object
 
@@ -199,7 +200,7 @@ Module metaDNAInfer
 
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function SetInferNetwork(metadna As MetaDNAAlgorithm,
+    Public Function SetInferNetwork(metadna As Algorithm,
                                     <RRawVectorArgument> links As Object,
                                     Optional env As Environment = Nothing) As Object
 
@@ -214,7 +215,7 @@ Module metaDNAInfer
 
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function handleSample(metadna As MetaDNAAlgorithm,
+    Public Function handleSample(metadna As Algorithm,
                                  <RRawVectorArgument> sample As Object,
                                  Optional env As Environment = Nothing) As Object
 
@@ -229,7 +230,7 @@ Module metaDNAInfer
 
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
-    Public Function DIAInfer(metaDNA As MetaDNAAlgorithm,
+    Public Function DIAInfer(metaDNA As Algorithm,
                              <RRawVectorArgument> sample As Object,
                              <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
@@ -347,7 +348,7 @@ Module metaDNAInfer
 
     <ExportAPI("as.table")>
     <RApiReturn(GetType(MetaDNAResult))>
-    Public Function ResultTable(metaDNA As MetaDNAAlgorithm,
+    Public Function ResultTable(metaDNA As Algorithm,
                                 <RRawVectorArgument>
                                 result As Object,
                                 Optional unique As Boolean = False,
@@ -377,7 +378,7 @@ Module metaDNAInfer
     End Function
 
     <ExportAPI("as.ticks")>
-    Public Function SaveAlgorithmPerfermance(metaDNA As MetaDNAAlgorithm) As dataframe
+    Public Function SaveAlgorithmPerfermance(metaDNA As Algorithm) As dataframe
         Dim counter = metaDNA.GetPerfermanceCounter
         Dim iteration As Integer() = counter.Select(Function(c) c.iteration).ToArray
         Dim ticks As String() = counter.Select(Function(c) c.ticks.FormatTime).ToArray

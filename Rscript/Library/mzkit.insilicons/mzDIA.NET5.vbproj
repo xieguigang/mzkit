@@ -12,7 +12,7 @@
     <Product>BioDeep</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
-    <PackageIcon>favicon.ico</PackageIcon>
+    <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
 
@@ -109,7 +109,7 @@
 
   
   <ItemGroup>
-    <None Include="..\..\..\favicon.ico">
+    <None Include="..\..\..\src\mzkit\mzkit\Resources\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -121,7 +121,9 @@
 
   
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
@@ -129,11 +131,15 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
   </ItemGroup>
+
+  
+  <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
 
 </Project>

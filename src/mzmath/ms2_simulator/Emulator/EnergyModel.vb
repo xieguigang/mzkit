@@ -47,8 +47,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Math.Calculus
-Imports stdNum = System.Math
 
 ''' <summary>
 ''' 分子的能量分布模型
