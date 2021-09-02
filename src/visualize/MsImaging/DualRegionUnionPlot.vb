@@ -51,12 +51,12 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Me.region2 = UnionScale(region2, colorSet2.Length)
     End Sub
 
-    Private Function GetMzLegend(ion As SingleIonLayer) As LegendObject
+    Private Function GetMzLegend(ion As SingleIonLayer, color As Color) As LegendObject
         Return New LegendObject With {
-           .color = "black",
+           .color = color.ToHtmlColor,
            .fontstyle = theme.legendLabelCSS,
            .style = LegendStyles.Square,
-           .title = region1.IonMz.ToString("F4")
+           .title = ion.IonMz.ToString("F4")
         }
     End Function
 
@@ -119,16 +119,16 @@ Public Class DualRegionUnionPlot : Inherits Plot
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
         Dim labelSize As SizeF = g.MeasureString(region1.IonMz.ToString("F4"), labelFont)
-        Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
-        Dim mz1 = GetMzLegend(region1)
-        Dim mz2 = GetMzLegend(region2)
+        Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top)
+        Dim mz1 = GetMzLegend(region1, colorSet1.Last.Color)
+        Dim mz2 = GetMzLegend(region2, colorSet2.Last.Color)
 
         Call Legend.DrawLegends(g, pos, {mz1, mz2}, $"{labelSize.Height},{labelSize.Height}")
 
         Dim layout As New Rectangle(
-            x:=pos.X - canvas.Padding.Right / 5,
-            y:=pos.Y + labelSize.Height * 2,
-            width:=canvas.Padding.Right * 0.8,
+            x:=canvas.PlotRegion.Right + 10,
+            y:=pos.Y + labelSize.Height * 4,
+            width:=canvas.Padding.Right * 0.5,
             height:=rect.Height * 0.5
         )
         Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
