@@ -154,11 +154,14 @@ Public Class mzPack
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    Public Shared Function ReadAll(file As Stream, Optional ignoreThumbnail As Boolean = False) As mzPack
+    Public Shared Function ReadAll(file As Stream,
+                                   Optional ignoreThumbnail As Boolean = False,
+                                   Optional skipMsn As Boolean = False) As mzPack
+
         Using mzpack As New mzPackReader(file)
-            Dim allMSscans As ScanMS1() = mzpack _
-                .EnumerateIndex _
-                .Select(AddressOf mzpack.ReadScan) _
+            Dim allIndex As String() = mzpack.EnumerateIndex.ToArray
+            Dim allMSscans As ScanMS1() = allIndex _
+                .Select(Function(id) mzpack.ReadScan(id, skipMsn)) _
                 .ToArray
             Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
             Dim source As String = Nothing
