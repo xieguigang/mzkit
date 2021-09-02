@@ -154,7 +154,7 @@ Public Class mzPack
     Private Shared Iterator Function PopulateAllScans(mzpack As mzPackReader, skipMsn As Boolean) As IEnumerable(Of ScanMS1)
         Dim allIndex As String() = mzpack.EnumerateIndex.ToArray
         Dim i As i32 = 0
-        Dim d As Integer = allIndex.Length / 25
+        Dim d As Integer = allIndex.Length / 10
         Dim j As Integer = 0
 
         For Each id As String In allIndex
