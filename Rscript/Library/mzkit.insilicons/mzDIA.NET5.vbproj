@@ -12,9 +12,8 @@
     <Product>BioDeep</Product>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
-    <PackageIcon>Flask.png</PackageIcon>
+    <PackageIcon>favicon.ico</PackageIcon>
     <PackageIconUrl />
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -103,38 +102,38 @@
     <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="test\**" />
-    <EmbeddedResource Remove="test\**" />
-    <None Remove="test\**" />
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\..\src\mzkit\mzkit\Resources\Flask.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
+  
   <ItemGroup>
     <Import Include="System.Data" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <None Include="..\..\..\favicon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
   </ItemGroup>
+
 
 </Project>
