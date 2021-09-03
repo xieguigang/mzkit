@@ -103,7 +103,6 @@ Namespace Imaging
         ''' <param name="dimension">the scan size</param>
         ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
-        ''' <param name="mapLevels"></param>
         ''' <param name="logE"></param>
         ''' <returns></returns>
         ''' <remarks>
