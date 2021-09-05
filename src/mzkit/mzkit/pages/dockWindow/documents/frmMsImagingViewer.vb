@@ -501,7 +501,7 @@ Public Class frmMsImagingViewer
             }, pm)
         ).ToArray
 
-        pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance)
+        pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance, cut:={0, 1})
         pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
 
         Dim drawer As New PixelRender

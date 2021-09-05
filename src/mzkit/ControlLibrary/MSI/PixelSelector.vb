@@ -721,7 +721,10 @@ Public Class PixelSelector
 
     Private Sub OnBoardPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles picCanvas.Paint
         Dim g = e.Graphics
-        If polygons.Count = 0 Then Return
+
+        If polygons.Count = 0 Then
+            Return
+        End If
 
         For Each polygon In polygons
 
@@ -781,6 +784,31 @@ Public Class PixelSelector
             g.DrawImage(bitmap, x1, y1 - 10, 10, 10)
             g.DrawImage(bitmap, x2, y2 - 10, 10, 10)
         Next
+    End Sub
+
+    Private Sub DrawSelectionBox(g As Graphics)
+        If (endPoint.X < 0) Then endPoint.X = 0
+        If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
+        If (endPoint.Y < 0) Then endPoint.Y = 0
+        If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
+
+        ' Draw the selection area.
+        Dim x = Math.Min(startPoint.X, endPoint.X)
+        Dim y = Math.Min(startPoint.Y, endPoint.Y)
+        Dim width = Math.Abs(startPoint.X - endPoint.X)
+        Dim height = Math.Abs(startPoint.Y - endPoint.Y)
+
+        g.DrawRectangle(Pens.Red, x, y, width, height)
+    End Sub
+
+    ''' <summary>
+    ''' Draw the area selected.
+    ''' </summary>
+    ''' <param name="end_point"></param>
+    Private Sub DrawSelectionBox(end_point As Point)
+        ' Save the end point.
+        endPoint = end_point
+        picCanvas.Invalidate()
     End Sub
 
     Private Sub RepaintPolygon()
@@ -1171,7 +1199,7 @@ Public Class PixelSelector
         startPoint = e.Location
 
         getPoint(e, xpoint, ypoint)
-        DrawSelectionBox(startPoint, True)
+        DrawSelectionBox(startPoint)
 
         rangeStart = New Point(xpoint, ypoint)
 
@@ -1195,7 +1223,7 @@ Public Class PixelSelector
             Return
         End If
 
-        DrawSelectionBox(e.Location, False)
+        DrawSelectionBox(e.Location)
     End Sub
 
     Private Sub getPoint(e As MouseEventArgs, ByRef xpoint As Integer, ByRef ypoint As Integer)
@@ -1205,29 +1233,6 @@ Public Class PixelSelector
         ' 得到图片上的坐标点
         xpoint = e.X * Pic_width
         ypoint = e.Y * Pic_height
-    End Sub
-
-    ''' <summary>
-    ''' Draw the area selected.
-    ''' </summary>
-    ''' <param name="end_point"></param>
-    Private Sub DrawSelectionBox(end_point As Point, push As Boolean)
-        ' Save the end point.
-        endPoint = end_point
-
-        If (endPoint.X < 0) Then endPoint.X = 0
-        If (endPoint.X >= picCanvas.Width) Then endPoint.X = picCanvas.Width - 1
-        If (endPoint.Y < 0) Then endPoint.Y = 0
-        If (endPoint.Y >= picCanvas.Height) Then endPoint.Y = picCanvas.Height - 1
-
-        ' Draw the selection area.
-        Dim x = Math.Min(startPoint.X, endPoint.X)
-        Dim y = Math.Min(startPoint.Y, endPoint.Y)
-        Dim width = Math.Abs(startPoint.X - endPoint.X)
-        Dim height = Math.Abs(startPoint.Y - endPoint.Y)
-
-        picCanvas.CreateGraphics.DrawRectangle(Pens.Red, x, y, width, height)
-        picCanvas.Refresh()
     End Sub
 
     Private Sub picCanvas_MouseUp(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseUp
@@ -1268,6 +1273,8 @@ Public Class PixelSelector
     Private Sub PixelSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
         Timer1.Enabled = True
         Timer1.Start()
+
+        polygonDemo()
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
