@@ -79,8 +79,29 @@ Namespace Imaging
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
+
+            Return RenderPixels(pixels, dimension, dimSize, Designer.GetColors(colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray, logE, scale, defaultFill, cutoff)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <param name="dimension">the scan size</param>
+        ''' <param name="dimSize">pixel size</param>
+        ''' <param name="colorSet"></param>
+        ''' <param name="logE"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
+        ''' </remarks>
+        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size, colorSet As SolidBrush(),
+                                               Optional logE As Boolean = False,
+                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                               Optional defaultFill As String = "Transparent",
+                                               Optional cutoff As DoubleRange = Nothing) As Bitmap
             Dim color As Color
-            Dim colors As Color() = Designer.GetColors(colorSet, mapLevels)
+            Dim colors As Color() = colorSet.Select(Function(br) br.Color).ToArray
             Dim index As Integer
             Dim level As Double
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}

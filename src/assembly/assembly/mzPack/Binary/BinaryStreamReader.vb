@@ -196,9 +196,15 @@ Namespace mzData.mzWebCache
         Public Function ReadScan2(scanId As String) As ScanMS2()
             Dim size As Integer = pointTo(scanId)
             Dim data As ScanMS2()
+            Dim nsize As Integer = file.ReadInt32
 
             file.Seek(size + index(scanId), SeekOrigin.Begin)
-            data = populateMs2Products.ToArray
+
+            If nsize > 0 Then
+                data = populateMs2Products(nsize).ToArray
+            Else
+                data = {}
+            End If
 
             Return data
         End Function
@@ -241,7 +247,10 @@ Namespace mzData.mzWebCache
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
             Call pointTo(scanId)
+
+#If UNIX = 0 Then
             Call Application.DoEvents()
+#End If
 
             ms1.rt = file.ReadDouble
             ms1.BPC = file.ReadDouble
@@ -252,7 +261,13 @@ Namespace mzData.mzWebCache
             Dim into As Double() = file.ReadDoubles(nsize)
 
             If Not skipProducts Then
-                ms1.products = populateMs2Products.ToArray
+                Dim nsize2 As Integer = file.ReadInt32
+
+                If nsize2 > 0 Then
+                    ms1.products = populateMs2Products(nsize).ToArray
+                Else
+                    ms1.products = {}
+                End If
             End If
 
             ms1.mz = mz
@@ -265,8 +280,7 @@ Namespace mzData.mzWebCache
             Return ms1
         End Function
 
-        Private Iterator Function populateMs2Products() As IEnumerable(Of ScanMS2)
-            Dim nsize As Integer = file.ReadInt32
+        Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
             Dim ms2 As ScanMS2
             Dim productSize As Integer
 

@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Public Module Algorithm
+Public Module GraphAlgorithm
 
     <Extension>
     Public Function CreateGraph(metaDNA As XML) As NetworkGraph
@@ -60,7 +60,7 @@ Public Module Algorithm
 
         For Each compound As compound In metaDNA.compounds
             kegg_compound = New Graph.Node With {
-                .Label = compound.kegg,
+                .label = compound.kegg,
                 .data = New NodeData() With {
                     .label = compound.kegg,
                     .origID = compound.kegg,
@@ -75,7 +75,7 @@ Public Module Algorithm
 
             For Each candidate As unknown In compound.candidates
                 candidate_compound = New Graph.Node With {
-                    .Label = candidate.name,
+                    .label = candidate.name,
                     .data = New NodeData With {
                         .label = candidate.name,
                         .origID = candidate.Msn,
@@ -91,7 +91,7 @@ Public Module Algorithm
                     .V = candidate_compound,
                     .weight = candidate.edges.Length,
                     .data = New EdgeData With {
-                        .label = $"{candidate_compound.Label} infer as {kegg_compound.Label}",
+                        .label = $"{candidate_compound.label} infer as {kegg_compound.label}",
                         .Properties = New Dictionary(Of String, String) From {
                             {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "is_candidate"},
                             {"score.forward", candidate.scores.ElementAtOrNull(0)},
@@ -111,7 +111,7 @@ Public Module Algorithm
                 If seedNode Is Nothing Then
                     ' 还没有添加进入网络之中
                     seedNode = New Graph.Node With {
-                        .Label = candidate.edges(Scan0).ms1,
+                        .label = candidate.edges(Scan0).ms1,
                         .data = New NodeData With {
                             .label = candidate.edges(Scan0).ms1,
                             .origID = candidate.edges(Scan0).ms2,

@@ -52,8 +52,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 
 ''' <summary>
 ''' mzPack文件格式模型
@@ -149,17 +151,35 @@ Public Class mzPack
         End Using
     End Function
 
+    Private Shared Iterator Function PopulateAllScans(mzpack As mzPackReader, skipMsn As Boolean) As IEnumerable(Of ScanMS1)
+        Dim allIndex As String() = mzpack.EnumerateIndex.ToArray
+        Dim i As i32 = 0
+        Dim d As Integer = allIndex.Length / 10
+        Dim j As Integer = 0
+
+        For Each id As String In allIndex
+            j += 1
+
+            Yield mzpack.ReadScan(id, skipMsn)
+
+            If ++i = d Then
+                RunSlavePipeline.SendProgress(j / allIndex.Length, id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                i = 0
+            End If
+        Next
+    End Function
+
     ''' <summary>
     ''' 一次性加载所有原始数据
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    Public Shared Function ReadAll(file As Stream, Optional ignoreThumbnail As Boolean = False) As mzPack
+    Public Shared Function ReadAll(file As Stream,
+                                   Optional ignoreThumbnail As Boolean = False,
+                                   Optional skipMsn As Boolean = False) As mzPack
+
         Using mzpack As New mzPackReader(file)
-            Dim allMSscans As ScanMS1() = mzpack _
-                .EnumerateIndex _
-                .Select(AddressOf mzpack.ReadScan) _
-                .ToArray
+            Dim allMSscans As ScanMS1() = PopulateAllScans(mzpack, skipMsn).ToArray
             Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
             Dim source As String = Nothing
 

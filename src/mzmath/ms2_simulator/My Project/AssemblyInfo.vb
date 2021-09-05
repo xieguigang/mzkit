@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' 資訊。
 
 ' 檢閱組件屬性的值
-
+#if netcore5=0 then 
 <Assembly: AssemblyTitle("ms2_simulator")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("HP Inc.")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+#end if
