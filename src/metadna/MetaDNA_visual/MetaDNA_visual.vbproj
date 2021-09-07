@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7B4A6D81-24D4-481C-8B6B-3129136B57A0}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MetaDNA.visual</RootNamespace>
-    <AssemblyName>BioDeep.MetaDNA.Visual</AssemblyName>
+    <RootNamespace>BioNovoGene.BioDeep.MetaDNA.Visual</RootNamespace>
+    <AssemblyName>BioNovoGene.BioDeep.MetaDNA.Visual</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -20,7 +20,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -29,7 +29,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -49,7 +49,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -58,7 +58,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -68,7 +68,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -90,7 +90,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -99,7 +99,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -111,7 +111,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -120,7 +120,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -149,6 +149,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphAlgorithm.vb" />
     <Compile Include="ReactionClass.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="viz.vb" />
@@ -156,7 +157,6 @@
     <Compile Include="XML\unknown.vb" />
     <Compile Include="XML\compound.vb" />
     <Compile Include="XML\XML.vb" />
-    <Compile Include="Algorithm.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
