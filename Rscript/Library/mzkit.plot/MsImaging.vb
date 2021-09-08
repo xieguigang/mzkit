@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -447,6 +448,24 @@ Module MsImaging
         End If
     End Function
 
+    <Extension>
+    Private Function averageStep(dims As Double()) As Double
+        If dims.IsNullOrEmpty Then
+            Return 1
+        End If
+
+        Dim asc As Double() = dims.Distinct.OrderBy(Function(d) d).ToArray
+        Dim deltas As New List(Of Double)
+        Dim base As Double = asc(Scan0)
+
+        For i As Integer = 1 To asc.Length - 1
+            deltas.Add(asc(i) - base)
+            base = asc(i)
+        Next
+
+        Return deltas.Average
+    End Function
+
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
@@ -476,7 +495,27 @@ Module MsImaging
                                    Optional background As String() = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim layer As PixelScanIntensity() = data.GetLayer(intensity).ToArray
+        Dim regionPts As Integer()() = background _
+            .SafeQuery _
+            .Select(Function(str)
+                        Return str _
+                            .Split(","c) _
+                            .Select(AddressOf Integer.Parse) _
+                            .ToArray
+                    End Function) _
+            .ToArray
+        Dim polygon As New Polygon2D(
+            x:=regionPts.Select(Function(p) CDbl(p(0))).ToArray,
+            y:=regionPts.Select(Function(p) CDbl(p(1))).ToArray
+        )
+        Dim unionSize As New Size With {
+            .Width = polygon.xpoints.averageStep,
+            .Height = polygon.ypoints.averageStep
+        }
+        Dim layer As PixelScanIntensity() = data _
+            .GetLayer(intensity) _
+            .TrimRegion(polygon, unionSize) _
+            .ToArray
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
                         Return New PixelData With {
