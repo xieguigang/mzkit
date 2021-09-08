@@ -264,7 +264,7 @@ Namespace mzData.mzWebCache
                 Dim nsize2 As Integer = file.ReadInt32
 
                 If nsize2 > 0 Then
-                    ms1.products = populateMs2Products(nsize).ToArray
+                    ms1.products = populateMs2Products(nsize2).ToArray
                 Else
                     ms1.products = {}
                 End If
