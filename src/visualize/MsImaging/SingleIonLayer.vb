@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Class SingleIonLayer
@@ -26,44 +28,40 @@ Public Class SingleIonLayer
     End Function
 
     ''' <summary>
+    ''' remove a polygon region from the MSI render raw data
+    ''' </summary>
+    ''' <param name="polygon"></param>
+    ''' <param name="unionSize"></param>
+    ''' <returns></returns>
+    Public Function Trim(polygon As Polygon2D, unionSize As Size) As SingleIonLayer
+        Dim takes As PixelData() = MSILayer _
+            .TrimRegion(polygon, unionSize) _
+            .Distinct _
+            .ToArray
+
+        Return New SingleIonLayer With {
+            .IonMz = IonMz,
+            .DimensionSize = DimensionSize,
+            .MSILayer = takes
+        }
+    End Function
+
+    ''' <summary>
     ''' take part of the pixels array from the current layer with given region polygon data.
     ''' </summary>
     ''' <param name="region"></param>
     ''' <param name="unionSize"></param>
     ''' <returns></returns>
     Public Function Take(region As Polygon2D, unionSize As Size) As SingleIonLayer
-        Dim takes As New List(Of PixelData)
-        Dim xy = MSILayer _
-            .GroupBy(Function(p) p.x) _
-            .ToDictionary(Function(xr) xr.Key,
-                          Function(xr)
-                              Return xr _
-                                  .GroupBy(Function(p) p.y) _
-                                  .ToDictionary(Function(p) p.Key,
-                                                Function(p)
-                                                    Return p.First
-                                                End Function)
-                          End Function)
-
-        For i As Integer = 0 To region.length - 1
-            Dim x As Integer = region.xpoints(i)
-            Dim y As Integer = region.ypoints(i)
-
-            For xi As Integer = x To x + unionSize.Width
-                If xy.ContainsKey(xi) Then
-                    For yi As Integer = y To y + unionSize.Height
-                        If xy(xi).ContainsKey(yi) Then
-                            takes.Add(xy(xi)(yi))
-                        End If
-                    Next
-                End If
-            Next
-        Next
+        Dim takes As PixelData() = MSILayer _
+            .TakeRegion(region, unionSize) _
+            .Distinct _
+            .ToArray
 
         Return New SingleIonLayer With {
             .IonMz = IonMz,
             .DimensionSize = DimensionSize,
-            .MSILayer = takes.Distinct.ToArray
+            .MSILayer = takes
         }
     End Function
 

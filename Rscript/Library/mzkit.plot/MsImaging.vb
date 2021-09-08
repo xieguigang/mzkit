@@ -457,6 +457,11 @@ Module MsImaging
     ''' <param name="pixelSize$"></param>
     ''' <param name="cutoff"></param>
     ''' <param name="logE"></param>
+    ''' <param name="background">
+    ''' all of the pixels in this index parameter data value will 
+    ''' be treated as background pixels and removed from the MSI 
+    ''' rendering.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
@@ -468,9 +473,10 @@ Module MsImaging
                                    Optional cutoff As Object = "0.1,0.75",
                                    Optional logE As Boolean = True,
                                    Optional pixelDrawer As Boolean = True,
+                                   Optional background As String() = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim layer = data.GetLayer(intensity).ToArray
+        Dim layer As PixelScanIntensity() = data.GetLayer(intensity).ToArray
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
                         Return New PixelData With {

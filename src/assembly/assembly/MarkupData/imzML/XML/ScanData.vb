@@ -61,15 +61,23 @@ Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
 
-    Public Class PixelScanIntensity
+    Public Interface IMSIPixel
+
+        ReadOnly Property x As Integer
+        ReadOnly Property y As Integer
+        ReadOnly Property intensity As Double
+
+    End Interface
+
+    Public Class PixelScanIntensity : Implements IMSIPixel
 
         ''' <summary>
         ''' TIC
         ''' </summary>
         ''' <returns></returns>
-        Public Property totalIon As Double
-        Public Property x As Integer
-        Public Property y As Integer
+        Public Property totalIon As Double Implements IMSIPixel.intensity
+        Public Property x As Integer Implements IMSIPixel.x
+        Public Property y As Integer Implements IMSIPixel.y
 
         Public Shared Function GetBuffer(summary As PixelScanIntensity()) As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)

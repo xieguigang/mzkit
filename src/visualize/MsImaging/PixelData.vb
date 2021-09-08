@@ -47,6 +47,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO
 Imports stdNum = System.Math
@@ -54,11 +55,11 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' a pixels point of [x,y,color]
 ''' </summary>
-Public Class PixelData
+Public Class PixelData : Implements IMSIPixel
 
-    Public Property x As Integer
-    Public Property y As Integer
-    Public Property intensity As Double
+    Public Property x As Integer Implements IMSIPixel.x
+    Public Property y As Integer Implements IMSIPixel.y
+    Public Property intensity As Double Implements IMSIPixel.intensity
     Public Property level As Double
     Public Property mz As Double
 
