@@ -80,7 +80,7 @@ Namespace Reader
         End Sub
 
         Sub New(mzpack As String)
-            Using file As Stream = mzpack.Open
+            Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Call Assembly.mzPack _
                     .ReadAll(file).MS _
                     .Select(Function(pixel)
