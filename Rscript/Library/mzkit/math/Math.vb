@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -428,15 +429,17 @@ Module MzMath
     ''' + a collection of peakMs2 data 
     ''' + a library matrix data 
     ''' + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
+    ''' + or just a m/z vector
+    ''' 
     ''' </param>
     ''' <returns>
-    ''' Peaks data in centroid mode.
+    ''' Peaks data in centroid mode or a new m/z vector in centroid.
     ''' </returns>
     <ExportAPI("centroid")>
-    <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
+    <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
     Public Function centroid(<RRawVectorArgument> ions As Object,
-                             Optional intoCutoff As Double = 0.05,
                              Optional tolerance As Object = "da:0.1",
+                             Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
                              Optional env As Environment = Nothing) As Object
 
@@ -445,6 +448,16 @@ Module MzMath
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
+        Else
+            Dim mzvec As pipeline = pipeline.TryCreatePipeline(Of Double)(ions, env, suppress:=True)
+
+            If Not mzvec.isError Then
+                Return mzvec _
+                    .populates(Of Double)(env) _
+                    .GroupBy(errors.TryCast(Of Tolerance)) _
+                    .Select(Function(d) d.Average) _
+                    .ToArray
+            End If
         End If
 
         Dim threshold As LowAbundanceTrimming = New RelativeIntensityCutoff(intoCutoff)
