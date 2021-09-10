@@ -82,6 +82,13 @@ Module MsImaging
         Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
     End Sub
 
+    ''' <summary>
+    ''' do MSI rendering
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 100px 700px 300px 300px"),
@@ -91,6 +98,24 @@ Module MsImaging
         Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
         Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
         Dim pixelDrawer As Boolean = args.getValue("pixelDrawer", env, False)
+        Dim region As String() = args.getValue(Of String())("region", env, Nothing)
+
+        If Not region.IsNullOrEmpty Then
+            Dim xy As Double()() = region _
+                .Select(Function(s)
+                            Return s _
+                                .Split(","c) _
+                                .Select(AddressOf Val) _
+                                .ToArray
+                        End Function) _
+                .ToArray
+            Dim x As Double() = xy.Select(Function(r) r(0)).ToArray
+            Dim y As Double() = xy.Select(Function(r) r(1)).ToArray
+            Dim polygon As New Polygon2D(x, y)
+
+            ion = ion.Take(polygon, scale.SizeParser)
+        End If
+
         Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
         Dim size As Size = app.MeasureSize
 
