@@ -120,6 +120,11 @@ Public Class PixelData : Implements IMSIPixel
     ''' 将响应度数据统一缩放到[0,1]之间
     ''' </summary>
     ''' <param name="pixels"></param>
+    ''' <param name="cutoff">
+    ''' if the max of this range is greater than 1, then it means the cutoff value range of this parameter is intensity value
+    ''' intensity range will set to this cutoff range value directlly. otherwise if the max of this range is smaller than 1, 
+    ''' then will treated as percentage range. 
+    ''' </param>
     ''' <returns></returns>
     Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As DoubleRange = Nothing, Optional logE As Boolean = False) As PixelData()
         Dim intensityRange As DoubleRange = pixels _
