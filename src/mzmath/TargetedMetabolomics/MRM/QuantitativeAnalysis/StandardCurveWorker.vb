@@ -99,10 +99,15 @@ Namespace MRM
         End Function
 
         ''' <summary>
-        ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
+        ''' do linear regression of the reference data.
+        ''' (根据扫描出来的TPA峰面积进行对标准曲线的回归建模)
         ''' </summary>
-        ''' <param name="ionTPA"></param>
-        ''' <param name="calibrates"></param>
+        ''' <param name="ionTPA">
+        ''' the peak area data in each data sample
+        ''' </param>
+        ''' <param name="calibrates">
+        ''' the reference content data
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),

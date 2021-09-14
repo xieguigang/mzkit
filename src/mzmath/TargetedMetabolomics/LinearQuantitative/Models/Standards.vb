@@ -54,7 +54,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace LinearQuantitative
 
     ''' <summary>
-    ''' The standard curve concentration gradient
+    ''' The standard curve concentration gradient data.
+    ''' (标准品的标准曲线的浓度梯度信息)
     ''' </summary>
     Public Class Standards : Implements INamedValue
 
