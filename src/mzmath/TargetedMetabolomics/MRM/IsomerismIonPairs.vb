@@ -51,6 +51,10 @@ Namespace MRM.Models
 
     Public Class IsomerismIonPairs : Implements IEnumerable(Of IonPair)
 
+        ''' <summary>
+        ''' all isomerism ion list data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ions As IonPair()
         Public Property target As IonPair
 

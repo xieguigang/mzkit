@@ -63,8 +63,12 @@ Namespace MRM
         ''' </summary>
         ''' <returns></returns>
         Public Property TPAFactors As Dictionary(Of String, Double)
+        ''' <summary>
+        ''' m/z tolerance for match ion pair
+        ''' </summary>
+        ''' <returns></returns>
         Public Property tolerance As Tolerance
-        Public Property timeWindowSize#
+        Public Property timeWindowSize As Double
         Public Property angleThreshold#
         Public Property baselineQuantile# = 0.65
         Public Property integratorTicks% = 5000
