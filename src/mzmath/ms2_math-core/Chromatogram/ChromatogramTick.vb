@@ -85,4 +85,18 @@ Namespace Chromatogram
             Return New PointF(tick.Time, tick.Intensity)
         End Operator
     End Class
+
+    Public Class Chromatogram
+
+        Public Property Name As String
+        Public Property Chromatogram As ChromatogramTick()
+
+        Sub New()
+        End Sub
+
+        Sub New(name As String)
+            Me.Name = name
+        End Sub
+
+    End Class
 End Namespace
