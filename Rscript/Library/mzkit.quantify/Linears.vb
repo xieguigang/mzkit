@@ -105,6 +105,11 @@ Module Linears
         Return printContent
     End Function
 
+    ''' <summary>
+    ''' export the table data of the reference linears
+    ''' </summary>
+    ''' <param name="lines"></param>
+    ''' <returns></returns>
     <ExportAPI("lines.table")>
     Public Function StandardCurveDataSet(lines As StandardCurve()) As EntityObject()
         Return lines _
@@ -126,6 +131,12 @@ Module Linears
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' save reference point data into a given table file
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="file$"></param>
+    ''' <returns></returns>
     <ExportAPI("write.points")>
     Public Function writeStandardCurve(points As ReferencePoint(), file$) As Boolean
         Return points.SaveTo(file, silent:=True)
@@ -208,7 +219,7 @@ Module Linears
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Run sample data quantify
     ''' </summary>
     ''' <param name="models"></param>
     ''' <param name="ions"></param>
