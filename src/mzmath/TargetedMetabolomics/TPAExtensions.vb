@@ -72,7 +72,7 @@ Public Module TPAExtensions
         If ion.hasRTwin Then
             ROIData = vector _
                 .PopulateROI(
-                    rt:=ion.GetTimeWindow(winsize:=args.timeWindowSize * 2.5),
+                    rt:=ion.GetTimeWindow(winsize:=args.timeWindowSize * 5),
                     baselineQuantile:=args.baselineQuantile,
                     angleThreshold:=args.angleThreshold,
                     peakwidth:=args.peakwidth,
