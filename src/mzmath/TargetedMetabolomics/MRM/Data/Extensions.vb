@@ -61,6 +61,11 @@ Namespace MRM.Data
     <HideModuleName>
     Public Module Extensions
 
+        ''' <summary>
+        ''' enumerate all of the ion pair features in the given mzML file list.
+        ''' </summary>
+        ''' <param name="files"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetAllFeatures(files As IEnumerable(Of String)) As IonPair()
             Dim ions As IonPair() = files _
@@ -134,6 +139,16 @@ Namespace MRM.Data
                                 Return (ion, chromatogram)
                             End Function)
             End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks), ion As IonPair, tolerance As Tolerance) As chromatogramTicks
+            Return chromatograms _
+                .Where(Function(c)
+                           Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)
+                       End Function) _
+                .FirstOrDefault
         End Function
     End Module
 End Namespace
