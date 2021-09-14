@@ -64,15 +64,15 @@ let integrator   as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve  as boolean = ?"--workMode";
 [@info "the window size for match the RT value in MSL ion data with the RT value that detected by the peak in samples. The data unit of this parameter should be in 'second', not 'minute'."]
 [@type "time window in seconds"]
-let rt_winSize   as double  = as.numeric(?"--rt.winsize" || "3"); 
+let rt_winSize   as double  = as.numeric(?"--rt.winsize" || 5); 
 [@info "The m/z tolerance value for match the MRM ion pair in format of mzkit tolerance syntax. Value of this mass tolerance can be da:xxx (delta mass) or ppm:xxx (ppm precision)."]
 [@type "mzError"]
 let tolerance    as string  = ?"--mz.diff"      || "ppm:15";
 [@info "the time range of a peak, this parameter is consist with two number for speicifc the upper bound and lower bound of the peak width which is represented with RT dimension."]
 [@type "doublerange"]
-let peakwidth    as string  = ?"--peakwidth"    || "8,30";
+let peakwidth    as string  = ?"--peakwidth"    || "8,35";
 [@info "the threshold value for determine that a detected peak is noise data or not. ZERO or negative value means not measure s/n cutoff."]
-let sn_threshold as double  = ?"--sn_threshold" || "-1";
+let sn_threshold as double  = ?"--sn_threshold" || "2";
 
 # Max number of points for removes in 
 # linear modelling
@@ -84,7 +84,8 @@ let sn_threshold as double  = ?"--sn_threshold" || "-1";
 let maxNumOfPoint.delets as integer = ?"--max.deletes"   || -1;
 [@info "The angle threshold for detect a peak via the calculation of sin(x)."]
 let angle.threshold as double   = ?"--angle.threshold"   || 8;
-let baseline.quantile as double = ?"--baseline.quantile" || 0.65;
+[@info "quantile threshold value for detected baseline noise in the peak finding."]
+let baseline.quantile as double = ?"--baseline.quantile" || 0.5;
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
