@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::c5055a2408a7be76633e19304b8c0001, src\mzmath\ms2_math-core\Chromatogram\AccumulateROI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AccumulateROI
-    ' 
-    '         Function: PopulateROI
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AccumulateROI
+' 
+'         Function: PopulateROI
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,31 @@ Namespace Chromatogram
     Public Module AccumulateROI
 
         ''' <summary>
+        ''' cut chromatogram via rt range and then populate all ROI from <see cref="PopulateROI"/>
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <param name="rt"></param>
+        ''' <param name="peakwidth"></param>
+        ''' <param name="angleThreshold#"></param>
+        ''' <param name="baselineQuantile#"></param>
+        ''' <param name="snThreshold"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PopulateROI(chromatogram As IVector(Of ChromatogramTick), rt As DoubleRange, peakwidth As DoubleRange,
+                                    Optional angleThreshold# = 3,
+                                    Optional baselineQuantile# = 0.65,
+                                    Optional snThreshold As Double = 3) As IEnumerable(Of ROI)
+
+            Return chromatogram((chromatogram!time >= rt.Min) & (chromatogram!time <= rt.Max)) _
+                .PopulateROI(
+                    peakwidth:=peakwidth,
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile,
+                    snThreshold:=snThreshold
+                )
+        End Function
+
+        ''' <summary>
         ''' The input data parameter <paramref name="chromatogram"/> for this function should be 
         ''' sort in asc order at first!
         ''' 
@@ -69,6 +94,9 @@ Namespace Chromatogram
         ''' <param name="angleThreshold">
         ''' The higher of this value it is, the more sensible it its.
         ''' (区分色谱峰的累加线切线角度的阈值，单位为度)
+        ''' </param>
+        ''' <param name="snThreshold">
+        ''' negative value means no threshold cutoff
         ''' </param>
         ''' <returns></returns>
         ''' <remarks>
@@ -104,7 +132,7 @@ Namespace Chromatogram
                     .noise = peak.Length * baseline
                 }
 
-                If ROI.snRatio >= snThreshold Then
+                If snThreshold <= 0 OrElse ROI.snRatio >= snThreshold Then
                     Yield ROI
                 End If
             Next
