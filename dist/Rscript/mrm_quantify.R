@@ -1,5 +1,3 @@
-#!REnv
-
 #' title: MRM quantification
 #' author: xieguigang <gg.xie@bionovogene.com>
 #'
@@ -83,7 +81,7 @@ let sn_threshold as double  = ?"--sn_threshold" || "3";
 # + ZERO for no points is removed
 # + positive value for specific a number for the deletion.
 [@info "Max number of reference points for removes in linear modelling. The default value '-1' means auto detects."]
-let maxNumOfPoint.delets as integer = ?"--max.deletes"       || -1;
+let maxNumOfPoint.delets as integer = ?"--max.deletes"   || -1;
 [@info "The angle threshold for detect a peak via the calculation of sin(x)."]
 let angle.threshold as double   = ?"--angle.threshold"   || 8;
 let baseline.quantile as double = ?"--baseline.quantile" || 0.65;
@@ -166,7 +164,8 @@ print(`The reference data raw files will be matches by name pattern: [${patternO
 wiff <- list(samples = sample, reference = wiff) 
 # :> wiff.rawfiles("[-]?LM[-]?\d+") 
 :> wiff.rawfiles(patternOf.ref, patternOfBlank = patternOf.Blank) 
-:> as.object;
+:> as.object
+;
 
 print("Reference standards:");
 print(basename(wiff$standards));
@@ -231,7 +230,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	;
 	
 	# Get raw scan data for given ions
-	let CAL <- wiff_standards 
+	const CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(
  		ions             = ions, 
