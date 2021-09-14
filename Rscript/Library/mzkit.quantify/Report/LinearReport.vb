@@ -129,7 +129,7 @@ Module LinearReport
 
     <Extension>
     Private Function singleLinear(line As StandardCurve, ionsRaw As list) As XElement
-        Dim title$ = line.points(Scan0).Name
+        Dim title$ = If(line.points.Length = 0, line.name, line.points(Scan0).Name)
         Dim image As Image = Visual.DrawStandardCurve(line, title, gridFill:="white").AsGDIImage
         Dim R2# = line.linear.R2
         Dim isWeighted As Boolean = line.isWeighted
@@ -219,12 +219,13 @@ Module LinearReport
                             .Where(Function(sp) sp.valid) _
                             .Select(Function(sp) sp.Cti) _
                             .Range
+                        Dim nameTitle As String = If(line.points.IsNullOrEmpty, line.name, line.points(Scan0).Name)
 
                         Return <tr class=<%= If(R2 < 0.99, If(R2 < 0.9, "critical", "warning"), "") %>>
                                    <td>
                                        <a href=<%= "#" & line.name %>><%= line.name %></a>
                                    </td>
-                                   <td><%= line.points(Scan0).Name %></td>
+                                   <td><%= nameTitle %></td>
                                    <td><%= line.linear.Polynomial.ToString("G5", False) %></td>
                                    <td><%= stdNum.Sqrt(line.linear.R2) %></td>
                                    <td><%= range.Min %> ~ <%= range.Max %></td>
@@ -252,7 +253,8 @@ Module LinearReport
     <Extension>
     Private Function asset(e As XElement, line As StandardCurve) As String
         Dim equation$ = line.linear.Polynomial.ToString("G4", html:=True)
-        Dim title As String = $"Linear Model Reference Points of '{line.points(Scan0).Name}'"
+        Dim nameTitle As String = If(line.points.IsNullOrEmpty, line.name, line.points(Scan0).Name)
+        Dim title As String = $"Linear Model Reference Points of '{nameTitle}'"
         Dim pointTable$ = line.points.ToHTMLTable(
             className:="table",
             width:="100%",
