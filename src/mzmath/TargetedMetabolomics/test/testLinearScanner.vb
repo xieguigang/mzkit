@@ -12,6 +12,9 @@ Module testLinearScanner
 
         Call raw.MRMSelector(ion, Tolerance.DeltaMass(0.1)).Plot.Save("D:\test\111\cal\cal1.png")
 
+        Dim target = raw.MRMSelector(ion, Tolerance.DeltaMass(0.1))
+        Dim TIC = target.GetChromatogram
+
         Pause()
     End Sub
 End Module
