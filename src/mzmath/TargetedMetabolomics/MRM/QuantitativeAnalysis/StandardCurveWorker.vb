@@ -120,6 +120,11 @@ Namespace MRM
             End If
 
             For Each ion As Standards In calibrates
+                If Not ionTPA.ContainsKey(ion.ID) Then
+                    Call $"missing reference line for {ion.ID}!".Warning
+                    Continue For
+                End If
+
                 ' 20181106 如果没有内标，则不进行内标校正
                 ' 所以在这里移除下面的where筛选
                 ' .Where(Function(i)
