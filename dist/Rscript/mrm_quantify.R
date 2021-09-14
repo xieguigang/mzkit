@@ -71,8 +71,8 @@ let tolerance    as string  = ?"--mz.diff"      || "ppm:15";
 [@info "the time range of a peak, this parameter is consist with two number for speicifc the upper bound and lower bound of the peak width which is represented with RT dimension."]
 [@type "doublerange"]
 let peakwidth    as string  = ?"--peakwidth"    || "8,30";
-[@info "the threshold value for determine that a detected peak is noise data or not."]
-let sn_threshold as double  = ?"--sn_threshold" || "3";
+[@info "the threshold value for determine that a detected peak is noise data or not. ZERO or negative value means not measure s/n cutoff."]
+let sn_threshold as double  = ?"--sn_threshold" || "-1";
 
 # Max number of points for removes in 
 # linear modelling

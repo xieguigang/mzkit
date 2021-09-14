@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -64,6 +65,8 @@ Namespace MRM.Data
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function GetTimeWindow(winsize As Double) As DoubleRange
             If hasRTwin Then
                 Return {
