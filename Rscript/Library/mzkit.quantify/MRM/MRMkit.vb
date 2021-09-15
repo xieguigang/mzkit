@@ -724,6 +724,11 @@ Module MRMkit
             .ToArray
     End Function
 
+    <ExportAPI("R2")>
+    Public Function R2(lines As StandardCurve()) As Double()
+        Return lines.Select(Function(r) r.linear.R2).ToArray
+    End Function
+
     ''' <summary>
     ''' Do sample quantify
     ''' </summary>

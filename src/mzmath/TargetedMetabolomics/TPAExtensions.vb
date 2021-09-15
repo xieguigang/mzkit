@@ -135,8 +135,8 @@ Public Module TPAExtensions
         }
         Dim region As ROI = ROIData _
            .Where(Function(r)
-                      Return find.IsInside(r.rt)
-                      ' Return isContactWith(r.time, find)
+                      ' Return find.IsInside(r.rt)
+                      Return isContactWith(r.time, find)
                   End Function) _
            .OrderByDescending(Function(r)
                                   ' 20200309 因为噪声的积分面积可能会大于目标物质峰

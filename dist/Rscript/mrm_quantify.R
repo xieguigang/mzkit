@@ -206,8 +206,8 @@ if (wiff$hasBlankControls) {
 #' @param wiff_standards A file path collection of ``*.mzML`` files, which should be the reference points.
 #' @param subdir A directory name for save the result table
 #'
-let linears.standard_curve as function(wiff_standards, subdir) {
-	let rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments(
+const linears.standard_curve as function(wiff_standards, subdir) {
+	const rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments(
 		tolerance        = tolerance,
 		timeWindowSize   = rt_winSize,
 		angleThreshold   = angle.threshold,
@@ -259,33 +259,9 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		isWorkCurveMode = isWorkCurve
 	);
 
-	#' print model summary and then do standard curve plot
-	#'
-	let printModel as function(line) {
-		# get compound id name
-		let id as string = line 
-		:> as.object 
-		:> do.call("name");
-		
-		# view summary result
-		print(line);
-		
-		bitmap(file = `${dir}/${subdir}/standard_curves/${id}.png`) {
-			line
-			:> standard_curve(title = `Standard Curve Of ${id}`)
-			;
-		}
-		
-		# save reference points
-		line
-		:> points(nameRef = id)
-		:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
-		;
-	}
-
 	for(line in ref) {
 		if (line :> as.object :> do.call("isValid")) {
-			line :> printModel;
+			line :> printModel(subdir);
 		}
 	}
 
@@ -314,7 +290,31 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
 	}	
 	
-	return ref;
+	ref;
+}
+
+#' print model summary and then do standard curve plot
+#'
+const printModel as function(line, subdir) {
+	# get compound id name
+	const id as string = line 
+	:> as.object 
+	:> do.call("name");
+	
+	# view summary result
+	print(line);
+	
+	bitmap(file = `${dir}/${subdir}/standard_curves/${id}.png`) {
+		line
+		:> standard_curve(title = `Standard Curve Of ${id}`)
+		;
+	}
+	
+	# save reference points
+	line
+	:> points(nameRef = id)
+	:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
+	;
 }
 
 let doLinears as function(wiff_standards, subdir = "") {
@@ -329,7 +329,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 	
 	# calculate standards points as well for quality controls
 	# and result data verification
-	let sample.files = wiff$samples << wiff_standards; 
+	const sample.files = wiff$samples << wiff_standards; 
 
 	# Write raw scan data of the user sample data
 	sample.files
@@ -351,8 +351,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
 	for(sample.mzML in sample.files) {
-		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		let result = ref :> sample.quantify(
+		const peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
+		const result = ref :> sample.quantify(
 			sample.mzML, ions, 
 			peakAreaMethod   = integrator, 
 			tolerance        = tolerance, 
@@ -407,7 +407,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 
 if (wiff$numberOfStandardReference > 1) {
 	# test for multiple standard curves
-	let groups = wiff$GetLinearGroups() :> as.list;
+	const groups = wiff$GetLinearGroups() :> as.list;
 	
 	print("We get linear groups:");
 	print(groups);
