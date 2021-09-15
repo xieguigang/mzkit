@@ -35,7 +35,15 @@ let MRM.info as string = ?"--MRM" || stop("Missing MRM information table file!")
 let ions as string = ?"--ions";      
 [@info "folder location for save quantification result output."]   
 [@type "folder"]
-let dir  as string = ?"--export" || `${wiff :> trim(" ")}-result/`;
+let dir as string = ?"--export" || `${wiff :> trim([" ", "/"])}-result/`;
+
+print("reference lines:");
+print(wiff);
+print("sample data:");
+print(sample);
+print("result will be export to folder location:");
+print(dir);
+
 # The regexp pattern of the file name for match
 # the reference point data.
 [@info "the regexp expression pattern for match of the reference lines raw data file."]
