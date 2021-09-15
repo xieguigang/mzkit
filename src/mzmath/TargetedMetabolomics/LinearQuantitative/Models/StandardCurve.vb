@@ -83,6 +83,8 @@ Namespace LinearQuantitative
         ''' <returns></returns>
         Public Property [IS] As [IS]
 
+        Public Property arguments As Object
+
         ''' <summary>
         ''' This linear model is required calibration by internal standards or not?
         ''' (在进行线性回归计算的时候是否需要内标校正？)

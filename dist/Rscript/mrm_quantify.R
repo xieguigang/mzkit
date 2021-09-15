@@ -235,31 +235,24 @@ const linears.standard_curve as function(wiff_standards, subdir) {
 	# Get raw scan data for given ions
 	const CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
-	:> wiff.scans(
- 		ions             = ions, 
- 		peakAreaMethod   = integrator, 
-	 	TPAFactors       = NULL,
-		tolerance        = tolerance,
-		timeWindowSize   = rt_winSize,
-		removesWiffName  = TRUE,
-		angleThreshold   = angle.threshold,
-		baselineQuantile = baseline.quantile,
-		peakwidth        = peakwidth,
-		sn_threshold     = sn_threshold,
-		rtshifts         = NULL# rt.shifts
+	:> wiff.scan2(
+ 		ions             = ions,  		
+		removesWiffName  = TRUE,		
+		rtshifts         = NULL, # rt.shifts
+		args             = args
 	);
-
-	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
-
-	let ref <- linears(
+	const ref <- linears(
 		rawScan         = CAL, 
 		calibrates      = reference, 
 		ISvector        = is, 
 		autoWeighted    = TRUE, 
 		blankControls   = blanks, 
 		maxDeletions    = maxNumOfPoint.delets, 
-		isWorkCurveMode = isWorkCurve
+		isWorkCurveMode = isWorkCurve,
+		args            = args
 	);
+
+	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
 	for(line in ref) {
 		if (line :> as.object :> do.call("isValid")) {
@@ -273,23 +266,12 @@ const linears.standard_curve as function(wiff_standards, subdir) {
 	:> write.csv(file = `${dir}/${subdir}/linears.csv`)
 	;
 
-	for(mzML in wiff_standards) {
-		let fileName <- basename(mzML);
-		let peaks    <- MRM.peaks(
-			mzML             = mzML, 
-			ions             = ions, 
-			peakAreaMethod   = integrator, 
-			TPAFactors       = NULL, 
-			tolerance        = tolerance, 
-			timeWindowSize   = rt_winSize,
-			angleThreshold   = angle.threshold,
-			baselineQuantile = baseline.quantile,
-			peakwidth        = peakwidth,
-			sn_threshold     = sn_threshold
-		);
+	for(mzML in wiff_standards) {		
+		const filepath <- `${dir}/${subdir}/peaktables/${basename(mzML)}.csv`;
+		const peaks    <- MRM.peak2(mzML = mzML, ions = ions, args = args);
 		
 		# save peaktable for given rawfile
-		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
+		write.csv(peaks, file = filepath);
 	}	
 	
 	ref;

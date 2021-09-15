@@ -526,6 +526,31 @@ Module MRMkit
     ''' </summary>
     ''' <param name="mzML">the file path of the mzML raw data file</param>
     ''' <param name="ions">the ion pairs data list</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("MRM.peak2")>
+    <RApiReturn(GetType(DataSet))>
+    Public Function ScanPeakTable2(mzML$, ions As IonPair(), args As MRMArguments,
+                                   Optional rtshifts As Dictionary(Of String, Double) = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        If args Is Nothing Then
+            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+        End If
+
+        Return WiffRaw.ScanPeakTable(
+            mzML:=mzML,
+            ions:=ions,
+            rtshifts:=rtshifts,
+            args:=args
+        )
+    End Function
+
+    ''' <summary>
+    ''' Get MRM ions peaks data from a given raw data file
+    ''' </summary>
+    ''' <param name="mzML">the file path of the mzML raw data file</param>
+    ''' <param name="ions">the ion pairs data list</param>
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="tolerance$"></param>
     ''' <param name="timeWindowSize#"></param>
@@ -567,7 +592,7 @@ Module MRMkit
             Return _peakwidth.TryCast(Of Message)
         End If
 
-        Return WiffRaw.ScanPeakTable(
+        Return ScanPeakTable2(
             mzML:=mzML,
             ions:=ions,
             rtshifts:=rtshifts,
@@ -581,7 +606,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold
-            )
+            ),
+            env:=env
         )
     End Function
 
@@ -732,7 +758,8 @@ Module MRMkit
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
                             Optional blankControls As DataSet() = Nothing,
                             Optional maxDeletions As Integer = 1,
-                            Optional isWorkCurveMode As Boolean = True) As StandardCurve()
+                            Optional isWorkCurveMode As Boolean = True,
+                            Optional args As MRMArguments = Nothing) As StandardCurve()
 
         Return rawScan.ToDictionary _
             .Regression(
@@ -742,6 +769,10 @@ Module MRMkit
                 maxDeletions:=maxDeletions,
                 isWorkCurveMode:=isWorkCurveMode
             ) _
+            .Select(Function(line)
+                        line.arguments = args
+                        Return line
+                    End Function) _
             .ToArray
     End Function
 
