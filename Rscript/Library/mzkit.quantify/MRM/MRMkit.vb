@@ -311,7 +311,7 @@ Module MRMkit
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold
             )
-        )
+        ).ToArray
     End Function
 
     <ExportAPI("peakROI")>

@@ -61,7 +61,7 @@ Namespace MRM
         ''' <param name="ionpairs"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScanTPA(raw$, ionpairs As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IonTPA()
+        Public Iterator Function ScanTPA(raw$, ionpairs As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As IEnumerable(Of IonTPA)
             ' 从原始文件之中读取出所有指定的离子对数据
             Dim ionData As IonChromatogram() = IonPair.GetIsomerism(ionpairs, args.tolerance) _
                 .ExtractIonData(
@@ -85,19 +85,13 @@ Namespace MRM
                                 End Function) _
                         .ToArray
                 End If
+
+                ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
+                Dim factorVal As Double = args.TPAFactors.GetFactor(ion.name)
+                Dim result As IonTPA = ion.ionTPA(factorVal, args)
+
+                Yield result
             Next
-
-            ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-            Dim TPA As IonTPA() = ionData _
-                .Select(Function(ion)
-                            Dim factorVal As Double = args.TPAFactors.GetFactor(ion.name)
-                            Dim result As IonTPA = ion.ionTPA(factorVal, args)
-
-                            Return result
-                        End Function) _
-                .ToArray
-
-            Return TPA
         End Function
 
         <Extension>

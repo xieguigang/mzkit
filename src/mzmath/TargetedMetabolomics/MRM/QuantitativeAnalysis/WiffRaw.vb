@@ -63,7 +63,7 @@ Namespace MRM
                 ionpairs:=ions,
                 rtshifts:=rtshifts,
                 args:=args
-            )
+            ).ToArray
             Dim peaktable As DataSet() = TPA _
                 .Select(Function(ion As IonTPA)
                             Return New DataSet With {
@@ -140,7 +140,7 @@ Namespace MRM
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据
                 Dim ionShifts = shiftMatrix.TryGetValue(file.BaseName)
-                Dim TPA() = file.ScanTPA(ionpairs:=ions, rtshifts:=ionShifts, args:=args)
+                Dim TPA() = file.ScanTPA(ionpairs:=ions, rtshifts:=ionShifts, args:=args).ToArray
 
                 refNames += file.BaseName
                 level$ = file.BaseName
