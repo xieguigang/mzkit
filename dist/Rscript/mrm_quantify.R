@@ -301,7 +301,7 @@ const printModel as function(line, subdir) {
 	;
 }
 
-let doLinears as function(wiff_standards, subdir = "") {
+const doLinears as function(wiff_standards, subdir = "") {
 	let scans    = [];
 	let ref      = linears.standard_curve(wiff_standards, subdir);
 	let ref_raws = ions 
