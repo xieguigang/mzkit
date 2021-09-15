@@ -787,6 +787,36 @@ Module MRMkit
     ''' <param name="model"></param>
     ''' <param name="file">The sample raw file its file path.</param>
     ''' <param name="ions"></param>
+    ''' <returns></returns>
+    <ExportAPI("sample.quantify2")>
+    <RApiReturn(GetType(QuantifyScan))>
+    Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), Optional env As Environment = Nothing) As Object
+        If model.Any(Function(line) line.arguments Is Nothing) Then
+            Return Internal.debug.stop("part of the reference line missing argument value!", env)
+        End If
+
+        Dim scan As New QuantifyScan
+
+        For Each line As StandardCurve In model
+            Dim ion As IonPair = ions.Where(Function(i) i.accession = line.name).FirstOrDefault
+            Dim subscan As QuantifyScan = MRMSamples.SampleQuantify(
+                model:={line},
+                file:=file,
+                ions:={ion},
+                args:=line.arguments,
+                rtshifts:=New Dictionary(Of String, Double)
+            )
+        Next
+
+        Return scan
+    End Function
+
+    ''' <summary>
+    ''' Do sample quantify
+    ''' </summary>
+    ''' <param name="model"></param>
+    ''' <param name="file">The sample raw file its file path.</param>
+    ''' <param name="ions"></param>
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <returns></returns>

@@ -19,15 +19,15 @@ imports "plot_ionRaws.R";
 # config of the standard curve data files
 [@info "The folder path of the reference lines. you can set the reference name pattern via '--patternOfRef' parameter for matched the raw data files in this folder."]
 [@type "folder, *.mzML"]
-let wiff     as string = ?"--Cal"  || stop("No standard curve data provides!");
+let wiff as string = ?"--Cal" || stop("No standard curve data provides!");
 
 [@info "The folder path of the sample data files."]
 [@type "folder, *.mzML"]
-let sample   as string = ?"--data" || stop("No sample data files provided!");
+let sample as string = ?"--data" || stop("No sample data files provided!");
 
 [@info "MRM ion information xlsx table file. This table file must contains the linear reference content data of each targeted metabolite for create linear reference models."]
 [@type "*.xlsx"]
-let MRM.info as string = ?"--MRM"  || stop("Missing MRM information table file!");
+let MRM.info as string = ?"--MRM" || stop("Missing MRM information table file!");
 # use external MSL data file if there is no 
 # ion pair data in the MRM table file. 
 [@info "The *.MSL ion file for specific the MRM ion pairs data if there is no ion pair data in the MRM table."]
@@ -40,14 +40,16 @@ let dir  as string = ?"--export" || `${wiff :> trim(" ")}-result/`;
 # the reference point data.
 [@info "the regexp expression pattern for match of the reference lines raw data file."]
 [@type "regexp"]
-const patternOf.ref as string   = ?"--patternOfRef" || '[-]?LM[-]?\d+';
+const patternOf.ref as string = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 [@info "the regexp expression pattern for match of the QC sample raw data files."]
 [@type "regexp"]
-const patternOf.QC as string    = ?"--patternOfQC"  || "QC[-]?\d+";
+const patternOf.QC as string = ?"--patternOfQC"  || "QC[-]?\d+";
 [@info "the regexp expression pattern for match of the blank sample raw data files."]
 [@type "regexp"]
 const patternOf.Blank as string = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
- 
+[@info "Do linear fitting of the given ions in different parameters?"]
+const individualFit as boolean = ?"--individual-fit";
+
 # let Methods as integer = {
       # NetPeakSum = 0;
       # Integrator = 1;
