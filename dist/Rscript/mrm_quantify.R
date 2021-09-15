@@ -32,10 +32,10 @@ let MRM.info as string = ?"--MRM"  || stop("Missing MRM information table file!"
 # ion pair data in the MRM table file. 
 [@info "The *.MSL ion file for specific the MRM ion pairs data if there is no ion pair data in the MRM table."]
 [@type "*.MSL"]
-let ions     as string = ?"--ions";      
+let ions as string = ?"--ions";      
 [@info "folder location for save quantification result output."]   
 [@type "folder"]
-let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
+let dir  as string = ?"--export" || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
 [@info "the regexp expression pattern for match of the reference lines raw data file."]
@@ -76,9 +76,9 @@ let rt_winSize   as double  = as.numeric(?"--rt.winsize" || 5);
 let tolerance    as string  = ?"--mz.diff"      || "ppm:15";
 [@info "the time range of a peak, this parameter is consist with two number for speicifc the upper bound and lower bound of the peak width which is represented with RT dimension."]
 [@type "doublerange"]
-let peakwidth    as string  = ?"--peakwidth"    || "8,35";
+let peakwidth    as string  = ?"--peakwidth"    || "8,30";
 [@info "the threshold value for determine that a detected peak is noise data or not. ZERO or negative value means not measure s/n cutoff."]
-let sn_threshold as double  = ?"--sn_threshold" || "2";
+let sn_threshold as double  = ?"--sn_threshold" || "3";
 
 # Max number of points for removes in 
 # linear modelling
