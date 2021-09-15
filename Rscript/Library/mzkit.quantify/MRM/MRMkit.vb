@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::5c37b6a2a7edab1412cb71ded3b42e88, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, readCompoundReference
-    '               readIonPairs, readIS, ROISummary, RTShiftSummary, SampleQuantify
-    '               ScanPeakTable, ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
+'               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, readCompoundReference
+'               readIonPairs, readIS, ROISummary, RTShiftSummary, SampleQuantify
+'               ScanPeakTable, ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -584,6 +585,38 @@ Module MRMkit
         )
     End Function
 
+    <ExportAPI("wiff.scan2")>
+    <RApiReturn(GetType(DataSet))>
+    <Extension>
+    Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
+                                Optional args As MRMArguments = Nothing,
+                                Optional rtshifts As RTAlignment() = Nothing,
+                                Optional removesWiffName As Boolean = True,
+                                Optional env As Environment = Nothing) As Object
+
+        If wiffConverts Is Nothing Then
+            Return Internal.debug.stop({
+                "the given wiff raw file list is nothing or empty!",
+                "argument: " & NameOf(wiffConverts)
+            }, env)
+        ElseIf args Is Nothing Then
+            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+        End If
+
+        If rtshifts Is Nothing Then
+            rtshifts = {}
+        End If
+
+        Return WiffRaw.Scan(
+            mzMLRawFiles:=wiffConverts,
+            ions:=ions,
+            refName:=Nothing,
+            removesWiffName:=removesWiffName,
+            rtshifts:=rtshifts,
+            args:=args
+        )
+    End Function
+
     ''' <summary>
     ''' # Scan the raw file data
     ''' 
@@ -631,17 +664,6 @@ Module MRMkit
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        If wiffConverts Is Nothing Then
-            Return Internal.debug.stop({
-                "the given wiff raw file list is nothing or empty!",
-                "argument: " & NameOf(wiffConverts)
-            }, env)
-        End If
-
-        If rtshifts Is Nothing Then
-            rtshifts = {}
-        End If
-
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
 
         If _peakwidth Like GetType(Message) Then
@@ -669,10 +691,8 @@ Module MRMkit
         'Dim raw As RawFile = DirectCast(wiffConverts, RawFile)
         Dim errorTolerance As Tolerance = mzErrors
 
-        Return WiffRaw.Scan(
-            mzMLRawFiles:=wiffConverts,
+        Return wiffConverts.ScanWiffRaw(
             ions:=ions,
-            refName:=Nothing,
             removesWiffName:=removesWiffName,
             rtshifts:=rtshifts,
             args:=New MRMArguments(
@@ -685,7 +705,8 @@ Module MRMkit
                 peakAreaMethod:=peakAreaMethod,
                 peakwidth:=_peakwidth,
                 sn_threshold:=sn_threshold
-            )
+            ),
+            env:=env
         )
     End Function
 

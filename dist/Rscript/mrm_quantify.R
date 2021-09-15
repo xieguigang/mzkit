@@ -181,6 +181,17 @@ if (sum(QC_samples) > 0) {
 	print(basename(wiff$samples[QC_samples]));
 }
 
+const args = MRM.arguments(
+	tolerance        = tolerance,
+	timeWindowSize   = rt_winSize,
+	angleThreshold   = angle.threshold,
+	baselineQuantile = baseline.quantile,
+	peakAreaMethod   = integrator,
+	TPAFactors       = NULL,
+	peakwidth        = peakwidth,
+	sn_threshold     = sn_threshold
+);
+
 if (wiff$hasBlankControls) {
 	print(`There are ${length(wiff$blanks)} blank controls in wiff raw data!`);
 	print(wiff$blanks);
@@ -207,16 +218,7 @@ if (wiff$hasBlankControls) {
 #' @param subdir A directory name for save the result table
 #'
 const linears.standard_curve as function(wiff_standards, subdir) {
-	const rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments(
-		tolerance        = tolerance,
-		timeWindowSize   = rt_winSize,
-		angleThreshold   = angle.threshold,
-		baselineQuantile = baseline.quantile,
-		peakAreaMethod   = integrator,
-		TPAFactors       = NULL,
-		peakwidth        = peakwidth,
-		sn_threshold     = sn_threshold
-	));
+	const rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args);
 	
 	print("Previews of the rt shifts summary in your sample reference points:");
 	
