@@ -1,8 +1,8 @@
 #' title: MRM quantification
 #' author: xieguigang <gg.xie@bionovogene.com>
 #'
-#' description: do LC-MSMS targeted metabolomics quantitative analysis
-#'    base on the MRM ion pairs data. This script will take a set of 
+#' description: do LC-MS/MS targeted metabolomics quantitative analysis
+#'    base on the MRM ion pairs data. This script will take a set of
 #'    *.mzML raw data files, and then create linear models based on the
 #'    linear reference raw data files, do sample quantitative evaluation
 #'    and QC assertion if the QC file is exists in your sample files.
@@ -32,7 +32,11 @@ let MRM.info as string = ?"--MRM" || stop("Missing MRM information table file!")
 # ion pair data in the MRM table file. 
 [@info "The *.MSL ion file for specific the MRM ion pairs data if there is no ion pair data in the MRM table."]
 [@type "*.MSL"]
-let ions as string = ?"--ions";      
+let ions  as string = ?"--ions";      
+[@info "The *.MSL ion file for specific the MRM ion pairs data if the ions data in sample is different with reference samples(mainly address of the RT shift problems.)."]
+[@type "*.MSL"]
+let ions2 as string = ?"--ions-sample"; 
+
 [@info "folder location for save quantification result output."]   
 [@type "folder"]
 let dir as string = ?"--export" || `${wiff :> trim([" ", "/"])}-result/`;
@@ -151,7 +155,8 @@ if (file.exists(ions)) {
 	# specific that the time unit is Minute
 	# at here
 	:> read.msl(unit = "Minute") 
-	:> as.ion_pairs;
+	:> as.ion_pairs
+	;
 } else {
 	[ions, reference, is] = MRM.info :> [
 		read.ion_pairs("ion pairs"), 
@@ -317,9 +322,10 @@ const printModel as function(line, subdir) {
 	;
 }
 
-const doLinears as function(wiff_standards, subdir = "") {
-	let scans    = [];
-	let ref      = linears.standard_curve(wiff_standards, subdir);
+#' Run linear quantification
+#' 
+const doLinears as function(wiff_standards, ref, ions, subdir = "") {
+	let scans    = [];	
 	let ref_raws = ions 
 	# get ion chromatograms raw data for 
 	# TIC data plots
@@ -415,12 +421,61 @@ if (wiff$numberOfStandardReference > 1) {
 	for(linear_groupKey in names(groups)) {
 		print(`Run linear profiles for '${linear_groupKey}'`);
 		print(groups[[linear_groupKey]]);
+
+		# create linear reference data
+		const ref         = linears.standard_curve(groups[[linear_groupKey]], subdir);
+		const samples_MSL = (
+			if (file.exists(ions2)) {
+				print("Use external msl data as ion pairs for the sample data!");
 	
-		doLinears(groups[[linear_groupKey]], linear_groupKey);
+				ions2
+				# the time unit is minute by default
+				# required convert to second by 
+				# specific that the time unit is Minute
+				# at here
+				:> read.msl(unit = "Minute") 
+				:> as.ion_pairs
+				;
+			} else {
+				ions;
+			}
+		);
+
+		# doLinears as function(wiff_standards, ref, ions, subdir = "") {
+		groups[[linear_groupKey]] 
+		|> doLinears(
+			ref    = ref, 
+			ions   = samples_MSL, 
+			subdir = linear_groupKey
+		);
 	}	
 	
 } else {
-	wiff$standards :> doLinears();
+	const ref = linears.standard_curve(wiff$standards, "");
+	const samples_MSL = (
+		if (file.exists(ions2)) {
+			print("Use external msl data as ion pairs for the sample data!");
+
+			ions2
+			# the time unit is minute by default
+			# required convert to second by 
+			# specific that the time unit is Minute
+			# at here
+			:> read.msl(unit = "Minute") 
+			:> as.ion_pairs
+			;
+		} else {
+			ions;
+		}
+	);
+
+	print("run LC-MS/MS mrm quantification for single data group!");
+
+	wiff$standards :> doLinears(
+		ref    = ref, 
+		ions   = samples_MSL, 
+		subdir = ""
+	);
 }
 
 print("MRM quantify [JOB DONE!]");
