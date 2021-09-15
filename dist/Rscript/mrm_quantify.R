@@ -38,9 +38,15 @@ let ions     as string = ?"--ions";
 let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
-let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
-let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
-let patternOf.Blank    = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
+[@info "the regexp expression pattern for match of the reference lines raw data file."]
+[@type "regexp"]
+const patternOf.ref as string   = ?"--patternOfRef" || '[-]?LM[-]?\d+';
+[@info "the regexp expression pattern for match of the QC sample raw data files."]
+[@type "regexp"]
+const patternOf.QC as string    = ?"--patternOfQC"  || "QC[-]?\d+";
+[@info "the regexp expression pattern for match of the blank sample raw data files."]
+[@type "regexp"]
+const patternOf.Blank as string = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
  
 # let Methods as integer = {
       # NetPeakSum = 0;
