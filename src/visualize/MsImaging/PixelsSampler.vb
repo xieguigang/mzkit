@@ -92,6 +92,8 @@ Public Class PixelsSampler
         For x As Integer = px To px + width
             If x > dims.Width Then
                 Exit For
+            ElseIf col_scans(x - 1) Is Nothing Then
+                Continue For
             End If
 
             For y As Integer = py To py + height
@@ -135,12 +137,20 @@ Public Class PixelsSampler
         Dim block As NamedCollection(Of ms2)()
 
         For x As Integer = 1 To dims.Width Step dw
+            If col_scans(x - 1) Is Nothing Then
+                Continue For
+            End If
+
             For y As Integer = 1 To dims.Height Step dh
                 If dw = 1 AndAlso dh = 1 Then
-                    block = col_scans(x - 1)(y - 1) _
-                        .GetMsPipe _
-                        .GroupBy(tolerance) _
-                        .ToArray
+                    If col_scans(x - 1)(y - 1) Is Nothing Then
+                        block = {}
+                    Else
+                        block = col_scans(x - 1)(y - 1) _
+                            .GetMsPipe _
+                            .GroupBy(tolerance) _
+                            .ToArray
+                    End If
                 Else
                     block = GetBlock(x, y, dw, dh) _
                         .Select(Function(p) p.GetMsPipe) _
