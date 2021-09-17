@@ -1576,7 +1576,7 @@
         <Image MinDPI="192">Res/applets-screenshooter.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonTogglePolygon" Id="140" LabelTitle="Toggle Polygon" LabelDescription="Toggle Polygon" TooltipTitle="Toggle Polygon" TooltipDescription="Toggle Polygon">
+    <Command Name="cmdButtonTogglePolygon" Id="140" LabelTitle="Polygon Editor" LabelDescription="Polygon editor for your MS-Imaging data" TooltipTitle="Open Polygon Editor" TooltipDescription="Polygon editor for your MS-Imaging data, create regions via polygon for extract expression data for downstream data analysis">
       <Command.SmallImages>
         <Image MinDPI="192">Res/insert-object.png</Image>
       </Command.SmallImages>
@@ -1603,6 +1603,34 @@
       <Command.LargeImages>
         <Image MinDPI="144">Res/edit-delete.png</Image>
       </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonMovePolygon" Id="147" LabelTitle="Move Polygon" LabelDescription="Move Polygon" TooltipTitle="Move Polygon" TooltipDescription="Move Polygon">
+      <Command.SmallImages>
+        <Image MinDPI="192">PolygonEditor/MovePolygonMenuItem.Image.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">PolygonEditor/MovePolygonMenuItem.Image.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/MovePolygonMenuItem.Image.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/MovePolygonMenuItem.Image.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
+    <Command Name="cmdButtonRemovePolygon" Id="148" LabelTitle="Remove Polygon" LabelDescription="Remove Polygon" TooltipTitle="Remove Polygon" TooltipDescription="Remove Polygon">
+      <Command.SmallImages>
+        <Image MinDPI="192">PolygonEditor/RemovePolygonMenuItem.Image.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">PolygonEditor/RemovePolygonMenuItem.Image.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/RemovePolygonMenuItem.Image.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/RemovePolygonMenuItem.Image.png</Image>
+      </Command.LargeHighContrastImages>
     </Command>
   </Application.Commands>
   <Application.Views>
@@ -1642,7 +1670,7 @@
       <Ribbon.ApplicationMenu>
         <ApplicationMenu>
           <ApplicationMenu.RecentItems>
-            <RecentItems CommandName="cmdRecentItems" MaxCount="13"  ApplicationModes="0,1"/>
+            <RecentItems CommandName="cmdRecentItems" MaxCount="13" />
           </ApplicationMenu.RecentItems>
           <MenuGroup CommandName="cmdMenuGroupFile">
             <Button CommandName="cmdButtonNew" ApplicationModes="0,1" />
@@ -1655,10 +1683,10 @@
                 <Button CommandName="cmdButtonDropD" />
               </MenuGroup>
             </DropDownButton>
-            <Button CommandName="cmdButtonRsharp"  ApplicationModes="0,1"/>
+            <Button CommandName="cmdButtonRsharp" ApplicationModes="0,1" />
           </MenuGroup>
           <MenuGroup>
-            <Button CommandName="cmdButtonSettings"  ApplicationModes="0,1"/>
+            <Button CommandName="cmdButtonSettings" ApplicationModes="0,1" />
             <SplitButton ApplicationModes="0,1">
               <SplitButton.MenuGroups>
                 <MenuGroup Class="MajorItems">
@@ -1669,8 +1697,8 @@
               </SplitButton.MenuGroups>
             </SplitButton>
           </MenuGroup>
-          <MenuGroup CommandName="cmdMenuGroupExit" ApplicationModes="0,1">
-            <Button CommandName="cmdButtonExit"  ApplicationModes="0,1"/>
+          <MenuGroup CommandName="cmdMenuGroupExit">
+            <Button CommandName="cmdButtonExit" ApplicationModes="0,1" />
           </MenuGroup>
         </ApplicationMenu>
       </Ribbon.ApplicationMenu>
@@ -1804,13 +1832,14 @@
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSITotalIon" />
             </Group>
-            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <ToggleButton CommandName="cmdButtonTogglePolygon" />
               <Button CommandName="cmdButtonExportSample" />
             </Group>
             <Group CommandName="cmdTabPolygonEditor" ApplicationModes="1">
               <Button CommandName="cmdButtonClosePolygonEditor" />
-              <Button CommandName="cmdButtonPolygonEditorMoveVertex" />
+              <ToggleButton CommandName="cmdButtonPolygonEditorMoveVertex" />
+              <ToggleButton CommandName="cmdButtonMovePolygon" />
             </Group>
           </Tab>
         </TabGroup>

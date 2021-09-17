@@ -118,6 +118,7 @@ Namespace RibbonLib.Controls
             Public Const cmdTabPolygonEditor As UInteger = 144
             Public Const cmdButtonClosePolygonEditor As UInteger = 146
             Public Const cmdButtonPolygonEditorMoveVertex As UInteger = 145
+            Public Const cmdButtonMovePolygon As UInteger = 147
             Public Const cmdGroupKEGG As UInteger = 133
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
@@ -771,10 +772,16 @@ Namespace RibbonLib.Controls
                 Return _ButtonClosePolygonEditor
             End Get
         End Property
-        Private _ButtonPolygonEditorMoveVertex As RibbonButton
-        Public ReadOnly Property ButtonPolygonEditorMoveVertex As RibbonButton
+        Private _ButtonPolygonEditorMoveVertex As RibbonToggleButton
+        Public ReadOnly Property ButtonPolygonEditorMoveVertex As RibbonToggleButton
             Get
                 Return _ButtonPolygonEditorMoveVertex
+            End Get
+        End Property
+        Private _ButtonMovePolygon As RibbonToggleButton
+        Public ReadOnly Property ButtonMovePolygon As RibbonToggleButton
+            Get
+                Return _ButtonMovePolygon
             End Get
         End Property
         Private _GroupKEGG As RibbonTabGroup
@@ -1088,7 +1095,8 @@ Namespace RibbonLib.Controls
             _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
             _TabPolygonEditor = New RibbonGroup(_ribbon, Cmd.cmdTabPolygonEditor)
             _ButtonClosePolygonEditor = New RibbonButton(_ribbon, Cmd.cmdButtonClosePolygonEditor)
-            _ButtonPolygonEditorMoveVertex = New RibbonButton(_ribbon, Cmd.cmdButtonPolygonEditorMoveVertex)
+            _ButtonPolygonEditorMoveVertex = New RibbonToggleButton(_ribbon, Cmd.cmdButtonPolygonEditorMoveVertex)
+            _ButtonMovePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonMovePolygon)
             _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)
