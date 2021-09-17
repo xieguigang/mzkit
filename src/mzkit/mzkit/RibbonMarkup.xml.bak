@@ -1632,6 +1632,20 @@
         <Image MinDPI="192">PolygonEditor/RemovePolygonMenuItem.Image.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdButtonAddNewPolygon" Id="149" LabelTitle="Add New Polygon" LabelDescription="Add New Polygon" TooltipTitle="Add New Polygon" TooltipDescription="Add New Polygon">
+      <Command.SmallImages>
+        <Image MinDPI="192">PolygonEditor/AddVertexMenuItem.Image.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">PolygonEditor/AddVertexMenuItem.Image.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/AddVertexMenuItem.Image.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/AddVertexMenuItem.Image.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>

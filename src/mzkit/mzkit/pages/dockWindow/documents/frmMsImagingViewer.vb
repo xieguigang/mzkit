@@ -107,11 +107,47 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonTogglePolygon.ExecuteEvent, Sub() Call TogglePolygonMode()
 
         Call ApplyVsTheme(ContextMenuStrip1)
+        Call setupPolygonEditorButtons()
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+    End Sub
+
+    Sub setupPolygonEditorButtons()
+        AddHandler ribbonItems.ButtonMovePolygon.ExecuteEvent,
+            Sub()
+                ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
+                ribbonItems.ButtonAddNewPolygon.BooleanValue = False
+                PixelSelector1.OnMovePolygonMenuItemClick()
+            End Sub
+        AddHandler ribbonItems.ButtonPolygonEditorMoveVertex.ExecuteEvent,
+            Sub()
+                ribbonItems.ButtonMovePolygon.BooleanValue = False
+                ribbonItems.ButtonAddNewPolygon.BooleanValue = False
+                PixelSelector1.OnMoveComponentMenuItemClick()
+            End Sub
+        AddHandler ribbonItems.ButtonAddNewPolygon.ExecuteEvent,
+            Sub()
+                ribbonItems.ButtonMovePolygon.BooleanValue = False
+                ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
+                PixelSelector1.OnAddVertexMenuItemClick()
+            End Sub
+
+        Call MyApplication.host.Ribbon1.SetModes(0)
     End Sub
 
     Sub TogglePolygonMode()
         PixelSelector1.SelectPolygonMode = RibbonEvents.ribbonItems.ButtonTogglePolygon.BooleanValue
+
+        If PixelSelector1.SelectPolygonMode Then
+            Call MyApplication.host.Ribbon1.SetModes(1)
+            Call MyApplication.host.showStatusMessage("Toggle edit polygon for your MS-imaging data!")
+
+            PixelSelector1.Cursor = Cursors.Default
+        Else
+            Call MyApplication.host.Ribbon1.SetModes(0)
+            Call MyApplication.host.showStatusMessage("Exit polygon editor!")
+
+            PixelSelector1.Cursor = Cursors.Cross
+        End If
     End Sub
 
     Private Sub PixelSelector1_SelectPolygon(polygon() As PointF) Handles PixelSelector1.SelectPolygon
