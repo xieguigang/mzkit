@@ -117,6 +117,7 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
                 ribbonItems.ButtonAddNewPolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
+                ribbonItems.ButtonRemovePolygon.BooleanValue = False
 
                 PixelSelector1.OnMovePolygonMenuItemClick()
             End Sub
@@ -125,6 +126,7 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonMovePolygon.BooleanValue = False
                 ribbonItems.ButtonAddNewPolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
+                ribbonItems.ButtonRemovePolygon.BooleanValue = False
 
                 PixelSelector1.OnMoveComponentMenuItemClick()
             End Sub
@@ -133,6 +135,7 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonMovePolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
                 ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
+                ribbonItems.ButtonRemovePolygon.BooleanValue = False
 
                 PixelSelector1.OnAddVertexMenuItemClick()
             End Sub
@@ -143,6 +146,7 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
                 ribbonItems.ButtonAddNewPolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
+                ribbonItems.ButtonRemovePolygon.BooleanValue = False
 
                 Call MyApplication.host.Ribbon1.SetModes(0)
                 Call MyApplication.host.showStatusMessage("Exit polygon editor!")
@@ -155,8 +159,19 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonMovePolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
                 ribbonItems.ButtonAddNewPolygon.BooleanValue = False
+                ribbonItems.ButtonRemovePolygon.BooleanValue = False
 
                 PixelSelector1.OnRemoveVertexMenuItemClick()
+            End Sub
+
+        AddHandler ribbonItems.ButtonRemovePolygon.ExecuteEvent,
+            Sub()
+                ribbonItems.ButtonMovePolygon.BooleanValue = False
+                ribbonItems.ButtonPolygonEditorMoveVertex.BooleanValue = False
+                ribbonItems.ButtonAddNewPolygon.BooleanValue = False
+                ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
+
+                PixelSelector1.OnRemovePolygonMenuItemClick()
             End Sub
 
         Call MyApplication.host.Ribbon1.SetModes(0)

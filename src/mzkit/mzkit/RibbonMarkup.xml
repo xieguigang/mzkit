@@ -1870,6 +1870,7 @@
               <ToggleButton CommandName="cmdButtonMovePolygon" />
               <ToggleButton CommandName="cmdButtonAddNewPolygon" />
               <ToggleButton CommandName="cmdButtonPolygonDeleteVertex" />
+              <ToggleButton CommandName="cmdButtonRemovePolygon" />
             </Group>
           </Tab>
         </TabGroup>
