@@ -111,7 +111,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' AddVertexMenuItem.Click
     ''' </summary>
-    Private Sub OnAddVertexMenuItemClick()
+    Public Sub OnAddVertexMenuItemClick()
         IsLastPolygonCorrect()
         Dim vertices As List(Of Vertex) = New List(Of Vertex)()
         Dim edges As List(Of Edge) = New List(Of Edge)()
@@ -125,7 +125,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' RemoveVertexMenuItem.Click
     ''' </summary>
-    Private Sub OnRemoveVertexMenuItemClick()
+    Public Sub OnRemoveVertexMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.DeleteVertex
 
@@ -136,7 +136,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' MovePolygonMenuItem.Click
     ''' </summary>
-    Private Sub OnMovePolygonMenuItemClick()
+    Public Sub OnMovePolygonMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.MovePolygon
 
@@ -146,7 +146,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' RemovePolygonMenuItem.Click
     ''' </summary>
-    Private Sub OnRemovePolygonMenuItemClick()
+    Public Sub OnRemovePolygonMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.RemovePolygon
 
@@ -157,7 +157,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' HalveEdgeMenuItem.Click
     ''' </summary>
-    Private Sub OnHalveEdgeMenuItemClick()
+    Public Sub OnHalveEdgeMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         menuOption = MenuOption.HalveEdge
 
@@ -168,7 +168,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' EqualEdgesMenuItem.Click
     ''' </summary>
-    Private Sub OnEqualEdgesMenuItemClick()
+    Public Sub OnEqualEdgesMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         clickedEdges = New List(Of Edge)()
         menuOption = MenuOption.AddRelation
@@ -180,7 +180,7 @@ Public Class PixelSelector
     ''' <summary>
     ''' PerpendiculateEdgesMenuItem.Click
     ''' </summary>
-    Private Sub OnPerpendiculateEdgesMenuItemClick()
+    Public Sub OnPerpendiculateEdgesMenuItemClick()
         If Not IsLastPolygonCorrect() Then Return
         clickedEdges = New List(Of Edge)()
         menuOption = MenuOption.AddRelation
@@ -581,7 +581,7 @@ Public Class PixelSelector
     End Sub
 
     Private Sub OnBoadMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseClick
-        Dim mouse As Vertex = New Vertex(e.X, e.Y)
+        Dim mouse As New Vertex(e.X, e.Y)
 
         If menuOption = MenuOption.AddVertex Then
             Me.AddVertex(mouse)
@@ -649,6 +649,8 @@ Public Class PixelSelector
             If edge IsNot Nothing AndAlso edge.Relation <> Relation.None Then Me.RemoveRelation(edge)
             RepaintPolygon()
         End If
+
+        Call clickGetPoint(e)
     End Sub
 
     Private Sub OnBoadMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseDown
@@ -711,7 +713,7 @@ Public Class PixelSelector
         mouse = New Vertex(e.X, e.Y)
     End Sub
 
-    Private Sub OnBoardMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseUp
+    Private Sub OnBoardMouseUp()
         ismouseDown = False
         movingVertex = Nothing
         movingEdge = Nothing
@@ -1236,6 +1238,8 @@ Public Class PixelSelector
     End Sub
 
     Private Sub picCanvas_MouseUp(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseUp
+        Call OnBoardMouseUp()
+
         If Not drawing Then
             Return
         Else
@@ -1254,7 +1258,7 @@ Public Class PixelSelector
 
     Public ReadOnly Property Pixel As Point
 
-    Private Sub picCanvas_MouseClick(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseClick
+    Private Sub clickGetPoint(e As MouseEventArgs)
         Dim xpoint = 0
         Dim ypoint = 0
 
