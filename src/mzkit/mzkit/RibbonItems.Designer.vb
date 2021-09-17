@@ -122,6 +122,7 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonAddNewPolygon As UInteger = 149
             Public Const cmdButtonPolygonDeleteVertex As UInteger = 150
             Public Const cmdButtonRemovePolygon As UInteger = 148
+            Public Const cmdButtonShowPolygonVertexInfo As UInteger = 151
             Public Const cmdGroupKEGG As UInteger = 133
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
@@ -805,6 +806,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonRemovePolygon
             End Get
         End Property
+        Private _ButtonShowPolygonVertexInfo As RibbonToggleButton
+        Public ReadOnly Property ButtonShowPolygonVertexInfo As RibbonToggleButton
+            Get
+                Return _ButtonShowPolygonVertexInfo
+            End Get
+        End Property
         Private _GroupKEGG As RibbonTabGroup
         Public ReadOnly Property GroupKEGG As RibbonTabGroup
             Get
@@ -1121,6 +1128,7 @@ Namespace RibbonLib.Controls
             _ButtonAddNewPolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonAddNewPolygon)
             _ButtonPolygonDeleteVertex = New RibbonToggleButton(_ribbon, Cmd.cmdButtonPolygonDeleteVertex)
             _ButtonRemovePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonRemovePolygon)
+            _ButtonShowPolygonVertexInfo = New RibbonToggleButton(_ribbon, Cmd.cmdButtonShowPolygonVertexInfo)
             _GroupKEGG = New RibbonTabGroup(_ribbon, Cmd.cmdGroupKEGG)
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)

@@ -174,6 +174,17 @@ Public Class frmMsImagingViewer
                 PixelSelector1.OnRemovePolygonMenuItemClick()
             End Sub
 
+        AddHandler ribbonItems.ButtonShowPolygonVertexInfo.ExecuteEvent,
+            Sub()
+                PixelSelector1.ShowPointInform = ribbonItems.ButtonShowPolygonVertexInfo.BooleanValue
+
+                If PixelSelector1.ShowPointInform Then
+                    Call MyApplication.host.showStatusMessage("Turn on display point information of polygon vertex.")
+                Else
+                    Call MyApplication.host.showStatusMessage("Hide point information of polygon vertex!")
+                End If
+            End Sub
+
         Call MyApplication.host.Ribbon1.SetModes(0)
     End Sub
 

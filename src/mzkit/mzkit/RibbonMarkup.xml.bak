@@ -1660,6 +1660,20 @@
         <Image MinDPI="192">PolygonEditor/RemoveVertexMenuItem.Image.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdButtonShowPolygonVertexInfo" Id="151" LabelTitle="Show Vertex Information" LabelDescription="Show Vertex Information" TooltipTitle="Show Vertex Information" TooltipDescription="Show Vertex Information">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/view-dual.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/view-dual.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">Res/view-dual.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="144">Res/view-dual.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1870,6 +1884,7 @@
               <ToggleButton CommandName="cmdButtonMovePolygon" />
               <ToggleButton CommandName="cmdButtonAddNewPolygon" />
               <ToggleButton CommandName="cmdButtonPolygonDeleteVertex" />
+              <ToggleButton CommandName="cmdButtonRemovePolygon" />
             </Group>
           </Tab>
         </TabGroup>

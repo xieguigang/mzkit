@@ -731,18 +731,23 @@ Public Class PixelSelector
         mouse = New Vertex()
     End Sub
 
-    Private Sub OnBoardPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles picCanvas.Paint
-        Dim g = e.Graphics
+    Public Property ShowPointInform As Boolean = True
 
+    Private Sub OnBoardPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles picCanvas.Paint
         If polygons.Count = 0 Then
             Return
         End If
+
+        Dim g = e.Graphics
 
         For Each polygon In polygons
 
             For Each vertex In polygon.Vertices
                 g.FillEllipse(Brushes.Red, vertex.X - 3, vertex.Y - 3, 6, 6)
-                g.DrawString($"({vertex.X}, {vertex.Y})", New Font("Arial", 10), Brushes.Black, vertex.X - 3, vertex.Y - 20)
+
+                If ShowPointInform Then
+                    g.DrawString($"({vertex.X}, {vertex.Y})", New Font("Arial", 10), Brushes.Black, vertex.X - 3, vertex.Y - 20)
+                End If
             Next
 
             If polygon.Edges.Count = 0 Then Continue For
