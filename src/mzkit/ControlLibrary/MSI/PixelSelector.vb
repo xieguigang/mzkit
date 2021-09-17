@@ -581,79 +581,85 @@ Public Class PixelSelector
     End Sub
 
     Private Sub OnBoadMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseClick
-        Dim mouse As New Vertex(e.X, e.Y)
+        If Not SelectPolygonMode Then
+            Call clickGetPoint(e)
+        Else
+            Dim mouse As New Vertex(e.X, e.Y)
 
-        If menuOption = MenuOption.AddVertex Then
-            Me.AddVertex(mouse)
-        ElseIf menuOption = MenuOption.DeleteVertex Then
-            Me.RemoveVertex(mouse)
-        ElseIf menuOption = MenuOption.AddRelation Then
-            Dim edge As Edge
+            If menuOption = MenuOption.AddVertex Then
+                Me.AddVertex(mouse)
+            ElseIf menuOption = MenuOption.DeleteVertex Then
+                Me.RemoveVertex(mouse)
+            ElseIf menuOption = MenuOption.AddRelation Then
+                Dim edge As Edge
 
-            With Me.FindEdge(mouse)
-                edge = .edge
-                movingPolygon = .Polygon
-            End With
+                With Me.FindEdge(mouse)
+                    edge = .edge
+                    movingPolygon = .Polygon
+                End With
 
-            If movingPolygon IsNot Nothing Then vertexCopy = movingPolygon.Vertices.[Select](Function(v) New Vertex(v.X, v.Y)).ToList()
+                If movingPolygon IsNot Nothing Then vertexCopy = movingPolygon.Vertices.[Select](Function(v) New Vertex(v.X, v.Y)).ToList()
 
-            If edge IsNot Nothing Then
-                If clickedEdges.IndexOf(edge) = -1 AndAlso edge.Relation = Relation.None Then
-                    If clickedEdges.Count = 0 Then
-                        clickedEdges.Add(edge)
-                    Else
-
-                        If movingPolygon.HasEdge(clickedEdges(0)) Then
+                If edge IsNot Nothing Then
+                    If clickedEdges.IndexOf(edge) = -1 AndAlso edge.Relation = Relation.None Then
+                        If clickedEdges.Count = 0 Then
                             clickedEdges.Add(edge)
                         Else
-                            MessageBox.Show("Cannot add relation between edges from" & " different polygons!")
+
+                            If movingPolygon.HasEdge(clickedEdges(0)) Then
+                                clickedEdges.Add(edge)
+                            Else
+                                MessageBox.Show("Cannot add relation between edges from" & " different polygons!")
+                            End If
                         End If
-                    End If
 
-                    RepaintPolygon()
-                End If
-
-                If clickedEdges.Count = 2 Then
-                    Dim e1 As Edge = clickedEdges(0), e2 As Edge = clickedEdges(1)
-                    Dim old As Point = New Point(e1.To.X, e1.To.Y)
-                    Dim corrected = New Boolean(3) {}
-                    edgesInRelation.Add((e1, e2))
-
-                    If relation = Relation.Equality Then
-                        Me.EqualEdges(e1, e2, e1.From)
-                    ElseIf relation = Relation.Perpendicular Then
-                        Me.PerpendiculateEdges(e1, e2, e1.From)
-                    End If
-
-                    corrected(0) = Me.CorrectClockwise(e1)
-                    corrected(1) = Me.CorrectClockwise(e2)
-                    corrected(2) = Me.CorrectCounterclockwise(e1.To.GetOutEdge())
-                    corrected(3) = Me.CorrectCounterclockwise(e2.To.GetOutEdge())
-
-                    If Not corrected(0) AndAlso Not corrected(1) AndAlso Not corrected(2) AndAlso Not corrected(3) Then
-                        InvalidPolygonError()
                         RepaintPolygon()
                     End If
 
-                    clickedEdges = New List(Of Edge)()
+                    If clickedEdges.Count = 2 Then
+                        Dim e1 As Edge = clickedEdges(0), e2 As Edge = clickedEdges(1)
+                        Dim old As Point = New Point(e1.To.X, e1.To.Y)
+                        Dim corrected = New Boolean(3) {}
+                        edgesInRelation.Add((e1, e2))
+
+                        If relation = Relation.Equality Then
+                            Me.EqualEdges(e1, e2, e1.From)
+                        ElseIf relation = Relation.Perpendicular Then
+                            Me.PerpendiculateEdges(e1, e2, e1.From)
+                        End If
+
+                        corrected(0) = Me.CorrectClockwise(e1)
+                        corrected(1) = Me.CorrectClockwise(e2)
+                        corrected(2) = Me.CorrectCounterclockwise(e1.To.GetOutEdge())
+                        corrected(3) = Me.CorrectCounterclockwise(e2.To.GetOutEdge())
+
+                        If Not corrected(0) AndAlso Not corrected(1) AndAlso Not corrected(2) AndAlso Not corrected(3) Then
+                            InvalidPolygonError()
+                            RepaintPolygon()
+                        End If
+
+                        clickedEdges = New List(Of Edge)()
+                    End If
+
+                    Return
                 End If
-
-                Return
+            ElseIf menuOption = MenuOption.RemovePolygon Then
+                Dim polygonToRemove As Polygon = Me.FindVertex(CType(mouse, Vertex)).Polygon
+                If polygonToRemove Is Nothing Then polygonToRemove = Me.FindEdge(CType(mouse, Vertex)).Polygon
+                If polygonToRemove IsNot Nothing Then Me.RemovePolygon(polygonToRemove)
+            ElseIf menuOption = MenuOption.RemoveRelation Then
+                Dim edge As Edge = Me.FindEdge(CType(mouse, Vertex)).edge
+                If edge IsNot Nothing AndAlso edge.Relation <> Relation.None Then Me.RemoveRelation(edge)
+                RepaintPolygon()
             End If
-        ElseIf menuOption = MenuOption.RemovePolygon Then
-            Dim polygonToRemove As Polygon = Me.FindVertex(CType(mouse, Vertex)).Polygon
-            If polygonToRemove Is Nothing Then polygonToRemove = Me.FindEdge(CType(mouse, Vertex)).Polygon
-            If polygonToRemove IsNot Nothing Then Me.RemovePolygon(polygonToRemove)
-        ElseIf menuOption = MenuOption.RemoveRelation Then
-            Dim edge As Edge = Me.FindEdge(CType(mouse, Vertex)).edge
-            If edge IsNot Nothing AndAlso edge.Relation <> Relation.None Then Me.RemoveRelation(edge)
-            RepaintPolygon()
         End If
-
-        Call clickGetPoint(e)
     End Sub
 
     Private Sub OnBoadMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseDown
+        If Not SelectPolygonMode Then
+            Return
+        End If
+
         mouse = New Vertex(e.X, e.Y)
         ismouseDown = True
         Dim edgeToHalve As Edge = Nothing, polygon As Polygon = Nothing, index As Integer = Nothing
@@ -686,6 +692,10 @@ Public Class PixelSelector
     End Sub
 
     Private Sub OnBoardMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles picCanvas.MouseMove
+        If Not SelectPolygonMode Then
+            Return
+        End If
+
         If menuOption = MenuOption.MoveComponent Then
             If ismouseDown AndAlso movingVertex IsNot Nothing Then
                 Me.MoveVertex(movingVertex, e.X, e.Y)
@@ -1238,9 +1248,9 @@ Public Class PixelSelector
     End Sub
 
     Private Sub picCanvas_MouseUp(sender As Object, e As MouseEventArgs) Handles picCanvas.MouseUp
-        Call OnBoardMouseUp()
-
-        If Not drawing Then
+        If SelectPolygonMode Then
+            Call OnBoardMouseUp()
+        ElseIf Not drawing Then
             Return
         Else
             Dim xpoint = 0

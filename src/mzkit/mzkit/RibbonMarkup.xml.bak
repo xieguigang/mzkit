@@ -1646,6 +1646,20 @@
         <Image MinDPI="192">PolygonEditor/AddVertexMenuItem.Image.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdButtonPolygonDeleteVertex" Id="150" LabelTitle="Delete Vertex" LabelDescription="Delete Vertex" TooltipTitle="Delete Vertex" TooltipDescription="Delete Vertex">
+      <Command.SmallImages>
+        <Image MinDPI="192">PolygonEditor/RemoveVertexMenuItem.Image.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">PolygonEditor/RemoveVertexMenuItem.Image.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/RemoveVertexMenuItem.Image.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">PolygonEditor/RemoveVertexMenuItem.Image.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1854,6 +1868,8 @@
               <Button CommandName="cmdButtonClosePolygonEditor" />
               <ToggleButton CommandName="cmdButtonPolygonEditorMoveVertex" />
               <ToggleButton CommandName="cmdButtonMovePolygon" />
+              <ToggleButton CommandName="cmdButtonAddNewPolygon" />
+              <ToggleButton CommandName="cmdButtonPolygonDeleteVertex" />
             </Group>
           </Tab>
         </TabGroup>
