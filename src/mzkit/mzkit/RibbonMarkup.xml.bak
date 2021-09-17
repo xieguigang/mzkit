@@ -1642,12 +1642,12 @@
       <Ribbon.ApplicationMenu>
         <ApplicationMenu>
           <ApplicationMenu.RecentItems>
-            <RecentItems CommandName="cmdRecentItems" MaxCount="13" />
+            <RecentItems CommandName="cmdRecentItems" MaxCount="13"  ApplicationModes="0,1"/>
           </ApplicationMenu.RecentItems>
           <MenuGroup CommandName="cmdMenuGroupFile">
-            <Button CommandName="cmdButtonNew" />
-            <Button CommandName="cmdButtonImportsRawFiles" />
-            <DropDownButton CommandName="cmdButtonToolkits">
+            <Button CommandName="cmdButtonNew" ApplicationModes="0,1" />
+            <Button CommandName="cmdButtonImportsRawFiles" ApplicationModes="0,1" />
+            <DropDownButton CommandName="cmdButtonToolkits" ApplicationModes="0,1">
               <MenuGroup Class="MajorItems">
                 <Button CommandName="cmdButtonDropA" />
                 <Button CommandName="cmdButtonDropB" />
@@ -1655,11 +1655,11 @@
                 <Button CommandName="cmdButtonDropD" />
               </MenuGroup>
             </DropDownButton>
-            <Button CommandName="cmdButtonRsharp" />
+            <Button CommandName="cmdButtonRsharp"  ApplicationModes="0,1"/>
           </MenuGroup>
           <MenuGroup>
-            <Button CommandName="cmdButtonSettings" />
-            <SplitButton>
+            <Button CommandName="cmdButtonSettings"  ApplicationModes="0,1"/>
+            <SplitButton ApplicationModes="0,1">
               <SplitButton.MenuGroups>
                 <MenuGroup Class="MajorItems">
                   <Button CommandName="cmdButtonAbout" />
@@ -1669,8 +1669,8 @@
               </SplitButton.MenuGroups>
             </SplitButton>
           </MenuGroup>
-          <MenuGroup CommandName="cmdMenuGroupExit">
-            <Button CommandName="cmdButtonExit" />
+          <MenuGroup CommandName="cmdMenuGroupExit" ApplicationModes="0,1">
+            <Button CommandName="cmdButtonExit"  ApplicationModes="0,1"/>
           </MenuGroup>
         </ApplicationMenu>
       </Ribbon.ApplicationMenu>
@@ -1688,15 +1688,15 @@
       </Ribbon.QuickAccessToolbar>
       <Ribbon.ContextualTabs>
         <TabGroup CommandName="cmdTabGroupTableTools">
-          <Tab CommandName="cmdTabDesign">
-            <Group CommandName="cmdGroupDesign">
+          <Tab CommandName="cmdTabDesign" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
               <Spinner CommandName="cmdPPMSpinner" />
             </Group>
-            <Group CommandName="cmdGroupShowViewer" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonShowPlotViewer" />
               <Button CommandName="cmdButtonShowMatrixViewer" />
             </Group>
-            <Group CommandName="cmdGroupShowDockWindows" SizeDefinition="ThreeButtons">
+            <Group CommandName="cmdGroupShowDockWindows" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
               <SplitButtonGallery CommandName="cmdExplorers" Type="Commands" TextPosition="Hide">
                 <SplitButtonGallery.MenuLayout>
                   <FlowMenuLayout Gripper="None" Columns="3" />
@@ -1710,96 +1710,96 @@
               <Button CommandName="cmdButtonShowProperties" />
             </Group>
           </Tab>
-          <Tab CommandName="cmdTabLayout">
-            <Group CommandName="cmdGroupLayout" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabLayout" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupLayout" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonLayout1" />
               <Button CommandName="cmdButtonLayout2" />
             </Group>
-            <Group CommandName="cmdGroupChromatography" SizeDefinition="ThreeButtons">
+            <Group CommandName="cmdGroupChromatography" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonBPC" />
               <Button CommandName="cmdButtonTIC" />
               <Button CommandName="cmdButtonXIC" />
             </Group>
-            <Group CommandName="cmdPlotOptions">
+            <Group CommandName="cmdPlotOptions" ApplicationModes="0,1">
               <CheckBox CommandName="cmdCheckBoxXICRelative" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupCalculatorTools">
-          <Tab CommandName="cmdTabCalculator">
-            <Group CommandName="cmdGroupCalculator" SizeDefinition="OneButton">
+          <Tab CommandName="cmdTabCalculator" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupCalculator" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonCalculatorExport" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupRscriptTools">
-          <Tab CommandName="cmdTabRscriptTools">
-            <Group CommandName="cmdGroupRscript" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabRscriptTools" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupRscript" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonSaveScript" />
               <Button CommandName="cmdButtonRunScript" />
             </Group>
-            <Group CommandName="cmdTabRStudio" SizeDefinition="OneButton">
+            <Group CommandName="cmdTabRStudio" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonInstallMzkitPackage" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupExactMassSearchTools">
-          <Tab CommandName="cmdTabExactMassSearch">
-            <Group CommandName="cmdGroupExactMassSearch" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabExactMassSearch" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupExactMassSearch" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonExactMassSearchExport" />
               <Button CommandName="cmdButtonLayout2" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupNetworkTools">
-          <Tab CommandName="cmdTabNetwork">
-            <Group CommandName="cmdGroupNetwork" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabNetwork" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupNetwork" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonNetworkExport" />
               <Button CommandName="cmdButtonNetworkRender" />
             </Group>
-            <Group CommandName="cmdGroupNetworkTools">
+            <Group CommandName="cmdGroupNetworkTools" ApplicationModes="0,1">
               <Spinner CommandName="cmdSpinnerSimilarity" />
             </Group>
-            <Group CommandName="cmdGroupNetworkRenderTool" SizeDefinition="OneButton">
+            <Group CommandName="cmdGroupNetworkRenderTool" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonRefreshNetwork" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupFormulaSearchTools">
-          <Tab CommandName="cmdTabFormulaSearch">
-            <Group CommandName="cmdGroupFormulaSearch" SizeDefinition="OneButton">
+          <Tab CommandName="cmdTabFormulaSearch" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupFormulaSearch" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonFormulaSearchExport" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTargetedContex">
-          <Tab CommandName="cmdTabTargeted">
-            <Group CommandName="cmdTabGroupTargeted" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabTargeted" ApplicationModes="0,1">
+            <Group CommandName="cmdTabGroupTargeted" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdImportsLinear" />
               <Button CommandName="cmdSaveLinears" />
             </Group>
-            <Group CommandName="cmdTabGroupTargetedLibrary" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdTabGroupTargetedLibrary" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdMRMLibrary" />
               <Button CommandName="cmdQuantifyIons" />
             </Group>
-            <Group CommandName="cmdTagGroupParameterTool" SizeDefinition="OneButton">
+            <Group CommandName="cmdTagGroupParameterTool" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdAdjustParameters" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdTabGroupMSI">
-          <Tab CommandName="cmdTabMSIPage">
-            <Group CommandName="cmdGroupMSIFile" SizeDefinition="TwoButtons">
+          <Tab CommandName="cmdTabMSIPage" ApplicationModes="0,1">
+            <Group CommandName="cmdGroupMSIFile" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonOpenMSIRaw" />
               <Button CommandName="cmdButtonMsImaging" />
             </Group>
-            <Group CommandName="cmdTabMSIFile" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdTabMSIFile" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonMSIRowScans" />
               <Button CommandName="cmdButtonExportMSIMzpack" />
             </Group>
           </Tab>
           <Tab CommandName="cmdTabMSIAnalysis" ApplicationModes="0,1">
-            <Group CommandName="cmdTabMSISnapshot" SizeDefinition="ThreeButtons-OneBigAndTwoSmall">
+            <Group CommandName="cmdTabMSISnapshot" ApplicationModes="0,1" SizeDefinition="ThreeButtons-OneBigAndTwoSmall">
               <Button CommandName="cmdButtonMSIAverageIon" />
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSITotalIon" />
@@ -1815,15 +1815,15 @@
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdGroupKEGG">
-          <Tab CommandName="cmdTabKEGG">
-            <Group CommandName="cmdTabGroupKEGG" SizeDefinition="OneButton">
+          <Tab CommandName="cmdTabKEGG" ApplicationModes="0,1">
+            <Group CommandName="cmdTabGroupKEGG" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonViewKEGGNetwork" />
             </Group>
           </Tab>
         </TabGroup>
       </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
-        <Tab CommandName="cmdTabMain">
+        <Tab CommandName="cmdTabMain" ApplicationModes="0,1">
           <Tab.ScalingPolicy>
             <ScalingPolicy>
               <ScalingPolicy.IdealSizes>
@@ -1832,22 +1832,22 @@
               <Scale Group="cmdGroupFileActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupFileActions" SizeDefinition="ThreeButtons">
+          <Group CommandName="cmdGroupFileActions" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdButtonNew" />
             <Button CommandName="cmdButtonOpenRaw" />
             <Button CommandName="cmdButtonSave" />
           </Group>
-          <Group CommandName="cmdTabGroupWindowTools" SizeDefinition="FourButtons">
+          <Group CommandName="cmdTabGroupWindowTools" ApplicationModes="0,1" SizeDefinition="FourButtons">
             <Button CommandName="cmdButtonRsharp" />
             <Button CommandName="cmdButtonShowStartPage" />
             <Button CommandName="cmdButtonShowLogWindow" />
             <Button CommandName="cmdButtonResetLayout" />
           </Group>
-          <Group CommandName="cmdTabGroupBioDeep" SizeDefinition="OneButton">
+          <Group CommandName="cmdTabGroupBioDeep" ApplicationModes="0,1" SizeDefinition="OneButton">
             <Button CommandName="cmdLogInBioDeep" />
           </Group>
         </Tab>
-        <Tab CommandName="cmdTabTools">
+        <Tab CommandName="cmdTabTools" ApplicationModes="0,1">
           <Tab.ScalingPolicy>
             <ScalingPolicy>
               <ScalingPolicy.IdealSizes>
@@ -1856,16 +1856,16 @@
               <Scale Group="cmdGroupToolsActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
+          <Group CommandName="cmdGroupToolsActions" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdButtonMzCalculator" />
             <Button CommandName="cmdButtonMzSearch" />
             <Button CommandName="cmdButtonShowSpectrumSearchPage" />
           </Group>
-          <Group CommandName="cmdTabGroupTargeted" SizeDefinition="OneButton">
+          <Group CommandName="cmdTabGroupTargeted" ApplicationModes="0,1" SizeDefinition="OneButton">
             <Button CommandName="cmdTargeted" />
           </Group>
         </Tab>
-        <Tab CommandName="cmdTabAbout">
+        <Tab CommandName="cmdTabAbout" ApplicationModes="0,1">
           <Tab.ScalingPolicy>
             <ScalingPolicy>
               <ScalingPolicy.IdealSizes>
@@ -1874,12 +1874,12 @@
               <Scale Group="cmdGroupAboutActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+          <Group CommandName="cmdGroupAboutActions" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdTutorials" />
             <Button CommandName="cmdButtonBioDeep" />
             <Button CommandName="cmdButtonAbout" />
           </Group>
-          <Group CommandName="cmdTabDemo" SizeDefinition="OneButton">
+          <Group CommandName="cmdTabDemo" ApplicationModes="0,1" SizeDefinition="OneButton">
             <Button CommandName="cmdButtonMsDemo" />
           </Group>
         </Tab>
