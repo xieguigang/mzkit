@@ -192,6 +192,7 @@ Public Class LayerLoader
     Public Property mz As Double()
     Public Property mzErr As Double
     Public Property method As String
+    Public Property densityCut As Double
 
     Public Function GetTolerance() As Tolerance
         Return Tolerance.ParseScript($"{method}:{mzErr}")
@@ -207,7 +208,8 @@ Public Class LayerLoader
             Yield (GetType(LayerLoader), New Dictionary(Of String, NilImplication) From {
                 {NameOf(mz), NilImplication.MemberDefault},
                 {NameOf(mzErr), NilImplication.MemberDefault},
-                {NameOf(method), NilImplication.MemberDefault}
+                {NameOf(method), NilImplication.MemberDefault},
+                {NameOf(densityCut), NilImplication.MemberDefault}
             })
         End Function
     End Class

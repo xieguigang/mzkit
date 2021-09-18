@@ -44,7 +44,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataMining.Clustering
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Quantile
 
 <HideModuleName>
 Public Module Extensions
@@ -69,6 +74,36 @@ Public Module Extensions
                             Function(t)
                                 Return t.Select(Function(i) i.id).ToArray
                             End Function)
+    End Function
+
+    <Extension>
+    Public Iterator Function DensityCut(layer As IEnumerable(Of PixelData), Optional qcut As Double = 0.1) As IEnumerable(Of PixelData)
+        Dim raw As PixelData() = layer.ToArray
+        Dim pxy As ClusterEntity() = raw _
+            .Select(Function(p)
+                        Dim row As New ClusterEntity With {
+                            .uid = $"{p.x},{p.y}",
+                            .entityVector = {p.x, p.y}
+                        }
+
+                        Return row
+                    End Function) _
+            .ToArray
+        Dim densityList = Density.GetDensity(pxy).OrderByDescending(Function(d) d.Value).ToArray
+        Dim q As New FastRankQuantile(densityList.Select(Function(d) d.Value))
+
+        qcut = q.Query(qcut)
+
+        Dim pid As Index(Of String) = (From d As NamedValue(Of Double)
+                                       In densityList
+                                       Where d.Value >= qcut
+                                       Select d.Name).Indexing
+
+        For Each point As PixelData In raw
+            If $"{point.x},{point.y}" Like pid Then
+                Yield point
+            End If
+        Next
     End Function
 End Module
 

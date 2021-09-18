@@ -100,6 +100,7 @@ Public Class MsImageProperty
     <Category("Render")> Public Property logE As Boolean = True
     <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
+    ' <Category("Render")> Public Property densityCut As Double = 0.1
     <Category("Render")> Public Property imageSmooth As SmoothFilters
     <Category("Render")> Public Property scale As InterpolationMode = InterpolationMode.Bilinear
 
@@ -189,7 +190,7 @@ Public Class MsImageProperty
         _max = max
 
         lowerbound = 0
-        upperbound = max
+        upperbound = max * 0.75
     End Sub
 
     Public Function GetTolerance() As Tolerance

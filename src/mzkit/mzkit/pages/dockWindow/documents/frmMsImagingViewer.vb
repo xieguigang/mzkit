@@ -491,11 +491,19 @@ Public Class frmMsImagingViewer
                    Call MyApplication.RegisterPlot(
                        Sub(args)
                            Dim drawer As New PixelRender
+
+                           'If params.densityCut > 0 Then
+                           '    R = R.DensityCut(qcut:=params.densityCut).ToArray
+                           '    G = G.DensityCut(qcut:=params.densityCut).ToArray
+                           '    B = B.DensityCut(qcut:=params.densityCut).ToArray
+                           'End If
+
                            Dim image As Bitmap = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
                                dimSize:=pixelSize.SizeParser,
-                               scale:=params.scale
+                               scale:=params.scale,
+                               cut:={0, 0.75}
                            )
 
                            image = params.Smooth(image)
@@ -590,6 +598,12 @@ Public Class frmMsImagingViewer
                 .y = pm.y
             }, pm)
         ).ToArray
+
+        'If params.densityCut > 0 Then
+        '    pixelFilter = pixelFilter _
+        '        .DensityCut(qcut:=params.densityCut) _
+        '        .ToArray
+        'End If
 
         pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance, cut:={0, 1})
         pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
