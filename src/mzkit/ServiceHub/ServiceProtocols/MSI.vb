@@ -54,11 +54,7 @@ Public Class MSI : Implements ITaskDriver
 
         If filepath.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(filepath)
-                Dim size As Size = cdf.GetMsiDimension
-                Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-                Dim mzpack As ReadRawPack = cdf.CreatePixelReader
-
-                MSI = New Drawer(mzpack)
+                MSI = New Drawer(cdf.CreatePixelReader)
             End Using
         Else
             Dim mzpack As mzPack

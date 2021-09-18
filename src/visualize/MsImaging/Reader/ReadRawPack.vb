@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::12a34bf85503c84a30e3c53405167f99, src\visualize\MsImaging\Reader\ReadRawPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ReadRawPack
-    ' 
-    '         Properties: dimension
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: AllPixels, GetPixel, GetScans, LoadMzArray
-    ' 
-    '         Sub: loadPixelsArray, ReadDimensions, release
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ReadRawPack
+' 
+'         Properties: dimension
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: AllPixels, GetPixel, GetScans, LoadMzArray
+' 
+'         Sub: loadPixelsArray, ReadDimensions, release
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,7 +67,7 @@ Namespace Reader
         ''' <summary>
         ''' [x, y[]]
         ''' </summary>
-        Dim pixels As Dictionary(Of Integer, mzPackPixel())
+        Dim pixels As Dictionary(Of String, mzPackPixel())
 
         Sub New(mzpack As Assembly.mzPack)
             Call mzpack.MS _
@@ -107,17 +107,17 @@ Namespace Reader
         Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
             Me.pixels = pixels _
                 .GroupBy(Function(p) p.X) _
-                .ToDictionary(Function(p) p.Key,
+                .ToDictionary(Function(p) p.Key.ToString,
                               Function(p)
                                   Return p.ToArray
                               End Function)
         End Sub
 
         Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
-            If Not pixels.ContainsKey(x) Then
+            If Not pixels.ContainsKey(x.ToString) Then
                 Return Nothing
             Else
-                Return (From p As mzPackPixel In pixels(x) Where p.Y = y).FirstOrDefault
+                Return (From p As mzPackPixel In pixels(key:=x.ToString) Where p.Y = y).FirstOrDefault
             End If
         End Function
 
