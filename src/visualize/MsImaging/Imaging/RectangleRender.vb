@@ -24,7 +24,7 @@ Namespace Imaging
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                      Optional cut As DoubleRange = Nothing,
+                                                      Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As Bitmap
 
             Dim defaultBackground As Color = background.TranslateColor
@@ -33,11 +33,13 @@ Namespace Imaging
                 dimSize = New Size(1, 1)
             End If
 
-            Dim Rchannel = GetPixelChannelReader(R, cut)
-            Dim Gchannel = GetPixelChannelReader(G, cut)
-            Dim Bchannel = GetPixelChannelReader(B, cut)
+            Dim Rchannel = GetPixelChannelReader(R, cut.r)
+            Dim Gchannel = GetPixelChannelReader(G, cut.g)
+            Dim Bchannel = GetPixelChannelReader(B, cut.b)
+            Dim w As Integer = dimension.Width * dimSize.Width
+            Dim h As Integer = dimension.Height * dimSize.Height
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(filled:=Color.Transparent)
+            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(filled:=Color.Transparent)
                 For x As Integer = 1 To dimension.Width
                     For y As Integer = 1 To dimension.Height
                         Dim bR As Byte = Rchannel(x, y)

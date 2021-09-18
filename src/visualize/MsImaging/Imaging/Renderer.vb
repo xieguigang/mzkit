@@ -5,6 +5,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
 
@@ -40,6 +42,18 @@ Namespace Imaging
     Public MustInherit Class Renderer
 
         ''' <summary>
+        ''' auto check for intensity cut threshold value
+        ''' </summary>
+        ''' <param name="intensity"></param>
+        ''' <returns></returns>
+        Public Shared Function AutoCheckCutMax(intensity As Double(), qcut As Double) As Double
+            Dim maxBin As Double() = intensity.TabulateBin(topBin:=True, bags:=5)
+            Dim per As Double = New FastRankQuantile(maxBin).Query(qcut) / intensity.Max
+
+            Return per
+        End Function
+
+        ''' <summary>
         ''' 每一种离子一种对应的颜色生成多个图层，然后叠在在一块进行可视化
         ''' </summary>
         ''' <param name="pixels"></param>
@@ -73,7 +87,7 @@ Namespace Imaging
                                                          dimension As Size,
                                                          Optional dimSize As Size = Nothing,
                                                          Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                         Optional cut As DoubleRange = Nothing,
+                                                         Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                          Optional background As String = "black") As Bitmap
 
         ''' <summary>

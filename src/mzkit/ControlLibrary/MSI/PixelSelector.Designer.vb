@@ -44,6 +44,7 @@ Partial Class PixelSelector
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 316)
         Me.StatusStrip1.Name = "StatusStrip1"

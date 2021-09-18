@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
@@ -488,19 +489,17 @@ Public Class frmMsImagingViewer
                    Call MyApplication.RegisterPlot(
                        Sub(args)
                            Dim drawer As New PixelRender
+                           Dim qr As Double = Renderer.AutoCheckCutMax(R.Select(Function(p) p.intensity).ToArray, params.maxCut)
+                           Dim qg As Double = Renderer.AutoCheckCutMax(G.Select(Function(p) p.intensity).ToArray, params.maxCut)
+                           Dim qb As Double = Renderer.AutoCheckCutMax(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
 
-                           'If params.densityCut > 0 Then
-                           '    R = R.DensityCut(qcut:=params.densityCut).ToArray
-                           '    G = G.DensityCut(qcut:=params.densityCut).ToArray
-                           '    B = B.DensityCut(qcut:=params.densityCut).ToArray
-                           'End If
                            Dim dotSize As Size = pixelSize.SizeParser
                            Dim image As Bitmap = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
                                dimSize:=dotSize,
                                scale:=params.scale,
-                               cut:={0, params.maxCut},
+                               cut:=(New DoubleRange(0, qr), New DoubleRange(0, qg), New DoubleRange(0, qb)),
                                background:=params.background.ToHtmlColor
                            )
 

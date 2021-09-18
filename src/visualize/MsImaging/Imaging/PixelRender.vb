@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
@@ -29,18 +30,19 @@ Namespace Imaging
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                      Optional cut As DoubleRange = Nothing,
+                                                      Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As Bitmap
 
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
-            Dim Rchannel = GetPixelChannelReader(R, cut)
-            Dim Gchannel = GetPixelChannelReader(G, cut)
-            Dim Bchannel = GetPixelChannelReader(B, cut)
             Dim defaultBackground As Color = background.TranslateColor
 
-            Dim qR As New FastRankQuantile(R.Select(Function(p) p.intensity))
-            Dim qG As New FastRankQuantile(G.Select(Function(p) p.intensity))
-            Dim qB As New FastRankQuantile(B.Select(Function(p) p.intensity))
+            'Dim qR = R.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(R.Select(Function(p) p.intensity))
+            'Dim qG = G.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(G.Select(Function(p) p.intensity))
+            'Dim qB = B.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(B.Select(Function(p) p.intensity))
+
+            Dim Rchannel = GetPixelChannelReader(R, cut.r)
+            Dim Gchannel = GetPixelChannelReader(G, cut.g)
+            Dim Bchannel = GetPixelChannelReader(B, cut.b)
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For x As Integer = 1 To dimension.Width
