@@ -1,11 +1,9 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -26,7 +24,10 @@ Namespace Imaging
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                      Optional cut As DoubleRange = Nothing) As Bitmap
+                                                      Optional cut As DoubleRange = Nothing,
+                                                      Optional background As String = "black") As Bitmap
+
+            Dim defaultBackground As Color = background.TranslateColor
 
             If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
                 dimSize = New Size(1, 1)
@@ -42,8 +43,14 @@ Namespace Imaging
                         Dim bR As Byte = Rchannel(x, y)
                         Dim bG As Byte = Gchannel(x, y)
                         Dim bB As Byte = Bchannel(x, y)
-                        Dim color As Color = Color.FromArgb(bR, bG, bB)
+                        Dim color As Color
                         Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
+
+                        If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
+                            color = defaultBackground
+                        Else
+                            color = Color.FromArgb(bR, bG, bB)
+                        End If
 
                         ' imzXML里面的坐标是从1开始的
                         ' 需要减一转换为.NET中从零开始的位置

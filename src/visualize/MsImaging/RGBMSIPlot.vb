@@ -42,7 +42,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim MSI As Image
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
 
-        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, Nothing)
+        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, Nothing, background:=theme.background)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)

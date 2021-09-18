@@ -100,7 +100,6 @@ Public Class MsImageProperty
     <Category("Render")> Public Property logE As Boolean = True
     <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
     <Category("Render")> Public Property mapLevels As Integer = 30
-    ' <Category("Render")> Public Property densityCut As Double = 0.1
     <Category("Render")> Public Property imageSmooth As SmoothFilters
     <Category("Render")> Public Property scale As InterpolationMode = InterpolationMode.Bilinear
 
@@ -112,6 +111,7 @@ Public Class MsImageProperty
 
     <Category("Intensity")> Public Property upperbound As Double
     <Category("Intensity")> Public Property lowerbound As Double
+    <Category("Intensity")> Public Property maxCut As Double = 0.75
 
     Sub New(render As Drawer)
         scan_x = render.dimension.Width
@@ -190,7 +190,7 @@ Public Class MsImageProperty
         _max = max
 
         lowerbound = 0
-        upperbound = max * 0.75
+        upperbound = max * maxCut
     End Sub
 
     Public Function GetTolerance() As Tolerance

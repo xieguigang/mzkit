@@ -54,18 +54,14 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports ControlLibrary
-Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
@@ -74,6 +70,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports mzkit.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class frmMsImagingViewer
     Implements IFileReference
@@ -479,7 +476,7 @@ Public Class frmMsImagingViewer
 
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
-        Call PixelSelector1.ShowMessage($"Render in RGB Channel Composition Mode: {selectedMz.JoinBy(", ")}")
+        Call PixelSelector1.ShowMessage($"Render in RGB Channel Composition Mode: {selectedMz.Select(Function(d) stdNum.Round(d, 4)).JoinBy(", ")}")
     End Sub
 
     Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), pixelSize$) As Action
@@ -497,13 +494,14 @@ Public Class frmMsImagingViewer
                            '    G = G.DensityCut(qcut:=params.densityCut).ToArray
                            '    B = B.DensityCut(qcut:=params.densityCut).ToArray
                            'End If
-
+                           Dim dotSize As Size = pixelSize.SizeParser
                            Dim image As Bitmap = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
-                               dimSize:=pixelSize.SizeParser,
+                               dimSize:=dotSize,
                                scale:=params.scale,
-                               cut:={0, 0.75}
+                               cut:={0, params.maxCut},
+                               background:=params.background.ToHtmlColor
                            )
 
                            image = params.Smooth(image)
@@ -551,7 +549,7 @@ Public Class frmMsImagingViewer
 
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
-        Call PixelSelector1.ShowMessage($"Render in Layer Pixels Composition Mode: {selectedMz.JoinBy(", ")}")
+        Call PixelSelector1.ShowMessage($"Render in Layer Pixels Composition Mode: {selectedMz.Select(Function(d) stdNum.Round(d, 4)).JoinBy(", ")}")
     End Sub
 
     Dim loadedPixels As PixelData()

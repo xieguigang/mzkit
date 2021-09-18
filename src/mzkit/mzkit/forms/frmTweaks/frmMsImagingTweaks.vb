@@ -211,23 +211,31 @@ UseCheckedList:
     End Sub
 
     Public Sub loadRenderFromCDF(firstFile As String)
+        Dim pixels As PixelData()
+        Dim size As Size
+        Dim tolerance As Tolerance
+
+        If viewer Is Nothing Then
+            viewer = WindowModules.viewer
+        End If
+
         Using cdf As New netCDFReader(firstFile)
-            Dim pixels As PixelData() = cdf.LoadPixelsData.ToArray
-            Dim size As Size = cdf.GetMsiDimension
-
-            viewer.LoadRender(firstFile, firstFile)
-            viewer.renderByPixelsData(pixels, size)
-            Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
-
-            For Each mz As Double In pixels _
-                .GroupBy(Function(p) p.mz, cdf.GetMzTolerance) _
-                .Select(Function(a)
-                            Return Val(a.name)
-                        End Function)
-
-                Call AddIonMzLayer(mz)
-            Next
+            size = cdf.GetMsiDimension
+            pixels = cdf.LoadPixelsData.ToArray
+            tolerance = cdf.GetMzTolerance
         End Using
+
+        viewer.LoadRender(firstFile, firstFile)
+        viewer.renderByPixelsData(pixels, size)
+
+        For Each mz As Double In pixels _
+            .GroupBy(Function(p) p.mz, tolerance) _
+            .Select(Function(a)
+                        Return Val(a.name)
+                    End Function)
+
+            Call AddIonMzLayer(mz)
+        Next
     End Sub
 
     Private Sub PropertyGrid1_DragEnter(sender As Object, e As DragEventArgs) Handles PropertyGrid1.DragEnter

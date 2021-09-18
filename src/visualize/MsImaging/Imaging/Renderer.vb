@@ -73,7 +73,8 @@ Namespace Imaging
                                                          dimension As Size,
                                                          Optional dimSize As Size = Nothing,
                                                          Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                         Optional cut As DoubleRange = Nothing) As Bitmap
+                                                         Optional cut As DoubleRange = Nothing,
+                                                         Optional background As String = "black") As Bitmap
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化

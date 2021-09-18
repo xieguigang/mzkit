@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports mzkit.My
@@ -118,6 +119,9 @@ Module ServiceHub
         Dim output As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetPixel, xy))
 
         If output Is Nothing Then
+            Return Nothing
+        ElseIf HTTP_RFC.RFC_OK <> output.Protocol Then
+            Call MyApplication.host.showStatusMessage("MSI service backend panic.", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
             Return InMemoryVectorPixel.Parse(output.ChunkBuffer)

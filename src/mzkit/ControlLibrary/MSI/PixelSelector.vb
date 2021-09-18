@@ -1293,7 +1293,7 @@ Public Class PixelSelector
         Timer1.Enabled = True
         Timer1.Start()
 
-        polygonDemo()
+        ' polygonDemo()
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
