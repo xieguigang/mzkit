@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
 
@@ -36,6 +37,10 @@ Namespace Imaging
             Dim Gchannel = GetPixelChannelReader(G, cut)
             Dim Bchannel = GetPixelChannelReader(B, cut)
             Dim defaultBackground As Color = background.TranslateColor
+
+            Dim qR As New FastRankQuantile(R.Select(Function(p) p.intensity))
+            Dim qG As New FastRankQuantile(G.Select(Function(p) p.intensity))
+            Dim qB As New FastRankQuantile(B.Select(Function(p) p.intensity))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For x As Integer = 1 To dimension.Width
@@ -115,7 +120,7 @@ Namespace Imaging
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
             Dim defaultColor As Color = defaultFill.TranslateColor
 
-            Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(New Point, raw.Size))
+            Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
