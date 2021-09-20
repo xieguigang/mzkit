@@ -103,10 +103,15 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
         AddHandler RibbonEvents.ribbonItems.ButtonTogglePolygon.ExecuteEvent, Sub() Call TogglePolygonMode()
+        AddHandler RibbonEvents.ribbonItems.ButtonFeatureDetections.ExecuteEvent, Sub() Call MSIFeatureDetections()
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call setupPolygonEditorButtons()
         Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+    End Sub
+
+    Sub MSIFeatureDetections()
+
     End Sub
 
     Sub setupPolygonEditorButtons()
@@ -145,10 +150,12 @@ Public Class frmMsImagingViewer
                 ribbonItems.ButtonAddNewPolygon.BooleanValue = False
                 ribbonItems.ButtonPolygonDeleteVertex.BooleanValue = False
                 ribbonItems.ButtonRemovePolygon.BooleanValue = False
+                ribbonItems.ButtonTogglePolygon.BooleanValue = False
 
                 Call MyApplication.host.Ribbon1.SetModes(0)
                 Call MyApplication.host.showStatusMessage("Exit polygon editor!")
 
+                PixelSelector1.SelectPolygonMode = False
                 PixelSelector1.Cursor = Cursors.Cross
             End Sub
 
