@@ -919,6 +919,10 @@
       <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
       <Name>DataMining</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.vbproj">
+      <Project>{39fe675e-f451-47de-8695-98e093775981}</Project>
+      <Name>DensityQuery</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj">
       <Project>{6ca54af6-cadc-457e-94b9-384f2990f07e}</Project>
       <Name>hierarchical-clustering</Name>
