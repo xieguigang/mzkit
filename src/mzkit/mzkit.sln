@@ -190,6 +190,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipeline", "Pipeline", "{D0
 		Pipeline\MSI_peaktable.R = Pipeline\MSI_peaktable.R
 		Pipeline\MSI_rbind.R = Pipeline\MSI_rbind.R
 		Pipeline\mzpack.R = Pipeline\mzpack.R
+		Pipeline\phenograph.R = Pipeline\phenograph.R
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "machineLearning", "machineLearning", "{9B0FEED6-1FEE-4A27-AD5D-B9CF8F333A9A}"
