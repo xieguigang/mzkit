@@ -113,8 +113,9 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonMSIBasePeakIon As UInteger = 124
             Public Const cmdButtonMSITotalIon As UInteger = 123
             Public Const cmdTabMenuMSIAnalysis As UInteger = 142
-            Public Const cmdButtonTogglePolygon As UInteger = 140
+            Public Const cmdButtonFeatureDetections As UInteger = 152
             Public Const cmdButtonExportSample As UInteger = 135
+            Public Const cmdButtonTogglePolygon As UInteger = 140
             Public Const cmdTabPolygonEditor As UInteger = 144
             Public Const cmdButtonClosePolygonEditor As UInteger = 146
             Public Const cmdButtonPolygonEditorMoveVertex As UInteger = 145
@@ -752,16 +753,22 @@ Namespace RibbonLib.Controls
                 Return _TabMenuMSIAnalysis
             End Get
         End Property
-        Private _ButtonTogglePolygon As RibbonToggleButton
-        Public ReadOnly Property ButtonTogglePolygon As RibbonToggleButton
+        Private _ButtonFeatureDetections As RibbonButton
+        Public ReadOnly Property ButtonFeatureDetections As RibbonButton
             Get
-                Return _ButtonTogglePolygon
+                Return _ButtonFeatureDetections
             End Get
         End Property
         Private _ButtonExportSample As RibbonButton
         Public ReadOnly Property ButtonExportSample As RibbonButton
             Get
                 Return _ButtonExportSample
+            End Get
+        End Property
+        Private _ButtonTogglePolygon As RibbonToggleButton
+        Public ReadOnly Property ButtonTogglePolygon As RibbonToggleButton
+            Get
+                Return _ButtonTogglePolygon
             End Get
         End Property
         Private _TabPolygonEditor As RibbonGroup
@@ -1119,8 +1126,9 @@ Namespace RibbonLib.Controls
             _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
             _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
             _TabMenuMSIAnalysis = New RibbonGroup(_ribbon, Cmd.cmdTabMenuMSIAnalysis)
-            _ButtonTogglePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonTogglePolygon)
+            _ButtonFeatureDetections = New RibbonButton(_ribbon, Cmd.cmdButtonFeatureDetections)
             _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
+            _ButtonTogglePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonTogglePolygon)
             _TabPolygonEditor = New RibbonGroup(_ribbon, Cmd.cmdTabPolygonEditor)
             _ButtonClosePolygonEditor = New RibbonButton(_ribbon, Cmd.cmdButtonClosePolygonEditor)
             _ButtonPolygonEditorMoveVertex = New RibbonToggleButton(_ribbon, Cmd.cmdButtonPolygonEditorMoveVertex)

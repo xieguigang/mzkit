@@ -1674,6 +1674,20 @@
         <Image MinDPI="144">Res/view-dual.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdButtonFeatureDetections" Id="152" LabelTitle="Feature Detections" LabelDescription="Feature Detections" TooltipTitle="Feature Detections" TooltipDescription="Feature Detections">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1874,9 +1888,10 @@
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSITotalIon" />
             </Group>
-            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="TwoButtons">
-              <ToggleButton CommandName="cmdButtonTogglePolygon" />
+            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
+              <Button CommandName="cmdButtonFeatureDetections" />
               <Button CommandName="cmdButtonExportSample" />
+              <ToggleButton CommandName="cmdButtonTogglePolygon" />
             </Group>
             <Group CommandName="cmdTabPolygonEditor" ApplicationModes="1">
               <Button CommandName="cmdButtonClosePolygonEditor" />

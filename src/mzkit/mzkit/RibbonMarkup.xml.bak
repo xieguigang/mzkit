@@ -1674,6 +1674,20 @@
         <Image MinDPI="144">Res/view-dual.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdButtonFeatureDetections" Id="152" LabelTitle="Feature Detections" LabelDescription="Feature Detections" TooltipTitle="Feature Detections" TooltipDescription="Feature Detections">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">Res/edit-find.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1885,6 +1899,7 @@
               <ToggleButton CommandName="cmdButtonAddNewPolygon" />
               <ToggleButton CommandName="cmdButtonPolygonDeleteVertex" />
               <ToggleButton CommandName="cmdButtonRemovePolygon" />
+              <ToggleButton CommandName="cmdButtonShowPolygonVertexInfo" />
             </Group>
           </Tab>
         </TabGroup>
