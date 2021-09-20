@@ -4,10 +4,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
-Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.DataMining.Clustering
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -15,6 +16,7 @@ Imports mzkit.My
 Imports mzkit.Tcp
 Imports ServiceHub
 Imports Task
+Imports stdNum = System.Math
 
 Module ServiceHub
 
@@ -68,7 +70,12 @@ Module ServiceHub
         If data Is Nothing Then
             Return {}
         Else
-            Return PixelData.Parse(data.ChunkBuffer)
+            Dim pixels = PixelData.Parse(data.ChunkBuffer)
+            Dim points = pixels.Select(Function(p) New ClusterEntity With {.uid = $"{p.x},{p.y}", .entityVector = {p.x, p.y}}).ToArray
+            Dim densityList = Density.GetDensity(points, k:=stdNum.Min(points.Length / 10, 150), query:=New KDQuery(points)).ToArray
+
+
+            Return pixels
         End If
     End Function
 
