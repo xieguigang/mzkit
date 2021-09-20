@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
@@ -70,11 +71,62 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.genomics.Assembly.iGEM
+Imports SMRUCC.genomics.Analysis.Microarray.PhenoGraph
 Imports stdNum = System.Math
 
 <Package("task")>
 Module TaskScript
+
+    <ExportAPI("phenograph")>
+    Public Function RunFeatureDetections(mzpackRaw As String, topN As Integer, dims As Integer, mzdiff As String) As NetworkGraph
+        Dim mzpack As mzPack = mzPack.Read(mzpackRaw, ignoreThumbnail:=True)
+        Dim mzErr As Tolerance = Tolerance.ParseScript(mzdiff)
+        Dim intocutoff As New RelativeIntensityCutoff(0.01)
+        Dim pixelsData = mzpack.MS _
+            .AsParallel _
+            .Select(Function(m)
+                        Dim msArray = m.GetMs _
+                            .ToArray _
+                            .Centroid(mzErr, intocutoff) _
+                            .OrderByDescending(Function(d) d.intensity) _
+                            .Take(topN) _
+                            .ToArray
+
+                        Return (m.GetMSIPixel, msArray)
+                    End Function) _
+            .ToArray
+        Dim allMz = pixelsData _
+            .Select(Function(d) d.msArray) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(mzErr, intocutoff) _
+            .OrderByDescending(Function(d) d.intensity) _
+            .Take(dims) _
+            .Select(Function(d) d.mz) _
+            .ToArray
+        Dim mzData As DataSet() = pixelsData _
+            .AsParallel _
+            .Select(Function(d)
+                        Dim vec As New Dictionary(Of String, Double)
+
+                        For Each mz As Double In allMz
+                            vec(mz.ToString("F4")) = d.msArray _
+                                .Where(Function(di) mzErr(di.mz, mz)) _
+                                .Select(Function(di)
+                                            Return di.intensity
+                                        End Function) _
+                                .Sum
+                        Next
+
+                        Return New DataSet With {
+                            .ID = $"{d.GetMSIPixel.X},{d.GetMSIPixel.Y}",
+                            .Properties = vec
+                        }
+                    End Function) _
+            .ToArray
+
+        Return mzData.CreatePhenoGraph(k:=120)
+    End Function
 
     <ExportAPI("MSI_peaktable")>
     Public Sub ExportMSISampleTable(raw As String, regions As Rectangle(), save As Stream)

@@ -216,6 +216,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\PhenoGraph\PhenoGraph\PhenoGraph.vbproj">
+      <Project>{ee99b2f1-6954-4d4d-adc2-e6defea2c733}</Project>
+      <Name>PhenoGraph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\Bio.Annotation.vbproj">
       <Project>{e5ad6940-d449-471d-9539-65b4e457e6e3}</Project>
       <Name>Bio.Annotation</Name>
@@ -271,6 +275,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
+      <Project>{076315EE-B598-40DC-9280-C71CDF9B6A48}</Project>
+      <Name>Network.GraphTheory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
