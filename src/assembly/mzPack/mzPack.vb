@@ -146,7 +146,7 @@ Public Class mzPack
     End Function
 
     Public Shared Function Read(filepath As String, Optional ignoreThumbnail As Boolean = False) As mzPack
-        Using file As FileStream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Return ReadAll(file, ignoreThumbnail)
         End Using
     End Function
