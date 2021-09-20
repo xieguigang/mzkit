@@ -210,7 +210,7 @@ Module RibbonEvents
 
     Public Sub OpenMSIRaw()
         Using file As New OpenFileDialog() With {
-            .Filter = "All Supported Raw(*.raw;*.mzPack;*.imzML)|*.raw;*.mzPack;*.imzML|Thermo Raw(*.raw)|*.raw|Imaging mzML(*.imzML)|*.imzML",
+            .Filter = "All Supported Raw(*.raw;*.mzPack;*.imzML;*.cdf)|*.raw;*.mzPack;*.imzML|Thermo Raw(*.raw)|*.raw|Imaging mzML(*.imzML)|*.imzML|Pixel Matrix(*.cdf)|*.cdf",
             .Title = "Open MS-imaging Raw Data File"
         }
             If file.ShowDialog = DialogResult.OK Then
@@ -220,6 +220,7 @@ Module RibbonEvents
                     Case "raw" : Call WindowModules.viewer.loadRaw(file.FileName)
                     Case "mzml" : Call WindowModules.viewer.loadmzML(file.FileName)
                     Case "imzml", "mzpack" : Call WindowModules.viewer.loadimzML(file.FileName)
+                    Case "cdf" : Call WindowModules.msImageParameters.loadRenderFromCDF(file.FileName)
                 End Select
             End If
         End Using
