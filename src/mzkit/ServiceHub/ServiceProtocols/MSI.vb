@@ -70,6 +70,12 @@ Public Class MSI : Implements ITaskDriver
         Return New DataPipe(info.GetJson(indent:=False, simpleDict:=True))
     End Function
 
+    ''' <summary>
+    ''' get ms data of a given pixel point
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(ServiceProtocol.GetPixel)>
     Public Function GetPixel(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim xy As Integer() = request.GetIntegers
@@ -79,6 +85,12 @@ Public Class MSI : Implements ITaskDriver
         Return New DataPipe(cache.GetBuffer)
     End Function
 
+    ''' <summary>
+    ''' get ms data of a given rectangle region
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(ServiceProtocol.GetPixelRectangle)>
     Public Function GetPixelRectangle(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim rect As Integer() = request.GetIntegers
@@ -121,6 +133,12 @@ Public Class MSI : Implements ITaskDriver
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 
+    ''' <summary>
+    ''' get multiple layers data of a given mz list
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(ServiceProtocol.LoadMSILayers)>
     Public Function GetMSILayers(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim config As LayerLoader = BSON.Load(request.ChunkBuffer).CreateObject(Of LayerLoader)
