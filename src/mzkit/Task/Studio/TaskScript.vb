@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.Microarray.PhenoGraph
@@ -76,6 +77,10 @@ Imports stdNum = System.Math
 
 <Package("task")>
 Module TaskScript
+
+    Sub New()
+        FrameworkInternal.ConfigMemory(MemoryLoads.Heavy)
+    End Sub
 
     <ExportAPI("phenograph")>
     Public Function RunFeatureDetections(mzpackRaw As String, topN As Integer, dims As Integer, mzdiff As String) As NetworkGraph
