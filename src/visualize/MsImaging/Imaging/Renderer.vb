@@ -45,12 +45,18 @@ Namespace Imaging
         ''' auto check for intensity cut threshold value
         ''' </summary>
         ''' <param name="intensity"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' percentage cutoff value
+        ''' </returns>
         Public Shared Function AutoCheckCutMax(intensity As Double(), qcut As Double) As Double
-            Dim maxBin As Double() = intensity.TabulateBin(topBin:=True, bags:=5)
-            Dim per As Double = New FastRankQuantile(maxBin).Query(qcut) / intensity.Max
+            If intensity.IsNullOrEmpty Then
+                Return 0
+            Else
+                Dim maxBin As Double() = intensity.TabulateBin(topBin:=True, bags:=5)
+                Dim per As Double = New FastRankQuantile(maxBin).Query(qcut) / intensity.Max
 
-            Return per
+                Return per
+            End If
         End Function
 
         ''' <summary>

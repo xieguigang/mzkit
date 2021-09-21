@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -16,6 +17,7 @@ Public Class RGBMSIPlot : Inherits Plot
     ReadOnly R, G, B As SingleIonLayer
     ReadOnly dimensionSize As Size
     ReadOnly pixelDrawer As Boolean
+    ReadOnly maxCut As Double = 0.75
 
     Public Sub New(R As SingleIonLayer, G As SingleIonLayer, B As SingleIonLayer, pixelDrawer As Boolean, theme As Theme)
         MyBase.New(theme)
@@ -41,8 +43,14 @@ Public Class RGBMSIPlot : Inherits Plot
         }
         Dim MSI As Image
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim iR = Me.R.MSILayer
+        Dim iG = Me.G?.MSILayer
+        Dim iB = Me.B?.MSILayer
+        Dim qr As DoubleRange = {0, Renderer.AutoCheckCutMax(iR.Select(Function(p) p.intensity).ToArray, maxCut)}
+        Dim qg As DoubleRange = {0, Renderer.AutoCheckCutMax(iG.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
+        Dim qb As DoubleRange = {0, Renderer.AutoCheckCutMax(iB.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
 
-        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, Nothing, background:=theme.background)
+        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, cut:=(qr, qg, qb), background:=theme.background)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
