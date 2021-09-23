@@ -1,5 +1,8 @@
 imports ["mzML.ERS", "assembly"] from "mzkit";
 
+#' Extract UV signals
+#'
+
 [@info "the folder path that contains multiple mzML raw data file."]
 [@type "directory"]
 const rawFolder as string = ?"--mzML" || stop("no data source folder path!");
@@ -22,6 +25,9 @@ const runFile as function(raw) {
 }
 
 for(raw in list.files(rawFolder, pattern = "*.mzML")) {
+	print(`read: ${raw}!`);
+	
+	# exact UV
 	runFile(raw);
 }
 
