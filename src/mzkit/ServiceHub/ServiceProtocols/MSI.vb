@@ -80,9 +80,12 @@ Public Class MSI : Implements ITaskDriver
     Public Function GetPixel(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim xy As Integer() = request.GetIntegers
         Dim pixel As PixelScan = MSI.pixelReader.GetPixel(xy(0), xy(1))
-        Dim cache As New InMemoryVectorPixel(pixel)
 
-        Return New DataPipe(cache.GetBuffer)
+        If pixel Is Nothing Then
+            Return New DataPipe(New Byte() {})
+        Else
+            Return New DataPipe(New InMemoryVectorPixel(pixel).GetBuffer)
+        End If
     End Function
 
     ''' <summary>
