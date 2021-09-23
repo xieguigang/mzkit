@@ -82,6 +82,7 @@ Public Class MSI : Implements ITaskDriver
         Dim pixel As PixelScan = MSI.pixelReader.GetPixel(xy(0), xy(1))
 
         If pixel Is Nothing Then
+            Call RunSlavePipeline.SendMessage($"missing pixel [{xy(0)},{xy(1)}]!")
             Return New DataPipe(New Byte() {})
         Else
             Return New DataPipe(New InMemoryVectorPixel(pixel).GetBuffer)
