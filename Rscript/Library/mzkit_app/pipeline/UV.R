@@ -1,11 +1,10 @@
 imports ["mzML.ERS", "assembly"] from "mzkit";
 
-setwd(!script$dir);
-
-let rawFolder as string = ?"--mzML";
-let runFile as function(raw) {
-	let output as string = `${dirname(raw)}/${basename(raw)}.cdf`;
-	let IC as string     = get_instrument(raw);
+[@info "the folder path that contains multiple mzML raw data file."]
+[@type "directory"]
+const rawFolder as string = ?"--mzML" || stop("no data source folder path!");
+const runFile as function(raw) {	
+	const IC as string = get_instrument(raw);
 
 	if (is.null(IC)) {
 		warning(`No electromagnetic radiation spectrum detector device data was found in '${raw}'!`);
@@ -16,9 +15,8 @@ let runFile as function(raw) {
 		print(raw);
 
 		raw
-		:> extract_UVsignals(instrumentId = IC)
-		# :> as.UVtime_signals
-		:> write.UVsignals(file = output)
+		|> extract_UVsignals(instrumentId = IC)
+		|> write.UVsignals(file = `${dirname(raw)}/${basename(raw)}.cdf`)
 		;
 	}
 }
