@@ -47,6 +47,7 @@
 #End Region
 
 Imports ControlLibrary.PolygonEditor
+Imports Microsoft.VisualBasic.Imaging.Filters
 Imports stdNum = System.Math
 
 Public Class PixelSelector
@@ -69,13 +70,7 @@ Public Class PixelSelector
     Private ismouseDown As Boolean = False
     Private algorithmIndex As Integer = 0
 
-    Dim WithEvents trackStrip As New ToolStripTraceBarItem
-
-    Public ReadOnly Property Gauss As TrackBar
-        Get
-            Return trackStrip.Control
-        End Get
-    End Property
+    Dim WithEvents gauss As New ToolStripTraceBarItem
 
     Public Sub New()
 
@@ -84,7 +79,7 @@ Public Class PixelSelector
 
         ' Add any initialization after the InitializeComponent() call.
         picCanvas.BackgroundImageLayout = ImageLayout.Stretch
-        StatusStrip1.Items.Add(trackStrip)
+        StatusStrip1.Items.Add(gauss)
     End Sub
 
     Sub polygonDemo()
@@ -1141,7 +1136,8 @@ Public Class PixelSelector
 
 #End Region
 
-    Dim orginal_image As Size
+    Dim orginal_imageSize As Size
+    Dim orginal_image As Image
     Dim dimension As Size
 
     ''' <summary>
@@ -1156,19 +1152,22 @@ Public Class PixelSelector
         Set(value As Image)
             picCanvas.BackgroundImage = value
             dimension = pixel_size
+            orginal_image = value
 
             If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
                 Throw New InvalidExpressionException("dimension size can not be ZERO!")
             End If
 
             If value Is Nothing Then
-                orginal_image = Nothing
+                orginal_imageSize = Nothing
             Else
-                orginal_image = value.Size
-                orginal_image = New Size With {
-                    .Width = orginal_image.Width / dimension.Width,
-                    .Height = orginal_image.Height / dimension.Height
+                orginal_imageSize = value.Size
+                orginal_imageSize = New Size With {
+                    .Width = orginal_imageSize.Width / dimension.Width,
+                    .Height = orginal_imageSize.Height / dimension.Height
                 }
+
+                Call gauss.SetValueRange(0, 10)
             End If
         End Set
     End Property
@@ -1252,8 +1251,8 @@ Public Class PixelSelector
     End Sub
 
     Private Sub getPoint(e As MouseEventArgs, ByRef xpoint As Integer, ByRef ypoint As Integer)
-        Dim Pic_width = orginal_image.Width / picCanvas.Width
-        Dim Pic_height = orginal_image.Height / picCanvas.Height
+        Dim Pic_width = orginal_imageSize.Width / picCanvas.Width
+        Dim Pic_height = orginal_imageSize.Height / picCanvas.Height
 
         ' 得到图片上的坐标点
         xpoint = e.X * Pic_width
@@ -1308,5 +1307,19 @@ Public Class PixelSelector
         If HasRegionSelection Then
             ' DrawSelectionBox(endPoint, False)
         End If
+    End Sub
+
+    Private Sub gauss_AdjustValue(value As Integer) Handles gauss.AdjustValue
+        If orginal_image Is Nothing Then
+            Return
+        End If
+
+        Dim sourceImage As New Bitmap(Me.orginal_image)
+
+        For i As Integer = 0 To value
+            sourceImage = GaussBlur.GaussBlur(sourceImage)
+        Next
+
+        picCanvas.BackgroundImage = sourceImage
     End Sub
 End Class
