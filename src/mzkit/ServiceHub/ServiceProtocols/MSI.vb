@@ -35,9 +35,11 @@ Public Class MSI : Implements ITaskDriver
         End Get
     End Property
 
-    Sub New()
-        Me.socket = New TcpServicesSocket(GetFirstAvailablePort())
-        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+    Sub New(Optional debugPort As Integer? = Nothing)
+        Dim port As Integer = If(debugPort Is Nothing, GetFirstAvailablePort(), debugPort)
+
+        Me.socket = New TcpServicesSocket(port, debug:=Not debugPort Is Nothing)
+        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me, debug:=Not debugPort Is Nothing).HandleRequest
 
         Call RunSlavePipeline.SendMessage($"socket={TcpPort}")
     End Sub

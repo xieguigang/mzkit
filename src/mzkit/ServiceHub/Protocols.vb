@@ -1,13 +1,14 @@
 ﻿Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Linq
 Imports Task
 
 Public Module Protocols
 
-    Public Function StartServer(Rscript As String, ByRef service As Integer) As RunSlavePipeline
-        Dim cli As String = Rscript
-        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, $"""{cli}""")
+    Public Function StartServer(Rscript As String, ByRef service As Integer, debugPort As Integer?) As RunSlavePipeline
+        Dim cli As String = If(debugPort Is Nothing, Rscript.CLIPath, $"{Rscript.CLIPath} --debug={debugPort}")
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
         Dim tcpPort As Integer = -1
 
         Call pipeline.CommandLine.__DEBUG_ECHO
