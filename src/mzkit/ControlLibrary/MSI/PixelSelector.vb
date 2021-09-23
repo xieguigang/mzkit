@@ -1315,9 +1315,10 @@ Public Class PixelSelector
         End If
 
         Dim sourceImage As New Bitmap(Me.orginal_image)
+        Dim filter As New GaussianSmooth
 
         For i As Integer = 0 To value
-            sourceImage = GaussBlur.GaussBlur(sourceImage)
+            sourceImage = filter.Smooth(sourceImage)
         Next
 
         picCanvas.BackgroundImage = sourceImage
