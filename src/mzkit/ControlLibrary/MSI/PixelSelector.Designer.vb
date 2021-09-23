@@ -38,7 +38,7 @@ Partial Class PixelSelector
         Me.picCanvas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.picCanvas.Location = New System.Drawing.Point(0, 0)
         Me.picCanvas.Name = "picCanvas"
-        Me.picCanvas.Size = New System.Drawing.Size(595, 316)
+        Me.picCanvas.Size = New System.Drawing.Size(595, 344)
         Me.picCanvas.TabIndex = 0
         Me.picCanvas.TabStop = False
         '
@@ -46,7 +46,7 @@ Partial Class PixelSelector
         '
         Me.StatusStrip1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 316)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 344)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(595, 22)
         Me.StatusStrip1.TabIndex = 1
@@ -55,13 +55,13 @@ Partial Class PixelSelector
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 17)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(120, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(61, 17)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(57, 17)
         Me.ToolStripStatusLabel2.Text = "[n/a, n/a]"
         '
         'Timer1
@@ -70,13 +70,13 @@ Partial Class PixelSelector
         '
         'PixelSelector
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.picCanvas)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Cursor = System.Windows.Forms.Cursors.Cross
         Me.Name = "PixelSelector"
-        Me.Size = New System.Drawing.Size(595, 338)
+        Me.Size = New System.Drawing.Size(595, 366)
         CType(Me.picCanvas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()

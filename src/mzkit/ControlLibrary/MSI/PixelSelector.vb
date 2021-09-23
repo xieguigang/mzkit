@@ -69,6 +69,13 @@ Public Class PixelSelector
     Private ismouseDown As Boolean = False
     Private algorithmIndex As Integer = 0
 
+    Dim WithEvents trackStrip As New ToolStripTraceBarItem
+
+    Public ReadOnly Property Gauss As TrackBar
+        Get
+            Return trackStrip.Control
+        End Get
+    End Property
 
     Public Sub New()
 
@@ -77,6 +84,7 @@ Public Class PixelSelector
 
         ' Add any initialization after the InitializeComponent() call.
         picCanvas.BackgroundImageLayout = ImageLayout.Stretch
+        StatusStrip1.Items.Add(trackStrip)
     End Sub
 
     Sub polygonDemo()
