@@ -707,16 +707,18 @@ Public Class frmMsImagingViewer
 
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
         Dim pos As Point = PixelSelector1.Pixel
+        Dim pixel As PixelScan
 
         If Not ServiceHub.MSIEngineRunning Then
             Return
         Else
+            pixel = ServiceHub.GetPixel(pos.X, pos.Y)
             pinedPixel = New LibraryMatrix With {
-                .ms2 = ServiceHub.GetPixel(pos.X, pos.Y).GetMs,
+                .ms2 = pixel?.GetMs,
                 .name = $"Select Pixel: [{pos.X},{pos.Y}]"
             }
 
-            If pinedPixel.ms2.Length = 0 Then
+            If pixel Is Nothing OrElse pinedPixel.ms2.IsNullOrEmpty Then
                 pinedPixel = Nothing
                 MyApplication.host.showStatusMessage("There is no MS data in current pixel?", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Else

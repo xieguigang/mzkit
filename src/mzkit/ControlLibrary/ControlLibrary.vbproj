@@ -146,6 +146,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ToolStripTraceBarItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Message\MaskForm.Designer.vb">
       <DependentUpon>MaskForm.vb</DependentUpon>
     </Compile>

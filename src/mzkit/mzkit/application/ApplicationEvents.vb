@@ -340,6 +340,8 @@ Type 'q()' to quit R.
             If Not (cli Is Nothing OrElse cli.IsNullOrEmpty) Then
                 If cli.Name.FileExists Then
                     Call mzkit.CLI.openRawFile(cli.Name, cli)
+                ElseIf cli.Name.TextEquals("--debug") Then
+                    ServiceHub.debugPort = cli.GetInt32("--port")
                 End If
             End If
         End Sub

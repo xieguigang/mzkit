@@ -1,7 +1,5 @@
-﻿Imports System.Drawing
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
-Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -37,9 +35,11 @@ Public Class MSI : Implements ITaskDriver
         End Get
     End Property
 
-    Sub New()
-        Me.socket = New TcpServicesSocket(GetFirstAvailablePort())
-        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+    Sub New(Optional debugPort As Integer? = Nothing)
+        Dim port As Integer = If(debugPort Is Nothing, GetFirstAvailablePort(), debugPort)
+
+        Me.socket = New TcpServicesSocket(port, debug:=Not debugPort Is Nothing)
+        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me, debug:=Not debugPort Is Nothing).HandleRequest
 
         Call RunSlavePipeline.SendMessage($"socket={TcpPort}")
     End Sub
@@ -80,9 +80,13 @@ Public Class MSI : Implements ITaskDriver
     Public Function GetPixel(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim xy As Integer() = request.GetIntegers
         Dim pixel As PixelScan = MSI.pixelReader.GetPixel(xy(0), xy(1))
-        Dim cache As New InMemoryVectorPixel(pixel)
 
-        Return New DataPipe(cache.GetBuffer)
+        If pixel Is Nothing Then
+            Call RunSlavePipeline.SendMessage($"missing pixel [{xy(0)},{xy(1)}]!")
+            Return New DataPipe(New Byte() {})
+        Else
+            Return New DataPipe(New InMemoryVectorPixel(pixel).GetBuffer)
+        End If
     End Function
 
     ''' <summary>
@@ -201,31 +205,3 @@ Public Class MSI : Implements ITaskDriver
     End Function
 End Class
 
-Public Class LayerLoader
-
-    Public Property mz As Double()
-    Public Property mzErr As Double
-    Public Property method As String
-    Public Property densityCut As Double
-
-    Public Function GetTolerance() As Tolerance
-        Return Tolerance.ParseScript($"{method}:{mzErr}")
-    End Function
-
-    Shared Sub New()
-        Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Schema)
-    End Sub
-
-    Private Class Schema : Inherits SchemaProvider(Of LayerLoader)
-
-        Protected Overrides Iterator Function GetObjectSchema() As IEnumerable(Of (obj As Type, schema As Dictionary(Of String, NilImplication)))
-            Yield (GetType(LayerLoader), New Dictionary(Of String, NilImplication) From {
-                {NameOf(mz), NilImplication.MemberDefault},
-                {NameOf(mzErr), NilImplication.MemberDefault},
-                {NameOf(method), NilImplication.MemberDefault},
-                {NameOf(densityCut), NilImplication.MemberDefault}
-            })
-        End Function
-    End Class
-
-End Class
