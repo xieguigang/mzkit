@@ -53,6 +53,22 @@ Public Structure KEGGQuery
     <XmlAttribute> Public Property precursorType As String
     <XmlText> Public Property kegg_id As String
 
+    ''' <summary>
+    ''' used in <see cref="MSJointConnection"/>
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute> Public Property score As Double
+
+    Public Function Clone() As KEGGQuery
+        Return New KEGGQuery With {
+            .kegg_id = kegg_id,
+            .mz = mz,
+            .ppm = ppm,
+            .precursorType = precursorType,
+            .score = score
+        }
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"{kegg_id} {precursorType}, m/z {mz.ToString("F4")}"
     End Function
