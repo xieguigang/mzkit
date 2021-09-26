@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 
 Public Class MSJointConnection
@@ -86,16 +87,49 @@ Public Class MSJointConnection
         Return unique
     End Function
 
+    Public Shared Function ImportsBackground(maps As IEnumerable(Of Pathway)) As Background
+        Return New Background With {
+            .clusters = toClusters(maps).ToArray,
+            .size = .clusters _
+                .Select(Function(c) c.members) _
+                .IteratesALL _
+                .Select(Function(c) c.accessionID) _
+                .Distinct _
+                .Count
+        }
+    End Function
+
     Public Shared Function ImportsBackground(maps As IEnumerable(Of Map)) As Background
         Return New Background With {
-           .clusters = toClusters(maps).ToArray,
-           .size = .clusters _
-              .Select(Function(c) c.members) _
-              .IteratesALL _
-              .Select(Function(c) c.accessionID) _
-              .Distinct _
-              .Count
+            .clusters = toClusters(maps).ToArray,
+            .size = .clusters _
+                .Select(Function(c) c.members) _
+                .IteratesALL _
+                .Select(Function(c) c.accessionID) _
+                .Distinct _
+                .Count
         }
+    End Function
+
+    Private Shared Iterator Function toClusters(maps As IEnumerable(Of Pathway)) As IEnumerable(Of Cluster)
+        For Each map As Pathway In maps
+            Yield New Cluster With {
+                .description = map.description,
+                .ID = map.EntryId,
+                .names = map.name,
+                .members = map.compound _
+                    .Select(Function(c)
+                                Return New BackgroundGene With {
+                                    .accessionID = c.name,
+                                    .name = c.text,
+                                    .[alias] = {c.name},
+                                    .locus_tag = c,
+                                    .term_id = {c.name}
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        Next
     End Function
 
     Private Shared Iterator Function toClusters(maps As IEnumerable(Of Map)) As IEnumerable(Of Cluster)
