@@ -30,7 +30,7 @@ Public Class MSJointConnection
                               Return cid.ToArray
                           End Function)
         Dim enrichment As EnrichmentResult() = jointSet _
-            .Enrichment(allId.Keys, showProgress:=False) _
+            .Enrichment(allIdList.Keys, showProgress:=False) _
             .OrderBy(Function(d) d.pvalue) _
             .ToArray
 
