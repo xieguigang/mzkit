@@ -8,6 +8,11 @@ Public Class MSJointConnection
     ReadOnly kegg As KEGGHandler
     ReadOnly jointSet As Background
 
+    Sub New(kegg As KEGGHandler, peakSet As Background)
+        Me.kegg = kegg
+        Me.jointSet = peakSet
+    End Sub
+
     ''' <summary>
     ''' MS1 peak list annotation
     ''' </summary>
