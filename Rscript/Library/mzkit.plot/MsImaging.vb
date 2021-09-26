@@ -341,10 +341,12 @@ Module MsImaging
     <ExportAPI("rgb")>
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
+                        Optional background As String = "black",
                         <RRawVectorArgument>
                         Optional pixelSize As Object = "5,5",
                         Optional tolerance As Object = "da:0.1",
                         Optional pixelDrawer As Boolean = True,
+                        Optional maxCut As Double = 0.75,
                         Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -358,8 +360,11 @@ Module MsImaging
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim qr As DoubleRange = {0, Renderer.AutoCheckCutMax(pr.Select(Function(p) p.intensity).ToArray, maxCut)}
+        Dim qg As DoubleRange = {0, Renderer.AutoCheckCutMax(pg.Select(Function(p) p.intensity).ToArray, maxCut)}
+        Dim qb As DoubleRange = {0, Renderer.AutoCheckCutMax(pb.Select(Function(p) p.intensity).ToArray, maxCut)}
 
-        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, psize)
+        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, psize, cut:=(qr, qg, qb), background:=background)
     End Function
 
     ''' <summary>

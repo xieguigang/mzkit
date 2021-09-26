@@ -1,3 +1,10 @@
 imports "app" from "ServiceHub";
 
-app::run(service = "MS-Imaging");
+#' Run MS-imaging ansy backend
+#'
+
+[@info "the tcp port for run debugging in VisualStudio."]
+[@type "integer"]
+const debugPort as string = ?"--debug" || NULL;
+
+app::run(service = "MS-Imaging", debugPort = debugPort);

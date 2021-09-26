@@ -120,6 +120,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceProtocols\Payloads\LayerLoader.vb" />
     <Compile Include="ServiceProtocols\MSI.vb" />
     <Compile Include="ServiceProtocols\ServiceProtocol.vb" />
     <Compile Include="Protocols.vb" />
