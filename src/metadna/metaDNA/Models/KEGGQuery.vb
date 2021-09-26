@@ -70,7 +70,13 @@ Public Structure KEGGQuery
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"{kegg_id} {precursorType}, m/z {mz.ToString("F4")}"
+        Dim prefix As String = $"{kegg_id} {precursorType}, m/z {mz.ToString("F4")}"
+
+        If score > 0 Then
+            Return $"{prefix}; score={score}"
+        Else
+            Return prefix
+        End If
     End Function
 
 End Structure
