@@ -9,19 +9,19 @@ Public Class MSJointConnection
     ReadOnly kegg As KEGGHandler
     ReadOnly jointSet As Background
 
+    Public ReadOnly Property allClusters As String()
+        Get
+            Return jointSet.clusters.Select(Function(c) c.ID).ToArray
+        End Get
+    End Property
+
     Sub New(kegg As KEGGHandler, peakSet As Background)
         Me.kegg = kegg
         Me.jointSet = peakSet
     End Sub
 
-    ''' <summary>
-    ''' MS1 peak list annotation
-    ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="topN"></param>
-    ''' <returns></returns>
-    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As KEGGQuery()
-        Dim allId As Dictionary(Of String, KEGGQuery()) = mz _
+    Public Function GetEnrichment(mz As Double(), Optional ByRef allId As Dictionary(Of String, KEGGQuery()) = Nothing) As EnrichmentResult()
+        Dim allIdList As Dictionary(Of String, KEGGQuery()) = mz _
             .Select(AddressOf kegg.QueryByMz) _
             .IteratesALL _
             .GroupBy(Function(cid) cid.kegg_id) _
@@ -32,8 +32,22 @@ Public Class MSJointConnection
         Dim enrichment As EnrichmentResult() = jointSet _
             .Enrichment(allId.Keys, showProgress:=False) _
             .OrderBy(Function(d) d.pvalue) _
-            .Take(topN) _
             .ToArray
+
+        allId = allIdList
+
+        Return enrichment
+    End Function
+
+    ''' <summary>
+    ''' MS1 peak list annotation
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="topN"></param>
+    ''' <returns></returns>
+    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As KEGGQuery()
+        Dim allId As Dictionary(Of String, KEGGQuery()) = Nothing
+        Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
         Dim mzSet = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
