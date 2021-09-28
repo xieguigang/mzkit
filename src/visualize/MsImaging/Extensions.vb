@@ -42,12 +42,13 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.Clustering
-Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 
@@ -79,17 +80,12 @@ Public Module Extensions
     <Extension>
     Public Iterator Function DensityCut(layer As IEnumerable(Of PixelData), Optional qcut As Double = 0.1) As IEnumerable(Of PixelData)
         Dim raw As PixelData() = layer.ToArray
-        Dim pxy As ClusterEntity() = raw _
-            .Select(Function(p)
-                        Dim row As New ClusterEntity With {
-                            .uid = $"{p.x},{p.y}",
-                            .entityVector = {p.x, p.y}
-                        }
-
-                        Return row
-                    End Function) _
+        Dim densityList = raw _
+            .Density(Function(p) $"{p.x},{p.y}", Function(p) p.x, Function(p) p.y, New Size(5, 5)) _
+            .OrderByDescending(Function(d)
+                                   Return d.Value
+                               End Function) _
             .ToArray
-        Dim densityList = Density.GetDensity(pxy).OrderByDescending(Function(d) d.Value).ToArray
         Dim q As New FastRankQuantile(densityList.Select(Function(d) d.Value))
 
         qcut = q.Query(qcut)
