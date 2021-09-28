@@ -64,6 +64,17 @@ Namespace DataReader
             Return scan.getName
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' ## 20210928 when the option compressionType="none"
+        ''' the value of compressedLen="0", so can not determine
+        ''' that the scan is empty as the compression type
+        ''' may be is ``none``.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function IsEmpty(scan As scan) As Boolean
             Return scan.peaks Is Nothing OrElse scan.peaks.value.StringEmpty
