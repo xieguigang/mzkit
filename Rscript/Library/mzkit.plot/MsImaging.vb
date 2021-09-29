@@ -608,31 +608,37 @@ Module MsImaging
             .OrderByDescending(Function(d) d.Count) _
             .ToArray
         Dim size As New Size(gridSize, gridSize)
-        Dim ions As New List(Of Double)
         Dim totalArea = reader.AllPixels.Count
+        Dim ions As Double() = allMsIons _
+            .Select(Function(d) Val(d.name)) _
+            .AsParallel _
+            .Where(Function(mz)
+                       Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
 
-        For Each mz As Double In allMsIons.Select(Function(d) Val(d.name))
-            Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
+                       If layer.Length / totalArea >= 0.65 Then
+                           Return True
+                       ElseIf layer.Length / totalArea < 0.25 Then
+                           Return False
+                       Else
+                           Dim graphDensity = layer _
+                               .Density(Function(p) $"{p.x},{p.y}",
+                                        Function(p) p.x,
+                                        Function(p) p.y,
+                                        size,
+                                        parallel:=False
+                               ) _
+                               .ToArray
+                           Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
 
-            If layer.Length / totalArea >= 0.65 Then
-                Call ions.Add(mz)
-            Else
-                Dim graphDensity = layer _
-                    .Density(Function(p) $"{p.x},{p.y}",
-                             Function(p) p.x,
-                             Function(p) p.y,
-                             size,
-                             parallel:=True
-                    ) _
-                    .ToArray
-                Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
-
-                If mean > 0.65 AndAlso (layer.Length / totalArea) >= 0.25 Then
-                    Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
-                    Call ions.Add(mz)
-                End If
-            End If
-        Next
+                           If mean > 0.65 Then
+                               Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
+                               Return True
+                           Else
+                               Return False
+                           End If
+                       End If
+                   End Function) _
+            .ToArray
 
         Return ions
     End Function
