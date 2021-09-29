@@ -526,8 +526,8 @@ Module MsImaging
                                    Optional env As Environment = Nothing) As Object
 
         Dim regionPts As Integer()() = background _
-            .Where(Function(str) Not str.StringEmpty) _
             .SafeQuery _
+            .Where(Function(str) Not str.StringEmpty) _
             .Select(Function(str)
                         Return str _
                             .Split(","c) _
