@@ -225,6 +225,11 @@ Module MSI
         Return pixels
     End Function
 
+    ''' <summary>
+    ''' Fetch MSI summary data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <ExportAPI("MSI_summary")>
     Public Function MSI_summary(raw As mzPack) As MSISummary
         Return New MSISummary With {

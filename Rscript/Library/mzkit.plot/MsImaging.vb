@@ -496,6 +496,14 @@ Module MsImaging
         Return deltas.Average
     End Function
 
+    <ExportAPI("MSI_summary.scaleMax")>
+    Public Function AutoScaleMax(data As MSISummary, intensity As IntensitySummary, Optional qcut As Double = 0.75) As Double
+        Dim into As Double() = data.GetLayer(intensity).Select(Function(p) p.totalIon).ToArray
+        Dim scale As Double = Renderer.AutoCheckCutMax(into, qcut)
+
+        Return scale
+    End Function
+
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
