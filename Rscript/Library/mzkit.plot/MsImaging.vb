@@ -523,6 +523,8 @@ Module MsImaging
                                    Optional logE As Boolean = True,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
+                                   <RRawVectorArgument>
+                                   Optional dims As Object = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
         Dim regionPts As Integer()() = background _
@@ -565,7 +567,7 @@ Module MsImaging
 
         Return engine.RenderPixels(
             pixels:=pixels,
-            dimension:=data.size,
+            dimension:=InteropArgumentHelper.getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}").SizeParser,
             dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
             logE:=logE,
