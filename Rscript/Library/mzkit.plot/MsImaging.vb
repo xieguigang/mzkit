@@ -613,7 +613,14 @@ Module MsImaging
 
         For Each mz As Double In allMsIons.Select(Function(d) Val(d.name))
             Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
-            Dim graphDensity = layer.Density(Function(p) $"{p.x},{p.y}", Function(p) p.x, Function(p) p.y, size).ToArray
+            Dim graphDensity = layer _
+                .Density(Function(p) $"{p.x},{p.y}",
+                         Function(p) p.x,
+                         Function(p) p.y,
+                         size,
+                         parallel:=True
+                ) _
+                .ToArray
             Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
 
             If mean > 0.65 AndAlso (layer.Length / totalArea) >= 0.25 Then
