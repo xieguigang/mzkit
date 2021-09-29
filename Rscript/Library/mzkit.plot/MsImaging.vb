@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -615,8 +616,9 @@ Module MsImaging
             Dim graphDensity = layer.Density(Function(p) $"{p.x},{p.y}", Function(p) p.x, Function(p) p.y, size).ToArray
             Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
 
-            If mean > 0.65 AndAlso (layer.Length / totalArea) Then
-                ions.Add(mean)
+            If mean > 0.65 AndAlso (layer.Length / totalArea) >= 0.25 Then
+                Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
+                Call ions.Add(mean)
             End If
         Next
 
