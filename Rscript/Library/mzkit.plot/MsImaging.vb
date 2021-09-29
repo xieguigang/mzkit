@@ -590,7 +590,7 @@ Module MsImaging
 
     <ExportAPI("MeasureMSIions")>
     Public Function getMSIIons(raw As mzPack,
-                               Optional gridSize As Integer = 10,
+                               Optional gridSize As Integer = 5,
                                Optional mzdiff As Object = "da:0.001",
                                Optional env As Environment = Nothing) As Object
 
