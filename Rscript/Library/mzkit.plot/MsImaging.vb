@@ -609,23 +609,28 @@ Module MsImaging
             .ToArray
         Dim size As New Size(gridSize, gridSize)
         Dim ions As New List(Of Double)
-        Dim totalArea = reader.dimension.Width * reader.dimension.Height
+        Dim totalArea = reader.AllPixels.Count
 
         For Each mz As Double In allMsIons.Select(Function(d) Val(d.name))
             Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
-            Dim graphDensity = layer _
-                .Density(Function(p) $"{p.x},{p.y}",
-                         Function(p) p.x,
-                         Function(p) p.y,
-                         size,
-                         parallel:=True
-                ) _
-                .ToArray
-            Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
 
-            If mean > 0.65 AndAlso (layer.Length / totalArea) >= 0.25 Then
-                Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
-                Call ions.Add(mean)
+            If layer.Length / totalArea >= 0.65 Then
+                Call ions.Add(mz)
+            Else
+                Dim graphDensity = layer _
+                    .Density(Function(p) $"{p.x},{p.y}",
+                             Function(p) p.x,
+                             Function(p) p.y,
+                             size,
+                             parallel:=True
+                    ) _
+                    .ToArray
+                Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
+
+                If mean > 0.65 AndAlso (layer.Length / totalArea) >= 0.25 Then
+                    Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
+                    Call ions.Add(mz)
+                End If
             End If
         Next
 
