@@ -55,10 +55,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -582,6 +585,42 @@ Module MsImaging
             defaultFill:=defaultFill,
             cutoff:=cutoffRange.TryCast(Of DoubleRange)
         )
+    End Function
+
+    <ExportAPI("MeasureMSIions")>
+    Public Function getMSIIons(raw As mzPack,
+                               Optional gridSize As Integer = 10,
+                               Optional mzdiff As Object = "da:0.001",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(mzdiff, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim reader As New ReadRawPack(raw)
+        Dim allMsIons = raw.MS _
+            .Select(Function(d) d.GetMs) _
+            .IteratesALL _
+            .GroupBy(Function(i) i.mz, mzErr.TryCast(Of Tolerance)) _
+            .OrderByDescending(Function(d) d.Count) _
+            .ToArray
+        Dim size As New Size(gridSize, gridSize)
+        Dim ions As New List(Of Double)
+        Dim totalArea = reader.dimension.Width * reader.dimension.Height
+
+        For Each mz As Double In allMsIons.Select(Function(d) Val(d.name))
+            Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
+            Dim graphDensity = layer.Density(Function(p) $"{p.x},{p.y}", Function(p) p.x, Function(p) p.y, size).ToArray
+            Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
+
+            If mean > 0.65 AndAlso (layer.Length / totalArea) Then
+                ions.Add(mean)
+            End If
+        Next
+
+        Return ions
     End Function
 
     ''' <summary>
