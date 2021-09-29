@@ -118,6 +118,8 @@ Namespace Ms1
         Public MustOverride Function MassError(mz1#, mz2#) As Double
         Public MustOverride Function MassErrorDescription(mz1#, mz2#) As String
 
+        Protected MustOverride Function Scale(scaler As Double) As Tolerance
+
         ''' <summary>
         ''' 判断目标分子质量误差是否符合当前的误差要求
         ''' </summary>
@@ -215,5 +217,13 @@ Namespace Ms1
                 Return $"ppm:{err.DeltaTolerance}"
             End If
         End Function
+
+        Public Shared Operator *(mzdiff As Tolerance, scale As Double) As Tolerance
+            Return mzdiff.Scale(scale)
+        End Operator
+
+        Public Shared Operator /(mzdiff As Tolerance, scale As Double) As Tolerance
+            Return mzdiff.Scale(1 / scale)
+        End Operator
     End Class
 End Namespace

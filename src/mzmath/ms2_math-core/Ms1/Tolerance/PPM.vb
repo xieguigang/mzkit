@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::3c074ec69b1b3ffef8c8168ec7ec0343, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PPMmethod
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: AsScore, Equals, MassError, MassErrorDescription, PPM
-    '                   ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PPMmethod
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: AsScore, Equals, MassError, MassErrorDescription, PPM
+'                   ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,17 +83,17 @@ Namespace Ms1
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
-            Return ppm(mz1, mz2) <= DeltaTolerance
+            Return PPM(mz1, mz2) <= DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (ppm(mz1, mz2) / DeltaTolerance)
+            Return 1 - (PPM(mz1, mz2) / DeltaTolerance)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
-            Return ppm(mz1, mz2)
+            Return PPM(mz1, mz2)
         End Function
 
         Public Overrides Function ToString() As String
@@ -102,6 +102,11 @@ Namespace Ms1
 
         Public Overrides Function MassErrorDescription(mz1 As Double, mz2 As Double) As String
             Return $"{MassError(mz1, mz2)} ppm"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Overrides Function Scale(scaler As Double) As Tolerance
+            Return New PPMmethod(DeltaTolerance * scaler)
         End Function
     End Class
 End Namespace
