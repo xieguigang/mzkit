@@ -410,7 +410,17 @@ Just click ``OK`` on the dialog:
 	}
 </script>
 
-### UI Framework
+### Credit
+
+GUI Framework library of mzkit_win32 software:
 
 + Windows Ribbon: https://github.com/harborsiem/WindowsRibbon
 + DockPanel: https://github.com/dockpanelsuite/dockpanelsuite
+
+### Reference
+
++ X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J. Zhu* (Corresponding Author), Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics, Nature Communications, 2019, 10: 1516.
++ Li S, Park Y, Duraisingham S, Strobel FH, Khan N, et al. (2013) Predicting Network Activity from High Throughput Metabolomics. PLOS Computational Biology 9(7): e1003123. https://doi.org/10.1371/journal.pcbi.1003123
++ Pang, Z., Chong, J., Zhou, G., Morais D., Chang, L., Barrette, M., Gauthier, C., Jacques, PE., Li, S., and Xia, J. (2021) MetaboAnalyst 5.0: narrowing the gap between raw spectra and functional insights Nucl. Acids Res. (doi: 10.1093/nar/gkab382)
++ Ogata, H., Goto, S., Sato, K., Fujibuchi, W., Bono, H., & Kanehisa, M. (1999). KEGG: Kyoto Encyclopedia of Genes and Genomes. Nucleic acids research, 27(1), 29–34. https://doi.org/10.1093/nar/27.1.29
++ Tsugawa, H., Cajka, T., Kind, T., Ma, Y., Higgins, B., Ikeda, K., Kanazawa, M., VanderGheynst, J., Fiehn, O., & Arita, M. (2015). MS-DIAL: data-independent MS/MS deconvolution for comprehensive metabolome analysis. Nature methods, 12(6), 523–526. https://doi.org/10.1038/nmeth.3393
