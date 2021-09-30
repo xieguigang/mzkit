@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -589,7 +590,7 @@ Module MsImaging
 
     <ExportAPI("MeasureMSIions")>
     Public Function getMSIIons(raw As mzPack,
-                               Optional gridSize As Integer = 10,
+                               Optional gridSize As Integer = 5,
                                Optional mzdiff As Object = "da:0.001",
                                Optional env As Environment = Nothing) As Object
 
@@ -607,18 +608,37 @@ Module MsImaging
             .OrderByDescending(Function(d) d.Count) _
             .ToArray
         Dim size As New Size(gridSize, gridSize)
-        Dim ions As New List(Of Double)
-        Dim totalArea = reader.dimension.Width * reader.dimension.Height
+        Dim totalArea = reader.AllPixels.Count
+        Dim ions As Double() = allMsIons _
+            .Select(Function(d) Val(d.name)) _
+            .AsParallel _
+            .Where(Function(mz)
+                       Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
 
-        For Each mz As Double In allMsIons.Select(Function(d) Val(d.name))
-            Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
-            Dim graphDensity = layer.Density(Function(p) $"{p.x},{p.y}", Function(p) p.x, Function(p) p.y, size).ToArray
-            Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
+                       If layer.Length / totalArea >= 0.65 Then
+                           Return True
+                       ElseIf layer.Length / totalArea < 0.25 Then
+                           Return False
+                       Else
+                           Dim graphDensity = layer _
+                               .Density(Function(p) $"{p.x},{p.y}",
+                                        Function(p) p.x,
+                                        Function(p) p.y,
+                                        size,
+                                        parallel:=False
+                               ) _
+                               .ToArray
+                           Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
 
-            If mean > 0.65 AndAlso (layer.Length / totalArea) Then
-                ions.Add(mean)
-            End If
-        Next
+                           If mean > 0.65 Then
+                               Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
+                               Return True
+                           Else
+                               Return False
+                           End If
+                       End If
+                   End Function) _
+            .ToArray
 
         Return ions
     End Function
