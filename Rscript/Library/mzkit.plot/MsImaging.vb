@@ -55,10 +55,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -69,6 +72,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -496,6 +500,14 @@ Module MsImaging
         Return deltas.Average
     End Function
 
+    <ExportAPI("MSI_summary.scaleMax")>
+    Public Function AutoScaleMax(data As MSISummary, intensity As IntensitySummary, Optional qcut As Double = 0.75) As Double
+        Dim into As Double() = data.GetLayer(intensity).Select(Function(p) p.totalIon).ToArray
+        Dim scale As Double = Renderer.AutoCheckCutMax(into, qcut)
+
+        Return scale
+    End Function
+
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
@@ -523,11 +535,13 @@ Module MsImaging
                                    Optional logE As Boolean = True,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
+                                   <RRawVectorArgument>
+                                   Optional dims As Object = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
         Dim regionPts As Integer()() = background _
-            .Where(Function(str) Not str.StringEmpty) _
             .SafeQuery _
+            .Where(Function(str) Not str.StringEmpty) _
             .Select(Function(str)
                         Return str _
                             .Split(","c) _
@@ -565,13 +579,68 @@ Module MsImaging
 
         Return engine.RenderPixels(
             pixels:=pixels,
-            dimension:=data.size,
+            dimension:=InteropArgumentHelper.getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}").SizeParser,
             dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
             logE:=logE,
             defaultFill:=defaultFill,
             cutoff:=cutoffRange.TryCast(Of DoubleRange)
         )
+    End Function
+
+    <ExportAPI("MeasureMSIions")>
+    Public Function getMSIIons(raw As mzPack,
+                               Optional gridSize As Integer = 5,
+                               Optional mzdiff As Object = "da:0.001",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(mzdiff, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim reader As New ReadRawPack(raw)
+        Dim allMsIons = raw.MS _
+            .Select(Function(d) d.GetMs) _
+            .IteratesALL _
+            .GroupBy(Function(i) i.mz, mzErr.TryCast(Of Tolerance)) _
+            .OrderByDescending(Function(d) d.Count) _
+            .ToArray
+        Dim size As New Size(gridSize, gridSize)
+        Dim totalArea = reader.AllPixels.Count
+        Dim ions As Double() = allMsIons _
+            .Select(Function(d) Val(d.name)) _
+            .AsParallel _
+            .Where(Function(mz)
+                       Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
+
+                       If layer.Length / totalArea >= 0.65 Then
+                           Return True
+                       ElseIf layer.Length / totalArea < 0.25 Then
+                           Return False
+                       Else
+                           Dim graphDensity = layer _
+                               .Density(Function(p) $"{p.x},{p.y}",
+                                        Function(p) p.x,
+                                        Function(p) p.y,
+                                        size,
+                                        parallel:=False
+                               ) _
+                               .ToArray
+                           Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
+
+                           If mean > 0.65 Then
+                               Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
+                               Return True
+                           Else
+                               Return False
+                           End If
+                       End If
+                   End Function) _
+            .ToArray
+
+        Return ions
     End Function
 
     ''' <summary>
