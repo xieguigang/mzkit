@@ -93,7 +93,7 @@ Module ResultHandler
                     .rt = type.infer.query.scan_time,
                     .intensity = type.infer.query.intensity,
                     .KEGG_reaction = links(Scan0).Name,
-                    .reaction = links(Scan0).Value,
+                    .reaction = links(Scan0).Value.LineTokens.Distinct.JoinBy("; "),
                     .parentTrace = type.infer.parentTrace / 100,
                     .inferSize = type.infer.inferSize,
                     .fileName = type.infer.rawFile,
