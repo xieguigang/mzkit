@@ -192,6 +192,7 @@
     <Compile Include="Models\MassIndexKey.vb" />
     <Compile Include="Models\UnknownSet.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="MSJointConnection.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -233,6 +234,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\FisherCore.vbproj">
+      <Project>{62cc1cc2-7e2b-47ba-a745-37c36bd84955}</Project>
+      <Name>FisherCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
       <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
       <Name>Bio.Assembly</Name>
