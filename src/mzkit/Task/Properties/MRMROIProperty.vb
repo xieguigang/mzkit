@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::753222a02796d1f3550a41cc680960f2, src\mzkit\Task\Properties\MRMROIProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c0c9a930e24852d71d6bce9becae0c84, src\mzkit\Task\Properties\MRMROIProperty.vb"
 
     ' Author:
     ' 

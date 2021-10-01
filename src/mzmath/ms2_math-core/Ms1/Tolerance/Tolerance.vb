@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e03472e873c68e5a9ec9bcbddbe839e, src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::3e88b7221f56eeb530b085aabefa6bed, src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AddPPM, DeltaMass, GetScript, MatchTolerance, ParseScript
     '                   PPM, SubPPM, ToScript
+    '         Operators: *, /
     ' 
     ' 
     ' /********************************************************************************/

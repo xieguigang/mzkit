@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cd15159877299081e1cf911e2d8b035, src\mzkit\mzkit\forms\Task\MSSearchTask.vb"
+﻿#Region "Microsoft.VisualBasic::eb67cd3668805edb6be2ff19ecbb6210, src\mzkit\mzkit\forms\Task\MSSearchTask.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Module MSSearchTask
 
 End Module
-

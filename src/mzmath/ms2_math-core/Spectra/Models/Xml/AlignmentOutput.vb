@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35a843e6552d08efe1af279aab858256, src\mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::e38f644fe4ee15e5c89ddbfcb8451176, src\mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Class AlignmentOutput
     ' 
-    '         Properties: alignments, forward, jaccard, mirror, query
-    '                     reference, reverse
+    '         Properties: alignments, forward, jaccard, mirror, nhits
+    '                     query, reference, reverse
     ' 
     '         Function: CreateLinearMatrix, GetAlignmentMirror, ToString
     ' 

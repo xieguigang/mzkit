@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e22b687c75f75cc4c0c536de8b2370a7, Rscript\Library\mzkit\assembly\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::5e7df97b88d72cbcc4763e5b9608e501, Rscript\Library\mzkit\assembly\NMR.vb"
 
     ' Author:
     ' 
@@ -36,12 +36,11 @@
 
     ' Module NMR
     ' 
-    '     Function: acquisition, GetMatrix, readSmall
+    '     Function: acquisition, GetMatrix, readSmall, spectrumData, spectrumList
     ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
@@ -88,4 +87,3 @@ Module NMR
     End Function
 
 End Module
-

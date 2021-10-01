@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb56a5a0518959091be65fb5c004241, src\mzkit\mzkit\application\VisualStudio.vb"
+﻿#Region "Microsoft.VisualBasic::152ef853873cc96e8bcd703e7283550e, src\mzkit\mzkit\application\VisualStudio.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,8 @@
     ' Class VisualStudio
     ' 
     '     Properties: DockPanel
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: ShowDocument
     ' 

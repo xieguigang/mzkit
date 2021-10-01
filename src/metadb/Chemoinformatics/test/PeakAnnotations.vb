@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a17010f61b5662f10982aa5caeccf32d, src\metadb\Chemoinformatics\test\PeakAnnotations.vb"
+﻿#Region "Microsoft.VisualBasic::b311214792a54c347589c8b9e3ea993b, src\metadb\Chemoinformatics\test\PeakAnnotations.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@
 '        Pause()
 '    End Sub
 'End Module
-

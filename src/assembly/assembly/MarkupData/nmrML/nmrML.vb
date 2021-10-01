@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::921588ff98a3c7575c8d05581381d920, src\assembly\assembly\MarkupData\nmrML\nmrML.vb"
+﻿#Region "Microsoft.VisualBasic::5c5d682ab11a4a729e778282611bbbe4, src\assembly\assembly\MarkupData\nmrML\nmrML.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Class XML
     ' 
     '         Properties: accession, accession_url, acquisition, contactList, cvList
-    '                     fileDescription, id, sourceFileList, version
+    '                     fileDescription, id, sourceFileList, spectrumList, version
     ' 
     '     Class contactList
     ' 

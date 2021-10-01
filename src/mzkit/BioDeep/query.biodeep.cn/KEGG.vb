@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f918308beb4774c7fb01e0612f8fcdd6, src\mzkit\BioDeep\query.biodeep.cn\KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::8248c51ad2425d076fff9e844effb357, src\mzkit\BioDeep\query.biodeep.cn\KEGG.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Module KEGG
 
 End Module
-

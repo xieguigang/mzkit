@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4ab4ba179fd13b5fccf91288d65deea, src\metadna\metaDNA\Models\KEGGQuery.vb"
+﻿#Region "Microsoft.VisualBasic::d1eb34d8d84e907b08596691624e6380, src\metadna\metaDNA\Models\KEGGQuery.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@
 
     ' Structure KEGGQuery
     ' 
-    '     Properties: kegg_id, mz, ppm, precursorType
+    '     Properties: kegg_id, mz, ppm, precursorType, score
     ' 
-    '     Function: ToString
+    '     Function: Clone, ToString
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9976bfd44446dbe289d60c1c7215b141, src\assembly\assembly\mzPack\Stream\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::ef56921e6a79dc6a85f9b9fb98cec090, src\assembly\assembly\mzPack\Stream\MSScan.vb"
 
     ' Author:
     ' 

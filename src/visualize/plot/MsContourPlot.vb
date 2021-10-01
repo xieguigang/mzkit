@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97d9503369429f93df228ca3f73b9402, src\visualize\plot\MsContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e58441b765a8b8cd9863ebe47cc4658b, src\visualize\plot\MsContourPlot.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Module MsContourPlot
         Return app.Plot(size, 300)
     End Function
 End Module
-
