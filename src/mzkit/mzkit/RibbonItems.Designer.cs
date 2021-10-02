@@ -43,6 +43,7 @@ namespace RibbonLib.Controls
             public const uint cmdTabGroupTableTools = 1031;
             public const uint cmdTabDesign = 1032;
             public const uint cmdGroupDesign = 1036;
+            public const uint cmdCheckBoxShowKEGGAnnotation = 153;
             public const uint cmdPPMSpinner = 1050;
             public const uint cmdGroupShowViewer = 1110;
             public const uint cmdButtonShowPlotViewer = 1111;
@@ -193,6 +194,7 @@ namespace RibbonLib.Controls
         public RibbonTabGroup TabGroupTableTools { get; private set; }
         public RibbonTab TabDesign { get; private set; }
         public RibbonGroup GroupDesign { get; private set; }
+        public RibbonCheckBox CheckBoxShowKEGGAnnotation { get; private set; }
         public RibbonSpinner PPMSpinner { get; private set; }
         public RibbonGroup GroupShowViewer { get; private set; }
         public RibbonButton ButtonShowPlotViewer { get; private set; }
@@ -341,6 +343,7 @@ namespace RibbonLib.Controls
             TabGroupTableTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupTableTools);
             TabDesign = new RibbonTab(ribbon, Cmd.cmdTabDesign);
             GroupDesign = new RibbonGroup(ribbon, Cmd.cmdGroupDesign);
+            CheckBoxShowKEGGAnnotation = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxShowKEGGAnnotation);
             PPMSpinner = new RibbonSpinner(ribbon, Cmd.cmdPPMSpinner);
             GroupShowViewer = new RibbonGroup(ribbon, Cmd.cmdGroupShowViewer);
             ButtonShowPlotViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowPlotViewer);

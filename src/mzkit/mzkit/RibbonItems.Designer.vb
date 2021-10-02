@@ -40,6 +40,7 @@ Namespace RibbonLib.Controls
             Public Const cmdTabGroupTableTools As UInteger = 1031
             Public Const cmdTabDesign As UInteger = 1032
             Public Const cmdGroupDesign As UInteger = 1036
+            Public Const cmdCheckBoxShowKEGGAnnotation As UInteger = 153
             Public Const cmdPPMSpinner As UInteger = 1050
             Public Const cmdGroupShowViewer As UInteger = 1110
             Public Const cmdButtonShowPlotViewer As UInteger = 1111
@@ -313,6 +314,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property GroupDesign As RibbonGroup
             Get
                 Return _GroupDesign
+            End Get
+        End Property
+        Private _CheckBoxShowKEGGAnnotation As RibbonCheckBox
+        Public ReadOnly Property CheckBoxShowKEGGAnnotation As RibbonCheckBox
+            Get
+                Return _CheckBoxShowKEGGAnnotation
             End Get
         End Property
         Private _PPMSpinner As RibbonSpinner
@@ -1053,6 +1060,7 @@ Namespace RibbonLib.Controls
             _TabGroupTableTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupTableTools)
             _TabDesign = New RibbonTab(_ribbon, Cmd.cmdTabDesign)
             _GroupDesign = New RibbonGroup(_ribbon, Cmd.cmdGroupDesign)
+            _CheckBoxShowKEGGAnnotation = New RibbonCheckBox(_ribbon, Cmd.cmdCheckBoxShowKEGGAnnotation)
             _PPMSpinner = New RibbonSpinner(_ribbon, Cmd.cmdPPMSpinner)
             _GroupShowViewer = New RibbonGroup(_ribbon, Cmd.cmdGroupShowViewer)
             _ButtonShowPlotViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowPlotViewer)
