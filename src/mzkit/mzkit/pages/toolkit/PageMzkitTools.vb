@@ -76,6 +76,7 @@ Imports mzkit.My
 Imports mzkit.RibbonLib.Controls
 Imports RibbonLib
 Imports RibbonLib.Interop
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
@@ -225,15 +226,17 @@ Public Class PageMzkitTools
                 Call ConnectToBioDeep.OpenAdvancedFunction(
                     Sub()
                         Dim mode As String = scanData.name.Match("[+-]")
-                        Dim kegg As MSJointConnection = Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1))
+                        Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1)), info:="Load KEGG repository data...")
                         Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
                         Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
+                        Dim compound As Compound
 
                         For Each mzi As ms2 In scanData.ms2
                             Dim hit As KEGGQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
 
                             If Not hit.kegg_id.StringEmpty Then
-                                mzi.Annotation = hit.ToString
+                                compound = kegg.GetCompound(hit.kegg_id)
+                                mzi.Annotation = $"{mzi.mz.ToString("F4")} {compound.commonNames.FirstOrDefault([default]:=hit.kegg_id)}{hit.precursorType}"
                             End If
                         Next
                     End Sub)
