@@ -90,8 +90,15 @@ Public Module MoleculeNetworking
         Next
     End Function
 
+    ReadOnly ms1diff As Tolerance = Tolerance.DeltaMass(0.001)
+    ReadOnly ms2diff As Tolerance = Tolerance.DeltaMass(0.3)
+
     <Extension>
-    Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, reload As Action(Of String, String), Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
+    Public Function GetSpectrum(raw As Raw,
+                                scanId As String,
+                                cutoff As LowAbundanceTrimming,
+                                reload As Action(Of String, String),
+                                Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
         Dim attrs As ScanMS2
         Dim msLevel As Integer
 
@@ -125,7 +132,11 @@ Public Module MoleculeNetworking
         Dim scanData As New LibraryMatrix With {
             .name = scanId,
             .centroid = False,
-            .ms2 = attrs.GetMs.ToArray.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
+            .ms2 = attrs _
+                .GetMs _
+                .ToArray _
+                .Centroid(If(msLevel = 1, ms1diff, ms2diff), cutoff) _
+                .ToArray
         }
         Dim pa As New PeakAnnotation
 

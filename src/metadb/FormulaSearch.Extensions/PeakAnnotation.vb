@@ -49,6 +49,12 @@ Imports stdNum = System.Math
 
 Public Class PeakAnnotation
 
+    ''' <summary>
+    ''' Run annotation of the ms2 product ions
+    ''' </summary>
+    ''' <param name="parentMz"></param>
+    ''' <param name="products"></param>
+    ''' <returns></returns>
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
         products = MeasureIsotopePeaks(parentMz, products)
         products = MatchElementGroups(parentMz, products)

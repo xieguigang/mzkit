@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::834a513a159f6ddbf282fe10d965d51a, src\mzkit\mzkit\pages\toolkit\PageMzkitTools.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzkitTools
-    ' 
-    '     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
-    ' 
-    '     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
-    '          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, PlotSpectrum
-    '          Ribbon_Load, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, (+2 Overloads) showAlignment, (+3 Overloads) showMatrix
-    '          (+2 Overloads) ShowMatrix, ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter
-    '          showSpectrum, ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
-    ' 
-    ' /********************************************************************************/
+' Class PageMzkitTools
+' 
+'     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
+' 
+'     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
+'          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, PlotSpectrum
+'          Ribbon_Load, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, (+2 Overloads) showAlignment, (+3 Overloads) showMatrix
+'          (+2 Overloads) ShowMatrix, ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter
+'          showSpectrum, ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
@@ -219,6 +220,19 @@ Public Class PageMzkitTools
         If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache), prop)
+
+            If prop.msLevel = 1 AndAlso RibbonItems.CheckBoxShowKEGGAnnotation.BooleanValue Then
+                Call ConnectToBioDeep.OpenAdvancedFunction(
+                    Sub()
+                        Dim mode As String = scanData.name.Match("[+-]")
+                        Dim kegg As MSJointConnection = Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1))
+                        Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
+
+                        For Each mzi As ms2 In scanData.ms2
+
+                        Next
+                    End Sub)
+            End If
 
             showMatrix(scanData.ms2, scanId)
 
