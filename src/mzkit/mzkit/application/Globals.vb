@@ -94,12 +94,12 @@ Module Globals
         Static KEGG As (pos As MSJointConnection, neg As MSJointConnection) = (Nothing, Nothing)
 
         If KEGG.pos Is Nothing OrElse KEGG.neg Is Nothing Then
-            Dim maps As Map() = KEGGRepo.RequestKEGGMaps(println)
+            Dim maps As Map() = KEGGRepo.RequestKEGGMaps
             Dim background = MSJointConnection.ImportsBackground(maps)
             Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.001)
             Dim compounds = KEGGRepo.RequestKEGGcompounds(println)
-            Dim pos As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Positives, mzdiff)
-            Dim neg As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Negatives, mzdiff)
+            Dim pos As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+            Dim neg As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
 
             KEGG = (New MSJointConnection(pos, background), New MSJointConnection(neg, background))
         End If

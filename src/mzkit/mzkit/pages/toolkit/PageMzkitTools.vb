@@ -227,9 +227,14 @@ Public Class PageMzkitTools
                         Dim mode As String = scanData.name.Match("[+-]")
                         Dim kegg As MSJointConnection = Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1))
                         Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
+                        Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
 
                         For Each mzi As ms2 In scanData.ms2
+                            Dim hit As KEGGQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
 
+                            If Not hit.kegg_id.StringEmpty Then
+                                mzi.Annotation = hit.ToString
+                            End If
                         Next
                     End Sub)
             End If

@@ -92,14 +92,15 @@ Module KEGGRepo
             .DoCall(AddressOf ReactionClassPack.ReadKeggDb)
     End Function
 
-    Public Function RequestKEGGMaps(println As Action(Of String)) As Map()
-        Const url As String = "http://query.biodeep.cn/kegg/repository/maps"
+    Public Function RequestKEGGMaps() As Map()
+        Dim filepath As String = $"{App.HOME}/Rstudio/Repository/KEGG_maps.msgpack"
 
-        Call println("request KEGG pathway maps from BioDeep...")
+        If Not filepath.FileExists Then
+            filepath = $"{App.HOME}/../../Rscript\Library\mzkit_app\data\KEGG_maps.msgpack"
+        End If
 
-        Return SingletonHolder(Of BioDeepSession).Instance _
-           .RequestStream(url) _
-           .unzip _
-           .DoCall(AddressOf KEGGMapPack.ReadKeggDb)
+        Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return KEGGMapPack.ReadKeggDb(file)
+        End Using
     End Function
 End Module
