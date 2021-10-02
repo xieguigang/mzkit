@@ -91,6 +91,16 @@ Public Class Algorithm
 
 #Region "algorithm initialization"
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ms1ppm"></param>
+    ''' <param name="dotcutoff"></param>
+    ''' <param name="mzwidth">
+    ''' the product m/z tolerance of the ms2 data
+    ''' </param>
+    ''' <param name="allowMs1"></param>
+    ''' <param name="maxIterations"></param>
     Sub New(ms1ppm As Tolerance,
             dotcutoff As Double,
             mzwidth As Tolerance,
