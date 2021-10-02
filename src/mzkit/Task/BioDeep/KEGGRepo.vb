@@ -49,6 +49,7 @@ Imports BioDeep
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
 
 Module KEGGRepo
@@ -89,5 +90,16 @@ Module KEGGRepo
             .RequestStream(url) _
             .unzip _
             .DoCall(AddressOf ReactionClassPack.ReadKeggDb)
+    End Function
+
+    Public Function RequestKEGGMaps(println As Action(Of String)) As Map()
+        Const url As String = "http://query.biodeep.cn/kegg/repository/maps"
+
+        Call println("request KEGG pathway maps from BioDeep...")
+
+        Return SingletonHolder(Of BioDeepSession).Instance _
+           .RequestStream(url) _
+           .unzip _
+           .DoCall(AddressOf KEGGMapPack.ReadKeggDb)
     End Function
 End Module
