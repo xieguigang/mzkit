@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c732afc22c696f2feb9c0ce6e0838a09, src\mzkit\mzkit\application\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::6c706c77cc0c35a4655909f59f75c12e, src\mzkit\mzkit\application\CLI.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Module CLI
         Return 0
     End Function
 End Module
-

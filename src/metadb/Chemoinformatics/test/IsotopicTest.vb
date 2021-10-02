@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fb9a92cc5b4f53da9712a6bb98d3e02, src\metadb\Chemoinformatics\test\IsotopicTest.vb"
+﻿#Region "Microsoft.VisualBasic::cb1552e9de7dc46f205fd53f0f47b263, src\metadb\Chemoinformatics\test\IsotopicTest.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Module IsotopicTest
         Pause()
     End Sub
 End Module
-

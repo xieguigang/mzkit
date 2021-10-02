@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fed4d313795705fb87f2097fa282ba4f, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::8d660fbc427074cfb52a3c24f51e5141, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Class StandardCurve
     ' 
-    '         Properties: [IS], blankControls, isValid, isWeighted, linear
-    '                     name, points, requireISCalibration
+    '         Properties: [IS], arguments, blankControls, isValid, isWeighted
+    '                     linear, name, points, requireISCalibration
     ' 
     '         Function: CreateLinearRegression, ToString
     ' 

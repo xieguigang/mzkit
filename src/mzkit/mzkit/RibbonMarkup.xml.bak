@@ -1688,6 +1688,20 @@
         <Image MinDPI="192">Res/edit-find.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdCheckBoxShowKEGGAnnotation" Id="153" LabelTitle="Show KEGG Annotation" LabelDescription="Show KEGG annotation for  ms1 scan data" TooltipTitle="Show KEGG Annotation" TooltipDescription="Show KEGG annotation for  ms1 scan data">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1775,6 +1789,7 @@
           <Tab CommandName="cmdTabDesign" ApplicationModes="0,1">
             <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
               <Spinner CommandName="cmdPPMSpinner" />
+              <CheckBox CommandName="cmdCheckBoxShowKEGGAnnotation" />
             </Group>
             <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonShowPlotViewer" />
@@ -1888,9 +1903,10 @@
               <Button CommandName="cmdButtonMSIBasePeakIon" />
               <Button CommandName="cmdButtonMSITotalIon" />
             </Group>
-            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="TwoButtons">
-              <ToggleButton CommandName="cmdButtonTogglePolygon" />
+            <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
+              <Button CommandName="cmdButtonFeatureDetections" />
               <Button CommandName="cmdButtonExportSample" />
+              <ToggleButton CommandName="cmdButtonTogglePolygon" />
             </Group>
             <Group CommandName="cmdTabPolygonEditor" ApplicationModes="1">
               <Button CommandName="cmdButtonClosePolygonEditor" />

@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::1834f379bd9e561451daa16ffe8cd10f, src\mzkit\Task\MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::4b5af21a87d6b37088a596ced7f9d4ca, src\mzkit\Task\MoleculeNetworking.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MoleculeNetworking
-' 
-'     Function: (+2 Overloads) alignSearch, CreateMatrix, GetSpectrum, RunMetaDNA, (+2 Overloads) SearchFiles
-' 
-' /********************************************************************************/
+    ' Module MoleculeNetworking
+    ' 
+    '     Function: (+2 Overloads) alignSearch, CreateMatrix, GetSpectrum, RunMetaDNA, (+2 Overloads) SearchFiles
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -90,8 +90,15 @@ Public Module MoleculeNetworking
         Next
     End Function
 
+    ReadOnly ms1diff As Tolerance = Tolerance.DeltaMass(0.001)
+    ReadOnly ms2diff As Tolerance = Tolerance.DeltaMass(0.3)
+
     <Extension>
-    Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, reload As Action(Of String, String), Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
+    Public Function GetSpectrum(raw As Raw,
+                                scanId As String,
+                                cutoff As LowAbundanceTrimming,
+                                reload As Action(Of String, String),
+                                Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
         Dim attrs As ScanMS2
         Dim msLevel As Integer
 
@@ -125,7 +132,11 @@ Public Module MoleculeNetworking
         Dim scanData As New LibraryMatrix With {
             .name = scanId,
             .centroid = False,
-            .ms2 = attrs.GetMs.ToArray.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
+            .ms2 = attrs _
+                .GetMs _
+                .ToArray _
+                .Centroid(If(msLevel = 1, ms1diff, ms2diff), cutoff) _
+                .ToArray
         }
         Dim pa As New PeakAnnotation
 

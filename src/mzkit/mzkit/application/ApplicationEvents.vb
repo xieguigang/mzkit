@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::119dc19e3f6408bb196cd5611f5e5987, src\mzkit\mzkit\application\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::cb2dc1a4fc47e9ea3684d9051513bab3, src\mzkit\mzkit\application\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
     '         Function: GetSplashScreen
     ' 
     '         Sub: doRunScript, doRunScriptWithSpecialCommand, ExecuteRScript, handleResult, InitializeREngine
-    '              InstallPackageRelease, LogText, MyApplication_Startup, MyApplication_UnhandledException, RegisterConsole
-    '              RegisterHost, RegisterOutput, RegisterPlot
+    '              InstallPackageRelease, LogText, MyApplication_Shutdown, MyApplication_Startup, MyApplication_UnhandledException
+    '              RegisterConsole, RegisterHost, RegisterOutput, RegisterPlot
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::6f725faf68d65379c36cbc53fbe0373a, src\mzkit\mzkit\application\Globals.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Globals
-    ' 
-    '     Properties: loadedSettings, Settings, workspace
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CheckFormOpened, CurrentRawFile, FindRaws, GetColors, GetTotalCacheSize
-    '               GetXICMaxYAxis, LoadIonLibrary, LoadRawFileCache
-    ' 
-    '     Sub: AddRecentFileHistory, AddScript, loadRawFile, loadRStudioScripts, SaveRawFileCache
-    ' 
-    ' /********************************************************************************/
+' Module Globals
+' 
+'     Properties: loadedSettings, Settings, workspace
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CheckFormOpened, CurrentRawFile, FindRaws, GetColors, GetTotalCacheSize
+'               GetXICMaxYAxis, LoadIonLibrary, LoadRawFileCache
+' 
+'     Sub: AddRecentFileHistory, AddScript, loadRawFile, loadRStudioScripts, SaveRawFileCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,9 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
@@ -60,6 +63,7 @@ Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Configuration
 Imports mzkit.My
+Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
@@ -85,6 +89,27 @@ Module Globals
     Sub New()
         Settings = Settings.GetConfiguration()
     End Sub
+
+    Public Function LoadKEGG(println As Action(Of String), mode As Integer) As MSJointConnection
+        Static KEGG As (pos As MSJointConnection, neg As MSJointConnection) = (Nothing, Nothing)
+
+        If KEGG.pos Is Nothing OrElse KEGG.neg Is Nothing Then
+            Dim maps As Map() = KEGGRepo.RequestKEGGMaps
+            Dim background = MSJointConnection.ImportsBackground(maps)
+            Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.001)
+            Dim compounds = KEGGRepo.RequestKEGGcompounds(println)
+            Dim pos As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+            Dim neg As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+
+            KEGG = (New MSJointConnection(pos, background), New MSJointConnection(neg, background))
+        End If
+
+        If mode = 1 Then
+            Return KEGG.pos
+        Else
+            Return KEGG.neg
+        End If
+    End Function
 
     Public Sub AddRecentFileHistory(file As String)
         Settings.recentFiles = {file}.JoinIterates(Settings.recentFiles).Distinct.ToArray

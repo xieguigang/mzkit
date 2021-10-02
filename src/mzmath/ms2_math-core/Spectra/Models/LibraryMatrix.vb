@@ -109,6 +109,12 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property mz As Double()
+            Get
+                Return ms2.Select(Function(i) i.mz).ToArray
+            End Get
+        End Property
+
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})

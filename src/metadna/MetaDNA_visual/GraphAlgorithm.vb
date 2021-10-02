@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d1e1c07af29c6eff8636233d2a8a870, src\metadna\MetaDNA_visual\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::841e91c0a3176428c2064bf102687d8d, src\metadna\MetaDNA_visual\GraphAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
 
     ' Summaries:
 
-    ' Module Algorithm
+    ' Module GraphAlgorithm
     ' 
     '     Function: CreateGraph
     ' 

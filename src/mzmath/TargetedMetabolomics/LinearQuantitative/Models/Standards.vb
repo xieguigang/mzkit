@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6aa64b5a9b4216611115f1dfa381588, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
+﻿#Region "Microsoft.VisualBasic::11a990e9048988615bf87af1f748d12a, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d0c0136a6c7efa71b8af6802800777c, src\metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, src\metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Public Module IsotopicAlignment
         Next
     End Function
 End Module
-

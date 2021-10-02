@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6634c7d2c41ff87959c9c65251b03292, src\mzkit\mzkit\pages\toolkit\PageMzkitTools.vb"
+﻿#Region "Microsoft.VisualBasic::834a513a159f6ddbf282fe10d965d51a, src\mzkit\mzkit\pages\toolkit\PageMzkitTools.vb"
 
 ' Author:
 ' 
@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
@@ -75,6 +76,7 @@ Imports mzkit.My
 Imports mzkit.RibbonLib.Controls
 Imports RibbonLib
 Imports RibbonLib.Interop
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
@@ -219,6 +221,26 @@ Public Class PageMzkitTools
         If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, Sub(src, cache) frmFileExplorer.getRawCache(src,, cache), prop)
+
+            If prop.msLevel = 1 AndAlso RibbonItems.CheckBoxShowKEGGAnnotation.BooleanValue Then
+                Call ConnectToBioDeep.OpenAdvancedFunction(
+                    Sub()
+                        Dim mode As String = scanData.name.Match("[+-]")
+                        Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1)), info:="Load KEGG repository data...")
+                        Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
+                        Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
+                        Dim compound As Compound
+
+                        For Each mzi As ms2 In scanData.ms2
+                            Dim hit As KEGGQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
+
+                            If Not hit.kegg_id.StringEmpty Then
+                                compound = kegg.GetCompound(hit.kegg_id)
+                                mzi.Annotation = $"{mzi.mz.ToString("F4")} {compound.commonNames.FirstOrDefault([default]:=hit.kegg_id)}{hit.precursorType}"
+                            End If
+                        Next
+                    End Sub)
+            End If
 
             showMatrix(scanData.ms2, scanId)
 

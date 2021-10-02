@@ -358,6 +358,10 @@
       <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
       <Name>DataMining</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.vbproj">
+      <Project>{39fe675e-f451-47de-8695-98e093775981}</Project>
+      <Name>DensityQuery</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>

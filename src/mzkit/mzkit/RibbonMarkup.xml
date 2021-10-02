@@ -1688,6 +1688,20 @@
         <Image MinDPI="192">Res/edit-find.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdCheckBoxShowKEGGAnnotation" Id="153" LabelTitle="Show KEGG Annotation" LabelDescription="Show KEGG annotation for  ms1 scan data" TooltipTitle="Show KEGG Annotation" TooltipDescription="Show KEGG annotation for  ms1 scan data">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeImages>
+      <Command.SmallHighContrastImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallHighContrastImages>
+      <Command.LargeHighContrastImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeHighContrastImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1774,6 +1788,7 @@
         <TabGroup CommandName="cmdTabGroupTableTools">
           <Tab CommandName="cmdTabDesign" ApplicationModes="0,1">
             <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
+              <CheckBox CommandName="cmdCheckBoxShowKEGGAnnotation" />
               <Spinner CommandName="cmdPPMSpinner" />
             </Group>
             <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">

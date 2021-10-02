@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4070abf759706bafab14af84ba2e7f8, src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::800ab5cbb71708c2b559c25c3fe69932, src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: GetAllFeatures, MRMSelector, PopulatePeaks
+    '         Function: GetAllFeatures, (+2 Overloads) MRMSelector, PopulatePeaks
     ' 
     ' 
     ' /********************************************************************************/
