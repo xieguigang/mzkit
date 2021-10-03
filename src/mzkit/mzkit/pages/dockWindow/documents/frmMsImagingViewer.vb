@@ -231,6 +231,8 @@ Public Class frmMsImagingViewer
                         ServiceHub.ExportMzpack(fileName)
                     End Sub, title:="Export mzPack data...", info:="Save mzPack!")
                 Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                ServiceHub.MessageCallback = Nothing
             End If
         End Using
     End Sub

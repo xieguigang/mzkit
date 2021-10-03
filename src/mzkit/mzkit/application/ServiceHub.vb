@@ -214,7 +214,7 @@ Module ServiceHub
 
     Private Sub MSI_pipe_SetMessage(message As String) Handles MSI_pipe.SetMessage
         If MessageCallback Is Nothing Then
-            Call message.__DEBUG_ECHO
+            Call MyApplication.LogText(message)
         Else
             Call MessageCallback(message)
         End If
