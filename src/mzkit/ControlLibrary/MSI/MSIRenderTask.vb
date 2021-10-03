@@ -99,7 +99,7 @@ Module GaussTask
     Public Function RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5) As Image
         Dim bytes As Byte() = bitmapBuffer(image)
         Dim generatorParams As New GeneratorParameters With {.BlurLevel = BlurLevel, .GaussMaskSize = GaussMaskSize, .NumberOfThreads = 1}
-        Dim currentThreadParams = ComputeThreadParams(1, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
+        Dim currentThreadParams = ComputeThreadParams(0, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
         Dim rowPadded = (currentThreadParams.ImgWidth * 3 + 3) And Not 3
         Dim tmpArray = New Byte(currentThreadParams.ImgHeight * rowPadded - 1) {}
         Dim imgArrayPtr = Marshal.ReadIntPtr(bytes, 0)
