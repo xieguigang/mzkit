@@ -17,10 +17,8 @@ void ComputeGaussBlur(ThreadParameters params) {
 
 	// must be odd
 	const int gaussWidth = params.GaussMaskSize;
-
 	// Compute specific row of a pascal triangle
 	int* mask = ComputePascalRow(gaussWidth - 1);
-
 	// Compute gauss mask sum
 	int gauss_sum = 0;
 
@@ -28,8 +26,9 @@ void ComputeGaussBlur(ThreadParameters params) {
 		gauss_sum += mask[i];
 	}
 
-	int currPos = 0; // stores position (in bytes) of current position 
-					 // of temporary bitmap array data
+	// stores position (in bytes) of current position 
+    // of temporary bitmap array data
+	int currPos = 0; 
 	int maxY = params.ImageHeight - gaussWidth + 1;
 
 	// Stores current thread bitmap part offset
@@ -121,35 +120,56 @@ void ComputeGaussBlur(ThreadParameters params) {
 	}
 
 	currPos = 0;
-	int maxX = params.ImageWidth - gaussWidth + 1;
 
+	int maxX = params.ImageWidth - gaussWidth + 1;
 	int beginCopy = 0;
 	int endCopy = params.ImageHeight;
 
 	// If current thread doesn't work with first part of the bitmap
-	if (params.IdOfImgPart != 0)
-	{
+	if (params.IdOfImgPart != 0) {
 		beginCopy = gaussHalf;
 		imgOffset += rowPadded * gaussHalf;
 	}
 
 	// If current thread doesn't work with last part of the bitmap
-	if (params.IdOfImgPart != params.NumOfImgParts - 1)
-		endCopy -= gaussHalf; // shrink area we are working on (because of gauss filters interleaves)
+	if (params.IdOfImgPart != params.NumOfImgParts - 1) {
+		// shrink area we are working on (because of gauss filters interleaves)
+		endCopy -= gaussHalf;
+	}
 
-	/*
-	* Horizontal iteration part
-	*/
+	// Horizontal iteration part
+	HorizontalScan(beginCopy, endCopy, rowPadded, rowPaddedDiff, gaussHalf, params.ImageWidth, maxX, gaussWidth, currPos, gauss_sum, mask, temp, imgOffset);
+}
 
-	// Iterate over selected range of lines
-	for (int y = beginCopy; y < endCopy; y++)
-	{
+/*
+@brief Horizontal iteration part,
+Iterate over selected range of lines
+
+@param[in] ImageWidth  ThreadParameters image width
+@param[in] rowPadded   The pixel array must begin at a memory address that is a multiple of 4 bytes
+@param[in] imgOffset   Stores current thread bitmap part offset
+*/
+void HorizontalScan(
+	int beginCopy,
+	int endCopy,
+	int rowPadded,
+	int rowPaddedDiff,
+	int gaussHalf,
+	int ImageWidth,
+	int maxX,
+	int gaussWidth,
+	int currPos,
+	int gauss_sum,
+	int* mask,
+	BYTE* temp,
+	BYTE* imgOffset) {
+
+	for (int y = beginCopy; y < endCopy; y++) {
 		// Compute offset to the current line of source bitmap 
 		BYTE* offset1 = temp + rowPadded * y - gaussHalf * 3;
 
 		// Iterate over pixels in line
-		for (int x = 0; x < params.ImageWidth; x++)
-		{
+		for (int x = 0; x < ImageWidth; x++) {
 			// Clear total sums of R, G, B
 			double linc_b = 0;
 			double linc_g = 0;
@@ -164,11 +184,9 @@ void ComputeGaussBlur(ThreadParameters params) {
 			* If |current pixel X position - gaussHalf| is in bounds of data array
 			* (edges of the bitmap)
 			*/
-			if (currX >= 0 && currX < maxX)
-			{
+			if (currX >= 0 && currX < maxX) {
 				// For each left/right pixel surrounding the current source pixel
-				for (int k = 0; k < gaussWidth; k++)
-				{
+				for (int k = 0; k < gaussWidth; k++) {
 					/*
 					* Multiply current mask value by corresponding,
 					* surrounding pixel took into consideration of
@@ -194,8 +212,7 @@ void ComputeGaussBlur(ThreadParameters params) {
 			* If |current pixel X position - gaussHalf| is not in bounds of data array
 			* (edges of the bitmap)
 			*/
-			else
-			{
+			else {
 				/*
 				* For pixels which are so close to border of the bitmap
 				* that they cannot be averaged by the full mask,

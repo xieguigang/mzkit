@@ -33,3 +33,27 @@ Computes gaussian blur.
 Takes struct with current thread parameters.
 */
 API void ComputeGaussBlur(ThreadParameters threadParameters);
+
+
+/*
+@brief Horizontal iteration part,
+Iterate over selected range of lines
+
+@param[in] ImageWidth  ThreadParameters image width
+@param[in] rowPadded   The pixel array must begin at a memory address that is a multiple of 4 bytes
+@param[in] imgOffset   Stores current thread bitmap part offset
+*/
+void HorizontalScan(
+	int beginCopy,
+	int endCopy,
+	int rowPadded,
+	int rowPaddedDiff,
+	int gaussHalf,
+	int ImageWidth,
+	int maxX,
+	int gaussWidth,
+	int currPos,
+	int gauss_sum,
+	int* mask,
+	BYTE* temp,
+	BYTE* imgOffset);
