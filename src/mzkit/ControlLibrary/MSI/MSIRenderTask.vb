@@ -43,7 +43,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
-Module GaussTask
+Public Module GaussTask
 
     <DllImport("gauss_blur.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="ComputeGaussBlur")>
     Private Sub ComputeGaussBlurCpp(threadParameters As ThreadParameters)
