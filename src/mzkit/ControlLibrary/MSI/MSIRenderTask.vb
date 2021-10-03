@@ -45,7 +45,7 @@ Imports System.Runtime.InteropServices
 
 Module GaussTask
 
-    <DllImport("Gauss.CPP.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="ComputeGaussBlur")>
+    <DllImport("gauss_blur.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="ComputeGaussBlur")>
     Private Sub ComputeGaussBlurCpp(threadParameters As ThreadParameters)
     End Sub
 
@@ -161,8 +161,8 @@ Public Structure ThreadParameters
             $"Width: {ImgHeight}; ",
             $"Height: {NumOfImgParts}; ",
             $"NumOfParts: {CurrentImgOffset}; ",
-            $"ThreadOffset: {ImgByteArrayPtr.ToInt32()}; ",
-            $"ImgPtr: {TempImgByteArrayPtr.ToInt32()}; ",
+            $"ThreadOffset: {ImgByteArrayPtr.ToString}; ",
+            $"ImgPtr: {TempImgByteArrayPtr.ToString}; ",
             $"TempImgPtr: {ProcessId}"
         }.JoinBy(" ")
     End Function
