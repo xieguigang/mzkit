@@ -218,6 +218,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="gauss_blur.h" />
+    <ClInclude Include="console.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
@@ -243,6 +244,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="gauss_blur.cpp" />
+    <ClCompile Include="console.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

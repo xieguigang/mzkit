@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "gauss_blur.h"
 #include "utils.h"
+#include "console.h"
 
 /**
 Computes gaussian blur.
@@ -97,6 +98,8 @@ void VerticalScan(
 	// stores position (in bytes) of current position 
 	// of temporary bitmap array data
 	int currPos = 0;
+
+	console::println("Run vertical iteration part!");
 
 	for (int y = 0; y < ImageHeight; y++) {
 		int currY = y - gaussHalf;
@@ -199,6 +202,8 @@ void HorizontalScan(
 	BYTE* imgOffset) {
 
 	int currPos = 0;
+
+	console::println("Run horizontal iteration part!");
 
 	for (int y = beginCopy; y < endCopy; y++) {
 		// Compute offset to the current line of source bitmap 
