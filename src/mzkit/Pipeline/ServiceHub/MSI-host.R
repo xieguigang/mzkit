@@ -7,4 +7,6 @@ imports "app" from "ServiceHub";
 [@type "integer"]
 const debugPort as string = ?"--debug" || NULL;
 
+options(memory.load = "max");
+
 app::run(service = "MS-Imaging", debugPort = debugPort);

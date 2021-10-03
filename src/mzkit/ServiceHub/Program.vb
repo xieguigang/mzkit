@@ -48,6 +48,13 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <Package("app")>
 Module Program
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="service"></param>
+    ''' <param name="debugPort">
+    ''' --debug 33361
+    ''' </param>
     <ExportAPI("run")>
     Public Sub Main(Optional service As String = "MS-Imaging", Optional debugPort As Integer? = Nothing)
         Select Case service.ToLower

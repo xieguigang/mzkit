@@ -79,6 +79,10 @@ Module ServiceHub
     End Property
 
     Public MessageCallback As Action(Of String)
+
+    ''' <summary>
+    ''' --debug --port=33361
+    ''' </summary>
     Public debugPort As Integer?
 
     Public Sub StartMSIService()
