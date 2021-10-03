@@ -18,17 +18,12 @@ void ComputeGaussBlur(ThreadParameters argv) {
 	// must be odd
 	const int gaussWidth = argv.GaussMaskSize;
 	// Compute specific row of a pascal triangle
-	int* mask = ComputePascalRow(gaussWidth - 1);
+	int* mask = ComputePascalRow(gaussWidth - 1, gaussWidth);
 	// Compute gauss mask sum
-	int gauss_sum = 0;
-
-	for (int i = 0; i < gaussWidth; i++) {
-		gauss_sum += mask[i];
-	}
-
+	int gauss_sum = mask[gaussWidth];
 	// stores position (in bytes) of current position 
-    // of temporary bitmap array data
-	int currPos = 0; 
+	// of temporary bitmap array data
+	int currPos = 0;
 	int maxY = argv.ImageHeight - gaussWidth + 1;
 
 	// Stores current thread bitmap part offset
@@ -39,8 +34,7 @@ void ComputeGaussBlur(ThreadParameters argv) {
 	*/
 
 	// Iterate over lines
-	for (int y = 0; y < argv.ImageHeight; y++)
-	{
+	for (int y = 0; y < argv.ImageHeight; y++) {
 		int currY = y - gaussHalf;
 
 		// Compute offset to the current line of source bitmap 
@@ -51,7 +45,6 @@ void ComputeGaussBlur(ThreadParameters argv) {
 		* (edges of the bitmap)
 		*/
 		if (currY >= 0 && currY < maxY) {
-
 			// Iterate over pixels in line
 			for (int x = 0; x < argv.ImageWidth; x++) {
 
@@ -64,8 +57,7 @@ void ComputeGaussBlur(ThreadParameters argv) {
 				double linc_r = 0;
 
 				// For each up/down pixel surrounding the current source pixel
-				for (int k = 0; k < gaussWidth; k++)
-				{
+				for (int k = 0; k < gaussWidth; k++) {
 					/*
 					* Multiply current mask value by corresponding,
 					* surrounding pixel took into consideration of
@@ -119,8 +111,6 @@ void ComputeGaussBlur(ThreadParameters argv) {
 		currPos += rowPaddedDiff;
 	}
 
-	currPos = 0;
-
 	int maxX = argv.ImageWidth - gaussWidth + 1;
 	int beginCopy = 0;
 	int endCopy = argv.ImageHeight;
@@ -138,7 +128,7 @@ void ComputeGaussBlur(ThreadParameters argv) {
 	}
 
 	// Horizontal iteration part
-	HorizontalScan(beginCopy, endCopy, rowPadded, rowPaddedDiff, gaussHalf, argv.ImageWidth, maxX, gaussWidth, currPos, gauss_sum, mask, temp, imgOffset);
+	HorizontalScan(beginCopy, endCopy, rowPadded, rowPaddedDiff, gaussHalf, argv.ImageWidth, maxX, gaussWidth, gauss_sum, mask, temp, imgOffset);
 }
 
 /*
@@ -158,11 +148,12 @@ void HorizontalScan(
 	int ImageWidth,
 	int maxX,
 	int gaussWidth,
-	int currPos,
 	int gauss_sum,
 	int* mask,
 	BYTE* temp,
 	BYTE* imgOffset) {
+
+	int currPos = 0;
 
 	for (int y = beginCopy; y < endCopy; y++) {
 		// Compute offset to the current line of source bitmap 

@@ -52,7 +52,6 @@ void HorizontalScan(
 	int ImageWidth,
 	int maxX,
 	int gaussWidth,
-	int currPos,
 	int gauss_sum,
 	int* mask,
 	BYTE* temp,
