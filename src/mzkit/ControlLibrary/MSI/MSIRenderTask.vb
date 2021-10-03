@@ -69,7 +69,12 @@ Public Module GaussTask
         Dim sumOfOffsetLines = 0
 
         For i = 0 To threadId
-            Dim numOfLinesOfCurrentThread = ComputeNumberOfLinesPerThread(threadId:=i, numOfThreads:=generatorParams.NumberOfThreads, gaussMaskSize:=generatorParams.GaussMaskSize, imgHeight:=imageSizes.Height)
+            Dim numOfLinesOfCurrentThread = ComputeNumberOfLinesPerThread(
+                threadId:=i,
+                numOfThreads:=generatorParams.NumberOfThreads,
+                gaussMaskSize:=generatorParams.GaussMaskSize,
+                imgHeight:=imageSizes.Height
+            )
 
             If i = threadId Then
                 currentThreadImgHeight = numOfLinesOfCurrentThread
@@ -101,7 +106,7 @@ Public Module GaussTask
     Public Function RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5) As Image
         Dim bytes As Byte() = bitmapBuffer(image)
         Dim generatorParams As New GeneratorParameters With {.BlurLevel = BlurLevel, .GaussMaskSize = GaussMaskSize, .NumberOfThreads = 1}
-        Dim currentThreadParams = ComputeThreadParams(0, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
+        Dim currentThreadParams As ThreadParameters = ComputeThreadParams(0, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
         Dim rowPadded = (currentThreadParams.ImgWidth * 3 + 3) And Not 3
 
         'tmpArray = New Byte(currentThreadParams.ImgHeight * rowPadded - 1) {}
@@ -157,13 +162,13 @@ Public Structure ThreadParameters
     Public Overrides Function ToString() As String
         Return {
             $"ProcessID: {IdOfImgPart}; ",
-            $"ThreadID: {ImgWidth}; ",
-            $"Width: {ImgHeight}; ",
-            $"Height: {NumOfImgParts}; ",
-            $"NumOfParts: {CurrentImgOffset}; ",
-            $"ThreadOffset: {ImgByteArrayPtr.ToString}; ",
-            $"ImgPtr: {TempImgByteArrayPtr.ToString}; ",
-            $"TempImgPtr: {ProcessId}"
+            $"ThreadID: {ProcessId}; ",
+            $"Width: {ImgWidth}; ",
+            $"Height: {ImgHeight}; ",
+            $"NumOfParts: {NumOfImgParts}; ",
+            $"ThreadOffset: {CurrentImgOffset}; ",
+            $"ImgPtr: {ImgByteArrayPtr.ToString}; ",
+            $"TempImgPtr: {TempImgByteArrayPtr.ToString}"
         }.JoinBy(" ")
     End Function
 End Structure

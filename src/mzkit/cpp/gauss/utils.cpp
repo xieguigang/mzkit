@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "console.h"
 
 int* ComputePascalRow(int n, int gaussWidth) {
 	// the last element of the array is gauss sum value
@@ -25,6 +26,9 @@ int* ComputePascalRow(int n, int gaussWidth) {
 	}
 
 	mask[n + 1] = gauss_sum;
+
+	console::println("gauss width value: ");
+	console::println(std::to_string(mask[n + 1]).c_str());
 
 	return mask;
 }

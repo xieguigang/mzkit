@@ -27,6 +27,10 @@ void ComputeGaussBlur(ThreadParameters argv) {
 	// Stores current thread bitmap part offset
 	BYTE* imgOffset = &argv.ImgByteArrayPtr[argv.CurrentImgOffset];
 
+	console::println("processing of image with size in pixels:");
+	console::println(std::to_string(argv.ImageWidth).c_str());
+	console::println(std::to_string(argv.ImageHeight).c_str());
+
 	// Vertical iteration part
 	VerticalScan(
 		argv.ImageWidth,
@@ -99,10 +103,12 @@ void VerticalScan(
 	// of temporary bitmap array data
 	int currPos = 0;
 
-	console::println("Run vertical iteration part!");
+	console::println("Run vertical iteration part:");
 
 	for (int y = 0; y < ImageHeight; y++) {
 		int currY = y - gaussHalf;
+
+		console::println(std::to_string(y).c_str());
 
 		// Compute offset to the current line of source bitmap 
 		BYTE* offset1 = imgOffset + rowPadded * currY;
@@ -204,6 +210,10 @@ void HorizontalScan(
 	int currPos = 0;
 
 	console::println("Run horizontal iteration part!");
+	console::println("begin copy:");
+	console::println(std::to_string(beginCopy).c_str());
+	console::println("end copy:");
+	console::println(std::to_string(endCopy).c_str());
 
 	for (int y = beginCopy; y < endCopy; y++) {
 		// Compute offset to the current line of source bitmap 
