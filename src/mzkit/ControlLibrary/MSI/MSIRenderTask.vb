@@ -95,22 +95,33 @@ Module GaussTask
         End Using
     End Function
 
+    ' Dim tmpArray As Byte()
+
     <Extension>
     Public Function RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5) As Image
         Dim bytes As Byte() = bitmapBuffer(image)
         Dim generatorParams As New GeneratorParameters With {.BlurLevel = BlurLevel, .GaussMaskSize = GaussMaskSize, .NumberOfThreads = 1}
         Dim currentThreadParams = ComputeThreadParams(0, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
         Dim rowPadded = (currentThreadParams.ImgWidth * 3 + 3) And Not 3
-        Dim tmpArray = New Byte(currentThreadParams.ImgHeight * rowPadded - 1) {}
-        Dim imgArrayPtr = Marshal.ReadIntPtr(bytes, 0)
-        Dim tmpArrayPtr = Marshal.ReadIntPtr(tmpArray, 0)
 
-        currentThreadParams.ImgByteArrayPtr = imgArrayPtr + 54
-        currentThreadParams.TempImgByteArrayPtr = tmpArrayPtr
+        'tmpArray = New Byte(currentThreadParams.ImgHeight * rowPadded - 1) {}
+
+        'For i As Integer = 0 To tmpArray.Length - 1
+        '    tmpArray(i) = 0
+        'Next
+
+        Dim imgArrayPtr = Microsoft.VisualBasic.Emit.Marshal.MarshalAs(Of Byte)(bytes)
+        Dim tmpArrayPtr = Microsoft.VisualBasic.Emit.Marshal.AllocHGlobal(Of Byte)(currentThreadParams.ImgHeight * rowPadded)
+
+        currentThreadParams.ImgByteArrayPtr = imgArrayPtr.Scan0 + 54
+        currentThreadParams.TempImgByteArrayPtr = tmpArrayPtr.Scan0
 
         Console.WriteLine("Start {0}", currentThreadParams)
 
         ComputeGaussBlurCpp(currentThreadParams)
+
+        Call tmpArrayPtr.Dispose()
+        Call imgArrayPtr.Dispose()
 
         Using buffer As New MemoryStream(bytes)
             Return Image.FromStream(buffer)
