@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::cb2dc1a4fc47e9ea3684d9051513bab3, src\mzkit\mzkit\application\ApplicationEvents.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MyApplication
-    ' 
-    '         Properties: host, LogForm, mzkitRawViewer, REngine
-    ' 
-    '         Function: GetSplashScreen
-    ' 
-    '         Sub: doRunScript, doRunScriptWithSpecialCommand, ExecuteRScript, handleResult, InitializeREngine
-    '              InstallPackageRelease, LogText, MyApplication_Shutdown, MyApplication_Startup, MyApplication_UnhandledException
-    '              RegisterConsole, RegisterHost, RegisterOutput, RegisterPlot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MyApplication
+' 
+'         Properties: host, LogForm, mzkitRawViewer, REngine
+' 
+'         Function: GetSplashScreen
+' 
+'         Sub: doRunScript, doRunScriptWithSpecialCommand, ExecuteRScript, handleResult, InitializeREngine
+'              InstallPackageRelease, LogText, MyApplication_Shutdown, MyApplication_Startup, MyApplication_UnhandledException
+'              RegisterConsole, RegisterHost, RegisterOutput, RegisterPlot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -334,6 +335,14 @@ Type 'q()' to quit R.
 
         Friend Shared afterLoad As Action
 
+        <DllImport("kernel32.dll", CharSet:=CharSet.Unicode, SetLastError:=True)>
+        Public Shared Function SetDllDirectory(lpPathName As String) As Boolean
+        End Function
+
+        <DllImport("kernel32", SetLastError:=True)>
+        Public Shared Function LoadLibrary(lpFileName As String) As IntPtr
+        End Function
+
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Dim cli = App.CommandLine
 
@@ -344,6 +353,8 @@ Type 'q()' to quit R.
                     ServiceHub.debugPort = cli.GetInt32("--port")
                 End If
             End If
+
+            Call SetDllDirectory($"{App.HOME}/tools/cpp/")
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
