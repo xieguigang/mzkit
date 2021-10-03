@@ -55,4 +55,26 @@ void HorizontalScan(
 	int gauss_sum,
 	int* mask,
 	BYTE* temp,
-	BYTE* imgOffset);
+	BYTE* imgOffset
+);
+
+/*
+Vertical iteration part
+Iterate over lines
+
+@param ImageHeight   argv ImageHeight
+
+*/
+void VerticalScan(
+	int ImageWidth,
+	int ImageHeight,
+	int gaussWidth,
+	int gaussHalf,
+	int gauss_sum,
+	int rowPadded,
+	int rowPaddedDiff,
+	int maxY,
+	BYTE* imgOffset,
+	BYTE* temp,
+	int* mask
+);
