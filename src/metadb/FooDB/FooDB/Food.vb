@@ -94,7 +94,7 @@ Namespace TMIC.FooDB
             End Function
 
             Public Function TryParse(cell As String) As Object Implements IParser.TryParse
-                Return CType(cell, DoubleRange)
+                Return DoubleRange.TryParse(cell)
             End Function
         End Class
     End Class
