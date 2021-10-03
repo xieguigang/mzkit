@@ -87,37 +87,37 @@ Module GaussTask
         }
     End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="currentThreadParams"></param>
-    Public Sub RunUnsafeImageGenerationCode(currentThreadParams As ThreadParameters, image As Image)
+    Private Function bitmapBuffer(image As Image) As Byte()
+        Using buffer As New MemoryStream
+            Call image.Save(buffer, ImageFormat.Bmp)
+            Return buffer.ToArray
+        End Using
+    End Function
+
+    Public Sub RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5)
+        Dim bytes As Byte() = bitmapBuffer(image)
+        Dim generatorParams As New GeneratorParameters With {.BlurLevel = BlurLevel, .GaussMaskSize = GaussMaskSize, .NumberOfThreads = 1}
+        Dim currentThreadParams = ComputeThreadParams(1, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
         Dim rowPadded = (currentThreadParams.ImgWidth * 3 + 3) And Not 3
         Dim tmpArray = New Byte(currentThreadParams.ImgHeight * rowPadded - 1) {}
-        Dim buffer As New MemoryStream
-
-        Call image.Save(buffer, ImageFormat.Bmp)
-
-        Dim bytes As Byte() = buffer.ToArray
         Dim imgArrayPtr = Marshal.ReadIntPtr(bytes, 0)
         Dim tmpArrayPtr = Marshal.ReadIntPtr(tmpArray, 0)
 
         currentThreadParams.ImgByteArrayPtr = imgArrayPtr + 54
         currentThreadParams.TempImgByteArrayPtr = tmpArrayPtr
 
-        System.Console.WriteLine("Start {0}", currentThreadParams)
+        Console.WriteLine("Start {0}", currentThreadParams)
 
         ComputeGaussBlurCpp(currentThreadParams)
-
     End Sub
 
 End Module
 
 Public Class GeneratorParameters
 
-    Public Property NumberOfThreads As Integer
-    Public Property BlurLevel As Integer
-    Public Property GaussMaskSize As Integer
+    Public Property NumberOfThreads As Integer = 1
+    Public Property BlurLevel As Integer = 20
+    Public Property GaussMaskSize As Integer = 5
 
     Public Overrides Function ToString() As String
         Return String.Format("NumOfThreads: {0}, BlurLvl: {1}", NumberOfThreads, BlurLevel)
@@ -161,7 +161,7 @@ Public Structure Size(Of T As {Structure, System.IConvertible})
         Me.Height = height
     End Sub
 
-    Public Function GetLoadedImageSizes(buffer As Byte()) As Size(Of Integer)
+    Public Shared Function GetLoadedImageSizes(buffer As Byte()) As Size(Of Integer)
         Dim width, height As Integer
 
         width = BitConverter.ToInt32(buffer, 18)
