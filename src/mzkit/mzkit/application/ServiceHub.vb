@@ -90,6 +90,9 @@ Module ServiceHub
 
         MSI_pipe = Global.ServiceHub.Protocols.StartServer(RscriptPipelineTask.GetRScript("ServiceHub/MSI-host.R"), MSI_service, debugPort)
 
+        ' hook message event handler
+        AddHandler MSI_pipe.SetMessage, AddressOf MSI_pipe_SetMessage
+
         If MSI_service <= 0 Then
             Call MyApplication.host.showStatusMessage("MS-Imaging service can not start!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
@@ -210,7 +213,12 @@ Module ServiceHub
     Public Sub CloseMSIEngine()
         If MSI_service > 0 Then
             Dim request As New RequestStream(MSI.Protocol, ServiceProtocol.ExitApp, Encoding.UTF8.GetBytes("shut down!"))
+
             Call handleServiceRequest(request)
+
+            ' detach message event handler
+            RemoveHandler MSI_pipe.SetMessage, AddressOf MSI_pipe_SetMessage
+
             MSI_pipe = Nothing
             MSI_service = -1
         End If
