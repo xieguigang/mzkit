@@ -179,7 +179,7 @@ Module ServiceHub
 
         If output Is Nothing Then
             Return Nothing
-        ElseIf HTTP_RFC.RFC_OK <> output.Protocol Then
+        ElseIf HTTP_RFC.RFC_OK <> output.Protocol AndAlso output.Protocol <> 0 Then
             Call MyApplication.host.showStatusMessage("MSI service backend panic.", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
