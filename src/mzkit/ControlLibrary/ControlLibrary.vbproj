@@ -264,14 +264,6 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
-      <Project>{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}</Project>
-      <Name>MsImaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Task\Task.vbproj">
-      <Project>{6e5bca87-358e-4ba5-b279-de17afa52c5c}</Project>
-      <Name>Task</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
