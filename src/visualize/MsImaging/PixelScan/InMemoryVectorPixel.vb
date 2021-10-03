@@ -117,6 +117,10 @@ Namespace Pixel
         End Function
 
         Public Shared Function Parse(buffer As Byte()) As InMemoryVectorPixel
+            If buffer.Length = 0 Then
+                Return Nothing
+            End If
+
             Using file As New BinaryDataReader(New MemoryStream(buffer))
                 Dim x As Integer = file.ReadInt32
                 Dim y As Integer = file.ReadInt32
