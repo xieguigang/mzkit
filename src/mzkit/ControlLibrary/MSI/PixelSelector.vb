@@ -1327,13 +1327,6 @@ Public Class PixelSelector
             Return
         End If
 
-        Dim sourceImage As New Bitmap(Me.orginal_image)
-        Dim filter As New GaussianSmooth
-
-        For i As Integer = 0 To value
-            sourceImage = filter.Smooth(sourceImage)
-        Next
-
-        picCanvas.BackgroundImage = sourceImage
+        picCanvas.BackgroundImage = orginal_image.RunUnsafeImageGenerationCode(BlurLevel:=value)
     End Sub
 End Class

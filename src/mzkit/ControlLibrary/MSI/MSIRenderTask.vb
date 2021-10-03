@@ -40,6 +40,7 @@
 
 Imports System.Drawing.Imaging
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 Module GaussTask
@@ -94,7 +95,8 @@ Module GaussTask
         End Using
     End Function
 
-    Public Sub RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5)
+    <Extension>
+    Public Function RunUnsafeImageGenerationCode(image As Image, Optional BlurLevel As Integer = 1, Optional GaussMaskSize As Integer = 5) As Image
         Dim bytes As Byte() = bitmapBuffer(image)
         Dim generatorParams As New GeneratorParameters With {.BlurLevel = BlurLevel, .GaussMaskSize = GaussMaskSize, .NumberOfThreads = 1}
         Dim currentThreadParams = ComputeThreadParams(1, generatorParams, Size(Of Integer).GetLoadedImageSizes(bytes))
@@ -109,7 +111,11 @@ Module GaussTask
         Console.WriteLine("Start {0}", currentThreadParams)
 
         ComputeGaussBlurCpp(currentThreadParams)
-    End Sub
+
+        Using buffer As New MemoryStream(bytes)
+            Return Image.FromStream(buffer)
+        End Using
+    End Function
 
 End Module
 
