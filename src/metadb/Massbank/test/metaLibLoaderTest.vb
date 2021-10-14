@@ -54,7 +54,7 @@ Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Module metaLibLoaderTest
 
     Sub Main()
-
+        Call readRepotest()
         Call lipidmapsRepository()
 
         Dim libs = LoadUltraLargeXMLDataSet(Of MetaLib)(path:="D:\Database\CID-Synonym-filtered\CID-Synonym-filtered.metlib_kegg.Xml").ToArray
@@ -63,6 +63,14 @@ Module metaLibLoaderTest
 
 
         Pause()
+    End Sub
+
+    Sub readRepotest()
+        Using file = "D:\mzkit\Rscript\Library\mzkit_app\data\LIPIDMAPS.msgpack".Open(IO.FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim repo = file.ReadRepository
+
+            Pause()
+        End Using
     End Sub
 
     Sub lipidmapsRepository()
