@@ -68,6 +68,10 @@ Module metaLibLoaderTest
     Sub lipidmapsRepository()
         Dim sdffile = SDF.SDF.IterateParser("C:\Users\Administrator\Downloads\structures.sdf", parseStruct:=False).CreateMeta.ToArray
 
+        Using file = "D:\mzkit\Rscript\Library\mzkit_app\data\LIPIDMAPS.msgpack".Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call sdffile.WriteRepository(file)
+        End Using
+
         Pause()
     End Sub
 End Module
