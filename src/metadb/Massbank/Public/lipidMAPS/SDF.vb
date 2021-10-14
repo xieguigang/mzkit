@@ -53,6 +53,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace LipidMaps
@@ -60,9 +61,9 @@ Namespace LipidMaps
     ''' <summary>
     ''' 物质的注释信息
     ''' </summary>
-    Public Class MetaData : Implements IExactmassProvider
+    Public Class MetaData : Implements IExactmassProvider, IReadOnlyId
 
-        <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String
+        <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String Implements IReadOnlyId.Identity
         <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String
         <MessagePackMember(2, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SUBSTANCE_URL As String
         <MessagePackMember(3, NilImplication:=NilImplication.MemberDefault)> Public Property LIPID_MAPS_CMPD_URL As String
