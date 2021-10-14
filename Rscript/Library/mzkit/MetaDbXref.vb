@@ -51,6 +51,7 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
@@ -58,6 +59,25 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("metadb")>
 Module MetaDbXref
+
+    Sub New()
+        Call makeDataframe.addHandler(GetType(MzQuery()), AddressOf createTable)
+    End Sub
+
+    Private Function createTable(query As MzQuery(), args As list, env As Environment) As dataframe
+        Dim columns As New Dictionary(Of String, Array) From {
+            {NameOf(MzQuery.unique_id), query.Select(Function(q) q.unique_id).ToArray},
+            {NameOf(MzQuery.mz), query.Select(Function(q) q.mz).ToArray},
+            {NameOf(MzQuery.ppm), query.Select(Function(q) q.ppm).ToArray},
+            {NameOf(MzQuery.precursorType), query.Select(Function(q) q.precursorType).ToArray},
+            {NameOf(MzQuery.score), query.Select(Function(q) q.score).ToArray}
+        }
+
+        Return New dataframe With {
+            .columns = columns,
+            .rownames = columns!unique_id
+        }
+    End Function
 
     ''' <summary>
     ''' a generic function for handle ms1 search
@@ -93,6 +113,23 @@ Module MetaDbXref
         End If
 
         Return metabolites.getError
+    End Function
+
+    <ExportAPI("ms1_search")>
+    Public Function ms1Search(engine As IMzQuery, mz As Double()) As Object
+        If mz.IsNullOrEmpty Then
+            Return Nothing
+        ElseIf mz.Length = 1 Then
+            Return engine.QueryByMz(mz(Scan0)).ToArray
+        Else
+            Return New list With {
+                .slots = mz _
+                    .ToDictionary(Function(mzi) mzi.ToString,
+                                  Function(mzi)
+                                      Return CObj(engine.QueryByMz(mzi).ToArray)
+                                  End Function)
+            }
+        End If
     End Function
 
 End Module

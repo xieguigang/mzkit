@@ -9,7 +9,13 @@ Imports any = Microsoft.VisualBasic.Scripting
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
 
-Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider})
+Public Interface IMzQuery
+
+    Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
+
+End Interface
+
+Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implements IMzQuery
 
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
@@ -49,7 +55,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider})
     ''' <returns>
     ''' 函数返回符合条件的kegg代谢物编号
     ''' </returns>
-    Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
+    Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim query As New MassIndexKey With {.mz = mz}
         Dim result As Compound() = massIndex.Find(query)?.Members
 
