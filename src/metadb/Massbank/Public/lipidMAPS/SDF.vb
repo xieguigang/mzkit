@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
@@ -59,7 +60,7 @@ Namespace LipidMaps
     ''' <summary>
     ''' 物质的注释信息
     ''' </summary>
-    Public Class MetaData
+    Public Class MetaData : Implements IExactmassProvider
 
         <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String
         <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String
@@ -73,7 +74,7 @@ Namespace LipidMaps
         <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String
         <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
         <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String
-        <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double
+        <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double Implements IExactmassProvider.ExactMass
         <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String
         <MessagePackMember(14, NilImplication:=NilImplication.MemberDefault)> Public Property LIPIDBANK_ID As String
         <MessagePackMember(15, NilImplication:=NilImplication.MemberDefault)> Public Property SWISSLIPIDS_ID As String
