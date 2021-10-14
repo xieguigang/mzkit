@@ -51,4 +51,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <Package("metadb")>
 Module MetaDbXref
 
+    Public Function CreateMs1Handler()
+
+    End Function
+
 End Module
