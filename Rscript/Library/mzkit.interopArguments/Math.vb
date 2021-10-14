@@ -45,6 +45,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
@@ -81,7 +82,17 @@ Module Math
         Dim data As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(val, env, suppress:=True)
 
         If Not data.isError Then
-
+            Return data.populates(Of MzCalculator)(env).ToArray
         End If
+
+        data = pipeline.TryCreatePipeline(Of String)(val, env, suppress:=True)
+
+        If Not data.isError Then
+            Return data.populates(Of String)(env) _
+                .ToArray _
+                .DoCall(AddressOf Provider.Calculators)
+        End If
+
+        Throw New NotImplementedException
     End Function
 End Module
