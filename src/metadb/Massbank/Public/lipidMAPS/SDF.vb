@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::6d51390fa8d2b9fc759ce52fcd9c19ef, src\metadb\Massbank\Public\lipidMAPS\SDF.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MetaData
-    ' 
-    '         Properties: ABBREVIATION, CATEGORY, CHEBI_ID, CLASS_LEVEL4, COMMON_NAME
-    '                     EXACT_MASS, FORMULA, HMDB_ID, HMDBID, INCHI
-    '                     INCHI_KEY, KEGG_ID, LIPID_MAPS_CMPD_URL, LIPIDBANK_ID, LM_ID
-    '                     MAIN_CLASS, METABOLOMICS_ID, NAME, PLANTFA_ID, PUBCHEM_CID
-    '                     PUBCHEM_SID, PUBCHEM_SUBSTANCE_URL, SMILES, STATUS, SUB_CLASS
-    '                     SWISSLIPIDS_ID, SYNONYMS, SYSTEMATIC_NAME
-    ' 
-    '         Function: Data, EqualsAny, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MetaData
+' 
+'         Properties: ABBREVIATION, CATEGORY, CHEBI_ID, CLASS_LEVEL4, COMMON_NAME
+'                     EXACT_MASS, FORMULA, HMDB_ID, HMDBID, INCHI
+'                     INCHI_KEY, KEGG_ID, LIPID_MAPS_CMPD_URL, LIPIDBANK_ID, LM_ID
+'                     MAIN_CLASS, METABOLOMICS_ID, NAME, PLANTFA_ID, PUBCHEM_CID
+'                     PUBCHEM_SID, PUBCHEM_SUBSTANCE_URL, SMILES, STATUS, SUB_CLASS
+'                     SWISSLIPIDS_ID, SYNONYMS, SYSTEMATIC_NAME
+' 
+'         Function: Data, EqualsAny, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace LipidMaps
 
@@ -60,42 +61,42 @@ Namespace LipidMaps
     ''' </summary>
     Public Class MetaData
 
-        Public Property NAME As String
-        Public Property PUBCHEM_SUBSTANCE_URL As String
-        Public Property LIPID_MAPS_CMPD_URL As String
-        Public Property LM_ID As String
-        Public Property PLANTFA_ID As String
-        Public Property COMMON_NAME As String
-        Public Property SYSTEMATIC_NAME As String
-        Public Property SYNONYMS As String
-        Public Property ABBREVIATION As String
-        Public Property CATEGORY As String
-        Public Property MAIN_CLASS As String
-        Public Property SUB_CLASS As String
-        Public Property EXACT_MASS As String
-        Public Property FORMULA As String
-        Public Property LIPIDBANK_ID As String
-        Public Property SWISSLIPIDS_ID As String
-        Public Property HMDB_ID As String
+        <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String
+        <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String
+        <MessagePackMember(2, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SUBSTANCE_URL As String
+        <MessagePackMember(3, NilImplication:=NilImplication.MemberDefault)> Public Property LIPID_MAPS_CMPD_URL As String
+        <MessagePackMember(4, NilImplication:=NilImplication.MemberDefault)> Public Property PLANTFA_ID As String
+        <MessagePackMember(5, NilImplication:=NilImplication.MemberDefault)> Public Property COMMON_NAME As String
+        <MessagePackMember(6, NilImplication:=NilImplication.MemberDefault)> Public Property SYSTEMATIC_NAME As String
+        <MessagePackMember(7, NilImplication:=NilImplication.MemberDefault)> Public Property SYNONYMS As String
+        <MessagePackMember(8, NilImplication:=NilImplication.MemberDefault)> Public Property ABBREVIATION As String
+        <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String
+        <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
+        <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String
+        <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double
+        <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String
+        <MessagePackMember(14, NilImplication:=NilImplication.MemberDefault)> Public Property LIPIDBANK_ID As String
+        <MessagePackMember(15, NilImplication:=NilImplication.MemberDefault)> Public Property SWISSLIPIDS_ID As String
+        <MessagePackMember(16, NilImplication:=NilImplication.MemberDefault)> Public Property HMDB_ID As String
         ''' <summary>
         ''' PubChem Substance accession identifier (SID)
         ''' </summary>
         ''' <returns></returns>
-        Public Property PUBCHEM_SID As String
+        <MessagePackMember(17, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SID As String
         ''' <summary>
         ''' PubChem Compound accession identifier (CID)
         ''' </summary>
         ''' <returns></returns>
-        Public Property PUBCHEM_CID As String
-        Public Property KEGG_ID As String
-        Public Property HMDBID As String
-        Public Property CHEBI_ID As String
-        Public Property INCHI_KEY As String
-        Public Property INCHI As String
-        Public Property SMILES As String
-        Public Property STATUS As String
-        Public Property CLASS_LEVEL4 As String
-        Public Property METABOLOMICS_ID As String
+        <MessagePackMember(18, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_CID As String
+        <MessagePackMember(19, NilImplication:=NilImplication.MemberDefault)> Public Property KEGG_ID As String
+        <MessagePackMember(20, NilImplication:=NilImplication.MemberDefault)> Public Property HMDBID As String
+        <MessagePackMember(21, NilImplication:=NilImplication.MemberDefault)> Public Property CHEBI_ID As String
+        <MessagePackMember(22, NilImplication:=NilImplication.MemberDefault)> Public Property INCHI_KEY As String
+        <MessagePackMember(23, NilImplication:=NilImplication.MemberDefault)> Public Property INCHI As String
+        <MessagePackMember(24, NilImplication:=NilImplication.MemberDefault)> Public Property SMILES As String
+        <MessagePackMember(25, NilImplication:=NilImplication.MemberDefault)> Public Property STATUS As String
+        <MessagePackMember(26, NilImplication:=NilImplication.MemberDefault)> Public Property CLASS_LEVEL4 As String
+        <MessagePackMember(27, NilImplication:=NilImplication.MemberDefault)> Public Property METABOLOMICS_ID As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Data(sdf As SDF) As MetaData
@@ -156,7 +157,7 @@ Namespace LipidMaps
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return COMMON_NAME
+            Return $"[{CATEGORY}] {SYSTEMATIC_NAME}"
         End Function
     End Class
 End Namespace

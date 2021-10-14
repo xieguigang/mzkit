@@ -55,7 +55,7 @@ Namespace SDF
     ''' <summary>
     ''' An internal file parser module
     ''' </summary>
-    Module SDFParser
+    Public Module SDFParser
 
         ''' <summary>
         ''' 解析单个的SDF文件

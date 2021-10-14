@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::f4b627aae3525a0143811a211b968b1d, Rscript\Library\mzkit\Massbank.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Massbank
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver, GlycosylTokens
-    '               hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, name2, readMoNA
-    '               readSDF, saveIDMapping, toLipidMaps
-    ' 
-    ' /********************************************************************************/
+' Module Massbank
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver, GlycosylTokens
+'               hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, name2, readMoNA
+'               readSDF, saveIDMapping, toLipidMaps
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
@@ -61,6 +62,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChEBIRepo = SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.DATA
@@ -125,7 +127,10 @@ Module Massbank
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("read.SDF")>
-    Public Function readSDF(file As String, Optional parseStruct As Boolean = True, Optional env As Environment = Nothing) As pipeline
+    Public Function readSDF(file As String,
+                            Optional parseStruct As Boolean = True,
+                            Optional env As Environment = Nothing) As pipeline
+
         If Not file.FileExists Then
             Return Internal.debug.stop({$"the required file is not exists on your file system!", $"file: {file}"}, env)
         Else
@@ -134,9 +139,44 @@ Module Massbank
     End Function
 
     ''' <summary>
+    ''' save lipidmaps data repository.
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>d
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.lipidmaps")>
+    Public Function writeLipidMapsRepo(<RRawVectorArgument> lipidmaps As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim lipidstream As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+        Dim output = GetFileStream(file, IO.FileAccess.Write, env)
+
+        If output Like GetType(Message) Then
+            Return output.TryCast(Of Message)
+        ElseIf lipidstream.isError Then
+            Return lipidstream.getError
+        End If
+
+        Return lipidstream.populates(Of LipidMaps.MetaData)(env).WriteRepository(output.TryCast(Of Stream))
+    End Function
+
+    <ExportAPI("read.lipidmaps")>
+    <RApiReturn(GetType(LipidMaps.MetaData))>
+    Public Function readLipidMapsRepo(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = GetFileStream(file, FileAccess.Read, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        Return buffer.TryCast(Of Stream).ReadRepository
+    End Function
+
+    ''' <summary>
     ''' populate lipidmaps meta data objects from the loaded sdf data stream
     ''' </summary>
-    ''' <param name="sdf"></param>
+    ''' <param name="sdf">
+    ''' a sequence of sdf molecular data which can be read from the ``read.SDF`` function. 
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.lipidmaps")>
