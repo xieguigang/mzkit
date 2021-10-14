@@ -157,7 +157,7 @@ Namespace LipidMaps
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return COMMON_NAME
+            Return $"[{CATEGORY}] {SYSTEMATIC_NAME}"
         End Function
     End Class
 End Namespace
