@@ -10,4 +10,3 @@ const lipidmaps_repo as function() {
 
     repo;
 }
-
