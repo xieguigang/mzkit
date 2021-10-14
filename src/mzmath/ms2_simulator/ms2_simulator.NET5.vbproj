@@ -135,7 +135,6 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\Massbank\massbank-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
