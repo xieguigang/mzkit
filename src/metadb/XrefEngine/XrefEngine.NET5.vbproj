@@ -102,9 +102,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\obo_foundry-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\Massbank\massbank.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
