@@ -126,7 +126,7 @@
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
-    <ProjectReference Include="..\mzPack\mzpack-netcore5.vbproj" />
+    <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
   </ItemGroup>
 

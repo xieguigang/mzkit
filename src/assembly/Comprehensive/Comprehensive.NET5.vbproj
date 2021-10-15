@@ -123,7 +123,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\mzPack\mzpack-netcore5.vbproj" />
+    <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
   </ItemGroup>
 
