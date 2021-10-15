@@ -4,9 +4,7 @@ imports ["metadb", "massbank", "math"] from "mzkit";
 #' 
 #' @return a data seuqnece of lipidmaps metadata
 #' 
-const lipidmaps_repo as function() {
-    const filepath = system.file("data/LIPIDMAPS.msgpack", package = "mzkit");
+const lipidmaps_repo as function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit")) {
     const repo = massbank::read.lipidmaps(filepath);
-
     repo;
 }
