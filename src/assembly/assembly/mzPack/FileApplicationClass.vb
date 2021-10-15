@@ -73,6 +73,6 @@ Namespace mzData.mzWebCache
         ''' <summary>
         ''' 质谱成像
         ''' </summary>
-        <Description("616DE505-3D78-45FA-BCA7-35ECEF3FE88D")> MSI
+        <Description("616DE505-3D78-45FA-BCA7-35ECEF3FE88D")> MSImaging
     End Enum
 End Namespace
