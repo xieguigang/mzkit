@@ -52,14 +52,15 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' the binary mzpack data reader
+    ''' </summary>
     Public Class BinaryStreamReader : Implements IMagicBlock
         Implements IDisposable
 
