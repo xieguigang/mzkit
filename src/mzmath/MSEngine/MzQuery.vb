@@ -62,7 +62,7 @@ Public Structure MzQuery
     <XmlText> Public Property unique_id As String
 
     ''' <summary>
-    ''' used in <see cref="MSJointConnection"/>
+    ''' used in MSJointConnection peak list annotation.
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute> Public Property score As Double
