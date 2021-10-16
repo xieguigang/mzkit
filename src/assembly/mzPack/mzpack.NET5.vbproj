@@ -20,6 +20,9 @@
     <PackageTags>mzkit, mzpack</PackageTags>
     <AssemblyVersion>2.33.*</AssemblyVersion>
 	<Deterministic>false</Deterministic>
+	<Version>2.33.516.9870</Version>
+	<Copyright>gg.xie@bionovogene.com</Copyright>
+	<RepositoryUrl>https://github.com/xieguigang/mzkit</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
