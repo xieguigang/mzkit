@@ -156,7 +156,7 @@ Module MetaDbXref
                         Dim all = query.getValue(Of MzQuery())(mzi, env)
                         Dim unique As MzQuery = Nothing
 
-                        If Not all Is Nothing Then
+                        If Not all.IsNullOrEmpty Then
                             unique = all.OrderBy(Function(d) d.ppm).First
                         End If
 
