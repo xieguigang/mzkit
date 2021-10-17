@@ -44,7 +44,10 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+
+<Assembly: InternalsVisibleTo("mzkit")>
 
 ''' <summary>
 ''' query result of a ms1 m/z ion
@@ -66,6 +69,16 @@ Public Structure MzQuery
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute> Public Property score As Double
+
+    Friend ReadOnly Property isEmpty As Boolean
+        Get
+            Return mz = 0.0 AndAlso
+                ppm = 0.0 AndAlso
+                score = 0.0 AndAlso
+                precursorType.StringEmpty AndAlso
+                unique_id.StringEmpty
+        End Get
+    End Property
 
     Public Function Clone() As MzQuery
         Return New MzQuery With {
