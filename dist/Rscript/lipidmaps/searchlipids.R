@@ -13,7 +13,11 @@ for (mz in names(query)) {
 	write.csv(as.data.frame(query[[mz]]), file = `${@dir}/lipids_${mz}.csv`, row.names = FALSE);
 }
 
-print(uniqueFeatures(query));
+const table = uniqueFeatures(query) |> cbind.metainfo(engine);
+
+str(table);
+
+write.csv(table, file = `${@dir}/ms1_result.csv`);
 
 pause();
 
