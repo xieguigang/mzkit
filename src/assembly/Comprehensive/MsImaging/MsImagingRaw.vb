@@ -87,6 +87,11 @@ Namespace MsImaging
                                              correction As Correction,
                                              cutoff As RelativeIntensityCutoff,
                                              progress As RunSlavePipeline.SetMessageEventHandler) As IEnumerable(Of ScanMS1)
+            If row?.source.StringEmpty Then
+                Call progress("[warning] source file is empty!")
+                Return
+            End If
+
             Dim i As i32 = 1
             Dim y As Integer = row.source _
                 .Match("\d+") _
