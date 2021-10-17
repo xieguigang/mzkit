@@ -46,6 +46,7 @@ Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime
@@ -115,6 +116,12 @@ Module MetaDbXref
         Return metabolites.getError
     End Function
 
+    ''' <summary>
+    ''' get duplictaed raw annotation results.
+    ''' </summary>
+    ''' <param name="engine"></param>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_search")>
     Public Function ms1Search(engine As IMzQuery, mz As Double()) As Object
         If mz.IsNullOrEmpty Then
@@ -130,6 +137,62 @@ Module MetaDbXref
                                   End Function)
             }
         End If
+    End Function
+
+    ''' <summary>
+    ''' unique of the peak annotation features
+    ''' </summary>
+    ''' <param name="query"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("uniqueFeatures")>
+    <RApiReturn(GetType(dataframe))>
+    Public Function searchTable(query As list, Optional env As Environment = Nothing) As Object
+        Dim mz As String() = query.getNames
+        Dim mzquery = mz _
+            .Select(Function(mzi)
+                        ' unique of rows
+                        Dim all = query.getValue(Of MzQuery())(mzi, env)
+                        Dim unique As MzQuery = Nothing
+
+                        If Not all Is Nothing Then
+                            unique = all.OrderBy(Function(d) d.ppm).First
+                        End If
+
+                        Return New NamedValue(Of MzQuery)(mzi, unique)
+                    End Function) _
+            .ToArray
+        ' unique between features
+        ' via min ppm?
+        For i As Integer = 0 To mz.Length - 1
+            If Not mzquery(i).Value.isEmpty Then
+                For j As Integer = 0 To mz.Length - 1
+                    If i = j Then
+                        Continue For
+                    ElseIf mzquery(j).Value.unique_id = mzquery(i).Value.unique_id Then
+                        If mzquery(j).Value.ppm < mzquery(i).Value.ppm Then
+                            ' j is better
+                            mzquery(i) = Nothing
+                            Exit For
+                        Else
+                            ' i is better
+                            mzquery(j) = Nothing
+                        End If
+                    End If
+                Next
+            End If
+        Next
+
+        Return New dataframe With {
+            .rownames = mz,
+            .columns = New Dictionary(Of String, Array) From {
+                {"m/z", mzquery.Select(Function(i) i.Value.mz).ToArray},
+                {"ppm", mzquery.Select(Function(i) i.Value.ppm).ToArray},
+                {"precursor_type", mzquery.Select(Function(i) i.Value.precursorType).ToArray},
+                {"unique_id", mzquery.Select(Function(i) i.Value.unique_id).ToArray},
+                {"score", mzquery.Select(Function(i) i.Value.score).ToArray}
+            }
+        }
     End Function
 
 End Module
