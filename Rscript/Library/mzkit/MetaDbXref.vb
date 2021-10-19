@@ -173,11 +173,11 @@ Module MetaDbXref
                     ElseIf mzquery(j).Value.unique_id = mzquery(i).Value.unique_id Then
                         If mzquery(j).Value.ppm < mzquery(i).Value.ppm Then
                             ' j is better
-                            mzquery(i) = Nothing
+                            mzquery(i) = New NamedValue(Of MzQuery)(mz(i), New MzQuery With {.mz = Val(mz(i))})
                             Exit For
                         Else
                             ' i is better
-                            mzquery(j) = Nothing
+                            mzquery(j) = New NamedValue(Of MzQuery)(mz(j), New MzQuery With {.mz = Val(mz(j))})
                         End If
                     End If
                 Next
