@@ -67,13 +67,13 @@ Public Class frmFeatureSearch
             Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz.ToString("F4")})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = CInt(member.rt)})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.ppm})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.polarity})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max.ToString("G3")})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum.ToString("G3")})
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.precursor_type})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.adducts})
@@ -95,14 +95,14 @@ Public Class frmFeatureSearch
             Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz.ToString("F4")})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = CInt(member.rt)})
             ' ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
             ion.SubItems.Add(New ListViewSubItem With {.Text = PPMmethod.PPM(member.parentMz, targetMz).ToString("F2")})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.polarity})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max.ToString("G3")})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum.ToString("G3")})
 
             row.Items.Add(ion)
         Next
