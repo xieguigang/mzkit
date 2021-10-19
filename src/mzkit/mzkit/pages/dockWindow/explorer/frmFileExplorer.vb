@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 ''' <summary>
 ''' 显示一个workspace对象里面所包含有的文件列表
@@ -253,6 +254,7 @@ Public Class frmFileExplorer
         Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot, contour)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
+        Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         Call UpdateMainTitle(raw.source)
     End Sub
 

@@ -685,6 +685,7 @@ Public Class PageMzkitTools
 
         If matrix.Length = 0 Then
             max = 0
+            Call MyApplication.host.showStatusMessage($"'{name}' didn't contains any data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             max = matrix.Select(Function(a) a.intensity).Max
         End If
