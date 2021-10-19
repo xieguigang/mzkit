@@ -99,7 +99,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+    <OutputPath>../\mzkit_app\assembly\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -135,7 +135,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />

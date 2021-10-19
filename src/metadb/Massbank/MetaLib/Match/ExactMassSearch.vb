@@ -61,6 +61,10 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.Database.IO.StreamProviders.Ts
 
 Namespace MetaLib
 
+    ''' <summary>
+    ''' handler for exact mass of the metabolites annotation on MS1 level.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class ExactMassSearch(Of T As IExactmassProvider)
 
         ReadOnly index As OrderSelector(Of MassCompares)

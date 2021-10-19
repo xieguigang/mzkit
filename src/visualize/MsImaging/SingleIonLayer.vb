@@ -143,5 +143,9 @@ Public Class SingleIonLayer
             .MSILayer = pixels
         }
     End Function
+
+    Public Shared Narrowing Operator CType(ion As SingleIonLayer) As PixelData()
+        Return ion.MSILayer
+    End Operator
 End Class
 

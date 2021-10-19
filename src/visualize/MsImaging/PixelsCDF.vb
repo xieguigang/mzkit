@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::d46bd480252de04d748bb56b161f8bfd, src\visualize\MsImaging\PixelsCDF.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module PixelsCDF
-    ' 
-    '     Function: CreatePixelReader, GetMsiDimension, GetMzTolerance, LoadPixelsData
-    ' 
-    '     Sub: CreateCDF
-    ' 
-    ' /********************************************************************************/
+' Module PixelsCDF
+' 
+'     Function: CreatePixelReader, GetMsiDimension, GetMzTolerance, LoadPixelsData
+' 
+'     Sub: CreateCDF
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -129,9 +129,7 @@ Public Module PixelsCDF
     End Function
 
     <Extension>
-    Public Function CreatePixelReader(cdf As netCDFReader) As ReadRawPack
-        Dim size As Size = cdf.GetMsiDimension
-        Dim pixels As New List(Of mzPackPixel)
+    Public Iterator Function CreateMs1(cdf As netCDFReader) As IEnumerable(Of ScanMS1)
         Dim xy = cdf.LoadPixelsData.GroupBy(Function(p) p.x).ToArray
         Dim scan As ScanMS1
 
@@ -145,10 +143,24 @@ Public Module PixelsCDF
                     .meta = New Dictionary(Of String, String) From {
                         {"x", x.Key},
                         {"y", y.Key}
-                    }
+                    },
+                    .scan_id = $"[{x.Key},{y.Key}]"
                 }
-                pixels += New mzPackPixel(scan, x.Key, y.Key)
+
+                Yield scan
             Next
+        Next
+    End Function
+
+    <Extension>
+    Public Function CreatePixelReader(cdf As netCDFReader) As ReadRawPack
+        Dim size As Size = cdf.GetMsiDimension
+        Dim pixels As New List(Of mzPackPixel)
+
+        For Each scan As ScanMS1 In cdf.CreateMs1
+            With scan.GetMSIPixel
+                pixels += New mzPackPixel(scan, .X, .Y)
+            End With
         Next
 
         Return New ReadRawPack(pixels, size)

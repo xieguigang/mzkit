@@ -82,6 +82,10 @@ Namespace mzData.mzWebCache
             End Set
         End Property
 
+        ''' <summary>
+        ''' get [x, y] pixel point from the scan metadata or scan id data.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetMSIPixel() As Point
             If meta.IsNullOrEmpty Then
                 Dim pixel As String = scan_id.Match("\[\d+,\d+\]")

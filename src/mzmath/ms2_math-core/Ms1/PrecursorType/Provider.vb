@@ -182,6 +182,11 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        ''' <summary>
+        ''' get internal m/z calculator
+        ''' </summary>
+        ''' <param name="precursor_types"></param>
+        ''' <returns></returns>
         Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
             Return (Iterator Function() As IEnumerable(Of MzCalculator)
                         For Each type As String In precursor_types

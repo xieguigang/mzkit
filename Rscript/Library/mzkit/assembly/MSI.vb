@@ -90,7 +90,7 @@ Module MSI
                                             Return DirectCast(p, mzPackPixel).scan
                                         End Function) _
                                 .ToArray,
-                            .Application = FileApplicationClass.MSI,
+                            .Application = FileApplicationClass.MSImaging,
                             .source = blockList.name
                         }
                     End Function) _

@@ -70,6 +70,9 @@ Imports stdNum = System.Math
 
 Namespace Ms1.PrecursorType
 
+    ''' <summary>
+    ''' m/z calculator for a given ion precursor type
+    ''' </summary>
     Public Class MzCalculator
 
         Public Property name As String
