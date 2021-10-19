@@ -1,19 +1,19 @@
 ﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
-#if netcore5=0 then 
+#If netcore5 = 0 Then
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("assembly")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("assembly")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("The Unify Mass Spectrometry Assembly File Reader")>
+<Assembly: AssemblyDescription("The Unify Mass Spectrometry Assembly File Reader")>
+<Assembly: AssemblyCompany("BioNovoGene")>
+<Assembly: AssemblyProduct("MSAssembly")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2021")>
+<Assembly: AssemblyTrademark("mzkit")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,6 +31,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
-#end if
+<Assembly: AssemblyVersion("2.444.*")>
+<Assembly: AssemblyFileVersion("1.21.*")>
+#End If
