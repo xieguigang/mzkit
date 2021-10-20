@@ -523,9 +523,17 @@
       <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
       <Name>SMILES</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.vbproj">
+      <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>
+      <Name>metaDNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\MSEngine\MSEngine_net47.vbproj">
+      <Project>{72a79dac-5c7a-44e0-830e-ebed4bc02f22}</Project>
+      <Name>MSEngine_net47</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
       <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
