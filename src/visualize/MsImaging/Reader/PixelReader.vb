@@ -72,6 +72,15 @@ Namespace Reader
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 
+        Public Shared Function ReadDimensions(raw As IEnumerable(Of Point)) As Size
+            With raw.ToArray
+                Return New Size(
+                    width:=(Aggregate p As Point In .AsEnumerable Into Max(p.X)),
+                    height:=(Aggregate p As Point In .AsEnumerable Into Max(p.Y))
+                )
+            End With
+        End Function
+
         ''' <summary>
         ''' get pixels in region range
         ''' </summary>
