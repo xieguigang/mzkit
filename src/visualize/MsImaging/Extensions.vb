@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -157,26 +158,19 @@ Public Module Extensions
         Dim scans As New List(Of ScanMS1)
         Dim dims As New Size(graph.width, graph.height)
         Dim pixel As ScanMS1
-        Dim around As ScanMS1()
 
         For i As Integer = 1 To dims.Width
             For j As Integer = 1 To dims.Height
                 pixel = graph.GetData(i, j)
 
                 If pixel Is Nothing Then
-                    around = graph.Query(i, j, gridSize).ToArray
+                    For xi As Integer = -1 To -gridSize Step -1
+                        pixel = graph.GetData(i + xi, j)
 
-                    If around.Length > 0 Then
-                        pixel = New ScanMS1 With {
-                            .BPC = around.Select(Function(d) d.BPC).Max,
-                            .meta = New Dictionary(Of String, String) From {{"x", i}, {"y", j}},
-                            .rt = around.Select(Function(d) d.rt).Average,
-                            .scan_id = $"[MS1] [{i},{j}]",
-                            .TIC = around.Select(Function(d) d.TIC).Sum,
-                            .mz = around.Select(Function(a) a.mz).IteratesALL.ToArray,
-                            .into = around.Select(Function(a) a.into).IteratesALL.ToArray
-                        }
-                    End If
+                        If Not pixel Is Nothing Then
+                            Exit For
+                        End If
+                    Next
                 End If
 
                 If Not pixel Is Nothing Then
