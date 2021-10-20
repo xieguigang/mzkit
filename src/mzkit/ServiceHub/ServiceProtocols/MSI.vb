@@ -109,7 +109,7 @@ Public Class MSI : Implements ITaskDriver
             Dim mzpack As mzPack
 
             Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True)
+                mzpack = mzPack.ReadAll(file, ignoreThumbnail:=True).ScanMeltdown
                 MSI = New Drawer(mzpack)
             End Using
         End If
