@@ -92,16 +92,10 @@ Public Class MSJointConnection
         Return enrichment
     End Function
 
-    ''' <summary>
-    ''' MS1 peak list annotation
-    ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="topN"></param>
-    ''' <returns></returns>
-    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As KEGGQuery()
+    Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, KEGGQuery)()
         Dim allId As Dictionary(Of String, KEGGQuery()) = Nothing
         Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
-        Dim mzSet = enrichment _
+        Dim mzSet As IGrouping(Of String, KEGGQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
                         Dim result = list.geneIDs _
@@ -127,7 +121,26 @@ Public Class MSJointConnection
                          Return c.mz.ToString("F4")
                      End Function) _
             .ToArray
-        Dim annotation = mzSet _
+
+        Return mzSet
+    End Function
+
+    ''' <summary>
+    ''' MS1 peak list annotation
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="topN"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' combine of the enriched result and un-enriched results.
+    ''' 
+    ''' + enriched result: high score
+    ''' + un-enriched result: zero score
+    ''' 
+    ''' </remarks>
+    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As KEGGQuery()
+        Dim mzSet = getEnrichedMzSet(mz, topN)
+        Dim annotation As KEGGQuery() = mzSet _
             .Select(Function(mzi)
                         Return mzi _
                             .GroupBy(Function(i) i.kegg_id) _
@@ -144,7 +157,12 @@ Public Class MSJointConnection
                             .First
                     End Function) _
             .ToArray
+        Dim allIdList As KEGGQuery() = mz _
+            .Select(AddressOf kegg.QueryByMz) _
+            .IteratesALL _
+            .ToArray
         Dim unique = annotation _
+            .JoinIterates(allIdList) _
             .GroupBy(Function(a) a.kegg_id) _
             .Select(Function(cid)
                         Return cid.OrderByDescending(Function(d) d.score).First
