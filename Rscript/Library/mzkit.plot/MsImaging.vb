@@ -623,6 +623,7 @@ Module MsImaging
         Dim layers As DoubleTagged(Of SingleIonLayer)() = raw _
             .GetMSIIons(mzErr, gridSize) _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
+            .OrderByDescending(Function(d) Val(d.TagStr)) _
             .ToArray
 
         If Not keepsLayer Then
