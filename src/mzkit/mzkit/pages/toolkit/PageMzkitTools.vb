@@ -670,6 +670,7 @@ Public Class PageMzkitTools
 
     Sub showMatrix(matrix As ms2(), name As String)
         Me.matrix = matrix
+
         matrixName = name
 
         DataGridView1.Rows.Clear()
@@ -680,7 +681,14 @@ Public Class PageMzkitTools
         DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "relative"})
         DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "annotation"})
 
-        Dim max As Double = matrix.Select(Function(a) a.intensity).Max
+        Dim max As Double
+
+        If matrix.Length = 0 Then
+            max = 0
+            Call MyApplication.host.showStatusMessage($"'{name}' didn't contains any data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            max = matrix.Select(Function(a) a.intensity).Max
+        End If
 
         For Each tick As ms2 In matrix
             DataGridView1.Rows.Add({tick.mz, tick.intensity, CInt(tick.intensity / max * 100), tick.Annotation})

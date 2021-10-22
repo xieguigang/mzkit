@@ -32,6 +32,7 @@ Partial Class frmFeatureSearch
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -45,7 +46,7 @@ Partial Class frmFeatureSearch
         '
         'TreeListView1
         '
-        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader10, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9})
         TreeListViewItemCollectionComparer1.Column = 0
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
@@ -79,24 +80,34 @@ Partial Class frmFeatureSearch
         '
         Me.ColumnHeader4.Text = "rt"
         '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.DisplayIndex = 4
+        Me.ColumnHeader10.Text = "rt(minutes)"
+        '
         'ColumnHeader5
         '
+        Me.ColumnHeader5.DisplayIndex = 5
         Me.ColumnHeader5.Text = "PPM"
         '
         'ColumnHeader6
         '
+        Me.ColumnHeader6.DisplayIndex = 6
         Me.ColumnHeader6.Text = "Polarity"
         '
         'ColumnHeader7
         '
+        Me.ColumnHeader7.DisplayIndex = 7
         Me.ColumnHeader7.Text = "Charge"
         '
         'ColumnHeader8
         '
+        Me.ColumnHeader8.DisplayIndex = 8
         Me.ColumnHeader8.Text = "BPC"
         '
         'ColumnHeader9
         '
+        Me.ColumnHeader9.DisplayIndex = 9
         Me.ColumnHeader9.Text = "TIC"
         '
         'ContextMenuStrip1
@@ -126,8 +137,8 @@ Partial Class frmFeatureSearch
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 274)
         Me.Controls.Add(Me.TreeListView1)
+        Me.DoubleBuffered = True
         Me.Name = "frmFeatureSearch"
-        Me.Text = "Form1"
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -146,4 +157,5 @@ Partial Class frmFeatureSearch
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ColumnHeader10 As ColumnHeader
 End Class

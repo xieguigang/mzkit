@@ -1,56 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::37b883469b943ee9f89e9aeab331edff, src\visualize\MsImaging\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: DensityCut, GetPixelKeys
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: DensityCut, GetPixelKeys
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Point = System.Drawing.Point
 
 <HideModuleName>
 Public Module Extensions
@@ -78,6 +83,45 @@ Public Module Extensions
     End Function
 
     <Extension>
+    Public Function PixelScanPadding(raw As mzPack, padding As Padding) As mzPack
+        Dim dims As Size = PixelReader.ReadDimensions(raw.MS.Select(Function(scan) scan.GetMSIPixel))
+        Dim paddingData As ScanMS1() = raw.MS.PixelScanPadding(padding, dims).ToArray
+
+        Return New mzPack With {
+            .MS = paddingData,
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = raw.Chromatogram,
+            .Scanners = raw.Scanners,
+            .source = raw.source,
+            .Thumbnail = raw.Thumbnail
+        }
+    End Function
+
+    <Extension>
+    Private Iterator Function PixelScanPadding(raw As IEnumerable(Of ScanMS1), padding As Padding, dims As Size) As IEnumerable(Of ScanMS1)
+        Dim marginRight As Integer = dims.Width - padding.Right
+        Dim marginLeft As Integer = padding.Left
+        Dim marginTop As Integer = padding.Top
+        Dim marginBottom As Integer = dims.Height - padding.Bottom
+
+        For Each sample As ScanMS1 In raw
+            Dim pxy As Point = sample.GetMSIPixel
+
+            If pxy.X < marginLeft Then
+                Continue For
+            ElseIf pxy.X > marginRight Then
+                Continue For
+            ElseIf pxy.Y < marginTop Then
+                Continue For
+            ElseIf pxy.Y > marginBottom Then
+                Continue For
+            End If
+
+            Yield sample
+        Next
+    End Function
+
+    <Extension>
     Public Iterator Function DensityCut(layer As IEnumerable(Of PixelData), Optional qcut As Double = 0.1) As IEnumerable(Of PixelData)
         Dim raw As PixelData() = layer.ToArray
         Dim densityList = raw _
@@ -100,5 +144,56 @@ Public Module Extensions
                 Yield point
             End If
         Next
+    End Function
+
+    ''' <summary>
+    ''' make bugs fixed for RT pixel correction
+    ''' </summary>
+    ''' <param name="MSI"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ScanMeltdown(MSI As mzPack, Optional gridSize As Integer = 2) As mzPack
+        Dim graph = Grid(Of ScanMS1).Create(MSI.MS, Function(d) d.GetMSIPixel)
+        Dim scans As New List(Of ScanMS1)
+        Dim dims As New Size(graph.width, graph.height)
+        Dim pixel As ScanMS1
+        Dim around As ScanMS1()
+
+        For i As Integer = 1 To dims.Width
+            For j As Integer = 1 To dims.Height
+                pixel = graph.GetData(i, j)
+
+                If pixel Is Nothing Then
+                    around = graph.Query(i, j, gridSize).ToArray
+
+                    If around.Length > 0 Then
+                        pixel = New ScanMS1 With {
+                            .BPC = around.Select(Function(d) d.BPC).Max,
+                            .meta = New Dictionary(Of String, String) From {{"x", i}, {"y", j}},
+                            .rt = around.Select(Function(d) d.rt).Average,
+                            .scan_id = $"[MS1] [{i},{j}]",
+                            .TIC = around.Select(Function(d) d.TIC).Sum,
+                            .mz = around.Select(Function(a) a.mz).IteratesALL.ToArray,
+                            .into = around.Select(Function(a) a.into).IteratesALL.ToArray
+                        }
+                    End If
+                End If
+
+                If Not pixel Is Nothing Then
+                    scans.Add(pixel)
+                Else
+                    Call $"Missing pixel data at [{i}, {j}]!".Warning
+                End If
+            Next
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = MSI.Chromatogram,
+            .MS = scans.ToArray,
+            .Scanners = MSI.Scanners,
+            .source = MSI.source,
+            .Thumbnail = MSI.Thumbnail
+        }
     End Function
 End Module
