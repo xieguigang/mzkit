@@ -27,7 +27,7 @@ Public Module LayerHelpers
     Public Iterator Function GetMSIIons(raw As mzPack,
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
-                                        Optional qcut As Double = 0.5) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
+                                        Optional qcut As Double = 0.3) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
 
         Dim cellSize As New Size(gridSize, gridSize)
         Dim graph As Grid(Of ScanMS1) = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
@@ -42,7 +42,7 @@ Public Module LayerHelpers
                         Return scan _
                             .GetMs _
                             .ToArray _
-                            .Centroid(mzErr, New RelativeIntensityCutoff(0.05)) _
+                            .Centroid(mzErr, New RelativeIntensityCutoff(0.01)) _
                             .Select(Function(mzi) (mzi, pt))
                     End Function) _
             .IteratesALL _
