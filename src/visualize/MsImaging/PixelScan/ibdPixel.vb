@@ -125,5 +125,9 @@ Namespace Pixel
         Protected Friend Overrides Sub release()
             Erase memoryCache
         End Sub
+
+        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace
