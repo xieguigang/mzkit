@@ -62,6 +62,7 @@ Namespace Pixel
         End Function
 
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
+        Public MustOverride Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
 
         Public Overrides Function ToString() As String
             Return $"[{X},{Y}]"
