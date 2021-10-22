@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::ac5d894cb056ffef2ff22f5001c883b3, Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
-    '               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
-    '               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
-    '               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
+'               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
+'               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
+'               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
@@ -590,10 +591,27 @@ Module MsImaging
         )
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="keepsLayer">
+    ''' if the options is set to false, then this function just returns the ions mz vector.
+    ''' otherwise, returns a dataframe that contains m/z, density value and ion layer 
+    ''' objects.
+    ''' </param>
+    ''' <param name="densityCut"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MeasureMSIions")>
+    <RApiReturn(GetType(Double), GetType(dataframe))>
     Public Function getMSIIons(raw As mzPack,
-                               Optional gridSize As Integer = 5,
-                               Optional mzdiff As Object = "da:0.001",
+                               Optional gridSize As Integer = 6,
+                               Optional mzdiff As Object = "da:0.1",
+                               Optional keepsLayer As Boolean = False,
+                               Optional densityCut As Double = 0.1,
                                Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env)
@@ -602,47 +620,38 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim reader As New ReadRawPack(raw)
-        Dim allMsIons = raw.MS _
-            .Select(Function(d) d.GetMs) _
-            .IteratesALL _
-            .GroupBy(Function(i) i.mz, mzErr.TryCast(Of Tolerance)) _
-            .OrderByDescending(Function(d) d.Count) _
-            .ToArray
-        Dim size As New Size(gridSize, gridSize)
-        Dim totalArea = reader.AllPixels.Count
-        Dim ions As Double() = allMsIons _
-            .Select(Function(d) Val(d.name)) _
-            .AsParallel _
-            .Where(Function(mz)
-                       Dim layer = reader.LoadPixels({mz}, mzErr.TryCast(Of Tolerance)).ToArray
-
-                       If layer.Length / totalArea >= 0.65 Then
-                           Return True
-                       ElseIf layer.Length / totalArea < 0.25 Then
-                           Return False
-                       Else
-                           Dim graphDensity = layer _
-                               .Density(Function(p) $"{p.x},{p.y}",
-                                        Function(p) p.x,
-                                        Function(p) p.y,
-                                        size,
-                                        parallel:=False
-                               ) _
-                               .ToArray
-                           Dim mean As Double = graphDensity.Select(Function(d) d.Value).Average
-
-                           If mean > 0.65 Then
-                               Call base.print($"m/z {mz.ToString("F4")} [{layer.Length} of density: {mean}]", env)
-                               Return True
-                           Else
-                               Return False
-                           End If
-                       End If
-                   End Function) _
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01).ToArray
+        Dim layerCuts = layers _
+            .Where(Function(d) Val(d.TagStr) > densityCut) _
+            .OrderByDescending(Function(d) Val(d.TagStr)) _
             .ToArray
 
-        Return ions
+        If Not keepsLayer Then
+            Return layerCuts.Select(Function(d) d.Tag).ToArray
+        End If
+
+        Dim mz As New List(Of Double)
+        Dim density As New List(Of Double)
+        Dim layerList As New List(Of SingleIonLayer)
+
+        For Each layer As DoubleTagged(Of SingleIonLayer) In layerCuts
+            mz.Add(layer.Tag)
+            density.Add(layer.TagStr)
+            layerList.Add(layer.Value)
+        Next
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"mz", mz.ToArray},
+                {"density", density.ToArray},
+                {"layer", layerList.ToArray}
+            },
+            .rownames = mz _
+                .Select(Function(mzi)
+                            Return mzi.ToString("F4")
+                        End Function) _
+                .ToArray
+        }
     End Function
 
     ''' <summary>

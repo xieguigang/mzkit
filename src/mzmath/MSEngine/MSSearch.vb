@@ -55,6 +55,9 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implem
     ''' <returns>
     ''' 函数返回符合条件的kegg代谢物编号
     ''' </returns>
+    ''' <remarks>
+    ''' the query score is zero from this function
+    ''' </remarks>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim query As New MassIndexKey With {.mz = mz}
         Dim result As Compound() = massIndex.Find(query)?.Members

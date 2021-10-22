@@ -163,6 +163,30 @@ Namespace Reader
             Next
         End Function
 
+        Public Function LoadLayer(mz As Double, mzdiff As Tolerance) As SingleIonLayer
+            Dim pixels As New List(Of PixelData)
+            Dim into As Double
+
+            For Each pixel As PixelScan In AllPixels()
+                into = pixel.GetMzIonIntensity(mz, mzdiff)
+
+                If into > 0 Then
+                    Call New PixelData With {
+                        .mz = mz,
+                        .intensity = into,
+                        .level = 0,
+                        .x = pixel.X,
+                        .y = pixel.Y
+                    }.DoCall(AddressOf pixels.Add)
+                End If
+            Next
+
+            Return New SingleIonLayer With {
+                .DimensionSize = dimension,
+                .IonMz = mz,
+                .MSILayer = pixels.ToArray
+            }
+        End Function
 
         Public Iterator Function LoadRatioPixels(mz1 As Double, mz2 As Double, tolerance As Tolerance,
                                                  Optional skipZero As Boolean = True,

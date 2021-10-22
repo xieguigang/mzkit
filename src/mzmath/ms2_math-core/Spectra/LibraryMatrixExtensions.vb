@@ -124,6 +124,11 @@ Namespace Spectra
         ''' <param name="peaks"></param>
         ''' <param name="cutoff"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' order of data processing:
+        ''' 
+        ''' ``intensity_cutoff -> centroid``
+        ''' </remarks>
         <Extension>
         Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As IEnumerable(Of ms2)
             Dim maxInto = If(peaks.IsNullOrEmpty, 0, peaks.Select(Function(p) p.intensity).Max)

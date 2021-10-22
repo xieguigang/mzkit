@@ -121,7 +121,7 @@ Namespace Reader
             End If
         End Function
 
-        Private Sub ReadDimensions()
+        Private Overloads Sub ReadDimensions()
             Dim width As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.X)).Max
             Dim height As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.Y)).Max
 
