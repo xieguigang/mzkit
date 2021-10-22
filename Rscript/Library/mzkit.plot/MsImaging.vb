@@ -620,19 +620,25 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw _
-            .GetMSIIons(mzErr, gridSize) _
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize).ToArray
+        Dim layerCuts = layers _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
             .OrderByDescending(Function(d) Val(d.TagStr)) _
             .ToArray
 
         If Not keepsLayer Then
-            Return layers.Select(Function(d) d.Tag).ToArray
+            Return layerCuts.Select(Function(d) d.Tag).ToArray
         End If
 
         Dim mz As New List(Of Double)
         Dim density As New List(Of Double)
         Dim layerList As New List(Of SingleIonLayer)
+
+        For Each layer As DoubleTagged(Of SingleIonLayer) In layerCuts
+            mz.Add(layer.Tag)
+            density.Add(layer.TagStr)
+            layerList.Add(layer.Value)
+        Next
 
         Return New dataframe With {
             .columns = New Dictionary(Of String, Array) From {

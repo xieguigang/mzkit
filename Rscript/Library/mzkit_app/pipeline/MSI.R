@@ -4,7 +4,7 @@ imports "mzweb" from "mzkit";
 options(memory.load = "max");
 
 const rawPack as string    = ?"--mzpack"      || stop("A raw data file path is required!");
-const mzdiff as double     = ?"--mzdiff"      || 0.1;
+const mzdiff as double     = ?"--mzdiff"      || 1;
 const gridSize as integer  = ?"--grid-size"   || 5;
 const densityCut as double = ?"--density-cut" || 0.65;
 

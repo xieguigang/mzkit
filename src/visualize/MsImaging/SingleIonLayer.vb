@@ -70,6 +70,10 @@ Public Class SingleIonLayer
         End Get
     End Property
 
+    Public Overrides Function ToString() As String
+        Return $"({MSILayer.Length} pixels) {IonMz.ToString("F4")}"
+    End Function
+
     Public Function MeasureUninSize(sampling As Integer) As Size
         Return New Size(DimensionSize.Width / sampling, DimensionSize.Height / sampling)
     End Function
