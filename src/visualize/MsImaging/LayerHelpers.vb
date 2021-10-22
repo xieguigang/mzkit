@@ -44,7 +44,8 @@ Public Module LayerHelpers
             .Centroid(mzErr, New RelativeIntensityCutoff(0)) _
             .ToArray
 
-        For Each mz As Double In allMz.Select(Function(mzi) mzi.mz)
+        For i As Integer = 0 To allMz.Length - 1
+            Dim mz As Double = allMz(i).mz
             Dim layer As SingleIonLayer = reader.LoadLayer(mz, mzErr)
             Dim density As NamedValue(Of Double)() = layer.MSILayer _
                 .Density(
