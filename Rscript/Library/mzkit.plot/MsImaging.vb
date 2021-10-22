@@ -608,10 +608,10 @@ Module MsImaging
     <ExportAPI("MeasureMSIions")>
     <RApiReturn(GetType(Double), GetType(dataframe))>
     Public Function getMSIIons(raw As mzPack,
-                               Optional gridSize As Integer = 5,
+                               Optional gridSize As Integer = 6,
                                Optional mzdiff As Object = "da:0.1",
                                Optional keepsLayer As Boolean = False,
-                               Optional densityCut As Double = 0.65,
+                               Optional densityCut As Double = 0.1,
                                Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env)
@@ -620,7 +620,7 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize).ToArray
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01).ToArray
         Dim layerCuts = layers _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
             .OrderByDescending(Function(d) Val(d.TagStr)) _

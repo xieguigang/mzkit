@@ -5,8 +5,9 @@ options(memory.load = "max");
 
 const rawPack as string    = ?"--mzpack"      || stop("A raw data file path is required!");
 const mzdiff as double     = ?"--mzdiff"      || 1;
-const gridSize as integer  = ?"--grid-size"   || 5;
-const densityCut as double = ?"--density-cut" || 0.65;
+const gridSize as integer  = ?"--grid-size"   || 6;
+const densityCut as double = ?"--density-cut" || 0.1;
+const outputdir as string  = ?"--outputdir"   || `${dirname(rawPack)}/MSI/`;
 
 const ions = open.mzpack(rawPack) 
 |> MeasureMSIions(
@@ -15,9 +16,15 @@ const ions = open.mzpack(rawPack)
 	keepsLayer = TRUE, 
 	densityCut = densityCut
 );
+const [mz, density, layer] = ions;
 
 print(head(ions));
 
 for(i in nrow(ions)) {
+	print("Rendering of the ion layer:");
+	print(mz[i]);
 
+	bitmap(file = `${outputdir}/${round(mz[i], 4)}.png`) {
+		plot(layer[i]);
+	}
 }

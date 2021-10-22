@@ -5,10 +5,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
@@ -27,7 +29,7 @@ Public Module LayerHelpers
     Public Iterator Function GetMSIIons(raw As mzPack,
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
-                                        Optional qcut As Double = 0.1) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
+                                        Optional qcut As Double = 0.05) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
 
         Dim cellSize As New Size(gridSize, gridSize)
         Dim graph As Grid(Of ScanMS1) = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
@@ -50,6 +52,8 @@ Public Module LayerHelpers
             .GroupBy(Function(d) d.mzi.mz, mzErr) _
             .Where(Function(d) d.Length > ncut) _
             .ToArray
+        Dim k As Integer = allMz.Length / 10
+        Dim j As i32 = 0
 
         For i As Integer = 0 To allMz.Length - 1
             Dim mz As Double = allMz(i) _
@@ -89,6 +93,11 @@ Public Module LayerHelpers
                .Value = layer,
                .TagStr = q
             }
+
+            If ++j = k Then
+                j = 0
+                Call RunSlavePipeline.SendProgress(i / allMz.Length, $"({CInt(100 * i / allMz.Length)}%) {mz.ToString("F4")}")
+            End If
         Next
     End Function
 
