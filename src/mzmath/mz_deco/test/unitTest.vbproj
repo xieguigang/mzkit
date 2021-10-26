@@ -1,63 +1,63 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
+    <RootNamespace>test</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>unit_test</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
     <Product>BioDeep</Product>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>README.md</PackageLicenseFile>
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <OutputType>Exe</OutputType>
-    <StartupObject>BioNovoGene.Analytical.MassSpectrometry.Math.Module1</StartupObject>
+    <StartupObject>test.Module1</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -69,7 +69,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -82,7 +82,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -93,7 +93,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <DocumentationFile>unit_test.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -107,6 +107,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
