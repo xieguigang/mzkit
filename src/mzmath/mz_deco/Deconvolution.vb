@@ -161,7 +161,8 @@ Public Module Deconvolution
     <Extension>
     Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
                                           Optional quantile# = 0.65,
-                                          Optional sn As Double = 3) As IEnumerable(Of PeakFeature)
+                                          Optional sn As Double = 3,
+                                          Optional nticks As Integer = 6) As IEnumerable(Of PeakFeature)
 
         Dim features As IGrouping(Of String, PeakFeature)() = mzgroups _
             .AsParallel _
@@ -169,6 +170,7 @@ Public Module Deconvolution
                         Return mz.GetPeakGroups(peakwidth, quantile, sn)
                     End Function) _
             .IteratesALL _
+            .Where(Function(peak) peak.nticks >= nticks) _
             .GroupBy(Function(m)
                          ' 产生xcms id编号的Mxx部分
                          Return stdNum.Round(m.mz).ToString
