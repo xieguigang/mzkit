@@ -107,26 +107,31 @@ Public Module Deconvolution
     End Function
 
     ''' <summary>
-    ''' 1. Separation of mass signals.
+    ''' 1. Separation of mass signals, generate XIC sequence data.
     ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
     ''' </summary>
     ''' <param name="scans"></param>
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
-        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, tolerance Or Tolerance.DefaultTolerance)
+    Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan),
+                                         Optional rtwin As Double = 0.05,
+                                         Optional mzdiff As Tolerance = Nothing) As IEnumerable(Of MzGroup)
+
+        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, mzdiff Or Tolerance.DefaultTolerance)
             Dim rawGroup As scan() = group.ToArray
             Dim timePoints As NamedCollection(Of scan)() = rawGroup _
                 .GroupBy(Function(t) t.rt,
                          Function(a, b)
-                             Return stdNum.Abs(a - b) <= 0.05
+                             Return stdNum.Abs(a - b) <= rtwin
                          End Function) _
                 .ToArray
             Dim xic As ChromatogramTick() = timePoints _
                 .Select(Function(t)
                             Dim rt As Double = Aggregate p As scan In t Into Average(p.rt)
-                            Dim into As Double = Aggregate p As scan In t Into Max(p.intensity)
+                            Dim into As Double = Aggregate p As scan
+                                                 In t
+                                                 Into Max(p.intensity)
 
                             Return New ChromatogramTick With {
                                 .Time = rt,
@@ -135,9 +140,10 @@ Public Module Deconvolution
                         End Function) _
                 .OrderBy(Function(t) t.Time) _
                 .ToArray
-            Dim mz As Double = Aggregate t As scan
-                               In rawGroup
-                               Into Average(t.mz)
+            Dim mz As Double = rawGroup _
+                .OrderByDescending(Function(d) d.intensity) _
+                .First _
+                .mz
 
             Yield New MzGroup With {
                 .mz = mz,
@@ -153,27 +159,31 @@ Public Module Deconvolution
     ''' <param name="quantile#"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        Dim mzfeatures As IGrouping(Of String, PeakFeature)() = mzgroups _
+    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
+                                          Optional quantile# = 0.65,
+                                          Optional sn As Double = 3) As IEnumerable(Of PeakFeature)
+
+        Dim features As IGrouping(Of String, PeakFeature)() = mzgroups _
             .AsParallel _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(peakwidth, quantile)
+                        Return mz.GetPeakGroups(peakwidth, quantile, sn)
                     End Function) _
             .IteratesALL _
             .GroupBy(Function(m)
+                         ' 产生xcms id编号的Mxx部分
                          Return stdNum.Round(m.mz).ToString
                      End Function) _
             .ToArray
         Dim guid As New Dictionary(Of String, Counter)
         Dim uid As String
 
-        For Each mzidgroup In mzfeatures
-            Dim mId As String = mzidgroup.Key
-            Dim rtIdgroup = mzidgroup _
+        For Each mzId As IGrouping(Of String, PeakFeature) In features
+            Dim mId As String = mzId.Key
+            Dim rtIdgroup = mzId _
                 .GroupBy(Function(m) stdNum.Round(m.rt).ToString) _
                 .ToArray
 
-            For Each rtgroup In rtIdgroup
+            For Each rtgroup As IGrouping(Of String, PeakFeature) In rtIdgroup
                 uid = $"M{mId}T{rtgroup.Key}"
                 guid(uid) = 0
 
