@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -40,7 +41,7 @@ Module mzDeco
 
         Return ms1_scans _
             .GetMzGroups(errors) _
-            .DecoMzGroups(rtRange, quantile:=baseline) _
+            .DecoMzGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline) _
             .ToArray
     End Function
 
@@ -48,13 +49,17 @@ Module mzDeco
     ''' do ``m/z`` grouping under the given tolerance
     ''' </summary>
     ''' <param name="ms1"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
-    Public Function mz_groups(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
-        Return ms1Scans(ms1).GetMzGroups(Math.getTolerance(tolerance, env)).ToArray
+    Public Function mz_groups(<RRawVectorArgument>
+                              ms1 As Object,
+                              Optional mzdiff As Object = "ppm:20",
+                              Optional env As Environment = Nothing) As Object
+
+        Return ms1Scans(ms1).GetMzGroups(Math.getTolerance(mzdiff, env)).ToArray
     End Function
 
     Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)
