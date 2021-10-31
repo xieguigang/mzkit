@@ -1,7 +1,10 @@
 Imports System
 Imports BioNovoGene.BioDeep.Chemistry.Massbank.FooDB
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
@@ -47,6 +50,47 @@ Module Program
 
     Sub FoodMatrix()
         Dim foodData = foodDataJson.LoadJsonFile(Of Dictionary(Of String, FoodData))
+        Dim flavorTags = foodData.Select(Function(d) d.Value.compoundFlavors.Values).IteratesALL.IteratesALL.Distinct.ToArray
+        Dim compoundlist = foodData.Values.Select(Function(d) d.contents.Select(Function(c) $"{c.source_id}-{c.food_id}")).IteratesALL.Distinct.ToArray
+
+        Call flavorTags.SaveTo("D:\biodeep\flavor\foodb\table\FlavorTags.txt")
+        Call VBDebugger.WaitOutput()
+        Call Console.WriteLine(compoundlist.Length)
+
+        Dim allcompoundsId As String() = foodData.Values.Select(Function(d) d.compounds).IteratesALL.Select(Function(c) c.public_id).Distinct.OrderBy(Function(id) id).ToArray
+        Dim allflavorId As String() = foodData.Values.Select(Function(d) d.compoundFlavors.Values).IteratesALL.IteratesALL.Distinct.ToArray
+        Dim mat As New List(Of DataSet)
+        Dim foodRow As DataSet
+        Dim internal As Index(Of String)
+
+        For Each food In foodData.Values
+            internal = food.compounds.Select(Function(c) c.public_id).Distinct.Indexing
+            foodRow = New DataSet With {
+                .ID = food.name,
+                .Properties = allcompoundsId.ToDictionary(Function(id) id, Function(id)
+                                                                               Return CDbl(If(internal.IndexOf(id) > -1, 1, 0))
+                                                                           End Function)
+            }
+
+            mat.Add(foodRow)
+        Next
+
+        Call mat.SaveTo("D:\biodeep\flavor\foodb\table\FoodCompoundMatrix.csv")
+
+        mat.Clear()
+
+        For Each food In foodData.Values
+            internal = food.compoundFlavors.Select(Function(c) c.Value).IteratesALL.Distinct.Indexing
+            foodRow = New DataSet With {
+                .ID = food.name,
+                .Properties = allflavorId.ToDictionary(Function(id) id, Function(id)
+                                                                            Return CDbl(If(internal.IndexOf(id) > -1, 1, 0))
+                                                                        End Function)
+            }
+
+            mat.Add(foodRow)
+        Next
+
 
         Pause()
     End Sub
