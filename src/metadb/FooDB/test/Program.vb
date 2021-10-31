@@ -6,6 +6,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
     Sub Main(args As String())
+        ' Call buildDb()
+        Call FoodMatrix()
+    End Sub
+
+    Sub buildDb()
         Dim foods = "D:\biodeep\flavor\foodb\table\Food.csv".LoadCsv(Of Food)
         Dim flavor = "D:\biodeep\flavor\foodb\table\Flavor.csv".LoadCsv(Of Flavor).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First.name)
         Dim compounds = "D:\biodeep\flavor\foodb\table\Compound.csv".LoadCsv(Of Compound).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First)
@@ -27,13 +32,21 @@ Module Program
 
                               Return New FoodData(food) With {
                                   .contents = compoundList,
-                                  .compounds = compoundList.Where(Function(c) compounds.ContainsKey(c.source_id)).Select(Function(c) compounds(c.source_id)).ToArray,
+                                  .compounds = compoundList.Where(Function(c) compounds.ContainsKey(c.source_id)).Select(Function(c) compounds(c.source_id)).GroupBy(Function(d) d.id).Select(Function(d) d.First).ToArray,
                                   .compoundFlavors = compoundList.Where(Function(c) compoundFlavor.ContainsKey(c.source_id)).GroupBy(Function(d) d.source_id).ToDictionary(Function(c) c.Key, Function(c) compoundFlavor(c.Key))
                               }
                           End Function)
 
 
-        Call foodsData.GetJson.SaveTo("D:\biodeep\flavor\foodb\table\FoodFlavorDb.json")
+        Call foodsData.GetJson.SaveTo(foodDataJson)
+
+        Pause()
+    End Sub
+
+    Const foodDataJson As String = "D:\biodeep\flavor\foodb\table\FoodFlavorDb.json"
+
+    Sub FoodMatrix()
+        Dim foodData = foodDataJson.LoadJsonFile(Of Dictionary(Of String, FoodData))
 
         Pause()
     End Sub
