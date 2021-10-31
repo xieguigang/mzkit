@@ -8,10 +8,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports Microsoft.VisualBasic.Text
 
 Module Program
     Sub Main(args As String())
-
+        Call gsea2()
         Call flavorCluster()
 
         ' Call buildDb()
@@ -77,6 +78,18 @@ Module Program
         Call background.GetXml.SaveTo("D:\biodeep\flavor\foodb\table\FoodFlavorClusters.XML")
 
         Pause()
+    End Sub
+
+    Sub gsea2()
+
+        Dim background As Background = "D:\biodeep\flavor\foodb\table\FoodFlavorClusters.XML".LoadXml(Of Background)
+        Dim id = "D:\biodeep\flavor\foodb\Rscript\visual\test.txt".ReadAllText.Split(ASCII.TAB)
+        Dim result = background.Enrichment(id,).ToArray
+
+        Call result.SaveTo("D:\biodeep\flavor\foodb\Rscript\visual\test_enrich.csv")
+
+        Pause()
+
     End Sub
 
     Sub FoodMatrix()
