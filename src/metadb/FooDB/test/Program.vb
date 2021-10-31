@@ -84,7 +84,7 @@ Module Program
 
         Dim background As Background = "D:\biodeep\flavor\foodb\table\FoodFlavorClusters.XML".LoadXml(Of Background)
         Dim id = "D:\biodeep\flavor\foodb\Rscript\visual\test.txt".ReadAllText.Split(ASCII.TAB)
-        Dim result = background.Enrichment(id,).ToArray
+        Dim result = background.Enrichment(id,).FDRCorrection.ToArray
 
         Call result.SaveTo("D:\biodeep\flavor\foodb\Rscript\visual\test_enrich.csv")
 
