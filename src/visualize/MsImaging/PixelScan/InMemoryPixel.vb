@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02a2360c6f91b235d891be3b899f3656, src\visualize\MsImaging\PixelScan\InMemoryPixel.vb"
+﻿#Region "Microsoft.VisualBasic::ecc1d48ac2e4f286c729294605cff414, src\visualize\MsImaging\PixelScan\InMemoryPixel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetMs, GetMsPipe, HasAnyMzIon
+    '         Function: GetMs, GetMsPipe, GetMzIonIntensity, HasAnyMzIon
     ' 
     '         Sub: release
     ' 

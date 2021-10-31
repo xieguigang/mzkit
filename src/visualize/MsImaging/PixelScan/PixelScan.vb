@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2d596326065e42436d53233f76cecaa, src\visualize\MsImaging\PixelScan\PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::7c12cfb9bed4e3d33a1c5412237a520a, src\visualize\MsImaging\PixelScan\PixelScan.vb"
 
     ' Author:
     ' 

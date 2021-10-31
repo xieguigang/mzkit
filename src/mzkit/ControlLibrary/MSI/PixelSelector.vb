@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e0021d8c0ea157b455fddf985178fa8, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
+﻿#Region "Microsoft.VisualBasic::2ad6ef2f42d9f3cebdb164d29b389544, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
     ' Author:
     ' 

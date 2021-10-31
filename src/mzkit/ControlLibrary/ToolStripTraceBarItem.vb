@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa92487ab03949a24719035fe93aa5a5, src\mzkit\ControlLibrary\ToolStripTraceBarItem.vb"
+﻿#Region "Microsoft.VisualBasic::cdbac80bb4f57a3b8cbb0aef17fea646, src\mzkit\ControlLibrary\ToolStripTraceBarItem.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Public Class ToolStripTraceBarItem : Inherits ToolStripControlHost
             End Sub
     End Sub
 End Class
-

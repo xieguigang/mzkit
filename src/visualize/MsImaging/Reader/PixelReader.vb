@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fde361fdb350eab2ada89baec09e358a, src\visualize\MsImaging\Reader\PixelReader.vb"
+﻿#Region "Microsoft.VisualBasic::41830dd513a2974e15ca932bd1bb6d04, src\visualize\MsImaging\Reader\PixelReader.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Class PixelReader
     ' 
-    '         Function: FindMatchedPixels, GetIntensitySummary, (+2 Overloads) GetPixel, GetSummary, LoadPixels
-    '                   LoadRatioPixels, LoadRatioPixelsInternal
+    '         Function: FindMatchedPixels, GetIntensitySummary, (+2 Overloads) GetPixel, GetSummary, LoadLayer
+    '                   LoadPixels, LoadRatioPixels, LoadRatioPixelsInternal, ReadDimensions
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

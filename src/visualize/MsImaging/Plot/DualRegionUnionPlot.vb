@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06d649c891b8c5a2552f26bdd7600ac8, src\visualize\MsImaging\DualRegionUnionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e1d50e3df6a1da75ce5ca01e9c9bf7d6, src\visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Call g.DrawDualColorBar(colorSet1, colorSet2, layout, intensityTicks, axisPen, tickPen, "Intensity", labelFont, tickFont, "G3")
     End Sub
 End Class
-

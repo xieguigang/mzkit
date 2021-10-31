@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210ad18117ca0d230901ed3a8438d372, src\assembly\Comprehensive\MsImaging\ScanMs2Correction.vb"
+﻿#Region "Microsoft.VisualBasic::46a0517e75a1de13b62cf4c13ebc4f89, src\assembly\Comprehensive\MsImaging\ScanMs2Correction.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Linq

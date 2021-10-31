@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9915dd37ef73c9580d33eba18ee1d16, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::11a4909e72550237bdd5a8f83d393664, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
 
     ' Author:
     ' 

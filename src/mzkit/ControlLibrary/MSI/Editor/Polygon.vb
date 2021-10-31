@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::787714c12301725651eb044213b4ac0c, src\mzkit\ControlLibrary\MSI\Editor\Polygon.vb"
+﻿#Region "Microsoft.VisualBasic::72e6ca2c3f268f42e1e25ff9788e1e97, src\mzkit\ControlLibrary\MSI\Editor\Polygon.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Namespace PolygonEditor
         End Sub
     End Class
 End Namespace
-

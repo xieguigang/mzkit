@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfe41559590fbf8b0e8aafbd6b6a1a2c, src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::b67a520f378f13bf8502b8376212499a, src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     '     Class LibraryMatrix
     ' 
-    '         Properties: centroid, intensity, ms2, name, totalIon
+    '         Properties: centroid, intensity, ms2, mz, name
+    '                     totalIon
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AlignMatrix, GetMaxInto

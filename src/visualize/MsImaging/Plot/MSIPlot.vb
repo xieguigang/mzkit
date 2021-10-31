@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1a741b65fcf50420d21fef3b7ee4ea9, src\visualize\MsImaging\MSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f2eeafba5ad33dbd7084d7327d5038f8, src\visualize\MsImaging\Plot\MSIPlot.vb"
 
     ' Author:
     ' 
@@ -153,4 +153,3 @@ Public Class MSIPlot : Inherits Plot
         Call g.ColorMapLegend(layout, colors, intensityTicks, labelFont, "Intensity", tickFont, tickPen, format:="G3")
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7334c59e82da06429a19c7c59a11e5, src\mzkit\Task\Properties\ICopyProperties.vb"
+﻿#Region "Microsoft.VisualBasic::5b92a75c45f42bef4b5cf83d696009d3, src\mzkit\Task\Properties\ICopyProperties.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Public Interface ICopyProperties
     Sub Copy()
 
 End Interface
-

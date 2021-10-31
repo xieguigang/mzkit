@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69d30254ee0953894d6bfa97a4cabade, src\visualize\MsImaging\PixelScan\InMemoryVectorPixel.vb"
+﻿#Region "Microsoft.VisualBasic::b0b6488c49177cd439a4400d94285c1c, src\visualize\MsImaging\PixelScan\InMemoryVectorPixel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) GetBuffer, GetMsPipe, HasAnyMzIon, Parse, ParseVector
+    '         Function: (+2 Overloads) GetBuffer, GetMsPipe, GetMzIonIntensity, HasAnyMzIon, Parse
+    '                   ParseVector
     ' 
     '         Sub: release
     ' 

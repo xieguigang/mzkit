@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4bf00db930d6d82ec3cbf219f8c036, src\assembly\mzPackExtensions\ToCDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e37516694c293112f9695efda6461fb7, src\assembly\mzPackExtensions\ToCDFWriter.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Public Module ToCDFWriter
         Yield New attribute With {.name = "timestamp", .type = CDFDataTypes.CHAR, .value = Now.ToString}
     End Function
 End Module
-

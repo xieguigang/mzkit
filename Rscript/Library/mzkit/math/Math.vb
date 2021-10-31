@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b141acc052204aca32d83c62afa858c1, Rscript\Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ae76c64ee1065e1eb27e2485da131a8c, Rscript\Library\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,9 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: centroid, cosine, CreateMSMatrix, createTolerance, exact_mass
-    '               getAlignmentTable, GetClusters, ms1Scans, mz, mz_deco
-    '               mz_groups, MzUnique, peaktable, ppm, precursorTypes
-    '               printCalculator, printMzTable, sequenceOrder, SpectrumTreeCluster, SSMCompares
-    '               XICTable
+    '               getAlignmentTable, GetClusters, mz, MzUnique, peaktable
+    '               ppm, precursorTypes, printCalculator, printMzTable, sequenceOrder
+    '               SpectrumTreeCluster, SSMCompares, XICTable
     ' 
     ' /********************************************************************************/
 

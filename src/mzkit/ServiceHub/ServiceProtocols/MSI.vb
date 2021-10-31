@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42eabf528216896158a061e6bf5053ed, src\mzkit\ServiceHub\ServiceProtocols\MSI.vb"
+﻿#Region "Microsoft.VisualBasic::fea4c916bc6d16d61c762e59fcfe24cc, src\mzkit\ServiceHub\ServiceProtocols\MSI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ExportMzPack, GetBPCIons, GetMSILayers, GetPixel, GetPixelRectangle
     '               Load, LoadSummaryLayer, Quit, Run, Unload
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -255,5 +254,3 @@ Public Class MSI : Implements ITaskDriver
         Return New DataPipe(mzList)
     End Function
 End Class
-
-

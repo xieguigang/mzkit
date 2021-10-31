@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e1256663315424f4db3028765913303, src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::7c16ff090eabf03f5a4601164203249d, src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetMsPipe, GetPixelPoint, HasAnyMzIon
+    '         Function: GetMsPipe, GetMzIonIntensity, GetPixelPoint, HasAnyMzIon
     ' 
     '         Sub: release
     ' 

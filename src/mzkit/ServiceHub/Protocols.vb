@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82b1d56dd13e7b5cd8186cfd742596e6, src\mzkit\ServiceHub\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::cfa6c8d6b9d7a7b00dc18b01364f544a, src\mzkit\ServiceHub\Protocols.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Module Protocols
         Return pipeline
     End Function
 End Module
-

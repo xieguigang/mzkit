@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43c70e8580ad6c9aad037e1bc9b655f4, src\mzkit\ControlLibrary\MSI\Editor\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::a391223bbdc7f6f1e7d5240085008dee, src\mzkit\ControlLibrary\MSI\Editor\Edge.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,6 @@
 
 #End Region
 
-
 Namespace PolygonEditor
     Public Enum EdgeType
         [In]
@@ -81,4 +80,3 @@ Namespace PolygonEditor
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25f7922532829ea34d8746992189c529, src\mzkit\ControlLibrary\MSI\Editor\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::ce2d78cabe56efcaec03ef7f0bcce46c, src\mzkit\ControlLibrary\MSI\Editor\Vertex.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Namespace PolygonEditor
         End Function
     End Class
 End Namespace
-

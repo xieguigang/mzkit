@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1032fdc7a96ad746de529f16d304b5d3, src\assembly\assembly\mzPack\FileApplicationClass.vb"
+﻿#Region "Microsoft.VisualBasic::10ec9b8b302694fec6f5d9143903a560, src\assembly\assembly\mzPack\FileApplicationClass.vb"
 
     ' Author:
     ' 

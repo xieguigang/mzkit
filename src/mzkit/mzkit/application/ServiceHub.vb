@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6063ed52a14e624aefed65a6dffd73df, src\mzkit\mzkit\application\ServiceHub.vb"
+﻿#Region "Microsoft.VisualBasic::786acf9c5224e3bc1cfc8e51c068536d, src\mzkit\mzkit\application\ServiceHub.vb"
 
     ' Author:
     ' 
@@ -232,4 +232,3 @@ Module ServiceHub
         End If
     End Sub
 End Module
-

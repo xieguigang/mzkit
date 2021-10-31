@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23a0bc5e5401146573aaec9fb8934fbb, src\mzkit\Task\Properties\PixelProperty.vb"
+﻿#Region "Microsoft.VisualBasic::fd76aa2dbb09237ceea6dd5f1e5fe6cb, src\mzkit\Task\Properties\PixelProperty.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Public Class PixelProperty
     End Sub
 
 End Class
-

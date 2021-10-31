@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfb27d933fd3e7d71daa559f71ee73c4, src\mzkit\ServiceHub\ServiceProtocols\ServiceProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::e58a0799337adcc490b0668e9245ee45, src\mzkit\ServiceHub\ServiceProtocols\ServiceProtocol.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Enum ServiceProtocol
     LoadSummaryLayer
     ExitApp
 End Enum
-

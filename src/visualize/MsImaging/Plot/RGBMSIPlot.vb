@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aae7e0df9fb18796bf2bd8f221731f5, src\visualize\MsImaging\RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::17c96e82e1b55df2f2e4c2782b86e25e, src\visualize\MsImaging\Plot\RGBMSIPlot.vb"
 
     ' Author:
     ' 
@@ -136,4 +136,3 @@ Public Class RGBMSIPlot : Inherits Plot
         Call Legend.DrawLegends(g, pos, legends, $"{labelSize.Height},{labelSize.Height}")
     End Sub
 End Class
-

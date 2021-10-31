@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d365e6af661cef5d49a39e62e91cf61, src\visualize\MsImaging\SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::f2463fc65c0cfdc073abe65e51c69e68, src\visualize\MsImaging\SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     '     Properties: DimensionSize, hasZeroPixels, IonMz, MSILayer
     ' 
     '     Function: GetIntensity, (+2 Overloads) GetLayer, GetQuartile, MeasureUninSize, Take
-    '               Trim
+    '               ToString, Trim
     ' 
     ' /********************************************************************************/
 
@@ -152,4 +152,3 @@ Public Class SingleIonLayer
         Return ion.MSILayer
     End Operator
 End Class
-

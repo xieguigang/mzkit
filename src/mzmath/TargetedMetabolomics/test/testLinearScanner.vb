@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1861dc47c87f2b08312ed8ad4140ed0, src\mzmath\TargetedMetabolomics\test\testLinearScanner.vb"
+﻿#Region "Microsoft.VisualBasic::ef4ed80d69fe8ea9029a54146d29946b, src\mzmath\TargetedMetabolomics\test\testLinearScanner.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ Module testLinearScanner
         Pause()
     End Sub
 End Module
-

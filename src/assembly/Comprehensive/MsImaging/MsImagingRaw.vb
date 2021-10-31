@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e5f92233b5e360032224371ada0e158, src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::bf62935919b623783d2dc6daf4f9fc6b, src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
