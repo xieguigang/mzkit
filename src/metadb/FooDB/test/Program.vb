@@ -91,7 +91,7 @@ Module Program
             mat.Add(foodRow)
         Next
 
-
+        Call mat.SaveTo("D:\biodeep\flavor\foodb\table\FoodFlavorMatrix.csv")
         Pause()
     End Sub
 End Module
