@@ -6,9 +6,14 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module Program
     Sub Main(args As String())
+
+        Call flavorCluster()
+
         ' Call buildDb()
         Call FoodMatrix()
     End Sub
@@ -47,6 +52,32 @@ Module Program
     End Sub
 
     Const foodDataJson As String = "D:\biodeep\flavor\foodb\table\FoodFlavorDb.json"
+
+    Sub flavorCluster()
+        Dim compounds = "D:\biodeep\flavor\foodb\table\Compound.csv".LoadCsv(Of Compound).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First)
+        Dim flavor = "D:\biodeep\flavor\foodb\table\Flavor.csv".LoadCsv(Of Flavor).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First.name)
+        Dim compoundFlavor = "D:\biodeep\flavor\foodb\table\CompoundsFlavor.csv".LoadCsv(Of CompoundFlavor) _
+         .Where(Function(d) d.source_type = "Compound").GroupBy(Function(d) d.compound_id).ToDictionary(Function(d) d.Key, Function(d) d.Where(Function(a) flavor.ContainsKey(a.flavor_id)).Select(Function(a) flavor(a.flavor_id)).ToArray)
+
+        Dim flavors = compoundFlavor.Select(Function(d) d.Value.Select(Function(fid) (cid:=d.Key, fid))) _
+            .IteratesALL.GroupBy(Function(d) d.fid) _
+            .ToDictionary(Function(d) d.Key, Function(d)
+                                                 Return d.Where(Function(c) compounds.ContainsKey(c.cid)).GroupBy(Function(a) compounds(a.cid).public_id).Select(Function(a) compounds(a.First.cid)).ToArray
+                                             End Function)
+        Dim flavorClusters = flavors.Select(Function(f)
+                                                Return New Cluster With {.ID = f.Key, .names = f.Key, .description = f.Key,
+                                                .members = f.Value.Select(Function(cc)
+                                                                              Dim id = cc.public_id
+                                                                              Return New BackgroundGene With {.accessionID = id, .[alias] = {id}, .locus_tag = New NamedValue With {.name = id, .text = cc.name}, .name = cc.name, .term_id = {id}}
+                                                                          End Function).ToArray}
+                                            End Function).ToArray
+
+        Dim background As New Background With {.clusters = flavorClusters}
+
+        Call background.GetXml.SaveTo("D:\biodeep\flavor\foodb\table\FoodFlavorClusters.XML")
+
+        Pause()
+    End Sub
 
     Sub FoodMatrix()
         Dim foodData = foodDataJson.LoadJsonFile(Of Dictionary(Of String, FoodData))
