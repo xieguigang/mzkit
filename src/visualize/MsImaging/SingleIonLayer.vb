@@ -124,6 +124,18 @@ Public Class SingleIonLayer
         Return GetIntensity.Quartile
     End Function
 
+    Public Shared Function GetLayer(mz As Double(), viewer As PixelReader, mzErr As Tolerance) As SingleIonLayer
+        Dim pixels As PixelData() = viewer _
+            .LoadPixels(mz, mzErr) _
+            .ToArray
+
+        Return New SingleIonLayer With {
+            .IonMz = mz.FirstOrDefault,
+            .DimensionSize = viewer.dimension,
+            .MSILayer = pixels
+        }
+    End Function
+
     Public Shared Function GetLayer(mz As Double, viewer As PixelReader, mzErr As Tolerance) As SingleIonLayer
         Dim pixels As PixelData() = viewer _
             .LoadPixels({mz}, mzErr) _
