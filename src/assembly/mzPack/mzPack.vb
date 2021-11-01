@@ -88,6 +88,10 @@ Public Class mzPack
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
 
+    Public Overrides Function ToString() As String
+        Return source
+    End Function
+
     ''' <summary>
     ''' is there any MS2 data in current raw data file?
     ''' </summary>
