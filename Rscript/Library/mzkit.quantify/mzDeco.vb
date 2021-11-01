@@ -84,7 +84,7 @@ Module mzDeco
         End If
 
         Return ms1_scans _
-            .GetMzGroups(errors) _
+            .GetMzGroups(mzdiff:=errors) _
             .DecoMzGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline) _
             .ToArray
     End Function
@@ -103,7 +103,7 @@ Module mzDeco
                               Optional mzdiff As Object = "ppm:20",
                               Optional env As Environment = Nothing) As Object
 
-        Return ms1Scans(ms1).GetMzGroups(Math.getTolerance(mzdiff, env)).ToArray
+        Return ms1Scans(ms1).GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env)).ToArray
     End Function
 
     Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)
