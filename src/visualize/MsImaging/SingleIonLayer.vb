@@ -149,6 +149,6 @@ Public Class SingleIonLayer
     End Function
 
     Public Shared Narrowing Operator CType(ion As SingleIonLayer) As PixelData()
-        Return ion.MSILayer
+        Return If(ion Is Nothing, Nothing, ion.MSILayer)
     End Operator
 End Class
