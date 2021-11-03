@@ -15,6 +15,7 @@
 
 ## LICENSE
 
++ MZKit® is a registered trademark of BioNovoGene Corporation, protected by copyright law and international treaties.
 + **RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
 
 ```
