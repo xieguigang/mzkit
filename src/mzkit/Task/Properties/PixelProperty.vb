@@ -49,10 +49,10 @@
 Imports System.ComponentModel
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
-Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.Math.Information
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports stdNum = System.Math
 
 Public Class PixelProperty
 
