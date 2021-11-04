@@ -103,8 +103,8 @@ Public Class PixelProperty
             Dim bin = CutBins.FixedWidthBins(into, 10, Function(x) x).ToArray
             Dim probs As Double() = bin.Select(Function(n) n.Count / into.Length).ToArray
 
-            ShannonEntropy = probs.ShannonEntropy
-            Gini = probs.Gini
+            ShannonEntropy = stdNum.Round(probs.ShannonEntropy, 4)
+            Gini = stdNum.Round(probs.Gini, 4)
         End If
     End Sub
 
