@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
 
+    Public Delegate Function IThreshold(intensity As Double(), q As Double) As Double
+
     Public MustInherit Class QuantizationThreshold
 
         ''' <summary>

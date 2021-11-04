@@ -493,6 +493,7 @@ Public Class frmMsImagingViewer
 
     Private Function createRenderTask(R As PixelData(), G As PixelData(), B As PixelData(), pixelSize$) As Action
         Dim dimensionSize As New Size(params.scan_x, params.scan_y)
+        Dim threshold As IThreshold = RibbonEvents.GetQuantizationThreshold
 
         loadedPixels = R.JoinIterates(G).JoinIterates(B).ToArray
 
@@ -500,9 +501,9 @@ Public Class frmMsImagingViewer
                    Call MyApplication.RegisterPlot(
                        Sub(args)
                            Dim drawer As New PixelRender
-                           Dim qr As Double = Renderer.AutoCheckCutMax(R.Select(Function(p) p.intensity).ToArray, params.maxCut)
-                           Dim qg As Double = Renderer.AutoCheckCutMax(G.Select(Function(p) p.intensity).ToArray, params.maxCut)
-                           Dim qb As Double = Renderer.AutoCheckCutMax(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
+                           Dim qr As Double = threshold(R.Select(Function(p) p.intensity).ToArray, params.maxCut)
+                           Dim qg As Double = threshold(G.Select(Function(p) p.intensity).ToArray, params.maxCut)
+                           Dim qb As Double = threshold(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
 
                            Dim dotSize As Size = pixelSize.SizeParser
                            Dim image As Bitmap = drawer.ChannelCompositions(

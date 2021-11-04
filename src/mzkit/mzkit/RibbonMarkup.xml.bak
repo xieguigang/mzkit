@@ -776,7 +776,7 @@
     </Command>
     <Command Name="cmdGroupExactMassSearch" Id="1073">
       <Command.LabelTitle>
-        <String Id="331">EEE</String>
+        <String Id="331">Exact Mass Search</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdGroupExit" Id="1096">
@@ -816,7 +816,7 @@
     </Command>
     <Command Name="cmdGroupFormulaSearchConfig2" Id="1095">
       <Command.LabelTitle>
-        <String Id="341">EEE</String>
+        <String Id="341">Formula Search Config</String>
       </Command.LabelTitle>
     </Command>
     <Command Name="cmdGroupLayout" Id="1037">
@@ -1702,6 +1702,8 @@
         <Image MinDPI="192">Res/application-x-object.png</Image>
       </Command.LargeHighContrastImages>
     </Command>
+    <Command Name="cmdCheckBoxTrIQThreshold" Id="154" LabelTitle="TrIQ Threshold" LabelDescription="Threshold Intensity Quantization Algorithm" TooltipTitle="Threshold Intensity Quantization Algorithm" TooltipDescription="Threshold Intensity Quantization Algorithm" />
+    <Command Name="cmdPanelOptions" Id="155" LabelTitle="Options" LabelDescription="Options" TooltipTitle="Options" TooltipDescription="Options" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1788,8 +1790,8 @@
         <TabGroup CommandName="cmdTabGroupTableTools">
           <Tab CommandName="cmdTabDesign" ApplicationModes="0,1">
             <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
-              <Spinner CommandName="cmdPPMSpinner" />
               <CheckBox CommandName="cmdCheckBoxShowKEGGAnnotation" />
+              <Spinner CommandName="cmdPPMSpinner" />
             </Group>
             <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonShowPlotViewer" />
@@ -1895,6 +1897,9 @@
             <Group CommandName="cmdTabMSIFile" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonMSIRowScans" />
               <Button CommandName="cmdButtonExportMSIMzpack" />
+            </Group>
+            <Group CommandName="cmdPanelOptions" ApplicationModes="0,1">
+              <CheckBox CommandName="cmdCheckBoxTrIQThreshold" />
             </Group>
           </Tab>
           <Tab CommandName="cmdTabMSIAnalysis" ApplicationModes="0,1">

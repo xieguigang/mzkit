@@ -723,5 +723,15 @@
 #define cmdCheckBoxShowKEGGAnnotation_LargeImages_192__RESID 60142
 #define cmdCheckBoxShowKEGGAnnotation_SmallHighContrastImages_192__RESID 60143
 #define cmdCheckBoxShowKEGGAnnotation_LargeHighContrastImages_192__RESID 60144
-#define InternalCmd2_LabelTitle_RESID 60145
-#define InternalCmd4_LabelTitle_RESID 60146
+#define cmdCheckBoxTrIQThreshold 154 
+#define cmdCheckBoxTrIQThreshold_LabelTitle_RESID 60145
+#define cmdCheckBoxTrIQThreshold_LabelDescription_RESID 60146
+#define cmdCheckBoxTrIQThreshold_TooltipTitle_RESID 60147
+#define cmdCheckBoxTrIQThreshold_TooltipDescription_RESID 60148
+#define cmdPanelOptions 155 
+#define cmdPanelOptions_LabelTitle_RESID 60149
+#define cmdPanelOptions_LabelDescription_RESID 60150
+#define cmdPanelOptions_TooltipTitle_RESID 60151
+#define cmdPanelOptions_TooltipDescription_RESID 60152
+#define InternalCmd2_LabelTitle_RESID 60153
+#define InternalCmd4_LabelTitle_RESID 60154

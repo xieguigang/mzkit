@@ -111,6 +111,8 @@ namespace RibbonLib.Controls
             public const uint cmdTabMSIFile = 129;
             public const uint cmdButtonMSIRowScans = 128;
             public const uint cmdButtonExportMSIMzpack = 127;
+            public const uint cmdPanelOptions = 155;
+            public const uint cmdCheckBoxTrIQThreshold = 154;
             public const uint cmdTabMSIAnalysis = 141;
             public const uint cmdTabMSISnapshot = 126;
             public const uint cmdButtonMSIAverageIon = 125;
@@ -262,6 +264,8 @@ namespace RibbonLib.Controls
         public RibbonGroup TabMSIFile { get; private set; }
         public RibbonButton ButtonMSIRowScans { get; private set; }
         public RibbonButton ButtonExportMSIMzpack { get; private set; }
+        public RibbonGroup PanelOptions { get; private set; }
+        public RibbonCheckBox CheckBoxTrIQThreshold { get; private set; }
         public RibbonTab TabMSIAnalysis { get; private set; }
         public RibbonGroup TabMSISnapshot { get; private set; }
         public RibbonButton ButtonMSIAverageIon { get; private set; }
@@ -411,6 +415,8 @@ namespace RibbonLib.Controls
             TabMSIFile = new RibbonGroup(ribbon, Cmd.cmdTabMSIFile);
             ButtonMSIRowScans = new RibbonButton(ribbon, Cmd.cmdButtonMSIRowScans);
             ButtonExportMSIMzpack = new RibbonButton(ribbon, Cmd.cmdButtonExportMSIMzpack);
+            PanelOptions = new RibbonGroup(ribbon, Cmd.cmdPanelOptions);
+            CheckBoxTrIQThreshold = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxTrIQThreshold);
             TabMSIAnalysis = new RibbonTab(ribbon, Cmd.cmdTabMSIAnalysis);
             TabMSISnapshot = new RibbonGroup(ribbon, Cmd.cmdTabMSISnapshot);
             ButtonMSIAverageIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIAverageIon);
