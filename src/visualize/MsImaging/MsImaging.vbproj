@@ -285,9 +285,11 @@
   <ItemGroup>
     <Compile Include="Imaging\RectangleRender.vb" />
     <Compile Include="Imaging\Renderer.vb" />
-    <Compile Include="RGBMSIPlot.vb" />
+    <Compile Include="Plot\DualRegionUnionPlot.vb" />
+    <Compile Include="Plot\MSIPlot.vb" />
+    <Compile Include="Plot\MSIRegionPlot.vb" />
+    <Compile Include="Plot\RGBMSIPlot.vb" />
     <Compile Include="SingleIonLayer.vb" />
-    <Compile Include="MSIPlot.vb" />
     <Compile Include="FeatureRegions.vb" />
     <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
     <Compile Include="PixelScan\InMemoryPixel.vb" />
