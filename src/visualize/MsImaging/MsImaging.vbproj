@@ -283,6 +283,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imaging\QuantizationThreshold.vb" />
+    <Compile Include="Imaging\MzLayerColorSet.vb" />
     <Compile Include="Imaging\RectangleRender.vb" />
     <Compile Include="Imaging\Renderer.vb" />
     <Compile Include="Plot\DualRegionUnionPlot.vb" />

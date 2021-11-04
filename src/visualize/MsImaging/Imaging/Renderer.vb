@@ -51,64 +51,13 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
 
-    Public Class MzLayerColorSet
-
-        Public Property mz As Double()
-        Public Property colorSet As Color()
-        Public Property tolerance As Tolerance
-
-        Default Public ReadOnly Property GetColor(i As Integer) As Color
-            Get
-                Return colorSet(i)
-            End Get
-        End Property
-
-
-        Public Function FindColor(mz As Double) As Color
-            Dim i As Integer = which(Me.mz.Select(Function(mzi) tolerance(mz, mzi))).FirstOrDefault(-1)
-
-            If i = -1 Then
-                Return Color.Transparent
-            Else
-                Return colorSet(i)
-            End If
-        End Function
-
-        Public Function SelectGroup(pixels As PixelData()) As IEnumerable(Of NamedCollection(Of PixelData))
-            Return pixels.GroupBy(Function(p) p.mz, tolerance)
-        End Function
-
-    End Class
-
     Public MustInherit Class Renderer
-
-        ''' <summary>
-        ''' auto check for intensity cut threshold value
-        ''' </summary>
-        ''' <param name="intensity"></param>
-        ''' <returns>
-        ''' percentage cutoff value
-        ''' </returns>
-        Public Shared Function AutoCheckCutMax(intensity As Double(), qcut As Double) As Double
-            If intensity.IsNullOrEmpty Then
-                Return 0
-            Else
-                Dim maxBin As Double() = intensity.TabulateBin(topBin:=True, bags:=5)
-                Dim per As Double = New FastRankQuantile(maxBin).Query(qcut) / intensity.Max
-
-                Return per
-            End If
-        End Function
 
         ''' <summary>
         ''' 每一种离子一种对应的颜色生成多个图层，然后叠在在一块进行可视化

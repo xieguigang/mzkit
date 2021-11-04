@@ -197,7 +197,9 @@ Namespace Imaging
             Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
                 For Each layer As PixelData() In layers
                     Dim baseColor As Color = colorSet(++i)
-                    Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels).Select(Function(a) New SolidBrush(baseColor.Alpha(a))).ToArray
+                    Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels) _
+                        .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
+                        .ToArray
 
                     Call FillLayerInternal(gr, layer, defaultColor, colors, cut, False, dimSize)
                 Next
