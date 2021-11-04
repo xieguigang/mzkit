@@ -10,11 +10,13 @@
 
 + [View User Manual PowerPoint](https://view.officeapps.live.com/op/view.aspx?src=https://mzkit.org/src/mzkit/man.pptx)
 + [View Mzkit Update History](HISTORY.md)
++ Found me at: https://bio.tools/mzkit 
 
 **Download Software**: [http://www.biodeep.cn/downloads?lang=en-US](http://www.biodeep.cn/downloads?lang=en-US)
 
 ## LICENSE
 
++ MZKit® is a registered trademark of BioNovoGene Corporation, protected by copyright law and international treaties.
 + **RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
 
 ```
