@@ -33,9 +33,20 @@ Namespace Imaging
             Static q As New TrIQThreshold
             Return q.ThresholdValue(intensity, qcut)
         End Function
+
+        Public Shared Narrowing Operator CType(q As QuantizationThreshold) As IQuantizationThreshold
+            Return AddressOf q.ThresholdValue
+        End Operator
     End Class
 
     Public Class RankQuantileThreshold : Inherits QuantizationThreshold
+
+        Sub New()
+        End Sub
+
+        Sub New(q As Double)
+            qcut = q
+        End Sub
 
         ''' <summary>
         ''' auto check for intensity cut threshold value
@@ -58,6 +69,13 @@ Namespace Imaging
     End Class
 
     Public Class TrIQThreshold : Inherits QuantizationThreshold
+
+        Sub New()
+        End Sub
+
+        Sub New(q As Double)
+            qcut = q
+        End Sub
 
         Public Overrides Function ThresholdValue(intensity() As Double, qcut As Double) As Double
             If intensity.IsNullOrEmpty Then

@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::b24d9d667f01098cfe16b08e0d90d9e0, Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
-    '               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
-    '               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
-    '               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
+'               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
+'               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
+'               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -354,6 +354,7 @@ Module MsImaging
                         Optional tolerance As Object = "da:0.1",
                         Optional pixelDrawer As Boolean = True,
                         Optional maxCut As Double = 0.75,
+                        Optional TrIQ As Boolean = True,
                         Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -367,9 +368,10 @@ Module MsImaging
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
-        Dim qr As DoubleRange = {0, Renderer.AutoCheckCutMax(pr.Select(Function(p) p.intensity).ToArray, maxCut)}
-        Dim qg As DoubleRange = {0, Renderer.AutoCheckCutMax(pg.Select(Function(p) p.intensity).ToArray, maxCut)}
-        Dim qb As DoubleRange = {0, Renderer.AutoCheckCutMax(pb.Select(Function(p) p.intensity).ToArray, maxCut)}
+        Dim cut As IQuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
+        Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
+        Dim qg As DoubleRange = {0, cut(pg.Select(Function(p) p.intensity).ToArray)}
+        Dim qb As DoubleRange = {0, cut(pb.Select(Function(p) p.intensity).ToArray)}
 
         Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, psize, cut:=(qr, qg, qb), background:=background)
     End Function
@@ -504,9 +506,14 @@ Module MsImaging
     End Function
 
     <ExportAPI("MSI_summary.scaleMax")>
-    Public Function AutoScaleMax(data As MSISummary, intensity As IntensitySummary, Optional qcut As Double = 0.75) As Double
+    Public Function AutoScaleMax(data As MSISummary,
+                                 intensity As IntensitySummary,
+                                 Optional qcut As Double = 0.75,
+                                 Optional TrIQ As Boolean = True) As Double
+
         Dim into As Double() = data.GetLayer(intensity).Select(Function(p) p.totalIon).ToArray
-        Dim scale As Double = Renderer.AutoCheckCutMax(into, qcut)
+        Dim cut As IQuantizationThreshold = If(TrIQ, New TrIQThreshold(qcut), New RankQuantileThreshold(qcut))
+        Dim scale As Double = cut(into)
 
         Return scale
     End Function
