@@ -368,7 +368,8 @@ Module MsImaging
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
-        Dim cut As IQuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
+        Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
+        Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
         Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
         Dim qg As DoubleRange = {0, cut(pg.Select(Function(p) p.intensity).ToArray)}
         Dim qb As DoubleRange = {0, cut(pb.Select(Function(p) p.intensity).ToArray)}

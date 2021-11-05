@@ -34,9 +34,9 @@ Namespace Imaging
             Return q.ThresholdValue(intensity, qcut)
         End Function
 
-        Public Shared Narrowing Operator CType(q As QuantizationThreshold) As IQuantizationThreshold
-            Return AddressOf q.ThresholdValue
-        End Operator
+        'Public Shared Narrowing Operator CType(q As QuantizationThreshold) As IQuantizationThreshold
+        '    Return AddressOf q.ThresholdValue
+        'End Operator
     End Class
 
     Public Class RankQuantileThreshold : Inherits QuantizationThreshold
