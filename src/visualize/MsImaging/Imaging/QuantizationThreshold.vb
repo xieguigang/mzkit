@@ -5,8 +5,11 @@ Imports Microsoft.VisualBasic.Math.Quantile
 Namespace Imaging
 
     Public Delegate Function IThreshold(intensity As Double(), q As Double) As Double
+    Public Delegate Function IQuantizationThreshold(intensity As Double()) As Double
 
     Public MustInherit Class QuantizationThreshold
+
+        Public Property qcut As Double = 0.65
 
         ''' <summary>
         ''' auto check for intensity cut threshold value
@@ -16,6 +19,10 @@ Namespace Imaging
         ''' percentage cutoff value
         ''' </returns>
         Public MustOverride Function ThresholdValue(intensity As Double(), q As Double) As Double
+
+        Public Function ThresholdValue(intensity As Double()) As Double
+            Return ThresholdValue(intensity, qcut)
+        End Function
 
         Public Shared Function RankQuantileThreshold(intensity As Double(), qcut As Double) As Double
             Static q As New RankQuantileThreshold
