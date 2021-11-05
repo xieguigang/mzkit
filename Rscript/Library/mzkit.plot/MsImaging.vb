@@ -513,8 +513,8 @@ Module MsImaging
                                  Optional TrIQ As Boolean = True) As Double
 
         Dim into As Double() = data.GetLayer(intensity).Select(Function(p) p.totalIon).ToArray
-        Dim cut As IQuantizationThreshold = If(TrIQ, New TrIQThreshold(qcut), New RankQuantileThreshold(qcut))
-        Dim scale As Double = cut(into)
+        Dim cut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(qcut), New RankQuantileThreshold(qcut))
+        Dim scale As Double = cut.ThresholdValue(into)
 
         Return scale
     End Function
