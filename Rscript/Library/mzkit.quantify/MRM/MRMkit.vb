@@ -146,8 +146,22 @@ Module MRMkit
                         Return $"{act}/{If(ref Is Nothing, "NA", stdNum.Round(ref.Value))}"
                     End Function) _
             .ToArray
-        Dim rtshifts = x.Select(Function(i) i.CalcRtShifts.ToDictionary(Function(sample) sample.Name, Function(sample) sample.Value)).ToArray
-        Dim allSampleNames = rtshifts.Select(Function(i) i.Keys).IteratesALL.Distinct.OrderBy(Function(s) s).ToArray
+        Dim rtshifts = x _
+            .Select(Function(i)
+                        Return i _
+                            .CalcRtShifts _
+                            .ToDictionary(Function(sample) sample.Name,
+                                          Function(sample)
+                                              Return sample.Value
+                                          End Function)
+                    End Function) _
+            .ToArray
+        Dim allSampleNames As String() = rtshifts _
+            .Select(Function(i) i.Keys) _
+            .IteratesALL _
+            .Distinct _
+            .OrderBy(Function(s) s) _
+            .ToArray
         Dim shifts As Array
 
         Call cols.Add(NameOf(name), name)

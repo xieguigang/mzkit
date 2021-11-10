@@ -7,7 +7,7 @@
 #'    linear reference raw data files, do sample quantitative evaluation
 #'    and QC assertion if the QC file is exists in your sample files.
 
-# require(mzkit);
+require(mzkit);
 
 # imports mzkit library modules
 imports ["Linears", "MRMLinear", "visualPlots"] from "mzkit.quantify";
@@ -16,10 +16,12 @@ imports "assembly" from "mzkit";
 # includes external helper script
 imports "plot_ionRaws.R";
 
+#region "pipeline script configuration"
+
 # config of the standard curve data files
 [@info "The folder path of the reference lines. you can set the reference name pattern via '--patternOfRef' parameter for matched the raw data files in this folder."]
 [@type "folder, *.mzML"]
-let wiff as string = ?"--Cal" || stop("No standard curve data provides!");
+let wiff as string   = ?"--Cal" || stop("No standard curve data provides!");
 
 [@info "The folder path of the sample data files."]
 [@type "folder, *.mzML"]
@@ -28,6 +30,7 @@ let sample as string = ?"--data" || stop("No sample data files provided!");
 [@info "MRM ion information xlsx table file. This table file must contains the linear reference content data of each targeted metabolite for create linear reference models."]
 [@type "*.xlsx"]
 let MRM.info as string = ?"--MRM" || stop("Missing MRM information table file!");
+
 # use external MSL data file if there is no 
 # ion pair data in the MRM table file. 
 [@info "The *.MSL ion file for specific the MRM ion pairs data if there is no ion pair data in the MRM table."]
@@ -55,12 +58,12 @@ print(dir);
 const patternOf.ref as string = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 [@info "the regexp expression pattern for match of the QC sample raw data files."]
 [@type "regexp"]
-const patternOf.QC as string = ?"--patternOfQC"  || "QC[-]?\d+";
+const patternOf.QC as string  = ?"--patternOfQC"  || "QC[-]?\d+";
 [@info "the regexp expression pattern for match of the blank sample raw data files."]
 [@type "regexp"]
 const patternOf.Blank as string = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
 [@info "Do linear fitting of the given ions in different parameters?"]
-const individualFit as boolean = ?"--individual-fit";
+const individualFit as boolean  = ?"--individual-fit";
 
 # let Methods as integer = {
       # NetPeakSum = 0;
@@ -106,6 +109,7 @@ let maxNumOfPoint.delets as integer = ?"--max.deletes"   || -1;
 let angle.threshold as double   = ?"--angle.threshold"   || 8;
 [@info "quantile threshold value for detected baseline noise in the peak finding."]
 let baseline.quantile as double = ?"--baseline.quantile" || 0.5;
+#end region
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
@@ -142,22 +146,22 @@ let is        = NULL;
 
 # read MRM, standard curve and IS information from the given file
 if (file.exists(ions)) {
-	[reference, is] = MRM.info :> [		
+	# ion paires data from MSL file
+	[reference, is] = MRM.info |> [		
 		read.reference("coordinates"), 
 		read.IS("IS")
 	];	
 	
 	print("Use external msl data as ion pairs.");
 	
-	ions = ions 
 	# the time unit is minute by default
 	# required convert to second by 
 	# specific that the time unit is Minute
 	# at here
-	:> read.msl(unit = "Minute") 
-	:> as.ion_pairs
-	;
+	ions = mzkit::ionPairsFromMsl(ions, unit = "Minute");
 } else {
+	# ion pairs data from the MRM data table file.
+	# read data from a data sheet which is named ``ion pairs``.
 	[ions, reference, is] = MRM.info :> [
 		read.ion_pairs("ion pairs"), 
 		read.reference("coordinates"), 
@@ -244,13 +248,13 @@ const linears.standard_curve as function(wiff_standards, subdir) {
 	print("Previews of the rt shifts summary in your sample reference points:");
 	
 	rt.shifts
-	:> as.data.frame
-	:> print
+	|> as.data.frame
+	|> print
 	;
 	
 	rt.shifts
-	:> as.data.frame
-	:> write.csv(file = `${dir}/${subdir}/rt_shifts.csv`)
+	|> as.data.frame
+	|> write.csv(file = `${dir}/${subdir}/rt_shifts.csv`)
 	;
 	
 	# Get raw scan data for given ions
@@ -283,8 +287,8 @@ const linears.standard_curve as function(wiff_standards, subdir) {
 
 	# save linear models summary
 	ref
-	:> lines.table
-	:> write.csv(file = `${dir}/${subdir}/linears.csv`)
+	|> lines.table
+	|> write.csv(file = `${dir}/${subdir}/linears.csv`)
 	;
 
 	for(mzML in wiff_standards) {		
@@ -299,38 +303,47 @@ const linears.standard_curve as function(wiff_standards, subdir) {
 }
 
 #' print model summary and then do standard curve plot
+#' 
+#' @param line the linear fitting object model from the reference dataset
+#' @param subdir the sub directory name for save the linear modelling 
+#'     visualization and data table file.
 #'
 const printModel as function(line, subdir) {
 	# get compound id name
 	const id as string = line 
-	:> as.object 
-	:> do.call("name");
+	|> as.object 
+	|> do.call("name");
 	
 	# view summary result
 	print(line);
 	
 	bitmap(file = `${dir}/${subdir}/standard_curves/${id}.png`) {
 		line
-		:> standard_curve(title = `Standard Curve Of ${id}`)
+		|> standard_curve(title = `Standard Curve Of ${id}`)
 		;
 	}
 	
 	# save reference points
 	line
-	:> points(nameRef = id)
-	:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
+	|> points(nameRef = id)
+	|> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
 	;
 }
 
 #' Run linear quantification
+#' 
+#' @param wiff_standards a list of filepath of the reference standards.
+#' @param ions the ion pairs dataset
+#' @param subdir the sub directory name for save the linear modelling 
+#'     visualization and data table file.
 #' 
 const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 	let scans    = [];	
 	let ref_raws = ions 
 	# get ion chromatograms raw data for 
 	# TIC data plots
-	:> getIonsSampleRaw(wiff_standards, tolerance) 
-	:> lapply(ion => ion$chromatograms)
+	|> getIonsSampleRaw(wiff_standards, tolerance) 
+	|> lapply(ion => ion$chromatograms)
 	;
 	
 	# calculate standards points as well for quality controls
@@ -340,7 +353,7 @@ const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 	# Write raw scan data of the user sample data
 	sample.files
 	# list.files(wiff, pattern = "*.mzML")
-	:> wiff.scans(
+	|> wiff.scans(
 		ions             = ions, 
 		peakAreaMethod   = integrator, 
 		TPAFactors       = NULL, 
@@ -352,13 +365,14 @@ const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 		peakwidth        = peakwidth,
 		sn_threshold     = sn_threshold
 	) 
-	:> write.csv(file = `${dir}/${subdir}/samples.csv`);
+	|> write.csv(file = `${dir}/${subdir}/samples.csv`)
+	;
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
 	for(sample.mzML in sample.files) {
 		const peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		const result = ref :> sample.quantify(
+		const result = ref |> sample.quantify(
 			sample.mzML, ions, 
 			peakAreaMethod   = integrator, 
 			tolerance        = tolerance, 
@@ -374,9 +388,9 @@ const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 		
 		# QuantifyScan
 		result 
-		:> as.object 
-		:> do.call("ionPeaks") 
-		:> write.ionPeaks(file = peakfile);
+		|> as.object 
+		|> do.call("ionPeaks") 
+		|> write.ionPeaks(file = peakfile);
 		
 		scans <- scans << result;
 	}
@@ -393,18 +407,18 @@ const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 	
 	# save linear regression html report
 	ref
-	:> report.dataset(scans, ionsRaw = ref_raws) 
-	:> html 
-	:> writeLines(con = `${dir}/${subdir}/index.html`)
+	|> report.dataset(scans, ionsRaw = ref_raws) 
+	|> html 
+	|> writeLines(con = `${dir}/${subdir}/index.html`)
 	;
 		
 	if (sum(QC_samples) > 0) {
 		print("Creating QC report....");
 	
 		ref
-		:> report.dataset(scans, QC_dataset = patternOf.QC) 
-		:> html 
-		:> writeLines(con = `${dir}/${subdir}/QC.html`)
+		|> report.dataset(scans, QC_dataset = patternOf.QC) 
+		|> html 
+		|> writeLines(con = `${dir}/${subdir}/QC.html`)
 		;	
 	} else {
 		print("QC report will not created due to the reason of no QC samples...");
@@ -413,7 +427,7 @@ const doLinears as function(wiff_standards, ref, ions, subdir = "") {
 
 if (wiff$numberOfStandardReference > 1) {
 	# test for multiple standard curves
-	const groups = wiff$GetLinearGroups() :> as.list;
+	const groups = wiff$GetLinearGroups() |> as.list;
 	
 	print("We get linear groups:");
 	print(groups);
@@ -428,14 +442,11 @@ if (wiff$numberOfStandardReference > 1) {
 			if (file.exists(ions2)) {
 				print("Use external msl data as ion pairs for the sample data!");
 	
-				ions2
 				# the time unit is minute by default
 				# required convert to second by 
 				# specific that the time unit is Minute
 				# at here
-				:> read.msl(unit = "Minute") 
-				:> as.ion_pairs
-				;
+				mzkit::ionPairsFromMsl(ions2, unit = "Minute");
 			} else {
 				ions;
 			}
@@ -456,14 +467,11 @@ if (wiff$numberOfStandardReference > 1) {
 		if (file.exists(ions2)) {
 			print("Use external msl data as ion pairs for the sample data!");
 
-			ions2
 			# the time unit is minute by default
 			# required convert to second by 
 			# specific that the time unit is Minute
 			# at here
-			:> read.msl(unit = "Minute") 
-			:> as.ion_pairs
-			;
+			mzkit::ionPairsFromMsl(ions2, unit = "Minute");
 		} else {
 			ions;
 		}
