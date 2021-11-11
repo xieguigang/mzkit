@@ -130,17 +130,12 @@ Module MsImaging
     End Function
 
     <ExportAPI("quartileRange")>
-    Public Function quartileRange(layer As SingleIonLayer, Optional scale As Double = 1) As Double()
+    Public Function quartileRange(layer As SingleIonLayer, Optional scale As Double = 1.5) As Double()
         Dim quartile As Quantile.DataQuartile = layer.GetQuartile
-        Dim range As Double() = {quartile.Q1, quartile.Q3}
+        Dim IQR As Double = quartile.IQR
+        Dim range As Double() = {quartile.Q1 - scale * IQR, quartile.Q3 + scale * IQR}
 
-        If scale <> 1 Then
-            With (New DoubleRange(range) * scale)
-                Return { .Min, .Max}
-            End With
-        Else
-            Return range
-        End If
+        Return range
     End Function
 
     <ExportAPI("write.MSI_XIC")>
