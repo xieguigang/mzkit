@@ -131,7 +131,10 @@ Namespace Imaging
                 dimSize = New Size(1, 1)
             End If
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
+            Dim w = dimension.Width * dimSize.Width
+            Dim h = dimension.Height * dimSize.Height
+
+            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
                 Call FillLayerInternal(gr, pixels, defaultColor, colorSet, cutoff, logE, dimSize)
                 Return gr.ImageResource
             End Using
@@ -152,7 +155,13 @@ Namespace Imaging
             Return RenderPixels(pixels, dimension, dimSize, colors, logE, scale, defaultFill, cutoff)
         End Function
 
-        Private Shared Sub FillLayerInternal(gr As Graphics2D, pixels() As PixelData, defaultColor As SolidBrush, colors As SolidBrush(), cutoff As DoubleRange, logE As Boolean, dimSize As Size)
+        Private Shared Sub FillLayerInternal(gr As Graphics2D,
+                                             pixels() As PixelData,
+                                             defaultColor As SolidBrush,
+                                             colors As SolidBrush(),
+                                             cutoff As DoubleRange,
+                                             logE As Boolean,
+                                             dimSize As Size)
             Dim color As SolidBrush
             Dim index As Integer
             Dim levelRange As DoubleRange = New Double() {0, 1}
@@ -194,7 +203,10 @@ Namespace Imaging
                 dimSize = New Size(1, 1)
             End If
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
+            Dim w = dimension.Width * dimSize.Width
+            Dim h = dimension.Height * dimSize.Height
+
+            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
                 For Each layer As PixelData() In layers
                     Dim baseColor As Color = colorSet(++i)
                     Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels) _
@@ -222,10 +234,17 @@ Namespace Imaging
                 dimSize = New Size(1, 1)
             End If
 
-            Using gr As Graphics2D = New Size(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height).CreateGDIDevice(defaultColor.Color)
+            Dim w = dimension.Width * dimSize.Width
+            Dim h = dimension.Height * dimSize.Height
+
+            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
                 For Each layer As NamedCollection(Of PixelData) In layers
                     Dim baseColor As Color = colorSet.FindColor(Val(layer.name))
-                    Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels).Select(Function(a) New SolidBrush(baseColor.Alpha(a))).ToArray
+                    Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels) _
+                        .Select(Function(a)
+                                    Return New SolidBrush(baseColor.Alpha(a))
+                                End Function) _
+                        .ToArray
 
                     Call FillLayerInternal(gr, layer.value, defaultColor, colors, cut, False, dimSize)
                 Next

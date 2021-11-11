@@ -138,7 +138,14 @@ Namespace Imaging
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
 
-            Return RenderPixels(pixels, dimension, dimSize, Designer.GetColors(colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray, logE, scale, defaultFill, cutoff)
+            Dim brushColors As SolidBrush() = Designer _
+                .GetColors(colorSet, mapLevels) _
+                .Select(Function(c)
+                            Return New SolidBrush(c)
+                        End Function) _
+                .ToArray
+
+            Return RenderPixels(pixels, dimension, dimSize, brushColors, logE, scale, defaultFill, cutoff)
         End Function
 
         ''' <summary>
@@ -198,7 +205,15 @@ Namespace Imaging
             End If
         End Function
 
-        Public Overrides Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet, Optional dimSize As Size = Nothing, Optional scale As InterpolationMode = InterpolationMode.Bilinear, Optional cut As DoubleRange = Nothing, Optional defaultFill As String = "Transparent", Optional mapLevels As Integer = 25) As Bitmap
+        Public Overrides Function LayerOverlaps(pixels As PixelData()(),
+                                                dimension As Size,
+                                                colorSet As MzLayerColorSet,
+                                                Optional dimSize As Size = Nothing,
+                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
+                                                Optional cut As DoubleRange = Nothing,
+                                                Optional defaultFill As String = "Transparent",
+                                                Optional mapLevels As Integer = 25) As Bitmap
+
             Throw New NotImplementedException()
         End Function
     End Class

@@ -70,13 +70,13 @@ Public Class PixelData : Implements IMSIPixel
 
     Public Shared Function GetBuffer(data As PixelData()) As Byte()
         Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
-            file.Write(data.Length)
-            file.Write(data.Select(Function(i) i.x).ToArray)
-            file.Write(data.Select(Function(i) i.y).ToArray)
-            file.Write(data.Select(Function(i) i.intensity).ToArray)
-            file.Write(data.Select(Function(i) i.level).ToArray)
-            file.Write(data.Select(Function(i) i.mz).ToArray)
-            file.Flush()
+            Call file.Write(data.Length)
+            Call file.Write(data.Select(Function(i) i.x).ToArray)
+            Call file.Write(data.Select(Function(i) i.y).ToArray)
+            Call file.Write(data.Select(Function(i) i.intensity).ToArray)
+            Call file.Write(data.Select(Function(i) i.level).ToArray)
+            Call file.Write(data.Select(Function(i) i.mz).ToArray)
+            Call file.Flush()
 
             Return buf.ToArray
         End Using
