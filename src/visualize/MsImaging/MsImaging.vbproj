@@ -283,6 +283,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imaging\KnnInterpolation.vb" />
     <Compile Include="Imaging\QuantizationThreshold.vb" />
     <Compile Include="Imaging\MzLayerColorSet.vb" />
     <Compile Include="Imaging\RectangleRender.vb" />
