@@ -400,6 +400,11 @@ Module MsImaging
         End If
     End Function
 
+    <ExportAPI("knnFill")>
+    Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
+        Return layer.KnnFill(resolution)
+    End Function
+
     <ExportAPI("MSI_coverage")>
     <Extension>
     Public Function MSICoverage(layer As SingleIonLayer, xy As Index(Of String), Optional samplingRegion As Boolean = True) As Double
