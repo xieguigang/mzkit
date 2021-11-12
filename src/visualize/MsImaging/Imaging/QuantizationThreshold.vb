@@ -48,6 +48,14 @@ Namespace Imaging
             qcut = q
         End Sub
 
+        Public Overrides Function ToString() As String
+            If qcut > 0 Then
+                Return $"Quantile({qcut})"
+            Else
+                Return "Quantile"
+            End If
+        End Function
+
         ''' <summary>
         ''' auto check for intensity cut threshold value
         ''' </summary>
@@ -82,6 +90,14 @@ Namespace Imaging
                 Return 0
             Else
                 Return intensity.FindThreshold(qcut, N:=64) / intensity.Max
+            End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            If qcut > 0 Then
+                Return $"TrIQ({qcut})"
+            Else
+                Return "TrIQ"
             End If
         End Function
     End Class
