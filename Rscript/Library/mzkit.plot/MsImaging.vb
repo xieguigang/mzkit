@@ -536,11 +536,14 @@ Module MsImaging
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
-    ''' <param name="data"></param>
+    ''' <param name="data">
+    ''' 1. <see cref="MSISummary"/>
+    ''' 2. <see cref="SingleIonLayer"/>
+    ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet$"></param>
+    ''' <param name="colorSet"></param>
     ''' <param name="defaultFill"></param>
-    ''' <param name="pixelSize$"></param>
+    ''' <param name="pixelSize"></param>
     ''' <param name="cutoff"></param>
     ''' <param name="logE"></param>
     ''' <param name="background">
@@ -551,7 +554,8 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
-    Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary,
+    Public Function renderRowScans(data As Object,
+                                   Optional intensity As IntensitySummary = IntensitySummary.Total,
                                    Optional colorSet$ = "Jet",
                                    Optional defaultFill As String = "Transparent",
                                    Optional pixelSize$ = "6,6",
@@ -582,23 +586,36 @@ Module MsImaging
             .Width = polygon.xpoints.averageStep,
             .Height = polygon.ypoints.averageStep
         }
-        Dim layer As PixelScanIntensity() = data _
-            .GetLayer(intensity) _
-            .TrimRegion(polygon, unionSize) _
-            .ToArray
-        Dim pixels As PixelData() = layer _
-            .Select(Function(p)
-                        Return New PixelData With {
-                            .intensity = p.totalIon,
-                            .x = p.x,
-                            .y = p.y
-                        }
-                    End Function) _
-            .ToArray
+        Dim dataSize As Size
+        Dim pixels As PixelData()
+
+        If TypeOf data Is MSISummary Then
+            Dim layer As PixelScanIntensity() = DirectCast(data, MSISummary) _
+                .GetLayer(intensity) _
+                .TrimRegion(polygon, unionSize) _
+                .ToArray
+
+            dataSize = DirectCast(data, MSISummary).size
+            pixels = layer _
+                .Select(Function(p)
+                            Return New PixelData With {
+                                .intensity = p.totalIon,
+                                .x = p.x,
+                                .y = p.y
+                            }
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf data Is SingleIonLayer Then
+            dataSize = DirectCast(data, SingleIonLayer).DimensionSize
+            pixels = DirectCast(data, SingleIonLayer).MSILayer
+        Else
+            Return Message.InCompatibleType(GetType(MSISummary), data.GetType, env)
+        End If
+
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
         Dim dimSize As Size = InteropArgumentHelper _
-            .getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}") _
+            .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
         Dim pointSize As Size = pixelSize.SizeParser
 
