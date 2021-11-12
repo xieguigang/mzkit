@@ -543,7 +543,7 @@ Module MsImaging
                                    Optional pixelSize$ = "5,5",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
-                                   Optional logE As Boolean = True,
+                                   Optional logE As Boolean = False,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
                                    <RRawVectorArgument>
@@ -583,6 +583,9 @@ Module MsImaging
             .ToArray
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
         Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim dimSize As Size = InteropArgumentHelper _
+            .getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}") _
+            .SizeParser
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
@@ -590,7 +593,7 @@ Module MsImaging
 
         Return engine.RenderPixels(
             pixels:=pixels,
-            dimension:=InteropArgumentHelper.getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}").SizeParser,
+            dimension:=dimSize,
             dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
             logE:=logE,
