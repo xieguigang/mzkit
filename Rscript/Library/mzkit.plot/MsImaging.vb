@@ -586,6 +586,7 @@ Module MsImaging
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{data.size.Width},{data.size.Height}") _
             .SizeParser
+        Dim pointSize As Size = pixelSize.SizeParser
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
@@ -594,7 +595,7 @@ Module MsImaging
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimSize,
-            dimSize:=pixelSize.SizeParser,
+            dimSize:=pointSize,
             colorSet:=colorSet,
             logE:=logE,
             defaultFill:=defaultFill,
