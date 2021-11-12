@@ -398,9 +398,12 @@ Module MsImaging
     <ExportAPI("knnFill")>
     <RApiReturn(GetType(SingleIonLayer), GetType(MSISummary))>
     Public Function KnnFill(layer As Object,
-                            Optional gridSize As Integer = 5,
-                            Optional q As Double = 0.5,
+                            Optional gridSize As Integer = 3,
+                            Optional q As Double = 0.7,
                             Optional env As Environment = Nothing) As Object
+
+        Call base.print($"Knn interpolation fill with grid size: [{gridSize},{gridSize}]", env)
+        Call base.print($"Pixels qcut: {q}", env)
 
         If TypeOf layer Is SingleIonLayer Then
             Return DirectCast(layer, SingleIonLayer).KnnFill(gridSize, gridSize, q)
