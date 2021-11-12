@@ -47,9 +47,9 @@ Namespace Imaging
                     If point Is Nothing Then
                         point = graph.KnnInterpolation(i, j, deltaSize, q)
 
-                        If Not point Is Nothing Then
-                            Call graph.Add(point)
-                        End If
+                        'If Not point Is Nothing Then
+                        '    Call graph.Add(point)
+                        'End If
                     End If
 
                     If Not point Is Nothing Then
@@ -76,9 +76,9 @@ Namespace Imaging
                     If point Is Nothing Then
                         point = graph.KnnInterpolation(i, j, deltaSize, q)
 
-                        If Not point Is Nothing Then
-                            Call graph.Add(point)
-                        End If
+                        'If Not point Is Nothing Then
+                        '    Call graph.Add(point)
+                        'End If
                     End If
 
                     If Not point Is Nothing Then

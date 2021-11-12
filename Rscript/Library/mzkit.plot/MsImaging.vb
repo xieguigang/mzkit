@@ -399,7 +399,7 @@ Module MsImaging
     <RApiReturn(GetType(SingleIonLayer), GetType(MSISummary))>
     Public Function KnnFill(layer As Object,
                             Optional gridSize As Integer = 3,
-                            Optional q As Double = 0.7,
+                            Optional q As Double = 0.8,
                             Optional env As Environment = Nothing) As Object
 
         Call base.print($"Knn interpolation fill with grid size: [{gridSize},{gridSize}]", env)
@@ -554,7 +554,7 @@ Module MsImaging
     Public Function renderRowScans(data As MSISummary, intensity As IntensitySummary,
                                    Optional colorSet$ = "Jet",
                                    Optional defaultFill As String = "Transparent",
-                                   Optional pixelSize$ = "5,5",
+                                   Optional pixelSize$ = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
                                    Optional logE As Boolean = False,
