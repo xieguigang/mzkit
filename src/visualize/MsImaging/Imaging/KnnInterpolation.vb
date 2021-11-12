@@ -9,6 +9,28 @@ Namespace Imaging
     Public Module KnnInterpolation
 
         <Extension>
+        Private Function KnnInterpolation(graph As Grid(Of iPixelIntensity), x As Integer, y As Integer, deltaSize As Size) As iPixelIntensity
+            Dim query As iPixelIntensity() = graph.Query(x, y, deltaSize).ToArray
+
+            If query.IsNullOrEmpty Then
+                Return Nothing
+            End If
+
+            Dim total = query.Select(Function(p) p.totalIon).TabulateBin
+            Dim baseIntensity = query.Select(Function(p) p.basePeakIntensity).TabulateBin
+            Dim average = query.Select(Function(p) p.average).TabulateBin
+
+            Return New iPixelIntensity With {
+                .basePeakIntensity = baseIntensity.Average,
+                .average = average.Average,
+                .basePeakMz = 0,
+                .totalIon = total.Average,
+                .x = x,
+                .y = y
+            }
+        End Function
+
+        <Extension>
         Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10) As MSISummary
             Dim graph As Grid(Of iPixelIntensity) = Grid(Of iPixelIntensity).Create(summary.ToArray, Function(p) p.x, Function(p) p.y)
             Dim size As Size = summary.size
