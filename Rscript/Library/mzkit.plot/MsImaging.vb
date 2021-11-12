@@ -129,13 +129,12 @@ Module MsImaging
         Return app.Plot($"{size.Width},{size.Height}")
     End Function
 
-    <ExportAPI("quartileRange")>
-    Public Function quartileRange(layer As SingleIonLayer, Optional scale As Double = 1.5) As Double()
-        Dim quartile As Quantile.DataQuartile = layer.GetQuartile
-        Dim IQR As Double = quartile.IQR
-        Dim range As Double() = {quartile.Q1 - scale * IQR, quartile.Q3 + scale * IQR}
+    <ExportAPI("TrIQ")>
+    Public Function quartileRange(layer As SingleIonLayer, Optional q As Double = 0.6) As Double()
+        Dim TrIQ As New TrIQThreshold
+        Dim range As Double = TrIQ.ThresholdValue(layer.GetIntensity, qcut:=q)
 
-        Return range
+        Return {0, range}
     End Function
 
     <ExportAPI("write.MSI_XIC")>
