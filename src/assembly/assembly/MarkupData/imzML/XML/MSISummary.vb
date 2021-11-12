@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::5d532b4d107e482eaeb4adbdb215f87c, src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MSISummary
-    ' 
-    '         Properties: rowScans, size
-    ' 
-    '         Function: GetBasePeakMz, GetLayer, GetRowScan, ToString
-    ' 
-    '     Enum IntensitySummary
-    ' 
-    '         Average, BasePeak, Total
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MSISummary
+' 
+'         Properties: rowScans, size
+' 
+'         Function: GetBasePeakMz, GetLayer, GetRowScan, ToString
+' 
+'     Enum IntensitySummary
+' 
+'         Average, BasePeak, Total
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,10 +59,34 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.imzML
 
+    ''' <summary>
+    ''' total ions/base peak/average intensity
+    ''' </summary>
     Public Class MSISummary
 
         Public Property rowScans As iPixelIntensity()()
         Public Property size As Size
+
+        Public Shared Function FromPixels(pixels As IEnumerable(Of iPixelIntensity)) As MSISummary
+            Dim matrix2D As iPixelIntensity()() = pixels _
+                .GroupBy(Function(p) p.y) _
+                .OrderBy(Function(p) p.Key) _
+                .Select(Function(row)
+                            Return row.OrderBy(Function(p) p.x).ToArray
+                        End Function) _
+                .ToArray
+            Dim width As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.x).Max).Max
+            Dim height As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.y).Max).Max
+
+            Return New MSISummary With {
+                .rowScans = matrix2D,
+                .size = New Size(width, height)
+            }
+        End Function
+
+        Public Function ToArray() As iPixelIntensity()
+            Return rowScans.IteratesALL.ToArray
+        End Function
 
         Public Function GetBasePeakMz() As LibraryMatrix
             Return New LibraryMatrix With {

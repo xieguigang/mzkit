@@ -233,27 +233,18 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("MSI_summary")>
     Public Function MSI_summary(raw As mzPack) As MSISummary
-        Return New MSISummary With {
-            .rowScans = raw.MS _
-                .Select(Function(p)
-                            Return New iPixelIntensity With {
-                                .x = Integer.Parse(p.meta("x")),
-                                .y = Integer.Parse(p.meta("y")),
-                                .average = p.into.Average,
-                                .basePeakIntensity = p.into.Max,
-                                .totalIon = p.into.Sum,
-                                .basePeakMz = p.mz(which.Max(p.into))
-                            }
-                        End Function) _
-                .GroupBy(Function(p) p.y) _
-                .OrderBy(Function(p) p.Key) _
-                .Select(Function(y) y.OrderBy(Function(p) p.x).ToArray) _
-                .ToArray,
-            .size = New Size(
-                width:= .rowScans.IteratesALL.Select(Function(p) p.x).Max,
-                height:= .rowScans.IteratesALL.Select(Function(p) p.y).Max
-            )
-        }
+        Return raw.MS _
+            .Select(Function(p)
+                        Return New iPixelIntensity With {
+                            .x = Integer.Parse(p.meta("x")),
+                            .y = Integer.Parse(p.meta("y")),
+                            .average = p.into.Average,
+                            .basePeakIntensity = p.into.Max,
+                            .totalIon = p.into.Sum,
+                            .basePeakMz = p.mz(which.Max(p.into))
+                        }
+                    End Function) _
+            .DoCall(AddressOf MSISummary.FromPixels)
     End Function
 
     ''' <summary>
@@ -332,18 +323,9 @@ Module MSI
             Return data.getError
         End If
 
-        Dim rows = data _
+        Return data _
             .populates(Of iPixelIntensity)(env) _
-            .GroupBy(Function(p) p.y) _
-            .Select(Function(r) r.ToArray) _
-            .ToArray
-        Dim width As Integer = rows.Select(Function(p) p.Select(Function(pi) pi.x).Max).Max
-        Dim height As Integer = rows.Select(Function(p) p.Select(Function(pi) pi.y).Max).Max
-
-        Return New MSISummary With {
-            .rowScans = rows,
-            .size = New Size(width, height)
-        }
+            .DoCall(AddressOf MSISummary.FromPixels)
     End Function
 
     <ExportAPI("peakMatrix")>

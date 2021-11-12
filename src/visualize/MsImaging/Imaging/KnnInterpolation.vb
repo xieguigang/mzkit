@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Math.Distributions
 
@@ -8,11 +9,38 @@ Namespace Imaging
     Public Module KnnInterpolation
 
         <Extension>
-        Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
+        Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10) As MSISummary
+            Dim graph As Grid(Of iPixelIntensity) = Grid(Of iPixelIntensity).Create(summary.ToArray, Function(p) p.x, Function(p) p.y)
+            Dim size As Size = summary.size
+            Dim pixels As New List(Of iPixelIntensity)
+            Dim point As iPixelIntensity
+            Dim deltaSize As New Size(dx, dy)
+
+            For i As Integer = 1 To size.Width
+                For j As Integer = 1 To size.Height
+                    point = graph.GetData(i, j)
+
+                    If point Is Nothing Then
+                        point = graph.KnnInterpolation(i, j, deltaSize)
+
+                        If Not point Is Nothing Then
+                            Call graph.Add(point)
+                        End If
+                    End If
+
+                    If Not point Is Nothing Then
+                        Call pixels.Add(point)
+                    End If
+                Next
+            Next
+
+            Return MSISummary.FromPixels(pixels)
+        End Function
+
+        <Extension>
+        Public Function KnnFill(layer As SingleIonLayer, Optional dx As Integer = 10, Optional dy As Integer = 10) As SingleIonLayer
             Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(layer.MSILayer)
             Dim size As Size = layer.DimensionSize
-            Dim dx As Integer = size.Width / resolution
-            Dim dy As Integer = size.Height / resolution
             Dim pixels As New List(Of PixelData)
             Dim point As PixelData
             Dim deltaSize As New Size(dx, dy)
@@ -40,6 +68,15 @@ Namespace Imaging
                 .IonMz = layer.IonMz,
                 .MSILayer = pixels.ToArray
             }
+        End Function
+
+        <Extension>
+        Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
+            Dim size As Size = layer.DimensionSize
+            Dim dx As Integer = size.Width / resolution
+            Dim dy As Integer = size.Height / resolution
+
+            Return layer.KnnFill(dx, dy)
         End Function
 
         <Extension>

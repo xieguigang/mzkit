@@ -396,8 +396,18 @@ Module MsImaging
     End Function
 
     <ExportAPI("knnFill")>
-    Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
-        Return layer.KnnFill(resolution)
+    <RApiReturn(GetType(SingleIonLayer), GetType(MSISummary))>
+    Public Function KnnFill(layer As Object,
+                            Optional gridSize As Integer = 10,
+                            Optional env As Environment = Nothing) As Object
+
+        If TypeOf layer Is SingleIonLayer Then
+            Return DirectCast(layer, SingleIonLayer).KnnFill(gridSize, gridSize)
+        ElseIf TypeOf layer Is MSISummary Then
+            Return DirectCast(layer, MSISummary).KnnFill(gridSize, gridSize)
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), layer.GetType, env)
+        End If
     End Function
 
     <ExportAPI("MSI_coverage")>
