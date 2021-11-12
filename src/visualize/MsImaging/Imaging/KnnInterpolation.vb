@@ -9,10 +9,12 @@ Namespace Imaging
     Public Module KnnInterpolation
 
         <Extension>
-        Private Function KnnInterpolation(graph As Grid(Of iPixelIntensity), x As Integer, y As Integer, deltaSize As Size) As iPixelIntensity
+        Private Function KnnInterpolation(graph As Grid(Of iPixelIntensity), x As Integer, y As Integer, deltaSize As Size, q As Double) As iPixelIntensity
             Dim query As iPixelIntensity() = graph.Query(x, y, deltaSize).ToArray
 
             If query.IsNullOrEmpty Then
+                Return Nothing
+            ElseIf (query.Length / (deltaSize.Width * deltaSize.Height)) <= q Then
                 Return Nothing
             End If
 
@@ -31,7 +33,7 @@ Namespace Imaging
         End Function
 
         <Extension>
-        Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10) As MSISummary
+        Public Function KnnFill(summary As MSISummary, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As MSISummary
             Dim graph As Grid(Of iPixelIntensity) = Grid(Of iPixelIntensity).Create(summary.ToArray, Function(p) p.x, Function(p) p.y)
             Dim size As Size = summary.size
             Dim pixels As New List(Of iPixelIntensity)
@@ -43,7 +45,7 @@ Namespace Imaging
                     point = graph.GetData(i, j)
 
                     If point Is Nothing Then
-                        point = graph.KnnInterpolation(i, j, deltaSize)
+                        point = graph.KnnInterpolation(i, j, deltaSize, q)
 
                         If Not point Is Nothing Then
                             Call graph.Add(point)
@@ -60,7 +62,7 @@ Namespace Imaging
         End Function
 
         <Extension>
-        Public Function KnnFill(layer As SingleIonLayer, Optional dx As Integer = 10, Optional dy As Integer = 10) As SingleIonLayer
+        Public Function KnnFill(layer As SingleIonLayer, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As SingleIonLayer
             Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(layer.MSILayer)
             Dim size As Size = layer.DimensionSize
             Dim pixels As New List(Of PixelData)
@@ -72,7 +74,7 @@ Namespace Imaging
                     point = graph.GetData(i, j)
 
                     If point Is Nothing Then
-                        point = graph.KnnInterpolation(i, j, deltaSize)
+                        point = graph.KnnInterpolation(i, j, deltaSize, q)
 
                         If Not point Is Nothing Then
                             Call graph.Add(point)
@@ -102,10 +104,12 @@ Namespace Imaging
         End Function
 
         <Extension>
-        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size) As PixelData
+        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double) As PixelData
             Dim query As PixelData() = graph.Query(x, y, deltaSize).ToArray
 
             If query.IsNullOrEmpty Then
+                Return Nothing
+            ElseIf (query.Length / (deltaSize.Width * deltaSize.Height)) <= q Then
                 Return Nothing
             End If
 

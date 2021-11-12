@@ -398,13 +398,14 @@ Module MsImaging
     <ExportAPI("knnFill")>
     <RApiReturn(GetType(SingleIonLayer), GetType(MSISummary))>
     Public Function KnnFill(layer As Object,
-                            Optional gridSize As Integer = 10,
+                            Optional gridSize As Integer = 5,
+                            Optional q As Double = 0.5,
                             Optional env As Environment = Nothing) As Object
 
         If TypeOf layer Is SingleIonLayer Then
-            Return DirectCast(layer, SingleIonLayer).KnnFill(gridSize, gridSize)
+            Return DirectCast(layer, SingleIonLayer).KnnFill(gridSize, gridSize, q)
         ElseIf TypeOf layer Is MSISummary Then
-            Return DirectCast(layer, MSISummary).KnnFill(gridSize, gridSize)
+            Return DirectCast(layer, MSISummary).KnnFill(gridSize, gridSize, q)
         Else
             Return Message.InCompatibleType(GetType(SingleIonLayer), layer.GetType, env)
         End If
