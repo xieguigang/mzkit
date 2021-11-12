@@ -18,15 +18,15 @@ Namespace Imaging
                 Return Nothing
             End If
 
-            Dim total = query.Select(Function(p) p.totalIon).TabulateBin
-            Dim baseIntensity = query.Select(Function(p) p.basePeakIntensity).TabulateBin
-            Dim average = query.Select(Function(p) p.average).TabulateBin
+            Dim total = query.Select(Function(p) p.totalIon).Min
+            Dim baseIntensity = query.Select(Function(p) p.basePeakIntensity).Min
+            Dim average = query.Select(Function(p) p.average).Min
 
             Return New iPixelIntensity With {
-                .basePeakIntensity = baseIntensity.Average,
-                .average = average.Average,
+                .basePeakIntensity = baseIntensity,
+                .average = average,
                 .basePeakMz = 0,
-                .totalIon = total.Average,
+                .totalIon = total,
                 .x = x,
                 .y = y
             }
