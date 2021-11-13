@@ -129,10 +129,35 @@ Module MsImaging
         Return app.Plot($"{size.Width},{size.Height}")
     End Function
 
+    ''' <summary>
+    ''' Contrast optimization of mass
+    ''' spectrometry imaging(MSI) data
+    ''' visualization by threshold intensity
+    ''' quantization (TrIQ)
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="q"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("TrIQ")>
-    Public Function quartileRange(layer As SingleIonLayer, Optional q As Double = 0.6) As Double()
+    <RApiReturn(GetType(Double))>
+    Public Function TrIQRange(<RRawVectorArgument> data As Object, Optional q As Double = 0.6, Optional env As Environment = Nothing) As Object
         Dim TrIQ As New TrIQThreshold
-        Dim range As Double = TrIQ.ThresholdValue(layer.GetIntensity, qcut:=q)
+        Dim into As Double()
+
+        If TypeOf data Is SingleIonLayer Then
+            into = DirectCast(data, SingleIonLayer).GetIntensity
+        Else
+            Dim dataPip As pipeline = pipeline.TryCreatePipeline(Of Double)(data, env)
+
+            If dataPip.isError Then
+                Return dataPip.getError
+            Else
+                into = dataPip.populates(Of Double)(env).ToArray
+            End If
+        End If
+
+        Dim range As Double = TrIQ.ThresholdValue(into, qcut:=q)
 
         Return {0, range}
     End Function
@@ -391,6 +416,21 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         Else
             Return SingleIonLayer.GetLayer(mz, viewer, mzErr.TryCast(Of Tolerance))
+        End If
+    End Function
+
+    <ExportAPI("intensity")>
+    <RApiReturn(GetType(Double))>
+    Public Function GetIntensityData(layer As Object,
+                                     Optional summary As IntensitySummary = IntensitySummary.Total,
+                                     Optional env As Environment = Nothing) As Object
+
+        If TypeOf layer Is SingleIonLayer Then
+            Return DirectCast(layer, SingleIonLayer).GetIntensity
+        ElseIf TypeOf layer Is MSISummary Then
+            Return DirectCast(layer, MSISummary).GetLayer(summary).Select(Function(i) i.totalIon).ToArray
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), layer.GetType, envir:=env)
         End If
     End Function
 
