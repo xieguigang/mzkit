@@ -187,11 +187,11 @@ Module MRMQCReport
         Dim RSD_steps = 0.1
         Dim hist As Image = RSD_dist _
             .Hist([step]:=RSD_steps) _
-            .HistogramPlot([step]:=RSD_steps, serialsTitle:="QC RSD", xLabel:="RSD", yLabel:="Number of Metabolite") _
+            .HistogramPlot(serialsTitle:="QC RSD", xLabel:="RSD", yLabel:="Number of Metabolite") _
             .AsGDIImage
         Dim histVariants As Image = QC_variants _
             .Hist([step]:=RSD_steps) _
-            .HistogramPlot([step]:=RSD_steps, serialsTitle:="QC variants", xLabel:="Variants", yLabel:="Number of Sample") _
+            .HistogramPlot(serialsTitle:="QC variants", xLabel:="Variants", yLabel:="Number of Sample") _
             .AsGDIImage
 
         For Each compound In TOCData
