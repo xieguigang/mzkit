@@ -74,6 +74,13 @@ Public Class MSJointConnection
         Return kegg.GetCompound(kegg_id)
     End Function
 
+    Public Function GetEnrichment(id As IEnumerable(Of String)) As EnrichmentResult()
+        Return jointSet _
+           .Enrichment(id, showProgress:=False) _
+           .OrderBy(Function(d) d.pvalue) _
+           .ToArray
+    End Function
+
     Public Function GetEnrichment(mz As Double(), Optional ByRef allId As Dictionary(Of String, KEGGQuery()) = Nothing) As EnrichmentResult()
         Dim allIdList As Dictionary(Of String, KEGGQuery()) = mz _
             .Select(AddressOf kegg.QueryByMz) _
@@ -83,10 +90,7 @@ Public Class MSJointConnection
                           Function(cid)
                               Return cid.ToArray
                           End Function)
-        Dim enrichment As EnrichmentResult() = jointSet _
-            .Enrichment(allIdList.Keys, showProgress:=False) _
-            .OrderBy(Function(d) d.pvalue) _
-            .ToArray
+        Dim enrichment As EnrichmentResult() = GetEnrichment(allIdList.Keys)
 
         allId = allIdList
 
