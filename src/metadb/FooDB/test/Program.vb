@@ -1,22 +1,20 @@
-Imports System
 Imports BioNovoGene.BioDeep.Chemistry.Massbank.FooDB
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.genomics.Analysis.HTS.GSEA
-Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 
 Module Program
     Sub Main(args As String())
-        Call gsea2()
+        ' Call gsea2()
         Call flavorCluster()
 
         ' Call buildDb()
-        Call FoodMatrix()
+        ' Call FoodMatrix()
     End Sub
 
     Sub buildDb()
@@ -65,13 +63,30 @@ Module Program
             .ToDictionary(Function(d) d.Key, Function(d)
                                                  Return d.Where(Function(c) compounds.ContainsKey(c.cid)).GroupBy(Function(a) compounds(a.cid).public_id).Select(Function(a) compounds(a.First.cid)).ToArray
                                              End Function)
-        Dim flavorClusters = flavors.Select(Function(f)
-                                                Return New Cluster With {.ID = f.Key, .names = f.Key, .description = f.Key,
-                                                .members = f.Value.Select(Function(cc)
-                                                                              Dim id = cc.public_id
-                                                                              Return New BackgroundGene With {.accessionID = id, .[alias] = {id}, .locus_tag = New NamedValue With {.name = id, .text = cc.name}, .name = cc.name, .term_id = {id}}
-                                                                          End Function).ToArray}
-                                            End Function).ToArray
+        Dim flavorClusters = flavors _
+            .Select(Function(f)
+                        Return New Cluster With {
+                            .ID = f.Key,
+                            .names = f.Key,
+                            .description = f.Key,
+                            .members = f.Value _
+                                .Select(Function(cc As Compound)
+                                            Dim id = cc.public_id
+                                            Return New BackgroundGene With {
+                                                .accessionID = id,
+                                                .[alias] = {cc.moldb_iupac, cc.moldb_smiles},
+                                                .locus_tag = New NamedValue With {
+                                                    .name = id,
+                                                    .text = cc.description
+                                                },
+                                                .name = cc.name,
+                                                .term_id = {id, cc.cas_number}
+                                            }
+                                        End Function) _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
 
         Dim background As New Background With {.clusters = flavorClusters}
 
