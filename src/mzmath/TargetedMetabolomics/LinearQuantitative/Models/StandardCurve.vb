@@ -93,7 +93,7 @@ Namespace LinearQuantitative
         Public ReadOnly Property requireISCalibration As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Not [IS] Is Nothing AndAlso Not [IS].ID.StringEmpty AndAlso [IS].CIS > 0
+                Return Not [IS] Is Nothing AndAlso Not [IS].ID.StringEmpty ' AndAlso [IS].CIS > 0
             End Get
         End Property
 
