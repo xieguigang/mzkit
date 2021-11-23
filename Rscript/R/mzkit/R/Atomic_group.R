@@ -31,10 +31,10 @@ atomic_group <- function() {
         NH4  = list(atoms = list(N  = 1, H = 4), charge = +1, symbol = "NH4+"   , name = ""),
         OH   = list(atoms = list(O  = 1, H = 1), charge = -1, symbol = "OH-"    , name = ""),
         NO3  = list(atoms = list(N  = 1, O = 3), charge = -1, symbol = "NO3-"   , name = ""),
-        PO31 = list(atoms = list(P  = 1, O = 3), charge = -1, symbol = "PO3-"   , name = ""), # 偏磷酸根  P = +5
-        PO33 = list(atoms = list(P  = 1, O = 3), charge = -3, symbol = "PO3 3-" , name = ""), # 亚磷酸根  P = +3
-        MnO42 = list(atoms = list(Mn = 1, O = 4), charge = -2, symbol = "MnO4 2-", name = ""), # 锰酸根   Mn = +6
-        MnO41 = list(atoms = list(Mn = 1, O = 4), charge = -1, symbol = "MnO4-"  , name = "")  # 高锰酸根 Mn = +7
+        PO31 = list(atoms = list(P  = 1, O = 3), charge = -1, symbol = "PO3-"   , name = ""), #   P = +5
+        PO33 = list(atoms = list(P  = 1, O = 3), charge = -3, symbol = "PO3 3-" , name = ""), #   P = +3
+        MnO42 = list(atoms = list(Mn = 1, O = 4), charge = -2, symbol = "MnO4 2-", name = ""), #    Mn = +6
+        MnO41 = list(atoms = list(Mn = 1, O = 4), charge = -1, symbol = "MnO4-"  , name = "")  # Mn = +7
     );
 
     group;
@@ -321,7 +321,6 @@ exactMass = function(formula) {
 	exact;
 }
 
-# 计算出指定的原子基团的分子质量大小
 atomics_group.Weight <- function(group, name) {
     group  <- group[[name]];
     atoms  <- group[["atoms"]];

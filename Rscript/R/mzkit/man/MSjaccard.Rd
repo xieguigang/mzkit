@@ -11,6 +11,9 @@ MSjaccard(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn = 5)
 
 \item{ref}{the MS matrix should be processed by \code{centroid}}
 }
+\value{
+a jaccard similarity score, value range \code{[0, 1]}.
+}
 \description{
 Jaccard index between two MS matrix
 }
