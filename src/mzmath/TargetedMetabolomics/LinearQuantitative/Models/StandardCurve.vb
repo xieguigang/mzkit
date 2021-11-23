@@ -93,6 +93,9 @@ Namespace LinearQuantitative
         Public ReadOnly Property requireISCalibration As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
+                ' 20211123 当忘记填写浓度值的时候
+                ' 样本定量过程中会出现浓度值异常高的bug
+                ' 所以在这里将CIS大于零的判断删除
                 Return Not [IS] Is Nothing AndAlso Not [IS].ID.StringEmpty ' AndAlso [IS].CIS > 0
             End Get
         End Property
