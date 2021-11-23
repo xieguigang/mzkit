@@ -81,10 +81,6 @@ Namespace Imaging
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
             Dim defaultBackground As Color = background.TranslateColor
 
-            'Dim qR = R.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(R.Select(Function(p) p.intensity))
-            'Dim qG = G.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(G.Select(Function(p) p.intensity))
-            'Dim qB = B.Select(Function(p) p.intensity).TabulateMode(topBin:=True, bags:=10) ' As New FastRankQuantile(B.Select(Function(p) p.intensity))
-
             Dim Rchannel = GetPixelChannelReader(R, cut.r)
             Dim Gchannel = GetPixelChannelReader(G, cut.g)
             Dim Bchannel = GetPixelChannelReader(B, cut.b)
