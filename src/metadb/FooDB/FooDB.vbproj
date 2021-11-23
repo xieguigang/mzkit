@@ -127,7 +127,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FooDB\Compound.vb" />
+    <Compile Include="FooDB\CompoundFlavor.vb" />
+    <Compile Include="FooDB\Content.vb" />
+    <Compile Include="FooDB\Flavor.vb" />
     <Compile Include="FooDB\Food.vb" />
+    <Compile Include="FooDB\FoodData.vb" />
+    <Compile Include="FooDB\FoodSource.vb" />
     <Compile Include="FooDB\mysql\compounds.vb" />
     <Compile Include="FooDB\mysql\compounds_enzymes.vb" />
     <Compile Include="FooDB\mysql\compounds_flavors.vb" />
