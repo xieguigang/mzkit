@@ -217,7 +217,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\PhenoGraph\PhenoGraph\PhenoGraph.vbproj">
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\SingleCell\PhenoGraph\PhenoGraph\PhenoGraph.vbproj">
       <Project>{ee99b2f1-6954-4d4d-adc2-e6defea2c733}</Project>
       <Name>PhenoGraph</Name>
     </ProjectReference>
