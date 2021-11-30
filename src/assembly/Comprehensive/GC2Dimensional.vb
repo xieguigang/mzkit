@@ -71,11 +71,10 @@ Public Module GC2Dimensional
     <Extension>
     Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
         Dim offset As Integer = Scan0
-        Dim mz As shorts
+        Dim mz As shorts = Nothing
 
         Call Console.WriteLine("read m/z matrix...")
-
-        mz = agilentGC.getDataVariable("mass_values")
+        Call agilentGC.getDataVariable("mass_values", mz)
 
         For Each width As Integer In point_count
             Yield mz _
