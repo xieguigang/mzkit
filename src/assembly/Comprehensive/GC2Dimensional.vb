@@ -60,8 +60,8 @@ Public Module GC2Dimensional
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
         Dim point_count As integers = agilentGC.getDataVariable("point_count")
-        Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
         Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
+        Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
 
         Return New mzPack With {
             .MS = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
@@ -86,23 +86,42 @@ Public Module GC2Dimensional
         Next
     End Function
 
+    Const intensity_values As String = "intensity_values"
+
     <Extension>
     Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
-        Dim into As integers
+        Dim into As ICDFDataVector = Nothing
         Dim offset As Integer = Scan0
+        Dim type As CDFDataTypes = agilentGC.getDataVariableEntry(intensity_values).type
 
         Call Console.WriteLine("read intensity matrix...")
+        Call agilentGC.getDataVariable("intensity_values", into)
 
-        into = agilentGC.getDataVariable("intensity_values")
+        If type = CDFDataTypes.INT Then
+            Dim ints As integers = DirectCast(into, integers)
 
-        For Each width As Integer In point_count
-            Yield into _
-                .Copy(offset, width) _
-                .Select(Function(i) CDbl(i)) _
-                .ToArray
+            For Each width As Integer In point_count
+                Yield ints _
+                    .Copy(offset, width) _
+                    .Select(Function(i) CDbl(i)) _
+                    .ToArray
 
-            offset += width
-        Next
+                offset += width
+            Next
+        ElseIf type = CDFDataTypes.FLOAT Then
+            Dim singles As floats = DirectCast(into, floats)
+
+            For Each width As Integer In point_count
+                Yield singles _
+                    .Copy(offset, width) _
+                    .Select(Function(i) CDbl(i)) _
+                    .ToArray
+
+                offset += width
+            Next
+        Else
+            Throw New NotImplementedException(type.Description)
+        End If
     End Function
 
     <Extension>
