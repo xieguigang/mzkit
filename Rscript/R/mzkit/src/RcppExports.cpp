@@ -5,20 +5,20 @@
 
 using namespace Rcpp;
 
-// jaccard_coeff
-List jaccard_coeff(CharacterVector filepath);
-RcppExport SEXP _mzkit_jaccard_coeff(SEXP filepathSEXP) {
+// read_mzpack
+List read_mzpack(CharacterVector filepath);
+RcppExport SEXP _mzkit_read_mzpack(SEXP filepathSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterVector >::type filepath(filepathSEXP);
-    rcpp_result_gen = Rcpp::wrap(jaccard_coeff(filepath));
+    rcpp_result_gen = Rcpp::wrap(read_mzpack(filepath));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mzkit_jaccard_coeff", (DL_FUNC) &_mzkit_jaccard_coeff, 1},
+    {"_mzkit_read_mzpack", (DL_FUNC) &_mzkit_read_mzpack, 1},
     {NULL, NULL, 0}
 };
 
