@@ -235,5 +235,12 @@ mzpack {
         BPC: double[]
     }
 
+    scanners {
+        scanner_name: string
+        data: {
+            scan_time: double[]
+            data: double[]
+        }
+    }
 }
 ```
