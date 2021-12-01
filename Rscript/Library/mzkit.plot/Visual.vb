@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::257d0d2a7dc4b7d4589f3d3455296b41, Rscript\Library\mzkit.plot\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Visual
-    ' 
-    '     Function: getSpectrum, plotChromatogram, plotMS, plotOverlaps, plotRawChromatogram
-    '               PlotRawScatter, plotSignal, plotSignal2, PlotUVSignals, Snapshot3D
-    '               SpectrumPlot
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module Visual
+' 
+'     Function: getSpectrum, plotChromatogram, plotMS, plotOverlaps, plotRawChromatogram
+'               PlotRawScatter, plotSignal, plotSignal2, PlotUVSignals, Snapshot3D
+'               SpectrumPlot
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -57,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -84,7 +86,16 @@ Module Visual
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
         Call Internal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
         Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
+        Call Internal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
+        Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
     End Sub
+
+    Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
+        Dim theme As New Theme
+        Dim app As New GCxGCTIC2DPlot(x, theme)
+
+        Return app.Plot()
+    End Function
 
     ''' <summary>
     ''' plot TIC overlaps
@@ -176,15 +187,8 @@ Module Visual
         Return plotChromatogram(chr, args, env)
     End Function
 
-    ''' <summary>
-    ''' plot single TIC
-    ''' </summary>
-    ''' <param name="x"></param>
-    ''' <param name="args"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
-        Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
+    <Extension>
+    Private Function plotTIC(x As ChromatogramTick(), args As list, env As Environment) As Object
         Dim name As String = args.getValue("name", env, [default]:="unknown")
         Dim color As String = args.getValue("color", env, [default]:="skyblue")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
@@ -193,7 +197,7 @@ Module Visual
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim data As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
-            .value = x.GetTicks(isBPC).ToArray
+            .value = x
         }
 
         Return data.TICplot(
@@ -204,6 +208,20 @@ Module Visual
             xlabel:=xlab,
             ylabel:=ylab
         )
+    End Function
+
+    ''' <summary>  
+    ''' plot single TIC
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
+        Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
+        Dim data As ChromatogramTick() = x.GetTicks(isBPC).ToArray
+
+        Return data.plotTIC(args, env)
     End Function
 
     Private Function plotSignal(x As GeneralSignal, args As list, env As Environment) As Object

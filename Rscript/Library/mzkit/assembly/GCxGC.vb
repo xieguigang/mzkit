@@ -11,4 +11,15 @@ Module GCxGC
         Return TIC.Demodulate2D(modtime)
     End Function
 
+    <ExportAPI("TIC1D")>
+    Public Function TIC1D(matrix As D2Chromatogram()) As ChromatogramTick()
+        Return matrix _
+            .Select(Function(i)
+                        Return New ChromatogramTick With {
+                            .Time = i.scan_time,
+                            .Intensity = i.intensity
+                        }
+                    End Function) _
+            .ToArray
+    End Function
 End Module

@@ -123,6 +123,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
