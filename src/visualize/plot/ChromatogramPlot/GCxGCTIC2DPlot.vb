@@ -47,7 +47,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim i As Integer
         Dim index As New DoubleRange(0, colors.Length - 1)
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray
-        Dim intensityRange As New DoubleRange(allIntensity.Min, TrIQ.FindThreshold(allIntensity, 0.8))
+        Dim intensityRange As New DoubleRange(allIntensity.Min, TrIQ.FindThreshold(allIntensity, 0.9))
 
         Call Axis.DrawAxis(g, canvas, scale,
                            showGrid:=theme.drawGrid,
@@ -83,7 +83,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             Next
         Next
 
-        Dim width = canvas.Width * 0.125
+        Dim width = canvas.Width * 0.1
         Dim legendLayout As New Rectangle(canvas.Width - width - canvas.Padding.Right / 3, canvas.Padding.Top, width, canvas.Height * 0.3)
 
         Call DrawMainTitle(g, canvas.PlotRegion)
@@ -94,7 +94,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             titleFont:=CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi),
             title:="Intensity Scale",
             tickFont:=CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi),
-            tickAxisStroke:=Stroke.TryParse(theme.axisTickStroke).GDIObject
+            tickAxisStroke:=Stroke.TryParse(theme.axisTickStroke).GDIObject,
+            format:="G2"
         )
     End Sub
 End Class
