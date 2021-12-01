@@ -47,7 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Module FragmentSamples

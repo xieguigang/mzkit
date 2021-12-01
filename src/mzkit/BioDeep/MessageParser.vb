@@ -57,13 +57,13 @@ Public Module MessageParser
         If msg Is Nothing Then
             Return False
         Else
-            Return msg.ContainsKey("code") AndAlso msg!code.AsString = "0"
+            Return msg.HasObjectKey("code") AndAlso msg!code.AsString = "0"
         End If
     End Function
 
     <Extension>
     Public Function getMsgString(msg As JsonObject) As String
-        If msg.ContainsKey("info") Then
+        If msg.HasObjectKey("info") Then
             Return msg!info.AsString
         Else
             Return Nothing
