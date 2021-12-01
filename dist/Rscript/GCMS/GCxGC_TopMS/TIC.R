@@ -3,7 +3,7 @@ imports "visual" from "mzplot";
 
 options(strict = FALSE);
 
-[Time, Intensity] = read.csv("E:\mzkit\DATA\test\GCxGC\TIC.csv", row.names = NULL);
+[Time, Intensity] = read.csv("E:\\mzkit\\DATA\\test\\GCxGC\\TIC.csv", row.names = NULL);
 
 # plot dimension 1 TIC
 bitmap(file = `${@dir}/TIC_1D.png`) {
