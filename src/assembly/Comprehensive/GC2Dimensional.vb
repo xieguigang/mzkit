@@ -88,6 +88,18 @@ Public Module GC2Dimensional
     ''' <summary>
     ''' converts 1D signal into 2D with xp x yp dimensions
     ''' </summary>
+    ''' <param name="sig"></param>
+    ''' <param name="modtime">modulation period in seconds</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Demodulate2D(sig As ChromatogramTick(), modtime As Double) As D2Chromatogram()
+        Dim size As Size = sig.Demodulate2DShape(modtime)
+
+    End Function
+
+    ''' <summary>
+    ''' converts 1D signal into 2D with xp x yp dimensions
+    ''' </summary>
     ''' <param name="sig">
     ''' data should be re-order by scan time
     ''' </param>

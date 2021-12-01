@@ -218,6 +218,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="D2Chromatogram.vb" />
     <Compile Include="MsImaging\PeakMatrix.vb" />
     <Compile Include="MsImaging\MSIMeasurement.vb" />
     <Compile Include="MsImaging\ScanMs2Correction.vb" />

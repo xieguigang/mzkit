@@ -381,6 +381,7 @@
     <Compile Include="assembly\ERS.vb" />
     <Compile Include="assembly\data.vb" />
     <Compile Include="assembly\Chromatogram.vb" />
+    <Compile Include="assembly\GCxGC.vb" />
     <Compile Include="assembly\NMR.vb" />
     <Compile Include="assembly\MzPackAccess.vb" />
     <Compile Include="assembly\MSI.vb" />
