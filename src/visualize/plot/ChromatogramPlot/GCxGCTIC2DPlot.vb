@@ -8,9 +8,13 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' GCxGC Imaging
+''' </summary>
 Public Class GCxGCTIC2DPlot : Inherits Plot
 
     ReadOnly TIC2D As D2Chromatogram()
@@ -41,7 +45,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim dh As Double = rect.Height / TIC2D(Scan0).d2chromatogram.Length
         Dim i As Integer
         Dim index As New DoubleRange(0, colors.Length - 1)
-        Dim intensityRange As DoubleRange = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray.Range
+        Dim allIntensity As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray
+        Dim intensityRange As New DoubleRange(allIntensity.Min, TrIQ.FindThreshold(allIntensity, 0.65))
 
         Call Axis.DrawAxis(g, canvas, scale,
                            showGrid:=theme.drawGrid,
@@ -69,7 +74,11 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                 }
                 i = intensityRange.ScaleMapping(cell.Intensity, index)
 
-                Call g.FillRectangle(colors(i), rect)
+                If i >= colors.Length Then
+                    Call g.FillRectangle(colors.Last, rect)
+                Else
+                    Call g.FillRectangle(colors(i), rect)
+                End If
             Next
         Next
     End Sub
