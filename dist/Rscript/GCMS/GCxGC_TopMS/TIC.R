@@ -5,6 +5,7 @@ options(strict = FALSE);
 
 [Time, Intensity] = read.csv("E:\mzkit\DATA\test\GCxGC\TIC.csv", row.names = NULL);
 
+# plot dimension 1 TIC
 bitmap(file = `${@dir}/TIC_1D.png`) {
 	as.chromatogram(Time, Intensity)
 	|> GCxGC::TIC2D(modtime = 5)
@@ -13,6 +14,16 @@ bitmap(file = `${@dir}/TIC_1D.png`) {
 	;
 }
 
+bitmap(file = `${@dir}/TIC_d2_100th.png`) {
+	d2 = as.chromatogram(Time, Intensity)
+	|> GCxGC::TIC2D(modtime = 5)
+	;
+	
+	# pick 100th dimension 2 TIC plot
+	plot(d2[100]);
+}
+
+# plot GCxGC 2D TIC matrix heatmap
 bitmap(file = `${@dir}/TIC.png`) {
 	as.chromatogram(Time, Intensity)
 	|> GCxGC::TIC2D(modtime = 5)
