@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::e1de758d386a6ca1b4f70040acd7c80b, Rscript\Library\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MzWeb
-    ' 
-    '     Function: GetChromatogram, loadStream, Ms1ScanPoints, Ms2ScanPeaks, Open
-    '               setMzpackThumbnail, ToMzPack, writeMzpack, writeStream, writeToCDF
-    ' 
-    '     Sub: WriteCache
-    ' 
-    ' /********************************************************************************/
+' Module MzWeb
+' 
+'     Function: GetChromatogram, loadStream, Ms1ScanPoints, Ms2ScanPeaks, Open
+'               setMzpackThumbnail, ToMzPack, writeMzpack, writeStream, writeToCDF
+' 
+'     Sub: WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,7 +58,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
@@ -70,12 +69,38 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 
 ''' <summary>
 ''' biodeep mzweb data viewer raw data file helper
 ''' </summary>
 <Package("mzweb")>
 Module MzWeb
+
+    <ExportAPI("open")>
+    Public Function openFile(file As String) As BinaryStreamReader
+        Return New BinaryStreamReader(file)
+    End Function
+
+    <ExportAPI("TIC")>
+    Public Function TIC(mzpack As BinaryStreamReader) As ChromatogramTick()
+        Dim keys As String() = mzpack.EnumerateIndex.ToArray
+        Dim ticks As ChromatogramTick() = keys _
+            .Select(Function(i)
+                        Dim scan_time As Double
+                        Dim TICpoint As Double
+
+                        Call mzpack.ReadChromatogramTick(i, scan_time, 0, TICpoint)
+
+                        Return New ChromatogramTick With {
+                            .Time = scan_time,
+                            .Intensity = TICpoint
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ticks
+    End Function
 
     ''' <summary>
     ''' load chromatogram data from the raw file data
