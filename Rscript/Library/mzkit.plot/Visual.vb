@@ -93,7 +93,8 @@ Module Visual
 
     Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;")
+            .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;"),
+            .colorSet = args.getValue("colorSet", env, "Jet")
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
         Dim app As New GCxGCTIC2DPlot(x, theme) With {
