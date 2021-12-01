@@ -92,10 +92,18 @@ Module Visual
     End Sub
 
     Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
-        Dim theme As New Theme
-        Dim app As New GCxGCTIC2DPlot(x, theme)
+        Dim theme As New Theme With {
+            .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;")
+        }
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
+        Dim app As New GCxGCTIC2DPlot(x, theme) With {
+            .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
+            .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
+            .legendTitle = "Intensity",
+            .main = "GCxGC 2D TIC Heatmap"
+        }
 
-        Return app.Plot()
+        Return app.Plot(size)
     End Function
 
     ''' <summary>
