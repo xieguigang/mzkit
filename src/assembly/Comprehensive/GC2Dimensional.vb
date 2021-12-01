@@ -137,6 +137,7 @@ Public Module GC2Dimensional
 
         Call Console.WriteLine($"Found {numpoints} data points")
         Call Console.WriteLine($"Runtime is {(runtime / 60).ToString("F2")} minutes")
+        Call Console.WriteLine($"GCxGC modulation period is {modtime} second")
         Call Console.WriteLine($"Acquisition rate is {rate} Hz")
 
         ' Pad matrix so it can be resized
