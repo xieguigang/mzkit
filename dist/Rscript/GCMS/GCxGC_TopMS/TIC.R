@@ -24,13 +24,15 @@ bitmap(file = `${@dir}/TIC_d2_100th.png`) {
 }
 
 # plot GCxGC 2D TIC matrix heatmap
-bitmap(file = `${@dir}/TIC.png`, size = [6000, 3200]) {
+bitmap(file = `${@dir}/TIC_Jet.png`, size = [6000, 3200]) {
 	as.chromatogram(Time, Intensity)
 	|> GCxGC::TIC2D(modtime = 5)
 	|> plot(
 		padding = "padding: 250px 800px 300px 300px;",
 		xlab = "Dimension 1 RT(s)",
-		ylab = "Dimension 2 RT(s)"
+		ylab = "Dimension 2 RT(s)",
+		TrIQ = 0.95,
+		colorSet = "viridis:turbo"
 	)
 	;
 }

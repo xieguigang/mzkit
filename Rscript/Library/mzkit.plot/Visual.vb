@@ -97,11 +97,12 @@ Module Visual
             .colorSet = args.getValue("colorSet", env, "Jet")
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
-        Dim app As New GCxGCTIC2DPlot(x, theme) With {
+        Dim q As Double = args.getValue("TrIQ", env, 0.85)
+        Dim app As New GCxGCTIC2DPlot(x, q, theme) With {
             .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
             .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
             .legendTitle = "Intensity",
-            .main = "GCxGC 2D TIC Heatmap"
+            .main = "GCxGC 2D Imaging"
         }
 
         Return app.Plot(size)

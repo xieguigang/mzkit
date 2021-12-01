@@ -115,6 +115,7 @@ SOFTWARE.
 
 <div style="font-size: 2em;">Demo Data Plots</div>
 
+![](dist/Rscript/GCMS/GCxGC_TopMS/TIC_Jet.png)
 ![](docs/manual/plots/TIC_overlaps.png)
 ![](docs/manual/plots/Linear_fitting.png)
 ![](docs/manual/plots/RawScatter_2D.png)

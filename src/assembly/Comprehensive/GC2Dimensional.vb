@@ -143,6 +143,10 @@ Public Module GC2Dimensional
         Dim xp = CInt(modtime * rate)
         Dim yp = CInt(stdNum.Ceiling(numpoints / xp))
 
+        Call Console.WriteLine($"Dimension1: {xp}")
+        Call Console.WriteLine($"Dimension2: {yp}")
+        Call Console.WriteLine()
+
         Return New Size(xp, yp)
     End Function
 
