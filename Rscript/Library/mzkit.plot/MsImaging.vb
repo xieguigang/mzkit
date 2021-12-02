@@ -441,8 +441,8 @@ Module MsImaging
                             Optional q As Double = 0.8,
                             Optional env As Environment = Nothing) As Object
 
-        Call base.print($"Knn interpolation fill with grid size: [{gridSize},{gridSize}]", env)
-        Call base.print($"Pixels qcut: {q}", env)
+        Call base.print($"Knn interpolation fill with grid size: [{gridSize},{gridSize}]", , env)
+        Call base.print($"Pixels qcut: {q}",, env)
 
         If TypeOf layer Is SingleIonLayer Then
             Return DirectCast(layer, SingleIonLayer).KnnFill(gridSize, gridSize, q)

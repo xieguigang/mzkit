@@ -176,8 +176,8 @@ Module metaDNAInfer
         Dim types As String() = REnv.asVector(Of String)(precursorTypes)
 
         If env.globalEnvironment.options.verbose Then
-            Call base.print("Set precursor types:", env)
-            Call base.print(types, env)
+            Call base.print("Set precursor types:", , env)
+            Call base.print(types, , env)
         End If
 
         Return metadna.SetSearchRange(types)
@@ -272,13 +272,13 @@ Module metaDNAInfer
             Dim seedsRaw As AnnotatedSeed()
 
             If env.globalEnvironment.options.verbose Then
-                Call base.print("Create seeds by dataframe...", env)
+                Call base.print("Create seeds by dataframe...", , env)
             End If
 
             seedsRaw = rawFile.CreateAnnotatedSeeds(annoSet).ToArray
 
             If env.globalEnvironment.options.verbose Then
-                Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", env)
+                Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", , env)
             End If
 
             infer = metaDNA _

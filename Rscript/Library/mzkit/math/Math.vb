@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::ae76c64ee1065e1eb27e2485da131a8c, Rscript\Library\mzkit\math\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MzMath
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: centroid, cosine, CreateMSMatrix, createTolerance, exact_mass
-    '               getAlignmentTable, GetClusters, mz, MzUnique, peaktable
-    '               ppm, precursorTypes, printCalculator, printMzTable, sequenceOrder
-    '               SpectrumTreeCluster, SSMCompares, XICTable
-    ' 
-    ' /********************************************************************************/
+' Module MzMath
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: centroid, cosine, CreateMSMatrix, createTolerance, exact_mass
+'               getAlignmentTable, GetClusters, mz, MzUnique, peaktable
+'               ppm, precursorTypes, printCalculator, printMzTable, sequenceOrder
+'               SpectrumTreeCluster, SSMCompares, XICTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -83,7 +84,29 @@ Module MzMath
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
+        Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
     End Sub
+
+    Private Function getPrecursorTable(list As PrecursorInfo(), args As list, env As Environment) As dataframe
+        Dim precursor_type As String() = list.Select(Function(i) i.precursor_type).ToArray
+        Dim charge As Double() = list.Select(Function(i) i.charge).ToArray
+        Dim M As Double() = list.Select(Function(i) i.M).ToArray
+        Dim adduct As Double() = list.Select(Function(i) i.adduct).ToArray
+        Dim mz As String() = list.Select(Function(i) i.mz).ToArray
+        Dim ionMode As Integer() = list.Select(Function(i) i.ionMode).ToArray
+
+        Return New dataframe With {
+            .rownames = precursor_type,
+            .columns = New Dictionary(Of String, Array) From {
+                {"precursor_type", precursor_type},
+                {"charge", charge},
+                {"M", M},
+                {"adduct", adduct},
+                {"m/z", mz},
+                {"ionMode", ionMode}
+            }
+        }
+    End Function
 
     Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
         Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
@@ -167,7 +190,9 @@ Module MzMath
         Else
             Dim strVal As String = any.ToString(mode, "+")
 
-            If strVal = "+" OrElse strVal = "-" Then
+            Static supportedModes As Index(Of String) = {"+", "-", "1", "-1"}
+
+            If strVal Like supportedModes Then
                 Return MzCalculator.EvaluateAll(mass, strVal).ToArray
             Else
                 Return Ms1.PrecursorType _
