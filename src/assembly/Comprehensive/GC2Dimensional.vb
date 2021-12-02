@@ -58,6 +58,20 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Module GC2Dimensional
 
+    ''' <summary>
+    ''' Function To calculate 2D RT from the 1D RT
+    ''' </summary>
+    ''' <param name="rt"></param>
+    ''' <param name="Modtime"></param>
+    ''' <param name="delay_time"></param>
+    ''' <returns></returns>
+    Public Function Convert2dRT(rt As Double, Modtime As Double, Optional delay_time As Double = 0) As Double
+        Dim rt_adj = rt - delay_time
+        Dim rt_2d = rt_adj - (Modtime * stdNum.Floor(rt_adj / Modtime))
+
+        Return rt_2d
+    End Function
+
     <Extension>
     Public Function ToMzPack(agilentGC As netCDFReader, modtime As Double) As mzPack
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
