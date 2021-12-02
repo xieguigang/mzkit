@@ -289,9 +289,12 @@ Module MzWeb
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
-    Public Function ToMzPack(assembly As Object, Optional env As Environment = Nothing) As Object
+    Public Function ToMzPack(assembly As Object,
+                             Optional modtime As Double = -1,
+                             Optional env As Environment = Nothing) As Object
+
         If TypeOf assembly Is netCDFReader Then
-            Return GC2Dimensional.ToMzPack(agilentGC:=assembly)
+            Return GC2Dimensional.ToMzPack(agilentGC:=assembly, modtime:=modtime)
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If

@@ -108,7 +108,31 @@ Public Module GC2Dimensional
     <Extension>
     Public Function Demodulate2D(sig As ChromatogramTick(), modtime As Double) As D2Chromatogram()
         Dim size As Size = sig.Demodulate2DShape(modtime)
+        Dim matrix = sig.Split(size.Height) _
+            .Select(Function(t)
+                        Return t.scan1
+                    End Function) _
+            .ToArray
 
+        Return matrix
+    End Function
+
+    <Extension>
+    Private Function scan1(t As ChromatogramTick()) As D2Chromatogram
+        Dim t0 As Double = t(0).Time
+
+        Return New D2Chromatogram With {
+            .scan_time = t0,
+            .intensity = t.Sum(Function(i) i.Intensity),
+            .d2chromatogram = t _
+                .Select(Function(i)
+                            Return New ChromatogramTick With {
+                                .Time = i.Time - t0,
+                                .Intensity = i.Intensity
+                            }
+                        End Function) _
+                .ToArray
+        }
     End Function
 
     ''' <summary>
@@ -125,13 +149,18 @@ Public Module GC2Dimensional
         Dim runtime As Double = sig.Last.time
         Dim rate As Double = numpoints / runtime
 
-        Call Console.WriteLine($"Found ${numpoints} data points")
-        Call Console.WriteLine($"Runtime is ${(runtime / 60).ToString("F2")} minutes")
-        Call Console.WriteLine($"Acquisition rate is ${rate} Hz")
+        Call Console.WriteLine($"Found {numpoints} data points")
+        Call Console.WriteLine($"Runtime is {(runtime / 60).ToString("F2")} minutes")
+        Call Console.WriteLine($"GCxGC modulation period is {modtime} second")
+        Call Console.WriteLine($"Acquisition rate is {rate} Hz")
 
         ' Pad matrix so it can be resized
         Dim xp = CInt(modtime * rate)
         Dim yp = CInt(stdNum.Ceiling(numpoints / xp))
+
+        Call Console.WriteLine($"Dimension1: {xp}")
+        Call Console.WriteLine($"Dimension2: {yp}")
+        Call Console.WriteLine()
 
         Return New Size(xp, yp)
     End Function

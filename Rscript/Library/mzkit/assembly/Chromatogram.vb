@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::8a41866c3061c53e5b7b6faef2e38a43, Rscript\Library\mzkit\assembly\Chromatogram.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ChromatogramTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: addOverlaps, asChromatogram, overlaps, overlapsSummary, ReadData
-    '               scaleScanTime, setLabels, subset
-    ' 
-    '     Sub: PackData
-    ' 
-    ' /********************************************************************************/
+' Module ChromatogramTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: addOverlaps, asChromatogram, overlaps, overlapsSummary, ReadData
+'               scaleScanTime, setLabels, subset
+' 
+'     Sub: PackData
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,8 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("chromatogram")>
 <RTypeExport("overlaps", GetType(ChromatogramOverlap))>
@@ -82,13 +84,42 @@ Module ChromatogramTools
         Return text.ToString
     End Function
 
+    ''' <summary>
+    ''' convert dataset to chromatography dataset
+    ''' </summary>
+    ''' <param name="scans">
+    ''' can be a data sequence of ms1 scan object or rt 
+    ''' scan time vector if the signal data parameter 
+    ''' is assigned value.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.chromatogram")>
-    <RApiReturn(GetType(Chromatogram))>
-    Public Function asChromatogram(<RRawVectorArgument> XIC As Object, Optional env As Environment = Nothing) As Object
-        Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(XIC, env)
+    <RApiReturn(GetType(Chromatogram), GetType(ChromatogramTick))>
+    Public Function asChromatogram(<RRawVectorArgument>
+                                   scans As Object,
+                                   <RRawVectorArgument>
+                                   Optional data As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(scans, env, suppress:=True)
 
         If ms1.isError Then
-            Return ms1.getError
+            If data Is Nothing Then
+                Return ms1.getError
+            End If
+
+            Dim scan_time As Double() = REnv.asVector(Of Double)(scans)
+            Dim intensity As Double() = REnv.asVector(Of Double)(data)
+
+            Return scan_time _
+                .Select(Function(t, i)
+                            Return New ChromatogramTick With {
+                                .Time = t,
+                                .Intensity = intensity(i)
+                            }
+                        End Function) _
+                .ToArray
         End If
 
         Dim scan As ms1_scan() = ms1 _
