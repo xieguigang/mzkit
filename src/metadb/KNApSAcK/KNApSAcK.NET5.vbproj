@@ -17,7 +17,7 @@
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -63,7 +63,7 @@
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.KNApSAcK.xml</DocumentationFile>
   </PropertyGroup>
 
