@@ -17,8 +17,10 @@
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
+	# class dependency should be loaded 
+	# before its customer.
+	.class_mzInto();
     .class_peakMs2();
-    .class_mzInto();
 
 	try({
         list(
