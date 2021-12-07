@@ -157,6 +157,10 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RData\" />
+  </ItemGroup>
+
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
   <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
