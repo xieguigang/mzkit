@@ -17,6 +17,9 @@
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
+    .class_peakMs2();
+    .class_mzInto();
+
 	try({
         list(
             #' The molweight module is the very basic function for other modules
