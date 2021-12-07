@@ -53,9 +53,10 @@ Public Module LoadR
 
     <Extension>
     Public Function LoadProductMatrix(data As RObject) As ms2()
-        Dim mz = data.attributes.LinkValue("mz").DoCall(AddressOf RStreamReader.ReadNumbers)
-        Dim into = data.attributes.LinkValue("intensity").DoCall(AddressOf RStreamReader.ReadNumbers)
-        Dim annotation = data.attributes.LinkValue("annotation").DoCall(AddressOf RStreamReader.ReadStrings)
+        Dim attrs As RObject = data.attributes
+        Dim mz As Double() = attrs.LinkValue("mz").DoCall(AddressOf RStreamReader.ReadNumbers)
+        Dim into As Double() = attrs.LinkValue("intensity").DoCall(AddressOf RStreamReader.ReadNumbers)
+        Dim annotation = attrs.LinkValue("annotation").DoCall(AddressOf RStreamReader.ReadStrings)
 
         Return mz _
             .Select(Function(mzi, i)
