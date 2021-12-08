@@ -1,1 +1,3 @@
+useDynLib(mzkit, .registration=TRUE)
 exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)

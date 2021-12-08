@@ -268,3 +268,6 @@ paket-files/
 /src/assembly/Apps
 /Rscript/biodeep/biodeepdb_v3/Rscript/R
 dist/Rscript/raw/UVtest.cdf
+Rscript/R/mzkit/src/mzkit.dll
+Rscript/R/mzkit/src/mzPack.o
+Rscript/R/mzkit/src/RcppExports.o
