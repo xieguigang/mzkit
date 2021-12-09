@@ -151,7 +151,6 @@ weighted_MScos = function(query, ref) {
 #'   is equals to the size of \code{y} refernece.
 #'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
-  tolerance = tolerance$assert;
   ref   = y[, 1];
   query = x[, 1];
   ints  = x[, 2];
