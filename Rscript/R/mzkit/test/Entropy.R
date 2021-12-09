@@ -11,11 +11,16 @@ test_score = function(x, y) {
     ry = mzkit::globalAlign(toMsMatrix(y), toMsMatrix(x));
     c2 = mzkit::MScos(ry, toMsMatrix(x));
 
+    cw1 = mzkit::weighted_MScos(rx, toMsMatrix(y));
+    cw2 = mzkit::weighted_MScos(ry, toMsMatrix(x));
+
+    j = mzkit::MSjaccard(toMsMatrix(y), toMsMatrix(x));
+
     e = mzkit::MSDiffEntropy(x, y);
 
     print(data.frame(
-        type = c("forward", "reverse", "entropy"),
-        score = c(c1, c2, e)
+        type = c("forward", "reverse", "forward(weighted)", "reverse(weighted)", "jaccard", "entropy"),
+        score = c(c1, c2, cw1, cw2, j, e)
     ));
 }
 
