@@ -23,8 +23,13 @@
     .class_peakMs2();
     .class_atom();
 
+    check = c(
+        exists("Calculator", global) && bindingIsLocked("Calculator", global),
+        exists("MolWeight", global) && bindingIsLocked("MolWeight", global)
+    );
+
 	try({
-        if (!(bindingIsLocked("Calculator", global) || bindingIsLocked("MolWeight", global))) {
+        if (!any(check)) {
             list(
                 #' The molweight module is the very basic function for other modules
                 MolWeight     = MolWeight(),
