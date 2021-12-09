@@ -24,7 +24,9 @@ MSDiffEntropy = function(query, ref) {
   SB  = MSEntropy(ref);
  
   # Unweighted entropy similarity
-  1 - (2 * SAB - SA - SB) / log(4);
+  s = 1 - (2 * SAB - SA - SB) / log(4);
+  s = ifelse(s < 0, 0, s);
+  s;
 }
 
 #' Mix two MS matrix
