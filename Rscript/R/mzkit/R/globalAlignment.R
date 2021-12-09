@@ -9,6 +9,10 @@
 
 #' Evaluate the Entropy difference between two spectrum
 #' 
+#' @details Spectral entropy outperforms MS/MS dot
+#'  product similarity for small-molecule compound
+#'  identification.
+#' 
 #' @param query a spectrum for query the database in \code{mzInto} class.
 #' @param ref a reference spectrum load from the database in \code{mzInto} class.
 #' 
@@ -18,7 +22,8 @@ MSDiffEntropy = function(query, ref) {
   SAB = MSEntropy(MixMS(query, ref));
   SA  = MSEntropy(query);
   SB  = MSEntropy(ref);
-
+ 
+  # Unweighted entropy similarity
   1 - (2 * SAB - SA - SB) / log(4);
 }
 
@@ -40,6 +45,8 @@ MixMS = function(x, y, mzdiff = mzkit::tolerance(0.3, "da")) {
   ix = .alignIntensity(x@mz, x@intensity, mz, mzdiff); 
   iy = .alignIntensity(y@mz, y@intensity, mz, mzdiff);
 
+  # 1:1 mix
+  # Virtual spectrum AB
   new("mzInto", 
     mz = mz, 
     intensity = ix / max(ix) + iy / max(iy)
@@ -135,21 +142,20 @@ weighted_MScos = function(query, ref) {
 }
 
 #' Align \code{x} by using \code{y} as base matrix
+#' 
+#' @param x the target query MS matrix data.
+#' @param y the reference MS matrix data.
+#' @param tolerance the mzdiff tolerance between the \code{m/z} values.
+#' 
+#' @return a aligned MS matrix which its \code{m/z} dimension size
+#'   is equals to the size of \code{y} refernece.
 #'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
   tolerance = tolerance$assert;
   ref   = y[, 1];
   query = x[, 1];
   ints  = x[, 2];
-  into  = sapply(ref, function(mz) {
-    i = which(tolerance(mz, query));
-
-    if (length(i) == 0) {
-      0;
-    } else {
-      max(ints[i]);
-    }
-  });
+  into  = .alignIntensity(query, ints, ref, mzdiff = tolerance); 
 
   data.frame(mz = ref, into = into);
 }
