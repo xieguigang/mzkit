@@ -6,6 +6,17 @@
 \usage{
 globalAlign(x, y, tolerance = mzkit::tolerance(0.3, "da"))
 }
+\arguments{
+\item{x}{the target query MS matrix data.}
+
+\item{y}{the reference MS matrix data.}
+
+\item{tolerance}{the mzdiff tolerance between the \code{m/z} values.}
+}
+\value{
+a aligned MS matrix which its \code{m/z} dimension size
+  is equals to the size of \code{y} refernece.
+}
 \description{
 Align \code{x} by using \code{y} as base matrix
 }
