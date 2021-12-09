@@ -24,16 +24,18 @@
     .class_atom();
 
 	try({
-        list(
-            #' The molweight module is the very basic function for other modules
-            MolWeight     = MolWeight(),
-            PrecursorType = PrecursorType(),
-            #' Get precursor ion calculator
-            Calculator    = list("+" = positive(), "-" = negative())
-        ) %=>% Set;
+        if (!(bindingIsLocked("Calculator", global) || bindingIsLocked("MolWeight", global))) {
+            list(
+                #' The molweight module is the very basic function for other modules
+                MolWeight     = MolWeight(),
+                PrecursorType = PrecursorType(),
+                #' Get precursor ion calculator
+                Calculator    = list("+" = positive(), "-" = negative())
+            ) %=>% Set;
 
-        lockBinding(sym = "Calculator", env = global);
-        lockBinding(sym = "MolWeight",  env = global);
+            lockBinding(sym = "Calculator", env = global);
+            lockBinding(sym = "MolWeight",  env = global);
+        }        
 	});
 }
 
