@@ -15,7 +15,11 @@
 #' @return Entropy difference score between two spectrum
 #' 
 MSDiffEntropy = function(query, ref) {
-  
+  SAB = MSEntropy(MixMS(query, ref));
+  SA  = MSEntropy(query);
+  SB  = MSEntropy(ref);
+
+  1 - (2 * SAB - SA - SB) / log(4);
 }
 
 #' Mix two MS matrix
