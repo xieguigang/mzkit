@@ -21,6 +21,7 @@
 	# before its customer.
 	.class_mzInto();
     .class_peakMs2();
+    .class_atom();
 
 	try({
         list(

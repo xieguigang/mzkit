@@ -58,6 +58,22 @@ atomic_group <- function() {
     );
 }
 
+.class_atom = function() {
+    setClass("Isotope", representation(
+        mass = "numeric",
+        prob = "numeric",
+        numNeutrons = "numeric"
+    ));
+
+    setClass("Element", representation(
+        symbol     = "character",
+        name  = "character",
+        charge = "numeric",
+        isotopic = "numeric",
+        isotopes = "Isotope"
+    ));
+}
+
 #' A in-memory Periodic Table
 #'
 atomics = function() {
