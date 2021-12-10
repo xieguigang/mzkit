@@ -66,3 +66,16 @@ toMsMatrix = function(x) {
     into = x@intensity
   );
 }
+
+#' Convert MS dataframe as \code{mzInto} class object.
+#' 
+#' @param x a spectrum data object in dataframe format. the first column
+#'    in dataframe should be \code{m/z} value and the second column
+#'    in dataframe should be \code{intensity} data.
+#' 
+toMzInto = function(x) {
+  new("mzInto", 
+    mz = as.numeric(as.vector(x[, 1])), 
+    intensity = as.numeric(as.vector(x[, 2]))
+  );
+}
