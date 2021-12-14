@@ -8,3 +8,14 @@
         toString          = "character"
     ));
 }
+
+.class_precursor = function() {
+    setClass("PrecursorType", representation(
+        Name   = "character",
+        calc   = "function",
+        charge = "numeric",
+        M      = "numeric",
+        adduct = "numeric",
+        cal.mz = "function"
+    ));
+}
