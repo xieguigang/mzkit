@@ -58,7 +58,8 @@ centroid.2 <- function(profile, peakwidth = 0.1, intocutoff = 0.05) {
 #' 
 #' @param x a spectrum object in \code{mzInto} class.
 #' 
-#' @return a dataframe with two column fields: \code{mz} and \code{into}. 
+#' @return a dataframe with two column fields: 
+#'    \code{mz} and \code{into}.
 #'
 toMsMatrix = function(x) {
   data.frame(
