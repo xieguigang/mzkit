@@ -22,6 +22,7 @@
 	.class_mzInto();
     .class_peakMs2();
     .class_atom();
+    .class_tolerance();
 
     check = c(
         exists("Calculator", global) && bindingIsLocked("Calculator", global),

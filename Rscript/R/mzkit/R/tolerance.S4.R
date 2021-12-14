@@ -5,6 +5,6 @@
         massErr           = "function",
         assert            = "function",
         is.low.resolution = "logical",
-        toString          = "character"        
+        toString          = "character"
     ));
 }
