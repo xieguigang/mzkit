@@ -56,6 +56,10 @@ Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Public Class MSJointConnection
 
     ReadOnly kegg As KEGGHandler
+
+    ''' <summary>
+    ''' the GSEA background
+    ''' </summary>
     ReadOnly jointSet As Background
 
     Public ReadOnly Property allClusters As String()
@@ -68,6 +72,10 @@ Public Class MSJointConnection
         Me.kegg = kegg
         Me.jointSet = peakSet
     End Sub
+
+    Public Function GetGSEABackground() As Background
+        Return jointSet
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(kegg_id As String) As Compound
