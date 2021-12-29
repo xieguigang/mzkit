@@ -1000,7 +1000,7 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\PdfConvert\WkHtmlToPdf.vbproj">
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\src\PdfConvert\WkHtmlToPdf.vbproj">
       <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>
       <Name>WkHtmlToPdf</Name>
     </ProjectReference>
