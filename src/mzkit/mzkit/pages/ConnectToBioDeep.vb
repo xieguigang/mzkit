@@ -134,7 +134,7 @@ Public Class ConnectToBioDeep
 
                                 Call MyApplication.host.Invoke(
                                     Sub()
-                                        Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
+                                        Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer, showScore:=False)
                                     End Sub)
                             Else
                                 Call MyApplication.host.showStatusMessage($"MS1 level metaDNA infer did'nt have MS/MS alignment data...")
