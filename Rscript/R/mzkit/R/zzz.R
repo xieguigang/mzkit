@@ -22,6 +22,8 @@
 	.class_mzInto();
     .class_peakMs2();
     .class_atom();
+    .class_tolerance();
+    .class_precursor();
 
     check = c(
         exists("Calculator", global) && bindingIsLocked("Calculator", global),
@@ -31,7 +33,8 @@
 	try({
         if (!any(check)) {
             list(
-                #' The molweight module is the very basic function for other modules
+                #' The molweight module is the very basic function 
+                #' for other modules
                 MolWeight     = MolWeight(),
                 PrecursorType = PrecursorType(),
                 #' Get precursor ion calculator
@@ -40,7 +43,7 @@
 
             lockBinding(sym = "Calculator", env = global);
             lockBinding(sym = "MolWeight",  env = global);
-        }        
+        }
 	});
 }
 

@@ -17,9 +17,12 @@
 #'
 #' @details This helper function returns a list, with members:
 #'    \enumerate{
-#'       \item \code{mz} Calculate mass \code{m/z} value with given adduct and charge values.
-#'       \item \code{mass} Calculate mass value from given \code{m/z} with given adduct and charge, etc.
-#'       \item \code{new} Create a new mass and \code{m/z} calculator from given adduct info
+#'       \item \code{mz} Calculate mass \code{m/z} value with 
+#'              given adduct and charge values.
+#'       \item \code{mass} Calculate mass value from given 
+#'             \code{m/z} with given adduct and charge, etc.
+#'       \item \code{new} Create a new mass and \code{m/z} 
+#'              calculator from given adduct info
 #'    }
 #'
 PrecursorType <- function() {
@@ -81,12 +84,21 @@ PrecursorType <- function() {
       adducts <- .eval(adducts);
     }
 
-    list(Name   = type,
-         calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
-         charge = charge,
-         M      = M,
-         adduct = adducts,
-         cal.mz = function(mass) adduct.mz(mass * M, adducts, charge)
+    calc_mass = function(precursorMZ) {
+      reverse.mass(precursorMZ, M, charge, adducts);
+    }
+
+    calc_mz = function(mass) {
+      adduct.mz(mass * M, adducts, charge);
+    }
+
+    new("PrecursorType", 
+        Name   = type,
+        calc   = calc_mass,
+        charge = charge,
+        M      = M,
+        adduct = adducts,
+        cal.mz = calc_mz
     );
   }
 
