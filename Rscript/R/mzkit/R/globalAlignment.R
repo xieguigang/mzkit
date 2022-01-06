@@ -7,6 +7,86 @@
 
 # global alignment of two MS spectrum
 
+#' Evaluate the Entropy difference between two spectrum
+#' 
+#' @details Spectral entropy outperforms MS/MS dot
+#'  product similarity for small-molecule compound
+#'  identification.
+#' 
+#' @param query a spectrum for query the database in \code{mzInto} class.
+#' @param ref a reference spectrum load from the database in \code{mzInto} class.
+#' 
+#' @return Entropy difference score between two spectrum
+#' 
+MSDiffEntropy = function(query, ref) {
+  SAB = MSEntropy(MixMS(query, ref));
+  SA  = MSEntropy(query);
+  SB  = MSEntropy(ref);
+ 
+  # Unweighted entropy similarity
+  s = 1 - (2 * SAB - SA - SB) / log(4);
+  s = ifelse(s < 0, 0, s);
+  s;
+}
+
+#' Mix two MS matrix
+#' 
+#' @param x a spectrum in \code{mzInto} class.
+#' @param y a spectrum in \code{mzInto} class.
+#' 
+#' @return a spectrum in \code{mzInto} class, which is the union
+#'   result of two MS matrix \code{x} and \code{y}.
+#' 
+MixMS = function(x, y, mzdiff = mzkit::tolerance(0.3, "da")) {
+  # assume than x,y is centroid MS
+  mz = append(x@mz, y@mz);
+  mz = numeric.group(mz, assert = function(x, y) mzdiff$assert(x, y)) %=>%
+     names %=>% 
+     as.numeric;
+  
+  ix = .alignIntensity(x@mz, x@intensity, mz, mzdiff); 
+  iy = .alignIntensity(y@mz, y@intensity, mz, mzdiff);
+
+  # 1:1 mix
+  # Virtual spectrum AB
+  new("mzInto", 
+    mz = mz, 
+    intensity = ix / max(ix) + iy / max(iy)
+  );
+}
+
+#' Align of intensity vector
+#' 
+#' @param mz the \code{m/z} vector
+#' @param intensity the intensity vector which is corresponding to the 
+#'     \code{mz} vector.
+#' @param template the reference \code{m/z} vector.
+#' 
+#' @return an intensity vector which is aligned to the \code{template}
+#'    \code{m/z} vector.
+#' 
+.alignIntensity = function(mz, intensity, template, mzdiff = mzkit::tolerance(0.3, "da")) {
+  sapply(template, function(mzi) {
+     i = mzdiff$assert(mz, mzi);
+
+     if (sum(i) == 0) {
+       0;
+     } else {
+       max(intensity[i]);
+     }
+  })
+}
+
+#' Evaluate the Entropy of a given MS object.
+#' 
+#' @param x a object with \code{mzInto} class.
+#' 
+MSEntropy = function(x) {
+   p = x@intensity / max(x@intensity);
+   p = -sum(p * log(p));
+   p;
+}
+
 #' SSM score in one direction
 #'
 #' @details the MS matrix of \code{query} and \code{ref} should
@@ -64,21 +144,19 @@ weighted_MScos = function(query, ref) {
 }
 
 #' Align \code{x} by using \code{y} as base matrix
+#' 
+#' @param x the target query MS matrix data.
+#' @param y the reference MS matrix data.
+#' @param tolerance the mzdiff tolerance between the \code{m/z} values.
+#' 
+#' @return a aligned MS matrix which its \code{m/z} dimension size
+#'   is equals to the size of \code{y} refernece.
 #'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
-  tolerance = tolerance$assert;
   ref   = y[, 1];
   query = x[, 1];
   ints  = x[, 2];
-  into  = sapply(ref, function(mz) {
-    i = which(tolerance(mz, query));
-
-    if (length(i) == 0) {
-      0;
-    } else {
-      max(ints[i]);
-    }
-  });
+  into  = .alignIntensity(query, ints, ref, mzdiff = tolerance); 
 
   data.frame(mz = ref, into = into);
 }

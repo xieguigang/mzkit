@@ -53,3 +53,30 @@ centroid.2 <- function(profile, peakwidth = 0.1, intocutoff = 0.05) {
   # we get a ms2 spectra peaks data in centroid mode
   data.frame(mz = cmz, into = cinto);
 }
+
+#' Convert \code{mzInto} object as data.frame
+#' 
+#' @param x a spectrum object in \code{mzInto} class.
+#' 
+#' @return a dataframe with two column fields: 
+#'    \code{mz} and \code{into}.
+#'
+toMsMatrix = function(x) {
+  data.frame(
+    mz = x@mz,
+    into = x@intensity
+  );
+}
+
+#' Convert MS dataframe as \code{mzInto} class object.
+#' 
+#' @param x a spectrum data object in dataframe format. the first column
+#'    in dataframe should be \code{m/z} value and the second column
+#'    in dataframe should be \code{intensity} data.
+#' 
+toMzInto = function(x) {
+  new("mzInto", 
+    mz = as.numeric(as.vector(x[, 1])), 
+    intensity = as.numeric(as.vector(x[, 2]))
+  );
+}

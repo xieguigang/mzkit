@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 read_mzpack <- function(filepath) {
-    .Call('_mzkit_read_mzpack', PACKAGE = 'mzkit', filepath)
+    .Call(`_mzkit_read_mzpack`, filepath)
 }
 

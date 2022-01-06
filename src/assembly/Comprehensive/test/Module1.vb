@@ -10,7 +10,7 @@ Module Module1
         FrameworkInternal.ConfigMemory(MemoryLoads.Heavy)
 
         Dim demo As String = "F:\20211123_CDF\P210702366.netcdf"
-        Dim gcxgc = netCDFReader.Open(demo).ToMzPack
+        Dim gcxgc = netCDFReader.Open(demo).ToMzPack(5)
 
         Using file As Stream = "F:\20211123_CDF\P210702366.mzpack".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Call gcxgc.Write(file)

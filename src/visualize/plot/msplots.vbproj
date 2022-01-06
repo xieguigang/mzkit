@@ -466,6 +466,7 @@
   <ItemGroup>
     <Compile Include="ChromatogramPlot\ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot\ChromatogramPlot.vb" />
+    <Compile Include="ChromatogramPlot\GCxGCTIC2DPlot.vb" />
     <Compile Include="ChromatogramPlot\ScanContour.vb" />
     <Compile Include="ChromatogramPlot\TICplot.vb" />
     <Compile Include="ChromatogramPlot\ScanVisual3D.vb" />
@@ -529,9 +530,9 @@
       <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>
       <Name>Math.Statistics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
@@ -564,6 +565,10 @@
     <ProjectReference Include="..\..\Assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\Comprehensive\Comprehensive.vbproj">
+      <Project>{6f5f8407-deb8-4b75-bf41-5284772d37dd}</Project>
+      <Name>Comprehensive</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>

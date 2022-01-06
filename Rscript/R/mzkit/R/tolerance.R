@@ -14,8 +14,9 @@
 #' PPM value between two mass value
 #'
 PPM <- function(measured, actualValue) {
-  # 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
-  # for unknown query when actualValue is negative
+  # 2018-7-8 without abs function for entir value, this 
+  # may cause bugs in metaDNA for unknown query when 
+  # actualValue is negative
 
   # |(measure - reference)| / measure * 1000000
   abs(((measured - actualValue) / actualValue) * 1000000);
@@ -70,7 +71,7 @@ tolerance.ppm <- function(ppm = 20) {
 }
 
 assert.deltaMass <- function(da = 0.3) {
-  function(a, b) abs(a-b) <= da;
+  function(a, b) abs(a - b) <= da;
 }
 
 assert.ppm <- function(ppm = 20) {
@@ -79,15 +80,22 @@ assert.ppm <- function(ppm = 20) {
 
 #' \code{m/z} tolerance helper
 #'
+#' @param threshold the tolerance threshold value.
+#' @param method the algorithm method name for evaluate the tolerance
+#'    value.
+#'
 #' @return This function returns a list object with members:
 #'    \enumerate{
 #'        \item \code{threshold} The tolerance threshold.
-#'        \item \code{method} The tolerance method name, which could be \code{da} or \code{ppm}.
-#'        \item \code{assert} The tolerance assert method function, which could be
-#'              \code{\link{assert.deltaMass}} or \code{\link{assert.ppm}} based on the \code{method}
-#'              parameter value.
-#'        \item \code{is.low.resolution} The tolerance \code{assert} method is a low resolution
-#'              method? \code{da} method is \code{TRUE}, and \code{ppm} method is \code{FALSE}.
+#'        \item \code{method} The tolerance method name, which could 
+#'                be \code{da} or \code{ppm}.
+#'        \item \code{assert} The tolerance assert method function, 
+#'                which could be \code{\link{assert.deltaMass}} or 
+#'                \code{\link{assert.ppm}} based on the \code{method}
+#'                parameter value.
+#'        \item \code{is.low.resolution} The tolerance \code{assert} 
+#'                method is a low resolution method? \code{da} method 
+#'                is \code{TRUE}, and \code{ppm} method is \code{FALSE}.
 #'    }
 #'
 tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
@@ -109,12 +117,15 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
     "High resolution";
   }
 
-  list(
+  desc = "%s m/z tolerance with threshold %s(%s).";
+  desc = sprintf(desc, resolution, threshold, method[1]);
+
+  new("mzdiff",
     threshold         = threshold,
     method            = method[1],
     assert            = assert,
     massErr           = massErr,
     is.low.resolution = is.low.resolution,
-    toString          = sprintf("%s m/z tolerance with threshold %s(%s).", resolution, threshold, method[1])
+    toString          = desc
   );
 }

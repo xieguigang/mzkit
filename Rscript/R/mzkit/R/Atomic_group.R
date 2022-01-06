@@ -41,7 +41,7 @@ atomic_group <- function() {
 }
 
 .Element = function(.symbol, .name, .charge, .isotopic, .isotopes) {
-    list(
+    new("Element",
         symbol   = .symbol,
         name     = .name,
         charge   = .charge,
@@ -51,11 +51,27 @@ atomic_group <- function() {
 }
 
 .Isotope = function(mass, prob, num) {
-    list(
+    new("Isotope",
         mass        = mass,
         prob        = prob,
         numNeutrons = num
     );
+}
+
+.class_atom = function() {
+    setClass("Isotope", representation(
+        mass = "numeric",
+        prob = "numeric",
+        numNeutrons = "numeric"
+    ));
+
+    setClass("Element", representation(
+        symbol     = "character",
+        name  = "character",
+        charge = "numeric",
+        isotopic = "numeric",
+        isotopes = "Isotope"
+    ));
 }
 
 #' A in-memory Periodic Table
@@ -306,7 +322,7 @@ atomics = function() {
 
 exactMass = function(formula) {
 	if(class(formula) == "character") {
-		formula = parseFormula(formula);
+		formula = mzkit::parseFormula(formula);
 	}
 	
 	atoms = atomics();

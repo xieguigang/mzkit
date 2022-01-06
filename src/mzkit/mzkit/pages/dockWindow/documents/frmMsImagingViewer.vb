@@ -365,7 +365,7 @@ Public Class frmMsImagingViewer
             align.query = New Meta With {.id = ms.name}
             align.reference = New Meta With {.id = pinedPixel.name}
 
-            Call MyApplication.host.mzkitTool.showAlignment(align)
+            Call MyApplication.host.mzkitTool.showAlignment(align, showScore:=True)
         End If
     End Sub
 

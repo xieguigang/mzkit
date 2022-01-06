@@ -17,17 +17,33 @@
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
-	try({
-        list(
-            #' The molweight module is the very basic function for other modules
-            MolWeight     = MolWeight(),
-            PrecursorType = PrecursorType(),
-            #' Get precursor ion calculator
-            Calculator    = list("+" = positive(), "-" = negative())
-        ) %=>% Set;
+	# class dependency should be loaded 
+	# before its customer.
+	.class_mzInto();
+    .class_peakMs2();
+    .class_atom();
+    .class_tolerance();
+    .class_precursor();
 
-        lockBinding(sym = "Calculator", env = global);
-        lockBinding(sym = "MolWeight",  env = global);
+    check = c(
+        exists("Calculator", global) && bindingIsLocked("Calculator", global),
+        exists("MolWeight", global) && bindingIsLocked("MolWeight", global)
+    );
+
+	try({
+        if (!any(check)) {
+            list(
+                #' The molweight module is the very basic function 
+                #' for other modules
+                MolWeight     = MolWeight(),
+                PrecursorType = PrecursorType(),
+                #' Get precursor ion calculator
+                Calculator    = list("+" = positive(), "-" = negative())
+            ) %=>% Set;
+
+            lockBinding(sym = "Calculator", env = global);
+            lockBinding(sym = "MolWeight",  env = global);
+        }
 	});
 }
 

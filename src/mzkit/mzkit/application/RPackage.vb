@@ -113,7 +113,7 @@ Namespace My
         <ExportAPI("ms2")>
         Public Shared Function LoadAllMs2(raw As Raw, Optional env As Environment = Nothing) As ScanMS2()
             If Not raw.isLoaded Then
-                Call raw.LoadMzpack(Sub(tag, msg) base.print($"{tag}. {msg}", env))
+                Call raw.LoadMzpack(Sub(tag, msg) base.print($"{tag}. {msg}",, env))
             End If
 
             Return raw.GetMs2Scans().ToArray
