@@ -82,7 +82,9 @@ Public Module GC2Dimensional
         Dim sig As ScanMS1() = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
 
         Return New mzPack With {
-            .MS = sig.Demodulate2D(modtime)
+            .MS = sig.Demodulate2D(modtime),
+            .Application = FileApplicationClass.GCxGC,
+            .source = agilentGC.ToString
         }
     End Function
 
@@ -95,8 +97,13 @@ Public Module GC2Dimensional
     <Extension>
     Public Function Demodulate2D(sig As ScanMS1(), modtime As Double) As ScanMS1()
         Dim size As Size = sig.Demodulate2DShape(modtime)
+        Dim matrix As ScanMS1() = sig.Split(size.Height) _
+            .Select(Function(t)
+                        Return t.scan1
+                    End Function) _
+            .ToArray
 
-        Throw New NotImplementedException
+        Return matrix
     End Function
 
     ''' <summary>
@@ -115,6 +122,44 @@ Public Module GC2Dimensional
             .ToArray
 
         Return matrix
+    End Function
+
+    ''' <summary>
+    ''' merge data
+    ''' </summary>
+    ''' <param name="rt1"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Private Function scan1(rt1 As ScanMS1()) As ScanMS1
+        Dim t0 As Double = rt1(Scan0).rt
+        Dim allMs = rt1.Select(Function(d) d.GetMs).IteratesALL.ToArray
+
+        Return New ScanMS1 With {
+           .BPC = allMs.Select(Function(d) d.intensity).Max,
+           .TIC = allMs.Select(Function(d) d.intensity).Sum,
+           .scan_id = rt1(Scan0).scan_id,
+           .rt = t0,
+           .mz = rt1(Scan0).mz,
+           .into = rt1(Scan0).into,
+           .products = rt1 _
+               .Select(Function(t)
+                           Return New ScanMS2 With {
+                               .activationMethod = mzData.ActivationMethods.AnyType,
+                               .centroided = False,
+                               .charge = 0,
+                               .collisionEnergy = 0,
+                               .into = t.into,
+                               .mz = t.mz,
+                               .parentMz = 0,
+                               .polarity = 0,
+                               .intensity = 0,
+                               .scan_id = t.scan_id,
+                               .rt = t.rt - t0
+                           }
+                       End Function) _
+               .ToArray
+        }
     End Function
 
     <Extension>
