@@ -1,13 +1,9 @@
-﻿Imports Clearcore2.Data.AnalystDataProvider
-Imports System
-Imports System.Collections.Generic
+﻿Imports System.Runtime.CompilerServices
 Imports Clearcore2.Data
 Imports Clearcore2.Data.AnalystDataProvider
 Imports Clearcore2.Data.DataAccess.SampleData
-Imports Clearcore2.Licensing
-Imports Clearcore2.RawXYProcessing
 Imports Clearcore2.Data.DataAccess.SampleData.MSExperimentInfo
-Imports System.Runtime.CompilerServices
+Imports Clearcore2.RawXYProcessing
 
 Public Class WiffScanFileReader : Implements IDisposable
 
