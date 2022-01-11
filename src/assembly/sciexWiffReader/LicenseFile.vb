@@ -11,7 +11,7 @@ Imports Microsoft.VisualBasic.Text.Xml
 <XmlRoot("license_key")>
 Public Class LicenseFile
 
-    Shared ReadOnly filepath As String
+    Shared ReadOnly filepath As String = App.ProductProgramData & "/Clearcore2_license.xml"
 
     Public Property company_name As String
     Public Property product_name As String
