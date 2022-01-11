@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F5BDF2AE-6E3D-411E-9593-E82EEA0F4D03}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.Module1</StartupObject>
+    <StartupObject>test.Module2</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="Module2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -163,6 +164,10 @@
     <ProjectReference Include="..\..\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sciexWiffReader\sciexWiffReader.vbproj">
+      <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
+      <Name>sciexWiffReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThermoRawFileReader.vbproj">
       <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>

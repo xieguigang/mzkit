@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0D82246C-02C5-4F9E-A571-EA4FA2077059}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>sciexWiffReader</RootNamespace>
-    <AssemblyName>sciexWiffReader</AssemblyName>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</RootNamespace>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>sciexWiffReader.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>sciexWiffReader.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -43,7 +43,41 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Clearcore2.Data">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.AnalystDataProvider">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Muni">
+      <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.RawXYProcessing">
+      <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Data.XYData">
+      <HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -64,11 +98,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WiffFileReader\Flags.vb" />
+    <Compile Include="Extensions.vb" />
+    <Compile Include="WiffFileReader\PeakList.vb" />
+    <Compile Include="WiffFileReader\ScanInfo.vb" />
+    <Compile Include="WiffFileReader\WiffScanFileReader.vb" />
     <Compile Include="LicenseFile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -99,6 +139,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

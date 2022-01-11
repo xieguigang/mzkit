@@ -10,10 +10,10 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("sciexWiffReader")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("微软中国")>
+<Assembly: AssemblyCompany("BioNovoGene")>
 <Assembly: AssemblyProduct("sciexWiffReader")>
-<Assembly: AssemblyCopyright("Copyright © 微软中国 2022")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2022")>
+<Assembly: AssemblyTrademark("MZKit")>
 
 <Assembly: ComVisible(False)>
 
