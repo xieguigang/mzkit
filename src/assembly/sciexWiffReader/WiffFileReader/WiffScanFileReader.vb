@@ -82,10 +82,10 @@ Public Class WiffScanFileReader : Implements IDisposable
 
     Public Function GetProfileFromScanNum(scannumber As Integer) As PeakList
         Dim scanInfo As ScanInfo = Me.ScanInfos(scannumber)
-        Dim massSpectrum As Global.Clearcore2.Data.MassSpectrum
+        Dim massSpectrum As MassSpectrum
         Try
             massSpectrum = Me.wiffExperiments(scanInfo.ExperimentId).GetMassSpectrum(scanInfo.CycleId)
-        Catch ex As Global.System.Exception
+        Catch ex As Exception
             Return New PeakList(New Double(-1) {}, New Double(-1) {})
         End Try
         Dim array As Double() = New Double(massSpectrum.NumDataPoints - 1) {}
@@ -102,7 +102,7 @@ Public Class WiffScanFileReader : Implements IDisposable
         Dim peakArray As PeakClass()
         Try
             peakArray = Me.wiffExperiments(scanInfo.ExperimentId).GetPeakArray(scanInfo.CycleId)
-        Catch ex As Global.System.Exception
+        Catch ex As Exception
             Return New PeakList(New Double(-1) {}, New Double(-1) {})
         End Try
         Dim array As Double() = New Double(peakArray.Length - 1) {}
@@ -174,22 +174,30 @@ Public Class WiffScanFileReader : Implements IDisposable
                             End If
                         Next
                     End If
+
+                    Dim centroidModel As ScanMode = If(massSpectrumInfo.CentroidMode, ScanMode.Centroid, ScanMode.Profile)
+                    Dim polarity As Polarity = If((details.Polarity = PolarityEnum.Positive), Polarity.Positive, Polarity.Negative)
+                    Dim msLevel As ScanType = If((details.IDAType = IDAExperimentType.Survey), ScanType.MS1, ScanType.MS2)
+                    Dim rt = CSng(totalIonChromatogram.GetXValue(j))
+                    Dim scanTitle As String = massSpectrumInfo.GetDescription(True)
+                    Dim basePeakMz = If((num2 = -1), 0.0, actualXValues(num2))
+                    Dim intensity = CSng(If((num2 = -1), 0.0, actualYValues(num2)))
                     Dim scanInfo As New ScanInfo() With {
                         .CycleId = j,
                         .ScanNumber = Me.ScanInfos.Count,
                         .ExperimentId = k,
-                        .RetentionTime = CSng(totalIonChromatogram.GetXValue(j)),
+                        .RetentionTime = rt,
                         .TotalIonCurrent = num,
-                        .ScanMode = If(massSpectrumInfo.CentroidMode, ScanMode.Centroid, ScanMode.Profile),
-                        .DataTitle = massSpectrumInfo.GetDescription(True),
+                        .ScanMode = centroidModel,
+                        .DataTitle = scanTitle,
                         .PeaksCount = massSpectrum.NumDataPoints,
-                        .BasePeakMz = If((num2 = -1), 0.0, actualXValues(num2)),
-                        .BasePeakIntensity = CSng(If((num2 = -1), 0.0, actualYValues(num2))),
-                        .Polarity = If((details.Polarity = PolarityEnum.Positive), Polarity.Positive, Polarity.Negative),
+                        .BasePeakMz = basePeakMz,
+                        .BasePeakIntensity = intensity,
+                        .Polarity = polarity,
                         .LowMz = details.StartMass,
                         .HighMz = details.EndMass,
                         .MSLevel = massSpectrumInfo.MSLevel,
-                        .ScanType = If((details.IDAType = IDAExperimentType.Survey), ScanType.MS1, ScanType.MS2),
+                        .ScanType = msLevel,
                         .FragmentationType = "NULL",
                         .IsolationWidth = isolationWidth,
                         .IsolationCenter = isolationCenter
