@@ -79,11 +79,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Flags.vb" />
+    <Compile Include="WiffFileReader\Flags.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="PeakList.vb" />
-    <Compile Include="ScanInfo.vb" />
-    <Compile Include="WiffScanFileReader.vb" />
+    <Compile Include="WiffFileReader\PeakList.vb" />
+    <Compile Include="WiffFileReader\ScanInfo.vb" />
+    <Compile Include="WiffFileReader\WiffScanFileReader.vb" />
     <Compile Include="LicenseFile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
