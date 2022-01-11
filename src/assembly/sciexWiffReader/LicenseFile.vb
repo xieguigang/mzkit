@@ -23,6 +23,17 @@ Public Class LicenseFile
     ''' <returns></returns>
     Public Property key_data As String
 
+    Shared _valid As Boolean = False
+
+    Public Shared Property LicenseValid As Boolean
+        Get
+            Return _valid
+        End Get
+        Private Set(value As Boolean)
+            _valid = value
+        End Set
+    End Property
+
     ''' <summary>
     ''' install the license key and test for license valid or not
     ''' </summary>
@@ -57,6 +68,7 @@ Public Class LicenseFile
 
         Try
             LicenseKeys.Keys = {LicenseFile.filepath.ReadAllText}
+            LicenseValid = True
         Catch ex As Exception
             Return False
         End Try
