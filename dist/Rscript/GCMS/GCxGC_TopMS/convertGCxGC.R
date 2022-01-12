@@ -3,8 +3,8 @@ require(mzkit);
 imports "netCDF.utils" from "base";
 imports "mzweb" from "mzkit";
 
-cdfpath = ?"--cdf" || stop("no cdf file provided!");
-mzfile = ?"--output" || `${dirname(cdfpath)}.mzPack`;
+cdfpath = ?"--cdf"    || stop("no cdf file provided!");
+mzfile  = ?"--output" || `${dirname(cdfpath)}/${basename(cdfpath)}.mzPack`;
 
 if (!file.exists(cdfpath)) {
 	stop(`missing raw data file at location: ${cdfpath}!`);
