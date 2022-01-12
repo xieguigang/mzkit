@@ -84,7 +84,7 @@ Public Module GC2Dimensional
         Return New mzPack With {
             .MS = sig.Demodulate2D(modtime),
             .Application = FileApplicationClass.GCxGC,
-            .source = agilentGC.ToString
+            .source = "LECO GCxGC CDF" ' agilentGC.ToString
         }
     End Function
 
