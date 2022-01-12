@@ -1,9 +1,16 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' Processing GCxGC comprehensive chromatogram data
+''' </summary>
 <Package("GCxGC")>
 Module GCxGC
 
@@ -28,9 +35,35 @@ Module GCxGC
     ''' extract GCxGC 2d peaks from the mzpack raw data file
     ''' </summary>
     ''' <param name="raw"></param>
+    ''' <param name="mz">
+    ''' target mz value for extract XIC data. NA means extract 
+    ''' TIC data by default.
+    ''' </param>
+    ''' <param name="mzdiff">
+    ''' the mz tolerance error for match the intensity data for
+    ''' extract XIC data if the <paramref name="mz"/> is not 
+    ''' ``NA`` value.
+    ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function will extract the TIC data by default.
+    ''' </remarks>
     <ExportAPI("extract_2D_peaks")>
-    Public Function create2DPeaks(raw As mzPack) As D2Chromatogram()
+    <RApiReturn(GetType(D2Chromatogram))>
+    Public Function create2DPeaks(raw As mzPack,
+                                  Optional mz As Double = Double.NaN,
+                                  Optional mzdiff As Object = "ppm:30",
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim extract_XIC As Boolean = Not mz.IsNaNImaginary AndAlso mz > 0
+        Dim mzErr = Math.getTolerance(mzdiff, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim test As Tolerance = mzErr.TryCast(Of Tolerance)
+
         Return raw.MS _
             .Select(Function(d)
                         Return New D2Chromatogram With {
