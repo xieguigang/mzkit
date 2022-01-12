@@ -17,45 +17,45 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -67,7 +67,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -80,7 +80,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -91,7 +91,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.xml</DocumentationFile>
+    <DocumentationFile>mzkit.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -103,8 +103,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RData\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="RData\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="RData\**" />
     <None Remove="test\**" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
@@ -155,10 +158,6 @@
 
   <ItemGroup>
     <Import Include="System.Data" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RData\" />
   </ItemGroup>
 
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
