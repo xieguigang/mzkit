@@ -81,6 +81,12 @@ Public Module GC2Dimensional
         Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
         Dim sig As ScanMS1() = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
 
+        ' agilentGC.ToString
+        '
+        ' 2022-01-12
+        ' build string based on the internal data vector
+        ' will cause the out of memory error
+
         Return New mzPack With {
             .MS = sig.Demodulate2D(modtime),
             .Application = FileApplicationClass.GCxGC,
