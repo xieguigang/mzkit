@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -63,22 +64,50 @@ Module GCxGC
         End If
 
         Dim test As Tolerance = mzErr.TryCast(Of Tolerance)
+        Dim extract As Func(Of ScanMS1, D2Chromatogram)
+
+        If extract_XIC Then
+            extract = extractXIC(mz, mzdiff:=test)
+        Else
+            extract = AddressOf extractTIC
+        End If
 
         Return raw.MS _
             .Select(Function(d)
-                        Return New D2Chromatogram With {
-                            .intensity = d.TIC,
-                            .scan_time = d.rt,
-                            .d2chromatogram = d.products _
-                                .Select(Function(t)
-                                            Return New ChromatogramTick With {
-                                                .Intensity = t.into.Sum,
-                                                .Time = t.rt
-                                            }
-                                        End Function) _
-                                .ToArray
-                        }
+                        Return extract(d)
                     End Function) _
             .ToArray
+    End Function
+
+    Private Function extractXIC(mz As Double, mzdiff As Tolerance) As Func(Of ScanMS1, D2Chromatogram)
+        Return Function(d)
+                   Return New D2Chromatogram With {
+                       .scan_time = d.rt,
+                       .intensity = d.GetIntensity(mz, mzdiff),
+                       .d2chromatogram = d.products _
+                            .Select(Function(t)
+                                        Return New ChromatogramTick With {
+                                            .Time = t.rt,
+                                            .Intensity = t.GetIntensity(mz, mzdiff)
+                                        }
+                                    End Function) _
+                            .ToArray
+                   }
+               End Function
+    End Function
+
+    Private Function extractTIC(d As ScanMS1) As D2Chromatogram
+        Return New D2Chromatogram With {
+            .intensity = d.TIC,
+            .scan_time = d.rt,
+            .d2chromatogram = d.products _
+                .Select(Function(t)
+                            Return New ChromatogramTick With {
+                                .Intensity = t.into.Sum,
+                                .Time = t.rt
+                            }
+                        End Function) _
+                .ToArray
+        }
     End Function
 End Module
