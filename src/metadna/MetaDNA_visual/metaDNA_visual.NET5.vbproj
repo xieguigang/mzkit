@@ -10,31 +10,31 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -45,11 +45,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
