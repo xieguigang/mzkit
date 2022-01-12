@@ -65,28 +65,35 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                            tickFontStyle:=theme.axisTickCSS
         )
 
-        For Each col As D2Chromatogram In TIC2D
-            Dim x As Double = scaleX(col.scan_time)
+        If intensityRange.Length > 0.0 Then
+            For Each col As D2Chromatogram In TIC2D
+                Dim x As Double = scaleX(col.scan_time)
 
-            For Each cell As ChromatogramTick In col.d2chromatogram
-                rect = New Rectangle() With {
-                    .X = x,
-                    .Y = scale.TranslateY(cell.Time),
-                    .Width = dw,
-                    .Height = dh
-                }
-                i = intensityRange.ScaleMapping(cell.Intensity, index)
+                For Each cell As ChromatogramTick In col.d2chromatogram
+                    rect = New Rectangle() With {
+                        .X = x,
+                        .Y = scale.TranslateY(cell.Time),
+                        .Width = dw,
+                        .Height = dh
+                    }
+                    i = intensityRange.ScaleMapping(cell.Intensity, index)
 
-                If i >= colors.Length Then
-                    Call g.FillRectangle(colors.Last, rect)
-                Else
-                    Call g.FillRectangle(colors(i), rect)
-                End If
+                    If i >= colors.Length Then
+                        Call g.FillRectangle(colors.Last, rect)
+                    Else
+                        Call g.FillRectangle(colors(i), rect)
+                    End If
+                Next
             Next
-        Next
+        End If
 
         Dim width = canvas.Width * 0.1
-        Dim legendLayout As New Rectangle(canvas.Width - width - canvas.Padding.Right / 3, canvas.Padding.Top, width, canvas.Height * 0.3)
+        Dim legendLayout As New Rectangle(
+            x:=canvas.Width - width - canvas.Padding.Right / 3,
+            y:=canvas.Padding.Top,
+            width:=width,
+            height:=canvas.Height * 0.3
+        )
 
         Call DrawMainTitle(g, canvas.PlotRegion)
         Call g.ColorMapLegend(
