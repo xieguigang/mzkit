@@ -1,9 +1,9 @@
 imports "netCDF.utils" from "base";
 imports "mzweb" from "mzkit";
 
-using cdf as open.netCDF("F:\Lu6-2.cdf") {
+using cdf as open.netCDF("D:\web\Lu6-1.cdf") {
 	cdf 
 	|> as.mzpack(modtime = 5)
-	|> write.mzPack(file = "F:\Lu6-2.mzpack")
+	|> write.mzPack(file = "D:\web\Lu6-1.Mzpack")
 	;	
 }
