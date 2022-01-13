@@ -47,7 +47,6 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -105,20 +104,6 @@ Namespace mzData.mzWebCache
             Else
                 Return Nothing
             End If
-        End Function
-
-        Public Function GetIntensity(mz As Double, tolerance As Tolerance) As Integer
-            Dim max As Double = 0
-
-            For i As Integer = 0 To Me.mz.Length - 1
-                If tolerance(mz, Me.mz(i)) Then
-                    If max < into(i) Then
-                        max = into(i)
-                    End If
-                End If
-            Next
-
-            Return max
         End Function
 
         Public Iterator Function GetMs1Scans() As IEnumerable(Of ms1_scan)
