@@ -13,5 +13,6 @@ biodeep mzweb data viewer raw data file helper
 + [open.mzpack](mzweb/open.mzpack.1) open a raw data files in common raw data format and then returns 
 + [setThumbnail](mzweb/setThumbnail.1) 
 + [ms1_scans](mzweb/ms1_scans.1) 
++ [ms1_peaks](mzweb/ms1_peaks.1) 
 + [ms2_peaks](mzweb/ms2_peaks.1) 
 + [as.mzpack](mzweb/as.mzpack.1) convert assembly file to mzpack format data object

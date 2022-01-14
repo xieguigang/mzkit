@@ -253,6 +253,7 @@ Module Visual
         Dim mirror As Boolean = args.getValue("mirror", env, False)
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
+        Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1280,900")
 
         If mirror Then
             Return SpectrumPlot(spectrum, title:=title)
@@ -266,7 +267,8 @@ Module Visual
             Return PeakAssign.DrawSpectrumPeaks(
                 matrix:=ms,
                 images:=annotateImages,
-                labelIntensity:=labeIntensity
+                labelIntensity:=labeIntensity,
+                size:=size
             )
         End If
     End Function
