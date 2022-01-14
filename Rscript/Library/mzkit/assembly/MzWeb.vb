@@ -56,6 +56,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -274,6 +275,33 @@ Module MzWeb
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
+    End Function
+
+    <ExportAPI("ms1_peaks")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function Ms1Peaks(mzpack As mzPack,
+                             Optional tolerance As Object = "da:0.001",
+                             Optional cutoff As Double = 0.05,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Dim ms As ms2() = mzpack.MS _
+            .Select(Function(scan) scan.GetMs) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(mzdiff.TryCast(Of Tolerance), New RelativeIntensityCutoff(cutoff)) _
+            .ToArray
+
+        Return New LibraryMatrix With {
+            .centroid = True,
+            .ms2 = ms,
+            .name = mzpack.source & " MS1"
+        }
     End Function
 
     <ExportAPI("ms2_peaks")>
