@@ -61,6 +61,12 @@ Namespace Pixel
 
         Dim data As ms2()
 
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return $"({X},{Y})"
+            End Get
+        End Property
+
         Sub New(x As Integer, y As Integer, data As ms2())
             Me.X = x
             Me.Y = y

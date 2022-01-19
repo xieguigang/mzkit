@@ -66,6 +66,12 @@ Namespace Pixel
         Public ReadOnly Property mz As Double()
         Public ReadOnly Property intensity As Double()
 
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return $"({X},{Y})"
+            End Get
+        End Property
+
         Sub New(x As Integer, y As Integer, mz As Double(), into As Double())
             Me.X = x
             Me.Y = y

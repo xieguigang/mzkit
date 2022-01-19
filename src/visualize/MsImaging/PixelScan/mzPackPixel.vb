@@ -76,6 +76,12 @@ Namespace Pixel
 
         ReadOnly pixel As Point
 
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return scan.scan_id
+            End Get
+        End Property
+
         Public ReadOnly Property mz As Double()
             Get
                 Return scan.mz
