@@ -71,7 +71,7 @@ Public Class PixelProperty
     Public ReadOnly Property TotalIon As Double
     <Category("Pixel")> Public ReadOnly Property X As Integer
     <Category("Pixel")> Public ReadOnly Property Y As Integer
-    <Category("Pixel")> Public ReadOnly Property ScanId As Integer
+    <Category("Pixel")> Public ReadOnly Property ScanId As String
 
     Public ReadOnly Property ShannonEntropy As Double
     Public ReadOnly Property Gini As Double
