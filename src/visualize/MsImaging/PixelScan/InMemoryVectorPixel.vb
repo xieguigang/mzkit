@@ -67,12 +67,9 @@ Namespace Pixel
         Public ReadOnly Property intensity As Double()
 
         Public Overrides ReadOnly Property scanId As String
-            Get
-                Return $"({X},{Y})"
-            End Get
-        End Property
 
-        Sub New(x As Integer, y As Integer, mz As Double(), into As Double())
+        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double())
+            Me.scanId = scanId
             Me.X = x
             Me.Y = y
             Me.mz = mz
@@ -84,12 +81,13 @@ Namespace Pixel
         ''' </summary>
         ''' <param name="scan"></param>
         Sub New(scan As ScanMS1)
-            Call Me.New(scan.meta!x, scan.meta!y, scan.mz, scan.into)
+            Call Me.New(scan.scan_id, scan.meta!x, scan.meta!y, scan.mz, scan.into)
         End Sub
 
         Sub New(pixel As PixelScan)
             X = pixel.X
             Y = pixel.Y
+            scanId = pixel.scanId
 
             If TypeOf pixel Is mzPackPixel Then
                 Dim raw As mzPackPixel = DirectCast(pixel, mzPackPixel)
@@ -112,6 +110,7 @@ Namespace Pixel
 
         Public Function GetBuffer() As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+                file.Write(scanId, BinaryStringFormat.ZeroTerminated)
                 file.Write(X)
                 file.Write(Y)
                 file.Write(mz.Length)
@@ -129,13 +128,14 @@ Namespace Pixel
             End If
 
             Using file As New BinaryDataReader(New MemoryStream(buffer))
+                Dim scanId As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
                 Dim x As Integer = file.ReadInt32
                 Dim y As Integer = file.ReadInt32
                 Dim size As Integer = file.ReadInt32
                 Dim mz As Double() = file.ReadDoubles(size)
                 Dim into As Double() = file.ReadDoubles(size)
 
-                Return New InMemoryVectorPixel(x, y, mz, into)
+                Return New InMemoryVectorPixel(scanId, x, y, mz, into)
             End Using
         End Function
 
