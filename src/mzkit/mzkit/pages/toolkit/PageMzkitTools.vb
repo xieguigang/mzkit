@@ -902,8 +902,8 @@ Public Class PageMzkitTools
         VisualStudio.Dock(WindowModules.plotParams, DockState.DockRight)
     End Sub
 
-    Private Sub PictureBox1_Resize(sender As Object, e As EventArgs) Handles PictureBox1.Resize
-        With PictureBox1.Size
+    Private Sub PageMzkitTools_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        With Size
             WindowModules.plotParams.params.width = .Width
             WindowModules.plotParams.params.height = .Height
         End With
