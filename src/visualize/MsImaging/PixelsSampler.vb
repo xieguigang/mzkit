@@ -162,7 +162,7 @@ Public Class PixelsSampler
                 Dim mz As Double() = block.Select(Function(d) Aggregate p In d Into Average(p.mz)).ToArray
                 Dim into As Double() = block.Select(Function(d) Aggregate p In d Into Max(p.intensity)).ToArray
 
-                Yield New InMemoryVectorPixel(x, y, mz, into)
+                Yield New InMemoryVectorPixel($"sample_{x}-{x + dw},{y}-{y + dh}", x, y, mz, into)
             Next
 
             Call Console.Write(x & vbTab)
