@@ -71,6 +71,7 @@ Public Class PixelProperty
     Public ReadOnly Property TotalIon As Double
     <Category("Pixel")> Public ReadOnly Property X As Integer
     <Category("Pixel")> Public ReadOnly Property Y As Integer
+    <Category("Pixel")> Public ReadOnly Property ScanId As Integer
 
     Public ReadOnly Property ShannonEntropy As Double
     Public ReadOnly Property Gini As Double
@@ -81,6 +82,7 @@ Public Class PixelProperty
 
         X = pixel.X
         Y = pixel.Y
+        ScanId = pixel.scanId
 
         If into.Length = 0 Then
         Else
