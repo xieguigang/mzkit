@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::12c3a5d7b1b895abf4b1d8959e2d9304, src\mzkit\mzkit\pages\dockWindow\documents\frmFeatureSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmFeatureSearch
-    ' 
-    '     Sub: (+2 Overloads) AddFileMatch, frmFeatureSearch_Load, ViewToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmFeatureSearch
+' 
+'     Sub: (+2 Overloads) AddFileMatch, frmFeatureSearch_Load, ViewToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -171,5 +173,68 @@ Public Class frmFeatureSearch
         OpenContainingFolderToolStripMenuItem.Enabled = False
         CopyFullPathToolStripMenuItem.Enabled = False
         SaveDocumentToolStripMenuItem.Enabled = False
+    End Sub
+
+    Private Sub ViewXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewXICToolStripMenuItem.Click
+        Dim cluster As TreeListViewItem
+        Dim host = MyApplication.host
+
+        If TreeListView1.SelectedItems.Count = 0 Then
+            Return
+        Else
+            cluster = TreeListView1.SelectedItems(0)
+        End If
+
+        ' 当没有feature搜索结果的时候， children count也是零
+        ' 但是raw文件的parent是空的
+        ' 所以还需要加上parent是否为空的判断来避免无结果产生的冲突
+        If cluster.ChildrenCount > 0 OrElse cluster.Parent Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Select a ms2 feature for view XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            ' 选择的是一个scan数据节点
+            Dim parentFile = cluster.Parent.ToolTipText
+            Dim scan_id As String = cluster.Text
+
+            MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
+            ' scan节点
+            Dim raw As Task.Raw
+
+            If directRaw Is Nothing Then
+                raw = Globals.workspace.FindRawFile(parentFile)
+            Else
+                raw = directRaw
+            End If
+
+            Dim scan = raw.FindMs2Scan(scan_id)
+
+            If scan Is Nothing Then
+                Call MyApplication.host.showStatusMessage($"no scan data was found for scan id: {scan_id}!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Else
+                Dim mz As Double = scan.parentMz
+                Dim ppm As New PPMmethod(30)
+                Dim GetXICCollection =
+                    Iterator Function() As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+                        Dim ticks As ChromatogramTick() = raw _
+                            .GetMs1Scans _
+                            .Select(Function(s)
+                                        Return New ChromatogramTick With {
+                                            .Intensity = s.GetIntensity(mz, ppm),
+                                            .Time = s.rt
+                                        }
+                                    End Function) _
+                            .ToArray
+
+                        Yield New NamedCollection(Of ChromatogramTick) With {
+                            .name = $"{mz.ToString("F4")} @ {raw.source.FileName}",
+                            .value = ticks
+                        }
+                    End Function
+
+                ' Call MyApplication.host.mzkitTool.showSpectrum(scan_id, raw)
+                Call MyApplication.mzkitRawViewer.ShowXIC(ppm.DeltaTolerance, Nothing, GetXICCollection, 0)
+                Call MyApplication.host.mzkitTool.ShowPage()
+            End If
+        End If
     End Sub
 End Class

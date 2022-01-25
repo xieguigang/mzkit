@@ -41,6 +41,7 @@ Partial Class frmFeatureSearch
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ViewXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -52,7 +53,7 @@ Partial Class frmFeatureSearch
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
         Me.TreeListView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TreeListView1.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeListView1.GridLines = True
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(0, 0)
@@ -82,46 +83,40 @@ Partial Class frmFeatureSearch
         '
         'ColumnHeader10
         '
-        Me.ColumnHeader10.DisplayIndex = 4
         Me.ColumnHeader10.Text = "rt(minutes)"
         '
         'ColumnHeader5
         '
-        Me.ColumnHeader5.DisplayIndex = 5
         Me.ColumnHeader5.Text = "PPM"
         '
         'ColumnHeader6
         '
-        Me.ColumnHeader6.DisplayIndex = 6
         Me.ColumnHeader6.Text = "Polarity"
         '
         'ColumnHeader7
         '
-        Me.ColumnHeader7.DisplayIndex = 7
         Me.ColumnHeader7.Text = "Charge"
         '
         'ColumnHeader8
         '
-        Me.ColumnHeader8.DisplayIndex = 8
         Me.ColumnHeader8.Text = "BPC"
         '
         'ColumnHeader9
         '
-        Me.ColumnHeader9.DisplayIndex = 9
         Me.ColumnHeader9.Text = "TIC"
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ViewXICToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(100, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'ImageList1
@@ -131,9 +126,15 @@ Partial Class frmFeatureSearch
         Me.ImageList1.Images.SetKeyName(0, "application-x-object.png")
         Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
         '
+        'ViewXICToolStripMenuItem
+        '
+        Me.ViewXICToolStripMenuItem.Name = "ViewXICToolStripMenuItem"
+        Me.ViewXICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ViewXICToolStripMenuItem.Text = "View XIC"
+        '
         'frmFeatureSearch
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 274)
         Me.Controls.Add(Me.TreeListView1)
@@ -158,4 +159,5 @@ Partial Class frmFeatureSearch
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ColumnHeader10 As ColumnHeader
+    Friend WithEvents ViewXICToolStripMenuItem As ToolStripMenuItem
 End Class
