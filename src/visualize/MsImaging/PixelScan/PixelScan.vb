@@ -56,6 +56,7 @@ Namespace Pixel
 
         Public MustOverride ReadOnly Property X As Integer
         Public MustOverride ReadOnly Property Y As Integer
+        Public MustOverride ReadOnly Property scanId As String
 
         Public Overridable Function GetMs() As ms2()
             Return GetMsPipe.ToArray

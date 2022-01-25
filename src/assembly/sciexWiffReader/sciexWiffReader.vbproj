@@ -90,6 +90,9 @@
     <Reference Include="Clearcore2.Muni">
       <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
     </Reference>
+    <Reference Include="Clearcore2.ProjectUtilities">
+      <HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Clearcore2.RawXYProcessing">
       <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
     </Reference>
@@ -116,16 +119,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="WiffFileReader\Flags.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="WiffFileReader\PeakList.vb" />
     <Compile Include="WiffFileReader\ScanInfo.vb" />
     <Compile Include="WiffFileReader\WiffScanFileReader.vb" />
-
     <Compile Include="MRMReader.vb" />
     <Compile Include="FullScanReader.vb" />
-
     <Compile Include="LicenseFile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -66,6 +66,12 @@ Namespace Pixel
         Dim memoryCache As ms2()
         Dim enableCache As Boolean = False
 
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return i.ToString
+            End Get
+        End Property
+
         <DebuggerStepThrough>
         Sub New(ibd As ibdReader, pixel As ScanData, Optional enableCache As Boolean = False)
             Me.i = pixel
