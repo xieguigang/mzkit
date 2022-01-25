@@ -27,9 +27,12 @@ Partial Class frmUntargettedViewer
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmUntargettedViewer))
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.MsSelector1 = New ControlLibrary.MSSelector()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MsSelector1 = New ControlLibrary.MSSelector()
+        Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -45,6 +48,19 @@ Partial Class frmUntargettedViewer
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowMatrixToolStripMenuItem, Me.ToolStripMenuItem1, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 98)
+        '
+        'ShowMatrixToolStripMenuItem
+        '
+        Me.ShowMatrixToolStripMenuItem.Image = CType(resources.GetObject("ShowMatrixToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ShowMatrixToolStripMenuItem.Name = "ShowMatrixToolStripMenuItem"
+        Me.ShowMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowMatrixToolStripMenuItem.Text = "Show Matrix"
+        '
         'MsSelector1
         '
         Me.MsSelector1.BackColor = System.Drawing.Color.White
@@ -58,22 +74,30 @@ Partial Class frmUntargettedViewer
         Me.MsSelector1.Size = New System.Drawing.Size(904, 143)
         Me.MsSelector1.TabIndex = 2
         '
-        'ContextMenuStrip1
+        'MS1ToolStripMenuItem
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowMatrixToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        Me.MS1ToolStripMenuItem.Checked = True
+        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1ToolStripMenuItem.Text = "MS1"
         '
-        'ShowMatrixToolStripMenuItem
+        'MS2ToolStripMenuItem
         '
-        Me.ShowMatrixToolStripMenuItem.Image = CType(resources.GetObject("ShowMatrixToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ShowMatrixToolStripMenuItem.Name = "ShowMatrixToolStripMenuItem"
-        Me.ShowMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ShowMatrixToolStripMenuItem.Text = "Show Matrix"
+        Me.MS2ToolStripMenuItem.Checked = True
+        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS2ToolStripMenuItem.Text = "MS2"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'frmUntargettedViewer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(904, 535)
         Me.Controls.Add(Me.PictureBox1)
@@ -89,4 +113,7 @@ Partial Class frmUntargettedViewer
     Friend WithEvents MsSelector1 As MSSelector
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowMatrixToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MS1ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MS2ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class

@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::3220e52e106e31f7ff9f91ffbd6a0145, src\mzkit\mzkit\pages\dockWindow\documents\frmUntargettedViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmUntargettedViewer
-    ' 
-    '     Sub: BPCToolStripMenuItem_Click, CopyFullPath, FilterMs2ToolStripMenuItem_Click, frmUntargettedViewer_Load, loadRaw
-    '          OpenContainingFolder, RtRangeSelector1_RangeSelect, SaveDocument, ShowMatrixToolStripMenuItem_Click, showTIC
-    ' 
-    ' /********************************************************************************/
+' Class frmUntargettedViewer
+' 
+'     Sub: BPCToolStripMenuItem_Click, CopyFullPath, FilterMs2ToolStripMenuItem_Click, frmUntargettedViewer_Load, loadRaw
+'          OpenContainingFolder, RtRangeSelector1_RangeSelect, SaveDocument, ShowMatrixToolStripMenuItem_Click, showTIC
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -70,11 +71,26 @@ Public Class frmUntargettedViewer
     End Sub
 
     Dim matrix As LibraryMatrix
+    Dim min As Double
+    Dim max As Double
 
-    Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles MsSelector1.RangeSelect
+    Private Sub updatePlot()
+        Dim containsMs1 As Boolean = MS1ToolStripMenuItem.Checked
+        Dim containsMs2 As Boolean = MS2ToolStripMenuItem.Checked
         Dim MS1 = raw.GetMs1Scans _
             .Where(Function(m1) m1.rt >= min AndAlso m1.rt <= max) _
-            .Select(Function(t) t.GetMs) _
+            .Select(Iterator Function(t) As IEnumerable(Of ms2())
+                        If containsMs1 Then
+                            Yield t.GetMs.ToArray
+                        End If
+
+                        If containsMs2 Then
+                            For Each scan2 As ScanMS2 In t.products.SafeQuery
+                                Yield scan2.GetMs.ToArray
+                            Next
+                        End If
+                    End Function) _
+            .IteratesALL _
             .IteratesALL _
             .ToArray _
             .Centroid(Tolerance.DeltaMass(0.1), LowAbundanceTrimming.intoCutff) _
@@ -93,6 +109,12 @@ Public Class frmUntargettedViewer
             matrix = msLib
             PictureBox1.BackgroundImage = plot
         End If
+    End Sub
+
+    Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles MsSelector1.RangeSelect
+        Me.min = min
+        Me.max = max
+        Me.updatePlot()
     End Sub
 
     Private Sub showTIC() Handles MsSelector1.ShowTIC
@@ -148,6 +170,18 @@ Public Class frmUntargettedViewer
         Else
             Call MyApplication.mzkitRawViewer.showMatrix(matrix.ms2, matrix.name)
             Call MyApplication.mzkitRawViewer.PlotSpectrum(scanData:=matrix, focusOn:=True)
+        End If
+    End Sub
+
+    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1ToolStripMenuItem.Click
+        If min > 0 OrElse max > 0 Then
+            Call Me.updatePlot()
+        End If
+    End Sub
+
+    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
+        If min > 0 OrElse max > 0 Then
+            Call Me.updatePlot()
         End If
     End Sub
 End Class
