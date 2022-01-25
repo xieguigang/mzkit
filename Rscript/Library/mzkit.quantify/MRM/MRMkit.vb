@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::eb79f4e83cff201ee3a381446819d253, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
-    '               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
-    '               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
+'               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
+'               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
+'               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -109,7 +109,7 @@ Module MRMkit
 
     Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
         Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
-        Dim rtmin As Array = peaks.Select(Function(r) r.time.Min).ToArray
+        Dim rtmin As Double() = peaks.Select(Function(r) r.time.Min).ToArray
         Dim rtmax As Array = peaks.Select(Function(r) r.time.Max).ToArray
         Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
         Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
@@ -122,6 +122,7 @@ Module MRMkit
             .columns = New Dictionary(Of String, Array) From {
                 {NameOf(rt), rt},
                 {NameOf(rtmin), rtmin},
+                {"rt(min)", rtmin.Select(Function(d) d / 60).ToArray},
                 {NameOf(rtmax), rtmax},
                 {NameOf(maxinto), maxinto},
                 {NameOf(nticks), nticks},
