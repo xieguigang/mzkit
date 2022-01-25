@@ -746,12 +746,15 @@ Public Class PageMzkitTools
                 If XICPlot.Count = 0 Then
                     Call MyApplication.host.showStatusMessage("No XIC ions data for generate plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 Else
-                    plotImage = XICPlot.ToArray.TICplot(
-                        intensityMax:=If(relative, 0, maxY),
-                        isXIC:=True,
-                        colorsSchema:=Globals.GetColors,
-                        fillCurve:=Globals.Settings.viewer.fill
-                    ).AsGDIImage
+                    plotImage = XICPlot _
+                        .ToArray _
+                        .TICplot(
+                            intensityMax:=If(relative, 0, maxY),
+                            isXIC:=True,
+                            colorsSchema:=Globals.GetColors,
+                            fillCurve:=Globals.Settings.viewer.fill,
+                            gridFill:="white"
+                        ).AsGDIImage
                 End If
 
                 Call progress.Invoke(Sub() progress.Close())
