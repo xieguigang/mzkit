@@ -106,7 +106,15 @@ Module ChromatogramTools
 
         If ms1.isError Then
             If data Is Nothing Then
-                Return ms1.getError
+                ms1 = pipeline.TryCreatePipeline(Of ChromatogramTick)(scans, env, suppress:=True)
+
+                If ms1.isError Then
+                    Return ms1.getError
+                Else
+                    Return ms1 _
+                        .populates(Of ChromatogramTick)(env) _
+                        .ToArray
+                End If
             End If
 
             Dim scan_time As Double() = REnv.asVector(Of Double)(scans)

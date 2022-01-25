@@ -1,51 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::501ed0ed3ad71afeb0aaf69941fd0791, Rscript\Library\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module data
-    ' 
-    '     Function: getIntensity, getScantime, libraryMatrix, LibraryTable, makeROInames
-    '               nfragments, readMatrix, RtSlice, XIC, XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module data
+' 
+'     Function: getIntensity, getScantime, libraryMatrix, LibraryTable, makeROInames
+'               nfragments, readMatrix, RtSlice, XIC, XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -147,23 +149,42 @@ Module data
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("XIC")>
-    <RApiReturn(GetType(ms1_scan))>
+    <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick))>
     Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
                         Optional tolerance As Object = "ppm:20",
                         Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env)
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True)
         Dim mzErr = Math.getTolerance(tolerance, env)
 
-        If ms1_scans.isError Then
-            Return ms1_scans.getError
-        ElseIf mzErr Like GetType(Message) Then
+        If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+
+        If ms1_scans.isError Then
+            If TypeOf ms1 Is mzPack Then
+                Return DirectCast(ms1, mzPack).MS _
+                    .Select(Function(scan)
+                                Dim i As Double = scan.GetIntensity(mz, mzdiff)
+                                Dim tick As New ChromatogramTick With {
+                                    .Intensity = i,
+                                    .Time = scan.rt
+                                }
+
+                                Return tick
+                            End Function) _
+                    .ToArray
+            Else
+                Return ms1_scans.getError
+            End If
+        Else
         End If
 
         Dim xicFilter As Array = ms1_scans _
             .populates(Of IMs1)(env) _
-            .Where(Function(pt) mzErr.VA(pt.mz, mz)) _
+            .Where(Function(pt) mzdiff(pt.mz, mz)) _
             .OrderBy(Function(a) a.rt) _
             .Select(Function(a) CObj(a)) _
             .ToArray
