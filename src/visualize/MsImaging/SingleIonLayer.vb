@@ -70,6 +70,33 @@ Public Class SingleIonLayer
         End Get
     End Property
 
+    Public ReadOnly Property maxinto As Double
+        Get
+            Return Aggregate p As PixelData In MSILayer Into Max(p.intensity)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="intocutoff">
+    ''' relative intensity cutoff value in range ``[0,1]``.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function IntensityCutoff(intocutoff As Double) As SingleIonLayer
+        Dim maxinto As Double = Me.maxinto
+
+        Return New SingleIonLayer With {
+            .DimensionSize = DimensionSize,
+            .IonMz = IonMz,
+            .MSILayer = MSILayer _
+                .Where(Function(p)
+                           Return p.intensity / maxinto >= intocutoff
+                       End Function) _
+                .ToArray
+        }
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"({MSILayer.Length} pixels) {IonMz.ToString("F4")}"
     End Function
