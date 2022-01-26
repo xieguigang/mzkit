@@ -134,21 +134,25 @@ Public Class mzPack
     Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)
         For Each ms1 As ScanMS1 In MS
             For Each ms2 As ScanMS2 In ms1.products
-                Yield New PeakMs2 With {
-                    .activation = ms2.activationMethod.ToString,
-                    .collisionEnergy = ms2.collisionEnergy,
-                    .file = "n/a",
-                    .intensity = ms2.intensity,
-                    .lib_guid = ms2.ToString,
-                    .meta = New Dictionary(Of String, String),
-                    .mz = ms2.parentMz,
-                    .precursor_type = "",
-                    .rt = ms2.rt,
-                    .scan = ms2.scan_id,
-                    .mzInto = ms2.GetMs.ToArray
-                }
+                Yield CastToPeakMs2(ms2)
             Next
         Next
+    End Function
+
+    Public Shared Function CastToPeakMs2(ms2 As ScanMS2) As PeakMs2
+        Return New PeakMs2 With {
+            .activation = ms2.activationMethod.ToString,
+            .collisionEnergy = ms2.collisionEnergy,
+            .file = "n/a",
+            .intensity = ms2.intensity,
+            .lib_guid = ms2.ToString,
+            .meta = New Dictionary(Of String, String),
+            .mz = ms2.parentMz,
+            .precursor_type = "",
+            .rt = ms2.rt,
+            .scan = ms2.scan_id,
+            .mzInto = ms2.GetMs.ToArray
+        }
     End Function
 
     Public Shared Function Read(filepath As String, Optional ignoreThumbnail As Boolean = False) As mzPack

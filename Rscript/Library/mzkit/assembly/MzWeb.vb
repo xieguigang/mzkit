@@ -341,6 +341,7 @@ Module MzWeb
                 .Where(Function(scan)
                            Return mzdiff(scan.parentMz, precursorMz)
                        End Function) _
+                .Select(AddressOf mzPack.CastToPeakMs2) _
                 .ToArray
 
             Return ms2_xic
