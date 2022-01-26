@@ -304,9 +304,47 @@ Module MzWeb
         }
     End Function
 
+    ''' <summary>
+    ''' extract ms2 peaks data from the mzpack data object
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="precursorMz">
+    ''' if the precursor m/z data is assign by this parameter
+    ''' value, then this function will extract the ms2 xic data
+    ''' only
+    ''' </param>
+    ''' <param name="tolerance">
+    ''' ppm toleracne error for extract ms2 xic data.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ms2_peaks")>
-    Public Function Ms2ScanPeaks(mzpack As mzPack) As PeakMs2()
-        Return mzpack.GetMs2Peaks.ToArray
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function Ms2ScanPeaks(mzpack As mzPack,
+                                 Optional precursorMz As Double = Double.NaN,
+                                 Optional tolerance As Object = "ppm:30",
+                                 Optional env As Environment = Nothing) As Object
+
+        If precursorMz.IsNaNImaginary Then
+            Return mzpack.GetMs2Peaks.ToArray
+        Else
+            Dim mzerr = Math.getTolerance(tolerance, env)
+
+            If mzerr Like GetType(Message) Then
+                Return mzerr.TryCast(Of Message)
+            End If
+
+            Dim mzdiff As Tolerance = mzerr.TryCast(Of Tolerance)
+            Dim ms2_xic = mzpack.MS _
+                .Select(Function(d) d.products) _
+                .IteratesALL _
+                .Where(Function(scan)
+                           Return mzdiff(scan.parentMz, precursorMz)
+                       End Function) _
+                .ToArray
+
+            Return ms2_xic
+        End If
     End Function
 
     ''' <summary>

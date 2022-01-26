@@ -110,7 +110,7 @@ Module MRMkit
     Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
         Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
         Dim rtmin As Double() = peaks.Select(Function(r) r.time.Min).ToArray
-        Dim rtmax As Array = peaks.Select(Function(r) r.time.Max).ToArray
+        Dim rtmax As Double() = peaks.Select(Function(r) r.time.Max).ToArray
         Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
         Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
         Dim baseline As Array = peaks.Select(Function(r) r.baseline).ToArray
@@ -124,6 +124,7 @@ Module MRMkit
                 {NameOf(rtmin), rtmin},
                 {"rt(min)", rtmin.Select(Function(d) d / 60).ToArray},
                 {NameOf(rtmax), rtmax},
+                {"peak_width", (rtmax.AsVector - rtmin.AsVector).ToArray},
                 {NameOf(maxinto), maxinto},
                 {NameOf(nticks), nticks},
                 {NameOf(baseline), baseline},
