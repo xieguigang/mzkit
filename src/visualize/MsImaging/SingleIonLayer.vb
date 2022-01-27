@@ -90,6 +90,7 @@ Public Class SingleIonLayer
             .DimensionSize = DimensionSize,
             .IonMz = IonMz,
             .MSILayer = MSILayer _
+                .AsParallel _
                 .Where(Function(p)
                            Return p.intensity / maxinto >= intocutoff
                        End Function) _
