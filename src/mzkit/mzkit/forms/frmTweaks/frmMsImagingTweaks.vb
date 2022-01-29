@@ -89,6 +89,12 @@ UseCheckedList:
     Public Const Ion_Layers As String = "Ion Layers"
     Public Const Pinned_Pixels As String = "Pinned Pixels"
 
+    Shared ReadOnly channelNames As New Dictionary(Of String, String) From {
+        {"r", "Red"},
+        {"g", "Green"},
+        {"b", "Blue"}
+    }
+
     ''' <summary>
     ''' negative value or zero means no ion selected
     ''' </summary>
@@ -130,14 +136,22 @@ UseCheckedList:
     End Sub
 
     Private Sub checkNode(node As TreeNode)
-        node.Checked = True
+        Static checked As TreeNode = Nothing
+
+        If checked Is Nothing OrElse checked IsNot node Then
+            checked = node
+            node.Checked = True
+        Else
+            Return
+        End If
+
         checkedMz.Add(node)
 
         If rgb.Any(Function(i) i.Value Is Nothing) Then
             For Each c In rgb.ToArray
                 If c.Value Is Nothing Then
                     rgb(c.Key) = node
-                    node.Text = $"{CDbl(node.Tag).ToString("F4")} ({c.Key})"
+                    node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(c.Key)})"
 
                     Exit For
                 End If
@@ -146,7 +160,15 @@ UseCheckedList:
     End Sub
 
     Private Sub uncheckNode(node As TreeNode)
-        node.Checked = False
+        Static unchecked As TreeNode = Nothing
+
+        If unchecked Is Nothing OrElse unchecked IsNot node Then
+            unchecked = node
+            node.Checked = False
+        Else
+            Return
+        End If
+
         checkedMz.Remove(node)
 
         For Each c In rgb.ToArray
