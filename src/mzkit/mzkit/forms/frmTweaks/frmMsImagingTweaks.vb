@@ -95,7 +95,11 @@ UseCheckedList:
     ''' <remarks>
     ''' [r,g,b] => m/z[]
     ''' </remarks>
-    ReadOnly rgb As New Dictionary(Of String, TreeNode)
+    ReadOnly rgb As New Dictionary(Of String, TreeNode) From {
+        {"r", Nothing},
+        {"g", Nothing},
+        {"b", Nothing}
+    }
 
     Private Sub frmMsImagingTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "MsImage Parameters"
@@ -217,7 +221,19 @@ UseCheckedList:
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub RGBLayers(sender As Object, e As EventArgs) Handles RenderLayerCompositionModeToolStripMenuItem.Click
-        Dim mz3 As Double() = GetSelectedIons.Take(3).ToArray
+        Dim mz3 As Double() = New Double(2) {}
+
+        If rgb.All(Function(i) i.Value Is Nothing) Then
+            mz3 = {}
+        Else
+            Dim rgb As String() = {"r", "g", "b"}
+
+            For i As Integer = 0 To rgb.Length - 1
+                If Not Me.rgb(rgb(i)) Is Nothing Then
+                    mz3(i) = Me.rgb(rgb(i)).Tag
+                End If
+            Next
+        End If
 
         If mz3.Length = 0 Then
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
