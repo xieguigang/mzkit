@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7dc7a2a2527bc047afecfc71f472a62d, src\mzkit\mzkit\forms\frmTweaks\frmMsImagingTweaks.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMsImagingTweaks
-    ' 
-    '     Function: GetSelectedIons
-    ' 
-    '     Sub: AddIonMzLayer, ClearIons, frmMsImagingTweaks_Load, LoadBasePeakIonsToolStripMenuItem_Click, loadBasePeakMz
-    '          LoadPinnedIons, loadRenderFromCDF, PropertyGrid1_DragDrop, PropertyGrid1_DragEnter, RGBLayers
-    '          ToolStripButton1_Click, ToolStripButton2_Click, Win7StyleTreeView1_AfterCheck
-    ' 
-    ' /********************************************************************************/
+' Class frmMsImagingTweaks
+' 
+'     Function: GetSelectedIons
+' 
+'     Sub: AddIonMzLayer, ClearIons, frmMsImagingTweaks_Load, LoadBasePeakIonsToolStripMenuItem_Click, loadBasePeakMz
+'          LoadPinnedIons, loadRenderFromCDF, PropertyGrid1_DragDrop, PropertyGrid1_DragEnter, RGBLayers
+'          ToolStripButton1_Click, ToolStripButton2_Click, Win7StyleTreeView1_AfterCheck
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -89,6 +89,14 @@ UseCheckedList:
     Public Const Ion_Layers As String = "Ion Layers"
     Public Const Pinned_Pixels As String = "Pinned Pixels"
 
+    ''' <summary>
+    ''' negative value or zero means no ion selected
+    ''' </summary>
+    ''' <remarks>
+    ''' [r,g,b] => m/z[]
+    ''' </remarks>
+    ReadOnly rgb As New Dictionary(Of String, TreeNode)
+
     Private Sub frmMsImagingTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "MsImage Parameters"
 
@@ -108,8 +116,40 @@ UseCheckedList:
     Public Sub LoadPinnedIons(ions As IEnumerable(Of ms2))
         Win7StyleTreeView1.Nodes.Item(1).Nodes.Clear()
 
-        For Each i In ions.ToArray.Centroid(Tolerance.DeltaMass(0.0001), New RelativeIntensityCutoff(0.001)).OrderByDescending(Function(m) m.intensity)
+        For Each i As ms2 In ions _
+            .ToArray _
+            .Centroid(Tolerance.DeltaMass(0.0001), New RelativeIntensityCutoff(0.001)) _
+            .OrderByDescending(Function(m) m.intensity)
+
             Call AddIonMzLayer(i.mz, index:=1)
+        Next
+    End Sub
+
+    Private Sub checkNode(node As TreeNode)
+        node.Checked = True
+        checkedMz.Add(node)
+
+        If rgb.Any(Function(i) i.Value Is Nothing) Then
+            For Each c In rgb.ToArray
+                If c.Value Is Nothing Then
+                    rgb(c.Key) = node
+                    node.Text = $"{CDbl(node.Tag).ToString("F4")} ({c.Key})"
+
+                    Exit For
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub uncheckNode(node As TreeNode)
+        node.Checked = False
+        checkedMz.Remove(node)
+
+        For Each c In rgb.ToArray
+            If c.Value Is node Then
+                rgb(c.Key) = Nothing
+                node.Text = CDbl(node.Tag).ToString("F4")
+            End If
         Next
     End Sub
 
@@ -117,20 +157,18 @@ UseCheckedList:
         If e.Node.Checked Then
             If e.Node.Tag Is Nothing Then
                 For Each mz As TreeNode In e.Node.Nodes
-                    mz.Checked = True
-                    checkedMz.Add(mz)
+                    Call checkNode(mz)
                 Next
             Else
-                checkedMz.Add(e.Node)
+                Call checkNode(e.Node)
             End If
         Else
             If e.Node.Tag Is Nothing Then
                 For Each mz As TreeNode In e.Node.Nodes
-                    mz.Checked = False
-                    checkedMz.Remove(mz)
+                    Call uncheckNode(mz)
                 Next
             Else
-                checkedMz.Remove(e.Node)
+                Call uncheckNode(e.Node)
             End If
         End If
     End Sub
