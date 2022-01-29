@@ -98,8 +98,8 @@ Public Class MsImageProperty
 
     <Description("Log(e) transformation of the intensity value?")>
     <Category("Render")> Public Property logE As Boolean = True
-    <Category("Render")> Public Property colors As Palettes = Palettes.BlackGreenRed
-    <Category("Render")> Public Property mapLevels As Integer = 30
+    <Category("Render")> Public Property colors As ScalerPalette = ScalerPalette.viridis
+    <Category("Render") > Public Property mapLevels As Integer = 30
     <Category("Render")> Public Property imageSmooth As SmoothFilters
     <Category("Render")> Public Property scale As InterpolationMode = InterpolationMode.Bilinear
 
