@@ -98,8 +98,20 @@ Module data
         Return matrix.Length
     End Function
 
+    ''' <summary>
+    ''' Create a library matrix object
+    ''' </summary>
+    ''' <param name="matrix">
+    ''' for a dataframe object, should contains column data:
+    ''' mz, into and annotation.
+    ''' </param>
+    ''' <param name="title"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("libraryMatrix")>
-    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object, Optional title$ = "MS Matrix", Optional env As Environment = Nothing) As Object
+    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object,
+                                  Optional title$ = "MS Matrix",
+                                  Optional env As Environment = Nothing) As Object
         Dim MS As ms2()
 
         If TypeOf matrix Is dataframe Then
