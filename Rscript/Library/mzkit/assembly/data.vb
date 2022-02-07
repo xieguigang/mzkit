@@ -273,7 +273,15 @@ Module data
         Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
 
         If scans.isError Then
-            Return scans.getError
+            scans = pipeline.TryCreatePipeline(Of PeakMs2)(ticks, env)
+
+            If scans.isError Then
+                Return scans.getError
+            Else
+                Return scans.populates(Of PeakMs2)(env) _
+                    .Select(Function(x) x.rt) _
+                    .DoCall(AddressOf vector.asVector)
+            End If
         End If
 
         Return scans.populates(Of ms1_scan)(env) _
