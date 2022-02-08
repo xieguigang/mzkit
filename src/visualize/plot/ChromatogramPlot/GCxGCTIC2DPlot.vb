@@ -78,7 +78,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                         .Width = dw,
                         .Height = dh
                     }
-                    i = intensityRange.ScaleMapping(cell.Intensity, index)
+                    i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
                     i = index.Max - i
 
                     If i >= colors.Length Then
