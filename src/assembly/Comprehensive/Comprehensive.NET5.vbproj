@@ -105,6 +105,12 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Remove="155_-_A_Comparison_of_Thermal_and_Flow_Modulated_GCxGC_withdual_FID-MS_for_Aviation_Fuels.pdf" />
+    <None Remove="2D-Chromatogram-of-Diesel-1090x595.jpg" />
+    <None Remove="c146-e177.pdf" />
+    <None Remove="GCxGC1.png" />
+    <None Remove="HeroImageOptimized.jpg" />
+    <None Remove="Pim-GCxGC-analysis.pdf" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
