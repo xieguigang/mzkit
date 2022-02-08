@@ -3,12 +3,14 @@ import mzkit
 from mzkit import GCxGC, mzweb
 from mzplot import visual
 
-inputfile = "F:\GCxGC-plot\YCH-G-G-3.mzPack"
+options(memory.loads = "max")
+
+inputfile = "C:\MSI\GCxGC-plot\YCH-G-G-3.mzPack"
 image_TIC = `${dirname(inputfile)}/${basename(inputfile)}_TIC2D.png`
 
-raw   = open.mzpack("F:\GCxGC-plot\YCH-G-G-3.mzPack")
+raw   = open.mzpack(inputfile)
 gcxgc = GCxGC::extract_2D_peaks(raw)
-plt = plot(gcxgc, size = [4800,3300], padding = "padding: 250px 500px 250px 250px;")
+plt = plot(gcxgc, size = [4800,3300], padding = "padding: 250px 500px 250px 250px;", TrIQ = 1)
 
 bitmap(plt, file = image_TIC)
 

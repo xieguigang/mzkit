@@ -77,9 +77,12 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                         .Height = dh
                     }
                     i = intensityRange.ScaleMapping(cell.Intensity, index)
+                    i = intensityRange.Max - i
 
                     If i >= colors.Length Then
                         Call g.FillRectangle(colors.Last, rect)
+                    ElseIf i <= 0 Then
+                        Call g.FillRectangle(colors(Scan0), rect)
                     Else
                         Call g.FillRectangle(colors(i), rect)
                     End If
