@@ -98,10 +98,17 @@ Public Module GC2Dimensional
     ''' converts 1D signal into 2D with xp x yp dimensions
     ''' </summary>
     ''' <param name="sig"></param>
-    ''' <param name="modtime">modulation period in seconds</param>
+    ''' <param name="modtime">
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' 
     ''' <returns></returns>
     <Extension>
-    Public Function Demodulate2D(sig As ScanMS1(), modtime As Double) As ScanMS1()
+    Public Function Demodulate2D(sig As ScanMS1(),
+                                 modtime As Double,
+                                 Optional sam_rate As Double = Double.NaN) As ScanMS1()
+
         Dim size As Size = sig.Demodulate2DShape(modtime)
         Dim matrix As ScanMS1() = sig.Split(size.Height) _
             .Select(Function(t)
@@ -192,13 +199,26 @@ Public Module GC2Dimensional
     ''' <param name="sig">
     ''' data should be re-order by scan time
     ''' </param>
-    ''' <param name="modtime">modulation period in seconds</param>
+    ''' <param name="modtime">
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sampleRate">
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Demodulate2DShape(Of Tick As ITimeSignal)(sig As Tick(), modtime As Double) As Size
+    Public Function Demodulate2DShape(Of Tick As ITimeSignal)(sig As Tick(),
+                                                              modtime As Double,
+                                                              Optional sampleRate As Double = Double.NaN) As Size
         Dim numpoints As Integer = sig.Length
-        Dim runtime As Double = sig.Last.time
-        Dim rate As Double = numpoints / runtime
+        Dim runtime As Double = Aggregate t As Tick
+                                In sig
+                                Let time As Double = t.time
+                                Into Max(time)
+        Dim rate As Double = If(sampleRate.IsNaNImaginary, 1 / sig.tickInternal, sampleRate)
 
         Call Console.WriteLine($"Found {numpoints} data points")
         Call Console.WriteLine($"Runtime is {(runtime / 60).ToString("F2")} minutes")
@@ -214,6 +234,19 @@ Public Module GC2Dimensional
         Call Console.WriteLine()
 
         Return New Size(xp, yp)
+    End Function
+
+    <Extension>
+    Private Function tickInternal(Of Tick As ITimeSignal)(sig As Tick()) As Double
+        Dim diff As New List(Of Double)
+
+        sig = sig.OrderBy(Function(t) t.time).ToArray
+
+        For i As Integer = 1 To sig.Length - 1
+            diff.Add(sig(i).time - sig(i - 1).time)
+        Next
+
+        Return diff.Average
     End Function
 
     <Extension>
