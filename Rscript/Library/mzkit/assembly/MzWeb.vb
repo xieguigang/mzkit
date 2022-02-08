@@ -353,15 +353,31 @@ Module MzWeb
     ''' </summary>
     ''' <param name="assembly"></param>
     ''' <param name="env"></param>
+    ''' <param name="modtime">
+    ''' [GCxGC]
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sample_rate">
+    ''' [GCxGC]
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function ToMzPack(assembly As Object,
                              Optional modtime As Double = -1,
+                             Optional sample_rate As Double = Double.NaN,
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf assembly Is netCDFReader Then
-            Return GC2Dimensional.ToMzPack(agilentGC:=assembly, modtime:=modtime)
+            Return GC2Dimensional.ToMzPack(
+                agilentGC:=assembly,
+                modtime:=modtime,
+                sam_rate:=sample_rate
+            )
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If

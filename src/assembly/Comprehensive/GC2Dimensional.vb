@@ -72,14 +72,34 @@ Public Module GC2Dimensional
         Return rt_2d
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="agilentGC"></param>
+    ''' <param name="modtime">
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sam_rate">
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
-    Public Function ToMzPack(agilentGC As netCDFReader, modtime As Double) As mzPack
+    Public Function ToMzPack(agilentGC As netCDFReader,
+                             modtime As Double,
+                             Optional sam_rate As Double = Double.NaN) As mzPack
+
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
         Dim point_count As integers = agilentGC.getDataVariable("point_count")
         Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
         Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
-        Dim sig As ScanMS1() = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
+        Dim sig As ScanMS1() = scan_time.Array _
+            .CreateMSScans(totalIons, mz, into) _
+            .OrderBy(Function(t) t.rt) _
+            .ToArray
 
         ' agilentGC.ToString
         '
@@ -88,7 +108,7 @@ Public Module GC2Dimensional
         ' will cause the out of memory error
 
         Return New mzPack With {
-            .MS = sig.Demodulate2D(modtime),
+            .MS = sig.Demodulate2D(modtime, sam_rate),
             .Application = FileApplicationClass.GCxGC,
             .source = "LECO GCxGC CDF" ' agilentGC.ToString
         }
@@ -98,16 +118,35 @@ Public Module GC2Dimensional
     ''' converts 1D signal into 2D with xp x yp dimensions
     ''' </summary>
     ''' <param name="sig"></param>
-    ''' <param name="modtime">modulation period in seconds</param>
+    ''' <param name="modtime">
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sam_rate">
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Demodulate2D(sig As ScanMS1(), modtime As Double) As ScanMS1()
-        Dim size As Size = sig.Demodulate2DShape(modtime)
+    Public Function Demodulate2D(sig As ScanMS1(),
+                                 modtime As Double,
+                                 Optional sam_rate As Double = Double.NaN) As ScanMS1()
+
+        Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate:=sam_rate)
         Dim matrix As ScanMS1() = sig.Split(size.Height) _
             .Select(Function(t)
                         Return t.scan1
                     End Function) _
             .ToArray
+        Dim t1d As Double = matrix.Select(Function(t) t.rt).Max / 60
+        Dim t2d As Double = Aggregate scan1D As ScanMS1
+                            In matrix
+                            Let t2 As Double = scan1D.products.Max(Function(t) t.rt)
+                            Into Average(t2)
+
+        Call Console.WriteLine($"get max runtime: {t1d.ToString("F2")} min.")
+        Call Console.WriteLine($"2d modtime ({t2d.ToString("F2")}s) should be approximately equals to {modtime}s.")
 
         Return matrix
     End Function
@@ -117,10 +156,18 @@ Public Module GC2Dimensional
     ''' </summary>
     ''' <param name="sig"></param>
     ''' <param name="modtime">modulation period in seconds</param>
+    ''' <param name="sampleRate">
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Demodulate2D(sig As ChromatogramTick(), modtime As Double) As D2Chromatogram()
-        Dim size As Size = sig.Demodulate2DShape(modtime)
+    Public Function Demodulate2D(sig As ChromatogramTick(),
+                                 modtime As Double,
+                                 Optional sampleRate As Double = Double.NaN) As D2Chromatogram()
+
+        Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate)
         Dim matrix = sig.Split(size.Height) _
             .Select(Function(t)
                         Return t.scan1
@@ -140,6 +187,23 @@ Public Module GC2Dimensional
     Private Function scan1(rt1 As ScanMS1()) As ScanMS1
         Dim t0 As Double = rt1(Scan0).rt
         Dim allMs = rt1.Select(Function(d) d.GetMs).IteratesALL.ToArray
+        Dim d2 As ScanMS2() = rt1 _
+            .Select(Function(t)
+                        Return New ScanMS2 With {
+                            .activationMethod = mzData.ActivationMethods.AnyType,
+                            .centroided = False,
+                            .charge = 0,
+                            .collisionEnergy = 0,
+                            .into = t.into,
+                            .mz = t.mz,
+                            .parentMz = 0,
+                            .polarity = 0,
+                            .intensity = 0,
+                            .scan_id = t.scan_id,
+                            .rt = t.rt - t0
+                        }
+                    End Function) _
+            .ToArray
 
         Return New ScanMS1 With {
            .BPC = allMs.Select(Function(d) d.intensity).Max,
@@ -148,23 +212,7 @@ Public Module GC2Dimensional
            .rt = t0,
            .mz = rt1(Scan0).mz,
            .into = rt1(Scan0).into,
-           .products = rt1 _
-               .Select(Function(t)
-                           Return New ScanMS2 With {
-                               .activationMethod = mzData.ActivationMethods.AnyType,
-                               .centroided = False,
-                               .charge = 0,
-                               .collisionEnergy = 0,
-                               .into = t.into,
-                               .mz = t.mz,
-                               .parentMz = 0,
-                               .polarity = 0,
-                               .intensity = 0,
-                               .scan_id = t.scan_id,
-                               .rt = t.rt - t0
-                           }
-                       End Function) _
-               .ToArray
+           .products = d2
         }
     End Function
 
@@ -192,13 +240,26 @@ Public Module GC2Dimensional
     ''' <param name="sig">
     ''' data should be re-order by scan time
     ''' </param>
-    ''' <param name="modtime">modulation period in seconds</param>
+    ''' <param name="modtime">
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sampleRate">
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Demodulate2DShape(Of Tick As ITimeSignal)(sig As Tick(), modtime As Double) As Size
+    Public Function Demodulate2DShape(Of Tick As ITimeSignal)(sig As Tick(),
+                                                              modtime As Double,
+                                                              Optional sampleRate As Double = Double.NaN) As Size
         Dim numpoints As Integer = sig.Length
-        Dim runtime As Double = sig.Last.time
-        Dim rate As Double = numpoints / runtime
+        Dim runtime As Double = Aggregate t As Tick
+                                In sig
+                                Let time As Double = t.time
+                                Into Max(time)
+        Dim rate As Double = If(sampleRate.IsNaNImaginary OrElse sampleRate <= 0, 1 / sig.tickInternal, sampleRate)
 
         Call Console.WriteLine($"Found {numpoints} data points")
         Call Console.WriteLine($"Runtime is {(runtime / 60).ToString("F2")} minutes")
@@ -213,7 +274,24 @@ Public Module GC2Dimensional
         Call Console.WriteLine($"Dimension2: {yp}")
         Call Console.WriteLine()
 
+        If xp * yp < numpoints Then
+            Call $"The last {numpoints - xp * yp} signals will be omitted.".Warning
+        End If
+
         Return New Size(xp, yp)
+    End Function
+
+    <Extension>
+    Private Function tickInternal(Of Tick As ITimeSignal)(sig As Tick()) As Double
+        Dim diff As New List(Of Double)
+
+        sig = (From t As Tick In sig Order By t.time).ToArray
+
+        For i As Integer = 1 To sig.Length - 1
+            Call diff.Add(sig(i).time - sig(i - 1).time)
+        Next
+
+        Return diff.Average
     End Function
 
     <Extension>
