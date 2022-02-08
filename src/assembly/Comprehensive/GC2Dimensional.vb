@@ -134,7 +134,7 @@ Public Module GC2Dimensional
                                  Optional sam_rate As Double = Double.NaN) As ScanMS1()
 
         Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate:=sam_rate)
-        Dim matrix As ScanMS1() = sig.Split(size.Height) _
+        Dim matrix As ScanMS1() = sig.Split(size.Width) _
             .Select(Function(t)
                         Return t.scan1
                     End Function) _
@@ -168,7 +168,7 @@ Public Module GC2Dimensional
                                  Optional sampleRate As Double = Double.NaN) As D2Chromatogram()
 
         Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate)
-        Dim matrix = sig.Split(size.Height) _
+        Dim matrix = sig.Split(size.Width) _
             .Select(Function(t)
                         Return t.scan1
                     End Function) _
@@ -199,8 +199,8 @@ Public Module GC2Dimensional
                             .parentMz = 0,
                             .polarity = 0,
                             .intensity = 0,
-                            .scan_id = t.scan_id,
-                            .rt = t.rt - t0
+                            .rt = t.rt - t0,
+                            .scan_id = $"[MS1] 2D.scan_time={ .rt.ToString("F2")}, (BPC: { .into.Max.ToString("G3")}, TIC: { .into.Sum.ToString("G3")})"
                         }
                     End Function) _
             .ToArray
