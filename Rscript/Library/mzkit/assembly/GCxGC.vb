@@ -1,9 +1,11 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -119,8 +121,14 @@ Module GCxGC
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("save.cdf")>
-    Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Boolean
+    Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
+        If filestream Like GetType(Message) Then
+            Return filestream.TryCast(Of Message)
+        End If
+
+        Return D2Chromatogram.EncodeCDF(TIC, filestream.TryCast(Of Stream))
     End Function
 
     ''' <summary>
@@ -130,7 +138,14 @@ Module GCxGC
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("read.cdf")>
-    Public Function readCDF(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As D2Chromatogram()
+    <RApiReturn(GetType(D2Chromatogram))>
+    Public Function readCDF(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
+        If filestream Like GetType(Message) Then
+            Return filestream.TryCast(Of Message)
+        End If
+
+        Return D2Chromatogram.DecodeCDF(filestream.TryCast(Of Stream)).ToArray
     End Function
 End Module
