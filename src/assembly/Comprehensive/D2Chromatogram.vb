@@ -37,7 +37,7 @@ Public Class D2Chromatogram
                 writer.AddVector($"[{++i}]{scan}", vector, dims, attrs)
             Next
 
-            attrs = {New attribute With {.name = "nscans", .value = i, .type = CDFDataTypes.INT}}
+            attrs = {New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.INT}}
             writer.GlobalAttributes(attrs)
         End Using
 
