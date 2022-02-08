@@ -96,7 +96,10 @@ Public Module GC2Dimensional
         Dim point_count As integers = agilentGC.getDataVariable("point_count")
         Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
         Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
-        Dim sig As ScanMS1() = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
+        Dim sig As ScanMS1() = scan_time.Array _
+            .CreateMSScans(totalIons, mz, into) _
+            .OrderBy(Function(t) t.rt) _
+            .ToArray
 
         ' agilentGC.ToString
         '
@@ -136,6 +139,14 @@ Public Module GC2Dimensional
                         Return t.scan1
                     End Function) _
             .ToArray
+        Dim t1d As Double = matrix.Select(Function(t) t.rt).Max / 60
+        Dim t2d As Double = Aggregate scan1D As ScanMS1
+                            In matrix
+                            Let t2 As Double = scan1D.products.Max(Function(t) t.rt)
+                            Into Average(t2)
+
+        Call Console.WriteLine($"get max runtime: {t1d.ToString("F2")} min.")
+        Call Console.WriteLine($"2d modtime ({t2d}s) should be equals to {modtime}s.")
 
         Return matrix
     End Function
