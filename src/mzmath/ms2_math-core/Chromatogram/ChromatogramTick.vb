@@ -84,7 +84,7 @@ Namespace Chromatogram
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{Intensity}@{Time}s"
+            Return $"{Intensity.ToString("G4")}@{Time.ToString("F2")}s"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

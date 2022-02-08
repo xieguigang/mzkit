@@ -51,8 +51,8 @@ Public Class D2Chromatogram
 
             For i As Integer = 0 To nscans - 1
                 Dim vec As doubles = reader.getDataVariable(names(i))
-                Dim time As Double() = vec(0, vec.Length / 2 - 1)
-                Dim into As Double() = vec(vec.Length / 2 - 1, vec.Length - 1)
+                Dim time As Double() = vec(0, vec.Length / 2)
+                Dim into As Double() = vec(vec.Length / 2, vec.Length)
                 Dim ticks As ChromatogramTick() = time _
                     .Select(Function(t, j)
                                 Return New ChromatogramTick With {.Time = t, .Intensity = into(j)}
