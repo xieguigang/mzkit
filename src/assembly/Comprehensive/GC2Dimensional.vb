@@ -262,6 +262,10 @@ Public Module GC2Dimensional
         Call Console.WriteLine($"Dimension2: {yp}")
         Call Console.WriteLine()
 
+        If xp * yp < numpoints Then
+            Call $"The last {numpoints - xp * yp} signals will be omitted.".Warning
+        End If
+
         Return New Size(xp, yp)
     End Function
 
