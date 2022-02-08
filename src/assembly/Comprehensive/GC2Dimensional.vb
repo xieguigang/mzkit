@@ -146,7 +146,7 @@ Public Module GC2Dimensional
                             Into Average(t2)
 
         Call Console.WriteLine($"get max runtime: {t1d.ToString("F2")} min.")
-        Call Console.WriteLine($"2d modtime ({t2d}s) should be equals to {modtime}s.")
+        Call Console.WriteLine($"2d modtime ({t2d.ToString("F2")}s) should be approximately equals to {modtime}s.")
 
         Return matrix
     End Function
@@ -187,6 +187,23 @@ Public Module GC2Dimensional
     Private Function scan1(rt1 As ScanMS1()) As ScanMS1
         Dim t0 As Double = rt1(Scan0).rt
         Dim allMs = rt1.Select(Function(d) d.GetMs).IteratesALL.ToArray
+        Dim d2 As ScanMS2() = rt1 _
+            .Select(Function(t)
+                        Return New ScanMS2 With {
+                            .activationMethod = mzData.ActivationMethods.AnyType,
+                            .centroided = False,
+                            .charge = 0,
+                            .collisionEnergy = 0,
+                            .into = t.into,
+                            .mz = t.mz,
+                            .parentMz = 0,
+                            .polarity = 0,
+                            .intensity = 0,
+                            .scan_id = t.scan_id,
+                            .rt = t.rt - t0
+                        }
+                    End Function) _
+            .ToArray
 
         Return New ScanMS1 With {
            .BPC = allMs.Select(Function(d) d.intensity).Max,
@@ -195,23 +212,7 @@ Public Module GC2Dimensional
            .rt = t0,
            .mz = rt1(Scan0).mz,
            .into = rt1(Scan0).into,
-           .products = rt1 _
-               .Select(Function(t)
-                           Return New ScanMS2 With {
-                               .activationMethod = mzData.ActivationMethods.AnyType,
-                               .centroided = False,
-                               .charge = 0,
-                               .collisionEnergy = 0,
-                               .into = t.into,
-                               .mz = t.mz,
-                               .parentMz = 0,
-                               .polarity = 0,
-                               .intensity = 0,
-                               .scan_id = t.scan_id,
-                               .rt = t.rt - t0
-                           }
-                       End Function) _
-               .ToArray
+           .products = d2
         }
     End Function
 
