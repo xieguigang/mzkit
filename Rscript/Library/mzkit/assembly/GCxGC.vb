@@ -110,4 +110,27 @@ Module GCxGC
                 .ToArray
         }
     End Function
+
+    ''' <summary>
+    ''' save GCxGC 2D Chromatogram data as a new netcdf file.
+    ''' </summary>
+    ''' <param name="TIC"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("save.cdf")>
+    Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Boolean
+
+    End Function
+
+    ''' <summary>
+    ''' read GCxGC 2D Chromatogram data from a given netcdf file.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.cdf")>
+    Public Function readCDF(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As D2Chromatogram()
+
+    End Function
 End Module
