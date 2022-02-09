@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::fa16c9ffb1dad0888a43d27cf5de7d3a, src\mzkit\mzkit\pages\dockWindow\frmVideoList.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmVideoList
-    ' 
-    '     Sub: BackgroundWorker_DoWork, frmVideoList_Load, loadVideoList
-    ' 
-    ' Class VideoContent
-    ' 
-    '     Properties: bvid, desc, duration, pic, pubdate
-    '                 short_link, title
-    ' 
-    ' Class VideoList
-    ' 
-    '     Properties: count, list
-    ' 
-    ' Class MessageInfo
-    ' 
-    '     Properties: code, info
-    ' 
-    ' /********************************************************************************/
+' Class frmVideoList
+' 
+'     Sub: BackgroundWorker_DoWork, frmVideoList_Load, loadVideoList
+' 
+' Class VideoContent
+' 
+'     Properties: bvid, desc, duration, pic, pubdate
+'                 short_link, title
+' 
+' Class VideoList
+' 
+'     Properties: count, list
+' 
+' Class MessageInfo
+' 
+'     Properties: code, info
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.ComponentModel
 Imports BioDeep
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class frmVideoList
 
@@ -76,6 +77,14 @@ Public Class frmVideoList
 
     Private Sub loadVideoList()
         Dim data As MessageInfo = source.GET.LoadJSON(Of MessageInfo)
+
+        If data Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Sorry, no network connectivity to education.biodeep.cn...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf data.info Is Nothing OrElse data.info.list.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("Remote server error, no video content can be found...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
 
         For Each video In data.info.list
             Dim card As New VideoCards With {.url = video.short_link}
