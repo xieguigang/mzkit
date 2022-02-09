@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -58,7 +59,10 @@ Public Class D2Chromatogram
                 writer.AddVector($"[{++i}]{scan}", vector, dims, attrs)
             Next
 
-            attrs = {New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.INT}}
+            attrs = {
+                New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.INT},
+                New attribute With {.name = "classid", .value = FileApplicationClass.GCxGC.Description, .type = CDFDataTypes.CHAR}
+            }
             writer.GlobalAttributes(attrs)
         End Using
 
