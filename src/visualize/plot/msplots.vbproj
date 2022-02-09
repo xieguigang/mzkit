@@ -464,9 +464,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GCxGC\GCxGCHeatMap.vb" />
+    <Compile Include="GCxGC\GCxGCTIC3DPeaks.vb" />
+    <Compile Include="GCxGC\GCxGCTIC2DPlot.vb" />
     <Compile Include="ChromatogramPlot\ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot\ChromatogramPlot.vb" />
-    <Compile Include="ChromatogramPlot\GCxGCTIC2DPlot.vb" />
     <Compile Include="ChromatogramPlot\ScanContour.vb" />
     <Compile Include="ChromatogramPlot\TICplot.vb" />
     <Compile Include="ChromatogramPlot\ScanVisual3D.vb" />

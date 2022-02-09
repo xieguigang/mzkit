@@ -161,7 +161,7 @@ Partial Class frmLicense
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.logo_2x
+        Me.PictureBox2.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.logo_2x
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox2.Location = New System.Drawing.Point(11, 12)
         Me.PictureBox2.Name = "PictureBox2"

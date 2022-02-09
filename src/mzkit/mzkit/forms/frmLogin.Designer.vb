@@ -127,7 +127,7 @@ Partial Class frmLogin
         '
         'PictureBox1
         '
-        Me.PictureBox1.BackgroundImage = Global.mzkit.My.Resources.Resources.logo_2x
+        Me.PictureBox1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.logo_2x
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
         Me.PictureBox1.Name = "PictureBox1"

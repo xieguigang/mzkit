@@ -1,5 +1,5 @@
 ﻿Imports ControlLibrary
-Imports mzkit.DockSample
+Imports BioNovoGene.mzkit_win32.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmUVScans

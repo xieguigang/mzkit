@@ -52,11 +52,10 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports BioNovoGene.mzkit_win32.My
+Imports BioNovoGene.mzkit_win32.RibbonLib.Controls
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.My
-Imports mzkit.RibbonLib.Controls
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop

@@ -175,7 +175,7 @@ Partial Class PageMoleculeNetworking
         '
         'SaveImageToolStripMenuItem
         '
-        Me.SaveImageToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
+        Me.SaveImageToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
         Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
         Me.SaveImageToolStripMenuItem.Text = "Show Image"

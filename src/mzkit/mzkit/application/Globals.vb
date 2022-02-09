@@ -57,13 +57,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports mzkit.Configuration
-Imports mzkit.My
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking

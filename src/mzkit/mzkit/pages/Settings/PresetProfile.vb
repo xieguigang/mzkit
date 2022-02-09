@@ -43,8 +43,8 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports mzkit.Configuration
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class PresetProfile : Implements ISaveSettings, IPageSettings
 

@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
-Imports mzkit.DockSample
+Imports BioNovoGene.mzkit_win32.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmRawFeaturesList
@@ -272,7 +272,7 @@ Partial Class frmRawFeaturesList
         '
         'SelectAllToolStripMenuItem
         '
-        Me.SelectAllToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
+        Me.SelectAllToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
         Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"

@@ -43,8 +43,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
-Imports mzkit.Configuration
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
 

@@ -43,7 +43,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Module CLI
