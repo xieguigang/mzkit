@@ -51,6 +51,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray
         Dim intensityRange As New DoubleRange(allIntensity.Min, TrIQ.FindThreshold(allIntensity, Me.q))
 
+        allIntensity = (allIntensity * 10 ^ 40).CreateAxisTicks.AsVector / (10 ^ 40)
+
         Call Axis.DrawAxis(g, canvas, scale,
                            showGrid:=theme.drawGrid,
                            xlabel:=xlabel,
@@ -76,8 +78,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                         .Width = dw,
                         .Height = dh
                     }
-                    i = intensityRange.ScaleMapping(cell.Intensity, index)
-                    i = intensityRange.Max - i
+                    i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
+                    i = index.Max - i
 
                     If i >= colors.Length Then
                         Call g.FillRectangle(colors.Last, rect)
@@ -102,7 +104,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Call g.ColorMapLegend(
             layout:=legendLayout,
             designer:=colors,
-            ticks:=allIntensity.CreateAxisTicks,
+            ticks:=allIntensity,
             titleFont:=CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi),
             title:="Intensity Scale",
             tickFont:=CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi),
