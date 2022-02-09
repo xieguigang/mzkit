@@ -3,8 +3,10 @@ import mzkit
 from mzkit import GCxGC, mzweb
 from mzplot import visual
 
-files = ["C:\MSI\GCxGC-plot\YCH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-M-H-3_TIC2D.cdf","C:\MSI\GCxGC-plot\CDH-G-R-3-FC_TIC2D.cdf"]
+files = list.files("C:\MSI\GCxGC-plot\2d", pattern = "*.cdf")
 gcxgc = list()
+
+print(files)
 
 for inputfile in files:
     
@@ -20,6 +22,6 @@ heatmap = "C:\MSI\GCxGC-plot\heatmap.png"
 
 print(metabolites)
 
-plt = gcxgc_heatmap(gcxgc, metabolites, space = [50,10],rt_width = [100,0.8],size = [2700,4000])
+plt = gcxgc_heatmap(gcxgc, metabolites, space = [50,10],rt_width = [100,0.8],size = [3700,4000], padding = "padding: 200px 1800px 250px 250px;")
 
 bitmap(plt, file = heatmap)

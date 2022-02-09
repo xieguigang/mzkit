@@ -5,7 +5,7 @@ from mzplot import visual
 
 options(memory.loads = "max")
 
-files = ["C:\MSI\GCxGC-plot\YCH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-M-H-3_TIC2D.cdf","C:\MSI\GCxGC-plot\CDH-G-R-3-FC_TIC2D.cdf"]
+files = list.files("C:\MSI\GCxGC-plot\2d", pattern = "*.cdf")
 
 for inputfile in files:
     image_TIC = `${dirname(inputfile)}/${basename(inputfile)}.png`

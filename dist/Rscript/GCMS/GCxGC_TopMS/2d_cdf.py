@@ -5,7 +5,7 @@ from mzplot import visual
 
 options(memory.loads = "max")
 
-files = ["C:\MSI\GCxGC-plot\YCH-G-G-3.mzPack", "C:\MSI\GCxGC-plot\BYH-G-G-3.mzPack", "C:\MSI\GCxGC-plot\BYH-M-H-3.mzPack", "C:\MSI\GCxGC-plot\CDH-G-R-3-FC.mzPack"]
+files = list.files("C:\MSI\GCxGC-plot", pattern = "*.mzPack") 
 
 for inputfile in files:
   

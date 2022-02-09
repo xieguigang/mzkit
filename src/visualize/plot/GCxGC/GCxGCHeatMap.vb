@@ -108,5 +108,8 @@ Public Class GCxGCHeatMap : Inherits Plot
 
             y += wy + dy
         Next
+
+        ' draw sample labels
+
     End Sub
 End Class
