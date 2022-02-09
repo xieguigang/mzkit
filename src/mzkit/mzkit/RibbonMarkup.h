@@ -733,5 +733,9 @@
 #define cmdPanelOptions_LabelDescription_RESID 60150
 #define cmdPanelOptions_TooltipTitle_RESID 60151
 #define cmdPanelOptions_TooltipDescription_RESID 60152
-#define InternalCmd2_LabelTitle_RESID 60153
-#define InternalCmd4_LabelTitle_RESID 60154
+#define cmdXIC_PPMSpinner 156 
+#define cmdXIC_PPMSpinner_LabelTitle_RESID 60153
+#define cmdXIC_PPMSpinner_LabelDescription_RESID 60154
+#define cmdXIC_PPMSpinner_TooltipDescription_RESID 60155
+#define InternalCmd2_LabelTitle_RESID 60156
+#define InternalCmd4_LabelTitle_RESID 60157

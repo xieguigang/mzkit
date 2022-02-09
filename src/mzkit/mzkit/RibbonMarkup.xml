@@ -1704,6 +1704,7 @@
     </Command>
     <Command Name="cmdCheckBoxTrIQThreshold" Id="154" LabelTitle="TrIQ Threshold" LabelDescription="Threshold Intensity Quantization Algorithm" TooltipTitle="Threshold Intensity Quantization Algorithm" TooltipDescription="Threshold Intensity Quantization Algorithm" />
     <Command Name="cmdPanelOptions" Id="155" LabelTitle="Options" LabelDescription="Options" TooltipTitle="Options" TooltipDescription="Options" />
+    <Command Name="cmdXIC_PPMSpinner" Id="156" LabelTitle="XIC ppm" LabelDescription="ppm tolerance for extract XIC data" TooltipDescription="ppm tolerance for extract XIC data" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1792,6 +1793,7 @@
             <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
               <CheckBox CommandName="cmdCheckBoxShowKEGGAnnotation" />
               <Spinner CommandName="cmdPPMSpinner" />
+              <Spinner CommandName="cmdXIC_PPMSpinner" />
             </Group>
             <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonShowPlotViewer" />
