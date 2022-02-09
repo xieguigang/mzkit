@@ -110,6 +110,17 @@ Public Class GCxGCHeatMap : Inherits Plot
         Next
 
         ' draw sample labels
+        x = rect.Left
+        y = rect.Bottom
 
+        For Each sample In Me.gcxgc
+            Dim fontSize As SizeF = g.MeasureString(sample.name, rowLabelFont)
+            Dim pos As New PointF With {
+                .X = x + (wx - fontSize.Width) / 2,
+                .Y = y
+            }
+
+            Call g.DrawString(sample.name, rowLabelFont, Brushes.Black, pos)
+        Next
     End Sub
 End Class
