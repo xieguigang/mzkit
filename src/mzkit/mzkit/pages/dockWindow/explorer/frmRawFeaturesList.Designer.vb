@@ -1,6 +1,6 @@
 ﻿Imports ControlLibrary
 Imports ControlLibrary.Kesoft.Windows.Forms.Win7StyleTreeView
-Imports mzkit.DockSample
+Imports BioNovoGene.mzkit_win32.DockSample
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmRawFeaturesList

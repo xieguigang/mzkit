@@ -48,7 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 

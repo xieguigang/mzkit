@@ -45,7 +45,7 @@
 #End Region
 
 Imports Microsoft.Windows.Taskbar
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Module TaskBarWindow

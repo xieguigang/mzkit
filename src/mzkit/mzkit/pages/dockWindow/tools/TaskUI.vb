@@ -44,7 +44,7 @@
 
 #End Region
 
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class TaskUI
 

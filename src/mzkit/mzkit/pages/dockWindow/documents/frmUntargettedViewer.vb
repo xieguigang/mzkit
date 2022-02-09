@@ -50,7 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 

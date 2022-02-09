@@ -61,8 +61,8 @@ Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports mzkit.My
-Imports mzkit.Tcp
+Imports BioNovoGene.mzkit_win32.My
+Imports BioNovoGene.mzkit_win32.Tcp
 Imports ServiceHub
 Imports Task
 Imports stdNum = System.Math

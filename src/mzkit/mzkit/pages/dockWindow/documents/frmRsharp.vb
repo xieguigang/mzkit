@@ -44,7 +44,7 @@
 
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Windows.Forms
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmRsharp

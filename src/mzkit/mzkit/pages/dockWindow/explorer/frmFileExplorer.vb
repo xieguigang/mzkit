@@ -56,7 +56,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Text
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking

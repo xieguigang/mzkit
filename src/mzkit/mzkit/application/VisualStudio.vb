@@ -48,8 +48,8 @@
 
 #End Region
 
-Imports mzkit.DockSample
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.DockSample
+Imports BioNovoGene.mzkit_win32.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class VisualStudio

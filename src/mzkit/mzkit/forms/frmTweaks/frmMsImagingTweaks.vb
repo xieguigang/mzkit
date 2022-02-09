@@ -53,7 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 
 Public Class frmMsImagingTweaks

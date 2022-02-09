@@ -48,7 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 

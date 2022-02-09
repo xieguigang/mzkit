@@ -43,8 +43,8 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
-Imports mzkit.Configuration
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
 

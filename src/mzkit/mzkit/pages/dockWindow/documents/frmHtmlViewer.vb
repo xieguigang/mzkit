@@ -44,7 +44,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports WkHtmlToPdf.Arguments
 
 Public Class frmHtmlViewer
