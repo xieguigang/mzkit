@@ -223,7 +223,7 @@ Public Module GC2Dimensional
         Return New D2Chromatogram With {
             .scan_time = t0,
             .intensity = t.Sum(Function(i) i.Intensity),
-            .d2chromatogram = t _
+            .chromatogram = t _
                 .Select(Function(i)
                             Return New ChromatogramTick With {
                                 .Time = i.Time - t0,

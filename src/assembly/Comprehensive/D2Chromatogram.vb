@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -10,8 +11,28 @@ Public Class D2Chromatogram
 
     Public Property scan_time As Double
     Public Property intensity As Double
-    Public Property d2chromatogram As ChromatogramTick()
 
+    ''' <summary>
+    ''' chromatogram data 2d
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property chromatogram As ChromatogramTick()
+
+    Default Public ReadOnly Property getTick(i As Integer) As ChromatogramTick
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return _chromatogram(i)
+        End Get
+    End Property
+
+    Public ReadOnly Property size As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return chromatogram.Length
+        End Get
+    End Property
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{intensity.ToString("G3")}@{scan_time.ToString("F2")}"
     End Function
@@ -25,9 +46,9 @@ Public Class D2Chromatogram
             Dim attrs As attribute()
 
             For Each scan As D2Chromatogram In gcxgc
-                vector = scan.d2chromatogram _
+                vector = scan.chromatogram _
                     .Select(Function(d) d.Time) _
-                    .JoinIterates(scan.d2chromatogram.Select(Function(d) d.Intensity)) _
+                    .JoinIterates(scan.chromatogram.Select(Function(d) d.Intensity)) _
                     .ToArray
                 dims = size.ComputeIfAbsent(vector.Length.ToString, Function() New Dimension With {.name = $"sizeof_{vector.Length}", .size = vector.Length})
                 attrs = {
@@ -62,7 +83,7 @@ Public Class D2Chromatogram
                 Dim intensity As Double = names(i).FindAttribute("intensity").getObjectValue
 
                 Yield New D2Chromatogram With {
-                    .d2chromatogram = ticks,
+                    .chromatogram = ticks,
                     .intensity = intensity,
                     .scan_time = scan_time
                 }

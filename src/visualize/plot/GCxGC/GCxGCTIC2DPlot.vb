@@ -29,14 +29,14 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
     End Sub
 
     Private Shared Iterator Function cutSignal(gcxgc As D2Chromatogram(), q As Double, levels As Integer) As IEnumerable(Of D2Chromatogram)
-        Dim qcut As Double = TrIQ.FindThreshold(gcxgc.Select(Function(t) t.d2chromatogram).IteratesALL.Select(Function(t) t.Intensity), q, N:=levels)
+        Dim qcut As Double = TrIQ.FindThreshold(gcxgc.Select(Function(t) t.chromatogram).IteratesALL.Select(Function(t) t.Intensity), q, N:=levels)
 
         For Each scan As D2Chromatogram In gcxgc
             Yield New D2Chromatogram With {
                 .intensity = scan.intensity,
                 .scan_time = scan.scan_time,
-                .d2chromatogram = scan _
-                    .d2chromatogram _
+                .chromatogram = scan _
+                    .chromatogram _
                     .Select(Function(d)
                                 Return New ChromatogramTick With {
                                     .Time = d.Time,
@@ -50,7 +50,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim xTicks As Vector = TIC2D.Select(Function(t) t.scan_time).CreateAxisTicks.AsVector
-        Dim yTicks As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.TimeArray.CreateAxisTicks.AsVector
+        Dim yTicks As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.TimeArray.CreateAxisTicks.AsVector
         Dim rect As Rectangle = canvas.PlotRegion
         Dim scaleX = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
@@ -65,10 +65,10 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
         Dim dw As Double = rect.Width / TIC2D.Length + 1
-        Dim dh As Double = rect.Height / TIC2D(Scan0).d2chromatogram.Length + 1
+        Dim dh As Double = rect.Height / TIC2D(Scan0).chromatogram.Length + 1
         Dim i As Integer
         Dim index As New DoubleRange(0, colors.Length - 1)
-        Dim allIntensity As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray
+        Dim allIntensity As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.IntensityArray
         Dim intensityRange As New DoubleRange(allIntensity)
 
         allIntensity = (allIntensity * 10 ^ 40).CreateAxisTicks.AsVector / (10 ^ 40)
@@ -91,7 +91,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             For Each col As D2Chromatogram In TIC2D
                 Dim x As Double = scaleX(col.scan_time)
 
-                For Each cell As ChromatogramTick In col.d2chromatogram
+                For Each cell As ChromatogramTick In col.chromatogram
                     rect = New Rectangle() With {
                         .X = x,
                         .Y = scale.TranslateY(cell.Time),

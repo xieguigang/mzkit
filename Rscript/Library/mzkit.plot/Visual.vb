@@ -201,7 +201,7 @@ Module Visual
 
     <Extension>
     Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
-        Return x.d2chromatogram.plotTIC(args, env)
+        Return x.chromatogram.plotTIC(args, env)
     End Function
 
     <Extension>
