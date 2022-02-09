@@ -8,8 +8,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports stdNum = System.Math
 
 Public Class GCxGCHeatMap : Inherits Plot
 
@@ -43,8 +45,8 @@ Public Class GCxGCHeatMap : Inherits Plot
     End Sub
 
     Private Function GetRectangle(gcxgc As D2Chromatogram(), point As PointF) As D2Chromatogram()
-        Dim t1 As New DoubleRange(point.X - w_rt1, point.X + w_rt1)
-        Dim t2 As New DoubleRange(point.Y - w_rt2, point.Y + w_rt2)
+        Dim t1 As New DoubleRange(point.X - w_rt1 / 2, point.X + w_rt1 / 2)
+        Dim t2 As New DoubleRange(point.Y - w_rt2 / 2, point.Y + w_rt2 / 2)
         Dim scans = gcxgc.Where(Function(i) t1.IsInside(i.scan_time)).OrderBy(Function(i) i.scan_time).ToArray
         Dim matrix = scans _
             .Select(Function(i)
@@ -104,23 +106,33 @@ Public Class GCxGCHeatMap : Inherits Plot
                 x += wx + dx
             Next
 
-            Call g.DrawString(points(i).Name, rowLabelFont, Brushes.Black, New PointF(rect.Right, y + (wy - fontHeight) / 2))
+            Call g.DrawString(points(i).Name, rowLabelFont, Brushes.Black, New PointF(rect.Right + dx, y + (wy - fontHeight) / 2))
 
             y += wy + dy
         Next
 
         ' draw sample labels
+        Dim tickFont = rowLabelFont
+        Dim tickColor As Brush = Brushes.Black
+
         x = rect.Left
         y = rect.Bottom
 
         For Each sample In Me.gcxgc
             Dim fontSize As SizeF = g.MeasureString(sample.name, rowLabelFont)
-            Dim pos As New PointF With {
-                .X = x + (wx - fontSize.Width) / 2,
+            Dim labelText = sample.name
+            Dim pos As New Point With {
+                .X = x + wx / 2,
                 .Y = y
             }
 
-            Call g.DrawString(sample.name, rowLabelFont, Brushes.Black, pos)
+            x += wx + dx
+            ' g.DrawString(sample.name, rowLabelFont, Brushes.Black, pos)
+
+            Dim text As New GraphicsText(g)
+            Dim xRotate As Double = 45
+
+            Call text.DrawString(labelText, tickFont, tickColor, New Point(pos.X, pos.Y + fontSize.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
         Next
     End Sub
 End Class

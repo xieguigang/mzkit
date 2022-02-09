@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -305,6 +306,7 @@ Module Visual
                                      <RRawVectorArgument> Optional size As Object = "3600,2100",
                                      <RRawVectorArgument> Optional padding As Object = "padding: 200px 600px 250px 250px;",
                                      Optional colorSet As String = "viridis:turbo",
+                                     Optional labelStyle As String = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";",
                                      Optional env As Environment = Nothing) As Object
 
         Dim canvas As String = InteropArgumentHelper.getSize(size, env, "3600,2100")
@@ -320,7 +322,8 @@ Module Visual
         Dim points = names.Select(Function(name, i) New NamedValue(Of PointF)(name, New PointF(rt1(i), rt2(i)))).ToArray
         Dim theme As New Theme With {
             .colorSet = colorSet,
-            .padding = margin
+            .padding = margin,
+            .axisLabelCSS = labelStyle
         }
         Dim app As New GCxGCHeatMap(samples, points, rt_size(0), rt_size(1), 64, margin_grid.Width, margin_grid.Height, theme)
 
