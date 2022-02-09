@@ -66,7 +66,6 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .ToArray
         Dim dw As Double = rect.Width / TIC2D.Length + 1
         Dim dh As Double = rect.Height / TIC2D(Scan0).chromatogram.Length + 1
-        Dim i As Integer
         Dim index As New DoubleRange(0, colors.Length - 1)
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.IntensityArray
         Dim intensityRange As New DoubleRange(allIntensity)
@@ -88,28 +87,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
 
         If intensityRange.Length > 0.0 Then
-            For Each col As D2Chromatogram In TIC2D
-                Dim x As Double = scaleX(col.scan_time)
-
-                For Each cell As ChromatogramTick In col.chromatogram
-                    rect = New Rectangle() With {
-                        .X = x,
-                        .Y = scale.TranslateY(cell.Time),
-                        .Width = dw,
-                        .Height = dh
-                    }
-                    i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
-                    i = index.Max - i
-
-                    If i >= colors.Length Then
-                        Call g.FillRectangle(colors.Last, rect)
-                    ElseIf i <= 0 Then
-                        Call g.FillRectangle(colors(Scan0), rect)
-                    Else
-                        Call g.FillRectangle(colors(i), rect)
-                    End If
-                Next
-            Next
+            Call FillHeatMap(g, TIC2D, dw, dh, scale, intensityRange, index, colors)
         End If
 
         Dim width = canvas.Width * 0.1
@@ -131,5 +109,40 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             tickAxisStroke:=Stroke.TryParse(theme.axisTickStroke).GDIObject,
             format:="G3"
         )
+    End Sub
+
+    Public Shared Sub FillHeatMap(g As IGraphics,
+                                  TIC2D As IEnumerable(Of D2Chromatogram),
+                                  dw As Double,
+                                  dh As Double,
+                                  scale As DataScaler,
+                                  intensityRange As DoubleRange,
+                                  index As DoubleRange,
+                                  colors As SolidBrush())
+
+        For Each col As D2Chromatogram In TIC2D
+            Dim x As Double = scale.TranslateX(col.scan_time)
+            Dim i As Integer
+            Dim rect As Rectangle
+
+            For Each cell As ChromatogramTick In col.chromatogram
+                rect = New Rectangle() With {
+                    .X = x,
+                    .Y = scale.TranslateY(cell.Time),
+                    .Width = dw,
+                    .Height = dh
+                }
+                i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
+                i = index.Max - i
+
+                If i >= colors.Length Then
+                    Call g.FillRectangle(colors.Last, rect)
+                ElseIf i <= 0 Then
+                    Call g.FillRectangle(colors(Scan0), rect)
+                Else
+                    Call g.FillRectangle(colors(i), rect)
+                End If
+            Next
+        Next
     End Sub
 End Class

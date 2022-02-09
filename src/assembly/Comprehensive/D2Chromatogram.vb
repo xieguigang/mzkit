@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
@@ -18,6 +19,12 @@ Public Class D2Chromatogram
     ''' </summary>
     ''' <returns></returns>
     Public Property chromatogram As ChromatogramTick()
+
+    Default Public ReadOnly Property getTick(i As DoubleRange) As ChromatogramTick()
+        Get
+            Return chromatogram.Where(Function(a) i.IsInside(a.Time)).ToArray
+        End Get
+    End Property
 
     Default Public ReadOnly Property getTick(i As Integer) As ChromatogramTick
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
