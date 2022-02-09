@@ -32,7 +32,7 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim mesh3D As Polygon() = MeshGrid(gcxgc:=raw, sampling:=sampling).ToArray
+        Dim mesh3D As Polygon() = MeshGrid(gcxgc:=raw, sampling:=sampling, xsize:=10, ysize:=6, zsize:=10).ToArray
         Dim colors As SolidBrush() = Designer.GetColors(theme.colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray
         Dim z As Double() = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z).Average).ToArray
         Dim range As New DoubleRange(z)
@@ -82,13 +82,19 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         )
     End Sub
 
-    Public Shared Iterator Function MeshGrid(gcxgc As D2Chromatogram(), sampling As Integer) As IEnumerable(Of Polygon)
+    Public Shared Iterator Function MeshGrid(gcxgc As D2Chromatogram(), sampling As Integer, xsize As Integer, ysize As Integer, zsize As Integer) As IEnumerable(Of Polygon)
         Dim height As Integer = gcxgc _
             .Select(Function(d) d.size) _
             .GroupBy(Function(n) n) _
             .OrderByDescending(Function(d) d.Count) _
             .First _
             .Key
+        Dim xTicks = gcxgc.Select(Function(s) s.scan_time).Range
+        Dim yTicks = gcxgc.Select(Function(s) s.chromatogram.Select(Function(t) t.Time)).IteratesALL.Range
+        Dim zTicks = gcxgc.Select(Function(s) s.chromatogram.Select(Function(p) p.Intensity)).IteratesALL.Range
+        Dim xscale = d3js.scale.linear.domain(xTicks).range(New Double() {0, xsize})
+        Dim yscale = d3js.scale.linear.domain(yTicks).range(New Double() {0, ysize})
+        Dim zscale = d3js.scale.linear.domain(zTicks).range(New Double() {0, zsize})
 
         gcxgc = (From scan As D2Chromatogram
                  In gcxgc
@@ -109,10 +115,10 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
                 ' top1, top2, bottom2, bottom1
                 Yield New Polygon With {
                     .Path = {
-                        New Point3D(left.scan_time, top1.Time, top1.Intensity),
-                        New Point3D(right.scan_time, top2.Time, top2.Intensity),
-                        New Point3D(right.scan_time, bottom2.Time, bottom2.Intensity),
-                        New Point3D(left.scan_time, bottom1.Time, bottom1.Intensity)
+                        New Point3D(xscale(left.scan_time), yscale(top1.Time), zscale(top1.Intensity)),
+                        New Point3D(xscale(right.scan_time), yscale(top2.Time), zscale(top2.Intensity)),
+                        New Point3D(xscale(right.scan_time), yscale(bottom2.Time), zscale(bottom2.Intensity)),
+                        New Point3D(xscale(left.scan_time), yscale(bottom1.Time), zscale(bottom1.Intensity))
                     }
                 }
             Next
