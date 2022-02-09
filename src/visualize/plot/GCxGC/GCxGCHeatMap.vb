@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Class GCxGCHeatMap : Inherits Plot
 
@@ -76,6 +77,8 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
+        Dim rowLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+        Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1
             ' for each metabolite row
@@ -100,6 +103,8 @@ Public Class GCxGCHeatMap : Inherits Plot
 
                 x += wx + dx
             Next
+
+            Call g.DrawString(points(i).Name, rowLabelFont, Brushes.Black, New PointF(rect.Right, y + (wy - fontHeight) / 2))
 
             y += wy + dy
         Next
