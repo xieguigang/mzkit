@@ -159,8 +159,8 @@ Public Class TICplot : Inherits Plot
         End If
 
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
-        Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={rect.Top, rect.Bottom})
+        Dim X = d3js.scale.linear.domain(values:=XTicks).range(integers:={rect.Left, rect.Right})
+        Dim Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler With {
             .AxisTicks = (XTicks, YTicks),
             .region = rect,

@@ -10,7 +10,7 @@ image_TIC = `${dirname(inputfile)}/${basename(inputfile)}.png`
 
 gcxgc   = read.cdf(inputfile)
 # gcxgc = GCxGC::extract_2D_peaks(raw)
-plt = plot(gcxgc, size = [5000,3300], padding = "padding: 250px 600px 300px 350px;", TrIQ = 1, colorSet = "viridis:inferno")
+plt = plot(gcxgc, size = [5000,3300], padding = "padding: 250px 600px 300px 350px;", TrIQ = 1, colorSet = "viridis:inferno", peaks3D = True)
 
 bitmap(plt, file = image_TIC)
 

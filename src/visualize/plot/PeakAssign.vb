@@ -152,8 +152,8 @@ Public Class PeakAssign : Inherits Plot
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
         Dim rect As RectangleF = canvas.PlotRegion.ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
-        Dim xscale = d3js.scale.linear().domain(xticks).range(values:={rect.Left, rect.Right})
-        Dim yscale = d3js.scale.linear().domain(New Double() {0, 100}).range(values:={rect.Top, rect.Bottom})
+        Dim xscale = d3js.scale.linear().domain(values:=xticks).range(values:={rect.Left, rect.Right})
+        Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 100}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
             .region = canvas.PlotRegion,
