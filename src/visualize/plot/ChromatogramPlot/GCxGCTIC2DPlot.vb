@@ -19,14 +19,34 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Public Class GCxGCTIC2DPlot : Inherits Plot
 
     ReadOnly TIC2D As D2Chromatogram()
-    ReadOnly q As Double = 0.85
+    ReadOnly mapLevels As Integer
 
-    Public Sub New(TIC2D As D2Chromatogram(), q As Double, theme As Theme)
+    Public Sub New(TIC2D As D2Chromatogram(), q As Double, mapLevels As Integer, theme As Theme)
         Call MyBase.New(theme)
 
-        Me.TIC2D = TIC2D
-        Me.q = q
+        Me.TIC2D = cutSignal(TIC2D, q, mapLevels).ToArray
+        Me.mapLevels = mapLevels
     End Sub
+
+    Private Shared Iterator Function cutSignal(gcxgc As D2Chromatogram(), q As Double, levels As Integer) As IEnumerable(Of D2Chromatogram)
+        Dim qcut As Double = TrIQ.FindThreshold(gcxgc.Select(Function(t) t.d2chromatogram).IteratesALL.Select(Function(t) t.Intensity), q, N:=levels)
+
+        For Each scan As D2Chromatogram In gcxgc
+            Yield New D2Chromatogram With {
+                .intensity = scan.intensity,
+                .scan_time = scan.scan_time,
+                .d2chromatogram = scan _
+                    .d2chromatogram _
+                    .Select(Function(d)
+                                Return New ChromatogramTick With {
+                                    .Time = d.Time,
+                                    .Intensity = If(d.Intensity > qcut, qcut, d.Intensity)
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        Next
+    End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim xTicks As Vector = TIC2D.Select(Function(t) t.scan_time).CreateAxisTicks.AsVector
@@ -41,7 +61,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .Y = scaleY
         }
         Dim colors As SolidBrush() = Designer _
-            .GetColors(theme.colorSet, 50) _
+            .GetColors(theme.colorSet, mapLevels) _
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
         Dim dw As Double = rect.Width / TIC2D.Length + 1
@@ -49,7 +69,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim i As Integer
         Dim index As New DoubleRange(0, colors.Length - 1)
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.d2chromatogram).IteratesALL.IntensityArray
-        Dim intensityRange As New DoubleRange(allIntensity.Min, TrIQ.FindThreshold(allIntensity, Me.q))
+        Dim intensityRange As New DoubleRange(allIntensity)
 
         allIntensity = (allIntensity * 10 ^ 40).CreateAxisTicks.AsVector / (10 ^ 40)
 
