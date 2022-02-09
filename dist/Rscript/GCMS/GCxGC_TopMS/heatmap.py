@@ -20,6 +20,6 @@ heatmap = "C:\MSI\GCxGC-plot\heatmap.png"
 
 print(metabolites)
 
-plt = gcxgc_heatmap(gcxgc, metabolites)
+plt = gcxgc_heatmap(gcxgc, metabolites, space = [50,10],rt_width = [100,0.8],size = [2700,4000])
 
 bitmap(plt, file = heatmap)

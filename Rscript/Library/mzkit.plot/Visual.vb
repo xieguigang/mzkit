@@ -304,6 +304,7 @@ Module Visual
                                      <RRawVectorArgument> Optional space As Object = "5,5",
                                      <RRawVectorArgument> Optional size As Object = "3600,2100",
                                      <RRawVectorArgument> Optional padding As Object = "padding: 200px 600px 250px 250px;",
+                                     Optional colorSet As String = "viridis:turbo",
                                      Optional env As Environment = Nothing) As Object
 
         Dim canvas As String = InteropArgumentHelper.getSize(size, env, "3600,2100")
@@ -318,7 +319,7 @@ Module Visual
         Dim rt2 As Double() = REnv.asVector(Of Double)(metabolites("rt2"))
         Dim points = names.Select(Function(name, i) New NamedValue(Of PointF)(name, New PointF(rt1(i), rt2(i)))).ToArray
         Dim theme As New Theme With {
-            .colorSet = "Jet",
+            .colorSet = colorSet,
             .padding = margin
         }
         Dim app As New GCxGCHeatMap(samples, points, rt_size(0), rt_size(1), 64, margin_grid.Width, margin_grid.Height, theme)
