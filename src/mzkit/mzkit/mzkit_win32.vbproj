@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2CD05F2C-B62F-4859-844D-E2968D05B4EA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>mzkit.My.MyApplication</StartupObject>
-    <RootNamespace>mzkit</RootNamespace>
+    <StartupObject>BioNovoGene.mzkit_win32.My.MyApplication</StartupObject>
+    <RootNamespace>BioNovoGene.mzkit_win32</RootNamespace>
     <AssemblyName>mzkit_win32</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
@@ -373,6 +373,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmGCxGCViewer.Designer.vb">
+      <DependentUpon>frmGCxGCViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmGCxGCViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\InputMSIDimension.Designer.vb">
       <DependentUpon>InputMSIDimension.vb</DependentUpon>
     </Compile>
