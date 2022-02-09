@@ -93,6 +93,10 @@ Public Class frmMain
         Return Val(ribbonItems.PPMSpinner.DecimalValue)
     End Function
 
+    Public Function GetXICPPMError() As Double
+        Return Val(ribbonItems.XIC_PPMSpinner.DecimalValue)
+    End Function
+
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
         For Each page2 In WindowModules.panelMain.pages
             If Not page Is page2 Then
@@ -518,12 +522,18 @@ Public Class frmMain
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1
-        _spinner.DecimalValue = Globals.Settings.viewer.XIC_ppm
+        _spinner.DecimalValue = Globals.Settings.viewer.ppm_error
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
         _spinner.RepresentativeString = "XXXXXX"
 
+        _spinner = ribbonItems.XIC_PPMSpinner
+        _spinner.MaxValue = Decimal.MaxValue
+        _spinner.MinValue = 0
+        _spinner.Increment = 0.5D
+        _spinner.DecimalPlaces = 1
+        _spinner.DecimalValue = Globals.Settings.viewer.XIC_ppm
 
         _spinner = ribbonItems.SpinnerSimilarity
 
@@ -581,7 +591,12 @@ Public Class frmMain
         If Globals.Settings.ui Is Nothing Then
             Globals.Settings.ui = New UISettings
         End If
+        If Globals.Settings.viewer Is Nothing Then
+            Globals.Settings.viewer = New RawFileViewerSettings
+        End If
 
+        Globals.Settings.viewer.XIC_ppm = MyApplication.host.GetXICPPMError
+        Globals.Settings.viewer.ppm_error = MyApplication.host.GetPPMError
         Globals.Settings.ui = New UISettings With {
             .height = Height,
             .width = Width,

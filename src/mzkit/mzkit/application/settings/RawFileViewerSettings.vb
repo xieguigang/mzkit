@@ -60,7 +60,16 @@ Namespace Configuration
 
     Public Class RawFileViewerSettings
 
+        ''' <summary>
+        ''' ppm error for extract xic data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property XIC_ppm As Double = 20
+        ''' <summary>
+        ''' ppm error for do m/z matches
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ppm_error As Double = 20
         Public Property colorSet As String()
 
         Public Property method As TrimmingMethods = TrimmingMethods.RelativeIntensity
