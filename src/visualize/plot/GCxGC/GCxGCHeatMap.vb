@@ -18,13 +18,14 @@ Public Class GCxGCHeatMap : Inherits Plot
     ReadOnly points As NamedValue(Of PointF)()
     ReadOnly mapLevels As Integer
 
-    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)), points As IEnumerable(Of NamedValue(Of PointF)), rt1 As Double, rt2 As Double, theme As Theme)
+    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)), points As IEnumerable(Of NamedValue(Of PointF)), rt1 As Double, rt2 As Double, mapLevels As Integer, theme As Theme)
         MyBase.New(theme)
 
         Me.gcxgc = gcxgc.ToArray
         Me.w_rt1 = rt1
         Me.w_rt2 = rt2
         Me.points = points.ToArray
+        Me.mapLevels = mapLevels
     End Sub
 
     Private Function GetRectangle(gcxgc As D2Chromatogram(), point As PointF) As D2Chromatogram()
