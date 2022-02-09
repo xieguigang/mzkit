@@ -5,14 +5,23 @@ from mzplot import visual
 
 options(memory.loads = "max")
 
-inputfile = "C:\MSI\GCxGC-plot\YCH-G-G-3_TIC2D.cdf"
-image_TIC = `${dirname(inputfile)}/${basename(inputfile)}.png`
+files = ["C:\MSI\GCxGC-plot\YCH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-G-G-3_TIC2D.cdf","C:\MSI\GCxGC-plot\BYH-M-H-3_TIC2D.cdf","C:\MSI\GCxGC-plot\CDH-G-R-3-FC_TIC2D.cdf"]
 
-gcxgc   = read.cdf(inputfile)
-# gcxgc = GCxGC::extract_2D_peaks(raw)
-plt = plot(gcxgc, size = [5000,3300], padding = "padding: 250px 600px 300px 350px;", TrIQ = 1, colorSet = "viridis:inferno", peaks3D = True)
+for inputfile in files:
+    image_TIC = `${dirname(inputfile)}/${basename(inputfile)}.png`
+    image_TIC1D = `${dirname(inputfile)}/${basename(inputfile)}_1D.png`
 
-bitmap(plt, file = image_TIC)
+    gcxgc   = read.cdf(inputfile)
+    # gcxgc = GCxGC::extract_2D_peaks(raw)
+    plt = plot(gcxgc, size = [5000,3300], padding = "padding: 250px 600px 300px 350px;", TrIQ = 1, colorSet = "viridis:turbo")
+
+    bitmap(plt, file = image_TIC)
+
+    tic = GCxGC::TIC1D(gcxgc)
+	plt = plot(tic)
+	
+    bitmap(plt, file = image_TIC1D )
+
 
 # XIC
 # gcxgc = GCxGC::extract_2D_peaks(raw, mz = 43.036646)
