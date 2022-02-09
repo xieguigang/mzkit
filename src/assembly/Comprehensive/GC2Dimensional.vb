@@ -94,8 +94,8 @@ Public Module GC2Dimensional
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
         Dim point_count As integers = agilentGC.getDataVariable("point_count")
-        Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
         Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
+        Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
         Dim sig As ScanMS1() = scan_time.Array _
             .CreateMSScans(totalIons, mz, into) _
             .OrderBy(Function(t) t.rt) _
