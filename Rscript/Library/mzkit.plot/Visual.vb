@@ -97,7 +97,7 @@ Module Visual
             .colorSet = args.getValue("colorSet", env, "Jet")
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
-        Dim q As Double = args.getValue("TrIQ", env, 0.85)
+        Dim q As Double = args.getValue("TrIQ", env, 1.0)
         Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
         Dim app As New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
             .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
