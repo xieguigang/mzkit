@@ -53,6 +53,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
+Imports BioNovoGene.mzkit_win32.DockSample
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
@@ -64,7 +65,6 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Windows.Forms
-Imports mzkit.DockSample
 Imports RDev
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -348,7 +348,7 @@ Type 'q()' to quit R.
 
             If Not (cli Is Nothing OrElse cli.IsNullOrEmpty) Then
                 If cli.Name.FileExists Then
-                    Call mzkit.CLI.openRawFile(cli.Name, cli)
+                    Call BioNovoGene.mzkit_win32.CLI.openRawFile(cli.Name, cli)
                 ElseIf cli.Name.TextEquals("--debug") Then
                     ServiceHub.debugPort = cli.GetInt32("--port")
                 End If

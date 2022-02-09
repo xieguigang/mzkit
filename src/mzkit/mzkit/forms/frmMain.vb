@@ -72,9 +72,9 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
-Imports mzkit.Configuration
-Imports mzkit.My
-Imports mzkit.RibbonLib.Controls
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
+Imports BioNovoGene.mzkit_win32.RibbonLib.Controls
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
