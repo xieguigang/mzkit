@@ -67,7 +67,6 @@ Module FeatureSearchHandler
     End Sub
 
     Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
-        Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
         If directRaw Then
@@ -87,7 +86,7 @@ Module FeatureSearchHandler
         Dim exact_mass As Double = Math.EvaluateFormula(formula)
         Dim ppm As Double = MyApplication.host.GetPPMError()
 
-        ' MyApplication.host.showStatusMessage($"Search MS ions for [{Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+        MyApplication.host.showStatusMessage($"Search MS ions for [{formula}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
         ' C25H40N4O5
         Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
