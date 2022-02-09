@@ -102,4 +102,7 @@ Public Class D2Chromatogram
         End Using
     End Function
 
+    Public Function times() As Double()
+        Return chromatogram.Select(Function(t) t.Time).ToArray
+    End Function
 End Class
