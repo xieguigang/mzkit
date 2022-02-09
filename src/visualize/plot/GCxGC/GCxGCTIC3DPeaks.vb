@@ -53,8 +53,8 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
             .angleZ = 125
         }
         Dim ppi As Integer = g.Dpi
-        Dim xTicks = raw.Select(Function(s) s.scan_time).Range.CreateAxisTicks
-        Dim yTicks = raw.Select(Function(s) s.chromatogram.Select(Function(t) t.Time)).IteratesALL.Range.CreateAxisTicks
+        Dim xTicks = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.X)).IteratesALL.Range.CreateAxisTicks
+        Dim yTicks = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Y)).IteratesALL.Range.CreateAxisTicks
         Dim zTicks = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z)).IteratesALL.Range.CreateAxisTicks
         Dim tickCss As String = CSSFont.TryParse(theme.axisTickCSS).SetFontColor(theme.mainTextColor).ToString
         Dim models As New List(Of Element3D)

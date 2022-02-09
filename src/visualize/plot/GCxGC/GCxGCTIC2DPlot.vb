@@ -52,8 +52,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim xTicks As Vector = TIC2D.Select(Function(t) t.scan_time).CreateAxisTicks.AsVector
         Dim yTicks As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.TimeArray.CreateAxisTicks.AsVector
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim scaleX = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
-        Dim scaleY = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
+        Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
+        Dim scaleY = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scale As New DataScaler() With {
             .AxisTicks = (xTicks, yTicks),
             .region = rect,
