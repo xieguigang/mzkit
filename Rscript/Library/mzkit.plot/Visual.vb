@@ -98,7 +98,8 @@ Module Visual
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
         Dim q As Double = args.getValue("TrIQ", env, 0.85)
-        Dim app As New GCxGCTIC2DPlot(x, q, theme) With {
+        Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
+        Dim app As New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
             .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
             .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
             .legendTitle = "Intensity",
