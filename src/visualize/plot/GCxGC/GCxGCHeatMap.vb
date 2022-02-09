@@ -18,7 +18,18 @@ Public Class GCxGCHeatMap : Inherits Plot
     ReadOnly points As NamedValue(Of PointF)()
     ReadOnly mapLevels As Integer
 
-    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)), points As IEnumerable(Of NamedValue(Of PointF)), rt1 As Double, rt2 As Double, mapLevels As Integer, theme As Theme)
+    Dim dx As Double = 5
+    Dim dy As Double = 5
+
+    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)),
+                   points As IEnumerable(Of NamedValue(Of PointF)),
+                   rt1 As Double,
+                   rt2 As Double,
+                   mapLevels As Integer,
+                   marginX As Integer,
+                   marginY As Integer,
+                   theme As Theme)
+
         MyBase.New(theme)
 
         Me.gcxgc = gcxgc.ToArray
@@ -26,6 +37,8 @@ Public Class GCxGCHeatMap : Inherits Plot
         Me.w_rt2 = rt2
         Me.points = points.ToArray
         Me.mapLevels = mapLevels
+        Me.dx = marginX
+        Me.dy = marginY
     End Sub
 
     Private Function GetRectangle(gcxgc As D2Chromatogram(), point As PointF) As D2Chromatogram()
@@ -49,8 +62,6 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim ncols As Integer = gcxgc.Length
         Dim nrows As Integer = points.Length
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim dx As Double = 5
-        Dim dy As Double = 5
         Dim wx As Double = (rect.Width - dx * (ncols - 1)) / ncols
         Dim wy As Double = (rect.Height - dy * (nrows - 1)) / nrows
         Dim matrix = points.Select(Function(cpd)
@@ -76,7 +87,13 @@ Public Class GCxGCHeatMap : Inherits Plot
                 n = col.Select(Function(d) d.size).Average
                 scale = New DataScaler() With {
                     .X = scaleX,
-                    .Y = scaleY
+                    .Y = scaleY,
+                    .region = New Rectangle With {
+                        .X = x,
+                        .Y = y,
+                        .Width = wx,
+                        .Height = wy
+                    }
                 }
 
                 Call GCxGCTIC2DPlot.FillHeatMap(g, col, wx / col.Length, wy / n, scale, valueRange, indexRange, colors)

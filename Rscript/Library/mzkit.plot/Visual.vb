@@ -300,13 +300,15 @@ Module Visual
     ''' <returns></returns>
     <ExportAPI("gcxgc_heatmap")>
     Public Function PlotGCxGCHeatMap(GCxGC As list, metabolites As dataframe,
-                                     <RRawVectorArgument> Optional rt_width As Object = "5,0.5",
+                                     <RRawVectorArgument> Optional rt_width As Object = "60,0.5",
+                                     <RRawVectorArgument> Optional space As Object = "5,5",
                                      <RRawVectorArgument> Optional size As Object = "3600,2100",
                                      <RRawVectorArgument> Optional padding As Object = "padding: 200px 600px 250px 250px;",
                                      Optional env As Environment = Nothing) As Object
 
         Dim canvas As String = InteropArgumentHelper.getSize(size, env, "3600,2100")
         Dim margin = InteropArgumentHelper.getPadding(padding, [default]:="padding: 200px 600px 250px 250px;")
+        Dim margin_grid = InteropArgumentHelper.getSize(space, env, "5,5").SizeParser
         Dim rt_size = InteropArgumentHelper.getSize(rt_width, env, "5,0.5").Split(","c).Select(AddressOf Val).ToArray
         Dim samples = GCxGC.getNames.Select(Function(name)
                                                 Return New NamedCollection(Of D2Chromatogram) With {.name = name, .value = GCxGC.getValue(Of D2Chromatogram())(name, env, Nothing)}
@@ -319,7 +321,7 @@ Module Visual
             .colorSet = "Jet",
             .padding = margin
         }
-        Dim app As New GCxGCHeatMap(samples, points, rt_size(0), rt_size(1), 64, theme)
+        Dim app As New GCxGCHeatMap(samples, points, rt_size(0), rt_size(1), 64, margin_grid.Width, margin_grid.Height, theme)
 
         Return app.Plot(canvas)
     End Function
