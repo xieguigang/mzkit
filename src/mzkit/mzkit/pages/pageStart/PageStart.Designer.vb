@@ -47,7 +47,7 @@ Partial Class PageStart
         '
         'Panel1
         '
-        Me.Panel1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_background_image
+        Me.Panel1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.header_background_image
         Me.Panel1.Controls.Add(Me.PictureBox1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 677)
@@ -58,7 +58,7 @@ Partial Class PageStart
         'PictureBox1
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_foreground_image
+        Me.PictureBox1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.header_foreground_image
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PictureBox1.Location = New System.Drawing.Point(0, 11)
         Me.PictureBox1.Name = "PictureBox1"
@@ -82,7 +82,7 @@ Partial Class PageStart
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo
+        Me.PictureBox2.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.Home_Logo
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox2.Location = New System.Drawing.Point(33, 22)
         Me.PictureBox2.Name = "PictureBox2"
