@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -99,12 +100,25 @@ Module Visual
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
         Dim q As Double = args.getValue("TrIQ", env, 1.0)
         Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
-        Dim app As New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
-            .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
-            .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
-            .legendTitle = "Intensity",
-            .main = "GCxGC 2D Imaging"
-        }
+        Dim mesh3D As Boolean = args.getValue("peaks3D", env, False)
+        Dim app As Plot
+
+        If mesh3D Then
+            app = New GCxGCTIC3DPeaks(x, 5, mapLevels, theme) With {
+                .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
+                .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
+                .zlabel = args.getValue("zlab", env, "Intensity"),
+                .legendTitle = "Intensity",
+                .main = "GCxGC 2D Imaging"
+            }
+        Else
+            app = New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
+                .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
+                .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
+                .legendTitle = "Intensity",
+                .main = "GCxGC 2D Imaging"
+            }
+        End If
 
         Return app.Plot(size)
     End Function
