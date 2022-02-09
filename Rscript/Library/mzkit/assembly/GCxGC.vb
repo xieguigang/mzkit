@@ -86,7 +86,7 @@ Module GCxGC
                    Return New D2Chromatogram With {
                        .scan_time = d.rt,
                        .intensity = d.GetIntensity(mz, mzdiff),
-                       .d2chromatogram = d.products _
+                       .chromatogram = d.products _
                             .Select(Function(t)
                                         Return New ChromatogramTick With {
                                             .Time = t.rt,
@@ -102,7 +102,7 @@ Module GCxGC
         Return New D2Chromatogram With {
             .intensity = d.TIC,
             .scan_time = d.rt,
-            .d2chromatogram = d.products _
+            .chromatogram = d.products _
                 .Select(Function(t)
                             Return New ChromatogramTick With {
                                 .Intensity = t.into.Sum,

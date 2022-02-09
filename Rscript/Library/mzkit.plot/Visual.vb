@@ -97,8 +97,9 @@ Module Visual
             .colorSet = args.getValue("colorSet", env, "Jet")
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
-        Dim q As Double = args.getValue("TrIQ", env, 0.85)
-        Dim app As New GCxGCTIC2DPlot(x, q, theme) With {
+        Dim q As Double = args.getValue("TrIQ", env, 1.0)
+        Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
+        Dim app As New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
             .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
             .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
             .legendTitle = "Intensity",
@@ -200,7 +201,7 @@ Module Visual
 
     <Extension>
     Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
-        Return x.d2chromatogram.plotTIC(args, env)
+        Return x.chromatogram.plotTIC(args, env)
     End Function
 
     <Extension>
