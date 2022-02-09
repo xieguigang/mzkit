@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.mzkit.frmMain
+            Me.MainForm = Global.BioNovoGene.mzkit_win32.frmMain
         End Sub
     End Class
 End Namespace
