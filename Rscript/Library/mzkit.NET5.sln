@@ -159,7 +159,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzpack.NET5", "..\..\src\as
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "RData.NET5", "..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj", "{7F7DB5B3-E93C-4683-9101-E817BEADDA19}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LoadR.NET5", "..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj", "{7F135503-460A-4D65-8600-D332927BFCDF}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "LoadR.NET5", "..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj", "{7F135503-460A-4D65-8600-D332927BFCDF}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
