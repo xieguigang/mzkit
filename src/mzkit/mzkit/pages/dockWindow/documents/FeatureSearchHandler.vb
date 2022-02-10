@@ -48,7 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 
@@ -67,7 +67,6 @@ Module FeatureSearchHandler
     End Sub
 
     Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
-        Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
         If directRaw Then
@@ -87,7 +86,7 @@ Module FeatureSearchHandler
         Dim exact_mass As Double = Math.EvaluateFormula(formula)
         Dim ppm As Double = MyApplication.host.GetPPMError()
 
-        ' MyApplication.host.showStatusMessage($"Search MS ions for [{Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+        MyApplication.host.showStatusMessage($"Search MS ions for [{formula}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
         ' C25H40N4O5
         Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
@@ -132,7 +131,11 @@ Module FeatureSearchHandler
         display.Show(MyApplication.host.dockPanel)
 
         For Each file As Raw In raw
-            Dim result = file.LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)).GetMs2Scans.Where(Function(a) tolerance(a.parentMz, mz)).ToArray
+            Dim result As ScanMS2() = file _
+                .LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)) _
+                .GetMs2Scans _
+                .Where(Function(a) tolerance(a.parentMz, mz)) _
+                .ToArray
 
             display.AddFileMatch(file.source, mz, result)
         Next

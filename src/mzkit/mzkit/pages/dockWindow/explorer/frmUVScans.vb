@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports Task
 
 Public Class frmUVScans

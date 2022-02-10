@@ -40,7 +40,7 @@ Partial Class frmMain
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Ribbon1 = New Ribbon()
+        Me.Ribbon1 = New Global.RibbonLib.Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip.SuspendLayout()
@@ -134,7 +134,7 @@ Partial Class frmMain
         Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
         Me.Ribbon1.Name = "Ribbon1"
         Me.Ribbon1.ResourceIdentifier = Nothing
-        Me.Ribbon1.ResourceName = "mzkit.RibbonMarkup.ribbon"
+        Me.Ribbon1.ResourceName = "BioNovoGene.mzkit_win32.RibbonMarkup.ribbon"
         Me.Ribbon1.ShortcutTableResourceName = Nothing
         Me.Ribbon1.Size = New System.Drawing.Size(1084, 166)
         Me.Ribbon1.TabIndex = 9

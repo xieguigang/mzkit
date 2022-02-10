@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DD4B546D-F6EC-4C97-9683-D0DC0E9F569E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>mzkit.plot</RootNamespace>
+    <RootNamespace>mzplot</RootNamespace>
     <AssemblyName>mzplot</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -309,6 +309,10 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
+      <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
+      <Name>mz_deco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>

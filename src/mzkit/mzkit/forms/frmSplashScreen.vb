@@ -46,7 +46,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Development
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class frmSplashScreen
 

@@ -42,6 +42,7 @@ Namespace RibbonLib.Controls
             Public Const cmdGroupDesign As UInteger = 1036
             Public Const cmdCheckBoxShowKEGGAnnotation As UInteger = 153
             Public Const cmdPPMSpinner As UInteger = 1050
+            Public Const cmdXIC_PPMSpinner As UInteger = 156
             Public Const cmdGroupShowViewer As UInteger = 1110
             Public Const cmdButtonShowPlotViewer As UInteger = 1111
             Public Const cmdButtonShowMatrixViewer As UInteger = 1112
@@ -328,6 +329,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property PPMSpinner As RibbonSpinner
             Get
                 Return _PPMSpinner
+            End Get
+        End Property
+        Private _XIC_PPMSpinner As RibbonSpinner
+        Public ReadOnly Property XIC_PPMSpinner As RibbonSpinner
+            Get
+                Return _XIC_PPMSpinner
             End Get
         End Property
         Private _GroupShowViewer As RibbonGroup
@@ -1076,6 +1083,7 @@ Namespace RibbonLib.Controls
             _GroupDesign = New RibbonGroup(_ribbon, Cmd.cmdGroupDesign)
             _CheckBoxShowKEGGAnnotation = New RibbonCheckBox(_ribbon, Cmd.cmdCheckBoxShowKEGGAnnotation)
             _PPMSpinner = New RibbonSpinner(_ribbon, Cmd.cmdPPMSpinner)
+            _XIC_PPMSpinner = New RibbonSpinner(_ribbon, Cmd.cmdXIC_PPMSpinner)
             _GroupShowViewer = New RibbonGroup(_ribbon, Cmd.cmdGroupShowViewer)
             _ButtonShowPlotViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowPlotViewer)
             _ButtonShowMatrixViewer = New RibbonButton(_ribbon, Cmd.cmdButtonShowMatrixViewer)

@@ -1,0 +1,40 @@
+citHeader("To cite package 'ptw' in publications use:")
+     
+     ## R >= 2.8.0 passes package metadata to citation().
+     if(!exists("meta") || is.null(meta)) meta <- packageDescription("ptw")
+     year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+     vers <- paste("R package version", meta$Version)
+     
+	citEntry(entry="Article",
+		 title = "Improved Parametric Time Warping for Proteomics",
+		 author = personList(as.person("Tom G. Bloemberg"), 
+				    as.person("Jan Gerretzen"),
+				    as.person("Hans J. P. Wouters"),
+				    as.person("Jolein Gloerich"),
+				    as.person("Maurice van Dael"),
+				    as.person("Hans J. C. T. Wessels"),
+				    as.person("Lambert P. van den Heuvel"),
+				    as.person("Paul H. C. Eilers"),
+				    as.person("Lutgarde M. C. Buydens"),
+				    as.person("Ron Wehrens")),
+				    
+		 year = "2010",
+		 journal = "Chemometrics and Intelligent Laboratory Systems",
+  		 volume = "104",
+		 number = "1",
+		 pages = "65-74",
+		 textVersion = 'Bloemberg, T. G. et al. (2010) "Improved
+		 Parametric Time Warping for Proteomics", Chemometrics and
+		 Intelligent Laboratory Systems, 104 (1), 65-74')
+
+	citEntry(entry="Article",
+		 title = "Fast parametric warping of peak lists",
+		 author = personList(as.person("Ron Wehrens"),
+                     as.person("Tom G. Bloemberg"), 
+                     as.person("Paul H. C. Eilers")),
+		 year = "2015",
+                 volume = "31",
+                 pages = "3063--3065",
+		 journal = "Bioinformatics",
+		 DOI = "10.1093/bioinformatics/btv299",
+                 textVersion = 'Wehrens, R. et al. (2015) "Fast parametric warping of peak lists", Bioinformatics, in press.')

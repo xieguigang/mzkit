@@ -98,8 +98,20 @@ Module data
         Return matrix.Length
     End Function
 
+    ''' <summary>
+    ''' Create a library matrix object
+    ''' </summary>
+    ''' <param name="matrix">
+    ''' for a dataframe object, should contains column data:
+    ''' mz, into and annotation.
+    ''' </param>
+    ''' <param name="title"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("libraryMatrix")>
-    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object, Optional title$ = "MS Matrix", Optional env As Environment = Nothing) As Object
+    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object,
+                                  Optional title$ = "MS Matrix",
+                                  Optional env As Environment = Nothing) As Object
         Dim MS As ms2()
 
         If TypeOf matrix Is dataframe Then
@@ -261,7 +273,15 @@ Module data
         Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
 
         If scans.isError Then
-            Return scans.getError
+            scans = pipeline.TryCreatePipeline(Of PeakMs2)(ticks, env)
+
+            If scans.isError Then
+                Return scans.getError
+            Else
+                Return scans.populates(Of PeakMs2)(env) _
+                    .Select(Function(x) x.rt) _
+                    .DoCall(AddressOf vector.asVector)
+            End If
         End If
 
         Return scans.populates(Of ms1_scan)(env) _

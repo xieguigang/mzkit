@@ -65,8 +65,8 @@ Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
-Imports mzkit.cooldatagridview
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.cooldatagridview
+Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math

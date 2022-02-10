@@ -29,10 +29,10 @@ Partial Class frmUntargettedViewer
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MsSelector1 = New ControlLibrary.MSSelector()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.MsSelector1 = New ControlLibrary.MSSelector()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -61,6 +61,29 @@ Partial Class frmUntargettedViewer
         Me.ShowMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ShowMatrixToolStripMenuItem.Text = "Show Matrix"
         '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        '
+        'MS1ToolStripMenuItem
+        '
+        Me.MS1ToolStripMenuItem.Checked = True
+        Me.MS1ToolStripMenuItem.CheckOnClick = True
+        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1ToolStripMenuItem.Text = "MS1"
+        '
+        'MS2ToolStripMenuItem
+        '
+        Me.MS2ToolStripMenuItem.Checked = True
+        Me.MS2ToolStripMenuItem.CheckOnClick = True
+        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS2ToolStripMenuItem.Text = "MS2"
+        '
         'MsSelector1
         '
         Me.MsSelector1.BackColor = System.Drawing.Color.White
@@ -73,27 +96,6 @@ Partial Class frmUntargettedViewer
         Me.MsSelector1.SelectedColor = System.Drawing.Color.Green
         Me.MsSelector1.Size = New System.Drawing.Size(904, 143)
         Me.MsSelector1.TabIndex = 2
-        '
-        'MS1ToolStripMenuItem
-        '
-        Me.MS1ToolStripMenuItem.Checked = True
-        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
-        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.MS1ToolStripMenuItem.Text = "MS1"
-        '
-        'MS2ToolStripMenuItem
-        '
-        Me.MS2ToolStripMenuItem.Checked = True
-        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
-        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.MS2ToolStripMenuItem.Text = "MS2"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'frmUntargettedViewer
         '

@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.My
 Imports Task
 
 Public Class PageSpectrumSearch

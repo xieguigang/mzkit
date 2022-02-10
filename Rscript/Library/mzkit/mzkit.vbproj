@@ -387,6 +387,7 @@
     <Compile Include="assembly\MSI.vb" />
     <Compile Include="assembly\ThermoRaw.vb" />
     <Compile Include="assembly\MzWeb.vb" />
+    <Compile Include="math\mz_deco.vb" />
     <Compile Include="math\TestFormulaSymbolLang.vb" />
     <Compile Include="MetaDbXref.vb" />
     <Compile Include="zzz.vb" />

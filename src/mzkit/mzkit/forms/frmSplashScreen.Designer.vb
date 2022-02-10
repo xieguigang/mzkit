@@ -36,7 +36,7 @@ Partial Class frmSplashScreen
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo_Link
+        Me.PictureBox2.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.Home_Logo_Link
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox2.Location = New System.Drawing.Point(21, 12)
         Me.PictureBox2.Name = "PictureBox2"
@@ -97,7 +97,7 @@ Partial Class frmSplashScreen
         'PictureBox1
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_foreground_image
+        Me.PictureBox1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.header_foreground_image
         Me.PictureBox1.Location = New System.Drawing.Point(0, 104)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(616, 56)

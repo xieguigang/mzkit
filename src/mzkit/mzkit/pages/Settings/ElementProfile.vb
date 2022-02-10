@@ -45,8 +45,8 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
-Imports mzkit.Configuration
-Imports mzkit.My
+Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class ElementProfile : Implements ISaveSettings, IPageSettings
 

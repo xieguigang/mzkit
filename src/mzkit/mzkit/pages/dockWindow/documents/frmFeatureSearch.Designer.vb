@@ -114,7 +114,7 @@ Partial Class frmFeatureSearch
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
+        Me.ViewToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ViewToolStripMenuItem.Text = "View"
