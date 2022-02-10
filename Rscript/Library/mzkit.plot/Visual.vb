@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -68,6 +69,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -286,6 +288,66 @@ Module Visual
                 size:=size
             )
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="GCxGC"></param>
+    ''' <param name="metabolites">
+    ''' [name, rt1, rt2]
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("gcxgc_heatmap")>
+    Public Function PlotGCxGCHeatMap(GCxGC As list, metabolites As dataframe,
+                                     <RRawVectorArgument> Optional rt_width As Object = "60,0.5",
+                                     <RRawVectorArgument> Optional space As Object = "5,5",
+                                     <RRawVectorArgument> Optional size As Object = "3600,2100",
+                                     <RRawVectorArgument> Optional padding As Object = "padding: 200px 600px 250px 250px;",
+                                     Optional colorSet As String = "viridis:turbo",
+                                     Optional mapLevels As Integer = 64,
+                                     Optional labelStyle As String = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";",
+                                     Optional env As Environment = Nothing) As Object
+
+        Dim canvas As String = InteropArgumentHelper.getSize(size, env, "3600,2100")
+        Dim margin = InteropArgumentHelper.getPadding(padding, [default]:="padding: 200px 600px 250px 250px;")
+        Dim margin_grid = InteropArgumentHelper.getSize(space, env, "5,5").SizeParser
+        Dim rt_size = InteropArgumentHelper.getSize(rt_width, env, "5,0.5").Split(","c).Select(AddressOf Val).ToArray
+        Dim samples = GCxGC.getNames _
+            .Select(Function(name)
+                        Return New NamedCollection(Of D2Chromatogram) With {
+                            .name = name,
+                            .value = GCxGC.getValue(Of D2Chromatogram())(name, env, Nothing)
+                        }
+                    End Function) _
+            .Where(Function(d) Not d.value.IsNullOrEmpty) _
+            .ToArray
+        Dim names As String() = REnv.asVector(Of String)(metabolites("name"))
+        Dim rt1 As Double() = REnv.asVector(Of Double)(metabolites("rt1"))
+        Dim rt2 As Double() = REnv.asVector(Of Double)(metabolites("rt2"))
+        Dim points = names _
+            .Select(Function(name, i)
+                        Return New NamedValue(Of PointF)(name, New PointF(rt1(i), rt2(i)))
+                    End Function) _
+            .ToArray
+        Dim theme As New Theme With {
+            .colorSet = colorSet,
+            .padding = margin,
+            .axisLabelCSS = labelStyle
+        }
+        Dim app As New GCxGCHeatMap(
+            gcxgc:=samples,
+            points:=points,
+            rt1:=rt_size(0),
+            rt2:=rt_size(1),
+            mapLevels:=mapLevels,
+            marginX:=margin_grid.Width,
+            marginY:=margin_grid.Height,
+            theme:=theme
+        )
+
+        Return app.Plot(canvas)
     End Function
 
     ''' <summary>

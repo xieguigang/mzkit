@@ -8,7 +8,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports stdNum = System.Math
 
 Public Class GCxGCHeatMap : Inherits Plot
 
@@ -18,18 +21,32 @@ Public Class GCxGCHeatMap : Inherits Plot
     ReadOnly points As NamedValue(Of PointF)()
     ReadOnly mapLevels As Integer
 
-    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)), points As IEnumerable(Of NamedValue(Of PointF)), rt1 As Double, rt2 As Double, theme As Theme)
+    Dim dx As Double = 5
+    Dim dy As Double = 5
+
+    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)),
+                   points As IEnumerable(Of NamedValue(Of PointF)),
+                   rt1 As Double,
+                   rt2 As Double,
+                   mapLevels As Integer,
+                   marginX As Integer,
+                   marginY As Integer,
+                   theme As Theme)
+
         MyBase.New(theme)
 
         Me.gcxgc = gcxgc.ToArray
         Me.w_rt1 = rt1
         Me.w_rt2 = rt2
         Me.points = points.ToArray
+        Me.mapLevels = mapLevels
+        Me.dx = marginX
+        Me.dy = marginY
     End Sub
 
     Private Function GetRectangle(gcxgc As D2Chromatogram(), point As PointF) As D2Chromatogram()
-        Dim t1 As New DoubleRange(point.X - w_rt1, point.X + w_rt1)
-        Dim t2 As New DoubleRange(point.Y - w_rt2, point.Y + w_rt2)
+        Dim t1 As New DoubleRange(point.X - w_rt1 / 2, point.X + w_rt1 / 2)
+        Dim t2 As New DoubleRange(point.Y - w_rt2 / 2, point.Y + w_rt2 / 2)
         Dim scans = gcxgc.Where(Function(i) t1.IsInside(i.scan_time)).OrderBy(Function(i) i.scan_time).ToArray
         Dim matrix = scans _
             .Select(Function(i)
@@ -48,8 +65,6 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim ncols As Integer = gcxgc.Length
         Dim nrows As Integer = points.Length
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim dx As Double = 5
-        Dim dy As Double = 5
         Dim wx As Double = (rect.Width - dx * (ncols - 1)) / ncols
         Dim wy As Double = (rect.Height - dy * (nrows - 1)) / nrows
         Dim matrix = points.Select(Function(cpd)
@@ -64,6 +79,8 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
+        Dim rowLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+        Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1
             ' for each metabolite row
@@ -75,7 +92,13 @@ Public Class GCxGCHeatMap : Inherits Plot
                 n = col.Select(Function(d) d.size).Average
                 scale = New DataScaler() With {
                     .X = scaleX,
-                    .Y = scaleY
+                    .Y = scaleY,
+                    .region = New Rectangle With {
+                        .X = x,
+                        .Y = y,
+                        .Width = wx,
+                        .Height = wy
+                    }
                 }
 
                 Call GCxGCTIC2DPlot.FillHeatMap(g, col, wx / col.Length, wy / n, scale, valueRange, indexRange, colors)
@@ -83,7 +106,33 @@ Public Class GCxGCHeatMap : Inherits Plot
                 x += wx + dx
             Next
 
+            Call g.DrawString(points(i).Name, rowLabelFont, Brushes.Black, New PointF(rect.Right + dx, y + (wy - fontHeight) / 2))
+
             y += wy + dy
+        Next
+
+        ' draw sample labels
+        Dim tickFont = rowLabelFont
+        Dim tickColor As Brush = Brushes.Black
+
+        x = rect.Left
+        y = rect.Bottom
+
+        For Each sample In Me.gcxgc
+            Dim fontSize As SizeF = g.MeasureString(sample.name, rowLabelFont)
+            Dim labelText = sample.name
+            Dim pos As New Point With {
+                .X = x + wx / 2,
+                .Y = y
+            }
+
+            x += wx + dx
+            ' g.DrawString(sample.name, rowLabelFont, Brushes.Black, pos)
+
+            Dim text As New GraphicsText(g)
+            Dim xRotate As Double = 45
+
+            Call text.DrawString(labelText, tickFont, tickColor, New Point(pos.X, pos.Y + fontSize.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
         Next
     End Sub
 End Class

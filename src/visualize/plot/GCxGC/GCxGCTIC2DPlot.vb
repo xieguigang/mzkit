@@ -123,10 +123,10 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         For Each col As D2Chromatogram In TIC2D
             Dim x As Double = scale.TranslateX(col.scan_time)
             Dim i As Integer
-            Dim rect As Rectangle
+            Dim rect As RectangleF
 
             For Each cell As ChromatogramTick In col.chromatogram
-                rect = New Rectangle() With {
+                rect = New RectangleF() With {
                     .X = x,
                     .Y = scale.TranslateY(cell.Time),
                     .Width = dw,
