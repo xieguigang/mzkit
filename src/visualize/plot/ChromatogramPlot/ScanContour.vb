@@ -127,7 +127,7 @@ Public Class ScanContour : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim matrix As MeasureData() = CreateMatrix.ToArray
-        Dim app As New ContourPlot(matrix, theme) With {
+        Dim app As New ContourPlot(matrix, False, theme) With {
             .legendTitle = "Scale Intensity"
         }
 
