@@ -70,7 +70,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.IntensityArray
         Dim intensityRange As New DoubleRange(allIntensity)
 
-        allIntensity = (allIntensity * 10 ^ 40).CreateAxisTicks.AsVector / (10 ^ 40)
+        ' allIntensity = (allIntensity * 10 ^ 40).CreateAxisTicks.AsVector / (10 ^ 40)
+        allIntensity = allIntensity.Range.CreateAxisTicks.AsVector
 
         Call Axis.DrawAxis(g, canvas, scale,
                            showGrid:=theme.drawGrid,
