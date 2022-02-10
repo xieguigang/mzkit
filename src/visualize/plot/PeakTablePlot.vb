@@ -72,10 +72,16 @@ Public Class PeakTablePlot : Inherits Plot
                 If color < 0 Then color = 0
                 If color >= colors.Length Then color = colors.Length - 1
 
-                Call g.FillRectangle(colors(color), rect:=dot)
+                If color = 0 Then
+                    Call g.FillRectangle(Brushes.White, rect:=dot)
+                Else
+                    Call g.FillRectangle(colors(color), rect:=dot)
+                End If
             Next
 
             y += dy
+
+            Call Console.WriteLine(sampleId)
         Next
     End Sub
 End Class
