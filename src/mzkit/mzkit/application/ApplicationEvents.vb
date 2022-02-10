@@ -138,7 +138,7 @@ Namespace My
                 End If
 
                 .colorSet = colorSet
-                .colors = Palettes.NA
+                .colors = CategoryPalettes.NA
             End With
 
             WindowModules.plotParams.draw = plot

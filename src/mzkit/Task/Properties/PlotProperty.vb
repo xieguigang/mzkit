@@ -78,7 +78,7 @@ Public Class PlotProperty
     <Category("Styles")> Public Property legend_font As Font = CSSFont.TryParse(CSSFont.Win10NormalLarge).GDIObject(100)
     <Category("Styles")> Public Property axis_label_font As Font = CSSFont.TryParse(CSSFont.Win10NormalLarge).GDIObject(100)
     <Category("Styles")> <Description("Tweaks of the fill color of the grid background.")> Public Property gridFill As Color = "rgb(245,245,245)".TranslateColor
-    <Category("Styles")> Public Property colors As Palettes = Palettes.Set1
+    <Category("Styles")> Public Property colors As CategoryPalettes = CategoryPalettes.ColorBrewerSet1
 
     ''' <summary>
     ''' 自定义颜色列表
@@ -87,7 +87,7 @@ Public Class PlotProperty
     <Browsable(False)> Public Property colorSet As String
 
     Public Function GetColorSetName() As String
-        If colors = Palettes.NA Then
+        If colors = CategoryPalettes.NA Then
             Return colorSet
         Else
             Return colors.Description
