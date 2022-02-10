@@ -92,7 +92,14 @@ Module Visual
         Call Internal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
         Call Internal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
         Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
+        Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
     End Sub
+
+    Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
+        Dim theme As New Theme
+        Dim app As New PeakTablePlot(peakSet, theme)
+        Return app.Plot()
+    End Function
 
     Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
