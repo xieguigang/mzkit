@@ -335,6 +335,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="xcms2.vb" />
     <Compile Include="Deconvolution.vb" />
     <Compile Include="Models\MzGroup.vb" />
     <Compile Include="Models\PeakROI.vb" />
