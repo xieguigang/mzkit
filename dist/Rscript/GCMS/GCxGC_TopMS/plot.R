@@ -3,7 +3,7 @@ require(mzkit);
 imports ["GCxGC", "mzweb"] from "mzkit";
 imports "visual" from "mzplot";
 
-inputfile = "C:\MSI\GCxGC-plot\cdf\processed\TIC\YP58969_control-1_1.cdf";
+inputfile = ?"--2d_cdf" || stop("no source data!");
 
 image_TIC = `${dirname(inputfile)}/${basename(inputfile)}.png`;
 image_TIC1D = `${dirname(inputfile)}/${basename(inputfile)}_1D.png`;
