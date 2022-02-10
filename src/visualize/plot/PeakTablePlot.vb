@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -14,6 +15,7 @@ Public Class PeakTablePlot : Inherits Plot
 
     ReadOnly peakSet As PeakSet
     ReadOnly mapLevels As Integer = 64
+    ReadOnly cut As Double = 0.65
 
     Public Sub New(peakSet As PeakSet, theme As Theme)
         MyBase.New(theme)
@@ -34,8 +36,19 @@ Public Class PeakTablePlot : Inherits Plot
         Dim dot As RectangleF
         Dim colors As SolidBrush() = Designer.GetColors(theme.colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray
         Dim indexRange As New DoubleRange(0, mapLevels)
-        Dim valueRange As DoubleRange = peakSet.peaks.Select(Function(pk) pk.Properties.Values).IteratesALL.Range
+        Dim allIntensity As Double() = peakSet.peaks.Select(Function(pk) pk.Properties.Values).IteratesALL.ToArray
+        Dim qcut As Double = TrIQ.FindThreshold(allIntensity, Me.cut, N:=mapLevels)
+        Dim valueRange As DoubleRange = New Double() {allIntensity.Min, qcut}
         Dim color As Integer
+        Dim strokePen As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim scaler As New DataScaler With {
+            .region = rect,
+            .X = scaleX,
+            .Y = d3js.scale.linear.domain(values:={0.0, 1.0}).range(integers:={rect.Top, rect.Bottom})
+        }
+        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+
+        Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black)
 
         ' for each sample as matrix row
         For Each sampleId As String In sampleNames

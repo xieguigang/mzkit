@@ -96,7 +96,10 @@ Module Visual
     End Sub
 
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
-        Dim theme As New Theme
+        Dim theme As New Theme With {
+            .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
+            .colorSet = "Jet"
+        }
         Dim app As New PeakTablePlot(peakSet, theme)
         Return app.Plot()
     End Function
