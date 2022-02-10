@@ -411,7 +411,7 @@ Module TaskScript
                     End Function) _
             .ToArray
         Dim layers = ContourLayer _
-            .GetContours(data) _
+            .GetContours(data, interpolateFill:=False) _
             .Select(Function(g) g.GetContour) _
             .ToArray
 
