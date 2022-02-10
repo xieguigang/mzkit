@@ -1,0 +1,10 @@
+version 1.9-13:
+  - fixed prediction for forward warping (contribution by Sergio Oller)
+  - updated author list in DESCRIPTION
+
+version 1.9-12:
+  - implementation of ptw for peak lists: stptw and associated
+    functions
+  - addition of vignette
+  - removal of obsolete function interpol, replaced by approx
+  - new maintainer
