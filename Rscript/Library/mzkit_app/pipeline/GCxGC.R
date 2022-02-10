@@ -1,20 +1,27 @@
 require(mzkit);
 
-#' workflow script for processing GCxGC raw data file
-#' 
-#' 
-
 imports "netCDF.utils" from "base";
 imports "mzweb" from "mzkit";
 imports ["GCxGC", "chromatogram"] from "mzkit";
 imports "visual" from "mzplot";
 
+#' title: workflow script for processing GCxGC raw data file
+#' 
+#' author: xieguigang <gg.xie@bionovogene.com> 
+#' description: workflow script for processing GCxGC raw data 
+#'    file. pre-processing of the raw data files includes:
+#'    convert cdf file to mzpack file format, and extract GCxGC
+#'    2D TIC matrix data into a cdf file, and run rendering of 
+#'    the GCxGC 1D/2D TIC data.
+
 [@info "the file path of the GCxGC raw data file, or a folder path that contains multiple cdf raw data files."]
-cdfpath   = ?"--cdf"       || stop("no cdf file provided!");
-outputdir = ?"--outputdir" || `${dirname(cdfpath)}/processed/`;
+const cdfpath   = ?"--cdf"       || stop("no cdf file provided!");
+[@info "the folder path for contains the result raw data files."]
+const outputdir = ?"--outputdir" || `${dirname(cdfpath)}/processed/`;
 [@info "GCxGC modtime in time unit seconds."]
-modtime   = ?"--modtime"   || 5;
-palette   = ?"--palette"   || "viridis:turbo";
+const modtime   = ?"--modtime"   || 5;
+[@info "the color palette name for do GCxGC 2D TIC rendering."]
+const palette   = ?"--palette"   || "viridis:turbo";
 
 if (!(file.exists(cdfpath) || dir.exists(cdfpath))) {
 	stop(`missing raw data file at location: ${cdfpath}!`);
