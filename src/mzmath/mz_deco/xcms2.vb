@@ -20,6 +20,25 @@ Public Class xcms2 : Inherits DataSet
             .ToArray
     End Function
 
+    Friend Function totalPeakSum() As xcms2
+        Dim totalSum As Double = Properties.Values.Sum
+
+        Return New xcms2 With {
+            .ID = ID,
+            .mz = mz,
+            .mzmax = mzmax,
+            .mzmin = mzmin,
+            .npeaks = npeaks,
+            .rt = rt,
+            .rtmax = rtmax,
+            .rtmin = rtmin,
+            .Properties = Properties.Keys _
+                .ToDictionary(Function(name) name,
+                              Function(name)
+                                  Return Me(name) / totalSum * 10 ^ 8
+                              End Function)
+        }
+    End Function
 End Class
 
 Public Class PeakSet
@@ -31,6 +50,14 @@ Public Class PeakSet
             Return peaks.Select(Function(pk) pk.Properties.Keys).IteratesALL.Distinct.ToArray
         End Get
     End Property
+
+    Public Function Norm() As PeakSet
+        Return New PeakSet With {
+            .peaks = peaks _
+                .Select(Function(pk) pk.totalPeakSum) _
+                .ToArray
+        }
+    End Function
 
     Public Function Subset(sampleNames As String()) As PeakSet
         Dim subpeaks = peaks _

@@ -18,7 +18,7 @@ Public Class PeakTablePlot : Inherits Plot
     Public Sub New(peakSet As PeakSet, theme As Theme)
         MyBase.New(theme)
 
-        Me.peakSet = peakSet
+        Me.peakSet = peakSet.Norm
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
