@@ -64,8 +64,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .GetColors(theme.colorSet, mapLevels) _
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
-        Dim dw As Double = rect.Width / TIC2D.Length + 1
-        Dim dh As Double = rect.Height / TIC2D(Scan0).chromatogram.Length + 1
+        Dim dw As Double = rect.Width / TIC2D.Length
+        Dim dh As Double = rect.Height / TIC2D(Scan0).chromatogram.Length
         Dim index As New DoubleRange(0, colors.Length - 1)
         Dim allIntensity As Vector = TIC2D.Select(Function(t) t.chromatogram).IteratesALL.IntensityArray
         Dim intensityRange As New DoubleRange(allIntensity)
