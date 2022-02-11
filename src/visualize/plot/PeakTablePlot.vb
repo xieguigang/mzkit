@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Class PeakTablePlot : Inherits Plot
@@ -44,16 +45,19 @@ Public Class PeakTablePlot : Inherits Plot
         Dim scaler As New DataScaler With {
             .region = rect,
             .X = scaleX,
-            .Y = d3js.scale.linear.domain(values:={0.0, 1.0}).range(integers:={rect.Top, rect.Bottom})
+            .Y = d3js.scale.linear.domain(values:={0.0, 1.0}).range(integers:={rect.Top, rect.Bottom}),
+            .AxisTicks = (xTicks.AsVector, Nothing)
         }
         Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+        Dim pos As PointF
 
-        Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black)
+        Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black, htmlLabel:=False)
 
         ' for each sample as matrix row
         For Each sampleId As String In sampleNames
             lbSize = g.MeasureString(sampleId, idFont)
-            g.DrawString(sampleId, idFont, Brushes.Black, New PointF(rect.Left - lbSize.Width - 10, y + (dy - lbSize.Height) / 2))
+            pos = New PointF(rect.Left - lbSize.Width / 2, y + (dy - lbSize.Height) / 2)
+            g.DrawString(sampleId, idFont, Brushes.Black, pos)
 
             For Each peak In peakSet.peaks
                 x = scaleX(peak.rt)
@@ -68,10 +72,16 @@ Public Class PeakTablePlot : Inherits Plot
                 If color < 0 Then color = 0
                 If color >= colors.Length Then color = colors.Length - 1
 
-                Call g.FillRectangle(colors(color), rect:=dot)
+                If color = 0 Then
+                    Call g.FillRectangle(Brushes.White, rect:=dot)
+                Else
+                    Call g.FillRectangle(colors(color), rect:=dot)
+                End If
             Next
 
             y += dy
+
+            Call Console.WriteLine(sampleId)
         Next
     End Sub
 End Class

@@ -3,7 +3,7 @@ require(mzkit);
 imports "mz_deco" from "mzkit";
 imports "visual" from "mzplot";
 
-data = read.xcms_peaks("F:\peaksdata.csv");
+data = read.xcms_peaks("C:\MSI\GCxGC-plot\peaksdata.csv");
 names = [data]::sampleNames;
 
 print(names);
