@@ -111,6 +111,7 @@ Module Visual
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
         Dim q As Double = args.getValue("TrIQ", env, 1.0)
+        Dim qlow As Double = args.getValue("q.low", env, 0.05)
         Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
         Dim mesh3D As Boolean = args.getValue("peaks3D", env, False)
         Dim app As Plot
@@ -124,7 +125,7 @@ Module Visual
                 .main = "GCxGC 2D Imaging"
             }
         Else
-            app = New GCxGCTIC2DPlot(x, q, mapLevels, theme) With {
+            app = New GCxGCTIC2DPlot(x, qlow, q, mapLevels, theme) With {
                 .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
                 .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
                 .legendTitle = "Intensity",
