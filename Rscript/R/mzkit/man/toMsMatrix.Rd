@@ -10,7 +10,8 @@ toMsMatrix(x)
 \item{x}{a spectrum object in \code{mzInto} class.}
 }
 \value{
-a dataframe with two column fields: \code{mz} and \code{into}.
+a dataframe with two column fields: 
+   \code{mz} and \code{into}.
 }
 \description{
 Convert \code{mzInto} object as data.frame

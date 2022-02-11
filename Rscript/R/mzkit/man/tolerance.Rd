@@ -6,16 +6,25 @@
 \usage{
 tolerance(threshold = 0.3, method = c("da", "ppm"))
 }
+\arguments{
+\item{threshold}{the tolerance threshold value.}
+
+\item{method}{the algorithm method name for evaluate the tolerance
+value.}
+}
 \value{
 This function returns a list object with members:
    \enumerate{
        \item \code{threshold} The tolerance threshold.
-       \item \code{method} The tolerance method name, which could be \code{da} or \code{ppm}.
-       \item \code{assert} The tolerance assert method function, which could be
-             \code{\link{assert.deltaMass}} or \code{\link{assert.ppm}} based on the \code{method}
-             parameter value.
-       \item \code{is.low.resolution} The tolerance \code{assert} method is a low resolution
-             method? \code{da} method is \code{TRUE}, and \code{ppm} method is \code{FALSE}.
+       \item \code{method} The tolerance method name, which could 
+               be \code{da} or \code{ppm}.
+       \item \code{assert} The tolerance assert method function, 
+               which could be \code{\link{assert.deltaMass}} or 
+               \code{\link{assert.ppm}} based on the \code{method}
+               parameter value.
+       \item \code{is.low.resolution} The tolerance \code{assert} 
+               method is a low resolution method? \code{da} method 
+               is \code{TRUE}, and \code{ppm} method is \code{FALSE}.
    }
 }
 \description{
