@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -58,6 +59,50 @@ Imports Point = System.Drawing.Point
 
 <HideModuleName>
 Public Module Extensions
+
+    ''' <summary>
+    ''' reset sample position
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Reset(raw As mzPack) As mzPack
+        Dim rect As Rectangle = raw.Shape
+        Dim scans As New List(Of ScanMS1)
+        Dim pos As Point
+        Dim meta As Dictionary(Of String, String)
+
+        For Each scan As ScanMS1 In raw.MS
+            pos = scan.GetMSIPixel
+            pos = New Point With {
+                .X = pos.X - rect.Left,
+                .Y = pos.Y - rect.Top
+            }
+            meta = New Dictionary(Of String, String)(scan.meta)
+            meta("x") = pos.X
+            meta("y") = pos.Y
+
+            scans += New ScanMS1 With {
+                .BPC = scan.BPC,
+                .into = scan.into,
+                .mz = scan.mz,
+                .products = scan.products,
+                .rt = scan.rt,
+                .TIC = scan.TIC,
+                .scan_id = scan.scan_id,
+                .meta = meta
+            }
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = raw.Chromatogram,
+            .MS = scans.ToArray,
+            .Scanners = raw.Scanners,
+            .source = $"reset({raw.source})",
+            .Thumbnail = Nothing
+        }
+    End Function
 
     ''' <summary>
     ''' get pixels boundary of the MSImaging
