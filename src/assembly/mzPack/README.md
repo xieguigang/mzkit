@@ -36,11 +36,12 @@ mzpack {
     }
 
     MS [{
-        TIC: double
-        BPC: double
-        rt: double
         scan_id: string
-
+		rt: double
+		BPC: double
+		TIC: double
+              
+        ions_count: integer
         mz: double[]
         into: double[]
 
@@ -52,6 +53,7 @@ mzpack {
         # scan msn data
         products: [{
 
+			scan_id: string
             precursor: double
             rt: double
             intensity: double

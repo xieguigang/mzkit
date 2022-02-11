@@ -71,13 +71,38 @@ Namespace mzData.mzWebCache
 
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
+        Public Shared ReadOnly Property version As System.Version
+            Get
+                Return New System.Version(5, 2, 389)
+            End Get
+        End Property
+
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         End Sub
 
         Sub New(file As Stream)
+            Dim ver = version
+
             Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
+
+            ' placeholder for source name
+            ' 128 bytes max length
+            Me.file.Write(New Byte(127) {})
+            ' write application tag data placeholder
+            Me.file.Write(CByte(0))
+
+            ' write version data
+            Me.file.Write({ver.Major, ver.Minor, ver.Build})
+
+            ' write unix timestamp for create this mzpack file
+            Me.file.Write(App.UnixTimeStamp)
+
+            ' write description placeholder
+            ' 1024 bytes max size
+            Me.file.Write(New Byte(1023) {})
+
             ' 4 numeric placeholder for
             ' mzmin, mzmax, rtmin, rtmax
             ' see writeIndex function
