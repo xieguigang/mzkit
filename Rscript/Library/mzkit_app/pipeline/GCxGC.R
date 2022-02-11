@@ -23,6 +23,9 @@ const modtime   = ?"--modtime"   || 5;
 [@info "the color palette name for do GCxGC 2D TIC rendering."]
 const palette   = ?"--palette"   || "viridis:turbo";
 
+[@info "skip of extract the raw data files?"]
+const skip_extract as boolean = ?"--skip-extract";
+
 if (!(file.exists(cdfpath) || dir.exists(cdfpath))) {
 	stop(`missing raw data file at location: ${cdfpath}!`);
 }
@@ -34,21 +37,28 @@ if (!(file.exists(cdfpath) || dir.exists(cdfpath))) {
 processCdfFile = function(cdf_src) {
     mzfile = `${outputdir}/mzpack/${basename(cdf_src)}.mzpack`;
     mzpack = NULL;
+	gcxgc  = NULL;
+	image_TIC = `${outputdir}/TIC/${basename(cdf_src)}.cdf`;
 
     print(`processing '${basename(cdf_src)}'!`);
-    print("open raw data cdf file for read and then convert to mzpack raw data file...");
+	
+	if (!skip_extract) {
+	    print("open raw data cdf file for read and then convert to mzpack raw data file...");
 
-    using cdf as open.netCDF(cdf_src) {
-        mzpack = cdf |> as.mzpack(modtime = modtime);
-        mzpack       |> write.mzPack(file = mzfile);	
-    }
+		using cdf as open.netCDF(cdf_src) {
+			mzpack = cdf |> as.mzpack(modtime = modtime);
+			mzpack       |> write.mzPack(file = mzfile);	
+		}
 
-    print("extract GCxGC 2d TIC data...");
+		print("extract GCxGC 2d TIC data...");
 
-    # extract TIC data
-    image_TIC = `${outputdir}/TIC/${basename(cdf_src)}.cdf`;
-    gcxgc = GCxGC::extract_2D_peaks(mzpack);
-    save.cdf(gcxgc, file = image_TIC);
+		# extract TIC data		
+		gcxgc = GCxGC::extract_2D_peaks(mzpack);		
+		save.cdf(gcxgc, file = image_TIC);	
+	} else {
+		gcxgc = read.cdf(image_TIC);
+	}
+	
     image_TIC = `${outputdir}/TIC/${basename(cdf_src)}.png`;
     image_1D = `${outputdir}/TIC/${basename(cdf_src)}_1D.png`;
 
