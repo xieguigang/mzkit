@@ -62,7 +62,7 @@ Module Math
     ''' apply for throw exception message
     ''' </param>
     ''' <returns></returns>
-    Public Function getTolerance(val As Object, env As Environment) As [Variant](Of Tolerance, Message)
+    Public Function getTolerance(val As Object, env As Environment, Optional default$ = "ppm:20") As [Variant](Of Tolerance, Message)
         If val Is Nothing Then
             Return Tolerance.DefaultTolerance.DefaultValue
         ElseIf val.GetType.IsInheritsFrom(GetType(Tolerance)) Then
