@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::a9e555522d650b96fe5c2e93d0320c36, src\visualize\MsImaging\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, ScanMeltdown
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, ScanMeltdown
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,12 +47,11 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -60,6 +59,72 @@ Imports Point = System.Drawing.Point
 
 <HideModuleName>
 Public Module Extensions
+
+    ''' <summary>
+    ''' reset sample position
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Reset(raw As mzPack) As mzPack
+        Dim rect As Rectangle = raw.Shape
+        Dim scans As New List(Of ScanMS1)
+        Dim pos As Point
+        Dim meta As Dictionary(Of String, String)
+
+        For Each scan As ScanMS1 In raw.MS
+            pos = scan.GetMSIPixel
+            pos = New Point With {
+                .X = pos.X - rect.Left,
+                .Y = pos.Y - rect.Top
+            }
+            meta = New Dictionary(Of String, String)(scan.meta)
+            meta("x") = pos.X
+            meta("y") = pos.Y
+
+            scans += New ScanMS1 With {
+                .BPC = scan.BPC,
+                .into = scan.into,
+                .mz = scan.mz,
+                .products = scan.products,
+                .rt = scan.rt,
+                .TIC = scan.TIC,
+                .scan_id = scan.scan_id,
+                .meta = meta
+            }
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = raw.Chromatogram,
+            .MS = scans.ToArray,
+            .Scanners = raw.Scanners,
+            .source = $"reset({raw.source})",
+            .Thumbnail = Nothing
+        }
+    End Function
+
+    ''' <summary>
+    ''' get pixels boundary of the MSImaging
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Shape(raw As mzPack) As Rectangle
+        Dim allPixels As Point() = raw.MS.Select(Function(scan) scan.GetMSIPixel).ToArray
+        Dim top = Aggregate pt As Point In allPixels Into Min(pt.Y)
+        Dim left = Aggregate pt As Point In allPixels Into Min(pt.X)
+        Dim right = Aggregate pt As Point In allPixels Into Max(pt.X)
+        Dim bottom = Aggregate pt As Point In allPixels Into Max(pt.Y)
+        Dim rect As New Rectangle With {
+            .X = left,
+            .Y = top,
+            .Width = right - left,
+            .Height = bottom - top
+        }
+
+        Return rect
+    End Function
 
     ''' <summary>
     ''' parse pixel mapping from 

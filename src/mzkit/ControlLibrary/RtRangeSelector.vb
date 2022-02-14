@@ -177,8 +177,8 @@ Public Class RtRangeSelector
         Using TICcurve As New GraphicsPath
             Dim height As Double = Me.Height
             Dim width As Double = Me.Width
-            Dim scaleX = d3js.scale.linear.domain({TIC_time.Min, TIC_time.Max}).range(New Double() {0, width})
-            Dim scaleY = d3js.scale.linear.domain({0.0, TIC_max}).range(New Double() {0, height})
+            Dim scaleX = d3js.scale.linear.domain(values:={TIC_time.Min, TIC_time.Max}).range(New Double() {0, width})
+            Dim scaleY = d3js.scale.linear.domain(values:={0.0, TIC_max}).range(New Double() {0, height})
             Dim i As i32 = Scan0
             Dim x1, x2 As Single
             Dim y1, y2 As Single
