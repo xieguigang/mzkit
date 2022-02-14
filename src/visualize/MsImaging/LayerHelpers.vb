@@ -94,7 +94,7 @@ Public Module LayerHelpers
                     End Function) _
             .IteratesALL _
             .GroupBy(Function(d) d.mzi.mz, mzErr) _
-            .Where(Function(d) d.Length > ncut) _
+            .Where(Function(d) d.Count > ncut) _
             .ToArray
         Dim k As Integer = allMz.Length / 10
         Dim j As i32 = 0
@@ -105,7 +105,7 @@ Public Module LayerHelpers
                 .First _
                 .mzi.mz
             Dim layer As New SingleIonLayer With {
-                .IonMz = mz,
+                .IonMz = mz.ToString("F4"),
                 .DimensionSize = New Size(graph.width, graph.height),
                 .MSILayer = Grid(Of (mzi As ms2, pt As Point)) _
                     .Create(allMz(i), Function(d) d.Item2) _

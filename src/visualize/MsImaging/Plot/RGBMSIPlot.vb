@@ -110,13 +110,14 @@ Public Class RGBMSIPlot : Inherits Plot
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim labelSize As SizeF = g.MeasureString(Me.R.IonMz.ToString("F4"), labelFont)
+        Dim label As String = SingleIonLayer.ToString(Me.R)
+        Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzR As New LegendObject With {
             .color = "red",
             .fontstyle = theme.legendLabelCSS,
             .style = LegendStyles.Square,
-            .title = Me.R.IonMz.ToString("F4")
+            .title = label
         }
         Dim mzG As LegendObject = Nothing
         Dim mzB As LegendObject = Nothing
@@ -126,7 +127,7 @@ Public Class RGBMSIPlot : Inherits Plot
                 .color = "green",
                 .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Square,
-                .title = Me.G.IonMz.ToString("F4")
+                .title = SingleIonLayer.ToString(Me.G)
             }
         End If
         If Not Me.B Is Nothing Then
@@ -134,7 +135,7 @@ Public Class RGBMSIPlot : Inherits Plot
                 .color = "blue",
                 .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Square,
-                .title = Me.B.IonMz.ToString("F4")
+                .title = SingleIonLayer.ToString(Me.B)
             }
         End If
 

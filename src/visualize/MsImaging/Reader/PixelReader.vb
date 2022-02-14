@@ -183,7 +183,7 @@ Namespace Reader
 
             Return New SingleIonLayer With {
                 .DimensionSize = dimension,
-                .IonMz = mz,
+                .IonMz = mz.ToString("F4"),
                 .MSILayer = pixels.ToArray
             }
         End Function
