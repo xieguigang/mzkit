@@ -144,7 +144,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI1 As Image, MSI2 As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1)
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)

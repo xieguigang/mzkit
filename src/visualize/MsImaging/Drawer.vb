@@ -160,7 +160,7 @@ Public Class Drawer : Implements IDisposable
                         }
                     End Function) _
             .ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         Return engine.RenderPixels(
             pixels:=pixels,
@@ -229,7 +229,7 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
@@ -297,7 +297,7 @@ Public Class Drawer : Implements IDisposable
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
