@@ -58,6 +58,10 @@ Namespace Imaging
 
     Public Class PixelRender : Inherits Renderer
 
+        Public Sub New(heatmapRender As Boolean)
+            MyBase.New(heatmapRender)
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

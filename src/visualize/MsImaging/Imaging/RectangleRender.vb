@@ -75,6 +75,10 @@ Namespace Imaging
 
     Public Class RectangleRender : Inherits Renderer
 
+        Public Sub New(heatmapRender As Boolean)
+            MyBase.New(heatmapRender)
+        End Sub
+
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
@@ -91,8 +95,16 @@ Namespace Imaging
             Dim Rchannel = GetPixelChannelReader(R, cut.r)
             Dim Gchannel = GetPixelChannelReader(G, cut.g)
             Dim Bchannel = GetPixelChannelReader(B, cut.b)
-            Dim w As Integer = dimension.Width * dimSize.Width
-            Dim h As Integer = dimension.Height * dimSize.Height
+            Dim w As Integer
+            Dim h As Integer
+
+            If heatmapMode Then
+                w = dimension.Width * dimSize.Width / 2
+                h = dimension.Height * dimSize.Height / 2
+            Else
+                w = dimension.Width * dimSize.Width
+                h = dimension.Height * dimSize.Height
+            End If
 
             Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(filled:=Color.Transparent)
                 For x As Integer = 1 To dimension.Width
