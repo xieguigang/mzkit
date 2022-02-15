@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::3011348f9de04107109dbdd3ec43dcdb, src\visualize\MsImaging\Imaging\RectangleRender.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Enum RenderingModes
-    ' 
-    '         LayerOverlaps, MixIons, RGBComposition
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class RectangleRender
-    ' 
-    '         Function: ChannelCompositions, (+2 Overloads) LayerOverlaps, (+2 Overloads) RenderPixels
-    ' 
-    '         Sub: FillLayerInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Enum RenderingModes
+' 
+'         LayerOverlaps, MixIons, RGBComposition
+' 
+'  
+' 
+' 
+' 
+'     Class RectangleRender
+' 
+'         Function: ChannelCompositions, (+2 Overloads) LayerOverlaps, (+2 Overloads) RenderPixels
+' 
+'         Sub: FillLayerInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,13 +98,13 @@ Namespace Imaging
             Dim w As Integer
             Dim h As Integer
 
-            If heatmapMode Then
-                w = dimension.Width * dimSize.Width / 2
-                h = dimension.Height * dimSize.Height / 2
-            Else
-                w = dimension.Width * dimSize.Width
-                h = dimension.Height * dimSize.Height
-            End If
+            'If heatmapMode Then
+            '    'w = dimension.Width * dimSize.Width / 2
+            '    'h = dimension.Height * dimSize.Height / 2
+            'Else
+            w = dimension.Width * dimSize.Width
+            h = dimension.Height * dimSize.Height
+            ' End If
 
             Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(filled:=Color.Transparent)
                 For x As Integer = 1 To dimension.Width
@@ -116,7 +116,28 @@ Namespace Imaging
                         Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
 
                         If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
-                            color = defaultBackground
+                            ' missing a pixel at here?
+                            If heatmapMode Then
+                                bR = CByte(New Integer() {
+                                    Rchannel(x - 1, y - 1), Rchannel(x, y - 1), Rchannel(x + 1, y - 1),
+                                    Rchannel(x - 1, y), Rchannel(x, y), Rchannel(x + 1, y),
+                                    Rchannel(x - 1, y + 1), Rchannel(x, y + 1), Rchannel(x + 1, y + 1)
+                                }.Average)
+                                bB = CByte(New Integer() {
+                                    Bchannel(x - 1, y - 1), Bchannel(x, y - 1), Bchannel(x + 1, y - 1),
+                                    Bchannel(x - 1, y), Bchannel(x, y), Bchannel(x + 1, y),
+                                    Bchannel(x - 1, y + 1), Bchannel(x, y + 1), Bchannel(x + 1, y + 1)
+                                }.Average)
+                                bG = CByte(New Integer() {
+                                    Gchannel(x - 1, y - 1), Gchannel(x, y - 1), Gchannel(x + 1, y - 1),
+                                    Gchannel(x - 1, y), Gchannel(x, y), Gchannel(x + 1, y),
+                                    Gchannel(x - 1, y + 1), Gchannel(x, y + 1), Gchannel(x + 1, y + 1)
+                                }.Average)
+
+                                color = Color.FromArgb(bR, bG, bB)
+                            Else
+                                color = defaultBackground
+                            End If
                         Else
                             color = Color.FromArgb(bR, bG, bB)
                         End If
