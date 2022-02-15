@@ -81,6 +81,8 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Remove="MSI_transform.pdf" />
+    <None Remove="peerj-cs-07-585.pdf" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
