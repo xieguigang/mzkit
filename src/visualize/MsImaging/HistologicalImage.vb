@@ -1,8 +1,9 @@
 ﻿Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 ''' <summary>
 ''' helper module for processing haematoxylin and eosin staining image
@@ -22,15 +23,12 @@ Public Module HistologicalImage
     <Extension>
     Public Function HeatMap(HE As Image,
                             Optional scale As ScalerPalette = ScalerPalette.turbo,
-                            Optional mapLevels As Integer = 64) As Image
+                            Optional mapLevels As Integer = 64) As GraphicsData
 
-        Dim map As New Bitmap(HE.Width, HE.Height, format:=PixelFormat.Format32bppArgb)
-
-        Using canvas As BitmapBuffer = BitmapBuffer.FromBitmap(map)
-
-
-            Return map
-        End Using
+        Return HE.Image2DMap(
+            scaleName:=scale.Description,
+            mapLevels:=mapLevels
+        )
     End Function
 
 End Module
