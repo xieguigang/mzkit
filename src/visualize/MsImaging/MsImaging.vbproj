@@ -338,6 +338,7 @@
     <Compile Include="Imaging\RectangleRender.vb" />
     <Compile Include="Imaging\Renderer.vb" />
     <Compile Include="LayerHelpers.vb" />
+    <Compile Include="HistologicalImage.vb" />
     <Compile Include="Plot\DualRegionUnionPlot.vb" />
     <Compile Include="Plot\MSIPlot.vb" />
     <Compile Include="Plot\MSIRegionPlot.vb" />
