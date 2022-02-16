@@ -114,6 +114,11 @@ Public Class VisualStudio
         targeted.DockState = DockState.Document
     End Sub
 
+    ''' <summary>
+    ''' create a new document tab page
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <returns></returns>
     Public Shared Function ShowDocument(Of T As {New, DocumentWindow})() As T
         Dim newDoc As New T()
 

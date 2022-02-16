@@ -69,6 +69,8 @@ Module FeatureSearchHandler
     Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
         Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
+        display.Text = $"Search [{formula}]"
+
         If directRaw Then
             display.directRaw = files.First
             display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw).ToArray)
