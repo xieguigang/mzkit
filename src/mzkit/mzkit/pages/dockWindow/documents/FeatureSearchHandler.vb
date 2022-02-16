@@ -69,7 +69,7 @@ Module FeatureSearchHandler
     Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
         Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
-        display.Text = $"Search [{formula}]"
+        display.TabText = $"Search [{formula}]"
 
         If directRaw Then
             display.directRaw = files.First

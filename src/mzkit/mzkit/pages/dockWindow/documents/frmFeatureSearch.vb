@@ -54,13 +54,19 @@ Imports Task
 
 Public Class frmFeatureSearch
 
+    Dim appendHeader As Boolean = False
+
     Public Sub AddFileMatch(file As String, matches As ParentMatch())
-        Dim matchHeaders = {
-            New ColumnHeader() With {.Text = "Precursor Type"},
-            New ColumnHeader() With {.Text = "Adducts"},
-            New ColumnHeader() With {.Text = "M"}
-        }
-        Me.TreeListView1.Columns.AddRange(matchHeaders)
+        If Not appendHeader Then
+            Dim matchHeaders = {
+                New ColumnHeader() With {.Text = "Precursor Type"},
+                New ColumnHeader() With {.Text = "Adducts"},
+                New ColumnHeader() With {.Text = "M"}
+            }
+
+            Me.TreeListView1.Columns.AddRange(matchHeaders)
+            Me.appendHeader = True
+        End If
 
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
