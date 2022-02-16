@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -23,6 +24,13 @@ Public Module HistologicalImage
                             Optional scale As ScalerPalette = ScalerPalette.turbo,
                             Optional mapLevels As Integer = 64) As Image
 
+        Dim map As New Bitmap(HE.Width, HE.Height, format:=PixelFormat.Format32bppArgb)
+
+        Using canvas As BitmapBuffer = BitmapBuffer.FromBitmap(map)
+
+
+            Return map
+        End Using
     End Function
 
 End Module
