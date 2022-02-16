@@ -91,7 +91,9 @@ Public Class XRawStream
             End Function)
     End Function
 
-    Public Function StreamTo(Optional skipEmptyScan As Boolean = True) As mzPack
+    Public Function StreamTo(Optional skipEmptyScan As Boolean = True,
+                             Optional println As Action(Of String) = Nothing) As mzPack
+
         Dim scan_times As New List(Of Double)
         Dim TIC As New List(Of Double)
         Dim BPC As New List(Of Double)
@@ -107,6 +109,10 @@ Public Class XRawStream
                 BPC += scaninfo.BasePeakIntensity
 
                 Call Application.DoEvents()
+
+                If Not println Is Nothing Then
+                    Call println($"Load " & scaninfo.ToString)
+                End If
             End If
         Next
 

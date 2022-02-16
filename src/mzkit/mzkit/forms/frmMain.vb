@@ -203,7 +203,7 @@ Public Class frmMain
     ''' </summary>
     Public Sub ImportsFiles()
         Using file As New OpenFileDialog With {
-            .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML",
+            .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML|Thermo MSRaw(*.raw)|*.raw",
             .Multiselect = True
         }
             If file.ShowDialog = DialogResult.OK Then

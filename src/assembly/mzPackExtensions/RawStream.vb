@@ -51,8 +51,8 @@ Imports Microsoft.VisualBasic.Language
 Public Module RawStream
 
     <Extension>
-    Public Function LoadFromXRaw(raw As MSFileReader) As mzPack
-        Return New XRawStream(raw).StreamTo
+    Public Function LoadFromXRaw(raw As MSFileReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Return New XRawStream(raw).StreamTo(println:=println)
     End Function
 
     <Extension>
