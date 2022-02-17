@@ -70,6 +70,44 @@ Public Module MZWork
 
     <Extension>
     Public Function ImportWorkspace(mzwork As String) As WorkspaceFile
+        Dim workspace As New WorkspaceFile With {
+            .cacheFiles = New Dictionary(Of String, Raw())
+        }
 
+        Using buffer As Stream = mzwork.Open(FileMode.Open, doClear:=False, [readOnly]:=True), zip As New ZipArchive(buffer, ZipArchiveMode.Read)
+            Dim filelist = zip.Entries.Where(Function(f) f.FullName.StartsWith("meta/")).ToArray
+            Dim scripts As New List(Of String)
+
+            For Each metafile In filelist
+                Dim key As String = metafile.FullName.Replace("meta/", "").FileName
+                Dim content As Raw() = MsgPackSerializer.Deserialize(Of Raw())(metafile.Open)
+
+                ' save mzpack to temp and then modify cache path
+                For Each meta As Raw In content
+                    Dim tempfile As String = $"{App.AppSystemTemp}/.cache/{meta.cache.Substring(0, 2)}/{meta.cache}.mzPack"
+                    Dim zipfile = zip.Entries.Where(Function(f) f.FullName = $"mzpack/{meta.cache}").First
+
+                    zipfile.Open.FlushStream(tempfile)
+                    meta.cache = tempfile
+                Next
+
+                workspace.cacheFiles.Add(key, content)
+            Next
+
+            filelist = zip.Entries.Where(Function(f) f.FullName.StartsWith("src/")).ToArray
+
+            For Each script In filelist
+                Dim scriptName As String = script.FullName.Replace("src/", "")
+                Dim text As String = New StreamReader(script.Open).ReadToEnd
+                Dim path As String = $"{App.ProductProgramData}/.script/{mzwork.MD5}/{scriptName}"
+
+                Call text.SaveTo(path)
+                Call scripts.Add(path)
+            Next
+
+            workspace.scriptFiles = scripts.ToArray
+        End Using
+
+        Return workspace
     End Function
 End Module
