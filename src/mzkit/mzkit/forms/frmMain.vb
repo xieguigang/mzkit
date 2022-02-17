@@ -570,6 +570,11 @@ Public Class frmMain
         progress.ShowProgressTitle("App Exit...", directAccess:=True)
         progress.ShowProgressDetails("Save raw data file viewer workspace...", directAccess:=True)
 
+        Globals.sharedProgressUpdater =
+            Sub()
+                ' do nothing
+            End Sub
+
         Call New Thread(
             Sub()
                 Call Thread.Sleep(100)
@@ -612,13 +617,7 @@ Public Class frmMain
             .taskListDock = WindowModules.taskWin.DockState
         }
 
-        Globals.sharedProgressUpdater =
-            Sub()
-                ' do nothing
-            End Sub
         Globals.Settings.Save()
-
-        App.Exit()
     End Sub
 
 #Region "vs2015"
