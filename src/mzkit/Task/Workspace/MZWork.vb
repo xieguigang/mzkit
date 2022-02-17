@@ -79,7 +79,7 @@ Public Module MZWork
             Dim scripts As New List(Of String)
 
             For Each metafile In filelist
-                Dim key As String = metafile.FullName.Replace("meta/", "").FileName
+                Dim key As String = metafile.FullName.Replace("meta/", "").BaseName
                 Dim content As Raw() = MsgPackSerializer.Deserialize(Of Raw())(metafile.Open)
 
                 ' save mzpack to temp and then modify cache path
