@@ -48,6 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.mzkit_win32.My
+Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -300,44 +301,49 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     End Function
 
     Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
-        Dim rtmin As Double = ribbonItems.SpinnerFeatureFilterRtMin.DecimalValue
-        Dim rtmax As Double = ribbonItems.SpinnerFeatureFilterRtMax.DecimalValue
+        Dim getFilters As New InputFeatureFilter
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
 
-        If rtmin = rtmax OrElse (rtmin = rtmax AndAlso rtmin = 0.0) OrElse rtmin > rtmax Then
-            Call MyApplication.host.showStatusMessage("invalid filter value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
-        Else
-            Call TreeListView1.Items.Clear()
-        End If
+        If mask.ShowDialogForm(getFilters) = DialogResult.OK Then
+            Dim rtmin As Double = Val(getFilters.txtRtMin.Text)
+            Dim rtmax As Double = Val(getFilters.txtRtMax.Text)
 
-        If Not list1.IsNullOrEmpty Then
-            Dim source = list1.ToArray
-            Dim filter = list1 _
-                .Select(Function(i)
-                            Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
-                        End Function) _
-                .ToArray
+            If rtmin = rtmax OrElse (rtmin = rtmax AndAlso rtmin = 0.0) OrElse rtmin > rtmax Then
+                Call MyApplication.host.showStatusMessage("invalid filter value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Return
+            Else
+                Call TreeListView1.Items.Clear()
+            End If
 
-            For Each row In filter
-                Call Me.AddFileMatch(row.File, row.ToArray)
-            Next
+            If Not list1.IsNullOrEmpty Then
+                Dim source = list1.ToArray
+                Dim filter = list1 _
+                    .Select(Function(i)
+                                Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                            End Function) _
+                    .ToArray
 
-            list1.Clear()
-            list1.AddRange(source)
-        ElseIf Not list2.IsNullOrEmpty Then
-            Dim source = list2.ToArray
-            Dim filter = list2 _
-                .Select(Function(i)
-                            Return (i.file, i.targetMz, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
-                        End Function) _
-                .ToArray
+                For Each row In filter
+                    Call Me.AddFileMatch(row.File, row.ToArray)
+                Next
 
-            For Each row In filter
-                Call Me.AddFileMatch(row.file, row.targetMz, row.ToArray)
-            Next
+                list1.Clear()
+                list1.AddRange(source)
+            ElseIf Not list2.IsNullOrEmpty Then
+                Dim source = list2.ToArray
+                Dim filter = list2 _
+                    .Select(Function(i)
+                                Return (i.file, i.targetMz, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                            End Function) _
+                    .ToArray
 
-            list2.Clear()
-            list2.Add(source)
+                For Each row In filter
+                    Call Me.AddFileMatch(row.file, row.targetMz, row.ToArray)
+                Next
+
+                list2.Clear()
+                list2.Add(source)
+            End If
         End If
     End Sub
 End Class

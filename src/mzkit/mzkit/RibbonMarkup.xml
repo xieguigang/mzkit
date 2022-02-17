@@ -2139,7 +2139,14 @@
     <Command Name="cmdGroupFeatureFilter" Id="162" LabelTitle="Feature Filter" LabelDescription="Feature Filter" TooltipTitle="Feature Filter" TooltipDescription="Feature Filter" />
     <Command Name="cmdSpinnerFeatureFilterRtMin" Id="163" LabelTitle="rtmin" LabelDescription="min rt(seconds)" TooltipTitle="min rt" TooltipDescription="min rt(seconds)" />
     <Command Name="cmdSpinnerFeatureFilterRtMax" Id="164" LabelTitle="rtmax" LabelDescription="max rt(seconds)" TooltipTitle="max rt" TooltipDescription="max rt(seconds)" />
-    <Command Name="cmdButtonApplyFeatureFilter" Id="165" LabelTitle="Apply Filter" LabelDescription="Apply Feature Filter" TooltipTitle="Apply Filter" TooltipDescription="Apply Feature Filter" />
+    <Command Name="cmdButtonResetFeatureFilter" Id="165" LabelTitle="Reset Filter" LabelDescription="Reset Feature Filter" TooltipTitle="Reset Filter" TooltipDescription="Reset Feature Filter">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2295,9 +2302,8 @@
               <Button CommandName="cmdButtonExactMassSearchExport" />
               <Button CommandName="cmdButtonLayout2" />
             </Group>
-            <Group CommandName="cmdGroupFeatureFilter">
-              <Spinner CommandName="cmdSpinnerFeatureFilterRtMin" />
-              <Spinner CommandName="cmdSpinnerFeatureFilterRtMax" />
+            <Group CommandName="cmdGroupFeatureFilter" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonResetFeatureFilter" />
             </Group>
           </Tab>
         </TabGroup>

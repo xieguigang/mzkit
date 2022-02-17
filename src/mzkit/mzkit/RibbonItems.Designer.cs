@@ -87,8 +87,7 @@ namespace RibbonLib.Controls
             public const uint cmdGroupExactMassSearch = 1073;
             public const uint cmdButtonExactMassSearchExport = 1074;
             public const uint cmdGroupFeatureFilter = 162;
-            public const uint cmdSpinnerFeatureFilterRtMin = 163;
-            public const uint cmdSpinnerFeatureFilterRtMax = 164;
+            public const uint cmdButtonResetFeatureFilter = 165;
             public const uint cmdTabGroupNetworkTools = 1081;
             public const uint cmdTabNetwork = 1082;
             public const uint cmdGroupNetwork = 1083;
@@ -248,8 +247,7 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupExactMassSearch { get; private set; }
         public RibbonButton ButtonExactMassSearchExport { get; private set; }
         public RibbonGroup GroupFeatureFilter { get; private set; }
-        public RibbonSpinner SpinnerFeatureFilterRtMin { get; private set; }
-        public RibbonSpinner SpinnerFeatureFilterRtMax { get; private set; }
+        public RibbonButton ButtonResetFeatureFilter { get; private set; }
         public RibbonTabGroup TabGroupNetworkTools { get; private set; }
         public RibbonTab TabNetwork { get; private set; }
         public RibbonGroup GroupNetwork { get; private set; }
@@ -407,8 +405,7 @@ namespace RibbonLib.Controls
             GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);
             ButtonExactMassSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonExactMassSearchExport);
             GroupFeatureFilter = new RibbonGroup(ribbon, Cmd.cmdGroupFeatureFilter);
-            SpinnerFeatureFilterRtMin = new RibbonSpinner(ribbon, Cmd.cmdSpinnerFeatureFilterRtMin);
-            SpinnerFeatureFilterRtMax = new RibbonSpinner(ribbon, Cmd.cmdSpinnerFeatureFilterRtMax);
+            ButtonResetFeatureFilter = new RibbonButton(ribbon, Cmd.cmdButtonResetFeatureFilter);
             TabGroupNetworkTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupNetworkTools);
             TabNetwork = new RibbonTab(ribbon, Cmd.cmdTabNetwork);
             GroupNetwork = new RibbonGroup(ribbon, Cmd.cmdGroupNetwork);
