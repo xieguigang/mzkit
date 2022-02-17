@@ -72,7 +72,7 @@ Public Class AtomGroupHandler
         Static all_groups As List(Of KeyValuePair(Of String, Formula)) = New List(Of KeyValuePair(Of String, Formula)) + alkyl + ketones + amines + alkenyl + others
 
         For Each group In all_groups
-            If stdnum.Abs(group.Value.ExactMass - mass) <= 0.3 Then
+            If stdnum.Abs(group.Value.ExactMass - mass) <= 0.1 Then
                 Return New NamedValue(Of Formula)(group.Key, group.Value)
             End If
         Next
@@ -84,7 +84,7 @@ Public Class AtomGroupHandler
         Dim d As Double = mz1 - mz2
         Dim dmass As Double = stdnum.Abs(d)
 
-        If dmass <= 0.3 Then
+        If dmass <= 0.1 Then
             Return Nothing
         End If
 

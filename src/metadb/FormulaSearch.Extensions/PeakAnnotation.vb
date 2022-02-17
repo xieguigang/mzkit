@@ -113,7 +113,7 @@ Public Class PeakAnnotation
                 If Not group.IsEmpty Then
                     Dim deltaStr As String
 
-                    If delta = 1 Then
+                    If delta = -1 Then
                         deltaStr = $"[M+{group.Name}]"
                     Else
                         deltaStr = $"[M-{group.Name}]"
