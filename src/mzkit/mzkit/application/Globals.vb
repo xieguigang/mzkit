@@ -194,9 +194,7 @@ Module Globals
         }
         Dim explorer = WindowModules.fileExplorer
 
-        If Not fromStartup Then
-            sharedProgressUpdater = Sub(text) MyApplication.host.showStatusMessage(text)
-        End If
+        sharedProgressUpdater = Sub(text) MyApplication.host.showStatusMessage(text)
 
         Call project.LoadRawFileCache(
             explorer:=explorer.treeView1,
