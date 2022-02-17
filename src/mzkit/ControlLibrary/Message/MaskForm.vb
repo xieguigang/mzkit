@@ -62,6 +62,11 @@ Public Class MaskForm
 
         Me.Location = New Point(point.X + dx, point.Y)
         Me.Size = New Size(size.Width - dx * 2, size.Height - dy)
+
+        Me.Text = ""
+        Me.ShowInTaskbar = False
+        Me.ShowIcon = False
+
     End Sub
 
     Public Function ShowDialogForm(dialog As Form) As DialogResult

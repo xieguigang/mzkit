@@ -25,10 +25,14 @@ Partial Class InputFeatureFilter
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtRtMin = New System.Windows.Forms.TextBox()
         Me.txtRtMax = New System.Windows.Forms.TextBox()
+        Me.txtRtMin = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtPPM = New System.Windows.Forms.TextBox()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -52,6 +56,10 @@ Partial Class InputFeatureFilter
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.CheckedListBox1)
+        Me.GroupBox1.Controls.Add(Me.txtPPM)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.txtRtMax)
         Me.GroupBox1.Controls.Add(Me.txtRtMin)
         Me.GroupBox1.Controls.Add(Me.Label2)
@@ -63,14 +71,19 @@ Partial Class InputFeatureFilter
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filter"
         '
-        'Label1
+        'txtRtMax
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(23, 33)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(47, 12)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Rt min:"
+        Me.txtRtMax.Location = New System.Drawing.Point(85, 61)
+        Me.txtRtMax.Name = "txtRtMax"
+        Me.txtRtMax.Size = New System.Drawing.Size(114, 21)
+        Me.txtRtMax.TabIndex = 3
+        '
+        'txtRtMin
+        '
+        Me.txtRtMin.Location = New System.Drawing.Point(85, 30)
+        Me.txtRtMin.Name = "txtRtMin"
+        Me.txtRtMin.Size = New System.Drawing.Size(114, 21)
+        Me.txtRtMin.TabIndex = 2
         '
         'Label2
         '
@@ -81,19 +94,48 @@ Partial Class InputFeatureFilter
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Rt max:"
         '
-        'txtRtMin
+        'Label1
         '
-        Me.txtRtMin.Location = New System.Drawing.Point(85, 30)
-        Me.txtRtMin.Name = "txtRtMin"
-        Me.txtRtMin.Size = New System.Drawing.Size(114, 21)
-        Me.txtRtMin.TabIndex = 2
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(23, 33)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(47, 12)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Rt min:"
         '
-        'txtRtMax
+        'Label3
         '
-        Me.txtRtMax.Location = New System.Drawing.Point(85, 61)
-        Me.txtRtMax.Name = "txtRtMax"
-        Me.txtRtMax.Size = New System.Drawing.Size(114, 21)
-        Me.txtRtMax.TabIndex = 3
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(242, 33)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(29, 12)
+        Me.Label3.TabIndex = 4
+        Me.Label3.Text = "PPM:"
+        '
+        'txtPPM
+        '
+        Me.txtPPM.Location = New System.Drawing.Point(302, 30)
+        Me.txtPPM.Name = "txtPPM"
+        Me.txtPPM.Size = New System.Drawing.Size(114, 21)
+        Me.txtPPM.TabIndex = 5
+        Me.txtPPM.Text = "30"
+        '
+        'CheckedListBox1
+        '
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Location = New System.Drawing.Point(25, 140)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(200, 100)
+        Me.CheckedListBox1.TabIndex = 6
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(23, 114)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(83, 12)
+        Me.Label4.TabIndex = 7
+        Me.Label4.Text = "Parent Types:"
         '
         'InputFeatureFilter
         '
@@ -108,6 +150,7 @@ Partial Class InputFeatureFilter
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "InputFeatureFilter"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Feature Filter"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
@@ -122,4 +165,8 @@ Partial Class InputFeatureFilter
     Friend WithEvents Label1 As Label
     Friend WithEvents txtRtMax As TextBox
     Friend WithEvents txtRtMin As TextBox
+    Friend WithEvents txtPPM As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents CheckedListBox1 As CheckedListBox
 End Class

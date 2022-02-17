@@ -50,9 +50,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports RibbonLib.Interop
@@ -300,13 +302,39 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         Return Save(path, encoding.CodePage)
     End Function
 
+    Dim rtmin As Double = 0
+    Dim rtmax As Double = 0
+    Dim ppm As Double = 30
+    Dim types As Dictionary(Of String, Boolean)
+
     Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
         Dim getFilters As New InputFeatureFilter
         Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
 
+        If Not list1.IsNullOrEmpty Then
+            If types.IsNullOrEmpty Then
+                types = list1 _
+                    .Select(Function(f) f.matches) _
+                    .IteratesALL _
+                    .Select(Function(a) a.precursor_type) _
+                    .Distinct _
+                    .ToDictionary(Function(type) type,
+                                  Function(any)
+                                      Return True
+                                  End Function)
+            End If
+
+            getFilters.AddTypes(types)
+        End If
+
+        getFilters.txtPPM.Text = ppm
+        getFilters.txtRtMax.Text = rtmax
+        getFilters.txtRtMin.Text = rtmin
+
         If mask.ShowDialogForm(getFilters) = DialogResult.OK Then
-            Dim rtmin As Double = Val(getFilters.txtRtMin.Text)
-            Dim rtmax As Double = Val(getFilters.txtRtMax.Text)
+            rtmin = Val(getFilters.txtRtMin.Text)
+            rtmax = Val(getFilters.txtRtMax.Text)
+            ppm = Val(getFilters.txtPPM.Text)
 
             If rtmin = rtmax OrElse (rtmin = rtmax AndAlso rtmin = 0.0) OrElse rtmin > rtmax Then
                 Call MyApplication.host.showStatusMessage("invalid filter value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -317,11 +345,16 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
 
             If Not list1.IsNullOrEmpty Then
                 Dim source = list1.ToArray
+                Dim requiredTypes As Index(Of String) = getFilters.GetTypes
                 Dim filter = list1 _
                     .Select(Function(i)
-                                Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                                Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax AndAlso p.ppm <= ppm AndAlso p.precursor_type Like requiredTypes).ToArray)
                             End Function) _
                     .ToArray
+
+                For Each type As String In types.Keys.ToArray
+                    types(type) = type Like requiredTypes
+                Next
 
                 For Each row In filter
                     Call Me.AddFileMatch(row.File, row.ToArray)
