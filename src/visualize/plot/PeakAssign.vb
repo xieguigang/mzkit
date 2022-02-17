@@ -218,10 +218,15 @@ Public Class PeakAssign : Inherits Plot
                     labelSize = images(label).size.SizeF
                 Else
                     Dim block = label.Match("\[.+\]")
-                    Dim name = label.Replace(block, "").Trim
 
-                    If Not (block.StringEmpty OrElse name.StringEmpty) Then
-                        label = block & vbCrLf & name
+                    If Not block.StringEmpty Then
+                        Dim name = label.Replace(block, "").Trim
+
+                        If name.Length > 6 AndAlso block.Length > 8 Then
+                            If Not (block.StringEmpty OrElse name.StringEmpty) Then
+                                label = block & vbCrLf & name
+                            End If
+                        End If
                     End If
 
                     labelSize = g.MeasureString(label, labelFont)
