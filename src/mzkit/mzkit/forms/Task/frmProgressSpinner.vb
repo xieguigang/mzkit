@@ -89,7 +89,10 @@ Public Class frmProgressSpinner
     Public Shared Sub DoLoading(loading As Action)
         Dim spinner As New frmProgressSpinner
 
-        Call New Thread(AddressOf loading.Invoke).Start()
+        Call New Thread(Sub()
+                            Call loading()
+                            Call spinner.Invoke(Sub() spinner.Close())
+                        End Sub).Start()
         Call spinner.ShowDialog()
     End Sub
 End Class
