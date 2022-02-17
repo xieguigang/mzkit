@@ -79,8 +79,8 @@ Public Module Extensions
                 .Y = pos.Y - rect.Top
             }
             meta = New Dictionary(Of String, String)(scan.meta)
-            meta("x") = pos.X
-            meta("y") = pos.Y
+            meta("x") = pos.X.ToString
+            meta("y") = pos.Y.ToString
 
             scans += New ScanMS1 With {
                 .BPC = scan.BPC,

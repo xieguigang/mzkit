@@ -42,25 +42,43 @@
 
 #End Region
 
+Imports System.Text
 Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports BioNovoGene.mzkit_win32.My
+Imports ControlLibrary
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Text
 Imports RibbonLib.Interop
 Imports Task
 
-Public Class frmFeatureSearch
+Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
+
+    Dim appendHeader As Boolean = False
+    Dim list1 As New List(Of (File As String, matches As ParentMatch()))
+    Dim list2 As New List(Of (file As String, targetMz As Double, matches As ScanMS2()))
 
     Public Sub AddFileMatch(file As String, matches As ParentMatch())
-        Dim matchHeaders = {
-            New ColumnHeader() With {.Text = "Precursor Type"},
-            New ColumnHeader() With {.Text = "Adducts"},
-            New ColumnHeader() With {.Text = "M"}
-        }
-        Me.TreeListView1.Columns.AddRange(matchHeaders)
+        list1.Add((file, matches))
+
+        If Not appendHeader Then
+            Dim matchHeaders = {
+                New ColumnHeader() With {.Text = "Precursor Type"},
+                New ColumnHeader() With {.Text = "Adducts"},
+                New ColumnHeader() With {.Text = "M"}
+            }
+
+            Me.TreeListView1.Columns.AddRange(matchHeaders)
+            Me.appendHeader = True
+        End If
 
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
@@ -94,6 +112,8 @@ Public Class frmFeatureSearch
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
 
+        list2.Add((file, targetMz, matches))
+
         For Each member As ScanMS2 In matches
             Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
 
@@ -116,6 +136,16 @@ Public Class frmFeatureSearch
     End Sub
 
     Friend directRaw As Raw
+
+    Public Property FilePath As String Implements IFileReference.FilePath
+
+    Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+        Get
+            Return {
+                New ContentType With {.Details = "Microsoft Excel Table", .FileExt = ".csv", .MIMEType = "application/csv", .Name = "Microsoft Excel Table"}
+            }
+        End Get
+    End Property
 
     Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
         Dim cluster As TreeListViewItem
@@ -173,6 +203,18 @@ Public Class frmFeatureSearch
         OpenContainingFolderToolStripMenuItem.Enabled = False
         CopyFullPathToolStripMenuItem.Enabled = False
         SaveDocumentToolStripMenuItem.Enabled = False
+
+        Call ApplyVsTheme(ContextMenuStrip1)
+
+        AddHandler ribbonItems.ButtonResetFeatureFilter.ExecuteEvent,
+            Sub()
+                ppm = 30
+                rtmin = 0
+                rtmax = 86400
+                types.Clear()
+
+                MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End Sub
     End Sub
 
     Private Sub ViewXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewXICToolStripMenuItem.Click
@@ -234,6 +276,116 @@ Public Class frmFeatureSearch
                 ' Call MyApplication.host.mzkitTool.showSpectrum(scan_id, raw)
                 Call MyApplication.mzkitRawViewer.ShowXIC(ppm.DeltaTolerance, Nothing, GetXICCollection, 0)
                 Call MyApplication.host.mzkitTool.ShowPage()
+            End If
+        End If
+    End Sub
+
+    Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+        Dim file As New File
+        Dim row As New List(Of String)
+
+        For i As Integer = 0 To TreeListView1.Columns.Count - 1
+            row.Add(TreeListView1.Columns(i).Text)
+        Next
+
+        file.Add(New RowObject(row))
+
+        For Each item As TreeListViewItem In TreeListView1.Items
+            Dim tag As String = item.Text
+
+            For Each feature As ListViewItem In item.Items
+                row.Clear()
+                row.Add(tag)
+
+                For Each cell As ListViewSubItem In feature.SubItems
+                    row.Add(cell.Text)
+                Next
+
+                Call file.Add(New RowObject(row))
+            Next
+        Next
+
+        Return file.Save(path, encoding)
+    End Function
+
+    Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Return Save(path, encoding.CodePage)
+    End Function
+
+    Dim rtmin As Double = 0
+    Dim rtmax As Double = 86400
+    Dim ppm As Double = 30
+    Dim types As New Dictionary(Of String, Boolean)
+
+    Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
+        Dim getFilters As New InputFeatureFilter
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
+
+        If Not list1.IsNullOrEmpty Then
+            If types.IsNullOrEmpty Then
+                types = list1 _
+                    .Select(Function(f) f.matches) _
+                    .IteratesALL _
+                    .Select(Function(a) a.precursor_type) _
+                    .Distinct _
+                    .ToDictionary(Function(type) type,
+                                  Function(any)
+                                      Return True
+                                  End Function)
+            End If
+
+            getFilters.AddTypes(types)
+        End If
+
+        getFilters.txtPPM.Text = ppm
+        getFilters.txtRtMax.Text = rtmax
+        getFilters.txtRtMin.Text = rtmin
+
+        If mask.ShowDialogForm(getFilters) = DialogResult.OK Then
+            rtmin = Val(getFilters.txtRtMin.Text)
+            rtmax = Val(getFilters.txtRtMax.Text)
+            ppm = Val(getFilters.txtPPM.Text)
+
+            If rtmin = rtmax OrElse (rtmin = rtmax AndAlso rtmin = 0.0) OrElse rtmin > rtmax Then
+                Call MyApplication.host.showStatusMessage("invalid filter value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Return
+            Else
+                Call TreeListView1.Items.Clear()
+            End If
+
+            If Not list1.IsNullOrEmpty Then
+                Dim source = list1.ToArray
+                Dim requiredTypes As Index(Of String) = getFilters.GetTypes
+                Dim filter = list1 _
+                    .Select(Function(i)
+                                Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax AndAlso p.ppm <= ppm AndAlso p.precursor_type Like requiredTypes).ToArray)
+                            End Function) _
+                    .ToArray
+
+                For Each type As String In types.Keys.ToArray
+                    types(type) = type Like requiredTypes
+                Next
+
+                For Each row In filter
+                    Call Me.AddFileMatch(row.File, row.ToArray)
+                Next
+
+                list1.Clear()
+                list1.AddRange(source)
+            ElseIf Not list2.IsNullOrEmpty Then
+                Dim source = list2.ToArray
+                Dim filter = list2 _
+                    .Select(Function(i)
+                                Return (i.file, i.targetMz, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                            End Function) _
+                    .ToArray
+
+                For Each row In filter
+                    Call Me.AddFileMatch(row.file, row.targetMz, row.ToArray)
+                Next
+
+                list2.Clear()
+                list2.Add(source)
             End If
         End If
     End Sub

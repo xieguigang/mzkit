@@ -59,6 +59,12 @@ Namespace Imaging
 
     Public MustInherit Class Renderer
 
+        Protected heatmapMode As Boolean
+
+        Sub New(heatmapRender As Boolean)
+            heatmapMode = heatmapRender
+        End Sub
+
         ''' <summary>
         ''' 每一种离子一种对应的颜色生成多个图层，然后叠在在一块进行可视化
         ''' </summary>

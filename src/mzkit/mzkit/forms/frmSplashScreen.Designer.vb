@@ -65,7 +65,7 @@ Partial Class frmSplashScreen
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(474, 161)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(38, 16)
+        Me.Label4.Size = New System.Drawing.Size(37, 16)
         Me.Label4.TabIndex = 5
         Me.Label4.Text = "Built: "
         '
@@ -79,7 +79,7 @@ Partial Class frmSplashScreen
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(212, 85)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "This free program is licensed to " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "%s " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "under the MIT license." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "@ 2020 BioNovoGen" &
+        Me.Label3.Text = "This free program is licensed to " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "%s " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "under the MIT license." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "@ 2022 BioNovoGen" &
     "e Corporation" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "All rights reserved."
         '
         'Information
@@ -90,7 +90,7 @@ Partial Class frmSplashScreen
         Me.Information.ForeColor = System.Drawing.Color.White
         Me.Information.Location = New System.Drawing.Point(2, 160)
         Me.Information.Name = "Information"
-        Me.Information.Size = New System.Drawing.Size(341, 16)
+        Me.Information.Size = New System.Drawing.Size(340, 16)
         Me.Information.TabIndex = 1
         Me.Information.Text = "An Open Source Mass Spectrometry Data Toolkit From BioNovoGene"
         '

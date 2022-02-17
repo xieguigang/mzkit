@@ -40,8 +40,10 @@ Partial Class frmFeatureSearch
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ViewXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ApplyFeatureFilterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -107,17 +109,23 @@ Partial Class frmFeatureSearch
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ViewXICToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ApplyFeatureFilterToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewToolStripMenuItem, Me.ViewXICToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 98)
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
+        Me.ViewToolStripMenuItem.Image = CType(resources.GetObject("ViewToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ViewToolStripMenuItem.Text = "View"
+        '
+        'ViewXICToolStripMenuItem
+        '
+        Me.ViewXICToolStripMenuItem.Image = CType(resources.GetObject("ViewXICToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewXICToolStripMenuItem.Name = "ViewXICToolStripMenuItem"
+        Me.ViewXICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ViewXICToolStripMenuItem.Text = "View XIC"
         '
         'ImageList1
         '
@@ -126,11 +134,17 @@ Partial Class frmFeatureSearch
         Me.ImageList1.Images.SetKeyName(0, "application-x-object.png")
         Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
         '
-        'ViewXICToolStripMenuItem
+        'ApplyFeatureFilterToolStripMenuItem
         '
-        Me.ViewXICToolStripMenuItem.Name = "ViewXICToolStripMenuItem"
-        Me.ViewXICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ViewXICToolStripMenuItem.Text = "View XIC"
+        Me.ApplyFeatureFilterToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
+        Me.ApplyFeatureFilterToolStripMenuItem.Name = "ApplyFeatureFilterToolStripMenuItem"
+        Me.ApplyFeatureFilterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ApplyFeatureFilterToolStripMenuItem.Text = "Apply Feature Filter"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'frmFeatureSearch
         '
@@ -160,4 +174,6 @@ Partial Class frmFeatureSearch
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ColumnHeader10 As ColumnHeader
     Friend WithEvents ViewXICToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ApplyFeatureFilterToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class

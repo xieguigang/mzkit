@@ -279,7 +279,7 @@ Public Class frmFileExplorer
     End Sub
 
     Public Sub UpdateMainTitle(source As String)
-        If source.Any(Function(c) c = ASCII.NUL) Then
+        If source.Any(Function(c) ASCII.IsNonPrinting(CByte(AscW(c))) OrElse c = ASCII.CR OrElse c = ASCII.LF) Then
             MyApplication.host.Text = $"BioNovoGene Mzkit [{source.Where(Function(c) AscW(c) >= 32).CharString}]"
         Else
             MyApplication.host.Text = $"BioNovoGene Mzkit [{source.GetFullPath}]"
@@ -504,5 +504,29 @@ Public Class frmFileExplorer
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False, contour:=True)
         End If
+    End Sub
+
+    ''' <summary>
+    ''' export workspace as mzwork workspace file
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Using file As New SaveFileDialog With {.Filter = "MZkit workspace(*.mzWork)|*.mzWork"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call frmTaskProgress.LoadData(
+                    streamLoad:=Function(msg)
+                                    Return MZWork.ExportWorkspace(
+                                        workspace:=Globals.workspace.work,
+                                        save:=file.FileName,
+                                        msg:=msg
+                                    )
+                                End Function,
+                    title:="Save Workspace",
+                    info:=$"Export workspace to [{file.FileName}]"
+                )
+                Call MessageBox.Show("job done!", "MZKit", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Using
     End Sub
 End Class

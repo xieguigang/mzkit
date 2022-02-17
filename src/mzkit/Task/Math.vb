@@ -49,10 +49,8 @@ Public Module Math
 
     Public Function EvaluateFormula(formula As String) As Double
         Dim composition As Formula = FormulaScanner.ScanFormula(formula)
-        Dim exact_mass As Double = Aggregate atom
-                                   In composition.CountsByElement
-                                   Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
-                                   Into Sum(eval)
+        Dim exact_mass As Double = composition.ExactMass
+
         Return exact_mass
     End Function
 End Module

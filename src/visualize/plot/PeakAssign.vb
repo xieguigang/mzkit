@@ -71,7 +71,7 @@ Public Class PeakAssign : Inherits Plot
     ReadOnly title As String
     ReadOnly barHighlight As String
     ReadOnly images As Dictionary(Of String, Image)
-    ReadOnly labelIntensity As Double = 0.2
+    ReadOnly labelIntensity As Double = 0.3
 
     ''' <summary>
     ''' 
@@ -153,7 +153,7 @@ Public Class PeakAssign : Inherits Plot
         Dim rect As RectangleF = canvas.PlotRegion.ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
         Dim xscale = d3js.scale.linear().domain(values:=xticks).range(values:={rect.Left, rect.Right})
-        Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 100}).range(values:={rect.Top, rect.Bottom})
+        Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 110}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
             .region = canvas.PlotRegion,
@@ -217,7 +217,22 @@ Public Class PeakAssign : Inherits Plot
                 If images.ContainsKey(label) Then
                     labelSize = images(label).size.SizeF
                 Else
-                    ' label = label.DoWordWrap(28, "")
+                    Dim block = label.Match("\[.+\]")
+
+                    If Not block.StringEmpty Then
+                        Dim name = label.Replace(block, "").Trim
+
+                        If name.Length > 8 OrElse block.Length > 8 Then
+                            If Not (block.StringEmpty OrElse name.StringEmpty) Then
+                                If block.Length > name.Length Then
+                                    label = block & vbCrLf & New String(" "c, (block.Length - name.Length) / 2) & name
+                                Else
+                                    label = New String(" "c, (name.Length - block.Length) / 2) & block & vbCrLf & name
+                                End If
+                            End If
+                        End If
+                    End If
+
                     labelSize = g.MeasureString(label, labelFont)
                 End If
 
@@ -343,7 +358,7 @@ Public Class PeakAssign : Inherits Plot
                                              Optional axisTicksCSS$ = "font-style: normal; font-size: 10; font-family: " & FontFace.SegoeUI & ";",
                                              Optional axisStroke$ = Stroke.AxisStroke,
                                              Optional connectorStroke$ = "stroke: gray; stroke-width: 3.5px; stroke-dash: dash;",
-                                             Optional labelIntensity As Double = 0.2,
+                                             Optional labelIntensity As Double = 0.3,
                                              Optional images As Dictionary(Of String, Image) = Nothing,
                                              Optional xlabel$ = "M/z ratio",
                                              Optional ylabel$ = "Relative Intensity (%)") As GraphicsData

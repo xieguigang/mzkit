@@ -19,7 +19,9 @@ Namespace RibbonLib.Controls
             Public Const cmdRecentItems As UInteger = 1014
             Public Const cmdMenuGroupFile As UInteger = 1005
             Public Const cmdButtonNew As UInteger = 1001
+            Public Const cmdMenuImports As UInteger = 158
             Public Const cmdButtonImportsRawFiles As UInteger = 1017
+            Public Const cmdImportsMzwork As UInteger = 157
             Public Const cmdButtonToolkits As UInteger = 1007
             Public Const cmdButtonDropA As UInteger = 1008
             Public Const cmdButtonDropB As UInteger = 1009
@@ -64,6 +66,8 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonXIC As UInteger = 1145
             Public Const cmdPlotOptions As UInteger = 97
             Public Const cmdCheckBoxXICRelative As UInteger = 96
+            Public Const cmdTabReferenceLibrary As UInteger = 161
+            Public Const cmdOpenIonsLibrary As UInteger = 159
             Public Const cmdTabGroupCalculatorTools As UInteger = 1061
             Public Const cmdTabCalculator As UInteger = 1062
             Public Const cmdGroupCalculator As UInteger = 1063
@@ -79,6 +83,8 @@ Namespace RibbonLib.Controls
             Public Const cmdTabExactMassSearch As UInteger = 1072
             Public Const cmdGroupExactMassSearch As UInteger = 1073
             Public Const cmdButtonExactMassSearchExport As UInteger = 1074
+            Public Const cmdGroupFeatureFilter As UInteger = 162
+            Public Const cmdButtonResetFeatureFilter As UInteger = 165
             Public Const cmdTabGroupNetworkTools As UInteger = 1081
             Public Const cmdTabNetwork As UInteger = 1082
             Public Const cmdGroupNetwork As UInteger = 1083
@@ -193,10 +199,22 @@ Namespace RibbonLib.Controls
                 Return _ButtonNew
             End Get
         End Property
+        Private _MenuImports As RibbonDropDownButton
+        Public ReadOnly Property MenuImports As RibbonDropDownButton
+            Get
+                Return _MenuImports
+            End Get
+        End Property
         Private _ButtonImportsRawFiles As RibbonButton
         Public ReadOnly Property ButtonImportsRawFiles As RibbonButton
             Get
                 Return _ButtonImportsRawFiles
+            End Get
+        End Property
+        Private _ImportsMzwork As RibbonButton
+        Public ReadOnly Property ImportsMzwork As RibbonButton
+            Get
+                Return _ImportsMzwork
             End Get
         End Property
         Private _ButtonToolkits As RibbonDropDownButton
@@ -463,6 +481,18 @@ Namespace RibbonLib.Controls
                 Return _CheckBoxXICRelative
             End Get
         End Property
+        Private _TabReferenceLibrary As RibbonGroup
+        Public ReadOnly Property TabReferenceLibrary As RibbonGroup
+            Get
+                Return _TabReferenceLibrary
+            End Get
+        End Property
+        Private _OpenIonsLibrary As RibbonButton
+        Public ReadOnly Property OpenIonsLibrary As RibbonButton
+            Get
+                Return _OpenIonsLibrary
+            End Get
+        End Property
         Private _TabGroupCalculatorTools As RibbonTabGroup
         Public ReadOnly Property TabGroupCalculatorTools As RibbonTabGroup
             Get
@@ -551,6 +581,18 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonExactMassSearchExport As RibbonButton
             Get
                 Return _ButtonExactMassSearchExport
+            End Get
+        End Property
+        Private _GroupFeatureFilter As RibbonGroup
+        Public ReadOnly Property GroupFeatureFilter As RibbonGroup
+            Get
+                Return _GroupFeatureFilter
+            End Get
+        End Property
+        Private _ButtonResetFeatureFilter As RibbonButton
+        Public ReadOnly Property ButtonResetFeatureFilter As RibbonButton
+            Get
+                Return _ButtonResetFeatureFilter
             End Get
         End Property
         Private _TabGroupNetworkTools As RibbonTabGroup
@@ -1060,7 +1102,9 @@ Namespace RibbonLib.Controls
             _RecentItems = New RibbonRecentItems(_ribbon, Cmd.cmdRecentItems)
             _MenuGroupFile = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupFile)
             _ButtonNew = New RibbonButton(_ribbon, Cmd.cmdButtonNew)
+            _MenuImports = New RibbonDropDownButton(_ribbon, Cmd.cmdMenuImports)
             _ButtonImportsRawFiles = New RibbonButton(_ribbon, Cmd.cmdButtonImportsRawFiles)
+            _ImportsMzwork = New RibbonButton(_ribbon, Cmd.cmdImportsMzwork)
             _ButtonToolkits = New RibbonDropDownButton(_ribbon, Cmd.cmdButtonToolkits)
             _ButtonDropA = New RibbonButton(_ribbon, Cmd.cmdButtonDropA)
             _ButtonDropB = New RibbonButton(_ribbon, Cmd.cmdButtonDropB)
@@ -1105,6 +1149,8 @@ Namespace RibbonLib.Controls
             _ButtonXIC = New RibbonButton(_ribbon, Cmd.cmdButtonXIC)
             _PlotOptions = New RibbonGroup(_ribbon, Cmd.cmdPlotOptions)
             _CheckBoxXICRelative = New RibbonCheckBox(_ribbon, Cmd.cmdCheckBoxXICRelative)
+            _TabReferenceLibrary = New RibbonGroup(_ribbon, Cmd.cmdTabReferenceLibrary)
+            _OpenIonsLibrary = New RibbonButton(_ribbon, Cmd.cmdOpenIonsLibrary)
             _TabGroupCalculatorTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupCalculatorTools)
             _TabCalculator = New RibbonTab(_ribbon, Cmd.cmdTabCalculator)
             _GroupCalculator = New RibbonGroup(_ribbon, Cmd.cmdGroupCalculator)
@@ -1120,6 +1166,8 @@ Namespace RibbonLib.Controls
             _TabExactMassSearch = New RibbonTab(_ribbon, Cmd.cmdTabExactMassSearch)
             _GroupExactMassSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupExactMassSearch)
             _ButtonExactMassSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonExactMassSearchExport)
+            _GroupFeatureFilter = New RibbonGroup(_ribbon, Cmd.cmdGroupFeatureFilter)
+            _ButtonResetFeatureFilter = New RibbonButton(_ribbon, Cmd.cmdButtonResetFeatureFilter)
             _TabGroupNetworkTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupNetworkTools)
             _TabNetwork = New RibbonTab(_ribbon, Cmd.cmdTabNetwork)
             _GroupNetwork = New RibbonGroup(_ribbon, Cmd.cmdGroupNetwork)

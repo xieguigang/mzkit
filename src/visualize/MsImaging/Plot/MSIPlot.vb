@@ -110,7 +110,7 @@ Public Class MSIPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         MSI = engine.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
@@ -128,13 +128,14 @@ Public Class MSIPlot : Inherits Plot
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim labelSize As SizeF = g.MeasureString(ion.IonMz.ToString("F4"), labelFont)
+        Dim label As String = Double.Parse(ion.IonMz).ToString("F4")
+        Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzLegend As New LegendObject With {
             .color = "black",
             .fontstyle = theme.legendLabelCSS,
             .style = LegendStyles.Square,
-            .title = ion.IonMz.ToString("F4")
+            .title = label
         }
 
         Call Legend.DrawLegends(g, pos, {mzLegend}, $"{labelSize.Height},{labelSize.Height}")

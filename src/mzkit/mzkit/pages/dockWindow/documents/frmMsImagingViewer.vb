@@ -502,7 +502,7 @@ Public Class frmMsImagingViewer
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
-                           Dim drawer As New PixelRender
+                           Dim drawer As New PixelRender(heatmapRender:=False)
                            Dim qr As Double = threshold(R.Select(Function(p) p.intensity).ToArray, params.maxCut)
                            Dim qg As Double = threshold(G.Select(Function(p) p.intensity).ToArray, params.maxCut)
                            Dim qb As Double = threshold(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
@@ -619,7 +619,7 @@ Public Class frmMsImagingViewer
         pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance, cut:={0, 1})
         pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
 
-        Dim drawer As New PixelRender
+        Dim drawer As New PixelRender(heatmapRender:=False)
         Dim image As Bitmap = drawer.RenderPixels(
             pixels:=pixelFilter,
             dimension:=dimensionSize,

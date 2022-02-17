@@ -56,6 +56,8 @@ Module CLI
                         MyApplication.host.OpenFile(filepath, showDocument:=True)
                         WindowModules.panelMain.Show(MyApplication.host.dockPanel)
                         WindowModules.panelMain.DockState = DockState.Document
+                    Case "mzwork"
+                        Globals.loadWorkspace(mzwork:=filepath, fromStartup:=True)
                 End Select
             End Sub
 

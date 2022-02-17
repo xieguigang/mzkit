@@ -104,7 +104,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
            .color = color.ToHtmlColor,
            .fontstyle = theme.legendLabelCSS,
            .style = LegendStyles.Square,
-           .title = ion.IonMz.ToString("F4")
+           .title = Double.Parse(ion.IonMz).ToString("F4")
         }
     End Function
 
@@ -144,7 +144,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI1 As Image, MSI2 As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
 
         MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1)
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
@@ -166,7 +166,8 @@ Public Class DualRegionUnionPlot : Inherits Plot
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim labelSize As SizeF = g.MeasureString(region1.IonMz.ToString("F4"), labelFont)
+        Dim label As String = Double.Parse(region1.IonMz).ToString("F4")
+        Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top)
         Dim mz1 = GetMzLegend(region1, colorSet1.Last.Color)
         Dim mz2 = GetMzLegend(region2, colorSet2.Last.Color)

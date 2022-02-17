@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::78e53de583e785b0fd19ba0dc20a489e, src\mzkit\mzkit\forms\Task\frmTaskProgress.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTaskProgress
-    ' 
-    '     Function: LoadData
-    ' 
-    '     Sub: frmImportTaskProgress_Paint, frmTaskProgress_Closed, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction
-    '          SetProgress, SetProgressMode, ShowProgressDetails, ShowProgressTitle
-    ' 
-    ' /********************************************************************************/
+' Class frmTaskProgress
+' 
+'     Function: LoadData
+' 
+'     Sub: frmImportTaskProgress_Paint, frmTaskProgress_Closed, frmTaskProgress_KeyDown, frmTaskProgress_Load, RunAction
+'          SetProgress, SetProgressMode, ShowProgressDetails, ShowProgressTitle
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class frmTaskProgress
 
@@ -96,6 +97,8 @@ Public Class frmTaskProgress
         ElseIf Not dialogClosed Then
             Invoke(Sub() Label1.Text = message)
         End If
+
+        Call MyApplication.host.showStatusMessage(message)
     End Sub
 
     Private Sub frmTaskProgress_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -118,6 +121,27 @@ Public Class frmTaskProgress
         DoubleBuffered = True
         TaskbarStatus.SetLoopStatus()
     End Sub
+
+    Public Shared Function LoadData(Of T)(streamLoad As Func(Of Action(Of String), T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
+        Dim tmp As T
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
+
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
+
+                tmp = streamLoad(AddressOf progress.ShowProgressDetails)
+
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
+
+        Call progress.ShowDialog()
+
+        Return tmp
+    End Function
 
     Public Shared Function LoadData(Of T)(streamLoad As Func(Of T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
         Dim tmp As T

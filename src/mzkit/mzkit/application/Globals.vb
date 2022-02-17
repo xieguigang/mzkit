@@ -186,6 +186,34 @@ Module Globals
 
     Friend sharedProgressUpdater As Action(Of String)
 
+    Public Sub loadWorkspace(mzwork As String, fromStartup As Boolean)
+        If Not fromStartup Then
+            If MessageBox.Show("Load new workspace will overrides current MZKit workspace, continute to process?", "Load New Workspace", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
+                Return
+            End If
+        End If
+
+        Dim work As WorkspaceFile = frmTaskProgress.LoadData(
+            streamLoad:=Function(msg) Task.MZWork.ImportWorkspace(mzwork, msg),
+            info:="Loading MZKit workspace..."
+        )
+        Dim project As New ViewerProject With {
+            .FilePath = Globals.defaultWorkspace,
+            .work = work
+        }
+        Dim explorer = WindowModules.fileExplorer
+
+        sharedProgressUpdater = Sub(text) MyApplication.host.showStatusMessage(text)
+
+        Call project.LoadRawFileCache(
+            explorer:=explorer.treeView1,
+            rawMenu:=explorer.ctxMenuFiles,
+            targetRawMenu:=explorer.ctxMenuRawFile,
+            scriptMenu:=explorer.ctxMenuScript
+        )
+        Call MyApplication.host.showStatusMessage("Ready!")
+    End Sub
+
     ''' <summary>
     ''' two root nodes:
     ''' 
@@ -193,14 +221,13 @@ Module Globals
     ''' 2. R# Automation
     ''' </summary>
     ''' <param name="explorer"></param>
-    ''' <param name="defaultWorkspace"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadRawFileCache(explorer As TreeView,
+    Public Function LoadRawFileCache(files As ViewerProject,
+                                     explorer As TreeView,
                                      rawMenu As ContextMenuStrip,
                                      targetRawMenu As ContextMenuStrip,
-                                     scriptMenu As ContextMenuStrip,
-                                     Optional defaultWorkspace As String = Nothing) As Integer
+                                     scriptMenu As ContextMenuStrip) As Integer
 
         Dim scripts As New TreeNode("R# Automation") With {
             .ImageIndex = 1,
@@ -215,37 +242,34 @@ Module Globals
             .ContextMenuStrip = rawMenu
         }
 
+        explorer.Nodes.Clear()
         explorer.Nodes.Add(rawFiles)
         explorer.Nodes.Add(scripts)
 
-        If defaultWorkspace.StringEmpty Then
-            defaultWorkspace = Globals.defaultWorkspace
-        End If
-
-        If Not defaultWorkspace.FileExists Then
-            currentWorkspace = New ViewerProject With {
-                .FilePath = defaultWorkspace
-            }
-
-            Return 0
-        Else
-            Call sharedProgressUpdater("Load raw file list...")
-        End If
-
-        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
         Dim i As Integer
 
         For Each raw As Raw In files.GetRawDataFiles
-            Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+            Dim sourcePath As String = raw.source.GetFullPath(throwEx:=False)
+            Dim name As String = raw.source.FileName
 
-            Dim rawFileNode As New TreeNode(raw.source.FileName) With {
+            If name.Contains(vbCr) OrElse name.Contains(vbLf) Then
+                name = name.LineTokens.Last
+
+                If name.Length > 24 Then
+                    name = "..." & name.Substring(name.Length - 21)
+                End If
+            End If
+
+            Call sharedProgressUpdater($"[Raw File Viewer] Loading {name}...")
+
+            Dim rawFileNode As New TreeNode(name) With {
                 .Checked = True,
                 .Tag = raw,
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
                 .StateImageIndex = 2,
                 .ContextMenuStrip = targetRawMenu,
-                .ToolTipText = raw.source.GetFullPath
+                .ToolTipText = If(sourcePath.StringEmpty, "source file is missing!", sourcePath)
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -266,7 +290,7 @@ Module Globals
                     .StateImageIndex = 3,
                     .SelectedImageIndex = 3,
                     .ContextMenuStrip = scriptMenu,
-                    .ToolTipText = script.GetFullPath
+                    .ToolTipText = script.GetFullPath(throwEx:=False)
                 }
 
                 scripts.Nodes.Add(fileNode)
@@ -274,6 +298,42 @@ Module Globals
         End If
 
         Call loadRStudioScripts(explorer, scriptMenu)
+
+        Return i
+    End Function
+
+    ''' <summary>
+    ''' two root nodes:
+    ''' 
+    ''' 1. Raw Data Files
+    ''' 2. R# Automation
+    ''' </summary>
+    ''' <param name="explorer"></param>
+    ''' <param name="defaultWorkspace"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadRawFileCache(explorer As TreeView,
+                                     rawMenu As ContextMenuStrip,
+                                     targetRawMenu As ContextMenuStrip,
+                                     scriptMenu As ContextMenuStrip,
+                                     Optional defaultWorkspace As String = Nothing) As Integer
+
+        If defaultWorkspace.StringEmpty Then
+            defaultWorkspace = Globals.defaultWorkspace
+        End If
+
+        If Not defaultWorkspace.FileExists Then
+            currentWorkspace = New ViewerProject With {
+                .FilePath = defaultWorkspace
+            }
+
+            Return 0
+        Else
+            Call sharedProgressUpdater("Load raw file list...")
+        End If
+
+        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
+        Dim i As Integer = files.LoadRawFileCache(explorer, rawMenu, targetRawMenu, scriptMenu)
 
         Return i
     End Function

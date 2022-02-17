@@ -172,6 +172,7 @@
     <Compile Include="Properties\PlotProperty.vb" />
     <Compile Include="Properties\MsImageProperty.vb" />
     <Compile Include="Properties\RawFileProperty.vb" />
+    <Compile Include="Workspace\MZWork.vb" />
     <Compile Include="Workspace\WorkspaceFile.vb" />
     <Compile Include="Workspace\ViewerProject.vb" />
     <Compile Include="DrawScatter.vb" />

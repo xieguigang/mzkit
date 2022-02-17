@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::080df9cd132073c6142b928301724776, src\mzkit\Task\Imports\Raw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Raw
-    ' 
-    '     Properties: cache, cacheFileExists, isLoaded, numOfScan1, numOfScan2
-    '                 rtmax, rtmin, source
-    ' 
-    '     Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetMs1Scans, GetMs2Scans
-    '               GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
-    ' 
-    '     Sub: SaveAs
-    ' 
-    ' /********************************************************************************/
+' Class Raw
+' 
+'     Properties: cache, cacheFileExists, isLoaded, numOfScan1, numOfScan2
+'                 rtmax, rtmin, source
+' 
+'     Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetMs1Scans, GetMs2Scans
+'               GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+' 
+'     Sub: SaveAs
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
-Imports System.Windows.Forms
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Raw
@@ -62,24 +62,27 @@ Public Class Raw
     ''' 原始数据文件位置
     ''' </summary>
     ''' <returns></returns>
-    Public Property source As String
+    <MessagePackMember(0)> Public Property source As String
+
     ''' <summary>
     ''' mzpack二进制缓存文件位置
     ''' </summary>
     ''' <returns></returns>
-    Public Property cache As String
-    Public Property rtmin As Double
-    Public Property rtmax As Double
+    <MessagePackMember(5)> Public Property cache As String
+
+    <MessagePackMember(1)> Public Property rtmin As Double
+    <MessagePackMember(2)> Public Property rtmax As Double
+
     ''' <summary>
     ''' MS1扫描的数量
     ''' </summary>
     ''' <returns></returns>
-    Public Property numOfScan1 As Integer
+    <MessagePackMember(3)> Public Property numOfScan1 As Integer
     ''' <summary>
     ''' MS2扫描的数量
     ''' </summary>
     ''' <returns></returns>
-    Public Property numOfScan2 As Integer
+    <MessagePackMember(4)> Public Property numOfScan2 As Integer
 
     Friend loaded As mzPack
 
@@ -134,15 +137,17 @@ mzPackReader:
     End Function
 
     Public Function UnloadMzpack() As Raw
-        Erase loaded.MS
+        If Not loaded Is Nothing Then
+            Erase loaded.MS
 
-        If Not loaded.Thumbnail Is Nothing Then
-            loaded.Thumbnail.Dispose()
-            loaded.Thumbnail = Nothing
+            If Not loaded.Thumbnail Is Nothing Then
+                loaded.Thumbnail.Dispose()
+                loaded.Thumbnail = Nothing
+            End If
+
+            loaded.Scanners.Clear()
+            loaded = Nothing
         End If
-
-        loaded.Scanners.Clear()
-        loaded = Nothing
 
         ms2.Clear()
         ms1.Clear()
@@ -177,6 +182,7 @@ mzPackReader:
     End Function
 
     Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)
+        Call LoadMzpack(Sub(m, s) Console.WriteLine($"[{m}] -> [{s}]"))
         Return ms2.Values
     End Function
 

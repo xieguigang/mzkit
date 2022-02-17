@@ -255,7 +255,15 @@ Module TaskScript
     ''' <param name="cacheFile"></param>
     <ExportAPI("cache.mzpack")>
     Public Sub CreateMzpack(raw As String, cacheFile As String)
-        Dim mzpack As mzPack = Converter.LoadRawFileAuto(raw, "ppm:20", , AddressOf RunSlavePipeline.SendMessage)
+        Dim mzpack As mzPack
+
+        If raw.ExtensionSuffix("raw") Then
+            Using msraw As New MSFileReader(raw)
+                mzpack = msraw.LoadFromXRaw(AddressOf RunSlavePipeline.SendMessage)
+            End Using
+        Else
+            mzpack = Converter.LoadRawFileAuto(raw, "ppm:20", , AddressOf RunSlavePipeline.SendMessage)
+        End If
 
         If Not mzpack.MS.IsNullOrEmpty Then
             RunSlavePipeline.SendMessage("Create snapshot...")

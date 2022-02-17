@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::f2463fc65c0cfdc073abe65e51c69e68, src\visualize\MsImaging\SingleIonLayer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class SingleIonLayer
-    ' 
-    '     Properties: DimensionSize, hasZeroPixels, IonMz, MSILayer
-    ' 
-    '     Function: GetIntensity, (+2 Overloads) GetLayer, GetQuartile, MeasureUninSize, Take
-    '               ToString, Trim
-    ' 
-    ' /********************************************************************************/
+' Class SingleIonLayer
+' 
+'     Properties: DimensionSize, hasZeroPixels, IonMz, MSILayer
+' 
+'     Function: GetIntensity, (+2 Overloads) GetLayer, GetQuartile, MeasureUninSize, Take
+'               ToString, Trim
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Class SingleIonLayer
 
-    Public Property IonMz As Double
+    Public Property IonMz As String
     Public Property MSILayer As PixelData()
 
     ''' <summary>
@@ -89,7 +89,7 @@ Public Class SingleIonLayer
         Return New SingleIonLayer With {
             .DimensionSize = DimensionSize,
             .IonMz = IonMz,
-            .MSILayer = MSILayer _                
+            .MSILayer = MSILayer _
                 .Where(Function(p)
                            Return p.intensity / maxinto >= intocutoff
                        End Function) _
@@ -98,7 +98,11 @@ Public Class SingleIonLayer
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"({MSILayer.Length} pixels) {IonMz.ToString("F4")}"
+        Return $"({MSILayer.Length} pixels) {ToString(Me)}"
+    End Function
+
+    Public Overloads Shared Function ToString(ion As SingleIonLayer) As String
+        Return If(ion.IonMz.IsNumeric, $"m/z {Double.Parse(ion.IonMz).ToString("F4")}", ion.IonMz)
     End Function
 
     Public Function MeasureUninSize(sampling As Integer) As Size
@@ -157,7 +161,7 @@ Public Class SingleIonLayer
             .ToArray
 
         Return New SingleIonLayer With {
-            .IonMz = mz.FirstOrDefault,
+            .IonMz = mz.FirstOrDefault.ToString("F4"),
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }

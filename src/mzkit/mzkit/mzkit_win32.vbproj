@@ -343,6 +343,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputFeatureFilter.Designer.vb">
+      <DependentUpon>InputFeatureFilter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputFeatureFilter.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Task\MSSearchTask.vb" />
     <Compile Include="forms\Task\TaskbarStatus.vb" />
     <Compile Include="forms\Task\RscriptProgressTask.vb" />
@@ -379,10 +385,10 @@
     <Compile Include="pages\dockWindow\documents\frmGCxGCViewer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\documents\InputMSIDimension.Designer.vb">
+    <Compile Include="forms\Inputs\InputMSIDimension.Designer.vb">
       <DependentUpon>InputMSIDimension.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\documents\InputMSIDimension.vb">
+    <Compile Include="forms\Inputs\InputMSIDimension.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\frmSeeMs.Designer.vb">
@@ -724,6 +730,9 @@
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputFeatureFilter.resx">
+      <DependentUpon>InputFeatureFilter.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
@@ -775,7 +784,7 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
       <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\documents\InputMSIDimension.resx">
+    <EmbeddedResource Include="forms\Inputs\InputMSIDimension.resx">
       <DependentUpon>InputMSIDimension.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
