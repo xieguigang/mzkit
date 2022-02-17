@@ -202,6 +202,7 @@ Module Globals
             targetRawMenu:=explorer.ctxMenuRawFile,
             scriptMenu:=explorer.ctxMenuScript
         )
+        Call MyApplication.host.showStatusMessage("Ready!")
     End Sub
 
     ''' <summary>
@@ -232,6 +233,7 @@ Module Globals
             .ContextMenuStrip = rawMenu
         }
 
+        explorer.Nodes.Clear()
         explorer.Nodes.Add(rawFiles)
         explorer.Nodes.Add(scripts)
 
