@@ -88,7 +88,7 @@ Public Module MZWork
                     Dim zipfile = zip.Entries.Where(Function(f) f.FullName = $"mzpack/{meta.cache}").First
 
                     zipfile.Open.FlushStream(tempfile)
-                    meta.cache = tempfile
+                    meta.cache = tempfile.Replace("\", "/")
                 Next
 
                 workspace.cacheFiles.Add(key, content)
