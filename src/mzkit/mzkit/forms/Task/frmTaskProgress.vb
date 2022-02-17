@@ -122,6 +122,27 @@ Public Class frmTaskProgress
         TaskbarStatus.SetLoopStatus()
     End Sub
 
+    Public Shared Function LoadData(Of T)(streamLoad As Func(Of Action(Of String), T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
+        Dim tmp As T
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
+
+                Call progress.ShowProgressTitle(title)
+                Call progress.ShowProgressDetails(info)
+
+                tmp = streamLoad(AddressOf progress.ShowProgressDetails)
+
+                Call progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
+
+        Call progress.ShowDialog()
+
+        Return tmp
+    End Function
+
     Public Shared Function LoadData(Of T)(streamLoad As Func(Of T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
         Dim tmp As T
         Dim progress As New frmTaskProgress

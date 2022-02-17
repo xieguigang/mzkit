@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f451b57994a2823fb5072f59283fef4c, src\mzkit\Task\Workspace\ViewerProject.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ViewerProject
-    ' 
-    '     Properties: Count, FilePath, MimeType, work
-    ' 
-    '     Function: FindRawFile, GetAutomationScripts, GetRawDataFiles, LoadWorkspace, (+2 Overloads) Save
-    '               SaveAs
-    ' 
-    '     Sub: Add
-    ' 
-    ' /********************************************************************************/
+' Class ViewerProject
+' 
+'     Properties: Count, FilePath, MimeType, work
+' 
+'     Function: FindRawFile, GetAutomationScripts, GetRawDataFiles, LoadWorkspace, (+2 Overloads) Save
+'               SaveAs
+' 
+'     Sub: Add
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -97,13 +97,15 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
             work.cacheFiles.Add(raw.source.FileName, {})
         End If
 
-        work.cacheFiles(raw.source.FileName) = work.cacheFiles(raw.source.FileName).JoinIterates(raw).ToArray
+        work.cacheFiles(raw.source.FileName) = work.cacheFiles(raw.source.FileName) _
+            .JoinIterates(raw) _
+            .ToArray
     End Sub
 
     Public Function FindRawFile(path As String) As Raw
         Dim fullName As String = path
 
-        If Not path.Any(Function(c) c = ASCII.NUL) Then
+        If Not path.Any(AddressOf ASCII.IsNonPrinting) Then
             fullName = path.GetFullPath
         End If
 
@@ -111,7 +113,7 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
             .Where(Function(a)
                        Dim name As String = a.source
 
-                       If Not name.Any(Function(c) c = ASCII.NUL) Then
+                       If Not name.Any(AddressOf ASCII.IsNonPrinting) Then
                            name = name.GetFullPath
                        End If
 

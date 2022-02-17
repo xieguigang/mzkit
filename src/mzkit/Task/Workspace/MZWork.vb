@@ -10,13 +10,26 @@ Imports Microsoft.VisualBasic.Linq
 Public Module MZWork
 
     <Extension>
-    Public Function ExportWorkspace(workspace As WorkspaceFile, save As String) As Boolean
+    Public Function ExportWorkspace(workspace As WorkspaceFile, save As String, msg As Action(Of String)) As Boolean
         Using file As Stream = save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), zip As New ZipArchive(file, ZipArchiveMode.Create)
             ' /
             ' +--- mzpack (raw data files)
             ' +--- meta (meta data of the raw data file)
             ' +--- src (R# automation script files)
             For Each rawfile In workspace.cacheFiles.SafeQuery
+                ' save message pack
+                Dim nameKey As String = rawfile.Key
+
+                If nameKey.Contains(vbCr) OrElse nameKey.Contains(vbLf) Then
+                    nameKey = nameKey.LineTokens.Last
+
+                    If nameKey.Length > 24 Then
+                        nameKey = "..." & nameKey.Substring(nameKey.Length - 21)
+                    End If
+                End If
+
+                Call msg($"pack raw [{nameKey}]...")
+
                 For Each cache As Raw In rawfile.Value
                     ' write cache data file
                     Using buffer As Stream = cache.cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -43,17 +56,6 @@ Public Module MZWork
                             End Function) _
                     .ToArray
 
-                ' save message pack
-                Dim nameKey As String = rawfile.Key
-
-                If nameKey.Contains(vbCr) OrElse nameKey.Contains(vbLf) Then
-                    nameKey = nameKey.LineTokens.Last
-
-                    If nameKey.Length > 24 Then
-                        nameKey = "..." & nameKey.Substring(nameKey.Length - 21)
-                    End If
-                End If
-
                 Dim metapack = zip.CreateEntry($"meta/{nameKey}.pack").Open
 
                 Call MsgPackSerializer.SerializeObject(meta, metapack)
@@ -79,7 +81,7 @@ Public Module MZWork
     End Function
 
     <Extension>
-    Public Function ImportWorkspace(mzwork As String) As WorkspaceFile
+    Public Function ImportWorkspace(mzwork As String, msg As Action(Of String)) As WorkspaceFile
         Dim workspace As New WorkspaceFile With {
             .cacheFiles = New Dictionary(Of String, Raw())
         }
@@ -96,6 +98,8 @@ Public Module MZWork
                 For Each meta As Raw In content
                     Dim tempfile As String = $"{App.AppSystemTemp}/.cache/{meta.cache.Substring(0, 2)}/{meta.cache}.mzPack"
                     Dim zipfile = zip.Entries.Where(Function(f) f.FullName = $"mzpack/{meta.cache}").First
+
+                    msg($"unpack raw data [{key}/{tempfile.FileName}]...")
 
                     zipfile.Open.FlushStream(tempfile)
                     meta.cache = tempfile.Replace("\", "/")

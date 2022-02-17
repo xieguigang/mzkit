@@ -193,7 +193,10 @@ Module Globals
             End If
         End If
 
-        Dim work As WorkspaceFile = frmTaskProgress.LoadData(Function() Task.MZWork.ImportWorkspace(mzwork), info:="Loading MZKit workspace...")
+        Dim work As WorkspaceFile = frmTaskProgress.LoadData(
+            streamLoad:=Function(msg) Task.MZWork.ImportWorkspace(mzwork, msg),
+            info:="Loading MZKit workspace..."
+        )
         Dim project As New ViewerProject With {
             .FilePath = Globals.defaultWorkspace,
             .work = work
