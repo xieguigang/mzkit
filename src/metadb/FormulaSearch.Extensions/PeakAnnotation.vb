@@ -78,6 +78,10 @@ Public Class PeakAnnotation
                 products(i).Annotation = "M"
             Else
                 For isotope As Integer = -3 To 3
+                    If isotope = 0 Then
+                        Continue For
+                    End If
+
                     If stdNum.Abs(isotope - delta) <= 0.05 Then
                         If isotope < 0 Then
                             products(i).Annotation = $"[M{isotope}]"

@@ -222,7 +222,7 @@ Public Class PeakAssign : Inherits Plot
                     If Not block.StringEmpty Then
                         Dim name = label.Replace(block, "").Trim
 
-                        If name.Length > 6 OrElse block.Length > 8 Then
+                        If name.Length > 8 OrElse block.Length > 8 Then
                             If Not (block.StringEmpty OrElse name.StringEmpty) Then
                                 If block.Length > name.Length Then
                                     label = block & vbCrLf & New String(" "c, (block.Length - name.Length) / 2) & name
