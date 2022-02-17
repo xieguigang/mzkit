@@ -2136,6 +2136,10 @@
         <Image Id="608" MinDPI="144">Res/application-vnd.oasis.opendocument.database.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdGroupFeatureFilter" Id="162" LabelTitle="Feature Filter" LabelDescription="Feature Filter" TooltipTitle="Feature Filter" TooltipDescription="Feature Filter" />
+    <Command Name="cmdSpinnerFeatureFilterRtMin" Id="163" LabelTitle="rtmin" LabelDescription="min rt(seconds)" TooltipTitle="min rt" TooltipDescription="min rt(seconds)" />
+    <Command Name="cmdSpinnerFeatureFilterRtMax" Id="164" LabelTitle="rtmax" LabelDescription="max rt(seconds)" TooltipTitle="max rt" TooltipDescription="max rt(seconds)" />
+    <Command Name="cmdButtonApplyFeatureFilter" Id="165" LabelTitle="Apply Filter" LabelDescription="Apply Feature Filter" TooltipTitle="Apply Filter" TooltipDescription="Apply Feature Filter" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2290,6 +2294,10 @@
             <Group CommandName="cmdGroupExactMassSearch" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonExactMassSearchExport" />
               <Button CommandName="cmdButtonLayout2" />
+            </Group>
+            <Group CommandName="cmdGroupFeatureFilter">
+              <Spinner CommandName="cmdSpinnerFeatureFilterRtMin" />
+              <Spinner CommandName="cmdSpinnerFeatureFilterRtMax" />
             </Group>
           </Tab>
         </TabGroup>

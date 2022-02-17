@@ -83,6 +83,9 @@ Namespace RibbonLib.Controls
             Public Const cmdTabExactMassSearch As UInteger = 1072
             Public Const cmdGroupExactMassSearch As UInteger = 1073
             Public Const cmdButtonExactMassSearchExport As UInteger = 1074
+            Public Const cmdGroupFeatureFilter As UInteger = 162
+            Public Const cmdSpinnerFeatureFilterRtMin As UInteger = 163
+            Public Const cmdSpinnerFeatureFilterRtMax As UInteger = 164
             Public Const cmdTabGroupNetworkTools As UInteger = 1081
             Public Const cmdTabNetwork As UInteger = 1082
             Public Const cmdGroupNetwork As UInteger = 1083
@@ -579,6 +582,24 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonExactMassSearchExport As RibbonButton
             Get
                 Return _ButtonExactMassSearchExport
+            End Get
+        End Property
+        Private _GroupFeatureFilter As RibbonGroup
+        Public ReadOnly Property GroupFeatureFilter As RibbonGroup
+            Get
+                Return _GroupFeatureFilter
+            End Get
+        End Property
+        Private _SpinnerFeatureFilterRtMin As RibbonSpinner
+        Public ReadOnly Property SpinnerFeatureFilterRtMin As RibbonSpinner
+            Get
+                Return _SpinnerFeatureFilterRtMin
+            End Get
+        End Property
+        Private _SpinnerFeatureFilterRtMax As RibbonSpinner
+        Public ReadOnly Property SpinnerFeatureFilterRtMax As RibbonSpinner
+            Get
+                Return _SpinnerFeatureFilterRtMax
             End Get
         End Property
         Private _TabGroupNetworkTools As RibbonTabGroup
@@ -1152,6 +1173,9 @@ Namespace RibbonLib.Controls
             _TabExactMassSearch = New RibbonTab(_ribbon, Cmd.cmdTabExactMassSearch)
             _GroupExactMassSearch = New RibbonGroup(_ribbon, Cmd.cmdGroupExactMassSearch)
             _ButtonExactMassSearchExport = New RibbonButton(_ribbon, Cmd.cmdButtonExactMassSearchExport)
+            _GroupFeatureFilter = New RibbonGroup(_ribbon, Cmd.cmdGroupFeatureFilter)
+            _SpinnerFeatureFilterRtMin = New RibbonSpinner(_ribbon, Cmd.cmdSpinnerFeatureFilterRtMin)
+            _SpinnerFeatureFilterRtMax = New RibbonSpinner(_ribbon, Cmd.cmdSpinnerFeatureFilterRtMax)
             _TabGroupNetworkTools = New RibbonTabGroup(_ribbon, Cmd.cmdTabGroupNetworkTools)
             _TabNetwork = New RibbonTab(_ribbon, Cmd.cmdTabNetwork)
             _GroupNetwork = New RibbonGroup(_ribbon, Cmd.cmdGroupNetwork)
