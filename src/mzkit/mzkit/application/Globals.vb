@@ -255,7 +255,7 @@ Module Globals
                 .SelectedImageIndex = 2,
                 .StateImageIndex = 2,
                 .ContextMenuStrip = targetRawMenu,
-                .ToolTipText = raw.source.GetFullPath
+                .ToolTipText = raw.source.GetFullPath(throwEx:=False)
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -276,7 +276,7 @@ Module Globals
                     .StateImageIndex = 3,
                     .SelectedImageIndex = 3,
                     .ContextMenuStrip = scriptMenu,
-                    .ToolTipText = script.GetFullPath
+                    .ToolTipText = script.GetFullPath(throwEx:=False)
                 }
 
                 scripts.Nodes.Add(fileNode)
