@@ -187,7 +187,13 @@ Module Globals
     Friend sharedProgressUpdater As Action(Of String)
 
     Public Sub loadWorkspace(mzwork As String, fromStartup As Boolean)
-        Dim work As WorkspaceFile = Task.MZWork.ImportWorkspace(mzwork)
+        If Not fromStartup Then
+            If MessageBox.Show("Load new workspace will overrides current MZKit workspace, continute to process?", "Load New Workspace", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
+                Return
+            End If
+        End If
+
+        Dim work As WorkspaceFile = frmTaskProgress.LoadData(Function() Task.MZWork.ImportWorkspace(mzwork), info:="Loading MZKit workspace...")
         Dim project As New ViewerProject With {
             .FilePath = Globals.defaultWorkspace,
             .work = work
