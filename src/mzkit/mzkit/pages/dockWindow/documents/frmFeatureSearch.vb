@@ -210,7 +210,7 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
             Sub()
                 ppm = 30
                 rtmin = 0
-                rtmax = 0
+                rtmax = 86400
                 types.Clear()
 
                 MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -313,7 +313,7 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     End Function
 
     Dim rtmin As Double = 0
-    Dim rtmax As Double = 0
+    Dim rtmax As Double = 86400
     Dim ppm As Double = 30
     Dim types As New Dictionary(Of String, Boolean)
 
