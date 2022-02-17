@@ -507,10 +507,10 @@
     <Compile Include="pages\dockWindow\tools\NotificationWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\tools\MSIPixelPropertyWindow.Designer.vb">
+    <Compile Include="pages\dockWindow\properties\MSIPixelPropertyWindow.Designer.vb">
       <DependentUpon>MSIPixelPropertyWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\tools\MSIPixelPropertyWindow.vb">
+    <Compile Include="pages\dockWindow\properties\MSIPixelPropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\tools\TaskUI.vb" />
@@ -808,7 +808,7 @@
     <EmbeddedResource Include="pages\dockWindow\tools\AdjustParameters.resx">
       <DependentUpon>AdjustParameters.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\tools\MSIPixelPropertyWindow.resx">
+    <EmbeddedResource Include="pages\dockWindow\properties\MSIPixelPropertyWindow.resx">
       <DependentUpon>MSIPixelPropertyWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\tools\OutputWindow.resx">
@@ -1130,6 +1130,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
