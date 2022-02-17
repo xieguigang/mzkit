@@ -75,11 +75,14 @@ Module FeatureSearchHandler
             display.directRaw = files.First
             display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw).ToArray)
         Else
-            For Each file As Raw In files
-                Dim result = MatchByFormula(formula, file).ToArray
+            Call frmProgressSpinner.DoLoading(
+                Sub()
+                    For Each file As Raw In files
+                        Dim result = MatchByFormula(formula, file).ToArray
 
-                display.AddFileMatch(file.source, result)
-            Next
+                        display.Invoke(Sub() display.AddFileMatch(file.source, result))
+                    Next
+                End Sub)
         End If
     End Sub
 
