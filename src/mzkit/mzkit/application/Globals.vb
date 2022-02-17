@@ -186,6 +186,22 @@ Module Globals
 
     Friend sharedProgressUpdater As Action(Of String)
 
+    Public Sub loadWorkspace(mzwork As String)
+        Dim work As WorkspaceFile = Task.MZWork.ImportWorkspace(mzwork)
+        Dim project As New ViewerProject With {
+            .FilePath = Globals.defaultWorkspace,
+            .work = work
+        }
+        Dim explorer = WindowModules.fileExplorer
+
+        Call project.LoadRawFileCache(
+            explorer:=explorer.treeView1,
+            rawMenu:=explorer.ctxMenuFiles,
+            targetRawMenu:=explorer.ctxMenuRawFile,
+            scriptMenu:=explorer.ctxMenuScript
+        )
+    End Sub
+
     ''' <summary>
     ''' two root nodes:
     ''' 
@@ -193,14 +209,13 @@ Module Globals
     ''' 2. R# Automation
     ''' </summary>
     ''' <param name="explorer"></param>
-    ''' <param name="defaultWorkspace"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadRawFileCache(explorer As TreeView,
+    Public Function LoadRawFileCache(files As ViewerProject,
+                                     explorer As TreeView,
                                      rawMenu As ContextMenuStrip,
                                      targetRawMenu As ContextMenuStrip,
-                                     scriptMenu As ContextMenuStrip,
-                                     Optional defaultWorkspace As String = Nothing) As Integer
+                                     scriptMenu As ContextMenuStrip) As Integer
 
         Dim scripts As New TreeNode("R# Automation") With {
             .ImageIndex = 1,
@@ -218,21 +233,6 @@ Module Globals
         explorer.Nodes.Add(rawFiles)
         explorer.Nodes.Add(scripts)
 
-        If defaultWorkspace.StringEmpty Then
-            defaultWorkspace = Globals.defaultWorkspace
-        End If
-
-        If Not defaultWorkspace.FileExists Then
-            currentWorkspace = New ViewerProject With {
-                .FilePath = defaultWorkspace
-            }
-
-            Return 0
-        Else
-            Call sharedProgressUpdater("Load raw file list...")
-        End If
-
-        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
         Dim i As Integer
 
         For Each raw As Raw In files.GetRawDataFiles
@@ -274,6 +274,42 @@ Module Globals
         End If
 
         Call loadRStudioScripts(explorer, scriptMenu)
+
+        Return i
+    End Function
+
+    ''' <summary>
+    ''' two root nodes:
+    ''' 
+    ''' 1. Raw Data Files
+    ''' 2. R# Automation
+    ''' </summary>
+    ''' <param name="explorer"></param>
+    ''' <param name="defaultWorkspace"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadRawFileCache(explorer As TreeView,
+                                     rawMenu As ContextMenuStrip,
+                                     targetRawMenu As ContextMenuStrip,
+                                     scriptMenu As ContextMenuStrip,
+                                     Optional defaultWorkspace As String = Nothing) As Integer
+
+        If defaultWorkspace.StringEmpty Then
+            defaultWorkspace = Globals.defaultWorkspace
+        End If
+
+        If Not defaultWorkspace.FileExists Then
+            currentWorkspace = New ViewerProject With {
+                .FilePath = defaultWorkspace
+            }
+
+            Return 0
+        Else
+            Call sharedProgressUpdater("Load raw file list...")
+        End If
+
+        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
+        Dim i As Integer = files.LoadRawFileCache(explorer, rawMenu, targetRawMenu, scriptMenu)
 
         Return i
     End Function

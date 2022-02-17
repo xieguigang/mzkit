@@ -143,6 +143,12 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="cacheList">the filepath of the <see cref="WorkspaceFile"/></param>
+    ''' <param name="progress"></param>
+    ''' <returns></returns>
     Public Shared Function LoadWorkspace(cacheList As String, progress As Action(Of String)) As ViewerProject
         Dim rawBuffer As Byte() = cacheList.ReadBinary
         Dim workspace As WorkspaceFile

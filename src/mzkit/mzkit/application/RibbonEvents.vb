@@ -151,6 +151,15 @@ Module RibbonEvents
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+        AddHandler ribbonItems.ImportsMzwork.ExecuteEvent, Sub() Call OpenWorkspace()
+    End Sub
+
+    Public Sub OpenWorkspace()
+        Using file As New OpenFileDialog With {.Filter = "BioNovoGene MZKit Workspace(*.mzWork)|*.mzWork"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call Globals.loadWorkspace(mzwork:=file.FileName)
+            End If
+        End Using
     End Sub
 
     Public Function GetQuantizationThreshold() As IThreshold
