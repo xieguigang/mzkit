@@ -205,6 +205,16 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         SaveDocumentToolStripMenuItem.Enabled = False
 
         Call ApplyVsTheme(ContextMenuStrip1)
+
+        AddHandler ribbonItems.ButtonResetFeatureFilter.ExecuteEvent,
+            Sub()
+                ppm = 30
+                rtmin = 0
+                rtmax = 0
+                types.Clear()
+
+                MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End Sub
     End Sub
 
     Private Sub ViewXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewXICToolStripMenuItem.Click
@@ -305,7 +315,7 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     Dim rtmin As Double = 0
     Dim rtmax As Double = 0
     Dim ppm As Double = 30
-    Dim types As Dictionary(Of String, Boolean)
+    Dim types As New Dictionary(Of String, Boolean)
 
     Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
         Dim getFilters As New InputFeatureFilter
