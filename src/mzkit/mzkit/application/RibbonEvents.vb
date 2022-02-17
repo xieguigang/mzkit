@@ -157,7 +157,7 @@ Module RibbonEvents
     Public Sub OpenWorkspace()
         Using file As New OpenFileDialog With {.Filter = "BioNovoGene MZKit Workspace(*.mzWork)|*.mzWork"}
             If file.ShowDialog = DialogResult.OK Then
-                Call Globals.loadWorkspace(mzwork:=file.FileName)
+                Call Globals.loadWorkspace(mzwork:=file.FileName, fromStartup:=False)
             End If
         End Using
     End Sub

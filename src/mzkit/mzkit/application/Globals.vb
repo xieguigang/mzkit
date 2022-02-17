@@ -186,7 +186,7 @@ Module Globals
 
     Friend sharedProgressUpdater As Action(Of String)
 
-    Public Sub loadWorkspace(mzwork As String)
+    Public Sub loadWorkspace(mzwork As String, fromStartup As Boolean)
         Dim work As WorkspaceFile = Task.MZWork.ImportWorkspace(mzwork)
         Dim project As New ViewerProject With {
             .FilePath = Globals.defaultWorkspace,
@@ -194,7 +194,9 @@ Module Globals
         }
         Dim explorer = WindowModules.fileExplorer
 
-        sharedProgressUpdater = Sub(text) MyApplication.host.showStatusMessage(text)
+        If Not fromStartup Then
+            sharedProgressUpdater = Sub(text) MyApplication.host.showStatusMessage(text)
+        End If
 
         Call project.LoadRawFileCache(
             explorer:=explorer.treeView1,
