@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::2c9166708440a71223d5c12e8aa5a75f, src\mzkit\mzkit\pages\dockWindow\documents\FeatureSearchHandler.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module FeatureSearchHandler
-    ' 
-    '     Function: MatchByFormula
-    ' 
-    '     Sub: runFormulaMatch, SearchByMz, searchInFileByMz
-    ' 
-    ' /********************************************************************************/
+' Module FeatureSearchHandler
+' 
+'     Function: MatchByFormula
+' 
+'     Sub: runFormulaMatch, SearchByMz, searchInFileByMz
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,17 +68,18 @@ Module FeatureSearchHandler
 
     Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
         Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
+        Dim ppm As Double = MyApplication.host.GetPPMError()
 
         display.TabText = $"Search [{formula}]"
 
         If directRaw Then
             display.directRaw = files.First
-            display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw).ToArray)
+            display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw, ppm).ToArray)
         Else
             Call frmProgressSpinner.DoLoading(
                 Sub()
                     For Each file As Raw In files
-                        Dim result = MatchByFormula(formula, file).ToArray
+                        Dim result = MatchByFormula(formula, file, ppm).ToArray
 
                         display.Invoke(Sub() display.AddFileMatch(file.source, result))
                     Next
@@ -86,10 +87,9 @@ Module FeatureSearchHandler
         End If
     End Sub
 
-    Public Iterator Function MatchByFormula(formula As String, raw As Raw) As IEnumerable(Of ParentMatch)
+    Public Iterator Function MatchByFormula(formula As String, raw As Raw, ppm As Double) As IEnumerable(Of ParentMatch)
         ' formula
         Dim exact_mass As Double = Math.EvaluateFormula(formula)
-        Dim ppm As Double = MyApplication.host.GetPPMError()
 
         MyApplication.host.showStatusMessage($"Search MS ions for [{formula}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
