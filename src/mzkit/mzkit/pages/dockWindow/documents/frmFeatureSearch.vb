@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 
@@ -65,6 +66,8 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     Dim appendHeader As Boolean = False
     Dim list1 As New List(Of (File As String, matches As ParentMatch()))
     Dim list2 As New List(Of (file As String, targetMz As Double, matches As ScanMS2()))
+    Dim rangeMin As Double = 999999999
+    Dim rangeMax As Double = -99999999999999
 
     Public Sub AddFileMatch(file As String, matches As ParentMatch())
         list1.Add((file, matches))
@@ -100,6 +103,13 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.adducts})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.M})
 
+            If rangeMin > member.rt Then
+                rangeMin = member.rt
+            End If
+            If rangeMax < member.rt Then
+                rangeMax = member.rt
+            End If
+
             row.Items.Add(ion)
         Next
 
@@ -126,6 +136,13 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max.ToString("G3")})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum.ToString("G3")})
+
+            If rangeMin > member.rt Then
+                rangeMin = member.rt
+            End If
+            If rangeMax < member.rt Then
+                rangeMax = member.rt
+            End If
 
             row.Items.Add(ion)
         Next
@@ -206,15 +223,19 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
 
         Call ApplyVsTheme(ContextMenuStrip1)
 
-        AddHandler ribbonItems.ButtonResetFeatureFilter.ExecuteEvent,
-            Sub()
-                ppm = 30
-                rtmin = 0
-                rtmax = 86400
-                types.Clear()
+        Static proxy As EventHandler(Of ExecuteEventArgs)
 
-                MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End Sub
+        ' 20220218 makes bugs fixed of the event handler
+        proxy = Sub()
+                    ppm = 30
+                    rtmin = rangeMin
+                    rtmax = rangeMax
+                    types.Clear()
+
+                    MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End Sub
+
+        AddHandler ribbonItems.ButtonResetFeatureFilter.ExecuteEvent, proxy
     End Sub
 
     Private Sub ViewXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewXICToolStripMenuItem.Click
@@ -312,14 +333,21 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         Return Save(path, encoding.CodePage)
     End Function
 
-    Dim rtmin As Double = 0
-    Dim rtmax As Double = 86400
+    Dim rtmin As Double = Double.NaN
+    Dim rtmax As Double = Double.NaN
     Dim ppm As Double = 30
     Dim types As New Dictionary(Of String, Boolean)
 
     Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
         Dim getFilters As New InputFeatureFilter
         Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
+
+        If rtmin.IsNaNImaginary Then
+            rtmin = rangeMin
+        End If
+        If rtmax.IsNaNImaginary Then
+            rtmax = rangeMax
+        End If
 
         If Not list1.IsNullOrEmpty Then
             If types.IsNullOrEmpty Then
