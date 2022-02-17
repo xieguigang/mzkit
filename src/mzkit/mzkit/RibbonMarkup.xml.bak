@@ -1705,6 +1705,46 @@
     <Command Name="cmdCheckBoxTrIQThreshold" Id="154" LabelTitle="TrIQ Threshold" LabelDescription="Threshold Intensity Quantization Algorithm" TooltipTitle="Threshold Intensity Quantization Algorithm" TooltipDescription="Threshold Intensity Quantization Algorithm" />
     <Command Name="cmdPanelOptions" Id="155" LabelTitle="Options" LabelDescription="Options" TooltipTitle="Options" TooltipDescription="Options" />
     <Command Name="cmdXIC_PPMSpinner" Id="156" LabelTitle="XIC ppm" LabelDescription="ppm tolerance for extract XIC data" TooltipDescription="ppm tolerance for extract XIC data" />
+    <Command Name="cmdImportsMzwork" Id="157" LabelTitle="Open Workspace" LabelDescription="Open MZkit workspace data file" TooltipTitle="Open Workspace" TooltipDescription="Open MZkit workspace data file">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-pictures.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-pictures.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdMenuImports" Id="158" LabelTitle="Imports Data" LabelDescription="Imports MS Data" TooltipTitle="Imports MS Data" TooltipDescription="Imports MS Data">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdOpenIonsLibrary" Id="159" LabelTitle="Open Ions Annotation" LabelDescription="Open ions annotation library" TooltipTitle="Open Ions Annotation" TooltipDescription="Open ions annotation library">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdReferenceLibrary" Id="160" LabelTitle="Reference Library" LabelDescription="Reference Library" TooltipTitle="Reference Library" TooltipDescription="Reference Library">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabReferenceLibrary" Id="161" LabelTitle="Reference Library" LabelDescription="Reference Library" TooltipTitle="Reference Library" TooltipDescription="Reference Library">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/application-vnd.oasis.opendocument.database.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1747,7 +1787,12 @@
           </ApplicationMenu.RecentItems>
           <MenuGroup CommandName="cmdMenuGroupFile">
             <Button CommandName="cmdButtonNew" ApplicationModes="0,1" />
-            <Button CommandName="cmdButtonImportsRawFiles" ApplicationModes="0,1" />
+            <DropDownButton CommandName="cmdMenuImports" ApplicationModes="0,1">
+              <MenuGroup Class="MajorItems">
+                <Button CommandName="cmdButtonImportsRawFiles" />
+                <Button CommandName="cmdImportsMzwork" />
+              </MenuGroup>
+            </DropDownButton>
             <DropDownButton CommandName="cmdButtonToolkits" ApplicationModes="0,1">
               <MenuGroup Class="MajorItems">
                 <Button CommandName="cmdButtonDropA" />
@@ -1793,6 +1838,7 @@
             <Group CommandName="cmdGroupDesign" ApplicationModes="0,1">
               <CheckBox CommandName="cmdCheckBoxShowKEGGAnnotation" />
               <Spinner CommandName="cmdPPMSpinner" />
+              <Spinner CommandName="cmdXIC_PPMSpinner" />
             </Group>
             <Group CommandName="cmdGroupShowViewer" ApplicationModes="0,1" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonShowPlotViewer" />
@@ -1824,6 +1870,9 @@
             </Group>
             <Group CommandName="cmdPlotOptions" ApplicationModes="0,1">
               <CheckBox CommandName="cmdCheckBoxXICRelative" />
+            </Group>
+            <Group CommandName="cmdTabReferenceLibrary" SizeDefinition="OneButton">
+              <Button CommandName="cmdOpenIonsLibrary" />
             </Group>
           </Tab>
         </TabGroup>

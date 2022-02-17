@@ -22,7 +22,9 @@ namespace RibbonLib.Controls
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
             public const uint cmdButtonNew = 1001;
+            public const uint cmdMenuImports = 158;
             public const uint cmdButtonImportsRawFiles = 1017;
+            public const uint cmdImportsMzwork = 157;
             public const uint cmdButtonToolkits = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
@@ -67,6 +69,8 @@ namespace RibbonLib.Controls
             public const uint cmdButtonXIC = 1145;
             public const uint cmdPlotOptions = 97;
             public const uint cmdCheckBoxXICRelative = 96;
+            public const uint cmdTabReferenceLibrary = 161;
+            public const uint cmdOpenIonsLibrary = 159;
             public const uint cmdTabGroupCalculatorTools = 1061;
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
@@ -176,7 +180,9 @@ namespace RibbonLib.Controls
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
         public RibbonButton ButtonNew { get; private set; }
+        public RibbonDropDownButton MenuImports { get; private set; }
         public RibbonButton ButtonImportsRawFiles { get; private set; }
+        public RibbonButton ImportsMzwork { get; private set; }
         public RibbonDropDownButton ButtonToolkits { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
@@ -221,6 +227,8 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonXIC { get; private set; }
         public RibbonGroup PlotOptions { get; private set; }
         public RibbonCheckBox CheckBoxXICRelative { get; private set; }
+        public RibbonGroup TabReferenceLibrary { get; private set; }
+        public RibbonButton OpenIonsLibrary { get; private set; }
         public RibbonTabGroup TabGroupCalculatorTools { get; private set; }
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
@@ -328,7 +336,9 @@ namespace RibbonLib.Controls
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
+            MenuImports = new RibbonDropDownButton(ribbon, Cmd.cmdMenuImports);
             ButtonImportsRawFiles = new RibbonButton(ribbon, Cmd.cmdButtonImportsRawFiles);
+            ImportsMzwork = new RibbonButton(ribbon, Cmd.cmdImportsMzwork);
             ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
@@ -373,6 +383,8 @@ namespace RibbonLib.Controls
             ButtonXIC = new RibbonButton(ribbon, Cmd.cmdButtonXIC);
             PlotOptions = new RibbonGroup(ribbon, Cmd.cmdPlotOptions);
             CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
+            TabReferenceLibrary = new RibbonGroup(ribbon, Cmd.cmdTabReferenceLibrary);
+            OpenIonsLibrary = new RibbonButton(ribbon, Cmd.cmdOpenIonsLibrary);
             TabGroupCalculatorTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools);
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
