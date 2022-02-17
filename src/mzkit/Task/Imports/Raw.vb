@@ -137,15 +137,17 @@ mzPackReader:
     End Function
 
     Public Function UnloadMzpack() As Raw
-        Erase loaded.MS
+        If Not loaded Is Nothing Then
+            Erase loaded.MS
 
-        If Not loaded.Thumbnail Is Nothing Then
-            loaded.Thumbnail.Dispose()
-            loaded.Thumbnail = Nothing
+            If Not loaded.Thumbnail Is Nothing Then
+                loaded.Thumbnail.Dispose()
+                loaded.Thumbnail = Nothing
+            End If
+
+            loaded.Scanners.Clear()
+            loaded = Nothing
         End If
-
-        loaded.Scanners.Clear()
-        loaded = Nothing
 
         ms2.Clear()
         ms1.Clear()
