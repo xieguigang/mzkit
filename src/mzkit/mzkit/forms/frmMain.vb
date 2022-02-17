@@ -612,7 +612,12 @@ Public Class frmMain
             .taskListDock = WindowModules.taskWin.DockState
         }
 
+        Globals.sharedProgressUpdater =
+            Sub()
+                ' do nothing
+            End Sub
         Globals.Settings.Save()
+
         App.Exit()
     End Sub
 
