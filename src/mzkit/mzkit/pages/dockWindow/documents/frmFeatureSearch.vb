@@ -60,8 +60,12 @@ Imports Task
 Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
 
     Dim appendHeader As Boolean = False
+    Dim list1 As New List(Of (File As String, matches As ParentMatch()))
+    Dim list2 As New List(Of (file As String, targetMz As Double, matches As ScanMS2()))
 
     Public Sub AddFileMatch(file As String, matches As ParentMatch())
+        list1.Add((file, matches))
+
         If Not appendHeader Then
             Dim matchHeaders = {
                 New ColumnHeader() With {.Text = "Precursor Type"},
@@ -104,6 +108,8 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     Public Sub AddFileMatch(file As String, targetMz As Double, matches As ScanMS2())
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
+
+        list2.Add((file, targetMz, matches))
 
         For Each member As ScanMS2 In matches
             Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
@@ -194,6 +200,8 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         OpenContainingFolderToolStripMenuItem.Enabled = False
         CopyFullPathToolStripMenuItem.Enabled = False
         SaveDocumentToolStripMenuItem.Enabled = False
+
+        Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
     Private Sub ViewXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewXICToolStripMenuItem.Click
@@ -290,4 +298,46 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
     End Function
+
+    Private Sub ApplyFeatureFilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyFeatureFilterToolStripMenuItem.Click
+        Dim rtmin As Double = ribbonItems.SpinnerFeatureFilterRtMin.DecimalValue
+        Dim rtmax As Double = ribbonItems.SpinnerFeatureFilterRtMax.DecimalValue
+
+        If rtmin = rtmax OrElse (rtmin = rtmax AndAlso rtmin = 0.0) OrElse rtmin > rtmax Then
+            Call MyApplication.host.showStatusMessage("invalid filter value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        Else
+            Call TreeListView1.Items.Clear()
+        End If
+
+        If Not list1.IsNullOrEmpty Then
+            Dim source = list1.ToArray
+            Dim filter = list1 _
+                .Select(Function(i)
+                            Return (i.File, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                        End Function) _
+                .ToArray
+
+            For Each row In filter
+                Call Me.AddFileMatch(row.File, row.ToArray)
+            Next
+
+            list1.Clear()
+            list1.AddRange(source)
+        ElseIf Not list2.IsNullOrEmpty Then
+            Dim source = list2.ToArray
+            Dim filter = list2 _
+                .Select(Function(i)
+                            Return (i.file, i.targetMz, i.matches.Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax).ToArray)
+                        End Function) _
+                .ToArray
+
+            For Each row In filter
+                Call Me.AddFileMatch(row.file, row.targetMz, row.ToArray)
+            Next
+
+            list2.Clear()
+            list2.Add(source)
+        End If
+    End Sub
 End Class
