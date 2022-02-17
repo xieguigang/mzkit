@@ -514,7 +514,8 @@ Public Class frmFileExplorer
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         Using file As New SaveFileDialog With {.Filter = "MZkit workspace(*.mzWork)|*.mzWork"}
             If file.ShowDialog = DialogResult.OK Then
-                Call MZWork.ExportWorkspace(Globals.workspace.work, file.FileName)
+                Call frmTaskProgress.LoadData(Function() MZWork.ExportWorkspace(Globals.workspace.work, file.FileName), title:="Save Workspace", info:=$"Export workspace to [{file.FileName}]")
+                Call MessageBox.Show("job done!", "MZKit", MessageBoxButtons.OK)
             End If
         End Using
     End Sub

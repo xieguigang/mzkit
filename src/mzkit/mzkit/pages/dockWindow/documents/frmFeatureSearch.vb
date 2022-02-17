@@ -50,12 +50,14 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports RibbonLib.Interop
 Imports Task
 
-Public Class frmFeatureSearch : Implements ISaveHandle
+Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
 
     Dim appendHeader As Boolean = False
 
@@ -125,6 +127,16 @@ Public Class frmFeatureSearch : Implements ISaveHandle
     End Sub
 
     Friend directRaw As Raw
+
+    Public Property FilePath As String Implements IFileReference.FilePath
+
+    Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+        Get
+            Return {
+                New ContentType With {.Details = "Microsoft Excel Table", .FileExt = ".csv", .MIMEType = "application/csv", .Name = "Microsoft Excel Table"}
+            }
+        End Get
+    End Property
 
     Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
         Dim cluster As TreeListViewItem
@@ -248,7 +260,31 @@ Public Class frmFeatureSearch : Implements ISaveHandle
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        Throw New NotImplementedException()
+        Dim file As New File
+        Dim row As New List(Of String)
+
+        For i As Integer = 0 To TreeListView1.Columns.Count - 1
+            row.Add(TreeListView1.Columns(i).Text)
+        Next
+
+        file.Add(New RowObject(row))
+
+        For Each item As TreeListViewItem In TreeListView1.Items
+            Dim tag As String = item.Text
+
+            For Each feature As ListViewItem In item.Items
+                row.Clear()
+                row.Add(tag)
+
+                For Each cell As ListViewSubItem In feature.SubItems
+                    row.Add(cell.Text)
+                Next
+
+                Call file.Add(New RowObject(row))
+            Next
+        Next
+
+        Return file.Save(path, encoding)
     End Function
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
