@@ -246,16 +246,27 @@ Module Globals
         Dim i As Integer
 
         For Each raw As Raw In files.GetRawDataFiles
-            Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+            Dim sourcePath As String = raw.source.GetFullPath(throwEx:=False)
+            Dim name As String = raw.source.FileName
 
-            Dim rawFileNode As New TreeNode(raw.source.FileName) With {
+            If name.Contains(vbCr) OrElse name.Contains(vbLf) Then
+                name = name.LineTokens.Last
+
+                If name.Length > 24 Then
+                    name = "..." & name.Substring(name.Length - 21)
+                End If
+            End If
+
+            Call sharedProgressUpdater($"[Raw File Viewer] Loading {name}...")
+
+            Dim rawFileNode As New TreeNode(name) With {
                 .Checked = True,
                 .Tag = raw,
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
                 .StateImageIndex = 2,
                 .ContextMenuStrip = targetRawMenu,
-                .ToolTipText = raw.source.GetFullPath(throwEx:=False)
+                .ToolTipText = If(sourcePath.StringEmpty, "source file is missing!", sourcePath)
             }
 
             rawFiles.Nodes.Add(rawFileNode)

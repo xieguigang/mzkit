@@ -279,7 +279,7 @@ Public Class frmFileExplorer
     End Sub
 
     Public Sub UpdateMainTitle(source As String)
-        If source.Any(Function(c) c = ASCII.NUL) Then
+        If source.Any(Function(c) ASCII.IsNonPrinting(CByte(AscW(c))) OrElse c = ASCII.CR OrElse c = ASCII.LF) Then
             MyApplication.host.Text = $"BioNovoGene Mzkit [{source.Where(Function(c) AscW(c) >= 32).CharString}]"
         Else
             MyApplication.host.Text = $"BioNovoGene Mzkit [{source.GetFullPath}]"

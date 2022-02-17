@@ -44,7 +44,17 @@ Public Module MZWork
                     .ToArray
 
                 ' save message pack
-                Dim metapack = zip.CreateEntry($"meta/{rawfile.Key}.pack").Open
+                Dim nameKey As String = rawfile.Key
+
+                If nameKey.Contains(vbCr) OrElse nameKey.Contains(vbLf) Then
+                    nameKey = nameKey.LineTokens.Last
+
+                    If nameKey.Length > 24 Then
+                        nameKey = "..." & nameKey.Substring(nameKey.Length - 21)
+                    End If
+                End If
+
+                Dim metapack = zip.CreateEntry($"meta/{nameKey}.pack").Open
 
                 Call MsgPackSerializer.SerializeObject(meta, metapack)
                 Call metapack.Flush()
