@@ -153,7 +153,7 @@ Public Class PeakAssign : Inherits Plot
         Dim rect As RectangleF = canvas.PlotRegion.ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
         Dim xscale = d3js.scale.linear().domain(values:=xticks).range(values:={rect.Left, rect.Right})
-        Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 100}).range(values:={rect.Top, rect.Bottom})
+        Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 120}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
             .region = canvas.PlotRegion,
@@ -217,7 +217,13 @@ Public Class PeakAssign : Inherits Plot
                 If images.ContainsKey(label) Then
                     labelSize = images(label).size.SizeF
                 Else
-                    ' label = label.DoWordWrap(28, "")
+                    Dim block = label.Match("\[.+\]")
+                    Dim name = label.Replace(block, "").Trim
+
+                    If Not (block.StringEmpty OrElse name.StringEmpty) Then
+                        label = block & vbCrLf & name
+                    End If
+
                     labelSize = g.MeasureString(label, labelFont)
                 End If
 
