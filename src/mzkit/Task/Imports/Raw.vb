@@ -50,11 +50,10 @@
 
 Imports System.Drawing
 Imports System.IO
-Imports System.Windows.Forms
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Raw
@@ -63,24 +62,27 @@ Public Class Raw
     ''' 原始数据文件位置
     ''' </summary>
     ''' <returns></returns>
-    Public Property source As String
+    <MessagePackMember(0)> Public Property source As String
+
     ''' <summary>
     ''' mzpack二进制缓存文件位置
     ''' </summary>
     ''' <returns></returns>
-    Public Property cache As String
-    Public Property rtmin As Double
-    Public Property rtmax As Double
+    <MessagePackMember(5)> Public Property cache As String
+
+    <MessagePackMember(1)> Public Property rtmin As Double
+    <MessagePackMember(2)> Public Property rtmax As Double
+
     ''' <summary>
     ''' MS1扫描的数量
     ''' </summary>
     ''' <returns></returns>
-    Public Property numOfScan1 As Integer
+    <MessagePackMember(3)> Public Property numOfScan1 As Integer
     ''' <summary>
     ''' MS2扫描的数量
     ''' </summary>
     ''' <returns></returns>
-    Public Property numOfScan2 As Integer
+    <MessagePackMember(4)> Public Property numOfScan2 As Integer
 
     Friend loaded As mzPack
 

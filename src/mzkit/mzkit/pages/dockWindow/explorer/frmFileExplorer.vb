@@ -505,4 +505,17 @@ Public Class frmFileExplorer
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False, contour:=True)
         End If
     End Sub
+
+    ''' <summary>
+    ''' export workspace as mzwork workspace file
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Using file As New SaveFileDialog With {.Filter = "MZkit workspace(*.mzwork)|*.mzwork"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call MZWork.ExportWorkspace(Globals.workspace.work, file.FileName)
+            End If
+        End Using
+    End Sub
 End Class

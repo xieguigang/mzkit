@@ -51,9 +51,10 @@ Partial Class frmFileExplorer
         Me.ViewSnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RawScatterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.XICPeaksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContourPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.OpenViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContourPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ctxMenuFiles.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.ctxMenuScript.SuspendLayout()
@@ -83,13 +84,13 @@ Partial Class frmFileExplorer
         'BPCOverlapToolStripMenuItem
         '
         Me.BPCOverlapToolStripMenuItem.Name = "BPCOverlapToolStripMenuItem"
-        Me.BPCOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BPCOverlapToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.BPCOverlapToolStripMenuItem.Text = "BPC Overlap"
         '
         'TICOverlapToolStripMenuItem
         '
         Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
-        Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
         '
         'ImportsToolStripMenuItem
@@ -133,7 +134,7 @@ Partial Class frmFileExplorer
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSpringTextBox1, Me.ToolStripButton1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSpringTextBox1, Me.ToolStripButton1, Me.ToolStripButton2})
         Me.ToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
@@ -150,7 +151,6 @@ Partial Class frmFileExplorer
         '
         'ToolStripSpringTextBox1
         '
-        Me.ToolStripSpringTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripSpringTextBox1.Name = "ToolStripSpringTextBox1"
         Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(689, 25)
         '
@@ -161,7 +161,7 @@ Partial Class frmFileExplorer
         Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton1.Name = "ToolStripButton1"
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "ToolStripButton1"
+        Me.ToolStripButton1.Text = "Search MS Feature"
         '
         'ctxMenuScript
         '
@@ -198,45 +198,54 @@ Partial Class frmFileExplorer
         '
         Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewSnapshotToolStripMenuItem, Me.ToolStripMenuItem3, Me.OpenViewerToolStripMenuItem})
         Me.ctxMenuRawFile.Name = "ctxMenuRawFile"
-        Me.ctxMenuRawFile.Size = New System.Drawing.Size(181, 76)
+        Me.ctxMenuRawFile.Size = New System.Drawing.Size(152, 54)
         '
         'ViewSnapshotToolStripMenuItem
         '
         Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem, Me.ContourPlotToolStripMenuItem})
         Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
-        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
         '
         'RawScatterToolStripMenuItem
         '
         Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
-        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
         Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
         '
         'XICPeaksToolStripMenuItem
         '
         Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
-        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
         Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
+        '
+        'ContourPlotToolStripMenuItem
+        '
+        Me.ContourPlotToolStripMenuItem.Name = "ContourPlotToolStripMenuItem"
+        Me.ContourPlotToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
+        Me.ContourPlotToolStripMenuItem.Text = "Contour Plot"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(148, 6)
         '
         'OpenViewerToolStripMenuItem
         '
         Me.OpenViewerToolStripMenuItem.Image = CType(resources.GetObject("OpenViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.OpenViewerToolStripMenuItem.Name = "OpenViewerToolStripMenuItem"
-        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.OpenViewerToolStripMenuItem.Text = "Open Viewer"
         '
-        'ContourPlotToolStripMenuItem
+        'ToolStripButton2
         '
-        Me.ContourPlotToolStripMenuItem.Name = "ContourPlotToolStripMenuItem"
-        Me.ContourPlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ContourPlotToolStripMenuItem.Text = "Contour Plot"
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Export Workspace And Share"
         '
         'frmFileExplorer
         '
@@ -282,4 +291,5 @@ Partial Class frmFileExplorer
     Friend WithEvents XICPeaksToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
     Friend WithEvents ContourPlotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 End Class
