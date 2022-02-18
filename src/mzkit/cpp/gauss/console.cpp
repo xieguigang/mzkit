@@ -13,4 +13,12 @@ namespace console {
 	void println(const char* line) {
 		cout << line << endl;
 	}
+
+	void echo(const char* text) {
+		cout << text;
+	}
+
+	void newline() {
+		cout << endl;
+	}
 }
