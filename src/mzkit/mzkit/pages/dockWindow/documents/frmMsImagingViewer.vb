@@ -452,7 +452,7 @@ Public Class frmMsImagingViewer
                                pixelSize:=$"{params.pixel_width},{params.pixel_height}",
                                mapLevels:=mapLevels
                            )
-                           Dim legend As Image = params.RenderingColorMapLegend(summaryLayer)
+                           Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
 
                            PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
                            PixelSelector1.BackColor = params.background
@@ -636,7 +636,7 @@ Public Class frmMsImagingViewer
             colorSet:=params.colors.Description,
             scale:=params.scale
         )
-        Dim legend As Image = params.RenderingColorMapLegend(pixelFilter)
+        Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
 
         PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
         PixelSelector1.BackColor = params.background
