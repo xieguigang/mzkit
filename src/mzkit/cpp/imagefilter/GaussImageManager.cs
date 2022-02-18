@@ -1,19 +1,21 @@
 using imagefilter.Interop;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace imagefilter
 {
     public class GaussImageManager
     {
-
         private byte[] SourceFile { get; set; }
-        private int i;
 
         public GaussImageManager(string filename)
         {
-            this.SourceFile = File.ReadAllBytes(filename);
+            this.SourceFile = gdiStream.getBitmapStream(fileName: filename);
+        }
+
+        public GaussImageManager(byte[] bitmap)
+        {
+            this.SourceFile = bitmap;
         }
 
         public async Task<byte[]> GenerateBlurredImageAsync(GeneratorParameters generatorParams)
