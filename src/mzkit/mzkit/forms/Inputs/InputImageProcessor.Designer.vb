@@ -27,6 +27,7 @@ Partial Class InputImageProcessor
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,6 +52,7 @@ Partial Class InputImageProcessor
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TrackBar1)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
@@ -62,25 +64,35 @@ Partial Class InputImageProcessor
         '
         'TrackBar1
         '
-        Me.TrackBar1.Location = New System.Drawing.Point(109, 23)
+        Me.TrackBar1.Location = New System.Drawing.Point(92, 23)
         Me.TrackBar1.Maximum = 25
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(318, 45)
+        Me.TrackBar1.Size = New System.Drawing.Size(307, 45)
         Me.TrackBar1.TabIndex = 1
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(24, 35)
+        Me.Label1.Location = New System.Drawing.Point(15, 35)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(71, 12)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Gauss Blur:"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(407, 30)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(11, 12)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "0"
+        '
         'InputImageProcessor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(475, 414)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Button2)
@@ -103,4 +115,5 @@ Partial Class InputImageProcessor
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label1 As Label
     Friend WithEvents TrackBar1 As TrackBar
+    Friend WithEvents Label2 As Label
 End Class

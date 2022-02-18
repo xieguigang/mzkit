@@ -1318,7 +1318,12 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Public Sub doGauss(level As Integer)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="level"></param>
+    ''' <param name="progress">[0,1]</param>
+    Public Sub doGauss(level As Integer, progress As Action(Of Double))
         If orginal_image Is Nothing Then
             Return
         Else
@@ -1326,6 +1331,7 @@ Public Class PixelSelector
 
             For i As Integer = 0 To level
                 bmp = GaussBlur.GaussBlur(bmp)
+                progress(i / level)
             Next
 
             picCanvas.BackgroundImage = bmp

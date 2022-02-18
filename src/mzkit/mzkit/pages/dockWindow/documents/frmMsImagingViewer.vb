@@ -771,7 +771,21 @@ Public Class frmMsImagingViewer
         Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
 
         If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
+            Dim levels As Integer = CInt(getConfig.TrackBar1.Value)
 
+            If levels > 0 Then
+                Dim progress As New frmTaskProgress
+
+                progress.SetProgressMode()
+                progress.SetProgress(0, "Do gauss blur...")
+
+                Call New Thread(Sub()
+                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 8, AddressOf progress.SetProgress))
+                                    Call progress.Invoke(Sub() progress.Close())
+                                End Sub).Start()
+
+                Call progress.ShowDialog()
+            End If
         End If
     End Sub
 End Class
