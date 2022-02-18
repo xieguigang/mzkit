@@ -61,6 +61,7 @@
 
 Imports ControlLibrary.PolygonEditor
 Imports imagefilter
+Imports Microsoft.VisualBasic.Imaging.Filters
 Imports stdNum = System.Math
 
 Public Class PixelSelector
@@ -1327,6 +1328,12 @@ Public Class PixelSelector
             Return
         End If
 
-        picCanvas.BackgroundImage = orginal_image.RunUnsafeImageGenerationCode(BlurLevel:=value)
+        Dim bmp As New Bitmap(orginal_image)
+
+        For i As Integer = 0 To value
+            bmp = GaussBlur.GaussBlur(bmp)
+        Next
+
+        picCanvas.BackgroundImage = bmp
     End Sub
 End Class

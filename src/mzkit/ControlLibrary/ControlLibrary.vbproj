@@ -263,10 +263,6 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\cpp\imagefilter\imagefilter.vbproj">
-      <Project>{6a5cb87a-75b5-4920-8e49-aad8c5720c4a}</Project>
-      <Name>imagefilter</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
