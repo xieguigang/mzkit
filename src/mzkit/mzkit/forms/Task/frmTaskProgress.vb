@@ -60,6 +60,23 @@ Public Class frmTaskProgress
         TaskbarStatus.SetProgress(0)
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="p">[0,100]</param>
+    Public Sub SetProgress(p As Integer)
+        Call Invoke(
+            Sub()
+                ProgressBar1.Value = p
+                TaskbarStatus.SetProgress(p)
+            End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="p">[0,100]</param>
+    ''' <param name="message"></param>
     Public Sub SetProgress(p As Integer, message As String)
         Call Invoke(
             Sub()

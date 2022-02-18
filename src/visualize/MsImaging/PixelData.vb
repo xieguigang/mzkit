@@ -65,6 +65,15 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D
     Public Property level As Double
     Public Property mz As Double
 
+    Sub New()
+    End Sub
+
+    Sub New(x As Integer, y As Integer, into As Double)
+        Me.x = x
+        Me.y = y
+        Me.intensity = intensity
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"
     End Function
@@ -127,8 +136,14 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D
     ''' intensity range will set to this cutoff range value directlly. otherwise if the max of this range is smaller than 1, 
     ''' then will treated as percentage range. 
     ''' </param>
+    ''' <param name="logE">
+    ''' 20220218 使用log进行缩放的效果很差，在这里默认禁用这个选项
+    ''' </param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As DoubleRange = Nothing, Optional logE As Boolean = False) As PixelData()
+    Public Shared Function ScalePixels(pixels As PixelData(),
+                                       Optional cutoff As DoubleRange = Nothing,
+                                       Optional logE As Boolean = False) As PixelData()
+
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
                         Return getIntensityAuto(p, logE)

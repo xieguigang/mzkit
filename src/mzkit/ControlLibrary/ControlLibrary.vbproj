@@ -159,7 +159,6 @@
     <Compile Include="MSI\Editor\Constants.vb" />
     <Compile Include="MSI\Editor\Polygon.vb" />
     <Compile Include="MSI\Editor\Vertex.vb" />
-    <Compile Include="MSI\MSIRenderTask.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>

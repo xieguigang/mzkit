@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::2ad6ef2f42d9f3cebdb164d29b389544, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PixelSelector
-    ' 
-    '     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
-    '                 ShowPointInform
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
-    '               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
-    '               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
-    ' 
-    '     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
-    '          ClearSelection, clickGetPoint, (+2 Overloads) DrawSelectionBox, EqualEdges, gauss_AdjustValue
-    '          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
-    '          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
-    '          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
-    '          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
-    '          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
-    '          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, RepaintPolygon
-    '          ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
-    ' 
-    ' /********************************************************************************/
+' Class PixelSelector
+' 
+'     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
+'                 ShowPointInform
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
+'               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
+'               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
+' 
+'     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
+'          ClearSelection, clickGetPoint, (+2 Overloads) DrawSelectionBox, EqualEdges, gauss_AdjustValue
+'          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
+'          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
+'          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
+'          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
+'          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
+'          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, RepaintPolygon
+'          ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,8 +83,6 @@ Public Class PixelSelector
     Private ismouseDown As Boolean = False
     Private algorithmIndex As Integer = 1
 
-    Dim WithEvents gauss As New ToolStripTraceBarItem
-
     Public Sub New()
 
         ' This call is required by the designer.
@@ -92,7 +90,6 @@ Public Class PixelSelector
 
         ' Add any initialization after the InitializeComponent() call.
         picCanvas.BackgroundImageLayout = ImageLayout.Stretch
-        StatusStrip1.Items.Add(gauss)
     End Sub
 
     Sub polygonDemo()
@@ -1154,37 +1151,52 @@ Public Class PixelSelector
     Dim orginal_image As Image
     Dim dimension As Size
 
+    Dim colorLegend As Image
+
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="pixel_size"></param>
     ''' <returns></returns>
-    Public Property MSImage(Optional pixel_size As Size = Nothing) As Image
+    Public ReadOnly Property MSImage As Image
         Get
             Return picCanvas.BackgroundImage
         End Get
-        Set(value As Image)
-            picCanvas.BackgroundImage = value
-            dimension = pixel_size
-            orginal_image = value
-
-            If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
-                Throw New InvalidExpressionException("dimension size can not be ZERO!")
-            End If
-
-            If value Is Nothing Then
-                orginal_imageSize = Nothing
-            Else
-                orginal_imageSize = value.Size
-                orginal_imageSize = New Size With {
-                    .Width = orginal_imageSize.Width / dimension.Width,
-                    .Height = orginal_imageSize.Height / dimension.Height
-                }
-
-                Call gauss.SetValueRange(0, 10)
-            End If
-        End Set
     End Property
+
+    Public Sub SetMsImagingOutput(value As Image, pixel_size As Size, legend As Image)
+        dimension = pixel_size
+        orginal_image = value
+        colorLegend = legend
+
+        If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
+            Throw New InvalidExpressionException("dimension size can not be ZERO!")
+        End If
+
+        If value Is Nothing Then
+            orginal_imageSize = Nothing
+        Else
+            orginal_imageSize = value.Size
+            orginal_imageSize = New Size With {
+                .Width = orginal_imageSize.Width / dimension.Width,
+                .Height = orginal_imageSize.Height / dimension.Height
+            }
+        End If
+
+        Call renderWithLegend(orginal_image.Clone)
+    End Sub
+
+    Private Sub renderWithLegend(image As Image)
+        If Not colorLegend Is Nothing Then
+            Using g As Graphics = Graphics.FromImage(image)
+                Dim size As New Size(image.Width / 8, image.Height / 2)
+                Dim pos As New Point(image.Width - size.Width, 25)
+
+                Call g.DrawImage(colorLegend, New Rectangle(pos, size))
+            End Using
+        End If
+
+        picCanvas.BackgroundImage = image
+    End Sub
 
     Dim oldMessage As String = "MSI Viewer"
 
@@ -1323,11 +1335,34 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Private Sub gauss_AdjustValue(value As Integer) Handles gauss.AdjustValue
+    Public cancelBlur As Boolean = False
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="level"></param>
+    ''' <param name="progress">[0,1]</param>
+    Public Sub doGauss(level As Integer, progress As Action(Of Double))
         If orginal_image Is Nothing Then
             Return
-        End If
+        Else
+            Dim bmp As New Bitmap(orginal_image)
 
-        picCanvas.BackgroundImage = orginal_image.RunUnsafeImageGenerationCode(BlurLevel:=value)
+            cancelBlur = False
+
+            For i As Integer = 0 To level
+                bmp = GaussBlur.GaussBlur(bmp)
+                progress(i / level * 100)
+                picCanvas.BackgroundImage = bmp
+
+                If cancelBlur Then
+                    Exit For
+                End If
+
+                Call Application.DoEvents()
+            Next
+
+            Call renderWithLegend(bmp)
+        End If
     End Sub
 End Class

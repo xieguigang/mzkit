@@ -63,14 +63,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports BioNovoGene.mzkit_win32.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
@@ -441,11 +444,17 @@ Public Class frmMsImagingViewer
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
-                           Dim image As Bitmap = Drawer.RenderSummaryLayer(summaryLayer, dimSize,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+                           Dim mapLevels As Integer = params.mapLevels
+                           Dim image As Bitmap = Drawer.RenderSummaryLayer(
+                               layer:=summaryLayer,
+                               dimension:=dimSize,
+                               colorSet:=params.colors.Description,
+                               pixelSize:=$"{params.pixel_width},{params.pixel_height}",
+                               mapLevels:=mapLevels
+                           )
+                           Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
 
-                           image = params.Smooth(image)
-
-                           PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
+                           PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -516,10 +525,9 @@ Public Class frmMsImagingViewer
                                cut:=(New DoubleRange(0, qr), New DoubleRange(0, qg), New DoubleRange(0, qb)),
                                background:=params.background.ToHtmlColor
                            )
+                           Dim legend As Image = Nothing
 
-                           image = params.Smooth(image)
-
-                           PixelSelector1.MSImage(pixelSize.SizeParser) = image
+                           PixelSelector1.SetMsImagingOutput(image, pixelSize.SizeParser, legend)
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -624,15 +632,13 @@ Public Class frmMsImagingViewer
             pixels:=pixelFilter,
             dimension:=dimensionSize,
             dimSize:=size.SizeParser,
-            logE:=params.logE,
             mapLevels:=params.mapLevels,
             colorSet:=params.colors.Description,
             scale:=params.scale
         )
+        Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
 
-        image = params.Smooth(image)
-
-        PixelSelector1.MSImage(size.SizeParser) = image
+        PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
         PixelSelector1.BackColor = params.background
     End Sub
 
@@ -740,7 +746,7 @@ Public Class frmMsImagingViewer
 
     Dim sampleRegions As New List(Of Rectangle)
 
-    Private Sub ClearSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSamplesToolStripMenuItem.Click
+    Private Sub ClearSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem1.Click
         sampleRegions.Clear()
     End Sub
 
@@ -764,5 +770,40 @@ Public Class frmMsImagingViewer
 
     Private Sub ExportPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportPlotToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub ImageProcessingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImageProcessingToolStripMenuItem.Click
+        Dim getConfig As New InputImageProcessor
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
+
+        If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
+            Dim levels As Integer = CInt(getConfig.TrackBar1.Value)
+
+            If levels > 0 Then
+                Dim progress As New frmTaskProgress
+
+                ' just exit image progress
+                progress.TaskCancel = Sub() PixelSelector1.cancelBlur = True
+                progress.ShowProgressTitle("Image Processing", True)
+                progress.ShowProgressDetails("Do gauss blur...", True)
+                progress.SetProgressMode()
+
+                Call New Thread(Sub()
+                                    Call Thread.Sleep(1000)
+                                    Call progress.SetProgress(0, "Do gauss blur...")
+                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
+                                    Call progress.Invoke(Sub() progress.Close())
+                                End Sub).Start()
+
+                Call progress.ShowDialog()
+            End If
+        End If
+    End Sub
+
+    Private Sub CopyImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyImageToolStripMenuItem.Click
+        Clipboard.Clear()
+        Clipboard.SetImage(PixelSelector1.MSImage)
+
+        Call MyApplication.host.showStatusMessage("MS-imaging plot has been copied to the clipboard!")
     End Sub
 End Class

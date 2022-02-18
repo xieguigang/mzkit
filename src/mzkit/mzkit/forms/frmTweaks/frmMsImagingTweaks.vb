@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class frmMsImagingTweaks
 
@@ -106,6 +107,12 @@ UseCheckedList:
         {"g", Nothing},
         {"b", Nothing}
     }
+
+    Public ReadOnly Property Parameters As MsImageProperty
+        Get
+            Return PropertyGrid1.SelectedObject
+        End Get
+    End Property
 
     Private Sub frmMsImagingTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "MsImage Parameters"
