@@ -1,4 +1,5 @@
 require(mzkit);
+require(filter);
 
 imports "MsImaging" from "mzplot";
 imports "mzweb" from "mzkit";
@@ -27,6 +28,12 @@ for(i in 1:nrow(ions)) %dopar% {
 	print(mz[i]);
 
 	bitmap(file = `${outputdir}/${round(mz[i], 4)}.png`) {
-		render(layer[i]);
+		render(
+			data        = layer[i], 
+			colorSet    = "viridis:turbo", 
+			cutoff      = TrIQ(layer[i], q = 0.45),
+			pixelSize   = [2,2],
+			defaultFill = "black"
+		);
 	}
 }

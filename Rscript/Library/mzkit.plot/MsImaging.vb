@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -580,7 +581,7 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"></param>
+    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
     ''' <param name="defaultFill"></param>
     ''' <param name="pixelSize"></param>
     ''' <param name="cutoff"></param>
@@ -592,9 +593,10 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
+    <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
                                    Optional intensity As IntensitySummary = IntensitySummary.Total,
-                                   Optional colorSet$ = "Jet",
+                                   Optional colorSet$ = "viridis:turbo",
                                    Optional defaultFill As String = "Transparent",
                                    Optional pixelSize$ = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
