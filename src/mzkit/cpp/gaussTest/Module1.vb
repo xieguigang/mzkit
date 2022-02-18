@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports imagefilter
+Imports imagefilter.Interop
 Imports Microsoft.VisualBasic.Imaging
 
 Module Module1
@@ -57,10 +58,11 @@ Module Module1
 
         Call SetDllDirectory($"{App.HOME}/tools/cpp/")
 
-        Dim image As Image = "D:\mzkit\src\mzkit\splash.PNG".LoadImage()
-        Dim blur = image.RunUnsafeImageGenerationCode(BlurLevel:=50)
+        Dim blur As New imagefilter.GaussImageManager("D:\mzkit\src\mzkit\splash.PNG")
+        Dim args As New GeneratorParameters With {.BlurLevel = 50, .GaussMaskSize = 9, .NumberOfThreads = 4}
+        Dim result = blur.GenerateBlurredImageAsync(args)
 
-        Call blur.SaveAs("./blur.png")
+        Call result.Result.FlushStream("./blur.bmp")
 
         Pause()
     End Sub
