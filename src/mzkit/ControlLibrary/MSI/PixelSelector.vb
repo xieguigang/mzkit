@@ -84,8 +84,6 @@ Public Class PixelSelector
     Private ismouseDown As Boolean = False
     Private algorithmIndex As Integer = 0
 
-    Dim WithEvents gauss As New ToolStripTraceBarItem
-
     Public Sub New()
 
         ' This call is required by the designer.
@@ -93,7 +91,6 @@ Public Class PixelSelector
 
         ' Add any initialization after the InitializeComponent() call.
         picCanvas.BackgroundImageLayout = ImageLayout.Stretch
-        StatusStrip1.Items.Add(gauss)
     End Sub
 
     Sub polygonDemo()
@@ -1180,8 +1177,6 @@ Public Class PixelSelector
                     .Width = orginal_imageSize.Width / dimension.Width,
                     .Height = orginal_imageSize.Height / dimension.Height
                 }
-
-                Call gauss.SetValueRange(0, 10)
             End If
         End Set
     End Property
@@ -1323,17 +1318,17 @@ Public Class PixelSelector
         End If
     End Sub
 
-    Private Sub gauss_AdjustValue(value As Integer) Handles gauss.AdjustValue
+    Public Sub doGauss(level As Integer)
         If orginal_image Is Nothing Then
             Return
+        Else
+            Dim bmp As New Bitmap(orginal_image)
+
+            For i As Integer = 0 To level
+                bmp = GaussBlur.GaussBlur(bmp)
+            Next
+
+            picCanvas.BackgroundImage = bmp
         End If
-
-        Dim bmp As New Bitmap(orginal_image)
-
-        For i As Integer = 0 To value
-            bmp = GaussBlur.GaussBlur(bmp)
-        Next
-
-        picCanvas.BackgroundImage = bmp
     End Sub
 End Class

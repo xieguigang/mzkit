@@ -740,7 +740,7 @@ Public Class frmMsImagingViewer
 
     Dim sampleRegions As New List(Of Rectangle)
 
-    Private Sub ClearSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSamplesToolStripMenuItem.Click
+    Private Sub ClearSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem1.Click
         sampleRegions.Clear()
     End Sub
 
@@ -764,5 +764,14 @@ Public Class frmMsImagingViewer
 
     Private Sub ExportPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportPlotToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub ImageProcessingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImageProcessingToolStripMenuItem.Click
+        Dim getConfig As New InputImageProcessor
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
+
+        If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
+
+        End If
     End Sub
 End Class
