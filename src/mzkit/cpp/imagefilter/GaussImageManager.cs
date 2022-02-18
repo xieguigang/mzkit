@@ -7,7 +7,13 @@ namespace imagefilter
 {
     public class GaussImageManager
     {
-        private byte[] SourceFile { get; set; }
+        private byte[] SourceFile;
+
+        /// <summary>
+        /// run in sequence mode if this flag is set to true,
+        /// otherwise run image processing in parallel
+        /// </summary>
+        public bool debugMode { get; set; }
 
         /// <summary>
         /// create bitmap buffer from file in any kind of image format
@@ -16,6 +22,7 @@ namespace imagefilter
         public GaussImageManager(string filename)
         {
             this.SourceFile = gdiStream.getBitmapStream(fileName: filename);
+            this.debugMode = false;
         }
 
         /// <summary>
@@ -25,6 +32,7 @@ namespace imagefilter
         public GaussImageManager(byte[] bitmap)
         {
             this.SourceFile = bitmap;
+            this.debugMode = false;
         }
 
         /// <summary>
@@ -34,6 +42,7 @@ namespace imagefilter
         public GaussImageManager(Image img)
         {
             this.SourceFile = gdiStream.getBitmapStream(img);
+            this.debugMode = false;
         }
 
         public byte[] GenerateBlurredImage(GeneratorParameters generatorParams)
@@ -50,8 +59,7 @@ namespace imagefilter
                 {
                     var num = threadNum;
                     var id = processId;
-
-                    tasks[threadNum] = Task.Run(() =>
+                    var task = new Action(() =>
                     {
                         var currentThreadParams = ComputeThreadParams(
                             threadId: num,
@@ -64,10 +72,22 @@ namespace imagefilter
                         unsafeLibrary.RunUnsafeComputeGaussBlur(argv: currentThreadParams, sourceFile: SourceFile);
                         Console.WriteLine("Stop {0}", currentThreadParams);
                     });
+
+                    if (debugMode)
+                    {
+                        task();
+                    }
+                    else
+                    {
+                        tasks[threadNum] = Task.Run(task);
+                    }
                 }
             }
 
-            Task.WaitAll(tasks);
+            if (!debugMode)
+            {
+                Task.WaitAll(tasks);
+            }
 
             return SourceFile;
         }

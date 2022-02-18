@@ -55,7 +55,7 @@ Module Module1
 
         Call SetDllDirectory($"{App.HOME}/tools/cpp/")
 
-        Dim blur As New imagefilter.GaussImageManager("D:\mzkit\src\mzkit\splash.PNG")
+        Dim blur As New imagefilter.GaussImageManager("D:\mzkit\src\mzkit\splash.PNG") With {.debugMode = True}
         Dim args As New GeneratorParameters With {.BlurLevel = 100, .GaussMaskSize = 9, .NumberOfThreads = 4}
         Dim result = blur.GenerateBlurredImage(args)
 
