@@ -776,6 +776,8 @@ Public Class frmMsImagingViewer
             If levels > 0 Then
                 Dim progress As New frmTaskProgress
 
+                progress.ShowProgressTitle("Image Processor", True)
+                progress.ShowProgressDetails("Do gauss blur...", True)
                 progress.SetProgressMode()
 
                 Call New Thread(Sub()

@@ -1331,7 +1331,9 @@ Public Class PixelSelector
 
             For i As Integer = 0 To level
                 bmp = GaussBlur.GaussBlur(bmp)
-                progress(i / level)
+                progress(i / level * 100)
+
+                Call Application.DoEvents()
             Next
 
             picCanvas.BackgroundImage = bmp
