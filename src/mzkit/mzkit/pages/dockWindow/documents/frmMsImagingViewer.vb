@@ -780,6 +780,7 @@ Public Class frmMsImagingViewer
                 progress.SetProgress(0, "Do gauss blur...")
 
                 Call New Thread(Sub()
+                                    Call Thread.Sleep(1000)
                                     Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 8, AddressOf progress.SetProgress))
                                     Call progress.Invoke(Sub() progress.Close())
                                 End Sub).Start()
