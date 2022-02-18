@@ -598,7 +598,8 @@ Module MsImaging
                                    Optional intensity As IntensitySummary = IntensitySummary.Total,
                                    Optional colorSet$ = "viridis:turbo",
                                    Optional defaultFill As String = "Transparent",
-                                   Optional pixelSize$ = "6,6",
+                                   <RRawVectorArgument>
+                                   Optional pixelSize As Object = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
                                    Optional pixelDrawer As Boolean = True,
@@ -656,7 +657,7 @@ Module MsImaging
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
-        Dim pointSize As Size = pixelSize.SizeParser
+        Dim pointSize As Size = InteropArgumentHelper.getSize(pixelSize, env, "6,6").SizeParser
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
