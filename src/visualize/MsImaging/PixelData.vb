@@ -65,6 +65,15 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D
     Public Property level As Double
     Public Property mz As Double
 
+    Sub New()
+    End Sub
+
+    Sub New(x As Integer, y As Integer, into As Double)
+        Me.x = x
+        Me.y = y
+        Me.intensity = intensity
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"
     End Function

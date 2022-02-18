@@ -149,7 +149,8 @@ Public Class Drawer : Implements IDisposable
                                               Optional colorSet$ = "Jet",
                                               Optional pixelSize$ = "3,3",
                                               Optional logE As Boolean = True,
-                                              Optional pixelDrawer As Boolean = True) As Bitmap
+                                              Optional pixelDrawer As Boolean = True,
+                                              Optional mapLevels As Integer = 25) As Bitmap
 
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
@@ -169,7 +170,8 @@ Public Class Drawer : Implements IDisposable
             colorSet:=colorSet,
             defaultFill:="black",
             cutoff:=cutoff,
-            logE:=logE
+            logE:=logE,
+            mapLevels:=mapLevels
         )
     End Function
 

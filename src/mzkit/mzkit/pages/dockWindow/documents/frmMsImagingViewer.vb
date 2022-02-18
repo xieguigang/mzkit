@@ -444,11 +444,17 @@ Public Class frmMsImagingViewer
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
-                           Dim image As Bitmap = Drawer.RenderSummaryLayer(summaryLayer, dimSize,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
+                           Dim mapLevels As Integer = params.mapLevels
+                           Dim image As Bitmap = Drawer.RenderSummaryLayer(
+                               layer:=summaryLayer,
+                               dimension:=dimSize,
+                               colorSet:=params.colors.Description,
+                               pixelSize:=$"{params.pixel_width},{params.pixel_height}",
+                               mapLevels:=mapLevels
+                           )
+                           Dim legend As Image = params.RenderingColorMapLegend(summaryLayer)
 
-                           ' image = params.Smooth(image)
-
-                           PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
+                           PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -519,10 +525,9 @@ Public Class frmMsImagingViewer
                                cut:=(New DoubleRange(0, qr), New DoubleRange(0, qg), New DoubleRange(0, qb)),
                                background:=params.background.ToHtmlColor
                            )
+                           Dim legend As Image = Nothing
 
-                           ' image = params.Smooth(image)
-
-                           PixelSelector1.MSImage(pixelSize.SizeParser) = image
+                           PixelSelector1.SetMsImagingOutput(image, pixelSize.SizeParser, legend)
                            PixelSelector1.BackColor = params.background
                        End Sub)
                End Sub
@@ -632,18 +637,9 @@ Public Class frmMsImagingViewer
             colorSet:=params.colors.Description,
             scale:=params.scale
         )
-        Dim colorMapLegend As New ColorMapLegend(params.colors.Description, params.mapLevels) With {
-            .format = "G3",
-            .ticks = pixelFilter.Select(Function(p) p.intensity).Range.CreateAxisTicks,
-            .tickAxisStroke = Stroke.TryParse(Stroke.AxisStroke).GDIObject,
-            .tickFont = CSSFont.TryParse(CSSFont.Win7Normal).GDIObject(100),
-            .title = "Intensity",
-            .titleFont = CSSFont.TryParse(CSSFont.Win7Large).GDIObject(100),
-            .noblank = True
-        }
+        Dim legend As Image = params.RenderingColorMapLegend(pixelFilter)
 
-        PixelSelector1.legend = colorMapLegend.Draw(New Size(600, 1200))
-        PixelSelector1.MSImage(size.SizeParser) = image
+        PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
         PixelSelector1.BackColor = params.background
     End Sub
 

@@ -1150,37 +1150,52 @@ Public Class PixelSelector
     Dim orginal_image As Image
     Dim dimension As Size
 
-    Public Property legend As Image
+    Dim colorLegend As Image
 
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="pixel_size"></param>
     ''' <returns></returns>
-    Public Property MSImage(Optional pixel_size As Size = Nothing) As Image
+    Public ReadOnly Property MSImage As Image
         Get
             Return picCanvas.BackgroundImage
         End Get
-        Set(value As Image)
-            picCanvas.BackgroundImage = value
-            dimension = pixel_size
-            orginal_image = value
-
-            If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
-                Throw New InvalidExpressionException("dimension size can not be ZERO!")
-            End If
-
-            If value Is Nothing Then
-                orginal_imageSize = Nothing
-            Else
-                orginal_imageSize = value.Size
-                orginal_imageSize = New Size With {
-                    .Width = orginal_imageSize.Width / dimension.Width,
-                    .Height = orginal_imageSize.Height / dimension.Height
-                }
-            End If
-        End Set
     End Property
+
+    Public Sub SetMsImagingOutput(value As Image, pixel_size As Size, legend As Image)
+        dimension = pixel_size
+        orginal_image = value
+        colorLegend = legend
+
+        If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
+            Throw New InvalidExpressionException("dimension size can not be ZERO!")
+        End If
+
+        If value Is Nothing Then
+            orginal_imageSize = Nothing
+        Else
+            orginal_imageSize = value.Size
+            orginal_imageSize = New Size With {
+                .Width = orginal_imageSize.Width / dimension.Width,
+                .Height = orginal_imageSize.Height / dimension.Height
+            }
+        End If
+
+        Call renderWithLegend(orginal_image)
+    End Sub
+
+    Private Sub renderWithLegend(image As Image)
+        If Not colorLegend Is Nothing Then
+            Using g As Graphics = Graphics.FromImage(image)
+                Dim size As New Size(image.Width / 4, image.Height / 2)
+                Dim pos As New Point(image.Width - size.Width - 50, 50)
+
+                Call g.DrawImage(colorLegend, New Rectangle(pos, size))
+            End Using
+        End If
+
+        picCanvas.BackgroundImage = image
+    End Sub
 
     Dim oldMessage As String = "MSI Viewer"
 
@@ -1313,18 +1328,9 @@ Public Class PixelSelector
         ' polygonDemo()
     End Sub
 
-    Dim countLegend As Integer
-
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If HasRegionSelection Then
             ' DrawSelectionBox(endPoint, False)
-        End If
-        If Not legend Is Nothing Then
-            countLegend += 1
-
-            If countLegend > 30 Then
-                Call Me.Invalidate()
-            End If
         End If
     End Sub
 
@@ -1354,12 +1360,8 @@ Public Class PixelSelector
 
                 Call Application.DoEvents()
             Next
+
+            Call renderWithLegend(bmp)
         End If
-    End Sub
-
-    Private Sub PixelSelector_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        Dim g = e.Graphics
-
-        g.DrawImageUnscaled(legend, New Point(Width - legend.Width - 20, 20))
     End Sub
 End Class
