@@ -22,11 +22,11 @@ const [mz, density, layer] = ions;
 
 print(head(ions));
 
-for(i in nrow(ions)) %dopar% {
+for(i in 1:nrow(ions)) %dopar% {
 	print("Rendering of the ion layer:");
 	print(mz[i]);
 
 	bitmap(file = `${outputdir}/${round(mz[i], 4)}.png`) {
-		plot(layer[i]);
+		render(layer[i]);
 	}
 }

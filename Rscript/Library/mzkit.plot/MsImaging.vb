@@ -584,7 +584,6 @@ Module MsImaging
     ''' <param name="defaultFill"></param>
     ''' <param name="pixelSize"></param>
     ''' <param name="cutoff"></param>
-    ''' <param name="logE"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
     ''' be treated as background pixels and removed from the MSI 
