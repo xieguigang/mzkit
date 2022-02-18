@@ -1181,14 +1181,14 @@ Public Class PixelSelector
             }
         End If
 
-        Call renderWithLegend(orginal_image)
+        Call renderWithLegend(orginal_image.Clone)
     End Sub
 
     Private Sub renderWithLegend(image As Image)
         If Not colorLegend Is Nothing Then
             Using g As Graphics = Graphics.FromImage(image)
-                Dim size As New Size(image.Width / 4, image.Height / 2)
-                Dim pos As New Point(image.Width - size.Width - 50, 50)
+                Dim size As New Size(image.Width / 8, image.Height / 2)
+                Dim pos As New Point(image.Width - size.Width, 25)
 
                 Call g.DrawImage(colorLegend, New Rectangle(pos, size))
             End Using

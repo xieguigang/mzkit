@@ -97,11 +97,11 @@ Public Class MsImageProperty
     <Category("imzML")> Public ReadOnly Property scan_y As Integer
 
     <Category("Render")> Public Property background As Color
-    <Category("Render")> <DisplayName("width")> Public Property pixel_width As Integer = 10
-    <Category("Render")> <DisplayName("height")> Public Property pixel_height As Integer = 10
+    <Category("Render")> <DisplayName("width")> Public Property pixel_width As Integer = 3
+    <Category("Render")> <DisplayName("height")> Public Property pixel_height As Integer = 3
 
-    <Description("Log(e) transformation of the intensity value?")>
-    <Category("Render")> Public Property logE As Boolean = True
+    ' <Description("Log(e) transformation of the intensity value?")>
+    ' <Category("Render")> Public Property logE As Boolean = True
     <Category("Render")> Public Property colors As ScalerPalette = ScalerPalette.viridis
     <Category("Render")> Public Property mapLevels As Integer = 30
     ' <Category("Render")> Public Property imageSmooth As SmoothFilters
@@ -204,7 +204,7 @@ Public Class MsImageProperty
             .noblank = True
         }
 
-        Return colorMapLegend.Draw(New Size(600, 1200))
+        Return colorMapLegend.Draw(New Size(600, 1500))
     End Function
 
     Public Sub SetIntensityMax(max As Double)

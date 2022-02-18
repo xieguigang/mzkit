@@ -125,7 +125,6 @@ Namespace Imaging
         ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
-        ''' <param name="logE"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
@@ -133,7 +132,6 @@ Namespace Imaging
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels% = 25,
-                                               Optional logE As Boolean = False,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
@@ -145,7 +143,7 @@ Namespace Imaging
                         End Function) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, dimSize, brushColors, logE, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, dimSize, brushColors, scale, defaultFill, cutoff)
         End Function
 
         ''' <summary>
@@ -155,13 +153,11 @@ Namespace Imaging
         ''' <param name="dimension">the scan size</param>
         ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
-        ''' <param name="logE"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
         ''' </remarks>
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size, colorSet As SolidBrush(),
-                                               Optional logE As Boolean = False,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
@@ -177,7 +173,7 @@ Namespace Imaging
             Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
+                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
                     level = point.level
 
                     If level <= 0.0 Then

@@ -632,7 +632,6 @@ Public Class frmMsImagingViewer
             pixels:=pixelFilter,
             dimension:=dimensionSize,
             dimSize:=size.SizeParser,
-            logE:=params.logE,
             mapLevels:=params.mapLevels,
             colorSet:=params.colors.Description,
             scale:=params.scale

@@ -153,7 +153,6 @@ Namespace Imaging
         End Function
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
-                                               Optional logE As Boolean = False,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
@@ -168,7 +167,7 @@ Namespace Imaging
             Dim h = dimension.Height * dimSize.Height
 
             Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
-                Call FillLayerInternal(gr, pixels, defaultColor, colorSet, cutoff, logE, dimSize)
+                Call FillLayerInternal(gr, pixels, defaultColor, colorSet, cutoff, dimSize)
                 Return gr.ImageResource
             End Using
         End Function
@@ -176,7 +175,6 @@ Namespace Imaging
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,
-                                               Optional logE As Boolean = False,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As Bitmap
@@ -185,7 +183,7 @@ Namespace Imaging
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, dimSize, colors, logE, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, dimSize, colors, scale, defaultFill, cutoff)
         End Function
 
         Private Shared Sub FillLayerInternal(gr As Graphics2D,
@@ -193,14 +191,13 @@ Namespace Imaging
                                              defaultColor As SolidBrush,
                                              colors As SolidBrush(),
                                              cutoff As DoubleRange,
-                                             logE As Boolean,
                                              dimSize As Size)
             Dim color As SolidBrush
             Dim index As Integer
             Dim levelRange As DoubleRange = New Double() {0, 1}
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
 
-            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, logE)
+            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
                 Dim level As Double = point.level
                 Dim rect As New Rectangle(New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height), dimSize)
 
@@ -246,7 +243,7 @@ Namespace Imaging
                         .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
                         .ToArray
 
-                    Call FillLayerInternal(gr, layer, defaultColor, colors, cut, False, dimSize)
+                    Call FillLayerInternal(gr, layer, defaultColor, colors, cut, dimSize)
                 Next
 
                 Return gr.ImageResource
@@ -279,7 +276,7 @@ Namespace Imaging
                                 End Function) _
                         .ToArray
 
-                    Call FillLayerInternal(gr, layer.value, defaultColor, colors, cut, False, dimSize)
+                    Call FillLayerInternal(gr, layer.value, defaultColor, colors, cut, dimSize)
                 Next
 
                 Return gr.ImageResource
