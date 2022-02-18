@@ -799,4 +799,11 @@ Public Class frmMsImagingViewer
             End If
         End If
     End Sub
+
+    Private Sub CopyImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyImageToolStripMenuItem.Click
+        Clipboard.Clear()
+        Clipboard.SetImage(PixelSelector1.MSImage)
+
+        Call MyApplication.host.showStatusMessage("MS-imaging plot has been copied to the clipboard!")
+    End Sub
 End Class
