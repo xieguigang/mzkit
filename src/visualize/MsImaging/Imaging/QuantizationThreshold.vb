@@ -78,6 +78,8 @@ Namespace Imaging
 
     Public Class TrIQThreshold : Inherits QuantizationThreshold
 
+        Public Property levels As Integer = 100
+
         Sub New()
         End Sub
 
@@ -89,7 +91,7 @@ Namespace Imaging
             If intensity.IsNullOrEmpty Then
                 Return 0
             Else
-                Return intensity.FindThreshold(qcut, N:=64) / intensity.Max
+                Return intensity.FindThreshold(qcut, N:=100) / intensity.Max
             End If
         End Function
 
