@@ -63,14 +63,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports BioNovoGene.mzkit_win32.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
@@ -629,9 +632,17 @@ Public Class frmMsImagingViewer
             colorSet:=params.colors.Description,
             scale:=params.scale
         )
+        Dim colorMapLegend As New ColorMapLegend(params.colors.Description, params.mapLevels) With {
+            .format = "G3",
+            .ticks = pixelFilter.Select(Function(p) p.intensity).Range.CreateAxisTicks,
+            .tickAxisStroke = Stroke.TryParse(Stroke.AxisStroke).GDIObject,
+            .tickFont = CSSFont.TryParse(CSSFont.Win7Normal).GDIObject(100),
+            .title = "Intensity",
+            .titleFont = CSSFont.TryParse(CSSFont.Win7Large).GDIObject(100),
+            .noblank = True
+        }
 
-        ' image = params.Smooth(image)
-
+        PixelSelector1.legend = colorMapLegend.Draw(New Size(600, 1200))
         PixelSelector1.MSImage(size.SizeParser) = image
         PixelSelector1.BackColor = params.background
     End Sub
@@ -776,14 +787,16 @@ Public Class frmMsImagingViewer
             If levels > 0 Then
                 Dim progress As New frmTaskProgress
 
-                progress.ShowProgressTitle("Image Processor", True)
+                ' just exit image progress
+                progress.TaskCancel = Sub() PixelSelector1.cancelBlur = True
+                progress.ShowProgressTitle("Image Processing", True)
                 progress.ShowProgressDetails("Do gauss blur...", True)
                 progress.SetProgressMode()
 
                 Call New Thread(Sub()
                                     Call Thread.Sleep(1000)
                                     Call progress.SetProgress(0, "Do gauss blur...")
-                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 8, AddressOf progress.SetProgress))
+                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
                                     Call progress.Invoke(Sub() progress.Close())
                                 End Sub).Start()
 

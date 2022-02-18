@@ -84,11 +84,12 @@ Public Class MSIPixelPropertyWindow
             PictureBox1.BackgroundImage = Nothing
         Else
             PictureBox1.BackgroundImage = {serial}.Plot(
-                size:="1800,1200",
+                size:="900,600",
                 padding:="padding:50px 50px 100px 200px;",
                 fill:=True,
                 ablines:={Q2line},
-                YtickFormat:="G2"
+                YtickFormat:="G2",
+                XtickFormat:="F1"
             ).AsGDIImage
         End If
     End Sub

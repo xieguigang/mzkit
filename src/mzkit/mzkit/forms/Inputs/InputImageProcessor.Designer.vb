@@ -25,9 +25,9 @@ Partial Class InputImageProcessor
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -62,13 +62,25 @@ Partial Class InputImageProcessor
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Parameters"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(407, 30)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(11, 12)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "0"
+        '
         'TrackBar1
         '
+        Me.TrackBar1.LargeChange = 15
         Me.TrackBar1.Location = New System.Drawing.Point(92, 23)
-        Me.TrackBar1.Maximum = 25
+        Me.TrackBar1.Maximum = 50
         Me.TrackBar1.Name = "TrackBar1"
         Me.TrackBar1.Size = New System.Drawing.Size(307, 45)
+        Me.TrackBar1.SmallChange = 5
         Me.TrackBar1.TabIndex = 1
+        Me.TrackBar1.TickFrequency = 2
         '
         'Label1
         '
@@ -78,15 +90,6 @@ Partial Class InputImageProcessor
         Me.Label1.Size = New System.Drawing.Size(71, 12)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Gauss Blur:"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(407, 30)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(11, 12)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "0"
         '
         'InputImageProcessor
         '

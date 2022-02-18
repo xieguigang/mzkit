@@ -60,7 +60,6 @@
 #End Region
 
 Imports ControlLibrary.PolygonEditor
-Imports imagefilter
 Imports Microsoft.VisualBasic.Imaging.Filters
 Imports stdNum = System.Math
 
@@ -1151,6 +1150,8 @@ Public Class PixelSelector
     Dim orginal_image As Image
     Dim dimension As Size
 
+    Public Property legend As Image
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -1312,11 +1313,22 @@ Public Class PixelSelector
         ' polygonDemo()
     End Sub
 
+    Dim countLegend As Integer
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If HasRegionSelection Then
             ' DrawSelectionBox(endPoint, False)
         End If
+        If Not legend Is Nothing Then
+            countLegend += 1
+
+            If countLegend > 30 Then
+                Call Me.Invalidate()
+            End If
+        End If
     End Sub
+
+    Public cancelBlur As Boolean = False
 
     ''' <summary>
     ''' 
@@ -1329,14 +1341,25 @@ Public Class PixelSelector
         Else
             Dim bmp As New Bitmap(orginal_image)
 
+            cancelBlur = False
+
             For i As Integer = 0 To level
                 bmp = GaussBlur.GaussBlur(bmp)
                 progress(i / level * 100)
+                picCanvas.BackgroundImage = bmp
+
+                If cancelBlur Then
+                    Exit For
+                End If
 
                 Call Application.DoEvents()
             Next
-
-            picCanvas.BackgroundImage = bmp
         End If
+    End Sub
+
+    Private Sub PixelSelector_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        Dim g = e.Graphics
+
+        g.DrawImageUnscaled(legend, New Point(Width - legend.Width - 20, 20))
     End Sub
 End Class

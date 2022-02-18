@@ -22,9 +22,10 @@ Partial Class MSIPixelPropertyWindow
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -47,35 +48,35 @@ Partial Class MSIPixelPropertyWindow
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.PropertyGrid1)
         Me.SplitContainer1.Size = New System.Drawing.Size(329, 664)
-        Me.SplitContainer1.SplitterDistance = 265
+        Me.SplitContainer1.SplitterDistance = 175
         Me.SplitContainer1.TabIndex = 0
-        '
-        'PropertyGrid1
-        '
-        Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
-        Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(329, 395)
-        Me.PropertyGrid1.TabIndex = 0
         '
         'PictureBox1
         '
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(329, 265)
+        Me.PictureBox1.Size = New System.Drawing.Size(329, 175)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
+        'PropertyGrid1
+        '
+        Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
+        Me.PropertyGrid1.Name = "PropertyGrid1"
+        Me.PropertyGrid1.Size = New System.Drawing.Size(329, 485)
+        Me.PropertyGrid1.TabIndex = 0
+        '
         'MSIPixelPropertyWindow
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(329, 664)
         Me.Controls.Add(Me.SplitContainer1)
+        Me.DoubleBuffered = True
         Me.Name = "MSIPixelPropertyWindow"
-        Me.Text = "Form1"
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
