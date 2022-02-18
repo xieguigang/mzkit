@@ -64,7 +64,8 @@ namespace imagefilter
                         var currentThreadParams = ComputeThreadParams(
                             threadId: num,
                             generatorParams: generatorParams,
-                            imageSizes: imgSizes);
+                            imageSizes: imgSizes
+                            );
 
                         currentThreadParams.ProcessId = id;
 
