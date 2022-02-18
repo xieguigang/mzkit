@@ -1,3 +1,5 @@
+require(mzkit);
+
 imports "MsImaging" from "mzplot";
 imports "mzweb" from "mzkit";
 
@@ -20,7 +22,7 @@ const [mz, density, layer] = ions;
 
 print(head(ions));
 
-for(i in nrow(ions)) {
+for(i in nrow(ions)) %dopar% {
 	print("Rendering of the ion layer:");
 	print(mz[i]);
 
