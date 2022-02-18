@@ -21,7 +21,7 @@ const ions = open.mzpack(rawPack)
 );
 const [mz, density, layer] = ions;
 
-print(head(ions));
+print(ions, max.print = 8);
 
 for(i in 1:nrow(ions)) %dopar% {
 	print("Rendering of the ion layer:");
