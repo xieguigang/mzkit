@@ -29,14 +29,14 @@ for(i in 1:nrow(ions)) %dopar% {
 
 	bitmap(file = `${outputdir}/${round(mz[i], 4)}.png`) {
 		layer[i]
-		|> knnFill(gridSize = 6)
+		|> knnFill(gridSize = 9)
 		|> render(			 
 			colorSet    = "viridis:turbo", 
 			cutoff      = TrIQ(layer[i], q = 0.3),
 			pixelSize   = [2,2],
 			defaultFill = "black"
 		)
-		|> gauss_blur(levels = 300)
+		|> gauss_blur(levels = 3)
 		;
 	}
 }
