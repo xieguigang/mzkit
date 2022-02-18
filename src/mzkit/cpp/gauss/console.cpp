@@ -7,6 +7,9 @@ using namespace std;
 
 namespace console {
 
+	/**
+	 * C++ std stream wrapper for run debug echo
+	*/
 	void println(const char* line) {
 		cout << line << endl;
 	}

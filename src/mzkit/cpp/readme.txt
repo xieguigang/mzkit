@@ -1,0 +1,1 @@
+only works under the configuration of AnyCPU(.NET) + Win32(cpp)

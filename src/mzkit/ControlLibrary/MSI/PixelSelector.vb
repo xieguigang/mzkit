@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::2ad6ef2f42d9f3cebdb164d29b389544, src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PixelSelector
-    ' 
-    '     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
-    '                 ShowPointInform
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
-    '               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
-    '               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
-    ' 
-    '     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
-    '          ClearSelection, clickGetPoint, (+2 Overloads) DrawSelectionBox, EqualEdges, gauss_AdjustValue
-    '          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
-    '          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
-    '          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
-    '          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
-    '          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
-    '          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, RepaintPolygon
-    '          ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
-    ' 
-    ' /********************************************************************************/
+' Class PixelSelector
+' 
+'     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
+'                 ShowPointInform
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
+'               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
+'               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
+' 
+'     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
+'          ClearSelection, clickGetPoint, (+2 Overloads) DrawSelectionBox, EqualEdges, gauss_AdjustValue
+'          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
+'          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
+'          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
+'          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
+'          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
+'          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, RepaintPolygon
+'          ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports ControlLibrary.PolygonEditor
-Imports Microsoft.VisualBasic.Imaging.Filters
+Imports imagefilter
 Imports stdNum = System.Math
 
 Public Class PixelSelector

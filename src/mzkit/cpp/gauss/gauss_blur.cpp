@@ -4,8 +4,8 @@
 #include "console.h"
 
 /**
-Computes gaussian blur.
-Takes struct with current thread parameters.
+ * Computes gaussian blur.
+ * Takes struct with current thread parameters.
 */
 void ComputeGaussBlur(ThreadParameters argv) {
 	// The pixel array must begin at a memory address that is a multiple of 4 bytes 
