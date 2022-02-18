@@ -1,5 +1,6 @@
 using imagefilter.Interop;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace imagefilter
@@ -8,14 +9,31 @@ namespace imagefilter
     {
         private byte[] SourceFile { get; set; }
 
+        /// <summary>
+        /// create bitmap buffer from file in any kind of image format
+        /// </summary>
+        /// <param name="filename"></param>
         public GaussImageManager(string filename)
         {
             this.SourceFile = gdiStream.getBitmapStream(fileName: filename);
         }
 
+        /// <summary>
+        /// should be a data buffer of bitmap data!
+        /// </summary>
+        /// <param name="bitmap"></param>
         public GaussImageManager(byte[] bitmap)
         {
             this.SourceFile = bitmap;
+        }
+
+        /// <summary>
+        /// create bitmap stream data from any kind of image data object
+        /// </summary>
+        /// <param name="img"></param>
+        public GaussImageManager(Image img)
+        {
+            this.SourceFile = gdiStream.getBitmapStream(img);
         }
 
         public async Task<byte[]> GenerateBlurredImageAsync(GeneratorParameters generatorParams)

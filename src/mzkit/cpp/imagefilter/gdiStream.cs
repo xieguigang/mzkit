@@ -9,14 +9,16 @@ namespace imagefilter
 
         internal static byte[] getBitmapStream(string fileName)
         {
-            Image img = Image.FromFile(fileName);
+            return getBitmapStream(Image.FromFile(fileName));
+        }
 
+        internal static byte[] getBitmapStream(Image img)
+        {
             using (MemoryStream buffer = new MemoryStream())
             {
                 img.Save(buffer, ImageFormat.Bmp);
                 return buffer.ToArray();
             }
         }
-
     }
 }
