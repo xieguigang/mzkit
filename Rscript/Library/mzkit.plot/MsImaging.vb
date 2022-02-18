@@ -600,7 +600,6 @@ Module MsImaging
                                    Optional pixelSize$ = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
-                                   Optional logE As Boolean = False,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
                                    <RRawVectorArgument>
@@ -667,7 +666,6 @@ Module MsImaging
             dimension:=dimSize,
             dimSize:=pointSize,
             colorSet:=colorSet,
-            logE:=logE,
             defaultFill:=defaultFill,
             cutoff:=cutoffRange.TryCast(Of DoubleRange)
         )
