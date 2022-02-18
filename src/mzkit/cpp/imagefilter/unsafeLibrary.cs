@@ -15,20 +15,20 @@ namespace imagefilter
         /// <summary>
         /// call cpp code at here
         /// </summary>
-        /// <param name="currentThreadParams"></param>
-        static internal unsafe void RunUnsafeImageGenerationCode(ThreadParameters currentThreadParams, out byte[] sourceFile)
+        /// <param name="argv"></param>
+        static internal unsafe void RunUnsafeComputeGaussBlur(ThreadParameters argv, byte[] sourceFile)
         {
-            int rowPadded = (currentThreadParams.ImgWidth * 3 + 3) & (~3);
-            var tmpArray = new byte[currentThreadParams.ImgHeight * rowPadded];
+            int rowPadded = (argv.ImgWidth * 3 + 3) & (~3);
+            var tmpArray = new byte[argv.ImgHeight * rowPadded];
 
             fixed (byte* imgArrayPtr = sourceFile)
             fixed (byte* tmpArrayPtr = tmpArray)
             {
-                currentThreadParams.ImgByteArrayPtr = (uint*)(&imgArrayPtr[54]);
-                currentThreadParams.TempImgByteArrayPtr = (uint*)(tmpArrayPtr);
+                argv.ImgByteArrayPtr = (uint*)(&imgArrayPtr[54]);
+                argv.TempImgByteArrayPtr = (uint*)(tmpArrayPtr);
 
                 // call cpp library
-                ComputeGaussBlurCpp(currentThreadParams);
+                ComputeGaussBlurCpp(argv);
             }
         }
     }

@@ -36,11 +36,10 @@ namespace imagefilter
             this.SourceFile = gdiStream.getBitmapStream(img);
         }
 
-        public async Task<byte[]> GenerateBlurredImageAsync(GeneratorParameters generatorParams)
+        public byte[] GenerateBlurredImage(GeneratorParameters generatorParams)
         {
             var tasks = new Task[generatorParams.NumberOfThreads];
             var imgSizes = GetLoadedImageSizes();
-            var sourceFile = this.SourceFile;
             var processId = 0;
 
             while (generatorParams.BlurLevel-- > 0)
@@ -62,13 +61,14 @@ namespace imagefilter
                         currentThreadParams.ProcessId = id;
 
                         Console.WriteLine("Start {0}", currentThreadParams);
-                        unsafeLibrary.RunUnsafeImageGenerationCode(currentThreadParams: currentThreadParams, out sourceFile);
+                        unsafeLibrary.RunUnsafeComputeGaussBlur(argv: currentThreadParams, sourceFile: SourceFile);
                         Console.WriteLine("Stop {0}", currentThreadParams);
                     });
                 }
-
-                await Task.WhenAll(tasks);
             }
+
+            Task.WaitAll(tasks);
+
             return SourceFile;
         }
 
@@ -90,7 +90,6 @@ namespace imagefilter
             int rowPadded = (imageSizes.Width * 3 + 3) & (~3);
             int currentThreadImgHeight = 0;
             int sumOfOffsetLines = 0;
-
 
             for (int i = 0; i <= threadId; i++)
             {
