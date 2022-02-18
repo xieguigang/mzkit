@@ -443,7 +443,7 @@ Public Class frmMsImagingViewer
                        Sub(args)
                            Dim image As Bitmap = Drawer.RenderSummaryLayer(summaryLayer, dimSize,, params.colors.Description, $"{params.pixel_width},{params.pixel_height}")
 
-                           image = params.Smooth(image)
+                           ' image = params.Smooth(image)
 
                            PixelSelector1.MSImage(New Size(params.pixel_width, params.pixel_height)) = image
                            PixelSelector1.BackColor = params.background
@@ -517,7 +517,7 @@ Public Class frmMsImagingViewer
                                background:=params.background.ToHtmlColor
                            )
 
-                           image = params.Smooth(image)
+                           ' image = params.Smooth(image)
 
                            PixelSelector1.MSImage(pixelSize.SizeParser) = image
                            PixelSelector1.BackColor = params.background
@@ -630,7 +630,7 @@ Public Class frmMsImagingViewer
             scale:=params.scale
         )
 
-        image = params.Smooth(image)
+        ' image = params.Smooth(image)
 
         PixelSelector1.MSImage(size.SizeParser) = image
         PixelSelector1.BackColor = params.background
@@ -777,10 +777,10 @@ Public Class frmMsImagingViewer
                 Dim progress As New frmTaskProgress
 
                 progress.SetProgressMode()
-                progress.SetProgress(0, "Do gauss blur...")
 
                 Call New Thread(Sub()
                                     Call Thread.Sleep(1000)
+                                    Call progress.SetProgress(0, "Do gauss blur...")
                                     Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 8, AddressOf progress.SetProgress))
                                     Call progress.Invoke(Sub() progress.Close())
                                 End Sub).Start()

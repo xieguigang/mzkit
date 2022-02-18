@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::92ede38e3fc01272d1278cb3c645170d, src\mzkit\Task\Properties\MsImageProperty.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Enum SmoothFilters
-    ' 
-    '     Gauss, GaussMax, GaussMean, GaussMedian, GaussMin
-    '     Max, Mean, Median, Min, None
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class MsImageProperty
-    ' 
-    '     Properties: background, colors, fileSize, imageSmooth, logE
-    '                 lowerbound, mapLevels, max, maxCut, method
-    '                 min, pixel_height, pixel_width, scale, scan_x
-    '                 scan_y, tolerance, upperbound, UUID
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: GetMSIInfo, GetTolerance, Smooth
-    ' 
-    '     Sub: Reset, SetIntensityMax
-    ' 
-    ' /********************************************************************************/
+' Enum SmoothFilters
+' 
+'     Gauss, GaussMax, GaussMean, GaussMedian, GaussMin
+'     Max, Mean, Median, Min, None
+' 
+'  
+' 
+' 
+' 
+' Class MsImageProperty
+' 
+'     Properties: background, colors, fileSize, imageSmooth, logE
+'                 lowerbound, mapLevels, max, maxCut, method
+'                 min, pixel_height, pixel_width, scale, scan_x
+'                 scan_y, tolerance, upperbound, UUID
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: GetMSIInfo, GetTolerance, Smooth
+' 
+'     Sub: Reset, SetIntensityMax
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Filters
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Public Enum SmoothFilters
     None
@@ -99,8 +100,8 @@ Public Class MsImageProperty
     <Description("Log(e) transformation of the intensity value?")>
     <Category("Render")> Public Property logE As Boolean = True
     <Category("Render")> Public Property colors As ScalerPalette = ScalerPalette.viridis
-    <Category("Render") > Public Property mapLevels As Integer = 30
-    <Category("Render")> Public Property imageSmooth As SmoothFilters
+    <Category("Render")> Public Property mapLevels As Integer = 30
+    ' <Category("Render")> Public Property imageSmooth As SmoothFilters
     <Category("Render")> Public Property scale As InterpolationMode = InterpolationMode.Bilinear
 
     <Category("Pixel M/z Data")> Public Property tolerance As Double = 0.1
@@ -165,32 +166,32 @@ Public Class MsImageProperty
         _fileSize = fileSize
     End Sub
 
-    Public Function Smooth(img As Bitmap) As Bitmap
-        If imageSmooth = SmoothFilters.None Then
-            Return img
-        End If
+    'Public Function Smooth(img As Bitmap) As Bitmap
+    '    If imageSmooth = SmoothFilters.None Then
+    '        Return img
+    '    End If
 
-        Select Case imageSmooth
-            Case SmoothFilters.Gauss : Return GaussBlur.GaussBlur(img)
-            Case SmoothFilters.GaussMax : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Max)
-            Case SmoothFilters.GaussMin : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Min)
-            Case SmoothFilters.GaussMean : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Mean)
-            Case SmoothFilters.GaussMedian : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Median)
-            Case SmoothFilters.Max : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Max)
-            Case SmoothFilters.Min : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Min)
-            Case SmoothFilters.Mean : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Mean)
-            Case SmoothFilters.Median : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Median)
-            Case Else
-                Throw New NotImplementedException
-        End Select
-    End Function
+    '    Select Case imageSmooth
+    '        Case SmoothFilters.Gauss : Return GaussBlur.GaussBlur(img)
+    '        Case SmoothFilters.GaussMax : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Max)
+    '        Case SmoothFilters.GaussMin : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Min)
+    '        Case SmoothFilters.GaussMean : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Mean)
+    '        Case SmoothFilters.GaussMedian : Return New Filters.Matrix(GaussBlur.GaussBlur(img)).GetSmoothBitmap(Matrix2DFilters.Median)
+    '        Case SmoothFilters.Max : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Max)
+    '        Case SmoothFilters.Min : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Min)
+    '        Case SmoothFilters.Mean : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Mean)
+    '        Case SmoothFilters.Median : Return New Filters.Matrix(img).GetSmoothBitmap(Matrix2DFilters.Median)
+    '        Case Else
+    '            Throw New NotImplementedException
+    '    End Select
+    'End Function
 
     Public Sub SetIntensityMax(max As Double)
         _min = 0
         _max = max
 
         lowerbound = 0
-        upperbound = max * maxCut
+        upperbound = stdNum.Round(max * maxCut, 1)
     End Sub
 
     Public Function GetTolerance() As Tolerance
