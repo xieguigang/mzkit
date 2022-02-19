@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Assembly: RPackageModule>
@@ -50,5 +51,6 @@ Public Class zzz
 
     Public Shared Sub onLoad()
         Call Visual.Main()
+        Call MSIColorSet.DoRegister()
     End Sub
 End Class

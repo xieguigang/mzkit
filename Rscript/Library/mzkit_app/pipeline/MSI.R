@@ -31,7 +31,7 @@ for(i in 1:nrow(ions)) %dopar% {
 		layer[i]
 		|> knnFill(gridSize = 3)
 		|> render(			 
-			colorSet    = "viridis:turbo", 
+			colorSet    = "MSImaging", 
 			cutoff      = TrIQ(layer[i], q = 0.65),
 			pixelSize   = [2,2],
 			defaultFill = "black"
