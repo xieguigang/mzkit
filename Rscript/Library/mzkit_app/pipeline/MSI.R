@@ -9,7 +9,7 @@ options(memory.load = "max");
 const rawPack as string    = ?"--mzpack"      || stop("A raw data file path is required!");
 const mzdiff as double     = ?"--mzdiff"      || 1;
 const gridSize as integer  = ?"--grid-size"   || 6;
-const densityCut as double = ?"--density-cut" || 0.1;
+const densityCut as double = ?"--density-cut" || 0.05;
 const outputdir as string  = ?"--outputdir"   || `${dirname(rawPack)}/${basename(rawPack)}_MSI/`;
 
 const ions = open.mzpack(rawPack) 
@@ -31,12 +31,12 @@ for(i in 1:nrow(ions)) %dopar% {
 		layer[i]
 		|> knnFill(gridSize = 3)
 		|> render(			 
-			colorSet    = "MPL_gist_ncar", 
-			cutoff      = TrIQ(layer[i], q = 0.9),
+			colorSet    = "viridis:turbo", 
+			cutoff      = TrIQ(layer[i], q = 1),
 			pixelSize   = [2,2],
 			defaultFill = "black"
 		)
-		|> gauss_blur(levels = 30)
+		|> gauss_blur(levels = 100)
 		;
 	}
 }

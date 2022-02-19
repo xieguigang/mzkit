@@ -90,6 +90,10 @@ Namespace Imaging
         Public Overrides Function ThresholdValue(intensity() As Double, qcut As Double) As Double
             If intensity.IsNullOrEmpty Then
                 Return 0
+            ElseIf qcut >= 1 Then
+                Return intensity.Max
+            ElseIf qcut <= 0.0 Then
+                Return intensity.Min
             Else
                 Return intensity.FindThreshold(qcut, N:=100) / intensity.Max
             End If

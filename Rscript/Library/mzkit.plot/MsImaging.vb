@@ -142,8 +142,13 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
-    Public Function TrIQRange(<RRawVectorArgument> data As Object, Optional q As Double = 0.6, Optional env As Environment = Nothing) As Object
-        Dim TrIQ As New TrIQThreshold
+    Public Function TrIQRange(<RRawVectorArgument>
+                              data As Object,
+                              Optional q As Double = 0.6,
+                              Optional levels As Integer = 100,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim TrIQ As New TrIQThreshold With {.levels = levels}
         Dim into As Double()
 
         If TypeOf data Is SingleIonLayer Then
@@ -694,6 +699,7 @@ Module MsImaging
                                Optional mzdiff As Object = "da:0.1",
                                Optional keepsLayer As Boolean = False,
                                Optional densityCut As Double = 0.1,
+                               Optional qcut As Double = 0.01,
                                Optional intoCut As Double = 0,
                                Optional env As Environment = Nothing) As Object
 
@@ -703,7 +709,7 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01, intoCut:=intoCut).ToArray
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=qcut, intoCut:=intoCut).ToArray
         Dim layerCuts = layers _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
             .OrderByDescending(Function(d) Val(d.TagStr)) _
