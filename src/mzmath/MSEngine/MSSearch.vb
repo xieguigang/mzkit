@@ -66,13 +66,13 @@ Public Interface IMzQuery
 
 End Interface
 
-Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implements IMzQuery
+Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider}) : Implements IMzQuery
 
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
     ReadOnly massIndex As AVLTree(Of MassIndexKey, Compound)
 
-    Friend ReadOnly keggIndex As Dictionary(Of String, Compound)
+    Friend ReadOnly index As Dictionary(Of String, Compound)
 
     Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -85,7 +85,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implem
         Me.tolerance = tolerance
         Me.massIndex = tree
         Me.precursorTypes = precursorTypes
-        Me.keggIndex = tree _
+        Me.index = tree _
             .GetAllNodes _
             .Select(Function(c) c.Members) _
             .IteratesALL _
@@ -98,12 +98,12 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implem
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return $"{keggIndex.Count} unique compounds, tree with mzdiff: {tolerance} (precursors: {precursorTypes.JoinBy("; ")})"
+        Return $"{index.Count} unique compounds, tree with mzdiff: {tolerance} (precursors: {precursorTypes.JoinBy("; ")})"
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetCompound(kegg_id As String) As Compound
-        Return keggIndex.TryGetValue(kegg_id)
+    Public Function GetCompound(id As String) As Compound
+        Return index.TryGetValue(id)
     End Function
 
     ''' <summary>
@@ -134,7 +134,8 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, IExactmassProvider}) : Implem
                 .unique_id = cpd.Identity,
                 .precursorType = minppm.type.ToString,
                 .mz = minppm.mzhit,
-                .ppm = minppm.Item3
+                .ppm = minppm.Item3,
+                .name = cpd.CommonName
             }
         Next
     End Function

@@ -1,0 +1,69 @@
+unique_id,name,mz,ppm,precursorType,score
+C06198,"P1,P4-Bis(5'-uridyl) tetraphosphate",772.991,14.5407,[M+H-H2O]+,0
+C19779,beta-Alaninamide,88.0875,1.23741,[M-H2O+NH4]+,0
+C00014,Ammonia,93.9455,25.9732,[M+2K-H]+,0
+C06613,trans-3-Chloroallyl aldehyde,96.9282,0,[M+Li]+,0
+NULL,NULL,0,0,NULL,0
+NULL,NULL,0,0,NULL,0
+NULL,NULL,0,0,NULL,0
+NULL,NULL,0,0,NULL,0
+NULL,NULL,0,0,NULL,0
+C00153,Nicotinamide,123.055,1.82032,[M+H]+,0
+C00488,Formamide,132.077,0.174141,[2M+ACN+H]+,0
+C00033,Acetate,136.94,0.438147,[M+2K-H]+,0
+NULL,NULL,0,0,NULL,0
+C16248,"2,6-Dibromohydroquinone",144.927,1.7457,[M+H+Na]2+,0
+C00315,Spermidine,146.165,0.51996,[M+H]+,0
+C01408,Benzoin,148.076,1.16832,[M+2ACN+2H]2+,0
+NULL,NULL,0,0,NULL,0
+C04713,N6-(delta2-Isopentenyl)-adenosine 5'-monophosphate,154.141,0.497378,[M+H+2Na]3+,0
+C14870,2-Bromoacetaldehyde,160.9,8.34052,[M+K]+,0
+C00009,Orthophosphate,174.896,1.37225,[M+2K-H]+,0
+C18236,"1,2,3,4-Tetrachlorobenzene",178.878,25.6886,[M+H-2H2O]+,0
+C00601,Phenylacetaldehyde,184.073,1.43965,[M+ACN+Na]+,0
+C12373,Tetracenomycin F1 methylester,191.052,4.31294,[M+2H]2+,0
+C01075,N-Sulfo-D-glucosamine,192.065,0.505037,[M+3ACN+2H]2+,0
+C02357,2-Chlorobenzoate,194.961,1.32334,[M+K]+,0
+C02710,N-Acetyl-L-leucine,196.094,0.418166,[M+Na]+,0
+C01173,"1,3,8-Naphthalenertriol",199.037,0.592856,[M+Na]+,0
+C00245,Taurine,201.934,2.67415,[M+2K-H]+,0
+C00750,Spermine,203.223,1.85019,[M+H]+,0
+C01717,4-Hydroxy-2-quinolinecarboxylic acid,212.032,1.02815,[M+Na]+,0
+NULL,NULL,0,0,NULL,0
+C16542,APC,221.856,17.8347,[M+H+2Na]3+,0
+C02496,"2,4-Dinitrophenol",222.975,0.7086,[M+K]+,0
+C06989,"delta-3,4,5,6-Tetrachlorocyclohexene",224.863,2.66829,[M+Li]+,0
+C00799,Isoflavone,229.009,0.873329,[M+Li]+,0
+C01717,4-Hydroxy-2-quinolinecarboxylic acid,234.014,2.39303,[M+2Na-H]+,0
+C01613,Stachyose,237.84,26.6699,[M+H+2Na]3+,0
+C01036,4-Maleylacetoacetate,245.003,0.653053,[M+2Na-H]+,0
+C03797,Oxidized Photinus luciferin,249.987,0.40002,[M]+,0
+C07047,Ifosfamide,266.966,5.24414,[M+Li]+,0
+C16424,Isopentenyladenosine-5'-triphosphate,267.955,13.3416,[M+H-C12H20O9]+,0
+C05699,L-Selenocystathionine,270.012,12.5922,[M]+,0
+C20248,7-Carboxy-7-carbaguanine,277.104,1.19089,[M+2ACN+H]+,0
+C02740,Photinus luciferin,286.939,1.39403,[M+Li]+,0
+C03356,3-Phospho-D-erythronate,292.923,7.37391,[M+2K-H]+,0
+C12469,"3-Amino-4,7-dihydroxy-8-chlorocoumarin",303.918,1.11873,[M+2K-H]+,0
+C03343,Mono-(2-ethylhexyl)phthalate,317.115,0.447787,[M+K]+,0
+C20672,"GDP-4-acetamido-4,6-dideoxy-alpha-D-mannose",327.053,0.755231,[M+H+Na]2+,0
+C00789,CDP-ribitol,331.085,3.46438,[M+3ACN+2H]2+,0
+C15848,Angiotensin III,333.158,0.354186,[M+3Na]3+,0
+C01269,5-O-(1-Carboxyvinyl)-3-phosphoshikimate,357.058,0.249259,[M+CH3OH+H]+,0
+C18347,"5,5'-Dehydrodivanillate",373.032,1.22778,[M+K]+,0
+C01151,"D-Ribose 1,5-bisphosphate",389.007,3.1362,[M+DMSO+H]+,0
+C00329,D-Glucosamine,397.122,0.357573,[2M+K]+,0
+C00575,"3',5'-Cyclic AMP",405.972,28.2278,[M+2K-H]+,0
+C16613,6-Thiourate,406.974,3.54321,[2M+K]+,0
+C16201,1-Naphthalenesulfonic acid,439.028,2.6923,[2M+Na]+,0
+C00206,dADP,456.006,0.964899,[M+2Na-H]+,0
+NULL,NULL,0,0,NULL,0
+C12469,"3-Amino-4,7-dihydroxy-8-chlorocoumarin",476.986,2.55354,[2M+Na]+,0
+NULL,NULL,0,0,NULL,0
+C11038,2'-Deoxy-5-hydroxymethylcytidine-5'-diphosphate,493.953,19.5561,[M+2K-H]+,0
+C00700,XTP,587.99,4.36233,[M+ACN+Na]+,0
+NULL,NULL,0,0,NULL,0
+C19621,"9,10,18-Trihydroxystearate",706.546,14.4692,[2M+ACN+H]+,0
+NULL,NULL,0,0,NULL,0
+NULL,NULL,0,0,NULL,0
+C04638,"2,3-Bis-O-(geranylgeranyl)glycerol 1-phosphate",734.548,25.9704,[M+NH4]+,0
