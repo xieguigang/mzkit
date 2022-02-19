@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::9e2ea98c3f6583c68977a107524905f3, src\visualize\MsImaging\LayerHelpers.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module LayerHelpers
-    ' 
-    '     Function: GetMSIIons
-    ' 
-    ' /********************************************************************************/
+' Module LayerHelpers
+' 
+'     Function: GetMSIIons
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports stdNum = System.Math
 
 Public Module LayerHelpers
 
@@ -73,7 +74,8 @@ Public Module LayerHelpers
     Public Iterator Function GetMSIIons(raw As mzPack,
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
-                                        Optional qcut As Double = 0.05) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
+                                        Optional qcut As Double = 0.05,
+                                        Optional intoCut As Double = 0) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
 
         Dim cellSize As New Size(gridSize, gridSize)
         Dim graph As Grid(Of ScanMS1) = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
@@ -89,7 +91,7 @@ Public Module LayerHelpers
                         Return scan _
                             .GetMs _
                             .ToArray _
-                            .Centroid(mzErr, New RelativeIntensityCutoff(0.01)) _
+                            .Centroid(mzErr, New RelativeIntensityCutoff(intoCut)) _
                             .Select(Function(mzi) (mzi, pt))
                     End Function) _
             .IteratesALL _
@@ -140,7 +142,7 @@ Public Module LayerHelpers
 
             If ++j = k Then
                 j = 0
-                Call RunSlavePipeline.SendProgress(i / allMz.Length, $"({CInt(100 * i / allMz.Length)}%) {mz.ToString("F4")}")
+                Call RunSlavePipeline.SendProgress(stdNum.Round(i / allMz.Length, 2), $"({CInt(100 * i / allMz.Length)}%) {mz.ToString("F4")}")
             End If
         Next
     End Function

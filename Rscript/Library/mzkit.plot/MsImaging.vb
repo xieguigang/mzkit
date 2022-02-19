@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -580,11 +581,10 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"></param>
+    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
     ''' <param name="defaultFill"></param>
     ''' <param name="pixelSize"></param>
     ''' <param name="cutoff"></param>
-    ''' <param name="logE"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
     ''' be treated as background pixels and removed from the MSI 
@@ -593,14 +593,15 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
+    <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
                                    Optional intensity As IntensitySummary = IntensitySummary.Total,
-                                   Optional colorSet$ = "Jet",
+                                   Optional colorSet$ = "viridis:turbo",
                                    Optional defaultFill As String = "Transparent",
-                                   Optional pixelSize$ = "6,6",
+                                   <RRawVectorArgument>
+                                   Optional pixelSize As Object = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
-                                   Optional logE As Boolean = False,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
                                    <RRawVectorArgument>
@@ -656,7 +657,7 @@ Module MsImaging
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
-        Dim pointSize As Size = pixelSize.SizeParser
+        Dim pointSize As Size = InteropArgumentHelper.getSize(pixelSize, env, "6,6").SizeParser
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
@@ -667,7 +668,6 @@ Module MsImaging
             dimension:=dimSize,
             dimSize:=pointSize,
             colorSet:=colorSet,
-            logE:=logE,
             defaultFill:=defaultFill,
             cutoff:=cutoffRange.TryCast(Of DoubleRange)
         )
@@ -694,6 +694,7 @@ Module MsImaging
                                Optional mzdiff As Object = "da:0.1",
                                Optional keepsLayer As Boolean = False,
                                Optional densityCut As Double = 0.1,
+                               Optional intoCut As Double = 0,
                                Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env)
@@ -702,7 +703,7 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01).ToArray
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01, intoCut:=intoCut).ToArray
         Dim layerCuts = layers _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
             .OrderByDescending(Function(d) Val(d.TagStr)) _

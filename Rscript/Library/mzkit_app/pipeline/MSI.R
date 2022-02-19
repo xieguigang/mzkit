@@ -1,3 +1,6 @@
+require(mzkit);
+require(filter);
+
 imports "MsImaging" from "mzplot";
 imports "mzweb" from "mzkit";
 
@@ -18,13 +21,22 @@ const ions = open.mzpack(rawPack)
 );
 const [mz, density, layer] = ions;
 
-print(head(ions));
+print(ions, max.print = 8);
 
-for(i in nrow(ions)) {
+for(i in 1:nrow(ions)) %dopar% {
 	print("Rendering of the ion layer:");
 	print(mz[i]);
 
 	bitmap(file = `${outputdir}/${round(mz[i], 4)}.png`) {
-		plot(layer[i]);
+		layer[i]
+		|> knnFill(gridSize = 3)
+		|> render(			 
+			colorSet    = "viridis:turbo", 
+			cutoff      = TrIQ(layer[i], q = 0.3),
+			pixelSize   = [2,2],
+			defaultFill = "black"
+		)
+		|> gauss_blur(levels = 15)
+		;
 	}
 }
