@@ -31,8 +31,8 @@ for(i in 1:nrow(ions)) %dopar% {
 		layer[i]
 		|> knnFill(gridSize = 3)
 		|> render(			 
-			colorSet    = "MSImaging", 
-			cutoff      = TrIQ(layer[i], q = 0.65),
+			colorSet    = "MPL_gist_ncar", 
+			cutoff      = TrIQ(layer[i], q = 0.9),
 			pixelSize   = [2,2],
 			defaultFill = "black"
 		)
