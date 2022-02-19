@@ -70,7 +70,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
 
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
-    ReadOnly massIndex As AVLTree(Of MassIndexKey, Compound)
+    ReadOnly mzIndex As (Double, Compound())()
 
     Friend ReadOnly index As Dictionary(Of String, Compound)
 
@@ -81,19 +81,22 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         End Get
     End Property
 
-    Sub New(tree As AVLTree(Of MassIndexKey, Compound), tolerance As Tolerance, precursorTypes As MzCalculator())
+    Sub New(tree As IEnumerable(Of Compound), tolerance As Tolerance, precursorTypes As MzCalculator())
         Me.tolerance = tolerance
-        Me.massIndex = tree
         Me.precursorTypes = precursorTypes
         Me.index = tree _
-            .GetAllNodes _
-            .Select(Function(c) c.Members) _
-            .IteratesALL _
             .GroupBy(Function(c) c.Identity) _
             .ToDictionary(Function(cpd) cpd.Key,
                           Function(cgroup)
                               Return cgroup.First
                           End Function)
+        Me.mzIndex = Me.index.Values.Select(Function(c)
+                                                Return precursorTypes.Select(Function(t)
+                                                                                 Return (t.CalcMZ(c.ExactMass), c)
+                                                                             End Function)
+                                            End Function).IteratesALL.GroupBy(Function(d) d.Item1).Select(Function(g)
+                                                                                                              Return (g.Key, g.Select(Function(i) i.c).ToArray)
+                                                                                                          End Function).ToArray
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -118,7 +121,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' </remarks>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim query As New MassIndexKey With {.mz = mz}
-        Dim result As Compound() = massIndex.Find(query)?.Members
+        Dim result As Compound() = mzIndex.Where(Function(d) tolerance(d.Item1, mz)).Select(Function(d) d.Item2).IteratesALL.GroupBy(Function(d) d.Identity).Select(Function(g) g.First).ToArray  ' massIndex.Find(query)?.Members
 
         For Each cpd As Compound In result.SafeQuery
             Dim minppm = precursorTypes _
@@ -141,25 +144,25 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     End Function
 
     Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of Compound)
-        Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
-        Dim typesCache = types.Select(Function(t) (name:=t.ToString, type:=t)).ToArray
+        'Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
+        'Dim typesCache = types.Select(Function(t) (name:=t.ToString, type:=t)).ToArray
 
-        For Each compound As Compound In compounds.GroupBy(Function(cpd) cpd.Identity).Select(Function(cgroup) cgroup.First)
-            If compound.ExactMass <= 0 Then
-                Continue For
-            End If
+        'For Each compound As Compound In compounds.GroupBy(Function(cpd) cpd.Identity).Select(Function(cgroup) cgroup.First)
+        '    If compound.ExactMass <= 0 Then
+        '        Continue For
+        '    End If
 
-            For Each type As (name$, calc As MzCalculator) In typesCache
-                Dim index As New MassIndexKey With {
-                    .precursorType = type.name,
-                    .mz = type.calc.CalcMZ(compound.ExactMass)
-                }
+        '    For Each type As (name$, calc As MzCalculator) In typesCache
+        '        Dim index As New MassIndexKey With {
+        '            .precursorType = type.name,
+        '            .mz = type.calc.CalcMZ(compound.ExactMass)
+        '        }
 
-                tree.Add(index, compound, valueReplace:=False)
-            Next
-        Next
+        '        tree.Add(index, compound, valueReplace:=False)
+        '    Next
+        'Next
 
-        Return New MSSearch(Of Compound)(tree, tolerance, types)
+        Return New MSSearch(Of Compound)(compounds, tolerance, types)
     End Function
 End Class
 

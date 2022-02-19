@@ -14,7 +14,7 @@ mz = input
 
 kegg = kegg_compounds(rawList = TRUE)
 |> ms1_handler(
-	precursors = defaultPrecursors("+"),
+	precursors = precursor_types(["[M]+","[M+H]+","[M+Na]+","[M+K]+","[M+H-H2O]+","[M+NH4]+","[M+H-2H2O]+","[M+CH3OH+H]+"]),
 	tolerance = "ppm:30"
 )
 |> ms1_search(mz, unique = TRUE)
