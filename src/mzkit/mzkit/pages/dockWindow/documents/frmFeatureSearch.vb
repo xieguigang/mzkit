@@ -232,6 +232,8 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
                     rtmax = rangeMax
                     types.Clear()
 
+                    Call ApplyFeatureFilterToolStripMenuItem_Click(Nothing, Nothing)
+
                     MessageBox.Show("All feature filter condition has been clear!", "Reset Feature Filter", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End Sub
 
