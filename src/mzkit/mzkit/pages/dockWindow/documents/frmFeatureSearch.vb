@@ -64,7 +64,14 @@ Imports Task
 Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
 
     Dim appendHeader As Boolean = False
+
+    ''' <summary>
+    ''' raw source list for ms1 search
+    ''' </summary>
     Dim list1 As New List(Of (File As String, matches As ParentMatch()))
+    ''' <summary>
+    ''' raw source list for ms2 search
+    ''' </summary>
     Dim list2 As New List(Of (file As String, targetMz As Double, matches As ScanMS2()))
     Dim rangeMin As Double = 999999999
     Dim rangeMax As Double = -99999999999999
@@ -87,7 +94,7 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         Dim i As i32 = 1
 
         For Each member As ParentMatch In matches
-            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
+            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id, .Tag = member}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz.ToString("F4")})
@@ -125,7 +132,7 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
         list2.Add((file, targetMz, matches))
 
         For Each member As ScanMS2 In matches
-            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
+            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id, .Tag = member}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz.ToString("F4")})
@@ -417,6 +424,29 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
                 list2.Clear()
                 list2.Add(source)
             End If
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 进行分子网络的建立来完成二级聚类
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub RunMs2ClusteringToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunMs2ClusteringToolStripMenuItem.Click
+        If list1.IsNullOrEmpty Then
+            ' is ms2 search
+            ' scanms2
+            Throw New NotImplementedException
+        Else
+            ' is ms1 search
+            ' parent match
+            Dim parents As New List(Of ParentMatch)
+
+            For Each fileRow As TreeListViewItem In TreeListView1.Items
+                For Each feature As TreeListViewItem In fileRow.Items
+                    Call parents.Add(feature.Tag)
+                Next
+            Next
         End If
     End Sub
 End Class

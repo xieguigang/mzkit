@@ -39,11 +39,13 @@ Partial Class frmFeatureSearch
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ApplyFeatureFilterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.ApplyFeatureFilterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.RunMs2ClusteringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -109,9 +111,21 @@ Partial Class frmFeatureSearch
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ApplyFeatureFilterToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewToolStripMenuItem, Me.ViewXICToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ApplyFeatureFilterToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewToolStripMenuItem, Me.ViewXICToolStripMenuItem, Me.ToolStripMenuItem2, Me.RunMs2ClusteringToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 98)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 126)
+        '
+        'ApplyFeatureFilterToolStripMenuItem
+        '
+        Me.ApplyFeatureFilterToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
+        Me.ApplyFeatureFilterToolStripMenuItem.Name = "ApplyFeatureFilterToolStripMenuItem"
+        Me.ApplyFeatureFilterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ApplyFeatureFilterToolStripMenuItem.Text = "Apply Feature Filter"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'ViewToolStripMenuItem
         '
@@ -134,17 +148,16 @@ Partial Class frmFeatureSearch
         Me.ImageList1.Images.SetKeyName(0, "application-x-object.png")
         Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
         '
-        'ApplyFeatureFilterToolStripMenuItem
+        'ToolStripMenuItem2
         '
-        Me.ApplyFeatureFilterToolStripMenuItem.Image = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.preferences_system_notifications
-        Me.ApplyFeatureFilterToolStripMenuItem.Name = "ApplyFeatureFilterToolStripMenuItem"
-        Me.ApplyFeatureFilterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ApplyFeatureFilterToolStripMenuItem.Text = "Apply Feature Filter"
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
         '
-        'ToolStripMenuItem1
+        'RunMs2ClusteringToolStripMenuItem
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.RunMs2ClusteringToolStripMenuItem.Name = "RunMs2ClusteringToolStripMenuItem"
+        Me.RunMs2ClusteringToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RunMs2ClusteringToolStripMenuItem.Text = "Run Ms2 Clustering"
         '
         'frmFeatureSearch
         '
@@ -176,4 +189,6 @@ Partial Class frmFeatureSearch
     Friend WithEvents ViewXICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ApplyFeatureFilterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents RunMs2ClusteringToolStripMenuItem As ToolStripMenuItem
 End Class
