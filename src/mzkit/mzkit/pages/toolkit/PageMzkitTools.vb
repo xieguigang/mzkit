@@ -576,10 +576,11 @@ Public Class PageMzkitTools
 
         If raw.Length = 0 Then
             MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Call progress.Invoke(Sub() progress.Close())
         Else
             Call MolecularNetworkingTool(raw, progress, similarityCutoff)
         End If
+
+        Call progress.Invoke(Sub() progress.Close())
     End Sub
 
     Friend Sub MolecularNetworkingTool(raw As PeakMs2(), progress As frmTaskProgress, similarityCutoff As Double)
@@ -662,8 +663,6 @@ Public Class PageMzkitTools
                     Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
                 End Sub)
         End If
-
-        progress.Invoke(Sub() progress.Close())
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
