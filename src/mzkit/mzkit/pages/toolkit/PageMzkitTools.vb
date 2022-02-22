@@ -561,20 +561,28 @@ Public Class PageMzkitTools
         End If
     End Sub
 
+    ''' <summary>
+    ''' load data and then run clustering
+    ''' </summary>
+    ''' <param name="progress"></param>
+    ''' <param name="similarityCutoff"></param>
     Friend Sub MolecularNetworkingTool(progress As frmTaskProgress, similarityCutoff As Double)
         Thread.Sleep(1000)
 
         progress.ShowProgressTitle("Load Scan data")
         progress.ShowProgressDetails("loading cache ms2 scan data...")
 
-        Dim raw = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
+        Dim raw As PeakMs2() = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
 
         If raw.Length = 0 Then
             MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            progress.Invoke(Sub() progress.Close())
-            Return
+            Call progress.Invoke(Sub() progress.Close())
+        Else
+            Call MolecularNetworkingTool(raw, progress, similarityCutoff)
         End If
+    End Sub
 
+    Friend Sub MolecularNetworkingTool(raw As PeakMs2(), progress As frmTaskProgress, similarityCutoff As Double)
         Dim protocol As New Protocols(
             ms1_tolerance:=Tolerance.PPM(15),
             ms2_tolerance:=Tolerance.DeltaMass(0.3),
