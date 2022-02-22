@@ -626,17 +626,17 @@ Public Class PageMzkitTools
         ' Call tree.doCluster(run)
         Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
         Dim net As IO.DataSet() = links _
-                    .Select(Function(a)
-                                Return New IO.DataSet With {
-                                    .ID = a.Name,
-                                    .Properties = a.Value _
-                                        .ToDictionary(Function(t) t.Key,
-                                                      Function(t)
-                                                          Return stdNum.Min(t.Value.forward, t.Value.reverse)
-                                                      End Function)
-                                }
-                            End Function) _
-                    .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
+            .Select(Function(a)
+                        Return New IO.DataSet With {
+                            .ID = a.Name,
+                            .Properties = a.Value _
+                                .ToDictionary(Function(t) t.Key,
+                                                Function(t)
+                                                    Return stdNum.Min(t.Value.forward, t.Value.reverse)
+                                                End Function)
+                        }
+                    End Function) _
+            .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
 
         progress.ShowProgressDetails("run family clustering....")
 
@@ -657,10 +657,10 @@ Public Class PageMzkitTools
             progress.ShowProgressDetails("initialize result output...")
 
             MyApplication.host.Invoke(
-                        Sub()
-                            Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
-                            Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
-                        End Sub)
+                Sub()
+                    Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
+                    Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
+                End Sub)
         End If
 
         progress.Invoke(Sub() progress.Close())

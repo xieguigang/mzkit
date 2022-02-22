@@ -43,10 +43,12 @@
 #End Region
 
 Imports System.Text
+Imports System.Threading
 Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
@@ -447,6 +449,20 @@ Public Class frmFeatureSearch : Implements ISaveHandle, IFileReference
                     Call parents.Add(feature.Tag)
                 Next
             Next
+
+            Dim peaksData As PeakMs2() = parents.Select(Function(p) p.ToMs2).ToArray
+            Dim progress As New frmTaskProgress
+
+            progress.ShowProgressTitle("Build Molecular Networking...", directAccess:=True)
+            progress.ShowProgressDetails("Run ms2 clustering!", directAccess:=True)
+
+            Call New Thread(Sub()
+                                Call Thread.Sleep(500)
+                                Call MyApplication.host.mzkitTool.MolecularNetworkingTool(peaksData, progress, 0.8)
+                                Call progress.Invoke(Sub() progress.Close())
+                            End Sub).Start()
+
+            Call progress.ShowDialog()
         End If
     End Sub
 End Class
