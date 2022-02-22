@@ -52,9 +52,11 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
+<Assembly: InternalsVisibleTo("mzkit")>
+
 Public Class KEGGHandler
 
-    ReadOnly engine As MSSearch(Of KEGGCompound)
+    Friend ReadOnly engine As MSSearch(Of KEGGCompound)
 
     Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -74,7 +76,7 @@ Public Class KEGGHandler
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(kegg_id As String) As Compound
-        Return engine.keggIndex.TryGetValue(kegg_id).KEGG
+        Return engine.index.TryGetValue(kegg_id).KEGG
     End Function
 
     ''' <summary>

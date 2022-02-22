@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0ce8722247640fe154c34a9e858b6077, Rscript\Library\mzkit\MetaDbXref.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MetaDbXref
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: cbindMeta, CreateMs1Handler, createTable, ms1Search, searchTable
-    ' 
-    ' /********************************************************************************/
+' Module MetaDbXref
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: cbindMeta, CreateMs1Handler, createTable, ms1Search, searchTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime
@@ -70,6 +71,7 @@ Module MetaDbXref
     Private Function createTable(query As MzQuery(), args As list, env As Environment) As dataframe
         Dim columns As New Dictionary(Of String, Array) From {
             {NameOf(MzQuery.unique_id), query.Select(Function(q) q.unique_id).ToArray},
+            {NameOf(MzQuery.name), query.Select(Function(q) q.name).ToArray},
             {NameOf(MzQuery.mz), query.Select(Function(q) q.mz).ToArray},
             {NameOf(MzQuery.ppm), query.Select(Function(q) q.ppm).ToArray},
             {NameOf(MzQuery.precursorType), query.Select(Function(q) q.precursorType).ToArray},
@@ -85,7 +87,7 @@ Module MetaDbXref
     ''' <summary>
     ''' a generic function for handle ms1 search
     ''' </summary>
-    ''' <param name="compounds"></param>
+    ''' <param name="compounds">kegg compounds</param>
     ''' <param name="precursors"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
@@ -125,17 +127,44 @@ Module MetaDbXref
     ''' <param name="mz"></param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
-    Public Function ms1Search(engine As IMzQuery, mz As Double()) As Object
+    <RApiReturn(GetType(MzQuery))>
+    Public Function ms1Search(engine As Object, mz As Double(),
+                              Optional unique As Boolean = False,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim queryEngine As IMzQuery
+
+        If TypeOf engine Is KEGGHandler Then
+            queryEngine = DirectCast(engine, KEGGHandler).engine
+        ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
+            queryEngine = engine
+        Else
+            Return Internal.debug.stop("invalid handler type!", env)
+        End If
+
         If mz.IsNullOrEmpty Then
             Return Nothing
         ElseIf mz.Length = 1 Then
-            Return engine.QueryByMz(mz(Scan0)).ToArray
+            Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
+
+            If unique Then
+                Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
+            Else
+                Return all
+            End If
         Else
             Return New list With {
                 .slots = mz _
                     .ToDictionary(Function(mzi) mzi.ToString,
-                                  Function(mzi)
-                                      Return CObj(engine.QueryByMz(mzi).ToArray)
+                                  Function(mzi) As Object
+                                      If unique Then
+                                          Return queryEngine _
+                                             .QueryByMz(mzi) _
+                                             .OrderBy(Function(d) d.ppm) _
+                                             .FirstOrDefault
+                                      Else
+                                          Return queryEngine.QueryByMz(mzi).ToArray
+                                      End If
                                   End Function)
             }
         End If
