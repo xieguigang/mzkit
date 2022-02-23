@@ -2,7 +2,7 @@
 
 Public Class MSClusterNetworkViewer
 
-    Public Overloads Sub Load(graph As NetworkGraph)
+    Public Sub LoadModel(graph As NetworkGraph)
 
     End Sub
 
