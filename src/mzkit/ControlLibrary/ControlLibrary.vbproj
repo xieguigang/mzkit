@@ -146,6 +146,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MSCluster\MSClusterNetworkViewer.Designer.vb">
+      <DependentUpon>MSClusterNetworkViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MSCluster\MSClusterNetworkViewer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ToolStripTraceBarItem.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -209,6 +215,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="MSCluster\MSClusterNetworkViewer.resx">
+      <DependentUpon>MSClusterNetworkViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -250,6 +259,18 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
+      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
+      <Name>Network.GraphTheory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\Network.IO.Extensions.vbproj">
+      <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
+      <Name>Network.IO.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\NetworkCanvas\NetworkCanvas.vbproj">
+      <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
+      <Name>NetworkCanvas</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
