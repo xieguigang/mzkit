@@ -1004,6 +1004,10 @@
       <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
       <Name>Network.IO.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\NetworkCanvas\NetworkCanvas.vbproj">
+      <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
+      <Name>NetworkCanvas</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\Visualizer.vbproj">
       <Project>{45b726ac-d3b8-476d-89ea-1ff7243a4fa5}</Project>
       <Name>Visualizer</Name>
