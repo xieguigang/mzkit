@@ -57,6 +57,9 @@ Imports ControlLibrary
 
 Public Class frmUntargettedViewer
 
+    ''' <summary>
+    ''' 已经加载的Raw文件
+    ''' </summary>
     Dim raw As Raw
 
     Public Sub loadRaw(raw As Raw)
@@ -205,6 +208,8 @@ Public Class frmUntargettedViewer
 
             If mz <= 0.0 Then
                 Return
+            Else
+                Call MyApplication.host.showStatusMessage($"View xic data for target ion mz=${mz}!")
             End If
 
             Dim XIC As ChromatogramTick() = raw.loaded.GetXIC(mz, Tolerance.DeltaMass(0.01))
