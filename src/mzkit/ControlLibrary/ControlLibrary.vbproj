@@ -152,6 +152,12 @@
     <Compile Include="MSCluster\MSClusterNetworkViewer.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="MSI\ColorScaleMap.Designer.vb">
+      <DependentUpon>ColorScaleMap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MSI\ColorScaleMap.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ToolStripTraceBarItem.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -217,6 +223,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MSCluster\MSClusterNetworkViewer.resx">
       <DependentUpon>MSClusterNetworkViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MSI\ColorScaleMap.resx">
+      <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

@@ -159,7 +159,10 @@ UseCheckedList:
             For Each C As KeyValuePair(Of String, TreeNode) In rgb.ToArray
                 If C.Value Is Nothing Then
                     rgb(C.Key) = node
-                    node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(C.Key)})"
+
+                    If node.Text.IsNumeric OrElse node.Text.IsPattern(".+ \([rgb]\)") Then
+                        node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(C.Key)})"
+                    End If
 
                     Exit For
                 End If
