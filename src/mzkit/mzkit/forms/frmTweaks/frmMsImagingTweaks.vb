@@ -156,7 +156,7 @@ UseCheckedList:
         checkedMz.Add(node)
 
         If rgb.Any(Function(i) i.Value Is Nothing) Then
-            For Each C In rgb.ToArray
+            For Each C As KeyValuePair(Of String, TreeNode) In rgb.ToArray
                 If C.Value Is Nothing Then
                     rgb(C.Key) = node
                     node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(C.Key)})"
@@ -179,7 +179,7 @@ UseCheckedList:
 
         checkedMz.Remove(node)
 
-        For Each C In rgb.ToArray
+        For Each C As KeyValuePair(Of String, TreeNode) In rgb.ToArray
             If C.Value Is node Then
                 rgb(C.Key) = Nothing
                 node.Text = CDbl(node.Tag).ToString("F4")
