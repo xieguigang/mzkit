@@ -43,7 +43,7 @@ Partial Class frmMsImagingTweaks
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSpringTextBox1 = New ControlLibrary.ToolStripSpringTextBox()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ViewLayerButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
@@ -69,7 +69,7 @@ Partial Class frmMsImagingTweaks
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderLayerCompositionModeToolStripMenuItem, Me.RenderingToolStripMenuItem, Me.ToolStripMenuItem1, Me.LoadBasePeakIonsToolStripMenuItem, Me.ToolStripMenuItem2, Me.ClearSelectionToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 126)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(262, 104)
         '
         'RenderLayerCompositionModeToolStripMenuItem
         '
@@ -148,7 +148,7 @@ Partial Class frmMsImagingTweaks
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSpringTextBox1, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripSeparator1, Me.ToolStripButton3})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSpringTextBox1, Me.ViewLayerButton, Me.ToolStripButton2, Me.ToolStripSeparator1, Me.ToolStripButton3})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(377, 25)
@@ -158,23 +158,23 @@ Partial Class frmMsImagingTweaks
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(31, 22)
-        Me.ToolStripLabel1.Text = "m/z:"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(65, 22)
+        Me.ToolStripLabel1.Text = "MSI Target:"
         '
         'ToolStripSpringTextBox1
         '
         Me.ToolStripSpringTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripSpringTextBox1.Name = "ToolStripSpringTextBox1"
-        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(228, 25)
+        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(194, 25)
         '
-        'ToolStripButton1
+        'ViewLayerButton
         '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton1.Text = "View Layer"
+        Me.ViewLayerButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ViewLayerButton.Image = CType(resources.GetObject("ViewLayerButton.Image"), System.Drawing.Image)
+        Me.ViewLayerButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ViewLayerButton.Name = "ViewLayerButton"
+        Me.ViewLayerButton.Size = New System.Drawing.Size(23, 22)
+        Me.ViewLayerButton.Text = "View MS-Imaging Layer"
         '
         'ToolStripButton2
         '
@@ -201,7 +201,7 @@ Partial Class frmMsImagingTweaks
         '
         'frmMsImagingTweaks
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(377, 554)
@@ -229,7 +229,7 @@ Partial Class frmMsImagingTweaks
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripSpringTextBox1 As ToolStripSpringTextBox
-    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ViewLayerButton As ToolStripButton
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
