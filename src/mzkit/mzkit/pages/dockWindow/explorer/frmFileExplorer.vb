@@ -53,15 +53,16 @@
 
 Imports System.ComponentModel
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Text
-Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 显示一个workspace对象里面所包含有的文件列表
@@ -571,11 +572,11 @@ Public Class frmFileExplorer
                                 node.Text,
                                 load.MS.Length,
                                 load.CountMs2,
-                                load.rtmin,
-                                load.rtmax,
-                                load.totalIons,
-                                If(basePeak Is Nothing, 0, basePeak.mz),
-                                If(basePeak Is Nothing, 0, basePeak.intensity)
+                                load.rtmin.ToString("F1"),
+                                load.rtmax.ToString("F1"),
+                                stdNum.Round(load.totalIons),
+                                If(basePeak Is Nothing, 0, basePeak.mz.ToString("F4")),
+                                If(basePeak Is Nothing, 0, stdNum.Round(basePeak.intensity))
                             )
                         End Sub)
                 Next
