@@ -51,6 +51,7 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
@@ -142,6 +143,17 @@ Public Class mzPack
             .GroupBy(tolerance) _
             .Select(Function(mz)
                         Return Double.Parse(mz.name)
+                    End Function) _
+            .ToArray
+    End Function
+
+    Public Function GetXIC(mz As Double, mzErr As Tolerance) As ChromatogramTick()
+        Return MS _
+            .Select(Function(i)
+                        Return New ChromatogramTick With {
+                            .Time = i.rt,
+                            .Intensity = i.GetIntensity(mz, mzErr)
+                        }
                     End Function) _
             .ToArray
     End Function

@@ -343,6 +343,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputXICTarget.Designer.vb">
+      <DependentUpon>InputXICTarget.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputXICTarget.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputImageProcessor.Designer.vb">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
     </Compile>
@@ -747,6 +753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputImageProcessor.resx">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputXICTarget.resx">
+      <DependentUpon>InputXICTarget.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
