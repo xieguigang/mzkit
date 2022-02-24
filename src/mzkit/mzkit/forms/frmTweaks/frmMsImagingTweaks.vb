@@ -231,6 +231,11 @@ UseCheckedList:
 
             For Each type As MzCalculator In Provider.Positives
                 Dim mz As Double = type.CalcMZ(exactMass)
+
+                If mz <= 0 Then
+                    Continue For
+                End If
+
                 Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add($"{mz.ToString("F4")} {type.ToString}")
 
                 node.Tag = mz
