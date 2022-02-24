@@ -77,7 +77,7 @@ Public Class mzPack
     ''' TIC/BPC
     ''' </summary>
     ''' <returns></returns>
-    Public Property Chromatogram As Chromatogram
+    Public Property Chromatogram As DataReader.Chromatogram
     ''' <summary>
     ''' the file name of the raw data source file
     ''' </summary>
