@@ -119,11 +119,11 @@ Public Class VisualStudio
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Shared Function ShowDocument(Of T As {New, DocumentWindow})() As T
+    Public Shared Function ShowDocument(Of T As {New, DocumentWindow})(Optional status As DockState = DockState.Document) As T
         Dim newDoc As New T()
 
         newDoc.Show(MyApplication.host.dockPanel)
-        newDoc.DockState = DockState.Document
+        newDoc.DockState = status
 
         Return newDoc
     End Function

@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::11a4909e72550237bdd5a8f83d393664, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmFileExplorer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
-    '               GetSelectedRaws, GetTotalCacheSize
-    ' 
-    '     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, ContourPlotToolStripMenuItem_Click
-    '          DeleteToolStripMenuItem_Click, frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw
-    '          ImportsToolStripMenuItem_Click, InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click
-    '          SaveFileCache, selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck
-    '          treeView1_AfterSelect, treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmFileExplorer
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
+'               GetSelectedRaws, GetTotalCacheSize
+' 
+'     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, ContourPlotToolStripMenuItem_Click
+'          DeleteToolStripMenuItem_Click, frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw
+'          ImportsToolStripMenuItem_Click, InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click
+'          SaveFileCache, selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck
+'          treeView1_AfterSelect, treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,8 @@ Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 ''' <summary>
 ''' 显示一个workspace对象里面所包含有的文件列表
@@ -310,7 +312,9 @@ Public Class frmFileExplorer
             ' 选择了一个脚本文件
             Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
             Dim script = RibbonEvents.scriptFiles _
-                .Where(Function(a) a.scriptFile.GetFullPath = path) _
+                .Where(Function(a)
+                           Return a.scriptFile.GetFullPath = path
+                       End Function) _
                 .FirstOrDefault
 
             '  treeView1.ContextMenuStrip = ContextMenuStrip2
@@ -528,5 +532,56 @@ Public Class frmFileExplorer
                 Call MessageBox.Show("job done!", "MZKit", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End Using
+    End Sub
+
+    Private Sub ShowSummaryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowSummaryToolStripMenuItem.Click
+        Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
+        Dim spinner As New frmProgressSpinner
+        Dim grid = table.DataGridView1
+
+        table.ViewRow =
+            Sub(row)
+                Dim sourceFile As String = row("source")
+
+
+            End Sub
+
+        Call grid.Columns.Add("source", "source")
+        Call grid.Columns.Add("ms1_scans", "ms1_scans")
+        Call grid.Columns.Add("msn_scans", "msn_scans")
+        Call grid.Columns.Add("rtmin", "rtmin")
+        Call grid.Columns.Add("rtmax", "rtmax")
+        Call grid.Columns.Add("total_ions", "total_ions")
+        Call grid.Columns.Add("base_peak", "base_peak")
+        Call grid.Columns.Add("max_intensity", "max_intensity")
+
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(500)
+
+                For Each node As TreeNode In treeView1.Nodes(0).Nodes
+                    Dim raw As Raw = node.Tag
+                    Dim load As mzPack = raw.LoadMzpack(Sub(title, msg) MyApplication.host.showStatusMessage($"{title}: {msg}")).loaded
+                    Dim basePeak As ms2 = load.GetBasePeak
+
+                    Call table.Invoke(
+                        Sub()
+                            Call grid.Rows.Add(
+                                node.Text,
+                                load.MS.Length,
+                                load.CountMs2,
+                                load.rtmin,
+                                load.rtmax,
+                                load.totalIons,
+                                If(basePeak Is Nothing, 0, basePeak.mz),
+                                If(basePeak Is Nothing, 0, basePeak.intensity)
+                            )
+                        End Sub)
+                Next
+
+                Call spinner.Invoke(Sub() spinner.Close())
+            End Sub).Start()
+
+        Call spinner.ShowDialog()
     End Sub
 End Class
