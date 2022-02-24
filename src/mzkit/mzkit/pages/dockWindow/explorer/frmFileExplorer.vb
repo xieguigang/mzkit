@@ -542,8 +542,9 @@ Public Class frmFileExplorer
         table.ViewRow =
             Sub(row)
                 Dim sourceFile As String = row("source")
+                Dim node = findRawFileNode(sourceFile)
 
-
+                Call showRawFile(DirectCast(node.Tag, Raw), XIC:=False, directSnapshot:=True, contour:=False)
             End Sub
 
         Call grid.Columns.Add("source", "source")
