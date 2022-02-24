@@ -60,6 +60,7 @@ Public Class MSSelector
     Public Event ShowBPC()
     Public Event FilterMs2(rtmin As Double, rtmax As Double)
     Public Event RangeSelect(rtmin As Double, rtmax As Double)
+    Public Event XICSelector(rtmin As Double, rtmax As Double)
 
     Public Property SelectedColor As Color
         Get
@@ -178,5 +179,14 @@ Public Class MSSelector
                 RtRangeSelector1.RefreshRtRangeSelector()
             End If
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 弹出对话框，然后选择XIC谱图的目标离子
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub XICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICToolStripMenuItem.Click
+        RaiseEvent XICSelector(RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
     End Sub
 End Class
