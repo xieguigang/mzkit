@@ -575,6 +575,11 @@ Module MzMath
                    End Function)
     End Function
 
+    <ExportAPI("defaultPrecursors")>
+    Public Function defaultPrecursors(ionMode As String) As MzCalculator()
+        Return Provider.GetCalculator(ionMode).Values.ToArray
+    End Function
+
     <ExportAPI("toMS")>
     Public Function CreateMSMatrix(isotope As IsotopeDistribution) As LibraryMatrix
         Return New LibraryMatrix With {

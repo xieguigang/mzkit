@@ -561,20 +561,29 @@ Public Class PageMzkitTools
         End If
     End Sub
 
+    ''' <summary>
+    ''' load data and then run clustering
+    ''' </summary>
+    ''' <param name="progress"></param>
+    ''' <param name="similarityCutoff"></param>
     Friend Sub MolecularNetworkingTool(progress As frmTaskProgress, similarityCutoff As Double)
         Thread.Sleep(1000)
 
         progress.ShowProgressTitle("Load Scan data")
         progress.ShowProgressDetails("loading cache ms2 scan data...")
 
-        Dim raw = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
+        Dim raw As PeakMs2() = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
 
         If raw.Length = 0 Then
             MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            progress.Invoke(Sub() progress.Close())
-            Return
+        Else
+            Call MolecularNetworkingTool(raw, progress, similarityCutoff)
         End If
 
+        Call progress.Invoke(Sub() progress.Close())
+    End Sub
+
+    Friend Sub MolecularNetworkingTool(raw As PeakMs2(), progress As frmTaskProgress, similarityCutoff As Double)
         Dim protocol As New Protocols(
             ms1_tolerance:=Tolerance.PPM(15),
             ms2_tolerance:=Tolerance.DeltaMass(0.3),
@@ -618,17 +627,17 @@ Public Class PageMzkitTools
         ' Call tree.doCluster(run)
         Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
         Dim net As IO.DataSet() = links _
-                    .Select(Function(a)
-                                Return New IO.DataSet With {
-                                    .ID = a.Name,
-                                    .Properties = a.Value _
-                                        .ToDictionary(Function(t) t.Key,
-                                                      Function(t)
-                                                          Return stdNum.Min(t.Value.forward, t.Value.reverse)
-                                                      End Function)
-                                }
-                            End Function) _
-                    .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
+            .Select(Function(a)
+                        Return New IO.DataSet With {
+                            .ID = a.Name,
+                            .Properties = a.Value _
+                                .ToDictionary(Function(t) t.Key,
+                                                Function(t)
+                                                    Return stdNum.Min(t.Value.forward, t.Value.reverse)
+                                                End Function)
+                        }
+                    End Function) _
+            .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
 
         progress.ShowProgressDetails("run family clustering....")
 
@@ -649,13 +658,11 @@ Public Class PageMzkitTools
             progress.ShowProgressDetails("initialize result output...")
 
             MyApplication.host.Invoke(
-                        Sub()
-                            Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
-                            Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
-                        End Sub)
+                Sub()
+                    Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
+                    Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
+                End Sub)
         End If
-
-        progress.Invoke(Sub() progress.Close())
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick

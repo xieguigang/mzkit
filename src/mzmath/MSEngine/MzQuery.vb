@@ -63,13 +63,16 @@ Public Structure MzQuery
     ''' the unique id of the target query result metabolite
     ''' </summary>
     ''' <returns></returns>
-    <XmlText> Public Property unique_id As String
+    <XmlAttribute> Public Property unique_id As String
 
     ''' <summary>
     ''' used in MSJointConnection peak list annotation.
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute> Public Property score As Double
+
+    <XmlText>
+    Public Property name As String
 
     Friend ReadOnly Property isEmpty As Boolean
         Get

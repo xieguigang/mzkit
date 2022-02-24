@@ -48,6 +48,10 @@ Partial Class PageMzSearch
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Button3 = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -55,29 +59,30 @@ Partial Class PageMzSearch
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(20, 58)
+        Me.Label1.Location = New System.Drawing.Point(20, 63)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 12)
+        Me.Label1.Size = New System.Drawing.Size(55, 13)
         Me.Label1.TabIndex = 22
         Me.Label1.Text = "Input m/z:"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(91, 55)
+        Me.TextBox1.Location = New System.Drawing.Point(91, 60)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(124, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(124, 20)
         Me.TextBox1.TabIndex = 23
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(221, 53)
+        Me.Button1.Location = New System.Drawing.Point(221, 57)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(112, 23)
+        Me.Button1.Size = New System.Drawing.Size(112, 25)
         Me.Button1.TabIndex = 24
         Me.Button1.Text = "Search Formula"
         Me.Button1.UseVisualStyleBackColor = True
@@ -88,26 +93,26 @@ Partial Class PageMzSearch
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(6, 91)
+        Me.DataGridView1.Location = New System.Drawing.Point(6, 99)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(1027, 524)
+        Me.DataGridView1.Size = New System.Drawing.Size(1027, 568)
         Me.DataGridView1.TabIndex = 25
         '
         'ComboBox1
         '
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"Custom", "Default", "Small Molecule", "Natural Product", "General Flavone"})
-        Me.ComboBox1.Location = New System.Drawing.Point(498, 55)
+        Me.ComboBox1.Location = New System.Drawing.Point(498, 60)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(158, 20)
+        Me.ComboBox1.Size = New System.Drawing.Size(158, 21)
         Me.ComboBox1.TabIndex = 26
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(349, 59)
+        Me.Label2.Location = New System.Drawing.Point(349, 64)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(143, 12)
+        Me.Label2.Size = New System.Drawing.Size(116, 13)
         Me.Label2.TabIndex = 27
         Me.Label2.Text = "Formula Search Profile:"
         '
@@ -115,7 +120,7 @@ Partial Class PageMzSearch
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(25, 9)
+        Me.Label3.Location = New System.Drawing.Point(25, 10)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(336, 35)
         Me.Label3.TabIndex = 28
@@ -125,12 +130,13 @@ Partial Class PageMzSearch
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Multiline = True
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1047, 647)
+        Me.TabControl1.Size = New System.Drawing.Size(1047, 701)
         Me.TabControl1.TabIndex = 29
         '
         'TabPage1
@@ -145,7 +151,7 @@ Partial Class PageMzSearch
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1039, 621)
+        Me.TabPage1.Size = New System.Drawing.Size(1039, 675)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Formula Search"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -161,7 +167,7 @@ Partial Class PageMzSearch
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1039, 621)
+        Me.TabPage2.Size = New System.Drawing.Size(1039, 675)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "DIA Annotation"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -175,7 +181,7 @@ Partial Class PageMzSearch
         Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.PictureBox1.Location = New System.Drawing.Point(383, 6)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(650, 609)
+        Me.PictureBox1.Size = New System.Drawing.Size(650, 660)
         Me.PictureBox1.TabIndex = 36
         Me.PictureBox1.TabStop = False
         '
@@ -183,12 +189,12 @@ Partial Class PageMzSearch
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GaussianPlotToolStripMenuItem, Me.MS1PlotToolStripMenuItem, Me.ToolStripMenuItem1, Me.ExportToolStripMenuItem, Me.MSISearchToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(146, 98)
         '
         'GaussianPlotToolStripMenuItem
         '
         Me.GaussianPlotToolStripMenuItem.Name = "GaussianPlotToolStripMenuItem"
-        Me.GaussianPlotToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+        Me.GaussianPlotToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.GaussianPlotToolStripMenuItem.Text = "Gaussian Plot"
         '
         'MS1PlotToolStripMenuItem
@@ -196,26 +202,26 @@ Partial Class PageMzSearch
         Me.MS1PlotToolStripMenuItem.Checked = True
         Me.MS1PlotToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MS1PlotToolStripMenuItem.Name = "MS1PlotToolStripMenuItem"
-        Me.MS1PlotToolStripMenuItem.Size = New System.Drawing.Size(154, 22)
+        Me.MS1PlotToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.MS1PlotToolStripMenuItem.Text = "MS1 Plot"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(151, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(142, 6)
         '
         'ExportToolStripMenuItem
         '
         Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.ExportToolStripMenuItem.Text = "Export"
         '
         'MSISearchToolStripMenuItem
         '
         Me.MSISearchToolStripMenuItem.Image = CType(resources.GetObject("MSISearchToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MSISearchToolStripMenuItem.Name = "MSISearchToolStripMenuItem"
-        Me.MSISearchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MSISearchToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.MSISearchToolStripMenuItem.Text = "MSI Search"
         '
         'DataGridView2
@@ -224,11 +230,11 @@ Partial Class PageMzSearch
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
-        Me.DataGridView2.Location = New System.Drawing.Point(8, 99)
+        Me.DataGridView2.Location = New System.Drawing.Point(8, 107)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowTemplate.Height = 23
         Me.DataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.DataGridView2.Size = New System.Drawing.Size(365, 515)
+        Me.DataGridView2.Size = New System.Drawing.Size(365, 558)
         Me.DataGridView2.TabIndex = 35
         '
         'Column1
@@ -246,7 +252,7 @@ Partial Class PageMzSearch
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 12)
+        Me.Label4.Location = New System.Drawing.Point(12, 13)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(330, 35)
         Me.Label4.TabIndex = 34
@@ -255,37 +261,79 @@ Partial Class PageMzSearch
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(16, 64)
+        Me.Label5.Location = New System.Drawing.Point(16, 69)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(89, 12)
+        Me.Label5.Size = New System.Drawing.Size(74, 13)
         Me.Label5.TabIndex = 29
         Me.Label5.Text = "Input Formula:"
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(111, 61)
+        Me.TextBox2.Location = New System.Drawing.Point(111, 66)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(146, 21)
+        Me.TextBox2.Size = New System.Drawing.Size(146, 20)
         Me.TextBox2.TabIndex = 30
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(263, 60)
+        Me.Button2.Location = New System.Drawing.Point(263, 65)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(110, 22)
+        Me.Button2.Size = New System.Drawing.Size(110, 24)
         Me.Button2.TabIndex = 31
         Me.Button2.Text = "Isotope Pattern"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.Button3)
+        Me.TabPage3.Controls.Add(Me.TextBox3)
+        Me.TabPage3.Controls.Add(Me.Label6)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(1039, 675)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Peak List Annotation"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(20, 20)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(62, 13)
+        Me.Label6.TabIndex = 0
+        Me.Label6.Text = "M/z Peaks:"
+        '
+        'TextBox3
+        '
+        Me.TextBox3.BackColor = System.Drawing.Color.White
+        Me.TextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox3.Location = New System.Drawing.Point(23, 52)
+        Me.TextBox3.Multiline = True
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.TextBox3.Size = New System.Drawing.Size(162, 562)
+        Me.TextBox3.TabIndex = 1
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(42, 632)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(100, 23)
+        Me.Button3.TabIndex = 2
+        Me.Button3.Text = "Search KEGG"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
         'PageMzSearch
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.TabControl1)
         Me.DoubleBuffered = True
         Me.Name = "PageMzSearch"
-        Me.Size = New System.Drawing.Size(1047, 647)
+        Me.Size = New System.Drawing.Size(1047, 701)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
@@ -295,6 +343,8 @@ Partial Class PageMzSearch
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -322,4 +372,8 @@ Partial Class PageMzSearch
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MSISearchToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents Button3 As Button
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label6 As Label
 End Class

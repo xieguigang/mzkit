@@ -51,6 +51,7 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
@@ -76,7 +77,7 @@ Public Class mzPack
     ''' TIC/BPC
     ''' </summary>
     ''' <returns></returns>
-    Public Property Chromatogram As Chromatogram
+    Public Property Chromatogram As DataReader.Chromatogram
     ''' <summary>
     ''' the file name of the raw data source file
     ''' </summary>
@@ -88,6 +89,40 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+
+    Public ReadOnly Property rtmin As Double
+        Get
+            Return Aggregate scan As ScanMS1 In MS Into Min(scan.rt)
+        End Get
+    End Property
+
+    Public ReadOnly Property rtmax As Double
+        Get
+            Return Aggregate scan As ScanMS1 In MS Into Max(scan.rt)
+        End Get
+    End Property
+
+    Public ReadOnly Property totalIons As Double
+        Get
+            Return Aggregate scan As ScanMS1 In MS Into Sum(scan.TIC)
+        End Get
+    End Property
+
+    Public ReadOnly Property maxIntensity As Double
+        Get
+            Return Aggregate scan As ScanMS1 In MS Into Max(scan.BPC)
+        End Get
+    End Property
+
+    Public ReadOnly Property CountMs2 As Integer
+        Get
+            Return Aggregate scan As ScanMS1 In MS Into Sum(scan.products.Length)
+        End Get
+    End Property
+
+    Public Function GetBasePeak() As ms2
+        Return MS.Select(Function(scan) scan.GetMs).IteratesALL.OrderByDescending(Function(mzi) mzi.intensity).FirstOrDefault
+    End Function
 
     Public Overrides Function ToString() As String
         Return source
@@ -108,6 +143,17 @@ Public Class mzPack
             .GroupBy(tolerance) _
             .Select(Function(mz)
                         Return Double.Parse(mz.name)
+                    End Function) _
+            .ToArray
+    End Function
+
+    Public Function GetXIC(mz As Double, mzErr As Tolerance) As ChromatogramTick()
+        Return MS _
+            .Select(Function(i)
+                        Return New ChromatogramTick With {
+                            .Time = i.rt,
+                            .Intensity = i.GetIntensity(mz, mzErr)
+                        }
                     End Function) _
             .ToArray
     End Function

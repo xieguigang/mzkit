@@ -121,7 +121,8 @@ Module FeatureSearchHandler
                         .polarity = scan.polarity,
                         .XIC = scan.intensity,
                         .into = scan.into,
-                        .parentMz = scan.parentMz
+                        .parentMz = scan.parentMz,
+                        .rawfile = raw.source
                     }
                 End If
             Next

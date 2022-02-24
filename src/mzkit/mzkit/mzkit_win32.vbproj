@@ -343,6 +343,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputXICTarget.Designer.vb">
+      <DependentUpon>InputXICTarget.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputXICTarget.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputImageProcessor.Designer.vb">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
     </Compile>
@@ -385,6 +391,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmNetworkViewer.Designer.vb">
+      <DependentUpon>frmNetworkViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmNetworkViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmGCxGCViewer.Designer.vb">
       <DependentUpon>frmGCxGCViewer.vb</DependentUpon>
     </Compile>
@@ -742,6 +754,9 @@
     <EmbeddedResource Include="forms\Inputs\InputImageProcessor.resx">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputXICTarget.resx">
+      <DependentUpon>InputXICTarget.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
@@ -768,6 +783,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmNetworkViewer.resx">
+      <DependentUpon>frmNetworkViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmQuantifyIons.resx">
       <DependentUpon>frmQuantifyIons.vb</DependentUpon>
@@ -1003,6 +1021,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\Network.IO.Extensions.vbproj">
       <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
       <Name>Network.IO.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\NetworkCanvas\NetworkCanvas.vbproj">
+      <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
+      <Name>NetworkCanvas</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\Visualizer.vbproj">
       <Project>{45b726ac-d3b8-476d-89ea-1ff7243a4fa5}</Project>

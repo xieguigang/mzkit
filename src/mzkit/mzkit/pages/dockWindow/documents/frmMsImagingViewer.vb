@@ -67,11 +67,8 @@ Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Task
@@ -452,7 +449,7 @@ Public Class frmMsImagingViewer
                                pixelSize:=$"{params.pixel_width},{params.pixel_height}",
                                mapLevels:=mapLevels
                            )
-                           Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
+                           Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
 
                            PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
                            PixelSelector1.BackColor = params.background
@@ -636,7 +633,7 @@ Public Class frmMsImagingViewer
             colorSet:=params.colors.Description,
             scale:=params.scale
         )
-        Dim legend As Image = If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
+        Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
 
         PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
         PixelSelector1.BackColor = params.background

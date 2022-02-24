@@ -53,9 +53,13 @@ Imports Microsoft.VisualBasic.Linq
 Imports BioNovoGene.mzkit_win32.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports ControlLibrary
 
 Public Class frmUntargettedViewer
 
+    ''' <summary>
+    ''' 已经加载的Raw文件
+    ''' </summary>
     Dim raw As Raw
 
     Public Sub loadRaw(raw As Raw)
@@ -182,6 +186,36 @@ Public Class frmUntargettedViewer
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
         If min > 0 OrElse max > 0 Then
             Call Me.updatePlot()
+        End If
+    End Sub
+
+    Private Sub MsSelector1_XICSelector(rtmin As Double, rtmax As Double) Handles MsSelector1.XICSelector
+        Dim MS1 = raw.GetMs1Scans _
+            .Where(Function(m1) m1.rt >= rtmin AndAlso m1.rt <= rtmax) _
+            .Select(Function(t) t.GetMs) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(Tolerance.DeltaMass(0.01), LowAbundanceTrimming.intoCutff) _
+            .ToArray
+
+        Dim mask As New MaskForm(MyApplication.host.Location, MyApplication.host.Size)
+        Dim getConfig As New InputXICTarget
+
+        Call getConfig.SetIons(MS1.Select(Function(i) i.mz).OrderBy(Function(i) i))
+
+        If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
+            Dim mz As Double = getConfig.XICTarget
+
+            If mz <= 0.0 Then
+                Return
+            Else
+                Call MyApplication.host.showStatusMessage($"View xic data for target ion mz=${mz}!")
+            End If
+
+            Dim XIC As ChromatogramTick() = raw.loaded.GetXIC(mz, Tolerance.DeltaMass(0.01))
+
+            Call MsSelector1.SetTIC(XIC)
+            Call MsSelector1.RefreshRtRangeSelector()
         End If
     End Sub
 End Class

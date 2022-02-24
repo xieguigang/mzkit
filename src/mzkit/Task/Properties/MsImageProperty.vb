@@ -189,23 +189,23 @@ Public Class MsImageProperty
     '    End Select
     'End Function
 
-    Public Function RenderingColorMapLegend(pixelFilter As IEnumerable(Of PixelScanIntensity)) As Image
-        Return pixelFilter.Select(Function(p) New PixelData(p.x, p.y, p.totalIon)).DoCall(AddressOf RenderingColorMapLegend)
-    End Function
+    'Public Function RenderingColorMapLegend(pixelFilter As IEnumerable(Of PixelScanIntensity)) As Image
+    '    Return pixelFilter.Select(Function(p) New PixelData(p.x, p.y, p.totalIon)).DoCall(AddressOf RenderingColorMapLegend)
+    'End Function
 
-    Public Function RenderingColorMapLegend(pixelFilter As IEnumerable(Of PixelData)) As Image
-        Dim colorMapLegend As New ColorMapLegend(colors.Description, mapLevels) With {
-            .format = "G3",
-            .ticks = pixelFilter.Select(Function(p) p.intensity).Range.CreateAxisTicks,
-            .tickAxisStroke = Stroke.TryParse(Stroke.AxisStroke).GDIObject,
-            .tickFont = CSSFont.TryParse(CSSFont.Win7Normal).GDIObject(100),
-            .title = "Intensity",
-            .titleFont = CSSFont.TryParse(CSSFont.Win7Large).GDIObject(100),
-            .noblank = True
-        }
+    'Public Function RenderingColorMapLegend(pixelFilter As IEnumerable(Of PixelData)) As Image
+    '    Dim colorMapLegend As New ColorMapLegend(colors.Description, mapLevels) With {
+    '        .format = "G3",
+    '        .ticks = pixelFilter.Select(Function(p) p.intensity).Range.CreateAxisTicks,
+    '        .tickAxisStroke = Stroke.TryParse(Stroke.AxisStroke).GDIObject,
+    '        .tickFont = CSSFont.TryParse(CSSFont.Win7Normal).GDIObject(100),
+    '        .title = "Intensity",
+    '        .titleFont = CSSFont.TryParse(CSSFont.Win7Large).GDIObject(100),
+    '        .noblank = True
+    '    }
 
-        Return colorMapLegend.Draw(New Size(600, 1500))
-    End Function
+    '    Return colorMapLegend.Draw(New Size(600, 1500))
+    'End Function
 
     Public Sub SetIntensityMax(max As Double)
         _min = 0

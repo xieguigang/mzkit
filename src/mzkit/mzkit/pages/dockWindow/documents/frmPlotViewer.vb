@@ -51,7 +51,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
-Imports BioNovoGene.mzkit_win32.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmPlotViewer : Implements ISaveHandle, IFileReference

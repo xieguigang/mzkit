@@ -61,10 +61,10 @@ Namespace LipidMaps
     ''' <summary>
     ''' 物质的注释信息
     ''' </summary>
-    Public Class MetaData : Implements IExactmassProvider, IReadOnlyId
+    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider
 
         <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String Implements IReadOnlyId.Identity
-        <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String
+        <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String Implements ICompoundNameProvider.CommonName
         <MessagePackMember(2, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SUBSTANCE_URL As String
         <MessagePackMember(3, NilImplication:=NilImplication.MemberDefault)> Public Property LIPID_MAPS_CMPD_URL As String
         <MessagePackMember(4, NilImplication:=NilImplication.MemberDefault)> Public Property PLANTFA_ID As String
@@ -75,7 +75,7 @@ Namespace LipidMaps
         <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String
         <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
         <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String
-        <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double Implements IExactmassProvider.ExactMass
+        <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double Implements IExactMassProvider.ExactMass
         <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String
         <MessagePackMember(14, NilImplication:=NilImplication.MemberDefault)> Public Property LIPIDBANK_ID As String
         <MessagePackMember(15, NilImplication:=NilImplication.MemberDefault)> Public Property SWISSLIPIDS_ID As String

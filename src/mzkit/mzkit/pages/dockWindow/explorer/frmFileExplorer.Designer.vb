@@ -42,6 +42,7 @@ Partial Class frmFileExplorer
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSpringTextBox1 = New ControlLibrary.ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ctxMenuScript = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddNewScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RunAutomationToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -54,7 +55,7 @@ Partial Class frmFileExplorer
         Me.ContourPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.OpenViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ShowSummaryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMenuFiles.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.ctxMenuScript.SuspendLayout()
@@ -69,9 +70,9 @@ Partial Class frmFileExplorer
         '
         'ctxMenuFiles
         '
-        Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
+        Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowSummaryToolStripMenuItem, Me.ChromatogramOverlapToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
         Me.ctxMenuFiles.Name = "ContextMenuStrip1"
-        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 76)
+        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 120)
         '
         'ChromatogramOverlapToolStripMenuItem
         '
@@ -151,8 +152,9 @@ Partial Class frmFileExplorer
         '
         'ToolStripSpringTextBox1
         '
+        Me.ToolStripSpringTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripSpringTextBox1.Name = "ToolStripSpringTextBox1"
-        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(689, 25)
+        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(666, 25)
         '
         'ToolStripButton1
         '
@@ -162,6 +164,15 @@ Partial Class frmFileExplorer
         Me.ToolStripButton1.Name = "ToolStripButton1"
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton1.Text = "Search MS Feature"
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Export Workspace And Share"
         '
         'ctxMenuScript
         '
@@ -238,18 +249,15 @@ Partial Class frmFileExplorer
         Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.OpenViewerToolStripMenuItem.Text = "Open Viewer"
         '
-        'ToolStripButton2
+        'ShowSummaryToolStripMenuItem
         '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton2.Text = "Export Workspace And Share"
+        Me.ShowSummaryToolStripMenuItem.Name = "ShowSummaryToolStripMenuItem"
+        Me.ShowSummaryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ShowSummaryToolStripMenuItem.Text = "Show Summary"
         '
         'frmFileExplorer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.treeView1)
@@ -292,4 +300,5 @@ Partial Class frmFileExplorer
     Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
     Friend WithEvents ContourPlotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ShowSummaryToolStripMenuItem As ToolStripMenuItem
 End Class

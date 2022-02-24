@@ -81,7 +81,7 @@ Public Class PixelSelector
     Private movingPolygon As Polygon = Nothing
     Private mouse As Vertex = New Vertex()
     Private ismouseDown As Boolean = False
-    Private algorithmIndex As Integer = 0
+    Private algorithmIndex As Integer = 1
 
     Public Sub New()
 
@@ -752,11 +752,12 @@ Public Class PixelSelector
         End If
 
         Dim g = e.Graphics
+        Dim radius As Single = 6
 
         For Each polygon In polygons
 
             For Each vertex In polygon.Vertices
-                g.FillEllipse(Brushes.Red, vertex.X - 3, vertex.Y - 3, 6, 6)
+                g.FillEllipse(Brushes.Red, vertex.X - radius, vertex.Y - radius, radius * 2, radius * 2)
 
                 If ShowPointInform Then
                     g.DrawString($"({vertex.X}, {vertex.Y})", New Font("Arial", 10), Brushes.Black, vertex.X - 3, vertex.Y - 20)
@@ -776,7 +777,7 @@ Public Class PixelSelector
                         Case 0
                             Me.Bresenham(edge, g, brush)
                         Case 1
-                            g.DrawLine(New Pen(brush, 1), from, [to])
+                            g.DrawLine(New Pen(brush, 5), from, [to])
                         Case 2
                             Me.AntialiasingWU(edge, g, If(brush Is Brushes.Black, Color.Black, Color.Aqua))
                         Case 3

@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Math
 Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Public Class frmMsImagingTweaks
 
@@ -155,10 +156,13 @@ UseCheckedList:
         checkedMz.Add(node)
 
         If rgb.Any(Function(i) i.Value Is Nothing) Then
-            For Each c In rgb.ToArray
-                If c.Value Is Nothing Then
-                    rgb(c.Key) = node
-                    node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(c.Key)})"
+            For Each C As KeyValuePair(Of String, TreeNode) In rgb.ToArray
+                If C.Value Is Nothing Then
+                    rgb(C.Key) = node
+
+                    If node.Text.IsNumeric OrElse node.Text.IsPattern(".+ \([rgb]\)") Then
+                        node.Text = $"{CDbl(node.Tag).ToString("F4")} ({channelNames(C.Key)})"
+                    End If
 
                     Exit For
                 End If
@@ -178,9 +182,9 @@ UseCheckedList:
 
         checkedMz.Remove(node)
 
-        For Each c In rgb.ToArray
-            If c.Value Is node Then
-                rgb(c.Key) = Nothing
+        For Each C As KeyValuePair(Of String, TreeNode) In rgb.ToArray
+            If C.Value Is node Then
+                rgb(C.Key) = Nothing
                 node.Text = CDbl(node.Tag).ToString("F4")
             End If
         Next
@@ -211,16 +215,34 @@ UseCheckedList:
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ViewLayerButton.Click
         If ToolStripSpringTextBox1.Text.StringEmpty Then
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        Else
+        ElseIf ToolStripSpringTextBox1.Text.IsNumeric(True) Then
             Dim mz As Double = Val(ToolStripSpringTextBox1.Text)
             Dim viewer = WindowModules.viewer
 
             If TypeOf viewer Is frmMsImagingViewer Then
                 Call DirectCast(viewer, frmMsImagingViewer).renderByMzList({mz})
             End If
+        Else
+            ' formula
+            Dim formula As String = ToolStripSpringTextBox1.Text
+            Dim exactMass As Double = Math.EvaluateFormula(formula)
+
+            Call Win7StyleTreeView1.Nodes.Item(0).Nodes.Clear()
+
+            For Each type As MzCalculator In Provider.Positives
+                Dim mz As Double = type.CalcMZ(exactMass)
+
+                If mz <= 0 Then
+                    Continue For
+                End If
+
+                Dim node As TreeNode = Win7StyleTreeView1.Nodes.Item(0).Nodes.Add($"{mz.ToString("F4")} {type.ToString}")
+
+                node.Tag = mz
+            Next
         End If
     End Sub
 
@@ -350,5 +372,13 @@ UseCheckedList:
             layers.Nodes.Add(p.ToString("F4")).Tag = p
             Application.DoEvents()
         Next
+    End Sub
+
+    Private Sub ToolStripSpringTextBox1_Click(sender As Object, e As EventArgs) Handles ToolStripSpringTextBox1.Click
+        If ToolStripSpringTextBox1.Text.IsNumeric(True) Then
+            ViewLayerButton.Text = "View MS-Imaging Layer"
+        Else
+            ViewLayerButton.Text = "List formula ions at here"
+        End If
     End Sub
 End Class

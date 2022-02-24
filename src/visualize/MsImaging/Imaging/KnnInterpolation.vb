@@ -63,9 +63,32 @@ Namespace Imaging
 
         <Extension>
         Public Function KnnFill(layer As SingleIonLayer, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As SingleIonLayer
-            Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(layer.MSILayer)
             Dim size As Size = layer.DimensionSize
-            Dim pixels As New List(Of PixelData)
+            Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q)
+
+            Return New SingleIonLayer With {
+                .DimensionSize = layer.DimensionSize,
+                .IonMz = layer.IonMz,
+                .MSILayer = pixels
+            }
+        End Function
+
+        <Extension>
+        Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
+            Dim size As Size = layer.DimensionSize
+            Dim dx As Integer = size.Width / resolution
+            Dim dy As Integer = size.Height / resolution
+
+            Return layer.KnnFill(dx, dy)
+        End Function
+
+        Public Function KnnFill(pixels As PixelData(), size As Size,
+                                Optional dx As Integer = 3,
+                                Optional dy As Integer = 3,
+                                Optional q As Double = 0.65) As PixelData()
+
+            Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(pixels)
+            Dim outPixels As New List(Of PixelData)
             Dim point As PixelData
             Dim deltaSize As New Size(dx, dy)
 
@@ -82,25 +105,12 @@ Namespace Imaging
                     End If
 
                     If Not point Is Nothing Then
-                        Call pixels.Add(point)
+                        Call outPixels.Add(point)
                     End If
                 Next
             Next
 
-            Return New SingleIonLayer With {
-                .DimensionSize = layer.DimensionSize,
-                .IonMz = layer.IonMz,
-                .MSILayer = pixels.ToArray
-            }
-        End Function
-
-        <Extension>
-        Public Function KnnFill(layer As SingleIonLayer, Optional resolution As Integer = 10) As SingleIonLayer
-            Dim size As Size = layer.DimensionSize
-            Dim dx As Integer = size.Width / resolution
-            Dim dy As Integer = size.Height / resolution
-
-            Return layer.KnnFill(dx, dy)
+            Return outPixels.ToArray
         End Function
 
         <Extension>
