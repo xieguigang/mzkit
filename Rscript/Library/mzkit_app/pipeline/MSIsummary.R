@@ -36,7 +36,7 @@ for(name in colnames(mat)) {
 	mat[, name] = v;
 }
 
-i = sapply(1:nrow(mat), i -> any(as.integer(unlist(mat[i, ])) > 0) );
+i = sapply(1:nrow(mat), i -> any(as.integer(unlist(mat[i,, drop = TRUE ])) > 0) );
 
 mat = mat[ i , ];
 
