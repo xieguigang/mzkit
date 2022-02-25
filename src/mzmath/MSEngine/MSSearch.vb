@@ -90,13 +90,17 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                           Function(cgroup)
                               Return cgroup.First
                           End Function)
-        Me.mzIndex = Me.index.Values.Select(Function(c)
-                                                Return precursorTypes.Select(Function(t)
-                                                                                 Return (t.CalcMZ(c.ExactMass), c)
-                                                                             End Function)
-                                            End Function).IteratesALL.GroupBy(Function(d) d.Item1).Select(Function(g)
-                                                                                                              Return (g.Key, g.Select(Function(i) i.c).ToArray)
-                                                                                                          End Function).ToArray
+        Me.mzIndex = Me.index _
+            .Values _
+            .Select(Function(c)
+                        Return precursorTypes.Select(Function(t) (t.CalcMZ(c.ExactMass), c))
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(d) d.Item1) _
+            .Select(Function(g)
+                        Return (g.Key, g.Select(Function(i) i.c).ToArray)
+                    End Function) _
+            .ToArray
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
