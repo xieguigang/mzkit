@@ -51,6 +51,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -443,26 +444,16 @@ Public Class PageMzSearch
         Dim modes As String() = (From x In CheckedListBox1.CheckedItems Let str = x.ToString Select str).ToArray
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
         Dim result As New List(Of KEGGQuery)
+        Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
 
         For Each mode As String In modes
-            If mode = "Positive" OrElse mode = "Negative" Then
-                Dim modeValue As Integer = Provider.ParseIonMode(mode)
-                Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue), info:="Load KEGG repository data...")
-                Dim anno As KEGGQuery() = kegg.SetAnnotation(mzset)
-            End If
+            Dim modeValue As Integer = Provider.ParseIonMode(mode)
+            Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
+            Dim anno As KEGGQuery() = kegg.SetAnnotation(mzset)
+
+            Call result.AddRange(anno)
         Next
 
 
-        Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
-        Dim compound As Compound
-
-        For Each mzi As ms2 In scanData.ms2
-            Dim hit As KEGGQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
-
-            If Not hit.kegg_id.StringEmpty Then
-                compound = kegg.GetCompound(hit.kegg_id)
-                mzi.Annotation = $"{mzi.mz.ToString("F4")} {compound.commonNames.FirstOrDefault([default]:=hit.kegg_id)}{hit.precursorType}"
-            End If
-        Next
     End Sub
 End Class

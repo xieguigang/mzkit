@@ -334,9 +334,9 @@ Partial Class PageMzSearch
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(252, 194)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(86, 13)
+        Me.Label8.Size = New System.Drawing.Size(115, 13)
         Me.Label8.TabIndex = 4
-        Me.Label8.Text = "Mass Tolerance:"
+        Me.Label8.Text = "Mass Tolerance(PPM):"
         '
         'Label7
         '
