@@ -129,7 +129,7 @@ Public Class frmMsImagingViewer
                 If ions.IsNullOrEmpty Then
                     Call MyApplication.host.warning("No ions result...")
                 Else
-                    Call DoIonStats(ions)
+                    Call Me.Invoke(Sub() Call DoIonStats(ions))
                 End If
 
                 Call progress.CloseWindow()
@@ -162,17 +162,17 @@ Public Class frmMsImagingViewer
                 Call Thread.Sleep(500)
                 Call table.Invoke(
                         Sub()
-                            For Each ion As IonStat In ions
+                            For Each ion As IonStat In ions.OrderByDescending(Function(i) i.pixels)
                                 Call grid.Rows.Add(
                                     ion.mz.ToString("F4"),
                                     ion.pixels,
-                                    ion.density,
-                                    ion.maxIntensity,
+                                    ion.density.ToString("F2"),
+                                    stdNum.Round(ion.maxIntensity),
                                     ion.basePixel.X,
                                     ion.basePixel.Y,
-                                    ion.Q1Intensity,
-                                    ion.Q2Intensity,
-                                    ion.Q3Intensity
+                                    stdNum.Round(ion.Q1Intensity),
+                                    stdNum.Round(ion.Q2Intensity),
+                                    stdNum.Round(ion.Q3Intensity)
                                 )
 
                                 Call Application.DoEvents()
