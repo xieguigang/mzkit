@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -319,6 +320,34 @@ Module MSI
     <ExportAPI("ionStat")>
     Public Function IonStats(raw As mzPack) As IonStat()
         Return IonStat.DoStat(raw).ToArray
+    End Function
+
+    <ExportAPI("ions_jointmatrix")>
+    Public Function GetIonsJointMatrix(raw As list, Optional env As Environment = Nothing) As rDataframe
+        Dim allStats = raw.getNames _
+            .AsParallel _
+            .Select(Function(name)
+                        Return New NamedValue(Of IonStat())(name, IonStats(raw.getValue(Of mzPack)(name, env)))
+                    End Function) _
+            .ToArray
+        Dim allMz As Double() = allStats.Select(Function(i) i.Value).IteratesALL.Select(Function(i) i.mz).GroupBy(Tolerance.DeltaMass(0.05)).Select(Function(i) Val(i.name)).ToArray
+        Dim mat As New rDataframe With {
+            .rownames = allMz.Select(Function(mzi) mzi.ToString("F4")).ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim daErr As Tolerance = Tolerance.DeltaMass(0.1)
+
+        For Each file In allStats
+            Dim pixels = allMz _
+                .Select(Function(mzi)
+                            Return file.Value.Where(Function(i) daErr.Equals(i.mz, mzi)).Select(Function(i) i.pixels).OrderByDescending(Function(i) i).FirstOrDefault
+                        End Function) _
+                .ToArray
+
+            mat.add(file.Name, pixels)
+        Next
+
+        Return mat
     End Function
 
     ''' <summary>
