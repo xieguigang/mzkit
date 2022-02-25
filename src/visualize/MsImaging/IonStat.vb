@@ -19,8 +19,15 @@ Public Class IonStat
     Public Property Q3Intensity As Double
 
     Public Shared Iterator Function DoStat(raw As mzPack) As IEnumerable(Of IonStat)
-        Dim allIons = raw.MS.Select(Function(scan) scan.GetMs.Select(Function(ms1) (scan.GetMSIPixel, ms1))).IteratesALL.ToArray
-        Dim ions = allIons.GroupBy(Function(d) d.ms1.mz, Tolerance.DeltaMass(0.05)).ToArray
+        Dim allIons = raw.MS _
+            .Select(Function(scan)
+                        Return scan.GetMs.Select(Function(ms1) (scan.GetMSIPixel, ms1))
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+        Dim ions = allIons _
+            .GroupBy(Function(d) d.ms1.mz, Tolerance.DeltaMass(0.05)) _
+            .ToArray
         Dim A As Double = 5 ^ 2
 
         For Each ion In ions
@@ -30,7 +37,12 @@ Public Class IonStat
             Dim counts As New List(Of Double)
 
             For Each top In ion.OrderByDescending(Function(i) i.ms1.intensity).Take(30)
-                Dim count As Integer = pixels.Query(top.GetMSIPixel.X, top.GetMSIPixel.Y, 5).Where(Function(i) Not i.Item2 Is Nothing).Count
+                Dim count As Integer = pixels _
+                    .Query(top.GetMSIPixel.X, top.GetMSIPixel.Y, 5) _
+                    .Where(Function(i)
+                               Return Not i.Item2 Is Nothing AndAlso i.Item2.intensity > 0
+                           End Function) _
+                    .Count
                 Dim density As Double = count / A
 
                 counts.Add(density)

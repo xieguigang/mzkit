@@ -29,16 +29,16 @@ mat = files
 |> ions_jointmatrix()
 ;
 
-for(name in colnames(mat)) {
-	v = mat[, name];
-	v[v < 500] = 0;
+# for(name in colnames(mat)) {
+	# v = mat[, name];
+	# v[v < 300] = 0;
 	
-	mat[, name] = v;
-}
+	# mat[, name] = v;
+# }
 
-i = sapply(1:nrow(mat), i -> any(as.integer(unlist(mat[i,, drop = TRUE ])) > 0) );
+# i = sapply(1:nrow(mat), i -> any(as.integer(unlist(mat[i,, drop = TRUE ])) > 0) );
 
-mat = mat[ i , ];
+# mat = mat[ i , ];
 
 print(mat, max.print = 13);
 
