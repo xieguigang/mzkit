@@ -360,6 +360,10 @@ Public Class frmMsImagingViewer
     ''' </summary>
     ''' <param name="filePath"></param>
     Public Sub LoadRender(info As MsImageProperty, filePath As String)
+        If info Is Nothing Then
+            Return
+        End If
+
         Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
         Me.params = info
         Me.tweaks = WindowModules.msImageParameters.PropertyGrid1

@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::786acf9c5224e3bc1cfc8e51c068536d, src\mzkit\mzkit\application\ServiceHub.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ServiceHub
-    ' 
-    '     Properties: MSIEngineRunning
-    ' 
-    '     Function: (+2 Overloads) GetPixel, handleServiceRequest, LoadBasePeakMzList, (+2 Overloads) LoadMSI, LoadPixels
-    '               LoadSummaryLayer
-    ' 
-    '     Sub: CloseMSIEngine, ExportMzpack, MSI_pipe_SetMessage, StartMSIService
-    ' 
-    ' /********************************************************************************/
+' Module ServiceHub
+' 
+'     Properties: MSIEngineRunning
+' 
+'     Function: (+2 Overloads) GetPixel, handleServiceRequest, LoadBasePeakMzList, (+2 Overloads) LoadMSI, LoadPixels
+'               LoadSummaryLayer
+' 
+'     Sub: CloseMSIEngine, ExportMzpack, MSI_pipe_SetMessage, StartMSIService
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -153,6 +153,12 @@ Module ServiceHub
     ''' </param>
     Public Function LoadMSI(raw As String) As MsImageProperty
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
+
+        If data Is Nothing Then
+            Call MyApplication.host.warning($"Failure to load MS-imaging raw data file: {raw}...")
+            Return Nothing
+        End If
+
         Dim output As MsImageProperty = data _
             .GetString(Encoding.UTF8) _
             .LoadJSON(Of Dictionary(Of String, String)) _
