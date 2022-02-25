@@ -431,4 +431,13 @@ Public Class PageMzSearch
         searchPage.page.loadMs2(isotope.GetMS)
         searchPage.page.runSearch(isotope)
     End Sub
+
+    ''' <summary>
+    ''' do ms1 peak list annotation
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+
+    End Sub
 End Class
