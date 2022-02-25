@@ -331,6 +331,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imaging\MSIColorSet.vb" />
     <Compile Include="IonStat.vb" />
     <Compile Include="HeatMapLayer.vb" />
     <Compile Include="Imaging\KnnInterpolation.vb" />
