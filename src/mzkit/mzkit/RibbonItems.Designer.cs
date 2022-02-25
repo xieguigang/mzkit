@@ -127,6 +127,8 @@ namespace RibbonLib.Controls
             public const uint cmdButtonMSITotalIon = 123;
             public const uint cmdTabMenuMSIAnalysis = 142;
             public const uint cmdButtonFeatureDetections = 152;
+            public const uint cmdButtonMSIRawIonStat = 166;
+            public const uint cmdButtonMSICleanBackground = 167;
             public const uint cmdButtonExportSample = 135;
             public const uint cmdButtonTogglePolygon = 140;
             public const uint cmdTabPolygonEditor = 144;
@@ -286,7 +288,9 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonMSIBasePeakIon { get; private set; }
         public RibbonButton ButtonMSITotalIon { get; private set; }
         public RibbonGroup TabMenuMSIAnalysis { get; private set; }
-        public RibbonButton ButtonFeatureDetections { get; private set; }
+        public RibbonDropDownButton ButtonFeatureDetections { get; private set; }
+        public RibbonButton ButtonMSIRawIonStat { get; private set; }
+        public RibbonButton ButtonMSICleanBackground { get; private set; }
         public RibbonButton ButtonExportSample { get; private set; }
         public RibbonToggleButton ButtonTogglePolygon { get; private set; }
         public RibbonGroup TabPolygonEditor { get; private set; }
@@ -444,7 +448,9 @@ namespace RibbonLib.Controls
             ButtonMSIBasePeakIon = new RibbonButton(ribbon, Cmd.cmdButtonMSIBasePeakIon);
             ButtonMSITotalIon = new RibbonButton(ribbon, Cmd.cmdButtonMSITotalIon);
             TabMenuMSIAnalysis = new RibbonGroup(ribbon, Cmd.cmdTabMenuMSIAnalysis);
-            ButtonFeatureDetections = new RibbonButton(ribbon, Cmd.cmdButtonFeatureDetections);
+            ButtonFeatureDetections = new RibbonDropDownButton(ribbon, Cmd.cmdButtonFeatureDetections);
+            ButtonMSIRawIonStat = new RibbonButton(ribbon, Cmd.cmdButtonMSIRawIonStat);
+            ButtonMSICleanBackground = new RibbonButton(ribbon, Cmd.cmdButtonMSICleanBackground);
             ButtonExportSample = new RibbonButton(ribbon, Cmd.cmdButtonExportSample);
             ButtonTogglePolygon = new RibbonToggleButton(ribbon, Cmd.cmdButtonTogglePolygon);
             TabPolygonEditor = new RibbonGroup(ribbon, Cmd.cmdTabPolygonEditor);

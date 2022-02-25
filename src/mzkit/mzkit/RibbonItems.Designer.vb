@@ -124,6 +124,8 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonMSITotalIon As UInteger = 123
             Public Const cmdTabMenuMSIAnalysis As UInteger = 142
             Public Const cmdButtonFeatureDetections As UInteger = 152
+            Public Const cmdButtonMSIRawIonStat As UInteger = 166
+            Public Const cmdButtonMSICleanBackground As UInteger = 167
             Public Const cmdButtonExportSample As UInteger = 135
             Public Const cmdButtonTogglePolygon As UInteger = 140
             Public Const cmdTabPolygonEditor As UInteger = 144
@@ -823,10 +825,22 @@ Namespace RibbonLib.Controls
                 Return _TabMenuMSIAnalysis
             End Get
         End Property
-        Private _ButtonFeatureDetections As RibbonButton
-        Public ReadOnly Property ButtonFeatureDetections As RibbonButton
+        Private _ButtonFeatureDetections As RibbonDropDownButton
+        Public ReadOnly Property ButtonFeatureDetections As RibbonDropDownButton
             Get
                 Return _ButtonFeatureDetections
+            End Get
+        End Property
+        Private _ButtonMSIRawIonStat As RibbonButton
+        Public ReadOnly Property ButtonMSIRawIonStat As RibbonButton
+            Get
+                Return _ButtonMSIRawIonStat
+            End Get
+        End Property
+        Private _ButtonMSICleanBackground As RibbonButton
+        Public ReadOnly Property ButtonMSICleanBackground As RibbonButton
+            Get
+                Return _ButtonMSICleanBackground
             End Get
         End Property
         Private _ButtonExportSample As RibbonButton
@@ -1206,7 +1220,9 @@ Namespace RibbonLib.Controls
             _ButtonMSIBasePeakIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSIBasePeakIon)
             _ButtonMSITotalIon = New RibbonButton(_ribbon, Cmd.cmdButtonMSITotalIon)
             _TabMenuMSIAnalysis = New RibbonGroup(_ribbon, Cmd.cmdTabMenuMSIAnalysis)
-            _ButtonFeatureDetections = New RibbonButton(_ribbon, Cmd.cmdButtonFeatureDetections)
+            _ButtonFeatureDetections = New RibbonDropDownButton(_ribbon, Cmd.cmdButtonFeatureDetections)
+            _ButtonMSIRawIonStat = New RibbonButton(_ribbon, Cmd.cmdButtonMSIRawIonStat)
+            _ButtonMSICleanBackground = New RibbonButton(_ribbon, Cmd.cmdButtonMSICleanBackground)
             _ButtonExportSample = New RibbonButton(_ribbon, Cmd.cmdButtonExportSample)
             _ButtonTogglePolygon = New RibbonToggleButton(_ribbon, Cmd.cmdButtonTogglePolygon)
             _TabPolygonEditor = New RibbonGroup(_ribbon, Cmd.cmdTabPolygonEditor)

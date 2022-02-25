@@ -2139,7 +2139,30 @@
     <Command Name="cmdGroupFeatureFilter" Id="162" LabelTitle="Feature Filter" LabelDescription="Feature Filter" TooltipTitle="Feature Filter" TooltipDescription="Feature Filter" />
     <Command Name="cmdSpinnerFeatureFilterRtMin" Id="163" LabelTitle="rtmin" LabelDescription="min rt(seconds)" TooltipTitle="min rt" TooltipDescription="min rt(seconds)" />
     <Command Name="cmdSpinnerFeatureFilterRtMax" Id="164" LabelTitle="rtmax" LabelDescription="max rt(seconds)" TooltipTitle="max rt" TooltipDescription="max rt(seconds)" />
-    <Command Name="cmdButtonResetFeatureFilter" Id="165" LabelTitle="Reset Filter" LabelDescription="Reset Feature Filter" TooltipTitle="Reset Filter" TooltipDescription="Reset Feature Filter" />
+    <Command Name="cmdButtonResetFeatureFilter" Id="165" LabelTitle="Reset Filter" LabelDescription="Reset Feature Filter" TooltipTitle="Reset Filter" TooltipDescription="Reset Feature Filter">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonMSIRawIonStat" Id="166" LabelTitle="Ion stats" LabelDescription="Ion stats" TooltipTitle="Ion stats" TooltipDescription="Ion stats">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonMSICleanBackground" Id="167" LabelTitle="Clean Background" LabelDescription="Clean Background" TooltipTitle="Clean Background" TooltipDescription="Clean Background">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-cut.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-cut.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>

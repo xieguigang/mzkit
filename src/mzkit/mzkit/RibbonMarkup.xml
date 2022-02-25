@@ -2147,6 +2147,22 @@
         <Image MinDPI="192">Res/application-exit.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonMSIRawIonStat" Id="166" LabelTitle="Ion stats" LabelDescription="Ion stats" TooltipTitle="Ion stats" TooltipDescription="Ion stats">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/excel-icon.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonMSICleanBackground" Id="167" LabelTitle="Clean Background" LabelDescription="Clean Background" TooltipTitle="Clean Background" TooltipDescription="Clean Background">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-cut.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-cut.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2364,7 +2380,10 @@
               <Button CommandName="cmdButtonMSITotalIon" />
             </Group>
             <Group CommandName="cmdTabMenuMSIAnalysis" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
-              <Button CommandName="cmdButtonFeatureDetections" />
+              <DropDownButton CommandName="cmdButtonFeatureDetections">
+                <Button CommandName="cmdButtonMSIRawIonStat" />
+                <Button CommandName="cmdButtonMSICleanBackground" />
+              </DropDownButton>
               <Button CommandName="cmdButtonExportSample" />
               <ToggleButton CommandName="cmdButtonTogglePolygon" />
             </Group>
