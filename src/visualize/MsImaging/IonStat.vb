@@ -1,11 +1,11 @@
-﻿Imports System.Drawing
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Point = System.Drawing.Point
 
 Public Class IonStat
 
