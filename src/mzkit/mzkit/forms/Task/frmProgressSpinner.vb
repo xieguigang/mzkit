@@ -95,4 +95,8 @@ Public Class frmProgressSpinner
                         End Sub).Start()
         Call spinner.ShowDialog()
     End Sub
+
+    Friend Sub CloseWindow()
+        Call Invoke(Sub() Call Close())
+    End Sub
 End Class

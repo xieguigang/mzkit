@@ -117,7 +117,9 @@ Module ServiceHub
     ''' <param name="raw">
     ''' filepath full name of the mzpack raw data file.
     ''' </param>
-    Public Function LoadMSI(raw As String, dimSize As Size) As MsImageProperty
+    Public Function LoadMSI(raw As String, dimSize As Size, message As Action(Of String)) As MsImageProperty
+        MessageCallback = message
+
         Dim config As String = $"{dimSize.Width},{dimSize.Height}={raw}"
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadThermoRawMSI, Encoding.UTF8.GetBytes(config)))
         Dim output As MsImageProperty = data _
@@ -151,7 +153,9 @@ Module ServiceHub
     ''' <param name="raw">
     ''' filepath full name of the mzpack raw data file.
     ''' </param>
-    Public Function LoadMSI(raw As String) As MsImageProperty
+    Public Function LoadMSI(raw As String, message As Action(Of String)) As MsImageProperty
+        MessageCallback = message
+
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
 
         If data Is Nothing Then
@@ -248,6 +252,16 @@ Module ServiceHub
             Call MyApplication.LogText(message)
         Else
             Call MessageCallback(message)
+        End If
+    End Sub
+
+    Private Sub MSI_pipe_SetProgress(percentage As Integer, details As String) Handles MSI_pipe.SetProgress
+        Call Application.DoEvents()
+
+        If MessageCallback Is Nothing Then
+            Call MyApplication.LogText(details)
+        Else
+            Call MessageCallback(details)
         End If
     End Sub
 End Module

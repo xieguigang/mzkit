@@ -118,57 +118,71 @@ Public Class frmMsImagingViewer
     End Sub
 
     Sub DoIonStats()
-        Dim ions As IonStat() = ServiceHub.DoIonStats
+        Dim progress As New frmProgressSpinner
 
-        If ions.IsNullOrEmpty Then
-            Call MyApplication.host.warning("No ions result...")
-        Else
-            Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
-            Dim spinner As New frmProgressSpinner
-            Dim grid = table.DataGridView1
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(500)
 
-            table.ViewRow = Sub(row)
-                                Call renderByMzList({Val(row("mz"))})
-                            End Sub
+                Dim ions As IonStat() = ServiceHub.DoIonStats
 
-            Call grid.Columns.Add("mz", "mz")
-            Call grid.Columns.Add("pixels", "pixels")
-            Call grid.Columns.Add("density", "density")
-            Call grid.Columns.Add("maxIntensity", "maxIntensity")
-            Call grid.Columns.Add("basePixel.X", "basePixel.X")
-            Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
-            Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
-            Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
-            Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
+                If ions.IsNullOrEmpty Then
+                    Call MyApplication.host.warning("No ions result...")
+                Else
+                    Call DoIonStats(ions)
+                End If
 
-            Call New Thread(
-                Sub()
-                    Call Thread.Sleep(500)
+                Call progress.CloseWindow()
+            End Sub).Start()
 
-                    Call table.Invoke(
-                            Sub()
-                                For Each ion As IonStat In ions
-                                    Call grid.Rows.Add(
-                                        ion.mz.ToString("F4"),
-                                        ion.pixels,
-                                        ion.density,
-                                        ion.maxIntensity,
-                                        ion.basePixel.X,
-                                        ion.basePixel.Y,
-                                        ion.Q1Intensity,
-                                        ion.Q2Intensity,
-                                        ion.Q3Intensity
-                                    )
+        Call progress.ShowDialog()
+    End Sub
 
-                                    Call Application.DoEvents()
-                                Next
-                            End Sub)
+    Sub DoIonStats(ions As IonStat())
+        Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
+        Dim spinner As New frmProgressSpinner
+        Dim grid = table.DataGridView1
 
-                    Call spinner.Invoke(Sub() spinner.Close())
-                End Sub).Start()
+        table.ViewRow = Sub(row)
+                            Call renderByMzList({Val(row("mz"))})
+                        End Sub
 
-            Call spinner.ShowDialog()
-        End If
+        Call grid.Columns.Add("mz", "mz")
+        Call grid.Columns.Add("pixels", "pixels")
+        Call grid.Columns.Add("density", "density")
+        Call grid.Columns.Add("maxIntensity", "maxIntensity")
+        Call grid.Columns.Add("basePixel.X", "basePixel.X")
+        Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
+        Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
+        Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
+        Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
+
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(500)
+                Call table.Invoke(
+                        Sub()
+                            For Each ion As IonStat In ions
+                                Call grid.Rows.Add(
+                                    ion.mz.ToString("F4"),
+                                    ion.pixels,
+                                    ion.density,
+                                    ion.maxIntensity,
+                                    ion.basePixel.X,
+                                    ion.basePixel.Y,
+                                    ion.Q1Intensity,
+                                    ion.Q2Intensity,
+                                    ion.Q3Intensity
+                                )
+
+                                Call Application.DoEvents()
+                            Next
+                        End Sub)
+
+                Call spinner.Invoke(Sub() spinner.Close())
+            End Sub).Start()
+
+        Call spinner.ShowDialog()
     End Sub
 
     Sub cleanBackground()
@@ -313,12 +327,12 @@ Public Class frmMsImagingViewer
 
             Call New Thread(
                 Sub()
-                    Dim info As MsImageProperty = ServiceHub.LoadMSI(file, getSize.Dims.SizeParser)
+                    Dim info As MsImageProperty = ServiceHub.LoadMSI(file, getSize.Dims.SizeParser, Sub(msg) MyApplication.host.showStatusMessage(msg))
 
                     Call WindowModules.viewer.Invoke(Sub() Call LoadRender(info, file))
                     Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
 
-                    Call progress.Invoke(Sub() progress.Close())
+                    Call progress.CloseWindow()
 
                     MyApplication.host.Invoke(
                         Sub()
@@ -351,8 +365,13 @@ Public Class frmMsImagingViewer
     ''' </summary>
     ''' <param name="filePath"></param>
     Public Sub LoadRender(mzpack As String, filePath As String)
-        Call ServiceHub.StartMSIService()
-        Call LoadRender(ServiceHub.LoadMSI(mzpack), filePath)
+        Call frmTaskProgress.LoadData(
+            Function(msg As Action(Of String))
+                Call ServiceHub.StartMSIService()
+                Call Me.Invoke(Sub() LoadRender(ServiceHub.LoadMSI(mzpack, msg), filePath))
+
+                Return 0
+            End Function)
     End Sub
 
     ''' <summary>
