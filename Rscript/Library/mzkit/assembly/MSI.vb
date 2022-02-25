@@ -67,9 +67,35 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
 <Package("MSI")>
 Module MSI
+
+    Sub New()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+    End Sub
+
+    Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = ions _
+                .Select(Function(i) i.mz.ToString("F4")) _
+                .ToArray
+        }
+
+        Call table.add(NameOf(IonStat.mz), ions.Select(Function(i) i.mz).ToArray)
+        Call table.add(NameOf(IonStat.pixels), ions.Select(Function(i) i.pixels).ToArray)
+        Call table.add(NameOf(IonStat.density), ions.Select(Function(i) i.density).ToArray)
+        Call table.add(NameOf(IonStat.basePixel) & ".X", ions.Select(Function(i) i.basePixel.X).ToArray)
+        Call table.add(NameOf(IonStat.basePixel) & ".Y", ions.Select(Function(i) i.basePixel.Y).ToArray)
+        Call table.add(NameOf(IonStat.maxIntensity), ions.Select(Function(i) i.maxIntensity).ToArray)
+        Call table.add(NameOf(IonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity).ToArray)
+        Call table.add(NameOf(IonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity).ToArray)
+        Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity).ToArray)
+
+        Return table
+    End Function
 
     ''' <summary>
     ''' split the raw 2D MSI data into multiple parts with given parts
@@ -288,6 +314,11 @@ Module MSI
     <ExportAPI("basePeakMz")>
     Public Function basePeakMz(summary As MSISummary) As LibraryMatrix
         Return summary.GetBasePeakMz
+    End Function
+
+    <ExportAPI("ionStat")>
+    Public Function IonStats(raw As mzPack) As IonStat()
+        Return IonStat.DoStat(raw).ToArray
     End Function
 
     ''' <summary>
