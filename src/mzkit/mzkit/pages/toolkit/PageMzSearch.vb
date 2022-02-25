@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports RibbonLib.Interop
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
@@ -454,6 +455,38 @@ Public Class PageMzSearch
             Call result.AddRange(anno)
         Next
 
+        Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
+        Dim grid = table.DataGridView1
+        Dim keggMeta = Globals.LoadKEGG(AddressOf MyApplication.LogText, 1, tolerance)
 
+        'table.ViewRow = Sub(row)
+
+        '                End Sub
+
+        Call grid.Columns.Add("mz", "mz")
+        Call grid.Columns.Add("ppm", "ppm")
+        Call grid.Columns.Add("precursorType", "precursorType")
+        Call grid.Columns.Add("kegg_id", "kegg_id")
+        Call grid.Columns.Add("name", "name")
+        Call grid.Columns.Add("formula", "formula")
+        Call grid.Columns.Add("exact_mass", "exact_mass")
+        Call grid.Columns.Add("score", "score")
+
+        For Each ion As KEGGQuery In result
+            Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
+
+            Call grid.Rows.Add(
+                ion.mz.ToString("F4"),
+                ion.ppm.ToString("F1"),
+                ion.precursorType,
+                ion.kegg_id,
+                If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
+                kegg.formula,
+                kegg.exactMass,
+                ion.score.ToString("F2")
+            )
+
+            Call Application.DoEvents()
+        Next
     End Sub
 End Class
