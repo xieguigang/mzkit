@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::ae6e7c8217a1e3d7cc8697beb3ea02ee, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmRawFeaturesList
-    ' 
-    '     Properties: CurrentRawFile
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: checkIon, GetSelectedNodes, GetXICCollection
-    ' 
-    '     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CopyIonsToolStripMenuItem_Click
-    '          CustomToolStripMenuItem_Click, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click
-    '          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click
-    '          IonSearchToolStripMenuItem_Click, IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, MetaDNASearchToolStripMenuItem_Click
-    '          MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click
-    '          ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click
-    '          SpectrumSearchToolStripMenuItem_Click, TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, ToolStripButton4_Click
-    '          TreeView1_AfterCheck, treeView1_AfterSelect, treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click
-    '          XICViewToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmRawFeaturesList
+' 
+'     Properties: CurrentRawFile
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: checkIon, GetSelectedNodes, GetXICCollection
+' 
+'     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CopyIonsToolStripMenuItem_Click
+'          CustomToolStripMenuItem_Click, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click
+'          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click
+'          IonSearchToolStripMenuItem_Click, IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, MetaDNASearchToolStripMenuItem_Click
+'          MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click
+'          ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click
+'          SpectrumSearchToolStripMenuItem_Click, TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, ToolStripButton4_Click
+'          TreeView1_AfterCheck, treeView1_AfterSelect, treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click
+'          XICViewToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -609,30 +609,35 @@ Public Class frmRawFeaturesList
             treeView1.loadRawFile(CurrentRawFile, False, rtmin, rtmax)
             checked.Clear()
         Else
-            XICViewToolStripMenuItem.Checked = True
-
-            Dim allMs2 = CurrentRawFile _
+            Call CurrentRawFile _
                 .GetMs2Scans _
                 .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
-                .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
-                .OrderBy(Function(t) Val(t.name)) _
-                .ToArray
-
-            treeView1.Nodes.Clear()
-            checked.Clear()
-
-            For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
-                Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
-
-                For Each ms2 As ScanMS2 In mz1
-                    Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
-                        .Tag = ms2,
-                        .ImageIndex = 1,
-                        .SelectedImageIndex = 1
-                    })
-                Next
-            Next
+                .DoCall(AddressOf LoadXICIons)
         End If
+    End Sub
+
+    Private Sub LoadXICIons(data As IEnumerable(Of ScanMS2))
+        Dim allMs2 = data _
+            .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
+            .OrderBy(Function(t) Val(t.name)) _
+            .ToArray
+
+        treeView1.Nodes.Clear()
+        checked.Clear()
+
+        XICViewToolStripMenuItem.Checked = True
+
+        For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
+            Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
+
+            For Each ms2 As ScanMS2 In mz1
+                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
+                    .Tag = ms2,
+                    .ImageIndex = 1,
+                    .SelectedImageIndex = 1
+                })
+            Next
+        Next
     End Sub
 
     Private Function checkIon(ByRef mz As Double) As Boolean
@@ -737,6 +742,22 @@ Public Class frmRawFeaturesList
         Call Clipboard.Clear()
         Call Clipboard.SetText(outfile.ToString)
         Call MyApplication.host.showStatusMessage("Ions data is copy to clipboard!")
+    End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        Dim ms2 As Double = Val(ToolStripSpringTextBox1.Text)
+        Dim test As Tolerance = Tolerance.DeltaMass(0.1)
+        Dim matched = CurrentRawFile _
+            .LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)).loaded _
+            .MS _
+            .Select(Function(i) i.products.SafeQuery) _
+            .IteratesALL _
+            .Where(Function(i)
+                       Return i.mz.Any(Function(mzi) test(mzi, ms2))
+                   End Function) _
+            .ToArray
+
+        Call LoadXICIons(matched)
     End Sub
 
     Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter
