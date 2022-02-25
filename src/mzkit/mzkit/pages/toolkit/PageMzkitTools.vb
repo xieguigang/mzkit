@@ -225,8 +225,9 @@ Public Class PageMzkitTools
             If prop.msLevel = 1 AndAlso RibbonItems.CheckBoxShowKEGGAnnotation.BooleanValue Then
                 Call ConnectToBioDeep.OpenAdvancedFunction(
                     Sub()
+                        Dim mzdiff1 As Tolerance = Tolerance.DeltaMass(0.001)
                         Dim mode As String = scanData.name.Match("[+-]")
-                        Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1)), info:="Load KEGG repository data...")
+                        Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1), mzdiff1), info:="Load KEGG repository data...")
                         Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
                         Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
                         Dim compound As Compound
