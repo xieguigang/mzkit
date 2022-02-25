@@ -139,7 +139,9 @@ Public Class frmTaskProgress
         TaskbarStatus.SetLoopStatus()
     End Sub
 
-    Public Shared Function LoadData(Of T)(streamLoad As Func(Of Action(Of String), T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
+    Public Shared Function LoadData(Of T)(streamLoad As Func(Of Action(Of String), T),
+                                          Optional title$ = "Loading data...",
+                                          Optional info$ = "Open a large raw data file...") As T
         Dim tmp As T
         Dim progress As New frmTaskProgress
 
@@ -152,7 +154,7 @@ Public Class frmTaskProgress
 
                 tmp = streamLoad(AddressOf progress.ShowProgressDetails)
 
-                Call progress.Invoke(Sub() progress.Close())
+                Call progress.CloseWindow()
             End Sub).Start()
 
         Call progress.ShowDialog()
@@ -201,5 +203,9 @@ Public Class frmTaskProgress
 
     Private Sub frmTaskProgress_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         TaskbarStatus.Stop()
+    End Sub
+
+    Public Sub CloseWindow()
+        Call Me.Invoke(Sub() Call Me.Close())
     End Sub
 End Class

@@ -98,6 +98,8 @@ Module ServiceHub
         Else
             Call $"MS-Imaging service started!({MSI_service})".__DEBUG_ECHO
         End If
+
+        MessageCallback = Nothing
     End Sub
 
     Public Function DoIonStats() As IonStat()
@@ -129,6 +131,8 @@ Module ServiceHub
                         Return New MsImageProperty(info)
                     End Function)
 
+        MessageCallback = Nothing
+
         Return output
     End Function
 
@@ -157,6 +161,8 @@ Module ServiceHub
         MessageCallback = message
 
         Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSI, Encoding.UTF8.GetBytes(raw)))
+
+        MessageCallback = Nothing
 
         If data Is Nothing Then
             Call MyApplication.host.warning($"Failure to load MS-imaging raw data file: {raw}...")
