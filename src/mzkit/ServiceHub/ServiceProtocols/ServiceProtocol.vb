@@ -60,6 +60,7 @@ Public Enum ServiceProtocol
     UnloadMSI
     ExportMzpack
     LoadMSILayers
+    GetIonStatList
     GetBasePeakMzList
     GetPixel
     GetPixelRectangle

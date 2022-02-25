@@ -105,7 +105,8 @@ Public Class frmMsImagingViewer
         AddHandler RibbonEvents.ribbonItems.ButtonExportSample.ExecuteEvent, Sub() Call exportMSISampleTable()
         AddHandler RibbonEvents.ribbonItems.ButtonExportMSIMzpack.ExecuteEvent, Sub() Call exportMzPack()
         AddHandler RibbonEvents.ribbonItems.ButtonTogglePolygon.ExecuteEvent, Sub() Call TogglePolygonMode()
-        AddHandler RibbonEvents.ribbonItems.ButtonFeatureDetections.ExecuteEvent, Sub() Call MSIFeatureDetections()
+        AddHandler RibbonEvents.ribbonItems.ButtonMSICleanBackground.ExecuteEvent, Sub() Call cleanBackground()
+        AddHandler RibbonEvents.ribbonItems.ButtonMSIRawIonStat.ExecuteEvent, Sub() Call DoIonStats()
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call setupPolygonEditorButtons()
@@ -113,6 +114,64 @@ Public Class frmMsImagingViewer
     End Sub
 
     Sub MSIFeatureDetections()
+
+    End Sub
+
+    Sub DoIonStats()
+        Dim ions As IonStat() = ServiceHub.DoIonStats
+
+        If ions.IsNullOrEmpty Then
+            Call MyApplication.host.warning("No ions result...")
+        Else
+            Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
+            Dim spinner As New frmProgressSpinner
+            Dim grid = table.DataGridView1
+
+            table.ViewRow = Sub(row)
+                                Call renderByMzList({Val(row("mz"))})
+                            End Sub
+
+            Call grid.Columns.Add("mz", "mz")
+            Call grid.Columns.Add("pixels", "pixels")
+            Call grid.Columns.Add("density", "density")
+            Call grid.Columns.Add("maxIntensity", "maxIntensity")
+            Call grid.Columns.Add("basePixel.X", "basePixel.X")
+            Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
+            Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
+            Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
+            Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
+
+            Call New Thread(
+                Sub()
+                    Call Thread.Sleep(500)
+
+                    Call table.Invoke(
+                            Sub()
+                                For Each ion As IonStat In ions
+                                    Call grid.Rows.Add(
+                                        ion.mz.ToString("F4"),
+                                        ion.pixels,
+                                        ion.density,
+                                        ion.maxIntensity,
+                                        ion.basePixel.X,
+                                        ion.basePixel.Y,
+                                        ion.Q1Intensity,
+                                        ion.Q2Intensity,
+                                        ion.Q3Intensity
+                                    )
+
+                                    Call Application.DoEvents()
+                                Next
+                            End Sub)
+
+                    Call spinner.Invoke(Sub() spinner.Close())
+                End Sub).Start()
+
+            Call spinner.ShowDialog()
+        End If
+    End Sub
+
+    Sub cleanBackground()
 
     End Sub
 

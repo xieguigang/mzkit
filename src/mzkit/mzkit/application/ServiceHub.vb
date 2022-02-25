@@ -100,6 +100,17 @@ Module ServiceHub
         End If
     End Sub
 
+    Public Function DoIonStats() As IonStat()
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.GetIonStatList, "read"))
+
+        If data Is Nothing Then
+            Return {}
+        Else
+            Dim ions = BSON.Load(data).CreateObject(Of IonStat())
+            Return ions
+        End If
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -225,6 +236,8 @@ Module ServiceHub
     End Sub
 
     Private Sub MSI_pipe_SetMessage(message As String) Handles MSI_pipe.SetMessage
+        Call Application.DoEvents()
+
         If MessageCallback Is Nothing Then
             Call MyApplication.LogText(message)
         Else

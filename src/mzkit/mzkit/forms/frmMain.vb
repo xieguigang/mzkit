@@ -138,6 +138,10 @@ Public Class frmMain
         End If
     End Sub
 
+    Friend Sub warning(v As String)
+        Call showStatusMessage(v, My.Resources.StatusAnnotations_Warning_32xLG_color)
+    End Sub
+
     Public Sub OpenFile(fileName As String, showDocument As Boolean)
         If fileName.ExtensionSuffix("R") Then
             Call WindowModules.fileExplorer.AddScript(fileName.GetFullPath)

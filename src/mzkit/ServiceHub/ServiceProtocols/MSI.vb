@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
@@ -117,6 +118,15 @@ Public Class MSI : Implements ITaskDriver
         Dim info As Dictionary(Of String, String) = MsImageProperty.GetMSIInfo(MSI)
 
         Return New DataPipe(info.GetJson(indent:=False, simpleDict:=True))
+    End Function
+
+    <Protocol(ServiceProtocol.GetIonStatList)>
+    Public Function GetIonStatList(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim allPixels As PixelScan() = MSI.pixelReader.AllPixels.ToArray
+        Dim ions As IonStat() = IonStat.DoStat(allPixels)
+        Dim json As JsonElement = ions.GetType.GetJsonElement(ions, New JSONSerializerOptions With {.indent = False})
+
+        Return New DataPipe(BSON.BSONFormat.SafeGetBuffer(json))
     End Function
 
     ''' <summary>
