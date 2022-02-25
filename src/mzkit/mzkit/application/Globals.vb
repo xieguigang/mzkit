@@ -104,11 +104,10 @@ Module Globals
     Public Function LoadKEGG(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSJointConnection
         Static background As Background = loadBackground()
         Static compounds = KEGGHandler.Wraps(KEGGRepo.RequestKEGGCompounds).ToArray
-        Static cache As New Dictionary(Of String, MSJointConnection)
+        Static cache As New Dictionary(Of String, KEGGHandler)
 
         Dim key As String = $"[{mzdiff.ToString}]{mode}"
-
-        Return cache.ComputeIfAbsent(key,
+        Dim handler As KEGGHandler = cache.ComputeIfAbsent(key,
             lazyValue:=Function()
                            If mode = 1 Then
                                Return KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
@@ -116,6 +115,8 @@ Module Globals
                                Return KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
                            End If
                        End Function)
+
+        Return New MSJointConnection(handler, background)
     End Function
 
     Public Sub AddRecentFileHistory(file As String)

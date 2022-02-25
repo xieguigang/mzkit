@@ -276,6 +276,7 @@ Public Class PageMzSearch
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim vs_win As DocumentWindow = DirectCast(ParentForm, DocumentWindow)
 
+        CheckedListBox1.SetItemChecked(0, True)
         ComboBox1.SelectedIndex = 0
         vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
     End Sub
