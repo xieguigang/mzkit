@@ -23,16 +23,28 @@ Partial Class frmNetworkViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Me.MsClusterNetworkViewer1 = New ControlLibrary.MSClusterNetworkViewer()
         Me.SuspendLayout()
+        '
+        'MsClusterNetworkViewer1
+        '
+        Me.MsClusterNetworkViewer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MsClusterNetworkViewer1.Location = New System.Drawing.Point(0, 0)
+        Me.MsClusterNetworkViewer1.Name = "MsClusterNetworkViewer1"
+        Me.MsClusterNetworkViewer1.Size = New System.Drawing.Size(888, 520)
+        Me.MsClusterNetworkViewer1.TabIndex = 0
         '
         'frmNetworkViewer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(888, 520)
+        Me.Controls.Add(Me.MsClusterNetworkViewer1)
         Me.DoubleBuffered = True
         Me.Name = "frmNetworkViewer"
         Me.ResumeLayout(False)
 
     End Sub
+
+    Friend WithEvents MsClusterNetworkViewer1 As ControlLibrary.MSClusterNetworkViewer
 End Class

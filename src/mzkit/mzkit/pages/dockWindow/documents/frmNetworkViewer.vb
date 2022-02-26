@@ -8,6 +8,6 @@ Public Class frmNetworkViewer
     End Sub
 
     Public Sub SetGraph(g As NetworkGraph)
-
+        MsClusterNetworkViewer1.LoadModel(g)
     End Sub
 End Class

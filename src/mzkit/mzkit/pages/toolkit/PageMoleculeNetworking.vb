@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::79ed127caf77576826cd6808e7d30d6c, src\mzkit\mzkit\pages\toolkit\PageMoleculeNetworking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMoleculeNetworking
-    ' 
-    '     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, RefreshNetwork
-    '          RenderNetwork, SaveImageToolStripMenuItem_Click, saveNetwork
-    ' 
-    ' /********************************************************************************/
+' Class PageMoleculeNetworking
+' 
+'     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, RefreshNetwork
+'          RenderNetwork, SaveImageToolStripMenuItem_Click, saveNetwork
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,8 +85,7 @@ Public Class PageMoleculeNetworking
             MyApplication.host.showStatusMessage("The network size is huge for create layout, entire progress will be very slow...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
 
-        Dim progress As New frmTaskProgress
-        Dim viewer As New frmPlotViewer With {.TabText = "Molecular Networking Viewer"}
+        Dim viewer As frmNetworkViewer = VisualStudio.ShowDocument(Of frmNetworkViewer)(title:="Molecular Networking Viewer")
         Dim showSingle As Boolean = False
         Dim graph As NetworkGraph = g.Copy
 
@@ -101,9 +100,6 @@ Public Class PageMoleculeNetworking
         End If
 
         Call graph.ComputeNodeDegrees
-
-        viewer.Show(MyApplication.host.dockPanel)
-        viewer.DockState = DockState.Hidden
 
         Dim minRadius As Single = Globals.Settings.network.nodeRadius.min
         Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
@@ -120,66 +116,8 @@ Public Class PageMoleculeNetworking
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
         Next
 
-        progress.ShowProgressTitle("Molecular networking", directAccess:=True)
-        progress.ShowProgressDetails("Refresh network", directAccess:=True)
-        progress.TaskCancel = Sub() cancel.Value = True
-
-        Dim task As New Thread(
-            Sub()
-                Thread.Sleep(500)
-                progress.ShowProgressTitle("Run network layouts...")
-                'graph = graph _
-                '    .doRandomLayout _
-                '    .doForceLayout(
-                '        parameters:=Globals.Settings.network.layout,
-                '        progressCallback:=AddressOf progress.ShowProgressDetails,
-                '        cancel:=cancel
-                '    )
-
-                Dim layouts = New GroupPlanner(graph)
-                Dim iterations = Globals.Settings.network.layout.Iterations
-                Dim msg$
-
-                For i As Integer = 0 To iterations
-                    Call layouts.Collide()
-
-                    If (100 * i / iterations) Mod 5 = 0 Then
-                        msg = $"- Completed {i + 1} of {iterations} [{CInt(100 * i / iterations)}%]"
-
-                        Call MyApplication.LogText(msg)
-                        Call progress.Invoke(Sub() progress.ShowProgressDetails(msg))
-
-                        If cancel.Value Then
-                            Exit For
-                        End If
-                    End If
-                Next
-
-                progress.ShowProgressDetails("do network render plot...")
-
-                Dim plot As Image = graph.DrawImage(
-                    canvasSize:="1920,1080",
-                    labelerIterations:=-1,
-                    displayId:=False,
-                    nodeRadius:=nodeRadius,
-                    minLinkWidth:=1,
-                    hideDisconnectedNode:=True,
-                    nodeStroke:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
-                    throwEx:=False,
-                    linkWidth:=linkWidth
-                ).AsGDIImage
-
-                viewer.Invoke(Sub()
-                                  viewer.PictureBox1.BackgroundImage = plot
-                                  viewer.DockState = DockState.Document
-                                  viewer.Show(MyApplication.host.dockPanel)
-                              End Sub)
-
-                progress.Invoke(Sub() progress.Close())
-            End Sub)
-
-        task.Start()
-        progress.ShowDialog()
+        Call viewer.SetGraph(graph)
+        Call viewer.Show(MyApplication.host.dockPanel)
     End Sub
 
     Public Sub RefreshNetwork()

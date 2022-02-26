@@ -53,6 +53,9 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports WeifenLuo.WinFormsUI.Docking
 
+''' <summary>
+''' form for view Rscript plot result
+''' </summary>
 Public Class frmPlotViewer : Implements ISaveHandle, IFileReference
 
     ''' <summary>
