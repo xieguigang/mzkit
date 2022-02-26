@@ -25,21 +25,43 @@ Partial Class frmNetworkViewer
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNetworkViewer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PinToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfigLayoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.SnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
         Me.CopyNetworkVisualizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem, Me.ShowLabelsToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfigLayoutToolStripMenuItem, Me.SnapshotToolStripMenuItem, Me.CopyNetworkVisualizeToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowLabelsToolStripMenuItem, Me.PhysicalEngineToolStripMenuItem, Me.ConfigLayoutToolStripMenuItem, Me.ToolStripMenuItem1, Me.SnapshotToolStripMenuItem, Me.CopyNetworkVisualizeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(199, 142)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(199, 170)
+        '
+        'PinToolStripMenuItem
+        '
+        Me.PinToolStripMenuItem.CheckOnClick = True
+        Me.PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.PinToolStripMenuItem.Name = "PinToolStripMenuItem"
+        Me.PinToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.PinToolStripMenuItem.Text = "Pin"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(195, 6)
+        '
+        'ShowLabelsToolStripMenuItem
+        '
+        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
+        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
+        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
         '
         'PhysicalEngineToolStripMenuItem
         '
@@ -50,23 +72,16 @@ Partial Class frmNetworkViewer
         Me.PhysicalEngineToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.PhysicalEngineToolStripMenuItem.Text = "Physical Engine (On)"
         '
-        'ShowLabelsToolStripMenuItem
-        '
-        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
-        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
-        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
-        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(195, 6)
-        '
         'ConfigLayoutToolStripMenuItem
         '
         Me.ConfigLayoutToolStripMenuItem.Name = "ConfigLayoutToolStripMenuItem"
         Me.ConfigLayoutToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.ConfigLayoutToolStripMenuItem.Text = "Config Layout"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(195, 6)
         '
         'SnapshotToolStripMenuItem
         '
@@ -74,6 +89,12 @@ Partial Class frmNetworkViewer
         Me.SnapshotToolStripMenuItem.Name = "SnapshotToolStripMenuItem"
         Me.SnapshotToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.SnapshotToolStripMenuItem.Text = "Snapshot"
+        '
+        'CopyNetworkVisualizeToolStripMenuItem
+        '
+        Me.CopyNetworkVisualizeToolStripMenuItem.Name = "CopyNetworkVisualizeToolStripMenuItem"
+        Me.CopyNetworkVisualizeToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.CopyNetworkVisualizeToolStripMenuItem.Text = "Copy Network Visualize"
         '
         'Canvas1
         '
@@ -90,12 +111,6 @@ Partial Class frmNetworkViewer
         Me.Canvas1.Size = New System.Drawing.Size(888, 520)
         Me.Canvas1.TabIndex = 1
         Me.Canvas1.ViewDistance = 0R
-        '
-        'CopyNetworkVisualizeToolStripMenuItem
-        '
-        Me.CopyNetworkVisualizeToolStripMenuItem.Name = "CopyNetworkVisualizeToolStripMenuItem"
-        Me.CopyNetworkVisualizeToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
-        Me.CopyNetworkVisualizeToolStripMenuItem.Text = "Copy Network Visualize"
         '
         'frmNetworkViewer
         '
@@ -118,4 +133,6 @@ Partial Class frmNetworkViewer
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents SnapshotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CopyNetworkVisualizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
 End Class

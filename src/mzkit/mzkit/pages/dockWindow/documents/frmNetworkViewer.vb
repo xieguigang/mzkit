@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Imaging
@@ -61,5 +62,21 @@ Public Class frmNetworkViewer
 
         Call Canvas1.GetSnapshot.SaveAs(tempfile)
         Call Process.Start(tempfile)
+    End Sub
+
+    Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
+        Dim target As Node = Canvas1.GetTargetNode(PointToClient(Cursor.Position))
+
+        If Not target Is Nothing Then
+            target.pinned = PinToolStripMenuItem.Checked
+        End If
+    End Sub
+
+    Private Sub ContextMenuStrip1_Opening(sender As Object, e As CancelEventArgs) Handles ContextMenuStrip1.Opening
+        Dim target As Node = Canvas1.GetTargetNode(PointToClient(Cursor.Position))
+
+        If Not target Is Nothing Then
+            PinToolStripMenuItem.Checked = target.pinned
+        End If
     End Sub
 End Class
