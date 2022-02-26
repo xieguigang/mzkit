@@ -749,7 +749,7 @@ Public Class frmRawFeaturesList
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
         Dim ms2 As Double = Val(ToolStripSpringTextBox1.Text)
-        Dim test As Tolerance = Tolerance.DeltaMass(0.1)
+        Dim test As Tolerance = Tolerance.DeltaMass(0.05)
 
         If CurrentRawFile Is Nothing Then
             Call MyApplication.host.warning("Open a raw data file at first!")
