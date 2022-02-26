@@ -114,6 +114,11 @@ Public Class PageMoleculeNetworking
 
         For Each v In graph.vertex
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
+            v.data.size = New Double() {nodeRadius(v)}
+        Next
+
+        For Each l In graph.graphEdges
+            l.data.style = New Pen(Color.LightGray, linkWidth(l))
         Next
 
         Call viewer.SetGraph(graph)

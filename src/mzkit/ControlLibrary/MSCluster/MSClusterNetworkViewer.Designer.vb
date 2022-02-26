@@ -33,6 +33,7 @@ Partial Class MSClusterNetworkViewer
         '
         Me.Canvas1.AutoRotate = True
         Me.Canvas1.BackColor = System.Drawing.Color.FromArgb(CType(CType(219, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Canvas1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Canvas1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Canvas1.DynamicsRadius = False
         Me.Canvas1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -40,7 +41,7 @@ Partial Class MSClusterNetworkViewer
         Me.Canvas1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Canvas1.Name = "Canvas1"
         Me.Canvas1.ShowLabel = False
-        Me.Canvas1.Size = New System.Drawing.Size(917, 645)
+        Me.Canvas1.Size = New System.Drawing.Size(945, 561)
         Me.Canvas1.TabIndex = 0
         Me.Canvas1.ViewDistance = 0R
         '
@@ -48,7 +49,7 @@ Partial Class MSClusterNetworkViewer
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 26)
         '
         'PhysicalEngineToolStripMenuItem
         '
@@ -65,7 +66,7 @@ Partial Class MSClusterNetworkViewer
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Canvas1)
         Me.Name = "MSClusterNetworkViewer"
-        Me.Size = New System.Drawing.Size(917, 645)
+        Me.Size = New System.Drawing.Size(945, 561)
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
