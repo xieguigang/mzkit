@@ -6,6 +6,8 @@ Public Class frmNetworkViewer
     Private Sub frmNetworkViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Text = "Network Canvas"
         TabText = "Network Canvas"
+
+        Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
     Public Sub SetGraph(g As NetworkGraph, layout As ForceDirectedArgs)
@@ -27,5 +29,13 @@ Public Class frmNetworkViewer
         End If
 
         Canvas1.SetPhysical(PhysicalEngineToolStripMenuItem.Checked)
+    End Sub
+
+    Private Sub ConfigLayoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigLayoutToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ShowLabelsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLabelsToolStripMenuItem.Click
+        Canvas1.ShowLabel = ShowLabelsToolStripMenuItem.Checked
     End Sub
 End Class

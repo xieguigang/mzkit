@@ -343,6 +343,18 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputDialog.Designer.vb">
+      <DependentUpon>InputDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Inputs\InputNetworkLayout.Designer.vb">
+      <DependentUpon>InputNetworkLayout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputNetworkLayout.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputXICTarget.Designer.vb">
       <DependentUpon>InputXICTarget.vb</DependentUpon>
     </Compile>
@@ -748,11 +760,17 @@
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputDialog.resx">
+      <DependentUpon>InputDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputFeatureFilter.resx">
       <DependentUpon>InputFeatureFilter.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputImageProcessor.resx">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputNetworkLayout.resx">
+      <DependentUpon>InputNetworkLayout.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputXICTarget.resx">
       <DependentUpon>InputXICTarget.vb</DependentUpon>

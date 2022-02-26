@@ -26,14 +26,17 @@ Partial Class frmNetworkViewer
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
+        Me.ConfigLayoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem, Me.ShowLabelsToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfigLayoutToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 98)
         '
         'PhysicalEngineToolStripMenuItem
         '
@@ -48,6 +51,7 @@ Partial Class frmNetworkViewer
         '
         Me.Canvas1.AutoRotate = True
         Me.Canvas1.BackColor = System.Drawing.Color.SkyBlue
+        Me.Canvas1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Canvas1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Canvas1.DynamicsRadius = False
         Me.Canvas1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -58,6 +62,24 @@ Partial Class frmNetworkViewer
         Me.Canvas1.Size = New System.Drawing.Size(888, 520)
         Me.Canvas1.TabIndex = 1
         Me.Canvas1.ViewDistance = 0R
+        '
+        'ConfigLayoutToolStripMenuItem
+        '
+        Me.ConfigLayoutToolStripMenuItem.Name = "ConfigLayoutToolStripMenuItem"
+        Me.ConfigLayoutToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ConfigLayoutToolStripMenuItem.Text = "Config Layout"
+        '
+        'ShowLabelsToolStripMenuItem
+        '
+        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
+        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
+        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 6)
         '
         'frmNetworkViewer
         '
@@ -75,4 +97,7 @@ Partial Class frmNetworkViewer
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents PhysicalEngineToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Canvas1 As Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas
+    Friend WithEvents ConfigLayoutToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowLabelsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class
