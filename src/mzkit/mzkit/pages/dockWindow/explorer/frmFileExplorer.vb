@@ -179,13 +179,16 @@ Public Class frmFileExplorer
 
     Public Sub ImportsRaw(fileName As String)
         If treeView1.Nodes.Count = 0 Then
-            MyApplication.host.OpenFile(fileName, showDocument:=False)
-            Return
+            Call Globals.InitExplorerUI(
+                explorer:=treeView1,
+                rawMenu:=ctxMenuFiles,
+                scriptMenu:=ctxMenuScript
+            )
         End If
 
         If fileName.ExtensionSuffix("mzml") AndAlso (RawScanParser.IsMRMData(fileName) OrElse RawScanParser.IsSIMData(fileName)) Then
             Call MyApplication.host.OpenFile(fileName, showDocument:=True)
-        ElseIf treeView1.Nodes.Item(0).Nodes.Count = 0 Then
+        ElseIf treeView1.Nodes.Count = 0 OrElse treeView1.Nodes.Item(0).Nodes.Count = 0 Then
             Call addFileNode(getRawCache(fileName))
         Else
             ' work in background
@@ -216,7 +219,8 @@ Public Class frmFileExplorer
 
     Public Sub addFileNode(newRaw As Raw)
         Me.Invoke(Sub()
-                      treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw, .ImageIndex = 1, .SelectedImageIndex = 1})
+                      Dim file As TreeNode = Globals.RawFileNodeTemplate(newRaw, targetRawMenu:=ctxMenuRawFile)
+                      treeView1.Nodes(0).Nodes.Add(file)
                   End Sub)
 
         Globals.workspace.Add(newRaw)

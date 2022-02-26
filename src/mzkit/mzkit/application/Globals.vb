@@ -221,6 +221,53 @@ Module Globals
         Call MyApplication.host.showStatusMessage("Ready!")
     End Sub
 
+    Public Sub InitExplorerUI(explorer As TreeView, rawMenu As ContextMenuStrip, scriptMenu As ContextMenuStrip,
+                              Optional ByRef scripts As TreeNode = Nothing,
+                              Optional ByRef rawFiles As TreeNode = Nothing)
+
+        scripts = New TreeNode("R# Automation") With {
+            .ImageIndex = 1,
+            .SelectedImageIndex = 1,
+            .StateImageIndex = 1,
+            .ContextMenuStrip = scriptMenu
+        }
+        rawFiles = New TreeNode("Raw Data Files") With {
+            .ImageIndex = 0,
+            .StateImageIndex = 0,
+            .SelectedImageIndex = 0,
+            .ContextMenuStrip = rawMenu
+        }
+
+        explorer.Nodes.Clear()
+        explorer.Nodes.Add(rawFiles)
+        explorer.Nodes.Add(scripts)
+    End Sub
+
+    Public Function RawFileNodeTemplate(raw As Raw, targetRawMenu As ContextMenuStrip) As TreeNode
+        Dim sourcePath As String = raw.source.GetFullPath(throwEx:=False)
+        Dim name As String = raw.source.FileName
+
+        If name.Contains(vbCr) OrElse name.Contains(vbLf) Then
+            name = name.LineTokens.Last
+
+            If name.Length > 24 Then
+                name = "..." & name.Substring(name.Length - 21)
+            End If
+        End If
+
+        Dim rawFileNode As New TreeNode(name) With {
+            .Checked = True,
+            .Tag = raw,
+            .ImageIndex = 2,
+            .SelectedImageIndex = 2,
+            .StateImageIndex = 2,
+            .ContextMenuStrip = targetRawMenu,
+            .ToolTipText = If(sourcePath.StringEmpty, "source file is missing!", sourcePath)
+        }
+
+        Return rawFileNode
+    End Function
+
     ''' <summary>
     ''' two root nodes:
     ''' 
@@ -235,49 +282,18 @@ Module Globals
                                      rawMenu As ContextMenuStrip,
                                      targetRawMenu As ContextMenuStrip,
                                      scriptMenu As ContextMenuStrip) As Integer
-
-        Dim scripts As New TreeNode("R# Automation") With {
-            .ImageIndex = 1,
-            .SelectedImageIndex = 1,
-            .StateImageIndex = 1,
-            .ContextMenuStrip = scriptMenu
-        }
-        Dim rawFiles As New TreeNode("Raw Data Files") With {
-            .ImageIndex = 0,
-            .StateImageIndex = 0,
-            .SelectedImageIndex = 0,
-            .ContextMenuStrip = rawMenu
-        }
-
-        explorer.Nodes.Clear()
-        explorer.Nodes.Add(rawFiles)
-        explorer.Nodes.Add(scripts)
-
         Dim i As Integer
+        Dim scripts, rawFiles As TreeNode
+
+#Disable Warning
+        Call InitExplorerUI(explorer, rawMenu, scriptMenu, scripts, rawFiles)
+#Enable Warning
 
         For Each raw As Raw In files.GetRawDataFiles
-            Dim sourcePath As String = raw.source.GetFullPath(throwEx:=False)
-            Dim name As String = raw.source.FileName
-
-            If name.Contains(vbCr) OrElse name.Contains(vbLf) Then
-                name = name.LineTokens.Last
-
-                If name.Length > 24 Then
-                    name = "..." & name.Substring(name.Length - 21)
-                End If
-            End If
+            Dim rawFileNode = RawFileNodeTemplate(raw, targetRawMenu)
+            Dim name As String = rawFileNode.Text
 
             Call sharedProgressUpdater($"[Raw File Viewer] Loading {name}...")
-
-            Dim rawFileNode As New TreeNode(name) With {
-                .Checked = True,
-                .Tag = raw,
-                .ImageIndex = 2,
-                .SelectedImageIndex = 2,
-                .StateImageIndex = 2,
-                .ContextMenuStrip = targetRawMenu,
-                .ToolTipText = If(sourcePath.StringEmpty, "source file is missing!", sourcePath)
-            }
 
             rawFiles.Nodes.Add(rawFileNode)
             'rawFileNode.addRawFile(raw, True, True)
