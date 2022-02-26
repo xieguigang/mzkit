@@ -22,7 +22,11 @@ Partial Class MSClusterNetworkViewer
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Canvas1
@@ -36,20 +40,38 @@ Partial Class MSClusterNetworkViewer
         Me.Canvas1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Canvas1.Name = "Canvas1"
         Me.Canvas1.ShowLabel = False
-        Me.Canvas1.Size = New System.Drawing.Size(917, 595)
+        Me.Canvas1.Size = New System.Drawing.Size(917, 645)
         Me.Canvas1.TabIndex = 0
         Me.Canvas1.ViewDistance = 0R
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 48)
+        '
+        'PhysicalEngineToolStripMenuItem
+        '
+        Me.PhysicalEngineToolStripMenuItem.Checked = True
+        Me.PhysicalEngineToolStripMenuItem.CheckOnClick = True
+        Me.PhysicalEngineToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.PhysicalEngineToolStripMenuItem.Name = "PhysicalEngineToolStripMenuItem"
+        Me.PhysicalEngineToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.PhysicalEngineToolStripMenuItem.Text = "Physical Engine (On)"
+        '
         'MSClusterNetworkViewer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Canvas1)
         Me.Name = "MSClusterNetworkViewer"
-        Me.Size = New System.Drawing.Size(917, 595)
+        Me.Size = New System.Drawing.Size(917, 645)
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Canvas1 As Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents PhysicalEngineToolStripMenuItem As ToolStripMenuItem
 End Class
