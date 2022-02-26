@@ -77,6 +77,7 @@ Imports BioNovoGene.mzkit_win32.My
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class frmRawFeaturesList
 
@@ -492,11 +493,11 @@ Public Class frmRawFeaturesList
         Else
             Using file As New SaveFileDialog With {.Filter = "Ion Table(*.csv)|*.csv", .FileName = "Ions_scan.csv"}
                 If file.ShowDialog = DialogResult.OK Then
-                    Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                    Using outFile As StreamWriter = file.FileName.OpenWriter()
                         Dim da03 As Tolerance = DAmethod.DeltaMass(0.3)
                         Dim intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.intoCutff
 
-                        Call OutFile.WriteLine($"ID,mz,rt,rt(min),intensity,Ion1,Ion2,Ion3,Ion4,Ion5")
+                        Call outFile.WriteLine($"ID,mz,rt,rt(min),intensity,totalIons,Ion1:into,Ion2:into,Ion3:into,Ion4:into,Ion5:into")
 
                         For Each peak As PeakMs2 In MyApplication.mzkitRawViewer.getSelectedIonSpectrums(Nothing)
                             Dim id As String = If(CInt(peak.rt) = 0, $"M{CInt(peak.mz)}", $"M{CInt(peak.mz)}T{CInt(peak.rt)}")
@@ -504,14 +505,16 @@ Public Class frmRawFeaturesList
                             Dim rt As String = peak.rt.ToString("F2")
                             Dim rtmin As String = (peak.rt / 60).ToString("F1")
                             Dim into As String = peak.intensity
+                            Dim TIC As Double = peak.mzInto.Sum(Function(i) i.intensity)
+                            Dim maxInto As Double = peak.mzInto.OrderByDescending(Function(i) i.intensity).FirstOrDefault?.intensity
                             Dim ions As String() = peak.mzInto _
                                 .Centroid(da03, intocutoff) _
                                 .OrderByDescending(Function(m) m.intensity) _
                                 .Take(5) _
-                                .Select(Function(m) m.mz.ToString("F4")) _
+                                .Select(Function(m) $"{m.mz.ToString("F4")}:{stdNum.Round(100 * m.intensity / maxInto)}") _
                                 .ToArray
 
-                            Call OutFile.WriteLine({id, mz, rt, rtmin, into}.JoinIterates(ions).JoinBy(","))
+                            Call outFile.WriteLine({id, mz, rt, rtmin, into, TIC}.JoinIterates(ions).JoinBy(","))
                         Next
                     End Using
                 End If
@@ -746,7 +749,7 @@ Public Class frmRawFeaturesList
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
         Dim ms2 As Double = Val(ToolStripSpringTextBox1.Text)
-        Dim test As Tolerance = Tolerance.DeltaMass(0.1)
+        Dim test As Tolerance = Tolerance.DeltaMass(0.05)
 
         If CurrentRawFile Is Nothing Then
             Call MyApplication.host.warning("Open a raw data file at first!")
@@ -759,7 +762,23 @@ Public Class frmRawFeaturesList
             .Select(Function(i) i.products.SafeQuery) _
             .IteratesALL _
             .Where(Function(i)
-                       Return i.mz.Any(Function(mzi) test(mzi, ms2))
+                       If i.mz.IsNullOrEmpty Then
+                           Return False
+                       End If
+
+                       Dim mz2 As ms2 = i.GetMs.Select(Function(mzi)
+                                                           If test(mzi.mz, ms2) Then
+                                                               Return mzi
+                                                           Else
+                                                               Return Nothing
+                                                           End If
+                                                       End Function).Where(Function(mzi) Not mzi Is Nothing).OrderByDescending(Function(mzi) mzi.intensity).FirstOrDefault
+
+                       If mz2 Is Nothing OrElse mz2.intensity / i.into.Max < 0.5 Then
+                           Return False
+                       Else
+                           Return True
+                       End If
                    End Function) _
             .ToArray
 
