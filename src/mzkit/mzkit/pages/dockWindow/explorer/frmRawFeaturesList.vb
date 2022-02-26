@@ -612,30 +612,35 @@ Public Class frmRawFeaturesList
             treeView1.loadRawFile(CurrentRawFile, False, rtmin, rtmax)
             checked.Clear()
         Else
-            XICViewToolStripMenuItem.Checked = True
-
-            Dim allMs2 = CurrentRawFile _
+            Call CurrentRawFile _
                 .GetMs2Scans _
                 .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
-                .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
-                .OrderBy(Function(t) Val(t.name)) _
-                .ToArray
-
-            treeView1.Nodes.Clear()
-            checked.Clear()
-
-            For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
-                Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
-
-                For Each ms2 As ScanMS2 In mz1
-                    Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
-                        .Tag = ms2,
-                        .ImageIndex = 1,
-                        .SelectedImageIndex = 1
-                    })
-                Next
-            Next
+                .DoCall(AddressOf LoadXICIons)
         End If
+    End Sub
+
+    Private Sub LoadXICIons(data As IEnumerable(Of ScanMS2))
+        Dim allMs2 = data _
+            .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
+            .OrderBy(Function(t) Val(t.name)) _
+            .ToArray
+
+        treeView1.Nodes.Clear()
+        checked.Clear()
+
+        XICViewToolStripMenuItem.Checked = True
+
+        For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
+            Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
+
+            For Each ms2 As ScanMS2 In mz1
+                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
+                    .Tag = ms2,
+                    .ImageIndex = 1,
+                    .SelectedImageIndex = 1
+                })
+            Next
+        Next
     End Sub
 
     Private Function checkIon(ByRef mz As Double) As Boolean
@@ -740,6 +745,28 @@ Public Class frmRawFeaturesList
         Call Clipboard.Clear()
         Call Clipboard.SetText(outfile.ToString)
         Call MyApplication.host.showStatusMessage("Ions data is copy to clipboard!")
+    End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        Dim ms2 As Double = Val(ToolStripSpringTextBox1.Text)
+        Dim test As Tolerance = Tolerance.DeltaMass(0.1)
+
+        If CurrentRawFile Is Nothing Then
+            Call MyApplication.host.warning("Open a raw data file at first!")
+            Return
+        End If
+
+        Dim matched = CurrentRawFile _
+            .LoadMzpack(Sub(src, cache) frmFileExplorer.getRawCache(src,, cache)).loaded _
+            .MS _
+            .Select(Function(i) i.products.SafeQuery) _
+            .IteratesALL _
+            .Where(Function(i)
+                       Return i.mz.Any(Function(mzi) test(mzi, ms2))
+                   End Function) _
+            .ToArray
+
+        Call LoadXICIons(matched)
     End Sub
 
     Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter

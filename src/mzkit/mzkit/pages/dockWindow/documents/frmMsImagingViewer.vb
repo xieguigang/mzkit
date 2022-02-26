@@ -145,6 +145,7 @@ Public Class frmMsImagingViewer
 
         table.ViewRow = Sub(row)
                             Call renderByMzList({Val(row("mz"))})
+                            Call Me.Activate()
                         End Sub
 
         Call grid.Columns.Add("mz", "mz")

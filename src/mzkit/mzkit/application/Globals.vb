@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -93,25 +94,29 @@ Module Globals
         Call LicenseFile.ApplyLicense()
     End Sub
 
-    Public Function LoadKEGG(println As Action(Of String), mode As Integer) As MSJointConnection
-        Static KEGG As (pos As MSJointConnection, neg As MSJointConnection) = (Nothing, Nothing)
+    Private Function loadBackground() As Background
+        Dim maps As Map() = KEGGRepo.RequestKEGGMaps
+        Dim background = MSJointConnection.ImportsBackground(maps)
 
-        If KEGG.pos Is Nothing OrElse KEGG.neg Is Nothing Then
-            Dim maps As Map() = KEGGRepo.RequestKEGGMaps
-            Dim background = MSJointConnection.ImportsBackground(maps)
-            Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.001)
-            Dim compounds = KEGGRepo.RequestKEGGcompounds(println)
-            Dim pos As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
-            Dim neg As KEGGHandler = KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+        Return background
+    End Function
 
-            KEGG = (New MSJointConnection(pos, background), New MSJointConnection(neg, background))
-        End If
+    Public Function LoadKEGG(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSJointConnection
+        Static background As Background = loadBackground()
+        Static compounds = KEGGHandler.Wraps(KEGGRepo.RequestKEGGCompounds).ToArray
+        Static cache As New Dictionary(Of String, KEGGHandler)
 
-        If mode = 1 Then
-            Return KEGG.pos
-        Else
-            Return KEGG.neg
-        End If
+        Dim key As String = $"[{mzdiff.ToString}]{mode}"
+        Dim handler As KEGGHandler = cache.ComputeIfAbsent(key,
+            lazyValue:=Function()
+                           If mode = 1 Then
+                               Return KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+                           Else
+                               Return KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+                           End If
+                       End Function)
+
+        Return New MSJointConnection(handler, background)
     End Function
 
     Public Sub AddRecentFileHistory(file As String)

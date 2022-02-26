@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::5ee6484d48b345557033171ac60a9ae7, src\mzkit\mzkit\pages\toolkit\PageMzSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzSearch
-    ' 
-    '     Function: GetFormulaSearchProfileName, GetIsotopeGaussianLine, GetIsotopeMS1, GetProfile
-    ' 
-    '     Sub: Button1_Click, Button2_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch
-    '          ExportToolStripMenuItem_Click, GaussianPlotToolStripMenuItem_Click, MS1PlotToolStripMenuItem_Click, MSISearchToolStripMenuItem_Click, PageMzSearch_Load
-    '          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
-    ' 
-    ' /********************************************************************************/
+' Class PageMzSearch
+' 
+'     Function: GetFormulaSearchProfileName, GetIsotopeGaussianLine, GetIsotopeMS1, GetProfile
+' 
+'     Sub: Button1_Click, Button2_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch
+'          ExportToolStripMenuItem_Click, GaussianPlotToolStripMenuItem_Click, MS1PlotToolStripMenuItem_Click, MSISearchToolStripMenuItem_Click, PageMzSearch_Load
+'          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,10 +51,13 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -65,6 +68,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports RibbonLib.Interop
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
@@ -272,6 +276,7 @@ Public Class PageMzSearch
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim vs_win As DocumentWindow = DirectCast(ParentForm, DocumentWindow)
 
+        CheckedListBox1.SetItemChecked(0, True)
         ComboBox1.SelectedIndex = 0
         vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
     End Sub
@@ -430,5 +435,59 @@ Public Class PageMzSearch
         searchPage.Show(MyApplication.host.dockPanel)
         searchPage.page.loadMs2(isotope.GetMS)
         searchPage.page.runSearch(isotope)
+    End Sub
+
+    ''' <summary>
+    ''' do ms1 peak list annotation
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim modes As String() = (From x In CheckedListBox1.CheckedItems Let str = x.ToString Select str).ToArray
+        Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
+        Dim result As New List(Of KEGGQuery)
+        Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
+
+        For Each mode As String In modes
+            Dim modeValue As Integer = Provider.ParseIonMode(mode)
+            Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
+            Dim anno As KEGGQuery() = kegg.SetAnnotation(mzset)
+
+            Call result.AddRange(anno)
+        Next
+
+        Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
+        Dim grid = table.DataGridView1
+        Dim keggMeta = Globals.LoadKEGG(AddressOf MyApplication.LogText, 1, tolerance)
+
+        'table.ViewRow = Sub(row)
+
+        '                End Sub
+
+        Call grid.Columns.Add("mz", "mz")
+        Call grid.Columns.Add("ppm", "ppm")
+        Call grid.Columns.Add("precursorType", "precursorType")
+        Call grid.Columns.Add("kegg_id", "kegg_id")
+        Call grid.Columns.Add("name", "name")
+        Call grid.Columns.Add("formula", "formula")
+        Call grid.Columns.Add("exact_mass", "exact_mass")
+        Call grid.Columns.Add("score", "score")
+
+        For Each ion As KEGGQuery In result
+            Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
+
+            Call grid.Rows.Add(
+                ion.mz.ToString("F4"),
+                ion.ppm.ToString("F1"),
+                ion.precursorType,
+                ion.kegg_id,
+                If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
+                kegg.formula,
+                kegg.exactMass,
+                ion.score.ToString("F2")
+            )
+
+            Call Application.DoEvents()
+        Next
     End Sub
 End Class

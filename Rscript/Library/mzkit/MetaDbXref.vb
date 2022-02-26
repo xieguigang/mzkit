@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
@@ -114,7 +115,7 @@ Module MetaDbXref
         metabolites = pipeline.TryCreatePipeline(Of Compound)(compounds, env, suppress:=True)
 
         If Not metabolites.isError Then
-            Return KEGGHandler.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff)
+            Return KEGGHandler.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff.TryCast(Of Tolerance))
         End If
 
         Return metabolites.getError

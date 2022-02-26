@@ -70,6 +70,7 @@ Public Class KEGGHandler
         Me.engine = New MSSearch(Of KEGGCompound)(tree, tolerance, precursorTypes)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(engine As MSSearch(Of KEGGCompound))
         Me.engine = engine
     End Sub
@@ -86,6 +87,8 @@ Public Class KEGGHandler
     ''' <returns>
     ''' 函数返回符合条件的kegg代谢物编号
     ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function QueryByMz(mz As Double) As IEnumerable(Of KEGGQuery)
         Return engine _
             .QueryByMz(mz) _
@@ -100,11 +103,20 @@ Public Class KEGGHandler
                     End Function)
     End Function
 
-    Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
-        Dim wrappers = compounds.Select(Function(c) New KEGGCompound With {.KEGG = c}).ToArray
-        Dim engine = MSSearch(Of KEGGCompound).CreateIndex(wrappers, types, tolerance)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function Wraps(compounds As IEnumerable(Of Compound)) As IEnumerable(Of KEGGCompound)
+        Return compounds.Select(Function(c) New KEGGCompound With {.KEGG = c})
+    End Function
+
+    Public Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
+        Dim engine = MSSearch(Of KEGGCompound).CreateIndex(compounds, types, tolerance)
         Dim kegg As New KEGGHandler(engine)
 
         Return kegg
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
+        Return CreateIndex(Wraps(compounds), types, tolerance)
     End Function
 End Class
