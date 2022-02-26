@@ -178,6 +178,11 @@ Public Class frmFileExplorer
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
+        If treeView1.Nodes.Count = 0 Then
+            MyApplication.host.OpenFile(fileName, showDocument:=False)
+            Return
+        End If
+
         If fileName.ExtensionSuffix("mzml") AndAlso (RawScanParser.IsMRMData(fileName) OrElse RawScanParser.IsSIMData(fileName)) Then
             Call MyApplication.host.OpenFile(fileName, showDocument:=True)
         ElseIf treeView1.Nodes.Item(0).Nodes.Count = 0 Then
