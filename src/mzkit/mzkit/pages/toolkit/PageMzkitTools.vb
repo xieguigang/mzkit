@@ -594,6 +594,9 @@ Public Class PageMzkitTools
         )
         Dim progressMsg As Action(Of String) = AddressOf progress.ShowProgressTitle
 
+        ' filter empty spectrum
+        raw = (From r As PeakMs2 In raw Where Not r.mzInto.IsNullOrEmpty).ToArray
+
         'Dim run As New List(Of PeakMs2)
         'Dim nodes As New Dictionary(Of String, ScanEntry)
         'Dim idList As New Dictionary(Of String, Integer)
