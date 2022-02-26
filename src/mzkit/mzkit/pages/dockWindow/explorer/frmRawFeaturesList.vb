@@ -762,7 +762,23 @@ Public Class frmRawFeaturesList
             .Select(Function(i) i.products.SafeQuery) _
             .IteratesALL _
             .Where(Function(i)
-                       Return i.mz.Any(Function(mzi) test(mzi, ms2))
+                       If i.mz.IsNullOrEmpty Then
+                           Return False
+                       End If
+
+                       Dim mz2 As ms2 = i.GetMs.Select(Function(mzi)
+                                                           If test(mzi.mz, ms2) Then
+                                                               Return mzi
+                                                           Else
+                                                               Return Nothing
+                                                           End If
+                                                       End Function).Where(Function(mzi) Not mzi Is Nothing).OrderByDescending(Function(mzi) mzi.intensity).First
+
+                       If mz2 Is Nothing OrElse mz2.intensity / i.into.Max < 0.5 Then
+                           Return False
+                       Else
+                           Return True
+                       End If
                    End Function) _
             .ToArray
 
