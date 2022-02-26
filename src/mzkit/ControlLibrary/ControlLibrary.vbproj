@@ -146,12 +146,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MSCluster\MSClusterNetworkViewer.Designer.vb">
-      <DependentUpon>MSClusterNetworkViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MSCluster\MSClusterNetworkViewer.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="MSI\ColorScaleMap.Designer.vb">
       <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </Compile>
@@ -221,9 +215,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MSCluster\MSClusterNetworkViewer.resx">
-      <DependentUpon>MSClusterNetworkViewer.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MSI\ColorScaleMap.resx">
       <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </EmbeddedResource>

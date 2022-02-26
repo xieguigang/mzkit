@@ -23,28 +23,56 @@ Partial Class frmNetworkViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.MsClusterNetworkViewer1 = New ControlLibrary.MSClusterNetworkViewer()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'MsClusterNetworkViewer1
+        'ContextMenuStrip1
         '
-        Me.MsClusterNetworkViewer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MsClusterNetworkViewer1.Location = New System.Drawing.Point(0, 0)
-        Me.MsClusterNetworkViewer1.Name = "MsClusterNetworkViewer1"
-        Me.MsClusterNetworkViewer1.Size = New System.Drawing.Size(888, 520)
-        Me.MsClusterNetworkViewer1.TabIndex = 0
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 26)
+        '
+        'PhysicalEngineToolStripMenuItem
+        '
+        Me.PhysicalEngineToolStripMenuItem.Checked = True
+        Me.PhysicalEngineToolStripMenuItem.CheckOnClick = True
+        Me.PhysicalEngineToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.PhysicalEngineToolStripMenuItem.Name = "PhysicalEngineToolStripMenuItem"
+        Me.PhysicalEngineToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.PhysicalEngineToolStripMenuItem.Text = "Physical Engine (On)"
+        '
+        'Canvas1
+        '
+        Me.Canvas1.AutoRotate = True
+        Me.Canvas1.BackColor = System.Drawing.Color.SkyBlue
+        Me.Canvas1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Canvas1.DynamicsRadius = False
+        Me.Canvas1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Canvas1.Location = New System.Drawing.Point(0, 0)
+        Me.Canvas1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Canvas1.Name = "Canvas1"
+        Me.Canvas1.ShowLabel = False
+        Me.Canvas1.Size = New System.Drawing.Size(888, 520)
+        Me.Canvas1.TabIndex = 1
+        Me.Canvas1.ViewDistance = 0R
         '
         'frmNetworkViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(888, 520)
-        Me.Controls.Add(Me.MsClusterNetworkViewer1)
+        Me.Controls.Add(Me.Canvas1)
         Me.DoubleBuffered = True
         Me.Name = "frmNetworkViewer"
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents MsClusterNetworkViewer1 As ControlLibrary.MSClusterNetworkViewer
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents PhysicalEngineToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Canvas1 As Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas
 End Class

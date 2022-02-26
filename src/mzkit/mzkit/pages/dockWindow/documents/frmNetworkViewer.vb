@@ -13,7 +13,19 @@ Public Class frmNetworkViewer
             layout = ForceDirectedArgs.DefaultNew
         End If
 
-        MsClusterNetworkViewer1.LoadModel(g)
-        MsClusterNetworkViewer1.SetLayoutArguments(layout)
+        Canvas1.Graph() = g
+        Canvas1.SetFDGParams(layout)
+    End Sub
+
+    Private Sub PhysicalEngineToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PhysicalEngineToolStripMenuItem.Click
+        If PhysicalEngineToolStripMenuItem.Checked Then
+            ' turn on engine
+            PhysicalEngineToolStripMenuItem.Text = "Physical Engine (On)"
+        Else
+            ' turn off engine
+            PhysicalEngineToolStripMenuItem.Text = "Physical Engine (Off)"
+        End If
+
+        Canvas1.SetPhysical(PhysicalEngineToolStripMenuItem.Checked)
     End Sub
 End Class
