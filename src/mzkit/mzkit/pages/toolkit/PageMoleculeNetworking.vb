@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.ForceDirected
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -121,7 +122,7 @@ Public Class PageMoleculeNetworking
             l.data.style = New Pen(Color.LightGray, linkWidth(l))
         Next
 
-        Call viewer.SetGraph(graph)
+        Call viewer.SetGraph(graph, layout:=Globals.Settings.network.layout)
         Call viewer.Show(MyApplication.host.dockPanel)
     End Sub
 
