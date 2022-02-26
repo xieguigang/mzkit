@@ -288,6 +288,9 @@ UseCheckedList:
 
         If mz3.Length = 0 Then
             Call MyApplication.host.showStatusMessage("no ions data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        ElseIf Parameters Is Nothing Then
+            Call MyApplication.host.warning("MS-imaging data is not loaded yet!")
+            Return
         End If
 
         Dim r As Double = mz3.ElementAtOrDefault(0, [default]:=-1)

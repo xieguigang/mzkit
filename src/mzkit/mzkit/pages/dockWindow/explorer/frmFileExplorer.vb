@@ -124,6 +124,10 @@ Public Class frmFileExplorer
     End Function
 
     Public Iterator Function GetSelectedRaws() As IEnumerable(Of Raw)
+        If treeView1.Nodes.Count = 0 Then
+            Return
+        End If
+
         Dim rawList = treeView1.Nodes.Item(Scan0)
 
         For i As Integer = 0 To rawList.Nodes.Count - 1
@@ -368,6 +372,10 @@ Public Class frmFileExplorer
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
         Dim fileList As New List(Of TreeNode)
 
+        If treeView1.Nodes.Count = 0 Then
+            Return
+        End If
+
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
             If node.Checked Then
                 fileList.Add(node)
@@ -410,6 +418,10 @@ Public Class frmFileExplorer
     End Function
 
     Public Function findRawFileNode(raw As Raw) As TreeNode
+        If treeView1.Nodes.Count = 0 Then
+            Return Nothing
+        End If
+
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
             If node.Tag Is raw Then
                 Return node
@@ -561,6 +573,11 @@ Public Class frmFileExplorer
             Sub()
                 Call Thread.Sleep(500)
 
+                If treeView1.Nodes.Count = 0 Then
+                    Call spinner.CloseWindow()
+                    Return
+                End If
+
                 For Each node As TreeNode In treeView1.Nodes(0).Nodes
                     Dim raw As Raw = node.Tag
                     Dim load As mzPack = raw.LoadMzpack(Sub(title, msg) MyApplication.host.showStatusMessage($"{title}: {msg}")).loaded
@@ -581,7 +598,7 @@ Public Class frmFileExplorer
                         End Sub)
                 Next
 
-                Call spinner.Invoke(Sub() spinner.Close())
+                Call spinner.CloseWindow()
             End Sub).Start()
 
         Call spinner.ShowDialog()

@@ -131,20 +131,22 @@ Module Globals
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView, progress As Action(Of String))
         Dim files As New List(Of Task.Raw)
-        Dim rawFileNodes = explorer.Nodes(Scan0)
-
-        For Each node As TreeNode In rawFileNodes.Nodes
-            files.Add(node.Tag)
-            progress(files.Last.source)
-            Application.DoEvents()
-        Next
-
         Dim scripts As New List(Of String)
 
-        If explorer.Nodes.Count > 1 Then
-            For Each node As TreeNode In explorer.Nodes(1).Nodes
-                scripts.Add(DirectCast(node.Tag, String).GetFullPath)
+        If explorer.Nodes.Count > 0 Then
+            Dim rawFileNodes = explorer.Nodes(Scan0)
+
+            For Each node As TreeNode In rawFileNodes.Nodes
+                files.Add(node.Tag)
+                progress(files.Last.source)
+                Application.DoEvents()
             Next
+
+            If explorer.Nodes.Count > 1 Then
+                For Each node As TreeNode In explorer.Nodes(1).Nodes
+                    scripts.Add(DirectCast(node.Tag, String).GetFullPath)
+                Next
+            End If
         End If
 
         Dim opened As New List(Of String)

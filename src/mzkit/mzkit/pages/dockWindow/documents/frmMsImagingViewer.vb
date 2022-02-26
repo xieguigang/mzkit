@@ -543,6 +543,12 @@ Public Class frmMsImagingViewer
     Friend Sub renderRGB(r As Double, g As Double, b As Double)
         Dim selectedMz As Double() = {r, g, b}.Where(Function(mz) mz > 0).ToArray
         Dim progress As New frmProgressSpinner
+
+        If params Is Nothing Then
+            Call MyApplication.host.warning("No MS-imaging data is loaded yet!")
+            Return
+        End If
+
         Dim size As String = $"{params.pixel_width},{params.pixel_height}"
 
         If selectedMz.Count = 1 Then
