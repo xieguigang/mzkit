@@ -32,7 +32,10 @@ Public Class frmNetworkViewer
     End Sub
 
     Private Sub ConfigLayoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigLayoutToolStripMenuItem.Click
+        Call InputDialog.Input(Of InputNetworkLayout)(
+            Sub(config)
 
+            End Sub)
     End Sub
 
     Private Sub ShowLabelsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLabelsToolStripMenuItem.Click

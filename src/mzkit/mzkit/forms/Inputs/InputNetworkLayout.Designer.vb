@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class InputNetworkLayout
-    Inherits System.Windows.Forms.Form
+    Inherits InputDialog
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -62,9 +62,7 @@ Partial Class InputNetworkLayout
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "InputNetworkLayout"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Config Network Layout"
         Me.ResumeLayout(False)
 
