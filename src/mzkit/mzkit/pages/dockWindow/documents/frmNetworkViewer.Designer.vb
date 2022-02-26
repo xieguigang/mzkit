@@ -41,7 +41,7 @@ Partial Class frmNetworkViewer
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowLabelsToolStripMenuItem, Me.PhysicalEngineToolStripMenuItem, Me.ConfigLayoutToolStripMenuItem, Me.ToolStripMenuItem1, Me.SnapshotToolStripMenuItem, Me.CopyNetworkVisualizeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(199, 170)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(199, 148)
         '
         'PinToolStripMenuItem
         '
@@ -99,7 +99,7 @@ Partial Class frmNetworkViewer
         'Canvas1
         '
         Me.Canvas1.AutoRotate = True
-        Me.Canvas1.BackColor = System.Drawing.Color.SkyBlue
+        Me.Canvas1.BackColor = System.Drawing.Color.FromArgb(CType(CType(223, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Canvas1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Canvas1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Canvas1.DynamicsRadius = False

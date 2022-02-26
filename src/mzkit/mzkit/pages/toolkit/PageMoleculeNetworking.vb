@@ -118,8 +118,10 @@ Public Class PageMoleculeNetworking
             v.data.size = New Double() {nodeRadius(v)}
         Next
 
+        Dim linkColor As Color = Color.FromArgb(161, 168, 172)
+
         For Each l In graph.graphEdges
-            l.data.style = New Pen(Color.LightGray, linkWidth(l))
+            l.data.style = New Pen(linkColor, linkWidth(l))
         Next
 
         Call viewer.SetGraph(graph, layout:=Globals.Settings.network.layout)
