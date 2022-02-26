@@ -23,20 +23,23 @@ Partial Class frmNetworkViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNetworkViewer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.PhysicalEngineToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
-        Me.ConfigLayoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ConfigLayoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Canvas1 = New Microsoft.VisualBasic.Data.visualize.Network.Canvas.Canvas()
+        Me.CopyNetworkVisualizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem, Me.ShowLabelsToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfigLayoutToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PhysicalEngineToolStripMenuItem, Me.ShowLabelsToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfigLayoutToolStripMenuItem, Me.SnapshotToolStripMenuItem, Me.CopyNetworkVisualizeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(184, 98)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(199, 142)
         '
         'PhysicalEngineToolStripMenuItem
         '
@@ -44,8 +47,33 @@ Partial Class frmNetworkViewer
         Me.PhysicalEngineToolStripMenuItem.CheckOnClick = True
         Me.PhysicalEngineToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.PhysicalEngineToolStripMenuItem.Name = "PhysicalEngineToolStripMenuItem"
-        Me.PhysicalEngineToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.PhysicalEngineToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
         Me.PhysicalEngineToolStripMenuItem.Text = "Physical Engine (On)"
+        '
+        'ShowLabelsToolStripMenuItem
+        '
+        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
+        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
+        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(195, 6)
+        '
+        'ConfigLayoutToolStripMenuItem
+        '
+        Me.ConfigLayoutToolStripMenuItem.Name = "ConfigLayoutToolStripMenuItem"
+        Me.ConfigLayoutToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.ConfigLayoutToolStripMenuItem.Text = "Config Layout"
+        '
+        'SnapshotToolStripMenuItem
+        '
+        Me.SnapshotToolStripMenuItem.Image = CType(resources.GetObject("SnapshotToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SnapshotToolStripMenuItem.Name = "SnapshotToolStripMenuItem"
+        Me.SnapshotToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.SnapshotToolStripMenuItem.Text = "Snapshot"
         '
         'Canvas1
         '
@@ -63,23 +91,11 @@ Partial Class frmNetworkViewer
         Me.Canvas1.TabIndex = 1
         Me.Canvas1.ViewDistance = 0R
         '
-        'ConfigLayoutToolStripMenuItem
+        'CopyNetworkVisualizeToolStripMenuItem
         '
-        Me.ConfigLayoutToolStripMenuItem.Name = "ConfigLayoutToolStripMenuItem"
-        Me.ConfigLayoutToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.ConfigLayoutToolStripMenuItem.Text = "Config Layout"
-        '
-        'ShowLabelsToolStripMenuItem
-        '
-        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
-        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
-        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 6)
+        Me.CopyNetworkVisualizeToolStripMenuItem.Name = "CopyNetworkVisualizeToolStripMenuItem"
+        Me.CopyNetworkVisualizeToolStripMenuItem.Size = New System.Drawing.Size(198, 22)
+        Me.CopyNetworkVisualizeToolStripMenuItem.Text = "Copy Network Visualize"
         '
         'frmNetworkViewer
         '
@@ -100,4 +116,6 @@ Partial Class frmNetworkViewer
     Friend WithEvents ConfigLayoutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ShowLabelsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents SnapshotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CopyNetworkVisualizeToolStripMenuItem As ToolStripMenuItem
 End Class

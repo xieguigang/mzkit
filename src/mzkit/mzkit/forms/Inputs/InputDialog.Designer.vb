@@ -31,6 +31,8 @@ Partial Class InputDialog
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(458, 457)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "InputDialog"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Form1"
