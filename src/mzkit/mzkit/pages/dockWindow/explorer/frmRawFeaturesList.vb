@@ -772,7 +772,7 @@ Public Class frmRawFeaturesList
                                                            Else
                                                                Return Nothing
                                                            End If
-                                                       End Function).Where(Function(mzi) Not mzi Is Nothing).OrderByDescending(Function(mzi) mzi.intensity).First
+                                                       End Function).Where(Function(mzi) Not mzi Is Nothing).OrderByDescending(Function(mzi) mzi.intensity).FirstOrDefault
 
                        If mz2 Is Nothing OrElse mz2.intensity / i.into.Max < 0.5 Then
                            Return False
