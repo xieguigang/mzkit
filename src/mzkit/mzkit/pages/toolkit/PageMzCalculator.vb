@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::00364a142ad301879c51b4c302ceacb4, src\mzkit\mzkit\pages\toolkit\PageMzCalculator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzCalculator
-    ' 
-    '     Sub: Button1_Click, Button2_Click, DataGridView1_CellClick, DataGridView1_CellContentClick, DataGridView2_CellClick
-    '          DataGridView2_CellContentClick, ExportToolStripMenuItem_Click, PageMzCalculator_VisibleChanged, RunFeatureSearch, ToggleSlider1_CheckChanged
-    '          ToggleSlider1_Load, Update
-    ' 
-    ' /********************************************************************************/
+' Class PageMzCalculator
+' 
+'     Sub: Button1_Click, Button2_Click, DataGridView1_CellClick, DataGridView1_CellContentClick, DataGridView2_CellClick
+'          DataGridView2_CellContentClick, ExportToolStripMenuItem_Click, PageMzCalculator_VisibleChanged, RunFeatureSearch, ToggleSlider1_CheckChanged
+'          ToggleSlider1_Load, Update
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,17 +67,40 @@ Public Class PageMzCalculator
         Call Update(exact_mass, Provider.GetCalculator("-").Values, DataGridView2)
     End Sub
 
+    ''' <summary>
+    ''' update m/z evaluate
+    ''' </summary>
+    ''' <param name="exact_mass"></param>
+    ''' <param name="mode"></param>
+    ''' <param name="show"></param>
     Overloads Sub Update(exact_mass As Double, mode As IEnumerable(Of MzCalculator), show As DataGridView)
-        Dim mzText As String
-
         Call show.Rows.Clear()
 
-        For Each type As MzCalculator In mode
-            mzText = type.CalcMZ(exact_mass)
-            mzText = If(Val(mzText) < 0, "n/a", mzText)
+        If ToggleSlider1.Checked Then
+            ' 通过输入的mz计算出不同的exact mass
+            Dim MassText As String
 
-            Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText, "Search"， "Query")
-        Next
+            show.Columns.Item(4).HeaderText = "Exact Mass"
+
+            For Each type As MzCalculator In mode
+                MassText = type.CalcMass(exact_mass)
+                MassText = If(Val(MassText) < 0, "n/a", MassText)
+
+                Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, MassText, "Query")
+            Next
+        Else
+            ' 通过输入的exact mass计算出不同的m/z
+            Dim mzText As String
+
+            show.Columns.Item(4).HeaderText = "Precursor m/z"
+
+            For Each type As MzCalculator In mode
+                mzText = type.CalcMZ(exact_mass)
+                mzText = If(Val(mzText) < 0, "n/a", mzText)
+
+                Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText, "Search", "Query")
+            Next
+        End If
     End Sub
 
     Public Sub ExportToolStripMenuItem_Click()
@@ -167,21 +190,25 @@ Public Class PageMzCalculator
 
     Private Sub ToggleSlider1_CheckChanged(sender As Object, e As EventArgs) Handles ToggleSlider1.CheckChanged
         If ToggleSlider1.Checked Then
+            ' 通过输入的mz计算出不同的exact mass
             ToggleSlider1.Text = "Toggle Exact Mass Search"
             Button2.Visible = False
             Button1.Text = "Exact Mass"
             Label1.Text = "Enter a m/z value:"
 
-            DataGridView1.Columns(6).Visible = True
-            DataGridView2.Columns(6).Visible = True
+            DataGridView1.Columns(6).Visible = False
+            DataGridView2.Columns(6).Visible = False
         Else
+            ' 通过输入的exact mass计算出不同的m/z
             ToggleSlider1.Text = "Toggle M/z Search"
             Button2.Visible = True
             Button1.Text = "Evaluate M/z"
             Label1.Text = "Enter an exact mass value:"
 
-            DataGridView1.Columns(6).Visible = False
-            DataGridView2.Columns(6).Visible = False
+            DataGridView1.Columns(6).Visible = True
+            DataGridView2.Columns(6).Visible = True
         End If
+
+        Call Button1_Click(Nothing, Nothing)
     End Sub
 End Class
