@@ -110,7 +110,7 @@ Public Class PageMoleculeNetworking
         Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, nodeRadiusRange)
         Dim linkWidth As Func(Of Graph.Edge, Single) = Function(l) similarityRange.ScaleMapping(l.weight, linkWidthRange)
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
-        Dim colorSet As SolidBrush() = Designer.GetColors("Paper", nodeClusters.Count, alpha:=200).Select(Function(a) New SolidBrush(a)).ToArray
+        Dim colorSet As SolidBrush() = Designer.GetColors("Paper", nodeClusters.Count, alpha:=120).Select(Function(a) New SolidBrush(a)).ToArray
         Dim cancel As Value(Of Boolean) = False
 
         For Each v In graph.vertex

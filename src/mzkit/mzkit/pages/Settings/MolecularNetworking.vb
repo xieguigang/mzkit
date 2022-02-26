@@ -52,7 +52,7 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
         If Globals.Settings.network Is Nothing Then
             Globals.Settings.network = New NetworkArguments With {
                 .layout = New ForceDirectedArgs With {.Damping = 0.4, .Iterations = 100, .Repulsion = 10000, .Stiffness = 41.76},
-                .linkWidth = New ElementRange With {.min = 1, .max = 10},
+                .linkWidth = New ElementRange With {.min = 1, .max = 5},
                 .nodeRadius = New ElementRange With {.min = 8, .max = 40}
             }
         End If
@@ -60,7 +60,7 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
             Globals.Settings.network.nodeRadius = New ElementRange With {.min = 8, .max = 40}
         End If
         If Globals.Settings.network.linkWidth Is Nothing Then
-            Globals.Settings.network.linkWidth = New ElementRange With {.min = 1, .max = 10}
+            Globals.Settings.network.linkWidth = New ElementRange With {.min = 1, .max = 5}
         End If
         If Globals.Settings.network.layout Is Nothing Then
             Globals.Settings.network.layout = New ForceDirectedArgs With {.Damping = 0.4, .Iterations = 100, .Repulsion = 10000, .Stiffness = 41.76}
