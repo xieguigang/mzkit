@@ -19,8 +19,9 @@ MScluster = function(peak_ms2,
 
   cos = function(query, ref) {
 	entropy = MSDiffEntropy(
-        query = toMzInto(query),
-        ref   = toMzInto(ref)
+        query  = toMzInto(query),
+        ref    = toMzInto(ref),
+		mzdiff = tolerance
     );
     query2  = globalAlign(query, ref, tolerance);
     forward = MScos(query2, ref);
