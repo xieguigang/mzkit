@@ -85,6 +85,7 @@ Public Class ColorScaleMap
 
     Private Sub refreshSlideBar()
         Call Me.Refresh()
+        Call colorMapDisplay.Refresh()
     End Sub
 
     Private Sub ColorScaleMap_Load(sender As Object, e As EventArgs) Handles Me.Load
