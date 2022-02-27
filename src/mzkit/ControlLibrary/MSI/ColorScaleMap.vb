@@ -84,17 +84,7 @@ Public Class ColorScaleMap
     End Sub
 
     Private Sub refreshSlideBar()
-        Dim width As Integer = Me.Width
-        Dim dw As Integer = width / _maplevels
-        Dim h As Integer = Height - SlideBar.Height
-        Dim g As Graphics = colorMapDisplay.CreateGraphics
-        Dim x As Integer
-
-        For Each col As SolidBrush In _colorMap
-            g.FillRectangle(col, New Rectangle(x, 0, dw, h))
-        Next
-
-        Call g.Flush()
+        Call Me.Refresh()
     End Sub
 
     Private Sub ColorScaleMap_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -103,5 +93,17 @@ Public Class ColorScaleMap
 
     Private Sub refreshTrigger_Tick(sender As Object, e As EventArgs) Handles refreshTrigger.Tick
         Call SlideBar.Invalidate()
+    End Sub
+
+    Private Sub colorMapDisplay_Paint(sender As Object, e As PaintEventArgs) Handles colorMapDisplay.Paint
+        Dim width As Integer = Me.Width
+        Dim dw As Integer = width / _maplevels
+        Dim h As Integer = Height - SlideBar.Height
+        Dim g As Graphics = e.Graphics
+        Dim x As Integer
+
+        For Each col As SolidBrush In _colorMap
+            g.FillRectangle(col, New Rectangle(x, 0, dw, h))
+        Next
     End Sub
 End Class
