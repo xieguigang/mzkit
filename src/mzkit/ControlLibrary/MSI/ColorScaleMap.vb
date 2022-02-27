@@ -1,8 +1,38 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports stdNum = System.Math
 
 Public Class ColorScaleMap
 
-    Public Property range As Double() = {0, 1}
+    Public Property range As Double()
+        Get
+            Return _range
+        End Get
+        Set(value As Double())
+            _range = value
+            Call refreshSlideBar()
+        End Set
+    End Property
+
+    Public Property mapLevels As Integer
+        Get
+            Return _maplevels
+        End Get
+        Set(value As Integer)
+            _maplevels = value
+            Call refreshSlideBar()
+        End Set
+    End Property
+
+    Public Property colorMap As String
+        Get
+            Return _mapName
+        End Get
+        Set(value As String)
+            _mapName = value
+            _colorMap = Designer.GetColors(value, _maplevels).Select(Function(c) New SolidBrush(c)).ToArray
+            Call refreshSlideBar()
+        End Set
+    End Property
 
     Dim WithEvents refreshTrigger As New Timer()
     Dim drag As Boolean = False
@@ -10,6 +40,11 @@ Public Class ColorScaleMap
     Dim max As Integer
     Dim isMin As Boolean
     Dim isMax As Boolean
+
+    Dim _maplevels As Integer
+    Dim _range As Double() = {0, 1}
+    Dim _colorMap As SolidBrush()
+    Dim _mapName As String
 
     Private Sub SlideBar_MouseMove(sender As Object, e As MouseEventArgs) Handles SlideBar.MouseMove
         If drag Then
@@ -45,7 +80,17 @@ Public Class ColorScaleMap
     End Sub
 
     Private Sub refreshSlideBar()
+        Dim width As Integer = Me.Width
+        Dim dw As Integer = width / _maplevels
+        Dim h As Integer = Height - SlideBar.Height
+        Dim g As Graphics = colorMapDisplay.CreateGraphics
+        Dim x As Integer
 
+        For Each col As SolidBrush In _colorMap
+            g.FillRectangle(col, New Rectangle(x, 0, dw, h))
+        Next
+
+        Call g.Flush()
     End Sub
 
     Private Sub ColorScaleMap_Load(sender As Object, e As EventArgs) Handles Me.Load
