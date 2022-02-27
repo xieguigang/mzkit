@@ -4,7 +4,7 @@
 \alias{tolerance}
 \title{\code{m/z} tolerance helper}
 \usage{
-tolerance(threshold = 0.3, method = c("da", "ppm"))
+tolerance(threshold = 0.3, method = c("da", "ppm"), legacy = TRUE)
 }
 \arguments{
 \item{threshold}{the tolerance threshold value.}
