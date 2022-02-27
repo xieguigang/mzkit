@@ -26,6 +26,7 @@ Partial Class MSIPixelPropertyWindow
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
+        Me.ColorScaleMap1 = New ControlLibrary.ColorScaleMap()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -47,8 +48,9 @@ Partial Class MSIPixelPropertyWindow
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.PropertyGrid1)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.ColorScaleMap1)
         Me.SplitContainer1.Size = New System.Drawing.Size(329, 664)
-        Me.SplitContainer1.SplitterDistance = 175
+        Me.SplitContainer1.SplitterDistance = 196
         Me.SplitContainer1.TabIndex = 0
         '
         'PictureBox1
@@ -56,7 +58,7 @@ Partial Class MSIPixelPropertyWindow
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(329, 175)
+        Me.PictureBox1.Size = New System.Drawing.Size(329, 196)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
@@ -64,14 +66,25 @@ Partial Class MSIPixelPropertyWindow
         'PropertyGrid1
         '
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
+        Me.PropertyGrid1.Location = New System.Drawing.Point(0, 86)
         Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(329, 485)
+        Me.PropertyGrid1.Size = New System.Drawing.Size(329, 378)
         Me.PropertyGrid1.TabIndex = 0
+        '
+        'ColorScaleMap1
+        '
+        Me.ColorScaleMap1.colorMap = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette.Jet
+        Me.ColorScaleMap1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ColorScaleMap1.Location = New System.Drawing.Point(0, 0)
+        Me.ColorScaleMap1.mapLevels = 30
+        Me.ColorScaleMap1.Name = "ColorScaleMap1"
+        Me.ColorScaleMap1.range = New Double() {0R, 1.0R}
+        Me.ColorScaleMap1.Size = New System.Drawing.Size(329, 86)
+        Me.ColorScaleMap1.TabIndex = 1
         '
         'MSIPixelPropertyWindow
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(329, 664)
         Me.Controls.Add(Me.SplitContainer1)
@@ -89,4 +102,5 @@ Partial Class MSIPixelPropertyWindow
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents PropertyGrid1 As PropertyGrid
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ColorScaleMap1 As ControlLibrary.ColorScaleMap
 End Class

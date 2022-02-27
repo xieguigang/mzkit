@@ -23,13 +23,17 @@ Public Class ColorScaleMap
         End Set
     End Property
 
-    Public Property colorMap As String
+    Public Property colorMap As ScalerPalette
         Get
             Return _mapName
         End Get
-        Set(value As String)
-            _mapName = value
-            _colorMap = Designer.GetColors(value, _maplevels).Select(Function(c) New SolidBrush(c)).ToArray
+        Set
+            _mapName = Value
+            _colorMap = Designer _
+                .GetColors(Value.Description, _maplevels) _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+
             Call refreshSlideBar()
         End Set
     End Property
@@ -44,7 +48,7 @@ Public Class ColorScaleMap
     Dim _maplevels As Integer
     Dim _range As Double() = {0, 1}
     Dim _colorMap As SolidBrush()
-    Dim _mapName As String
+    Dim _mapName As ScalerPalette
 
     Private Sub SlideBar_MouseMove(sender As Object, e As MouseEventArgs) Handles SlideBar.MouseMove
         If drag Then
