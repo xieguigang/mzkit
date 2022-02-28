@@ -158,6 +158,12 @@ Namespace My
             Return list.ToArray
         End Function
 
+        ''' <summary>
+        ''' view any R# object 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="env"></param>
+        ''' <returns></returns>
         <ExportAPI("view")>
         Public Shared Function View(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Message
             If x Is Nothing Then
