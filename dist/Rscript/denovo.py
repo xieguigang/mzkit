@@ -41,7 +41,7 @@ def search_product(filepath, mz):
     scan      = sapply(products, ms2 -> [ms2]::scan)
     nsize     = sapply(products, ms2 -> [ms2]::fragments)
     
-    topIons   = lapply(product, ms2 -> topIons([ms2]::mzInto))
+    topIons   = lapply(products, ms2 -> topIons([ms2]::mzInto))
     basePeak  = sapply(topIons, ms2 -> basePeak_toString(ms2[1]))
     top2      = sapply(topIons, ms2 -> mz2_toString(ms2, 2))
     top3      = sapply(topIons, ms2 -> mz2_toString(ms2, 3))
