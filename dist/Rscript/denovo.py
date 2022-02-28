@@ -23,10 +23,11 @@ if !all(["name", "mz"] in colnames(targets)):
 else
     print("input check success")
 
-def search_product(filepath):
+def search_product(filepath, mz):
     
     mzpack    = open.mzpack(filepath)
     products  = ms2_peaks(mzpack)
+    
     i         = lapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
     products  = products[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
@@ -46,26 +47,37 @@ def search_product(filepath):
 
     return mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5
 
-def mz2_toString(mz2):
-
-
-def basePeak_toString(mz2):
-    return `${toString([mz2]::mz, format = "F4")}:${toString([mz2]::intensity, format = "G3")}`    
-
-def topIons(ms2, i):
+def mz2_toString(ms2, i):
     into = sapply(ms2, x -> [x]::intensity)
     into = round(into / max(into) * 100, 2)
     mz2  = ms2[i]
     
     return `${toString([mz2]::mz, format = "F4")}:${into[i]}`
+
+def basePeak_toString(mz2):
+    return `${toString([mz2]::mz, format = "F4")}:${toString([mz2]::intensity, format = "G3")}`    
+
+def topIons(ms2):
+    into = sapply(ms2, x -> [x]::intensity)
+    i    = order(into, decreasing = True)
+    
+    return ms2[i]
     
 for filepath in files:
     
     print(`processing data [${filepath}]...`)
-    
-    peaks = data.frame(search_product(filepath))
-    peaks[, "samplefile"] = basename(filepath)
-    hits = rbind(hits, peaks)
+       
+    for(mz2 in as.list(targets, byrow = True)):
+        
+        str(mz2)        
+           
+        # name, mz    
+        peaks                  = search_product(filepath, mz2[["mz"]])
+        peaks                  = data.frame(peaks)
+        peaks[, "samplefile"]  = basename(filepath)
+        peaks[, "target_name"] = mz2[["name"]]
+        peaks[, "target_mz"]   = mz2[["mz"]]
+        hits = rbind(hits, peaks)
        
 print(" ~~job done!")
 print(`save result file at location: '${savefile}'!`)
