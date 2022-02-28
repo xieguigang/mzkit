@@ -25,18 +25,43 @@ else
 
 def search_product(filepath):
     
-    mzpack   = open.mzpack(filepath)
-    products = ms2_peaks(mzpack)
-    i        = lapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
-    products = products[i]
+    mzpack    = open.mzpack(filepath)
+    products  = ms2_peaks(mzpack)
+    i         = lapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
+    products  = products[i]
+    mz        = sapply(products, ms2 -> [ms2]::mz)
+    rt        = sapply(products, ms2 -> [ms2]::rt)
+    rt_min    = round(rt / 60, 2)
+    intensity = sapply(products, ms2 -> [ms2]::intensity)
+    totalIons = sapply(products, ms2 -> [ms2]::Ms2Intensity)
+    scan      = sapply(products, ms2 -> [ms2]::scan)
+    nsize     = sapply(products, ms2 -> [ms2]::fragments)
+    
+    topIons   = lapply(product, ms2 -> topIons([ms2]::mzInto))
+    basePeak  = sapply(topIons, ms2 -> basePeak_toString(ms2[1]))
+    top2
+    top3
+    top4
+    top5
+
+    return mz, rt, rt_min, intensity, scan, basePeak, top2, top3, top4, top5
+
+def basePeak_toString(mz2):
+    
+
+def topIons(ms2):
+    
+    
 
 for filepath in files:
     
-    print(`processing [${filepath}]...`)
+    print(`processing data [${filepath}]...`)
     
-    peaks = search_product(filepath)
+    peaks = data.frame(search_product(filepath))
     peaks[, "samplefile"] = basename(filepath)
     hits = rbind(hits, peaks)
-    
-    
+       
+print(" ~~job done!")
+print(`save result file at location: '${savefile}'!`)
 
+write.csv(hits, file = savefile, row.names = True)
