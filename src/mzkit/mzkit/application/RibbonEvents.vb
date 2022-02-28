@@ -157,7 +157,7 @@ Module RibbonEvents
         AddHandler ribbonItems.ButtonDevTools.ExecuteEvent, Sub() Call openCmd()
     End Sub
 
-    Private Sub openCmd()
+    Friend Sub openCmd()
         Static WorkingDirectory As String = App.HOME
 
         Dim exePath As String = Environment.SystemDirectory & "\cmd.exe"

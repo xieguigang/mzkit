@@ -63,4 +63,9 @@ Module CLI
 
         Return 0
     End Function
+
+    Public Function openDevTools() As Integer
+        Call RibbonEvents.openCmd()
+        Return 0
+    End Function
 End Module
