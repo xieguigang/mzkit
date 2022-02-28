@@ -171,6 +171,7 @@ Module RibbonEvents
         ' let cmd.exe remain running using /k
         StartInfo.Arguments = $"/k CALL {getWelcomeScript.GetFullPath.CLIPath}"
         StartInfo.EnvironmentVariables("pkg_attach") = pkg_attach
+        StartInfo.EnvironmentVariables("R_LIBS_USER") = MyApplication.R_LIBS_USER.GetDirectoryFullPath
 
         cmdSession.StartInfo = StartInfo
 

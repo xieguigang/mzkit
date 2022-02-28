@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Windows.Forms
 Imports RDev
+Imports SMRUCC.Rsharp.Development.Configuration
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -223,6 +224,8 @@ Namespace My
             End If
         End Sub
 
+        Friend Shared ReadOnly R_LIBS_USER As String = $"{App.ProductProgramData}/.settings/R#.configs.xml"
+
         Public Shared Sub InitializeREngine()
             Dim Rcore = GetType(RInterpreter).Assembly.FromAssembly
             Dim framework = GetType(App).Assembly.FromAssembly
@@ -241,8 +244,7 @@ Welcome to the R# language
 Type 'q()' to quit R.
 ")
 
-            _REngine = New RInterpreter
-
+            _REngine = RInterpreter.FromEnvironmentConfiguration(configs:=R_LIBS_USER)
             _REngine.strict = False
 
             _REngine.LoadLibrary("base")
