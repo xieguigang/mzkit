@@ -28,7 +28,7 @@ def search_product(filepath, mz):
     mzpack    = open.mzpack(filepath)
     products  = ms2_peaks(mzpack)
     
-    i         = lapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
+    i         = sapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
     products  = products[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
     rt        = sapply(products, ms2 -> [ms2]::rt)
