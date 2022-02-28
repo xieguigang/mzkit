@@ -58,15 +58,16 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Windows.Forms
 Imports RDev
-Imports SMRUCC.Rsharp.Development.Configuration
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -246,6 +247,13 @@ Type 'q()' to quit R.
 
             _REngine = RInterpreter.FromEnvironmentConfiguration(configs:=R_LIBS_USER)
             _REngine.strict = False
+
+            If REngine.globalEnvir.packages.AsEnumerable.Count = 0 Then
+                ' no packages ...
+                ' init R# engine environment
+                Call PipelineProcess.CreatePipeline($"{App.HOME}/R#.exe", $"--reset --R_LIBS_USER {R_LIBS_USER.CLIPath}").WaitForExit()
+                Call PipelineProcess.CreatePipeline($"{App.HOME}/R#.exe", $"--setup --R_LIBS_USER {R_LIBS_USER.CLIPath}").WaitForExit()
+            End If
 
             _REngine.LoadLibrary("base")
             _REngine.LoadLibrary("utils")
