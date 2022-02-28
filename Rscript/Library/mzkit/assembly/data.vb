@@ -314,6 +314,12 @@ Module data
             .DoCall(AddressOf vector.asVector)
     End Function
 
+    ''' <summary>
+    ''' makes xcms_id format liked ROI unique id
+    ''' </summary>
+    ''' <param name="ROIlist"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("make.ROI_names")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function makeROInames(<RRawVectorArgument> ROIlist As Object, Optional env As Environment = Nothing) As Object

@@ -28,9 +28,11 @@ def search_product(filepath, mz):
     
     mzpack    = open.mzpack(filepath)
     products  = ms2_peaks(mzpack)
+    xcms_id   = make.ROI_names(products)
     
     i         = data::intensity(products, mz = mz, mzdiff = mzdiff) > 0
     products  = products[i]
+    xcms_id   = xcms_id[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
     rt        = sapply(products, ms2 -> [ms2]::rt)
     rt_min    = round(rt / 60, 2)
@@ -46,7 +48,7 @@ def search_product(filepath, mz):
     top4      = sapply(topIons, ms2 -> mz2_toString(ms2, 4))
     top5      = sapply(topIons, ms2 -> mz2_toString(ms2, 5))
 
-    return (mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5)
+    return (xcms_id, mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5)
 
 def mz2_toString(ms2, i):
     into = sapply(ms2, x -> [x]::intensity)
@@ -82,6 +84,8 @@ for filepath in files:
         peaks[, "target_mz"]   = mz2[["mz"]]
         
         hits = rbind(hits, peaks)
+       
+rownames(hits) = hits[, "xcms_id"]
        
 print(" ~~job done!")
 print(`save result file at location: '${savefile}'!`)

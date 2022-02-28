@@ -595,4 +595,9 @@ Module MzMath
                 .ToArray
         }
     End Function
+
+    <ExportAPI("xcms_id")>
+    Public Function xcms_id(mz As Double(), rt As Double()) As String()
+
+    End Function
 End Module
