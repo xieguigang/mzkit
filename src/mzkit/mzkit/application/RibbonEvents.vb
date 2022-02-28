@@ -169,7 +169,7 @@ Module RibbonEvents
         ' start in this directory
         StartInfo.WorkingDirectory = WorkingDirectory
         ' let cmd.exe remain running using /k
-        StartInfo.Arguments = $"/k CALL {getWelcomeScript.CLIPath}"
+        StartInfo.Arguments = $"/k CALL {getWelcomeScript.GetFullPath.CLIPath}"
         StartInfo.EnvironmentVariables("pkg_attach") = pkg_attach
 
         cmdSession.StartInfo = StartInfo
@@ -177,8 +177,10 @@ Module RibbonEvents
         cmdSession.Start()
     End Sub
 
+    Const banner_script As String = "banner_prompt.cmd"
+
     Private Function getWelcomeScript() As String
-        Return MyApplication.CheckPkgFolder("banner_prompt.cmd")
+        Return MyApplication.CheckPkgFolder(banner_script) & "/" & banner_script
     End Function
 
     Public Sub OpenWorkspace()
