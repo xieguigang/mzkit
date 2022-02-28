@@ -39,12 +39,15 @@ def search_product(filepath):
     
     topIons   = lapply(product, ms2 -> topIons([ms2]::mzInto))
     basePeak  = sapply(topIons, ms2 -> basePeak_toString(ms2[1]))
-    top2
-    top3
-    top4
-    top5
+    top2      = sapply(topIons, ms2 -> mz2_toString(ms2[2]))
+    top3      = sapply(topIons, ms2 -> mz2_toString(ms2[3]))
+    top4      = sapply(topIons, ms2 -> mz2_toString(ms2[4]))
+    top5      = sapply(topIons, ms2 -> mz2_toString(ms2[5]))
 
-    return mz, rt, rt_min, intensity, scan, basePeak, top2, top3, top4, top5
+    return mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5
+
+def mz2_toString(mz2):
+
 
 def basePeak_toString(mz2):
     
