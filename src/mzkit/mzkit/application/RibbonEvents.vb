@@ -54,6 +54,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
 Imports BioNovoGene.mzkit_win32.My
 Imports BioNovoGene.mzkit_win32.RibbonLib.Controls
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports RibbonLib
@@ -162,16 +163,23 @@ Module RibbonEvents
         Dim exePath As String = Environment.SystemDirectory & "\cmd.exe"
         Dim StartInfo As New ProcessStartInfo(exePath)
         Dim cmdSession As New Process
+        Dim pkg_attach As String = MyApplication.CheckPkgFolder(MyApplication.pkgs).GetDirectoryFullPath
 
         StartInfo.UseShellExecute = False
         ' start in this directory
         StartInfo.WorkingDirectory = WorkingDirectory
         ' let cmd.exe remain running using /k
-        StartInfo.Arguments = "/k"
+        StartInfo.Arguments = $"/k CALL {getWelcomeScript.CLIPath}"
+        StartInfo.EnvironmentVariables("pkg_attach") = pkg_attach
+
         cmdSession.StartInfo = StartInfo
 
         cmdSession.Start()
     End Sub
+
+    Private Function getWelcomeScript() As String
+        Return MyApplication.CheckPkgFolder("banner_prompt.cmd")
+    End Function
 
     Public Sub OpenWorkspace()
         Using file As New OpenFileDialog With {.Filter = "BioNovoGene MZKit Workspace(*.mzWork)|*.mzWork"}

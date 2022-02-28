@@ -317,13 +317,24 @@ Type 'q()' to quit R.
             End
         End Sub
 
-        Public Shared Sub InstallPackageRelease()
-            For Each fileName As String In {"mzkit.zip", "REnv.zip"}
-                Dim file As String = $"{App.HOME}/Rstudio/{fileName}"
+        Friend Shared ReadOnly pkgs As String() = {"mzkit.zip", "REnv.zip"}
 
-                If Not file.FileExists Then
-                    file = $"{App.HOME}/../../src/mzkit/setup/{fileName}"
-                End If
+        Public Shared Function CheckPkgFolder(ParamArray checkFiles As String()) As String
+            Dim dirRelease As String = $"{App.HOME}/Rstudio/"
+            Dim dirDev As String = $"{App.HOME}/../../src/mzkit/setup/"
+
+            If checkFiles.Any(Function(fileName) $"{dirRelease}/{fileName}".FileExists) Then
+                Return dirRelease
+            Else
+                Return dirDev
+            End If
+        End Function
+
+        Public Shared Sub InstallPackageRelease()
+            Dim dir As String = CheckPkgFolder(pkgs)
+
+            For Each fileName As String In {"mzkit.zip", "REnv.zip"}
+                Dim file As String = $"{dir}/{fileName}"
 
                 If file.FileExists Then
                     Call REngine.Invoke("install.packages", {file}, REngine.globalEnvir)
