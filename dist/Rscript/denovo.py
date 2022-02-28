@@ -28,7 +28,7 @@ def search_product(filepath, mz):
     
     mzpack    = open.mzpack(filepath)
     products  = ms2_peaks(mzpack)
-    xcms_id   = make.ROI_names(products)
+    xcms_id   = make.ROI_names(products, name.chrs = True)
     
     i         = data::intensity(products, mz = mz, mzdiff = mzdiff) > 0
     products  = products[i]

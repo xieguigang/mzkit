@@ -318,11 +318,17 @@ Module data
     ''' makes xcms_id format liked ROI unique id
     ''' </summary>
     ''' <param name="ROIlist"></param>
+    ''' <param name="name_chrs">
+    ''' just returns the ROI names character?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("make.ROI_names")>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function makeROInames(<RRawVectorArgument> ROIlist As Object, Optional env As Environment = Nothing) As Object
+    Public Function makeROInames(<RRawVectorArgument> ROIlist As Object,
+                                 Optional name_chrs As Boolean = False,
+                                 Optional env As Environment = Nothing) As Object
+
         Dim dataList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ROIlist, env)
 
         If dataList.isError Then
@@ -341,11 +347,15 @@ Module data
             .ToArray
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
-        For i As Integer = 0 To allData.Length - 1
-            allData(i).lib_guid = uniques(i)
-        Next
+        If name_chrs Then
+            Return uniques
+        Else
+            For i As Integer = 0 To allData.Length - 1
+                allData(i).lib_guid = uniques(i)
+            Next
 
-        Return allData
+            Return allData
+        End If
     End Function
 
     <ExportAPI("read.MsMatrix")>
