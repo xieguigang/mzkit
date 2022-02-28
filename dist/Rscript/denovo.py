@@ -74,18 +74,21 @@ for filepath in files:
     # loop through all target ms2 product ions
     for(mz2 in as.list(targets, byrow = True)):
         
-        str(mz2)        
-           
-        # name, mz    
-        peaks = search_product(filepath, mz2[["mz"]])
+        str(mz2)   
+        
+        # name, mz   
+        name   = mz2[["name"]]
+        mzData = mz2[["mz"]]     
+                 
+        peaks = search_product(filepath, mzData)
         peaks = data.frame(peaks)
         
         print(`get ${nrow(peaks)} ms2 products:`)
         print(peaks, max.print = 6)
         
         peaks[, "samplefile"]  = basename(filepath)
-        peaks[, "target_name"] = mz2[["name"]]
-        peaks[, "target_mz"]   = mz2[["mz"]]
+        peaks[, "target_name"] = name
+        peaks[, "target_mz"]   = mzData
         
         hits = rbind(hits, peaks)
        
