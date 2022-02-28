@@ -36,7 +36,7 @@ def search_product(filepath, mz):
     intensity = data::intensity(products, mz = mz, mzdiff = mzdiff)
     
     # just filter out target fragment with high intensity
-    i         = (intensity / max(intensity)) > 0.6
+    i         = (intensity / max(intensity)) > 0.5
     products  = products[i]
     xcms_id   = xcms_id[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
