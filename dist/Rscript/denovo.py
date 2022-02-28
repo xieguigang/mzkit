@@ -77,8 +77,12 @@ for filepath in files:
         str(mz2)        
            
         # name, mz    
-        peaks                  = search_product(filepath, mz2[["mz"]])
-        peaks                  = data.frame(peaks)
+        peaks = search_product(filepath, mz2[["mz"]])
+        peaks = data.frame(peaks)
+        
+        print(`get ${nrow(peaks)} ms2 products:`)
+        print(peaks, max.print = 6)
+        
         peaks[, "samplefile"]  = basename(filepath)
         peaks[, "target_name"] = mz2[["name"]]
         peaks[, "target_mz"]   = mz2[["mz"]]
