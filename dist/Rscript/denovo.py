@@ -9,7 +9,7 @@ files    = gtk::selectFiles(title = "Select raw data files for run ms2 filter", 
 savefile = gtk::selectFiles(title = "Select a table file for save result", filter = "Excel(*.xls)|*.xls", forSave = True)
 
 # tolerance value for match ms2 data
-mzdiff  = mzkit::tolerance("da", 0.3)
+mzdiff  = mzkit::tolerance("da", 0.1)
 hits    = None
 targets = read.csv(targets, row.names = None)
 
@@ -30,7 +30,10 @@ def search_product(filepath, mz):
     products  = ms2_peaks(mzpack)
     xcms_id   = make.ROI_names(products, name.chrs = True)
     
-    i         = data::intensity(products, mz = mz, mzdiff = mzdiff) > 0
+    intensity = data::intensity(products, mz = mz, mzdiff = mzdiff)
+    
+    # just filter out target fragment with high intensity
+    i         = (intensity / max(intensity)) > 0.6
     products  = products[i]
     xcms_id   = xcms_id[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
