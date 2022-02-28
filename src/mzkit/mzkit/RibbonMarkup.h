@@ -808,5 +808,12 @@
 #define cmdButtonMSICleanBackground_TooltipDescription_RESID 60028
 #define cmdButtonMSICleanBackground_SmallImages_192__RESID 60029
 #define cmdButtonMSICleanBackground_LargeImages_144__RESID 60030
-#define InternalCmd2_LabelTitle_RESID 60031
-#define InternalCmd4_LabelTitle_RESID 60032
+#define cmdButtonDevTools 168 
+#define cmdButtonDevTools_LabelTitle_RESID 60031
+#define cmdButtonDevTools_LabelDescription_RESID 60032
+#define cmdButtonDevTools_TooltipTitle_RESID 60033
+#define cmdButtonDevTools_TooltipDescription_RESID 60034
+#define cmdButtonDevTools_SmallImages_192__RESID 60035
+#define cmdButtonDevTools_LargeImages_192__RESID 60036
+#define InternalCmd2_LabelTitle_RESID 60037
+#define InternalCmd4_LabelTitle_RESID 60038

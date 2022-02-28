@@ -27,6 +27,7 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonDropB As UInteger = 1009
             Public Const cmdButtonFormulaSearch As UInteger = 1010
             Public Const cmdButtonDropD As UInteger = 5010
+            Public Const cmdButtonDevTools As UInteger = 168
             Public Const cmdButtonRsharp As UInteger = 1107
             Public Const cmdButtonSettings As UInteger = 1051
             Public Const cmdButtonAbout As UInteger = 1021
@@ -247,6 +248,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonDropD As RibbonButton
             Get
                 Return _ButtonDropD
+            End Get
+        End Property
+        Private _ButtonDevTools As RibbonButton
+        Public ReadOnly Property ButtonDevTools As RibbonButton
+            Get
+                Return _ButtonDevTools
             End Get
         End Property
         Private _ButtonRsharp As RibbonButton
@@ -1124,6 +1131,7 @@ Namespace RibbonLib.Controls
             _ButtonDropB = New RibbonButton(_ribbon, Cmd.cmdButtonDropB)
             _ButtonFormulaSearch = New RibbonButton(_ribbon, Cmd.cmdButtonFormulaSearch)
             _ButtonDropD = New RibbonButton(_ribbon, Cmd.cmdButtonDropD)
+            _ButtonDevTools = New RibbonButton(_ribbon, Cmd.cmdButtonDevTools)
             _ButtonRsharp = New RibbonButton(_ribbon, Cmd.cmdButtonRsharp)
             _ButtonSettings = New RibbonButton(_ribbon, Cmd.cmdButtonSettings)
             _ButtonAbout = New RibbonButton(_ribbon, Cmd.cmdButtonAbout)

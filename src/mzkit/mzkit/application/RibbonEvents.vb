@@ -152,6 +152,25 @@ Module RibbonEvents
 
         AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
         AddHandler ribbonItems.ImportsMzwork.ExecuteEvent, Sub() Call OpenWorkspace()
+
+        AddHandler ribbonItems.ButtonDevTools.ExecuteEvent, Sub() Call openCmd()
+    End Sub
+
+    Private Sub openCmd()
+        Static WorkingDirectory As String = App.HOME
+
+        Dim exePath As String = Environment.SystemDirectory & "\cmd.exe"
+        Dim StartInfo As New ProcessStartInfo(exePath)
+        Dim cmdSession As New Process
+
+        StartInfo.UseShellExecute = False
+        ' start in this directory
+        StartInfo.WorkingDirectory = WorkingDirectory
+        ' let cmd.exe remain running using /k
+        StartInfo.Arguments = "/k"
+        cmdSession.StartInfo = StartInfo
+
+        cmdSession.Start()
     End Sub
 
     Public Sub OpenWorkspace()

@@ -2163,6 +2163,14 @@
         <Image MinDPI="144">Res/edit-cut.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonDevTools" Id="168" LabelTitle="Developer CommandLine Tools" LabelDescription="Developer CommandLine Tools" TooltipTitle="Developer CommandLine Tools" TooltipDescription="Developer CommandLine Tools">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/Terminal.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/Terminal.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2217,6 +2225,9 @@
                 <Button CommandName="cmdButtonDropB" />
                 <Button CommandName="cmdButtonFormulaSearch" />
                 <Button CommandName="cmdButtonDropD" />
+              </MenuGroup>
+              <MenuGroup Class="MajorItems">
+                <Button CommandName="cmdButtonDevTools" />
               </MenuGroup>
             </DropDownButton>
             <Button CommandName="cmdButtonRsharp" ApplicationModes="0,1" />

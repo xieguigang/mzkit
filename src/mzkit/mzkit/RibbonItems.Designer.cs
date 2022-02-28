@@ -30,6 +30,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonFormulaSearch = 1010;
             public const uint cmdButtonDropD = 5010;
+            public const uint cmdButtonDevTools = 168;
             public const uint cmdButtonRsharp = 1107;
             public const uint cmdButtonSettings = 1051;
             public const uint cmdButtonAbout = 1021;
@@ -192,6 +193,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonFormulaSearch { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
+        public RibbonButton ButtonDevTools { get; private set; }
         public RibbonButton ButtonRsharp { get; private set; }
         public RibbonButton ButtonSettings { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
@@ -352,6 +354,7 @@ namespace RibbonLib.Controls
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonFormulaSearch = new RibbonButton(ribbon, Cmd.cmdButtonFormulaSearch);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
+            ButtonDevTools = new RibbonButton(ribbon, Cmd.cmdButtonDevTools);
             ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
             ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
