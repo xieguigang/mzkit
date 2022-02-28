@@ -21,3 +21,4 @@ echo type "R# some_script.R" or
 echo      "R# some_script.py" 
 @echo:
 echo in the command console to start automation work
+@echo:
