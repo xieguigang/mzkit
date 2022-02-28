@@ -66,6 +66,8 @@ Module CLI
 
     Public Function openDevTools() As Integer
         Call RibbonEvents.openCmd()
+        Call App.Exit()
+
         Return 0
     End Function
 End Module
