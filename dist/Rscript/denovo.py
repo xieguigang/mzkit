@@ -39,10 +39,10 @@ def search_product(filepath):
     
     topIons   = lapply(product, ms2 -> topIons([ms2]::mzInto))
     basePeak  = sapply(topIons, ms2 -> basePeak_toString(ms2[1]))
-    top2      = sapply(topIons, ms2 -> mz2_toString(ms2[2]))
-    top3      = sapply(topIons, ms2 -> mz2_toString(ms2[3]))
-    top4      = sapply(topIons, ms2 -> mz2_toString(ms2[4]))
-    top5      = sapply(topIons, ms2 -> mz2_toString(ms2[5]))
+    top2      = sapply(topIons, ms2 -> mz2_toString(ms2, 2))
+    top3      = sapply(topIons, ms2 -> mz2_toString(ms2, 3))
+    top4      = sapply(topIons, ms2 -> mz2_toString(ms2, 4))
+    top5      = sapply(topIons, ms2 -> mz2_toString(ms2, 5))
 
     return mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5
 
@@ -50,12 +50,15 @@ def mz2_toString(mz2):
 
 
 def basePeak_toString(mz2):
-    
+    return `${toString([mz2]::mz, format = "F4")}:${toString([mz2]::intensity, format = "G3")}`    
 
-def topIons(ms2):
+def topIons(ms2, i):
+    into = sapply(ms2, x -> [x]::intensity)
+    into = round(into / max(into) * 100, 2)
+    mz2  = ms2[i]
     
+    return `${toString([mz2]::mz, format = "F4")}:${into[i]}`
     
-
 for filepath in files:
     
     print(`processing data [${filepath}]...`)
