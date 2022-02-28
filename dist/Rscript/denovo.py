@@ -1,6 +1,7 @@
 import mzkit
 
 from mzkit import mzweb
+from mzkit import data
 from Rstudio import gtk
 
 targets  = gtk::selectFiles(title = "Select a csv table contains target product fragments", filter = "Excel(*.csv)|*.csv", multiple = False)
@@ -28,7 +29,7 @@ def search_product(filepath, mz):
     mzpack    = open.mzpack(filepath)
     products  = ms2_peaks(mzpack)
     
-    i         = sapply(products, ms2 -> [ms2]::GetIntensity(mz, mzdiff)) > 0
+    i         = data::intensity(products, mz = mz, mzdiff = mzdiff) > 0
     products  = products[i]
     mz        = sapply(products, ms2 -> [ms2]::mz)
     rt        = sapply(products, ms2 -> [ms2]::rt)

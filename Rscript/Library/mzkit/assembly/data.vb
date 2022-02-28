@@ -245,15 +245,40 @@ Module data
     <RApiReturn(GetType(Double))>
     Public Function getIntensity(<RRawVectorArgument>
                                  ticks As Object,
+                                 Optional mz As Double = -1,
+                                 Optional mzdiff As Object = "da:0.3",
                                  Optional env As Environment = Nothing) As Object
 
-        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env, suppress:=True)
+        Dim tolerance = Math.getTolerance(mzdiff, env)
 
         If scans.isError Then
-            Return scans.getError
+            scans = pipeline.TryCreatePipeline(Of PeakMs2)(ticks, env)
+
+            If scans.isError Then
+                Return scans.getError
+            End If
+
+            If mz > 0 AndAlso tolerance Like GetType(Message) Then
+                Return tolerance.TryCast(Of Message)
+            End If
+
+            Dim mzErr As Tolerance = tolerance.TryCast(Of Tolerance)
+
+            Return scans _
+                .populates(Of PeakMs2)(env) _
+                .Select(Function(x)
+                            If mz > 0 Then
+                                Return x.GetIntensity(mz, mzErr)
+                            Else
+                                Return x.intensity
+                            End If
+                        End Function) _
+                .DoCall(AddressOf vector.asVector)
         End If
 
-        Return scans.populates(Of ms1_scan)(env) _
+        Return scans _
+            .populates(Of ms1_scan)(env) _
             .Select(Function(x) x.intensity) _
             .DoCall(AddressOf vector.asVector)
     End Function
