@@ -322,11 +322,14 @@ Type 'q()' to quit R.
         Public Shared Function CheckPkgFolder(ParamArray checkFiles As String()) As String
             Dim dirRelease As String = $"{App.HOME}/Rstudio/"
             Dim dirDev As String = $"{App.HOME}/../../src/mzkit/setup/"
+            Dim dirDev2 As String = $"{App.HOME}/../../src/mzkit/setup/Rstudio"
 
             If checkFiles.Any(Function(fileName) $"{dirRelease}/{fileName}".FileExists) Then
                 Return dirRelease
-            Else
+            ElseIf checkFiles.Any(Function(fileName) $"{dirDev}/{fileName}".FileExists) Then
                 Return dirDev
+            Else
+                Return dirDev2
             End If
         End Function
 
