@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::e72c506139d0a38b79504ff926b846cd, src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PeakMs2
-    ' 
-    '         Properties: activation, collisionEnergy, file, fragments, intensity
-    '                     lib_guid, meta, Ms2Intensity, mz, mzInto
-    '                     precursor_type, rt, scan
-    ' 
-    '         Function: AlignMatrix, RtInSecond, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PeakMs2
+' 
+'         Properties: activation, collisionEnergy, file, fragments, intensity
+'                     lib_guid, meta, Ms2Intensity, mz, mzInto
+'                     precursor_type, rt, scan
+' 
+'         Function: AlignMatrix, RtInSecond, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -148,6 +148,19 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(ref As ms2(), tolerance As Tolerance) As ms2()
             Return mzInto.AlignMatrix(ref, tolerance)
+        End Function
+
+        Public Function GetIntensity(mz2 As Double, mzdiff As Tolerance) As Double
+            Dim mz As ms2 = mzInto _
+                .Where(Function(mzi) mzdiff(mzi.mz, mz2)) _
+                .OrderByDescending(Function(mzi) mzi.intensity) _
+                .FirstOrDefault
+
+            If mz Is Nothing Then
+                Return 0
+            Else
+                Return mz.intensity
+            End If
         End Function
     End Class
 End Namespace
