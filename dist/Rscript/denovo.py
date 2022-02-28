@@ -15,6 +15,14 @@ targets = read.csv(targets, row.names = None)
 print("view of the ms2 product ion list:")
 print(targets, max.print = 6)
 
+if length(files) == 0:
+    raise "no raw data file was selected for run data processing!"
+
+if !all(["name", "mz"] in colnames(targets)):
+    raise "missing one of the data fields in your target product fragments table: 'name' or 'mz'!"
+else
+    print("input check success")
+
 def search_product(filepath):
     
     mzpack   = open.mzpack(filepath)
