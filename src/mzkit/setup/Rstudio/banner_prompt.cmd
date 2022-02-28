@@ -12,7 +12,7 @@ echo **********************************************************************
 echo Automation environment initialized done~
 @echo:
 echo RStudio pkg repository: "%pkg_attach%"
-echo R# engine config file: "%renv_config%"
+echo R# engine config file: "%R_LIBS_USER%"
 @echo:
 echo Run R# script or python.NET script at here,
 echo you can try:
