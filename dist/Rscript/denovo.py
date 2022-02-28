@@ -63,10 +63,12 @@ def topIons(ms2):
     
     return ms2[i]
     
+# loop through all raw data files
 for filepath in files:
     
     print(`processing data [${filepath}]...`)
        
+    # loop through all target ms2 product ions
     for(mz2 in as.list(targets, byrow = True)):
         
         str(mz2)        
@@ -77,9 +79,12 @@ for filepath in files:
         peaks[, "samplefile"]  = basename(filepath)
         peaks[, "target_name"] = mz2[["name"]]
         peaks[, "target_mz"]   = mz2[["mz"]]
+        
         hits = rbind(hits, peaks)
        
 print(" ~~job done!")
 print(`save result file at location: '${savefile}'!`)
 
-write.csv(hits, file = savefile, row.names = True)
+print(hits, max.print = 13)
+
+write.csv(hits, file = savefile, row.names = False)
