@@ -5,7 +5,7 @@ from mzkit import data
 from Rstudio import gtk
 
 targets  = gtk::selectFiles(title = "Select a csv table contains target product fragments", filter = "Excel(*.csv)|*.csv", multiple = False)
-files    = gtk::selectFiles(title = "Select raw data files for run ms2 filter", filter = "Thermofisher Raw(*.raw)|*.raw", throwCancel = False, multiple = True) 
+files    = gtk::selectFiles(title = "Select raw data files for run ms2 filter", filter = "Thermofisher Raw(*.raw)|*.raw|GC-MS(*.cdf)|*.cdf", throwCancel = False, multiple = True) 
 savefile = gtk::selectFiles(title = "Select a table file for save result", filter = "Excel(*.xls)|*.xls", forSave = True)
 
 # tolerance value for match ms2 data
