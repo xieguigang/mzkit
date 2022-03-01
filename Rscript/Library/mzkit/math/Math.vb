@@ -298,7 +298,7 @@ Module MzMath
                                         Optional compares As Comparison(Of PeakMs2) = Nothing,
                                         Optional tolerance As Object = "da:0.1",
                                         Optional intocutoff As Double = 0.05,
-                                        Optional showReport As Boolean = True,
+                                        Optional showReport As Boolean = False,
                                         Optional env As Environment = Nothing) As Object
 
         Dim spectrum As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2list, env)
