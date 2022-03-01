@@ -51,12 +51,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -159,6 +160,34 @@ Module data
             .name = title,
             .ms2 = MS
         }
+    End Function
+
+    <ExportAPI("XIC_groups")>
+    Public Function XICGroups(<RRawVectorArgument> ms1 As Object,
+                              Optional tolerance As Object = "ppm:20",
+                              Optional env As Environment = Nothing) As Object
+
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True)
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+
+        If ms1_scans.isError Then
+            Return ms1_scans.getError
+        End If
+
+        Dim mzgroups = ms1_scans.populates(Of IMs1)(env).GroupBy(Function(x) x.mz, mzdiff).ToArray
+        Dim xic As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each mzi As NamedCollection(Of IMs1) In mzgroups
+            xic.add(Val(mzi.name).ToString("F4"), mzi.ToArray)
+        Next
+
+        Return xic
     End Function
 
     ''' <summary>
