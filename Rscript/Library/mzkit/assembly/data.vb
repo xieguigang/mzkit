@@ -98,6 +98,19 @@ Module data
         Return matrix.Length
     End Function
 
+    <ExportAPI("peakMs2")>
+    Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
+                                  Optional totalIons As Double = 0,
+                                  Optional file As String = Nothing) As PeakMs2
+        Return New PeakMs2 With {
+            .mz = precursor,
+            .intensity = totalIons,
+            .mzInto = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray,
+            .rt = rt,
+            .file = file
+        }
+    End Function
+
     ''' <summary>
     ''' Create a library matrix object
     ''' </summary>
