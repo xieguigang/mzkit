@@ -36,16 +36,17 @@ def search_product(filepath, mz):
     intensity = data::intensity(products, mz = mz, mzdiff = mzdiff)
     
     # just filter out target fragment with high intensity
-    i         = (intensity / max(intensity)) > 0.5
-    products  = products[i]
-    xcms_id   = xcms_id[i]
-    mz        = sapply(products, ms2 -> [ms2]::mz)
-    rt        = sapply(products, ms2 -> [ms2]::rt)
-    rt_min    = round(rt / 60, 2)
-    intensity = sapply(products, ms2 -> [ms2]::intensity)
-    totalIons = sapply(products, ms2 -> [ms2]::Ms2Intensity)
-    scan      = sapply(products, ms2 -> [ms2]::scan)
-    nsize     = sapply(products, ms2 -> [ms2]::fragments)
+    i           = (intensity / max(intensity)) > 0
+    target_into = intensity[i]    
+    products    = products[i]
+    xcms_id     = xcms_id[i]
+    mz          = sapply(products, ms2 -> [ms2]::mz)
+    rt          = sapply(products, ms2 -> [ms2]::rt)
+    rt_min      = round(rt / 60, 2)
+    intensity   = sapply(products, ms2 -> [ms2]::intensity)
+    totalIons   = sapply(products, ms2 -> [ms2]::Ms2Intensity)
+    scan        = sapply(products, ms2 -> [ms2]::scan)
+    nsize       = sapply(products, ms2 -> [ms2]::fragments)
     
     topIons   = lapply(products, ms2 -> getTopIons([ms2]::mzInto))
     basePeak  = sapply(topIons, ms2 -> basePeak_toString(ms2[1]))
@@ -54,7 +55,7 @@ def search_product(filepath, mz):
     top4      = sapply(topIons, ms2 -> mz2_toString(ms2, 4))
     top5      = sapply(topIons, ms2 -> mz2_toString(ms2, 5))
 
-    return (xcms_id, mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5)
+    return (xcms_id, mz, rt, rt_min, intensity, totalIons, scan, nsize, basePeak, top2, top3, top4, top5, target_into)
 
 def mz2_toString(ms2, i):
     into = sapply(ms2, x -> [x]::intensity)
@@ -90,11 +91,11 @@ for filepath in files:
         peaks = data.frame(peaks)
         
         print(`get ${nrow(peaks)} ms2 products:`)
-        print(peaks, max.print = 6)
-        
-        peaks[, "samplefile"]  = basename(filepath)
-        peaks[, "target_name"] = name
+        print(peaks, max.print = 6)       
+       
         peaks[, "target_mz"]   = mzData
+        peaks[, "target_name"] = name        
+        peaks[, "samplefile"]  = basename(filepath)
         
         hits = rbind(hits, peaks)
        
