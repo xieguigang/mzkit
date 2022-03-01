@@ -16,3 +16,4 @@ mass spectrometry data math toolkit
 + [precursor_types](math/precursor_types.1) create precursor type calculator
 + [defaultPrecursors](math/defaultPrecursors.1) 
 + [toMS](math/toMS.1) 
++ [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
