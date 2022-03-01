@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
@@ -602,8 +603,25 @@ Module MzMath
         }
     End Function
 
+    ''' <summary>
+    ''' makes xcms_id format liked ROI unique id
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <returns></returns>
     <ExportAPI("xcms_id")>
     Public Function xcms_id(mz As Double(), rt As Double()) As String()
+        Dim allId As String() = mz _
+            .Select(Function(mzi, i)
+                        If CInt(rt(i)) = 0 Then
+                            Return $"M{CInt(mzi)}"
+                        Else
+                            Return $"M{CInt(mzi)}T{CInt(rt(i))}"
+                        End If
+                    End Function) _
+            .ToArray
+        Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
+        Return uniques
     End Function
 End Module

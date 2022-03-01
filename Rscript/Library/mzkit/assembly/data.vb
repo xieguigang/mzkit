@@ -342,6 +342,13 @@ Module data
                                  Optional name_chrs As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
+        If TypeOf ROIlist Is list AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, list).hasName) Then
+            Dim mz As Double() = DirectCast(ROIlist, list).getValue(Of Double())("mz", env)
+            Dim rt As Double() = DirectCast(ROIlist, list).getValue(Of Double())("rt", env)
+
+            Return xcms_id(mz, rt)
+        End If
+
         Dim dataList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ROIlist, env)
 
         If dataList.isError Then
@@ -349,16 +356,10 @@ Module data
         End If
 
         Dim allData As PeakMs2() = dataList.populates(Of PeakMs2)(env).ToArray
-        Dim allId As String() = allData _
-            .Select(Function(p)
-                        If CInt(p.rt) = 0 Then
-                            Return $"M{CInt(p.mz)}"
-                        Else
-                            Return $"M{CInt(p.mz)}T{CInt(p.rt)}"
-                        End If
-                    End Function) _
-            .ToArray
-        Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
+        Dim uniques As String() = xcms_id(
+            mz:=allData.Select(Function(p) p.mz).ToArray,
+            rt:=allData.Select(Function(p) p.rt).ToArray
+        )
 
         If name_chrs Then
             Return uniques
