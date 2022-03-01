@@ -62,7 +62,10 @@ def mz2_toString(ms2, i):
     into = round(into / max(into) * 100, 2)
     mz2  = ms2[i]
     
-    return `${toString([mz2]::mz, format = "F4")}:${into[i]}`
+    if is.null(mz2):
+        return ""
+    else 
+        return `${toString([mz2]::mz, format = "F4")}:${into[i]}`
 
 def basePeak_toString(mz2):
     return `${toString([mz2]::mz, format = "F4")}:${toString([mz2]::intensity, format = "G3")}`    
