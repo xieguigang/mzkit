@@ -432,6 +432,12 @@ Module MzMath
 
         Dim threshold As LowAbundanceTrimming = New RelativeIntensityCutoff(intoCutoff)
 
+        If TypeOf ions Is vector Then
+            ions = DirectCast(ions, vector).data
+            ions = REnv.TryCastGenericArray(ions, env)
+            inputType = ions.GetType
+        End If
+
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
             Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2)(env), DirectCast(ions, PeakMs2()))
             Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
