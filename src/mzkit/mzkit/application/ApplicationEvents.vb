@@ -327,7 +327,7 @@ Type 'q()' to quit R.
             End
         End Sub
 
-        Friend Shared ReadOnly pkgs As String() = {"mzkit.zip", "REnv.zip"}
+        Friend Shared ReadOnly pkgs As String() = {"mzkit.zip", "REnv.zip", "ggplot.zip"}
 
         Public Shared Function CheckPkgFolder(ParamArray checkFiles As String()) As String
             Dim dirRelease As String = $"{App.HOME}/Rstudio/"
@@ -346,7 +346,7 @@ Type 'q()' to quit R.
         Public Shared Sub InstallPackageRelease()
             Dim dir As String = CheckPkgFolder(pkgs)
 
-            For Each fileName As String In {"mzkit.zip", "REnv.zip"}
+            For Each fileName As String In pkgs
                 Dim file As String = $"{dir}/{fileName}"
 
                 If file.FileExists Then
