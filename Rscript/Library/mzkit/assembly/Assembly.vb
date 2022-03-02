@@ -109,7 +109,7 @@ Module Assembly
             .Select(Function(d) d.ToString("F4")) _
             .JoinBy(vbTab)
 
-        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
+        Return $"[{xcms_id}, {peak.intensity}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
     End Function
 
     ''' <summary>
