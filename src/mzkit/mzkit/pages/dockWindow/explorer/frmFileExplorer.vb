@@ -559,7 +559,6 @@ Public Class frmFileExplorer
     Private Sub ShowSummaryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowSummaryToolStripMenuItem.Click
         Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
         Dim spinner As New frmProgressSpinner
-        Dim grid = table.DataGridView1
 
         table.ViewRow =
             Sub(row)
@@ -568,48 +567,48 @@ Public Class frmFileExplorer
 
                 Call showRawFile(DirectCast(node.Tag, Raw), XIC:=False, directSnapshot:=True, contour:=False)
             End Sub
-
-        Call grid.Columns.Add("source", "source")
-        Call grid.Columns.Add("ms1_scans", "ms1_scans")
-        Call grid.Columns.Add("msn_scans", "msn_scans")
-        Call grid.Columns.Add("rtmin", "rtmin")
-        Call grid.Columns.Add("rtmax", "rtmax")
-        Call grid.Columns.Add("total_ions", "total_ions")
-        Call grid.Columns.Add("base_peak", "base_peak")
-        Call grid.Columns.Add("max_intensity", "max_intensity")
-
-        Call New Thread(
-            Sub()
-                Call Thread.Sleep(500)
+        table.LoadTable(
+            Sub(grid)
+                Call grid.Columns.Add("source", "source")
+                Call grid.Columns.Add("ms1_scans", "ms1_scans")
+                Call grid.Columns.Add("msn_scans", "msn_scans")
+                Call grid.Columns.Add("rtmin", "rtmin")
+                Call grid.Columns.Add("rtmax", "rtmax")
+                Call grid.Columns.Add("total_ions", "total_ions")
+                Call grid.Columns.Add("base_peak", "base_peak")
+                Call grid.Columns.Add("max_intensity", "max_intensity")
 
                 If treeView1.Nodes.Count = 0 Then
-                    Call spinner.CloseWindow()
                     Return
                 End If
 
-                For Each node As TreeNode In treeView1.Nodes(0).Nodes
-                    Dim raw As Raw = node.Tag
-                    Dim load As mzPack = raw.LoadMzpack(Sub(title, msg) MyApplication.host.showStatusMessage($"{title}: {msg}")).loaded
-                    Dim basePeak As ms2 = load.GetBasePeak
+                Call New Thread(Sub()
+                                    Call Thread.Sleep(500)
 
-                    Call table.Invoke(
-                        Sub()
-                            Call grid.Rows.Add(
-                                node.Text,
-                                load.MS.Length,
-                                load.CountMs2,
-                                load.rtmin.ToString("F1"),
-                                load.rtmax.ToString("F1"),
-                                stdNum.Round(load.totalIons),
-                                If(basePeak Is Nothing, 0, basePeak.mz.ToString("F4")),
-                                If(basePeak Is Nothing, 0, stdNum.Round(basePeak.intensity))
-                            )
-                        End Sub)
-                Next
+                                    For Each node As TreeNode In treeView1.Nodes(0).Nodes
+                                        Dim raw As Raw = node.Tag
+                                        Dim load As mzPack = raw.LoadMzpack(Sub(title, msg) MyApplication.host.showStatusMessage($"{title}: {msg}")).loaded
+                                        Dim basePeak As ms2 = load.GetBasePeak
 
-                Call spinner.CloseWindow()
-            End Sub).Start()
+                                        Call table.Invoke(
+                                            Sub()
+                                                Call grid.Rows.Add(
+                                                    node.Text,
+                                                    load.MS.Length,
+                                                    load.CountMs2,
+                                                    load.rtmin.ToString("F1"),
+                                                    load.rtmax.ToString("F1"),
+                                                    stdNum.Round(load.totalIons),
+                                                    If(basePeak Is Nothing, 0, basePeak.mz.ToString("F4")),
+                                                    If(basePeak Is Nothing, 0, stdNum.Round(basePeak.intensity))
+                                                )
+                                            End Sub)
+                                    Next
 
-        Call spinner.ShowDialog()
+                                    Call spinner.CloseWindow()
+                                End Sub).Start()
+
+                Call spinner.ShowDialog()
+            End Sub)
     End Sub
 End Class

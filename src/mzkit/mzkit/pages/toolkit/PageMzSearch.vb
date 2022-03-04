@@ -457,37 +457,35 @@ Public Class PageMzSearch
         Next
 
         Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
-        Dim grid = table.DataGridView1
         Dim keggMeta = Globals.LoadKEGG(AddressOf MyApplication.LogText, 1, tolerance)
 
-        'table.ViewRow = Sub(row)
+        Call table.LoadTable(
+            Sub(grid)
+                Call grid.Columns.Add("mz", "mz")
+                Call grid.Columns.Add("ppm", "ppm")
+                Call grid.Columns.Add("precursorType", "precursorType")
+                Call grid.Columns.Add("kegg_id", "kegg_id")
+                Call grid.Columns.Add("name", "name")
+                Call grid.Columns.Add("formula", "formula")
+                Call grid.Columns.Add("exact_mass", "exact_mass")
+                Call grid.Columns.Add("score", "score")
 
-        '                End Sub
+                For Each ion As KEGGQuery In result
+                    Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
 
-        Call grid.Columns.Add("mz", "mz")
-        Call grid.Columns.Add("ppm", "ppm")
-        Call grid.Columns.Add("precursorType", "precursorType")
-        Call grid.Columns.Add("kegg_id", "kegg_id")
-        Call grid.Columns.Add("name", "name")
-        Call grid.Columns.Add("formula", "formula")
-        Call grid.Columns.Add("exact_mass", "exact_mass")
-        Call grid.Columns.Add("score", "score")
+                    Call grid.Rows.Add(
+                        ion.mz.ToString("F4"),
+                        ion.ppm.ToString("F1"),
+                        ion.precursorType,
+                        ion.kegg_id,
+                        If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
+                        kegg.formula,
+                        kegg.exactMass,
+                        ion.score.ToString("F2")
+                    )
 
-        For Each ion As KEGGQuery In result
-            Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
-
-            Call grid.Rows.Add(
-                ion.mz.ToString("F4"),
-                ion.ppm.ToString("F1"),
-                ion.precursorType,
-                ion.kegg_id,
-                If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
-                kegg.formula,
-                kegg.exactMass,
-                ion.score.ToString("F2")
-            )
-
-            Call Application.DoEvents()
-        Next
+                    Call Application.DoEvents()
+                Next
+            End Sub)
     End Sub
 End Class

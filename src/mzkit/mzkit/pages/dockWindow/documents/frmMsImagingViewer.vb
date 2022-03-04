@@ -140,50 +140,39 @@ Public Class frmMsImagingViewer
 
     Sub DoIonStats(ions As IonStat())
         Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
-        Dim spinner As New frmProgressSpinner
-        Dim grid = table.DataGridView1
 
         table.ViewRow = Sub(row)
                             Call renderByMzList({Val(row("mz"))})
                             Call Me.Activate()
                         End Sub
+        table.LoadTable(
+            Sub(grid)
+                Call grid.Columns.Add("mz", "mz")
+                Call grid.Columns.Add("pixels", "pixels")
+                Call grid.Columns.Add("density", "density")
+                Call grid.Columns.Add("maxIntensity", "maxIntensity")
+                Call grid.Columns.Add("basePixel.X", "basePixel.X")
+                Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
+                Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
+                Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
+                Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
 
-        Call grid.Columns.Add("mz", "mz")
-        Call grid.Columns.Add("pixels", "pixels")
-        Call grid.Columns.Add("density", "density")
-        Call grid.Columns.Add("maxIntensity", "maxIntensity")
-        Call grid.Columns.Add("basePixel.X", "basePixel.X")
-        Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
-        Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
-        Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
-        Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
+                For Each ion As IonStat In ions.OrderByDescending(Function(i) i.pixels)
+                    Call grid.Rows.Add(
+                        ion.mz.ToString("F4"),
+                        ion.pixels,
+                        ion.density.ToString("F2"),
+                        stdNum.Round(ion.maxIntensity),
+                        ion.basePixel.X,
+                        ion.basePixel.Y,
+                        stdNum.Round(ion.Q1Intensity),
+                        stdNum.Round(ion.Q2Intensity),
+                        stdNum.Round(ion.Q3Intensity)
+                    )
 
-        Call New Thread(
-            Sub()
-                Call Thread.Sleep(500)
-                Call table.Invoke(
-                        Sub()
-                            For Each ion As IonStat In ions.OrderByDescending(Function(i) i.pixels)
-                                Call grid.Rows.Add(
-                                    ion.mz.ToString("F4"),
-                                    ion.pixels,
-                                    ion.density.ToString("F2"),
-                                    stdNum.Round(ion.maxIntensity),
-                                    ion.basePixel.X,
-                                    ion.basePixel.Y,
-                                    stdNum.Round(ion.Q1Intensity),
-                                    stdNum.Round(ion.Q2Intensity),
-                                    stdNum.Round(ion.Q3Intensity)
-                                )
-
-                                Call Application.DoEvents()
-                            Next
-                        End Sub)
-
-                Call spinner.Invoke(Sub() spinner.Close())
-            End Sub).Start()
-
-        Call spinner.ShowDialog()
+                    Call Application.DoEvents()
+                Next
+            End Sub)
     End Sub
 
     Sub cleanBackground()
