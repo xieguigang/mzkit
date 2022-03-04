@@ -52,6 +52,8 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports BioNovoGene.mzkit_win32.My
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
@@ -124,7 +126,25 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
         Call InputDialog.Input(Of InputRSymbol)(
             Sub(config)
+                Dim name As String = config.ComboBox1.Text.Trim
+                Dim fields As String() = config.GetNames.ToArray
+                Dim table As New dataframe With {
+                    .columns = New Dictionary(Of String, Array)
+                }
 
+                For Each fieldRef As String In fields
+                    Dim i As Integer = fieldNames.IndexOf(fieldRef)
+                    Dim array As New List(Of Object)
+
+                    For Each row As DataGridViewRow In DataGridView1.Rows
+                        array.Add(row.Cells(i).Value)
+                    Next
+
+                    table.add(fieldRef, REnv.TryCastGenericArray(array.ToArray, MyApplication.REngine.globalEnvir))
+                Next
+
+                Call MyApplication.REngine.Add(name, table)
+                Call VisualStudio.ShowRTerm()
             End Sub, config:=form)
     End Sub
 End Class

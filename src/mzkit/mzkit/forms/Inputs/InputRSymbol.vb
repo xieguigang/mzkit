@@ -1,5 +1,4 @@
-﻿Imports SMRUCC.Rsharp.Runtime.Components
-Imports BioNovoGene.mzkit_win32.My
+﻿Imports BioNovoGene.mzkit_win32.My
 
 Public Class InputRSymbol
 
@@ -8,6 +7,12 @@ Public Class InputRSymbol
             Call ComboBox1.Items.Add(symbol)
         Next
     End Sub
+
+    Public Iterator Function GetNames() As IEnumerable(Of String)
+        For Each i As Integer In CheckedListBox1.CheckedIndices
+            Yield CheckedListBox1.Items(i).ToString
+        Next
+    End Function
 
     Public Sub LoadFields(names As IEnumerable(Of String))
         Call CheckedListBox1.Items.Clear()
@@ -19,7 +24,11 @@ Public Class InputRSymbol
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        DialogResult = DialogResult.OK
+        If Trim(ComboBox1.Text).StringEmpty Then
+            MessageBox.Show("A symbol name is required!", "Create Symbol", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            DialogResult = DialogResult.OK
+        End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
