@@ -147,4 +147,19 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
                 Call VisualStudio.ShowRTerm()
             End Sub, config:=form)
     End Sub
+
+    Private Sub VisualizeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizeToolStripMenuItem.Click
+        Dim load As New InputDataVisual
+        Dim schema As New Dictionary(Of String, Type)
+
+        For Each col As DataGridViewColumn In DataGridView1.Columns
+            Call schema.Add(col.Name, GetType(Double))
+        Next
+
+        Call load.SetAxis(schema)
+        Call InputDialog.Input(
+            Sub(creator)
+
+            End Sub, config:=load)
+    End Sub
 End Class
