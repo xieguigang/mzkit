@@ -72,6 +72,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
+Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -84,7 +85,23 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
+
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
     End Sub
+
+    Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
+        Dim candidates As New RDataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call candidates.add("formula", formulas.Select(Function(f) f.EmpiricalFormula).ToArray)
+        Call candidates.add("exact_mass", formulas.Select(Function(f) f.ExactMass).ToArray)
+        Call candidates.add("mass_diff", formulas.Select(Function(f) f.massdiff).ToArray)
+        Call candidates.add("ppm", formulas.Select(Function(f) f.ppm).ToArray)
+        Call candidates.add("H/C", formulas.Select(Function(f) f.HCRatio).ToArray)
+
+        Return candidates
+    End Function
 
     Private Function printFormulas(formulas As FormulaComposition()) As String
         Dim table As New List(Of String())

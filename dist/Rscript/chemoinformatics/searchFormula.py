@@ -7,10 +7,16 @@ print(D_glucose)
 print(formula::eval(D_glucose))
 
 print("run search test")
-formulas = formula::candidates(formula::eval(D_glucose), ppm = 30, C= [3,12], H = [3,12], O = [3,12], N = [0, 4])
+formulas = formula::candidates(formula::eval(D_glucose), ppm = 5, C= [3,12], H = [3,12], O = [3,12], N = [0, 4])
+print(as.data.frame(formulas))
 
-print(formulas)
+# PC 32:1 C40H78NO8P
 
-test2 =  formula::candidates(formula::eval(C19H20O9), ppm = 5, C= [3,32], H = [3,32], O = [3,12], N = [0, 4]) 
+exact_mass = formula::eval(C40H78NO8P)
+formulas = formula::candidates(exact_mass, ppm = 5, C= [6,72], H = [3,120], O = [1,20], N = [0, 18], P  = [0, 18], S = [0, 20])
+list = as.data.frame(formulas)
 
-print(test2)
+list = list[ order(list[, "ppm"]) , ]
+
+print("search for exact mass value: ${exact_mass}")
+print(list)

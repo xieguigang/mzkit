@@ -48,10 +48,14 @@
 
 Namespace Formula
 
+    ''' <summary>
+    ''' the formula search result
+    ''' </summary>
     Public Class FormulaComposition : Inherits Formula
 
         Public Property charge As Double
         Public Property ppm As Double
+        Public Property massdiff As Double
 
         ''' <summary>
         ''' Hydrogen/Carbon element ratio
