@@ -343,6 +343,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputDataVisual.Designer.vb">
+      <DependentUpon>InputDataVisual.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputDataVisual.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputRSymbol.Designer.vb">
       <DependentUpon>InputRSymbol.vb</DependentUpon>
     </Compile>
@@ -765,6 +771,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputDataVisual.resx">
+      <DependentUpon>InputDataVisual.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputDialog.resx">
       <DependentUpon>InputDialog.vb</DependentUpon>
