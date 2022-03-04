@@ -66,6 +66,12 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         End Get
     End Property
 
+    Public Sub LoadTable(apply As Action(Of DataGridView))
+        Call Me.DataGridView1.Columns.Clear()
+        Call Me.DataGridView1.Rows.Clear()
+        Call apply(DataGridView1)
+    End Sub
+
     Protected Overrides Sub SaveDocument()
         Call DataGridView1.SaveDataGrid("Save Table View")
     End Sub

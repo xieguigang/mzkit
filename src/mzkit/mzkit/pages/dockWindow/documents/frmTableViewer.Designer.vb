@@ -124,7 +124,7 @@ Partial Class frmTableViewer
 
     End Sub
 
-    Friend WithEvents DataGridView1 As DataGridView
+    Private WithEvents DataGridView1 As DataGridView
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
