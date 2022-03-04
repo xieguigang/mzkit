@@ -105,4 +105,8 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
             Call _ViewRow(obj)
         End If
     End Sub
+
+    Private Sub SendToREnvironmentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SendToREnvironmentToolStripMenuItem.Click
+
+    End Sub
 End Class

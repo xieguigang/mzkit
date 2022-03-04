@@ -32,9 +32,9 @@ Partial Class frmTableViewer
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.SendToREnvironmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VisualizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ActionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SendToREnvironmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -92,12 +92,6 @@ Partial Class frmTableViewer
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(200, 6)
         '
-        'SendToREnvironmentToolStripMenuItem
-        '
-        Me.SendToREnvironmentToolStripMenuItem.Name = "SendToREnvironmentToolStripMenuItem"
-        Me.SendToREnvironmentToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.SendToREnvironmentToolStripMenuItem.Text = "Send To R# Environment"
-        '
         'VisualizeToolStripMenuItem
         '
         Me.VisualizeToolStripMenuItem.Name = "VisualizeToolStripMenuItem"
@@ -109,6 +103,12 @@ Partial Class frmTableViewer
         Me.ActionsToolStripMenuItem.Name = "ActionsToolStripMenuItem"
         Me.ActionsToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
         Me.ActionsToolStripMenuItem.Text = "Actions"
+        '
+        'SendToREnvironmentToolStripMenuItem
+        '
+        Me.SendToREnvironmentToolStripMenuItem.Name = "SendToREnvironmentToolStripMenuItem"
+        Me.SendToREnvironmentToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.SendToREnvironmentToolStripMenuItem.Text = "Send To R# Environment"
         '
         'frmTableViewer
         '

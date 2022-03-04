@@ -343,6 +343,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\InputRSymbol.Designer.vb">
+      <DependentUpon>InputRSymbol.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputRSymbol.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputDialog.Designer.vb">
       <DependentUpon>InputDialog.vb</DependentUpon>
     </Compile>
@@ -771,6 +777,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputNetworkLayout.resx">
       <DependentUpon>InputNetworkLayout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputRSymbol.resx">
+      <DependentUpon>InputRSymbol.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputXICTarget.resx">
       <DependentUpon>InputXICTarget.vb</DependentUpon>
