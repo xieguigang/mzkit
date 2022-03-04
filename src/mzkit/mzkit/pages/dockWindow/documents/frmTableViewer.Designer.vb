@@ -24,13 +24,17 @@ Partial Class frmTableViewer
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SendToREnvironmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VisualizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ActionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -45,18 +49,6 @@ Partial Class frmTableViewer
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(834, 495)
         Me.DataGridView1.TabIndex = 0
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(100, 26)
-        '
-        'ViewToolStripMenuItem
-        '
-        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
-        Me.ViewToolStripMenuItem.Text = "View"
         '
         'Column1
         '
@@ -83,6 +75,41 @@ Partial Class frmTableViewer
         Me.Column5.HeaderText = "Column5"
         Me.Column5.Name = "Column5"
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ToolStripMenuItem1, Me.VisualizeToolStripMenuItem, Me.ActionsToolStripMenuItem, Me.SendToREnvironmentToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(204, 120)
+        '
+        'ViewToolStripMenuItem
+        '
+        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.ViewToolStripMenuItem.Text = "View"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(200, 6)
+        '
+        'SendToREnvironmentToolStripMenuItem
+        '
+        Me.SendToREnvironmentToolStripMenuItem.Name = "SendToREnvironmentToolStripMenuItem"
+        Me.SendToREnvironmentToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.SendToREnvironmentToolStripMenuItem.Text = "Send To R# Environment"
+        '
+        'VisualizeToolStripMenuItem
+        '
+        Me.VisualizeToolStripMenuItem.Name = "VisualizeToolStripMenuItem"
+        Me.VisualizeToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.VisualizeToolStripMenuItem.Text = "Visualize"
+        '
+        'ActionsToolStripMenuItem
+        '
+        Me.ActionsToolStripMenuItem.Name = "ActionsToolStripMenuItem"
+        Me.ActionsToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.ActionsToolStripMenuItem.Text = "Actions"
+        '
         'frmTableViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -105,4 +132,8 @@ Partial Class frmTableViewer
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents VisualizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SendToREnvironmentToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ActionsToolStripMenuItem As ToolStripMenuItem
 End Class
