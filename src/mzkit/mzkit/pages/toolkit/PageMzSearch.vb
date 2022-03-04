@@ -74,7 +74,7 @@ Imports stdNum = System.Math
 
 Public Class PageMzSearch
 
-    Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
+    Private Sub doExactMassSearch(mz As Double, ppm As Double)
         Dim progress As New frmTaskProgress
         Dim cancel As Value(Of Boolean) = False
 
@@ -84,7 +84,7 @@ Public Class PageMzSearch
 
         Call New Thread(
             Sub()
-                Call runSearchInternal(exact_mass, ppm, progress, cancel)
+                Call runSearchInternal(mz, ppm, progress, cancel)
             End Sub).Start()
         Call progress.ShowDialog()
     End Sub
@@ -264,7 +264,7 @@ Public Class PageMzSearch
             Dim formula As String = DataGridView1.Rows(e.RowIndex).Cells(0).Value?.ToString
 
             If Not formula.StringEmpty Then
-                Call Process.Start($"https://query.biodeep.cn/search?expression=[formula]&category=metabolite&formula={formula}")
+                Call Process.Start($"http://query.biodeep.cn/search?expression=[formula]&category=metabolite&formula={formula}")
             End If
         End If
     End Sub
@@ -291,7 +291,7 @@ Public Class PageMzSearch
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim mz As Double = Val(TextBox1.Text)
-        Dim ppm As Double = 1
+        Dim ppm As Double = 5
 
         Call doExactMassSearch(mz, ppm)
     End Sub

@@ -133,9 +133,9 @@ Public Class PageMzCalculator
         If TextBox1.Text.StringEmpty Then
             Return
         ElseIf TextBox1.Text.IsNumeric Then
-            Call Process.Start($"https://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={TextBox1.Text}")
+            Call Process.Start($"http://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={TextBox1.Text}")
         Else
-            Call Process.Start($"https://query.biodeep.cn/search?expression=[formula]&category=metabolite&formula={TextBox1.Text}")
+            Call Process.Start($"http://query.biodeep.cn/search?expression=[formula]&category=metabolite&formula={TextBox1.Text}")
         End If
     End Sub
 
