@@ -61,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.mzkit_win32.My
 Imports ControlLibrary
@@ -163,8 +163,8 @@ Public Class frmMsImagingViewer
                         ion.pixels,
                         ion.density.ToString("F2"),
                         stdNum.Round(ion.maxIntensity),
-                        ion.basePixel.X,
-                        ion.basePixel.Y,
+                        ion.basePixelX,
+                        ion.basePixelY,
                         stdNum.Round(ion.Q1Intensity),
                         stdNum.Round(ion.Q2Intensity),
                         stdNum.Round(ion.Q3Intensity)
