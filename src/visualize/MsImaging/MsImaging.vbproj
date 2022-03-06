@@ -331,14 +331,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imaging\MSIColorSet.vb" />
+    <Compile Include="Blender\MSIColorSet.vb" />
     <Compile Include="IonStat.vb" />
     <Compile Include="HeatMapLayer.vb" />
-    <Compile Include="Imaging\KnnInterpolation.vb" />
-    <Compile Include="Imaging\QuantizationThreshold.vb" />
-    <Compile Include="Imaging\MzLayerColorSet.vb" />
-    <Compile Include="Imaging\RectangleRender.vb" />
-    <Compile Include="Imaging\Renderer.vb" />
+    <Compile Include="Blender\KnnInterpolation.vb" />
+    <Compile Include="Blender\QuantizationThreshold.vb" />
+    <Compile Include="Blender\MzLayerColorSet.vb" />
+    <Compile Include="Blender\RectangleRender.vb" />
+    <Compile Include="Blender\Renderer.vb" />
     <Compile Include="LayerHelpers.vb" />
     <Compile Include="HistologicalImage.vb" />
     <Compile Include="Plot\DualRegionUnionPlot.vb" />
@@ -350,7 +350,7 @@
     <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
     <Compile Include="PixelScan\InMemoryPixel.vb" />
     <Compile Include="PixelsSampler.vb" />
-    <Compile Include="Imaging\PixelRender.vb" />
+    <Compile Include="Blender\PixelRender.vb" />
     <Compile Include="IndexedCache\XICReader.vb" />
     <Compile Include="IndexedCache\XICIndex.vb" />
     <Compile Include="IndexedCache\XICWriter.vb" />
