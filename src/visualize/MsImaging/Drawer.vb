@@ -225,6 +225,7 @@ Public Class Drawer : Implements IDisposable
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
                               Optional pixelDrawer As Boolean = True,
+                              Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
@@ -237,7 +238,16 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
-        Return engine.RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
+        Return engine.RenderPixels(
+            pixels:=pixels,
+            dimension:=dimension,
+            dimSize:=dimSize,
+            colorSet:=colorSet,
+            mapLevels:=mapLevels,
+            scale:=scale,
+            cutoff:=cutoff,
+            defaultFill:=background
+        )
     End Function
 
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance, cut As DoubleRange) As PixelData()
@@ -288,6 +298,7 @@ Public Class Drawer : Implements IDisposable
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
                               Optional pixelDrawer As Boolean = True,
+                              Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
@@ -306,7 +317,15 @@ Public Class Drawer : Implements IDisposable
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return engine.RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale)
+        Return engine.RenderPixels(
+            pixels:=matrix,
+            dimension:=dimension,
+            dimSize:=dimSize,
+            colorSet:=colorSet,
+            mapLevels:=mapLevels,
+            scale:=scale,
+            defaultFill:=background
+        )
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)

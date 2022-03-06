@@ -9,8 +9,8 @@ data = open.mzpack(data);
 
 print(data);
 
-pdf(file = "./msi1.pdf") {
+pdf(file = "./MsImaging.pdf") {
 	viewer(data)
-	|> layer([741.55, 743.54, 798.54])
+	|> layer([741.55, 743.54, 798.54], background = "black")
 	;
 }

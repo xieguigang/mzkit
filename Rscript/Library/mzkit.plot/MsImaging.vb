@@ -498,11 +498,12 @@ Module MsImaging
                           <RRawVectorArgument>
                           Optional pixelSize As Object = "5,5",
                           Optional tolerance As Object = "da:0.1",
-                          Optional color$ = "YlGnBu:c8",
+                          Optional color$ = "viridis:turbo",
                           Optional levels% = 30,
                           <RRawVectorArgument(GetType(Double))>
                           Optional cutoff As Object = "0.1,0.75",
-                          Optional pixelDrawer As Boolean = True,
+                          <RRawVectorArgument>
+                          Optional background As Object = NameOf(Color.Transparent),
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -529,7 +530,7 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer,
+                background:=RColorPalette.getColor(background, "Translate"),
                 driver:=env.getDriver
             )
         Else
@@ -540,7 +541,7 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer,
+                background:=RColorPalette.getColor(background, "Translate"),
                 driver:=env.getDriver
             )
         End If
