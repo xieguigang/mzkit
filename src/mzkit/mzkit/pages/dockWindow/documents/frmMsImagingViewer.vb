@@ -514,13 +514,13 @@ Public Class frmMsImagingViewer
                    Call MyApplication.RegisterPlot(
                        Sub(args)
                            Dim mapLevels As Integer = params.mapLevels
-                           Dim image As Bitmap = Drawer.RenderSummaryLayer(
+                           Dim image As Image = Drawer.RenderSummaryLayer(
                                layer:=summaryLayer,
                                dimension:=dimSize,
                                colorSet:=params.colors.Description,
                                pixelSize:=$"{params.pixel_width},{params.pixel_height}",
                                mapLevels:=mapLevels
-                           )
+                           ).AsGDIImage
                            Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
 
                            PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
@@ -592,14 +592,14 @@ Public Class frmMsImagingViewer
                            Dim qb As Double = threshold(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
 
                            Dim dotSize As Size = pixelSize.SizeParser
-                           Dim image As Bitmap = drawer.ChannelCompositions(
+                           Dim image As Image = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
                                dimSize:=dotSize,
                                scale:=params.scale,
                                cut:=(New DoubleRange(0, qr), New DoubleRange(0, qg), New DoubleRange(0, qb)),
                                background:=params.background.ToHtmlColor
-                           )
+                           ).AsGDIImage
                            Dim legend As Image = Nothing
 
                            PixelSelector1.SetMsImagingOutput(image, pixelSize.SizeParser, legend)
@@ -703,14 +703,14 @@ Public Class frmMsImagingViewer
         pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
 
         Dim drawer As New PixelRender(heatmapRender:=False)
-        Dim image As Bitmap = drawer.RenderPixels(
+        Dim image As Image = drawer.RenderPixels(
             pixels:=pixelFilter,
             dimension:=dimensionSize,
             dimSize:=size.SizeParser,
             mapLevels:=params.mapLevels,
             colorSet:=params.colors.Description,
             scale:=params.scale
-        )
+        ).AsGDIImage
         Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
 
         PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
