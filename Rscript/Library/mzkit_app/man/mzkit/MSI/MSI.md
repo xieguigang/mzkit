@@ -10,6 +10,8 @@
 + [MSI_summary](MSI/MSI_summary.1) Fetch MSI summary data
 + [correction](MSI/correction.1) calculate the X scale
 + [basePeakMz](MSI/basePeakMz.1) 
++ [ionStat](MSI/ionStat.1) 
++ [ions_jointmatrix](MSI/ions_jointmatrix.1) 
 + [scans2D](MSI/scans2D.1) combine each row scan raw data files as the pixels 2D matrix
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
 + [peakMatrix](MSI/peakMatrix.1) 

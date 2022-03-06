@@ -127,6 +127,8 @@ Namespace Formula
                     Call progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
                 End If
 
+                formula.massdiff = stdNum.Abs(formula.ExactMass - exact_mass)
+
                 Yield formula
             Next
         End Function

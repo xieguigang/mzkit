@@ -150,6 +150,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="query.biodeep.cn\KEGG.vb" />
+    <Compile Include="query.biodeep.cn\Query.vb" />
     <Compile Include="SessionInfo.vb" />
   </ItemGroup>
   <ItemGroup>

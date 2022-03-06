@@ -51,12 +51,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -96,6 +97,24 @@ Module data
     <ExportAPI("nsize")>
     Public Function nfragments(matrix As LibraryMatrix) As Integer
         Return matrix.Length
+    End Function
+
+    <ExportAPI("peakMs2")>
+    Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
+                                  Optional totalIons As Double = 0,
+                                  Optional file As String = Nothing,
+                                  <RListObjectArgument>
+                                  Optional meta As list = Nothing,
+                                  Optional env As Environment = Nothing) As PeakMs2
+
+        Return New PeakMs2 With {
+            .mz = precursor,
+            .intensity = totalIons,
+            .mzInto = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray,
+            .rt = rt,
+            .file = file,
+            .meta = meta.AsGeneric(Of String)(env)
+        }
     End Function
 
     ''' <summary>
@@ -146,6 +165,34 @@ Module data
             .name = title,
             .ms2 = MS
         }
+    End Function
+
+    <ExportAPI("XIC_groups")>
+    Public Function XICGroups(<RRawVectorArgument> ms1 As Object,
+                              Optional tolerance As Object = "ppm:20",
+                              Optional env As Environment = Nothing) As Object
+
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True)
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+
+        If ms1_scans.isError Then
+            Return ms1_scans.getError
+        End If
+
+        Dim mzgroups = ms1_scans.populates(Of IMs1)(env).GroupBy(Function(x) x.mz, mzdiff).ToArray
+        Dim xic As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each mzi As NamedCollection(Of IMs1) In mzgroups
+            xic.add(Val(mzi.name).ToString("F4"), mzi.ToArray)
+        Next
+
+        Return xic
     End Function
 
     ''' <summary>
@@ -329,6 +376,13 @@ Module data
                                  Optional name_chrs As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
+        If TypeOf ROIlist Is list AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, list).hasName) Then
+            Dim mz As Double() = DirectCast(ROIlist, list).getValue(Of Double())("mz", env)
+            Dim rt As Double() = DirectCast(ROIlist, list).getValue(Of Double())("rt", env)
+
+            Return xcms_id(mz, rt)
+        End If
+
         Dim dataList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ROIlist, env)
 
         If dataList.isError Then
@@ -336,16 +390,10 @@ Module data
         End If
 
         Dim allData As PeakMs2() = dataList.populates(Of PeakMs2)(env).ToArray
-        Dim allId As String() = allData _
-            .Select(Function(p)
-                        If CInt(p.rt) = 0 Then
-                            Return $"M{CInt(p.mz)}"
-                        Else
-                            Return $"M{CInt(p.mz)}T{CInt(p.rt)}"
-                        End If
-                    End Function) _
-            .ToArray
-        Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
+        Dim uniques As String() = xcms_id(
+            mz:=allData.Select(Function(p) p.mz).ToArray,
+            rt:=allData.Select(Function(p) p.rt).ToArray
+        )
 
         If name_chrs Then
             Return uniques

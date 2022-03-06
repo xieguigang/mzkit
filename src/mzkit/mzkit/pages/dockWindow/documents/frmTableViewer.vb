@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2cef0801993064fd8cad75ac817537cb, src\mzkit\mzkit\pages\dockWindow\documents\frmTableViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTableViewer
-    ' 
-    '     Properties: FilePath, MimeType, ViewRow
-    ' 
-    '     Function: (+2 Overloads) Save
-    ' 
-    '     Sub: frmTableViewer_Load, SaveDocument, ViewToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmTableViewer
+' 
+'     Properties: FilePath, MimeType, ViewRow
+' 
+'     Function: (+2 Overloads) Save
+' 
+'     Sub: frmTableViewer_Load, SaveDocument, ViewToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,8 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports BioNovoGene.mzkit_win32.My
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
@@ -65,6 +67,12 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
             }
         End Get
     End Property
+
+    Public Sub LoadTable(apply As Action(Of DataGridView))
+        Call Me.DataGridView1.Columns.Clear()
+        Call Me.DataGridView1.Rows.Clear()
+        Call apply(DataGridView1)
+    End Sub
 
     Protected Overrides Sub SaveDocument()
         Call DataGridView1.SaveDataGrid("Save Table View")
@@ -104,5 +112,54 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
             Call _ViewRow(obj)
         End If
+    End Sub
+
+    Private Sub SendToREnvironmentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SendToREnvironmentToolStripMenuItem.Click
+        Dim form As New InputRSymbol
+        Dim fieldNames As New List(Of String)
+
+        For Each col As DataGridViewColumn In DataGridView1.Columns
+            Call fieldNames.Add(col.Name)
+        Next
+
+        Call form.LoadFields(fieldNames)
+
+        Call InputDialog.Input(Of InputRSymbol)(
+            Sub(config)
+                Dim name As String = config.ComboBox1.Text.Trim
+                Dim fields As String() = config.GetNames.ToArray
+                Dim table As New dataframe With {
+                    .columns = New Dictionary(Of String, Array)
+                }
+
+                For Each fieldRef As String In fields
+                    Dim i As Integer = fieldNames.IndexOf(fieldRef)
+                    Dim array As New List(Of Object)
+
+                    For Each row As DataGridViewRow In DataGridView1.Rows
+                        array.Add(row.Cells(i).Value)
+                    Next
+
+                    table.add(fieldRef, REnv.TryCastGenericArray(array.ToArray, MyApplication.REngine.globalEnvir))
+                Next
+
+                Call MyApplication.REngine.Add(name, table)
+                Call VisualStudio.ShowRTerm()
+            End Sub, config:=form)
+    End Sub
+
+    Private Sub VisualizeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizeToolStripMenuItem.Click
+        Dim load As New InputDataVisual
+        Dim schema As New Dictionary(Of String, Type)
+
+        For Each col As DataGridViewColumn In DataGridView1.Columns
+            Call schema.Add(col.Name, GetType(Double))
+        Next
+
+        Call load.SetAxis(schema)
+        Call InputDialog.Input(
+            Sub(creator)
+
+            End Sub, config:=load)
     End Sub
 End Class

@@ -57,8 +57,8 @@ Public Class MaskForm
         FormBorderStyle = FormBorderStyle.None
         StartPosition = FormStartPosition.Manual
 
-        Dim dx As Integer = 5
-        Dim dy As Integer = 5
+        Dim dx As Integer = 7
+        Dim dy As Integer = 7
 
         Me.Location = New Point(point.X + dx, point.Y)
         Me.Size = New Size(size.Width - dx * 2, size.Height - dy)

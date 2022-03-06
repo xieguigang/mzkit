@@ -2,7 +2,7 @@
 
 The chemical formulae toolkit
 
-+ [find.formula](formula/find.formula.1) 
++ [candidates](formula/candidates.1) find all of the candidate chemical formulas by a 
 + [eval](formula/eval.1) evaluate exact mass for the given formula strings.
 + [scan](formula/scan.1) Get atom composition from a formula string
 + [getElementCount](formula/getElementCount.1) 

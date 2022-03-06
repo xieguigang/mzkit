@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::d7fbe43fc105f79e6b475a285f84cfe8, Rscript\Library\mzkit\math\Formula.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module FormulaTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
-    '               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
-    '               IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase, parseSMILES
-    '               printFormulas, readKCF, readSDF, removeElement, (+2 Overloads) repeats
-    '               ScanFormula, SDF2KCF
-    ' 
-    ' /********************************************************************************/
+' Module FormulaTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
+'               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
+'               IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase, parseSMILES
+'               printFormulas, readKCF, readSDF, removeElement, (+2 Overloads) repeats
+'               ScanFormula, SDF2KCF
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -67,8 +68,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
+Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -81,7 +85,23 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
+
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
     End Sub
+
+    Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
+        Dim candidates As New RDataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call candidates.add("formula", formulas.Select(Function(f) f.EmpiricalFormula).ToArray)
+        Call candidates.add("exact_mass", formulas.Select(Function(f) f.ExactMass).ToArray)
+        Call candidates.add("mass_diff", formulas.Select(Function(f) f.massdiff).ToArray)
+        Call candidates.add("ppm", formulas.Select(Function(f) f.ppm).ToArray)
+        Call candidates.add("H/C", formulas.Select(Function(f) f.HCRatio).ToArray)
+
+        Return candidates
+    End Function
 
     Private Function printFormulas(formulas As FormulaComposition()) As String
         Dim table As New List(Of String())
@@ -110,16 +130,41 @@ Module FormulaTools
         Return formula.ExactMass.ToString("F7") & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
     End Function
 
-    <ExportAPI("find.formula")>
+    ''' <summary>
+    ''' find all of the candidate chemical formulas by a 
+    ''' specific exact mass value and a specific mass 
+    ''' tolerance value in ppm
+    ''' </summary>
+    ''' <param name="mass">the exact mass value</param>
+    ''' <param name="ppm">the mass tolerance value in ppm</param>
+    ''' <param name="candidateElements">
+    ''' a list configuration of the formula candidates
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("candidates")>
     Public Function FormulaFinder(mass#,
                                   Optional ppm# = 5,
-                                  <RRawVectorArgument(GetType(String))>
-                                  Optional candidateElements As Object = "C|H|N|O") As FormulaComposition()
+                                  <RListObjectArgument>
+                                  Optional candidateElements As list = Nothing,
+                                  Optional env As Environment = Nothing) As FormulaComposition()
 
         Dim opts As New SearchOption(-9999, 9999, ppm)
 
-        For Each element As String In DirectCast(candidateElements, String())
-            Call opts.AddElement(element, 0, 30)
+        For Each element As String In candidateElements.getNames
+            Dim value As Object = candidateElements.getByName(element)
+
+            If Formula.AllAtomElements.ContainsKey(element) Then
+                Dim range = SMRUCC.Rsharp.GetDoubleRange(value, env, [default]:="0,1")
+
+                If range Like GetType(Message) Then
+                    Call env.AddMessage(range.TryCast(Of Message).message, MSG_TYPES.WRN)
+                    Call opts.AddElement(element, 0, 1)
+                Else
+                    With range.TryCast(Of DoubleRange)
+                        Call opts.AddElement(element, .Min, .Max)
+                    End With
+                End If
+            End If
         Next
 
         Dim oMwtWin As New FormulaSearch(opts)
