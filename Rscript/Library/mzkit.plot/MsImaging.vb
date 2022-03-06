@@ -742,28 +742,4 @@ Module MsImaging
                 .ToArray
         }
     End Function
-
-    ''' <summary>
-    ''' flatten image layers
-    ''' </summary>
-    ''' <param name="layers">
-    ''' layer bitmaps should be all in equal size
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("flatten")>
-    Public Function flatten(layers As Bitmap(), Optional bg$ = "white") As Bitmap
-        Using g As Graphics2D = New Bitmap(layers(Scan0).Width, layers(Scan0).Height)
-            If Not bg.StringEmpty Then
-                Call g.Clear(bg.GetBrush)
-            End If
-
-            ' 在这里是反向叠加图层的
-            ' 向量中最开始的图层表示为最上层的图层，即最后进行绘制的图层
-            For Each layer As Bitmap In layers.Reverse
-                Call g.DrawImageUnscaled(layer, New Point)
-            Next
-
-            Return g.ImageResource
-        End Using
-    End Function
 End Module
