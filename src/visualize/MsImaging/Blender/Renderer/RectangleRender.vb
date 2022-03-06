@@ -70,8 +70,12 @@ Namespace Blender
 
     Public Class RectangleRender : Inherits Renderer
 
-        Public Sub New(heatmapRender As Boolean)
+        ReadOnly driver As Drivers
+
+        Public Sub New(driver As Drivers, heatmapRender As Boolean)
             MyBase.New(heatmapRender)
+
+            Me.driver = driver
         End Sub
 
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
@@ -97,6 +101,7 @@ Namespace Blender
                 size:=New Size(w, h),
                 padding:=New Padding,
                 bg:=NameOf(Color.Transparent),
+                driver:=driver,
                 plotAPI:=Sub(ByRef gr, region)
                              For x As Integer = 1 To dimension.Width
                                  For y As Integer = 1 To dimension.Height
@@ -159,6 +164,7 @@ Namespace Blender
                 size:=New Size(w, h),
                 padding:=New Padding,
                 bg:=defaultFill,
+                driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
                              Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, dimSize)
                          End Sub)
@@ -232,6 +238,7 @@ Namespace Blender
                 size:=New Size(w, h),
                 padding:=New Padding,
                 bg:=defaultColor.Color.ToHtmlColor,
+                driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
                              For Each layer As PixelData() In layers
                                  Dim baseColor As Color = colorSet(++i)
@@ -265,6 +272,7 @@ Namespace Blender
                 size:=New Size(w, h),
                 padding:=New Padding,
                 bg:=defaultColor.Color.ToHtmlColor,
+                driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
                              For Each layer As NamedCollection(Of PixelData) In layers
                                  Dim baseColor As Color = colorSet.FindColor(Val(layer.name))

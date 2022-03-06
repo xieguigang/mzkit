@@ -389,7 +389,7 @@ Module MsImaging
         Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New RectangleRender(imageDriverHandler.getDriver(env), heatmapRender:=False)
         Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
         Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
         Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
@@ -529,7 +529,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                pixelDrawer:=pixelDrawer,
+                driver:=env.getDriver
             )
         Else
             Return viewer.DrawLayer(
@@ -539,7 +540,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                pixelDrawer:=pixelDrawer,
+                driver:=env.getDriver
             )
         End If
     End Function
@@ -655,7 +657,7 @@ Module MsImaging
         End If
 
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser

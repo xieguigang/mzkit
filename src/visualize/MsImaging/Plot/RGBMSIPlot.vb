@@ -94,7 +94,7 @@ Public Class RGBMSIPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New PixelRender(heatmapRender:=False)
         Dim iR = Me.R.MSILayer
         Dim iG = Me.G?.MSILayer
         Dim iB = Me.B?.MSILayer

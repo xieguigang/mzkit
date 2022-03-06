@@ -137,10 +137,11 @@ Public Class Drawer : Implements IDisposable
                                          Optional colorSet$ = "Jet",
                                          Optional pixelSize$ = "3,3",
                                          Optional logE As Boolean = True,
-                                         Optional pixelDrawer As Boolean = True) As GraphicsData
+                                         Optional pixelDrawer As Boolean = True,
+                                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim layer As PixelScanIntensity() = pixelReader.GetSummary.GetLayer(summary).ToArray
-        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer)
+        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer, driver:=driver)
 
         Return render
     End Function
@@ -150,7 +151,8 @@ Public Class Drawer : Implements IDisposable
                                               Optional colorSet$ = "Jet",
                                               Optional pixelSize$ = "3,3",
                                               Optional pixelDrawer As Boolean = True,
-                                              Optional mapLevels As Integer = 25) As GraphicsData
+                                              Optional mapLevels As Integer = 25,
+                                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
@@ -161,7 +163,7 @@ Public Class Drawer : Implements IDisposable
                         }
                     End Function) _
             .ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(driver, heatmapRender:=False))
 
         Return engine.RenderPixels(
             pixels:=pixels,
@@ -222,7 +224,8 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
-                              Optional pixelDrawer As Boolean = True) As GraphicsData
+                              Optional pixelDrawer As Boolean = True,
+                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -230,7 +233,7 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New RectangleRender(driver, heatmapRender:=False)
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
@@ -284,7 +287,8 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
-                              Optional pixelDrawer As Boolean = True) As GraphicsData
+                              Optional pixelDrawer As Boolean = True,
+                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
@@ -298,7 +302,7 @@ Public Class Drawer : Implements IDisposable
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 

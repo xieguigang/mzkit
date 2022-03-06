@@ -110,7 +110,7 @@ Public Class MSIPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New PixelRender(heatmapRender:=False)
 
         MSI = engine.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet).AsGDIImage
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
