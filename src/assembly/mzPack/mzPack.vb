@@ -116,7 +116,7 @@ Public Class mzPack
 
     Public ReadOnly Property CountMs2 As Integer
         Get
-            Return Aggregate scan As ScanMS1 In MS Into Sum(scan.products.Length)
+            Return Aggregate scan As ScanMS1 In MS Into Sum(scan.products.TryCount)
         End Get
     End Property
 
