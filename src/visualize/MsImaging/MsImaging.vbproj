@@ -331,7 +331,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imaging\PdfRender.vb" />
     <Compile Include="Imaging\MSIColorSet.vb" />
     <Compile Include="IonStat.vb" />
     <Compile Include="HeatMapLayer.vb" />
