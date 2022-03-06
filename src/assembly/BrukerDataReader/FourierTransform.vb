@@ -1,4 +1,5 @@
 ﻿Imports System
+Imports Microsoft.VisualBasic
 
 Namespace BrukerDataReader
     Public Class FourierTransform
@@ -9,7 +10,7 @@ Namespace BrukerDataReader
             Const c1 = 0.5
             Dim hir As Double
             n /= 2
-            Dim theta = 3.141592653589793 / n
+            Dim theta = 3.1415926535897931 / n
 
             'if (iSign == 1)
             '{
@@ -72,8 +73,8 @@ Namespace BrukerDataReader
             For i = 1 To n - 1 Step 2
 
                 If j > i Then
-                    SwapValuesInArray(data, i - 1, j - 1)
-                    SwapValuesInArray(data, i, j)
+                    Call data.Swap(i - 1, j - 1)
+                    Call data.Swap(i, j)
                 End If
 
                 m = n >> 1
