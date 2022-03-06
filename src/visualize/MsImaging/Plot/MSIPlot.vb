@@ -128,7 +128,7 @@ Public Class MSIPlot : Inherits Plot
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim label As String = Double.Parse(ion.IonMz).ToString("F4")
+        Dim label As String = ion.IonMz
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzLegend As New LegendObject With {

@@ -14,3 +14,10 @@ pdf(file = "./MsImaging.pdf") {
 	|> layer([741.55, 743.54, 798.54], background = "black")
 	;
 }
+
+pdf(file = "./MsImaging2.pdf") {
+viewer(data)
+	|> MSIlayer([741.55, 743.54, 798.54])
+	|> plot(colorSet = "viridis:plasma", grid.fill = "black")
+	;
+}

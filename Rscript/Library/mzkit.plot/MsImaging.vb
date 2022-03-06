@@ -124,7 +124,7 @@ Module MsImaging
         Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
         Dim size As Size = app.MeasureSize
 
-        Return app.Plot($"{size.Width},{size.Height}")
+        Return app.Plot($"{size.Width},{size.Height}", driver:=env.getDriver)
     End Function
 
     ''' <summary>
@@ -409,7 +409,7 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function GetIonLayer(viewer As Drawer, mz As Double,
+    Public Function GetIonLayer(viewer As Drawer, mz As Double(),
                                 Optional tolerance As Object = "da:0.1",
                                 Optional env As Environment = Nothing) As Object
 
