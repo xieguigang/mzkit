@@ -51,8 +51,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Imaging
 
