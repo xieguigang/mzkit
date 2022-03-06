@@ -58,21 +58,15 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Blender
-
-    Public Enum RenderingModes
-
-        RGBComposition
-        MixIons
-        LayerOverlaps
-
-    End Enum
 
     Public Class RectangleRender : Inherits Renderer
 
@@ -96,61 +90,55 @@ Namespace Blender
             Dim Rchannel = GetPixelChannelReader(R, cut.r)
             Dim Gchannel = GetPixelChannelReader(G, cut.g)
             Dim Bchannel = GetPixelChannelReader(B, cut.b)
-            Dim w As Integer
-            Dim h As Integer
+            Dim w As Integer = dimension.Width * dimSize.Width
+            Dim h As Integer = dimension.Height * dimSize.Height
 
-            'If heatmapMode Then
-            '    'w = dimension.Width * dimSize.Width / 2
-            '    'h = dimension.Height * dimSize.Height / 2
-            'Else
-            w = dimension.Width * dimSize.Width
-            h = dimension.Height * dimSize.Height
-            ' End If
+            Return Drawing2D.g.GraphicsPlots(
+                size:=New Size(w, h),
+                padding:=New Padding,
+                bg:=NameOf(Color.Transparent),
+                plotAPI:=Sub(ByRef gr, region)
+                             For x As Integer = 1 To dimension.Width
+                                 For y As Integer = 1 To dimension.Height
+                                     Dim bR As Byte = Rchannel(x, y)
+                                     Dim bG As Byte = Gchannel(x, y)
+                                     Dim bB As Byte = Bchannel(x, y)
+                                     Dim color As Color
+                                     Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
 
-            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(filled:=Color.Transparent)
-                For x As Integer = 1 To dimension.Width
-                    For y As Integer = 1 To dimension.Height
-                        Dim bR As Byte = Rchannel(x, y)
-                        Dim bG As Byte = Gchannel(x, y)
-                        Dim bB As Byte = Bchannel(x, y)
-                        Dim color As Color
-                        Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
+                                     If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
+                                         ' missing a pixel at here?
+                                         If heatmapMode Then
+                                             bR = CByte(New Integer() {
+                                                 Rchannel(x - 1, y - 1), Rchannel(x, y - 1), Rchannel(x + 1, y - 1),
+                                                 Rchannel(x - 1, y), Rchannel(x, y), Rchannel(x + 1, y),
+                                                 Rchannel(x - 1, y + 1), Rchannel(x, y + 1), Rchannel(x + 1, y + 1)
+                                             }.Average)
+                                             bB = CByte(New Integer() {
+                                                 Bchannel(x - 1, y - 1), Bchannel(x, y - 1), Bchannel(x + 1, y - 1),
+                                                 Bchannel(x - 1, y), Bchannel(x, y), Bchannel(x + 1, y),
+                                                 Bchannel(x - 1, y + 1), Bchannel(x, y + 1), Bchannel(x + 1, y + 1)
+                                             }.Average)
+                                             bG = CByte(New Integer() {
+                                                 Gchannel(x - 1, y - 1), Gchannel(x, y - 1), Gchannel(x + 1, y - 1),
+                                                 Gchannel(x - 1, y), Gchannel(x, y), Gchannel(x + 1, y),
+                                                 Gchannel(x - 1, y + 1), Gchannel(x, y + 1), Gchannel(x + 1, y + 1)
+                                             }.Average)
 
-                        If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
-                            ' missing a pixel at here?
-                            If heatmapMode Then
-                                bR = CByte(New Integer() {
-                                    Rchannel(x - 1, y - 1), Rchannel(x, y - 1), Rchannel(x + 1, y - 1),
-                                    Rchannel(x - 1, y), Rchannel(x, y), Rchannel(x + 1, y),
-                                    Rchannel(x - 1, y + 1), Rchannel(x, y + 1), Rchannel(x + 1, y + 1)
-                                }.Average)
-                                bB = CByte(New Integer() {
-                                    Bchannel(x - 1, y - 1), Bchannel(x, y - 1), Bchannel(x + 1, y - 1),
-                                    Bchannel(x - 1, y), Bchannel(x, y), Bchannel(x + 1, y),
-                                    Bchannel(x - 1, y + 1), Bchannel(x, y + 1), Bchannel(x + 1, y + 1)
-                                }.Average)
-                                bG = CByte(New Integer() {
-                                    Gchannel(x - 1, y - 1), Gchannel(x, y - 1), Gchannel(x + 1, y - 1),
-                                    Gchannel(x - 1, y), Gchannel(x, y), Gchannel(x + 1, y),
-                                    Gchannel(x - 1, y + 1), Gchannel(x, y + 1), Gchannel(x + 1, y + 1)
-                                }.Average)
+                                             color = Color.FromArgb(bR, bG, bB)
+                                         Else
+                                             color = defaultBackground
+                                         End If
+                                     Else
+                                         color = Color.FromArgb(bR, bG, bB)
+                                     End If
 
-                                color = Color.FromArgb(bR, bG, bB)
-                            Else
-                                color = defaultBackground
-                            End If
-                        Else
-                            color = Color.FromArgb(bR, bG, bB)
-                        End If
-
-                        ' imzXML里面的坐标是从1开始的
-                        ' 需要减一转换为.NET中从零开始的位置
-                        Call gr.FillRectangle(New SolidBrush(color), rect)
-                    Next
-                Next
-
-                Return gr.ImageResource
-            End Using
+                                     ' imzXML里面的坐标是从1开始的
+                                     ' 需要减一转换为.NET中从零开始的位置
+                                     Call gr.FillRectangle(New SolidBrush(color), rect)
+                                 Next
+                             Next
+                         End Sub)
         End Function
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
@@ -167,10 +155,13 @@ Namespace Blender
             Dim w = dimension.Width * dimSize.Width
             Dim h = dimension.Height * dimSize.Height
 
-            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
-                Call FillLayerInternal(gr, pixels, defaultColor, colorSet, cutoff, dimSize)
-                Return gr.ImageResource
-            End Using
+            Return g.GraphicsPlots(
+                size:=New Size(w, h),
+                padding:=New Padding,
+                bg:=defaultFill,
+                plotAPI:=Sub(ByRef g, region)
+                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, dimSize)
+                         End Sub)
         End Function
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size,
@@ -187,7 +178,7 @@ Namespace Blender
             Return RenderPixels(pixels, dimension, dimSize, colors, scale, defaultFill, cutoff)
         End Function
 
-        Private Shared Sub FillLayerInternal(gr As Graphics2D,
+        Private Shared Sub FillLayerInternal(gr As IGraphics,
                                              pixels() As PixelData,
                                              defaultColor As SolidBrush,
                                              colors As SolidBrush(),
@@ -237,18 +228,20 @@ Namespace Blender
             Dim w = dimension.Width * dimSize.Width
             Dim h = dimension.Height * dimSize.Height
 
-            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
-                For Each layer As PixelData() In layers
-                    Dim baseColor As Color = colorSet(++i)
-                    Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels) _
-                        .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
-                        .ToArray
+            Return g.GraphicsPlots(
+                size:=New Size(w, h),
+                padding:=New Padding,
+                bg:=defaultColor.Color.ToHtmlColor,
+                plotAPI:=Sub(ByRef g, region)
+                             For Each layer As PixelData() In layers
+                                 Dim baseColor As Color = colorSet(++i)
+                                 Dim colors As SolidBrush() = seq(50, 255, (255 - 30) / mapLevels) _
+                                     .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
+                                     .ToArray
 
-                    Call FillLayerInternal(gr, layer, defaultColor, colors, cut, dimSize)
-                Next
-
-                Return gr.ImageResource
-            End Using
+                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, dimSize)
+                             Next
+                         End Sub)
         End Function
 
         Public Overloads Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
@@ -268,20 +261,22 @@ Namespace Blender
             Dim w = dimension.Width * dimSize.Width
             Dim h = dimension.Height * dimSize.Height
 
-            Using gr As Graphics2D = New Size(w, h).CreateGDIDevice(defaultColor.Color)
-                For Each layer As NamedCollection(Of PixelData) In layers
-                    Dim baseColor As Color = colorSet.FindColor(Val(layer.name))
-                    Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels) _
-                        .Select(Function(a)
-                                    Return New SolidBrush(baseColor.Alpha(a))
-                                End Function) _
-                        .ToArray
+            Return g.GraphicsPlots(
+                size:=New Size(w, h),
+                padding:=New Padding,
+                bg:=defaultColor.Color.ToHtmlColor,
+                plotAPI:=Sub(ByRef g, region)
+                             For Each layer As NamedCollection(Of PixelData) In layers
+                                 Dim baseColor As Color = colorSet.FindColor(Val(layer.name))
+                                 Dim colors As SolidBrush() = seq(0, 255, 255 / mapLevels) _
+                                      .Select(Function(a)
+                                                  Return New SolidBrush(baseColor.Alpha(a))
+                                              End Function) _
+                                      .ToArray
 
-                    Call FillLayerInternal(gr, layer.value, defaultColor, colors, cut, dimSize)
-                Next
-
-                Return gr.ImageResource
-            End Using
+                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, dimSize)
+                             Next
+                         End Sub)
         End Function
     End Class
 End Namespace

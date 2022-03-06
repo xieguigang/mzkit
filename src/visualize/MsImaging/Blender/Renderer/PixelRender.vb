@@ -110,9 +110,9 @@ Namespace Blender
             End Using
 
             If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                Return raw
+                Return New ImageData(raw)
             Else
-                Return Drawer.ScaleLayer(raw, dimension, dimSize, scale)
+                Return New ImageData(Drawer.ScaleLayer(raw, dimension, dimSize, scale))
             End If
         End Function
 
@@ -194,9 +194,9 @@ Namespace Blender
             End Using
 
             If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                Return raw
+                Return New ImageData(raw)
             Else
-                Return Drawer.ScaleLayer(raw, dimension, dimSize, scale)
+                Return New ImageData(Drawer.ScaleLayer(raw, dimension, dimSize, scale))
             End If
         End Function
 

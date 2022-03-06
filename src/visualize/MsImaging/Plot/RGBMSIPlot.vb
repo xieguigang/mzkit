@@ -102,7 +102,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim qg As DoubleRange = {0, threshold(iG.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
         Dim qb As DoubleRange = {0, threshold(iB.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
 
-        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, cut:=(qr, qg, qb), background:=theme.background)
+        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, cut:=(qr, qg, qb), background:=theme.background).AsGDIImage
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
