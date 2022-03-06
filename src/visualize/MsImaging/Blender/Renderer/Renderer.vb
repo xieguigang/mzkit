@@ -52,6 +52,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
@@ -82,7 +83,7 @@ Namespace Blender
                                                    Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                    Optional cut As DoubleRange = Nothing,
                                                    Optional defaultFill As String = "Transparent",
-                                                   Optional mapLevels As Integer = 25) As Bitmap
+                                                   Optional mapLevels As Integer = 25) As GraphicsData
 
         ''' <summary>
         ''' 最多只支持三种离子（R,G,B）
@@ -100,7 +101,7 @@ Namespace Blender
                                                          Optional dimSize As Size = Nothing,
                                                          Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                          Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
-                                                         Optional background As String = "black") As Bitmap
+                                                         Optional background As String = "black") As GraphicsData
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
@@ -119,7 +120,7 @@ Namespace Blender
                                                   Optional mapLevels% = 25,
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                   Optional defaultFill As String = "Transparent",
-                                                  Optional cutoff As DoubleRange = Nothing) As Bitmap
+                                                  Optional cutoff As DoubleRange = Nothing) As GraphicsData
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
@@ -135,7 +136,7 @@ Namespace Blender
         Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size, colorSet As SolidBrush(),
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                   Optional defaultFill As String = "Transparent",
-                                                  Optional cutoff As DoubleRange = Nothing) As Bitmap
+                                                  Optional cutoff As DoubleRange = Nothing) As GraphicsData
 
         ''' <summary>
         ''' 

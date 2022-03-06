@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -84,7 +85,7 @@ Namespace Blender
                                                       Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
-                                                      Optional background As String = "black") As Bitmap
+                                                      Optional background As String = "black") As GraphicsData
 
             Dim defaultBackground As Color = background.TranslateColor
 
@@ -155,7 +156,7 @@ Namespace Blender
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As Bitmap
+                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
 
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
 
@@ -177,7 +178,7 @@ Namespace Blender
                                                Optional mapLevels As Integer = 25,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As Bitmap
+                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
 
             Dim colors As SolidBrush() = Designer.GetColors(colorSet, mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
@@ -224,7 +225,7 @@ Namespace Blender
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
-                                                Optional mapLevels As Integer = 25) As Bitmap
+                                                Optional mapLevels As Integer = 25) As GraphicsData
 
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
             Dim i As i32 = Scan0
@@ -255,7 +256,7 @@ Namespace Blender
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
-                                                Optional mapLevels As Integer = 25) As Bitmap
+                                                Optional mapLevels As Integer = 25) As GraphicsData
 
             Dim layers = colorSet.SelectGroup(pixels).ToArray
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
