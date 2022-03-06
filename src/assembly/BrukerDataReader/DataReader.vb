@@ -21,10 +21,10 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Constructor for the DataReader class
         ''' </summary>
-        ''' <paramname="fileName">Refers to the binary file containing the mass spectra data. For Bruker data,
+        ''' <param name="fileName">Refers to the binary file containing the mass spectra data. For Bruker data,
         ''' this is a 'ser' or a 'fid' file</param>
-        ''' <paramname="settingsFilePath">Path to the acqus or apexAcquisition.method file that should be used for reading parameters</param>
-        Public Sub New(ByVal fileName As String, ByVal Optional settingsFilePath As String = "")
+        ''' <param name="settingsFilePath">Path to the acqus or apexAcquisition.method file that should be used for reading parameters</param>
+        Public Sub New(fileName As String, Optional settingsFilePath As String = "")
             If File.Exists(fileName) Then
                 Me.FileName = fileName
             Else
@@ -48,8 +48,8 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Load the parameters from an acqus file or apexAcquisition.method file
         ''' </summary>
-        ''' <paramname="settingsFilePath"></param>
-        Public Sub LoadParameters(ByVal settingsFilePath As String)
+        ''' <param name="settingsFilePath"></param>
+        Public Sub LoadParameters(settingsFilePath As String)
             Dim fiSettingsFile = New FileInfo(settingsFilePath)
             If Not fiSettingsFile.Exists Then Throw New FileNotFoundException("Settings file not found")
             Dim filenameLower = fiSettingsFile.Name.ToLower()
@@ -65,7 +65,7 @@ Namespace BrukerDataReader
             End Select
         End Sub
 
-        Public Sub SetParameters(ByVal calA As Double, ByVal calB As Double, ByVal sampleRate As Double, ByVal numValuesInScan As Integer)
+        Public Sub SetParameters(calA As Double, calB As Double, sampleRate As Double, numValuesInScan As Integer)
             Parameters = New GlobalParameters With {
                 .ML1 = calA,
                 .ML2 = calB,
@@ -74,7 +74,7 @@ Namespace BrukerDataReader
             }
         End Sub
 
-        Public Sub SetParameters(ByVal gp As GlobalParameters)
+        Public Sub SetParameters(gp As GlobalParameters)
             Parameters = gp
         End Sub
 
@@ -90,17 +90,11 @@ Namespace BrukerDataReader
 
             Using reader = New BinaryReader(File.Open(FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 Dim fileLength = reader.BaseStream.Length
-                                ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-'''                 var totalNumberOfValues = fileLength / sizeof(int);
-''' 
-''' 
-                If Parameters IsNot Nothing Then _numMSScans = CInt(totalNumberOfValues / Parameters.NumValuesInScan)
+                Dim totalNumberOfValues = fileLength / Marshal.SizeOf(Of Integer)
+
+                If Parameters IsNot Nothing Then
+                    _numMSScans = CInt(totalNumberOfValues / Parameters.NumValuesInScan)
+                End If
             End Using
 
             Return _numMSScans
@@ -113,11 +107,10 @@ Namespace BrukerDataReader
         ''' <remarks>
         ''' Unit tests in 2010 showed this method to be 3% to 10% faster than GetMassSpectrum
         ''' </remarks>
-        ''' <paramname="scanIndex">Zero-based scan index</param>
-        ''' <paramname="mzValues">array of m/z values</param>
-        ''' <paramname="intensities">Array of intensity values</param>
-        ' ReSharper disable once UnusedMember.Global
-        Public Sub GetMassSpectrumUsingSupposedlyFasterBinaryReader(ByVal scanIndex As Integer, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
+        ''' <param name="scanIndex">Zero-based scan index</param>
+        ''' <param name="mzValues">array of m/z values</param>
+        ''' <param name="intensities">Array of intensity values</param>
+        Public Sub GetMassSpectrumUsingSupposedlyFasterBinaryReader(scanIndex As Integer, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
             Require(Parameters IsNot Nothing, "Cannot get mass spectrum. Need to first set Parameters.")
             Require(scanIndex < GetNumMSScans(), "Cannot get mass spectrum. Requested scan index is greater than number of scans in the dataset.")
 
@@ -128,17 +121,8 @@ Namespace BrukerDataReader
             If Parameters Is Nothing Then Throw New Exception("Parameters is null in GetMassSpectrumUsingSupposedlyFasterBinaryReader")
             Dim vals = New Double(Parameters.NumValuesInScan - 1) {}
             Dim diffBetweenCurrentAndPreviousScan = scanIndex - _lastScanIndexOpened
-                        ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-''' 
-'''             var byteOffset = diffBetweenCurrentAndPreviousScan * (long)this.Parameters.NumValuesInScan * sizeof(int) - this._bytesAdvanced;
-''' 
-''' 
+            Dim byteOffset = diffBetweenCurrentAndPreviousScan * Parameters.NumValuesInScan * Marshal.SizeOf(Of Integer) - _bytesAdvanced
+
             If byteOffset <> 0 Then
                 _reader.BaseStream.Seek(byteOffset, SeekOrigin.Current)
             End If
@@ -185,10 +169,10 @@ Namespace BrukerDataReader
         ''' a new BinaryReader is created every time in this method. This is advantageous in terms of making sure
         ''' the file is opened and closed properly. Unit tests in 2010 show method GetMassSpectrum to be about 3% to 10% slower.
         ''' </remarks>
-        ''' <paramname="scanIndex">Zero-based scan index</param>
-        ''' <paramname="mzValues">m/z values are returned here</param>
-        ''' <paramname="intensities">intensity values are returned here</param>
-        Public Sub GetMassSpectrum(ByVal scanIndex As Integer, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
+        ''' <param name="scanIndex">Zero-based scan index</param>
+        ''' <param name="mzValues">m/z values are returned here</param>
+        ''' <param name="intensities">intensity values are returned here</param>
+        Public Sub GetMassSpectrum(scanIndex As Integer, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
             Dim scanIndices = {scanIndex}
             GetMassSpectrum(scanIndices, mzValues, intensities)
         End Sub
@@ -202,12 +186,12 @@ Namespace BrukerDataReader
         ''' then you later call GetMassSpectrum that does not have an m/z range,
         ''' the data will still be filtered by the previously used m/z filters.
         ''' </remarks>
-        ''' <paramname="scanIndex"></param>
-        ''' <paramname="minMZ"></param>
-        ''' <paramname="maxMZ"></param>
-        ''' <paramname="mzValues"></param>
-        ''' <paramname="intensities"></param>
-        Public Sub GetMassSpectrum(ByVal scanIndex As Integer, ByVal minMZ As Single, ByVal maxMZ As Single, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
+        ''' <param name="scanIndex"></param>
+        ''' <param name="minMZ"></param>
+        ''' <param name="maxMZ"></param>
+        ''' <param name="mzValues"></param>
+        ''' <param name="intensities"></param>
+        Public Sub GetMassSpectrum(scanIndex As Integer, minMZ As Single, maxMZ As Single, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
             Require(Parameters?.ML1 > -1, "Cannot get mass spectrum. Need to first set Parameters.")
             Require(maxMZ >= minMZ, "Cannot get mass spectrum. MinMZ is greater than MaxMZ - that's impossible.")
             If Parameters Is Nothing Then Throw New Exception("Parameters is null in GetMassSpectrum")
@@ -219,10 +203,10 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Gets the summed mass spectrum.
         ''' </summary>
-        ''' <paramname="scanIndicesToBeSummed"></param>
-        ''' <paramname="mzValues"></param>
-        ''' <paramname="intensities"></param>
-        Public Sub GetMassSpectrum(ByVal scanIndicesToBeSummed As Integer(), <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
+        ''' <param name="scanIndicesToBeSummed"></param>
+        ''' <param name="mzValues"></param>
+        ''' <param name="intensities"></param>
+        Public Sub GetMassSpectrum(scanIndicesToBeSummed As Integer(), <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
             Require(Parameters IsNot Nothing AndAlso Math.Abs(Parameters.ML1 - -1) > Single.Epsilon, "Cannot get mass spectrum. Need to first set Parameters.")
             If Parameters Is Nothing Then Throw New Exception("Parameters is null in GetMassSpectrum")
             ValidateScanIndices(scanIndicesToBeSummed)
@@ -234,17 +218,8 @@ Namespace BrukerDataReader
 
                 For Each scanIndex In scanIndicesToBeSummed
                     Dim vals = New Double(Parameters.NumValuesInScan - 1) {}
-                                        ''' Cannot convert LocalDeclarationStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-'''    at ICSharpCode.CodeConverter.VB.CommonConversions.RemodelVariableDeclaration(VariableDeclarationSyntax declaration)
-'''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-'''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-'''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-''' 
-''' Input:
-''' 
-'''                     var bytePosition = scanIndex * (long)this.Parameters.NumValuesInScan * sizeof(int);
-''' 
-''' 
+                    Dim bytePosition = scanIndex * Parameters.NumValuesInScan * Marshal.SizeOf(Of Integer)
+
                     reader.BaseStream.Seek(bytePosition, SeekOrigin.Begin)
 
                     For i = 0 To Parameters.NumValuesInScan - 1
@@ -290,20 +265,20 @@ Namespace BrukerDataReader
         End Sub
 
         ' ReSharper disable once UnusedMember.Global
-        Public Sub GetMassSpectrum(ByVal scansNumsToBeSummed As Integer(), ByVal minMZ As Single, ByVal maxMZ As Single, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
+        Public Sub GetMassSpectrum(scansNumsToBeSummed As Integer(), minMZ As Single, maxMZ As Single, <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
             Require(maxMZ >= minMZ, "Cannot get mass spectrum. MinMZ is greater than MaxMZ - that's impossible.")
             Parameters.MinMZFilter = minMZ
             Parameters.MaxMZFilter = maxMZ
             GetMassSpectrum(scansNumsToBeSummed, mzValues, intensities)
         End Sub
 
-        Private Sub ValidateScanIndices(ByVal scanIndicesToBeSummed As IEnumerable(Of Integer))
+        Private Sub ValidateScanIndices(scanIndicesToBeSummed As IEnumerable(Of Integer))
             For Each scanIndex In scanIndicesToBeSummed
                 Require(scanIndex < GetNumMSScans(), "Cannot get mass spectrum. Requested scan index (" & scanIndex & ") is greater than number of scans in dataset. Note that the first scan is scan 0")
             Next
         End Sub
 
-        Private Function GetIndexForMZ(ByVal targetMZ As Single, ByVal arrayLength As Integer) As Integer
+        Private Function GetIndexForMZ(targetMZ As Single, arrayLength As Integer) As Integer
             Dim index = CInt(Parameters.NumValuesInScan / Parameters.SampleRate * (Parameters.ML1 / targetMZ - Parameters.ML2))
             index = arrayLength - index
 
@@ -318,7 +293,7 @@ Namespace BrukerDataReader
             Return index
         End Function
 
-        Private Function GetMZ(ByVal i As Integer) As Double
+        Private Function GetMZ(i As Integer) As Double
             Dim freq = i * Parameters.SampleRate / Parameters.NumValuesInScan
 
             If Math.Abs(freq + Parameters.ML2) > 0 Then

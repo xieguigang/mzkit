@@ -15,7 +15,7 @@ Namespace BrukerDataReader
             Public Value As String
         End Structure
 
-        Private Function GetNameFromNode(ByVal node As XElement) As String
+        Private Function GetNameFromNode(node As XElement) As String
             Dim elementNames = From n In node.Elements() Select n.Name.LocalName
             Dim attributeNames = From n In node.Attributes() Select n.Name.LocalName
             Dim nameIsAnXMLElement = elementNames.Contains("name")
@@ -35,7 +35,7 @@ Namespace BrukerDataReader
             Return nameValue
         End Function
 
-        Private Function GetValueFromNode(ByVal node As XContainer) As String
+        Private Function GetValueFromNode(node As XContainer) As String
             Dim elementNames = (From n In node.Elements() Select n.Name.LocalName).ToList()
             Dim fieldName = String.Empty
 
@@ -58,7 +58,7 @@ Namespace BrukerDataReader
             Return valueString
         End Function
 
-        Private Function GetDoubleFromParamList(ByVal paramList As IEnumerable(Of BrukerNameValuePair), ByVal paramName As String, ByVal valueIfMissing As Double) As Double
+        Private Function GetDoubleFromParamList(paramList As IEnumerable(Of BrukerNameValuePair), paramName As String, valueIfMissing As Double) As Double
             For Each item In paramList
 
                 If Equals(item.Name, paramName) Then
@@ -69,7 +69,7 @@ Namespace BrukerDataReader
             Return valueIfMissing
         End Function
 
-        Public Function LoadApexAcqParameters(ByVal fiSettingsFile As FileInfo) As GlobalParameters
+        Public Function LoadApexAcqParameters(fiSettingsFile As FileInfo) As GlobalParameters
             ' Bruker acquisition software will write out data like this to the apexAcquisition.method file
             ' if the user enters a sample description of "<2mg/mL  100mM  AA  SID35"
             '
@@ -130,7 +130,7 @@ Namespace BrukerDataReader
             Return parameters
         End Function
 
-        Private Function PreScanApexAcqFile(ByVal apexAcqFilePath As String) As String
+        Private Function PreScanApexAcqFile(apexAcqFilePath As String) As String
             ' Look for
             '   &lt;<
             ' but exclude matches to
@@ -165,7 +165,7 @@ Namespace BrukerDataReader
             Return fixedFilePath
         End Function
 
-        Public Function LoadApexAcqusParameters(ByVal fiSettingsFile As FileInfo) As GlobalParameters
+        Public Function LoadApexAcqusParameters(fiSettingsFile As FileInfo) As GlobalParameters
             Dim dataLookupTable = New Dictionary(Of String, Double)()
             Dim parsedResult As Double = Nothing
 

@@ -13,7 +13,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Precondition check - should run regardless of preprocessor directives.
         ''' </summary>
-        Public Sub Require(ByVal assertion As Boolean, ByVal message As String)
+        Public Sub Require(assertion As Boolean, message As String)
             If UseExceptions Then
                 If Not assertion Then Throw New PreconditionException(message)
             Else
@@ -24,7 +24,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Precondition check - should run regardless of preprocessor directives.
         ''' </summary>
-        Public Sub Require(ByVal assertion As Boolean, ByVal message As String, ByVal inner As Exception)
+        Public Sub Require(assertion As Boolean, message As String, inner As Exception)
             If UseExceptions Then
                 If Not assertion Then Throw New PreconditionException(message, inner)
             Else
@@ -35,7 +35,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Precondition check - should run regardless of preprocessor directives.
         ''' </summary>
-        Public Sub Require(ByVal assertion As Boolean)
+        Public Sub Require(assertion As Boolean)
             If UseExceptions Then
                 If Not assertion Then Throw New PreconditionException("Precondition failed.")
             Else
@@ -46,7 +46,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Postcondition check.
         ''' </summary>
-        Public Sub Ensure(ByVal assertion As Boolean, ByVal message As String)
+        Public Sub Ensure(assertion As Boolean, message As String)
             If UseExceptions Then
                 If Not assertion Then Throw New PostconditionException(message)
             Else
@@ -57,7 +57,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Postcondition check.
         ''' </summary>
-        Public Sub Ensure(ByVal assertion As Boolean, ByVal message As String, ByVal inner As Exception)
+        Public Sub Ensure(assertion As Boolean, message As String, inner As Exception)
             If UseExceptions Then
                 If Not assertion Then Throw New PostconditionException(message, inner)
             Else
@@ -68,7 +68,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Postcondition check.
         ''' </summary>
-        Public Sub Ensure(ByVal assertion As Boolean)
+        Public Sub Ensure(assertion As Boolean)
             If UseExceptions Then
                 If Not assertion Then Throw New PostconditionException("Postcondition failed.")
             Else
@@ -79,7 +79,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Invariant check.
         ''' </summary>
-        Public Sub Invariant(ByVal assertion As Boolean, ByVal message As String)
+        Public Sub Invariant(assertion As Boolean, message As String)
             If UseExceptions Then
                 If Not assertion Then Throw New InvariantException(message)
             Else
@@ -90,7 +90,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Invariant check.
         ''' </summary>
-        Public Sub Invariant(ByVal assertion As Boolean, ByVal message As String, ByVal inner As Exception)
+        Public Sub Invariant(assertion As Boolean, message As String, inner As Exception)
             If UseExceptions Then
                 If Not assertion Then Throw New InvariantException(message, inner)
             Else
@@ -101,7 +101,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Invariant check.
         ''' </summary>
-        Public Sub Invariant(ByVal assertion As Boolean)
+        Public Sub Invariant(assertion As Boolean)
             If UseExceptions Then
                 If Not assertion Then Throw New InvariantException("Invariant failed.")
             Else
@@ -112,7 +112,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Assertion check.
         ''' </summary>
-        Public Sub Assert(ByVal assertion As Boolean, ByVal message As String)
+        Public Sub Assert(assertion As Boolean, message As String)
             If UseExceptions Then
                 If Not assertion Then Throw New AssertionException(message)
             Else
@@ -123,7 +123,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Assertion check.
         ''' </summary>
-        Public Sub Assert(ByVal assertion As Boolean, ByVal message As String, ByVal inner As Exception)
+        Public Sub Assert(assertion As Boolean, message As String, inner As Exception)
             If UseExceptions Then
                 If Not assertion Then Throw New AssertionException(message, inner)
             Else
@@ -134,7 +134,7 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Assertion check.
         ''' </summary>
-        Public Sub Assert(ByVal assertion As Boolean)
+        Public Sub Assert(assertion As Boolean)
             If UseExceptions Then
                 If Not assertion Then Throw New AssertionException("Assertion failed.")
             Else
@@ -173,11 +173,11 @@ Namespace BrukerDataReader
         Protected Sub New()
         End Sub
 
-        Protected Sub New(ByVal message As String)
+        Protected Sub New(message As String)
             MyBase.New(message)
         End Sub
 
-        Protected Sub New(ByVal message As String, ByVal inner As Exception)
+        Protected Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -198,14 +198,14 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Precondition Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
         ''' <summary>
         ''' Precondition Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -226,14 +226,14 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Postcondition Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
         ''' <summary>
         ''' Postcondition Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -253,13 +253,13 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Invariant Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
         ''' <summary>
         ''' Invariant Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -280,14 +280,14 @@ Namespace BrukerDataReader
         ''' <summary>
         ''' Assertion Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
         ''' <summary>
         ''' Assertion Exception.
         ''' </summary>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class

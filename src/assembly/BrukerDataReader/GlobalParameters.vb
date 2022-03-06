@@ -53,7 +53,7 @@ Namespace BrukerDataReader
         End Sub
 
         ' ReSharper disable once UnusedMember.Global
-        Public Sub New(ByVal ml1 As Double, ByVal ml2 As Double, ByVal sampleRate As Double, ByVal numValuesInScan As Integer)
+        Public Sub New(ml1 As Double, ml2 As Double, sampleRate As Double, numValuesInScan As Integer)
             Me.New()
             Me.ML1 = ml1
             Me.ML2 = ml2

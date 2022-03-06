@@ -63,7 +63,7 @@ Namespace BrukerDataReader
             Return 0
         End Function
 
-        Private Sub PerformFourierTransform(ByVal nn As Integer, ByRef data As Double(), ByVal iSign As Integer)
+        Private Sub PerformFourierTransform(nn As Integer, ByRef data As Double(), iSign As Integer)
             Dim m As Long
             Dim i As Long
             Dim n As Long = nn << 1
