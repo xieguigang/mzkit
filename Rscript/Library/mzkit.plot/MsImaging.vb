@@ -96,12 +96,12 @@ Module MsImaging
     ''' <returns></returns>
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 100px 700px 300px 300px"),
+            .padding = InteropArgumentHelper.getPadding(args!padding, "padding:200px 500px 200px 200px"),
             .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
             .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
         Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
-        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
+        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "3,3")
         Dim pixelDrawer As Boolean = args.getValue("pixelDrawer", env, False)
         Dim region As String() = args.getValue(Of String())("region", env, Nothing)
 
@@ -121,7 +121,7 @@ Module MsImaging
             ion = ion.Take(polygon, scale.SizeParser)
         End If
 
-        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
+        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme, driver:=env.getDriver)
         Dim size As Size = app.MeasureSize
 
         Return app.Plot($"{size.Width},{size.Height}", driver:=env.getDriver)

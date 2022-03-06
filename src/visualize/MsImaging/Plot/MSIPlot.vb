@@ -68,12 +68,14 @@ Public Class MSIPlot : Inherits Plot
     ReadOnly pixelScale As Size
     ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
+    ReadOnly driver As Drivers = Drivers.Default
 
     Public Sub New(ion As SingleIonLayer,
                    pixelScale As Size,
                    cutoff As DoubleRange,
                    pixelDrawer As Boolean,
-                   theme As Theme)
+                   theme As Theme,
+                   driver As Drivers)
 
         Call MyBase.New(theme)
 
@@ -81,6 +83,7 @@ Public Class MSIPlot : Inherits Plot
         Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
+        Me.driver = driver
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -124,7 +127,8 @@ Public Class MSIPlot : Inherits Plot
                         ylabel:=ylabel,
                         XtickFormat:="F0",
                         YtickFormat:="F0",
-                        htmlLabel:=False)
+                        htmlLabel:=False,
+                        driver:=driver)
 
         Call engine.RenderPixels(g, rect.Location, ion.MSILayer, scaleSize, colorScale, cutoff:=cutoff)
 

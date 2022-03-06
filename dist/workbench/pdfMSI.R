@@ -18,6 +18,6 @@ pdf(file = "./MsImaging.pdf") {
 pdf(file = "./MsImaging2.pdf") {
 viewer(data)
 	|> MSIlayer([741.55, 743.54, 798.54])
-	|> plot(colorSet = "viridis:plasma", grid.fill = "black")
+	|> plot(colorSet = "viridis:plasma", grid.fill = "white")
 	;
 }
