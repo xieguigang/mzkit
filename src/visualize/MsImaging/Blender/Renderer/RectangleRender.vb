@@ -146,6 +146,12 @@ Namespace Blender
                          End Sub)
         End Function
 
+        Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, dimSize As Size, colorSet() As SolidBrush,
+                                          Optional cutoff As DoubleRange = Nothing)
+
+            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, cutoff, dimSize, offset)
+        End Sub
+
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
@@ -166,7 +172,7 @@ Namespace Blender
                 bg:=defaultFill,
                 driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
-                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, dimSize)
+                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, dimSize, Nothing)
                          End Sub)
         End Function
 
@@ -189,7 +195,8 @@ Namespace Blender
                                              defaultColor As SolidBrush,
                                              colors As SolidBrush(),
                                              cutoff As DoubleRange,
-                                             dimSize As Size)
+                                             dimSize As Size,
+                                             offset As Point)
             Dim color As SolidBrush
             Dim index As Integer
             Dim levelRange As DoubleRange = New Double() {0, 1}
@@ -197,7 +204,11 @@ Namespace Blender
 
             For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
                 Dim level As Double = point.level
-                Dim rect As New Rectangle(New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height), dimSize)
+                Dim pos As New Point With {
+                    .X = (point.x - 1) * dimSize.Width + offset.X,
+                    .Y = (point.y - 1) * dimSize.Height + offset.Y
+                }
+                Dim rect As New Rectangle(pos, dimSize)
 
                 If level <= 0.0 Then
                     color = defaultColor
@@ -246,7 +257,7 @@ Namespace Blender
                                      .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
                                      .ToArray
 
-                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, dimSize)
+                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, dimSize, Nothing)
                              Next
                          End Sub)
         End Function
@@ -282,7 +293,7 @@ Namespace Blender
                                               End Function) _
                                       .ToArray
 
-                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, dimSize)
+                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, dimSize, Nothing)
                              Next
                          End Sub)
         End Function
