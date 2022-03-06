@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
-Namespace Imaging
+Namespace Blender
 
     Public Enum RenderingModes
 

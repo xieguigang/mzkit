@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Imaging
+Namespace Blender
 
     Public Class PixelRender : Inherits Renderer
 

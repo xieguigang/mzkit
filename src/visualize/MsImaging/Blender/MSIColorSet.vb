@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
-Namespace Imaging
+Namespace Blender
 
     Public Module MSIColorSet
 

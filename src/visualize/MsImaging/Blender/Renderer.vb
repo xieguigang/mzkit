@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
-Namespace Imaging
+Namespace Blender
 
     Public MustInherit Class Renderer
 
