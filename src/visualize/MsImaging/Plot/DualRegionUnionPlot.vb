@@ -48,7 +48,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -144,12 +144,12 @@ Public Class DualRegionUnionPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI1 As Image, MSI2 As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New PixelRender(heatmapRender:=False)
 
-        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1)
+        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
-        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet2)
+        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet2).AsGDIImage
         MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale,

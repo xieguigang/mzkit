@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Quantile
 
-Namespace Imaging
+Namespace Blender
 
     Public Delegate Function IThreshold(intensity As Double(), q As Double) As Double
     Public Delegate Function IQuantizationThreshold(intensity As Double()) As Double

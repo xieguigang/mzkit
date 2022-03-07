@@ -179,13 +179,13 @@ Public Class SingleIonLayer
         }
     End Function
 
-    Public Shared Function GetLayer(mz As Double, viewer As Drawer, mzErr As Tolerance) As SingleIonLayer
+    Public Shared Function GetLayer(mz As Double(), viewer As Drawer, mzErr As Tolerance) As SingleIonLayer
         Dim pixels As PixelData() = viewer _
-            .LoadPixels({mz}, mzErr) _
+            .LoadPixels(mz, mzErr) _
             .ToArray
 
         Return New SingleIonLayer With {
-            .IonMz = mz,
+            .IonMz = If(mz.Length = 1, mz(0), mz.Select(Function(d) d.ToString("F4")).JoinBy("+")),
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }

@@ -54,23 +54,20 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -99,12 +96,12 @@ Module MsImaging
     ''' <returns></returns>
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 100px 700px 300px 300px"),
+            .padding = InteropArgumentHelper.getPadding(args!padding, "padding:200px 500px 200px 200px"),
             .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
             .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
         Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
-        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
+        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "3,3")
         Dim pixelDrawer As Boolean = args.getValue("pixelDrawer", env, False)
         Dim region As String() = args.getValue(Of String())("region", env, Nothing)
 
@@ -124,10 +121,10 @@ Module MsImaging
             ion = ion.Take(polygon, scale.SizeParser)
         End If
 
-        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
+        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme, driver:=env.getDriver)
         Dim size As Size = app.MeasureSize
 
-        Return app.Plot($"{size.Width},{size.Height}")
+        Return app.Plot($"{size.Width},{size.Height}", driver:=env.getDriver)
     End Function
 
     ''' <summary>
@@ -392,7 +389,7 @@ Module MsImaging
         Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New RectangleRender(imageDriverHandler.getDriver(env), heatmapRender:=False)
         Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
         Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
         Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
@@ -412,7 +409,7 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function GetIonLayer(viewer As Drawer, mz As Double,
+    Public Function GetIonLayer(viewer As Drawer, mz As Double(),
                                 Optional tolerance As Object = "da:0.1",
                                 Optional env As Environment = Nothing) As Object
 
@@ -501,11 +498,12 @@ Module MsImaging
                           <RRawVectorArgument>
                           Optional pixelSize As Object = "5,5",
                           Optional tolerance As Object = "da:0.1",
-                          Optional color$ = "YlGnBu:c8",
+                          Optional color$ = "viridis:turbo",
                           Optional levels% = 30,
                           <RRawVectorArgument(GetType(Double))>
                           Optional cutoff As Object = "0.1,0.75",
-                          Optional pixelDrawer As Boolean = True,
+                          <RRawVectorArgument>
+                          Optional background As Object = NameOf(Color.Transparent),
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -532,7 +530,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                background:=RColorPalette.getColor(background, "Translate"),
+                driver:=env.getDriver
             )
         Else
             Return viewer.DrawLayer(
@@ -542,7 +541,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                background:=RColorPalette.getColor(background, "Translate"),
+                driver:=env.getDriver
             )
         End If
     End Function
@@ -658,7 +658,7 @@ Module MsImaging
         End If
 
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
@@ -741,29 +741,5 @@ Module MsImaging
                         End Function) _
                 .ToArray
         }
-    End Function
-
-    ''' <summary>
-    ''' flatten image layers
-    ''' </summary>
-    ''' <param name="layers">
-    ''' layer bitmaps should be all in equal size
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("flatten")>
-    Public Function flatten(layers As Bitmap(), Optional bg$ = "white") As Bitmap
-        Using g As Graphics2D = New Bitmap(layers(Scan0).Width, layers(Scan0).Height)
-            If Not bg.StringEmpty Then
-                Call g.Clear(bg.GetBrush)
-            End If
-
-            ' 在这里是反向叠加图层的
-            ' 向量中最开始的图层表示为最上层的图层，即最后进行绘制的图层
-            For Each layer As Bitmap In layers.Reverse
-                Call g.DrawImageUnscaled(layer, New Point)
-            Next
-
-            Return g.ImageResource
-        End Using
     End Function
 End Module

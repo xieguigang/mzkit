@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::f2eeafba5ad33dbd7084d7327d5038f8, src\visualize\MsImaging\Plot\MSIPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MSIPlot
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) MeasureSize
-    ' 
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Class MSIPlot
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) MeasureSize
+' 
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -67,12 +68,14 @@ Public Class MSIPlot : Inherits Plot
     ReadOnly pixelScale As Size
     ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
+    ReadOnly driver As Drivers = Drivers.Default
 
     Public Sub New(ion As SingleIonLayer,
                    pixelScale As Size,
                    cutoff As DoubleRange,
                    pixelDrawer As Boolean,
-                   theme As Theme)
+                   theme As Theme,
+                   driver As Drivers)
 
         Call MyBase.New(theme)
 
@@ -80,6 +83,7 @@ Public Class MSIPlot : Inherits Plot
         Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
+        Me.driver = driver
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -109,11 +113,12 @@ Public Class MSIPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
-        Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
-
-        MSI = engine.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
-        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        Dim engine As New RectangleRender(Drivers.Default, heatmapRender:=False)
+        Dim colorScale = Designer.GetColors(theme.colorSet, 25).Select(Function(c) New SolidBrush(c)).ToArray
+        Dim scaleSize As New Size With {
+            .Width = rect.Width / ion.DimensionSize.Width,
+            .Height = rect.Height / ion.DimensionSize.Height
+        }
 
         Call g.DrawAxis(canvas, scale,
                         showGrid:=True,
@@ -122,13 +127,14 @@ Public Class MSIPlot : Inherits Plot
                         ylabel:=ylabel,
                         XtickFormat:="F0",
                         YtickFormat:="F0",
-                        htmlLabel:=False)
+                        htmlLabel:=False,
+                        driver:=driver)
 
-        Call g.DrawImage(MSI, rect)
+        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, scaleSize, colorScale, cutoff:=cutoff)
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim label As String = Double.Parse(ion.IonMz).ToString("F4")
+        Dim label As String = ion.IonMz
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzLegend As New LegendObject With {

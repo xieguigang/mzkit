@@ -66,6 +66,7 @@ Public Module FeatureRegions
                               Return region.Select(Function(i) i.Value).ToArray
                           End Function)
 
+        Throw New NotImplementedException
     End Function
 
     <Extension>

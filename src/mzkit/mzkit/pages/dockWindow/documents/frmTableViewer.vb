@@ -134,13 +134,9 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
                 For Each fieldRef As String In fields
                     Dim i As Integer = fieldNames.IndexOf(fieldRef)
-                    Dim array As New List(Of Object)
+                    Dim array As Array = getFieldVector(i)
 
-                    For Each row As DataGridViewRow In DataGridView1.Rows
-                        array.Add(row.Cells(i).Value)
-                    Next
-
-                    table.add(fieldRef, REnv.TryCastGenericArray(array.ToArray, MyApplication.REngine.globalEnvir))
+                    Call table.add(fieldRef, array)
                 Next
 
                 Call MyApplication.REngine.Add(name, table)
@@ -148,18 +144,59 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
             End Sub, config:=form)
     End Sub
 
-    Private Sub VisualizeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizeToolStripMenuItem.Click
-        Dim load As New InputDataVisual
+    Public Function getFieldVector(fieldRef As String) As Array
+        Dim fieldNames As New List(Of String)
+
+        For Each col As DataGridViewColumn In DataGridView1.Columns
+            Call fieldNames.Add(col.Name)
+        Next
+
+        Dim i As Integer = fieldNames.IndexOf(fieldRef)
+        Dim vec = getFieldVector(i)
+
+        Return vec
+    End Function
+
+    Public Function getFieldVector(i As Integer) As Array
+        Dim array As New List(Of Object)
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            array.Add(row.Cells(i).Value)
+        Next
+
+        Return REnv.TryCastGenericArray(array.ToArray, MyApplication.REngine.globalEnvir)
+    End Function
+
+    Public Function GetSchema() As Dictionary(Of String, Type)
         Dim schema As New Dictionary(Of String, Type)
 
         For Each col As DataGridViewColumn In DataGridView1.Columns
             Call schema.Add(col.Name, GetType(Double))
         Next
 
-        Call load.SetAxis(schema)
+        Return schema
+    End Function
+
+    Private Sub VisualizeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizeToolStripMenuItem.Click
+        Dim load As New InputDataVisual
+
+        Call load.SetAxis(GetSchema)
         Call InputDialog.Input(
             Sub(creator)
 
             End Sub, config:=load)
+    End Sub
+
+    Private Sub ActionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActionsToolStripMenuItem.Click
+        Dim takeActions As New InputAction
+
+        Call takeActions.SetFields(GetSchema.Keys)
+        Call InputDialog.Input(Sub(input)
+                                   Dim name As String = input.getTargetName
+                                   Dim action As String = input.getActionName
+                                   Dim data As Array = getFieldVector(name)
+
+                                   Call Actions.RunAction(action, data)
+                               End Sub, config:=takeActions)
     End Sub
 End Class
