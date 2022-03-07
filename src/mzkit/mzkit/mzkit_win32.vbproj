@@ -312,6 +312,7 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\CLI.vb" />
+    <Compile Include="application\Actions.vb" />
     <Compile Include="application\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\WindowModules.vb" />
@@ -341,6 +342,12 @@
       <DependentUpon>frmTweaks.vb</DependentUpon>
     </Compile>
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Inputs\InputAction.Designer.vb">
+      <DependentUpon>InputAction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputAction.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\Inputs\InputDataVisual.Designer.vb">
@@ -771,6 +778,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputAction.resx">
+      <DependentUpon>InputAction.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputDataVisual.resx">
       <DependentUpon>InputDataVisual.vb</DependentUpon>
