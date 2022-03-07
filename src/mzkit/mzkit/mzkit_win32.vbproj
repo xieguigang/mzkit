@@ -250,7 +250,6 @@
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="SMRUCC.genomics.Analysis.HTS.GSEA.Fisher.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
@@ -983,6 +982,10 @@
     <ProjectReference Include="..\..\..\..\console\console\console.vbproj">
       <Project>{b17ef2af-f2de-4036-9e2a-5fa10f8116c7}</Project>
       <Name>console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\FisherCore.vbproj">
+      <Project>{62cc1cc2-7e2b-47ba-a745-37c36bd84955}</Project>
+      <Name>FisherCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
       <Project>{C699D311-9923-4C19-BF70-5048D0E2CF5D}</Project>
