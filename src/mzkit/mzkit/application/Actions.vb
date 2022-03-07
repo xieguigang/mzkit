@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.mzkit_win32.My
+Imports Microsoft.VisualBasic.Linq
 
 Module Actions
 
@@ -29,7 +30,10 @@ Module Actions
     Private Sub registerMs1Search()
         Call Register("Peak List Annotation",
              Sub(data)
+                 MyApplication.host.mzkitSearch.TextBox3.Text = data.AsObjectEnumerator.JoinBy(vbCrLf)
 
+                 Call MyApplication.host.mzkitSearch.TabControl1.SelectTab(MyApplication.host.mzkitSearch.TabPage3)
+                 Call MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
              End Sub)
     End Sub
 
