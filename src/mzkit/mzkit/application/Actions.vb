@@ -1,8 +1,10 @@
 ﻿Imports BioNovoGene.mzkit_win32.My
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
+Imports SMRUCC.genomics.GCModeller.Workbench.KEGGReport
 
 Module Actions
 
@@ -48,7 +50,7 @@ Module Actions
                  Dim kegg As Background = Globals.loadBackground(maps)
                  Dim enrich = frmTaskProgress.LoadData(
                     Function(msg)
-                        Dim all = kegg.Enrichment(data.AsObjectEnumerator.Select(Function(c) c.ToString), outputAll:=True, showProgress:=True, doProgress:=msg).ToArray
+                        Dim all = kegg.Enrichment(data.AsObjectEnumerator.Where(Function(c) Not c Is Nothing).Select(Function(c) c.ToString), outputAll:=True, showProgress:=True, doProgress:=msg).ToArray
                         Call msg("Do FDR...")
                         Dim fdr = all.FDRCorrection.OrderBy(Function(p) p.pvalue).ToArray
 
@@ -62,9 +64,12 @@ Module Actions
                          Dim id As String = row("term")
                          Dim map As Map = mapIndex(id)
                          Dim geneIds = row("geneIDs").ToString.StringSplit(",\s+").Select(Function(gid) New NamedValue(Of String)(gid, "blue")).ToArray
-                         Dim image As Image = LocalRender.Rendering(map, geneIds)
+                         Dim image As String = ReportRender.Render(map, geneIds)
+                         Dim temp As String = TempFileSystem.GetAppSysTempFile(".html", sessionID:=App.PID, prefix:="kegg_pathway")
+                         Dim browser = VisualStudio.ShowDocument(Of frmHtmlViewer)(title:=map.Name)
 
-                         VisualStudio.ShowDocument(Of frmPlotViewer)(title:=map.Name).PictureBox1.BackgroundImage = image
+                         Call image.SaveTo(temp)
+                         Call browser.LoadHtml(temp)
                      End Sub
                  table.LoadTable(Sub(grid)
                                      grid.Columns.Add(NameOf(EnrichmentResult.term), NameOf(EnrichmentResult.term))

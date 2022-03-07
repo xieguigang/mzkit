@@ -1099,6 +1099,10 @@
       <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>
       <Name>WkHtmlToPdf</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\modules\keggReport\keggReport.vbproj">
+      <Project>{c6f51b7c-c3f9-4bdf-8611-91528c5a096f}</Project>
+      <Name>keggReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.vbproj">
       <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
       <Name>RDev</Name>
