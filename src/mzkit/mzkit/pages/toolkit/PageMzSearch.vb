@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -457,7 +458,7 @@ Public Class PageMzSearch
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim modes As String() = (From x In CheckedListBox1.CheckedItems Let str = x.ToString Select str).ToArray
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
-        Dim result As New List(Of KEGGQuery)
+        Dim result As New List(Of MzQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
         Dim keggMeta As MSJointConnection = Nothing
         Dim dbNames As String() = getDatabaseNames.ToArray
@@ -470,7 +471,7 @@ Public Class PageMzSearch
             Next
 
             keggMeta = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
-            Dim anno As KEGGQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
+            Dim anno As MzQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
 
             Call result.AddRange(anno)
         Next
@@ -488,15 +489,15 @@ Public Class PageMzSearch
                 Call grid.Columns.Add("exact_mass", "exact_mass")
                 Call grid.Columns.Add("score", "score")
 
-                For Each ion As KEGGQuery In result
-                    Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
+                For Each ion As MzQuery In result
+                    Dim kegg As Compound = keggMeta.GetCompound(ion.unique_id)
 
                     Call grid.Rows.Add(
                         ion.mz.ToString("F4"),
                         ion.ppm.ToString("F1"),
                         ion.precursorType,
-                        ion.kegg_id,
-                        If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
+                        ion.unique_id,
+                        If(kegg.commonNames.FirstOrDefault, ion.unique_id),
                         kegg.formula,
                         kegg.exactMass,
                         ion.score.ToString("F2")

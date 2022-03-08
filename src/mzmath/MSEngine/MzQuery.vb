@@ -80,7 +80,8 @@ Public Structure MzQuery
                 ppm = 0.0 AndAlso
                 score = 0.0 AndAlso
                 precursorType.StringEmpty AndAlso
-                unique_id.StringEmpty
+                unique_id.StringEmpty AndAlso
+                name.StringEmpty
         End Get
     End Property
 
@@ -90,7 +91,8 @@ Public Structure MzQuery
             .mz = mz,
             .ppm = ppm,
             .precursorType = precursorType,
-            .score = score
+            .score = score,
+            .name = name
         }
     End Function
 

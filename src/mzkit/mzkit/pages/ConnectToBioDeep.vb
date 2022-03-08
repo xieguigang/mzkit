@@ -122,7 +122,7 @@ Public Class ConnectToBioDeep
             .ExportInferRaw(result) _
             .Inference _
             .ToDictionary(Function(a)
-                              Return $"{a.ROI}|{a.infer.kegg.kegg_id}|{a.precursorType}|{a.infer.reference.id}|{a.infer.rawFile}"
+                              Return $"{a.ROI}|{a.infer.kegg.unique_id}|{a.precursorType}|{a.infer.reference.id}|{a.infer.rawFile}"
                           End Function)
 
         table.ViewRow = Sub(obj)

@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.My
 Imports BioNovoGene.mzkit_win32.RibbonLib.Controls
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -228,16 +229,16 @@ Public Class PageMzkitTools
                         Dim mzdiff1 As Tolerance = Tolerance.DeltaMass(0.001)
                         Dim mode As String = scanData.name.Match("[+-]")
                         Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, If(mode = "+", 1, -1), mzdiff1), info:="Load KEGG repository data...")
-                        Dim anno As KEGGQuery() = kegg.SetAnnotation(scanData.mz)
+                        Dim anno As MzQuery() = kegg.SetAnnotation(scanData.mz)
                         Dim mzdiff As Tolerance = Tolerance.DeltaMass(0.05)
                         Dim compound As Compound
 
                         For Each mzi As ms2 In scanData.ms2
-                            Dim hit As KEGGQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
+                            Dim hit As MzQuery = anno.Where(Function(d) mzdiff(d.mz, mzi.mz)).FirstOrDefault
 
-                            If Not hit.kegg_id.StringEmpty Then
-                                compound = kegg.GetCompound(hit.kegg_id)
-                                mzi.Annotation = $"{mzi.mz.ToString("F4")} {compound.commonNames.FirstOrDefault([default]:=hit.kegg_id)}{hit.precursorType}"
+                            If Not hit.unique_id.StringEmpty Then
+                                compound = kegg.GetCompound(hit.unique_id)
+                                mzi.Annotation = $"{mzi.mz.ToString("F4")} {compound.commonNames.FirstOrDefault([default]:=hit.unique_id)}{hit.precursorType}"
                             End If
                         Next
                     End Sub)

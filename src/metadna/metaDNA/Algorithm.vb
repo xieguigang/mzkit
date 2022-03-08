@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f17e446fbfc4a75caf25dd3dbff34d43, src\metadna\metaDNA\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Algorithm
-    ' 
-    '     Properties: ms1Err
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
-    '               GetPerfermanceCounter, GetUnknownSet, RunInfer, RunIteration, SetKeggLibrary
-    '               SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Class Algorithm
+' 
+'     Properties: ms1Err
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
+'               GetPerfermanceCounter, GetUnknownSet, RunInfer, RunIteration, SetKeggLibrary
+'               SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -233,9 +234,9 @@ Public Class Algorithm
 
         For Each hit As PeakMs2 In candidates
             Dim alignment As InferLink = GetBestQuery(hit, seed)
-            Dim kegg As New KEGGQuery With {
+            Dim kegg As New MzQuery With {
                 .mz = mz,
-                .kegg_id = compound.entry,
+                .unique_id = compound.entry,
                 .precursorType = type.ToString,
                 .ppm = PPMmethod.PPM(mz, hit.mz)
             }
@@ -386,10 +387,10 @@ Public Class Algorithm
                 .name = unknown.ToString
             }
 
-            For Each DIAseed As KEGGQuery In kegg.QueryByMz(unknown.mz)
+            For Each DIAseed As MzQuery In kegg.QueryByMz(unknown.mz)
                 Yield New AnnotatedSeed With {
                     .id = unknown.lib_guid,
-                    .kegg_id = DIAseed.kegg_id,
+                    .kegg_id = DIAseed.unique_id,
                     .parent = New ms1_scan With {
                         .mz = unknown.mz,
                         .scan_time = unknown.rt,

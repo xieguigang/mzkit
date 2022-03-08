@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::dfd796e56602efd850305e3d372adcc0, src\metadna\metaDNA\MSJointConnection.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MSJointConnection
-    ' 
-    '     Properties: allClusters
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetCompound, getEnrichedMzSet, GetEnrichment, (+2 Overloads) ImportsBackground, SetAnnotation
-    '               (+2 Overloads) toClusters
-    ' 
-    ' /********************************************************************************/
+' Class MSJointConnection
+' 
+'     Properties: allClusters
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: GetCompound, getEnrichedMzSet, GetEnrichment, (+2 Overloads) ImportsBackground, SetAnnotation
+'               (+2 Overloads) toClusters
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
@@ -79,7 +80,7 @@ Public Class MSJointConnection
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(kegg_id As String) As Compound
-        Return kegg.GetCompound(kegg_id)
+        Return kegg.GetCompound(kegg_id).KEGG
     End Function
 
     Public Function GetEnrichment(id As IEnumerable(Of String)) As EnrichmentResult()
@@ -89,11 +90,11 @@ Public Class MSJointConnection
            .ToArray
     End Function
 
-    Public Function GetEnrichment(mz As Double(), Optional ByRef allId As Dictionary(Of String, KEGGQuery()) = Nothing) As EnrichmentResult()
-        Dim allIdList As Dictionary(Of String, KEGGQuery()) = mz _
+    Public Function GetEnrichment(mz As Double(), Optional ByRef allId As Dictionary(Of String, MzQuery()) = Nothing) As EnrichmentResult()
+        Dim allIdList As Dictionary(Of String, MzQuery()) = mz _
             .Select(AddressOf kegg.QueryByMz) _
             .IteratesALL _
-            .GroupBy(Function(cid) cid.kegg_id) _
+            .GroupBy(Function(cid) cid.unique_id) _
             .ToDictionary(Function(cid) cid.Key,
                           Function(cid)
                               Return cid.ToArray
@@ -105,10 +106,10 @@ Public Class MSJointConnection
         Return enrichment
     End Function
 
-    Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, KEGGQuery)()
-        Dim allId As Dictionary(Of String, KEGGQuery()) = Nothing
+    Private Function getEnrichedMzSet(mz As Double(), topN As Integer) As IGrouping(Of String, MzQuery)()
+        Dim allId As Dictionary(Of String, MzQuery()) = Nothing
         Dim enrichment As EnrichmentResult() = GetEnrichment(mz, allId).Take(topN).ToArray
-        Dim mzSet As IGrouping(Of String, KEGGQuery)() = enrichment _
+        Dim mzSet As IGrouping(Of String, MzQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
                         Dim result = list.geneIDs _
@@ -117,10 +118,10 @@ Public Class MSJointConnection
                             .ToArray
                         Dim copy = result _
                             .Select(Function(q)
-                                        Return New KEGGQuery With {
+                                        Return New MzQuery With {
                                             .score = score,
                                             .precursorType = q.precursorType,
-                                            .kegg_id = q.kegg_id,
+                                            .unique_id = q.unique_id,
                                             .mz = q.mz,
                                             .ppm = q.ppm
                                         }
@@ -151,15 +152,15 @@ Public Class MSJointConnection
     ''' + un-enriched result: zero score
     ''' 
     ''' </remarks>
-    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As KEGGQuery()
+    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As MzQuery()
         Dim mzSet = getEnrichedMzSet(mz, topN)
-        Dim annotation As KEGGQuery() = mzSet _
+        Dim annotation As MzQuery() = mzSet _
             .Select(Function(mzi)
                         Return mzi _
-                            .GroupBy(Function(i) i.kegg_id) _
+                            .GroupBy(Function(i) i.unique_id) _
                             .Select(Function(m)
-                                        Return New KEGGQuery With {
-                                            .kegg_id = m.Key,
+                                        Return New MzQuery With {
+                                            .unique_id = m.Key,
                                             .mz = Double.Parse(mzi.Key),
                                             .ppm = m.First.ppm,
                                             .precursorType = m.First.precursorType,
@@ -170,13 +171,13 @@ Public Class MSJointConnection
                             .First
                     End Function) _
             .ToArray
-        Dim allIdList As KEGGQuery() = mz _
+        Dim allIdList As MzQuery() = mz _
             .Select(AddressOf kegg.QueryByMz) _
             .IteratesALL _
             .ToArray
         Dim unique = annotation _
             .JoinIterates(allIdList) _
-            .GroupBy(Function(a) a.kegg_id) _
+            .GroupBy(Function(a) a.unique_id) _
             .Select(Function(cid)
                         Return cid.OrderByDescending(Function(d) d.score).First
                     End Function) _
