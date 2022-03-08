@@ -105,7 +105,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Return index.TryGetValue(id)
     End Function
 
-    Public Function MSetAnnotation(mzlist As IEnumerable(Of Double)) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
+    Public Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional topN As Integer = 3) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
         Return mzlist.Select(AddressOf QueryByMz).IteratesALL
     End Function
 
