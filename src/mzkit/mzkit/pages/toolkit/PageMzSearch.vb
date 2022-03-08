@@ -278,7 +278,9 @@ Public Class PageMzSearch
 
         CheckedListBox1.SetItemChecked(0, True)
         ComboBox1.SelectedIndex = 0
-        vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
+
+        Call vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
+        Call ReloadMetaDatabase()
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -437,6 +439,16 @@ Public Class PageMzSearch
         searchPage.page.runSearch(isotope)
     End Sub
 
+    Public Iterator Function getDatabaseNames() As IEnumerable(Of String)
+        For Each check In CheckedListBox2.CheckedItems
+            Yield check.ToString
+        Next
+    End Function
+
+    Public Sub ReloadMetaDatabase()
+
+    End Sub
+
     ''' <summary>
     ''' do ms1 peak list annotation
     ''' </summary>
@@ -448,9 +460,15 @@ Public Class PageMzSearch
         Dim result As New List(Of KEGGQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
         Dim keggMeta As MSJointConnection = Nothing
+        Dim dbNames As String() = getDatabaseNames.ToArray
 
         For Each mode As String In modes
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
+
+            For Each db As String In dbNames
+
+            Next
+
             keggMeta = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
             Dim anno As KEGGQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
 

@@ -57,6 +57,8 @@ Partial Class PageMzSearch
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.CheckedListBox2 = New System.Windows.Forms.CheckedListBox()
+        Me.Label9 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -307,6 +309,8 @@ Partial Class PageMzSearch
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.Label9)
+        Me.GroupBox1.Controls.Add(Me.CheckedListBox2)
         Me.GroupBox1.Controls.Add(Me.NumericUpDown1)
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Controls.Add(Me.Label7)
@@ -387,8 +391,25 @@ Partial Class PageMzSearch
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(100, 21)
         Me.Button3.TabIndex = 2
-        Me.Button3.Text = "Search KEGG"
+        Me.Button3.Text = "Search"
         Me.Button3.UseVisualStyleBackColor = True
+        '
+        'CheckedListBox2
+        '
+        Me.CheckedListBox2.FormattingEnabled = True
+        Me.CheckedListBox2.Location = New System.Drawing.Point(252, 305)
+        Me.CheckedListBox2.Name = "CheckedListBox2"
+        Me.CheckedListBox2.Size = New System.Drawing.Size(144, 196)
+        Me.CheckedListBox2.TabIndex = 6
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(252, 280)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(101, 12)
+        Me.Label9.TabIndex = 7
+        Me.Label9.Text = "Select Database:"
         '
         'PageMzSearch
         '
@@ -448,4 +469,6 @@ Partial Class PageMzSearch
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents NumericUpDown1 As NumericUpDown
+    Friend WithEvents CheckedListBox2 As CheckedListBox
+    Friend WithEvents Label9 As Label
 End Class
