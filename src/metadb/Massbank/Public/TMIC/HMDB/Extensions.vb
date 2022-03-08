@@ -200,6 +200,11 @@ Namespace TMIC.HMDB
                    End Function
         End Function
 
+        ''' <summary>
+        ''' parse the ultra large hmdb metabolite database xml file.
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXML(path$) As IEnumerable(Of metabolite)
             Return metabolite.Load(path)
