@@ -40,9 +40,10 @@ Public Class InputDataVisual
 
         Select Case ComboBox1.SelectedItem.ToString
             Case "Scatter"
-                plot = Scatter.Plot({Scatter.FromPoints(x.AsObjectEnumerator.Select(Function(xi, i) New PointF(xi, y(i))))}).AsGDIImage
-            Case "Line
-BarPlot
+                plot = Scatter.Plot({Scatter.FromPoints(x.AsObjectEnumerator.Select(Function(xi, i) New PointF(xi, y(i))))}, size:="2100,1800", drawLine:=False).AsGDIImage
+            Case "Line"
+                plot = Scatter.Plot({Scatter.FromPoints(x.AsObjectEnumerator.Select(Function(xi, i) New PointF(xi, y(i))).OrderBy(Function(p) p.X))}, size:="2100,1800", drawLine:=True).AsGDIImage
+            Case "BarPlot
 BoxPlot
 ViolinPlot"
         End Select
