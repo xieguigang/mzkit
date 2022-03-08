@@ -105,6 +105,10 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Return index.TryGetValue(id)
     End Function
 
+    Public Function MSetAnnotation(mzlist As IEnumerable(Of Double)) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
+        Return mzlist.Select(AddressOf QueryByMz).IteratesALL
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -117,7 +121,15 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' </remarks>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim query As New MassIndexKey With {.mz = mz}
-        Dim result As Compound() = mzIndex.Where(Function(d) tolerance(d.Item1, mz)).Select(Function(d) d.Item2).IteratesALL.GroupBy(Function(d) d.Identity).Select(Function(g) g.First).ToArray  ' massIndex.Find(query)?.Members
+        Dim result As Compound() = mzIndex _
+            .Where(Function(d) tolerance(d.Item1, mz)) _
+            .Select(Function(d) d.Item2) _
+            .IteratesALL _
+            .GroupBy(Function(d) d.Identity) _
+            .Select(Function(g)
+                        Return g.First
+                    End Function) _
+            .ToArray  ' massIndex.Find(query)?.Members
 
         For Each cpd As Compound In result.SafeQuery
             Dim minppm = precursorTypes _

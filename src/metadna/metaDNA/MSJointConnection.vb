@@ -54,7 +54,7 @@ Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 
-Public Class MSJointConnection
+Public Class MSJointConnection : Implements IMzQuery
 
     ReadOnly kegg As KEGGHandler
 
@@ -139,6 +139,10 @@ Public Class MSJointConnection
         Return mzSet
     End Function
 
+    Public Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
+        Return kegg.QueryByMz(mz)
+    End Function
+
     ''' <summary>
     ''' MS1 peak list annotation
     ''' </summary>
@@ -152,8 +156,9 @@ Public Class MSJointConnection
     ''' + un-enriched result: zero score
     ''' 
     ''' </remarks>
-    Public Function SetAnnotation(mz As Double(), Optional topN As Integer = 3) As MzQuery()
-        Dim mzSet = getEnrichedMzSet(mz, topN)
+    Public Function SetAnnotation(mz As IEnumerable(Of Double), Optional topN As Integer = 3) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
+        Dim allMz As Double() = mz.ToArray
+        Dim mzSet = getEnrichedMzSet(allMz, topN)
         Dim annotation As MzQuery() = mzSet _
             .Select(Function(mzi)
                         Return mzi _
@@ -171,7 +176,7 @@ Public Class MSJointConnection
                             .First
                     End Function) _
             .ToArray
-        Dim allIdList As MzQuery() = mz _
+        Dim allIdList As MzQuery() = allMz _
             .Select(AddressOf kegg.QueryByMz) _
             .IteratesALL _
             .ToArray
@@ -259,6 +264,4 @@ Public Class MSJointConnection
             }
         Next
     End Function
-
-
 End Class
