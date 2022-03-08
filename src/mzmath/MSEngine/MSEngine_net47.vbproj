@@ -158,6 +158,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMzQuery.vb" />
     <Compile Include="DBPool.vb" />
     <Compile Include="MassIndexKey.vb" />
     <Compile Include="MSSearch.vb" />

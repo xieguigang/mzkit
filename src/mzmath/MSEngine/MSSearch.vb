@@ -53,18 +53,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
-Imports any = Microsoft.VisualBasic.Scripting
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
-
-Public Interface IMzQuery
-
-    Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
-
-End Interface
 
 Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider}) : Implements IMzQuery
 
