@@ -447,17 +447,17 @@ Public Class PageMzSearch
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
         Dim result As New List(Of KEGGQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
+        Dim keggMeta As MSJointConnection = Nothing
 
         For Each mode As String In modes
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
-            Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
-            Dim anno As KEGGQuery() = kegg.SetAnnotation(mzset)
+            keggMeta = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
+            Dim anno As KEGGQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
 
             Call result.AddRange(anno)
         Next
 
         Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
-        Dim keggMeta = Globals.LoadKEGG(AddressOf MyApplication.LogText, 1, tolerance)
 
         Call table.LoadTable(
             Sub(grid)
@@ -487,6 +487,8 @@ Public Class PageMzSearch
                     Call Application.DoEvents()
                 Next
             End Sub)
+
+        Call MyApplication.host.showStatusMessage($"get {result.Count} annotation result for {mzset.Length} m/z ions list!")
     End Sub
 
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
