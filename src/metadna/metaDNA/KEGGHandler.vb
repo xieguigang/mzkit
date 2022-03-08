@@ -49,74 +49,27 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MSEngine
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 <Assembly: InternalsVisibleTo("mzkit")>
 
-Public Class KEGGHandler
+Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of KEGGCompound)
 
-    Friend ReadOnly engine As MSSearch(Of KEGGCompound)
-
-    Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return engine.Calculators
-        End Get
-    End Property
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub New(tree As AVLTree(Of MassIndexKey, KEGGCompound), tolerance As Tolerance, precursorTypes As MzCalculator())
-        Me.engine = New MSSearch(Of KEGGCompound)(tree, tolerance, precursorTypes)
+    Private Sub New(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance)
+        Call MyBase.New(compounds, tolerance, types)
     End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub New(engine As MSSearch(Of KEGGCompound))
-        Me.engine = engine
-    End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetCompound(kegg_id As String) As Compound
-        Return engine.index.TryGetValue(kegg_id).KEGG
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <returns>
-    ''' 函数返回符合条件的kegg代谢物编号
-    ''' </returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function QueryByMz(mz As Double) As IEnumerable(Of KEGGQuery)
-        Return engine _
-            .QueryByMz(mz) _
-            .Select(Function(q)
-                        Return New KEGGQuery With {
-                            .mz = q.mz,
-                            .kegg_id = q.unique_id,
-                            .ppm = q.ppm,
-                            .precursorType = q.precursorType,
-                            .score = q.score
-                        }
-                    End Function)
-    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Wraps(compounds As IEnumerable(Of Compound)) As IEnumerable(Of KEGGCompound)
         Return compounds.Select(Function(c) New KEGGCompound With {.KEGG = c})
     End Function
 
-    Public Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
-        Dim engine = MSSearch(Of KEGGCompound).CreateIndex(compounds, types, tolerance)
-        Dim kegg As New KEGGHandler(engine)
-
-        Return kegg
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of KEGGCompound)
+        Return New KEGGHandler(compounds, types, tolerance)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of KEGGCompound)
         Return CreateIndex(Wraps(compounds), types, tolerance)
     End Function
 End Class

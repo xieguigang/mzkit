@@ -70,7 +70,7 @@ Namespace Infer
         End Sub
 
         Public Iterator Function CandidateInfers(infer As IEnumerable(Of InferLink)) As IEnumerable(Of CandidateInfer)
-            Dim kegg = infer.GroupBy(Function(i) i.kegg.kegg_id).ToArray
+            Dim kegg = infer.GroupBy(Function(i) i.kegg.unique_id).ToArray
 
             For Each candidate As CandidateInfer In kegg _
                 .AsParallel _
@@ -96,8 +96,8 @@ Namespace Infer
                               Function(c)
                                   Return c.ToArray
                               End Function)
-            Dim kegg_id As String = all.Values.First()(Scan0).kegg.kegg_id
-            Dim kegg As Compound = Me.kegg.GetCompound(kegg_id)
+            Dim kegg_id As String = all.Values.First()(Scan0).kegg.unique_id
+            Dim kegg As Compound = Me.kegg.GetCompound(kegg_id).KEGG
             Dim tree As New SpectrumTreeCluster(showReport:=False)
 
             Call all _

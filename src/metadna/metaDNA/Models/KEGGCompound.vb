@@ -77,5 +77,9 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
         Return KEGG.ToString
     End Function
 
+    Public Shared Narrowing Operator CType(cpd As KEGGCompound) As Compound
+        Return cpd.KEGG
+    End Operator
+
 End Structure
 

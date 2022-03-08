@@ -189,7 +189,6 @@
     <Compile Include="Models\AnnotatedSeed.vb" />
     <Compile Include="Infer\InferLink.vb" />
     <Compile Include="Models\KEGGCompound.vb" />
-    <Compile Include="Models\KEGGQuery.vb" />
     <Compile Include="Models\UnknownSet.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="MSJointConnection.vb" />

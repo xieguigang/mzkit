@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -278,7 +279,9 @@ Public Class PageMzSearch
 
         CheckedListBox1.SetItemChecked(0, True)
         ComboBox1.SelectedIndex = 0
-        vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
+
+        Call vs_win.VisualStudioToolStripExtender1.SetStyle(ContextMenuStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, vs_win.VS2015LightTheme1)
+        Call ReloadMetaDatabase()
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -437,6 +440,16 @@ Public Class PageMzSearch
         searchPage.page.runSearch(isotope)
     End Sub
 
+    Public Iterator Function getDatabaseNames() As IEnumerable(Of String)
+        For Each check In CheckedListBox2.CheckedItems
+            Yield check.ToString
+        Next
+    End Function
+
+    Public Sub ReloadMetaDatabase()
+
+    End Sub
+
     ''' <summary>
     ''' do ms1 peak list annotation
     ''' </summary>
@@ -445,19 +458,25 @@ Public Class PageMzSearch
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim modes As String() = (From x In CheckedListBox1.CheckedItems Let str = x.ToString Select str).ToArray
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
-        Dim result As New List(Of KEGGQuery)
+        Dim result As New List(Of MzQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
+        Dim keggMeta As MSJointConnection = Nothing
+        Dim dbNames As String() = getDatabaseNames.ToArray
 
         For Each mode As String In modes
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
-            Dim kegg As MSJointConnection = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
-            Dim anno As KEGGQuery() = kegg.SetAnnotation(mzset)
+
+            For Each db As String In dbNames
+
+            Next
+
+            keggMeta = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
+            Dim anno As MzQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
 
             Call result.AddRange(anno)
         Next
 
         Dim table As frmTableViewer = VisualStudio.ShowDocument(Of frmTableViewer)
-        Dim keggMeta = Globals.LoadKEGG(AddressOf MyApplication.LogText, 1, tolerance)
 
         Call table.LoadTable(
             Sub(grid)
@@ -470,15 +489,15 @@ Public Class PageMzSearch
                 Call grid.Columns.Add("exact_mass", "exact_mass")
                 Call grid.Columns.Add("score", "score")
 
-                For Each ion As KEGGQuery In result
-                    Dim kegg As Compound = keggMeta.GetCompound(ion.kegg_id)
+                For Each ion As MzQuery In result
+                    Dim kegg As Compound = keggMeta.GetCompound(ion.unique_id)
 
                     Call grid.Rows.Add(
                         ion.mz.ToString("F4"),
                         ion.ppm.ToString("F1"),
                         ion.precursorType,
-                        ion.kegg_id,
-                        If(kegg.commonNames.FirstOrDefault, ion.kegg_id),
+                        ion.unique_id,
+                        If(kegg.commonNames.FirstOrDefault, ion.unique_id),
                         kegg.formula,
                         kegg.exactMass,
                         ion.score.ToString("F2")
@@ -487,6 +506,8 @@ Public Class PageMzSearch
                     Call Application.DoEvents()
                 Next
             End Sub)
+
+        Call MyApplication.host.showStatusMessage($"get {result.Count} annotation result for {mzset.Length} m/z ions list!")
     End Sub
 
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
