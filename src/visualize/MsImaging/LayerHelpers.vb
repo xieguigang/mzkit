@@ -82,7 +82,7 @@ Public Module LayerHelpers
         Dim mzErr As Tolerance = mzdiff Or Tolerance.DefaultTolerance
         Dim reader As PixelReader = New ReadRawPack(raw)
         Dim ncut As Integer = graph.size * qcut
-        Dim allMz = graph _
+        Dim allMz As NamedCollection(Of (mzi As ms2, pt As Point))() = graph _
             .EnumerateData _
             .AsParallel _
             .Select(Function(scan)
@@ -100,51 +100,60 @@ Public Module LayerHelpers
             .ToArray
         Dim k As Integer = allMz.Length / 10
         Dim j As i32 = 0
+        Dim info As String
 
         For i As Integer = 0 To allMz.Length - 1
-            Dim mz As Double = allMz(i) _
-                .OrderByDescending(Function(d) d.mzi.intensity) _
-                .First _
-                .mzi.mz
-            Dim layer As New SingleIonLayer With {
-                .IonMz = mz.ToString("F4"),
-                .DimensionSize = New Size(graph.width, graph.height),
-                .MSILayer = Grid(Of (mzi As ms2, pt As Point)) _
-                    .Create(allMz(i), Function(d) d.Item2) _
-                    .EnumerateData _
-                    .Select(Function(d)
-                                Return New PixelData With {
-                                    .intensity = d.mzi.intensity,
-                                    .level = 0,
-                                    .mz = d.mzi.mz,
-                                    .x = d.pt.X,
-                                    .y = d.pt.Y
-                                }
-                            End Function) _
-                    .ToArray
-            }
-            Dim density As NamedValue(Of Double)() = layer.MSILayer _
-                .Density(
-                    getName:=Function(pt) $"{pt.x},{pt.y}",
-                    getX:=Function(p) p.x,
-                    getY:=Function(p) p.y,
-                    gridSize:=cellSize,
-                    parallel:=True
-                ) _
-                .ToArray
-            Dim q As Double = density.Select(Function(d) d.Value).Median
-
-            Yield New DoubleTagged(Of SingleIonLayer) With {
-               .Tag = mz,
-               .Value = layer,
-               .TagStr = q
-            }
+            Yield allMz(i).evalMz(graph, cellSize)
 
             If ++j = k Then
                 j = 0
-                Call RunSlavePipeline.SendProgress(stdNum.Round(i / allMz.Length, 2), $"({CInt(100 * i / allMz.Length)}%) {mz.ToString("F4")}")
+                info = $"({CInt(100 * i / allMz.Length)}%) {Val(allMz(i).name).ToString("F4")}"
+
+                Call RunSlavePipeline.SendProgress(stdNum.Round(i / allMz.Length, 2), info)
             End If
         Next
+    End Function
+
+    <Extension>
+    Private Function evalMz(allMz As NamedCollection(Of (mzi As ms2, pt As Point)), graph As Grid(Of ScanMS1), cellSize As Size) As DoubleTagged(Of SingleIonLayer)
+        Dim mz As Double = allMz _
+            .OrderByDescending(Function(d) d.mzi.intensity) _
+            .First _
+            .mzi _
+            .mz
+        Dim layer As New SingleIonLayer With {
+            .IonMz = mz.ToString("F4"),
+            .DimensionSize = New Size(graph.width, graph.height),
+            .MSILayer = Grid(Of (mzi As ms2, pt As Point)) _
+                .Create(allMz, Function(d) d.Item2) _
+                .EnumerateData _
+                .Select(Function(d)
+                            Return New PixelData With {
+                                .intensity = d.mzi.intensity,
+                                .level = 0,
+                                .mz = d.mzi.mz,
+                                .x = d.pt.X,
+                                .y = d.pt.Y
+                            }
+                        End Function) _
+                .ToArray
+        }
+        Dim density As NamedValue(Of Double)() = layer.MSILayer _
+            .Density(
+                getName:=Function(pt) $"{pt.x},{pt.y}",
+                getX:=Function(p) p.x,
+                getY:=Function(p) p.y,
+                gridSize:=cellSize,
+                parallel:=True
+            ) _
+            .ToArray
+        Dim q As Double = density.Select(Function(d) d.Value).Median
+
+        Return New DoubleTagged(Of SingleIonLayer) With {
+            .Tag = mz,
+            .Value = layer,
+            .TagStr = q
+        }
     End Function
 
 End Module

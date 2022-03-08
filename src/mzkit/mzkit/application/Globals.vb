@@ -94,8 +94,8 @@ Module Globals
         Call LicenseFile.ApplyLicense()
     End Sub
 
-    Private Function loadBackground() As Background
-        Dim maps As Map() = KEGGRepo.RequestKEGGMaps
+    Public Function loadBackground(Optional ByRef maps As Map() = Nothing) As Background
+        maps = KEGGRepo.RequestKEGGMaps
         Dim background = MSJointConnection.ImportsBackground(maps)
 
         Return background

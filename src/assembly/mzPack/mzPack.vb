@@ -116,12 +116,19 @@ Public Class mzPack
 
     Public ReadOnly Property CountMs2 As Integer
         Get
-            Return Aggregate scan As ScanMS1 In MS Into Sum(scan.products.Length)
+            Return Aggregate scan As ScanMS1
+                   In MS
+                   Let nsize As Integer = scan.products.TryCount
+                   Into Sum(nsize)
         End Get
     End Property
 
     Public Function GetBasePeak() As ms2
-        Return MS.Select(Function(scan) scan.GetMs).IteratesALL.OrderByDescending(Function(mzi) mzi.intensity).FirstOrDefault
+        Return MS _
+            .Select(Function(scan) scan.GetMs) _
+            .IteratesALL _
+            .OrderByDescending(Function(mzi) mzi.intensity) _
+            .FirstOrDefault
     End Function
 
     Public Overrides Function ToString() As String

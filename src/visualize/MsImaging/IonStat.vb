@@ -14,7 +14,8 @@ Public Class IonStat
     Public Property pixels As Integer
     Public Property density As Double
     Public Property maxIntensity As Double
-    Public Property basePixel As Point
+    Public Property basePixelX As Integer
+    Public Property basePixelY As Integer
     Public Property Q1Intensity As Double
     Public Property Q2Intensity As Double
     Public Property Q3Intensity As Double
@@ -70,7 +71,8 @@ Public Class IonStat
 
             Yield New IonStat With {
                 .mz = Val(ion.name),
-                .basePixel = basePixel.pixel,
+                .basePixelX = basePixel.pixel.X,
+                .basePixelY = basePixel.pixel.Y,
                 .maxIntensity = basePixel.ms.intensity,
                 .pixels = pixels.size,
                 .Q1Intensity = Q.Q1,

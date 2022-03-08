@@ -45,7 +45,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -94,7 +94,7 @@ Public Class RGBMSIPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(heatmapRender:=False))
+        Dim engine As New PixelRender(heatmapRender:=False)
         Dim iR = Me.R.MSILayer
         Dim iG = Me.G?.MSILayer
         Dim iB = Me.B?.MSILayer
@@ -102,7 +102,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim qg As DoubleRange = {0, threshold(iG.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
         Dim qb As DoubleRange = {0, threshold(iB.SafeQuery.Select(Function(p) p.intensity).ToArray, maxCut)}
 
-        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, cut:=(qr, qg, qb), background:=theme.background)
+        MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, cut:=(qr, qg, qb), background:=theme.background).AsGDIImage
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)

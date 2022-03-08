@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Assembly: RPackageModule>

@@ -4,7 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Math.Distributions
 
-Namespace Imaging
+Namespace Blender
 
     Public Module KnnInterpolation
 

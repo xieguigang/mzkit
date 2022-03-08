@@ -2171,6 +2171,22 @@
         <Image MinDPI="192">Res/Terminal.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdWWWForward" Id="169" LabelTitle="Forward" LabelDescription="Forward" TooltipTitle="Forward" TooltipDescription="Forward">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-undo-rtl.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-undo-rtl.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdWWWBack" Id="170" LabelTitle="Back" LabelDescription="Back" TooltipTitle="Back" TooltipDescription="Back">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/edit-undo.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/edit-undo.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>

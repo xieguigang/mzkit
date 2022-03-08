@@ -250,7 +250,6 @@
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="SMRUCC.genomics.Analysis.HTS.GSEA.Fisher.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
@@ -312,6 +311,7 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\CLI.vb" />
+    <Compile Include="application\Actions.vb" />
     <Compile Include="application\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\WindowModules.vb" />
@@ -341,6 +341,12 @@
       <DependentUpon>frmTweaks.vb</DependentUpon>
     </Compile>
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Inputs\InputAction.Designer.vb">
+      <DependentUpon>InputAction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\InputAction.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\Inputs\InputDataVisual.Designer.vb">
@@ -772,6 +778,9 @@
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputAction.resx">
+      <DependentUpon>InputAction.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputDataVisual.resx">
       <DependentUpon>InputDataVisual.vb</DependentUpon>
     </EmbeddedResource>
@@ -974,6 +983,10 @@
       <Project>{b17ef2af-f2de-4036-9e2a-5fa10f8116c7}</Project>
       <Name>console</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\FisherCore.vbproj">
+      <Project>{62cc1cc2-7e2b-47ba-a745-37c36bd84955}</Project>
+      <Name>FisherCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
       <Project>{C699D311-9923-4C19-BF70-5048D0E2CF5D}</Project>
       <Name>Bio.Assembly</Name>
@@ -1085,6 +1098,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\src\PdfConvert\WkHtmlToPdf.vbproj">
       <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>
       <Name>WkHtmlToPdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\modules\keggReport\keggReport.vbproj">
+      <Project>{c6f51b7c-c3f9-4bdf-8611-91528c5a096f}</Project>
+      <Name>keggReport</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.vbproj">
       <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
