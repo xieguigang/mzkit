@@ -246,14 +246,21 @@ Type 'q()' to quit R.
 ")
 
             _REngine = RInterpreter.FromEnvironmentConfiguration(configs:=R_LIBS_USER)
-            _REngine.strict = False
 
             If REngine.globalEnvir.packages.AsEnumerable.Count = 0 Then
                 ' no packages ...
                 ' init R# engine environment
                 Call PipelineProcess.CreatePipeline($"{App.HOME}/R#.exe", $"--reset --R_LIBS_USER {R_LIBS_USER.CLIPath}").WaitForExit()
                 Call PipelineProcess.CreatePipeline($"{App.HOME}/R#.exe", $"--setup --R_LIBS_USER {R_LIBS_USER.CLIPath}").WaitForExit()
+
+                ' and then reload
+                _REngine = RInterpreter.FromEnvironmentConfiguration(configs:=R_LIBS_USER)
+
+                ' install the required packages
+                Call InstallPackageRelease()
             End If
+
+            _REngine.strict = False
 
             _REngine.LoadLibrary("base")
             _REngine.LoadLibrary("utils")
