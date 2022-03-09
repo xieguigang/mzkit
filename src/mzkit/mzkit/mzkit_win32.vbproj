@@ -346,6 +346,12 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Inputs\ShowColumnStat.Designer.vb">
+      <DependentUpon>ShowColumnStat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Inputs\ShowColumnStat.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Inputs\InputAction.Designer.vb">
       <DependentUpon>InputAction.vb</DependentUpon>
     </Compile>
@@ -804,6 +810,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputXICTarget.resx">
       <DependentUpon>InputXICTarget.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\ShowColumnStat.resx">
+      <DependentUpon>ShowColumnStat.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>

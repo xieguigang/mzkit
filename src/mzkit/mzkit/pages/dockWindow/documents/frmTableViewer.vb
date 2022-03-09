@@ -268,7 +268,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     End Sub
 
     Private Sub frmTableViewer_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        ribbonItems.TableGroup.ContextAvailable = ContextAvailability.Active
+
     End Sub
 
     Shared Sub New()

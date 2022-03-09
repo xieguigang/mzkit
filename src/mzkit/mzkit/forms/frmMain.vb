@@ -739,6 +739,19 @@ Public Class frmMain
     Private Sub ToolStripStatusLabel4_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel4.Click
         Call VisualStudio.Dock(WindowModules.taskWin, DockState.DockBottom)
     End Sub
+
+    Private Sub dockPanel_ActiveDocumentChanged(sender As Object, e As EventArgs) Handles dockPanel.ActiveDocumentChanged
+        If TypeOf dockPanel.ActiveDocument Is frmTableViewer Then
+            ribbonItems.TableGroup.ContextAvailable = ContextAvailability.Active
+        Else
+            ribbonItems.TableGroup.ContextAvailable = ContextAvailability.NotAvailable
+        End If
+        If TypeOf dockPanel.ActiveDocument Is frmMsImagingViewer Then
+            ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.Active
+        Else
+            ribbonItems.TabGroupMSI.ContextAvailable = ContextAvailability.NotAvailable
+        End If
+    End Sub
 #End Region
 
 End Class
