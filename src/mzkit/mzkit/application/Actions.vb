@@ -83,7 +83,17 @@ Module Actions
                                      grid.Columns.Add(NameOf(EnrichmentResult.geneIDs), GetType(String))
 
                                      For Each item As EnrichmentResult In enrich
-                                         Call grid.Rows.Add(item.term, item.name, item.description, item.cluster, item.enriched, item.score, item.pvalue, item.FDR, item.geneIDs.JoinBy(", "))
+                                         Call grid.Rows.Add(
+                                            If(item.term.IsPattern("\d+"), $"map{item.term}", item.term),
+                                            item.name,
+                                            item.description,
+                                            item.cluster,
+                                            item.enriched,
+                                            item.score,
+                                            item.pvalue,
+                                            item.FDR,
+                                            item.geneIDs.JoinBy(", ")
+                                         )
                                      Next
                                  End Sub)
              End Sub)
