@@ -81,8 +81,22 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         Call AdvancedDataGridViewSearchToolBar1.SetColumns(AdvancedDataGridView1.Columns)
 
         For Each column As DataGridViewColumn In AdvancedDataGridView1.Columns
+            'Select Case table.Columns.Item(column.HeaderText).DataType
+            '    Case GetType(String)
+            '        AdvancedDataGridView1.SetSortEnabled(column, True)
+            '    Case GetType(Double)
+            '    Case GetType(Integer)
+            '    Case Else
+            '        ' do nothing 
+            'End Select
+
             AdvancedDataGridView1.ShowMenuStrip(column)
         Next
+
+        BindingSource1.DataSource = memoryData
+        BindingSource1.DataMember = table.TableName
+
+        AdvancedDataGridView1.DataSource = BindingSource1
     End Sub
 
     Protected Overrides Sub SaveDocument()
