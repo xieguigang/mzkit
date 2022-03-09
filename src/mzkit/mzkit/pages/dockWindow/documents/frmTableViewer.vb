@@ -52,6 +52,7 @@ Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports RibbonLib.Interop
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports Zuby.ADGV
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -78,7 +79,6 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         Call Me.AdvancedDataGridView1.Rows.Clear()
         Call apply(table)
         Call AdvancedDataGridView1.SetDoubleBuffered()
-        Call AdvancedDataGridViewSearchToolBar1.SetColumns(AdvancedDataGridView1.Columns)
 
         For Each column As DataGridViewColumn In AdvancedDataGridView1.Columns
             'Select Case table.Columns.Item(column.HeaderText).DataType
@@ -97,6 +97,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         BindingSource1.DataMember = table.TableName
 
         AdvancedDataGridView1.DataSource = BindingSource1
+        AdvancedDataGridViewSearchToolBar1.SetColumns(AdvancedDataGridView1.Columns)
     End Sub
 
     Protected Overrides Sub SaveDocument()
@@ -257,4 +258,65 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Private Sub AdvancedDataGridView1_FilterStringChanged(sender As Object, e As AdvancedDataGridView.FilterEventArgs) Handles AdvancedDataGridView1.FilterStringChanged
 
     End Sub
+
+    Private Sub frmTableViewer_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+    End Sub
+
+    Private Sub frmTableViewer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+    End Sub
+
+    Private Sub frmTableViewer_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        ribbonItems.TableGroup.ContextAvailable = ContextAvailability.Active
+    End Sub
+
+    Shared Sub New()
+        AddHandler ribbonItems.ButtonResetTableFilter.ExecuteEvent,
+            Sub()
+                Dim table = getCurrentTable()
+
+                If Not table Is Nothing Then
+                    Call table.resetFilter()
+                End If
+            End Sub
+
+        AddHandler ribbonItems.ButtonColumnStats.ExecuteEvent,
+            Sub()
+                Dim table = getCurrentTable()
+
+                If Not table Is Nothing Then
+                    Call table.columnVectorStat()
+                End If
+            End Sub
+
+        AddHandler ribbonItems.ButtonSaveTableCDF.ExecuteEvent,
+            Sub()
+                Dim table = getCurrentTable()
+
+                If Not table Is Nothing Then
+                    Call table.exportTableCDF()
+                End If
+            End Sub
+    End Sub
+
+    Private Sub exportTableCDF()
+
+    End Sub
+
+    Private Sub columnVectorStat()
+
+    End Sub
+
+    Private Sub resetFilter()
+        Call AdvancedDataGridView1.CleanFilterAndSort()
+    End Sub
+
+    Private Shared Function getCurrentTable() As frmTableViewer
+        If TypeOf MyApplication.host.dockPanel.ActiveDocument Is frmTableViewer Then
+            Return MyApplication.host.dockPanel.ActiveDocument
+        Else
+            Return Nothing
+        End If
+    End Function
 End Class
