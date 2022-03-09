@@ -144,6 +144,12 @@ namespace RibbonLib.Controls
             public const uint cmdTabKEGG = 132;
             public const uint cmdTabGroupKEGG = 134;
             public const uint cmdButtonViewKEGGNetwork = 131;
+            public const uint cmdTableGroup = 173;
+            public const uint cmdTableTab = 172;
+            public const uint cmdTableInnerGroup = 174;
+            public const uint cmdButtonResetTableFilter = 171;
+            public const uint cmdButtonColumnStats = 175;
+            public const uint cmdButtonSaveTableCDF = 176;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -307,6 +313,12 @@ namespace RibbonLib.Controls
         public RibbonTab TabKEGG { get; private set; }
         public RibbonGroup TabGroupKEGG { get; private set; }
         public RibbonButton ButtonViewKEGGNetwork { get; private set; }
+        public RibbonTabGroup TableGroup { get; private set; }
+        public RibbonTab TableTab { get; private set; }
+        public RibbonGroup TableInnerGroup { get; private set; }
+        public RibbonButton ButtonResetTableFilter { get; private set; }
+        public RibbonButton ButtonColumnStats { get; private set; }
+        public RibbonButton ButtonSaveTableCDF { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -468,6 +480,12 @@ namespace RibbonLib.Controls
             TabKEGG = new RibbonTab(ribbon, Cmd.cmdTabKEGG);
             TabGroupKEGG = new RibbonGroup(ribbon, Cmd.cmdTabGroupKEGG);
             ButtonViewKEGGNetwork = new RibbonButton(ribbon, Cmd.cmdButtonViewKEGGNetwork);
+            TableGroup = new RibbonTabGroup(ribbon, Cmd.cmdTableGroup);
+            TableTab = new RibbonTab(ribbon, Cmd.cmdTableTab);
+            TableInnerGroup = new RibbonGroup(ribbon, Cmd.cmdTableInnerGroup);
+            ButtonResetTableFilter = new RibbonButton(ribbon, Cmd.cmdButtonResetTableFilter);
+            ButtonColumnStats = new RibbonButton(ribbon, Cmd.cmdButtonColumnStats);
+            ButtonSaveTableCDF = new RibbonButton(ribbon, Cmd.cmdButtonSaveTableCDF);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);

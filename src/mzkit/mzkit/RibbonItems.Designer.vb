@@ -141,6 +141,12 @@ Namespace RibbonLib.Controls
             Public Const cmdTabKEGG As UInteger = 132
             Public Const cmdTabGroupKEGG As UInteger = 134
             Public Const cmdButtonViewKEGGNetwork As UInteger = 131
+            Public Const cmdTableGroup As UInteger = 173
+            Public Const cmdTableTab As UInteger = 172
+            Public Const cmdTableInnerGroup As UInteger = 174
+            Public Const cmdButtonResetTableFilter As UInteger = 171
+            Public Const cmdButtonColumnStats As UInteger = 175
+            Public Const cmdButtonSaveTableCDF As UInteger = 176
             Public Const cmdTabMain As UInteger = 1011
             Public Const cmdGroupFileActions As UInteger = 1045
             Public Const cmdTabGroupWindowTools As UInteger = 1023
@@ -934,6 +940,42 @@ Namespace RibbonLib.Controls
                 Return _ButtonViewKEGGNetwork
             End Get
         End Property
+        Private _TableGroup As RibbonTabGroup
+        Public ReadOnly Property TableGroup As RibbonTabGroup
+            Get
+                Return _TableGroup
+            End Get
+        End Property
+        Private _TableTab As RibbonTab
+        Public ReadOnly Property TableTab As RibbonTab
+            Get
+                Return _TableTab
+            End Get
+        End Property
+        Private _TableInnerGroup As RibbonGroup
+        Public ReadOnly Property TableInnerGroup As RibbonGroup
+            Get
+                Return _TableInnerGroup
+            End Get
+        End Property
+        Private _ButtonResetTableFilter As RibbonButton
+        Public ReadOnly Property ButtonResetTableFilter As RibbonButton
+            Get
+                Return _ButtonResetTableFilter
+            End Get
+        End Property
+        Private _ButtonColumnStats As RibbonButton
+        Public ReadOnly Property ButtonColumnStats As RibbonButton
+            Get
+                Return _ButtonColumnStats
+            End Get
+        End Property
+        Private _ButtonSaveTableCDF As RibbonButton
+        Public ReadOnly Property ButtonSaveTableCDF As RibbonButton
+            Get
+                Return _ButtonSaveTableCDF
+            End Get
+        End Property
         Private _TabMain As RibbonTab
         Public ReadOnly Property TabMain As RibbonTab
             Get
@@ -1245,6 +1287,12 @@ Namespace RibbonLib.Controls
             _TabKEGG = New RibbonTab(_ribbon, Cmd.cmdTabKEGG)
             _TabGroupKEGG = New RibbonGroup(_ribbon, Cmd.cmdTabGroupKEGG)
             _ButtonViewKEGGNetwork = New RibbonButton(_ribbon, Cmd.cmdButtonViewKEGGNetwork)
+            _TableGroup = New RibbonTabGroup(_ribbon, Cmd.cmdTableGroup)
+            _TableTab = New RibbonTab(_ribbon, Cmd.cmdTableTab)
+            _TableInnerGroup = New RibbonGroup(_ribbon, Cmd.cmdTableInnerGroup)
+            _ButtonResetTableFilter = New RibbonButton(_ribbon, Cmd.cmdButtonResetTableFilter)
+            _ButtonColumnStats = New RibbonButton(_ribbon, Cmd.cmdButtonColumnStats)
+            _ButtonSaveTableCDF = New RibbonButton(_ribbon, Cmd.cmdButtonSaveTableCDF)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupFileActions = New RibbonGroup(_ribbon, Cmd.cmdGroupFileActions)
             _TabGroupWindowTools = New RibbonGroup(_ribbon, Cmd.cmdTabGroupWindowTools)

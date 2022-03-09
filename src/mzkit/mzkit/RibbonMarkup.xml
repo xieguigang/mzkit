@@ -2187,6 +2187,33 @@
         <Image MinDPI="144">Res/edit-undo.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonResetTableFilter" Id="171" LabelTitle="Reset Filter" LabelDescription="Reset Filter" TooltipTitle="Reset Filter" TooltipDescription="Reset Filter">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-exit.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTableTab" Id="172" LabelTitle="Table Tab" LabelDescription="Table Tab" TooltipTitle="Table Tab" TooltipDescription="Table Tab" />
+    <Command Name="cmdTableGroup" Id="173" LabelTitle="Table" LabelDescription="Table" TooltipTitle="Table" TooltipDescription="Table" />
+    <Command Name="cmdTableInnerGroup" Id="174" LabelTitle="Table" LabelDescription="Table" TooltipTitle="Table" TooltipDescription="Table" />
+    <Command Name="cmdButtonColumnStats" Id="175" LabelTitle="Column Stat" LabelDescription="Column Stat" TooltipTitle="Column Stat" TooltipDescription="Column Stat">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/libreoffice-math.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/libreoffice-math.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonSaveTableCDF" Id="176" LabelTitle="Export CDF" LabelDescription="Export CDF" TooltipTitle="Export CDF" TooltipDescription="Export CDF">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-object.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2429,6 +2456,15 @@
           <Tab CommandName="cmdTabKEGG" ApplicationModes="0,1">
             <Group CommandName="cmdTabGroupKEGG" ApplicationModes="0,1" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonViewKEGGNetwork" />
+            </Group>
+          </Tab>
+        </TabGroup>
+        <TabGroup CommandName="cmdTableGroup">
+          <Tab CommandName="cmdTableTab">
+            <Group CommandName="cmdTableInnerGroup" SizeDefinition="ThreeButtons">
+              <Button CommandName="cmdButtonResetTableFilter" />
+              <Button CommandName="cmdButtonColumnStats" />
+              <Button CommandName="cmdButtonSaveTableCDF" />
             </Group>
           </Tab>
         </TabGroup>
