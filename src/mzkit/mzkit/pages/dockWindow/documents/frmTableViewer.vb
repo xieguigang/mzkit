@@ -183,7 +183,10 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         Call load.SetAxis(GetSchema)
         Call InputDialog.Input(
             Sub(creator)
+                Dim x As Array = getFieldVector(creator.GetX)
+                Dim y As Array = getFieldVector(creator.GetY)
 
+                Call creator.DoPlot(x, y)
             End Sub, config:=load)
     End Sub
 
