@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::6b70e2108197afe2e258375e3daa9659, src\mzkit\mzkit\pages\ConnectToBioDeep.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ConnectToBioDeep
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: OpenAdvancedFunction, RunMetaDNA, RunMetaDNAImpl, ShowInferAlignment, showTable
-    ' 
-    ' /********************************************************************************/
+' Class ConnectToBioDeep
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: OpenAdvancedFunction, RunMetaDNA, RunMetaDNAImpl, ShowInferAlignment, showTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -145,32 +145,32 @@ Public Class ConnectToBioDeep
     Private Shared Sub showTable(table As frmTableViewer, result As MetaDNAResult())
         Call table.LoadTable(
             Sub(grid)
-                grid.Columns.Add(NameOf(MetaDNAResult.ROI_id), NameOf(MetaDNAResult.ROI_id))
-                grid.Columns.Add(NameOf(MetaDNAResult.query_id), NameOf(MetaDNAResult.query_id))
-                grid.Columns.Add(NameOf(MetaDNAResult.mz), NameOf(MetaDNAResult.mz))
-                grid.Columns.Add(NameOf(MetaDNAResult.rt), NameOf(MetaDNAResult.rt))
-                grid.Columns.Add(NameOf(MetaDNAResult.intensity), NameOf(MetaDNAResult.intensity))
-                grid.Columns.Add(NameOf(MetaDNAResult.KEGGId), NameOf(MetaDNAResult.KEGGId))
-                grid.Columns.Add(NameOf(MetaDNAResult.exactMass), NameOf(MetaDNAResult.exactMass))
-                grid.Columns.Add(NameOf(MetaDNAResult.formula), NameOf(MetaDNAResult.formula))
-                grid.Columns.Add(NameOf(MetaDNAResult.name), NameOf(MetaDNAResult.name))
-                grid.Columns.Add(NameOf(MetaDNAResult.precursorType), NameOf(MetaDNAResult.precursorType))
-                grid.Columns.Add(NameOf(MetaDNAResult.mzCalc), NameOf(MetaDNAResult.mzCalc))
-                grid.Columns.Add(NameOf(MetaDNAResult.ppm), NameOf(MetaDNAResult.ppm))
-                grid.Columns.Add(NameOf(MetaDNAResult.inferLevel), NameOf(MetaDNAResult.inferLevel))
-                grid.Columns.Add(NameOf(MetaDNAResult.forward), NameOf(MetaDNAResult.forward))
-                grid.Columns.Add(NameOf(MetaDNAResult.reverse), NameOf(MetaDNAResult.reverse))
-                grid.Columns.Add(NameOf(MetaDNAResult.jaccard), NameOf(MetaDNAResult.jaccard))
-                grid.Columns.Add(NameOf(MetaDNAResult.parentTrace), NameOf(MetaDNAResult.parentTrace))
-                grid.Columns.Add(NameOf(MetaDNAResult.inferSize), NameOf(MetaDNAResult.inferSize))
-                grid.Columns.Add(NameOf(MetaDNAResult.score1), NameOf(MetaDNAResult.score1))
-                grid.Columns.Add(NameOf(MetaDNAResult.score2), NameOf(MetaDNAResult.score2))
-                grid.Columns.Add(NameOf(MetaDNAResult.pvalue), NameOf(MetaDNAResult.pvalue))
-                grid.Columns.Add(NameOf(MetaDNAResult.seed), NameOf(MetaDNAResult.seed))
-                grid.Columns.Add(NameOf(MetaDNAResult.partnerKEGGId), NameOf(MetaDNAResult.partnerKEGGId))
-                grid.Columns.Add(NameOf(MetaDNAResult.KEGG_reaction), NameOf(MetaDNAResult.KEGG_reaction))
-                grid.Columns.Add(NameOf(MetaDNAResult.reaction), NameOf(MetaDNAResult.reaction))
-                grid.Columns.Add(NameOf(MetaDNAResult.fileName), NameOf(MetaDNAResult.fileName))
+                grid.Columns.Add(NameOf(MetaDNAResult.ROI_id), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.query_id), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.mz), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.rt), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.intensity), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.KEGGId), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.exactMass), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.formula), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.name), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.precursorType), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.mzCalc), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.ppm), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.inferLevel), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.forward), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.reverse), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.jaccard), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.parentTrace), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.inferSize), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.score1), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.score2), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.pvalue), GetType(Double))
+                grid.Columns.Add(NameOf(MetaDNAResult.seed), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.partnerKEGGId), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.KEGG_reaction), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.reaction), GetType(String))
+                grid.Columns.Add(NameOf(MetaDNAResult.fileName), GetType(String))
 
                 For Each line As MetaDNAResult In result
                     Call grid.Rows.Add(line.ROI_id,

@@ -147,15 +147,15 @@ Public Class frmMsImagingViewer
                         End Sub
         table.LoadTable(
             Sub(grid)
-                Call grid.Columns.Add("mz", "mz")
-                Call grid.Columns.Add("pixels", "pixels")
-                Call grid.Columns.Add("density", "density")
-                Call grid.Columns.Add("maxIntensity", "maxIntensity")
-                Call grid.Columns.Add("basePixel.X", "basePixel.X")
-                Call grid.Columns.Add("basePixel.Y", "basePixel.Y")
-                Call grid.Columns.Add("Q1_intensity", "Q1_intensity")
-                Call grid.Columns.Add("Q2_intensity", "Q2_intensity")
-                Call grid.Columns.Add("Q3_intensity", "Q3_intensity")
+                Call grid.Columns.Add("mz", GetType(Double))
+                Call grid.Columns.Add("pixels", GetType(Integer))
+                Call grid.Columns.Add("density", GetType(Double))
+                Call grid.Columns.Add("maxIntensity", GetType(Double))
+                Call grid.Columns.Add("basePixel.X", GetType(Integer))
+                Call grid.Columns.Add("basePixel.Y", GetType(Integer))
+                Call grid.Columns.Add("Q1_intensity", GetType(Double))
+                Call grid.Columns.Add("Q2_intensity", GetType(Double))
+                Call grid.Columns.Add("Q3_intensity", GetType(Double))
 
                 For Each ion As IonStat In ions.OrderByDescending(Function(i) i.pixels)
                     Call grid.Rows.Add(

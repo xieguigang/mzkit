@@ -569,14 +569,14 @@ Public Class frmFileExplorer
             End Sub
         table.LoadTable(
             Sub(grid)
-                Call grid.Columns.Add("source", "source")
-                Call grid.Columns.Add("ms1_scans", "ms1_scans")
-                Call grid.Columns.Add("msn_scans", "msn_scans")
-                Call grid.Columns.Add("rtmin", "rtmin")
-                Call grid.Columns.Add("rtmax", "rtmax")
-                Call grid.Columns.Add("total_ions", "total_ions")
-                Call grid.Columns.Add("base_peak", "base_peak")
-                Call grid.Columns.Add("max_intensity", "max_intensity")
+                Call grid.Columns.Add("source", GetType(String))
+                Call grid.Columns.Add("ms1_scans", GetType(Integer))
+                Call grid.Columns.Add("msn_scans", GetType(Integer))
+                Call grid.Columns.Add("rtmin", GetType(Double))
+                Call grid.Columns.Add("rtmax", GetType(Double))
+                Call grid.Columns.Add("total_ions", GetType(Double))
+                Call grid.Columns.Add("base_peak", GetType(Double))
+                Call grid.Columns.Add("max_intensity", GetType(Double))
 
                 If treeView1.Nodes.Count = 0 Then
                     Return

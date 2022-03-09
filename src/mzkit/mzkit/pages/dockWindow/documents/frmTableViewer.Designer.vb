@@ -23,63 +23,23 @@ Partial Class frmTableViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.VisualizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ActionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SendToREnvironmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.AdvancedDataGridView1 = New Zuby.ADGV.AdvancedDataGridView()
+        Me.AdvancedDataGridViewSearchToolBar1 = New Zuby.ADGV.AdvancedDataGridViewSearchToolBar()
         Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.AdvancedDataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'DataGridView1
-        '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5})
-        Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(834, 495)
-        Me.DataGridView1.TabIndex = 0
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Column1"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Column2"
-        Me.Column2.Name = "Column2"
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Column3"
-        Me.Column3.Name = "Column3"
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Column4"
-        Me.Column4.Name = "Column4"
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Column5"
-        Me.Column5.Name = "Column5"
         '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem, Me.ToolStripMenuItem1, Me.VisualizeToolStripMenuItem, Me.ActionsToolStripMenuItem, Me.SendToREnvironmentToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(204, 120)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(204, 98)
         '
         'ViewToolStripMenuItem
         '
@@ -110,30 +70,54 @@ Partial Class frmTableViewer
         Me.SendToREnvironmentToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
         Me.SendToREnvironmentToolStripMenuItem.Text = "Send To R# Environment"
         '
+        'AdvancedDataGridView1
+        '
+        Me.AdvancedDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.AdvancedDataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AdvancedDataGridView1.FilterAndSortEnabled = True
+        Me.AdvancedDataGridView1.FilterStringChangedInvokeBeforeDatasourceUpdate = True
+        Me.AdvancedDataGridView1.Location = New System.Drawing.Point(0, 27)
+        Me.AdvancedDataGridView1.Name = "AdvancedDataGridView1"
+        Me.AdvancedDataGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.AdvancedDataGridView1.RowTemplate.Height = 23
+        Me.AdvancedDataGridView1.Size = New System.Drawing.Size(834, 468)
+        Me.AdvancedDataGridView1.SortStringChangedInvokeBeforeDatasourceUpdate = True
+        Me.AdvancedDataGridView1.TabIndex = 1
+        '
+        'AdvancedDataGridViewSearchToolBar1
+        '
+        Me.AdvancedDataGridViewSearchToolBar1.AllowMerge = False
+        Me.AdvancedDataGridViewSearchToolBar1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.AdvancedDataGridViewSearchToolBar1.Location = New System.Drawing.Point(0, 0)
+        Me.AdvancedDataGridViewSearchToolBar1.MaximumSize = New System.Drawing.Size(0, 27)
+        Me.AdvancedDataGridViewSearchToolBar1.MinimumSize = New System.Drawing.Size(0, 27)
+        Me.AdvancedDataGridViewSearchToolBar1.Name = "AdvancedDataGridViewSearchToolBar1"
+        Me.AdvancedDataGridViewSearchToolBar1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.AdvancedDataGridViewSearchToolBar1.Size = New System.Drawing.Size(834, 27)
+        Me.AdvancedDataGridViewSearchToolBar1.TabIndex = 2
+        Me.AdvancedDataGridViewSearchToolBar1.Text = "AdvancedDataGridViewSearchToolBar1"
+        '
         'frmTableViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(834, 495)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.AdvancedDataGridView1)
+        Me.Controls.Add(Me.AdvancedDataGridViewSearchToolBar1)
         Me.DoubleBuffered = True
         Me.Name = "frmTableViewer"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.AdvancedDataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-
-    Private WithEvents DataGridView1 As DataGridView
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents VisualizeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SendToREnvironmentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ActionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AdvancedDataGridView1 As Zuby.ADGV.AdvancedDataGridView
+    Friend WithEvents AdvancedDataGridViewSearchToolBar1 As Zuby.ADGV.AdvancedDataGridViewSearchToolBar
 End Class

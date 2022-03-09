@@ -72,18 +72,18 @@ Module Actions
                          Call browser.LoadHtml(temp)
                      End Sub
                  table.LoadTable(Sub(grid)
-                                     grid.Columns.Add(NameOf(EnrichmentResult.term), NameOf(EnrichmentResult.term))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.name), NameOf(EnrichmentResult.name))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.description), NameOf(EnrichmentResult.description))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.cluster), NameOf(EnrichmentResult.cluster))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.enriched), NameOf(EnrichmentResult.enriched))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.score), NameOf(EnrichmentResult.score))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.pvalue), NameOf(EnrichmentResult.pvalue))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.FDR), NameOf(EnrichmentResult.FDR))
-                                     grid.Columns.Add(NameOf(EnrichmentResult.geneIDs), NameOf(EnrichmentResult.geneIDs))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.term), GetType(String))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.name), GetType(String))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.description), GetType(String))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.cluster), GetType(Integer))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.enriched), GetType(String))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.score), GetType(Double))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.pvalue), GetType(Double))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.FDR), GetType(Double))
+                                     grid.Columns.Add(NameOf(EnrichmentResult.geneIDs), GetType(String()))
 
                                      For Each item As EnrichmentResult In enrich
-                                         Call grid.Rows.Add(item.term, item.name, item.description, item.cluster, item.enriched, item.score, item.pvalue, item.FDR, item.geneIDs.JoinBy(", "))
+                                         Call grid.Rows.Add(item.term, item.name, item.description, item.cluster, item.enriched, item.score, item.pvalue, item.FDR, item.geneIDs)
                                      Next
                                  End Sub)
              End Sub)

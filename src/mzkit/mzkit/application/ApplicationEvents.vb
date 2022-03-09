@@ -93,6 +93,19 @@ Namespace My
 
         Public Shared ReadOnly TaskQueue As New ThreadQueue
 
+        ''' <summary>
+        ''' Enable high DPI
+        ''' </summary>
+        Shared ReadOnly HighDPIEnabled As Boolean = True
+
+        ''' <summary>
+        ''' Load for high DPI
+        ''' </summary>
+        ''' <returns></returns>
+        <DllImport("user32.dll")>
+        Private Shared Function SetProcessDPIAware() As Boolean
+        End Function
+
 #Region "mzkit"
         Public Shared ReadOnly Property mzkitRawViewer As PageMzkitTools
             Get

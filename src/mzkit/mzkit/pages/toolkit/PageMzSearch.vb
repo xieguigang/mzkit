@@ -480,14 +480,14 @@ Public Class PageMzSearch
 
         Call table.LoadTable(
             Sub(grid)
-                Call grid.Columns.Add("mz", "mz")
-                Call grid.Columns.Add("ppm", "ppm")
-                Call grid.Columns.Add("precursorType", "precursorType")
-                Call grid.Columns.Add("kegg_id", "kegg_id")
-                Call grid.Columns.Add("name", "name")
-                Call grid.Columns.Add("formula", "formula")
-                Call grid.Columns.Add("exact_mass", "exact_mass")
-                Call grid.Columns.Add("score", "score")
+                Call grid.Columns.Add("mz", GetType(Double))
+                Call grid.Columns.Add("ppm", GetType(Double))
+                Call grid.Columns.Add("precursorType", GetType(String))
+                Call grid.Columns.Add("kegg_id", GetType(String))
+                Call grid.Columns.Add("name", GetType(String))
+                Call grid.Columns.Add("formula", GetType(String))
+                Call grid.Columns.Add("exact_mass", GetType(Double))
+                Call grid.Columns.Add("score", GetType(Double))
 
                 For Each ion As MzQuery In result
                     Dim kegg As Compound = keggMeta.GetCompound(ion.unique_id)

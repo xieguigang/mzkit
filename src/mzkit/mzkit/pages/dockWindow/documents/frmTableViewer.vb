@@ -48,11 +48,12 @@
 
 Imports System.IO
 Imports System.Text
+Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
-Imports BioNovoGene.mzkit_win32.My
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports Zuby.ADGV
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 Public Class frmTableViewer : Implements ISaveHandle, IFileReference
@@ -68,14 +69,24 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         End Get
     End Property
 
-    Public Sub LoadTable(apply As Action(Of DataGridView))
-        Call Me.DataGridView1.Columns.Clear()
-        Call Me.DataGridView1.Rows.Clear()
-        Call apply(DataGridView1)
+    Dim memoryData As New DataSet
+
+    Public Sub LoadTable(apply As Action(Of DataTable))
+        Dim table As DataTable = memoryData.Tables.Add("memoryData")
+
+        Call Me.AdvancedDataGridView1.Columns.Clear()
+        Call Me.AdvancedDataGridView1.Rows.Clear()
+        Call apply(table)
+        Call AdvancedDataGridView1.SetDoubleBuffered()
+        Call AdvancedDataGridViewSearchToolBar1.SetColumns(AdvancedDataGridView1.Columns)
+
+        For Each column As DataGridViewColumn In AdvancedDataGridView1.Columns
+            AdvancedDataGridView1.ShowMenuStrip(column)
+        Next
     End Sub
 
     Protected Overrides Sub SaveDocument()
-        Call DataGridView1.SaveDataGrid("Save Table View")
+        Call AdvancedDataGridView1.SaveDataGrid("Save Table View")
     End Sub
 
     Private Sub frmTableViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -89,7 +100,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Using writeTsv As StreamWriter = path.OpenWriter(encoding:=Encodings.UTF8WithoutBOM)
-            Call DataGridView1.WriteTableToFile(writeTsv)
+            Call AdvancedDataGridView1.WriteTableToFile(writeTsv)
         End Using
 
         Return True
@@ -100,14 +111,14 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     End Function
 
     Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
-        If DataGridView1.SelectedRows.Count <= 0 Then
+        If AdvancedDataGridView1.SelectedRows.Count <= 0 Then
             Call MyApplication.host.showStatusMessage("Please select a row data for view content!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         ElseIf Not ViewRow Is Nothing Then
             Dim obj As New Dictionary(Of String, Object)
-            Dim row As DataGridViewRow = DataGridView1.SelectedRows(0)
+            Dim row As DataGridViewRow = AdvancedDataGridView1.SelectedRows(0)
 
-            For i As Integer = 0 To DataGridView1.Columns.Count - 1
-                obj(DataGridView1.Columns(i).HeaderText) = row.Cells(i).Value
+            For i As Integer = 0 To AdvancedDataGridView1.Columns.Count - 1
+                obj(AdvancedDataGridView1.Columns(i).HeaderText) = row.Cells(i).Value
             Next
 
             Call _ViewRow(obj)
@@ -118,7 +129,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         Dim form As New InputRSymbol
         Dim fieldNames As New List(Of String)
 
-        For Each col As DataGridViewColumn In DataGridView1.Columns
+        For Each col As DataGridViewColumn In AdvancedDataGridView1.Columns
             Call fieldNames.Add(col.Name)
         Next
 
@@ -147,7 +158,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Public Function getFieldVector(fieldRef As String) As Array
         Dim fieldNames As New List(Of String)
 
-        For Each col As DataGridViewColumn In DataGridView1.Columns
+        For Each col As DataGridViewColumn In AdvancedDataGridView1.Columns
             Call fieldNames.Add(col.Name)
         Next
 
@@ -160,7 +171,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Public Function getFieldVector(i As Integer) As Array
         Dim array As New List(Of Object)
 
-        For Each row As DataGridViewRow In DataGridView1.Rows
+        For Each row As DataGridViewRow In AdvancedDataGridView1.Rows
             array.Add(row.Cells(i).Value)
         Next
 
@@ -170,7 +181,7 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Public Function GetSchema() As Dictionary(Of String, Type)
         Dim schema As New Dictionary(Of String, Type)
 
-        For Each col As DataGridViewColumn In DataGridView1.Columns
+        For Each col As DataGridViewColumn In AdvancedDataGridView1.Columns
             Call schema.Add(col.Name, GetType(Double))
         Next
 
@@ -198,5 +209,38 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
                                    Call Actions.RunAction(action, data)
                                End Sub, config:=takeActions)
+    End Sub
+
+    Private Sub AdvancedDataGridViewSearchToolBar1_Search(sender As Object, e As AdvancedDataGridViewSearchToolBarSearchEventArgs) Handles AdvancedDataGridViewSearchToolBar1.Search
+        Dim restartsearch = True
+        Dim startColumn = 0
+        Dim startRow = 0
+
+        If Not e.FromBegin Then
+            Dim endcol = AdvancedDataGridView1.CurrentCell.ColumnIndex + 1 >= AdvancedDataGridView1.ColumnCount
+            Dim endrow = AdvancedDataGridView1.CurrentCell.RowIndex + 1 >= AdvancedDataGridView1.RowCount
+
+            If endcol AndAlso endrow Then
+                startColumn = AdvancedDataGridView1.CurrentCell.ColumnIndex
+                startRow = AdvancedDataGridView1.CurrentCell.RowIndex
+            Else
+                startColumn = If(endcol, 0, AdvancedDataGridView1.CurrentCell.ColumnIndex + 1)
+                startRow = AdvancedDataGridView1.CurrentCell.RowIndex + If(endcol, 1, 0)
+            End If
+        End If
+
+        Dim c = AdvancedDataGridView1.FindCell(e.ValueToSearch, If(e.ColumnToSearch IsNot Nothing, e.ColumnToSearch.Name, Nothing), startRow, startColumn, e.WholeWord, e.CaseSensitive)
+
+        If c Is Nothing AndAlso restartsearch Then
+            c = AdvancedDataGridView1.FindCell(e.ValueToSearch, If(e.ColumnToSearch IsNot Nothing, e.ColumnToSearch.Name, Nothing), 0, 0, e.WholeWord, e.CaseSensitive)
+        End If
+
+        If c IsNot Nothing Then
+            AdvancedDataGridView1.CurrentCell = c
+        End If
+    End Sub
+
+    Private Sub AdvancedDataGridView1_FilterStringChanged(sender As Object, e As AdvancedDataGridView.FilterEventArgs) Handles AdvancedDataGridView1.FilterStringChanged
+
     End Sub
 End Class
