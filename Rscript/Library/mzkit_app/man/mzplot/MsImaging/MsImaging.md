@@ -21,4 +21,3 @@
 + [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) 
 + [render](MsImaging/render.1) 
 + [MeasureMSIions](MsImaging/MeasureMSIions.1) 
-+ [flatten](MsImaging/flatten.1) 

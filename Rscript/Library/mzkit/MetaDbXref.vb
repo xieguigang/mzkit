@@ -136,7 +136,7 @@ Module MetaDbXref
         Dim queryEngine As IMzQuery
 
         If TypeOf engine Is KEGGHandler Then
-            queryEngine = DirectCast(engine, KEGGHandler).engine
+            queryEngine = DirectCast(engine, KEGGHandler)
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
