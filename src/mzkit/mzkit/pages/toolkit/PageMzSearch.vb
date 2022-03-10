@@ -61,6 +61,7 @@ Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.My
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
@@ -455,9 +456,9 @@ Public Class PageMzSearch
             Case "kegg"
                 Return Globals.LoadKEGG(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case "lipidmaps"
-
+                Return Globals.LoadLipidMaps(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case Else
-
+                Return Nothing
         End Select
     End Function
 
@@ -472,7 +473,7 @@ Public Class PageMzSearch
                                  Let str = x.ToString
                                  Select str).ToArray
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
-        Dim result As New List(Of MzQuery)
+        Dim result As New List(Of NamedCollection(Of MzQuery))
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
         Dim keggMeta As DBPool = Nothing
         Dim dbNames As String() = getDatabaseNames.ToArray
@@ -491,7 +492,7 @@ Public Class PageMzSearch
                     Return database
                 End Function, info:="Load annotation database repository data...")
 
-            Dim anno As MzQuery() = frmTaskProgress.LoadData(
+            Dim anno As IEnumerable(Of NamedCollection(Of MzQuery)) = frmTaskProgress.LoadData(
                 streamLoad:=Function() keggMeta.MSetAnnotation(mzset),
                 title:="Peak List Annotation",
                 info:="Run ms1 peak list data annotation..."
@@ -512,22 +513,26 @@ Public Class PageMzSearch
                 Call grid.Columns.Add("formula", GetType(String))
                 Call grid.Columns.Add("exact_mass", GetType(Double))
                 Call grid.Columns.Add("score", GetType(Double))
+                Call grid.Columns.Add("metadb", GetType(String))
 
-                For Each ion As MzQuery In result
-                    Dim kegg = keggMeta.getAnnotation(ion.unique_id)
+                For Each setList In result
+                    For Each ion As MzQuery In setList
+                        Dim kegg = keggMeta.getAnnotation(ion.unique_id)
 
-                    Call grid.Rows.Add(
-                        ion.mz.ToString("F4"),
-                        ion.ppm.ToString("F1"),
-                        ion.precursorType,
-                        ion.unique_id,
-                        If(kegg.name, ion.unique_id),
-                        kegg.formula,
-                        FormulaScanner.ScanFormula(kegg.formula).ExactMass,
-                        ion.score.ToString("F2")
-                    )
+                        Call grid.Rows.Add(
+                            ion.mz.ToString("F4"),
+                            ion.ppm.ToString("F1"),
+                            ion.precursorType,
+                            ion.unique_id,
+                            If(kegg.name, ion.unique_id),
+                            kegg.formula,
+                            FormulaScanner.ScanFormula(kegg.formula).ExactMass,
+                            ion.score.ToString("F2"),
+                            setList.name
+                        )
 
-                    Call Application.DoEvents()
+                        Call Application.DoEvents()
+                    Next
                 Next
             End Sub)
 

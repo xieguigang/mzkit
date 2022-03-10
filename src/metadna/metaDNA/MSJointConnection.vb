@@ -264,4 +264,8 @@ Public Class MSJointConnection : Implements IMzQuery
             }
         Next
     End Function
+
+    Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
+        Return kegg.GetAnnotation(uniqueId)
+    End Function
 End Class

@@ -322,6 +322,10 @@
       <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
       <Name>FormulaSearch.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadb\Massbank\Massbank.vbproj">
+      <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
+      <Name>Massbank</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.vbproj">
       <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>
       <Name>metaDNA</Name>

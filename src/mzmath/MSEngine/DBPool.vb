@@ -8,11 +8,21 @@ Public Class DBPool
     Protected ReadOnly metadb As New Dictionary(Of String, IMzQuery)
 
     Public Sub Register(name As String, database As IMzQuery)
-        metadb(name) = database
+        If Not database Is Nothing Then
+            metadb(name) = database
+        End If
     End Sub
 
     Public Function getAnnotation(uniqueId As String) As (name As String, formula As String)
+        For Each db In metadb.Values
+            Dim result = db.GetAnnotation(uniqueId)
 
+            If Not (result.formula.StringEmpty AndAlso result.name.StringEmpty) Then
+                Return result
+            End If
+        Next
+
+        Return Nothing
     End Function
 
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of NamedCollection(Of MzQuery))

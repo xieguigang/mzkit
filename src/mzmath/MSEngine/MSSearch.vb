@@ -58,12 +58,15 @@ Imports Microsoft.VisualBasic.Linq
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
 
-Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider}) : Implements IMzQuery
+Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider}) : Implements IMzQuery
 
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
     ReadOnly mzIndex As (Double, Compound())()
 
+    ''' <summary>
+    ''' index by unique id
+    ''' </summary>
     Friend ReadOnly index As Dictionary(Of String, Compound)
 
     Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
@@ -171,6 +174,16 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         'Next
 
         Return New MSSearch(Of Compound)(compounds, tolerance, types)
+    End Function
+
+    Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
+        Dim meta = index.TryGetValue(uniqueId)
+
+        If meta Is Nothing Then
+            Return Nothing
+        Else
+            Return (meta.CommonName, meta.Formula)
+        End If
     End Function
 End Class
 

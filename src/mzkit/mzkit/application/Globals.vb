@@ -56,7 +56,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.My
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -68,6 +70,7 @@ Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Module Globals
 
@@ -101,6 +104,22 @@ Module Globals
         Return background
     End Function
 
+    Public Function LoadLipidMaps(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSSearch(Of LipidMaps.MetaData)
+        Dim key As String = $"[{mzdiff.ToString}]{mode}"
+
+        Static dataPack As LipidMaps.MetaData() = KEGGRepo.RequestLipidMaps
+        Static cache As New Dictionary(Of String, MSSearch(Of LipidMaps.MetaData))
+
+        Return cache.ComputeIfAbsent(key,
+            lazyValue:=Function()
+                           If mode = 1 Then
+                               Return MSSearch(Of LipidMaps.MetaData).CreateIndex(dataPack, Provider.Positives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
+                           Else
+                               Return MSSearch(Of LipidMaps.MetaData).CreateIndex(dataPack, Provider.Positives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
+                           End If
+                       End Function)
+    End Function
+
     Public Function LoadKEGG(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSJointConnection
         Static background As Background = loadBackground()
         Static compounds = KEGGHandler.Wraps(KEGGRepo.RequestKEGGCompounds).ToArray
@@ -110,9 +129,9 @@ Module Globals
         Dim handler As KEGGHandler = cache.ComputeIfAbsent(key,
             lazyValue:=Function()
                            If mode = 1 Then
-                               Return KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+                               Return KEGGHandler.CreateIndex(compounds, Provider.Positives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
                            Else
-                               Return KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) t.charge = 1).ToArray, mzdiff)
+                               Return KEGGHandler.CreateIndex(compounds, Provider.Negatives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
                            End If
                        End Function)
 
