@@ -4,7 +4,7 @@ Namespace Configuration
 
     Public Enum Languages
         System
-        <Description("en-US")> English
         <Description("zh-CN")> Chinese
+        <Description("en-US")> English
     End Enum
 End Namespace

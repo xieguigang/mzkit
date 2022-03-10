@@ -450,6 +450,17 @@ Public Class PageMzSearch
 
     End Sub
 
+    Private Function getDatabase(name As String, ionMode As Integer, tolerance As Tolerance) As IMzQuery
+        Select Case name
+            Case "kegg"
+                Return Globals.LoadKEGG(AddressOf MyApplication.LogText, ionMode, tolerance)
+            Case "lipidmaps"
+
+            Case Else
+
+        End Select
+    End Function
+
     ''' <summary>
     ''' do ms1 peak list annotation
     ''' </summary>
@@ -460,18 +471,24 @@ Public Class PageMzSearch
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
         Dim result As New List(Of MzQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
-        Dim keggMeta As MSJointConnection = Nothing
+        Dim keggMeta As DBPool = Nothing
         Dim dbNames As String() = getDatabaseNames.ToArray
 
         For Each mode As String In modes
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
 
-            For Each db As String In dbNames
+            keggMeta = frmTaskProgress.LoadData(
+                Function()
+                    Dim database As New DBPool
 
-            Next
+                    For Each db As String In dbNames
+                        Call database.Register(db, getDatabase(db, modeValue, tolerance))
+                    Next
 
-            keggMeta = frmTaskProgress.LoadData(Function() Globals.LoadKEGG(AddressOf MyApplication.LogText, modeValue, tolerance), info:="Load KEGG repository data...")
-            Dim anno As MzQuery() = frmTaskProgress.LoadData(Function() keggMeta.SetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
+                    Return database
+                End Function, info:="Load annotation database repository data...")
+
+            Dim anno As MzQuery() = frmTaskProgress.LoadData(Function() keggMeta.MSetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
 
             Call result.AddRange(anno)
         Next

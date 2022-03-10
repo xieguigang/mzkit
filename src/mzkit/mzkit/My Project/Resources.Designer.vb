@@ -191,6 +191,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  查找类似 MZKit needs restart application to apply the new UI language 的本地化字符串。
+        '''</summary>
+        Friend ReadOnly Property language_en() As String
+            Get
+                Return ResourceManager.GetString("language_en", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 您需要重新启动应用程序来应用新的程序界面语言 的本地化字符串。
+        '''</summary>
+        Friend ReadOnly Property language_zh() As String
+            Get
+                Return ResourceManager.GetString("language_zh", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  查找类似 MIT License
         '''
         '''Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.

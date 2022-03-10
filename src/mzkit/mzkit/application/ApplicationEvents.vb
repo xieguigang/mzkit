@@ -49,10 +49,12 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
+Imports BioNovoGene.mzkit_win32.Configuration
 Imports BioNovoGene.mzkit_win32.DockSample
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -387,8 +389,36 @@ Type 'q()' to quit R.
         Public Shared Function LoadLibrary(lpFileName As String) As IntPtr
         End Function
 
+        Public Shared Function getLanguageString(key As String, lang As Languages) As String
+            Select Case lang
+                Case Languages.Chinese
+                    Return My.Resources.ResourceManager.GetString($"{key}_zh")
+                Case Languages.English
+                    Return My.Resources.ResourceManager.GetString($"{key}_en")
+                Case Else
+                    Return My.Resources.ResourceManager.GetString($"{key}_en")
+            End Select
+        End Function
+
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             Dim cli = App.CommandLine
+            Dim config = Globals.Settings
+
+            If config.ui Is Nothing Then
+                config.ui = New UISettings
+            End If
+
+            Select Case config.ui.language
+                Case Languages.Chinese
+                    Thread.CurrentThread.CurrentUICulture = New CultureInfo("zh-CN")
+                    CultureInfo.DefaultThreadCurrentUICulture = New CultureInfo("zh-CN")
+                Case Languages.English
+                    Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+                    CultureInfo.DefaultThreadCurrentUICulture = New CultureInfo("en-US")
+                Case Else
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.CurrentUICulture
+                    CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.CurrentUICulture
+            End Select
 
             If Not (cli Is Nothing OrElse cli.IsNullOrEmpty) Then
                 If cli.Name.FileExists Then

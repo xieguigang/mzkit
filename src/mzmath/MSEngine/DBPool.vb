@@ -7,6 +7,10 @@ Public Class DBPool
 
     Protected ReadOnly metadb As New Dictionary(Of String, IMzQuery)
 
+    Public Sub Register(name As String, database As IMzQuery)
+        metadb(name) = database
+    End Sub
+
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of NamedCollection(Of MzQuery))
         For Each xrefDb In metadb
             Yield New NamedCollection(Of MzQuery) With {

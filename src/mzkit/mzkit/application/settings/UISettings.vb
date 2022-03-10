@@ -58,7 +58,7 @@ Namespace Configuration
         Public Property width As Integer
         Public Property height As Integer
         Public Property window As FormWindowState
-
+        Public Property language As Languages = Languages.System
         Public Property rememberWindowsLocation As Boolean = True
         Public Property rememberLayouts As Boolean = True
 
