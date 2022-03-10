@@ -59,6 +59,7 @@ Public Class zzz
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
 
+        Call MetaDbXref.Main()
         Call data.Main()
     End Sub
 
