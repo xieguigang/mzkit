@@ -218,6 +218,12 @@
     <EmbeddedResource Include="MSI\ColorScaleMap.resx">
       <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MSSelector.en-US.resx">
+      <DependentUpon>MSSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MSSelector.zh-CN.resx">
+      <DependentUpon>MSSelector.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -227,11 +233,17 @@
     <EmbeddedResource Include="MSI\PixelSelector.resx">
       <DependentUpon>PixelSelector.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RtRangeSelector.en-US.resx">
+      <DependentUpon>RtRangeSelector.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RtRangeSelector.resx">
       <DependentUpon>RtRangeSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MSSelector.resx">
       <DependentUpon>MSSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RtRangeSelector.zh-CN.resx">
+      <DependentUpon>RtRangeSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ToggleSlider.resx">
       <DependentUpon>ToggleSlider.vb</DependentUpon>

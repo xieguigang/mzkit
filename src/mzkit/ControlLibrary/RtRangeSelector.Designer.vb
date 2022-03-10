@@ -23,6 +23,7 @@ Partial Class RtRangeSelector
     <System.Diagnostics.DebuggerStepThrough()>
     Protected Overridable Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RtRangeSelector))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -34,21 +35,16 @@ Partial Class RtRangeSelector
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
+        resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(4, 4)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(146, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Select time range by mouse..."
         '
         'RtRangeSelector
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Label1)
         Me.Name = "RtRangeSelector"
-        Me.Size = New System.Drawing.Size(754, 98)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
