@@ -22,39 +22,48 @@ Partial Class AppConfig
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AppConfig))
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'CheckBox1
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(24, 25)
+        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(168, 16)
-        Me.CheckBox1.TabIndex = 0
-        Me.CheckBox1.Text = "Remember Window Location"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'CheckBox2
         '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(24, 65)
+        resources.ApplyResources(Me.CheckBox2, "CheckBox2")
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(114, 16)
-        Me.CheckBox2.TabIndex = 8
-        Me.CheckBox2.Text = "Remember Layout"
         Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'ComboBox1
+        '
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2")})
+        Me.ComboBox1.Name = "ComboBox1"
         '
         'AppConfig
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.CheckBox1)
         Me.Name = "AppConfig"
-        Me.Size = New System.Drawing.Size(732, 495)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -62,4 +71,6 @@ Partial Class AppConfig
 
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 End Class
