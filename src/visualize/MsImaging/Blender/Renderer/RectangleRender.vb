@@ -81,7 +81,7 @@ Namespace Blender
         Public Overloads Sub ChannelCompositions(gr As IGraphics, region As GraphicsRegion,
                                                  R() As PixelData, G() As PixelData, B() As PixelData,
                                                  dimension As Size,
-                                                 Optional dimSize As Size = Nothing,
+                                                 Optional dimSize As SizeF = Nothing,
                                                  Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                  Optional background As String = "black")
 

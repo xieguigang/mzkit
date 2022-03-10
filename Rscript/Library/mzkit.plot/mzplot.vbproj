@@ -323,8 +323,7 @@
       <Name>msplots</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
-
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
+  <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

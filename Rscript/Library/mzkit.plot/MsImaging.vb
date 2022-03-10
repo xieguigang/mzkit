@@ -374,7 +374,6 @@ Module MsImaging
                         <RRawVectorArgument>
                         Optional pixelSize As Object = "5,5",
                         Optional tolerance As Object = "da:0.1",
-                        Optional pixelDrawer As Boolean = True,
                         Optional maxCut As Double = 0.75,
                         Optional TrIQ As Boolean = True,
                         Optional env As Environment = Nothing) As Object
@@ -389,7 +388,7 @@ Module MsImaging
         Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
-        Dim engine As New RectangleRender(imageDriverHandler.getDriver(env), heatmapRender:=False)
+        Dim engine As New RectangleRender(env.getDriver(), heatmapRender:=False)
         Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
         Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
         Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
