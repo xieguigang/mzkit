@@ -278,6 +278,10 @@
       <Project>{77683884-EDF0-4C48-9D7C-B4343A561FD7}</Project>
       <Name>ms2_simulator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\MSEngine\MSEngine_net47.vbproj">
+      <Project>{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}</Project>
+      <Name>MSEngine_net47</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
       <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
       <Name>KCF.Graph</Name>

@@ -5,6 +5,6 @@ imports "math" from "mzkit";
 #' @param kind da method or ppm method.
 #' @param mzdiff the m/z tolerance error value.
 #' 
-const tolerance as function(kind as string, mzdiff as double) {
+const tolerance = function(kind as string, mzdiff as double) {
     math::tolerance(mzdiff, kind);
 }

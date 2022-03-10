@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::db60d926c8a4d878f0c0c0bf923cf329, Rscript\Library\mzkit.insilicons\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module metaDNAInfer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary, loadKeggNetwork
-    '               loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments
-    '               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Module metaDNAInfer
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary, loadKeggNetwork
+'               loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments
+'               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -400,6 +401,37 @@ Module metaDNAInfer
 
 #Region "kegg"
 
+    <ExportAPI("annotationSet")>
+    <RApiReturn(GetType(KEGGHandler))>
+    Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
+                                     <RRawVectorArgument>
+                                     Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
+                                     Optional mzdiff As Object = "ppm:20",
+                                     Optional env As Environment = Nothing) As Object
+        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim mzErr = Math.getTolerance(mzdiff, env)
+
+        If keggSet.isError Then
+            Return keggSet.getError
+        ElseIf mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim types As String() = REnv.asVector(Of String)(precursors)
+        Dim calculators As MzCalculator() = Provider.Calculators(types)
+
+        Return KEGGHandler.CreateIndex(
+            compounds:=keggSet.populates(Of KeggCompound)(env),
+            types:=calculators,
+            tolerance:=mzErr.TryCast(Of Tolerance)
+        )
+    End Function
+
+    ''' <summary>
+    ''' load kegg compounds
+    ''' </summary>
+    ''' <param name="repo"></param>
+    ''' <returns></returns>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object

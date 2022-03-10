@@ -1,4 +1,5 @@
 imports ["metadb", "massbank", "math"] from "mzkit";
+imports "metadna" from "mzDIA";
 
 #' Load lipidmaps data repository from internal data pack
 #' 
@@ -8,7 +9,7 @@ imports ["metadb", "massbank", "math"] from "mzkit";
 #' 
 #' @return a data seuqnece of lipidmaps metadata
 #' 
-const lipidmaps_repo as function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit")) {
+const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit")) {
     if (!file.exists(repofile)) {
         stop(`no repository data file at location: ${repofile}!`);
     } else {
@@ -16,5 +17,21 @@ const lipidmaps_repo as function(repofile = system.file("data/LIPIDMAPS.msgpack"
         #
         const repo = massbank::read.lipidmaps(repofile);
         repo;
+    }
+}
+
+const kegg_compounds = function(precursors = ["[M]+", "[M+H]+", "[M+H-H2O]+"], 
+                                mzdiff     = "ppm:20", 
+                                repofile   = system.file("data/KEGG_compounds.msgpack", package = "mzkit")) {
+
+    if (!file.exists(repofile)) {
+        stop(`no repository data file at location: ${repofile}!`);
+    } else {
+        # read messagepack repository data file
+        #
+        repofile
+        |> kegg.library()
+        |> annotationSet()
+        ;        
     }
 }
