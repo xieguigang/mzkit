@@ -155,6 +155,7 @@ Module RibbonEvents
         AddHandler ribbonItems.ImportsMzwork.ExecuteEvent, Sub() Call OpenWorkspace()
 
         AddHandler ribbonItems.ButtonDevTools.ExecuteEvent, Sub() Call openCmd()
+        AddHandler ribbonItems.DOIReference.ExecuteEvent, Sub() Call New frmDOI().ShowDialog()
     End Sub
 
     Friend Sub openCmd()

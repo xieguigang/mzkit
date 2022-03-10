@@ -322,6 +322,12 @@
     <Compile Include="application\settings\RawFileViewerSettings.vb" />
     <Compile Include="application\VisualStudio.vb" />
     <Compile Include="application\RPackage.vb" />
+    <Compile Include="forms\frmDOI.Designer.vb">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmDOI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmUserAgreement.Designer.vb">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </Compile>
@@ -778,6 +784,12 @@
     <Compile Include="Win32API.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="forms\frmDOI.resx">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmDOI.zh-CN.resx">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>

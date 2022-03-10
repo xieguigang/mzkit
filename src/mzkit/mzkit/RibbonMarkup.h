@@ -865,5 +865,12 @@
 #define cmdButtonSaveTableCDF_TooltipDescription_RESID 60076
 #define cmdButtonSaveTableCDF_SmallImages_192__RESID 60077
 #define cmdButtonSaveTableCDF_LargeImages_192__RESID 60078
-#define InternalCmd2_LabelTitle_RESID 60079
-#define InternalCmd4_LabelTitle_RESID 60080
+#define cmdDOIReference 177 
+#define cmdDOIReference_LabelTitle_RESID 60079
+#define cmdDOIReference_LabelDescription_RESID 60080
+#define cmdDOIReference_TooltipTitle_RESID 60081
+#define cmdDOIReference_TooltipDescription_RESID 60082
+#define cmdDOIReference_SmallImages_192__RESID 60083
+#define cmdDOIReference_LargeImages_192__RESID 60084
+#define InternalCmd2_LabelTitle_RESID 60085
+#define InternalCmd4_LabelTitle_RESID 60086
