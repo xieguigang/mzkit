@@ -448,7 +448,13 @@ Public Class PageMzSearch
     End Function
 
     Public Sub ReloadMetaDatabase()
+        CheckedListBox2.Items.Clear()
 
+        CheckedListBox2.Items.Add("kegg")
+        CheckedListBox2.Items.Add("lipidmaps")
+
+        CheckedListBox2.SetItemChecked(0, True)
+        CheckedListBox2.SetItemChecked(1, True)
     End Sub
 
     Private Function getDatabase(name As String, ionMode As Integer, tolerance As Tolerance) As IMzQuery

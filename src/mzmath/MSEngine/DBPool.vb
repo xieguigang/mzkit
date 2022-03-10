@@ -40,7 +40,9 @@ Public Class DBPool
         For Each xrefDb In metadb
             Yield New NamedCollection(Of MzQuery) With {
                 .name = xrefDb.Key,
-                .value = xrefDb.Value.MSetAnnotation(allMz)
+                .value = xrefDb.Value _
+                    .MSetAnnotation(allMz) _
+                    .ToArray
             }
         Next
     End Function

@@ -50,7 +50,6 @@ Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
-Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF

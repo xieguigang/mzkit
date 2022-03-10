@@ -179,7 +179,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
         Dim meta = index.TryGetValue(uniqueId)
 
-        If meta Is Nothing Then
+        If meta Is Nothing OrElse (meta.CommonName.StringEmpty AndAlso meta.Formula.StringEmpty) Then
             Return Nothing
         Else
             Return (meta.CommonName, meta.Formula)
