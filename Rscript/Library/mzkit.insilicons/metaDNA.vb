@@ -404,7 +404,7 @@ Module metaDNAInfer
     <ExportAPI("annotationSet")>
     <RApiReturn(GetType(KEGGHandler))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
-                                     <RRawVectorArgument>
+                                     <RRawVectorArgument(GetType(String))>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
                                      Optional env As Environment = Nothing) As Object
