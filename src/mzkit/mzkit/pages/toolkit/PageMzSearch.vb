@@ -467,7 +467,10 @@ Public Class PageMzSearch
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim modes As String() = (From x In CheckedListBox1.CheckedItems Let str = x.ToString Select str).ToArray
+        Dim modes As String() = (From x As Object
+                                 In CheckedListBox1.CheckedItems
+                                 Let str = x.ToString
+                                 Select str).ToArray
         Dim mzset As Double() = TextBox3.Text.LineTokens.Select(AddressOf Val).ToArray
         Dim result As New List(Of MzQuery)
         Dim tolerance As Tolerance = Tolerance.PPM(NumericUpDown1.Value)
@@ -488,7 +491,11 @@ Public Class PageMzSearch
                     Return database
                 End Function, info:="Load annotation database repository data...")
 
-            Dim anno As MzQuery() = frmTaskProgress.LoadData(Function() keggMeta.MSetAnnotation(mzset), title:="Peak List Annotation", info:="Run ms1 peak list data annotation...")
+            Dim anno As MzQuery() = frmTaskProgress.LoadData(
+                streamLoad:=Function() keggMeta.MSetAnnotation(mzset),
+                title:="Peak List Annotation",
+                info:="Run ms1 peak list data annotation..."
+            )
 
             Call result.AddRange(anno)
         Next
@@ -507,16 +514,16 @@ Public Class PageMzSearch
                 Call grid.Columns.Add("score", GetType(Double))
 
                 For Each ion As MzQuery In result
-                    Dim kegg As Compound = keggMeta.GetCompound(ion.unique_id)
+                    Dim kegg = keggMeta.getAnnotation(ion.unique_id)
 
                     Call grid.Rows.Add(
                         ion.mz.ToString("F4"),
                         ion.ppm.ToString("F1"),
                         ion.precursorType,
                         ion.unique_id,
-                        If(kegg.commonNames.FirstOrDefault, ion.unique_id),
+                        If(kegg.name, ion.unique_id),
                         kegg.formula,
-                        kegg.exactMass,
+                        FormulaScanner.ScanFormula(kegg.formula).ExactMass,
                         ion.score.ToString("F2")
                     )
 

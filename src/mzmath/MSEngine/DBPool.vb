@@ -11,6 +11,10 @@ Public Class DBPool
         metadb(name) = database
     End Sub
 
+    Public Function getAnnotation(uniqueId As String) As (name As String, formula As String)
+
+    End Function
+
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of NamedCollection(Of MzQuery))
         For Each xrefDb In metadb
             Yield New NamedCollection(Of MzQuery) With {
