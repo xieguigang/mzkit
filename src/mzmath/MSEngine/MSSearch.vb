@@ -147,9 +147,10 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             Yield New MzQuery With {
                 .unique_id = cpd.Identity,
                 .precursorType = minppm.type.ToString,
-                .mz = minppm.mzhit,
+                .mz = mz,
                 .ppm = minppm.Item3,
-                .name = cpd.CommonName
+                .name = cpd.CommonName,
+                .mz_ref = minppm.mzhit
             }
         Next
     End Function
