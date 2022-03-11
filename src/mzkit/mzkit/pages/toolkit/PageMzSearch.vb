@@ -512,6 +512,7 @@ Public Class PageMzSearch
         Call table.LoadTable(
             Sub(grid)
                 Call grid.Columns.Add("mz", GetType(Double))
+                Call grid.Columns.Add("mz_ref", GetType(Double))
                 Call grid.Columns.Add("ppm", GetType(Double))
                 Call grid.Columns.Add("precursorType", GetType(String))
                 Call grid.Columns.Add("kegg_id", GetType(String))
@@ -527,6 +528,7 @@ Public Class PageMzSearch
 
                         Call grid.Rows.Add(
                             ion.mz.ToString("F4"),
+                            ion.mz_ref.ToString("F4"),
                             ion.ppm.ToString("F1"),
                             ion.precursorType,
                             ion.unique_id,
