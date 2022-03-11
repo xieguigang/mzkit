@@ -51,29 +51,55 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 ''' <summary>
 ''' object model wrapper for the KEGG compound in order to apply of the generic ms search engine
 ''' </summary>
-Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider
+Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
     Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
         Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
             Return KEGG.exactMass
         End Get
     End Property
 
     Public ReadOnly Property kegg_id As String Implements IReadOnlyId.Identity
         Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
             Return KEGG.entry
         End Get
     End Property
 
     Public ReadOnly Property CommonName As String Implements ICompoundNameProvider.CommonName
         Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
             Return If(KEGG.commonNames.FirstOrDefault, kegg_id)
+        End Get
+    End Property
+
+    Public ReadOnly Property Formula As String Implements IFormulaProvider.Formula
+        Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
+            Return KEGG.formula
         End Get
     End Property
 
     Dim KEGG As Compound
 
     Public Overrides Function ToString() As String
+        If KEGG Is Nothing Then
+            Return Nothing
+        End If
+
         Return KEGG.ToString
     End Function
 

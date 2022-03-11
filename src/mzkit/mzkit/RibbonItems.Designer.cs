@@ -36,6 +36,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonAbout = 1021;
             public const uint cmdButtonBioDeep = 1022;
             public const uint cmdButtonLicense = 1101;
+            public const uint cmdDOIReference = 177;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdButtonExit = 1004;
             public const uint cmdHelpButton = 1016;
@@ -205,6 +206,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonAbout { get; private set; }
         public RibbonButton ButtonBioDeep { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
+        public RibbonButton DOIReference { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
@@ -372,6 +374,7 @@ namespace RibbonLib.Controls
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
+            DOIReference = new RibbonButton(ribbon, Cmd.cmdDOIReference);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);

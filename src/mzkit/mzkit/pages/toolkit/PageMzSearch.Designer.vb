@@ -50,6 +50,8 @@ Partial Class PageMzSearch
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.CheckedListBox2 = New System.Windows.Forms.CheckedListBox()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -57,8 +59,6 @@ Partial Class PageMzSearch
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.CheckedListBox2 = New System.Windows.Forms.CheckedListBox()
-        Me.Label9 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -324,6 +324,23 @@ Partial Class PageMzSearch
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Search Input"
         '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(252, 280)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(101, 12)
+        Me.Label9.TabIndex = 7
+        Me.Label9.Text = "Select Database:"
+        '
+        'CheckedListBox2
+        '
+        Me.CheckedListBox2.FormattingEnabled = True
+        Me.CheckedListBox2.Location = New System.Drawing.Point(252, 305)
+        Me.CheckedListBox2.Name = "CheckedListBox2"
+        Me.CheckedListBox2.Size = New System.Drawing.Size(144, 196)
+        Me.CheckedListBox2.TabIndex = 6
+        '
         'NumericUpDown1
         '
         Me.NumericUpDown1.Increment = New Decimal(New Integer() {5, 0, 0, 0})
@@ -367,7 +384,7 @@ Partial Class PageMzSearch
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.TextBox3.BackColor = System.Drawing.Color.White
         Me.TextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox3.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.TextBox3.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.TextBox3.Location = New System.Drawing.Point(22, 56)
         Me.TextBox3.Multiline = True
         Me.TextBox3.Name = "TextBox3"
@@ -393,23 +410,6 @@ Partial Class PageMzSearch
         Me.Button3.TabIndex = 2
         Me.Button3.Text = "Search"
         Me.Button3.UseVisualStyleBackColor = True
-        '
-        'CheckedListBox2
-        '
-        Me.CheckedListBox2.FormattingEnabled = True
-        Me.CheckedListBox2.Location = New System.Drawing.Point(252, 305)
-        Me.CheckedListBox2.Name = "CheckedListBox2"
-        Me.CheckedListBox2.Size = New System.Drawing.Size(144, 196)
-        Me.CheckedListBox2.TabIndex = 6
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(252, 280)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(101, 12)
-        Me.Label9.TabIndex = 7
-        Me.Label9.Text = "Select Database:"
         '
         'PageMzSearch
         '

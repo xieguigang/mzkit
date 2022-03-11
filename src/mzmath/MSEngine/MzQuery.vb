@@ -55,7 +55,18 @@ Imports System.Xml.Serialization
 ''' </summary>
 Public Structure MzQuery
 
+    ''' <summary>
+    ''' the source ``m/z`` value
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property mz As Double
+    ''' <summary>
+    ''' the evaluated m/z value based on the 
+    ''' precursor type and formula string 
+    ''' data.
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute> Public Property mz_ref As Double
     <XmlAttribute> Public Property ppm As Double
     <XmlAttribute> Public Property precursorType As String
 
@@ -92,7 +103,8 @@ Public Structure MzQuery
             .ppm = ppm,
             .precursorType = precursorType,
             .score = score,
-            .name = name
+            .name = name,
+            .mz_ref = mz_ref
         }
     End Function
 

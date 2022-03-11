@@ -181,7 +181,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
+    <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
@@ -190,6 +190,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -332,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blender\MSIColorSet.vb" />
+    <Compile Include="Blender\Renderer\RenderRGB.vb" />
     <Compile Include="Blender\Renderer\RenderingModes.vb" />
     <Compile Include="IonStat.vb" />
     <Compile Include="HeatMapLayer.vb" />

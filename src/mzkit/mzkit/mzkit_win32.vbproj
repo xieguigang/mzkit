@@ -317,11 +317,18 @@
     <Compile Include="application\Actions.vb" />
     <Compile Include="application\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
+    <Compile Include="application\settings\Languages.vb" />
     <Compile Include="application\WindowModules.vb" />
     <Compile Include="application\TaskbarWindow.vb" />
     <Compile Include="application\settings\RawFileViewerSettings.vb" />
     <Compile Include="application\VisualStudio.vb" />
     <Compile Include="application\RPackage.vb" />
+    <Compile Include="forms\frmDOI.Designer.vb">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmDOI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmUserAgreement.Designer.vb">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </Compile>
@@ -778,6 +785,12 @@
     <Compile Include="Win32API.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="forms\frmDOI.resx">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmDOI.zh-CN.resx">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
@@ -921,6 +934,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\pageStart\VideoCards.resx">
       <DependentUpon>VideoCards.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\Settings\AppConfig.en-US.resx">
+      <DependentUpon>AppConfig.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\Settings\AppConfig.zh-CN.resx">
+      <DependentUpon>AppConfig.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\toolkit\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
@@ -1150,6 +1169,10 @@
     <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.vbproj">
       <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
       <Name>FormulaSearch.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\Massbank\Massbank.vbproj">
+      <Project>{A686BDF5-077F-47F5-A8DD-C73E6E88363C}</Project>
+      <Name>Massbank</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.vbproj">
       <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>

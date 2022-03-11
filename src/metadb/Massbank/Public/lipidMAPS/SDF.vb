@@ -61,7 +61,7 @@ Namespace LipidMaps
     ''' <summary>
     ''' 物质的注释信息
     ''' </summary>
-    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider
+    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider
 
         <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String Implements IReadOnlyId.Identity
         <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String Implements ICompoundNameProvider.CommonName
@@ -76,7 +76,7 @@ Namespace LipidMaps
         <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
         <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String
         <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double Implements IExactMassProvider.ExactMass
-        <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String
+        <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String Implements IFormulaProvider.Formula
         <MessagePackMember(14, NilImplication:=NilImplication.MemberDefault)> Public Property LIPIDBANK_ID As String
         <MessagePackMember(15, NilImplication:=NilImplication.MemberDefault)> Public Property SWISSLIPIDS_ID As String
         <MessagePackMember(16, NilImplication:=NilImplication.MemberDefault)> Public Property HMDB_ID As String
@@ -99,6 +99,7 @@ Namespace LipidMaps
         <MessagePackMember(25, NilImplication:=NilImplication.MemberDefault)> Public Property STATUS As String
         <MessagePackMember(26, NilImplication:=NilImplication.MemberDefault)> Public Property CLASS_LEVEL4 As String
         <MessagePackMember(27, NilImplication:=NilImplication.MemberDefault)> Public Property METABOLOMICS_ID As String
+
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Data(sdf As SDF) As MetaData

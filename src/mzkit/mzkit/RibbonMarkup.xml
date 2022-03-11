@@ -2214,6 +2214,14 @@
         <Image MinDPI="192">Res/application-x-object.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdDOIReference" Id="177" LabelTitle="DOI Reference" LabelDescription="View algorithm paper DOI reference that MZKit software used." TooltipTitle="DOI Reference" TooltipDescription="View algorithm paper DOI reference that MZKit software used.">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/preferences-system-notifications.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/preferences-system-notifications.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2283,6 +2291,7 @@
                   <Button CommandName="cmdButtonAbout" />
                   <Button CommandName="cmdButtonBioDeep" />
                   <Button CommandName="cmdButtonLicense" />
+                  <Button CommandName="cmdDOIReference" />
                 </MenuGroup>
               </SplitButton.MenuGroups>
             </SplitButton>

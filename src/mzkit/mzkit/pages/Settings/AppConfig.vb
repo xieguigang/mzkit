@@ -44,14 +44,20 @@
 #End Region
 
 Imports BioNovoGene.mzkit_win32.Configuration
+Imports BioNovoGene.mzkit_win32.My
 
 Public Class AppConfig : Implements ISaveSettings, IPageSettings
 
     '  Dim WithEvents colorPicker As New ThemeColorPicker
 
+    Dim oldLanguageConfig As Languages
+
     Public Sub LoadSettings() Implements ISaveSettings.LoadSettings
         If Globals.Settings.ui Is Nothing Then
-            Globals.Settings.ui = New UISettings With {.rememberWindowsLocation = True}
+            Globals.Settings.ui = New UISettings With {
+                .rememberWindowsLocation = True,
+                .language = Languages.System
+            }
         End If
 
         CheckBox1.Checked = Globals.Settings.ui.rememberWindowsLocation
@@ -68,10 +74,17 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
         '    Globals.Settings.ui.highlight = {colors.HighlightColor.R, colors.HighlightColor.G, colors.HighlightColor.B}
         '    Globals.Settings.ui.text = {colors.TextColor.R, colors.TextColor.G, colors.TextColor.B}
         'End If
+
+        oldLanguageConfig = Globals.Settings.ui.language
+        ComboBox1.SelectedIndex = Globals.Settings.ui.language
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
         Globals.Settings.Save()
+
+        If ComboBox1.SelectedIndex <> CInt(oldLanguageConfig) Then
+            Call MyApplication.host.showStatusMessage(MyApplication.getLanguageString("language", ComboBox1.SelectedIndex))
+        End If
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
@@ -93,6 +106,10 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
         Globals.Settings.ui.rememberLayouts = CheckBox2.Checked
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Globals.Settings.ui.language = ComboBox1.SelectedIndex
     End Sub
 
     ' Private Sub selectColor(sender As Object, e As ColorSelectedArg) Handles colorPicker.ColorSelected

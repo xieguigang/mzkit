@@ -123,7 +123,9 @@ Public Class MSJointConnection : Implements IMzQuery
                                             .precursorType = q.precursorType,
                                             .unique_id = q.unique_id,
                                             .mz = q.mz,
-                                            .ppm = q.ppm
+                                            .ppm = q.ppm,
+                                            .mz_ref = q.mz_ref,
+                                            .name = q.name
                                         }
                                     End Function) _
                             .ToArray
@@ -169,7 +171,11 @@ Public Class MSJointConnection : Implements IMzQuery
                                             .mz = Double.Parse(mzi.Key),
                                             .ppm = m.First.ppm,
                                             .precursorType = m.First.precursorType,
-                                            .score = Aggregate hit In m Into Sum(hit.score)
+                                            .name = m.First.name,
+                                            .mz_ref = m.First.mz_ref,
+                                            .score = Aggregate hit As MzQuery
+                                                     In m
+                                                     Into Sum(hit.score)
                                         }
                                     End Function) _
                             .OrderByDescending(Function(d) d.score) _
@@ -184,7 +190,9 @@ Public Class MSJointConnection : Implements IMzQuery
             .JoinIterates(allIdList) _
             .GroupBy(Function(a) a.unique_id) _
             .Select(Function(cid)
-                        Return cid.OrderByDescending(Function(d) d.score).First
+                        Return cid _
+                            .OrderByDescending(Function(d) d.score) _
+                            .First
                     End Function) _
             .ToArray
 
@@ -263,5 +271,9 @@ Public Class MSJointConnection : Implements IMzQuery
                     .ToArray
             }
         Next
+    End Function
+
+    Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
+        Return kegg.GetAnnotation(uniqueId)
     End Function
 End Class

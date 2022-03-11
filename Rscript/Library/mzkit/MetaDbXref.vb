@@ -65,7 +65,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("metadb")>
 Module MetaDbXref
 
-    Sub New()
+    Sub Main()
         Call makeDataframe.addHandler(GetType(MzQuery()), AddressOf createTable)
     End Sub
 

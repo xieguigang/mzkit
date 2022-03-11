@@ -53,3 +53,9 @@ Public Interface ICompoundNameProvider
     ReadOnly Property CommonName As String
 
 End Interface
+
+Public Interface IFormulaProvider
+
+    ReadOnly Property Formula As String
+
+End Interface

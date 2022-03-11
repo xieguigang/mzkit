@@ -78,6 +78,30 @@ Namespace Blender
             Me.driver = driver
         End Sub
 
+        Public Overloads Sub ChannelCompositions(gr As IGraphics, region As GraphicsRegion,
+                                                 R() As PixelData, G() As PixelData, B() As PixelData,
+                                                 dimension As Size,
+                                                 Optional dimSize As SizeF = Nothing,
+                                                 Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
+                                                 Optional background As String = "black")
+
+            Dim defaultBackground As Color = background.TranslateColor
+
+            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
+                dimSize = New Size(1, 1)
+            End If
+
+            Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
+                .Bchannel = GetPixelChannelReader(B, cut.b),
+                .Rchannel = GetPixelChannelReader(R, cut.r),
+                .Gchannel = GetPixelChannelReader(G, cut.g),
+                .dimension = dimension,
+                .dimSize = dimSize
+            }
+
+            Call rgb.Render(gr, region)
+        End Sub
+
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
                                                       Optional dimSize As Size = Nothing,
@@ -96,54 +120,21 @@ Namespace Blender
             Dim Bchannel = GetPixelChannelReader(B, cut.b)
             Dim w As Integer = dimension.Width * dimSize.Width
             Dim h As Integer = dimension.Height * dimSize.Height
+            Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
+                .Bchannel = Bchannel,
+                .dimension = dimension,
+                .dimSize = dimSize,
+                .Gchannel = Gchannel,
+                .Rchannel = Rchannel
+            }
 
             Return Drawing2D.g.GraphicsPlots(
                 size:=New Size(w, h),
                 padding:=New Padding,
                 bg:=NameOf(Color.Transparent),
                 driver:=driver,
-                plotAPI:=Sub(ByRef gr, region)
-                             For x As Integer = 1 To dimension.Width
-                                 For y As Integer = 1 To dimension.Height
-                                     Dim bR As Byte = Rchannel(x, y)
-                                     Dim bG As Byte = Gchannel(x, y)
-                                     Dim bB As Byte = Bchannel(x, y)
-                                     Dim color As Color
-                                     Dim rect As New Rectangle(New Point((x - 1) * dimSize.Width, (y - 1) * dimSize.Height), dimSize)
-
-                                     If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
-                                         ' missing a pixel at here?
-                                         If heatmapMode Then
-                                             bR = CByte(New Integer() {
-                                                 Rchannel(x - 1, y - 1), Rchannel(x, y - 1), Rchannel(x + 1, y - 1),
-                                                 Rchannel(x - 1, y), Rchannel(x, y), Rchannel(x + 1, y),
-                                                 Rchannel(x - 1, y + 1), Rchannel(x, y + 1), Rchannel(x + 1, y + 1)
-                                             }.Average)
-                                             bB = CByte(New Integer() {
-                                                 Bchannel(x - 1, y - 1), Bchannel(x, y - 1), Bchannel(x + 1, y - 1),
-                                                 Bchannel(x - 1, y), Bchannel(x, y), Bchannel(x + 1, y),
-                                                 Bchannel(x - 1, y + 1), Bchannel(x, y + 1), Bchannel(x + 1, y + 1)
-                                             }.Average)
-                                             bG = CByte(New Integer() {
-                                                 Gchannel(x - 1, y - 1), Gchannel(x, y - 1), Gchannel(x + 1, y - 1),
-                                                 Gchannel(x - 1, y), Gchannel(x, y), Gchannel(x + 1, y),
-                                                 Gchannel(x - 1, y + 1), Gchannel(x, y + 1), Gchannel(x + 1, y + 1)
-                                             }.Average)
-
-                                             color = Color.FromArgb(bR, bG, bB)
-                                         Else
-                                             color = defaultBackground
-                                         End If
-                                     Else
-                                         color = Color.FromArgb(bR, bG, bB)
-                                     End If
-
-                                     ' imzXML里面的坐标是从1开始的
-                                     ' 需要减一转换为.NET中从零开始的位置
-                                     Call gr.FillRectangle(New SolidBrush(color), rect)
-                                 Next
-                             Next
-                         End Sub)
+                plotAPI:=AddressOf rgb.Render
+            )
         End Function
 
         Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, dimSize As Size, colorSet() As SolidBrush,
