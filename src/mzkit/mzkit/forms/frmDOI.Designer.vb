@@ -35,8 +35,10 @@ Partial Class frmDOI
         'RichTextBox1
         '
         resources.ApplyResources(Me.RichTextBox1, "RichTextBox1")
+        Me.RichTextBox1.AutoWordSelection = True
         Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.ReadOnly = True
         '
         'PictureBox1
         '
