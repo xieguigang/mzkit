@@ -121,12 +121,8 @@
   <data name="RichTextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 55</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="RichTextBox1.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
-    <value>ForcedVertical</value>
-  </data>
   <data name="RichTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>655, 299</value>
+    <value>678, 323</value>
   </data>
   <data name="RichTextBox1.Text" xml:space="preserve">
     <value>1. X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J. Zhu* (Corresponding Author), Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics, Nature Communications, 2019, 10: 1516.
@@ -136,7 +132,7 @@
 5. Tsugawa, H., Cajka, T., Kind, T., Ma, Y., Higgins, B., Ikeda, K., Kanazawa, M., VanderGheynst, J., Fiehn, O., &amp; Arita, M. (2015). MS-DIAL: data-independent MS/MS deconvolution for comprehensive metabolome analysis. Nature methods, 12(6), 523–526. https://doi.org/10.1038/nmeth.3393</value>
   </data>
   <data name="PictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 369</value>
+    <value>9, 384</value>
   </data>
   <data name="PictureBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 112</value>
@@ -144,20 +140,14 @@
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 13</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 28</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>引用文献</value>
-  </data>
   <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>148, 428</value>
+    <value>145, 443</value>
   </data>
   <data name="LinkLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>148, 452</value>
+    <value>145, 467</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 378</value>
+    <value>147, 393</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>265, 39</value>
@@ -166,9 +156,6 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>679, 493</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>参考文献</value>
+    <value>702, 501</value>
   </data>
 </root>

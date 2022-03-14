@@ -151,20 +151,14 @@
 4. Ogata, H., Goto, S., Sato, K., Fujibuchi, W., Bono, H., &amp; Kanehisa, M. (1999). KEGG: Kyoto Encyclopedia of Genes and Genomes. Nucleic acids research, 27(1), 29–34. https://doi.org/10.1093/nar/27.1.29
 5. Tsugawa, H., Cajka, T., Kind, T., Ma, Y., Higgins, B., Ikeda, K., Kanazawa, M., VanderGheynst, J., Fiehn, O., &amp; Arita, M. (2015). MS-DIAL: data-independent MS/MS deconvolution for comprehensive metabolome analysis. Nature methods, 12(6), 523–526. https://doi.org/10.1038/nmeth.3393</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="LinkLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>148, 327</value>
-  </data>
-  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="PictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 103</value>
   </data>
   <data name="&gt;&gt;LinkLabel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -177,9 +171,6 @@
   </data>
   <data name="&gt;&gt;Label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Reference</value>
   </data>
   <data name="&gt;&gt;PictureBox1.Name" xml:space="preserve">
     <value>PictureBox1</value>
@@ -203,7 +194,7 @@
     <value>True</value>
   </data>
   <data name="LinkLabel1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>微软雅黑, 11.25pt</value>
+    <value>Microsoft YaHei, 11.25pt</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Data toolkits for processing NMR, MALDI MSI, LC-MS 
@@ -214,7 +205,7 @@ and data visualization.</value>
     <value>2</value>
   </data>
   <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>微软雅黑, 15.75pt, style=Bold</value>
+    <value>Microsoft YaHei, 15.75pt, style=Bold</value>
   </data>
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -222,8 +213,8 @@ and data visualization.</value>
   <data name="RichTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="PictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 103</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -237,6 +228,18 @@ and data visualization.</value>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LinkLabel1.Text" xml:space="preserve">
+    <value>https://bio.tools/mzkit</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 12</value>
+  </data>
   <data name="&gt;&gt;LinkLabel2.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -249,35 +252,35 @@ and data visualization.</value>
   <data name="RichTextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>499, 215</value>
   </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>311, 36</value>
+  </data>
   <data name="LinkLabel2.Text" xml:space="preserve">
     <value>https://mzkit.org</value>
-  </data>
-  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;PictureBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>311, 36</value>
+  <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>148, 327</value>
   </data>
-  <data name="LinkLabel1.Text" xml:space="preserve">
-    <value>https://bio.tools/mzkit</value>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;RichTextBox1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="LinkLabel2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>微软雅黑, 11.25pt</value>
+    <value>Microsoft YaHei, 11.25pt</value>
   </data>
   <data name="&gt;&gt;PictureBox1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 12</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Reference</value>
   </data>
   <data name="&gt;&gt;Label2.Name" xml:space="preserve">
     <value>Label2</value>
@@ -291,9 +294,6 @@ and data visualization.</value>
   <data name="&gt;&gt;PictureBox1.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="LinkLabel1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>150, 281</value>
   </data>
@@ -306,34 +306,13 @@ and data visualization.</value>
   <data name="&gt;&gt;RichTextBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
+  <data name="LinkLabel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <metadata name="LinkLabel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>zh-CN</value>
-  </metadata>
-  <metadata name="LinkLabel2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="PictureBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Label2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="RichTextBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Label1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en-US</value>
   </metadata>
 </root>

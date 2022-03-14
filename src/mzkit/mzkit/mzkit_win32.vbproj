@@ -785,6 +785,9 @@
     <Compile Include="Win32API.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="forms\frmDOI.en-US.resx">
+      <DependentUpon>frmDOI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmDOI.resx">
       <DependentUpon>frmDOI.vb</DependentUpon>
     </EmbeddedResource>
