@@ -159,6 +159,12 @@ Module Massbank
         Return lipidstream.populates(Of LipidMaps.MetaData)(env).WriteRepository(output.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' read messagepack repository file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("read.lipidmaps")>
     <RApiReturn(GetType(LipidMaps.MetaData))>
     Public Function readLipidMapsRepo(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
