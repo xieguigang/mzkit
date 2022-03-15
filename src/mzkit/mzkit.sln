@@ -262,6 +262,7 @@ Global
 		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{6ec3d3f5-f19d-4899-af88-161f6238e6e8}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{7df565ae-6e7a-4667-ab6d-9908acbeed8b}*SharedItemsImports = 13
 		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{a60240d1-e78b-4b96-85e3-45256571c2cb}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{ac523ae1-b6b9-49bd-8f0a-49ebe02dcb65}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
 	EndGlobalSection
