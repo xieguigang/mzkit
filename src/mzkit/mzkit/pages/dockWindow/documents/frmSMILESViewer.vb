@@ -27,7 +27,7 @@ Public Class frmSMILESViewer
     End Sub
 
     Private Sub frmSMILESViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Canvas1.SetFDGParams(New ForceDirectedArgs With {.Repulsion = 20000.0!})
+        Canvas1.SetFDGParams(New ForceDirectedArgs With {.Repulsion = 10000.0!})
     End Sub
 
     Private Sub Canvas1_Load(sender As Object, e As EventArgs) Handles Canvas1.Load
