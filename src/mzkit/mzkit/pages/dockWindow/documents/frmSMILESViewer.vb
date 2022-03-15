@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 Public Class frmSMILESViewer
 
@@ -22,6 +23,18 @@ Public Class frmSMILESViewer
             network.AddEdge(url)
         Next
 
-        Canvas1.Graph = network
+        Canvas1.Graph() = network
+    End Sub
+
+    Private Sub frmSMILESViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Canvas1.SetFDGParams(New ForceDirectedArgs With {.Repulsion = 20000.0!})
+    End Sub
+
+    Private Sub Canvas1_Load(sender As Object, e As EventArgs) Handles Canvas1.Load
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
     End Sub
 End Class

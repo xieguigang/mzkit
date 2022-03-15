@@ -31,7 +31,8 @@ Partial Class frmSMILESViewer
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(357, 512)
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(357, 613)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 0
@@ -40,15 +41,17 @@ Partial Class frmSMILESViewer
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(23, 514)
+        Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.Location = New System.Drawing.Point(23, 615)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(303, 20)
         Me.TextBox1.TabIndex = 1
         '
         'Label1
         '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(20, 489)
+        Me.Label1.Location = New System.Drawing.Point(20, 590)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(76, 13)
         Me.Label1.TabIndex = 2
@@ -56,6 +59,9 @@ Partial Class frmSMILESViewer
         '
         'Canvas1
         '
+        Me.Canvas1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Canvas1.AutoRotate = True
         Me.Canvas1.BackColor = System.Drawing.Color.FromArgb(CType(CType(219, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Canvas1.DynamicsRadius = False
@@ -64,7 +70,7 @@ Partial Class frmSMILESViewer
         Me.Canvas1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Canvas1.Name = "Canvas1"
         Me.Canvas1.ShowLabel = False
-        Me.Canvas1.Size = New System.Drawing.Size(857, 457)
+        Me.Canvas1.Size = New System.Drawing.Size(926, 558)
         Me.Canvas1.TabIndex = 3
         Me.Canvas1.ViewDistance = 0R
         '
@@ -72,7 +78,7 @@ Partial Class frmSMILESViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(903, 559)
+        Me.ClientSize = New System.Drawing.Size(972, 660)
         Me.Controls.Add(Me.Canvas1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox1)
