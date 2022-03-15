@@ -437,6 +437,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmSMILESViewer.Designer.vb">
+      <DependentUpon>frmSMILESViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmSMILESViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmNetworkViewer.Designer.vb">
       <DependentUpon>frmNetworkViewer.vb</DependentUpon>
     </Compile>
@@ -875,6 +881,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmSeeMs.resx">
       <DependentUpon>frmSeeMs.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmSMILESViewer.resx">
+      <DependentUpon>frmSMILESViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmTableViewer.resx">
       <DependentUpon>frmTableViewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -1176,6 +1185,10 @@
     <ProjectReference Include="..\..\metadb\Massbank\Massbank.vbproj">
       <Project>{A686BDF5-077F-47F5-A8DD-C73E6E88363C}</Project>
       <Name>Massbank</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.vbproj">
       <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>

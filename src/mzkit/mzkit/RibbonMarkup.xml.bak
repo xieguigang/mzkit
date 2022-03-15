@@ -2222,6 +2222,14 @@
         <Image MinDPI="192">Res/preferences-system-notifications.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonViewSMILES" Id="178" LabelTitle="View SMILES" LabelDescription="View SMILES" TooltipTitle="View SMILES" TooltipDescription="View SMILES">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/preferences-system-sharing.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/preferences-system-sharing.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2516,6 +2524,7 @@
             <Button CommandName="cmdButtonMzCalculator" />
             <Button CommandName="cmdButtonMzSearch" />
             <Button CommandName="cmdButtonShowSpectrumSearchPage" />
+            <Button CommandName="cmdButtonViewSMILES" />
           </Group>
           <Group CommandName="cmdTabGroupTargeted" ApplicationModes="0,1" SizeDefinition="OneButton">
             <Button CommandName="cmdTargeted" />

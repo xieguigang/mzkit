@@ -161,6 +161,7 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonMzCalculator As UInteger = 1013
             Public Const cmdButtonMzSearch As UInteger = 1052
             Public Const cmdButtonShowSpectrumSearchPage As UInteger = 1102
+            Public Const cmdButtonViewSMILES As UInteger = 178
             Public Const cmdTargeted As UInteger = 99
             Public Const cmdTabAbout As UInteger = 1020
             Public Const cmdGroupAboutActions As UInteger = 1047
@@ -1061,6 +1062,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonShowSpectrumSearchPage
             End Get
         End Property
+        Private _ButtonViewSMILES As RibbonButton
+        Public ReadOnly Property ButtonViewSMILES As RibbonButton
+            Get
+                Return _ButtonViewSMILES
+            End Get
+        End Property
         Private _Targeted As RibbonButton
         Public ReadOnly Property Targeted As RibbonButton
             Get
@@ -1314,6 +1321,7 @@ Namespace RibbonLib.Controls
             _ButtonMzCalculator = New RibbonButton(_ribbon, Cmd.cmdButtonMzCalculator)
             _ButtonMzSearch = New RibbonButton(_ribbon, Cmd.cmdButtonMzSearch)
             _ButtonShowSpectrumSearchPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowSpectrumSearchPage)
+            _ButtonViewSMILES = New RibbonButton(_ribbon, Cmd.cmdButtonViewSMILES)
             _Targeted = New RibbonButton(_ribbon, Cmd.cmdTargeted)
             _TabAbout = New RibbonTab(_ribbon, Cmd.cmdTabAbout)
             _GroupAboutActions = New RibbonGroup(_ribbon, Cmd.cmdGroupAboutActions)
