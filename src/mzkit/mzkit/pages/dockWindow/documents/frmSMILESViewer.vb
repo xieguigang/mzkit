@@ -26,6 +26,7 @@ Public Class frmSMILESViewer
         Next
 
         Canvas1.Graph() = network
+        Canvas1.ShowLabel = True
     End Sub
 
     Private Sub frmSMILESViewer_Load(sender As Object, e As EventArgs) Handles Me.Load

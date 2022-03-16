@@ -77,7 +77,9 @@ Public Class ParseChain
     Public Shared Function ParseGraph(SMILES As String) As ChemicalFormula
         Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
         Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph
-        Dim degree = graph.AllBonds.DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
+        Dim degree = graph _
+            .AllBonds _
+            .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
         For Each element As ChemicalElement In graph.AllElements
             element.degree = (degree.in.TryGetValue(element.label), degree.out.TryGetValue(element.label))
@@ -116,15 +118,17 @@ Public Class ParseChain
         Dim element As New ChemicalElement(t.text)
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
+        element.ID = graph.vertex.Count
+
         If Not ringId Is Nothing Then
             If rings.ContainsKey(ringId) Then
                 element = rings(ringId)
             Else
                 rings(ringId) = element
+                graph.AddVertex(element)
             End If
         Else
-            element.ID = graph.vertex.Count
-            graph.AddVertex(element)
+            Call graph.AddVertex(element)
         End If
 
         If chainStack.Count > 0 Then
