@@ -119,16 +119,22 @@ Public Class ParseChain
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
         element.ID = graph.vertex.Count
+        graph.AddVertex(element)
 
         If Not ringId Is Nothing Then
             If rings.ContainsKey(ringId) Then
-                element = rings(ringId)
+                Dim [next] = rings(ringId)
+                Dim bond As New ChemicalKey With {
+                    .U = [next],
+                    .V = element,
+                    .weight = 1,
+                    .bond = Bonds.single
+                }
+
+                Call graph.AddBond(bond)
             Else
                 rings(ringId) = element
-                graph.AddVertex(element)
             End If
-        Else
-            Call graph.AddVertex(element)
         End If
 
         If chainStack.Count > 0 Then
