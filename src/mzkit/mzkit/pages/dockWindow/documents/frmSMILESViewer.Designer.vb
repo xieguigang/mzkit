@@ -46,6 +46,7 @@ Partial Class frmSMILESViewer
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(303, 20)
         Me.TextBox1.TabIndex = 1
+        Me.TextBox1.Text = "CC(=O)OC1=CC=CC=C1C(=O)O"
         '
         'Label1
         '
