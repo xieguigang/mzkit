@@ -46,6 +46,8 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Class Token : Inherits CodeToken(Of ElementTypes)
 
+    Public Property ring As Integer?
+
     Sub New(name As ElementTypes, text As String)
         Call MyBase.New(name, text)
     End Sub

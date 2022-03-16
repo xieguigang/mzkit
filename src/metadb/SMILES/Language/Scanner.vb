@@ -52,7 +52,7 @@ Public Class Scanner
     Dim buf As New CharBuffer
 
     Sub New(SMILES As String)
-        Me.SMILES = SMILES.StringReplace("\d+", "").Replace("@", "")
+        Me.SMILES = SMILES.Replace("@", "")
     End Sub
 
     ''' <summary>
@@ -99,7 +99,6 @@ Public Class Scanner
                 Dim tmpStr = New String(buf.PopAllChars)
 
                 tmpStr = tmpStr.GetStackValue("[", "]")
-                tmpStr = tmpStr.StringReplace("\d+", "")
                 tmpStr = tmpStr.StringReplace("[+-]$", "", RegexOptions.Multiline)
 
                 Dim tmp As String = ""
@@ -128,18 +127,23 @@ Public Class Scanner
     End Function
 
     Private Function MeasureElement(str As String) As Token
+        Dim ring As Integer? = Nothing
+
         If str.Length >= 3 AndAlso (str.First = "["c AndAlso str.Last = "]"c) Then
             ' [H]
             str = str.GetStackValue("[", "]")
         End If
         If str.IsPattern("[A-Za-z]+\d+") Then
             ' removes number
+            ring = Integer.Parse(str.Match("\d+"))
             str = str.Match("[a-zA-Z]+")
         End If
 
         Select Case str
             Case "B", "C", "N", "O", "P", "S", "F", "Cl", "Br", "I", "Au", "H"
-                Return New Token(ElementTypes.Element, str)
+                Return New Token(ElementTypes.Element, str) With {
+                    .ring = ring
+                }
             Case "("
                 Return New Token(ElementTypes.Open, str)
             Case ")"
