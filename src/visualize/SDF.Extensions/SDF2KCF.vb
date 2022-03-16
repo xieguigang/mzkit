@@ -58,7 +58,8 @@ Public Module SDF2KCF
     ''' </summary>
     ''' <param name="sdf"></param>
     ''' <returns></returns>
-    <Extension> Public Function ToKCF(sdf As SDF) As KCF
+    <Extension>
+    Public Function ToKCF(sdf As SDF) As KCF
         Dim mol As [Structure] = sdf.Structure
         Dim atoms As KCF_atom() = mol.Atoms _
             .Select(AddressOf KCFAtom) _

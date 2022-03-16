@@ -364,6 +364,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SMILES2KCF.vb" />
     <Compile Include="SDF2KCF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -402,6 +403,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
+      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Name>GraphTheory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
@@ -409,6 +414,10 @@
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
       <Name>Chemoinformatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
     </ProjectReference>
     <ProjectReference Include="..\KCF\KCF.IO\KCF.IO.vbproj">
       <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>

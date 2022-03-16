@@ -60,6 +60,12 @@ Public Class ChemicalElement : Inherits Node
         End Get
     End Property
 
+    ''' <summary>
+    ''' 2D coordinate ``[x,y]``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property coordinate As Double()
+
     Sub New()
     End Sub
 
