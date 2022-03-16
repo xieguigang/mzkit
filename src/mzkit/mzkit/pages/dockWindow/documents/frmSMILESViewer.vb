@@ -1,6 +1,8 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
+﻿Imports BioNovoGene.BioDeep.Chemistry.Model
+Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Imaging
 
 Public Class frmSMILESViewer
 
@@ -36,5 +38,13 @@ Public Class frmSMILESViewer
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim kcf As String = TextBox2.Text
+        Dim model As KCF = IO.LoadKCF(kcf)
+        Dim visual As Image = KEGGdraw.Canvas.Draw(model).AsGDIImage
+
+        PictureBox1.BackgroundImage = visual
     End Sub
 End Class

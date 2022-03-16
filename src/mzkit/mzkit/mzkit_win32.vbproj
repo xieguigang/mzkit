@@ -1206,6 +1206,18 @@
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>TargetedMetabolomics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
+      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
+      <Name>KCF.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KCF.IO\KCF.IO.vbproj">
+      <Project>{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}</Project>
+      <Name>KCF.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KEGGdraw\KEGGdraw.vbproj">
+      <Project>{2fd54b9f-97bc-4254-9111-544cc85c41b1}</Project>
+      <Name>KEGGdraw</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
       <Name>MsImaging</Name>
