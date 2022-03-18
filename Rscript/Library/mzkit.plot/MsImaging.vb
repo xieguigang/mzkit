@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::687eeca43b0a154b4976d185e367ec17, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 710
-    '    Code Lines: 509
-    ' Comment Lines: 110
-    '   Blank Lines: 91
-    '     File Size: 29.74 KB
+' Summaries:
 
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AutoScaleMax, averageStep, FilterMz, GetIntensityData, GetIonLayer
-    '               getMSIIons, GetMsMatrx, GetPixel, KnnFill, layer
-    '               LoadPixels, MSICoverage, openIndexedCacheFile, plotMSI, printLayer
-    '               renderRowScans, RGB, testLayer, TrIQRange, viewer
-    '               writeIndexCacheFile, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 710
+'    Code Lines: 509
+' Comment Lines: 110
+'   Blank Lines: 91
+'     File Size: 29.74 KB
+
+
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AutoScaleMax, averageStep, FilterMz, GetIntensityData, GetIonLayer
+'               getMSIIons, GetMsMatrx, GetPixel, KnnFill, layer
+'               LoadPixels, MSICoverage, openIndexedCacheFile, plotMSI, printLayer
+'               renderRowScans, RGB, testLayer, TrIQRange, viewer
+'               writeIndexCacheFile, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -188,6 +188,23 @@ Module MsImaging
         Dim range As Double = TrIQ.ThresholdValue(into, qcut:=q)
 
         Return {0, range}
+    End Function
+
+    <ExportAPI("intensityLimits")>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+        data.MSILayer = data.MSILayer _
+            .Select(Function(p)
+                        If p.intensity > max Then
+                            p.intensity = max
+                        ElseIf p.intensity < min Then
+                            p.intensity = min
+                        End If
+
+                        Return p
+                    End Function) _
+            .ToArray
+
+        Return data
     End Function
 
     <ExportAPI("write.MSI_XIC")>
