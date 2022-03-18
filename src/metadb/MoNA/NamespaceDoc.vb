@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802e5994cbe3c73822a32a86a1cba847, src\metadb\MoNA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8533e638e4b4c57f94fdc07ba42a8e9f, mzkit\src\metadb\MoNA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 0
+    '     File Size: 244.00 B
+
 
     ' Class NamespaceDoc
     ' 

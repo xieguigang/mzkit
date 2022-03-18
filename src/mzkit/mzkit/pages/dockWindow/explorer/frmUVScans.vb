@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e02aa4d78d2dc289ccf34677b6d00a1, src\mzkit\mzkit\pages\dockWindow\explorer\frmUVScans.vb"
+﻿#Region "Microsoft.VisualBasic::e9d4b8f66e8c0c781e977d770c1133a1, mzkit\src\mzkit\mzkit\pages\dockWindow\explorer\frmUVScans.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 99
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 4.85 KB
+
 
     ' Class frmUVScans
     ' 

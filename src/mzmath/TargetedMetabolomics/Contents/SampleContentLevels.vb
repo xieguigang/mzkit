@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bfcd178b1ca28f6469f6598d52ea27f, src\mzmath\TargetedMetabolomics\Contents\SampleContentLevels.vb"
+﻿#Region "Microsoft.VisualBasic::6bfcd178b1ca28f6469f6598d52ea27f, mzkit\src\mzmath\TargetedMetabolomics\Contents\SampleContentLevels.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 29
+    ' Comment Lines: 21
+    '   Blank Lines: 8
+    '     File Size: 2.20 KB
+
 
     '     Class SampleContentLevels
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5698255c1e1bf5639db77de980f1fc4e, src\mzkit\setup\autoUpdates\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::5698255c1e1bf5639db77de980f1fc4e, mzkit\src\mzkit\setup\autoUpdates\Form1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 31.00 B
+
 
     ' Class Form1
     ' 

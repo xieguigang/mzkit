@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e863a3170bb8489711590f84ff384667, src\metadb\MetabolomeXchange\Json\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::2b50d386425a59093b6bc8988d70f3a3, mzkit\src\metadb\MetabolomeXchange\Json\DataSet.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 55
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.02 KB
+
 
     '     Class DataSet
     ' 

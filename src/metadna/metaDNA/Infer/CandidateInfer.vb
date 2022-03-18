@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df74c4e65fd06676668bb4a3a66caa2a, src\metadna\metaDNA\Infer\CandidateInfer.vb"
+﻿#Region "Microsoft.VisualBasic::ad4fcc9056f16f49a5c37a4618753a65, mzkit\src\metadna\metaDNA\Infer\CandidateInfer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 379.00 B
+
 
     '     Class CandidateInfer
     ' 

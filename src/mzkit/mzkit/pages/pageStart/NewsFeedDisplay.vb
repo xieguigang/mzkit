@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f2bb34185590721aca4ef094cf9e6ec, src\mzkit\mzkit\pages\pageStart\NewsFeedDisplay.vb"
+﻿#Region "Microsoft.VisualBasic::63ba80cb65b7b462adee0710f596fc71, mzkit\src\mzkit\mzkit\pages\pageStart\NewsFeedDisplay.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 433.00 B
+
 
     ' Class NewsFeedDisplay
     ' 

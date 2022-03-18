@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6586b804162e2aeebb3a76a921391c38, src\mzkit\mzkit\application\settings\PrecursorSearchSettings.vb"
+﻿#Region "Microsoft.VisualBasic::6586b804162e2aeebb3a76a921391c38, mzkit\src\mzkit\mzkit\application\settings\PrecursorSearchSettings.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 1.63 KB
+
 
     '     Class PrecursorSearchSettings
     ' 

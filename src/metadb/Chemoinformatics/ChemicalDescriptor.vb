@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f082ad534b8ddc4eb75dc252a900a4cb, src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::f082ad534b8ddc4eb75dc252a900a4cb, mzkit\src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 115
+    ' Comment Lines: 22
+    '   Blank Lines: 24
+    '     File Size: 5.96 KB
+
 
     ' Class ChemicalDescriptor
     ' 

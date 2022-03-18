@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da420d83450f2f01c0395bd86f86b004, src\mzkit\setup\InstallerCustomActions\InstallerCustomActions.vb"
+﻿#Region "Microsoft.VisualBasic::da420d83450f2f01c0395bd86f86b004, mzkit\src\mzkit\setup\InstallerCustomActions\InstallerCustomActions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 14
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 739.00 B
+
 
     ' Class InstallerCustomActions
     ' 

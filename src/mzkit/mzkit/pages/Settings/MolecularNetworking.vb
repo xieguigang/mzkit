@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e7ebe75cd4705fbea33ef63de4706be, src\mzkit\mzkit\pages\Settings\MolecularNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::55d1058044bb4d53d5405f82ac07fab6, mzkit\src\mzkit\mzkit\pages\Settings\MolecularNetworking.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 57
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 3.38 KB
+
 
     ' Class MolecularNetworking
     ' 

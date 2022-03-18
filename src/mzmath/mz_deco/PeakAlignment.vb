@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3182c3618af7650e03f9aa81e19e78fc, src\mzmath\mz_deco\PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::be4b2c3e10c3004f97a01ed2c8bf7889, mzkit\src\mzmath\mz_deco\PeakAlignment.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 2
+    ' Comment Lines: 6
+    '   Blank Lines: 1
+    '     File Size: 361.00 B
+
 
     ' Module PeakAlignment
     ' 

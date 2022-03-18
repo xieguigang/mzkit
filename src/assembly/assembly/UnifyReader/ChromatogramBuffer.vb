@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7467c8e5527b5c8e58406dc2919cf777, src\assembly\assembly\UnifyReader\ChromatogramBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::7467c8e5527b5c8e58406dc2919cf777, mzkit\src\assembly\assembly\UnifyReader\ChromatogramBuffer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 41
+    ' Comment Lines: 9
+    '   Blank Lines: 9
+    '     File Size: 2.01 KB
+
 
     '     Module ChromatogramBuffer
     ' 

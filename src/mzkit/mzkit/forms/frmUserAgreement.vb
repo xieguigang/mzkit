@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e420f3747d7b74d53d757b2e3b7cfbee, src\mzkit\mzkit\forms\frmUserAgreement.vb"
+﻿#Region "Microsoft.VisualBasic::e420f3747d7b74d53d757b2e3b7cfbee, mzkit\src\mzkit\mzkit\forms\frmUserAgreement.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 452.00 B
+
 
     ' Class frmUserAgreement
     ' 

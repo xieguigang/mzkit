@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82cb33f4d127560d66c1c4263033494b, src\mzkit\mzkit\DataControlHandler.vb"
+﻿#Region "Microsoft.VisualBasic::82cb33f4d127560d66c1c4263033494b, mzkit\src\mzkit\mzkit\DataControlHandler.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 60
+    ' Comment Lines: 7
+    '   Blank Lines: 17
+    '     File Size: 2.91 KB
+
 
     ' Module DataControlHandler
     ' 

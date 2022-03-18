@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c706c77cc0c35a4655909f59f75c12e, src\mzkit\mzkit\application\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::6f85c3f416cda31f903619c48074dabf, mzkit\src\mzkit\mzkit\application\CLI.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 958.00 B
+
+
     ' Module CLI
     ' 
-    '     Function: openRawFile
+    '     Function: openDevTools, openRawFile
     ' 
     ' /********************************************************************************/
 

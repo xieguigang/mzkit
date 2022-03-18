@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c8ba45623986f4d4b384a4c7debe53f, src\mzmath\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
+﻿#Region "Microsoft.VisualBasic::7c8ba45623986f4d4b384a4c7debe53f, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 33
+    ' Comment Lines: 3
+    '   Blank Lines: 9
+    '     File Size: 1.62 KB
+
 
     '     Class DAmethod
     ' 

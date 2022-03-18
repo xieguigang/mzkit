@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f63670eeee318538220224e358a968, src\mzmath\ms2_math-core\Spectra\Models\Trimming\QuantileIntensityCutoff.vb"
+﻿#Region "Microsoft.VisualBasic::d5e7f60bf5b4bee937ab70c2cdb87029, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\QuantileIntensityCutoff.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 726.00 B
+
 
     '     Class QuantileIntensityCutoff
     ' 

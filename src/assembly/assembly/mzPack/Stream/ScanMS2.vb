@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9837f67dc6d0805d743079770f81553, src\assembly\assembly\mzPack\Stream\ScanMS2.vb"
+﻿#Region "Microsoft.VisualBasic::a9837f67dc6d0805d743079770f81553, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS2.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 22
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 994.00 B
+
 
     '     Class ScanMS2
     ' 

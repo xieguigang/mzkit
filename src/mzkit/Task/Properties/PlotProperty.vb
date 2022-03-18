@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd5c0282e7b6d9b8ab6adca14174166d, src\mzkit\Task\Properties\PlotProperty.vb"
+﻿#Region "Microsoft.VisualBasic::5e57e2fbb14aa6af30803d790c6d5907, mzkit\src\mzkit\Task\Properties\PlotProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 39
+    ' Comment Lines: 4
+    '   Blank Lines: 8
+    '     File Size: 3.27 KB
+
 
     ' Class PlotProperty
     ' 

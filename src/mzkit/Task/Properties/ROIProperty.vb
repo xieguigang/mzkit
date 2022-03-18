@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec9fea590615845c3287f5005b8d1e31, src\mzkit\Task\Properties\ROIProperty.vb"
+﻿#Region "Microsoft.VisualBasic::ec9fea590615845c3287f5005b8d1e31, mzkit\src\mzkit\Task\Properties\ROIProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 1.03 KB
+
 
     ' Class ROIProperty
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ace2505bcc568d6527f7978a6436d9be, src\mzkit\mzkit\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::ace2505bcc568d6527f7978a6436d9be, mzkit\src\mzkit\mzkit\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 4
+    ' Comment Lines: 6
+    '   Blank Lines: 0
+    '     File Size: 590.00 B
+
 
     '     Class MyApplication
     ' 

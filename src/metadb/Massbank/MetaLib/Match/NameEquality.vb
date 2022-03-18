@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f198078b4634fa057c7535e8e3936fa, src\metadb\Massbank\MetaLib\Match\NameEquality.vb"
+﻿#Region "Microsoft.VisualBasic::fc4bf9b25149eb324d7313932bce9fda, mzkit\src\metadb\Massbank\MetaLib\Match\NameEquality.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 46
+    ' Comment Lines: 23
+    '   Blank Lines: 11
+    '     File Size: 2.82 KB
+
 
     '     Class ChemicalNameEquality
     ' 

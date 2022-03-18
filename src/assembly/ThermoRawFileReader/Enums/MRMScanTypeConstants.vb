@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22abfcd3abc0c49d29b4262692a49c3d, src\assembly\ThermoRawFileReader\Enums\MRMScanTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::22abfcd3abc0c49d29b4262692a49c3d, mzkit\src\assembly\ThermoRawFileReader\Enums\MRMScanTypeConstants.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 8
+    ' Comment Lines: 18
+    '   Blank Lines: 4
+    '     File Size: 626.00 B
+
 
     ' Enum MRMScanTypeConstants
     ' 

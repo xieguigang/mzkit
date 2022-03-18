@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::649de142c48b98acf881f9493af76b54, src\metadb\SMILES\FormulaBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::649de142c48b98acf881f9493af76b54, mzkit\src\metadb\SMILES\FormulaBuilder.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 59
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.28 KB
+
 
     ' Class FormulaBuilder
     ' 

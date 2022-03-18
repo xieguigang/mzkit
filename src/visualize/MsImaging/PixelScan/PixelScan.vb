@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c12cfb9bed4e3d33a1c5412237a520a, src\visualize\MsImaging\PixelScan\PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::179fe02fc979acc741265803ac3883b3, mzkit\src\visualize\MsImaging\PixelScan\PixelScan.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 32
+    ' Comment Lines: 10
+    '   Blank Lines: 12
+    '     File Size: 2.12 KB
+
 
     '     Class PixelScan
     ' 

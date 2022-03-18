@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7265c8eb4a3f526a08a06891948f29, src\mzkit\mzkit\forms\frmLicense.vb"
+﻿#Region "Microsoft.VisualBasic::9a307f512ea6b976e99dc19653b86b47, mzkit\src\mzkit\mzkit\forms\frmLicense.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 726.00 B
+
 
     ' Class frmLicense
     ' 

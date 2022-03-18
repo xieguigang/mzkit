@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a186c0085f26e0ce8813a456d1fb4fe, src\metadna\KEGG_MetaDNA\ReactionLink.vb"
+﻿#Region "Microsoft.VisualBasic::069c3100291fca0b4a5864db364fd831, mzkit\src\metadna\KEGG_MetaDNA\ReactionLink.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 343.00 B
+
 
     ' Class ReactionLink
     ' 

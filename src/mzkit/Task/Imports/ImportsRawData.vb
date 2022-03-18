@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f97a5ce6224a263f4df28570df577c7, src\mzkit\Task\Imports\ImportsRawData.vb"
+﻿#Region "Microsoft.VisualBasic::9f97a5ce6224a263f4df28570df577c7, mzkit\src\mzkit\Task\Imports\ImportsRawData.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.43 KB
+
 
     ' Class ImportsRawData
     ' 

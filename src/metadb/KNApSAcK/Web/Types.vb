@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, src\metadb\KNApSAcK\Web\Types.vb"
+﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, mzkit\src\metadb\KNApSAcK\Web\Types.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 141.00 B
+
 
     ' Enum Types
     ' 

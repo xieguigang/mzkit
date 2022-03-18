@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d204b7390a0f4496a2fefc67e594219, src\assembly\assembly\MarkupData\mzML\XML\MsData\scanList.vb"
+﻿#Region "Microsoft.VisualBasic::21fcd33d4ae7fb8875a410f90c54356b, mzkit\src\assembly\assembly\MarkupData\mzML\XML\MsData\scanList.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 1.32 KB
+
 
     '     Class spectrumList
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3888d4dc0861e87488bb3e52157fca, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
+﻿#Region "Microsoft.VisualBasic::5f3888d4dc0861e87488bb3e52157fca, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 78
+    ' Comment Lines: 15
+    '   Blank Lines: 15
+    '     File Size: 4.57 KB
+
 
     '     Module SampleWorker
     ' 

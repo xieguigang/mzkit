@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32d3be0b3766ae087b820a268dd2f2e0, src\mzkit\BioDeep\SessionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::32d3be0b3766ae087b820a268dd2f2e0, mzkit\src\mzkit\BioDeep\SessionInfo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 325.00 B
+
 
     ' Class SessionInfo
     ' 

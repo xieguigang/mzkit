@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86b23c33e2d41e238c6908b6d7b7e744, src\metadna\metaDNA\Result\MetaDNAResult.vb"
+﻿#Region "Microsoft.VisualBasic::86b23c33e2d41e238c6908b6d7b7e744, mzkit\src\metadna\metaDNA\Result\MetaDNAResult.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 30
+    ' Comment Lines: 19
+    '   Blank Lines: 2
+    '     File Size: 1.77 KB
+
 
     ' Class MetaDNAResult
     ' 

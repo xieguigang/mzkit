@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da1b1c841361d2e579f967a0ee58ec23, src\assembly\ProteoWizard.d\MassWolf.vb"
+﻿#Region "Microsoft.VisualBasic::1a4571412d6f4e6a5aa60ffb437d096f, mzkit\src\assembly\ProteoWizard.d\MassWolf.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 37
+    ' Comment Lines: 3
+    '   Blank Lines: 12
+    '     File Size: 1.79 KB
+
 
     ' Class MassWolf
     ' 

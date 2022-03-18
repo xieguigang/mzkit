@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c922111663270fe91b503e8727825f82, src\metadb\FooDB\FooDB\mysql\compounds.vb"
+﻿#Region "Microsoft.VisualBasic::c922111663270fe91b503e8727825f82, mzkit\src\metadb\FooDB\FooDB\mysql\compounds.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 469
+    '    Code Lines: 285
+    ' Comment Lines: 162
+    '   Blank Lines: 22
+    '     File Size: 79.88 KB
+
 
     ' Class compounds
     ' 

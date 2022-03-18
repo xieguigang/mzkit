@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71b592661688c441e659a3328a3e39af, src\assembly\SpectrumTree\Reader.vb"
+﻿#Region "Microsoft.VisualBasic::71b592661688c441e659a3328a3e39af, mzkit\src\assembly\SpectrumTree\Reader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 92
+    ' Comment Lines: 14
+    '   Blank Lines: 22
+    '     File Size: 4.84 KB
+
 
     ' Class Reader
     ' 

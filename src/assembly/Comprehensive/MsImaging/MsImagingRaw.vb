@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf62935919b623783d2dc6daf4f9fc6b, src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::ea419b71154ff6b93595c6e59115f98d, mzkit\src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 63
+    ' Comment Lines: 4
+    '   Blank Lines: 13
+    '     File Size: 3.27 KB
+
 
     '     Module MsImagingRaw
     ' 

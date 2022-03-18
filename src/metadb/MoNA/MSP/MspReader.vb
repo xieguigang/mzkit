@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3173cbde69932ed1e7e9dc29d8d7e44, src\metadb\MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::6b306d42183b6a5880b53f37bd9a9774, mzkit\src\metadb\MoNA\MSP\MspReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 174.00 B
+
 
     ' Module MspReader
     ' 

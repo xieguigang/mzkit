@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fb95a485566d3ef7a35585caa24ff37, src\mzkit\mzkit\pages\dockWindow\frmDemo.vb"
+﻿#Region "Microsoft.VisualBasic::5e9dad0ef8a0a2f6659df1a7d5db33a7, mzkit\src\mzkit\mzkit\pages\dockWindow\frmDemo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 223
+    '    Code Lines: 157
+    ' Comment Lines: 8
+    '   Blank Lines: 58
+    '     File Size: 8.50 KB
+
 
     ' Class frmDemo
     ' 

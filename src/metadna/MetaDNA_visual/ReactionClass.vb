@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dd9e67c9ddcbbeea1f65c5f87036794, src\metadna\MetaDNA_visual\ReactionClass.vb"
+﻿#Region "Microsoft.VisualBasic::183089063b601784a5510078586fb23f, mzkit\src\metadna\MetaDNA_visual\ReactionClass.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 336.00 B
+
 
     ' Class ReactionClass
     ' 

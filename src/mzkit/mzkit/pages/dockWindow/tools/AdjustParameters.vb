@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::207c06b608d89b09d4fb97cca5eaf155, src\mzkit\mzkit\pages\dockWindow\tools\AdjustParameters.vb"
+﻿#Region "Microsoft.VisualBasic::207c06b608d89b09d4fb97cca5eaf155, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\AdjustParameters.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 812.00 B
+
 
     ' Class AdjustParameters
     ' 

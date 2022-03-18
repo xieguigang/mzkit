@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1afc95a907e12f12bc6dd64fe60c209, src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
+﻿#Region "Microsoft.VisualBasic::d1afc95a907e12f12bc6dd64fe60c209, mzkit\src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.45 KB
+
 
     '     Class precursor
     ' 

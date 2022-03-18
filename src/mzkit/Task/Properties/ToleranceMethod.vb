@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6575a9f5d1b751cdff1b6f92bbfe2021, src\mzkit\Task\Properties\ToleranceMethod.vb"
+﻿#Region "Microsoft.VisualBasic::f87e7c055489327e4ffa30d7d6a5f537, mzkit\src\mzkit\Task\Properties\ToleranceMethod.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 51.00 B
+
 
     ' Enum ToleranceMethod
     ' 

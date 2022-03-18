@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7d395e54043e8330c780cdff7c2f091, src\mzkit\Task\IonLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::d7d395e54043e8330c780cdff7c2f091, mzkit\src\mzkit\Task\IonLibrary.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 67
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 2.68 KB
+
 
     ' Class IonLibrary
     ' 

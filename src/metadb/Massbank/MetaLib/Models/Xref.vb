@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6387c845279e9943624fe4240ed4926, src\metadb\Massbank\MetaLib\Models\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::720f8900e4a855411ad99ab3ed35df87, mzkit\src\metadb\Massbank\MetaLib\Models\Xref.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 134
+    ' Comment Lines: 26
+    '   Blank Lines: 18
+    '     File Size: 6.18 KB
+
 
     '     Class xref
     ' 

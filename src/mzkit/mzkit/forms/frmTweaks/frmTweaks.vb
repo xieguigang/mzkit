@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92797346728a393a22b03e204bce5ec7, src\mzkit\mzkit\forms\frmTweaks\frmTweaks.vb"
+﻿#Region "Microsoft.VisualBasic::9696f7084a899e5a36cd42137c150409, mzkit\src\mzkit\mzkit\forms\frmTweaks\frmTweaks.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 15
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 619.00 B
+
 
     ' Class frmTweaks
     ' 

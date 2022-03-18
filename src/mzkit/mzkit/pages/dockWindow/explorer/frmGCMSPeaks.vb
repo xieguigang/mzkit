@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c30b55ecb02e3c200196f8c1e33e076, src\mzkit\mzkit\pages\dockWindow\explorer\frmGCMSPeaks.vb"
+﻿#Region "Microsoft.VisualBasic::801ff093a781177c8c2705b4a73a8285, mzkit\src\mzkit\mzkit\pages\dockWindow\explorer\frmGCMSPeaks.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 124
+    ' Comment Lines: 5
+    '   Blank Lines: 29
+    '     File Size: 6.76 KB
+
 
     ' Class frmGCMSPeaks
     ' 

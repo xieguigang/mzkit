@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a853c84d5ab1932ce57fdfd05e0872b, src\metadb\Massbank\MetaLib\Models\MassSearch.vb"
+﻿#Region "Microsoft.VisualBasic::4a853c84d5ab1932ce57fdfd05e0872b, mzkit\src\metadb\Massbank\MetaLib\Models\MassSearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 87.00 B
+
 
     '     Class MassSearch
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93963e33c0f76c0314effc9c9fee6c5b, src\assembly\assembly\ASCII\MSL\MSLIon.vb"
+﻿#Region "Microsoft.VisualBasic::0507a2247dd0cc48f99a881aa92b8e83, mzkit\src\assembly\assembly\ASCII\MSL\MSLIon.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 25
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.26 KB
+
 
     '     Class MSLIon
     ' 

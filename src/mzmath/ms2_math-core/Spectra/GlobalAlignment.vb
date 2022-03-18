@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6281d4ff76584f9e8dceec850011316, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::5ee9b3fd7c71b4fadf6ae75775d4d531, mzkit\src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 223
+    '    Code Lines: 114
+    ' Comment Lines: 83
+    '   Blank Lines: 26
+    '     File Size: 9.44 KB
+
 
     '     Module GlobalAlignment
     ' 

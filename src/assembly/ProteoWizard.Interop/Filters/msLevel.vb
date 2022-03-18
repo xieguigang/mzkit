@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0550ea4b3da47e060b38ce57777da49f, src\assembly\ProteoWizard.Interop\Filters\msLevel.vb"
+﻿#Region "Microsoft.VisualBasic::0550ea4b3da47e060b38ce57777da49f, mzkit\src\assembly\ProteoWizard.Interop\Filters\msLevel.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 471.00 B
+
 
     '     Class msLevel
     ' 

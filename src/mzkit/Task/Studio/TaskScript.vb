@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::492b5a7f14848ce7a88b62deb5746d91, src\mzkit\Task\Studio\TaskScript.vb"
+﻿#Region "Microsoft.VisualBasic::8b7cb70482cd70c8a59223a59024bcba, mzkit\src\mzkit\Task\Studio\TaskScript.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 380
+    '    Code Lines: 311
+    ' Comment Lines: 15
+    '   Blank Lines: 54
+    '     File Size: 16.32 KB
+
 
     ' Module TaskScript
     ' 

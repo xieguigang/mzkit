@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80ff1c3b1ebd257e7a67ec82bc675568, src\mzkit\BioDeep\BioDeepSession.vb"
+﻿#Region "Microsoft.VisualBasic::80ff1c3b1ebd257e7a67ec82bc675568, mzkit\src\mzkit\BioDeep\BioDeepSession.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 80
+    ' Comment Lines: 9
+    '   Blank Lines: 23
+    '     File Size: 4.09 KB
+
 
     ' Class BioDeepSession
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0224131679af9a5d60b7c7f3645e36d2, src\mzkit\Task\Studio\WorkStudio.vb"
+﻿#Region "Microsoft.VisualBasic::0224131679af9a5d60b7c7f3645e36d2, mzkit\src\mzkit\Task\Studio\WorkStudio.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 177.00 B
+
 
     ' Class WorkStudio
     ' 

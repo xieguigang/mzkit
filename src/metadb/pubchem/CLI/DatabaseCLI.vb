@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a75b04655d223534a0831b07f6bd5238, src\metadb\pubchem\CLI\DatabaseCLI.vb"
+﻿#Region "Microsoft.VisualBasic::647e03ee16b8c647465c0544043f5a50, mzkit\src\metadb\pubchem\CLI\DatabaseCLI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 185
+    ' Comment Lines: 24
+    '   Blank Lines: 36
+    '     File Size: 9.41 KB
+
 
     ' Module CLI
     ' 

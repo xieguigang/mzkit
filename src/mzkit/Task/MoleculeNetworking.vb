@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a259ad0c980f73916df5db878ca7d067, src\mzkit\Task\MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::a81e8bd6f9a0b04faa20da9dc5db5131, mzkit\src\mzkit\Task\MoleculeNetworking.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 237
+    '    Code Lines: 194
+    ' Comment Lines: 0
+    '   Blank Lines: 43
+    '     File Size: 9.45 KB
+
 
     ' Module MoleculeNetworking
     ' 

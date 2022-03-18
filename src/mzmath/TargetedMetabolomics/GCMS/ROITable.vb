@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2cb9f40fa3e896aba2be3e31f85c6b6, src\mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
+﻿#Region "Microsoft.VisualBasic::e2cb9f40fa3e896aba2be3e31f85c6b6, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 27
+    ' Comment Lines: 31
+    '   Blank Lines: 10
+    '     File Size: 2.04 KB
+
 
     '     Class ROITable
     ' 

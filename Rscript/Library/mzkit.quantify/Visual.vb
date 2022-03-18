@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7bb42a396e0d4c0b6969377e1b75ed, Rscript\Library\mzkit.quantify\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::3a7bb42a396e0d4c0b6969377e1b75ed, mzkit\Rscript\Library\mzkit.quantify\Visual.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 126
+    ' Comment Lines: 25
+    '   Blank Lines: 11
+    '     File Size: 7.84 KB
+
 
     ' Module Visual
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68299d82fb881d2fc462e8068c6eba15, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ReferenceLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::214fb57f81d07b5aa6db48ccb648dfb9, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ReferenceLibrary.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 46
+    ' Comment Lines: 23
+    '   Blank Lines: 8
+    '     File Size: 3.52 KB
+
 
     '     Module ReferenceLibrary
     ' 

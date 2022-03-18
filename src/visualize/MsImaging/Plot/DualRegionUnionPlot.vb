@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1d50e3df6a1da75ce5ca01e9c9bf7d6, src\visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f13df6d4ab1d715c56cbcf3d90c2b1d0, mzkit\src\visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 121
+    ' Comment Lines: 1
+    '   Blank Lines: 19
+    '     File Size: 6.12 KB
+
 
     ' Class DualRegionUnionPlot
     ' 

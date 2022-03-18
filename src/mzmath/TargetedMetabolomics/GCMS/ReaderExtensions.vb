@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86da0ce5b5c86809723e565b4303e6d6, src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4bb745502d9bfe217793f4b9a0c4f353, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 130
+    ' Comment Lines: 11
+    '   Blank Lines: 17
+    '     File Size: 6.17 KB
+
 
     '     Module ReaderExtensions
     ' 

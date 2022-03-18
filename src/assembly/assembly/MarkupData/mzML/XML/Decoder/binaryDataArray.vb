@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0086a995215db3cb581e37938bec1b, src\assembly\assembly\MarkupData\mzML\XML\Decoder\binaryDataArray.vb"
+﻿#Region "Microsoft.VisualBasic::09eb621b1f134a53d1b86b37aefad61f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Decoder\binaryDataArray.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 35
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.62 KB
+
 
     '     Class binaryDataArray
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c16ff090eabf03f5a4601164203249d, src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::6faa14831f7bab9d50867e4a40bae482, mzkit\src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 3.11 KB
+
+
     '     Class mzPackPixel
     ' 
-    '         Properties: mz, scan, X, Y
+    '         Properties: mz, scan, scanId, X, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

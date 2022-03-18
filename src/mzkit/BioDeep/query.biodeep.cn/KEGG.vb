@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8248c51ad2425d076fff9e844effb357, src\mzkit\BioDeep\query.biodeep.cn\KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::8248c51ad2425d076fff9e844effb357, mzkit\src\mzkit\BioDeep\query.biodeep.cn\KEGG.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 32.00 B
+
 
     ' Module KEGG
     ' 

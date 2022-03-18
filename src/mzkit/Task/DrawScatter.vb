@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f62d380127b07c1b330191eed21d752f, src\mzkit\Task\DrawScatter.vb"
+﻿#Region "Microsoft.VisualBasic::f62d380127b07c1b330191eed21d752f, mzkit\src\mzkit\Task\DrawScatter.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 93
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 4.50 KB
+
 
     ' Module DrawScatter
     ' 

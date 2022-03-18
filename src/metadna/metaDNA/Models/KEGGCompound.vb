@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::417bc1378fbef78e1b4af06287cd7054, src\metadna\metaDNA\Models\KEGGCompound.vb"
+﻿#Region "Microsoft.VisualBasic::ea5cf9f012b9aca5f60972e9026bfa20, mzkit\src\metadna\metaDNA\Models\KEGGCompound.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 47
+    ' Comment Lines: 3
+    '   Blank Lines: 14
+    '     File Size: 1.84 KB
+
+
     ' Structure KEGGCompound
     ' 
-    '     Properties: ExactMass, kegg_id
+    '     Properties: CommonName, ExactMass, Formula, kegg_id
     ' 
     '     Function: ToString
     ' 
@@ -108,4 +118,3 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
     End Operator
 
 End Structure
-

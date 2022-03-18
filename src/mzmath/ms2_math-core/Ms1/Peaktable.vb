@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e72ff99b98372b58c5d0386a674ec242, src\mzmath\ms2_math-core\Ms1\Peaktable.vb"
+﻿#Region "Microsoft.VisualBasic::f6fd5ad912766c4058dcea9067da56c8, mzkit\src\mzmath\ms2_math-core\Ms1\Peaktable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 36
+    ' Comment Lines: 19
+    '   Blank Lines: 5
+    '     File Size: 1.68 KB
+
 
     ' Class Peaktable
     ' 

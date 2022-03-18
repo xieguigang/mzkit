@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::baf821cd73bf8a39b2116cbce1d583ea, src\mzmath\TargetedMetabolomics\GCMS\mzMLReader\TimeScanMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::721ed70d1246c8fe35729325ce1f1964, mzkit\src\mzmath\TargetedMetabolomics\GCMS\mzMLReader\TimeScanMatrix.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.30 KB
+
 
     '     Class TimeScanMatrix
     ' 

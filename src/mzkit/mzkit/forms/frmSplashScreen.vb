@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::773c72fa51241411d579a0e7177a7cf7, src\mzkit\mzkit\forms\frmSplashScreen.vb"
+﻿#Region "Microsoft.VisualBasic::b76a7466309f21b2cfa7d9168391a378, mzkit\src\mzkit\mzkit\forms\frmSplashScreen.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 57
+    ' Comment Lines: 11
+    '   Blank Lines: 18
+    '     File Size: 3.47 KB
+
 
     ' Class frmSplashScreen
     ' 

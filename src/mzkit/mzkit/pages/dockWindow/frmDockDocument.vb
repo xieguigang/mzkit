@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ac417d9c7924d86aa8a5fcdf5d61315, src\mzkit\mzkit\pages\dockWindow\frmDockDocument.vb"
+﻿#Region "Microsoft.VisualBasic::2ac417d9c7924d86aa8a5fcdf5d61315, mzkit\src\mzkit\mzkit\pages\dockWindow\frmDockDocument.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 26
+    ' Comment Lines: 1
+    '   Blank Lines: 7
+    '     File Size: 1.12 KB
+
 
     ' Class frmDockDocument
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daa01f0cbfaac7111858365be39e6cb4, src\mzmath\TargetedMetabolomics\Peaks\FeatureExtract.vb"
+﻿#Region "Microsoft.VisualBasic::f2b0224c17e724d743b48a23a53b1b36, mzkit\src\mzmath\TargetedMetabolomics\Peaks\FeatureExtract.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 23
+    ' Comment Lines: 8
+    '   Blank Lines: 6
+    '     File Size: 1.29 KB
+
 
     ' Class FeatureExtract
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b67a520f378f13bf8502b8376212499a, src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::65a9898b3fd62420ca2f85d23759def0, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 108
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.82 KB
+
 
     '     Class LibraryMatrix
     ' 

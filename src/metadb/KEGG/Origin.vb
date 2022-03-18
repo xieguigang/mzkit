@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0d047ebd87fb1c66d78a0170f03a182, src\metadb\KEGG\Origin.vb"
+﻿#Region "Microsoft.VisualBasic::8abc7cc423363da0a68d97cecea87e18, mzkit\src\metadb\KEGG\Origin.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 6
+    ' Comment Lines: 11
+    '   Blank Lines: 5
+    '     File Size: 436.00 B
+
 
     ' Class Origin
     ' 

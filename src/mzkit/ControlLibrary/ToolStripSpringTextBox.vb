@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89afa5571800be291157f72b6b751c0e, src\mzkit\ControlLibrary\ToolStripSpringTextBox.vb"
+﻿#Region "Microsoft.VisualBasic::89afa5571800be291157f72b6b751c0e, mzkit\src\mzkit\ControlLibrary\ToolStripSpringTextBox.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 29
+    ' Comment Lines: 19
+    '   Blank Lines: 12
+    '     File Size: 2.51 KB
+
 
     ' Class ToolStripSpringTextBox
     ' 

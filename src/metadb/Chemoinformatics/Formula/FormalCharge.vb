@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::531ad7dff0a5f9a658ceee99def95b36, src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
+﻿#Region "Microsoft.VisualBasic::531ad7dff0a5f9a658ceee99def95b36, mzkit\src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 48
+    ' Comment Lines: 13
+    '   Blank Lines: 15
+    '     File Size: 3.30 KB
+
 
     '     Module FormalCharge
     ' 

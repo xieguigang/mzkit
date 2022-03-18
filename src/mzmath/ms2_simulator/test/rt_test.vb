@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::389afb9a10ef0fdc5e8fb9a140de76df, src\mzmath\ms2_simulator\test\rt_test.vb"
+﻿#Region "Microsoft.VisualBasic::726a8426a36ce49c124b788cfa52e5e0, mzkit\src\mzmath\ms2_simulator\test\rt_test.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 404.00 B
+
 
     ' Module rt_test
     ' 

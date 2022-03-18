@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e58441b765a8b8cd9863ebe47cc4658b, src\visualize\plot\MsContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e58441b765a8b8cd9863ebe47cc4658b, mzkit\src\visualize\plot\MsContourPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 534.00 B
+
 
     ' Module MsContourPlot
     ' 

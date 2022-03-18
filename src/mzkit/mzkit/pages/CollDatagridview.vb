@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb45fcf396a046d99829275606ef15b, src\mzkit\mzkit\pages\CollDatagridview.vb"
+﻿#Region "Microsoft.VisualBasic::bc3c2fa1af49eb22acf5b29005448fd0, mzkit\src\mzkit\mzkit\pages\CollDatagridview.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 67
+    ' Comment Lines: 17
+    '   Blank Lines: 12
+    '     File Size: 4.41 KB
+
 
     '     Module CollDatagridview
     ' 

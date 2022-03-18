@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc4b62cd839d882dbba0adde6b02c89a, src\mzkit\mzkit\pages\dockWindow\tools\TaskUI.vb"
+﻿#Region "Microsoft.VisualBasic::8b1558e49e88c9e590e9d5dbe8973d93, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\TaskUI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 53
+    ' Comment Lines: 3
+    '   Blank Lines: 17
+    '     File Size: 2.39 KB
+
 
     ' Class TaskUI
     ' 

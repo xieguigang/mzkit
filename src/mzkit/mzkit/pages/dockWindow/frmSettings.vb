@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::391c853b15b82488ad554acc46cd0675, src\mzkit\mzkit\pages\dockWindow\frmSettings.vb"
+﻿#Region "Microsoft.VisualBasic::9adc228512d7cd8909c8650769cf9d55, mzkit\src\mzkit\mzkit\pages\dockWindow\frmSettings.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 65
+    ' Comment Lines: 0
+    '   Blank Lines: 17
+    '     File Size: 3.03 KB
+
 
     ' Class frmSettings
     ' 

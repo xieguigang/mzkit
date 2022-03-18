@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2333338c74a7979da45908cefbe14c4d, src\assembly\mz\Pipeline\mzplot.vb"
+﻿#Region "Microsoft.VisualBasic::6a6f05c67b18bf10071b694d4c7ab0b9, mzkit\src\assembly\mz\Pipeline\mzplot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 69
+    ' Comment Lines: 56
+    '   Blank Lines: 17
+    '     File Size: 4.63 KB
+
 
     ' Class mzplot
     ' 

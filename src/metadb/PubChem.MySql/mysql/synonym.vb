@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c34bed20cb1a5e2d7d8e8020d4f765ba, src\metadb\PubChem.MySql\mysql\synonym.vb"
+﻿#Region "Microsoft.VisualBasic::432210793c8d353745344597432b7157, mzkit\src\metadb\PubChem.MySql\mysql\synonym.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 75
+    ' Comment Lines: 41
+    '   Blank Lines: 22
+    '     File Size: 4.40 KB
+
 
     ' Class synonym
     ' 

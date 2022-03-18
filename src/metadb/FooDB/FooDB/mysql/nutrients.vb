@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::326aece1fcf2ccc67c24fe1d89b4c745, src\metadb\FooDB\FooDB\mysql\nutrients.vb"
+﻿#Region "Microsoft.VisualBasic::326aece1fcf2ccc67c24fe1d89b4c745, mzkit\src\metadb\FooDB\FooDB\mysql\nutrients.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 220
+    '    Code Lines: 119
+    ' Comment Lines: 79
+    '   Blank Lines: 22
+    '     File Size: 17.13 KB
+
 
     ' Class nutrients
     ' 

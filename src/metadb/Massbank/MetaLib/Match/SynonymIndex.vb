@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::979c424079dfc7c4750ff017cc5b1c5e, src\metadb\Massbank\MetaLib\Match\SynonymIndex.vb"
+﻿#Region "Microsoft.VisualBasic::979c424079dfc7c4750ff017cc5b1c5e, mzkit\src\metadb\Massbank\MetaLib\Match\SynonymIndex.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 43
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 2.00 KB
+
 
     '     Class SynonymIndex
     ' 

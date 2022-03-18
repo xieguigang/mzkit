@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65d3815e136ea4d23705869f42bb36ec, src\mzkit\Task\Properties\RawFileProperty.vb"
+﻿#Region "Microsoft.VisualBasic::65d3815e136ea4d23705869f42bb36ec, mzkit\src\mzkit\Task\Properties\RawFileProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.48 KB
+
 
     ' Class RawFileProperty
     ' 

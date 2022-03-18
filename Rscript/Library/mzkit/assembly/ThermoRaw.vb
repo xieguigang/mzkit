@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::677ed5adce3af2c09f6fe28c1910051d, Rscript\Library\mzkit\assembly\ThermoRaw.vb"
+﻿#Region "Microsoft.VisualBasic::677ed5adce3af2c09f6fe28c1910051d, mzkit\Rscript\Library\mzkit\assembly\ThermoRaw.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 57
+    ' Comment Lines: 6
+    '   Blank Lines: 11
+    '     File Size: 2.84 KB
+
 
     ' Module ThermoRaw
     ' 

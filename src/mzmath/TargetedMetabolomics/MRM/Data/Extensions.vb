@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::800ab5cbb71708c2b559c25c3fe69932, src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::800ab5cbb71708c2b559c25c3fe69932, mzkit\src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 80
+    ' Comment Lines: 14
+    '   Blank Lines: 15
+    '     File Size: 5.07 KB
+
 
     '     Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e656c5f56a02ba8248617c76153a5700, src\assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::50fc50a7fd1b8bacd99d0142c2c6786f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 127
+    ' Comment Lines: 21
+    '   Blank Lines: 25
+    '     File Size: 6.34 KB
+
 
     '     Class spectrum
     ' 

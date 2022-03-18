@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46c7e2227e2e77d7e14911c70554a306, src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::97abfd84a38df1113a5b15f8b6fb062d, mzkit\src\mzmath\mz_deco\Deconvolution.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 117
+    ' Comment Lines: 28
+    '   Blank Lines: 17
+    '     File Size: 6.48 KB
+
 
     ' Module Deconvolution
     ' 

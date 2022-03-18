@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9ba01bebe1895ce89fdfdcc6b059472, src\assembly\mzPackExtensions\MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::d9ba01bebe1895ce89fdfdcc6b059472, mzkit\src\assembly\mzPackExtensions\MSIRawPack.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 45
+    ' Comment Lines: 11
+    '   Blank Lines: 13
+    '     File Size: 2.67 KB
+
 
     ' Module MSIRawPack
     ' 

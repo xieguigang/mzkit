@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6b48b099f1ede469dffd02c524f1eef, src\assembly\assembly\ASCII\MSN\PeakTable.vb"
+﻿#Region "Microsoft.VisualBasic::f42f8c93e1af37a433d0546f4804f8ba, mzkit\src\assembly\assembly\ASCII\MSN\PeakTable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 51
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.06 KB
+
 
     '     Class PeakTable
     ' 

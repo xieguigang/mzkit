@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5931363180fd5eb2d034e45e5f00beac, src\mzkit\mzkit\application\TaskbarWindow.vb"
+﻿#Region "Microsoft.VisualBasic::faf2c69a212d48cb3bec21da3761d262, mzkit\src\mzkit\mzkit\application\TaskbarWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 97
+    '    Code Lines: 59
+    ' Comment Lines: 19
+    '   Blank Lines: 19
+    '     File Size: 4.08 KB
+
 
     ' Module TaskBarWindow
     ' 

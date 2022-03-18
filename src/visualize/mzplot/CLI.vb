@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::680a17b1bb8a0ffdce66e89516cc23fc, src\visualize\mzplot\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::680a17b1bb8a0ffdce66e89516cc23fc, mzkit\src\visualize\mzplot\CLI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 148
+    ' Comment Lines: 6
+    '   Blank Lines: 14
+    '     File Size: 7.37 KB
+
 
     ' Module CLI
     ' 

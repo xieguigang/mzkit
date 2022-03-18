@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcf20c9153a0857496bbead1d8b69425, src\visualize\plot\UVsignalPlot.vb"
+﻿#Region "Microsoft.VisualBasic::dcf20c9153a0857496bbead1d8b69425, mzkit\src\visualize\plot\UVsignalPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 85
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 4.38 KB
+
 
     ' Module UVsignalPlot
     ' 
