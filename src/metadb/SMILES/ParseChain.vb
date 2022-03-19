@@ -128,7 +128,7 @@ Public Class ParseChain
         Dim element As New ChemicalElement(t.text)
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
-        element.ID = graph.vertex.Count
+        element.ID = graph.vertex.Count + 1
         graph.AddVertex(element)
 
         If Not ringId Is Nothing Then
