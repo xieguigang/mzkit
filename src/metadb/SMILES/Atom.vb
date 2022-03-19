@@ -58,6 +58,11 @@
 Public Class Atom
 
     Public Property label As String
+    ''' <summary>
+    ''' the max number of the chemical keys
+    ''' (max charge number)
+    ''' </summary>
+    ''' <returns></returns>
     Public Property maxKeys As Integer
 
     Sub New(label As String, max As Integer)

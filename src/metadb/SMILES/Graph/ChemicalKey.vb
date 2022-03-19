@@ -58,6 +58,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
 Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
 
+    ''' <summary>
+    ''' the charge of current chemical key
+    ''' </summary>
+    ''' <returns></returns>
     Public Property bond As Bonds
 
     Public Overrides Function ToString() As String

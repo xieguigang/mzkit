@@ -28,6 +28,28 @@ Module Layout2D
         Return chemical
     End Function
 
+    ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
+        .DefaultElements _
+        .ToDictionary(Function(a)
+                          Return a.label
+                      End Function)
+
+    Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey()) As Double
+        Dim maxN As Integer = atomMaxCharges(atom.label).maxKeys
+        Dim n = Aggregate b In bonds Into Sum(b.bond)
+
+        If bonds.Length > maxN OrElse (n > maxN) Then
+            Throw New InvalidConstraintException
+        End If
+
+        ' fix for the missing H element
+        ' bonds in SMILES
+        n = maxN - n
+        n += bonds.Length
+
+        Return 2 * stdNum.PI / n
+    End Function
+
     <Extension>
     Public Sub LayoutTarget(chemical As ChemicalFormula, atom As ChemicalElement, radius As Double, alpha As Double)
         ' get number of bounds (n) of
@@ -40,7 +62,7 @@ Module Layout2D
                    End Function) _
             .ToArray
         Dim n As Integer = bonds.Length
-        Dim angleDelta As Double = 2 * stdNum.PI / n
+        Dim angleDelta As Double = EvaluateAngleDelta(atom, bonds)
 
         If alpha = 0 Then
             alpha = angleDelta
