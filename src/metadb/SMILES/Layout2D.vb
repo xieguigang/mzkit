@@ -35,7 +35,7 @@ Module Layout2D
                       End Function)
 
     Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey()) As Double
-        Dim maxN As Integer = atomMaxCharges(atom.label).maxKeys
+        Dim maxN As Integer = atomMaxCharges(atom.elementName).maxKeys
         Dim n = Aggregate b In bonds Into Sum(b.bond)
 
         If bonds.Length > maxN OrElse (n > maxN) Then
