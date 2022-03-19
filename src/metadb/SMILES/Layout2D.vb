@@ -14,7 +14,7 @@ Module Layout2D
         atom.coordinate = New Double() {0, 0}
 
         Do While True
-            chemical.LayoutTarget(atom, radius)
+            chemical.LayoutTarget(atom, radius, 0)
             atom = chemical _
                 .AllElements _
                 .Where(Function(a) a.coordinate.IsNullOrEmpty) _
@@ -29,7 +29,7 @@ Module Layout2D
     End Function
 
     <Extension>
-    Public Sub LayoutTarget(chemical As ChemicalFormula, atom As ChemicalElement, radius As Double)
+    Public Sub LayoutTarget(chemical As ChemicalFormula, atom As ChemicalElement, radius As Double, alpha As Double)
         ' get number of bounds (n) of
         ' the current atom links,
         ' then we can evaluate the angle
@@ -41,7 +41,11 @@ Module Layout2D
             .ToArray
         Dim n As Integer = bonds.Length
         Dim angleDelta As Double = 2 * stdNum.PI / n
-        Dim alpha As Double = angleDelta
+
+        If alpha = 0 Then
+            alpha = angleDelta
+        End If
+
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
 
         For Each bond As ChemicalKey In From b In bonds Where b.U Is atom
@@ -54,7 +58,7 @@ Module Layout2D
             [next].coordinate = {layout.X, layout.Y}
             alpha += angleDelta
 
-            Call chemical.LayoutTarget([next], radius)
+            Call chemical.LayoutTarget([next], radius, alpha)
         Next
     End Sub
 End Module
