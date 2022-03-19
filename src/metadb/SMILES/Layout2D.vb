@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -15,7 +14,15 @@ Module Layout2D
         atom.coordinate = New Double() {0, 0}
 
         Do While True
-            Call chemical.LayoutTarget(atom, radius)
+            chemical.LayoutTarget(atom, radius)
+            atom = chemical _
+                .AllElements _
+                .Where(Function(a) a.coordinate.IsNullOrEmpty) _
+                .FirstOrDefault
+
+            If atom Is Nothing Then
+                Exit Do
+            End If
         Loop
 
         Return chemical
@@ -33,7 +40,7 @@ Module Layout2D
                    End Function) _
             .ToArray
         Dim n As Integer = bonds.Length
-        Dim angleDelta As Double = 360 / n
+        Dim angleDelta As Double = 2 * stdNum.PI / n
         Dim alpha As Double = 0
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
 
