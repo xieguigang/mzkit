@@ -49,6 +49,9 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
 
+''' <summary>
+''' the molecule graph
+''' </summary>
 Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, ChemicalKey)
 
     Public ReadOnly Property AllBonds As IEnumerable(Of ChemicalKey)

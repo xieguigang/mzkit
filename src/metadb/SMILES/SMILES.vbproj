@@ -153,6 +153,7 @@
     <Compile Include="Graph\ChemicalElement.vb" />
     <Compile Include="Graph\ChemicalKey.vb" />
     <Compile Include="Graph\ChemicalFormula.vb" />
+    <Compile Include="Layout2D.vb" />
     <Compile Include="ParseChain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
