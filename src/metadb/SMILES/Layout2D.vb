@@ -41,7 +41,7 @@ Module Layout2D
             .ToArray
         Dim n As Integer = bonds.Length
         Dim angleDelta As Double = 2 * stdNum.PI / n
-        Dim alpha As Double = 0
+        Dim alpha As Double = angleDelta
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
 
         For Each bond As ChemicalKey In From b In bonds Where b.U Is atom
