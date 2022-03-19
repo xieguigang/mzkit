@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75724a9695a2ad2ea7f12c145368de43, src\mzkit\mzkit\pages\Settings\PresetProfile.vb"
+﻿#Region "Microsoft.VisualBasic::e39eae53ed5b0d56608a661e82da147f, mzkit\src\mzkit\mzkit\pages\Settings\PresetProfile.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 43
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.43 KB
+
 
     ' Class PresetProfile
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e07d8fb3da5ac4680d2fba0c6735e09b, src\mzkit\mzkit\pages\dockWindow\tools\MSIPixelPropertyWindow.vb"
+﻿#Region "Microsoft.VisualBasic::013e5f6d13b03f6bd3a820d1f06beca5, mzkit\src\mzkit\mzkit\pages\dockWindow\properties\MSIPixelPropertyWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 51
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 2.27 KB
+
 
     ' Class MSIPixelPropertyWindow
     ' 

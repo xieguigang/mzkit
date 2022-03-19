@@ -1,48 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::eb79f4e83cff201ee3a381446819d253, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MRMkit
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-'               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
-'               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
-'               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 832
+    '    Code Lines: 579
+    ' Comment Lines: 166
+    '   Blank Lines: 87
+    '     File Size: 35.91 KB
+
+
+    ' Module MRMkit
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
+    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
+    '               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
+    '               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

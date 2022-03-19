@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d78644e03331f50917498380710fd4fd, src\mzkit\mzkit\pages\dockWindow\base\DocumentWindow.vb"
+﻿#Region "Microsoft.VisualBasic::264e2a9432db60ddc3ecc73521757822, mzkit\src\mzkit\mzkit\pages\dockWindow\base\DocumentWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 61
+    ' Comment Lines: 3
+    '   Blank Lines: 23
+    '     File Size: 3.26 KB
+
 
     ' Class DocumentWindow
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e58a0799337adcc490b0668e9245ee45, src\mzkit\ServiceHub\ServiceProtocols\ServiceProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::677a2360789d9044615d1198922ddb58, mzkit\src\mzkit\ServiceHub\ServiceProtocols\ServiceProtocol.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 14
+    ' Comment Lines: 6
+    '   Blank Lines: 0
+    '     File Size: 397.00 B
+
+
     ' Enum ServiceProtocol
     ' 
-    '     ExitApp, ExportMzpack, GetBasePeakMzList, GetPixel, GetPixelPolygon
-    '     GetPixelRectangle, LoadMSI, LoadMSILayers, LoadSummaryLayer, LoadThermoRawMSI
-    '     UnloadMSI
+    '     ExitApp, ExportMzpack, GetBasePeakMzList, GetIonStatList, GetPixel
+    '     GetPixelPolygon, GetPixelRectangle, LoadMSI, LoadMSILayers, LoadSummaryLayer
+    '     LoadThermoRawMSI, UnloadMSI
     ' 
     '  
     ' 

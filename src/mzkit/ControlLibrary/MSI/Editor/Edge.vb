@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a391223bbdc7f6f1e7d5240085008dee, src\mzkit\ControlLibrary\MSI\Editor\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::73a65ce0f18af945728bda4097098c9e, mzkit\src\mzkit\ControlLibrary\MSI\Editor\Edge.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 822.00 B
+
 
     '     Enum EdgeType
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bee77824bdfe76b55b170f7adc94f547, src\metadb\Massbank\MetaLib\Models\ICompoundNames.vb"
+﻿#Region "Microsoft.VisualBasic::bee77824bdfe76b55b170f7adc94f547, mzkit\src\metadb\Massbank\MetaLib\Models\ICompoundNames.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 158.00 B
+
 
     '     Interface ICompoundNames
     ' 

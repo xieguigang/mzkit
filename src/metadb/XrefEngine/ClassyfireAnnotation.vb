@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6bbad1b014e5a75109e762113c50437, src\metadb\XrefEngine\ClassyfireAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::86b0afb20f0c0d9d1220a16b24946ff7, mzkit\src\metadb\XrefEngine\ClassyfireAnnotation.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 9
+    ' Comment Lines: 11
+    '   Blank Lines: 2
+    '     File Size: 668.00 B
+
 
     ' Class ClassyfireAnnotation
     ' 

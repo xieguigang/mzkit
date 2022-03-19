@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11354f1b8ccd0966fa708e65438955da, src\metadb\KNApSAcK\Data\QueryInput.vb"
+﻿#Region "Microsoft.VisualBasic::11354f1b8ccd0966fa708e65438955da, mzkit\src\metadb\KNApSAcK\Data\QueryInput.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 279.00 B
+
 
     '     Structure QueryInput
     ' 

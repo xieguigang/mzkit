@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be677e82e504cdff8024ea81b7c364d, src\metadb\Massbank\MetaLib\Models\ICompoundClass.vb"
+﻿#Region "Microsoft.VisualBasic::c633b3c1a4fe9607746e87482ab4e7be, mzkit\src\metadb\Massbank\MetaLib\Models\ICompoundClass.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 9
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 392.00 B
+
 
     '     Interface ICompoundClass
     ' 

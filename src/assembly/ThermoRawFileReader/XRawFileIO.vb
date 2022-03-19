@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ace10cac463f0e1e197b1d2b2948a6d, src\assembly\ThermoRawFileReader\XRawFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::2ace10cac463f0e1e197b1d2b2948a6d, mzkit\src\assembly\ThermoRawFileReader\XRawFileIO.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 2531
+    '    Code Lines: 1499
+    ' Comment Lines: 591
+    '   Blank Lines: 441
+    '     File Size: 109.28 KB
+
 
     ' Class XRawFileIO
     ' 

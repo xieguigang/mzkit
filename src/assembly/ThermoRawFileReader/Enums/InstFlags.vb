@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7886f2d5f485d530be881114f302a11d, src\assembly\ThermoRawFileReader\Enums\InstFlags.vb"
+﻿#Region "Microsoft.VisualBasic::7886f2d5f485d530be881114f302a11d, mzkit\src\assembly\ThermoRawFileReader\Enums\InstFlags.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 7
+    ' Comment Lines: 15
+    '   Blank Lines: 3
+    '     File Size: 603.00 B
+
 
     ' Module InstFlags
     ' 

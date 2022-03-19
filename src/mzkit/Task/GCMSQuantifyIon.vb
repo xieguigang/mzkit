@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed804410692e8e86cd05e83be552600c, src\mzkit\Task\GCMSQuantifyIon.vb"
+﻿#Region "Microsoft.VisualBasic::ed804410692e8e86cd05e83be552600c, mzkit\src\mzkit\Task\GCMSQuantifyIon.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 26
+    ' Comment Lines: 6
+    '   Blank Lines: 4
+    '     File Size: 1.11 KB
+
 
     ' Module GCMSQuantifyIon
     ' 

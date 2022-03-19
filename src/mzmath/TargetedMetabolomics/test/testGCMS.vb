@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b7f4ea30fdb432563adc4c010ad491, src\mzmath\TargetedMetabolomics\test\testGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::c0b7f4ea30fdb432563adc4c010ad491, mzkit\src\mzmath\TargetedMetabolomics\test\testGCMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 1.71 KB
+
 
     ' Module testGCMS
     ' 

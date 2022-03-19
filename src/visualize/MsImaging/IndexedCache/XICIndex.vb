@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55db16f24ac667303220bdd68e881a8a, src\visualize\MsImaging\IndexedCache\XICIndex.vb"
+﻿#Region "Microsoft.VisualBasic::55db16f24ac667303220bdd68e881a8a, mzkit\src\visualize\MsImaging\IndexedCache\XICIndex.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 169
+    '    Code Lines: 129
+    ' Comment Lines: 9
+    '   Blank Lines: 31
+    '     File Size: 6.56 KB
+
 
     '     Class XICIndex
     ' 

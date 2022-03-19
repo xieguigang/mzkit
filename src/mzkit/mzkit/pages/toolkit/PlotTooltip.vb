@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214db27f749b4c5c6a8fd88fea05142b, src\mzkit\mzkit\pages\toolkit\PlotTooltip.vb"
+﻿#Region "Microsoft.VisualBasic::a5882896a24a9c617e07309422e78f56, mzkit\src\mzkit\mzkit\pages\toolkit\PlotTooltip.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.31 KB
+
 
     ' Class PlotTooltip
     ' 

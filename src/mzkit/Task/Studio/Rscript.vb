@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5a6a1641d8693bb3199036962b927fd, src\mzkit\Task\Studio\Rscript.vb"
+﻿#Region "Microsoft.VisualBasic::d5a6a1641d8693bb3199036962b927fd, mzkit\src\mzkit\Task\Studio\Rscript.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 115
+    ' Comment Lines: 91
+    '   Blank Lines: 21
+    '     File Size: 10.95 KB
+
 
     '     Class Rscript
     ' 

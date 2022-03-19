@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::473502dc25680b2249108ceb59d1d90f, src\metadb\FooDB\FooDB\mysql\references.vb"
+﻿#Region "Microsoft.VisualBasic::473502dc25680b2249108ceb59d1d90f, mzkit\src\metadb\FooDB\FooDB\mysql\references.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 200
+    '    Code Lines: 95
+    ' Comment Lines: 83
+    '   Blank Lines: 22
+    '     File Size: 11.22 KB
+
 
     ' Class references
     ' 

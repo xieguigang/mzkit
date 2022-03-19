@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::019504d06b6b6deec1a9ea76ef0d8622, src\assembly\ProteoWizard.d\test\batchConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::5d8f492c29fb7f5588cc7a9fab7e12be, mzkit\src\assembly\ProteoWizard.d\test\batchConvertor.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 581.00 B
+
 
     ' Module batchConvertor
     ' 

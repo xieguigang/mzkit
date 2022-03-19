@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dce3d7d4eaa645bbfa140845179ba8ac, src\assembly\mzPackExtensions\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::b5f1465b13f08a25c7450306529af668, mzkit\src\assembly\mzPackExtensions\RawStream.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.09 KB
+
 
     ' Module RawStream
     ' 

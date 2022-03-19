@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a8efe6d820ff153f833f7001c18193d, src\mzkit\mzkit\pages\dockWindow\documents\frmRsharp.vb"
+﻿#Region "Microsoft.VisualBasic::48ae92e193a0251e72fafa06e8227d63, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmRsharp.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 33
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.32 KB
+
 
     ' Class frmRsharp
     ' 

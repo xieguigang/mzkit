@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e6f8a09c0f7e01c1eea68adc45bae50, src\metadb\FormulaSearch.Extensions\AtomGroups\Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::026b1df609b73eeaa32163ff5c809883, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Alkenyl.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 177.00 B
+
 
     ' Class Alkenyl
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dbe31e5fdb38cb861d6a19f24e201d6, src\mzkit\mzkit\pages\dockWindow\documents\frmHtmlViewer.vb"
+﻿#Region "Microsoft.VisualBasic::e7d46a1e851208677fb39dec47cfa0d2, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmHtmlViewer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 62
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.54 KB
+
 
     ' Class frmHtmlViewer
     ' 

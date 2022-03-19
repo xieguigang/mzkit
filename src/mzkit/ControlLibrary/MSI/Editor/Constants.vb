@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4a145e28a21339550277e23eb19b319, src\mzkit\ControlLibrary\MSI\Editor\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::d4a145e28a21339550277e23eb19b319, mzkit\src\mzkit\ControlLibrary\MSI\Editor\Constants.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 480.00 B
+
 
     '     Enum MenuOption
     ' 

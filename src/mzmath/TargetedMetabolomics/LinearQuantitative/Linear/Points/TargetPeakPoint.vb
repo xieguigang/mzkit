@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2ab798a00f6a76737093987c99cb027, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\TargetPeakPoint.vb"
+﻿#Region "Microsoft.VisualBasic::0cf5b6a84936968af2a9a00dfb7fa51c, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\TargetPeakPoint.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 32
+    ' Comment Lines: 18
+    '   Blank Lines: 6
+    '     File Size: 1.97 KB
+
 
     '     Class TargetPeakPoint
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64a41b6f3431c042298713172bb9a251, src\assembly\mzPack\ChromatogramOverlap.vb"
+﻿#Region "Microsoft.VisualBasic::f886a0cba381f3ed6cb748155734208d, mzkit\src\assembly\mzPack\ChromatogramOverlap.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 77
+    ' Comment Lines: 10
+    '   Blank Lines: 17
+    '     File Size: 3.50 KB
+
 
     ' Class ChromatogramOverlap
     ' 

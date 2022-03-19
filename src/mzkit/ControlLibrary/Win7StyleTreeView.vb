@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df8bfd896274aa6266677470123bcced, src\mzkit\ControlLibrary\Win7StyleTreeView.vb"
+﻿#Region "Microsoft.VisualBasic::df8bfd896274aa6266677470123bcced, mzkit\src\mzkit\ControlLibrary\Win7StyleTreeView.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 50
+    ' Comment Lines: 3
+    '   Blank Lines: 10
+    '     File Size: 2.61 KB
+
 
     '     Class Win7StyleTreeView
     ' 

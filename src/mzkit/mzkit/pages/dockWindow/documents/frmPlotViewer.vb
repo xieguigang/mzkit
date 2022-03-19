@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e7af2a51710ba94318dc2d062bcc7d1, src\mzkit\mzkit\pages\dockWindow\documents\frmPlotViewer.vb"
+﻿#Region "Microsoft.VisualBasic::86b632f7770fc1ae80641a36000885a9, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmPlotViewer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 39
+    ' Comment Lines: 7
+    '   Blank Lines: 10
+    '     File Size: 2.16 KB
+
 
     ' Class frmPlotViewer
     ' 

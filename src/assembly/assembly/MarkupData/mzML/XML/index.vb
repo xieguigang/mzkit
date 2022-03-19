@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9a9af6f6bc4a254a3ebf7de085f1ff4, src\assembly\assembly\MarkupData\mzML\XML\index.vb"
+﻿#Region "Microsoft.VisualBasic::a9a9af6f6bc4a254a3ebf7de085f1ff4, mzkit\src\assembly\assembly\MarkupData\mzML\XML\index.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 68
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 2.76 KB
+
 
     '     Class indexList
     ' 

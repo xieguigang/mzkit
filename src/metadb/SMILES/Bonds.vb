@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf71606b1080c7925636612c6d11adaa, src\metadb\SMILES\Bonds.vb"
+﻿#Region "Microsoft.VisualBasic::bf71606b1080c7925636612c6d11adaa, mzkit\src\metadb\SMILES\Bonds.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 7
+    ' Comment Lines: 8
+    '   Blank Lines: 1
+    '     File Size: 537.00 B
+
 
     ' Enum Bonds
     ' 

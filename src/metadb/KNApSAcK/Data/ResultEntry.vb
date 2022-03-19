@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, src\metadb\KNApSAcK\Data\ResultEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, mzkit\src\metadb\KNApSAcK\Data\ResultEntry.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 291.00 B
+
 
     '     Class ResultEntry
     ' 

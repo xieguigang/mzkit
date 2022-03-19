@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4c18bdd40aa686349bc18a3703da03d, src\visualize\MsImaging\FeatureRegions.vb"
+﻿#Region "Microsoft.VisualBasic::866702d55aca4038b570a9e08161390f, mzkit\src\visualize\MsImaging\FeatureRegions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 78
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 3.86 KB
+
 
     ' Module FeatureRegions
     ' 

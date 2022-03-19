@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81b67ff7935faf251899994f347cfd9, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\WorkCurve.vb"
+﻿#Region "Microsoft.VisualBasic::d38176630f623393999f5a4e72a59fe2, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\WorkCurve.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 2
+    '     File Size: 163.00 B
+
 
     '     Module WorkCurve
     ' 

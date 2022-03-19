@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03bbc750bb871f6f3c73b19e400d5492, src\mzmath\MSEngine\MzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::e8d9aca82d3f898be30c80c13d54d948, mzkit\src\mzmath\MSEngine\MzQuery.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 42
+    ' Comment Lines: 21
+    '   Blank Lines: 11
+    '     File Size: 2.09 KB
+
+
     ' Structure MzQuery
     ' 
-    '     Properties: isEmpty, mz, ppm, precursorType, score
-    '                 unique_id
+    '     Properties: isEmpty, mz, mz_ref, name, ppm
+    '                 precursorType, score, unique_id
     ' 
     '     Function: Clone, ToString
     ' 

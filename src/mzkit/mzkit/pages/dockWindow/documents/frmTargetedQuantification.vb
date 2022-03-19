@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06bbda836a7a6525ea35c62daab39ddc, src\mzkit\mzkit\pages\dockWindow\documents\frmTargetedQuantification.vb"
+﻿#Region "Microsoft.VisualBasic::f6e50c5ca8e25ec192141f4521d1c52e, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmTargetedQuantification.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1145
+    '    Code Lines: 901
+    ' Comment Lines: 30
+    '   Blank Lines: 214
+    '     File Size: 48.07 KB
+
 
     ' Class frmTargetedQuantification
     ' 

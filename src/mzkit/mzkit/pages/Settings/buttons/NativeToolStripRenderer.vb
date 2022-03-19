@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c32dbfe8988244cf8f1d28e5e571b3, src\mzkit\mzkit\pages\Settings\buttons\NativeToolStripRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::c0a03144fc37845c070faa25f0c6e199, mzkit\src\mzkit\mzkit\pages\Settings\buttons\NativeToolStripRenderer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 451
+    '    Code Lines: 324
+    ' Comment Lines: 64
+    '   Blank Lines: 63
+    '     File Size: 20.61 KB
+
 
     '     Enum ToolbarTheme
     ' 

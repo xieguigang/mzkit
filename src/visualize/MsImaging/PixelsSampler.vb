@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25fed5ac20c1a976596d778e5217672b, src\visualize\MsImaging\PixelsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::8dc139541bf205580d47dc5ada41e948, mzkit\src\visualize\MsImaging\PixelsSampler.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 96
+    ' Comment Lines: 9
+    '   Blank Lines: 21
+    '     File Size: 4.78 KB
+
 
     ' Class PixelsSampler
     ' 

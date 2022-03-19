@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::949aecc8a3bb74e6d3aef08843e9af97, src\mzkit\Task\Properties\AlignmentProperty.vb"
+﻿#Region "Microsoft.VisualBasic::949aecc8a3bb74e6d3aef08843e9af97, mzkit\src\mzkit\Task\Properties\AlignmentProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 937.00 B
+
 
     ' Class AlignmentProperty
     ' 

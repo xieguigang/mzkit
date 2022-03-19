@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a139cb54449e8297c6943a4c0bbc1d9, src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::0a139cb54449e8297c6943a4c0bbc1d9, mzkit\src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 53
+    ' Comment Lines: 28
+    '   Blank Lines: 12
+    '     File Size: 3.67 KB
+
 
     '     Class ms2
     ' 

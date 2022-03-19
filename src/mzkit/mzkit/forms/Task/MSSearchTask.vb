@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb67cd3668805edb6be2ff19ecbb6210, src\mzkit\mzkit\forms\Task\MSSearchTask.vb"
+﻿#Region "Microsoft.VisualBasic::eb67cd3668805edb6be2ff19ecbb6210, mzkit\src\mzkit\mzkit\forms\Task\MSSearchTask.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 33.00 B
+
 
     ' Module MSSearchTask
     ' 

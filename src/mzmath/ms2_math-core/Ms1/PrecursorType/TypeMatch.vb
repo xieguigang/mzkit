@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecf3b1f41d16e6bdee4cf31d88d99a48, src\mzmath\ms2_math-core\Ms1\PrecursorType\TypeMatch.vb"
+﻿#Region "Microsoft.VisualBasic::3e8fe3e5eb7f5168bcd52c7b8de090a1, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\TypeMatch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 7
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 255.00 B
+
 
     '     Structure TypeMatch
     ' 

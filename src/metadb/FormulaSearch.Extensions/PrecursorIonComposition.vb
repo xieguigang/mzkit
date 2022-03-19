@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4236f0bd08d93033cae4ec84f7977c49, src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
+﻿#Region "Microsoft.VisualBasic::a5668271c934ea813f238418e5b2168e, mzkit\src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 396.00 B
+
 
     ' Class PrecursorIonComposition
     ' 

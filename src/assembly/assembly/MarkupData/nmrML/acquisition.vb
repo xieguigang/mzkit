@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34a5e4370292ed10c57baff810ce8f79, src\assembly\assembly\MarkupData\nmrML\acquisition.vb"
+﻿#Region "Microsoft.VisualBasic::34a5e4370292ed10c57baff810ce8f79, mzkit\src\assembly\assembly\MarkupData\nmrML\acquisition.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 72
+    ' Comment Lines: 10
+    '   Blank Lines: 28
+    '     File Size: 3.66 KB
+
 
     '     Class acquisition
     ' 

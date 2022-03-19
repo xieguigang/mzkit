@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bf95ebc790eed59438e12c8239f4c9, src\mzkit\mzkit\pages\dockWindow\frmStartPage.vb"
+﻿#Region "Microsoft.VisualBasic::996f160f0559a76ffbf07119dd772eb1, mzkit\src\mzkit\mzkit\pages\dockWindow\frmStartPage.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 1
+    '   Blank Lines: 4
+    '     File Size: 517.00 B
+
 
     ' Class frmStartPage
     ' 

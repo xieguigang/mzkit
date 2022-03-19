@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, src\metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, mzkit\src\metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 45
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 2.20 KB
+
 
     ' Module IsotopicAlignment
     ' 

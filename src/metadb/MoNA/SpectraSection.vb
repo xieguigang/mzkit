@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d12b25d23ae8fa3ba4c1fe907da5fc29, src\metadb\MoNA\SpectraSection.vb"
+﻿#Region "Microsoft.VisualBasic::f5631ed19fcc9f716ce232258f2ac765, mzkit\src\metadb\MoNA\SpectraSection.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 39
+    ' Comment Lines: 6
+    '   Blank Lines: 7
+    '     File Size: 1.79 KB
+
 
     ' Class SpectraSection
     ' 

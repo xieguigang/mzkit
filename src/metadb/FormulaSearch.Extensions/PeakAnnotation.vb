@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4926bef7c7024c1bcba3eb1137544512, src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::86ed08d5dad570cf4e0a28562e7ed268, mzkit\src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 69
+    ' Comment Lines: 6
+    '   Blank Lines: 18
+    '     File Size: 3.26 KB
+
 
     ' Class PeakAnnotation
     ' 

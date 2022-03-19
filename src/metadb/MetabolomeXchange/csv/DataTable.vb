@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e17b1e5539a5a27ca0b47169b7e3bd6, src\metadb\MetabolomeXchange\csv\DataTable.vb"
+﻿#Region "Microsoft.VisualBasic::cc029b0d2eadd837792ad5174b14cc2a, mzkit\src\metadb\MetabolomeXchange\csv\DataTable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 1.43 KB
+
 
     ' Class DataTable
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a003ea46c51cfe72935d801deb579d96, src\mzkit\Task\Studio\RscriptPipelineTask.vb"
+﻿#Region "Microsoft.VisualBasic::a003ea46c51cfe72935d801deb579d96, mzkit\src\mzkit\Task\Studio\RscriptPipelineTask.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 15
+    ' Comment Lines: 2
+    '   Blank Lines: 8
+    '     File Size: 709.00 B
+
 
     ' Class RscriptPipelineTask
     ' 

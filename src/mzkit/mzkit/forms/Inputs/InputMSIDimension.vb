@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9be69a205d7b1c29c8d8cbfc212f64a7, src\mzkit\mzkit\pages\dockWindow\documents\InputMSIDimension.vb"
+﻿#Region "Microsoft.VisualBasic::9be69a205d7b1c29c8d8cbfc212f64a7, mzkit\src\mzkit\mzkit\forms\Inputs\InputMSIDimension.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 506.00 B
+
 
     ' Class InputMSIDimension
     ' 

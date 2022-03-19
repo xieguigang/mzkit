@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6713e890b7a8f0f957e2467b88a3129c, src\assembly\assembly\MarkupData\nmrML\spectrum1D.vb"
+﻿#Region "Microsoft.VisualBasic::6713e890b7a8f0f957e2467b88a3129c, mzkit\src\assembly\assembly\MarkupData\nmrML\spectrum1D.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 41
+    ' Comment Lines: 5
+    '   Blank Lines: 14
+    '     File Size: 1.94 KB
+
 
     '     Class spectrum1D
     ' 

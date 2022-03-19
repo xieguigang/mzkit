@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c488ce93fc6ef66361d2e9752ae4d04, src\mzkit\ControlLibrary\Message\MaskForm.vb"
+﻿#Region "Microsoft.VisualBasic::ebcb768b9e3995ca55b1c4ecba3ac80d, mzkit\src\mzkit\ControlLibrary\Message\MaskForm.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 22
+    ' Comment Lines: 2
+    '   Blank Lines: 10
+    '     File Size: 877.00 B
+
 
     ' Class MaskForm
     ' 

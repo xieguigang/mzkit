@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d85437e3bddd7a018c6f0f5e31968208, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::d85437e3bddd7a018c6f0f5e31968208, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 97
+    ' Comment Lines: 10
+    '   Blank Lines: 19
+    '     File Size: 5.60 KB
+
 
     '     Module WiffRaw
     ' 

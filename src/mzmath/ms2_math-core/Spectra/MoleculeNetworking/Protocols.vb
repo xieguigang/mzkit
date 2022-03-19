@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a65686ce34dbf8dca677f5adf88329, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::a5c2a3247a77825c654d1171c75bd392, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 104
+    ' Comment Lines: 16
+    '   Blank Lines: 24
+    '     File Size: 5.95 KB
+
 
     '     Class Protocols
     ' 

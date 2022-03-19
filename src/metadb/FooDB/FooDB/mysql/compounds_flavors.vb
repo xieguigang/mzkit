@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::860cae01bcf9a1ad2777b75fa746e9ae, src\metadb\FooDB\FooDB\mysql\compounds_flavors.vb"
+﻿#Region "Microsoft.VisualBasic::860cae01bcf9a1ad2777b75fa746e9ae, mzkit\src\metadb\FooDB\FooDB\mysql\compounds_flavors.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 92
+    ' Comment Lines: 65
+    '   Blank Lines: 22
+    '     File Size: 10.41 KB
+
 
     ' Class compounds_flavors
     ' 

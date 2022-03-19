@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15f6592f8656f399a45e5914eb36aea4, src\mzkit\mzkit\pages\dockWindow\tools\PropertyWindow.vb"
+﻿#Region "Microsoft.VisualBasic::379e050c44f144a03cc35ae8108903a3, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\PropertyWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 20
+    ' Comment Lines: 1
+    '   Blank Lines: 5
+    '     File Size: 777.00 B
+
 
     '     Class PropertyWindow
     ' 

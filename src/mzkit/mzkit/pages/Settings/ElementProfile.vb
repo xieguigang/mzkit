@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::127a4f2c2926e163c3abaa8cae7bbf85, src\mzkit\mzkit\pages\Settings\ElementProfile.vb"
+﻿#Region "Microsoft.VisualBasic::44bf0d86a0fd25b76033d333b12f0fe2, mzkit\src\mzkit\mzkit\pages\Settings\ElementProfile.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 53
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.79 KB
+
 
     ' Class ElementProfile
     ' 

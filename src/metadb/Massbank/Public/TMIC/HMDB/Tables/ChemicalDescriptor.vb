@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f198c51bb00587f8a1e23b43d4db17, src\metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::d65445f67976c5d9470b8a3ab0b384b8, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 126
+    ' Comment Lines: 12
+    '   Blank Lines: 13
+    '     File Size: 6.82 KB
+
 
     '     Class ChemicalDescriptor
     ' 

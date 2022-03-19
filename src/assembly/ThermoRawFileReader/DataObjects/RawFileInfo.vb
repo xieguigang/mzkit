@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, src\assembly\ThermoRawFileReader\DataObjects\RawFileInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, mzkit\src\assembly\ThermoRawFileReader\DataObjects\RawFileInfo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 200
+    '    Code Lines: 79
+    ' Comment Lines: 94
+    '   Blank Lines: 27
+    '     File Size: 6.39 KB
+
 
     '     Class RawFileInfo
     ' 

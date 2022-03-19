@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32900b121fb177e75cc901b6db3c084b, src\metadb\FooDB\FooDB\mysql\compound_substituents.vb"
+﻿#Region "Microsoft.VisualBasic::32900b121fb177e75cc901b6db3c084b, mzkit\src\metadb\FooDB\FooDB\mysql\compound_substituents.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 86
+    ' Comment Lines: 62
+    '   Blank Lines: 22
+    '     File Size: 8.58 KB
+
 
     ' Class compound_substituents
     ' 

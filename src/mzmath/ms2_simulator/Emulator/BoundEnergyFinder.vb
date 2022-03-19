@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b6e2a241bacb304a0213e381513cc68, src\mzmath\ms2_simulator\Emulator\BoundEnergyFinder.vb"
+﻿#Region "Microsoft.VisualBasic::b94172c64471fbe7549d1c1d4a0a7e75, mzkit\src\mzmath\ms2_simulator\Emulator\BoundEnergyFinder.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 68
+    ' Comment Lines: 15
+    '   Blank Lines: 12
+    '     File Size: 3.31 KB
+
 
     ' Class BoundEnergyFinder
     ' 

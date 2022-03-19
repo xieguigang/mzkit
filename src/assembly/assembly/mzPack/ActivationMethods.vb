@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b73e452bd7d7e597fa2ca2f69732f8ac, src\assembly\assembly\mzPack\ActivationMethods.vb"
+﻿#Region "Microsoft.VisualBasic::b73e452bd7d7e597fa2ca2f69732f8ac, mzkit\src\assembly\assembly\mzPack\ActivationMethods.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 252
+    '    Code Lines: 47
+    ' Comment Lines: 161
+    '   Blank Lines: 44
+    '     File Size: 6.44 KB
+
 
     '     Enum ActivationMethods
     ' 

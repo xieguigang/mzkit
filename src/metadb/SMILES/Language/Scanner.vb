@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d962eee4634c16edc6e7e6659693bfcf, src\metadb\SMILES\Language\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::2fc30f935f4111bbbd77b3d1a75800cb, mzkit\src\metadb\SMILES\Language\Scanner.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 85
+    ' Comment Lines: 6
+    '   Blank Lines: 19
+    '     File Size: 3.45 KB
+
 
     ' Class Scanner
     ' 

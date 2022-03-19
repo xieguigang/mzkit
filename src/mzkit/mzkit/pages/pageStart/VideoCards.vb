@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1858314432e7d362a95bfd78dccf9a29, src\mzkit\mzkit\pages\pageStart\VideoCards.vb"
+﻿#Region "Microsoft.VisualBasic::1858314432e7d362a95bfd78dccf9a29, mzkit\src\mzkit\mzkit\pages\pageStart\VideoCards.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 211.00 B
+
 
     ' Class VideoCards
     ' 

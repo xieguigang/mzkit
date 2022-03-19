@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62a1599b6c3546f58fd0ed4e07806df9, src\assembly\ProteoWizard.d\VBServerScript.vb"
+﻿#Region "Microsoft.VisualBasic::307acc2a2ec007007b1b256de52a8725, mzkit\src\assembly\ProteoWizard.d\VBServerScript.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 237
+    '    Code Lines: 52
+    ' Comment Lines: 171
+    '   Blank Lines: 14
+    '     File Size: 12.38 KB
+
 
     ' Class VBServerScript
     ' 

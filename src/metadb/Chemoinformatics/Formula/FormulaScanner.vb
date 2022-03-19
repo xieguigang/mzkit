@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afacdbdeaa9afbe4aba291d35a2f1df1, src\metadb\Chemoinformatics\Formula\FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::afacdbdeaa9afbe4aba291d35a2f1df1, mzkit\src\metadb\Chemoinformatics\Formula\FormulaScanner.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 190
+    '    Code Lines: 133
+    ' Comment Lines: 21
+    '   Blank Lines: 36
+    '     File Size: 6.35 KB
+
 
     '     Class FormulaScanner
     ' 

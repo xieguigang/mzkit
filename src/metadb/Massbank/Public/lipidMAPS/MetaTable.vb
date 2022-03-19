@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::905a438fb34c1cf92ad2f0a72762eb31, src\metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
+﻿#Region "Microsoft.VisualBasic::e5f656418ff3349fba3c92671985909d, mzkit\src\metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 33
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.52 KB
+
 
     '     Module MetaTable
     ' 

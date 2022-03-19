@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eca7986c133dbfcdcc37611c11bc46d1, src\metadb\Chemoinformatics\Formula\HeteroatomRatioCheck.vb"
+﻿#Region "Microsoft.VisualBasic::5899b72a607170c953c3b7da966659d3, mzkit\src\metadb\Chemoinformatics\Formula\HeteroatomRatioCheck.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 58
+    ' Comment Lines: 21
+    '   Blank Lines: 10
+    '     File Size: 3.76 KB
+
 
     '     Module HeteroatomRatioCheck
     ' 

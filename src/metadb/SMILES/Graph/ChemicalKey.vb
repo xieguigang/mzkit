@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac64ac5731b624d86d8aa24375f6e9c, src\metadb\SMILES\Graph\ChemicalKey.vb"
+﻿#Region "Microsoft.VisualBasic::aac64ac5731b624d86d8aa24375f6e9c, mzkit\src\metadb\SMILES\Graph\ChemicalKey.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 324.00 B
+
 
     ' Class ChemicalKey
     ' 

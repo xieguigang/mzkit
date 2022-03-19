@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc24506001473fb4df37aef82ffb08b3, src\assembly\ThermoRawFileReader\DataObjects\SingleScanInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cc24506001473fb4df37aef82ffb08b3, mzkit\src\assembly\ThermoRawFileReader\DataObjects\SingleScanInfo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 298
+    '    Code Lines: 105
+    ' Comment Lines: 141
+    '   Blank Lines: 52
+    '     File Size: 10.94 KB
+
 
     '     Class SingleScanInfo
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f45d574b3337099e9792d02a308cf1f1, Rscript\Library\mzkit.quantify\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::f45d574b3337099e9792d02a308cf1f1, mzkit\Rscript\Library\mzkit.quantify\GCMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 191
+    ' Comment Lines: 12
+    '   Blank Lines: 35
+    '     File Size: 10.09 KB
+
 
     ' Module GCMSLinear
     ' 

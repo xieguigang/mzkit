@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1867328fc7c9c7254069ef9f9852ab74, src\visualize\MsImaging\IndexedCache\XICWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1867328fc7c9c7254069ef9f9852ab74, mzkit\src\visualize\MsImaging\IndexedCache\XICWriter.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 104
+    ' Comment Lines: 19
+    '   Blank Lines: 26
+    '     File Size: 5.61 KB
+
 
     '     Class XICWriter
     ' 

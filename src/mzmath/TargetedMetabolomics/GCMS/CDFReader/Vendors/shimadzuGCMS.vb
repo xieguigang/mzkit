@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a0806d6fa1c497884bdf96c20637820, src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\shimadzuGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::f52016480f7e9dcf15c296f17722680b, mzkit\src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\shimadzuGCMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 82.00 B
+
 
     '     Class shimadzuGCMS
     ' 

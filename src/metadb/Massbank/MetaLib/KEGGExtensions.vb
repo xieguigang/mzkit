@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, src\metadb\Massbank\MetaLib\KEGGExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, mzkit\src\metadb\Massbank\MetaLib\KEGGExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 32
+    ' Comment Lines: 10
+    '   Blank Lines: 11
+    '     File Size: 1.96 KB
+
 
     '     Module KEGGExtensions
     ' 

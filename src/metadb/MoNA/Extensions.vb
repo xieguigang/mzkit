@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dff0461ea3edbf051d32e9e889095bc, src\metadb\MoNA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1dff0461ea3edbf051d32e9e889095bc, mzkit\src\metadb\MoNA\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 70
+    ' Comment Lines: 15
+    '   Blank Lines: 22
+    '     File Size: 3.73 KB
+
 
     ' Module Extensions
     ' 

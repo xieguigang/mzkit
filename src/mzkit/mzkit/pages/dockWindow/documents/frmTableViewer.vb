@@ -1,48 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::2cef0801993064fd8cad75ac817537cb, src\mzkit\mzkit\pages\dockWindow\documents\frmTableViewer.vb"
+﻿#Region "Microsoft.VisualBasic::09e529c89b620cda995388ea15f96330, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmTableViewer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmTableViewer
-' 
-'     Properties: FilePath, MimeType, ViewRow
-' 
-'     Function: (+2 Overloads) Save
-' 
-'     Sub: frmTableViewer_Load, SaveDocument, ViewToolStripMenuItem_Click
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 274
+    '    Code Lines: 198
+    ' Comment Lines: 8
+    '   Blank Lines: 68
+    '     File Size: 10.44 KB
+
+
+    ' Class frmTableViewer
+    ' 
+    '     Properties: FilePath, MimeType, ViewRow
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: getCurrentTable, (+2 Overloads) getFieldVector, GetSchema, (+2 Overloads) Save
+    ' 
+    '     Sub: ActionsToolStripMenuItem_Click, AdvancedDataGridView1_FilterStringChanged, AdvancedDataGridViewSearchToolBar1_Search, columnVectorStat, exportTableCDF
+    '          frmTableViewer_Activated, frmTableViewer_FormClosed, frmTableViewer_FormClosing, frmTableViewer_Load, LoadTable
+    '          resetFilter, SaveDocument, SendToREnvironmentToolStripMenuItem_Click, ViewToolStripMenuItem_Click, VisualizeToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

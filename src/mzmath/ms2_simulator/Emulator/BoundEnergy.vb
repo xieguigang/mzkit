@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::872137fc774456423e107a4de107584e, src\mzmath\ms2_simulator\Emulator\BoundEnergy.vb"
+﻿#Region "Microsoft.VisualBasic::ad4d0b29275590825e5aa7bf2ebdb5a2, mzkit\src\mzmath\ms2_simulator\Emulator\BoundEnergy.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 28
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.13 KB
+
 
     ' Class BoundEnergy
     ' 

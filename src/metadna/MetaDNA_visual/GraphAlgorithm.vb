@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::841e91c0a3176428c2064bf102687d8d, src\metadna\MetaDNA_visual\GraphAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::841e91c0a3176428c2064bf102687d8d, mzkit\src\metadna\MetaDNA_visual\GraphAlgorithm.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 99
+    ' Comment Lines: 5
+    '   Blank Lines: 13
+    '     File Size: 5.18 KB
+
 
     ' Module GraphAlgorithm
     ' 

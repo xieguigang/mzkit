@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d26ee91b14322e7259ad91fbfb4934e3, src\metadb\Massbank\Concentration\Concentration.vb"
+﻿#Region "Microsoft.VisualBasic::d26ee91b14322e7259ad91fbfb4934e3, mzkit\src\metadb\Massbank\Concentration\Concentration.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 92
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 6.01 KB
+
 
     ' Module Concentration
     ' 

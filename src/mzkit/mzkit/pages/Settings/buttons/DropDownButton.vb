@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e40195f84f5df90294b76239249742e3, src\mzkit\mzkit\pages\Settings\buttons\DropDownButton.vb"
+﻿#Region "Microsoft.VisualBasic::ad30782f4af83e14814f6e476e7d2a2e, mzkit\src\mzkit\mzkit\pages\Settings\buttons\DropDownButton.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 405
+    '    Code Lines: 309
+    ' Comment Lines: 32
+    '   Blank Lines: 64
+    '     File Size: 15.89 KB
+
 
     '     Class DropDownButton
     ' 

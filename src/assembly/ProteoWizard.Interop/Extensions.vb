@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e1fd2fff076341cf44e181e6b07c52, src\assembly\ProteoWizard.Interop\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e3e1fd2fff076341cf44e181e6b07c52, mzkit\src\assembly\ProteoWizard.Interop\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 33
+    ' Comment Lines: 11
+    '   Blank Lines: 7
+    '     File Size: 1.98 KB
+
 
     ' Module Extensions
     ' 

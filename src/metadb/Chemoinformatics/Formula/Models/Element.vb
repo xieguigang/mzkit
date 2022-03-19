@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8985a5c428facddbc263d17d5776f61c, src\metadb\Chemoinformatics\Formula\Models\Element.vb"
+﻿#Region "Microsoft.VisualBasic::8985a5c428facddbc263d17d5776f61c, mzkit\src\metadb\Chemoinformatics\Formula\Models\Element.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 296
+    '    Code Lines: 263
+    ' Comment Lines: 24
+    '   Blank Lines: 9
+    '     File Size: 27.98 KB
+
 
     '     Class Element
     ' 

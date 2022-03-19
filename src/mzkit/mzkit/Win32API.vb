@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8242d39c0fefceccb7b15ecf0b53df2a, src\mzkit\mzkit\Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::1bd83a5e03c210720891ac7253b9812f, mzkit\src\mzkit\mzkit\Win32API.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 100
+    ' Comment Lines: 33
+    '   Blank Lines: 22
+    '     File Size: 7.40 KB
+
 
     '     Class Win32API
     ' 

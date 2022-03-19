@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3320b24927e7ca40575c6b7d333807a, src\mzkit\Task\Workspace\WorkspaceFile.vb"
+﻿#Region "Microsoft.VisualBasic::c3320b24927e7ca40575c6b7d333807a, mzkit\src\mzkit\Task\Workspace\WorkspaceFile.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 7
+    ' Comment Lines: 14
+    '   Blank Lines: 5
+    '     File Size: 698.00 B
+
 
     ' Class WorkspaceFile
     ' 

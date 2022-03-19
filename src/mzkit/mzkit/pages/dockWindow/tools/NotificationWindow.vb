@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a778d40922b7044bb454549659267375, src\mzkit\mzkit\pages\dockWindow\tools\NotificationWindow.vb"
+﻿#Region "Microsoft.VisualBasic::a778d40922b7044bb454549659267375, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\NotificationWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 44.00 B
+
 
     ' Class NotificationWindow
     ' 

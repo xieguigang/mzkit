@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61e0147fa38169752ac130c10d9b9558, src\metadb\FormulaSearch.Extensions\AtomGroups\Others.vb"
+﻿#Region "Microsoft.VisualBasic::25245b632a1796e85e90814b702064f3, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Others.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 180.00 B
+
 
     ' Class Others
     ' 

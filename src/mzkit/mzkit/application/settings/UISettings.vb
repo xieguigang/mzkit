@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::787db1fcde435c209b873facc9cbb4db, src\mzkit\mzkit\application\settings\UISettings.vb"
+﻿#Region "Microsoft.VisualBasic::bf2f6b20dd349bc6e91a608b78386b31, mzkit\src\mzkit\mzkit\application\settings\UISettings.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 26
+    ' Comment Lines: 14
+    '   Blank Lines: 12
+    '     File Size: 2.02 KB
+
+
     '     Class UISettings
     ' 
-    '         Properties: featureListDock, fileExplorerDock, height, OutputDock, propertyWindowDock
-    '                     rememberLayouts, rememberWindowsLocation, taskListDock, width, window
-    '                     x, y
+    '         Properties: featureListDock, fileExplorerDock, height, language, OutputDock
+    '                     propertyWindowDock, rememberLayouts, rememberWindowsLocation, taskListDock, width
+    '                     window, x, y
     ' 
     '         Function: getLocation, getSize
     ' 

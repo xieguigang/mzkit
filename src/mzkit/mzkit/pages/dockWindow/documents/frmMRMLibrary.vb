@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e423a621184b1f15eb2d25423e2785f6, src\mzkit\mzkit\pages\dockWindow\documents\frmMRMLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::6c63df775d0545e383ce9a8b3c72d4cc, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmMRMLibrary.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 80
+    ' Comment Lines: 1
+    '   Blank Lines: 19
+    '     File Size: 3.60 KB
+
 
     ' Class frmMRMLibrary
     ' 

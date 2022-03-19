@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5933ca95c2d747e823e0c000fce02ed0, src\metadb\Massbank\Public\NCBI\SDFExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3310dfa05017be6fe409dd47ad41de7d, mzkit\src\metadb\Massbank\Public\NCBI\SDFExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 905.00 B
+
 
     '     Module SDFExtensions
     ' 

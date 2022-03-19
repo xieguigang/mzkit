@@ -1,55 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::5e7dacfbcb3ec62c9c1a5615ded52dde, src\mzkit\mzkit\forms\frmMain.vb"
+﻿#Region "Microsoft.VisualBasic::d1a66053acb459c240cd0f6263f18427, mzkit\src\mzkit\mzkit\forms\frmMain.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmMain
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: GetPPMError
-' 
-'     Sub: EnableVSRenderer, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing, frmMain_KeyUp
-'          frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd, ImportsFiles
-'          InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click
-'          MzCalculatorToolStripMenuItem_Click, OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click, saveCurrentDocument
-'          saveCurrentFile, saveCurrentScript, SaveScript, SaveSettings, SetSchema
-'          ShowGCMSSIM, ShowMRMIons, showMsImaging, ShowMzkitToolkit, showMzPackMSI
-'          ShowPage, ShowPropertyWindow, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
-'          ToolStripStatusLabel4_Click, UpdateCacheSize
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 702
+    '    Code Lines: 500
+    ' Comment Lines: 52
+    '   Blank Lines: 150
+    '     File Size: 27.94 KB
+
+
+    ' Class frmMain
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetPPMError, GetXICPPMError
+    ' 
+    '     Sub: dockPanel_ActiveDocumentChanged, EnableVSRenderer, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing
+    '          frmMain_KeyUp, frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd
+    '          ImportsFiles, InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner
+    '          MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click, OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click
+    '          saveCurrentDocument, saveCurrentFile, saveCurrentScript, SaveScript, SaveSettings
+    '          SetSchema, ShowGCMSSIM, ShowMRMIons, showMsImaging, ShowMzkitToolkit
+    '          showMzPackMSI, ShowPage, ShowPropertyWindow, showStatusMessage, Timer1_Tick
+    '          ToolStripStatusLabel2_Click, ToolStripStatusLabel4_Click, UpdateCacheSize, warning
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

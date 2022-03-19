@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c8107807060fd9760ff1057e9103e4c, src\metadb\SMILES\Graph\ChemicalFormula.vb"
+﻿#Region "Microsoft.VisualBasic::9c8107807060fd9760ff1057e9103e4c, mzkit\src\metadb\SMILES\Graph\ChemicalFormula.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 32
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 1.54 KB
+
 
     ' Class ChemicalFormula
     ' 

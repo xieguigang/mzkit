@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72e6ca2c3f268f42e1e25ff9788e1e97, src\mzkit\ControlLibrary\MSI\Editor\Polygon.vb"
+﻿#Region "Microsoft.VisualBasic::7d1b6b0dc534f97232ebe7a55a81fa2d, mzkit\src\mzkit\ControlLibrary\MSI\Editor\Polygon.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 713.00 B
+
 
     '     Class Polygon
     ' 

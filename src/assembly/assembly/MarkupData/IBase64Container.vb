@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4002c7c28c14750dcb8baf43ec5d974, src\assembly\assembly\MarkupData\IBase64Container.vb"
+﻿#Region "Microsoft.VisualBasic::546b9cb6a47ddc460df25716e5d972c8, mzkit\src\assembly\assembly\MarkupData\IBase64Container.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 7
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 371.00 B
+
 
     '     Interface IBase64Container
     ' 

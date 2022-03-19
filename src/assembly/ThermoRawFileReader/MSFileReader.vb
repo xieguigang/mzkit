@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5e83a2d742bd34445737f89540a11fe, src\assembly\ThermoRawFileReader\MSFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::e5e83a2d742bd34445737f89540a11fe, mzkit\src\assembly\ThermoRawFileReader\MSFileReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 143
+    ' Comment Lines: 31
+    '   Blank Lines: 35
+    '     File Size: 7.41 KB
+
 
     ' Class MSFileReader
     ' 

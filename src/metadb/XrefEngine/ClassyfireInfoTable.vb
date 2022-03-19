@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::724f0d32b7e3256f98fafe857b11b918, src\metadb\XrefEngine\ClassyfireInfoTable.vb"
+﻿#Region "Microsoft.VisualBasic::6144d5b58d2131d2badd3074b21aa26d, mzkit\src\metadb\XrefEngine\ClassyfireInfoTable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 76
+    ' Comment Lines: 6
+    '   Blank Lines: 12
+    '     File Size: 4.65 KB
+
 
     ' Class ClassyfireInfoTable
     ' 

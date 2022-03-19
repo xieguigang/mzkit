@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1085277a37abe1b6411c76f9f0d7271f, src\assembly\ThermoRawFileReader\SimpleScanAccessTruncated.vb"
+﻿#Region "Microsoft.VisualBasic::1085277a37abe1b6411c76f9f0d7271f, mzkit\src\assembly\ThermoRawFileReader\SimpleScanAccessTruncated.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 462.00 B
+
 
     ' Class SimpleScanAccessTruncated
     ' 

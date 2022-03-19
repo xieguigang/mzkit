@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98a18dd78e95e5c9a6b047836bd225f9, src\mzmath\ms2_math-core\Spectra\MzGrouping.vb"
+﻿#Region "Microsoft.VisualBasic::1c46b99bdf9716708d9e06d508d6aee6, mzkit\src\mzmath\ms2_math-core\Spectra\MzGrouping.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 89
+    ' Comment Lines: 13
+    '   Blank Lines: 13
+    '     File Size: 5.10 KB
+
 
     '     Module MzGrouping
     ' 

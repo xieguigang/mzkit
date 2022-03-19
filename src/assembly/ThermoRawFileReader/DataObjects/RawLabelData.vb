@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9f73932d089ab646fa440b4563c5f86, src\assembly\ThermoRawFileReader\DataObjects\RawLabelData.vb"
+﻿#Region "Microsoft.VisualBasic::e9f73932d089ab646fa440b4563c5f86, mzkit\src\assembly\ThermoRawFileReader\DataObjects\RawLabelData.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 12
+    ' Comment Lines: 12
+    '   Blank Lines: 6
+    '     File Size: 853.00 B
+
 
     '     Class RawLabelData
     ' 

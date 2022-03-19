@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bee31458949bd21cf2ea336bc7e4563, src\mzkit\mzkit\pages\dockWindow\tools\TaskListWindow.vb"
+﻿#Region "Microsoft.VisualBasic::3ab8ea8e4472aa0e331fa2dd6accfd4d, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\TaskListWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 26
+    ' Comment Lines: 2
+    '   Blank Lines: 10
+    '     File Size: 1.08 KB
+
 
     ' Class TaskListWindow
     ' 

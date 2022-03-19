@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::018ad030bdf646e57f501fdb930ad0d6, src\mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
+﻿#Region "Microsoft.VisualBasic::018ad030bdf646e57f501fdb930ad0d6, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 8
+    ' Comment Lines: 12
+    '   Blank Lines: 3
+    '     File Size: 471.00 B
+
 
     '     Enum IonModes
     ' 

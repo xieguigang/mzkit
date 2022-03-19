@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95d3e0e41db9f24619e03920fcab0e38, src\metadb\FooDB\FooDB\mysql\contents.vb"
+﻿#Region "Microsoft.VisualBasic::95d3e0e41db9f24619e03920fcab0e38, mzkit\src\metadb\FooDB\FooDB\mysql\contents.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 219
+    '    Code Lines: 119
+    ' Comment Lines: 78
+    '   Blank Lines: 22
+    '     File Size: 19.09 KB
+
 
     ' Class contents
     ' 

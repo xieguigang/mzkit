@@ -1,58 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::ae6e7c8217a1e3d7cc8697beb3ea02ee, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
+﻿#Region "Microsoft.VisualBasic::85534e62a2794ba293e87f31c0464e0d, mzkit\src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmRawFeaturesList
-' 
-'     Properties: CurrentRawFile
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: checkIon, GetSelectedNodes, GetXICCollection
-' 
-'     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CopyIonsToolStripMenuItem_Click
-'          CustomToolStripMenuItem_Click, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click
-'          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click
-'          IonSearchToolStripMenuItem_Click, IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, MetaDNASearchToolStripMenuItem_Click
-'          MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click
-'          ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click
-'          SpectrumSearchToolStripMenuItem_Click, TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click, ToolStripButton4_Click
-'          TreeView1_AfterCheck, treeView1_AfterSelect, treeView1_DragDrop, treeView1_DragEnter, XICToolStripMenuItem_Click
-'          XICViewToolStripMenuItem_Click
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 735
+    '    Code Lines: 565
+    ' Comment Lines: 31
+    '   Blank Lines: 139
+    '     File Size: 31.62 KB
+
+
+    ' Class frmRawFeaturesList
+    ' 
+    '     Properties: CurrentRawFile
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: checkIon, GetSelectedNodes, GetXICCollection
+    ' 
+    '     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CopyIonsToolStripMenuItem_Click
+    '          CustomToolStripMenuItem_Click, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click
+    '          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click
+    '          IonSearchToolStripMenuItem_Click, IonTableToolStripMenuItem_Click, loadInternal, LoadRaw, LoadXICIons
+    '          MetaDNASearchToolStripMenuItem_Click, MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click
+    '          SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click
+    '          SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click, TextBox2_Click, ToolStripButton2_Click, ToolStripButton3_Click
+    '          ToolStripButton4_Click, ToolStripButton5_Click, TreeView1_AfterCheck, treeView1_AfterSelect, treeView1_DragDrop
+    '          treeView1_DragEnter, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

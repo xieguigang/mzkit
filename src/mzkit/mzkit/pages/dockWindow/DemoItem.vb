@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778e9cf76ead2765c7e398b950f0f13e, src\mzkit\mzkit\pages\dockWindow\DemoItem.vb"
+﻿#Region "Microsoft.VisualBasic::b8e6cf6c70fdc9b65db6b8c0671cf943, mzkit\src\mzkit\mzkit\pages\dockWindow\DemoItem.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 187.00 B
+
 
     ' Class DemoItem
     ' 

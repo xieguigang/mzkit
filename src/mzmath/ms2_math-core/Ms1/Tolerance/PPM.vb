@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58950ea696dcfdc4d85f07e24fdaeccf, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
+﻿#Region "Microsoft.VisualBasic::58950ea696dcfdc4d85f07e24fdaeccf, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 40
+    ' Comment Lines: 12
+    '   Blank Lines: 13
+    '     File Size: 2.21 KB
+
 
     '     Class PPMmethod
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b24d9d667f01098cfe16b08e0d90d9e0, Rscript\Library\mzkit.plot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::687eeca43b0a154b4976d185e367ec17, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
 
 ' Author:
 ' 
@@ -34,13 +34,24 @@
 
 ' Summaries:
 
+
+' Code Statistics:
+
+'   Total Lines: 710
+'    Code Lines: 509
+' Comment Lines: 110
+'   Blank Lines: 91
+'     File Size: 29.74 KB
+
+
 ' Module MsImaging
 ' 
 '     Constructor: (+1 Overloads) Sub New
-'     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
-'               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
-'               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
-'               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
+'     Function: AutoScaleMax, averageStep, FilterMz, GetIntensityData, GetIonLayer
+'               getMSIIons, GetMsMatrx, GetPixel, KnnFill, layer
+'               LoadPixels, MSICoverage, openIndexedCacheFile, plotMSI, printLayer
+'               renderRowScans, RGB, testLayer, TrIQRange, viewer
+'               writeIndexCacheFile, WriteXICCache
 ' 
 ' /********************************************************************************/
 
@@ -49,6 +60,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -85,7 +97,20 @@ Module MsImaging
 
     Sub New()
         Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
     End Sub
+
+    Private Function printLayer(ion As SingleIonLayer) As String
+        Dim sb As New StringBuilder
+        Dim into = ion.GetIntensity
+
+        Call sb.AppendLine($"m/z {ion.IonMz} has {ion.MSILayer.Length} pixels@[{ion.DimensionSize.Width},{ion.DimensionSize.Height}]")
+        Call sb.AppendLine("----------------------------------")
+        Call sb.AppendLine($"  max intensity: {into.Max}")
+        Call sb.AppendLine($"  min intensity: {into.Min}")
+
+        Return sb.ToString
+    End Function
 
     ''' <summary>
     ''' do MSI rendering
@@ -163,6 +188,23 @@ Module MsImaging
         Dim range As Double = TrIQ.ThresholdValue(into, qcut:=q)
 
         Return {0, range}
+    End Function
+
+    <ExportAPI("intensityLimits")>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+        data.MSILayer = data.MSILayer _
+            .Select(Function(p)
+                        If p.intensity > max Then
+                            p.intensity = max
+                        ElseIf p.intensity < min Then
+                            p.intensity = min
+                        End If
+
+                        Return p
+                    End Function) _
+            .ToArray
+
+        Return data
     End Function
 
     <ExportAPI("write.MSI_XIC")>
