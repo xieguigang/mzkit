@@ -1226,6 +1226,10 @@
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msplots</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\visualize\SDF.Extensions\SDF.Extensions.vbproj">
+      <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>
+      <Name>SDF.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BioDeep\BioDeep.vbproj">
       <Project>{04497d3c-ae08-4df2-be29-e5b572daa5b6}</Project>
       <Name>BioDeep</Name>
