@@ -34,9 +34,10 @@ Module Layout2D
                           Return a.label
                       End Function)
 
-    Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey()) As Double
+    Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey(), ByRef n As Integer) As Double
         Dim maxN As Integer = atomMaxCharges(atom.elementName).maxKeys
-        Dim n = Aggregate b In bonds Into Sum(b.bond)
+
+        n = Aggregate b In bonds Into Sum(b.bond)
 
         If bonds.Length > maxN OrElse (n > maxN) Then
             Throw New InvalidConstraintException
@@ -61,11 +62,15 @@ Module Layout2D
                        Return b.U Is atom OrElse b.V Is atom
                    End Function) _
             .ToArray
-        Dim n As Integer = bonds.Length
-        Dim angleDelta As Double = EvaluateAngleDelta(atom, bonds)
+        Dim n As Integer = 0
+        Dim angleDelta As Double = EvaluateAngleDelta(atom, bonds, n)
 
         If alpha = 0 Then
-            alpha = angleDelta
+            If atom.elementName = "C" AndAlso bonds.Length = 1 Then
+                alpha = 2 * stdNum.PI * 2 / 3
+            Else
+                alpha = angleDelta
+            End If
         End If
 
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
