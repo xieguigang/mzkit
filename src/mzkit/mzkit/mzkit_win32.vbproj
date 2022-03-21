@@ -1214,9 +1214,9 @@
       <Project>{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}</Project>
       <Name>KCF.IO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\visualize\KCF\KEGGdraw\KEGGdraw.vbproj">
-      <Project>{2fd54b9f-97bc-4254-9111-544cc85c41b1}</Project>
-      <Name>KEGGdraw</Name>
+    <ProjectReference Include="..\..\visualize\KCF\KCFDraw\KCFDraw.vbproj">
+      <Project>{c9d3d242-e471-4980-a87e-44ba237b79d6}</Project>
+      <Name>KCFDraw</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
