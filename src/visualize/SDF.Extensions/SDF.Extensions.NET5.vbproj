@@ -88,6 +88,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
     <ProjectReference Include="..\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
   </ItemGroup>
