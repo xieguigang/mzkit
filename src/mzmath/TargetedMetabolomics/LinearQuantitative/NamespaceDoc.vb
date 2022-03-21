@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f21b8a589e1ab797fc26474a9aa09269, src\mzmath\TargetedMetabolomics\LinearQuantitative\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b9183488ef7289de713f53da8a7a16b6, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 188.00 B
+
 
     '     Module NamespaceDoc
     ' 

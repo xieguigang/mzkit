@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0bae0153ebe46044202bec92c07c2f5, src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::c9a69eb2341683ea8ddfc09834fbe47f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.17 KB
+
 
     '     Class fileDescription
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8815c5b64ff166acf2ca29490e3c113, src\assembly\assembly\UnifyReader\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::e8815c5b64ff166acf2ca29490e3c113, mzkit\src\assembly\assembly\UnifyReader\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 51
+    ' Comment Lines: 21
+    '   Blank Lines: 11
+    '     File Size: 3.05 KB
+
 
     '     Class Chromatogram
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0395ebc4bdc21eb4c3be40839a70f6e5, src\metadb\PubChem.MySql\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::91efef3a49ba5e25ebfd0bfcab531269, mzkit\src\metadb\PubChem.MySql\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 18
+    ' Comment Lines: 1
+    '   Blank Lines: 8
+    '     File Size: 807.00 B
+
 
     ' Module Module1
     ' 

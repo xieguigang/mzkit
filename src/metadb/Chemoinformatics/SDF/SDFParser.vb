@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cab025b7c179822cf12a802c9678124d, src\metadb\Chemoinformatics\SDF\SDFParser.vb"
+﻿#Region "Microsoft.VisualBasic::adcefd6711a8b39639f9284614ace80a, mzkit\src\metadb\Chemoinformatics\SDF\SDFParser.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 135
+    ' Comment Lines: 34
+    '   Blank Lines: 28
+    '     File Size: 7.42 KB
+
 
     '     Module SDFParser
     ' 

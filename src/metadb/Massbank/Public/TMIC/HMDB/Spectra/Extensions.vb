@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a73c972cad135f611c2b6246e07a2777, src\metadb\Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3ef68477dddd9fc9346c4fad0c14efb7, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 45
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 2.22 KB
+
 
     '     Module Extensions
     ' 

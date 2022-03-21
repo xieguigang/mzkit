@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11a990e9048988615bf87af1f748d12a, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
+﻿#Region "Microsoft.VisualBasic::11a990e9048988615bf87af1f748d12a, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\Standards.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 19
+    ' Comment Lines: 17
+    '   Blank Lines: 4
+    '     File Size: 1.41 KB
+
 
     '     Class Standards
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e600a629355546513ef5d546ba96fb3, Rscript\Library\mzkit\assembly\MzPackAccess.vb"
+﻿#Region "Microsoft.VisualBasic::5e600a629355546513ef5d546ba96fb3, mzkit\Rscript\Library\mzkit\assembly\MzPackAccess.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 47
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.02 KB
+
 
     ' Module MzPackAccess
     ' 

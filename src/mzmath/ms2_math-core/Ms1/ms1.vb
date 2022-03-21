@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4dc14dede28a67fccaabd6e8c567cbd, src\mzmath\ms2_math-core\Ms1\ms1.vb"
+﻿#Region "Microsoft.VisualBasic::0648b16fdbc7b6ffccd499de6b676817, mzkit\src\mzmath\ms2_math-core\Ms1\ms1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 21
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 1.11 KB
+
 
     ' Class Ms1Feature
     ' 

@@ -125,6 +125,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -153,6 +154,7 @@
     <Compile Include="Graph\ChemicalElement.vb" />
     <Compile Include="Graph\ChemicalKey.vb" />
     <Compile Include="Graph\ChemicalFormula.vb" />
+    <Compile Include="Layout2D.vb" />
     <Compile Include="ParseChain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

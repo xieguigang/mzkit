@@ -1,51 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::94f91300a5d9dfc541be4dcb261c2441, src\mzkit\mzkit\application\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::d8cd6f9b81d685f0993f132369bb1fad, mzkit\src\mzkit\mzkit\application\ApplicationEvents.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class MyApplication
-' 
-'         Properties: host, LogForm, mzkitRawViewer, REngine
-' 
-'         Function: GetSplashScreen, LoadLibrary, SetDllDirectory
-' 
-'         Sub: doRunScript, doRunScriptWithSpecialCommand, ExecuteRScript, handleResult, InitializeREngine
-'              InstallPackageRelease, LogText, MyApplication_Shutdown, MyApplication_Startup, MyApplication_UnhandledException
-'              RegisterConsole, RegisterHost, RegisterOutput, RegisterPlot
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 389
+    '    Code Lines: 294
+    ' Comment Lines: 22
+    '   Blank Lines: 73
+    '     File Size: 15.83 KB
+
+
+    '     Class MyApplication
+    ' 
+    '         Properties: host, LogForm, mzkitRawViewer, REngine
+    ' 
+    '         Function: CheckPkgFolder, getLanguageString, GetSplashScreen, LoadLibrary, SetDllDirectory
+    '                   SetProcessDPIAware
+    ' 
+    '         Sub: doRunScript, doRunScriptWithSpecialCommand, ExecuteRScript, handleResult, InitializeREngine
+    '              InstallPackageRelease, LogText, MyApplication_Shutdown, MyApplication_Startup, MyApplication_UnhandledException
+    '              RegisterConsole, RegisterHost, RegisterOutput, RegisterPlot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

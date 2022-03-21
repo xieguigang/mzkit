@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6bfdb5c6bb36f99325ba07d49a9459d, src\mzkit\mzkit\pages\dockWindow\documents\QuantifyParameters.vb"
+﻿#Region "Microsoft.VisualBasic::b6bfdb5c6bb36f99325ba07d49a9459d, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\QuantifyParameters.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.55 KB
+
 
     ' Class QuantifyParameters
     ' 

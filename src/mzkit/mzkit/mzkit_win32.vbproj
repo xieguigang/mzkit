@@ -437,6 +437,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmSMILESViewer.Designer.vb">
+      <DependentUpon>frmSMILESViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmSMILESViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmNetworkViewer.Designer.vb">
       <DependentUpon>frmNetworkViewer.vb</DependentUpon>
     </Compile>
@@ -875,6 +881,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmSeeMs.resx">
       <DependentUpon>frmSeeMs.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmSMILESViewer.resx">
+      <DependentUpon>frmSMILESViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmTableViewer.resx">
       <DependentUpon>frmTableViewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -1177,6 +1186,10 @@
       <Project>{A686BDF5-077F-47F5-A8DD-C73E6E88363C}</Project>
       <Name>Massbank</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.vbproj">
       <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>
       <Name>metaDNA</Name>
@@ -1193,6 +1206,18 @@
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>TargetedMetabolomics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
+      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
+      <Name>KCF.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KCF.IO\KCF.IO.vbproj">
+      <Project>{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}</Project>
+      <Name>KCF.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\KCF\KCFDraw\KCFDraw.vbproj">
+      <Project>{c9d3d242-e471-4980-a87e-44ba237b79d6}</Project>
+      <Name>KCFDraw</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
       <Name>MsImaging</Name>
@@ -1200,6 +1225,10 @@
     <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msplots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\SDF.Extensions\SDF.Extensions.vbproj">
+      <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>
+      <Name>SDF.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\BioDeep\BioDeep.vbproj">
       <Project>{04497d3c-ae08-4df2-be29-e5b572daa5b6}</Project>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de5d96034129cba1c8459e4a522da0cf, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
+﻿#Region "Microsoft.VisualBasic::de5d96034129cba1c8459e4a522da0cf, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 99
+    ' Comment Lines: 17
+    '   Blank Lines: 14
+    '     File Size: 6.13 KB
+
 
     '     Module SIMModeWorker
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f23fd3f8b035d8662fbbaafe47f7b80, src\mzkit\Task\Studio\Notification.vb"
+﻿#Region "Microsoft.VisualBasic::2f23fd3f8b035d8662fbbaafe47f7b80, mzkit\src\mzkit\Task\Studio\Notification.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 316.00 B
+
 
     ' Module Notification
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e88b7221f56eeb530b085aabefa6bed, src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::3e88b7221f56eeb530b085aabefa6bed, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 99
+    ' Comment Lines: 56
+    '   Blank Lines: 25
+    '     File Size: 6.45 KB
+
 
     '     Class Tolerance
     ' 

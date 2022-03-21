@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d653002d5de88104ffba2a846873c33d, src\mzmath\TargetedMetabolomics\Contents\UnitExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d653002d5de88104ffba2a846873c33d, mzkit\src\mzmath\TargetedMetabolomics\Contents\UnitExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 36
+    ' Comment Lines: 8
+    '   Blank Lines: 10
+    '     File Size: 1.91 KB
+
 
     '     Module UnitExtensions
     ' 

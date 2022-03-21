@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f68f2279e38194abdf425f511b685b3d, src\metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::82af6883817035dfb5037245bd94d38e, mzkit\src\metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 124
+    ' Comment Lines: 10
+    '   Blank Lines: 18
+    '     File Size: 6.21 KB
+
 
     '     Module MapsHelper
     ' 

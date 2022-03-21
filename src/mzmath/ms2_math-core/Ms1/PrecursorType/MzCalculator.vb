@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7be424c2e8f6e46406db3b36eda97c, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::9c2ca4ab3fe2ac4b1a3ca2bbff4f6d53, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 101
+    ' Comment Lines: 56
+    '   Blank Lines: 21
+    '     File Size: 5.83 KB
+
 
     '     Class MzCalculator
     ' 

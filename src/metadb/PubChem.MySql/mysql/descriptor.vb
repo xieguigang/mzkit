@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2458670319ed6ba61fa94f8e7a7de09d, src\metadb\PubChem.MySql\mysql\descriptor.vb"
+﻿#Region "Microsoft.VisualBasic::2cd1d71269dbb4f59428e3e4c061596e, mzkit\src\metadb\PubChem.MySql\mysql\descriptor.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 118
+    ' Comment Lines: 41
+    '   Blank Lines: 22
+    '     File Size: 16.54 KB
+
 
     ' Class descriptor
     ' 

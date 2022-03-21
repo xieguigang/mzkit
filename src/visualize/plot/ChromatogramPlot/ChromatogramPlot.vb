@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea4fdb0ae93e8ca806a318b37ff1ab0d, src\visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ea4fdb0ae93e8ca806a318b37ff1ab0d, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 234
+    '    Code Lines: 190
+    ' Comment Lines: 32
+    '   Blank Lines: 12
+    '     File Size: 10.79 KB
+
 
     ' Module ChromatogramPlot
     ' 

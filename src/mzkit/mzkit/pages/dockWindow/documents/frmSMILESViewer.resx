@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TextBox2.Text" xml:space="preserve">
+    <value>ENTRY       C00101                      Compound
+ATOM        32
+            1   N4x N     9.5392  -17.5978
+            2   C8y C     9.5392  -19.0001
+            3   N5x N    10.7312  -19.7013
+            4   C8y C    11.9933  -19.0001
+            5   C8y C    11.9933  -17.5978
+            6   C8y C    10.7312  -16.8966
+            7   N1x N    13.1853  -19.7013
+            8   C1x C    14.3773  -19.0001
+            9   C1y C    14.3773  -17.5978
+            10  N1x N    13.1853  -16.8966
+            11  O5x O    10.7312  -15.4943
+            12  N1a N     8.3219  -19.6964
+            13  C1b C    15.5918  -16.8966
+            14  N1b N    16.8063  -17.5978
+            15  C8y C    18.0207  -16.8966
+            16  C8x C    19.2373  -17.5990
+            17  C8x C    20.4517  -16.8978
+            18  C8y C    20.4517  -15.4955
+            19  C8x C    19.2352  -14.7931
+            20  C8x C    18.0207  -15.4943
+            21  C5a C    21.6920  -14.7931
+            22  N1b N    22.9065  -15.4943
+            23  O5a O    21.6979  -13.3911
+            24  C1c C    24.1397  -14.7821
+            25  C1b C    25.3469  -15.4790
+            26  C1b C    26.5312  -14.7950
+            27  C6a C    27.7272  -15.4855
+            28  O6a O    28.9171  -14.7983
+            29  O6a O    27.7274  -16.8963
+            30  C6a C    24.1394  -13.3909
+            31  O6a O    22.9130  -12.6830
+            32  O6a O    25.3419  -12.6962
+BOND        34
+            1     1   2 1
+            2     2   3 2
+            3     3   4 1
+            4     4   5 2
+            5     5   6 1
+            6     1   6 1
+            7     4   7 1
+            8     7   8 1
+            9     8   9 1
+            10    9  10 1
+            11    5  10 1
+            12    6  11 2
+            13    2  12 1
+            14    9  13 1 #Up
+            15   13  14 1
+            16   14  15 1
+            17   15  16 2
+            18   16  17 1
+            19   17  18 2
+            20   18  19 1
+            21   19  20 2
+            22   15  20 1
+            23   18  21 1
+            24   21  22 1
+            25   21  23 2
+            26   22  24 1
+            27   24  25 1
+            28   25  26 1
+            29   26  27 1
+            30   27  28 1
+            31   27  29 2
+            32   24  30 1 #Down
+            33   30  31 2
+            34   30  32 1
+///</value>
+  </data>
+</root>

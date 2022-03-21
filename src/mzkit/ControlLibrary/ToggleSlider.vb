@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::524821fccfaf988f5410d3baa22f5edf, src\mzkit\ControlLibrary\ToggleSlider.vb"
+﻿#Region "Microsoft.VisualBasic::524821fccfaf988f5410d3baa22f5edf, mzkit\src\mzkit\ControlLibrary\ToggleSlider.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 132
+    ' Comment Lines: 4
+    '   Blank Lines: 26
+    '     File Size: 5.31 KB
+
 
     ' Class ToggleSlider
     ' 

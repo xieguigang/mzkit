@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27fca9b4dfb0139bbbfd79446bbb686f, src\mzmath\ms2_simulator\Emulator\EnergyModel.vb"
+﻿#Region "Microsoft.VisualBasic::27fca9b4dfb0139bbbfd79446bbb686f, mzkit\src\mzmath\ms2_simulator\Emulator\EnergyModel.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 29
+    ' Comment Lines: 15
+    '   Blank Lines: 7
+    '     File Size: 1.39 KB
+
 
     ' Class EnergyModel
     ' 

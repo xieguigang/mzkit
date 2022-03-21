@@ -872,5 +872,12 @@
 #define cmdDOIReference_TooltipDescription_RESID 60082
 #define cmdDOIReference_SmallImages_192__RESID 60083
 #define cmdDOIReference_LargeImages_192__RESID 60084
-#define InternalCmd2_LabelTitle_RESID 60085
-#define InternalCmd4_LabelTitle_RESID 60086
+#define cmdButtonViewSMILES 178 
+#define cmdButtonViewSMILES_LabelTitle_RESID 60085
+#define cmdButtonViewSMILES_LabelDescription_RESID 60086
+#define cmdButtonViewSMILES_TooltipTitle_RESID 60087
+#define cmdButtonViewSMILES_TooltipDescription_RESID 60088
+#define cmdButtonViewSMILES_SmallImages_192__RESID 60089
+#define cmdButtonViewSMILES_LargeImages_192__RESID 60090
+#define InternalCmd2_LabelTitle_RESID 60091
+#define InternalCmd4_LabelTitle_RESID 60092

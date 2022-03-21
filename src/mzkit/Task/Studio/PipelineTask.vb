@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71e54e4098201e39ceb0f3657185dbe3, src\mzkit\Task\Studio\PipelineTask.vb"
+﻿#Region "Microsoft.VisualBasic::71e54e4098201e39ceb0f3657185dbe3, mzkit\src\mzkit\Task\Studio\PipelineTask.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 2
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 136.00 B
+
 
     ' Class PipelineTask
     ' 

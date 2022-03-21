@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2d78cabe56efcaec03ef7f0bcce46c, src\mzkit\ControlLibrary\MSI\Editor\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::cbfad983a0bcae168c1947597572f3ca, mzkit\src\mzkit\ControlLibrary\MSI\Editor\Vertex.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 49
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.53 KB
+
 
     '     Class Vertex
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::232971b69653c91caef8240e55f4a911, src\metadna\metaDNA\Result\MetaDNARawSet.vb"
+﻿#Region "Microsoft.VisualBasic::232971b69653c91caef8240e55f4a911, mzkit\src\metadna\metaDNA\Result\MetaDNARawSet.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 23
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 977.00 B
+
 
     ' Class MetaDNARawSet
     ' 

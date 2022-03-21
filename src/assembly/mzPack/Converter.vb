@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca8164570d3716f7be3f12139c08e1c4, src\assembly\mzPack\Converter.vb"
+﻿#Region "Microsoft.VisualBasic::ca8164570d3716f7be3f12139c08e1c4, mzkit\src\assembly\mzPack\Converter.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 126
+    ' Comment Lines: 5
+    '   Blank Lines: 22
+    '     File Size: 6.29 KB
+
 
     ' Module Converter
     ' 

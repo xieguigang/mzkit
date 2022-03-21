@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ddcb236c4ac0a89c5ca5d06e6873f6f, src\mzkit\mzkit\application\settings\NetworkArguments.vb"
+﻿#Region "Microsoft.VisualBasic::0c1da276dece812bd3ad63b91714778f, mzkit\src\mzkit\mzkit\application\settings\NetworkArguments.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 486.00 B
+
 
     '     Class NetworkArguments
     ' 

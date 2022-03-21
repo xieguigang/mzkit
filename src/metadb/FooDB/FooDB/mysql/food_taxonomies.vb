@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a00f24a5841efd2e06860159fa04dfbd, src\metadb\FooDB\FooDB\mysql\food_taxonomies.vb"
+﻿#Region "Microsoft.VisualBasic::a00f24a5841efd2e06860159fa04dfbd, mzkit\src\metadb\FooDB\FooDB\mysql\food_taxonomies.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 166
+    '    Code Lines: 84
+    ' Comment Lines: 60
+    '   Blank Lines: 22
+    '     File Size: 8.78 KB
+
 
     ' Class food_taxonomies
     ' 

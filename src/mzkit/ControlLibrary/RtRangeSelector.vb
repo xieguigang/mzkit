@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ccf06b0db9a23e045193409b8844831, src\mzkit\ControlLibrary\RtRangeSelector.vb"
+﻿#Region "Microsoft.VisualBasic::80ba40ead49b4071c893d23c3c31fce3, mzkit\src\mzkit\ControlLibrary\RtRangeSelector.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 154
+    ' Comment Lines: 27
+    '   Blank Lines: 58
+    '     File Size: 7.22 KB
+
 
     ' Class RtRangeSelector
     ' 

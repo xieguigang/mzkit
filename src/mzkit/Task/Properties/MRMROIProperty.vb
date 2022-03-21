@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0c9a930e24852d71d6bce9becae0c84, src\mzkit\Task\Properties\MRMROIProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c0c9a930e24852d71d6bce9becae0c84, mzkit\src\mzkit\Task\Properties\MRMROIProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.43 KB
+
 
     ' Class MRMROIProperty
     ' 

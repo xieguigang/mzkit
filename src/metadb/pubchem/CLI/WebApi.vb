@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::021c1099d00b3d88d67545c573498540, src\metadb\pubchem\CLI\WebApi.vb"
+﻿#Region "Microsoft.VisualBasic::b68562a5adc68d25b8c8fc6356bc9e84, mzkit\src\metadb\pubchem\CLI\WebApi.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 57
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 2.49 KB
+
 
     ' Module CLI
     ' 

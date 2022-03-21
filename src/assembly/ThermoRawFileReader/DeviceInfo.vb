@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2aea20c6105b184bfce093374c18774, src\assembly\ThermoRawFileReader\DeviceInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d2aea20c6105b184bfce093374c18774, mzkit\src\assembly\ThermoRawFileReader\DeviceInfo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 137
+    '    Code Lines: 65
+    ' Comment Lines: 50
+    '   Blank Lines: 22
+    '     File Size: 4.53 KB
+
 
     ' Class DeviceInfo
     ' 

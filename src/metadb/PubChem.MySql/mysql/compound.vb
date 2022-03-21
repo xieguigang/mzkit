@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f955585ff0e8a5954df76b34684970, src\metadb\PubChem.MySql\mysql\compound.vb"
+﻿#Region "Microsoft.VisualBasic::e755d757307b2912f7dbd3c106fbe7f7, mzkit\src\metadb\PubChem.MySql\mysql\compound.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 87
+    ' Comment Lines: 47
+    '   Blank Lines: 22
+    '     File Size: 6.87 KB
+
 
     ' Class compound
     ' 

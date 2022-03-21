@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82f1014914d1b8fc79d8adf2126794bc, src\assembly\mzPackExtensions\XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::1b7ba1ac6fb7a7cb54491ccf6aa181ee, mzkit\src\assembly\mzPackExtensions\XRawStream.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 106
+    ' Comment Lines: 0
+    '   Blank Lines: 22
+    '     File Size: 4.84 KB
+
 
     ' Class XRawStream
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7e6075107592b07dbfe9ca4c39c1f12, src\metadb\Massbank\Public\NCBI\PubChem\ImageFly.vb"
+﻿#Region "Microsoft.VisualBasic::e7e6075107592b07dbfe9ca4c39c1f12, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\ImageFly.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 29
+    ' Comment Lines: 18
+    '   Blank Lines: 7
+    '     File Size: 2.05 KB
+
 
     '     Module ImageFly
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6829a17f5766f8c2f8a089f937832aa3, src\mzkit\mzkit\pages\dockWindow\tools\OutputWindow.vb"
+﻿#Region "Microsoft.VisualBasic::6829a17f5766f8c2f8a089f937832aa3, mzkit\src\mzkit\mzkit\pages\dockWindow\tools\OutputWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 43
+    ' Comment Lines: 8
+    '   Blank Lines: 10
+    '     File Size: 1.93 KB
+
 
     '     Class OutputWindow
     ' 

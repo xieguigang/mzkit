@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbca31ccfca4bcd89c1ae7f98f146b56, src\mzkit\mzkit\pages\dockWindow\explorer\frmTreeExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::c3741c2a0af6a3ddd0d29e8654e57306, mzkit\src\mzkit\mzkit\pages\dockWindow\explorer\frmTreeExplorer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 448.00 B
+
 
     ' Class frmTreeExplorer
     ' 

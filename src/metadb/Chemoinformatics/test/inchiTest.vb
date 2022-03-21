@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, src\metadb\Chemoinformatics\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::fa1a0c7ab604aa68caabe4f2e4f2f7f9, mzkit\src\metadb\Chemoinformatics\test\inchiTest.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 11
+    ' Comment Lines: 8
+    '   Blank Lines: 9
+    '     File Size: 644.00 B
+
 
     ' Module inchiTest
     ' 

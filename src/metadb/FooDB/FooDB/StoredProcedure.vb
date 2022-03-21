@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, src\metadb\FooDB\FooDB\StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, mzkit\src\metadb\FooDB\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 25
+    ' Comment Lines: 72
+    '   Blank Lines: 16
+    '     File Size: 4.35 KB
+
 
     '     Module StoredProcedure
     ' 

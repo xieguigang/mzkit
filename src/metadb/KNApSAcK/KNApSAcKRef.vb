@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5cb730119fd8bd0fca86c2e84878a47, src\metadb\KNApSAcK\KNApSAcKRef.vb"
+﻿#Region "Microsoft.VisualBasic::d5cb730119fd8bd0fca86c2e84878a47, mzkit\src\metadb\KNApSAcK\KNApSAcKRef.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 26
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.19 KB
+
 
     ' Class KNApSAcKRef
     ' 

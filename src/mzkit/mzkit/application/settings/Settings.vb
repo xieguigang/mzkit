@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c0e4b525fdd13a9adc1ed26be1cae4a, src\mzkit\mzkit\application\settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::2c0e4b525fdd13a9adc1ed26be1cae4a, mzkit\src\mzkit\mzkit\application\settings\Settings.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 46
+    ' Comment Lines: 4
+    '   Blank Lines: 14
+    '     File Size: 2.31 KB
+
 
     '     Class Settings
     ' 

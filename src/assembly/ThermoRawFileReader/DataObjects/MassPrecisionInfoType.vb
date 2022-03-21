@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2bf43a23ab2278de9f6c08f13fe3945, src\assembly\ThermoRawFileReader\DataObjects\MassPrecisionInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::a2bf43a23ab2278de9f6c08f13fe3945, mzkit\src\assembly\ThermoRawFileReader\DataObjects\MassPrecisionInfoType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 10
+    ' Comment Lines: 18
+    '   Blank Lines: 5
+    '     File Size: 786.00 B
+
 
     '     Structure MassPrecisionInfoType
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01c7470588a8d40515c4c793d5470f21, src\visualize\MsImaging\PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::09e1f2c86f808b0e0155b6ec8d4f4a72, mzkit\src\visualize\MsImaging\PixelData.vb"
 
 ' Author:
 ' 
@@ -34,10 +34,21 @@
 
 ' Summaries:
 
+
+' Code Statistics:
+
+'   Total Lines: 167
+'    Code Lines: 119
+' Comment Lines: 28
+'   Blank Lines: 20
+'     File Size: 6.01 KB
+
+
 ' Class PixelData
 ' 
 '     Properties: intensity, level, mz, x, y
 ' 
+'     Constructor: (+2 Overloads) Sub New
 '     Function: GetBuffer, getIntensityAuto, Parse, ScalePixels, SequenceIndex
 '               ToString
 ' 
@@ -52,16 +63,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.IO
+Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 Imports stdNum = System.Math
 
 ''' <summary>
 ''' a pixels point of [x,y,color]
 ''' </summary>
-Public Class PixelData : Implements IMSIPixel, IPoint2D
+Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
-    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X
-    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y
-    Public Property intensity As Double Implements IMSIPixel.intensity
+    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, HeatMapPixel.X
+    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, HeatMapPixel.Y
+    Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
     Public Property level As Double
     Public Property mz As Double
 

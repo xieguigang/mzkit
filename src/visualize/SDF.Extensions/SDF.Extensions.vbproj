@@ -125,13 +125,15 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit\</OutputPath>
     <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.SDF.Extensions.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -296,11 +298,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
     <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.SDF.Extensions.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
     <DefineTrace>true</DefineTrace>
@@ -364,6 +368,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SMILES2KCF.vb" />
     <Compile Include="SDF2KCF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -402,6 +407,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
+      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Name>GraphTheory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
@@ -409,6 +418,10 @@
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
       <Name>Chemoinformatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
     </ProjectReference>
     <ProjectReference Include="..\KCF\KCF.IO\KCF.IO.vbproj">
       <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2c41273fe2a89c5b1634f97c84c6111, src\assembly\ThermoRawFileReader\DataObjects\FTLabelInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::b2c41273fe2a89c5b1634f97c84c6111, mzkit\src\assembly\ThermoRawFileReader\DataObjects\FTLabelInfoType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 20
+    ' Comment Lines: 31
+    '   Blank Lines: 8
+    '     File Size: 1.75 KB
+
 
     '     Structure FTLabelInfoType
     ' 

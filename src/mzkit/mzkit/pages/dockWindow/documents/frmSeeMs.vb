@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b63fd25d23436a40e50a1ea1162975ea, src\mzkit\mzkit\pages\dockWindow\documents\frmSeeMs.vb"
+﻿#Region "Microsoft.VisualBasic::b63fd25d23436a40e50a1ea1162975ea, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmSeeMs.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 378.00 B
+
 
     ' Class frmSeeMs
     ' 

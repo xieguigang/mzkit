@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::105312f649c714f112f9a5c2d54588e8, src\mzkit\setup\autoUpdates\AppVersion.vb"
+﻿#Region "Microsoft.VisualBasic::105312f649c714f112f9a5c2d54588e8, mzkit\src\mzkit\setup\autoUpdates\AppVersion.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 5
+    ' Comment Lines: 8
+    '   Blank Lines: 2
+    '     File Size: 368.00 B
+
 
     ' Class AppVersion
     ' 

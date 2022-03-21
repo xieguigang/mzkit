@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87f72e1f3b1989379e841a5d9d73db55, src\mzkit\Task\NewsFeed.vb"
+﻿#Region "Microsoft.VisualBasic::87f72e1f3b1989379e841a5d9d73db55, mzkit\src\mzkit\Task\NewsFeed.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 35
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.75 KB
+
 
     ' Class NewsFeed
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8af31f12471b7e8ba214e025be981e12, src\mzmath\ms2_math-core\Chromatogram\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::e772e69f57b4662711080bfc49a1af1d, mzkit\src\mzmath\ms2_math-core\Chromatogram\Quantile.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 9
+    ' Comment Lines: 11
+    '   Blank Lines: 3
+    '     File Size: 674.00 B
+
 
     '     Class Quantile
     ' 

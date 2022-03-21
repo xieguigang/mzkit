@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::452f2534bfa797288d9ae9ac419965b2, src\visualize\MsImaging\IndexedCache\XICReader.vb"
+﻿#Region "Microsoft.VisualBasic::452f2534bfa797288d9ae9ac419965b2, mzkit\src\visualize\MsImaging\IndexedCache\XICReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 107
+    ' Comment Lines: 11
+    '   Blank Lines: 32
+    '     File Size: 5.66 KB
+
 
     '     Class XICReader
     ' 

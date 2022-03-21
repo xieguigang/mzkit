@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56399c7850b5468dfd09e49305724cde, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\ProtocolPipeline.vb"
+﻿#Region "Microsoft.VisualBasic::845f9bfb478f5f93b445b275ad3ea15e, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\ProtocolPipeline.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.62 KB
+
 
     '     Class ProtocolPipeline
     ' 

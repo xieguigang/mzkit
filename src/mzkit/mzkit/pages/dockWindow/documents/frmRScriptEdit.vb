@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ef1a048ec6306cc8661d6aecb8602d, src\mzkit\mzkit\pages\dockWindow\documents\frmRScriptEdit.vb"
+﻿#Region "Microsoft.VisualBasic::32832fe9ba8e9a859e01cc6a1de3375d, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmRScriptEdit.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 86
+    ' Comment Lines: 1
+    '   Blank Lines: 21
+    '     File Size: 3.88 KB
+
 
     ' Class frmRScriptEdit
     ' 

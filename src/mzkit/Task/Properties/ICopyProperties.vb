@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b92a75c45f42bef4b5cf83d696009d3, src\mzkit\Task\Properties\ICopyProperties.vb"
+﻿#Region "Microsoft.VisualBasic::69f4508b7a7691ceab6b8d52c9b822ef, mzkit\src\mzkit\Task\Properties\ICopyProperties.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5
+    '    Code Lines: 3
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 63.00 B
+
 
     ' Interface ICopyProperties
     ' 

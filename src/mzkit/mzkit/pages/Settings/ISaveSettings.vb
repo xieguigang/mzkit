@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30ce0a2624589e0bb7b6ef58656dfe2, src\mzkit\mzkit\pages\Settings\ISaveSettings.vb"
+﻿#Region "Microsoft.VisualBasic::4c12e10a0b1ae0213ab117be7f104961, mzkit\src\mzkit\mzkit\pages\Settings\ISaveSettings.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 158.00 B
+
 
     ' Interface ISaveSettings
     ' 

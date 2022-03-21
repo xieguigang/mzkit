@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed73b4dfe9edbc57f38f1e7f7751554, src\mzkit\mzkit\pages\dockWindow\documents\frmSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::62feaec406808c4fef9fbe2e53a492e9, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmSpectrumSearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 362.00 B
+
 
     ' Class frmSpectrumSearch
     ' 

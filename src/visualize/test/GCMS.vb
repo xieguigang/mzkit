@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::063866e3c3be890c43143b253643030f, src\visualize\test\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::063866e3c3be890c43143b253643030f, mzkit\src\visualize\test\GCMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 10
+    ' Comment Lines: 15
+    '   Blank Lines: 8
+    '     File Size: 1.22 KB
+
 
     ' Module GCMS
     ' 

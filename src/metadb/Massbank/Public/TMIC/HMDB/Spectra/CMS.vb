@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d10ebbe86b1bc6e39b03baed1561e7a4, src\metadb\Massbank\Public\TMIC\HMDB\Spectra\CMS.vb"
+﻿#Region "Microsoft.VisualBasic::be4ccc7dda888cdcd2e229355fac1700, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\CMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 945.00 B
+
 
     '     Class CMS
     ' 

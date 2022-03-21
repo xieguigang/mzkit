@@ -1,45 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::3220e52e106e31f7ff9f91ffbd6a0145, src\mzkit\mzkit\pages\dockWindow\documents\frmUntargettedViewer.vb"
+﻿#Region "Microsoft.VisualBasic::ca52f92a5090e5fe640486533779d552, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmUntargettedViewer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmUntargettedViewer
-' 
-'     Sub: BPCToolStripMenuItem_Click, CopyFullPath, FilterMs2ToolStripMenuItem_Click, frmUntargettedViewer_Load, loadRaw
-'          OpenContainingFolder, RtRangeSelector1_RangeSelect, SaveDocument, ShowMatrixToolStripMenuItem_Click, showTIC
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 142
+    ' Comment Lines: 3
+    '   Blank Lines: 31
+    '     File Size: 6.56 KB
+
+
+    ' Class frmUntargettedViewer
+    ' 
+    '     Sub: BPCToolStripMenuItem_Click, CopyFullPath, FilterMs2ToolStripMenuItem_Click, frmUntargettedViewer_Load, loadRaw
+    '          MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click, MsSelector1_XICSelector, OpenContainingFolder, RtRangeSelector1_RangeSelect
+    '          SaveDocument, ShowMatrixToolStripMenuItem_Click, showTIC, updatePlot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

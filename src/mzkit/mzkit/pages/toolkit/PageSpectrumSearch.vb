@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68e3c9c8a1d99bf7460eb21c8c765748, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::532fb26acb6765746b463a88f8bbd9d7, mzkit\src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 226
+    '    Code Lines: 183
+    ' Comment Lines: 3
+    '   Blank Lines: 40
+    '     File Size: 9.14 KB
+
 
     ' Class PageSpectrumSearch
     ' 

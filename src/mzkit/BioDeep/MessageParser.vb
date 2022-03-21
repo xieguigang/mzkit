@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da74beb8de4eb4c347d8bcc1e2b33c1d, src\mzkit\BioDeep\MessageParser.vb"
+﻿#Region "Microsoft.VisualBasic::a4868738e5dbfaf058a7e0cf7373b014, mzkit\src\mzkit\BioDeep\MessageParser.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 836.00 B
+
 
     ' Module MessageParser
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4204608cef2c7f29dd93e826a8aba7, src\assembly\ThermoRawFileReader\DataObjects\TuneMethodSettingType.vb"
+﻿#Region "Microsoft.VisualBasic::9d4204608cef2c7f29dd93e826a8aba7, mzkit\src\assembly\ThermoRawFileReader\DataObjects\TuneMethodSettingType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 11
+    ' Comment Lines: 15
+    '   Blank Lines: 4
+    '     File Size: 858.00 B
+
 
     '     Structure TuneMethodSettingType
     ' 

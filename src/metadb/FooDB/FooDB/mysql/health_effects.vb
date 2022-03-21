@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, src\metadb\FooDB\FooDB\mysql\health_effects.vb"
+﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, mzkit\src\metadb\FooDB\FooDB\mysql\health_effects.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 93
+    ' Comment Lines: 66
+    '   Blank Lines: 22
+    '     File Size: 10.43 KB
+
 
     ' Class health_effects
     ' 

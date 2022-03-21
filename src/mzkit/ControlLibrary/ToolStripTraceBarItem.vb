@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdbac80bb4f57a3b8cbb0aef17fea646, src\mzkit\ControlLibrary\ToolStripTraceBarItem.vb"
+﻿#Region "Microsoft.VisualBasic::ea8c09108b0279702da72abc7477afb6, mzkit\src\mzkit\ControlLibrary\ToolStripTraceBarItem.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 828.00 B
+
 
     ' Class ToolStripTraceBarItem
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efbdff672e1b196e3cf6327315dbbfba, src\mzkit\mzkit\pages\dockWindow\documents\frmGCMS_CDFExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::9c5002c067d9b9c698dba1775621ae8a, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmGCMS_CDFExplorer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 76
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 3.41 KB
+
 
     ' Class frmGCMS_CDFExplorer
     ' 

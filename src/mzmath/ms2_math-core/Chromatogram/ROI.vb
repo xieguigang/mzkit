@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa381c17d0766b01d1ad0c033ee5cce6, src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::aa381c17d0766b01d1ad0c033ee5cce6, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 49
+    ' Comment Lines: 39
+    '   Blank Lines: 11
+    '     File Size: 3.57 KB
+
 
     '     Class ROI
     ' 

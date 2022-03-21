@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0935adcd3a70edfaf718cffffff51fc9, src\metadb\KNApSAcK\Data\Information.vb"
+﻿#Region "Microsoft.VisualBasic::0935adcd3a70edfaf718cffffff51fc9, mzkit\src\metadb\KNApSAcK\Data\Information.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 24
+    ' Comment Lines: 8
+    '   Blank Lines: 5
+    '     File Size: 1.09 KB
+
 
     '     Class Information
     ' 

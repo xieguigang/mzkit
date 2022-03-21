@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4824744322295efbade38f2415cc592f, src\mzkit\ServiceHub\ServiceProtocols\Payloads\LayerLoader.vb"
+﻿#Region "Microsoft.VisualBasic::4824744322295efbade38f2415cc592f, mzkit\src\mzkit\ServiceHub\ServiceProtocols\Payloads\LayerLoader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.23 KB
+
 
     ' Class LayerLoader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::751ecd888f76ce0c136859ceaf629a03, src\mzkit\mzkit\pages\dockWindow\documents\frmQuantifyIons.vb"
+﻿#Region "Microsoft.VisualBasic::eb21b719b2f2e9cfd21f13555fc71246, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmQuantifyIons.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 92
+    ' Comment Lines: 0
+    '   Blank Lines: 19
+    '     File Size: 4.11 KB
+
 
     ' Class frmQuantifyIons
     ' 

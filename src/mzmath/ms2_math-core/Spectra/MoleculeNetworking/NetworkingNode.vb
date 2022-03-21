@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac0b7704ee5b64793ec64eefa27f7b1d, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
+﻿#Region "Microsoft.VisualBasic::9cfe04024ddaa9d4e440c97820bf17c2, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 84
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 4.04 KB
+
 
     '     Class NetworkingNode
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, src\metadb\FooDB\FooDB\mysql\compound_synonyms.vb"
+﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, mzkit\src\metadb\FooDB\FooDB\mysql\compound_synonyms.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 86
+    ' Comment Lines: 62
+    '   Blank Lines: 22
+    '     File Size: 8.86 KB
+
 
     ' Class compound_synonyms
     ' 

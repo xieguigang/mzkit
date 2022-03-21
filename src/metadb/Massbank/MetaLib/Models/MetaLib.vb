@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf51640b7d01f1192fd5dbd708d6b9ca, src\metadb\Massbank\MetaLib\Models\MetaLib.vb"
+﻿#Region "Microsoft.VisualBasic::7507954e66f93ff19438a98c5feb76dd, mzkit\src\metadb\Massbank\MetaLib\Models\MetaLib.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 30
+    ' Comment Lines: 21
+    '   Blank Lines: 10
+    '     File Size: 2.26 KB
+
 
     '     Class MetaLib
     ' 

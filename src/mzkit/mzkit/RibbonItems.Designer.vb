@@ -1,3 +1,97 @@
+﻿#Region "Microsoft.VisualBasic::61a5e03a693aab22bf7fa1e736250f15, mzkit\src\mzkit\mzkit\RibbonItems.Designer.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1345
+    '    Code Lines: 1329
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 61.20 KB
+
+
+    '     Class RibbonItems
+    ' 
+    '         Properties: AdjustParameters, ButtonAbout, ButtonAddNewPolygon, ButtonBioDeep, ButtonBPC
+    '                     ButtonCalculatorExport, ButtonClosePolygonEditor, ButtonColumnStats, ButtonCopyMatrix, ButtonCopyPlot
+    '                     ButtonCopyProperties, ButtonDevTools, ButtonDropA, ButtonDropB, ButtonDropD
+    '                     ButtonExactMassSearchExport, ButtonExit, ButtonExportImage, ButtonExportMatrix, ButtonExportMSIMzpack
+    '                     ButtonExportSample, ButtonFeatureDetections, ButtonFormulaSearch, ButtonFormulaSearchExport, ButtonImportsRawFiles
+    '                     ButtonInstallMzkitPackage, ButtonLayout1, ButtonLayout2, ButtonLicense, ButtonMovePolygon
+    '                     ButtonMsDemo, ButtonMSIAverageIon, ButtonMSIBasePeakIon, ButtonMSICleanBackground, ButtonMsImaging
+    '                     ButtonMSIRawIonStat, ButtonMSIRowScans, ButtonMSITotalIon, ButtonMzCalculator, ButtonMzSearch
+    '                     ButtonNetworkExport, ButtonNetworkRender, ButtonNew, ButtonOpenMSIRaw, ButtonOpenRaw
+    '                     ButtonPageNavBack, ButtonPolygonDeleteVertex, ButtonPolygonEditorMoveVertex, ButtonRefreshNetwork, ButtonRemovePolygon
+    '                     ButtonResetFeatureFilter, ButtonResetLayout, ButtonResetTableFilter, ButtonRsharp, ButtonRunScript
+    '                     ButtonSave, ButtonSaveScript, ButtonSaveTableCDF, ButtonSettings, ButtonShowExplorer
+    '                     ButtonShowLogWindow, ButtonShowMatrixViewer, ButtonShowPlotViewer, ButtonShowPolygonVertexInfo, ButtonShowProperties
+    '                     ButtonShowSearchList, ButtonShowSpectrumSearchPage, ButtonShowStartPage, ButtonTIC, ButtonTogglePolygon
+    '                     ButtonToolkits, ButtonViewKEGGNetwork, ButtonViewSMILES, ButtonXIC, CheckBoxShowKEGGAnnotation
+    '                     CheckBoxTrIQThreshold, CheckBoxXICRelative, DOIReference, Explorers, FontControl
+    '                     GroupAboutActions, GroupCalculator, GroupChromatography, GroupCopyData, GroupDesign
+    '                     GroupExactMassSearch, GroupExport, GroupFeatureFilter, GroupFileActions, GroupFormulaSearch
+    '                     GroupKEGG, GroupLayout, GroupMSIFile, GroupNetwork, GroupNetworkRenderTool
+    '                     GroupNetworkTools, GroupRscript, GroupShowDockWindows, GroupShowViewer, GroupToolsActions
+    '                     HelpButton, ImportsLinear, ImportsMzwork, LegendCheckBox, LogInBioDeep
+    '                     MenuGroupExit, MenuGroupFile, MenuImports, MRMLibrary, OpenIonsLibrary
+    '                     PanelOptions, PlotOptions, PPMSpinner, QAT, QuantifyIons
+    '                     RecentItems, Ribbon, SaveLinears, ShowGCMSExplorer, ShowMRMExplorer
+    '                     ShowProperty, SpinnerSimilarity, TabAbout, TabCalculator, TabDemo
+    '                     TabDesign, TabExactMassSearch, TabFormulaSearch, TabGroupBioDeep, TabGroupCalculatorTools
+    '                     TabGroupExactMassSearchTools, TabGroupFormulaSearchTools, TabGroupKEGG, TabGroupMSI, TabGroupNetworkTools
+    '                     TabGroupRscriptTools, TabGroupTableTools, TabGroupTargeted, TabGroupTargetedLibrary, TabGroupWindowTools
+    '                     TabKEGG, TabLayout, TableGroup, TableInnerGroup, TableTab
+    '                     TabMain, TabMenuMSIAnalysis, TabMSIAnalysis, TabMSIFile, TabMSIPage
+    '                     TabMSISnapshot, TabNetwork, TabPolygonEditor, TabReferenceLibrary, TabRscriptTools
+    '                     TabRStudio, TabTargeted, TabTools, TagGroupParameterTool, Targeted
+    '                     TargetedContex, Tutorials, TweaksImage, XIC_PPMSpinner
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Class Cmd
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 '------------------------------------------------------------------------------
 ' <auto-generated>
 '     This code was generated by a tool.
@@ -161,6 +255,7 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonMzCalculator As UInteger = 1013
             Public Const cmdButtonMzSearch As UInteger = 1052
             Public Const cmdButtonShowSpectrumSearchPage As UInteger = 1102
+            Public Const cmdButtonViewSMILES As UInteger = 178
             Public Const cmdTargeted As UInteger = 99
             Public Const cmdTabAbout As UInteger = 1020
             Public Const cmdGroupAboutActions As UInteger = 1047
@@ -1061,6 +1156,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonShowSpectrumSearchPage
             End Get
         End Property
+        Private _ButtonViewSMILES As RibbonButton
+        Public ReadOnly Property ButtonViewSMILES As RibbonButton
+            Get
+                Return _ButtonViewSMILES
+            End Get
+        End Property
         Private _Targeted As RibbonButton
         Public ReadOnly Property Targeted As RibbonButton
             Get
@@ -1314,6 +1415,7 @@ Namespace RibbonLib.Controls
             _ButtonMzCalculator = New RibbonButton(_ribbon, Cmd.cmdButtonMzCalculator)
             _ButtonMzSearch = New RibbonButton(_ribbon, Cmd.cmdButtonMzSearch)
             _ButtonShowSpectrumSearchPage = New RibbonButton(_ribbon, Cmd.cmdButtonShowSpectrumSearchPage)
+            _ButtonViewSMILES = New RibbonButton(_ribbon, Cmd.cmdButtonViewSMILES)
             _Targeted = New RibbonButton(_ribbon, Cmd.cmdTargeted)
             _TabAbout = New RibbonTab(_ribbon, Cmd.cmdTabAbout)
             _GroupAboutActions = New RibbonGroup(_ribbon, Cmd.cmdGroupAboutActions)

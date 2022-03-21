@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0908a1abf1250420c3bcc4812eb578c1, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ROIPeak.vb"
+﻿#Region "Microsoft.VisualBasic::fdab3585c098597f0366d19712374ef3, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ROIPeak.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 22
+    ' Comment Lines: 11
+    '   Blank Lines: 9
+    '     File Size: 1.28 KB
+
 
     '     Class ROIPeak
     ' 

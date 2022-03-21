@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43b3625fb96096c4f5a040d6aa238942, Rscript\Library\mzkit.quantify\Report\LinearDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::ff808c1881080c07860a07206a02f6f6, mzkit\Rscript\Library\mzkit.quantify\Report\LinearDataSet.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 8
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 432.00 B
+
 
     ' Class LinearDataSet
     ' 

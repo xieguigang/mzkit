@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::070951941072d44d921539945862df2c, src\assembly\Comprehensive\MsImaging\PeakMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::070951941072d44d921539945862df2c, mzkit\src\assembly\Comprehensive\MsImaging\PeakMatrix.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 59
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 2.99 KB
+
 
     '     Module PeakMatrix
     ' 

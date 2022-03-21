@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ad2cde8b8a4fdc5854acceafa7c12e1, src\mzkit\mzkit\forms\ISplashScreenUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::a267ea59ea5d09f15ef21d263ca05568, mzkit\src\mzkit\mzkit\forms\ISplashScreenUpdater.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5
+    '    Code Lines: 3
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 105.00 B
+
 
     ' Interface ISplashScreenUpdater
     ' 

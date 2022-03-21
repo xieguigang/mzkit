@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b47fdf779d8bc0d43b8019a3e52f5d, src\mzkit\Task\MetaDNASearch.vb"
+﻿#Region "Microsoft.VisualBasic::18b47fdf779d8bc0d43b8019a3e52f5d, mzkit\src\mzkit\Task\MetaDNASearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.35 KB
+
 
     ' Module MetaDNASearch
     ' 

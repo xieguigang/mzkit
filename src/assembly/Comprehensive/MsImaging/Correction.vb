@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70568ce2a1ed3e3e459caef9ae475c7a, src\assembly\Comprehensive\MsImaging\Correction.vb"
+﻿#Region "Microsoft.VisualBasic::70568ce2a1ed3e3e459caef9ae475c7a, mzkit\src\assembly\Comprehensive\MsImaging\Correction.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 256.00 B
+
 
     '     Class Correction
     ' 

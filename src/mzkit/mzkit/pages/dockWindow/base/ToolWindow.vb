@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5baf810b15feabd8179e73edfac19227, src\mzkit\mzkit\pages\dockWindow\base\ToolWindow.vb"
+﻿#Region "Microsoft.VisualBasic::981b42a546fe90eb3f3f9a44bc227c83, mzkit\src\mzkit\mzkit\pages\dockWindow\base\ToolWindow.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 62
+    ' Comment Lines: 20
+    '   Blank Lines: 16
+    '     File Size: 3.41 KB
+
 
     ' Class ToolWindow
     ' 

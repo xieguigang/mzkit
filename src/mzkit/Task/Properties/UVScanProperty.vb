@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9f432d3e0b7e65399833eb6aca543bf, src\mzkit\Task\Properties\UVScanProperty.vb"
+﻿#Region "Microsoft.VisualBasic::b9f432d3e0b7e65399833eb6aca543bf, mzkit\src\mzkit\Task\Properties\UVScanProperty.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.57 KB
+
 
     ' Class UVScanProperty
     ' 

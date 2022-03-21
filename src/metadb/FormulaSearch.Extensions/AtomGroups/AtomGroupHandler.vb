@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a41fc7555e46d9c23125b3321d23d41, src\metadb\FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
+﻿#Region "Microsoft.VisualBasic::336f884666a379c1b0f8d9111cd53f85, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 2.07 KB
+
 
     ' Class AtomGroupHandler
     ' 

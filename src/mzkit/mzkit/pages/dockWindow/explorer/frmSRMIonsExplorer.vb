@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7599208cb2934d55165dfe9e878665d9, src\mzkit\mzkit\pages\dockWindow\explorer\frmSRMIonsExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::c3bd73918006a5b3b4ba5ca4687b80ae, mzkit\src\mzkit\mzkit\pages\dockWindow\explorer\frmSRMIonsExplorer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 137
+    ' Comment Lines: 15
+    '   Blank Lines: 36
+    '     File Size: 7.97 KB
+
 
     ' Class frmSRMIonsExplorer
     ' 

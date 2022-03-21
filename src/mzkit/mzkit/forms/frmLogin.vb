@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18f7536186303d4a175cc29e5521966d, src\mzkit\mzkit\forms\frmLogin.vb"
+﻿#Region "Microsoft.VisualBasic::18f7536186303d4a175cc29e5521966d, mzkit\src\mzkit\mzkit\forms\frmLogin.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 68
+    ' Comment Lines: 5
+    '   Blank Lines: 20
+    '     File Size: 3.37 KB
+
 
     ' Class frmLogin
     ' 

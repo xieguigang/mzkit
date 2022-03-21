@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0658cfd0adb506f6c1f15a3fd082c586, src\metadb\Chemoinformatics\Formula\DNPOrWileyType.vb"
+﻿#Region "Microsoft.VisualBasic::b29283a14d20b35f5c3706e64effb094, mzkit\src\metadb\Chemoinformatics\Formula\DNPOrWileyType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 102.00 B
+
 
     '     Enum DNPOrWileyType
     ' 

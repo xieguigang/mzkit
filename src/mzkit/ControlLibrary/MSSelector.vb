@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::543fffe7147c964e6ade4704ea80f310, src\mzkit\ControlLibrary\MSSelector.vb"
+﻿#Region "Microsoft.VisualBasic::982b194a814f7922fcaf170617e0d024, mzkit\src\mzkit\ControlLibrary\MSSelector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 102
+    ' Comment Lines: 15
+    '   Blank Lines: 27
+    '     File Size: 4.66 KB
+
+
     ' Class MSSelector
     ' 
     '     Properties: FillColor, Pinned, rtmax, rtmin, SelectedColor
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: FilterMs2ToolStripMenuItem_Click, MSSelector_Load, PinToolStripMenuItem_Click, RefreshRtRangeSelector, ResetToolStripMenuItem_Click
-    '          RtRangeSelector1_RangeSelect, SetTIC, showBPCClick, showTICClick
+    '          RtRangeSelector1_RangeSelect, SetTIC, showBPCClick, showTICClick, XICToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 

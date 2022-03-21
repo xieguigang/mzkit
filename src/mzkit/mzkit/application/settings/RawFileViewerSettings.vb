@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da9e80d94f126a0dc9c9b718773fd178, src\mzkit\mzkit\application\settings\RawFileViewerSettings.vb"
+﻿#Region "Microsoft.VisualBasic::6f4d39229eb43566f8800a9bf148fae8, mzkit\src\mzkit\mzkit\application\settings\RawFileViewerSettings.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 23
+    ' Comment Lines: 8
+    '   Blank Lines: 7
+    '     File Size: 1.17 KB
+
+
     '     Class RawFileViewerSettings
     ' 
-    '         Properties: colorSet, fill, intoCutoff, method, quantile
-    '                     XIC_ppm
+    '         Properties: colorSet, fill, intoCutoff, method, ppm_error
+    '                     quantile, XIC_ppm
     ' 
     '         Function: GetMethod
     ' 

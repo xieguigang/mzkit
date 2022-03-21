@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::176bcd6a630965452a5ffaf383f93fc9, src\assembly\assembly\MarkupData\mzML\XML\indexedmzML.vb"
+﻿#Region "Microsoft.VisualBasic::c5ed2027b721e731353e79dbbf380c3c, mzkit\src\assembly\assembly\MarkupData\mzML\XML\indexedmzML.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.47 KB
+
 
     '     Class indexedmzML
     ' 

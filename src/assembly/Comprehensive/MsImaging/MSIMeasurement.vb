@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b35d38ed731aa2fe577d9d0ddf0f7461, src\assembly\Comprehensive\MsImaging\MSIMeasurement.vb"
+﻿#Region "Microsoft.VisualBasic::b35d38ed731aa2fe577d9d0ddf0f7461, mzkit\src\assembly\Comprehensive\MsImaging\MSIMeasurement.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 71
+    ' Comment Lines: 3
+    '   Blank Lines: 18
+    '     File Size: 3.28 KB
+
 
     '     Class MSIMeasurement
     ' 

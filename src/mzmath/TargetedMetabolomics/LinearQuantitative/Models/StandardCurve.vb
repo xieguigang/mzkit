@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d660fbc427074cfb52a3c24f51e5141, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::d1b27eb7913fed36b280bcfafbd8941c, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 74
+    ' Comment Lines: 24
+    '   Blank Lines: 16
+    '     File Size: 4.25 KB
+
 
     '     Class StandardCurve
     ' 

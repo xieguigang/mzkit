@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::039728efbb73abcae67ca613ac20c9eb, src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\brukerGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::b7e676d322dd7d0699dd37918d603c15, mzkit\src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\brukerGCMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 80.00 B
+
 
     '     Class brukerGCMS
     ' 

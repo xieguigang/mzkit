@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18fe4ff418ef6a38bb838f77d17fa990, src\metadb\FormulaSearch.Extensions\AtomGroups\Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::0caa3ee629c1e1778de9b6fd9d4af2c6, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Ketones.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 16
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 1.67 KB
+
 
     ' Class Ketones
     ' 
