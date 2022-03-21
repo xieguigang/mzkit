@@ -15,8 +15,7 @@ print(as.data.frame(formulas))
 exact_mass = formula::eval(C40H78NO8P)
 formulas = formula::candidates(exact_mass, ppm = 5, C= [6,72], H = [3,120], O = [1,20], N = [0, 18], P  = [0, 18], S = [0, 20])
 list = as.data.frame(formulas)
-
 list = list[ order(list[, "ppm"]) , ]
 
-print("search for exact mass value: ${exact_mass}")
+print(`search for exact mass value: ${exact_mass}`)
 print(list)
