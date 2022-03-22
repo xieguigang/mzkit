@@ -220,11 +220,11 @@ Public Class WiffScanFileReader : Implements IDisposable
             Me.msSample = Me.wiffSample.MassSpectrometerSample
             Me.scanList.Clear()
 
-            Call InternalSetCurrentSample()
+            Call InternalSetCurrentSample(_sampleNames(sampleId))
         End If
     End Sub
 
-    Private Sub InternalSetCurrentSample()
+    Private Sub InternalSetCurrentSample(sampleName As String)
         Dim experimentCount As Integer = Me.msSample.ExperimentCount
         Dim array As TotalIonChromatogram() = New TotalIonChromatogram(experimentCount - 1) {}
 
@@ -239,7 +239,7 @@ Public Class WiffScanFileReader : Implements IDisposable
 
         For j As Integer = 0 To numDataPoints - 1
             For k As Integer = 0 To Me.msSample.ExperimentCount - 1
-                Call loadScan(array, k, j)
+                Call loadScan(array, sampleName, k, j)
             Next
         Next
 
@@ -247,7 +247,7 @@ Public Class WiffScanFileReader : Implements IDisposable
         _maxRT = Me.scanList(Me.scanList.Count - 1).RetentionTime
     End Sub
 
-    Private Sub loadScan(array As TotalIonChromatogram(), k As Integer, j As Integer)
+    Private Sub loadScan(array As TotalIonChromatogram(), sampleName As String, k As Integer, j As Integer)
         Dim totalIonChromatogram As TotalIonChromatogram = array(k)
         Dim num As Single = CSng(totalIonChromatogram.GetYValue(j))
 
@@ -306,7 +306,8 @@ Public Class WiffScanFileReader : Implements IDisposable
             .ScanType = msLevel,
             .FragmentationType = "NULL",
             .IsolationWidth = isolationWidth,
-            .IsolationCenter = isolationCenter
+            .IsolationCenter = isolationCenter,
+            .SampleName = sampleName
         }
 
         If scanInfo.MSLevel > 1 Then

@@ -178,7 +178,7 @@ Public Class frmMain
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         ElseIf fileName.ExtensionSuffix("wiff") Then
             Dim wiffRaw As New sciexWiffReader.WiffScanFileReader(fileName)
-            Dim mzPack As mzPack = frmTaskProgress.LoadData(Function() wiffRaw.LoadFromWiffRaw)
+            Dim mzPack As mzPack = frmTaskProgress.LoadData(Function(println) wiffRaw.LoadFromWiffRaw(println))
             Dim cacheFile As String = TempFileSystem.GetAppSysTempFile(".mzPack", App.PID.ToHexString, "WiffRawFile_")
             Dim raw As New Raw With {
                .cache = cacheFile,
@@ -197,7 +197,7 @@ Public Class frmMain
             Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
         ElseIf fileName.ExtensionSuffix("raw") Then
             Dim Xraw As New MSFileReader(fileName)
-            Dim mzPack As mzPack = frmTaskProgress.LoadData(Function() Xraw.LoadFromXRaw)
+            Dim mzPack As mzPack = frmTaskProgress.LoadData(Function(println) Xraw.LoadFromXRaw(println))
             Dim cacheFile As String = TempFileSystem.GetAppSysTempFile(".mzPack", App.PID.ToHexString, "MSRawFile_")
             Dim raw As New Raw With {
                .cache = cacheFile,
