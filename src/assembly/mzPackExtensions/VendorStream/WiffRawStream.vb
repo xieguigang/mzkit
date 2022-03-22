@@ -43,6 +43,19 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 .TIC = scan.TotalIonCurrent
             }
         Else
+            Dim clean As ms2() = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = into(i)
+                            }
+                        End Function) _
+                .AbSciexBaselineHandling _
+                .ToArray
+
+            mz = clean.Select(Function(i) i.mz).ToArray
+            into = clean.Select(Function(i) i.intensity).ToArray
+
             MS2 += New ScanMS2 With {
                 .activationMethod = ActivationMethods.CID,
                 .centroided = True,
