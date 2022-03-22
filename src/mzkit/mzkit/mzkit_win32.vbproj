@@ -854,6 +854,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmGCxGCViewer.resx">
+      <DependentUpon>frmGCxGCViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmHtmlViewer.resx">
       <DependentUpon>frmHtmlViewer.vb</DependentUpon>
     </EmbeddedResource>

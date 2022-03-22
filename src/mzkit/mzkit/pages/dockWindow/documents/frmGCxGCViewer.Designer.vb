@@ -75,9 +75,17 @@ Partial Class frmGCxGCViewer : Inherits DocumentWindow
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
+        Me.SuspendLayout()
+        '
+        'frmGCxGCViewer
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "Form1"
+        Me.ClientSize = New System.Drawing.Size(945, 587)
+        Me.DoubleBuffered = True
+        Me.Name = "frmGCxGCViewer"
+        Me.ResumeLayout(False)
+
     End Sub
 End Class
