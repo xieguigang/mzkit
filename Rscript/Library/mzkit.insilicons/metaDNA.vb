@@ -195,6 +195,15 @@ Module metaDNAInfer
         Return metadna.SetSearchRange(types)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="kegg">
+    ''' a collection of the kegg compound data.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetKeggLibrary(metadna As Algorithm,
@@ -210,6 +219,15 @@ Module metaDNAInfer
         Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="links">
+    ''' a collection of the reaction class data
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetInferNetwork(metadna As Algorithm,
@@ -225,6 +243,15 @@ Module metaDNAInfer
         Return metadna.SetNetwork(network.populates(Of ReactionClass)(env))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="sample">
+    ''' a collection of the mzkit peak ms2 data objects
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function handleSample(metadna As Algorithm,
