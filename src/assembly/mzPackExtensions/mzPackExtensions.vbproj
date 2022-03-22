@@ -188,9 +188,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WiffRawStream.vb" />
+    <Compile Include="VendorStream\VendorStreamLoader.vb" />
+    <Compile Include="VendorStream\WiffRawStream.vb" />
     <Compile Include="ToCDFWriter.vb" />
-    <Compile Include="XRawStream.vb" />
+    <Compile Include="VendorStream\XRawStream.vb" />
     <Compile Include="MSIRawPack.vb" />
     <Compile Include="RawStream.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
