@@ -65,6 +65,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports stdNum = System.Math
 
+''' <summary>
+''' thermo raw to mzpack convertor
+''' </summary>
 Public Class XRawStream
 
     ReadOnly raw As MSFileReader

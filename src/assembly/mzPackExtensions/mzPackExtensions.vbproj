@@ -188,6 +188,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WiffRawStream.vb" />
     <Compile Include="ToCDFWriter.vb" />
     <Compile Include="XRawStream.vb" />
     <Compile Include="MSIRawPack.vb" />
@@ -229,21 +230,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
-      <Name>R</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
       <Name>BinaryData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
-      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
-      <Name>DataStorage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
@@ -265,13 +254,13 @@
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Comprehensive\Comprehensive.vbproj">
-      <Project>{6F5F8407-DEB8-4B75-BF41-5284772D37DD}</Project>
-      <Name>Comprehensive</Name>
-    </ProjectReference>
     <ProjectReference Include="..\mzPack\mzPack.vbproj">
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj">
+      <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
+      <Name>sciexWiffReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj">
       <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
