@@ -17,8 +17,9 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         End Get
     End Property
 
-    Public Sub New(scanIdFunc As Func(Of ScanInfo, Integer, String))
+    Public Sub New(raw As WiffScanFileReader, scanIdFunc As Func(Of ScanInfo, Integer, String))
         MyBase.New(scanIdFunc)
+        Me.raw = raw
     End Sub
 
     Protected Overrides Sub walkScan(scan As ScanInfo)
