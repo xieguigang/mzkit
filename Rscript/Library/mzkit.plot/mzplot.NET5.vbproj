@@ -126,10 +126,16 @@
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
