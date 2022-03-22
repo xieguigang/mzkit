@@ -58,6 +58,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonShowExplorer = 1121;
             public const uint cmdShowGCMSExplorer = 113;
             public const uint cmdShowMRMExplorer = 118;
+            public const uint cmdGCxGCViewer = 179;
             public const uint cmdButtonMsImaging = 1167;
             public const uint cmdButtonShowSearchList = 1122;
             public const uint cmdButtonShowProperties = 1123;
@@ -229,6 +230,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonShowExplorer { get; private set; }
         public RibbonButton ShowGCMSExplorer { get; private set; }
         public RibbonButton ShowMRMExplorer { get; private set; }
+        public RibbonButton GCxGCViewer { get; private set; }
         public RibbonButton ButtonMsImaging { get; private set; }
         public RibbonButton ButtonShowSearchList { get; private set; }
         public RibbonButton ButtonShowProperties { get; private set; }
@@ -398,6 +400,7 @@ namespace RibbonLib.Controls
             ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
             ShowGCMSExplorer = new RibbonButton(ribbon, Cmd.cmdShowGCMSExplorer);
             ShowMRMExplorer = new RibbonButton(ribbon, Cmd.cmdShowMRMExplorer);
+            GCxGCViewer = new RibbonButton(ribbon, Cmd.cmdGCxGCViewer);
             ButtonMsImaging = new RibbonButton(ribbon, Cmd.cmdButtonMsImaging);
             ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
             ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
