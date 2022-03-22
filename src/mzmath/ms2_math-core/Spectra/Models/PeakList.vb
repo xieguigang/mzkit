@@ -56,10 +56,26 @@ Namespace Spectra
 
     Public Class PeakList
 
-        Public ReadOnly mz As Double()
-        Public ReadOnly intensity As Double()
+        ''' <summary>
+        ''' the ion fragment mass list
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property mz As Double()
+        ''' <summary>
+        ''' the signal intensity strength 
+        ''' value of the corresponding ion 
+        ''' fragment mass data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property into As Double()
 
-        Public ReadOnly Property Size As Integer
+        ''' <summary>
+        ''' the number of the ion fragments 
+        ''' in current peak list object 
+        ''' data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
             Get
                 Return mz.Length
             End Get
@@ -67,7 +83,10 @@ Namespace Spectra
 
         Public Sub New(masses As Double(), intensities As Double())
             Me.mz = masses
-            Me.intensity = intensities
+            Me.into = intensities
+        End Sub
+
+        Sub New()
         End Sub
 
     End Class
