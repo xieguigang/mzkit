@@ -56,6 +56,10 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
             mz = clean.Select(Function(i) i.mz).ToArray
             into = clean.Select(Function(i) i.intensity).ToArray
 
+            If mz.Length = 0 Then
+                Return
+            End If
+
             MS2 += New ScanMS2 With {
                 .activationMethod = ActivationMethods.CID,
                 .centroided = True,
