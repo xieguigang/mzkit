@@ -68,6 +68,12 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
         For Each name As String In raw.sampleNames
             Call raw.SetCurrentSample(++i)
+
+            Dim n As Integer = raw.GetLastSpectrumNumber
+
+            For scanId As Integer = 0 To n
+                Yield raw.GetScan(scanId)
+            Next
         Next
     End Function
 End Class
