@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9f73932d089ab646fa440b4563c5f86, mzkit\src\assembly\ThermoRawFileReader\DataObjects\RawLabelData.vb"
+﻿#Region "Microsoft.VisualBasic::f8d8955a612c949cb1025a57b788cbde, mzkit\src\assembly\sciexWiffReader\WiffFileReader\PeakList.vb"
 
 ' Author:
 ' 
@@ -37,61 +37,57 @@
 
 ' Code Statistics:
 
-'   Total Lines: 30
-'    Code Lines: 12
-' Comment Lines: 12
-'   Blank Lines: 6
-'     File Size: 853.00 B
+'   Total Lines: 11
+'    Code Lines: 8
+' Comment Lines: 0
+'   Blank Lines: 3
+'     File Size: 243.00 B
 
 
-'     Class RawLabelData
+' Class PeakList
 ' 
-'         Properties: MaxIntensity, MSData, MsLevel, ScanNumber, ScanTime
-' 
-'         Function: ToString
-' 
+'     Constructor: (+1 Overloads) Sub New
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Namespace Spectra
 
-Namespace DataObjects
-
-    <CLSCompliant(True)>
-    Public Class RawLabelData
+    Public Class PeakList
 
         ''' <summary>
-        ''' Scan number
+        ''' the ion fragment mass list
         ''' </summary>
-        Public Property ScanNumber As Integer
+        ''' <returns></returns>
+        Public Property mz As Double()
+        ''' <summary>
+        ''' the signal intensity strength 
+        ''' value of the corresponding ion 
+        ''' fragment mass data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property into As Double()
 
         ''' <summary>
-        ''' Acquisition time (in minutes)
+        ''' the number of the ion fragments 
+        ''' in current peak list object 
+        ''' data.
         ''' </summary>
-        Public Property ScanTime As Double
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return mz.Length
+            End Get
+        End Property
 
-        Public Property MsLevel As Integer
+        Public Sub New(masses As Double(), intensities As Double())
+            Me.mz = masses
+            Me.into = intensities
+        End Sub
 
-        ''' <summary>
-        ''' Label data (if FTMS), otherwise peak data
-        ''' </summary>
-        Public Property MSData As List(Of FTLabelInfoType)
+        Sub New()
+        End Sub
 
-        ''' <summary>
-        ''' Maximum intensity of the peaks in this scan
-        ''' </summary>
-        Public Property MaxIntensity As Double
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Select](Of T)(project As Func(Of FTLabelInfoType, Integer, T)) As IEnumerable(Of T)
-            Return MSData.Select(project)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ToString() As String
-            Return $"[{ScanNumber}] RT: {ScanTime} = {MaxIntensity}"
-        End Function
     End Class
 End Namespace

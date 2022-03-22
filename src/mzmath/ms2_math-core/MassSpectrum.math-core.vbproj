@@ -527,6 +527,7 @@
     <Compile Include="Spectra\Alignment\ScoreAggregates.vb" />
     <Compile Include="Spectra\Models\MzAnnotation.vb" />
     <Compile Include="Spectra\Models\ms2.vb" />
+    <Compile Include="Spectra\Models\PeakList.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />

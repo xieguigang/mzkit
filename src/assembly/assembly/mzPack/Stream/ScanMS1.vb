@@ -67,8 +67,9 @@ Namespace mzData.mzWebCache
     ''' </summary>
     Public Class ScanMS1 : Inherits MSScan
         Implements ITimeSignal
+        Implements IRetentionTime
 
-        Public Overrides Property rt As Double Implements ITimeSignal.time
+        Public Overrides Property rt As Double Implements ITimeSignal.time, IRetentionTime.rt
         Public Property TIC As Double Implements ITimeSignal.intensity
         Public Property BPC As Double
         Public Property products As ScanMS2()
