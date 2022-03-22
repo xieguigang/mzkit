@@ -56,9 +56,10 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 
-Public Class ScanInfo : Implements IRetentionTime
+Public Class ScanInfo : Implements IRetentionTime, IMsScanData
 
     Public Property CycleId As Integer
     Public Property ExperimentId As Integer
@@ -69,11 +70,11 @@ Public Class ScanInfo : Implements IRetentionTime
 
     Public Property Polarity As Polarity
 
-    Public Property MSLevel As Integer
+    Public Property MSLevel As Integer Implements IMsScanData.MSLevel
 
     Public Property ScanNumber As Integer
 
-    Public Property RetentionTime As Double Implements IRetentionTime.rt
+    Public Property RetentionTime As Double Implements IRetentionTime.rt, IMsScanData.ScanTime
 
     Public Property PeaksCount As Integer
 
@@ -81,11 +82,11 @@ Public Class ScanInfo : Implements IRetentionTime
 
     Public Property HighMz As Double
 
-    Public Property TotalIonCurrent As Single
+    Public Property TotalIonCurrent As Double Implements IMsScanData.TotalIonCurrent
 
     Public Property BasePeakMz As Double
 
-    Public Property BasePeakIntensity As Single
+    Public Property BasePeakIntensity As Double Implements IMsScanData.BasePeakIntensity
 
     Public Property DataTitle As String
 

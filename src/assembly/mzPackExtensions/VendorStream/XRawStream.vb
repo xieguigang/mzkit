@@ -64,7 +64,7 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' thermo raw to mzpack convertor
 ''' </summary>
-Public Class XRawStream : Inherits VendorStreamLoader(Of (scaninfo As SingleScanInfo, ms As RawLabelData))
+Public Class XRawStream : Inherits VendorStreamLoader(Of SingleScanInfo)
 
     ReadOnly raw As MSFileReader
 
@@ -75,23 +75,14 @@ Public Class XRawStream : Inherits VendorStreamLoader(Of (scaninfo As SingleScan
     End Property
 
     Sub New(raw As MSFileReader, Optional scanIdFunc As Func(Of SingleScanInfo, Integer, String) = Nothing)
-        Call MyBase.New(wrapId(scanIdFunc))
+        Call MyBase.New(scanIdFunc)
 
         Me.raw = raw
         Me.raw.Options.MaxScan = raw.ScanMax
     End Sub
 
-    Private Shared Function wrapId(scanIdFunc As Func(Of SingleScanInfo, Integer, String)) As Func(Of (scaninfo As SingleScanInfo, ms As RawLabelData), Integer, String)
-        If scanIdFunc Is Nothing Then
-            Return Nothing
-        Else
-            Return Function(i, j) scanIdFunc(i.scaninfo, j)
-        End If
-    End Function
-
-    Protected Overrides Function defaultScanId(scan As (scaninfo As SingleScanInfo, ms As RawLabelData), i As Integer) As String
+    Protected Overrides Function defaultScanId(scaninfo As SingleScanInfo, i As Integer) As String
         Dim xcms_id As String
-        Dim scaninfo As SingleScanInfo = scan.scaninfo
         Dim nT As Integer = stdNum.Round(scaninfo.RetentionTime * 60)
 
         If scaninfo.MSLevel = 1 Then
@@ -107,43 +98,44 @@ Public Class XRawStream : Inherits VendorStreamLoader(Of (scaninfo As SingleScan
         Return $"{If(scaninfo.MSLevel = 1, "[MS1]", "[MSn]")}[Scan_{scaninfo.ScanNumber}] {scaninfo.FilterText}{xcms_id}"
     End Function
 
-    Protected Overrides Iterator Function pullAllScans(skipEmptyScan As Boolean) As IEnumerable(Of (SingleScanInfo, RawLabelData))
+    Protected Overrides Iterator Function pullAllScans(skipEmptyScan As Boolean) As IEnumerable(Of SingleScanInfo)
         For Each scan As RawLabelData In raw.GetLabelData(skipEmptyScan)
-            Yield (raw.GetScanInfo(scan.ScanNumber), scan)
+            Dim info As SingleScanInfo = raw.GetScanInfo(scan.ScanNumber)
+            info.MSData = scan
+            Yield info
         Next
     End Function
 
-    Protected Overrides Sub walkScan(scan As (scaninfo As SingleScanInfo, ms As RawLabelData))
-        Dim scanInfo As SingleScanInfo = scan.scaninfo
-        Dim mz As Double() = scan.ms.MSData.Select(Function(a) a.Mass).ToArray
-        Dim into As Double() = scan.ms.MSData.Select(Function(a) a.Intensity).ToArray
+    Protected Overrides Sub walkScan(scan As SingleScanInfo)
+        Dim mz As Double() = scan.MSData.Select(Function(a, i) a.Mass).ToArray
+        Dim into As Double() = scan.MSData.Select(Function(a, i) a.Intensity).ToArray
         Dim scanId As String = scanIdFunc(scan, MSscans.Count)
 
-        If scanInfo.MSLevel = 1 Then
+        If scan.MSLevel = 1 Then
             If Not MS1 Is Nothing Then
                 MS1.products = MS2.PopAll
                 MSscans += MS1
             End If
 
             MS1 = New ScanMS1 With {
-                .BPC = scanInfo.BasePeakIntensity,
+                .BPC = scan.BasePeakIntensity,
                 .into = into,
                 .mz = mz,
-                .rt = scanInfo.RetentionTime * 60,
+                .rt = scan.RetentionTime * 60,
                 .scan_id = scanId,
-                .TIC = scanInfo.TotalIonCurrent
+                .TIC = scan.TotalIonCurrent
             }
         Else
             MS2 += New ScanMS2 With {
-                .activationMethod = scanInfo.ActivationType,
-                .centroided = scanInfo.IsCentroided,
-                .charge = scanInfo.ChargeState,
+                .activationMethod = scan.ActivationType,
+                .centroided = scan.IsCentroided,
+                .charge = scan.ChargeState,
                 .collisionEnergy = 0,
-                .intensity = scanInfo.TotalIonCurrent,
-                .parentMz = scanInfo.ParentIonMZ,
+                .intensity = scan.TotalIonCurrent,
+                .parentMz = scan.ParentIonMZ,
                 .scan_id = scanId,
-                .rt = scanInfo.RetentionTime * 60,
-                .polarity = scanInfo.IonMode,
+                .rt = scan.RetentionTime * 60,
+                .polarity = scan.IonMode,
                 .mz = mz,
                 .into = into
             }

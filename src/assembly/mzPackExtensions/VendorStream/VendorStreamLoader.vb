@@ -1,9 +1,10 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 
-Public MustInherit Class VendorStreamLoader(Of T)
+Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
 
     Protected MS1 As ScanMS1 = Nothing
     Protected MS2 As New List(Of ScanMS2)
@@ -30,7 +31,7 @@ Public MustInherit Class VendorStreamLoader(Of T)
         For Each scaninfo As T In pullAllScans(skipEmptyScan)
             Call walkScan(scaninfo)
 
-            If scaninfo.MsLevel = 1 Then
+            If scaninfo.MSLevel = 1 Then
                 scan_times += scaninfo.ScanTime * 60
                 TIC += scaninfo.TotalIonCurrent
                 BPC += scaninfo.BasePeakIntensity
@@ -62,7 +63,4 @@ Public MustInherit Class VendorStreamLoader(Of T)
             .source = rawFileName.FileName
         }
     End Function
-
-
-
 End Class
