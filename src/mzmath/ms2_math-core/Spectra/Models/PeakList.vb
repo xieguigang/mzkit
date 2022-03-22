@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7f4eb9e33b0aa6ae49123be00c8fbb, mzkit\src\assembly\ThermoRawFileReader\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::f8d8955a612c949cb1025a57b788cbde, mzkit\src\assembly\sciexWiffReader\WiffFileReader\PeakList.vb"
 
 ' Author:
 ' 
@@ -37,31 +37,38 @@
 
 ' Code Statistics:
 
-'   Total Lines: 12
+'   Total Lines: 11
 '    Code Lines: 8
 ' Comment Lines: 0
-'   Blank Lines: 4
-'     File Size: 333.00 B
+'   Blank Lines: 3
+'     File Size: 243.00 B
 
 
-' Module Module2
+' Class PeakList
 ' 
-'     Sub: Main
+'     Constructor: (+1 Overloads) Sub New
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Namespace Spectra
 
-Module Module2
+    Public Class PeakList
 
-    Sub Main()
-        Dim wiff As New WiffScanFileReader("E:\mzkit\DATA\test\wiff\MTBLS691\KIT2-0-5504_1020804070_01_0_1_1_01_10000001.wiff")
+        Public ReadOnly mz As Double()
+        Public ReadOnly intensity As Double()
 
-        Dim ms As PeakList = wiff.GetCentroidFromScanNum(10)
+        Public ReadOnly Property Size As Integer
+            Get
+                Return mz.Length
+            End Get
+        End Property
 
-        Pause()
-    End Sub
-End Module
+        Public Sub New(masses As Double(), intensities As Double())
+            Me.mz = masses
+            Me.intensity = intensities
+        End Sub
+
+    End Class
+End Namespace
