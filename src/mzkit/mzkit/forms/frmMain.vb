@@ -651,7 +651,8 @@ Public Class frmMain
             .OutputDock = WindowModules.output.DockState,
             .propertyWindowDock = WindowModules.propertyWin.DockState,
             .featureListDock = WindowModules.rawFeaturesList.DockState,
-            .taskListDock = WindowModules.taskWin.DockState
+            .taskListDock = WindowModules.taskWin.DockState，
+            .language = Globals.Settings.ui.language
         }
 
         Globals.Settings.Save()

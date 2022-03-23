@@ -809,6 +809,9 @@
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmSplashScreen.zh-CN.resx">
+      <DependentUpon>frmSplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
     </EmbeddedResource>
