@@ -94,7 +94,7 @@ Partial Class frmMain
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Ribbon1 = New RibbonLib.Ribbon()
+        Me.Ribbon1 = New Global.RibbonLib.Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip.SuspendLayout()
