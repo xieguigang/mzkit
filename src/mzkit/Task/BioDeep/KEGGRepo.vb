@@ -105,56 +105,40 @@ Module KEGGRepo
     End Function
 
     Public Function RequestKEGGCompounds() As Compound()
-        Dim filepath As String = $"{App.HOME}/Rstudio/mzkit.zip"
-
-        If Not filepath.FileExists Then
-            filepath = $"{App.HOME}/../../Rscript\Library\mzkit_app\data\KEGG_compounds.msgpack"
-
-            Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return KEGGCompoundPack.ReadKeggDb(file)
+        Using zip As New ZipArchive(getMZKitPackage.Open(FileMode.Open, doClear:=False))
+            Using pack = zip.GetEntry("data\KEGG_compounds.msgpack").Open
+                Return KEGGCompoundPack.ReadKeggDb(pack)
             End Using
-        Else
-            Using zip As New ZipArchive(filepath.Open(FileMode.Open, doClear:=False))
-                Using pack = zip.GetEntry("data\KEGG_compounds.msgpack").Open
-                    Return KEGGCompoundPack.ReadKeggDb(pack)
-                End Using
-            End Using
-        End If
+        End Using
     End Function
 
     Public Function RequestKEGGMaps() As Map()
+        Using zip As New ZipArchive(getMZKitPackage.Open(FileMode.Open, doClear:=False))
+            Using pack = zip.GetEntry("data\KEGG_maps.msgpack").Open
+                Return KEGGMapPack.ReadKeggDb(pack)
+            End Using
+        End Using
+    End Function
+
+    Private Function getMZKitPackage() As String
         Dim filepath As String = $"{App.HOME}/Rstudio/mzkit.zip"
 
         If Not filepath.FileExists Then
-            filepath = $"{App.HOME}/../../Rscript\Library\mzkit_app\data\KEGG_maps.msgpack"
+            filepath = $"{App.HOME}/../../src\mzkit\setup/mzkit.zip"
 
-            Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return KEGGMapPack.ReadKeggDb(file)
-            End Using
-        Else
-            Using zip As New ZipArchive(filepath.Open(FileMode.Open, doClear:=False))
-                Using pack = zip.GetEntry("data\KEGG_maps.msgpack").Open
-                    Return KEGGMapPack.ReadKeggDb(pack)
-                End Using
-            End Using
+            If Not filepath.FileExists Then
+                Throw New FileNotFoundException(filepath)
+            End If
         End If
+
+        Return filepath
     End Function
 
     Public Function RequestLipidMaps() As LipidMaps.MetaData()
-        Dim filepath As String = $"{App.HOME}/Rstudio/mzkit.zip"
-
-        If Not filepath.FileExists Then
-            filepath = $"{App.HOME}/../../Rscript\Library\mzkit_app\data\LIPIDMAPS.msgpack"
-
-            Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return LipidMaps.ReadRepository(file)
+        Using zip As New ZipArchive(getMZKitPackage.Open(FileMode.Open, doClear:=False))
+            Using pack = zip.GetEntry("data\LIPIDMAPS.msgpack").Open
+                Return LipidMaps.ReadRepository(pack)
             End Using
-        Else
-            Using zip As New ZipArchive(filepath.Open(FileMode.Open, doClear:=False))
-                Using pack = zip.GetEntry("data\LIPIDMAPS.msgpack").Open
-                    Return LipidMaps.ReadRepository(pack)
-                End Using
-            End Using
-        End If
+        End Using
     End Function
 End Module
