@@ -93,7 +93,12 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
         Globals.Settings.Save()
 
         If ComboBox1.SelectedIndex <> CInt(oldLanguageConfig) Then
-            Call MyApplication.host.showStatusMessage(MyApplication.getLanguageString("language", ComboBox1.SelectedIndex))
+            Call MessageBox.Show(
+                MyApplication.getLanguageString("language", ComboBox1.SelectedIndex),
+                MyApplication.getLanguageString("msgbox_title", ComboBox1.SelectedIndex),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            )
         End If
     End Sub
 
