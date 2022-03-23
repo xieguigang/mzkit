@@ -94,7 +94,7 @@ Partial Class frmMain
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Ribbon1 = New Global.RibbonLib.Ribbon()
+        Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip.SuspendLayout()
@@ -102,104 +102,80 @@ Partial Class frmMain
         '
         'StatusStrip
         '
+        resources.ApplyResources(Me.StatusStrip, "StatusStrip")
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3, Me.ToolStripProgressBar1, Me.ToolStripStatusLabel4})
         Me.StatusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 501)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.StatusStrip.Size = New System.Drawing.Size(1084, 23)
-        Me.StatusStrip.TabIndex = 7
-        Me.StatusStrip.Text = "StatusStrip"
+        Me.ToolTip.SetToolTip(Me.StatusStrip, resources.GetString("StatusStrip.ToolTip"))
         '
         'ToolStripStatusLabel1
         '
+        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 18)
-        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripDropDownButton1
         '
+        resources.ApplyResources(Me.ToolStripDropDownButton1, "ToolStripDropDownButton1")
         Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MoleculeNetworkingToolStripMenuItem, Me.FormulaSearchToolToolStripMenuItem, Me.MzCalculatorToolStripMenuItem, Me.RawFileViewerToolStripMenuItem})
-        Me.ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), System.Drawing.Image)
-        Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
-        Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(149, 21)
-        Me.ToolStripDropDownButton1.Text = "Use m/z Data Toolkits"
         '
         'MoleculeNetworkingToolStripMenuItem
         '
-        Me.MoleculeNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MoleculeNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.MoleculeNetworkingToolStripMenuItem, "MoleculeNetworkingToolStripMenuItem")
         Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
-        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'FormulaSearchToolToolStripMenuItem
         '
-        Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.FormulaSearchToolToolStripMenuItem, "FormulaSearchToolToolStripMenuItem")
         Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
-        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
         '
         'MzCalculatorToolStripMenuItem
         '
-        Me.MzCalculatorToolStripMenuItem.Image = CType(resources.GetObject("MzCalculatorToolStripMenuItem.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.MzCalculatorToolStripMenuItem, "MzCalculatorToolStripMenuItem")
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
-        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.MzCalculatorToolStripMenuItem.Text = "M/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
-        Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.RawFileViewerToolStripMenuItem, "RawFileViewerToolStripMenuItem")
         Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
-        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'ToolStripStatusLabel2
         '
-        Me.ToolStripStatusLabel2.Image = CType(resources.GetObject("ToolStripStatusLabel2.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(135, 18)
-        Me.ToolStripStatusLabel2.Text = "ToolStripStatusLabel2"
         '
         'ToolStripStatusLabel3
         '
-        Me.ToolStripStatusLabel3.Image = CType(resources.GetObject("ToolStripStatusLabel3.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.ToolStripStatusLabel3, "ToolStripStatusLabel3")
         Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(135, 18)
-        Me.ToolStripStatusLabel3.Text = "ToolStripStatusLabel3"
         '
         'ToolStripProgressBar1
         '
+        resources.ApplyResources(Me.ToolStripProgressBar1, "ToolStripProgressBar1")
         Me.ToolStripProgressBar1.Name = "ToolStripProgressBar1"
-        Me.ToolStripProgressBar1.Size = New System.Drawing.Size(100, 17)
         Me.ToolStripProgressBar1.Value = 100
         '
         'ToolStripStatusLabel4
         '
-        Me.ToolStripStatusLabel4.Image = CType(resources.GetObject("ToolStripStatusLabel4.Image"), System.Drawing.Image)
+        resources.ApplyResources(Me.ToolStripStatusLabel4, "ToolStripStatusLabel4")
         Me.ToolStripStatusLabel4.IsLink = True
         Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
-        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(40, 18)
-        Me.ToolStripStatusLabel4.Text = "0/0"
         '
         'Ribbon1
         '
-        Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
+        resources.ApplyResources(Me.Ribbon1, "Ribbon1")
         Me.Ribbon1.Name = "Ribbon1"
         Me.Ribbon1.ResourceIdentifier = Nothing
         Me.Ribbon1.ResourceName = "BioNovoGene.mzkit_win32.RibbonMarkup.ribbon"
         Me.Ribbon1.ShortcutTableResourceName = Nothing
-        Me.Ribbon1.Size = New System.Drawing.Size(1084, 166)
-        Me.Ribbon1.TabIndex = 9
+        Me.ToolTip.SetToolTip(Me.Ribbon1, resources.GetString("Ribbon1.ToolTip"))
         '
         'PanelBase
         '
-        Me.PanelBase.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PanelBase.Location = New System.Drawing.Point(0, 166)
+        resources.ApplyResources(Me.PanelBase, "PanelBase")
         Me.PanelBase.Name = "PanelBase"
-        Me.PanelBase.Size = New System.Drawing.Size(1084, 335)
-        Me.PanelBase.TabIndex = 10
+        Me.ToolTip.SetToolTip(Me.PanelBase, resources.GetString("PanelBase.ToolTip"))
         '
         'Timer1
         '
@@ -208,16 +184,14 @@ Partial Class frmMain
         '
         'frmMain
         '
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(1084, 524)
         Me.Controls.Add(Me.PanelBase)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.Ribbon1)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "BioNovoGene Mzkit"
+        Me.ToolTip.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.StatusStrip.ResumeLayout(False)
         Me.StatusStrip.PerformLayout()
         Me.ResumeLayout(False)
