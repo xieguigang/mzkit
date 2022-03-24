@@ -44,6 +44,7 @@ Namespace MarkupData.mzXML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub println(line As String)
             Call mzXML.Write(line, BinaryStringFormat.NoPrefixOrTermination)
+            Call mzXML.Write(vbLf, BinaryStringFormat.NoPrefixOrTermination)
             Call mzXML.Flush()
         End Sub
 
@@ -75,8 +76,13 @@ Namespace MarkupData.mzXML
 
         Public Sub WriteData(mzData As ScanMS1())
             Dim scanCount As Integer = mzData.Select(Function(si) si.products.Length + 1).Sum
-            Dim startTime As Double = mzData.OrderBy(Function(si) si.rt).First.rt
-            Dim endTime As Double = mzData.OrderByDescending(Function(si) si.rt).Last.rt
+
+            mzData = mzData _
+                .OrderBy(Function(si) si.rt) _
+                .ToArray
+
+            Dim startTime As Double = mzData.First.rt
+            Dim endTime As Double = mzData.Last.rt
             Dim i As i32 = 1
 
             Call WriteHeader(scanCount, startTime, endTime)
