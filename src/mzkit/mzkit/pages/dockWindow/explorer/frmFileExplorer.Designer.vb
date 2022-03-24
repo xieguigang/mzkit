@@ -84,6 +84,7 @@ Partial Class frmFileExplorer
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFileExplorer))
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ctxMenuFiles = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowSummaryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChromatogramOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -109,7 +110,7 @@ Partial Class frmFileExplorer
         Me.ContourPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.OpenViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowSummaryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConvertToMzXMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMenuFiles.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.ctxMenuScript.SuspendLayout()
@@ -126,7 +127,13 @@ Partial Class frmFileExplorer
         '
         Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowSummaryToolStripMenuItem, Me.ChromatogramOverlapToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
         Me.ctxMenuFiles.Name = "ContextMenuStrip1"
-        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 120)
+        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 98)
+        '
+        'ShowSummaryToolStripMenuItem
+        '
+        Me.ShowSummaryToolStripMenuItem.Name = "ShowSummaryToolStripMenuItem"
+        Me.ShowSummaryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ShowSummaryToolStripMenuItem.Text = "Show Summary"
         '
         'ChromatogramOverlapToolStripMenuItem
         '
@@ -261,16 +268,16 @@ Partial Class frmFileExplorer
         '
         'ctxMenuRawFile
         '
-        Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewSnapshotToolStripMenuItem, Me.ToolStripMenuItem3, Me.OpenViewerToolStripMenuItem})
+        Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewSnapshotToolStripMenuItem, Me.ToolStripMenuItem3, Me.OpenViewerToolStripMenuItem, Me.ConvertToMzXMLToolStripMenuItem})
         Me.ctxMenuRawFile.Name = "ctxMenuRawFile"
-        Me.ctxMenuRawFile.Size = New System.Drawing.Size(152, 54)
+        Me.ctxMenuRawFile.Size = New System.Drawing.Size(181, 98)
         '
         'ViewSnapshotToolStripMenuItem
         '
         Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem, Me.ContourPlotToolStripMenuItem})
         Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
-        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
         '
         'RawScatterToolStripMenuItem
@@ -294,20 +301,20 @@ Partial Class frmFileExplorer
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(148, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(177, 6)
         '
         'OpenViewerToolStripMenuItem
         '
         Me.OpenViewerToolStripMenuItem.Image = CType(resources.GetObject("OpenViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.OpenViewerToolStripMenuItem.Name = "OpenViewerToolStripMenuItem"
-        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OpenViewerToolStripMenuItem.Text = "Open Viewer"
         '
-        'ShowSummaryToolStripMenuItem
+        'ConvertToMzXMLToolStripMenuItem
         '
-        Me.ShowSummaryToolStripMenuItem.Name = "ShowSummaryToolStripMenuItem"
-        Me.ShowSummaryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
-        Me.ShowSummaryToolStripMenuItem.Text = "Show Summary"
+        Me.ConvertToMzXMLToolStripMenuItem.Name = "ConvertToMzXMLToolStripMenuItem"
+        Me.ConvertToMzXMLToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConvertToMzXMLToolStripMenuItem.Text = "Convert To mzXML"
         '
         'frmFileExplorer
         '
@@ -355,4 +362,5 @@ Partial Class frmFileExplorer
     Friend WithEvents ContourPlotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ShowSummaryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConvertToMzXMLToolStripMenuItem As ToolStripMenuItem
 End Class
