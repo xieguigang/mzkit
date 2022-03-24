@@ -257,6 +257,21 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCFDraw", "..\visualize\KCF\KCFDraw\KCFDraw.vbproj", "{C9D3D242-E471-4980-A87E-44BA237B79D6}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{2cd05f2c-b62f-4859-844d-e2968d05b4ea}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{4b5f4fc4-545f-4148-8401-bd51ec522e87}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{6ec3d3f5-f19d-4899-af88-161f6238e6e8}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{7df565ae-6e7a-4667-ab6d-9908acbeed8b}*SharedItemsImports = 13
+		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{a60240d1-e78b-4b96-85e3-45256571c2cb}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{ac523ae1-b6b9-49bd-8f0a-49ebe02dcb65}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
+		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BioDeep_database|Any CPU = BioDeep_database|Any CPU
 		BioDeep_database|x64 = BioDeep_database|x64
@@ -880,8 +895,8 @@ Global
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -3940,8 +3955,8 @@ Global
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -4348,8 +4363,8 @@ Global
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -4552,8 +4567,8 @@ Global
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{6CA54AF6-CADC-457E-94B9-384F2990F07E}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -4960,8 +4975,8 @@ Global
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{A8A71B32-DAC6-4FA7-A5C1-0F5E5D5C9EB7}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -5572,8 +5587,8 @@ Global
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -5776,8 +5791,8 @@ Global
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -5980,8 +5995,8 @@ Global
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -6184,8 +6199,8 @@ Global
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -6592,8 +6607,8 @@ Global
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -7000,8 +7015,8 @@ Global
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -7204,8 +7219,8 @@ Global
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -7408,8 +7423,8 @@ Global
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{4921196C-A7F1-487E-A008-F31C25CB65F3}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -7612,8 +7627,8 @@ Global
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -7816,8 +7831,8 @@ Global
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{203506AB-8CB6-454C-98DB-2E27AC94CB17}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -8020,8 +8035,8 @@ Global
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -8224,8 +8239,8 @@ Global
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{C60416D4-B3E2-45E5-BFE0-90D5021647F9}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -8428,8 +8443,8 @@ Global
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{B08C17B2-7C36-404D-9E51-B3348B286EE6}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -8632,8 +8647,8 @@ Global
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -8836,8 +8851,8 @@ Global
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{C5C3428C-D64C-4E79-B239-77ADC66B1156}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -9040,8 +9055,8 @@ Global
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{1579D1A8-73C4-4F97-BB57-3D1E62343599}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -9979,8 +9994,8 @@ Global
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{DE1C8D67-3E8E-436A-A88D-A39A050342E2}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -10105,8 +10120,8 @@ Global
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x64.Build.0 = Debug|Any CPU
+		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x64.ActiveCfg = Debug|x64
+		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x64.Build.0 = Debug|x64
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.Debug|x86.Build.0 = Debug|Any CPU
 		{EAE53986-6DDA-4DA7-96B0-AF6CC78F0C6E}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -10591,8 +10606,8 @@ Global
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -10999,8 +11014,8 @@ Global
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{4E06139A-D524-417F-A980-DB3BF534CBDC}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -11407,8 +11422,8 @@ Global
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{37A4CED9-2CE6-468E-B781-3B0A05E3BEEE}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -11737,8 +11752,8 @@ Global
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x64.Build.0 = Debug|Any CPU
+		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x64.ActiveCfg = Debug|x64
+		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x64.Build.0 = Debug|x64
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.Debug|x86.Build.0 = Debug|Any CPU
 		{319618D7-3F65-4E16-A46A-88C8F11361E7}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -12427,8 +12442,8 @@ Global
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{B028826A-E615-4F26-B192-B9B0A997696A}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -12631,8 +12646,8 @@ Global
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -12835,8 +12850,8 @@ Global
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_UnixDocker|x86.Build.0 = mzkit|Any CPU
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -13981,8 +13996,8 @@ Global
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x64.Build.0 = Debug|Any CPU
+		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x64.ActiveCfg = Debug|x64
+		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x64.Build.0 = Debug|x64
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.Debug|x86.Build.0 = Debug|Any CPU
 		{2CDAE9E0-51D8-400F-83DD-46142415E0AF}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -14389,8 +14404,8 @@ Global
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x64.ActiveCfg = Debug|x64
+		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x64.Build.0 = Debug|x64
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.Debug|x86.Build.0 = Debug|Any CPU
 		{DF66AA70-9AB9-48D0-B492-9D0E0482A651}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -14671,8 +14686,8 @@ Global
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{2288294B-3A1D-40C0-B05B-C5F53EADD5C8}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -15613,8 +15628,8 @@ Global
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x64.Build.0 = Debug|Any CPU
+		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x64.ActiveCfg = Debug|x64
+		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x64.Build.0 = Debug|x64
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.Debug|x86.Build.0 = Debug|Any CPU
 		{54A151D4-F817-4FCF-ABA1-66219B2B638C}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15895,8 +15910,8 @@ Global
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{A60240D1-E78B-4B96-85E3-45256571C2CB}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -16225,8 +16240,8 @@ Global
 		{39FE675E-F451-47DE-8695-98E093775981}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{39FE675E-F451-47DE-8695-98E093775981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39FE675E-F451-47DE-8695-98E093775981}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x64.Build.0 = Debug|Any CPU
+		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x64.ActiveCfg = Debug|x64
+		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x64.Build.0 = Debug|x64
 		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{39FE675E-F451-47DE-8695-98E093775981}.Debug|x86.Build.0 = Debug|Any CPU
 		{39FE675E-F451-47DE-8695-98E093775981}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -16429,8 +16444,8 @@ Global
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x64.Build.0 = Debug|Any CPU
+		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x64.ActiveCfg = Debug|x64
+		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x64.Build.0 = Debug|x64
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.Debug|x86.Build.0 = Debug|Any CPU
 		{62CC1CC2-7E2B-47BA-A745-37C36BD84955}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -16633,8 +16648,8 @@ Global
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x64.Build.0 = Debug|Any CPU
+		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x64.ActiveCfg = Debug|x64
+		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x64.Build.0 = Debug|x64
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.Debug|x86.Build.0 = Debug|Any CPU
 		{72A79DAC-5C7A-44E0-830E-EBED4BC02F22}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -17731,8 +17746,8 @@ Global
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{459B837F-AFAC-4F24-8C74-9786E449D41D}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -17935,8 +17950,8 @@ Global
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x64.Build.0 = Debug|x64
+		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -18139,8 +18154,8 @@ Global
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|x86
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|x86
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|x86
 		{2B482D9B-31B9-4185-A73E-6B0E8534808C}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -18343,8 +18358,8 @@ Global
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{4B5F4FC4-545F-4148-8401-BD51EC522E87}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -18547,8 +18562,8 @@ Global
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_UnixDocker|x86.Build.0 = Debug|x86
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x64.Build.0 = Debug|x64
+		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x86.ActiveCfg = Debug|x86
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit_win32|x86.Build.0 = Debug|x86
 		{EF70BED6-8795-4523-A260-C1ABED9405AA}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -18751,8 +18766,8 @@ Global
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_UnixDocker|x86.Build.0 = Debug|x86
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x64.Build.0 = Debug|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x86.ActiveCfg = Debug|x86
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit_win32|x86.Build.0 = Debug|x86
 		{5D35E122-11C0-4B18-BE08-E658A3F20323}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -18955,8 +18970,8 @@ Global
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x64.Build.0 = Debug|x64
+		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{AC523AE1-B6B9-49BD-8F0A-49EBE02DCB65}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19159,8 +19174,8 @@ Global
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x64.Build.0 = Debug|x64
+		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{7195E03E-D156-4B3F-A284-128DF6960110}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19363,8 +19378,8 @@ Global
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{05DB9B3D-3456-4005-8E95-7D854CDC6C69}.mzkit|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
@@ -19567,8 +19582,8 @@ Global
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x64.Build.0 = Debug|x64
+		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{C9779403-50DF-0334-1325-E2BA59586F98}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19771,8 +19786,8 @@ Global
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x64.Build.0 = Debug|x64
+		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{190A3EE1-48CC-42EA-AA15-98BC3B83CD42}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19975,8 +19990,8 @@ Global
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x64.Build.0 = Debug|x64
+		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{C6F51B7C-C3F9-4BDF-8611-91528C5A096F}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -20179,8 +20194,8 @@ Global
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_UnixDocker|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|Any CPU.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|Any CPU.Build.0 = mzkit_UnixDocker|Any CPU
-		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x64.ActiveCfg = mzkit_UnixDocker|x64
-		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x64.Build.0 = mzkit_UnixDocker|x64
+		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x86.ActiveCfg = mzkit_UnixDocker|Any CPU
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit_win32|x86.Build.0 = mzkit_UnixDocker|Any CPU
 		{A2CDF95F-B0E2-49CC-B3B9-AD8B0E452E4E}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
@@ -20383,8 +20398,8 @@ Global
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x64.Build.0 = Debug|x64
+		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{2FD54B9F-97BC-4254-9111-544CC85C41B1}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -20587,8 +20602,8 @@ Global
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|Any CPU.Build.0 = Debug|Any CPU
-		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x64.ActiveCfg = Debug|x64
-		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x64.Build.0 = Debug|x64
+		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x64.ActiveCfg = mzkit|x64
+		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x64.Build.0 = mzkit|x64
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x86.ActiveCfg = Debug|Any CPU
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit_win32|x86.Build.0 = Debug|Any CPU
 		{C9D3D242-E471-4980-A87E-44BA237B79D6}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -20799,20 +20814,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C1FED87-3DE9-4C58-AFCB-3C3950D15747}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{2cd05f2c-b62f-4859-844d-e2968d05b4ea}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{4b5f4fc4-545f-4148-8401-bd51ec522e87}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
-		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{5fa10d0c-7efb-40b4-bb1c-6efce819abf6}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{6ec3d3f5-f19d-4899-af88-161f6238e6e8}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{7df565ae-6e7a-4667-ab6d-9908acbeed8b}*SharedItemsImports = 13
-		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{a60240d1-e78b-4b96-85e3-45256571c2cb}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{ac523ae1-b6b9-49bd-8f0a-49ebe02dcb65}*SharedItemsImports = 4
-		..\..\..\GCModeller\src\R-sharp\Library\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
-		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
