@@ -166,7 +166,7 @@ Namespace MarkupData.mzXML
             Call mzXML.Seek(Scan0, SeekOrigin.Begin)
 
             Dim sha As SHA1 = New SHA1Managed()
-            Dim sha1 As String = BitConverter.ToString(sha.ComputeHash(mzXML.BaseStream))
+            Dim sha1 As String = BitConverter.ToString(sha.ComputeHash(mzXML.BaseStream)).Replace("-", "").ToLower
 
             Call mzXML.Seek(offset, SeekOrigin.Begin)
             Call mzXML.Write(sha1, BinaryStringFormat.NoPrefixOrTermination)
