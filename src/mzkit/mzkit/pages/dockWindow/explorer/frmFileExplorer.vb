@@ -651,6 +651,8 @@ Public Class frmFileExplorer
                                 info:="Save mzPack data as mzXML file..."
                             )
                     End Using
+
+                    Call MessageBox.Show("Convert to mzXML success!", "MZKit", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             End Using
         End If

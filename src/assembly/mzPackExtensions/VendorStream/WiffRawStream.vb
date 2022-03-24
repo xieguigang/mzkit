@@ -22,11 +22,33 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         Me.raw = raw
     End Sub
 
+    Private Shared Sub RemoveAbNoise(ByRef mz As Double(), ByRef into As Double())
+        Dim intensity As Double() = into
+        Dim clean As ms2() = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = intensity(i)
+                            }
+                        End Function) _
+                .AbSciexBaselineHandling _
+                .ToArray
+
+        mz = clean.Select(Function(i) i.mz).ToArray
+        into = clean.Select(Function(i) i.intensity).ToArray
+    End Sub
+
     Protected Overrides Sub walkScan(scan As ScanInfo)
         Dim msData As PeakList = raw.GetCentroidFromScanNum(scan.ScanNumber)
         Dim mz As Double() = msData.mz
         Dim into As Double() = msData.into
         Dim scanId As String = scanIdFunc(scan, MSscans.Count)
+
+        Call RemoveAbNoise(mz, into)
+
+        If mz.Length = 0 Then
+            Return
+        End If
 
         If scan.MSLevel = 1 Then
             If Not MS1 Is Nothing Then
@@ -43,23 +65,6 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 .TIC = scan.TotalIonCurrent
             }
         Else
-            Dim clean As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = into(i)
-                            }
-                        End Function) _
-                .AbSciexBaselineHandling _
-                .ToArray
-
-            mz = clean.Select(Function(i) i.mz).ToArray
-            into = clean.Select(Function(i) i.intensity).ToArray
-
-            If mz.Length = 0 Then
-                Return
-            End If
-
             MS2 += New ScanMS2 With {
                 .activationMethod = ActivationMethods.CID,
                 .centroided = True,
