@@ -138,7 +138,7 @@ Namespace MarkupData.mzXML
           basePeakIntensity=""{scan.BPC}""
           totIonCurrent=""{scan.TIC}""
           msInstrumentID=""1"">
-      <peaks compressionType=""gzip""
+      <peaks compressionType=""none""
              compressedLen=""{size}""
              precision=""64""
              byteOrder=""network""
@@ -165,9 +165,10 @@ Namespace MarkupData.mzXML
 
             len = rawBytes.Length
 
-            Using buffer As New MemoryStream(rawBytes)
-                Return buffer.GZipAsBase64(noMagic:=True)
-            End Using
+            'Using buffer As New MemoryStream(rawBytes)
+            '    Return buffer.GZipAsBase64(noMagic:=True)
+            'End Using
+            Return Convert.ToBase64String(rawBytes)
         End Function
 
         Private Sub writeScan(scan As ScanMS2, ByRef scanNum As i32)
@@ -191,7 +192,7 @@ Namespace MarkupData.mzXML
           totIonCurrent=""{scan.into.Sum}""
           msInstrumentID=""2"">
       <precursorMz precursorScanNum=""1"" precursorIntensity=""{scan.intensity}"" precursorCharge=""{scan.charge}"" activationMethod=""{scan.activationMethod}"" windowWideness=""2.0"">{scan.parentMz}</precursorMz>
-      <peaks compressionType=""gzip""
+      <peaks compressionType=""none""
              compressedLen=""{size}""
              precision=""64""
              byteOrder=""network""
