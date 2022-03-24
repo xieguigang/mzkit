@@ -2,6 +2,9 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
 Namespace MarkupData.mzXML
@@ -68,27 +71,83 @@ Namespace MarkupData.mzXML
         End Sub
 
         Public Sub WriteData(mzData As ScanMS1())
-            Dim scanCount As Integer = mzData.Select(Function(i) i.products.Length + 1).Sum
-            Dim startTime As Double = mzData.OrderBy(Function(i) i.rt).First.rt
-            Dim endTime As Double = mzData.OrderByDescending(Function(i) i.rt).Last.rt
+            Dim scanCount As Integer = mzData.Select(Function(si) si.products.Length + 1).Sum
+            Dim startTime As Double = mzData.OrderBy(Function(si) si.rt).First.rt
+            Dim endTime As Double = mzData.OrderByDescending(Function(si) si.rt).Last.rt
+            Dim i As i32 = 1
 
             Call WriteHeader(scanCount, startTime, endTime)
 
             For Each scan As ScanMS1 In mzData
-                Call writeScan(scan)
+                Call writeScan(scan, i)
 
                 For Each ion As ScanMS2 In scan.products
-                    Call writeScan(ion)
+                    Call writeScan(ion, i)
                 Next
             Next
         End Sub
 
-        Private Sub writeScan(scan As ScanMS1)
+        Private Sub writeScan(scan As ScanMS1, ByRef scanNum As i32)
+            Dim mzint As String = encode(scan)
 
+            Call println($"<scan num=""{++scanNum}""
+          scanType=""Full""
+          centroided=""1""
+          msLevel=""1""
+          peaksCount=""{scan.size}""
+          polarity=""{scan.meta.TryGetValue("polarity", [default]:="+")}""
+          retentionTime=""PT{scan.rt}S""
+          lowMz=""{scan.mz.Min}""
+          highMz=""{scan.mz.Max}""
+          basePeakMz=""{scan.mz(which.Max(scan.into))}""
+          basePeakIntensity=""{scan.BPC}""
+          totIonCurrent=""{scan.TIC}""
+          msInstrumentID=""1"">
+      <peaks compressionType=""zlib""
+             compressedLen=""{mzint.Length}""
+             precision=""64""
+             byteOrder=""network""
+             contentType=""m/z-int"">{mzint}</peaks>
+    </scan>")
         End Sub
 
-        Private Sub writeScan(scan As ScanMS2)
+        Private Function encode(msscan As MSScan) As String
+            Dim x As New List(Of Double)
 
+            For i As Integer = 0 To msscan.size - 1
+                x.Add(msscan.into(i))
+                x.Add(msscan.mz(i))
+            Next
+
+            Using buffer As New MemoryStream(x.Select(AddressOf BitConverter.GetBytes).IteratesALL.ToArray)
+                Return buffer.GZipAsBase64
+            End Using
+        End Function
+
+        Private Sub writeScan(scan As ScanMS2, ByRef scanNum As i32)
+            Dim mzint As String = encode(scan)
+
+            Call println($"<scan num=""{++scanNum}""
+          scanType=""Full""
+          centroided=""1""
+          msLevel=""2""
+          peaksCount=""{scan.size}""
+          polarity=""{If(scan.polarity > 0, "+", "-")}""
+          retentionTime=""PT{scan.rt}S""
+          collisionEnergy=""{scan.collisionEnergy}""
+          lowMz=""{scan.mz.Min}""
+          highMz=""{scan.mz.Max}""
+          basePeakMz=""{scan.mz(which.Max(scan.into))}""
+          basePeakIntensity=""{scan.into.Max}""
+          totIonCurrent=""{scan.into.Sum}""
+          msInstrumentID=""2"">
+      <precursorMz precursorScanNum=""1"" precursorIntensity=""{scan.intensity}"" precursorCharge=""{scan.charge}"" activationMethod=""{scan.activationMethod}"" windowWideness=""2.0"">{scan.parentMz}</precursorMz>
+      <peaks compressionType=""zlib""
+             compressedLen=""{mzint.Length}""
+             precision=""64""
+             byteOrder=""network""
+             contentType=""m/z-int"">{mzint}</peaks>
+    </scan>")
         End Sub
 
         Private Sub WriteSha1()
