@@ -1,5 +1,5 @@
 imports "math" from "mzkit";
-imports "visual" from "mzkit.plot";
+imports "visual" from "mzplot";
 
 require(buffer);
 

@@ -56,8 +56,29 @@ Namespace MarkupData.mzXML
                 fileType=""{file.fileType}""
                 fileSha1=""{file.fileShal}""/>")
             Next
-            For Each instrument As msInstrument In msInstruments
-                Call println($"<msInstrument msInstrumentID=""{instrument.msInstrumentID}"">
+
+            If msInstruments.IsNullOrEmpty Then
+                Call println("
+<msInstrument msInstrumentID=""1"">
+      <msManufacturer category=""msManufacturer"" value=""Thermo Scientific""/>
+      <msModel category=""msModel"" value=""LTQ Orbitrap XL""/>
+      <msIonisation category=""msIonisation"" value=""electrospray ionization""/>
+      <msMassAnalyzer category=""msMassAnalyzer"" value=""orbitrap""/>
+      <msDetector category=""msDetector"" value=""inductive detector""/>
+      <software type=""acquisition"" name=""Xcalibur"" version=""2.5.5 SP2""/>
+    </msInstrument>
+    <msInstrument msInstrumentID=""2"">
+      <msManufacturer category=""msManufacturer"" value=""Thermo Scientific""/>
+      <msModel category=""msModel"" value=""LTQ Orbitrap XL""/>
+      <msIonisation category=""msIonisation"" value=""electrospray ionization""/>
+      <msMassAnalyzer category=""msMassAnalyzer"" value=""radial ejection linear ion trap""/>
+      <msDetector category=""msDetector"" value=""electron multiplier""/>
+      <software type=""acquisition"" name=""Xcalibur"" version=""2.5.5 SP2""/>
+    </msInstrument>
+")
+            Else
+                For Each instrument As msInstrument In msInstruments
+                    Call println($"<msInstrument msInstrumentID=""{instrument.msInstrumentID}"">
       <msManufacturer category=""msManufacturer"" value=""Thermo Scientific""/>
       <msModel category=""msModel"" value=""LTQ Orbitrap XL""/>
       <msIonisation category=""msIonisation"" value=""electrospray ionization""/>
@@ -65,7 +86,9 @@ Namespace MarkupData.mzXML
       <msDetector category=""msDetector"" value=""inductive detector""/>
       <software type=""acquisition"" name=""Xcalibur"" version=""2.5.5 SP2""/>
     </msInstrument>")
-            Next
+                Next
+            End If
+
             For Each process As dataProcessing In dataProcessings
                 Call println($"<dataProcessing>
       <software type=""conversion"" name=""ProteoWizard software"" version=""3.0.9220""/>
@@ -97,7 +120,8 @@ Namespace MarkupData.mzXML
         End Sub
 
         Private Sub writeScan(scan As ScanMS1, ByRef scanNum As i32)
-            Dim mzint As String = encode(scan)
+            Dim size As Integer = 0
+            Dim mzint As String = encode(scan, len:=size)
             Dim i As String = ++scanNum
 
             Call scanOffsets.Add(i, mzXML.Position)
@@ -114,15 +138,15 @@ Namespace MarkupData.mzXML
           basePeakIntensity=""{scan.BPC}""
           totIonCurrent=""{scan.TIC}""
           msInstrumentID=""1"">
-      <peaks compressionType=""zlib""
-             compressedLen=""{mzint.Length}""
+      <peaks compressionType=""gzip""
+             compressedLen=""{size}""
              precision=""64""
              byteOrder=""network""
              contentType=""m/z-int"">{mzint}</peaks>
     </scan>")
         End Sub
 
-        Private Function encode(msscan As MSScan) As String
+        Private Function encode(msscan As MSScan, ByRef len As Integer) As String
             Dim x As New List(Of Double)
 
             For i As Integer = 0 To msscan.size - 1
@@ -130,13 +154,21 @@ Namespace MarkupData.mzXML
                 x.Add(msscan.mz(i))
             Next
 
-            Using buffer As New MemoryStream(x.Select(AddressOf BitConverter.GetBytes).IteratesALL.ToArray)
+            Dim rawBytes As Byte() = x _
+                .Select(AddressOf BitConverter.GetBytes) _
+                .IteratesALL _
+                .ToArray
+
+            len = rawBytes.Length
+
+            Using buffer As New MemoryStream(rawBytes)
                 Return buffer.GZipAsBase64
             End Using
         End Function
 
         Private Sub writeScan(scan As ScanMS2, ByRef scanNum As i32)
-            Dim mzint As String = encode(scan)
+            Dim size As Integer = 0
+            Dim mzint As String = encode(scan, len:=size)
             Dim i As String = ++scanNum
 
             Call scanOffsets.Add(i, mzXML.Position)
@@ -155,8 +187,8 @@ Namespace MarkupData.mzXML
           totIonCurrent=""{scan.into.Sum}""
           msInstrumentID=""2"">
       <precursorMz precursorScanNum=""1"" precursorIntensity=""{scan.intensity}"" precursorCharge=""{scan.charge}"" activationMethod=""{scan.activationMethod}"" windowWideness=""2.0"">{scan.parentMz}</precursorMz>
-      <peaks compressionType=""zlib""
-             compressedLen=""{mzint.Length}""
+      <peaks compressionType=""gzip""
+             compressedLen=""{size}""
              precision=""64""
              byteOrder=""network""
              contentType=""m/z-int"">{mzint}</peaks>
