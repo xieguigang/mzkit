@@ -285,8 +285,13 @@ Public Module GC2Dimensional
         Call Console.WriteLine($"Dimension2: {yp}")
         Call Console.WriteLine()
 
-        If xp * yp < numpoints Then
-            Call $"The last {numpoints - xp * yp} signals will be omitted.".Warning
+        Dim delta As Integer = stdNum.Abs(xp * yp - numpoints)
+
+        If delta <> 0 Then
+            Dim msg As String = $"the last {delta} signals points will be omitted."
+
+            Call msg.Warning
+            Call Console.WriteLine(msg)
         End If
 
         Return New Size(xp, yp)
