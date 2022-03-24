@@ -53,6 +53,7 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemistry.Model
+Imports BioNovoGene.BioDeep.Chemistry.Model.Drawing
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -106,7 +107,7 @@ Public Class frmSMILESViewer
             model = IO.LoadKCF(kcf)
         End If
 
-        Dim visual As Image = KEGGdraw.Canvas.Draw(model).AsGDIImage
+        Dim visual As Image = model.Draw().AsGDIImage
 
         PictureBox1.BackgroundImage = visual
     End Sub

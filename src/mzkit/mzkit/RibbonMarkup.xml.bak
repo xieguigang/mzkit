@@ -2230,6 +2230,14 @@
         <Image MinDPI="192">Res/preferences-system-sharing.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdGCxGCViewer" Id="179" LabelTitle="GCxGC Viewer" LabelDescription="GCxGC Viewer" TooltipTitle="GCxGC Viewer" TooltipDescription="GCxGC Viewer">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2341,6 +2349,7 @@
                 <Button CommandName="cmdButtonShowExplorer" />
                 <Button CommandName="cmdShowGCMSExplorer" />
                 <Button CommandName="cmdShowMRMExplorer" />
+                <Button CommandName="cmdGCxGCViewer" />
                 <Button CommandName="cmdButtonMsImaging" />
               </SplitButtonGallery>
               <Button CommandName="cmdButtonShowSearchList" />
@@ -2520,7 +2529,7 @@
               <Scale Group="cmdGroupToolsActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupToolsActions" ApplicationModes="0,1" SizeDefinition="ThreeButtons">
+          <Group CommandName="cmdGroupToolsActions" ApplicationModes="0,1" SizeDefinition="FourButtons">
             <Button CommandName="cmdButtonMzCalculator" />
             <Button CommandName="cmdButtonMzSearch" />
             <Button CommandName="cmdButtonShowSpectrumSearchPage" />

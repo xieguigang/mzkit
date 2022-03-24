@@ -61,6 +61,11 @@ Imports Microsoft.VisualBasic.Language
 Public Module RawStream
 
     <Extension>
+    Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Return New WiffRawStream(raw).StreamTo(println:=println)
+    End Function
+
+    <Extension>
     Public Function LoadFromXRaw(raw As MSFileReader, Optional println As Action(Of String) = Nothing) As mzPack
         Return New XRawStream(raw).StreamTo(println:=println)
     End Function

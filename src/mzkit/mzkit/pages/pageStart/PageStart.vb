@@ -152,7 +152,7 @@ Public Class PageStart
         Dim firstFile As String = files.ElementAtOrDefault(Scan0)
 
         If Not firstFile Is Nothing Then
-            If firstFile.ExtensionSuffix("raw") Then
+            If firstFile.ExtensionSuffix("raw", "wiff") Then
                 Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
                 Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(WindowModules.rawFeaturesList.CurrentRawFile)
             Else

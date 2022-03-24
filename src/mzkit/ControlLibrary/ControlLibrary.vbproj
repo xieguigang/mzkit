@@ -146,6 +146,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GCxGC\PeakSelector.Designer.vb">
+      <DependentUpon>PeakSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GCxGC\PeakSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MSI\ColorScaleMap.Designer.vb">
       <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </Compile>
@@ -215,6 +221,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GCxGC\PeakSelector.resx">
+      <DependentUpon>PeakSelector.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MSI\ColorScaleMap.resx">
       <DependentUpon>ColorScaleMap.vb</DependentUpon>
     </EmbeddedResource>

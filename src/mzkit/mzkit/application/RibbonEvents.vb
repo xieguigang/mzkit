@@ -154,6 +154,7 @@ Module RibbonEvents
 
         AddHandler ribbonItems.MRMLibrary.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmMRMLibrary)(Nothing)
         AddHandler ribbonItems.QuantifyIons.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmQuantifyIons)(Nothing)
+        AddHandler ribbonItems.GCxGCViewer.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmGCxGCViewer)(Nothing)
 
         AddHandler ribbonItems.LogInBioDeep.ExecuteEvent, Sub() Call New frmLogin().ShowDialog()
 

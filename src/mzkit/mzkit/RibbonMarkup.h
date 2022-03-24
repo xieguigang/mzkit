@@ -879,5 +879,12 @@
 #define cmdButtonViewSMILES_TooltipDescription_RESID 60088
 #define cmdButtonViewSMILES_SmallImages_192__RESID 60089
 #define cmdButtonViewSMILES_LargeImages_192__RESID 60090
-#define InternalCmd2_LabelTitle_RESID 60091
-#define InternalCmd4_LabelTitle_RESID 60092
+#define cmdGCxGCViewer 179 
+#define cmdGCxGCViewer_LabelTitle_RESID 60091
+#define cmdGCxGCViewer_LabelDescription_RESID 60092
+#define cmdGCxGCViewer_TooltipTitle_RESID 60093
+#define cmdGCxGCViewer_TooltipDescription_RESID 60094
+#define cmdGCxGCViewer_SmallImages_192__RESID 60095
+#define cmdGCxGCViewer_LargeImages_192__RESID 60096
+#define InternalCmd2_LabelTitle_RESID 60097
+#define InternalCmd4_LabelTitle_RESID 60098

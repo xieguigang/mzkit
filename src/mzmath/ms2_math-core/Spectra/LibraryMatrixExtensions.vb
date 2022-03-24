@@ -166,5 +166,14 @@ Namespace Spectra
                     .ToArray
             End If
         End Function
+
+        <Extension>
+        Public Function AbSciexBaselineHandling(msData As IEnumerable(Of ms2), Optional cut As Integer = 2) As IEnumerable(Of ms2)
+            Return msData _
+                .GroupBy(Function(i) i.intensity, offsets:=1) _
+                .Where(Function(i) i.Length < cut) _
+                .Select(Function(i) i.value) _
+                .IteratesALL
+        End Function
     End Module
 End Namespace

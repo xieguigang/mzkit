@@ -17,7 +17,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         End Get
     End Property
 
-    Public Sub New(raw As WiffScanFileReader, scanIdFunc As Func(Of ScanInfo, Integer, String))
+    Public Sub New(raw As WiffScanFileReader, Optional scanIdFunc As Func(Of ScanInfo, Integer, String) = Nothing)
         MyBase.New(scanIdFunc)
         Me.raw = raw
     End Sub
@@ -43,6 +43,23 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 .TIC = scan.TotalIonCurrent
             }
         Else
+            Dim clean As ms2() = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = into(i)
+                            }
+                        End Function) _
+                .AbSciexBaselineHandling _
+                .ToArray
+
+            mz = clean.Select(Function(i) i.mz).ToArray
+            into = clean.Select(Function(i) i.intensity).ToArray
+
+            If mz.Length = 0 Then
+                Return
+            End If
+
             MS2 += New ScanMS2 With {
                 .activationMethod = ActivationMethods.CID,
                 .centroided = True,
@@ -68,6 +85,12 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
         For Each name As String In raw.sampleNames
             Call raw.SetCurrentSample(++i)
+
+            Dim n As Integer = raw.GetLastSpectrumNumber
+
+            For scanId As Integer = 0 To n
+                Yield raw.GetScan(scanId)
+            Next
         Next
     End Function
 End Class

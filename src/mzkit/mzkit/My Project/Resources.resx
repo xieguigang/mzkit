@@ -169,6 +169,12 @@
   <data name="logo_2x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo@2x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="msgbox_title_en" xml:space="preserve">
+    <value>BioNovoGene MZKit</value>
+  </data>
+  <data name="msgbox_title_zh" xml:space="preserve">
+    <value>苏州帕诺米克MZKit代谢组学原始数据工具箱</value>
+  </data>
   <data name="preferences_system_notifications" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Res\preferences-system-notifications.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

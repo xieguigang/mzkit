@@ -239,6 +239,9 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>1</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
@@ -800,11 +803,23 @@
     <EmbeddedResource Include="forms\frmDOI.zh-CN.resx">
       <DependentUpon>frmDOI.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmLicense.zh-CN.resx">
+      <DependentUpon>frmLicense.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmLogin.zh-CN.resx">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmMain.zh-CN.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmSplashScreen.zh-CN.resx">
+      <DependentUpon>frmSplashScreen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmUserAgreement.resx">
       <DependentUpon>frmUserAgreement.vb</DependentUpon>
@@ -815,16 +830,28 @@
     <EmbeddedResource Include="forms\Inputs\InputDataVisual.resx">
       <DependentUpon>InputDataVisual.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputDataVisual.zh-CN.resx">
+      <DependentUpon>InputDataVisual.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputDialog.resx">
       <DependentUpon>InputDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputFeatureFilter.resx">
       <DependentUpon>InputFeatureFilter.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputFeatureFilter.zh-CN.resx">
+      <DependentUpon>InputFeatureFilter.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputImageProcessor.resx">
       <DependentUpon>InputImageProcessor.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputImageProcessor.zh-CN.resx">
+      <DependentUpon>InputImageProcessor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputNetworkLayout.resx">
+      <DependentUpon>InputNetworkLayout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Inputs\InputNetworkLayout.zh-CN.resx">
       <DependentUpon>InputNetworkLayout.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Inputs\InputRSymbol.resx">
@@ -853,6 +880,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmGCxGCViewer.resx">
+      <DependentUpon>frmGCxGCViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmHtmlViewer.resx">
       <DependentUpon>frmHtmlViewer.vb</DependentUpon>
@@ -944,6 +974,9 @@
     <EmbeddedResource Include="pages\dockWindow\tools\TaskListWindow.resx">
       <DependentUpon>TaskListWindow.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\pageStart\PageStart.zh-CN.resx">
+      <DependentUpon>PageStart.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\pageStart\VideoCards.resx">
       <DependentUpon>VideoCards.vb</DependentUpon>
     </EmbeddedResource>
@@ -982,6 +1015,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

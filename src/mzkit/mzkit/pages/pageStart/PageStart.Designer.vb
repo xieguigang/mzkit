@@ -101,62 +101,37 @@ Partial Class PageStart
         '
         'Panel1
         '
+        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.header_background_image
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 677)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1498, 62)
-        Me.Panel1.TabIndex = 0
         '
         'PictureBox1
         '
+        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.header_foreground_image
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 11)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(1498, 51)
-        Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
         'FlowLayoutPanel1
         '
-        Me.FlowLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FlowLayoutPanel1.AutoScroll = True
-        Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(986, 119)
-        Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
+        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 524)
-        Me.FlowLayoutPanel1.TabIndex = 1
-        Me.FlowLayoutPanel1.WrapContents = False
         '
         'PictureBox2
         '
+        resources.ApplyResources(Me.PictureBox2, "PictureBox2")
         Me.PictureBox2.BackgroundImage = Global.BioNovoGene.mzkit_win32.My.Resources.Resources.Home_Logo
-        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(33, 22)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(529, 193)
-        Me.PictureBox2.TabIndex = 3
         Me.PictureBox2.TabStop = False
         '
         'LinkLabel1
         '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
         Me.LinkLabel1.ImageList = Me.ImageList1
-        Me.LinkLabel1.Location = New System.Drawing.Point(110, 254)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(147, 20)
-        Me.LinkLabel1.TabIndex = 4
         Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "View Raw Data File"
-        Me.LinkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ImageList1
         '
@@ -166,93 +141,55 @@ Partial Class PageStart
         '
         'PictureBox3
         '
-        Me.PictureBox3.BackgroundImage = CType(resources.GetObject("PictureBox3.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox3.Location = New System.Drawing.Point(72, 242)
+        resources.ApplyResources(Me.PictureBox3, "PictureBox3")
         Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(32, 33)
-        Me.PictureBox3.TabIndex = 5
         Me.PictureBox3.TabStop = False
         '
         'LinkLabel2
         '
-        Me.LinkLabel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel2.AutoSize = True
+        resources.ApplyResources(Me.LinkLabel2, "LinkLabel2")
         Me.LinkLabel2.DisabledLinkColor = System.Drawing.Color.Silver
-        Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        Me.LinkLabel2.Location = New System.Drawing.Point(989, 35)
         Me.LinkLabel2.Name = "LinkLabel2"
-        Me.LinkLabel2.Size = New System.Drawing.Size(447, 62)
-        Me.LinkLabel2.TabIndex = 6
         Me.LinkLabel2.TabStop = True
-        Me.LinkLabel2.Text = "News                     "
         Me.LinkLabel2.VisitedLinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 72.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.ForeColor = System.Drawing.Color.Teal
-        Me.Label1.Location = New System.Drawing.Point(140, 65)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(307, 124)
-        Me.Label1.TabIndex = 7
-        Me.Label1.Text = "Mzkit"
-        Me.Label1.Visible = False
         '
         'PictureBox4
         '
-        Me.PictureBox4.BackgroundImage = CType(resources.GetObject("PictureBox4.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox4.Location = New System.Drawing.Point(72, 288)
+        resources.ApplyResources(Me.PictureBox4, "PictureBox4")
         Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(32, 33)
-        Me.PictureBox4.TabIndex = 9
         Me.PictureBox4.TabStop = False
         '
         'LinkLabel3
         '
-        Me.LinkLabel3.AutoSize = True
-        Me.LinkLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        resources.ApplyResources(Me.LinkLabel3, "LinkLabel3")
         Me.LinkLabel3.ImageList = Me.ImageList1
-        Me.LinkLabel3.Location = New System.Drawing.Point(110, 300)
         Me.LinkLabel3.Name = "LinkLabel3"
-        Me.LinkLabel3.Size = New System.Drawing.Size(161, 20)
-        Me.LinkLabel3.TabIndex = 8
         Me.LinkLabel3.TabStop = True
-        Me.LinkLabel3.Text = "R# Script Automation"
-        Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PictureBox5
         '
-        Me.PictureBox5.BackgroundImage = CType(resources.GetObject("PictureBox5.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox5.Location = New System.Drawing.Point(72, 335)
+        resources.ApplyResources(Me.PictureBox5, "PictureBox5")
         Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(32, 33)
-        Me.PictureBox5.TabIndex = 11
         Me.PictureBox5.TabStop = False
         '
         'LinkLabel4
         '
-        Me.LinkLabel4.AutoSize = True
-        Me.LinkLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        resources.ApplyResources(Me.LinkLabel4, "LinkLabel4")
         Me.LinkLabel4.ImageList = Me.ImageList1
-        Me.LinkLabel4.Location = New System.Drawing.Point(110, 347)
         Me.LinkLabel4.Name = "LinkLabel4"
-        Me.LinkLabel4.Size = New System.Drawing.Size(105, 20)
-        Me.LinkLabel4.TabIndex = 10
         Me.LinkLabel4.TabStop = True
-        Me.LinkLabel4.Text = "Visit BioDeep"
-        Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PageStart
         '
+        resources.ApplyResources(Me, "$this")
         Me.AllowDrop = True
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.Panel1)
@@ -268,7 +205,6 @@ Partial Class PageStart
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Name = "PageStart"
-        Me.Size = New System.Drawing.Size(1498, 739)
         Me.Panel1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()

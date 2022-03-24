@@ -58,6 +58,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports stdNum = System.Math
 
 Public Class ScanInfo : Implements IRetentionTime, IMsScanData
 
@@ -89,6 +90,7 @@ Public Class ScanInfo : Implements IRetentionTime, IMsScanData
     Public Property BasePeakIntensity As Double Implements IMsScanData.BasePeakIntensity
 
     Public Property DataTitle As String
+    Public Property SampleName As String
 
     Public Property PrecursorMz As Double
 
@@ -103,5 +105,22 @@ Public Class ScanInfo : Implements IRetentionTime, IMsScanData
     Public Property IsolationCenter As Double
 
     Public Property IsolationWidth As Double
+
+    Public Overrides Function ToString() As String
+        Dim xcms_id As String
+        Dim nT As Integer = stdNum.Round(RetentionTime * 60)
+
+        If MSLevel = 1 Then
+            xcms_id = ""
+        Else
+            If nT = 0 Then
+                xcms_id = $" M{stdNum.Round(PrecursorMz)}"
+            Else
+                xcms_id = $" M{stdNum.Round(PrecursorMz)}T{nT}"
+            End If
+        End If
+
+        Return $"{If(MSLevel = 1, "[MS1]", "[MSn]")}[Scan_{ScanNumber}@{SampleName}] {DataTitle}{xcms_id}"
+    End Function
 
 End Class
