@@ -157,6 +157,7 @@ Namespace MarkupData.mzXML
             Dim rawBytes As Byte() = x _
                 .Select(AddressOf BitConverter.GetBytes) _
                 .IteratesALL _
+                .Reverse _
                 .ToArray
 
             len = rawBytes.Length
