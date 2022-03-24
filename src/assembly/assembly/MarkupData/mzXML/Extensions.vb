@@ -67,6 +67,13 @@ Namespace MarkupData.mzXML
         ''' </summary>
         ''' <param name="peaks"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the encoded peaks data base64 string content:
+        ''' 
+        ''' ```
+        ''' [intensity,mz][intensity,mz]
+        ''' ```
+        ''' </remarks>
         <Extension>
         Public Function ExtractMzI(peaks As peaks) As ms2()
             Dim floats#() = peaks.Base64Decode(True)

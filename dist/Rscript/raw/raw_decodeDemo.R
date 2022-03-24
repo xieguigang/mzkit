@@ -1,13 +1,15 @@
 imports "math" from "mzkit";
-imports "visual" from "mzkit.plot";
+imports "visual" from "mzplot";
 
 require(buffer);
+
+setwd(@dir);
 
 #region "demo data"
 
 # the raw data base64 string copy from the peaks node
 # of a demo mzxml file
-const raw as string = "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";
+const raw as string = "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";
 
 #endregion
 
@@ -17,12 +19,12 @@ let runDecode_demo as function(raw as string) {
 	# from the raw data string 
 	const data_decode as double = raw
 	# decode the base64 string at first for get the raw byte stream data
-	:> base64_decode      
+	|> base64_decode      
 	# the demo raw bytes data stream is compressed in zlib format
 	# do zlib decompression of the stream data
-	:> zlib.decompress
+	|> gzip.decompress
 	# then we run bit convert of the byte stream data as floats number array
-	:> float(networkOrder = TRUE, sizeOf = 64)
+	|> float(networkOrder = TRUE, sizeOf = 64)
 	;
 
 	print("demo decode of the raw MS data:");
@@ -36,7 +38,8 @@ let runDecode_demo as function(raw as string) {
 	
 	# finally we have the ms matrix
 	# decoded from the mzxml file
-	const ms_matrix = data.frame("m/z" = mz, intensity = into);
+	ms_matrix = data.frame("m/z" = mz, intensity = into);
+	ms_matrix = ms_matrix[ order(ms_matrix[, "intensity"], decreasing = TRUE), ];	
 
 	cat("\n\n");
 
@@ -51,9 +54,9 @@ bitmap(file = `${dirname(@script)}/raw_decodeDemo.png`) {
 	# run demo data decode and then plot generated 
 	# matrix object to a bitmap file
 	raw
-	:> runDecode_demo()
-	:> centroid
-	:> plot
+	|> runDecode_demo()
+	|> centroid
+	|> plot
 	;
 }
 
