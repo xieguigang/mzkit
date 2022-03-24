@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Security.Cryptography
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -15,6 +16,7 @@ Namespace MarkupData.mzXML
         ReadOnly parentFiles As parentFile()
         ReadOnly msInstruments As msInstrument()
         ReadOnly dataProcessings As dataProcessing()
+        ReadOnly scanOffsets As New Dictionary(Of String, Long)
 
         Dim disposedValue As Boolean
 
@@ -41,7 +43,8 @@ Namespace MarkupData.mzXML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub println(line As String)
-            Call Me.mzXML.Write(line, BinaryStringFormat.NoPrefixOrTermination)
+            Call mzXML.Write(line, BinaryStringFormat.NoPrefixOrTermination)
+            Call mzXML.Flush()
         End Sub
 
         Private Sub WriteHeader(scanCount As Integer, startTime As Double, endTime As Double)
@@ -89,8 +92,10 @@ Namespace MarkupData.mzXML
 
         Private Sub writeScan(scan As ScanMS1, ByRef scanNum As i32)
             Dim mzint As String = encode(scan)
+            Dim i As String = ++scanNum
 
-            Call println($"<scan num=""{++scanNum}""
+            Call scanOffsets.Add(i, mzXML.Position)
+            Call println($"<scan num=""{i}""
           scanType=""Full""
           centroided=""1""
           msLevel=""1""
@@ -126,8 +131,10 @@ Namespace MarkupData.mzXML
 
         Private Sub writeScan(scan As ScanMS2, ByRef scanNum As i32)
             Dim mzint As String = encode(scan)
+            Dim i As String = ++scanNum
 
-            Call println($"<scan num=""{++scanNum}""
+            Call scanOffsets.Add(i, mzXML.Position)
+            Call println($"<scan num=""{i}""
           scanType=""Full""
           centroided=""1""
           msLevel=""2""
@@ -151,11 +158,35 @@ Namespace MarkupData.mzXML
         End Sub
 
         Private Sub WriteSha1()
+            Call mzXML.Write("<sha1>", BinaryStringFormat.NoPrefixOrTermination)
+            Call mzXML.Flush()
 
+            Dim offset As Long = mzXML.Position
+
+            Call mzXML.Seek(Scan0, SeekOrigin.Begin)
+
+            Dim sha As SHA1 = New SHA1Managed()
+            Dim sha1 As String = BitConverter.ToString(sha.ComputeHash(mzXML.BaseStream))
+
+            Call mzXML.Seek(offset, SeekOrigin.Begin)
+            Call mzXML.Write(sha1, BinaryStringFormat.NoPrefixOrTermination)
+            Call println("</sha1>")
+            Call println("</mzXML>")
         End Sub
 
         Private Sub WriteIndex()
+            Call println("</msRun>")
 
+            Dim indexOffset As Long = mzXML.Position
+
+            Call println("<index name=""scan"">")
+
+            For Each offset In scanOffsets
+                Call println($"<offset id=""{offset.Key}"">{offset.Value}</offset>")
+            Next
+
+            Call println("</index>")
+            Call println($"<indexOffset>{indexOffset}</indexOffset>")
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
