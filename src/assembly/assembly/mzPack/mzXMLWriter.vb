@@ -166,7 +166,7 @@ Namespace MarkupData.mzXML
             len = rawBytes.Length
 
             Using buffer As New MemoryStream(rawBytes)
-                Return buffer.GZipAsBase64
+                Return buffer.GZipAsBase64(noMagic:=True)
             End Using
         End Function
 
