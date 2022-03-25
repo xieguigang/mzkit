@@ -89,6 +89,13 @@ Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromato
 <Package("mzweb")>
 Module MzWeb
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path to the mzpack data file
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("open")>
     Public Function openFile(file As String) As BinaryStreamReader
         Return New BinaryStreamReader(file)
@@ -273,6 +280,12 @@ Module MzWeb
         End If
     End Function
 
+    ''' <summary>
+    ''' set thumbnail image to the raw data file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="thumb"></param>
+    ''' <returns></returns>
     <ExportAPI("setThumbnail")>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
         If TypeOf thumb Is GraphicsData Then
