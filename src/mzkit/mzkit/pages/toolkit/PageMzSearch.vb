@@ -502,10 +502,11 @@ Public Class PageMzSearch
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
 
             keggMeta = frmTaskProgress.LoadData(
-                Function()
+                Function(print)
                     Dim database As New DBPool
 
                     For Each db As String In dbNames
+                        Call print($"Load annotation database repository data... [{db}]")
                         Call database.Register(db, getDatabase(db, modeValue, tolerance))
                     Next
 
