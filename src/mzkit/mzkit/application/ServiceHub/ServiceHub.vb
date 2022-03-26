@@ -98,7 +98,7 @@ Module ServiceHub
     Public Sub StartMSIService()
         Call CloseMSIEngine()
 
-        MSI_pipe = Global.ServiceHub.Protocols.StartServer(RscriptPipelineTask.GetRScript("ServiceHub/MSI-host.R"), MSI_service, debugPort, HeartBeat.Start)
+        MSI_pipe = Global.ServiceHub.Protocols.StartServer(RscriptPipelineTask.GetRScript("ServiceHub/MSI-host.R"), MSI_service, debugPort) ', HeartBeat.Start)
 
         ' hook message event handler
         AddHandler MSI_pipe.SetMessage, AddressOf MSI_pipe_SetMessage
