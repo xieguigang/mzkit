@@ -462,9 +462,11 @@ Public Class PageMzSearch
 
         CheckedListBox2.Items.Add("kegg")
         CheckedListBox2.Items.Add("lipidmaps")
+        CheckedListBox2.Items.Add("chebi")
 
         CheckedListBox2.SetItemChecked(0, True)
         CheckedListBox2.SetItemChecked(1, True)
+        CheckedListBox2.SetItemChecked(2, True)
     End Sub
 
     Private Function getDatabase(name As String, ionMode As Integer, tolerance As Tolerance) As IMzQuery
@@ -473,6 +475,8 @@ Public Class PageMzSearch
                 Return Globals.LoadKEGG(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case "lipidmaps"
                 Return Globals.LoadLipidMaps(AddressOf MyApplication.LogText, ionMode, tolerance)
+            Case "chebi"
+                Return Globals.LoadChebi(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case Else
                 Return Nothing
         End Select
