@@ -11,7 +11,7 @@ biodeep mzweb data viewer raw data file helper
 + [write.mzPack](mzweb/write.mzPack.1) 
 + [write.cdf](mzweb/write.cdf.1) 
 + [open.mzpack](mzweb/open.mzpack.1) open a raw data files in common raw data format and then returns 
-+ [setThumbnail](mzweb/setThumbnail.1) 
++ [setThumbnail](mzweb/setThumbnail.1) set thumbnail image to the raw data file
 + [ms1_scans](mzweb/ms1_scans.1) 
 + [ms1_peaks](mzweb/ms1_peaks.1) 
 + [ms2_peaks](mzweb/ms2_peaks.1) extract ms2 peaks data from the mzpack data object
