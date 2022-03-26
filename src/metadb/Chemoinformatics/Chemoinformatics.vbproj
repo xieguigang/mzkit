@@ -443,6 +443,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaboliteAnnotation.vb" />
     <Compile Include="ExactMassProvider.vb" />
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\DNPOrWileyType.vb" />
