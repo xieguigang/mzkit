@@ -318,7 +318,7 @@
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\CLI.vb" />
     <Compile Include="application\Actions.vb" />
-    <Compile Include="application\ServiceHub.vb" />
+    <Compile Include="application\ServiceHub\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\settings\Languages.vb" />
     <Compile Include="application\WindowModules.vb" />
