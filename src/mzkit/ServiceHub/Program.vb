@@ -58,6 +58,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <Package("app")>
 Module Program
 
+    <ExportAPI("listen.heartbeat")>
+    Public Sub ListenHeartBeat(port As Integer)
+        Call HeartBeat.Start(port)
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
