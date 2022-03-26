@@ -513,8 +513,8 @@ Public Class PageMzSearch
                     Return database
                 End Function, info:="Load annotation database repository data...")
 
-            Dim anno As IEnumerable(Of NamedCollection(Of MzQuery)) = frmTaskProgress.LoadData(
-                streamLoad:=Function() keggMeta.MSetAnnotation(mzset),
+            Dim anno As NamedCollection(Of MzQuery)() = frmTaskProgress.LoadData(
+                streamLoad:=Function(print) keggMeta.MSetAnnotation(mzset, print).ToArray,
                 title:="Peak List Annotation",
                 info:="Run ms1 peak list data annotation..."
             )
