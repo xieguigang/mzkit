@@ -80,7 +80,13 @@ Namespace Reader
 
         Sub New(pixels As IEnumerable(Of PixelData))
             Me.matrix = pixels _
-                .Select(Function(i) New InMemoryVectorPixel()) _
+                .GroupBy(Function(i) $"{i.x},{i.y}") _
+                .Select(Function(i)
+                            Dim mz As Double() = i.Select(Function(x) x.mz).ToArray
+                            Dim into As Double() = i.Select(Function(x) x.intensity).ToArray
+
+                            Return New InMemoryVectorPixel(i.First.x, i.First.y, mz, into, i.Key)
+                        End Function) _
                 .DoCall(AddressOf Grid(Of InMemoryVectorPixel).Create)
             Me.pixels = pixels
         End Sub
