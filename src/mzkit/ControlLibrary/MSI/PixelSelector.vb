@@ -1378,30 +1378,34 @@ Public Class PixelSelector
     Public Sub doGauss(level As Integer, contrast As Double, progress As Action(Of Double))
         If orginal_image Is Nothing Then
             Return
-        Else
-            Call renderWithLegend(orginal_image, Color.Black)
         End If
 
         Dim bmp As New Bitmap(orginal_image)
+        Dim color As Color = Me.BackColor
+
+        cancelBlur = False
 
         If contrast <> 0 Then
             Call BitmapScale.AdjustContrast(bmp, contrast)
         End If
 
-        cancelBlur = False
+        If level > 0 Then
+            color = Color.Black
+            renderWithLegend(orginal_image, color)
 
-        For i As Integer = 0 To level
-            bmp = GaussBlur.GaussBlur(bmp)
-            progress(i / level * 100)
-            picCanvas.BackgroundImage = bmp
+            For i As Integer = 0 To level
+                bmp = GaussBlur.GaussBlur(bmp)
+                progress(i / level * 100)
+                picCanvas.BackgroundImage = bmp
 
-            If cancelBlur Then
-                Exit For
-            End If
+                If cancelBlur Then
+                    Exit For
+                End If
 
-            Call Application.DoEvents()
-        Next
+                Call Application.DoEvents()
+            Next
+        End If
 
-        Call renderWithLegend(bmp, Color.Black)
+        Call renderWithLegend(bmp, color)
     End Sub
 End Class
