@@ -84,6 +84,12 @@ Module ServiceHub
         End Get
     End Property
 
+    Public ReadOnly Property appPort As Integer
+        Get
+            Return MSI_service
+        End Get
+    End Property
+
     Public MessageCallback As Action(Of String)
 
     ''' <summary>

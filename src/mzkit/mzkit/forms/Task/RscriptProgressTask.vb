@@ -128,6 +128,30 @@ Public Class RscriptProgressTask
         End If
     End Sub
 
+    Public Shared Sub ExportSingleIonPlot(mz As Double, tolerance As String, saveAs As String)
+        Dim Rscript As String = RscriptPipelineTask.GetRScript("MSImaging/singleIon.R")
+        Dim cli As String = $"""{Rscript}"" --app {ServiceHub.appPort} --mzlist ""{mz}"" --save ""{saveAs}"" --mzdiff ""{tolerance}"""
+        Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
+        Dim progress As New frmTaskProgress
+
+        progress.ShowProgressTitle("Single Ion MSImaging", directAccess:=True)
+        progress.ShowProgressDetails("Do plot of target ion m/z...", directAccess:=True)
+        progress.SetProgressMode()
+
+        Call MyApplication.LogText(pipeline.CommandLine)
+
+        AddHandler pipeline.SetMessage, AddressOf progress.ShowProgressDetails
+        AddHandler pipeline.SetProgress, AddressOf progress.SetProgress
+        AddHandler pipeline.Finish, Sub() progress.Invoke(Sub() progress.Close())
+
+        Call New Thread(AddressOf pipeline.Run).Start()
+        Call progress.ShowDialog()
+
+        If MessageBox.Show("Single Ion MSImaging Job Done!" & vbCrLf & "Open MSImaging result plot file?", "Open Image", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+            Call Process.Start(saveAs.GetFullPath)
+        End If
+    End Sub
+
     Public Shared Sub CreateMSIPeakTable(regions As Rectangle(), mzpack As String, saveAs As String)
         Dim data As Dictionary(Of String, Integer()) = regions.ToDictionary(Function(r) $"{r.Left},{r.Top}", Function(r) {r.Left, r.Top, r.Width, r.Height})
         Dim tempfile As String = TempFileSystem.GetAppSysTempFile(".json", App.PID.ToHexString, prefix:="MSI_regions__")

@@ -564,10 +564,12 @@ Public Class frmMsImagingViewer
             Return
         End If
 
+        mzdiff = params.GetTolerance
+        targetMz = selectedMz
+
         Call New Thread(
             Sub()
-                Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, mzdiff)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -575,9 +577,9 @@ Public Class frmMsImagingViewer
                     Dim maxInto As Double = Aggregate pm As PixelData
                                             In pixels
                                             Into Max(pm.intensity)
-                    Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
-                    Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
-                    Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
+                    Dim Rpixels = pixels.Where(Function(p) mzdiff(p.mz, r)).ToArray
+                    Dim Gpixels = pixels.Where(Function(p) mzdiff(p.mz, g)).ToArray
+                    Dim Bpixels = pixels.Where(Function(p) mzdiff(p.mz, b)).ToArray
 
                     Call Invoke(Sub() params.SetIntensityMax(maxInto))
                     Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size))
@@ -639,10 +641,12 @@ Public Class frmMsImagingViewer
             MyApplication.host.showStatusMessage($"Run MS-Image rendering for {selectedMz.Count} selected ions...")
         End If
 
+        mzdiff = params.GetTolerance
+        targetMz = selectedMz.ToArray
+
         Call New Thread(
             Sub()
-                Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, mzdiff)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage("no pixel data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -665,6 +669,8 @@ Public Class frmMsImagingViewer
     End Sub
 
     Dim loadedPixels As PixelData()
+    Dim targetMz As Double()
+    Dim mzdiff As Tolerance
 
     Public Sub renderByPixelsData(pixels As PixelData(), MsiDim As Size)
         If params Is Nothing Then
@@ -863,7 +869,16 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub ExportPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportPlotToolStripMenuItem.Click
+        If Not ServiceHub.MSIEngineRunning Then
+            Call MyApplication.host.warning("You must load raw data file at first!")
+            Return
+        End If
 
+        Using file As New SaveFileDialog With {.Filter = "Plot Image(*.png)|*.png"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call RscriptProgressTask.ExportSingleIonPlot(targetMz(0), mzdiff.GetScript, saveAs:=file.FileName)
+            End If
+        End Using
     End Sub
 
     Private Sub ImageProcessingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImageProcessingToolStripMenuItem.Click
