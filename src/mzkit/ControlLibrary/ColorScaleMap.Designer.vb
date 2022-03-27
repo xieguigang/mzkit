@@ -87,7 +87,7 @@ Partial Class ColorScaleMap
         Me.colorMapDisplay.Dock = System.Windows.Forms.DockStyle.Top
         Me.colorMapDisplay.Location = New System.Drawing.Point(0, 0)
         Me.colorMapDisplay.Name = "colorMapDisplay"
-        Me.colorMapDisplay.Size = New System.Drawing.Size(386, 29)
+        Me.colorMapDisplay.Size = New System.Drawing.Size(386, 18)
         Me.colorMapDisplay.TabIndex = 0
         Me.colorMapDisplay.TabStop = False
         '
@@ -95,7 +95,7 @@ Partial Class ColorScaleMap
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 32)
+        Me.Label1.Location = New System.Drawing.Point(3, 19)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 1
@@ -105,7 +105,7 @@ Partial Class ColorScaleMap
         '
         Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(329, 32)
+        Me.Label2.Location = New System.Drawing.Point(329, 19)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(39, 13)
         Me.Label2.TabIndex = 2
@@ -119,7 +119,7 @@ Partial Class ColorScaleMap
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.colorMapDisplay)
         Me.Name = "ColorScaleMap"
-        Me.Size = New System.Drawing.Size(386, 45)
+        Me.Size = New System.Drawing.Size(386, 32)
         CType(Me.colorMapDisplay, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

@@ -121,7 +121,7 @@ Public Class frmMsImagingViewer
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call setupPolygonEditorButtons()
-        Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+        Call PixelSelector1.ShowMessage("BioNovoGene MZKit MSImaging Viewer")
     End Sub
 
     Sub MSIFeatureDetections()
@@ -423,16 +423,17 @@ Public Class frmMsImagingViewer
         End If
 
         Dim pixel As PixelScan = ServiceHub.GetPixel(x, y)
+        Dim info As PixelProperty = Nothing
 
         If pixel Is Nothing Then
             Call MyApplication.host.showStatusMessage($"Pixels [{x}, {y}] not contains any data.", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}))
+            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}), info)
             Call PixelSelector1.ShowMessage($"Pixels [{x}, {y}] not contains any data.")
 
             Return
         Else
-            Call WindowModules.MSIPixelProperty.SetPixel(pixel)
-            Call PixelSelector1.ShowMessage($"Select {pixel.scanId}")
+            Call WindowModules.MSIPixelProperty.SetPixel(pixel, info)
+            Call PixelSelector1.ShowMessage($"Select {pixel.scanId}, totalIons: {info.TotalIon.ToString("G3")}, basePeak m/z: {info.TopIonMz.ToString("F4")}")
         End If
 
         Dim ms As New LibraryMatrix With {
@@ -538,6 +539,7 @@ Public Class frmMsImagingViewer
 
                            PixelSelector1.SetMsImagingOutput(image, dotSize, params.colors, {range.Min, range.Max}, mapLevels)
                            PixelSelector1.BackColor = params.background
+                           PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
                        End Sub)
                End Sub
     End Function
@@ -617,6 +619,7 @@ Public Class frmMsImagingViewer
 
                            PixelSelector1.SetMsImagingOutput(image, dotSize, Nothing, Nothing, Nothing)
                            PixelSelector1.BackColor = params.background
+                           PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
                        End Sub)
                End Sub
     End Function
@@ -730,6 +733,7 @@ Public Class frmMsImagingViewer
 
         PixelSelector1.SetMsImagingOutput(image, size.SizeParser, params.colors, {range.Min, range.Max}, params.mapLevels)
         PixelSelector1.BackColor = params.background
+        PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
     End Sub
 
     Protected Overrides Sub OpenContainingFolder()

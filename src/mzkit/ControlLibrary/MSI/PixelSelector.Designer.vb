@@ -127,11 +127,11 @@ Partial Class PixelSelector
         '
         Me.ColorScaleMap1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ColorScaleMap1.colorMap = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette.Jet
-        Me.ColorScaleMap1.Location = New System.Drawing.Point(322, 14)
+        Me.ColorScaleMap1.Location = New System.Drawing.Point(432, 14)
         Me.ColorScaleMap1.mapLevels = 30
         Me.ColorScaleMap1.Name = "ColorScaleMap1"
         Me.ColorScaleMap1.range = New Double() {0R, 1.0R}
-        Me.ColorScaleMap1.Size = New System.Drawing.Size(255, 45)
+        Me.ColorScaleMap1.Size = New System.Drawing.Size(139, 32)
         Me.ColorScaleMap1.TabIndex = 2
         '
         'PixelSelector

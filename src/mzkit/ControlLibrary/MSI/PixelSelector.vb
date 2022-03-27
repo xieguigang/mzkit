@@ -1161,6 +1161,8 @@ Public Class PixelSelector
     Dim orginal_imageSize As Size
     Dim orginal_image As Image
     Dim dimension As Size
+    Dim range As Double()
+    Dim mapLevels As Integer
 
     ''' <summary>
     ''' 
@@ -1172,9 +1174,19 @@ Public Class PixelSelector
         End Get
     End Property
 
+    Public Sub SetColorMapVisible(visible As Boolean)
+        If range.IsNullOrEmpty AndAlso mapLevels = 0 Then
+            ColorScaleMap1.Visible = False
+        Else
+            ColorScaleMap1.Visible = visible
+        End If
+    End Sub
+
     Public Sub SetMsImagingOutput(value As Image, pixel_size As Size, colorMap As ScalerPalette, range As Double(), mapLevels As Integer)
-        dimension = pixel_size
-        orginal_image = value
+        Me.dimension = pixel_size
+        Me.orginal_image = value
+        Me.range = range
+        Me.mapLevels = mapLevels
 
         If range.IsNullOrEmpty AndAlso mapLevels = 0 Then
             ColorScaleMap1.Visible = False
@@ -1199,10 +1211,10 @@ Public Class PixelSelector
             }
         End If
 
-        Call renderWithLegend(orginal_image.Clone)
+        Call renderWithLegend(orginal_image.Clone, oldBackColor)
     End Sub
 
-    Private Sub renderWithLegend(image As Image)
+    Private Sub renderWithLegend(image As Image, backColor As Color)
         'If Not colorLegend Is Nothing Then
         '    Using g As Graphics = Graphics.FromImage(image)
         '        Dim size As New Size(image.Width / 8, image.Height / 2)
@@ -1213,8 +1225,11 @@ Public Class PixelSelector
         'End If
 
         picCanvas.BackgroundImage = image
+        Me.oldBackColor = Me.BackColor
+        Me.BackColor = backColor
     End Sub
 
+    Dim oldBackColor As Color = Color.White
     Dim oldMessage As String = "MSI Viewer"
 
     Public Sub ShowMessage(text As String)
@@ -1363,23 +1378,25 @@ Public Class PixelSelector
         If orginal_image Is Nothing Then
             Return
         Else
-            Dim bmp As New Bitmap(orginal_image)
-
-            cancelBlur = False
-
-            For i As Integer = 0 To level
-                bmp = GaussBlur.GaussBlur(bmp)
-                progress(i / level * 100)
-                picCanvas.BackgroundImage = bmp
-
-                If cancelBlur Then
-                    Exit For
-                End If
-
-                Call Application.DoEvents()
-            Next
-
-            Call renderWithLegend(bmp)
+            Call renderWithLegend(orginal_image, Color.Black)
         End If
+
+        Dim bmp As New Bitmap(orginal_image)
+
+        cancelBlur = False
+
+        For i As Integer = 0 To level
+            bmp = GaussBlur.GaussBlur(bmp)
+            progress(i / level * 100)
+            picCanvas.BackgroundImage = bmp
+
+            If cancelBlur Then
+                Exit For
+            End If
+
+            Call Application.DoEvents()
+        Next
+
+        Call renderWithLegend(bmp, Color.Black)
     End Sub
 End Class
