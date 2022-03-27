@@ -10,7 +10,11 @@ const appPort as integer = ?"--app" || stop("A MSimaging services hub app handle
 const mz as string       = ?"--mzlist" || stop("target ions list must be provided!");
 const mzdiff as string   = ?"--mzdiff" || "da:0.1";
 const savefile as string = ?"--save" || stop("A file path to save plot image must be specificed!");
-const mzlist as double   = as.numeric(unlist(strsplit(mzlist, ",")));
+const mzlist as double   = mzlist
+|> strsplit(",")
+|> unlist()
+|> as.numeric()
+;
 
 bitmap(file = savefile, size = [3300, 2000]) {
     
