@@ -103,22 +103,22 @@ Public Class PixelSelector
         picCanvas.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
 
-    Sub polygonDemo()
-        Dim predefinedVertices As List(Of Vertex) = New List(Of Vertex)(New Vertex() {New Vertex(268, 223), New Vertex(313, 340), New Vertex(442, 340), New Vertex(489, 221), New Vertex(380, 112)})
-        Dim predefinedEdges As List(Of Edge) = New List(Of Edge)()
+    'Sub polygonDemo()
+    '    Dim predefinedVertices As List(Of Vertex) = New List(Of Vertex)(New Vertex() {New Vertex(268, 223), New Vertex(313, 340), New Vertex(442, 340), New Vertex(489, 221), New Vertex(380, 112)})
+    '    Dim predefinedEdges As List(Of Edge) = New List(Of Edge)()
 
-        For i = 0 To 5 - 1
-            predefinedEdges.Add(New Edge(predefinedVertices(i), predefinedVertices((i + 1) Mod 5)))
-        Next
+    '    For i = 0 To 5 - 1
+    '        predefinedEdges.Add(New Edge(predefinedVertices(i), predefinedVertices((i + 1) Mod 5)))
+    '    Next
 
-        Me.EqualEdges(predefinedEdges(0), predefinedEdges(2), predefinedEdges(CInt(0)).From)
-        Me.PerpendiculateEdges(predefinedEdges(3), predefinedEdges(4), predefinedEdges(CInt(3)).From)
-        polygons.Add(New Polygon(predefinedVertices, predefinedEdges))
-        edgesInRelation.Add((predefinedEdges(0), predefinedEdges(2)))
-        edgesInRelation.Add((predefinedEdges(3), predefinedEdges(4)))
+    '    Me.EqualEdges(predefinedEdges(0), predefinedEdges(2), predefinedEdges(CInt(0)).From)
+    '    Me.PerpendiculateEdges(predefinedEdges(3), predefinedEdges(4), predefinedEdges(CInt(3)).From)
+    '    polygons.Add(New Polygon(predefinedVertices, predefinedEdges))
+    '    edgesInRelation.Add((predefinedEdges(0), predefinedEdges(2)))
+    '    edgesInRelation.Add((predefinedEdges(3), predefinedEdges(4)))
 
-        RepaintPolygon()
-    End Sub
+    '    RepaintPolygon()
+    'End Sub
 
 #Region "Polygon Editor"
     ''' <summary>
@@ -1358,7 +1358,7 @@ Public Class PixelSelector
         Timer1.Enabled = True
         Timer1.Start()
 
-        ' polygonDemo()
+        Call SetColorMapVisible(visible:=False)
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
