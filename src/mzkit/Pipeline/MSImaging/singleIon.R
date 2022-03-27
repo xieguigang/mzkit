@@ -15,17 +15,21 @@ const mzlist as double   = mz
 |> unlist()
 |> as.numeric()
 ;
+const pixelsData = app::getMSIData(
+    MSI_service = appPort, 
+    mz          = mzlist, 
+    mzdiff      = mzdiff
+);
+
+print(`load ${length(pixelsData)} pixels data from given m/z:`);
+print(mzlist);
 
 bitmap(file = savefile, size = [3300, 2000]) {
     
     # load mzpack/imzML raw data file
     # and config ggplot data source driver 
     # as MSImaging data reader
-    ggplot(app::getMSIData(
-               MSI_service = appPort, 
-               mz          = mzlist, 
-               mzdiff      = mzdiff
-           ) |> pixelPack(), 
+    ggplot(pixelPack(pixelsData), 
            mapping = aes(), 
            padding = "padding: 200px 600px 200px 250px;"
     ) 
