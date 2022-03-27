@@ -198,8 +198,8 @@ Module ServiceHub
         End If
     End Function
 
-    Public Sub ExportMzpack(fileName As String)
-        Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(fileName)))
+    Public Sub ExportMzpack(savefile As String)
+        Call handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.ExportMzpack, Encoding.UTF8.GetBytes(savefile)))
     End Sub
 
     Public Function GetPixel(x As Integer, y As Integer, w As Integer, h As Integer) As InMemoryVectorPixel()

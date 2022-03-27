@@ -1,75 +1,76 @@
 ﻿#Region "Microsoft.VisualBasic::0ddbca067bea5ea1a2e901d7a6d9ad1f, mzkit\src\mzkit\ControlLibrary\MSI\PixelSelector.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1307
-    '    Code Lines: 1024
-    ' Comment Lines: 50
-    '   Blank Lines: 233
-    '     File Size: 48.90 KB
+' Summaries:
 
 
-    ' Class PixelSelector
-    ' 
-    '     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
-    '                 ShowPointInform
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
-    '               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
-    '               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
-    ' 
-    '     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
-    '          ClearSelection, clickGetPoint, doGauss, (+2 Overloads) DrawSelectionBox, EqualEdges
-    '          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
-    '          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
-    '          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
-    '          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
-    '          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
-    '          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, renderWithLegend
-    '          RepaintPolygon, SetMsImagingOutput, ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1307
+'    Code Lines: 1024
+' Comment Lines: 50
+'   Blank Lines: 233
+'     File Size: 48.90 KB
+
+
+' Class PixelSelector
+' 
+'     Properties: HasRegionSelection, MSImage, Pixel, RegionSelectin, SelectPolygonMode
+'                 ShowPointInform
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: AreEqual, ArePerpendicular, BelongsToCircle, BelongsToSegment, CalculateLength
+'               CorrectClockwise, CorrectCounterclockwise, FindEdge, FindEdgeWithIndex, FindVertex
+'               Frac, Ipart, IsLastPolygonCorrect, RFrac, Round
+' 
+'     Sub: AddVertex, AntialiasingWU, Bresenham, BresenhamSymmetric, canvasMouseDown
+'          ClearSelection, clickGetPoint, doGauss, (+2 Overloads) DrawSelectionBox, EqualEdges
+'          getPoint, HalveEdge, InvalidPolygonError, MoveEdge, MovePolygon
+'          MoveVertex, OnAddVertexMenuItemClick, OnBoadMouseClick, OnBoadMouseDown, OnBoardMouseMove
+'          OnBoardMouseUp, OnBoardPaint, OnEqualEdgesMenuItemClick, OnHalveEdgeMenuItemClick, OnMoveComponentMenuItemClick
+'          OnMovePolygonMenuItemClick, OnPerpendiculateEdgesMenuItemClick, OnRemovePolygonMenuItemClick, OnRemoveRelationMenuItemClick, OnRemoveVertexMenuItemClick
+'          PerpendiculateEdges, picCanvas_MouseMove, picCanvas_MouseUp, PixelSelector_Load, Plot
+'          polygonDemo, RemovePolygon, RemoveRelation, RemoveVertex, renderWithLegend
+'          RepaintPolygon, SetMsImagingOutput, ShowMessage, Timer1_Tick, toolStripMenuItem1_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports ControlLibrary.PolygonEditor
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Filters
 Imports stdNum = System.Math
 
@@ -1161,8 +1162,6 @@ Public Class PixelSelector
     Dim orginal_image As Image
     Dim dimension As Size
 
-    Dim colorLegend As Image
-
     ''' <summary>
     ''' 
     ''' </summary>
@@ -1173,10 +1172,18 @@ Public Class PixelSelector
         End Get
     End Property
 
-    Public Sub SetMsImagingOutput(value As Image, pixel_size As Size, legend As Image)
+    Public Sub SetMsImagingOutput(value As Image, pixel_size As Size, colorMap As ScalerPalette, range As Double(), mapLevels As Integer)
         dimension = pixel_size
         orginal_image = value
-        colorLegend = legend
+
+        If range.IsNullOrEmpty AndAlso mapLevels = 0 Then
+            ColorScaleMap1.Visible = False
+        Else
+            ColorScaleMap1.Visible = True
+            ColorScaleMap1.colorMap = colorMap
+            ColorScaleMap1.range = range
+            ColorScaleMap1.mapLevels = mapLevels
+        End If
 
         If value IsNot Nothing AndAlso (dimension.Width = 0 OrElse dimension.Height = 0) Then
             Throw New InvalidExpressionException("dimension size can not be ZERO!")
@@ -1196,14 +1203,14 @@ Public Class PixelSelector
     End Sub
 
     Private Sub renderWithLegend(image As Image)
-        If Not colorLegend Is Nothing Then
-            Using g As Graphics = Graphics.FromImage(image)
-                Dim size As New Size(image.Width / 8, image.Height / 2)
-                Dim pos As New Point(image.Width - size.Width, 25)
+        'If Not colorLegend Is Nothing Then
+        '    Using g As Graphics = Graphics.FromImage(image)
+        '        Dim size As New Size(image.Width / 8, image.Height / 2)
+        '        Dim pos As New Point(image.Width - size.Width, 25)
 
-                Call g.DrawImage(colorLegend, New Rectangle(pos, size))
-            End Using
-        End If
+        '        Call g.DrawImage(colorLegend, New Rectangle(pos, size))
+        '    End Using
+        'End If
 
         picCanvas.BackgroundImage = image
     End Sub
