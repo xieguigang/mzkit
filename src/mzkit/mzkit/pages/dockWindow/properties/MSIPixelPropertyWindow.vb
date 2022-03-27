@@ -68,6 +68,7 @@ Public Class MSIPixelPropertyWindow
     Public Sub SetPixel(pixel As PixelScan, ByRef props As PixelProperty)
         Select Case Me.DockState
             Case DockState.DockBottomAutoHide, DockState.DockLeftAutoHide, DockState.DockRightAutoHide, DockState.DockTopAutoHide, DockState.Hidden, DockState.Unknown
+                props = New PixelProperty(pixel)
                 Return
             Case Else
         End Select
