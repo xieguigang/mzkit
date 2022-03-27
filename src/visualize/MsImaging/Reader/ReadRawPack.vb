@@ -89,6 +89,7 @@ Namespace Reader
                         End Function) _
                 .DoCall(AddressOf Grid(Of InMemoryVectorPixel).Create)
             Me.pixels = pixels
+            Me.dimension = New Size(matrix.width, matrix.height)
         End Sub
 
         Protected Overrides Sub release()
