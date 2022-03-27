@@ -147,8 +147,12 @@ Public Class RscriptProgressTask
         Call New Thread(AddressOf pipeline.Run).Start()
         Call progress.ShowDialog()
 
-        If MessageBox.Show("Single Ion MSImaging Job Done!" & vbCrLf & "Open MSImaging result plot file?", "Open Image", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-            Call Process.Start(saveAs.GetFullPath)
+        If saveAs.FileExists Then
+            If MessageBox.Show("Single Ion MSImaging Job Done!" & vbCrLf & "Open MSImaging result plot file?", "Open Image", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                Call Process.Start(saveAs.GetFullPath)
+            End If
+        Else
+            Call MessageBox.Show("Single Ion MSImaging Task Error!", "Task Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
