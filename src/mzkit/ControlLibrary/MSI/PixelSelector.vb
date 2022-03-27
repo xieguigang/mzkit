@@ -70,6 +70,7 @@
 #End Region
 
 Imports ControlLibrary.PolygonEditor
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Filters
 Imports stdNum = System.Math
@@ -1374,7 +1375,7 @@ Public Class PixelSelector
     ''' </summary>
     ''' <param name="level"></param>
     ''' <param name="progress">[0,1]</param>
-    Public Sub doGauss(level As Integer, progress As Action(Of Double))
+    Public Sub doGauss(level As Integer, contrast As Double, progress As Action(Of Double))
         If orginal_image Is Nothing Then
             Return
         Else
@@ -1382,6 +1383,10 @@ Public Class PixelSelector
         End If
 
         Dim bmp As New Bitmap(orginal_image)
+
+        If contrast <> 0 Then
+            Call BitmapScale.AdjustContrast(bmp, contrast)
+        End If
 
         cancelBlur = False
 

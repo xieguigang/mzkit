@@ -872,8 +872,9 @@ Public Class frmMsImagingViewer
 
         If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
             Dim levels As Integer = CInt(getConfig.TrackBar1.Value)
+            Dim contract As Double = getConfig.TrackBar2.Value
 
-            If levels > 0 Then
+            If levels > 0 OrElse contract <> 0.0 Then
                 Dim progress As New frmTaskProgress
 
                 ' just exit image progress
@@ -885,7 +886,7 @@ Public Class frmMsImagingViewer
                 Call New Thread(Sub()
                                     Call Thread.Sleep(1000)
                                     Call progress.SetProgress(0, "Do gauss blur...")
-                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
+                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, contract, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
                                     Call progress.Invoke(Sub() progress.Close())
                                 End Sub).Start()
 
