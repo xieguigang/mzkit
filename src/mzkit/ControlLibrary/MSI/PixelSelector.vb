@@ -1381,7 +1381,7 @@ Public Class PixelSelector
         End If
 
         Dim bmp As New Bitmap(orginal_image)
-        Dim color As Color = Me.BackColor
+        Dim color As Color = Me.oldBackColor
 
         cancelBlur = False
 

@@ -894,6 +894,12 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.zh-CN.resx">
+      <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.zh-Hant.resx">
+      <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmNetworkViewer.resx">
       <DependentUpon>frmNetworkViewer.vb</DependentUpon>
     </EmbeddedResource>
