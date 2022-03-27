@@ -196,6 +196,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
+      <Project>{0C2EB77C-39F2-460D-A3F8-CE905F867637}</Project>
+      <Name>R</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487D7C92-D05A-4908-BF81-E6BABA0BF592}</Project>
       <Name>BinaryData</Name>
@@ -249,5 +253,6 @@
       <Name>Task</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\..\Rscript\Library\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

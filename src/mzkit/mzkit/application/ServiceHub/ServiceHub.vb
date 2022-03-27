@@ -62,20 +62,16 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
-Imports Microsoft.VisualBasic.DataMining.Clustering
-Imports Microsoft.VisualBasic.DataMining.DensityQuery
-Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports BioNovoGene.mzkit_win32.My
 Imports BioNovoGene.mzkit_win32.Tcp
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.Net.HTTP
+Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports ServiceHub
 Imports Task
-Imports stdNum = System.Math
 
 Module ServiceHub
 
@@ -147,18 +143,7 @@ Module ServiceHub
     End Function
 
     Public Function LoadPixels(mz As IEnumerable(Of Double), mzErr As Tolerance) As PixelData()
-        Dim config As New LayerLoader With {.mz = mz.ToArray, .method = If(TypeOf mzErr Is PPMmethod, "ppm", "da"), .mzErr = mzErr.DeltaTolerance}
-        Dim configBytes As Byte() = BSON.GetBuffer(config.GetType.GetJsonElement(config, New JSONSerializerOptions)).ToArray
-        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.LoadMSILayers, configBytes))
-
-        If data Is Nothing Then
-            Return {}
-        Else
-            Dim pixels As PixelData() = PixelData.Parse(data.ChunkBuffer)
-            'Dim points = pixels.Select(Function(p) New ClusterEntity With {.uid = $"{p.x},{p.y}", .entityVector = {p.x, p.y}}).ToArray
-            'Dim densityList = Density.GetDensity(points, k:=stdNum.Min(points.Length / 10, 150), query:=New KDQuery(points)).ToArray
-            Return pixels
-        End If
+        Return MSIProtocols.LoadPixels(mz, mzErr, AddressOf handleServiceRequest)
     End Function
 
     ''' <summary>
