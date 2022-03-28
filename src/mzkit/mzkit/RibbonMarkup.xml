@@ -2238,6 +2238,15 @@
         <Image MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonSystemDiagnosis" Comment="System Diagnosis" Id="180" LabelTitle="System Diagnosis" LabelDescription="System Diagnosis" TooltipTitle="System Diagnosis" TooltipDescription="System Diagnosis" Keytip="System Diagnosis">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/gparted.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/gparted.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdLabelSystemInformation" Id="181" LabelTitle="System Information" LabelDescription="System Information" TooltipTitle="System Information" TooltipDescription="System Information" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -2306,8 +2315,11 @@
                 <MenuGroup Class="MajorItems">
                   <Button CommandName="cmdButtonAbout" />
                   <Button CommandName="cmdButtonBioDeep" />
-                  <Button CommandName="cmdButtonLicense" />
                   <Button CommandName="cmdDOIReference" />
+                </MenuGroup>
+                <MenuGroup CommandName="cmdLabelSystemInformation" Class="MajorItems">
+                  <Button CommandName="cmdButtonLicense" />
+                  <Button CommandName="cmdButtonSystemDiagnosis" />
                 </MenuGroup>
               </SplitButton.MenuGroups>
             </SplitButton>

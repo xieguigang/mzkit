@@ -32,8 +32,10 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonSettings As UInteger = 1051
             Public Const cmdButtonAbout As UInteger = 1021
             Public Const cmdButtonBioDeep As UInteger = 1022
-            Public Const cmdButtonLicense As UInteger = 1101
             Public Const cmdDOIReference As UInteger = 177
+            Public Const cmdLabelSystemInformation As UInteger = 181
+            Public Const cmdButtonLicense As UInteger = 1101
+            Public Const cmdButtonSystemDiagnosis As UInteger = 180
             Public Const cmdMenuGroupExit As UInteger = 1006
             Public Const cmdButtonExit As UInteger = 1004
             Public Const cmdHelpButton As UInteger = 1016
@@ -289,16 +291,31 @@ Namespace RibbonLib.Controls
                 Return _ButtonBioDeep
             End Get
         End Property
+        Private _DOIReference As RibbonButton
+        Public ReadOnly Property DOIReference As RibbonButton
+            Get
+                Return _DOIReference
+            End Get
+        End Property
+        Private _LabelSystemInformation As RibbonMenuGroup
+        Public ReadOnly Property LabelSystemInformation As RibbonMenuGroup
+            Get
+                Return _LabelSystemInformation
+            End Get
+        End Property
         Private _ButtonLicense As RibbonButton
         Public ReadOnly Property ButtonLicense As RibbonButton
             Get
                 Return _ButtonLicense
             End Get
         End Property
-        Private _DOIReference As RibbonButton
-        Public ReadOnly Property DOIReference As RibbonButton
+        Private _ButtonSystemDiagnosis As RibbonButton
+        ''' <summary>
+        ''' System Diagnosis
+        ''' </summary>
+        Public ReadOnly Property ButtonSystemDiagnosis As RibbonButton
             Get
-                Return _DOIReference
+                Return _ButtonSystemDiagnosis
             End Get
         End Property
         Private _MenuGroupExit As RibbonMenuGroup
@@ -1199,8 +1216,10 @@ Namespace RibbonLib.Controls
             _ButtonSettings = New RibbonButton(_ribbon, Cmd.cmdButtonSettings)
             _ButtonAbout = New RibbonButton(_ribbon, Cmd.cmdButtonAbout)
             _ButtonBioDeep = New RibbonButton(_ribbon, Cmd.cmdButtonBioDeep)
-            _ButtonLicense = New RibbonButton(_ribbon, Cmd.cmdButtonLicense)
             _DOIReference = New RibbonButton(_ribbon, Cmd.cmdDOIReference)
+            _LabelSystemInformation = New RibbonMenuGroup(_ribbon, Cmd.cmdLabelSystemInformation)
+            _ButtonLicense = New RibbonButton(_ribbon, Cmd.cmdButtonLicense)
+            _ButtonSystemDiagnosis = New RibbonButton(_ribbon, Cmd.cmdButtonSystemDiagnosis)
             _MenuGroupExit = New RibbonMenuGroup(_ribbon, Cmd.cmdMenuGroupExit)
             _ButtonExit = New RibbonButton(_ribbon, Cmd.cmdButtonExit)
             _HelpButton = New RibbonHelpButton(_ribbon, Cmd.cmdHelpButton)
