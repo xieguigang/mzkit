@@ -66,7 +66,7 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
 
     Public ReadOnly Property AllBonds As IEnumerable(Of ChemicalKey)
         Get
-            Return edges.Values
+            Return edges
         End Get
     End Property
 
