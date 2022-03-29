@@ -58,6 +58,9 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports BioDeep
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -132,6 +135,28 @@ Module KEGGRepo
         End If
 
         Return filepath
+    End Function
+
+    Public Function RequestChebi() As MetaboliteAnnotation()
+        Using zip As New ZipArchive(getMZKitPackage.Open(FileMode.Open, doClear:=False))
+            Using pack = If(zip.GetEntry("data\MetaboLights.csv"), zip.GetEntry("data/MetaboLights.csv")).Open
+                Dim packData As DataFrame = DataFrame.Load(pack)
+                Dim id As String() = packData("id")
+                Dim name As String() = packData("name")
+                Dim formula As String() = packData("formula")
+
+                Return id _
+                    .Select(Function(ref, i)
+                                Return New MetaboliteAnnotation With {
+                                    .UniqueId = ref,
+                                    .CommonName = name(i),
+                                    .Formula = formula(i),
+                                    .ExactMass = FormulaScanner.EvaluateExactMass(.Formula)
+                                }
+                            End Function) _
+                    .ToArray
+            End Using
+        End Using
     End Function
 
     Public Function RequestLipidMaps() As LipidMaps.MetaData()

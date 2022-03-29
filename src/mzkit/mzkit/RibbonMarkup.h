@@ -886,5 +886,18 @@
 #define cmdGCxGCViewer_TooltipDescription_RESID 60094
 #define cmdGCxGCViewer_SmallImages_192__RESID 60095
 #define cmdGCxGCViewer_LargeImages_192__RESID 60096
-#define InternalCmd2_LabelTitle_RESID 60097
-#define InternalCmd4_LabelTitle_RESID 60098
+#define cmdButtonSystemDiagnosis 180  /* System Diagnosis */ 
+#define cmdButtonSystemDiagnosis_LabelTitle_RESID 60097
+#define cmdButtonSystemDiagnosis_LabelDescription_RESID 60098
+#define cmdButtonSystemDiagnosis_Keytip_RESID 60099
+#define cmdButtonSystemDiagnosis_TooltipTitle_RESID 60100
+#define cmdButtonSystemDiagnosis_TooltipDescription_RESID 60101
+#define cmdButtonSystemDiagnosis_SmallImages_192__RESID 60102
+#define cmdButtonSystemDiagnosis_LargeImages_192__RESID 60103
+#define cmdLabelSystemInformation 181 
+#define cmdLabelSystemInformation_LabelTitle_RESID 60104
+#define cmdLabelSystemInformation_LabelDescription_RESID 60105
+#define cmdLabelSystemInformation_TooltipTitle_RESID 60106
+#define cmdLabelSystemInformation_TooltipDescription_RESID 60107
+#define InternalCmd2_LabelTitle_RESID 60108
+#define InternalCmd4_LabelTitle_RESID 60109

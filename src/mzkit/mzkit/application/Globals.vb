@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::39d746b4c99fdce964e733247d3678cf, mzkit\src\mzkit\mzkit\application\Globals.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 510
-    '    Code Lines: 379
-    ' Comment Lines: 40
-    '   Blank Lines: 91
-    '     File Size: 18.71 KB
+' Summaries:
 
 
-    ' Module Globals
-    ' 
-    '     Properties: loadedSettings, Settings, workspace
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CheckFormOpened, CurrentRawFile, FindRaws, GetColors, GetTotalCacheSize
-    '               GetXICMaxYAxis, loadBackground, LoadIonLibrary, LoadKEGG, LoadLipidMaps
-    '               (+2 Overloads) LoadRawFileCache, RawFileNodeTemplate
-    ' 
-    '     Sub: AddRecentFileHistory, AddScript, InitExplorerUI, loadRawFile, loadRStudioScripts
-    '          loadWorkspace, SaveRawFileCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 510
+'    Code Lines: 379
+' Comment Lines: 40
+'   Blank Lines: 91
+'     File Size: 18.71 KB
+
+
+' Module Globals
+' 
+'     Properties: loadedSettings, Settings, workspace
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CheckFormOpened, CurrentRawFile, FindRaws, GetColors, GetTotalCacheSize
+'               GetXICMaxYAxis, loadBackground, LoadIonLibrary, LoadKEGG, LoadLipidMaps
+'               (+2 Overloads) LoadRawFileCache, RawFileNodeTemplate
+' 
+'     Sub: AddRecentFileHistory, AddScript, InitExplorerUI, loadRawFile, loadRStudioScripts
+'          loadWorkspace, SaveRawFileCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.mzkit_win32.Configuration
@@ -114,6 +115,22 @@ Module Globals
         Dim background = MSJointConnection.ImportsBackground(maps)
 
         Return background
+    End Function
+
+    Public Function LoadChebi(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSSearch(Of MetaboliteAnnotation)
+        Dim key As String = $"[{mzdiff.ToString}]{mode}"
+
+        Static dataPack As MetaboliteAnnotation() = KEGGRepo.RequestChebi
+        Static cache As New Dictionary(Of String, MSSearch(Of MetaboliteAnnotation))
+
+        Return cache.ComputeIfAbsent(key,
+            lazyValue:=Function()
+                           If mode = 1 Then
+                               Return MSSearch(Of MetaboliteAnnotation).CreateIndex(dataPack, Provider.Positives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
+                           Else
+                               Return MSSearch(Of MetaboliteAnnotation).CreateIndex(dataPack, Provider.Positives.Where(Function(t) stdNum.Abs(t.charge) = 1).ToArray, mzdiff)
+                           End If
+                       End Function)
     End Function
 
     Public Function LoadLipidMaps(println As Action(Of String), mode As Integer, mzdiff As Tolerance) As MSSearch(Of LipidMaps.MetaData)

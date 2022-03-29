@@ -400,6 +400,10 @@ Type 'q()' to quit R.
         Public Shared Function LoadLibrary(lpFileName As String) As IntPtr
         End Function
 
+        Public Shared Function getCurrentLanguageString(key As String) As String
+            Return getLanguageString(key, Globals.Settings.ui.language)
+        End Function
+
         Public Shared Function getLanguageString(key As String, lang As Languages) As String
             Select Case lang
                 Case Languages.Chinese

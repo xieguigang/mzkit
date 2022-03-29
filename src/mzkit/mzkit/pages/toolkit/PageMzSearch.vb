@@ -462,9 +462,11 @@ Public Class PageMzSearch
 
         CheckedListBox2.Items.Add("kegg")
         CheckedListBox2.Items.Add("lipidmaps")
+        CheckedListBox2.Items.Add("chebi")
 
         CheckedListBox2.SetItemChecked(0, True)
         CheckedListBox2.SetItemChecked(1, True)
+        CheckedListBox2.SetItemChecked(2, True)
     End Sub
 
     Private Function getDatabase(name As String, ionMode As Integer, tolerance As Tolerance) As IMzQuery
@@ -473,6 +475,8 @@ Public Class PageMzSearch
                 Return Globals.LoadKEGG(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case "lipidmaps"
                 Return Globals.LoadLipidMaps(AddressOf MyApplication.LogText, ionMode, tolerance)
+            Case "chebi"
+                Return Globals.LoadChebi(AddressOf MyApplication.LogText, ionMode, tolerance)
             Case Else
                 Return Nothing
         End Select
@@ -498,18 +502,19 @@ Public Class PageMzSearch
             Dim modeValue As Integer = Provider.ParseIonMode(mode)
 
             keggMeta = frmTaskProgress.LoadData(
-                Function()
+                Function(print)
                     Dim database As New DBPool
 
                     For Each db As String In dbNames
+                        Call print($"Load annotation database repository data... [{db}]")
                         Call database.Register(db, getDatabase(db, modeValue, tolerance))
                     Next
 
                     Return database
                 End Function, info:="Load annotation database repository data...")
 
-            Dim anno As IEnumerable(Of NamedCollection(Of MzQuery)) = frmTaskProgress.LoadData(
-                streamLoad:=Function() keggMeta.MSetAnnotation(mzset),
+            Dim anno As NamedCollection(Of MzQuery)() = frmTaskProgress.LoadData(
+                streamLoad:=Function(print) keggMeta.MSetAnnotation(mzset, print).ToArray,
                 title:="Peak List Annotation",
                 info:="Run ms1 peak list data annotation..."
             )

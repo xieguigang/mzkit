@@ -83,8 +83,12 @@ Partial Class InputImageProcessor
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TrackBar2 = New System.Windows.Forms.TrackBar()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Button1
@@ -101,10 +105,13 @@ Partial Class InputImageProcessor
         '
         'GroupBox1
         '
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.TrackBar2)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TrackBar1)
         Me.GroupBox1.Controls.Add(Me.Label1)
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
@@ -115,8 +122,8 @@ Partial Class InputImageProcessor
         '
         'TrackBar1
         '
-        resources.ApplyResources(Me.TrackBar1, "TrackBar1")
         Me.TrackBar1.LargeChange = 15
+        resources.ApplyResources(Me.TrackBar1, "TrackBar1")
         Me.TrackBar1.Maximum = 50
         Me.TrackBar1.Name = "TrackBar1"
         Me.TrackBar1.SmallChange = 5
@@ -126,6 +133,25 @@ Partial Class InputImageProcessor
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'TrackBar2
+        '
+        resources.ApplyResources(Me.TrackBar2, "TrackBar2")
+        Me.TrackBar2.LargeChange = 20
+        Me.TrackBar2.Maximum = 100
+        Me.TrackBar2.Minimum = -100
+        Me.TrackBar2.Name = "TrackBar2"
+        Me.TrackBar2.TickFrequency = 8
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
         '
         'InputImageProcessor
         '
@@ -142,6 +168,7 @@ Partial Class InputImageProcessor
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -152,4 +179,7 @@ Partial Class InputImageProcessor
     Friend WithEvents Label1 As Label
     Friend WithEvents TrackBar1 As TrackBar
     Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TrackBar2 As TrackBar
 End Class

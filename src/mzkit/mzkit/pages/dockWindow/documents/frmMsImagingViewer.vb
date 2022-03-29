@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::75e280eada08208a035f6f6cda02f0f4, mzkit\src\mzkit\mzkit\pages\dockWindow\documents\frmMsImagingViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 830
-    '    Code Lines: 652
-    ' Comment Lines: 23
-    '   Blank Lines: 155
-    '     File Size: 36.57 KB
+' Summaries:
 
 
-    ' Class frmMsImagingViewer
-    ' 
-    '     Properties: FilePath, MimeType
-    ' 
-    '     Function: (+2 Overloads) createRenderTask, registerSummaryRender
-    ' 
-    '     Sub: AddSampleToolStripMenuItem_Click, checks_Click, cleanBackground, ClearPinToolStripMenuItem_Click, ClearSamplesToolStripMenuItem_Click
-    '          CopyFullPath, CopyImageToolStripMenuItem_Click, (+2 Overloads) DoIonStats, ExportMatrixToolStripMenuItem_Click, exportMSISampleTable
-    '          exportMzPack, ExportPlotToolStripMenuItem_Click, frmMsImagingViewer_Closing, frmMsImagingViewer_Load, ImageProcessingToolStripMenuItem_Click
-    '          loadimzML, loadmzML, loadRaw, (+2 Overloads) LoadRender, MSIFeatureDetections
-    '          OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, PixelSelector1_SelectPolygon, Plot
-    '          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
-    '          SaveImageToolStripMenuItem_Click, setupPolygonEditorButtons, showPixel, ShowRegion, TogglePolygonMode
-    '          tweaks_PropertyValueChanged
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 830
+'    Code Lines: 652
+' Comment Lines: 23
+'   Blank Lines: 155
+'     File Size: 36.57 KB
+
+
+' Class frmMsImagingViewer
+' 
+'     Properties: FilePath, MimeType
+' 
+'     Function: (+2 Overloads) createRenderTask, registerSummaryRender
+' 
+'     Sub: AddSampleToolStripMenuItem_Click, checks_Click, cleanBackground, ClearPinToolStripMenuItem_Click, ClearSamplesToolStripMenuItem_Click
+'          CopyFullPath, CopyImageToolStripMenuItem_Click, (+2 Overloads) DoIonStats, ExportMatrixToolStripMenuItem_Click, exportMSISampleTable
+'          exportMzPack, ExportPlotToolStripMenuItem_Click, frmMsImagingViewer_Closing, frmMsImagingViewer_Load, ImageProcessingToolStripMenuItem_Click
+'          loadimzML, loadmzML, loadRaw, (+2 Overloads) LoadRender, MSIFeatureDetections
+'          OpenContainingFolder, PinToolStripMenuItem_Click, PixelSelector1_SelectPixelRegion, PixelSelector1_SelectPolygon, Plot
+'          renderByMzList, renderByPixelsData, renderRGB, RenderSummary, SaveDocument
+'          SaveImageToolStripMenuItem_Click, setupPolygonEditorButtons, showPixel, ShowRegion, TogglePolygonMode
+'          tweaks_PropertyValueChanged
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -121,7 +121,7 @@ Public Class frmMsImagingViewer
 
         Call ApplyVsTheme(ContextMenuStrip1)
         Call setupPolygonEditorButtons()
-        Call PixelSelector1.ShowMessage("Mzkit MSI Viewer")
+        Call PixelSelector1.ShowMessage("BioNovoGene MZKit MSImaging Viewer")
     End Sub
 
     Sub MSIFeatureDetections()
@@ -302,7 +302,7 @@ Public Class frmMsImagingViewer
                 Call frmTaskProgress.RunAction(
                     Sub(update)
                         ServiceHub.MessageCallback = update
-                        ServiceHub.ExportMzpack(fileName)
+                        ServiceHub.ExportMzpack(savefile:=fileName)
                     End Sub, title:="Export mzPack data...", info:="Save mzPack!")
                 Call MessageBox.Show($"Export mzPack data at location: {vbCrLf}{fileName}!", "BioNovoGene MSI Viewer", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -423,16 +423,17 @@ Public Class frmMsImagingViewer
         End If
 
         Dim pixel As PixelScan = ServiceHub.GetPixel(x, y)
+        Dim info As PixelProperty = Nothing
 
         If pixel Is Nothing Then
             Call MyApplication.host.showStatusMessage($"Pixels [{x}, {y}] not contains any data.", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}))
+            Call WindowModules.MSIPixelProperty.SetPixel(New InMemoryPixel(x, y, {}), info)
             Call PixelSelector1.ShowMessage($"Pixels [{x}, {y}] not contains any data.")
 
             Return
         Else
-            Call WindowModules.MSIPixelProperty.SetPixel(pixel)
-            Call PixelSelector1.ShowMessage($"Select {pixel.scanId}")
+            Call WindowModules.MSIPixelProperty.SetPixel(pixel, info)
+            Call PixelSelector1.ShowMessage($"Select {pixel.scanId}, totalIons: {info.TotalIon.ToString("G3")}, basePeak m/z: {info.TopIonMz.ToString("F4")}")
         End If
 
         Dim ms As New LibraryMatrix With {
@@ -520,22 +521,25 @@ Public Class frmMsImagingViewer
     Private Function registerSummaryRender(summary As IntensitySummary) As Action
         Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary)
         Dim dimSize As New Size(params.scan_x, params.scan_y)
+        Dim range As DoubleRange = summaryLayer.Select(Function(i) i.totalIon).Range
 
         Return Sub()
                    Call MyApplication.RegisterPlot(
                        Sub(args)
+                           Dim dotSize As New Size(2, 2)
                            Dim mapLevels As Integer = params.mapLevels
                            Dim image As Image = Drawer.RenderSummaryLayer(
                                layer:=summaryLayer,
                                dimension:=dimSize,
                                colorSet:=params.colors.Description,
-                               pixelSize:=$"{params.pixel_width},{params.pixel_height}",
+                               pixelSize:=$"{dotSize.Width},{dotSize.Height}",
                                mapLevels:=mapLevels
                            ).AsGDIImage
                            Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(summaryLayer), Nothing)
 
-                           PixelSelector1.SetMsImagingOutput(image, New Size(params.pixel_width, params.pixel_height), legend)
+                           PixelSelector1.SetMsImagingOutput(image, dotSize, params.colors, {range.Min, range.Max}, mapLevels)
                            PixelSelector1.BackColor = params.background
+                           PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
                        End Sub)
                End Sub
     End Function
@@ -560,10 +564,12 @@ Public Class frmMsImagingViewer
             Return
         End If
 
+        mzdiff = params.GetTolerance
+        targetMz = selectedMz
+
         Call New Thread(
             Sub()
-                Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, mzdiff)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage($"No ion hits!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -571,9 +577,9 @@ Public Class frmMsImagingViewer
                     Dim maxInto As Double = Aggregate pm As PixelData
                                             In pixels
                                             Into Max(pm.intensity)
-                    Dim Rpixels = pixels.Where(Function(p) err(p.mz, r)).ToArray
-                    Dim Gpixels = pixels.Where(Function(p) err(p.mz, g)).ToArray
-                    Dim Bpixels = pixels.Where(Function(p) err(p.mz, b)).ToArray
+                    Dim Rpixels = pixels.Where(Function(p) mzdiff(p.mz, r)).ToArray
+                    Dim Gpixels = pixels.Where(Function(p) mzdiff(p.mz, g)).ToArray
+                    Dim Bpixels = pixels.Where(Function(p) mzdiff(p.mz, b)).ToArray
 
                     Call Invoke(Sub() params.SetIntensityMax(maxInto))
                     Call Invoke(Sub() rendering = createRenderTask(Rpixels, Gpixels, Bpixels, size))
@@ -602,7 +608,7 @@ Public Class frmMsImagingViewer
                            Dim qg As Double = threshold(G.Select(Function(p) p.intensity).ToArray, params.maxCut)
                            Dim qb As Double = threshold(B.Select(Function(p) p.intensity).ToArray, params.maxCut)
 
-                           Dim dotSize As Size = pixelSize.SizeParser
+                           Dim dotSize As Size = New Size(2, 2)   ' pixelSize.SizeParser
                            Dim image As Image = drawer.ChannelCompositions(
                                R:=R, G:=G, B:=B,
                                dimension:=dimensionSize,
@@ -613,8 +619,9 @@ Public Class frmMsImagingViewer
                            ).AsGDIImage
                            Dim legend As Image = Nothing
 
-                           PixelSelector1.SetMsImagingOutput(image, pixelSize.SizeParser, legend)
+                           PixelSelector1.SetMsImagingOutput(image, dotSize, Nothing, Nothing, Nothing)
                            PixelSelector1.BackColor = params.background
+                           PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
                        End Sub)
                End Sub
     End Function
@@ -634,10 +641,12 @@ Public Class frmMsImagingViewer
             MyApplication.host.showStatusMessage($"Run MS-Image rendering for {selectedMz.Count} selected ions...")
         End If
 
+        mzdiff = params.GetTolerance
+        targetMz = selectedMz.ToArray
+
         Call New Thread(
             Sub()
-                Dim err As Tolerance = params.GetTolerance
-                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, err)
+                Dim pixels As PixelData() = ServiceHub.LoadPixels(selectedMz, mzdiff)
 
                 If pixels.IsNullOrEmpty Then
                     Call MyApplication.host.showStatusMessage("no pixel data...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -660,6 +669,8 @@ Public Class frmMsImagingViewer
     End Sub
 
     Dim loadedPixels As PixelData()
+    Dim targetMz As Double()
+    Dim mzdiff As Tolerance
 
     Public Sub renderByPixelsData(pixels As PixelData(), MsiDim As Size)
         If params Is Nothing Then
@@ -712,7 +723,9 @@ Public Class frmMsImagingViewer
 
         pixelFilter = MsImaging.Drawer.ScalePixels(pixelFilter, params.GetTolerance, cut:={0, 1})
         pixelFilter = MsImaging.Drawer.GetPixelsMatrix(pixelFilter)
+        size = "2,2"
 
+        Dim range As DoubleRange = pixelFilter.Select(Function(i) i.intensity).Range
         Dim drawer As New PixelRender(heatmapRender:=False)
         Dim image As Image = drawer.RenderPixels(
             pixels:=pixelFilter,
@@ -724,8 +737,9 @@ Public Class frmMsImagingViewer
         ).AsGDIImage
         Dim legend As Image = Nothing ' If(ShowLegendToolStripMenuItem.Checked, params.RenderingColorMapLegend(pixelFilter), Nothing)
 
-        PixelSelector1.SetMsImagingOutput(image, size.SizeParser, legend)
+        PixelSelector1.SetMsImagingOutput(image, size.SizeParser, params.colors, {range.Min, range.Max}, params.mapLevels)
         PixelSelector1.BackColor = params.background
+        PixelSelector1.SetColorMapVisible(visible:=params.showColorMap)
     End Sub
 
     Protected Overrides Sub OpenContainingFolder()
@@ -855,7 +869,16 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub ExportPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportPlotToolStripMenuItem.Click
+        If Not ServiceHub.MSIEngineRunning Then
+            Call MyApplication.host.warning("You must load raw data file at first!")
+            Return
+        End If
 
+        Using file As New SaveFileDialog With {.Filter = "Plot Image(*.png)|*.png"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call RscriptProgressTask.ExportSingleIonPlot(targetMz(0), mzdiff.GetScript, saveAs:=file.FileName)
+            End If
+        End Using
     End Sub
 
     Private Sub ImageProcessingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImageProcessingToolStripMenuItem.Click
@@ -864,8 +887,9 @@ Public Class frmMsImagingViewer
 
         If mask.ShowDialogForm(getConfig) = DialogResult.OK Then
             Dim levels As Integer = CInt(getConfig.TrackBar1.Value)
+            Dim contract As Double = getConfig.TrackBar2.Value
 
-            If levels > 0 Then
+            If levels > 0 OrElse contract <> 0.0 Then
                 Dim progress As New frmTaskProgress
 
                 ' just exit image progress
@@ -877,7 +901,7 @@ Public Class frmMsImagingViewer
                 Call New Thread(Sub()
                                     Call Thread.Sleep(1000)
                                     Call progress.SetProgress(0, "Do gauss blur...")
-                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
+                                    Call Me.Invoke(Sub() PixelSelector1.doGauss(levels * 13, contract, Sub(p) progress.SetProgress(p, $"Do gauss blur... {p.ToString("F2")}%")))
                                     Call progress.Invoke(Sub() progress.Close())
                                 End Sub).Start()
 

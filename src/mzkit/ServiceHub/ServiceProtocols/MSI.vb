@@ -83,12 +83,14 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Task
 
 <Protocol(GetType(ServiceProtocol))>
-Public Class MSI : Implements ITaskDriver
+Public Class MSI : Implements ITaskDriver, IDisposable
 
     Public Shared ReadOnly Property Protocol As Long = New ProtocolAttribute(GetType(ServiceProtocol)).EntryPoint
 
     Dim socket As TcpServicesSocket
     Dim MSI As Drawer
+
+    Private disposedValue As Boolean
 
     Public ReadOnly Property TcpPort As Integer
         Get
@@ -103,6 +105,7 @@ Public Class MSI : Implements ITaskDriver
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me, debug:=Not debugPort Is Nothing).HandleRequest
 
         Call RunSlavePipeline.SendMessage($"socket={TcpPort}")
+        Call HeartBeat.Register(Me)
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run
@@ -277,4 +280,30 @@ Public Class MSI : Implements ITaskDriver
 
         Return New DataPipe(mzList)
     End Function
+
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects)
+                Call socket.Dispose()
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            ' TODO: set large fields to null
+            disposedValue = True
+        End If
+    End Sub
+
+    ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+    ' Protected Overrides Sub Finalize()
+    '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+    '     Dispose(disposing:=False)
+    '     MyBase.Finalize()
+    ' End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        Dispose(disposing:=True)
+        GC.SuppressFinalize(Me)
+    End Sub
 End Class

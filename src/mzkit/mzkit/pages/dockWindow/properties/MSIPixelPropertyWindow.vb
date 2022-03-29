@@ -65,14 +65,16 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class MSIPixelPropertyWindow
 
-    Public Sub SetPixel(pixel As PixelScan)
+    Public Sub SetPixel(pixel As PixelScan, ByRef props As PixelProperty)
         Select Case Me.DockState
             Case DockState.DockBottomAutoHide, DockState.DockLeftAutoHide, DockState.DockRightAutoHide, DockState.DockTopAutoHide, DockState.Hidden, DockState.Unknown
+                props = New PixelProperty(pixel)
                 Return
             Case Else
         End Select
 
         PropertyGrid1.SelectedObject = New PixelProperty(pixel)
+        props = PropertyGrid1.SelectedObject
 
         Dim q As QuantileEstimationGK = pixel.GetMs.Select(Function(i) i.intensity).GKQuantile
         Dim serial As New SerialData With {

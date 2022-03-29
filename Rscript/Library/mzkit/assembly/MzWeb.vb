@@ -256,7 +256,16 @@ Module MzWeb
     ''' <param name="file">the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file</param>
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
-    Public Function Open(file As String) As mzPack
+    <RApiReturn(GetType(mzPack))>
+    Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf file Is String Then
+            Return openFromFile(file)
+        Else
+            Throw New NotImplementedException
+        End If
+    End Function
+
+    Private Function openFromFile(file As String) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
 #If netcore5 = 0 Then

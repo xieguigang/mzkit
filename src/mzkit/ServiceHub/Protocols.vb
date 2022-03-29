@@ -60,8 +60,8 @@ Imports Task
 
 Public Module Protocols
 
-    Public Function StartServer(Rscript As String, ByRef service As Integer, debugPort As Integer?) As RunSlavePipeline
-        Dim cli As String = If(debugPort Is Nothing, Rscript.CLIPath, $"{Rscript.CLIPath} --debug={debugPort}")
+    Public Function StartServer(Rscript As String, ByRef service As Integer, debugPort As Integer?, Optional heartbeats As Integer? = Nothing) As RunSlavePipeline
+        Dim cli As String = If(debugPort Is Nothing, Rscript.CLIPath, $"{Rscript.CLIPath} --debug={debugPort}") ' --heartbeats={heartbeats}
         Dim pipeline As New RunSlavePipeline(RscriptPipelineTask.Rscript.Path, cli)
         Dim tcpPort As Integer = -1
 

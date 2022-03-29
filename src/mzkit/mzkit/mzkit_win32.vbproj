@@ -318,7 +318,8 @@
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\CLI.vb" />
     <Compile Include="application\Actions.vb" />
-    <Compile Include="application\ServiceHub.vb" />
+    <Compile Include="application\ServiceHub\HeartBeat.vb" />
+    <Compile Include="application\ServiceHub\ServiceHub.vb" />
     <Compile Include="application\RibbonEvents.vb" />
     <Compile Include="application\settings\Languages.vb" />
     <Compile Include="application\WindowModules.vb" />
@@ -893,6 +894,12 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.zh-CN.resx">
+      <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.zh-Hant.resx">
+      <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmNetworkViewer.resx">
       <DependentUpon>frmNetworkViewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -1171,6 +1178,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
+      <Project>{A60240D1-E78B-4B96-85E3-45256571C2CB}</Project>
+      <Name>Microsoft.VisualBasic.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\src\PdfConvert\WkHtmlToPdf.vbproj">
       <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>

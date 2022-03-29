@@ -90,10 +90,14 @@ Public Class DBPool
         Next
     End Function
 
-    Public Iterator Function MSetAnnotation(mzlist As IEnumerable(Of Double)) As IEnumerable(Of NamedCollection(Of MzQuery))
+    Public Iterator Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional println As Action(Of String) = Nothing) As IEnumerable(Of NamedCollection(Of MzQuery))
         Dim allMz As Double() = mzlist.ToArray
 
         For Each xrefDb In metadb
+            If Not println Is Nothing Then
+                Call println($"Do m/z set annotation of {xrefDb.Key}...")
+            End If
+
             Yield New NamedCollection(Of MzQuery) With {
                 .name = xrefDb.Key,
                 .value = xrefDb.Value _
