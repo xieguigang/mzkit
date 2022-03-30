@@ -204,6 +204,11 @@ Public Class mzPack
         Next
     End Function
 
+    ''' <summary>
+    ''' using scan id as lib guid
+    ''' </summary>
+    ''' <param name="ms2"></param>
+    ''' <returns></returns>
     Public Shared Function CastToPeakMs2(ms2 As ScanMS2) As PeakMs2
         Return New PeakMs2 With {
             .activation = ms2.activationMethod.ToString,

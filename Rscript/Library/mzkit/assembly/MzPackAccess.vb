@@ -53,16 +53,21 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports stdNum = System.Math
 
 <Package("mzPack")>
 Module MzPackAccess
@@ -122,5 +127,63 @@ Module MzPackAccess
         End Using
 
         Return True
+    End Function
+
+    <ExportAPI("packData")>
+    <RApiReturn(GetType(mzPack))>
+    Public Function packData(<RRawVectorArgument>
+                             data As Object,
+                             Optional timeWindow As Double = 1,
+                             Optional env As Environment = Nothing) As Object
+        Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(data, env)
+
+        If peaks.isError Then
+            Return peaks.getError
+        End If
+
+        Dim groupScans = peaks _
+            .populates(Of PeakMs2)(env) _
+            .GroupBy(Function(t) t.rt,
+                     Function(t1, t2)
+                         Return stdNum.Abs(t1 - t2) <= timeWindow
+                     End Function) _
+            .ToArray
+        Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)
+                        In groupScans
+                        Select list.scan1).ToArray
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.LCMS,
+            .MS = groupMs1,
+            .source = "<assembly>"
+        }
+    End Function
+
+    <Extension>
+    Private Function scan1(list As NamedCollection(Of PeakMs2)) As ScanMS1
+        Dim scan2 As ScanMS2() = list _
+            .Select(Function(i)
+                        Return New ScanMS2 With {
+                            .centroided = True,
+                            .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
+                            .into = i.mzInto.Select(Function(mzi) mzi.intensity).ToArray,
+                            .parentMz = i.mz,
+                            .intensity = i.intensity,
+                            .rt = i.rt,
+                            .scan_id = i.lib_guid,
+                            .collisionEnergy = i.collisionEnergy
+                        }
+                    End Function) _
+            .ToArray
+
+        Return New ScanMS1 With {
+           .into = scan2.Select(Function(i) i.intensity).ToArray,
+           .mz = scan2.Select(Function(i) i.parentMz).ToArray,
+           .products = scan2,
+           .rt = Val(list.name),
+           .scan_id = list.name,
+           .TIC = .into.Sum,
+           .BPC = .into.Max
+        }
     End Function
 End Module
