@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::29731a29e781e49a6e19e9d4bb820c17, mzkit\Rscript\Library\mzkit.insilicons\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 418
-    '    Code Lines: 321
-    ' Comment Lines: 33
-    '   Blank Lines: 64
-    '     File Size: 17.23 KB
+' Summaries:
 
 
-    ' Module metaDNAInfer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary
-    '               loadKeggNetwork, loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable
-    '               ResultAlignments, ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary
-    '               SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 418
+'    Code Lines: 321
+' Comment Lines: 33
+'   Blank Lines: 64
+'     File Size: 17.23 KB
+
+
+' Module metaDNAInfer
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary
+'               loadKeggNetwork, loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable
+'               ResultAlignments, ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary
+'               SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,8 +98,45 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Module metaDNAInfer
 
     Sub New()
-
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
+
+    Private Function getResultTable(list As MetaDNAResult(), args As list, env As Environment) As dataframe
+        Dim data As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        data.columns(NameOf(MetaDNAResult.ROI_id)) = list.Select(Function(i) i.ROI_id).ToArray
+        data.columns(NameOf(MetaDNAResult.query_id)) = list.Select(Function(i) i.query_id).ToArray
+        data.columns(NameOf(MetaDNAResult.mz)) = list.Select(Function(i) i.mz).ToArray
+        data.columns(NameOf(MetaDNAResult.rt)) = list.Select(Function(i) i.rt).ToArray
+        data.columns(NameOf(MetaDNAResult.intensity)) = list.Select(Function(i) i.intensity).ToArray
+        data.columns(NameOf(MetaDNAResult.ppm)) = list.Select(Function(i) i.ppm).ToArray
+        data.columns(NameOf(MetaDNAResult.KEGGId)) = list.Select(Function(i) i.KEGGId).ToArray
+        data.columns(NameOf(MetaDNAResult.precursorType)) = list.Select(Function(i) i.precursorType).ToArray
+        data.columns(NameOf(MetaDNAResult.name)) = list.Select(Function(i) i.name).ToArray
+        data.columns(NameOf(MetaDNAResult.formula)) = list.Select(Function(i) i.formula).ToArray
+        data.columns(NameOf(MetaDNAResult.exactMass)) = list.Select(Function(i) i.exactMass).ToArray
+        data.columns(NameOf(MetaDNAResult.mzCalc)) = list.Select(Function(i) i.mzCalc).ToArray
+
+        data.columns(NameOf(MetaDNAResult.inferLevel)) = list.Select(Function(i) i.inferLevel).ToArray
+        data.columns(NameOf(MetaDNAResult.inferSize)) = list.Select(Function(i) i.inferSize).ToArray
+        data.columns(NameOf(MetaDNAResult.forward)) = list.Select(Function(i) i.forward).ToArray
+        data.columns(NameOf(MetaDNAResult.reverse)) = list.Select(Function(i) i.reverse).ToArray
+        data.columns(NameOf(MetaDNAResult.jaccard)) = list.Select(Function(i) i.jaccard).ToArray
+        data.columns(NameOf(MetaDNAResult.mirror)) = list.Select(Function(i) i.mirror).ToArray
+        data.columns(NameOf(MetaDNAResult.score1)) = list.Select(Function(i) i.score1).ToArray
+        data.columns(NameOf(MetaDNAResult.score2)) = list.Select(Function(i) i.score2).ToArray
+        data.columns(NameOf(MetaDNAResult.pvalue)) = list.Select(Function(i) i.pvalue).ToArray
+
+        data.columns(NameOf(MetaDNAResult.seed)) = list.Select(Function(i) i.seed).ToArray
+        data.columns(NameOf(MetaDNAResult.parentTrace)) = list.Select(Function(i) i.parentTrace).ToArray
+        data.columns(NameOf(MetaDNAResult.partnerKEGGId)) = list.Select(Function(i) i.partnerKEGGId).ToArray
+        data.columns(NameOf(MetaDNAResult.reaction)) = list.Select(Function(i) i.reaction).ToArray
+        data.columns(NameOf(MetaDNAResult.KEGG_reaction)) = list.Select(Function(i) i.KEGG_reaction).ToArray
+
+        Return data
+    End Function
 
     ''' <summary>
     ''' Load network graph model from the kegg metaDNA infer network data.
