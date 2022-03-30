@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::9aa0f529fa26bbb17565c9f15f78d452, mzkit\src\visualize\MsImaging\IonStat.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 85
-    '    Code Lines: 75
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 3.51 KB
+' Summaries:
 
 
-    ' Class IonStat
-    ' 
-    '     Properties: basePixelX, basePixelY, density, maxIntensity, mz
-    '                 pixels, Q1Intensity, Q2Intensity, Q3Intensity
-    ' 
-    '     Function: (+3 Overloads) DoStat
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 85
+'    Code Lines: 75
+' Comment Lines: 0
+'   Blank Lines: 10
+'     File Size: 3.51 KB
+
+
+' Class IonStat
+' 
+'     Properties: basePixelX, basePixelY, density, maxIntensity, mz
+'                 pixels, Q1Intensity, Q2Intensity, Q3Intensity
+' 
+'     Function: (+3 Overloads) DoStat
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +76,7 @@ Public Class IonStat
     Public Property Q1Intensity As Double
     Public Property Q2Intensity As Double
     Public Property Q3Intensity As Double
+    Public Property RSD As Double
 
     Public Shared Function DoStat(allPixels As PixelScan(), Optional nsize As Integer = 5) As IEnumerable(Of IonStat)
         Return allPixels _
@@ -111,7 +112,8 @@ Public Class IonStat
         For Each ion In ions
             Dim pixels = Grid(Of (Point, ms2)).Create(ion, Function(x) x.Item1)
             Dim basePixel = ion.OrderByDescending(Function(i) i.ms.intensity).First
-            Dim Q = ion.Select(Function(i) i.ms.intensity).Quartile
+			Dim intensity As Double() = ion.Select(Function(i) i.ms.intensity).ToArray
+            Dim Q = intensity.Quartile
             Dim counts As New List(Of Double)
 
             For Each top In ion.OrderByDescending(Function(i) i.ms.intensity).Take(30)
@@ -135,7 +137,8 @@ Public Class IonStat
                 .Q1Intensity = Q.Q1,
                 .Q2Intensity = Q.Q2,
                 .Q3Intensity = Q.Q3,
-                .density = counts.Average
+                .density = counts.Average,
+                .RSD = intensity.RSD * 100
             }
         Next
     End Function
