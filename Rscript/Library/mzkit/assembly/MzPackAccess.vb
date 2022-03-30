@@ -131,7 +131,10 @@ Module MzPackAccess
 
     <ExportAPI("packData")>
     <RApiReturn(GetType(mzPack))>
-    Public Function packData(<RRawVectorArgument> data As Object, Optional timeWindow As Double = 1, Optional env As Environment = Nothing) As Object
+    Public Function packData(<RRawVectorArgument>
+                             data As Object,
+                             Optional timeWindow As Double = 1,
+                             Optional env As Environment = Nothing) As Object
         Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(data, env)
 
         If peaks.isError Then
