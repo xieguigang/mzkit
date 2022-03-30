@@ -521,7 +521,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Function registerSummaryRender(summary As IntensitySummary) As Action
-        Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary)
+        Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary).KnnFill(6, 6).ToArray
         Dim dimSize As New Size(params.scan_x, params.scan_y)
         Dim range As DoubleRange = summaryLayer.Select(Function(i) i.totalIon).Range
 
