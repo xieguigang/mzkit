@@ -188,10 +188,6 @@ Public Class frmMsImagingViewer
             End Sub)
     End Sub
 
-    Sub cleanBackground()
-
-    End Sub
-
     Sub setupPolygonEditorButtons()
         AddHandler ribbonItems.ButtonMovePolygon.ExecuteEvent,
             Sub()
@@ -377,7 +373,7 @@ Public Class frmMsImagingViewer
             End Function)
     End Sub
 
-    Public Sub CutBackground()
+    Sub cleanBackground()
         If FilePath.StringEmpty Then
             Call MyApplication.host.warning("Load MS-imaging raw data at first!")
         Else
