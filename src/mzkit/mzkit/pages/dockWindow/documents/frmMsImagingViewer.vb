@@ -374,12 +374,17 @@ Public Class frmMsImagingViewer
     End Sub
 
     Sub cleanBackground()
-        If FilePath.StringEmpty Then
+        If Me.FilePath.StringEmpty Then
             Call MyApplication.host.warning("Load MS-imaging raw data at first!")
         Else
+            Dim filePath = Me.FilePath
+
             Call frmTaskProgress.LoadData(
                 Function(msg As Action(Of String))
-                    Call Me.Invoke(Sub() LoadRender(ServiceHub.CutBackground, FilePath))
+                    Dim info = ServiceHub.CutBackground
+
+                    Call Me.Invoke(Sub() LoadRender(info, filePath))
+                    Call Me.Invoke(Sub() RenderSummary(IntensitySummary.BasePeak))
 
                     Return 0
                 End Function)
