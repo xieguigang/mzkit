@@ -379,7 +379,6 @@ Public Class frmMsImagingViewer
         Else
             Call frmTaskProgress.LoadData(
                 Function(msg As Action(Of String))
-                    Call ServiceHub.StartMSIService()
                     Call Me.Invoke(Sub() LoadRender(ServiceHub.CutBackground, FilePath))
 
                     Return 0

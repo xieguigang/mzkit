@@ -97,6 +97,9 @@ Module ServiceHub
     ''' </summary>
     Public debugPort As Integer?
 
+    ''' <summary>
+    ''' this method will close the engine at first
+    ''' </summary>
     Public Sub StartMSIService()
         Call CloseMSIEngine()
 
