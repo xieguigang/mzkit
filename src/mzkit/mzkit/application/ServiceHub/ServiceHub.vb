@@ -152,6 +152,18 @@ Module ServiceHub
         Return MSIProtocols.LoadPixels(mz, mzErr, AddressOf handleServiceRequest)
     End Function
 
+    Public Function CutBackground() As MsImageProperty
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.CutBackground, Encoding.UTF8.GetBytes("1")))
+        Dim output As MsImageProperty = data _
+            .GetString(Encoding.UTF8) _
+            .LoadJSON(Of Dictionary(Of String, String)) _
+            .DoCall(Function(info)
+                        Return New MsImageProperty(info)
+                    End Function)
+
+        Return output
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>

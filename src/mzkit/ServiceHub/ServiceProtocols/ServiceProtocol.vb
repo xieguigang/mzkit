@@ -81,6 +81,7 @@ Public Enum ServiceProtocol
     GetPixelRectangle
     GetPixelPolygon
     LoadSummaryLayer
+    CutBackground
     ExitApp
 End Enum
 

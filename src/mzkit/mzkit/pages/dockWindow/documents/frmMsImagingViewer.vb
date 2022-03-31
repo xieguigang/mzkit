@@ -375,6 +375,20 @@ Public Class frmMsImagingViewer
             End Function)
     End Sub
 
+    Public Sub CutBackground()
+        If FilePath.StringEmpty Then
+            Call MyApplication.host.warning("Load MS-imaging raw data at first!")
+        Else
+            Call frmTaskProgress.LoadData(
+                Function(msg As Action(Of String))
+                    Call ServiceHub.StartMSIService()
+                    Call Me.Invoke(Sub() LoadRender(ServiceHub.CutBackground, FilePath))
+
+                    Return 0
+                End Function)
+        End If
+    End Sub
+
     ''' <summary>
     ''' load mzpack into MSI engine services
     ''' </summary>

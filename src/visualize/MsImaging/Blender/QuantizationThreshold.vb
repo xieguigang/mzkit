@@ -107,6 +107,14 @@ Namespace Blender
             Return q.ThresholdValue(intensity, qcut)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="intensity"></param>
+        ''' <param name="qcut"></param>
+        ''' <returns>
+        ''' threshold value range in range ``[0,1]``.
+        ''' </returns>
         Public Shared Function TrIQThreshold(intensity As Double(), qcut As Double) As Double
             Static q As New TrIQThreshold
             Return q.ThresholdValue(intensity, qcut)
@@ -165,13 +173,21 @@ Namespace Blender
             qcut = q
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="intensity"></param>
+        ''' <param name="qcut"></param>
+        ''' <returns>
+        ''' [0, 1] 
+        ''' </returns>
         Public Overrides Function ThresholdValue(intensity() As Double, qcut As Double) As Double
             If intensity.IsNullOrEmpty Then
                 Return 0
             ElseIf qcut >= 1 Then
-                Return intensity.Max
+                Return 1
             ElseIf qcut <= 0.0 Then
-                Return intensity.Min
+                Return intensity.Min / intensity.Max
             Else
                 Return intensity.FindThreshold(qcut, N:=100) / intensity.Max
             End If

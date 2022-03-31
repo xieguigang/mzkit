@@ -176,4 +176,8 @@ Public Module PixelsCDF
         Return New ReadRawPack(pixels, size)
     End Function
 
+    <Extension>
+    Public Function CreatePixelReader(allPixels As PixelScan()) As ReadRawPack
+
+    End Function
 End Module
