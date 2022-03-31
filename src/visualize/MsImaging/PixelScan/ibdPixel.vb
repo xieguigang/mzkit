@@ -142,8 +142,8 @@ Namespace Pixel
             Erase memoryCache
         End Sub
 
-        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
-            Throw New NotImplementedException()
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return GetMsPipe.Select(Function(i) i.intensity).ToArray
         End Function
     End Class
 End Namespace

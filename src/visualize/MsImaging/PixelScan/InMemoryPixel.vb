@@ -110,5 +110,9 @@ Namespace Pixel
                        Into Max(mzi.intensity)
             End If
         End Function
+
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return data.Select(Function(i) i.intensity).ToArray
+        End Function
     End Class
 End Namespace
