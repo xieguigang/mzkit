@@ -141,7 +141,6 @@
     <ProjectReference Include="..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\Massbank\massbank.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj" />

@@ -167,6 +167,7 @@ Public Class frmMsImagingViewer
                 Call grid.Columns.Add("Q1_intensity", GetType(Double))
                 Call grid.Columns.Add("Q2_intensity", GetType(Double))
                 Call grid.Columns.Add("Q3_intensity", GetType(Double))
+                Call grid.Columns.Add("RSD", GetType(Double))
 
                 For Each ion As IonStat In ions.OrderByDescending(Function(i) i.pixels)
                     Call grid.Rows.Add(
@@ -178,7 +179,8 @@ Public Class frmMsImagingViewer
                         ion.basePixelY,
                         stdNum.Round(ion.Q1Intensity),
                         stdNum.Round(ion.Q2Intensity),
-                        stdNum.Round(ion.Q3Intensity)
+                        stdNum.Round(ion.Q3Intensity),
+                        stdNum.Round(ion.RSD)
                     )
 
                     Call Application.DoEvents()
@@ -533,7 +535,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Function registerSummaryRender(summary As IntensitySummary) As Action
-        Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary)
+        Dim summaryLayer As PixelScanIntensity() = ServiceHub.LoadSummaryLayer(summary).KnnFill(6, 6).ToArray
         Dim dimSize As New Size(params.scan_x, params.scan_y)
         Dim range As DoubleRange = summaryLayer.Select(Function(i) i.totalIon).Range
 

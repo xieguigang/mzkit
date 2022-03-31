@@ -125,7 +125,7 @@ Public Class MsImageProperty
 
     <Category("Intensity")> Public Property upperbound As Double
     <Category("Intensity")> Public Property lowerbound As Double
-    <Category("Intensity")> Public Property maxCut As Double = 0.75
+    <Category("Intensity")> Public Property maxCut As Double = 0.3
     <Category("Intensity")> Public Property showColorMap As Boolean = True
 
     Sub New(render As Drawer)

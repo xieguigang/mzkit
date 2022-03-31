@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::a873fc8824d20329f79e710db5a10d19, mzkit\src\mzkit\mzkit\application\RibbonEvents.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 424
-    '    Code Lines: 327
-    ' Comment Lines: 10
-    '   Blank Lines: 87
-    '     File Size: 21.72 KB
+' Summaries:
 
 
-    ' Module RibbonEvents
-    ' 
-    '     Properties: ribbonItems
-    ' 
-    '     Function: GetQuantizationThreshold, getWelcomeScript
-    ' 
-    '     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, AddHandlers, CombineRowScanTask
-    '          CopyMatrix, CopyPlotImage, CopyProperties, CreateNewScript, ExitToolsStripMenuItem_Click
-    '          NavBack_Click, openCmd, OpenMSIRaw, OpenWorkspace, resetLayout
-    '          RunCurrentScript, ShowExplorer, showHelp, showLoggingWindow, showMsImaging
-    '          ShowProperties, showRTerm, ShowSearchList, ShowSettings, showStartPage
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 424
+'    Code Lines: 327
+' Comment Lines: 10
+'   Blank Lines: 87
+'     File Size: 21.72 KB
+
+
+' Module RibbonEvents
+' 
+'     Properties: ribbonItems
+' 
+'     Function: GetQuantizationThreshold, getWelcomeScript
+' 
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, AddHandlers, CombineRowScanTask
+'          CopyMatrix, CopyPlotImage, CopyProperties, CreateNewScript, ExitToolsStripMenuItem_Click
+'          NavBack_Click, openCmd, OpenMSIRaw, OpenWorkspace, resetLayout
+'          RunCurrentScript, ShowExplorer, showHelp, showLoggingWindow, showMsImaging
+'          ShowProperties, showRTerm, ShowSearchList, ShowSettings, showStartPage
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -170,6 +170,18 @@ Module RibbonEvents
 
         AddHandler ribbonItems.ButtonDevTools.ExecuteEvent, Sub() Call openCmd()
         AddHandler ribbonItems.DOIReference.ExecuteEvent, Sub() Call New frmDOI().ShowDialog()
+        AddHandler ribbonItems.ButtonSystemDiagnosis.ExecuteEvent, Sub() Call CollectSystemInformation()
+    End Sub
+
+    Private Sub CollectSystemInformation()
+        If MessageBox.Show(
+            MyApplication.getCurrentLanguageString("collectSysInfo"),
+            MyApplication.getCurrentLanguageString("msgbox_title"),
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Question) = DialogResult.Cancel Then
+
+            Return
+        End If
     End Sub
 
     Friend Sub openCmd()

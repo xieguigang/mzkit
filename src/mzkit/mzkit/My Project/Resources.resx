@@ -121,6 +121,12 @@
   <data name="chemistry" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chemistry.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="collectSysInfo_en" xml:space="preserve">
+    <value>We will collect information about the hardware on your computer for application compatibility evaluation, but this information collection process will not involve your personal privacy information. Later you will get a report of your computer system information, and you can send the generated report file to us for optimizing the application components. You can send the generated computer system information report to our e-mail box: biodeep@bionovogene.com</value>
+  </data>
+  <data name="collectSysInfo_zh" xml:space="preserve">
+    <value>我们将采集您的计算机上的相关硬件信息用于应用程序兼容性评估，但是这个信息采集过程并不会涉及到您的个人隐私信息。待会您将会得到一份关于您的计算机系统信息的报告，您可以将所生成的报告文件发送给我们用于优化应用程序相关功能组件。您可以将所生成的计算机系统信息报告发送至电子邮箱：biodeep@bionovogene.com</value>
+  </data>
   <data name="DBFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DBFile.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

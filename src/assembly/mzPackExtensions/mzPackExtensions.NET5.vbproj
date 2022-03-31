@@ -103,8 +103,11 @@
 
   <ItemGroup>
     <Compile Remove="test\**" />
+    <Compile Remove="VendorStream\**" />
     <EmbeddedResource Remove="test\**" />
+    <EmbeddedResource Remove="VendorStream\**" />
     <None Remove="test\**" />
+    <None Remove="VendorStream\**" />
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -127,7 +130,6 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
-    <ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

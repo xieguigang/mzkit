@@ -270,7 +270,11 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("write.mgf")>
     <RApiReturn(GetType(Boolean))>
-    Public Function writeMgfIons(<RRawVectorArgument> ions As Object, file$, Optional relativeInto As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function writeMgfIons(<RRawVectorArgument>
+                                 ions As Object,
+                                 file$,
+                                 Optional relativeInto As Boolean = False,
+                                 Optional env As Environment = Nothing) As Object
         If ions Is Nothing Then
             Return Internal.debug.stop("the required ions data can not be nothing!", env)
         ElseIf ions.GetType.IsArray AndAlso DirectCast(ions, Array).Length = 0 Then

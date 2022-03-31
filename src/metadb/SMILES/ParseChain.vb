@@ -141,7 +141,7 @@ Public Class ParseChain
                     .bond = Bonds.single
                 }
 
-                Call graph.AddBond(bond)
+                Call graph.Insert(bond)
             Else
                 rings(ringId) = element
             End If
@@ -158,7 +158,7 @@ Public Class ParseChain
                 .bond = bondType
             }
 
-            Call graph.AddBond(bond)
+            Call graph.Insert(bond)
         End If
         If stackSize.Count > 0 Then
             Call stackSize.Peek.Hit()

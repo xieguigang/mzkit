@@ -66,7 +66,7 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
 
     Public ReadOnly Property AllBonds As IEnumerable(Of ChemicalKey)
         Get
-            Return edges.Values
+            Return graphEdges
         End Get
     End Property
 
@@ -75,16 +75,6 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
             Return vertex
         End Get
     End Property
-
-    ''' <summary>
-    ''' <see cref="AddEdge"/> without add elements
-    ''' </summary>
-    ''' <param name="bond">
-    ''' the elements has already been added.
-    ''' </param>
-    Friend Sub AddBond(bond As ChemicalKey)
-        Call edges.Add(bond)
-    End Sub
 
     Public Iterator Function FindKeys(elementkey As String) As IEnumerable(Of ChemicalKey)
         For Each key As ChemicalKey In AllBonds

@@ -288,7 +288,7 @@ Module Visual
     End Function
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
-        Dim title As String = args.getValue("title", env, "Mass Spectrum Plot")
+        Dim title As String = args.getValue("title", env, Nothing)
         Dim mirror As Boolean = args.getValue("mirror", env, False)
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
@@ -307,7 +307,8 @@ Module Visual
                 matrix:=ms,
                 images:=annotateImages,
                 labelIntensity:=labeIntensity,
-                size:=size
+                size:=size,
+                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault
             )
         End If
     End Function

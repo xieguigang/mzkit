@@ -15,3 +15,4 @@ Metabolite annotation database toolkit
 + [save.mapping](massbank/save.mapping.1) Save id mapping file in json file format
 + [glycosyl.tokens](massbank/glycosyl.tokens.1) 
 + [glycosyl.solver](massbank/glycosyl.solver.1) 
++ [parseChEBIEntity](massbank/parseChEBIEntity.1) 

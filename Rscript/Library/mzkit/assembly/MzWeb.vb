@@ -65,7 +65,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+#If netcore5 = 0 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+#End If
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -266,10 +268,12 @@ Module MzWeb
     Private Function openFromFile(file As String) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
+#If netcore5 = 0 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXRaw
             End Using
+#End If
         ElseIf file.ExtensionSuffix("cdf") Then
             ' convert MSI cdf to mzpack
             Using cdf As New netCDFReader(file)
