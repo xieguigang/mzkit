@@ -139,7 +139,7 @@ Public Class MSI : Implements ITaskDriver, IDisposable
     Public Function CutBackground(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim allPixels As PixelScan() = MSI.pixelReader.AllPixels.ToArray
         Dim intensity As Double() = allPixels.Select(Function(d) d.GetMzIonIntensity).IteratesALL.ToArray
-        Dim q As Double = TrIQThreshold.TrIQThreshold(intensity, 0.6)
+        Dim q As Double = TrIQThreshold.TrIQThreshold(intensity, 0.7)
         Dim cut As Double = intensity.Max * q
         Dim info As Dictionary(Of String, String)
 
