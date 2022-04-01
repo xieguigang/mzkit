@@ -106,18 +106,19 @@ Public Class AtomGroupHandler
         Return Nothing
     End Function
 
-    Public Shared Function FindDelta(mz1 As Double, mz2 As Double, Optional ByRef delta As Integer = 0) As NamedValue(Of Formula)
+    Public Shared Function FindDelta(mz1 As Double, mz2 As Double,
+                                     Optional ByRef delta As Integer = 0,
+                                     Optional da As Double = 0.1) As NamedValue(Of Formula)
         Dim d As Double = mz1 - mz2
         Dim dmass As Double = stdNum.Abs(d)
 
         If dmass <= 0.1 Then
             Return Nothing
+        Else
+            delta = stdNum.Sign(d)
         End If
 
-        Dim group = GetByMass(dmass)
-
-        delta = stdNum.Sign(d)
-
+        Dim group As NamedValue(Of Formula) = GetByMass(dmass, da)
         Return group
     End Function
 End Class
