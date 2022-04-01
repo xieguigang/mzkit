@@ -204,16 +204,8 @@ Namespace Pixel
             Next
         End Function
 
-        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
-            Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray
-
-            If allMatched.Length = 0 Then
-                Return 0
-            Else
-                Return Aggregate mzi As ms2
-                       In allMatched
-                       Into Max(mzi.intensity)
-            End If
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return intensity
         End Function
     End Class
 

@@ -115,6 +115,7 @@ Public Class MSI : Implements ITaskDriver, IDisposable
     <Protocol(ServiceProtocol.LoadMSI)>
     Public Function Load(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim filepath As String = request.GetString(Encoding.UTF8)
+        Dim info As Dictionary(Of String, String)
 
         If filepath.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(filepath)
@@ -129,7 +130,27 @@ Public Class MSI : Implements ITaskDriver, IDisposable
             End Using
         End If
 
-        Dim info As Dictionary(Of String, String) = MsImageProperty.GetMSIInfo(MSI)
+        info = MsImageProperty.GetMSIInfo(MSI)
+
+        Return New DataPipe(info.GetJson(indent:=False, simpleDict:=True))
+    End Function
+
+    <Protocol(ServiceProtocol.CutBackground)>
+    Public Function CutBackground(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Dim allPixels As PixelScan() = MSI.pixelReader.AllPixels.ToArray
+        Dim intensity As Double() = allPixels.Select(Function(d) d.GetMzIonIntensity).IteratesALL.ToArray
+        Dim q As Double = TrIQThreshold.TrIQThreshold(intensity, 0.7)
+        Dim cut As Double = intensity.Max * q
+        Dim info As Dictionary(Of String, String)
+
+        allPixels = allPixels _
+            .Where(Function(i)
+                       Return i.GetMzIonIntensity.Max <= cut
+                   End Function) _
+            .ToArray
+
+        MSI = New Drawer(allPixels.CreatePixelReader)
+        info = MsImageProperty.GetMSIInfo(MSI)
 
         Return New DataPipe(info.GetJson(indent:=False, simpleDict:=True))
     End Function
@@ -186,10 +207,11 @@ Public Class MSI : Implements ITaskDriver, IDisposable
     <Protocol(ServiceProtocol.ExportMzpack)>
     Public Function ExportMzPack(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim filename As String = request.GetString(Encoding.UTF8)
+        Dim reader = MSI.pixelReader
 
         Using buffer As Stream = filename.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Call New mzPack With {
-                .MS = DirectCast(MSI.pixelReader, ReadRawPack) _
+                .MS = DirectCast(reader, ReadRawPack) _
                     .GetScans _
                     .ToArray
             }.Write(buffer, progress:=AddressOf RunSlavePipeline.SendMessage)

@@ -97,6 +97,9 @@ Module ServiceHub
     ''' </summary>
     Public debugPort As Integer?
 
+    ''' <summary>
+    ''' this method will close the engine at first
+    ''' </summary>
     Public Sub StartMSIService()
         Call CloseMSIEngine()
 
@@ -150,6 +153,18 @@ Module ServiceHub
 
     Public Function LoadPixels(mz As IEnumerable(Of Double), mzErr As Tolerance) As PixelData()
         Return MSIProtocols.LoadPixels(mz, mzErr, AddressOf handleServiceRequest)
+    End Function
+
+    Public Function CutBackground() As MsImageProperty
+        Dim data As RequestStream = handleServiceRequest(New RequestStream(MSI.Protocol, ServiceProtocol.CutBackground, Encoding.UTF8.GetBytes("1")))
+        Dim output As MsImageProperty = data _
+            .GetString(Encoding.UTF8) _
+            .LoadJSON(Of Dictionary(Of String, String)) _
+            .DoCall(Function(info)
+                        Return New MsImageProperty(info)
+                    End Function)
+
+        Return output
     End Function
 
     ''' <summary>

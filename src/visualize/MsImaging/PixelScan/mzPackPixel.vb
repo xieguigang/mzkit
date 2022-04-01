@@ -152,5 +152,9 @@ Namespace Pixel
                        Into Max(mzi.intensity)
             End If
         End Function
+
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return scan.into
+        End Function
     End Class
 End Namespace
