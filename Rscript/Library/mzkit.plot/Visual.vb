@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::6be1297bfc32ab701f164fb9060f397f, mzkit\Rscript\Library\mzkit.plot\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 590
-    '    Code Lines: 458
-    ' Comment Lines: 72
-    '   Blank Lines: 60
-    '     File Size: 25.42 KB
+' Summaries:
 
 
-    ' Module Visual
-    ' 
-    '     Function: getSpectrum, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D, plotMS
-    '               plotOverlaps, plotPeaktable, plotRawChromatogram, PlotRawScatter, plotSignal
-    '               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
-    '               SpectrumPlot
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 590
+'    Code Lines: 458
+' Comment Lines: 72
+'   Blank Lines: 60
+'     File Size: 25.42 KB
+
+
+' Module Visual
+' 
+'     Function: getSpectrum, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D, plotMS
+'               plotOverlaps, plotPeaktable, plotRawChromatogram, PlotRawScatter, plotSignal
+'               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
+'               SpectrumPlot
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -288,14 +288,14 @@ Module Visual
     End Function
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
-        Dim title As String = args.getValue("title", env, Nothing)
+        Dim title As String = args.getValue(Of String)("title", env, Nothing)
         Dim mirror As Boolean = args.getValue("mirror", env, False)
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1280,900")
 
         If mirror Then
-            Return SpectrumPlot(spectrum, title:=title)
+            Return SpectrumPlot(spectrum, title:=If(title, "Mass Spectrum Plot"))
         Else
             Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
 
