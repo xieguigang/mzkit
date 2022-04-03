@@ -86,7 +86,7 @@ Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.genomics.Analysis.Microarray.PhenoGraph
+' Imports SMRUCC.genomics.Analysis.Microarray.PhenoGraph
 Imports stdNum = System.Math
 
 <Package("task")>
@@ -144,7 +144,8 @@ Module TaskScript
                     End Function) _
             .ToArray
 
-        Return mzData.CreatePhenoGraph(k:=120)
+        Throw New NotImplementedException
+        ' Return mzData.CreatePhenoGraph(k:=120)
     End Function
 
     <ExportAPI("MSI_peaktable")>

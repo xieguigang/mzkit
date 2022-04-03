@@ -218,10 +218,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\SingleCell\PhenoGraph\PhenoGraph\PhenoGraph.vbproj">
-      <Project>{ee99b2f1-6954-4d4d-adc2-e6defea2c733}</Project>
-      <Name>PhenoGraph</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\Bio.Annotation.vbproj">
       <Project>{e5ad6940-d449-471d-9539-65b4e457e6e3}</Project>
       <Name>Bio.Annotation</Name>
