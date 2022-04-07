@@ -103,11 +103,11 @@
 
   <ItemGroup>
     <Compile Remove="test\**" />
-    <Compile Remove="VendorStream\**" />
     <EmbeddedResource Remove="test\**" />
-    <EmbeddedResource Remove="VendorStream\**" />
     <None Remove="test\**" />
-    <None Remove="VendorStream\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
