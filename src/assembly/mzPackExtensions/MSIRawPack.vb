@@ -56,10 +56,8 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-#If netcore5 = 0 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-#End If
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports stdNum = System.Math
 
@@ -67,8 +65,6 @@ Imports stdNum = System.Math
 ''' read Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
-
-#If netcore5 = 0 Then
 
     ''' <summary>
     ''' single raw data file as MSI data
@@ -103,7 +99,6 @@ Public Module MSIRawPack
                    End If
                End Function
     End Function
-#End If
 
     <Extension>
     Public Function ExactPixelTable(mzpack As mzPack) As DataSet()
