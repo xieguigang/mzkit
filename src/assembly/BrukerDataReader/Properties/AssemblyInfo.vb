@@ -52,6 +52,8 @@
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
+#If netcore5 = 0 Then
+
 ' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
@@ -80,3 +82,4 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 <Assembly: AssemblyVersion("1.0.*")>
+#end if
