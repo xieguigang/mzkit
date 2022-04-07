@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.MetaDNA</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.MetaDNA</AssemblyName>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
