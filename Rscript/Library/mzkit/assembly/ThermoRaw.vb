@@ -54,7 +54,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-#If NET48 Or netcore5 = 0 Then
+#If NET48 Then
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
@@ -70,7 +70,7 @@ Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 <Package("ThermoRaw")>
 Module ThermoRaw
 
-#If NET48 Or netcore5 = 0 Then
+#If NET48 Then
 
     ''' <summary>
     ''' open a Thermo raw file
