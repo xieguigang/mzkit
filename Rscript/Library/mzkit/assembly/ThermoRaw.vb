@@ -53,20 +53,25 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+#If netcore5 = 0 Then
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+#End If
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("ThermoRaw")>
 Module ThermoRaw
+
+#If netcore5 = 0 Then
 
     ''' <summary>
     ''' open a Thermo raw file
@@ -121,6 +126,8 @@ Module ThermoRaw
 
         Return raw.LoadFromXMSIRaw(pixels:=size)
     End Function
+
+#End If
 
     <ExportAPI("MSI_pixels")>
     Public Function MSIPixels(mzpack As mzPack) As DataSet()
