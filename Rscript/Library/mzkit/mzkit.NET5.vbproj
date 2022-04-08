@@ -160,7 +160,7 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
       <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
     </Reference>

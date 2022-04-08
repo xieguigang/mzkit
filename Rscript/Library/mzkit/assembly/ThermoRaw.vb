@@ -53,7 +53,7 @@
 
 #End Region
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 <Package("ThermoRaw")>
 Module ThermoRaw
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 
     ''' <summary>
     ''' open a Thermo raw file
@@ -87,19 +87,6 @@ Module ThermoRaw
     <ExportAPI("read.rawscan")>
     Public Function readRawScan(raw As MSFileReader, scanId As Integer) As SingleScanInfo
         Return raw.GetScanInfo(scanId)
-    End Function
-
-    <ExportAPI("events")>
-    Public Function events(scan As SingleScanInfo) As rDataframe
-        Dim key As Array = scan.ScanEvents.Select(Function(evt) evt.Key).ToArray
-        Dim evts As Array = scan.ScanEvents.Select(Function(evt) evt.Value).ToArray
-
-        Return New rDataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {"event", key},
-                {"data", evts}
-            }
-        }
     End Function
 
     <ExportAPI("logs")>
@@ -127,6 +114,18 @@ Module ThermoRaw
         Return raw.LoadFromXMSIRaw(pixels:=size)
     End Function
 
+    <ExportAPI("events")>
+    Public Function events(scan As SingleScanInfo) As rDataframe
+        Dim key As Array = scan.ScanEvents.Select(Function(evt) evt.Key).ToArray
+        Dim evts As Array = scan.ScanEvents.Select(Function(evt) evt.Value).ToArray
+
+        Return New rDataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"event", key},
+                {"data", evts}
+            }
+        }
+    End Function
 #End If
 
     <ExportAPI("MSI_pixels")>
