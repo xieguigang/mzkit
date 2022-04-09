@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>ProteoWizard.Interop</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	 <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
     <AssemblyName>ProteoWizard.Interop</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>

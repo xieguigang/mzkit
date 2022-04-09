@@ -9,9 +9,8 @@
     <ProjectGuid>{4D466562-D2B7-09E5-01B7-826AE2C9EE7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>BrukerDataReader</AssemblyName>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader</RootNamespace>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

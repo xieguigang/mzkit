@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>mzkit</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
     <AssemblyName>mzkit</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
@@ -14,6 +14,7 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -157,6 +158,21 @@
 
   <ItemGroup>
     <Import Include="System.Data" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />

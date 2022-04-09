@@ -64,6 +64,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.InteropServices
+Imports stdNum = System.Math
 
 Namespace BrukerDataReader
     ' TODO: add apodization ability
@@ -203,7 +204,7 @@ Namespace BrukerDataReader
 
             For i = 0 To lengthOfMZAndIntensityArray - 1
                 Dim mz = CSng(GetMZ(i))
-                Dim intensity = CSng(Math.Sqrt(vals(2 * i + 1) * vals(2 * i + 1) + vals(2 * i) * vals(2 * i)))
+                Dim intensity = CSng(stdNum.Sqrt(vals(2 * i + 1) * vals(2 * i + 1) + vals(2 * i) * vals(2 * i)))
                 Dim indexForReverseInsertion = lengthOfMZAndIntensityArray - i - 1
                 mzValuesFullRange(indexForReverseInsertion) = mz
                 intensitiesFullRange(indexForReverseInsertion) = intensity
@@ -269,7 +270,7 @@ Namespace BrukerDataReader
         ''' <param name="mzValues"></param>
         ''' <param name="intensities"></param>
         Public Sub GetMassSpectrum(scanIndicesToBeSummed As Integer(), <Out> ByRef mzValues As Single(), <Out> ByRef intensities As Single())
-            Require(Parameters IsNot Nothing AndAlso Math.Abs(Parameters.ML1 - -1) > Single.Epsilon, "Cannot get mass spectrum. Need to first set Parameters.")
+            Require(Parameters IsNot Nothing AndAlso stdNum.Abs(Parameters.ML1 - -1) > Single.Epsilon, "Cannot get mass spectrum. Need to first set Parameters.")
             If Parameters Is Nothing Then Throw New Exception("Parameters is null in GetMassSpectrum")
             ValidateScanIndices(scanIndicesToBeSummed)
             'Check.Require(scanIndex < GetNumMSScans(), "Cannot get mass spectrum. Requested scan index is greater than number of scans in dataset.");
@@ -309,7 +310,7 @@ Namespace BrukerDataReader
                         mzValuesFullRange(indexForReverseInsertion) = mz
                     End If
 
-                    Dim intensity = CSng(Math.Sqrt(vals(2 * j + 1) * vals(2 * j + 1) + vals(2 * j) * vals(2 * j)))
+                    Dim intensity = CSng(stdNum.Sqrt(vals(2 * j + 1) * vals(2 * j + 1) + vals(2 * j) * vals(2 * j)))
                     intensitiesFullRange(indexForReverseInsertion) += intensity    'sum the intensities
                 Next
             Next
@@ -358,7 +359,7 @@ Namespace BrukerDataReader
         Private Function GetMZ(i As Integer) As Double
             Dim freq = i * Parameters.SampleRate / Parameters.NumValuesInScan
 
-            If Math.Abs(freq + Parameters.ML2) > 0 Then
+            If stdNum.Abs(freq + Parameters.ML2) > 0 Then
                 Return Parameters.ML1 / (freq + Parameters.ML2)
             End If
 

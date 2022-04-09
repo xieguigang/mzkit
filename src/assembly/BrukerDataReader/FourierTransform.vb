@@ -57,6 +57,7 @@
 
 Imports System
 Imports Microsoft.VisualBasic
+Imports stdNum = System.Math
 
 Namespace BrukerDataReader
     Public Class FourierTransform
@@ -80,9 +81,9 @@ Namespace BrukerDataReader
             '    theta = -theta;
             '}
 
-            Dim wTemp = Math.Sin(0.5 * theta)
+            Dim wTemp = stdNum.Sin(0.5 * theta)
             Dim wpr = -2.0 * wTemp * wTemp
-            Dim wpi = Math.Sin(theta)
+            Dim wpi = stdNum.Sin(theta)
             Dim wr = 1.0 + wpr
             Dim wi = wpi
             Dim n2p3 = 2 * n + 3
@@ -149,9 +150,9 @@ Namespace BrukerDataReader
             While n > mMax
                 Dim iStep = 2 * mMax
                 Dim theta = 6.28318530717959 / (iSign * mMax)
-                Dim wTemp = Math.Sin(0.5 * theta)
+                Dim wTemp = stdNum.Sin(0.5 * theta)
                 Dim wpr = -2.0 * wTemp * wTemp
-                Dim wpi = Math.Sin(theta)
+                Dim wpi = stdNum.Sin(theta)
                 Dim wr = 1.0
                 Dim wi = 0.0
 

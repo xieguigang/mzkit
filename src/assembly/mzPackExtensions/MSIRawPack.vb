@@ -52,14 +52,15 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 #If netcore5 = 0 Then
+Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 #End If
+
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports stdNum = System.Math
 
@@ -103,6 +104,7 @@ Public Module MSIRawPack
                    End If
                End Function
     End Function
+
 #End If
 
     <Extension>
