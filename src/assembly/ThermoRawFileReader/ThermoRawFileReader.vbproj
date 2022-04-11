@@ -288,6 +288,10 @@
       <Project>{5e161d08-84ec-4d88-a5ca-cea92d8999b0}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{1ba7ffb2-f4d0-4df0-a5af-4190d849fe9d}</Project>
+      <Name>mzmath-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj">
       <Project>{bdaece54-bf9e-42a5-801d-5df08b40f9a0}</Project>
       <Name>assembly-netcore5</Name>

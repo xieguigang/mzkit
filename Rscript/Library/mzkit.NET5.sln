@@ -161,7 +161,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "LoadR.NET5", "..\..\src\ass
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCFDraw.NET5", "..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj", "{6628A3E8-332F-4AFF-9EE5-AE41DF2AC4FD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{C6FC2403-7408-42EC-AFC6-608FF9E684B7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET4.8_vendors", ".NET4.8_vendors", "{C6FC2403-7408-42EC-AFC6-608FF9E684B7}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BrukerDataReader.NET5", "..\..\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj", "{2EC13844-EB75-4FAA-BBC6-422C16C3132A}"
 EndProject
