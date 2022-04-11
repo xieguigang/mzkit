@@ -131,15 +131,19 @@
     <ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
     <ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
-    <ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj" />
-    <ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
+   
   </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+		<ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
+	</ItemGroup>
+
+		<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="Clearcore2.Data">
       <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
     </Reference>
