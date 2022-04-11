@@ -175,6 +175,27 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Clearcore2.Data">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.AnalystDataProvider">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Muni">
+      <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.ProjectUtilities">
+      <HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.RawXYProcessing">
+      <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Data.XYData">
+      <HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
   <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
