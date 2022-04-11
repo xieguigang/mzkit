@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly</RootNamespace>
@@ -103,11 +103,8 @@
 
   <ItemGroup>
     <Compile Remove="test\**" />
-    <Compile Remove="VendorStream\**" />
     <EmbeddedResource Remove="test\**" />
-    <EmbeddedResource Remove="VendorStream\**" />
     <None Remove="test\**" />
-    <None Remove="VendorStream\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -131,8 +128,11 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
     <ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj" />
+    <ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -140,6 +140,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Clearcore2.Data">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Data.AnalystDataProvider">
+      <HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.Muni">
+      <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.ProjectUtilities">
+      <HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Clearcore2.RawXYProcessing">
+      <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
+    </Reference>
+    <Reference Include="Sciex.Data.XYData">
+      <HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
+    </Reference>
     <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
       <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
     </Reference>

@@ -52,7 +52,7 @@
 
 #End Region
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
@@ -69,7 +69,7 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Module MSIRawPack
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 
     ''' <summary>
     ''' single raw data file as MSI data

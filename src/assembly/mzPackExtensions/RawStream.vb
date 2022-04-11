@@ -55,14 +55,14 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
 Imports Microsoft.VisualBasic.Language
 
 Public Module RawStream
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
     <Extension>
     Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader, Optional println As Action(Of String) = Nothing) As mzPack
         Return New WiffRawStream(raw).StreamTo(println:=println)
