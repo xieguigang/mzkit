@@ -234,9 +234,21 @@
       <Project>{e2caa18e-9705-462a-844d-c809a45d4197}</Project>
       <Name>imaging.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj">
+      <Project>{7c431d4e-e7a3-4cb7-8afa-ce81b611e89f}</Project>
+      <Name>network_graph-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj">
+      <Project>{10e3a50e-4a2d-42b8-92de-2c0ca297f8a9}</Project>
+      <Name>networkVisualizer.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{dee82853-4241-4f24-a096-12923c664369}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\html_netcore5.vbproj">
+      <Project>{0b752d71-2852-4071-ac44-db37195cf8c3}</Project>
+      <Name>html_netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
       <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
@@ -257,6 +269,14 @@
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\Massbank\massbank.NET5.vbproj">
+      <Project>{70056e6f-58d0-4e44-866c-27c0b70ad28d}</Project>
+      <Name>massbank.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\MoNA\MoNA.NET5.vbproj">
+      <Project>{5365986b-a702-4cd6-873f-f9ff01f340ec}</Project>
+      <Name>MoNA.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.NET5.vbproj">
       <Project>{ed42e4be-537c-4d1e-98b6-ac0b0215b83b}</Project>
