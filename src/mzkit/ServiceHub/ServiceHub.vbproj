@@ -196,6 +196,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{dee82853-4241-4f24-a096-12923c664369}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
+      <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
+      <Name>assembly-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{ab5fd86e-6da9-4f7c-8dce-17da85bc895d}</Project>
+      <Name>mzmath-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.NET5.vbproj">
+      <Project>{2ca6510f-eeed-406c-a14b-a675e093b327}</Project>
+      <Name>MsImaging.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Task\Task.vbproj">
       <Project>{6E5BCA87-358E-4BA5-B279-DE17AFA52C5C}</Project>
       <Name>Task</Name>
