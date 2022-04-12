@@ -1100,6 +1100,10 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\console\console\console.NET5.vbproj">
+      <Project>{816b6145-4c89-4cbb-89cd-27b7832ead2f}</Project>
+      <Name>console.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj">
       <Project>{84dbe474-b005-4ddd-b4c7-0f6ba01d3ca2}</Project>
       <Name>Fisher.NET5</Name>
