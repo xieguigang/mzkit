@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</RootNamespace>
-	  <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release;mzkit_win32</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
@@ -14,6 +14,8 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -42,6 +44,10 @@
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
   </PropertyGroup>
@@ -67,6 +73,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -130,10 +149,30 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+   
   </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />
+  </ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+		<ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
+	</ItemGroup>
+
+		<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

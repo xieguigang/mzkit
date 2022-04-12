@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
-	  <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release;mzkit_win32</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
@@ -50,6 +50,10 @@
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
   </PropertyGroup>
@@ -91,6 +95,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>

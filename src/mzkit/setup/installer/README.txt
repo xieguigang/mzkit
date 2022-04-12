@@ -8,8 +8,10 @@ If you have already installed the mzkit application,
 please uninstall the previous version before you 
 install the new version of the mzkit application.
 
-mzkit application required of .NET Framework 4.8 runtime:
+mzkit_win32 application required of .NET Framework 4.8 runtime:
 https://dotnet.microsoft.com/download/dotnet-framework/net48
+Rstudio application required of .NET Core 6.0(windows-x64) runtime:
+https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
 mzkit home: https://mzkit.org/
 mzkit on ELIXIR bio tools: https://bio.tools/mzkit
