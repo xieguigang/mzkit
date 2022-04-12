@@ -1100,13 +1100,49 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj">
+      <Project>{84dbe474-b005-4ddd-b4c7-0f6ba01d3ca2}</Project>
+      <Name>Fisher.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\annotation.NET5.vbproj">
+      <Project>{84323a67-5465-463a-a5c7-de7838063c89}</Project>
+      <Name>annotation.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj">
       <Project>{494d50d9-fa36-455e-8ea0-103e1b162e3b}</Project>
       <Name>biocore-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\obo_foundry-netcore5.vbproj">
+      <Project>{82c8e262-4e52-4c09-8865-ddbb5462fd66}</Project>
+      <Name>obo_foundry-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj">
       <Project>{08ec0a71-809d-49d7-bac5-10e15665fade}</Project>
       <Name>Rsharp-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj">
+      <Project>{b63f0c8e-d97b-432a-9cac-8dd7dd5da2c6}</Project>
+      <Name>repository.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\CloudKit\Centos\Centos.NET5.vbproj">
+      <Project>{d124c066-9534-4caa-96f4-5b95873748a5}</Project>
+      <Name>Centos.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\CloudKit\Docker\Docker.NET5.vbproj">
+      <Project>{67addf65-9dd0-4dda-aeb0-706ef381fa15}</Project>
+      <Name>Docker.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\CloudKit\ossutil\ossutil.NET5.vbproj">
+      <Project>{b4ce0f90-6a52-45e9-a62b-576922e7dd36}</Project>
+      <Name>ossutil.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\Darwinism\Parallel\parallel-netcore5.vbproj">
+      <Project>{ad91d54d-5502-471e-90d6-5ff488687016}</Project>
+      <Name>parallel-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\httpd\Flute\Flute.NET5.vbproj">
+      <Project>{1fd40f6e-6a78-4c61-9f86-682560337028}</Project>
+      <Name>Flute.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
       <Project>{9efd79a7-b385-4d67-9d23-8940453e5d03}</Project>
@@ -1120,13 +1156,137 @@
       <Project>{84f10a06-0779-4480-abac-fac185d66693}</Project>
       <Name>msgpack-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj">
+      <Project>{ae0496a2-669c-4aa4-8d11-4db9e8e8cd98}</Project>
+      <Name>DataFramework.Extensions-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{02e9ba6a-35e1-431f-bb47-0553757af6b9}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\GraphQuery\GraphQuery.NET5.vbproj">
+      <Project>{c0fab10d-97d9-4968-a95e-f5bb59016191}</Project>
+      <Name>GraphQuery.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\Trinity\Trinity.NET5.vbproj">
+      <Project>{4ce6b126-e02c-480e-91ed-394eabe6c6e5}</Project>
+      <Name>Trinity.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj">
+      <Project>{60fdcf90-6d75-489f-a6ed-55a77090dbf7}</Project>
+      <Name>btree-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj">
+      <Project>{5c8b99a0-3ca8-4469-b04e-f7177664ca17}</Project>
+      <Name>DataMining.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.NET5.vbproj">
+      <Project>{6ddf0b74-23f9-4343-b433-317908c575ce}</Project>
+      <Name>DensityQuery.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DynamicProgramming\DynamicProgramming.NET5.vbproj">
+      <Project>{081d7ce7-8caa-4fdb-8924-36e3dd406760}</Project>
+      <Name>DynamicProgramming.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj">
+      <Project>{161dd92f-0543-42d3-832b-261ea543a0fb}</Project>
+      <Name>hctree.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\HMM\HMM.NET5.vbproj">
+      <Project>{f768a881-a163-478a-8f9a-eb5f3780d6d1}</Project>
+      <Name>HMM.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\UMAP\UMAP.NET5.vbproj">
+      <Project>{71b85412-8787-4648-b577-e240adf640ad}</Project>
+      <Name>UMAP.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{c7f74294-cccb-4b65-809d-523074dfaf4d}</Project>
+      <Name>graph-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj">
+      <Project>{b6005552-a627-4daa-8c53-627e595d5f63}</Project>
+      <Name>machine_learning-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MLDebugger\ML_debugger-netcore5.vbproj">
+      <Project>{7e17e6d5-4cf7-4dcc-b7ec-599c9bd41f23}</Project>
+      <Name>ML_debugger-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\t-SNE\t-SNE.NET5.vbproj">
+      <Project>{ae1ef95e-826f-41a3-ba8e-73aee67fcd63}</Project>
+      <Name>t-SNE.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\XGBoostDataSet\XGBoostDataSet.vbproj">
+      <Project>{21d2f3ce-7c56-41ac-8162-16d5d57b4107}</Project>
+      <Name>XGBoostDataSet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\xgboost.vbproj">
+      <Project>{ed692683-453b-4de1-b554-dbc183b453ad}</Project>
+      <Name>xgboost</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj">
       <Project>{0b7385ea-1cf7-4f83-aea0-668d2c6637ba}</Project>
       <Name>linear-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj">
+      <Project>{d0f031e5-048b-4e63-982a-ad0a32c65485}</Project>
+      <Name>dataframeUtils-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj">
+      <Project>{a94ca0c3-0aa0-48e6-9f7a-293f7819966a}</Project>
+      <Name>stats-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\MathLambda\symbolic-netcore5.vbproj">
+      <Project>{32c959b5-6216-4e4b-843a-0fec676e0f34}</Project>
+      <Name>symbolic-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
       <Project>{eb3dd1ee-71a4-4d85-b494-ef075ad99098}</Project>
       <Name>Math.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODESolver.Extensions\ODESolver.Extensions.NET5.vbproj">
+      <Project>{bd310731-7c65-44da-aaab-712cf8baa9b6}</Project>
+      <Name>ODESolver.Extensions.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj">
+      <Project>{9a8b6eed-3be8-470b-8286-26de916beb7b}</Project>
+      <Name>odes-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj">
+      <Project>{d8653c28-954b-4ebf-bebc-7d6fae910e4b}</Project>
+      <Name>randomizer-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj">
+      <Project>{73385d74-2e95-432a-a25e-434d8e3e355a}</Project>
+      <Name>signal_io-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj">
+      <Project>{590fb6f6-7f96-488d-8f32-cc584298d061}</Project>
+      <Name>signalprocessing-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj">
+      <Project>{ee75f03d-057c-479f-aa44-2239c48843dd}</Project>
+      <Name>waveFile-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\NLP\NLP.NET.vbproj">
+      <Project>{6e91f267-65d5-46b1-b0fd-c1ca04ad1c6c}</Project>
+      <Name>NLP.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj">
+      <Project>{f393d9a7-f42b-4fe0-a6f6-61822c03313b}</Project>
+      <Name>plots_extensions-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj">
+      <Project>{5886614d-8d70-41e7-9795-afd0effb4e38}</Project>
+      <Name>plots-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Visualization\data_visualize-netcore5.vbproj">
+      <Project>{2bfaef8e-5f0f-466d-af66-b30bfc7fd86d}</Project>
+      <Name>data_visualize-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\avi\AVI.NET5.vbproj">
+      <Project>{c41a8a0a-3e98-4441-a721-0cf2e7f1bbda}</Project>
+      <Name>AVI.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{e2caa18e-9705-462a-844d-c809a45d4197}</Project>
@@ -1140,9 +1300,17 @@
       <Project>{70473ef5-feb8-402d-b5da-bfcdd4a2bfcd}</Project>
       <Name>network_io-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\NetworkCanvas\NetworkCanvas.NET5.vbproj">
+      <Project>{edea8197-6bc7-40cc-be0c-be023795f21e}</Project>
+      <Name>NetworkCanvas.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj">
       <Project>{10e3a50e-4a2d-42b8-92de-2c0ca297f8a9}</Project>
       <Name>networkVisualizer.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\PdfImage\PdfImage.NET5.vbproj">
+      <Project>{68010cbd-cce2-4b4c-a67a-7b1bf6fcb486}</Project>
+      <Name>PdfImage.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj">
       <Project>{7d350c80-4598-4978-8eb2-476d3756642b}</Project>
@@ -1155,6 +1323,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\JSON-netcore5.vbproj">
       <Project>{e907b484-44f0-41f6-97c7-297451fa05ee}</Project>
       <Name>JSON-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25pdf\Pdf.NET5.vbproj">
+      <Project>{a29e3db1-bd06-4225-b715-5552f12cc709}</Project>
+      <Name>Pdf.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25rdf+xml\rdf_xml-netcore5.vbproj">
       <Project>{6b3e719d-bd95-4624-aced-aca0988bb077}</Project>
@@ -1171,6 +1343,18 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\html_netcore5.vbproj">
       <Project>{0b752d71-2852-4071-ac44-db37195cf8c3}</Project>
       <Name>html_netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25markdown\markdown.NET5.vbproj">
+      <Project>{5bc2e703-d575-44c7-a0bb-ac48b1127893}</Project>
+      <Name>markdown.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj">
+      <Project>{b373a999-9786-42d1-8265-47c2c9d2b2a3}</Project>
+      <Name>VisualStudio.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\network-netcore5.vbproj">
+      <Project>{7c84664a-190e-4e09-b33d-59733dbec141}</Project>
+      <Name>network-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
       <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
@@ -1199,6 +1383,10 @@
     <ProjectReference Include="..\..\assembly\sciexWiffReader\sciexWiffReader.vbproj">
       <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
       <Name>sciexWiffReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\SpectrumTree\spectrumTree-netcore5.vbproj">
+      <Project>{589449b3-9524-46b5-8da9-d4653476156f}</Project>
+      <Name>spectrumTree-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\assembly\ThermoRawFileReader\ThermoRawFileReader.vbproj">
       <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>

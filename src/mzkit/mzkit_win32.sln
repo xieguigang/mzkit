@@ -321,6 +321,8 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "repository.NET5", "..\..\..
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "annotation.NET5", "..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\annotation.NET5.vbproj", "{84323A67-5465-463A-A5C7-DE7838063C89}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mzkit.interopArguments", "..\..\Rscript\Library\mzkit.interopArguments\mzkit.interopArguments.shproj", "{C295C3AF-3E62-4756-966A-3D0B90DED160}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{0ca98561-ba8e-4d4b-9a3a-136512d6db90}*SharedItemsImports = 5
@@ -329,10 +331,12 @@ Global
 		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{2584c91e-35e4-462d-b269-effd3e51318d}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{38108f41-95ae-43cd-b429-958a8f1a406d}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{3d2bd8e4-57b1-409e-bc91-64f5ff8b1b6b}*SharedItemsImports = 5
+		..\..\Rscript\Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{54a151d4-f817-4fcf-aba1-66219b2b638c}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{6faa9b4f-1a84-457a-9487-353fce469203}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{7564935f-2822-4393-b4d0-42cdb2398bf4}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{7825ed5b-ca14-49d0-a20a-7fb76c8cbbdd}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{88fd010f-1154-47ec-b1cd-cc954e0da244}*SharedItemsImports = 5
+		..\..\Rscript\Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{c295c3af-3e62-4756-966a-3d0b90ded160}*SharedItemsImports = 13
 		..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{d7f34cbf-4705-4c1f-8404-840c9435b376}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{daaf2006-0a98-4d3d-9a95-5e9a25e5c74d}*SharedItemsImports = 5
 		..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{ecc0fb1e-d85a-47fa-ba3d-c65d61c9d128}*SharedItemsImports = 5
@@ -33869,6 +33873,7 @@ Global
 		{84DBE474-B005-4DDD-B4C7-0F6BA01D3CA2} = {B9FE96C5-0711-47A6-B7BE-78717CE19CA2}
 		{B63F0C8E-D97B-432A-9CAC-8DD7DD5DA2C6} = {B9FE96C5-0711-47A6-B7BE-78717CE19CA2}
 		{84323A67-5465-463A-A5C7-DE7838063C89} = {B9FE96C5-0711-47A6-B7BE-78717CE19CA2}
+		{C295C3AF-3E62-4756-966A-3D0B90DED160} = {3F8893E6-47AA-4CBC-9569-A533F2DC7C11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C1FED87-3DE9-4C58-AFCB-3C3950D15747}

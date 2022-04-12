@@ -55,7 +55,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
 Imports stdNum = System.Math
