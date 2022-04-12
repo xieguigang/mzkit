@@ -5,7 +5,7 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release;mzkit_win32</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -43,6 +43,17 @@
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -64,6 +75,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
   </PropertyGroup>
 

@@ -123,7 +123,7 @@ Namespace MsImaging
             Return New MSIMeasurement(maxrt.Average, scans.Average, hasMs2:=scanMs2)
         End Function
 
-#If netcore5 = 0 Then
+#If netcore5 = 0 Or NET48 Then
 
         Public Shared Function Measure(raw As IEnumerable(Of MSFileReader), Optional scanMs2 As Boolean = False) As MSIMeasurement
             Dim scans As New List(Of Integer)
