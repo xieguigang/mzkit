@@ -1356,6 +1356,10 @@
       <Project>{7c84664a-190e-4e09-b33d-59733dbec141}</Project>
       <Name>network-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.NET5.vbproj">
+      <Project>{884f2aa6-1cd9-4c72-9531-1725d2502cd9}</Project>
+      <Name>RDev.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
       <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
       <Name>assembly-netcore5</Name>
