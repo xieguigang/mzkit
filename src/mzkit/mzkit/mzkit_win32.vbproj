@@ -1212,9 +1212,9 @@
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.vbproj">
-      <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
-      <Name>FormulaSearch.Extensions</Name>
+    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj">
+      <Project>{354b7fae-e29b-4827-9d27-ffd0aaf7d03d}</Project>
+      <Name>FormulaSearch.Extensions.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadb\Massbank\massbank.NET5.vbproj">
       <Project>{70056e6f-58d0-4e44-866c-27c0b70ad28d}</Project>
