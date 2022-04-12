@@ -226,6 +226,10 @@
       <Project>{84f10a06-0779-4480-abac-fac185d66693}</Project>
       <Name>msgpack-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{eb3dd1ee-71a4-4d85-b494-ef075ad99098}</Project>
+      <Name>Math.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{e2caa18e-9705-462a-844d-c809a45d4197}</Project>
       <Name>imaging.NET5</Name>
@@ -254,6 +258,10 @@
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.NET5.vbproj">
+      <Project>{ed42e4be-537c-4d1e-98b6-ac0b0215b83b}</Project>
+      <Name>metaDNA.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
       <Project>{ab5fd86e-6da9-4f7c-8dce-17da85bc895d}</Project>
       <Name>mzmath-netcore5</Name>
@@ -265,6 +273,10 @@
     <ProjectReference Include="..\..\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj">
       <Project>{373f637b-cf9f-4179-a4b4-a8a76c3454b3}</Project>
       <Name>Targetted.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.NET5.vbproj">
+      <Project>{2ca6510f-eeed-406c-a14b-a675e093b327}</Project>
+      <Name>MsImaging.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\BioDeep\BioDeep.vbproj">
       <Project>{04497d3c-ae08-4df2-be29-e5b572daa5b6}</Project>
