@@ -1360,6 +1360,14 @@
       <Project>{7c84664a-190e-4e09-b33d-59733dbec141}</Project>
       <Name>network-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\src\PdfConvert\WkHtmlToPdf.NET5.vbproj">
+      <Project>{eca213f0-e999-478c-904a-0840fd3b645c}</Project>
+      <Name>WkHtmlToPdf.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\modules\keggReport\keggReport.NET5.vbproj">
+      <Project>{dceef144-03c8-482f-b668-1a8706366ea0}</Project>
+      <Name>keggReport.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.NET5.vbproj">
       <Project>{884f2aa6-1cd9-4c72-9531-1725d2502cd9}</Project>
       <Name>RDev.NET5</Name>
@@ -1541,5 +1549,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
