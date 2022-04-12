@@ -218,6 +218,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj">
+      <Project>{494d50d9-fa36-455e-8ea0-103e1b162e3b}</Project>
+      <Name>biocore-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
       <Project>{84f10a06-0779-4480-abac-fac185d66693}</Project>
       <Name>msgpack-netcore5</Name>
@@ -229,6 +233,18 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{dee82853-4241-4f24-a096-12923c664369}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
+      <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
+      <Name>assembly-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj">
+      <Project>{25c58b60-eff4-48a7-a48c-6bca408806f7}</Project>
+      <Name>mzPackExtensions.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPack\mzpack.NET5.vbproj">
+      <Project>{c6d266df-b35f-480b-acb0-15c7d2882769}</Project>
+      <Name>mzpack.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
       <Project>{ab5fd86e-6da9-4f7c-8dce-17da85bc895d}</Project>
