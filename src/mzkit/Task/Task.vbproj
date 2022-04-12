@@ -238,6 +238,10 @@
       <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
       <Name>assembly-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\assembly\Comprehensive\Comprehensive.NET5.vbproj">
+      <Project>{5f23ce55-e4b2-4931-94db-1085ee7175c1}</Project>
+      <Name>Comprehensive.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj">
       <Project>{25c58b60-eff4-48a7-a48c-6bca408806f7}</Project>
       <Name>mzPackExtensions.NET5</Name>
@@ -246,9 +250,17 @@
       <Project>{c6d266df-b35f-480b-acb0-15c7d2882769}</Project>
       <Name>mzpack.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
+      <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
+      <Name>chemoinformatics-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
       <Project>{ab5fd86e-6da9-4f7c-8dce-17da85bc895d}</Project>
       <Name>mzmath-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\MSEngine\MSEngine.vbproj">
+      <Project>{712e2304-2f25-4480-8a0b-6c7091136fb4}</Project>
+      <Name>MSEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj">
       <Project>{373f637b-cf9f-4179-a4b4-a8a76c3454b3}</Project>
