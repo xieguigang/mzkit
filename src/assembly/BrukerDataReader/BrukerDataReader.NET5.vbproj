@@ -5,7 +5,7 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32</Configurations>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
     <Product>BioDeep</Product>
@@ -64,6 +64,18 @@
     <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.xml</DocumentationFile>
+    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.xml</DocumentationFile>
   </PropertyGroup>
@@ -77,6 +89,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.xml</DocumentationFile>
   </PropertyGroup>
 

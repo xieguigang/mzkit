@@ -56,6 +56,8 @@
 
 #End Region
 
+#If NET48 Then
+
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
@@ -143,3 +145,4 @@ Public Class XRawStream : Inherits VendorStreamLoader(Of SingleScanInfo)
     End Sub
 
 End Class
+#End If

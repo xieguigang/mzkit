@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
-    <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math.Formula.Extensions</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
@@ -11,6 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -145,6 +146,8 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

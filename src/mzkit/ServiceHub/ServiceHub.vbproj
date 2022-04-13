@@ -196,57 +196,53 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0C2EB77C-39F2-460D-A3F8-CE905F867637}</Project>
-      <Name>R</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj">
+      <Project>{08ec0a71-809d-49d7-bac5-10e15665fade}</Project>
+      <Name>Rsharp-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
-      <Project>{487D7C92-D05A-4908-BF81-E6BABA0BF592}</Project>
-      <Name>BinaryData</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{9efd79a7-b385-4d67-9d23-8940453e5d03}</Project>
+      <Name>binarydata-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
-      <Project>{3C79AE03-A766-4B61-BDC4-824D78481B53}</Project>
-      <Name>DataStorage</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj">
+      <Project>{12d4ac8b-8b59-4137-ad0f-944068f7e347}</Project>
+      <Name>datastorage-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
-      <Project>{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}</Project>
-      <Name>MessagePack</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
+      <Project>{84f10a06-0779-4480-abac-fac185d66693}</Project>
+      <Name>msgpack-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.vbproj">
-      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
-      <Name>DataMining</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{dee82853-4241-4f24-a096-12923c664369}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.vbproj">
-      <Project>{39fe675e-f451-47de-8695-98e093775981}</Project>
-      <Name>DensityQuery</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\JSON-netcore5.vbproj">
+      <Project>{e907b484-44f0-41f6-97c7-297451fa05ee}</Project>
+      <Name>JSON-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\network-netcore5.vbproj">
+      <Project>{7c84664a-190e-4e09-b33d-59733dbec141}</Project>
+      <Name>network-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\application.json.vbproj">
-      <Project>{32228818-26F1-44DF-8D40-347136C743CD}</Project>
-      <Name>application.json</Name>
+    <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj">
+      <Project>{5dce233f-c0e1-41b8-827a-872b0c8cc3bc}</Project>
+      <Name>assembly-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
-      <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
-      <Name>Microsoft.VisualBasic.Network</Name>
+    <ProjectReference Include="..\..\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj">
+      <Project>{25c58b60-eff4-48a7-a48c-6bca408806f7}</Project>
+      <Name>mzPackExtensions.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
-      <Project>{95F7D65E-9DB1-4605-9FD3-25433277AF88}</Project>
-      <Name>assembly</Name>
+    <ProjectReference Include="..\..\assembly\mzPack\mzpack.NET5.vbproj">
+      <Project>{c6d266df-b35f-480b-acb0-15c7d2882769}</Project>
+      <Name>mzpack.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
-      <Project>{A1CB72F1-E918-4146-82A4-F409F31700B6}</Project>
-      <Name>mzPack</Name>
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{ab5fd86e-6da9-4f7c-8dce-17da85bc895d}</Project>
+      <Name>mzmath-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
-      <Name>MassSpectrum.math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
-      <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
-      <Name>MsImaging</Name>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.NET5.vbproj">
+      <Project>{2ca6510f-eeed-406c-a14b-a675e093b327}</Project>
+      <Name>MsImaging.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\Task\Task.vbproj">
       <Project>{6E5BCA87-358E-4BA5-B279-DE17AFA52C5C}</Project>

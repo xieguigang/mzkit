@@ -1,4 +1,6 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+﻿#If NET48 Then
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -99,3 +101,5 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         Next
     End Function
 End Class
+
+#End If
