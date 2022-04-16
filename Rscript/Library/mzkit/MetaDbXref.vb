@@ -257,9 +257,11 @@ Module MetaDbXref
             .rownames = mz,
             .columns = New Dictionary(Of String, Array) From {
                 {"m/z", mzquery.Select(Function(i) i.Value.mz).ToArray},
+                {"theoretical_mz", mzquery.Select(Function(i) i.Value.mz_ref).ToArray},
                 {"ppm", mzquery.Select(Function(i) i.Value.ppm).ToArray},
                 {"precursor_type", mzquery.Select(Function(i) i.Value.precursorType).ToArray},
                 {"unique_id", mzquery.Select(Function(i) i.Value.unique_id).ToArray},
+                {"name", mzquery.Select(Function(i) i.Value.name).ToArray},
                 {"score", mzquery.Select(Function(i) i.Value.score).ToArray}
             }
         }
