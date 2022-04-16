@@ -194,16 +194,28 @@ Module MetaDbXref
         Else
             Return New list With {
                 .slots = mz _
-                    .ToDictionary(Function(mzi) mzi.ToString,
+                    .Select(Function(mzi, i) (mzi, i)) _
+                    .AsParallel _
+                    .Select(Function(t)
+                                Dim result As Object
+                                Dim mzi As Double = t.mzi
+                                Dim i As Integer = t.i
+
+                                If unique Then
+                                    result = queryEngine _
+                                        .QueryByMz(mzi) _
+                                        .OrderBy(Function(d) d.ppm) _
+                                        .FirstOrDefault
+                                Else
+                                    result = queryEngine.QueryByMz(mzi).ToArray
+                                End If
+
+                                Return (mzi.ToString, result, i)
+                            End Function) _
+                    .OrderBy(Function(t) t.i) _
+                    .ToDictionary(Function(mzi) mzi.Item1,
                                   Function(mzi) As Object
-                                      If unique Then
-                                          Return queryEngine _
-                                             .QueryByMz(mzi) _
-                                             .OrderBy(Function(d) d.ppm) _
-                                             .FirstOrDefault
-                                      Else
-                                          Return queryEngine.QueryByMz(mzi).ToArray
-                                      End If
+                                      Return mzi.Item2
                                   End Function)
             }
         End If
