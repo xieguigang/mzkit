@@ -330,8 +330,8 @@ Module MSI
     End Function
 
     <ExportAPI("ionStat")>
-    Public Function IonStats(raw As mzPack) As IonStat()
-        Return IonStat.DoStat(raw).ToArray
+    Public Function IonStats(raw As mzPack, Optional gridSize As Integer = 5, Optional da As Double = 0.01) As IonStat()
+        Return IonStat.DoStat(raw, nsize:=gridSize, da:=da).ToArray
     End Function
 
     <ExportAPI("ions_jointmatrix")>

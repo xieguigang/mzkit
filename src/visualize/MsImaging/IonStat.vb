@@ -92,27 +92,35 @@ Public Class IonStat
                     End Function)
     End Function
 
-    Public Shared Function DoStat(raw As mzPack, Optional nsize As Integer = 5) As IEnumerable(Of IonStat)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="nsize">
+    ''' the grid size for evaluate the density value
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Function DoStat(raw As mzPack, Optional nsize As Integer = 5, Optional da As Double = 0.05) As IEnumerable(Of IonStat)
         Return raw.MS _
             .Select(Function(scan)
                         Return scan.GetMs.Select(Function(ms1) (scan.GetMSIPixel, ms1))
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
-                        Return DoStat(allIons, nsize)
+                        Return DoStat(allIons, nsize, da)
                     End Function)
     End Function
 
-    Private Shared Iterator Function DoStat(allIons As IEnumerable(Of (pixel As Point, ms As ms2)), nsize As Integer) As IEnumerable(Of IonStat)
+    Private Shared Iterator Function DoStat(allIons As IEnumerable(Of (pixel As Point, ms As ms2)), nsize As Integer, da As Double) As IEnumerable(Of IonStat)
         Dim ions = allIons _
-            .GroupBy(Function(d) d.ms.mz, Tolerance.DeltaMass(0.05)) _
+            .GroupBy(Function(d) d.ms.mz, Tolerance.DeltaMass(da)) _
             .ToArray
         Dim A As Double = nsize ^ 2
 
         For Each ion In ions
             Dim pixels = Grid(Of (Point, ms2)).Create(ion, Function(x) x.Item1)
             Dim basePixel = ion.OrderByDescending(Function(i) i.ms.intensity).First
-			Dim intensity As Double() = ion.Select(Function(i) i.ms.intensity).ToArray
+            Dim intensity As Double() = ion.Select(Function(i) i.ms.intensity).ToArray
             Dim Q = intensity.Quartile
             Dim counts As New List(Of Double)
 
