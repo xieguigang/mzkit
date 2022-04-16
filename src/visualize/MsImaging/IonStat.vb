@@ -78,7 +78,9 @@ Public Class IonStat
     Public Property Q3Intensity As Double
     Public Property RSD As Double
 
-    Public Shared Function DoStat(allPixels As PixelScan(), Optional nsize As Integer = 5) As IEnumerable(Of IonStat)
+    Public Shared Function DoStat(allPixels As PixelScan(),
+                                  Optional nsize As Integer = 5,
+                                  Optional da As Double = 0.05) As IEnumerable(Of IonStat)
         Return allPixels _
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
@@ -88,7 +90,7 @@ Public Class IonStat
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
-                        Return DoStat(allIons, nsize)
+                        Return DoStatInternal(allIons, nsize, da)
                     End Function)
     End Function
 
@@ -107,11 +109,11 @@ Public Class IonStat
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
-                        Return DoStat(allIons, nsize, da)
+                        Return DoStatInternal(allIons, nsize, da)
                     End Function)
     End Function
 
-    Private Shared Iterator Function DoStat(allIons As IEnumerable(Of (pixel As Point, ms As ms2)), nsize As Integer, da As Double) As IEnumerable(Of IonStat)
+    Private Shared Iterator Function DoStatInternal(allIons As IEnumerable(Of (pixel As Point, ms As ms2)), nsize As Integer, da As Double) As IEnumerable(Of IonStat)
         Dim ions = allIons _
             .GroupBy(Function(d) d.ms.mz, Tolerance.DeltaMass(da)) _
             .ToArray
