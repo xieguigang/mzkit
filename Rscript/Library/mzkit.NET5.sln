@@ -5506,8 +5506,8 @@ Global
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|ARM32.ActiveCfg = Release|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|ARM32.Build.0 = Release|Any CPU
-		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x64.ActiveCfg = Release|x64
-		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x64.Build.0 = Release|x64
+		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x86.ActiveCfg = Release|Any CPU
 		{0D82246C-02C5-4F9E-A571-EA4FA2077059}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 		{B2A12D83-0B7B-45E5-8EEE-7FE0F2D6A979}.Biodeep|Any CPU.ActiveCfg = Debug|Any CPU
