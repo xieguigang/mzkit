@@ -52,6 +52,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Spectra
 
     Public Class PeakList
@@ -76,6 +78,7 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property size As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return mz.Length
             End Get
