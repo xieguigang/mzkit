@@ -16,4 +16,5 @@
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
 + [peakMatrix](MSI/peakMatrix.1) 
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
++ [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
