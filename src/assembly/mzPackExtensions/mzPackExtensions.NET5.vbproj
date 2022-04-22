@@ -132,6 +132,7 @@
 		<ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
 
+
 	</ItemGroup>
 
 	<ItemGroup>
@@ -140,7 +141,7 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj" />
-		<ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">

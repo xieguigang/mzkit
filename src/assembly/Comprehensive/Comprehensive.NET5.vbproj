@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</RootNamespace>
@@ -150,6 +150,7 @@
 		<ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+		
 
 	</ItemGroup>
 
@@ -158,7 +159,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-		<ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
