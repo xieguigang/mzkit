@@ -1,179 +1,179 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly</RootNamespace>
-	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
-    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions</AssemblyName>
-    <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>xieguigang</Authors>
-    <Company>BioNovoGene</Company>
-    <Product>BioDeep</Product>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
-    <PackageIcon>Flask.png</PackageIcon>
-    <PackageIconUrl />
-  </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly</RootNamespace>
+		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+		<AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions</AssemblyName>
+		<Platforms>AnyCPU;x64</Platforms>
+		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>xieguigang</Authors>
+		<Company>BioNovoGene</Company>
+		<Product>BioDeep</Product>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
+		<PackageIcon>Flask.png</PackageIcon>
+		<PackageIconUrl />
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineConstants>netcore5=1</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>netcore5=1</DefineConstants>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineConstants>netcore5=1</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>netcore5=1</DefineConstants>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+		<RemoveIntegerChecks>true</RemoveIntegerChecks>
+		<Optimize>false</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineDebug>false</DefineDebug>
+		<DefineTrace>true</DefineTrace>
+		<DefineConstants>netcore5=1</DefineConstants>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <DefineConstants>netcore5=1</DefineConstants>
-    <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<RemoveIntegerChecks>true</RemoveIntegerChecks>
+		<Optimize>false</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineDebug>false</DefineDebug>
+		<DefineTrace>true</DefineTrace>
+		<GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+		<DefineConstants>netcore5=1</DefineConstants>
+		<OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<RemoveIntegerChecks>true</RemoveIntegerChecks>
+		<Optimize>false</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineDebug>false</DefineDebug>
+		<DefineTrace>true</DefineTrace>
+		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+		<DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.Extensions.xml</DocumentationFile>
+		<RemoveIntegerChecks>true</RemoveIntegerChecks>
+		<Optimize>false</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineDebug>false</DefineDebug>
+		<DefineTrace>true</DefineTrace>
+		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="test\**" />
-    <EmbeddedResource Remove="test\**" />
-    <None Remove="test\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="test\**" />
+		<EmbeddedResource Remove="test\**" />
+		<None Remove="test\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
-    <ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
-    <ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
-    <ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
-   
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+		<ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+		<ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
+		<ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
+		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
 
-  <ItemGroup>
-    <Import Include="System.Data" />
-  </ItemGroup>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Import Include="System.Data" />
+	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
 		<ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj" />
 		<ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj" />
 	</ItemGroup>
 
-		<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <Reference Include="Clearcore2.Data">
-      <HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Clearcore2.Data.AnalystDataProvider">
-      <HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
-    </Reference>
-    <Reference Include="Clearcore2.Muni">
-      <HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
-    </Reference>
-    <Reference Include="Clearcore2.ProjectUtilities">
-      <HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Clearcore2.RawXYProcessing">
-      <HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
-    </Reference>
-    <Reference Include="Sciex.Data.XYData">
-      <HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
-    </Reference>
-    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
-    </Reference>
-    <Reference Include="ThermoFisher.CommonCore.Data">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
-    </Reference>
-    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+		<Reference Include="Clearcore2.Data">
+			<HintPath>..\..\..\Sciex\Clearcore2.Data.dll</HintPath>
+		</Reference>
+		<Reference Include="Clearcore2.Data.AnalystDataProvider">
+			<HintPath>..\..\..\Sciex\Clearcore2.Data.AnalystDataProvider.dll</HintPath>
+		</Reference>
+		<Reference Include="Clearcore2.Muni">
+			<HintPath>..\..\..\Sciex\Clearcore2.Muni.dll</HintPath>
+		</Reference>
+		<Reference Include="Clearcore2.ProjectUtilities">
+			<HintPath>..\..\..\Sciex\Clearcore2.ProjectUtilities.dll</HintPath>
+		</Reference>
+		<Reference Include="Clearcore2.RawXYProcessing">
+			<HintPath>..\..\..\Sciex\Clearcore2.RawXYProcessing.dll</HintPath>
+		</Reference>
+		<Reference Include="Sciex.Data.XYData">
+			<HintPath>..\..\..\Sciex\Sciex.Data.XYData.dll</HintPath>
+		</Reference>
+		<Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+		</Reference>
+		<Reference Include="ThermoFisher.CommonCore.Data">
+			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+		</Reference>
+		<Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+		</Reference>
+		<Reference Include="ThermoFisher.CommonCore.RawFileReader">
+			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>
