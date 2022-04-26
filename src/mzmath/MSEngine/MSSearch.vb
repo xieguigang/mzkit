@@ -70,6 +70,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
     ReadOnly mzIndex As (Double, Compound())()
+    ReadOnly score As Func(Of Compound, Double)
 
     ''' <summary>
     ''' index by unique id
@@ -83,9 +84,14 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         End Get
     End Property
 
-    Sub New(tree As IEnumerable(Of Compound), tolerance As Tolerance, precursorTypes As MzCalculator())
+    Sub New(tree As IEnumerable(Of Compound),
+            tolerance As Tolerance,
+            precursorTypes As MzCalculator(),
+            Optional score As Func(Of Compound, Double) = Nothing)
+
         Me.tolerance = tolerance
         Me.precursorTypes = precursorTypes
+        Me.score = If(score, New Func(Of Compound, Double)(Function() 0.0))
         Me.index = tree _
             .GroupBy(Function(c) c.Identity) _
             .ToDictionary(Function(cpd) cpd.Key,
@@ -139,14 +145,18 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             .Select(Function(g)
                         Return g.First
                     End Function) _
-            .ToArray  ' massIndex.Find(query)?.Members
+            .ToArray
 
         For Each cpd As Compound In result.SafeQuery
             Dim minppm = precursorTypes _
-                .Select(Function(type)
+                .Select(Function(type, i)
                             Dim mzhit As Double = type.CalcMZ(cpd.ExactMass)
+                            Dim ppm As Double = PPMmethod.PPM(mzhit, mz)
 
-                            Return (type, mzhit, PPMmethod.PPM(mzhit, mz))
+                            ' 20220426
+                            ' precursor type has priority order
+                            ' as its annotation score
+                            Return (type, mzhit, ppm, priority:=i)
                         End Function) _
                 .OrderBy(Function(type) type.Item3) _
                 .First
@@ -157,7 +167,8 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                 .mz = mz,
                 .ppm = minppm.Item3,
                 .name = cpd.CommonName,
-                .mz_ref = minppm.mzhit
+                .mz_ref = minppm.mzhit,
+                .score = (score(cpd) / (.ppm + 1)) / minppm.priority
             }
         Next
     End Function
