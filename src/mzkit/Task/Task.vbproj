@@ -302,6 +302,10 @@
       <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
       <Name>sciexWiffReader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj">
+      <Project>{eee7f7fd-963f-4696-a71f-df70086df3d3}</Project>
+      <Name>MSFileReader.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>
