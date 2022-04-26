@@ -5,3 +5,6 @@
 [submodule "Rscript/Library/MSI_app"]
 	path = Rscript/Library/MSI_app
 	url = https://gitee.com/xieguigang/ms-imaging.git
+[submodule "src/mzkit"]
+	path = src/mzkit
+	url = https://github.com/xieguigang/mzkit_win32.git
