@@ -1404,10 +1404,6 @@
       <Project>{589449b3-9524-46b5-8da9-d4653476156f}</Project>
       <Name>spectrumTree-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\ThermoRawFileReader\ThermoRawFileReader.vbproj">
-      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
-      <Name>ThermoRawFileReader</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>

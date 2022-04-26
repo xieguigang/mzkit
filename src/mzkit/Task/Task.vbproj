@@ -302,10 +302,6 @@
       <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
       <Name>sciexWiffReader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\ThermoRawFileReader\ThermoRawFileReader.vbproj">
-      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
-      <Name>ThermoRawFileReader</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
       <Project>{2abff190-611a-4cb7-afff-d8f7bba0bb63}</Project>
       <Name>chemoinformatics-netcore5</Name>
