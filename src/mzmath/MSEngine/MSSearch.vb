@@ -156,7 +156,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                             ' 20220426
                             ' precursor type has priority order
                             ' as its annotation score
-                            Return (type, mzhit, ppm, priority:=i)
+                            Return (type, mzhit, ppm, priority:=i + 1)
                         End Function) _
                 .OrderBy(Function(type) type.Item3) _
                 .First
