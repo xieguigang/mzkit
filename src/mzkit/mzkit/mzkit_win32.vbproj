@@ -1100,10 +1100,6 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\console\console\console.NET5.vbproj">
-      <Project>{816b6145-4c89-4cbb-89cd-27b7832ead2f}</Project>
-      <Name>console.NET5</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj">
       <Project>{84dbe474-b005-4ddd-b4c7-0f6ba01d3ca2}</Project>
       <Name>Fisher.NET5</Name>
@@ -1367,6 +1363,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\modules\keggReport\keggReport.NET5.vbproj">
       <Project>{dceef144-03c8-482f-b668-1a8706366ea0}</Project>
       <Name>keggReport.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mini-R\console\console\console.NET5.vbproj">
+      <Project>{dd612bec-4460-4d76-9ded-d190de584181}</Project>
+      <Name>console.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.NET5.vbproj">
       <Project>{884f2aa6-1cd9-4c72-9531-1725d2502cd9}</Project>
