@@ -87,7 +87,9 @@ Public Class SingleIonLayer
     End Property
 
     ''' <summary>
-    ''' 
+    ''' Removes pixels which relative intensity value is 
+    ''' less than the given <paramref name="intocutoff"/> 
+    ''' threshold.
     ''' </summary>
     ''' <param name="intocutoff">
     ''' relative intensity cutoff value in range ``[0,1]``.

@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::e190b82ad56029b2dc79cb4ac2ddf4bc, mzkit\Rscript\Library\mzkit\assembly\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 464
-    '    Code Lines: 336
-    ' Comment Lines: 73
-    '   Blank Lines: 55
-    '     File Size: 19.16 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: basePeakMz, Correction, GetIonsJointMatrix, getStatTable, IonStats
-    '               loadRowSummary, MSI_summary, MSIScanMatrix, open_imzML, PeakMatrix
-    '               peakSamples, pixelId, PixelMatrix, pixels, pixels2D
-    '               rowScans, splice
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 464
+'    Code Lines: 336
+' Comment Lines: 73
+'   Blank Lines: 55
+'     File Size: 19.16 KB
+
+
+' Module MSI
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: basePeakMz, Correction, GetIonsJointMatrix, getStatTable, IonStats
+'               loadRowSummary, MSI_summary, MSIScanMatrix, open_imzML, PeakMatrix
+'               peakSamples, pixelId, PixelMatrix, pixels, pixels2D
+'               rowScans, splice
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -330,8 +330,8 @@ Module MSI
     End Function
 
     <ExportAPI("ionStat")>
-    Public Function IonStats(raw As mzPack) As IonStat()
-        Return IonStat.DoStat(raw).ToArray
+    Public Function IonStats(raw As mzPack, Optional gridSize As Integer = 5, Optional da As Double = 0.01) As IonStat()
+        Return IonStat.DoStat(raw, nsize:=gridSize, da:=da).ToArray
     End Function
 
     <ExportAPI("ions_jointmatrix")>
@@ -342,9 +342,17 @@ Module MSI
                         Return New NamedValue(Of IonStat())(name, IonStats(raw.getValue(Of mzPack)(name, env)))
                     End Function) _
             .ToArray
-        Dim allMz As Double() = allStats.Select(Function(i) i.Value).IteratesALL.Select(Function(i) i.mz).GroupBy(Tolerance.DeltaMass(0.05)).Select(Function(i) Val(i.name)).ToArray
+        Dim allMz As Double() = allStats _
+            .Select(Function(i) i.Value) _
+            .IteratesALL _
+            .Select(Function(i) i.mz) _
+            .GroupBy(Tolerance.DeltaMass(0.05)) _
+            .Select(Function(i) Val(i.name)) _
+            .ToArray
         Dim mat As New rDataframe With {
-            .rownames = allMz.Select(Function(mzi) mzi.ToString("F4")).ToArray,
+            .rownames = allMz _
+                .Select(Function(mzi) mzi.ToString("F4")) _
+                .ToArray,
             .columns = New Dictionary(Of String, Array)
         }
         Dim daErr As Tolerance = Tolerance.DeltaMass(0.1)
@@ -352,7 +360,11 @@ Module MSI
         For Each file In allStats
             Dim pixels = allMz _
                 .Select(Function(mzi)
-                            Return file.Value.Where(Function(i) daErr.Equals(i.mz, mzi)).Select(Function(i) i.pixels).OrderByDescending(Function(i) i).FirstOrDefault
+                            Return file.Value _
+                                .Where(Function(i) daErr.Equals(i.mz, mzi)) _
+                                .Select(Function(i) i.pixels) _
+                                .OrderByDescending(Function(i) i) _
+                                .FirstOrDefault
                         End Function) _
                 .ToArray
 
@@ -430,7 +442,9 @@ Module MSI
             Return err.TryCast(Of Message)
         End If
 
-        Return raw.TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript).ToArray
+        Return raw _
+            .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -448,6 +462,7 @@ Module MSI
                                 Optional mzError As Object = "da:0.05",
                                 Optional cutoff As Double = 0.05,
                                 Optional env As Environment = Nothing) As Object
+
         Dim err = Math.getTolerance(mzError, env)
 
         If err Like GetType(Message) Then
@@ -458,10 +473,25 @@ Module MSI
         Dim sampling As Size = sampler.MeasureSamplingSize(resolution)
         Dim samples = sampler.Sampling(sampling, err.TryCast(Of Tolerance)).ToArray
         Dim matrix As DataSet() = samples _
-            .AlignMzPeaks(err.TryCast(Of Tolerance), cutoff, Function(p) p.GetMs, Function(p) $"{p.X},{p.Y}") _
+            .AlignMzPeaks(
+                mzErr:=err.TryCast(Of Tolerance),
+                cutoff:=cutoff,
+                getPeaks:=Function(p) p.GetMs,
+                getSampleId:=Function(p) $"{p.X},{p.Y}"
+            ) _
             .ToArray
 
         Return matrix
+    End Function
+
+    ''' <summary>
+    ''' get number of ions in each pixel scans
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <ExportAPI("pixelIons")>
+    Public Function PixelIons(raw As mzPack) As Integer()
+        Return raw.MS.Select(Function(scan) scan.size).ToArray
     End Function
 
     ''' <summary>
@@ -501,7 +531,9 @@ Module MSI
             Dim msData = pixel.GetMs.ToArray
             Dim vec As String() = allMz _
                 .Select(Function(mzi)
-                            Dim mz = msData.Where(Function(i) da(i.mz, mzi.mz)).FirstOrDefault
+                            Dim mz As ms2 = msData _
+                                .Where(Function(i) da(i.mz, mzi.mz)) _
+                                .FirstOrDefault
 
                             If mz Is Nothing Then
                                 Return "0"

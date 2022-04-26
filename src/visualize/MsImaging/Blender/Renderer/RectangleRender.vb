@@ -171,6 +171,20 @@ Namespace Blender
                          End Sub)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <param name="dimension"></param>
+        ''' <param name="dimSize"></param>
+        ''' <param name="colorSet"></param>
+        ''' <param name="mapLevels"></param>
+        ''' <param name="scale"></param>
+        ''' <param name="defaultFill">
+        ''' the background of the MS-imaging chartting.
+        ''' </param>
+        ''' <param name="cutoff"></param>
+        ''' <returns></returns>
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,

@@ -295,7 +295,7 @@ Module Visual
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1280,900")
 
         If mirror Then
-            Return SpectrumPlot(spectrum, title:=If(title, "Mass Spectrum Plot"))
+            Return SpectrumPlot(spectrum, title:=If(title, "Mass Spectrum Plot"), env:=env)
         Else
             Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
 
@@ -531,7 +531,8 @@ Module Visual
                     titles:={
                         ms.TryCast(Of LibraryMatrix).name,
                         spectrum.ToString
-                    }
+                    },
+                    driver:=env.getDriver
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
