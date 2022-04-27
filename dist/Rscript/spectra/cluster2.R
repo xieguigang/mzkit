@@ -2,6 +2,7 @@ require(mzkit);
 require(xlsx);
 
 imports ["mzPack", "mzweb", "data"] from "mzkit";
+imports "visual" from "mzplot";
 
 data = read.xlsx("D:/lipids_20220427.xlsx", row.names = 1);
 
@@ -23,4 +24,15 @@ for(tag in names(data)) {
     ;
     ions = ions[which.max(sapply(ions, i -> [i]::Length))];
     ions = [ions]::cluster;
+
+    rep = unionPeaks(ions);
+    summary = as.data.frame(ions);
+
+    print(summary);
+
+    bitmap(file = `E:\lipids/${normalizeFileName(tag)}/plot.png`) {
+        plot(centroid(rep));
+    }
+
+    write.csv(summary , file = `E:\lipids/${normalizeFileName(tag)}/all_ions.csv`);
 }
