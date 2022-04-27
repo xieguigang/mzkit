@@ -10,10 +10,13 @@ print("view target lipids metabolite:");
 print(data);
 
 data = as.list(data, byrow = TRUE);
-bin = spectrum.compares();
+bin = spectrum.compares( equals_score = 0.9,
+                        gt_score = 0.65
+                        );
 
 for(tag in names(data)) {
     file = `E:\lipids/${normalizeFileName(tag)}.mzPack`;
+    meta = data[[tag]];
     ions = file 
     |> open.mzpack()
     |> ms2_peaks()
@@ -27,12 +30,19 @@ for(tag in names(data)) {
 
     rep = unionPeaks(ions);
     summary = as.data.frame(ions);
+    summary[, "scan"] = make.ROI_names(ions);
+    summary[, "precursor_type"] = NULL;
+    summary[, "collisionEnergy"] = NULL;
+    summary[, "activation"] = NULL;
+    summary[, "scan"] = NULL;
+    summary[, "file"] = NULL;
 
     print(summary);
+    str(meta);    
 
     bitmap(file = `E:\lipids/${normalizeFileName(tag)}/plot.png`) {
-        plot(centroid(rep));
+        plot(centroid(rep), title = `${tag}_${meta$MainIon}`, size = [1600,900]);
     }
 
-    write.csv(summary , file = `E:\lipids/${normalizeFileName(tag)}/all_ions.csv`);
+    write.csv(summary , file = `E:\lipids/${normalizeFileName(tag)}/all_ions.csv`, row.names = FALSE);
 }
