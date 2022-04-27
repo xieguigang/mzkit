@@ -27,3 +27,30 @@ for(rawfile in open.mzwork("E:/lipids.mzWork")) {
 
     NULL;
 }
+
+print("union ions...");
+
+lipidIons = list();
+
+for(file in ions) {
+    for(name in names(file)) {
+        lipidIons[[name]] = append(lipidIons[[name]], file[[name]]); 
+    }
+
+    cat(".");
+}
+
+cat("\n");
+print("save ions to mzpack...");
+
+for(lipid in names(lipidIons)) {
+    unlist(lipidIons[[lipid]])
+    |> as.vector()
+    |> packData()
+    |> write.mzPack(file = `E:/lipids/${normalizeFileName(lipid)}.mzPack`)
+    ;
+
+    print(lipid);
+}
+
+print("~job done!");
