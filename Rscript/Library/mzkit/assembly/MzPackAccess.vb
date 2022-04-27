@@ -89,16 +89,17 @@ Module MzPackAccess
             Sub(text)
                 Call stdout(text)
             End Sub
+        Dim verbose As Boolean = env.globalEnvironment.options.verbose
         Dim print2 As Action(Of String, String) =
             Sub(text1, text2)
-                Call stdout($"[{text1}] {text2}")
+                If verbose Then Call stdout($"[{text1}] {text2}")
             End Sub
         Dim stream As IEnumerable(Of mzPack) =
             Iterator Function() As IEnumerable(Of mzPack)
                 Using pack As New ZipArchive(mzwork.Open(FileMode.Open, doClear:=False, [readOnly]:=True), ZipArchiveMode.Read)
                     For Each group In ParseArchive.LoadRawGroups(zip:=pack, msg:=println)
                         For Each raw As Raw In group
-                            Dim mzpack As mzPack = raw.LoadMzpack(print2).GetLoadedMzpack
+                            Dim mzpack As mzPack = raw.LoadMzpack(print2, verbose).GetLoadedMzpack
                             mzpack.source = group.name
                             Yield mzpack
                         Next

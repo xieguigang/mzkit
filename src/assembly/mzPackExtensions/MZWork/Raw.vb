@@ -120,7 +120,7 @@ Namespace MZWork
             Return loaded.Thumbnail
         End Function
 
-        Public Function LoadMzpack(reload As Action(Of String, String)) As Raw
+        Public Function LoadMzpack(reload As Action(Of String, String), Optional verbose As Boolean = True) As Raw
             If isLoaded Then
                 Return Me
             End If
@@ -128,7 +128,7 @@ Namespace MZWork
 mzPackReader:
             Try
                 Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    loaded = mzPack.ReadAll(file)
+                    loaded = mzPack.ReadAll(file, verbose:=verbose)
 
                     ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
                     ms2 = loaded.MS _
