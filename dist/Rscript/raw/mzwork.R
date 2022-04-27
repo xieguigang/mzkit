@@ -14,6 +14,11 @@ data = as.list(data, byrow = TRUE);
 str(data);
 
 for(rawfile in open.mzwork("E:/lipids.mzWork")) {
+    tag = [rawfile]::source;
+    ions[[tag]] = lapply(data, function(i) {
+        mz = i$mz;
+        rawfile |> ms2_peaks(mz);
+    });
 
     NULL;
 }
