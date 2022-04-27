@@ -156,6 +156,16 @@ Module data
             .mzInto = peaks _
                 .Select(Function(i) i.mzInto) _
                 .IteratesALL _
+                .GroupBy(Function(i) i.mz, offsets:=0.1) _
+                .Select(Function(i)
+                            Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
+                            Dim into = i.Average(Function(x) x.intensity)
+
+                            Return New ms2 With {
+                                .mz = mz,
+                                .intensity = into
+                            }
+                        End Function) _
                 .ToArray,
             .rt = peaks.Average(Function(i) i.rt)
         }
