@@ -41,7 +41,7 @@ for(tag in names(data)) {
     str(meta);    
 
     bitmap(file = `E:\lipids/${normalizeFileName(tag)}/plot.png`) {
-        plot(centroid(rep), title = `${tag}_${meta$MainIon}`, size = [1600,900]);
+        plot(centroid(rep), title = `${tag} [${meta$MainIon}]+`, size = [1600,900]);
     }
 
     write.csv(summary , file = `E:\lipids/${normalizeFileName(tag)}/all_ions.csv`, row.names = FALSE);
