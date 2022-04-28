@@ -159,7 +159,7 @@ Module data
                 .GroupBy(Function(i) i.mz, offsets:=0.1) _
                 .Select(Function(i)
                             Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
-                            Dim into = i.Average(Function(x) x.intensity)
+                            Dim into = i.Max(Function(x) x.intensity)
 
                             Return New ms2 With {
                                 .mz = mz,

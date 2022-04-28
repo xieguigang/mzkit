@@ -208,7 +208,7 @@ Module MzPackAccess
                             .parentMz = i.mz,
                             .intensity = i.intensity,
                             .rt = i.rt,
-                            .scan_id = i.lib_guid,
+                            .scan_id = $"{i.file}#{i.lib_guid}",
                             .collisionEnergy = i.collisionEnergy
                         }
                     End Function) _

@@ -10,8 +10,8 @@ print("view target lipids metabolite:");
 print(data);
 
 data = as.list(data, byrow = TRUE);
-bin = spectrum.compares( equals_score = 0.9,
-                        gt_score = 0.65
+bin = spectrum.compares( equals_score = 0.95,
+                        gt_score = 0.8
                         );
 
 for(tag in names(data)) {
@@ -37,11 +37,24 @@ for(tag in names(data)) {
     summary[, "scan"] = NULL;
     summary[, "file"] = NULL;
 
+	ref = strsplit(summary[, "lib_guid"],"#", fixed = TRUE);
+	filename = sapply(ref, x -> x[1]);
+	guid = sapply(ref, x -> x[2]);
+	
+	top = ions[which.max(summary[, "intensity"])];
+	
+	summary[, "lib_guid"] = guid;
+	summary[, "filename"] = filename;
+
     print(summary);
     str(meta);    
 
-    bitmap(file = `E:\lipids/${normalizeFileName(tag)}/plot.png`) {
+    bitmap(file = `E:\lipids/${normalizeFileName(tag)}/union_rep.png`) {
         plot(rep, title = `${tag} [${meta$MainIon}]+`, size = [1600,900]);
+    }
+
+	bitmap(file = `E:\lipids/${normalizeFileName(tag)}/topIon.png`) {
+        plot(top, title = `${tag} [${meta$MainIon}]+`, size = [1600,900]);
     }
 
     write.csv(summary , file = `E:\lipids/${normalizeFileName(tag)}/all_ions.csv`, row.names = FALSE);
