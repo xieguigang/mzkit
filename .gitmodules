@@ -8,3 +8,6 @@
 [submodule "src/mzkit"]
 	path = src/mzkit
 	url = https://github.com/xieguigang/mzkit_win32.git
+[submodule "src/visualize/KCF"]
+	path = src/visualize/KCF
+	url = https://github.com/BioDeep/KEGG.molDraw.git
