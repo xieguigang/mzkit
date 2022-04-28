@@ -358,7 +358,7 @@ Public Class PeakAssign : Inherits Plot
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
                                              Optional size$ = "1280,900",
-                                             Optional padding$ = "padding:200px 100px 85px 125px;",
+                                             Optional padding$ = "padding:100px 50px 85px 100px;",
                                              Optional bg$ = "white",
                                              Optional gridFill$ = "white",
                                              Optional title As String = Nothing,

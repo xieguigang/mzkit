@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::07c5d180ad0b2b4189c9b87a32871c34, mzkit\Rscript\Library\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 366
-    '    Code Lines: 251
-    ' Comment Lines: 54
-    '   Blank Lines: 61
-    '     File Size: 13.91 KB
+' Summaries:
 
 
-    ' Module data
-    ' 
-    '     Function: createPeakMs2, getIntensity, getScantime, libraryMatrix, LibraryTable
-    '               makeROInames, nfragments, readMatrix, RtSlice, XIC
-    '               XICGroups, XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 366
+'    Code Lines: 251
+' Comment Lines: 54
+'   Blank Lines: 61
+'     File Size: 13.91 KB
+
+
+' Module data
+' 
+'     Function: createPeakMs2, getIntensity, getScantime, libraryMatrix, LibraryTable
+'               makeROInames, nfragments, readMatrix, RtSlice, XIC
+'               XICGroups, XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,6 +82,7 @@ Module data
     <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
     End Sub
 
@@ -103,6 +104,71 @@ Module data
         table.columns("intensity") = XIC.Select(Function(a) a.intensity).ToArray
 
         Return table
+    End Function
+
+    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call df.add(NameOf(PeakMs2.lib_guid), From i In peaks Select i.lib_guid)
+        Call df.add(NameOf(PeakMs2.scan), From i In peaks Select i.scan)
+        Call df.add(NameOf(PeakMs2.file), From i In peaks Select i.file)
+        Call df.add(NameOf(PeakMs2.mz), From i In peaks Select i.mz)
+        Call df.add(NameOf(PeakMs2.rt), From i In peaks Select i.rt)
+        Call df.add(NameOf(PeakMs2.precursor_type), From i In peaks Select i.precursor_type)
+        Call df.add(NameOf(PeakMs2.collisionEnergy), From i In peaks Select i.collisionEnergy)
+        Call df.add(NameOf(PeakMs2.activation), From i In peaks Select i.activation)
+        Call df.add(NameOf(PeakMs2.fragments), From i In peaks Select i.fragments)
+        Call df.add(NameOf(PeakMs2.intensity), From i In peaks Select i.intensity)
+        Call df.add(NameOf(PeakMs2.Ms2Intensity), From i In peaks Select i.Ms2Intensity)
+
+        Dim ionsMs2 = peaks _
+            .Select(Function(i)
+                        Return i.mzInto _
+                            .OrderByDescending(Function(m) m.intensity) _
+                            .ToArray
+                    End Function) _
+            .ToArray
+
+        Call df.add("basePeak", From i In ionsMs2 Select toString(i(Scan0)))
+        Call df.add("top2", From i In ionsMs2 Select toString(i.ElementAtOrNull(1)))
+        Call df.add("top3", From i In ionsMs2 Select toString(i.ElementAtOrNull(2)))
+        Call df.add("top4", From i In ionsMs2 Select toString(i.ElementAtOrNull(3)))
+        Call df.add("top5", From i In ionsMs2 Select toString(i.ElementAtOrNull(4)))
+
+        Return df
+    End Function
+
+    Private Function toString(i As ms2) As String
+        If i Is Nothing Then
+            Return ""
+        Else
+            Return $"{i.mz.ToString("F4")}:{i.intensity.ToString("G3")}"
+        End If
+    End Function
+
+    <ExportAPI("unionPeaks")>
+    Public Function unionPeaks(peaks As PeakMs2()) As PeakMs2
+        Return New PeakMs2 With {
+            .file = peaks.Select(Function(i) i.file).Distinct.JoinBy("; "),
+            .intensity = peaks.Sum(Function(i) i.intensity),
+            .mzInto = peaks _
+                .Select(Function(i) i.mzInto) _
+                .IteratesALL _
+                .GroupBy(Function(i) i.mz, offsets:=0.1) _
+                .Select(Function(i)
+                            Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
+                            Dim into = i.Max(Function(x) x.intensity)
+
+                            Return New ms2 With {
+                                .mz = mz,
+                                .intensity = into
+                            }
+                        End Function) _
+                .ToArray,
+            .rt = peaks.Average(Function(i) i.rt)
+        }
     End Function
 
     <ExportAPI("nsize")>

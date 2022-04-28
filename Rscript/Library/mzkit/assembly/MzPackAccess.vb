@@ -53,10 +53,12 @@
 #End Region
 
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MZWork
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -71,6 +73,42 @@ Imports stdNum = System.Math
 
 <Package("mzPack")>
 Module MzPackAccess
+
+    ''' <summary>
+    ''' open mzwork file and then populate all of the mzpack raw data file
+    ''' </summary>
+    ''' <param name="mzwork"></param>
+    ''' <returns>
+    ''' a collection of mzpack raw data objects
+    ''' </returns>
+    <ExportAPI("open.mzwork")>
+    <RApiReturn(GetType(mzPack))>
+    Public Function populateMzPacks(mzwork As String, Optional env As Environment = Nothing) As pipeline
+        Dim stdout = env.WriteLineHandler
+        Dim println As Action(Of String) =
+            Sub(text)
+                Call stdout(text)
+            End Sub
+        Dim verbose As Boolean = env.globalEnvironment.options.verbose
+        Dim print2 As Action(Of String, String) =
+            Sub(text1, text2)
+                If verbose Then Call stdout($"[{text1}] {text2}")
+            End Sub
+        Dim stream As IEnumerable(Of mzPack) =
+            Iterator Function() As IEnumerable(Of mzPack)
+                Using pack As New ZipArchive(mzwork.Open(FileMode.Open, doClear:=False, [readOnly]:=True), ZipArchiveMode.Read)
+                    For Each group In ParseArchive.LoadRawGroups(zip:=pack, msg:=println)
+                        For Each raw As Raw In group
+                            Dim mzpack As mzPack = raw.LoadMzpack(print2, verbose).GetLoadedMzpack
+                            mzpack.source = group.name
+                            Yield mzpack
+                        Next
+                    Next
+                End Using
+            End Function()
+
+        Return pipeline.CreateFromPopulator(stream)
+    End Function
 
     <ExportAPI("mzpack")>
     <RApiReturn(GetType(mzPackReader))>
@@ -170,7 +208,7 @@ Module MzPackAccess
                             .parentMz = i.mz,
                             .intensity = i.intensity,
                             .rt = i.rt,
-                            .scan_id = i.lib_guid,
+                            .scan_id = $"{i.file}#{i.lib_guid}",
                             .collisionEnergy = i.collisionEnergy
                         }
                     End Function) _

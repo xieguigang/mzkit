@@ -104,11 +104,11 @@ Module FormulaTools
             .columns = New Dictionary(Of String, Array)
         }
 
-        Call candidates.add("formula", formulas.Select(Function(f) f.EmpiricalFormula).ToArray)
-        Call candidates.add("exact_mass", formulas.Select(Function(f) f.ExactMass).ToArray)
-        Call candidates.add("mass_diff", formulas.Select(Function(f) f.massdiff).ToArray)
-        Call candidates.add("ppm", formulas.Select(Function(f) f.ppm).ToArray)
-        Call candidates.add("H/C", formulas.Select(Function(f) f.HCRatio).ToArray)
+        Call candidates.add("formula", formulas.Select(Function(f) f.EmpiricalFormula))
+        Call candidates.add("exact_mass", formulas.Select(Function(f) f.ExactMass))
+        Call candidates.add("mass_diff", formulas.Select(Function(f) f.massdiff))
+        Call candidates.add("ppm", formulas.Select(Function(f) f.ppm))
+        Call candidates.add("H/C", formulas.Select(Function(f) f.HCRatio))
 
         Return candidates
     End Function

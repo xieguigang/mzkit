@@ -199,7 +199,7 @@ Public Class mzPack
     Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)
         For Each ms1 As ScanMS1 In MS
             For Each ms2 As ScanMS2 In ms1.products
-                Yield CastToPeakMs2(ms2)
+                Yield CastToPeakMs2(ms2, file:=source)
             Next
         Next
     End Function
@@ -209,11 +209,11 @@ Public Class mzPack
     ''' </summary>
     ''' <param name="ms2"></param>
     ''' <returns></returns>
-    Public Shared Function CastToPeakMs2(ms2 As ScanMS2) As PeakMs2
+    Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a") As PeakMs2
         Return New PeakMs2 With {
             .activation = ms2.activationMethod.ToString,
             .collisionEnergy = ms2.collisionEnergy,
-            .file = "n/a",
+            .file = file,
             .intensity = ms2.intensity,
             .lib_guid = ms2.ToString,
             .meta = New Dictionary(Of String, String),
@@ -231,7 +231,7 @@ Public Class mzPack
         End Using
     End Function
 
-    Private Shared Iterator Function PopulateAllScans(mzpack As mzPackReader, skipMsn As Boolean) As IEnumerable(Of ScanMS1)
+    Private Shared Iterator Function PopulateAllScans(mzpack As mzPackReader, skipMsn As Boolean, verbose As Boolean) As IEnumerable(Of ScanMS1)
         Dim allIndex As String() = mzpack.EnumerateIndex.ToArray
         Dim i As i32 = 0
         Dim d As Integer = allIndex.Length / 10
@@ -243,7 +243,10 @@ Public Class mzPack
             Yield mzpack.ReadScan(id, skipMsn)
 
             If ++i = d Then
-                RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                If verbose Then
+                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                End If
+
                 i = 0
             End If
         Next
@@ -256,10 +259,11 @@ Public Class mzPack
     ''' <returns></returns>
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
-                                   Optional skipMsn As Boolean = False) As mzPack
+                                   Optional skipMsn As Boolean = False,
+                                   Optional verbose As Boolean = True) As mzPack
 
         Using mzpack As New mzPackReader(file)
-            Dim allMSscans As ScanMS1() = PopulateAllScans(mzpack, skipMsn).ToArray
+            Dim allMSscans As ScanMS1() = PopulateAllScans(mzpack, skipMsn, verbose).ToArray
             Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
             Dim source As String = Nothing
 

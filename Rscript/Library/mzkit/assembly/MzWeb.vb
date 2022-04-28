@@ -378,7 +378,9 @@ Module MzWeb
                 .Where(Function(scan)
                            Return mzdiff(scan.parentMz, precursorMz)
                        End Function) _
-                .Select(AddressOf mzPack.CastToPeakMs2) _
+                .Select(Function(mz2)
+                            Return mzPack.CastToPeakMs2(mz2, file:=mzpack.source)
+                        End Function) _
                 .ToArray
 
             Return ms2_xic
