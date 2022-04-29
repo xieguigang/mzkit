@@ -227,7 +227,7 @@ Public Class PeakAssign : Inherits Plot
 
             label = product.Annotation
 
-            If (Not label.StringEmpty) AndAlso Not label Like empty Then
+            If (product.intensity / maxinto > 0.05) AndAlso (Not label.StringEmpty) AndAlso (Not label Like empty) Then
                 If images.ContainsKey(label) Then
                     labelSize = images(label).size.SizeF
                 Else
