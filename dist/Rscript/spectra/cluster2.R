@@ -28,7 +28,10 @@ for(tag in names(data)) {
     ions = ions[which.max(sapply(ions, i -> [i]::Length))];
     ions = [ions]::cluster;
 
-    rep = unionPeaks(ions);
+    rep = ions
+	|> unionPeaks( matrix = TRUE)
+	|> peakAnnotations(massDiff = 0.3)
+	;
     summary = as.data.frame(ions);
     summary[, "scan"] = make.ROI_names(ions);
     summary[, "precursor_type"] = NULL;
