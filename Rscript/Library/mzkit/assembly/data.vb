@@ -150,11 +150,14 @@ Module data
 
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
-    Public Function unionPeaks(peaks As PeakMs2(), Optional matrix As Boolean = False) As Object
+    Public Function unionPeaks(peaks As PeakMs2(),
+                               Optional matrix As Boolean = False,
+                               Optional massDiff As Double = 0.1) As Object
+
         Dim fragments As ms2() = peaks _
             .Select(Function(i) i.mzInto) _
             .IteratesALL _
-            .GroupBy(Function(i) i.mz, offsets:=0.1) _
+            .GroupBy(Function(i) i.mz, offsets:=massDiff) _
             .Select(Function(i)
                         Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
                         Dim into = i.Max(Function(x) x.intensity)

@@ -2,6 +2,7 @@ require(mzkit);
 require(xlsx);
 
 imports ["mzPack", "mzweb", "data"] from "mzkit";
+imports "formula" from "mzkit";
 imports "visual" from "mzplot";
 
 data = read.xlsx("D:/lipids_20220427.xlsx", row.names = 1);
@@ -29,7 +30,7 @@ for(tag in names(data)) {
     ions = [ions]::cluster;
 
     rep = ions
-	|> unionPeaks( matrix = TRUE)
+	|> unionPeaks( matrix = TRUE, massDiff = 0.3)
 	|> peakAnnotations(massDiff = 0.3)
 	;
     summary = as.data.frame(ions);
