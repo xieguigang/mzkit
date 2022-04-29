@@ -59,6 +59,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -212,6 +213,8 @@ Public Class PeakAssign : Inherits Plot
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)
 
+        Static empty As Index(Of String) = {"-", "_", "NULL", "NA", "null"}
+
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
             Dim bar As New RectangleF With {
@@ -224,7 +227,7 @@ Public Class PeakAssign : Inherits Plot
 
             label = product.Annotation
 
-            If Not label.StringEmpty Then
+            If (product.intensity / maxinto > 0.05) AndAlso (Not label.StringEmpty) AndAlso (Not label Like empty) Then
                 If images.ContainsKey(label) Then
                     labelSize = images(label).size.SizeF
                 Else
