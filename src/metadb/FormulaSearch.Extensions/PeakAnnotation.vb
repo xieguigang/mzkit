@@ -60,6 +60,7 @@ Imports stdNum = System.Math
 Public Class PeakAnnotation
 
     ReadOnly massDelta As Double
+    ReadOnly isotopeFirst As Boolean = True
 
     ''' <summary>
     ''' 
@@ -67,8 +68,9 @@ Public Class PeakAnnotation
     ''' <param name="massDelta">
     ''' mass tolerance error in delta dalton
     ''' </param>
-    Sub New(massDelta As Double)
+    Sub New(massDelta As Double, isotopeFirst As Boolean)
         Me.massDelta = massDelta
+        Me.isotopeFirst = isotopeFirst
     End Sub
 
     ''' <summary>
@@ -78,7 +80,7 @@ Public Class PeakAnnotation
     ''' <param name="products"></param>
     ''' <returns></returns>
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
-        products = MeasureIsotopePeaks(parentMz, products)
+        products = MeasureIsotopePeaks(parentMz, products, isotopeFirst)
         products = MatchElementGroups(parentMz, products, massDelta)
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
@@ -97,34 +99,46 @@ Public Class PeakAnnotation
         Return New FormulaComposition(counts)
     End Function
 
-    Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2()) As ms2()
-        Dim delta As Double
-
+    Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2(), isotopeFirst As Boolean) As ms2()
         For i As Integer = 0 To products.Length - 1
-            delta = (products(i).mz - parentMz) / Element.H
+            Dim tag As String = MeasureIsotopePeaks(parentMz, products(i).mz)
 
-            If FormulaSearch.PPM(products(i).mz, parentMz) <= 30 Then
-                products(i).Annotation = "M"
-            Else
-                For isotope As Integer = -3 To 3
-                    If isotope = 0 Then
-                        Continue For
-                    End If
-
-                    If stdNum.Abs(isotope - delta) <= 0.05 Then
-                        If isotope < 0 Then
-                            products(i).Annotation = $"[M{isotope}]"
-                        Else
-                            products(i).Annotation = $"[M+{isotope}]isotope"
-                        End If
-
-                        Exit For
-                    End If
-                Next
+            If Not tag Is Nothing Then
+                If products(i).Annotation.StringEmpty Then
+                    products(i).Annotation = tag
+                ElseIf isotopeFirst Then
+                    products(i).Annotation = tag
+                End If
             End If
         Next
 
         Return products
+    End Function
+
+    Private Shared Function MeasureIsotopePeaks(parentMz#, product As Double) As String
+        Dim delta As Double = (product - parentMz) / Element.H
+
+        If FormulaSearch.PPM(product, parentMz) <= 30 Then
+            Return "M"
+        End If
+
+        For isotope As Integer = -3 To 3
+            If isotope = 0 Then
+                Continue For
+            End If
+
+            If stdNum.Abs(isotope - delta) <= 0.05 Then
+                If isotope < 0 Then
+                    Return $"[M{isotope}]"
+                Else
+                    Return $"[M+{isotope}]isotope"
+                End If
+
+                Exit For
+            End If
+        Next
+
+        Return Nothing
     End Function
 
     Private Shared Function MatchElementGroups(parentMz#, products As ms2(), massDelta As Double) As ms2()
