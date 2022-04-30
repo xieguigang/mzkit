@@ -54,7 +54,6 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports stdNum = System.Math
 
 Public Class PeakAnnotation
@@ -150,25 +149,25 @@ Public Class PeakAnnotation
     End Function
 
     Private Shared Sub FragmentAnnotation(element As ms2, parentMz#, massDelta As Double)
-        Dim group As NamedValue(Of Formula) = AtomGroupHandler.GetByMass(element.mz, massDelta)
+        Dim group As FragmentAnnotationHolder = AtomGroupHandler.GetByMass(element.mz, massDelta)
         Dim delta As Integer = 0
 
-        If Not group.IsEmpty Then
+        If Not group Is Nothing Then
             If element.Annotation.StringEmpty Then
-                element.Annotation = $"[{group.Value.EmpiricalFormula}]{group.Name}"
+                element.Annotation = group.name
             Else
-                element.Annotation = $"{element.Annotation} ([{group.Value.EmpiricalFormula}]{group.Name})"
+                element.Annotation = $"{element.Annotation} ({group.name})"
             End If
         Else
             group = AtomGroupHandler.FindDelta(parentMz, element.mz, delta, da:=massDelta)
 
-            If Not group.IsEmpty Then
+            If Not group Is Nothing Then
                 Dim deltaStr As String
 
                 If delta = -1 Then
-                    deltaStr = $"[M+{group.Name}]"
+                    deltaStr = $"[M+{group.name}]"
                 Else
-                    deltaStr = $"[M-{group.Name}]"
+                    deltaStr = $"[M-{group.name}]"
                 End If
 
                 If element.Annotation.StringEmpty Then

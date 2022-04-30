@@ -78,7 +78,7 @@ Public Class AtomGroupHandler
                         End Function)
     End Function
 
-    Sub New()
+    Shared Sub New()
         Call SingletonList(Of FragmentAnnotationHolder).Add(From i In alkyl Select New FragmentAnnotationHolder(i.Value))
         Call SingletonList(Of FragmentAnnotationHolder).Add(From i In ketones Select New FragmentAnnotationHolder(i.Value))
         Call SingletonList(Of FragmentAnnotationHolder).Add(From i In amines Select New FragmentAnnotationHolder(i.Value))
@@ -92,13 +92,13 @@ Public Class AtomGroupHandler
     ''' <summary>
     ''' x2
     ''' </summary>
-    Private Sub Multiple(all As FragmentAnnotationHolder())
+    Private Shared Sub Multiple(all As FragmentAnnotationHolder())
         For Each item In all
             SingletonList(Of FragmentAnnotationHolder).Add(item * 2)
         Next
     End Sub
 
-    Private Sub MixAll(all As FragmentAnnotationHolder())
+    Private Shared Sub MixAll(all As FragmentAnnotationHolder())
         Dim mix As FragmentAnnotationHolder
 
         ' a + b
@@ -120,28 +120,28 @@ Public Class AtomGroupHandler
         Next
     End Sub
 
-    Public Sub Register(annotations As IEnumerable(Of FragmentAnnotationHolder))
+    Public Shared Sub Register(annotations As IEnumerable(Of FragmentAnnotationHolder))
         Dim list As FragmentAnnotationHolder() = annotations.ToArray
 
         Call Multiple(list)
         Call MixAll(list)
     End Sub
 
-    Public Sub Register(name As String, formula As String)
+    Public Shared Function CreateModel(name As String, formula As String) As FragmentAnnotationHolder
         Dim chemical As Formula = FormulaScanner.ScanFormula(formula)
         Dim anno As New FragmentAnnotationHolder(chemical, name)
 
-        Call SingletonList(Of FragmentAnnotationHolder).Add(anno)
-    End Sub
+        Return anno
+    End Function
 
-    Public Sub Register(name As String, exactMass As Double)
+    Public Shared Function CreateModel(name As String, exactMass As Double) As FragmentAnnotationHolder
         Dim group As New MassGroup With {
             .name = name,
             .exactMass = exactMass
         }
 
-        Call SingletonList(Of FragmentAnnotationHolder).Add(group)
-    End Sub
+        Return New FragmentAnnotationHolder(group)
+    End Function
 
     Public Shared Function GetByMass(mass As Double, Optional da As Double = 0.1) As FragmentAnnotationHolder
         For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach

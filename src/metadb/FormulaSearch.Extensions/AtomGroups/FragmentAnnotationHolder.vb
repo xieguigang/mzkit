@@ -26,6 +26,10 @@ Public Class FragmentAnnotationHolder
         Me.base = base
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return name
+    End Function
+
     Public Shared Operator Like(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As Boolean
         If a.base.GetType Is b.base.GetType Then
             Return True
