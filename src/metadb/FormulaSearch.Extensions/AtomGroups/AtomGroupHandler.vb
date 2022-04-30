@@ -78,6 +78,12 @@ Public Class AtomGroupHandler
                         End Function)
     End Function
 
+    Public Shared ReadOnly Property AllAnnotations As FragmentAnnotationHolder()
+        Get
+            Return SingletonList(Of FragmentAnnotationHolder).ForEach.ToArray
+        End Get
+    End Property
+
     Shared Sub New()
         Call SingletonList(Of FragmentAnnotationHolder).Add(From i In alkyl Select New FragmentAnnotationHolder(i.Value))
         Call SingletonList(Of FragmentAnnotationHolder).Add(From i In ketones Select New FragmentAnnotationHolder(i.Value))
@@ -104,7 +110,7 @@ Public Class AtomGroupHandler
         ' a + b
         For Each a In all
             For Each b In From i In all Where i.name <> a.name
-                SingletonList(Of NamedValue(Of (Double, Formula))).Add(a + b)
+                SingletonList(Of FragmentAnnotationHolder).Add(a + b)
             Next
         Next
 
@@ -114,7 +120,7 @@ Public Class AtomGroupHandler
                 mix = a - b
 
                 If mix.exactMass > 0 Then
-                    SingletonList(Of NamedValue(Of (Double, Formula))).Add(mix)
+                    SingletonList(Of FragmentAnnotationHolder).Add(mix)
                 End If
             Next
         Next

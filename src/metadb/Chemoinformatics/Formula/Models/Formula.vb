@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Formula
 
     <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
-    Public Class Formula
+    Public Class Formula : Implements IExactMassProvider
 
         ''' <summary>
         ''' atom_count_tuples
@@ -98,7 +98,7 @@ Namespace Formula
         ''' sum all isotopic mass of the atom elements. 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ExactMass As Double
+        Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
             Get
                 Try
                     Return Aggregate element
