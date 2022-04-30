@@ -95,7 +95,10 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
     ''' <param name="charge">abs charge value</param>
     ''' <param name="ionMode">[1, -1]</param>
     ''' <returns></returns>
-    Public Iterator Function SearchByPrecursorMz(mz As Double, charge As Double, ionMode As Integer, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of PrecursorIonComposition)
+    Public Iterator Function SearchByPrecursorMz(mz As Double,
+                                                 charge As Double,
+                                                 ionMode As Integer,
+                                                 Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of PrecursorIonComposition)
         Dim parents As MzCalculator()
 
         If cancel Is Nothing Then
