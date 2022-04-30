@@ -2,6 +2,7 @@ require(mzkit);
 require(xlsx);
 
 imports ["mzPack", "mzweb", "data"] from "mzkit";
+imports "formula" from "mzkit";
 imports "visual" from "mzplot";
 
 data = read.xlsx("D:/lipids_20220427.xlsx", row.names = 1);
@@ -28,7 +29,10 @@ for(tag in names(data)) {
     ions = ions[which.max(sapply(ions, i -> [i]::Length))];
     ions = [ions]::cluster;
 
-    rep = unionPeaks(ions);
+    rep = ions
+	|> unionPeaks( matrix = TRUE, massDiff = 0.3)
+	|> peakAnnotations(massDiff = 0.3)
+	;
     summary = as.data.frame(ions);
     summary[, "scan"] = make.ROI_names(ions);
     summary[, "precursor_type"] = NULL;

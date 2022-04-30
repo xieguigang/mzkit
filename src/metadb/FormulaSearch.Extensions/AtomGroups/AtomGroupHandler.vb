@@ -84,6 +84,60 @@ Public Class AtomGroupHandler
         Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In amines Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
         Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In alkenyl Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
         Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In others Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
+
+        Call Multiple()
+        Call MixAll()
+    End Sub
+
+    ''' <summary>
+    ''' x2
+    ''' </summary>
+    Private Sub Multiple()
+        Dim all = SingletonList(Of NamedValue(Of (Double, Formula))).ForEach.ToArray
+        Dim x2 As NamedValue(Of (Double, Formula))
+        Dim formula As Formula
+
+        For Each item In all
+            formula = item.Value.Item2 * 2
+            x2 = New NamedValue(Of (Double, Formula)) With {
+                .Name = $"2{item.Name}",
+                .Value = (formula.ExactMass, formula)
+            }
+            SingletonList(Of NamedValue(Of (Double, Formula))).Add(x2)
+        Next
+    End Sub
+
+    Private Sub MixAll()
+        Dim all = SingletonList(Of NamedValue(Of (Double, Formula))).ForEach.ToArray
+        Dim mix As NamedValue(Of (Double, Formula))
+        Dim formula As Formula
+
+        ' a + b
+        For Each a In all
+            For Each b In From i In all Where i.Name <> a.Name
+                formula = a.Value.Item2 + b.Value.Item2
+                mix = New NamedValue(Of (Double, Formula)) With {
+                    .Name = $"{a.Name}+{b.Name}",
+                    .Value = (formula.ExactMass, formula)
+                }
+                SingletonList(Of NamedValue(Of (Double, Formula))).Add(mix)
+            Next
+        Next
+
+        ' a - b
+        For Each a In all
+            For Each b In From i In all Where i.Name <> a.Name
+                formula = a.Value.Item2 - b.Value.Item2
+
+                If formula.ExactMass > 0 Then
+                    mix = New NamedValue(Of (Double, Formula)) With {
+                        .Name = $"{a.Name}-{b.Name}",
+                        .Value = (formula.ExactMass, formula)
+                    }
+                    SingletonList(Of NamedValue(Of (Double, Formula))).Add(mix)
+                End If
+            Next
+        Next
     End Sub
 
     Public Sub Register(name As String, formula As String)

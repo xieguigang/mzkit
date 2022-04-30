@@ -149,26 +149,43 @@ Module data
     End Function
 
     <ExportAPI("unionPeaks")>
-    Public Function unionPeaks(peaks As PeakMs2()) As PeakMs2
-        Return New PeakMs2 With {
-            .file = peaks.Select(Function(i) i.file).Distinct.JoinBy("; "),
-            .intensity = peaks.Sum(Function(i) i.intensity),
-            .mzInto = peaks _
-                .Select(Function(i) i.mzInto) _
-                .IteratesALL _
-                .GroupBy(Function(i) i.mz, offsets:=0.1) _
-                .Select(Function(i)
-                            Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
-                            Dim into = i.Max(Function(x) x.intensity)
+    <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
+    Public Function unionPeaks(peaks As PeakMs2(),
+                               Optional matrix As Boolean = False,
+                               Optional massDiff As Double = 0.1) As Object
 
-                            Return New ms2 With {
-                                .mz = mz,
-                                .intensity = into
-                            }
-                        End Function) _
-                .ToArray,
-            .rt = peaks.Average(Function(i) i.rt)
-        }
+        Dim fragments As ms2() = peaks _
+            .Select(Function(i) i.mzInto) _
+            .IteratesALL _
+            .GroupBy(Function(i) i.mz, offsets:=massDiff) _
+            .Select(Function(i)
+                        Dim mz As Double = i.OrderByDescending(Function(x) x.intensity).First.mz
+                        Dim into = i.Max(Function(x) x.intensity)
+
+                        Return New ms2 With {
+                            .mz = mz,
+                            .intensity = into
+                        }
+                    End Function) _
+            .ToArray
+
+        If matrix Then
+            Return New LibraryMatrix With {
+                .ms2 = fragments,
+                .centroid = True,
+                .parentMz = peaks _
+                    .OrderByDescending(Function(i) i.intensity) _
+                    .First _
+                    .mz
+            }
+        Else
+            Return New PeakMs2 With {
+                .file = peaks.Select(Function(i) i.file).Distinct.JoinBy("; "),
+                .intensity = peaks.Sum(Function(i) i.intensity),
+                .mzInto = fragments,
+                .rt = peaks.Average(Function(i) i.rt)
+            }
+        End If
     End Function
 
     <ExportAPI("nsize")>
@@ -207,6 +224,8 @@ Module data
     <ExportAPI("libraryMatrix")>
     Public Function libraryMatrix(<RRawVectorArgument> matrix As Object,
                                   Optional title$ = "MS Matrix",
+                                  Optional parentMz As Double = -1,
+                                  Optional centroid As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
         Dim MS As ms2()
 
@@ -241,7 +260,9 @@ Module data
 
         Return New LibraryMatrix With {
             .name = title,
-            .ms2 = MS
+            .ms2 = MS,
+            .parentMz = parentMz,
+            .centroid = centroid
         }
     End Function
 

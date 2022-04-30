@@ -1,63 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::5db75a4056d3ed3a5240803fcfe23103, mzkit\Rscript\Library\mzkit\math\Formula.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 402
-    '    Code Lines: 287
-    ' Comment Lines: 52
-    '   Blank Lines: 63
-    '     File Size: 15.77 KB
+' Summaries:
 
 
-    ' Module FormulaTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
-    '               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
-    '               getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase
-    '               parseSMILES, printFormulas, readKCF, readSDF, removeElement
-    '               (+2 Overloads) repeats, ScanFormula, SDF2KCF
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 402
+'    Code Lines: 287
+' Comment Lines: 52
+'   Blank Lines: 63
+'     File Size: 15.77 KB
+
+
+' Module FormulaTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
+'               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
+'               getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase
+'               parseSMILES, printFormulas, readKCF, readSDF, removeElement
+'               (+2 Overloads) repeats, ScanFormula, SDF2KCF
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -138,6 +140,19 @@ Module FormulaTools
 
     Private Function FormulaString(formula As Formula) As String
         Return formula.ExactMass.ToString("F7") & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
+    End Function
+
+    <ExportAPI("peakAnnotations")>
+    Public Function PeakAnnotation(library As LibraryMatrix, Optional massDiff As Double = 0.1) As LibraryMatrix
+        Dim anno As New PeakAnnotation(massDiff)
+        Dim result = anno.RunAnnotation(library.parentMz, library.ms2)
+
+        Return New LibraryMatrix With {
+            .centroid = library.centroid,
+            .ms2 = result.products,
+            .parentMz = library.parentMz,
+            .name = library.name
+        }
     End Function
 
     ''' <summary>

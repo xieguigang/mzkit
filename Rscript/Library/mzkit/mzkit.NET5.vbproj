@@ -147,6 +147,10 @@
 
 
 		<ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+		
+
+
+		<ProjectReference Include="..\..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\metadb\Massbank\massbank.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
