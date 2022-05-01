@@ -18,9 +18,10 @@ bitmap(file = "./LSM(d16-1)+H.png") {
 input[, "annotation"] = NULL;
 ms2 = input
 |> libraryMatrix(, parentMz = 437.3153)
-|> peakAnnotations(massDiff = 0.1, adducts = math::precursor_types(["[M+H]+","[M+H-2H2O]+"]))
+|> peakAnnotations(massDiff = 0.01, adducts = math::precursor_types(["[M+H]+","[M+H-2H2O]+"]))
 ;
 
+print("view of the predicted ion fragment annotations:");
 print(as.data.frame(ms2));
 
 plot(ms2, title = "LSM(d16:1)+H", label.intensity = 0)

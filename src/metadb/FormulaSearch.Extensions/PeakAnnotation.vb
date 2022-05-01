@@ -85,6 +85,7 @@ Public Class PeakAnnotation
         products = MeasureIsotopePeaks(parentMz, products)
         products = MatchElementGroups(parentMz, products)
         products = MeasureProductIsotopePeaks(products)
+        products = (From i In products Order By i.mz).ToArray
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
     End Function
@@ -97,7 +98,14 @@ Public Class PeakAnnotation
         For i As Integer = 0 To products.Length - 2
             Dim large As Double = products(i).mz
             Dim small As Double = products(i + 1).mz
-            Dim label As String = MeasureIsotopePeaks(parentMz:=large, product:=small)
+
+            ' 20220501
+            '
+            '   parent + adduct = product
+            '     |        |        |
+            '   small[isotopic] = large
+            '
+            Dim label As String = MeasureIsotopePeaks(parentMz:=small, product:=large)
 
             If Not label Is Nothing Then
                 If products(i + 1).Annotation.StringEmpty Then
