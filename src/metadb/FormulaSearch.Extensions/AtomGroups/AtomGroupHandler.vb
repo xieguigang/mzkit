@@ -150,7 +150,10 @@ Public Class AtomGroupHandler
         Return New FragmentAnnotationHolder(group)
     End Function
 
-    Public Shared Function GetByMass(mass As Double, Optional da As Double = 0.1) As FragmentAnnotationHolder
+    Public Shared Function GetByMass(mass As Double,
+                                     Optional da As Double = 0.1,
+                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
+
         For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach
             If stdNum.Abs(group.exactMass - mass) <= da Then
                 Return group
