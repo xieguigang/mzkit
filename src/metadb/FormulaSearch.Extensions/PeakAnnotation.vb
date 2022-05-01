@@ -84,8 +84,37 @@ Public Class PeakAnnotation
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
         products = MeasureIsotopePeaks(parentMz, products)
         products = MatchElementGroups(parentMz, products)
+        products = MeasureProductIsotopePeaks(products)
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
+    End Function
+
+    Private Function MeasureProductIsotopePeaks(products As ms2()) As ms2()
+        products = products _
+            .OrderByDescending(Function(i) i.mz) _
+            .ToArray
+
+        For i As Integer = 0 To products.Length - 2
+            Dim large As Double = products(i).mz
+            Dim small As Double = products(i + 1).mz
+            Dim label As String = MeasureIsotopePeaks(parentMz:=large, product:=small)
+
+            If Not label Is Nothing Then
+                If products(i + 1).Annotation.StringEmpty Then
+                    label = $"{products(i + 1).mz.ToString("F3")} {label}"
+                Else
+                    label = $"{products(i + 1).Annotation} {label}"
+                End If
+
+                If products(i).Annotation.StringEmpty Then
+                    products(i).Annotation = label
+                ElseIf isotopeFirst Then
+                    products(i).Annotation = label
+                End If
+            End If
+        Next
+
+        Return products
     End Function
 
     ''' <summary>
