@@ -59,6 +59,7 @@
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
@@ -166,10 +167,11 @@ Module FormulaTools
     <ExportAPI("peakAnnotations")>
     Public Function PeakAnnotation(library As LibraryMatrix,
                                    Optional massDiff As Double = 0.1,
-                                   Optional isotopeFirst As Boolean = True) As LibraryMatrix
+                                   Optional isotopeFirst As Boolean = True,
+                                   Optional adducts As MzCalculator() = Nothing) As LibraryMatrix
 
-        Dim anno As New PeakAnnotation(massDiff, isotopeFirst)
-        Dim result = anno.RunAnnotation(library.parentMz, library.ms2)
+        Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
+        Dim result As Annotation = anno.RunAnnotation(library.parentMz, library.ms2)
 
         Return New LibraryMatrix With {
             .centroid = library.centroid,

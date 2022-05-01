@@ -162,7 +162,13 @@ Public Class PeakAnnotation
                 element.Annotation = $"{element.Annotation} ({group.name})"
             End If
         Else
-            group = AtomGroupHandler.FindDelta(parentMz, element.mz, delta, da:=massDelta)
+            group = AtomGroupHandler.FindDelta(
+                mz1:=parentMz,
+                mz2:=element.mz,
+                delta:=delta,
+                da:=massDelta,
+                adducts:=adducts
+            )
 
             If Not group Is Nothing Then
                 Dim deltaStr As String

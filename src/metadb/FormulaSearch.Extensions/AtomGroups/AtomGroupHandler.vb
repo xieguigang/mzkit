@@ -160,7 +160,7 @@ Public Class AtomGroupHandler
             ElseIf Not adducts Is Nothing Then
                 ' test on adducts
                 For Each type As MzCalculator In adducts
-                    Dim mz As Double = type.CalcMZ(mass)
+                    Dim mz As Double = type.CalcMZ(group.exactMass)
 
                     If stdNum.Abs(mz - mass) <= da Then
                         Return New FragmentAnnotationHolder(MassGroup.CreateAdducts(group, adducts:=type))
@@ -174,7 +174,8 @@ Public Class AtomGroupHandler
 
     Public Shared Function FindDelta(mz1 As Double, mz2 As Double,
                                      Optional ByRef delta As Integer = 0,
-                                     Optional da As Double = 0.1) As FragmentAnnotationHolder
+                                     Optional da As Double = 0.1,
+                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
         Dim d As Double = mz1 - mz2
         Dim dmass As Double = stdNum.Abs(d)
 
@@ -184,7 +185,7 @@ Public Class AtomGroupHandler
             delta = stdNum.Sign(d)
         End If
 
-        Dim group As FragmentAnnotationHolder = GetByMass(dmass, da)
+        Dim group As FragmentAnnotationHolder = GetByMass(dmass, da, adducts)
         Return group
     End Function
 End Class

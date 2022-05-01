@@ -18,7 +18,7 @@ bitmap(file = "./LSM(d16-1)+H.png") {
 input[, "annotation"] = NULL;
 ms2 = input
 |> libraryMatrix(, parentMz = 437.3153)
-|> peakAnnotations(massDiff = 0.1)
+|> peakAnnotations(massDiff = 0.1, adducts = math::precursor_types(["[M+H]+"]))
 ;
 
 print(as.data.frame(ms2));
