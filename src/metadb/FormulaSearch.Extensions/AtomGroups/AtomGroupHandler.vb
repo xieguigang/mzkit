@@ -96,6 +96,10 @@ Public Class AtomGroupHandler
         Call MixAll(SingletonList(Of FragmentAnnotationHolder).ForEach.ToArray)
     End Sub
 
+    Public Shared Sub Clear()
+        Call SingletonList(Of FragmentAnnotationHolder).Clear()
+    End Sub
+
     ''' <summary>
     ''' x2
     ''' </summary>
@@ -129,6 +133,10 @@ Public Class AtomGroupHandler
 
     Public Shared Sub Register(annotations As IEnumerable(Of FragmentAnnotationHolder))
         Dim list As FragmentAnnotationHolder() = annotations.ToArray
+
+        For Each [single] As FragmentAnnotationHolder In list
+            Call SingletonList(Of FragmentAnnotationHolder).Add([single])
+        Next
 
         Call Multiple(list)
         Call MixAll(list)

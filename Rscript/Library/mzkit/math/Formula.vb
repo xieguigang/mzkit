@@ -144,7 +144,10 @@ Module FormulaTools
     End Function
 
     <ExportAPI("registerAnnotations")>
-    Public Function registerAnnotations(annotation As RDataframe, Optional env As Environment = Nothing) As Object
+    Public Function registerAnnotations(annotation As RDataframe,
+                                        Optional debug As Boolean = True,
+                                        Optional env As Environment = Nothing) As Object
+
         Dim items = annotation.forEachRow({"annotation", "formula"}).ToArray
         Dim list As FragmentAnnotationHolder() = items _
             .Select(Function(tuple)
@@ -158,6 +161,10 @@ Module FormulaTools
                         End If
                     End Function) _
             .ToArray
+
+        If debug Then
+            Call AtomGroupHandler.Clear()
+        End If
 
         Call AtomGroupHandler.Register(annotations:=list)
 
