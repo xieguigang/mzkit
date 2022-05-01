@@ -59,6 +59,7 @@
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
@@ -142,10 +143,42 @@ Module FormulaTools
         Return formula.ExactMass.ToString("F7") & $" ({formula.CountsByElement.Select(Function(e) $"{e.Key}:{e.Value}").JoinBy(", ")})"
     End Function
 
+    <ExportAPI("registerAnnotations")>
+    Public Function registerAnnotations(annotation As RDataframe,
+                                        Optional debug As Boolean = True,
+                                        Optional env As Environment = Nothing) As Object
+
+        Dim items = annotation.forEachRow({"annotation", "formula"}).ToArray
+        Dim list As FragmentAnnotationHolder() = items _
+            .Select(Function(tuple)
+                        Dim name As String = any.ToString(tuple(Scan0))
+                        Dim formula As String = any.ToString(tuple(1))
+
+                        If formula.IsNumeric Then
+                            Return AtomGroupHandler.CreateModel(name, Val(formula))
+                        Else
+                            Return AtomGroupHandler.CreateModel(name, formula)
+                        End If
+                    End Function) _
+            .ToArray
+
+        If debug Then
+            Call AtomGroupHandler.Clear()
+        End If
+
+        Call AtomGroupHandler.Register(annotations:=list)
+
+        Return Nothing
+    End Function
+
     <ExportAPI("peakAnnotations")>
-    Public Function PeakAnnotation(library As LibraryMatrix, Optional massDiff As Double = 0.1) As LibraryMatrix
-        Dim anno As New PeakAnnotation(massDiff)
-        Dim result = anno.RunAnnotation(library.parentMz, library.ms2)
+    Public Function PeakAnnotation(library As LibraryMatrix,
+                                   Optional massDiff As Double = 0.1,
+                                   Optional isotopeFirst As Boolean = True,
+                                   Optional adducts As MzCalculator() = Nothing) As LibraryMatrix
+
+        Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
+        Dim result As Annotation = anno.RunAnnotation(library.parentMz, library.ms2)
 
         Return New LibraryMatrix With {
             .centroid = library.centroid,
