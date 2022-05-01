@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports stdNum = System.Math
@@ -60,6 +61,7 @@ Public Class PeakAnnotation
 
     ReadOnly massDelta As Double
     ReadOnly isotopeFirst As Boolean = True
+    ReadOnly adducts As MzCalculator()
 
     ''' <summary>
     ''' 
@@ -67,9 +69,10 @@ Public Class PeakAnnotation
     ''' <param name="massDelta">
     ''' mass tolerance error in delta dalton
     ''' </param>
-    Sub New(massDelta As Double, isotopeFirst As Boolean)
+    Sub New(massDelta As Double, isotopeFirst As Boolean, Optional adducts As MzCalculator() = Nothing)
         Me.massDelta = massDelta
         Me.isotopeFirst = isotopeFirst
+        Me.adducts = adducts
     End Sub
 
     ''' <summary>
@@ -79,8 +82,8 @@ Public Class PeakAnnotation
     ''' <param name="products"></param>
     ''' <returns></returns>
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
-        products = MeasureIsotopePeaks(parentMz, products, isotopeFirst)
-        products = MatchElementGroups(parentMz, products, massDelta)
+        products = MeasureIsotopePeaks(parentMz, products)
+        products = MatchElementGroups(parentMz, products)
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
     End Function
@@ -98,7 +101,7 @@ Public Class PeakAnnotation
         Return New FormulaComposition(counts)
     End Function
 
-    Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2(), isotopeFirst As Boolean) As ms2()
+    Private Function MeasureIsotopePeaks(parentMz#, products As ms2()) As ms2()
         For i As Integer = 0 To products.Length - 1
             Dim tag As String = MeasureIsotopePeaks(parentMz, products(i).mz)
 
@@ -114,7 +117,7 @@ Public Class PeakAnnotation
         Return products
     End Function
 
-    Private Shared Function MeasureIsotopePeaks(parentMz#, product As Double) As String
+    Private Function MeasureIsotopePeaks(parentMz#, product As Double) As String
         Dim delta As Double = (product - parentMz) / Element.H
 
         If FormulaSearch.PPM(product, parentMz) <= 30 Then
@@ -140,16 +143,16 @@ Public Class PeakAnnotation
         Return Nothing
     End Function
 
-    Private Shared Function MatchElementGroups(parentMz#, products As ms2(), massDelta As Double) As ms2()
+    Private Function MatchElementGroups(parentMz#, products As ms2()) As ms2()
         For Each element As ms2 In products
-            Call FragmentAnnotation(element, parentMz, massDelta)
+            Call FragmentAnnotation(element, parentMz)
         Next
 
         Return products
     End Function
 
-    Private Shared Sub FragmentAnnotation(element As ms2, parentMz#, massDelta As Double)
-        Dim group As FragmentAnnotationHolder = AtomGroupHandler.GetByMass(element.mz, massDelta)
+    Private Sub FragmentAnnotation(element As ms2, parentMz#)
+        Dim group As FragmentAnnotationHolder = AtomGroupHandler.GetByMass(element.mz, massDelta, adducts)
         Dim delta As Integer = 0
 
         If Not group Is Nothing Then

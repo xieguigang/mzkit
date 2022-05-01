@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Reflection
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.My
@@ -153,6 +154,15 @@ Public Class AtomGroupHandler
         For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach
             If stdNum.Abs(group.exactMass - mass) <= da Then
                 Return group
+            ElseIf Not adducts Is Nothing Then
+                ' test on adducts
+                For Each type As MzCalculator In adducts
+                    Dim mz As Double = type.CalcMZ(mass)
+
+                    If stdNum.Abs(mz - mass) <= da Then
+                        Return New FragmentAnnotationHolder(MassGroup.CreateAdducts(group, adducts:=type))
+                    End If
+                Next
             End If
         Next
 
