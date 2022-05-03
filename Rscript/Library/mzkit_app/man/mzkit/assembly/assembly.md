@@ -1,4 +1,4 @@
-﻿# assembly
+# assembly
 
 The mass spectrum assembly file read/write library module.
 

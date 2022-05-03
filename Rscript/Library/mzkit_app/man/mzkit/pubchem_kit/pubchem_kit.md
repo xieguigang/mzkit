@@ -1,4 +1,4 @@
-﻿# pubchem_kit
+# pubchem_kit
 
 
 

@@ -1,4 +1,4 @@
-﻿# visualPlots
+# visualPlots
 
 Visual plot of the quantification data
 

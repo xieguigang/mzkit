@@ -1,4 +1,4 @@
-﻿# mzweb
+# mzweb
 
 biodeep mzweb data viewer raw data file helper
 

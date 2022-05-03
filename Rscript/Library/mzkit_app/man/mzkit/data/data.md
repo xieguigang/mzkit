@@ -1,4 +1,4 @@
-﻿# data
+# data
 
 m/z data operator module
 

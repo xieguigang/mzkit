@@ -1,4 +1,4 @@
-﻿# MRMLinear
+# MRMLinear
 
 MRM Targeted Metabolomics
 
