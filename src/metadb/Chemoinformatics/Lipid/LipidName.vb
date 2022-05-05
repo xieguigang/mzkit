@@ -6,8 +6,18 @@ Public Class LipidName
     Public Property className As String
     Public Property chains As Chain()
 
+    Public ReadOnly Property hasStructureInfo As Boolean
+        Get
+            Return chains.All(Function(c) c.hasStructureInfo)
+        End Get
+    End Property
+
     Public Overrides Function ToString() As String
-        Return ToSystematicName()
+        If chains.Length = 1 AndAlso Not chains(Scan0).hasStructureInfo Then
+            Return ToOverviewName()
+        Else
+            Return ToSystematicName()
+        End If
     End Function
 
     Public Function ToSystematicName() As String
@@ -15,7 +25,10 @@ Public Class LipidName
     End Function
 
     Public Function ToOverviewName() As String
+        Dim totalCarbons As Integer = Aggregate c As Chain In chains Into Sum(c.carbons)
+        Dim totalDBes As Integer = Aggregate c As Chain In chains Into Sum(c.doubleBonds)
 
+        Return $"{className}({totalCarbons}:{totalDBes})"
     End Function
 
     ''' <summary>
@@ -50,7 +63,10 @@ Public Class LipidName
     End Function
 
     Private Shared Iterator Function ChainParser(components As String) As IEnumerable(Of Chain)
+        Dim parts As String() = components.StringSplit("[/_]")
 
+        For Each components In parts
+            Yield Chain.ParseName(components)
+        Next
     End Function
-
 End Class
