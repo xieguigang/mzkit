@@ -84,7 +84,15 @@ Module nameTest
     End Sub
 
     Sub parseLipids()
-        Dim name As LipidName = LipidName.ParseLipidName("LysoPC(20:5)")
+        Dim print = Sub(str As String)
+                        Dim name As LipidName = LipidName.ParseLipidName(str)
+
+                        Call Console.WriteLine(name.ToString)
+                        Call Console.WriteLine(name.GetJson)
+                    End Sub
+
+        Call print("LysoPC(20:5)")
+        Call print("SM(d19:1/16:0)")
 
         Pause()
     End Sub
