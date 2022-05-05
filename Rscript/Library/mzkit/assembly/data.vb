@@ -84,7 +84,17 @@ Module data
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
     End Sub
+
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
+        table.columns("intensity") = TIC.Select(Function(t) t.Intensity).ToArray
+
+        Return table
+    End Function
 
     Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
         Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}

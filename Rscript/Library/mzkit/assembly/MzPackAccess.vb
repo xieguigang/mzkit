@@ -71,6 +71,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports stdNum = System.Math
 
+''' <summary>
+''' raw data accessor for the mzpack data object
+''' </summary>
 <Package("mzPack")>
 Module MzPackAccess
 
