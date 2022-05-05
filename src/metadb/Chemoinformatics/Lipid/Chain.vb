@@ -98,9 +98,16 @@ Public Class BondPosition
         If Not (tokens.Length = 1 AndAlso tokens(Scan0) = "") Then
             For Each token As String In tokens
                 Dim index = token.Match("\(\d+[a-zA-Z]\)")
-                token = token.Replace(index, "")
+                Dim t As String = index.StringReplace("\d+", "")
 
-                Yield New Group
+                token = token.Replace(index, "")
+                index = index.Match("\d+")
+
+                Yield New Group With {
+                    .groupName = token,
+                    .index = Integer.Parse(index),
+                    .[structure] = t
+                }
             Next
         End If
 
