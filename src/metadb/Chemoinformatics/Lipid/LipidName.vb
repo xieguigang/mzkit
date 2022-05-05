@@ -1,4 +1,7 @@
-﻿Public Class LipidName
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+
+Public Class LipidName
 
     Public Property className As String
     Public Property chains As Chain()
@@ -15,7 +18,12 @@
 
     End Function
 
-    Public Shared Function ParseName(name As String) As LipidName
+    ''' <summary>
+    ''' parse lipid name components
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <returns></returns>
+    Public Shared Function ParseLipidName(name As String) As LipidName
 
     End Function
 

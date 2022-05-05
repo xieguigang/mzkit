@@ -60,6 +60,7 @@ Module nameTest
     Dim parser As New GlycosylNameSolver
 
     Sub Main()
+        Call parseLipids()
 
         Call echo(" 3-o-[6-o-(malonyl)-beta-d-glucopyranoside]-7-o-[6-o-(trans-p-coumaryl)-beta-d-glucopyranoside]-3'-o-[6-o-(trans-4-o-(6-o-(trans-4-o-(beta-d-glucopyranosyl)-p-coumaryl)-beta-d-glucopyranoside]")
 
@@ -78,6 +79,12 @@ Module nameTest
         Call echo("Cyanidin 3-(6'',6'''-di-p-coumarylsophoroside)-5-(6-malonylglucoside)")
         Call echo("Cyanidin 3-O-[2''-O-(xylosyl)-6''-O-(p-coumaroyl) glucoside] 5-O-malonylglucoside")
         Call echo("Petunidin 3,5-di-O-beta-D-glucoside")
+
+        Pause()
+    End Sub
+
+    Sub parseLipids()
+        Dim name As LipidName = LipidName.ParseLipidName("LysoPC(20:5)")
 
         Pause()
     End Sub
