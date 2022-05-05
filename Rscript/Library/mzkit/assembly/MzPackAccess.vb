@@ -110,6 +110,30 @@ Module MzPackAccess
         Return pipeline.CreateFromPopulator(stream)
     End Function
 
+    <ExportAPI("mzwork")>
+    <RApiReturn(GetType(WorkspaceAccess))>
+    Public Function open_mzwork(file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        Dim println As Action(Of Object) = env.WriteLineHandler
+
+        Return New WorkspaceAccess(
+            file:=buffer.TryCast(Of Stream),
+            msg:=Sub(line)
+                     Call println(line)
+                 End Sub)
+    End Function
+
+    <ExportAPI("readFileCache")>
+    <RApiReturn(GetType(mzPack))>
+    Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String) As Object
+        Return mzwork.GetByFileName(fileName).ToArray
+    End Function
+
     <ExportAPI("mzpack")>
     <RApiReturn(GetType(mzPackReader))>
     Public Function open_mzpack(file As Object, Optional env As Environment = Nothing) As Object

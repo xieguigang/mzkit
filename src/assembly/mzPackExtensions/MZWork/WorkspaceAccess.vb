@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 
@@ -13,16 +14,14 @@ Namespace MZWork
         ReadOnly cache As New Dictionary(Of String, NamedValue(Of Raw)())
         ReadOnly println As Action(Of String) = AddressOf Console.WriteLine
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(zip As String, Optional msg As Action(Of String) = Nothing)
-            Me.zip = New ZipArchive(
-                stream:=zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
-                mode:=ZipArchiveMode.Read
-            )
-            Me.LoadIndexInternal()
+            Call Me.New(zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True), msg)
+        End Sub
 
-            If Not msg Is Nothing Then
-                Me.println = msg
-            End If
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(file As Stream, Optional msg As Action(Of String) = Nothing)
+            Call Me.New(New ZipArchive(stream:=file, mode:=ZipArchiveMode.Read), msg)
         End Sub
 
         Sub New(zip As ZipArchive, Optional msg As Action(Of String) = Nothing)
@@ -54,6 +53,7 @@ Namespace MZWork
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ListAllFileNames() As String()
             Return cache.Keys.ToArray
         End Function
@@ -66,6 +66,7 @@ Namespace MZWork
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Iterator Function EnumerateBlocks() As IEnumerable(Of NamedValue(Of Raw)())
             For Each item In cache.Values
                 Yield item
