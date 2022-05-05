@@ -87,14 +87,18 @@ Public Class BondPosition
 
         components = components.Match("\(.*\)")
 
-        For Each token As String In tokens
-            Yield New Group
-        Next
+        If Not (tokens.Length = 1 AndAlso tokens(Scan0) = "") Then
+            For Each token As String In tokens
+                Yield New Group
+            Next
+        End If
 
-        tokens = components.Split(","c)
+        If components <> "" Then
+            tokens = components.GetStackValue("(", ")").Split(","c)
 
-        For Each token As String In tokens
-            Yield New BondPosition
-        Next
+            For Each token As String In tokens
+                Yield New BondPosition
+            Next
+        End If
     End Function
 End Class
