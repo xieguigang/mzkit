@@ -3,6 +3,7 @@
 
 
 + [as.chromatogram](chromatogram/as.chromatogram.1) convert dataset to chromatography dataset
++ [toChromatogram](chromatogram/toChromatogram.1) 
 + [add](chromatogram/add.1) 
 + [subset](chromatogram/subset.1) 
 + [labels](chromatogram/labels.1) 

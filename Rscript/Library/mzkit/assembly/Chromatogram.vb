@@ -153,6 +153,15 @@ Module ChromatogramTools
         Return chr
     End Function
 
+    <ExportAPI("toChromatogram")>
+    Public Function toChromatogram(ticks As ChromatogramTick()) As Chromatogram
+        Return New Chromatogram With {
+            .scan_time = ticks.Select(Function(t) t.Time).ToArray,
+            .TIC = ticks.Select(Function(t) t.Intensity).ToArray,
+            .BPC = .TIC
+        }
+    End Function
+
     <ExportAPI("add")>
     Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
         Call overlaps.overlaps.Add(name, data)
