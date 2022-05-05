@@ -98,7 +98,7 @@ Public Class BondPosition
         If Not (tokens.Length = 1 AndAlso tokens(Scan0) = "") Then
             For Each token As String In tokens
                 Dim index = token.Match("\(\d+[a-zA-Z]\)")
-                Dim t As String = index.StringReplace("\d+", "")
+                Dim t As String = index.StringReplace("\d+", "").Trim("("c, ")"c)
 
                 token = token.Replace(index, "")
                 index = index.Match("\d+")
