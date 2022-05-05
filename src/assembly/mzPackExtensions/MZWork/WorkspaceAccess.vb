@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 
 Namespace MZWork
 
@@ -8,21 +10,103 @@ Namespace MZWork
         Private disposedValue As Boolean
 
         ReadOnly zip As ZipArchive
+        ReadOnly cache As New Dictionary(Of String, NamedValue(Of Raw)())
+        ReadOnly println As Action(Of String) = AddressOf Console.WriteLine
 
-        Sub New(zip As String)
-            Me.zip = New ZipArchive(zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True), ZipArchiveMode.Read)
+        Sub New(zip As String, Optional msg As Action(Of String) = Nothing)
+            Me.zip = New ZipArchive(
+                stream:=zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
+                mode:=ZipArchiveMode.Read
+            )
+            Me.LoadIndexInternal()
+
+            If Not msg Is Nothing Then
+                Me.println = msg
+            End If
         End Sub
 
-        Sub New(zip As ZipArchive)
+        Sub New(zip As ZipArchive, Optional msg As Action(Of String) = Nothing)
             Me.zip = zip
+            Me.LoadIndexInternal()
+
+            If Not msg Is Nothing Then
+                Me.println = msg
+            End If
+        End Sub
+
+        Private Sub LoadIndexInternal()
+            Dim filelist As ZipArchiveEntry() = zip.Entries _
+                .Where(Function(f) f.FullName.StartsWith("meta/")) _
+                .ToArray
+            Dim rawList As New List(Of NamedValue(Of Raw))
+
+            For Each metafile As ZipArchiveEntry In filelist
+                Dim key As String = metafile.FullName.Replace("meta/", "").BaseName
+                Dim content As Raw() = MsgPackSerializer.Deserialize(Of Raw())(metafile.Open)
+
+                Call rawList.AddRange(From cache As Raw
+                                      In content
+                                      Select New NamedValue(Of Raw)(key, cache))
+            Next
+
+            For Each group In rawList.GroupBy(Function(file) file.Value.source)
+                Call cache.Add(group.Key, group.ToArray)
+            Next
         End Sub
 
         Public Function ListAllFileNames() As String()
-
+            Return cache.Keys.ToArray
         End Function
 
-        Public Function GetByFileName(fileName As String) As mzPack
+        Public Function GetByFileName(fileName As String) As IEnumerable(Of mzPack)
+            If Not cache.ContainsKey(fileName) Then
+                Return Nothing
+            Else
+                Return GetByFileName(cache(fileName))
+            End If
+        End Function
 
+        Friend Iterator Function EnumerateBlocks() As IEnumerable(Of NamedValue(Of Raw)())
+            For Each item In cache.Values
+                Yield item
+            Next
+        End Function
+
+        Friend Iterator Function ReleaseCache(raws As NamedValue(Of Raw)()) As IEnumerable(Of NamedValue(Of Raw))
+            For Each cache As NamedValue(Of Raw) In raws
+                Dim meta As Raw = cache.Value
+                Dim tempfile As String = getTempref(meta)
+
+                If tempfile.FileLength <= 0 Then
+                    Dim zipfile As ZipArchiveEntry = zip.Entries _
+                        .Where(Function(f)
+                                   Return f.FullName = $"mzpack/{meta.cache}"
+                               End Function) _
+                        .First
+
+                    Call println($"unpack raw data [{cache.Name}/{tempfile.FileName}]...")
+                    Call zipfile.Open.FlushStream(tempfile)
+                End If
+
+                ' save mzpack to temp and then modify cache path
+                meta = New Raw(meta)
+                meta.cache = tempfile.Replace("\", "/")
+
+                Yield New NamedValue(Of Raw) With {
+                    .Name = cache.Name,
+                    .Description = cache.Description,
+                    .Value = meta
+                }
+            Next
+        End Function
+
+        Private Iterator Function GetByFileName(raws As NamedValue(Of Raw)()) As IEnumerable(Of mzPack)
+            For Each cache As NamedValue(Of Raw) In ReleaseCache(raws)
+                Dim meta As Raw = cache.Value
+                Dim tempfile As String = meta.cache
+
+                Yield mzPack.Read(tempfile, ignoreThumbnail:=True)
+            Next
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
