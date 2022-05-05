@@ -21,7 +21,10 @@ Public Class LipidName
     End Function
 
     Public Function ToSystematicName() As String
-
+        Return $"{className}({(From chain As Chain
+                               In chains
+                               Let str = chain.ToString
+                               Select str).JoinBy("_")})"
     End Function
 
     Public Function ToOverviewName() As String

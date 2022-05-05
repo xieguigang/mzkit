@@ -14,7 +14,17 @@
 
     Public Overrides Function ToString() As String
         If hasStructureInfo Then
-            Throw New NotImplementedException
+            Dim name As String = $"{tag}{carbons}:{doubleBonds}"
+
+            If Not position.IsNullOrEmpty Then
+                name = name & $"({position.JoinBy(",")})"
+            End If
+
+            If Not groups.IsNullOrEmpty Then
+                name = name & "-" & groups.JoinBy("-")
+            End If
+
+            Return name
         Else
             Return $"{carbons}:{doubleBonds}"
         End If
@@ -72,5 +82,19 @@ Public Class BondPosition
             Return
         End If
 
+        Dim groupInfo As String = components.StringReplace("\(.*\)", "")
+        Dim tokens As String() = groupInfo.Split("-"c)
+
+        components = components.Match("\(.*\)")
+
+        For Each token As String In tokens
+            Yield New Group
+        Next
+
+        tokens = components.Split(","c)
+
+        For Each token As String In tokens
+            Yield New BondPosition
+        Next
     End Function
 End Class
