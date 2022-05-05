@@ -123,8 +123,19 @@ Module MzPackAccess
     End Function
 
     <ExportAPI("ls")>
-    Public Function index(mzpack As mzPackReader) As String()
-        Return mzpack.EnumerateIndex.ToArray
+    <RApiReturn(GetType(String))>
+    Public Function index(mzpack As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf mzpack Is mzPackReader Then
+            Return DirectCast(mzpack, mzPackReader) _
+                .EnumerateIndex _
+                .ToArray
+        ElseIf TypeOf mzpack Is WorkspaceAccess Then
+            Return DirectCast(mzpack, WorkspaceAccess).ListAllFileNames
+        Else
+            Return Message.InCompatibleType(GetType(mzPackReader), mzpack.GetType, env)
+        End If
     End Function
 
     <ExportAPI("metadata")>
