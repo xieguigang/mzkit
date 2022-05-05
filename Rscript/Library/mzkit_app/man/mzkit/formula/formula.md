@@ -2,6 +2,8 @@
 
 The chemical formulae toolkit
 
++ [registerAnnotations](formula/registerAnnotations.1) 
++ [peakAnnotations](formula/peakAnnotations.1) 
 + [candidates](formula/candidates.1) find all of the candidate chemical formulas by a 
 + [eval](formula/eval.1) evaluate exact mass for the given formula strings.
 + [scan](formula/scan.1) Get atom composition from a formula string

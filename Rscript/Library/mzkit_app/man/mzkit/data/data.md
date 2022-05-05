@@ -2,6 +2,7 @@
 
 m/z data operator module
 
++ [unionPeaks](data/unionPeaks.1) 
 + [nsize](data/nsize.1) 
 + [peakMs2](data/peakMs2.1) 
 + [libraryMatrix](data/libraryMatrix.1) Create a library matrix object
