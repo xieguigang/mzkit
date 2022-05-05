@@ -58,11 +58,11 @@ Namespace MZWork
             Return cache.Keys.ToArray
         End Function
 
-        Public Function GetByFileName(fileName As String) As IEnumerable(Of mzPack)
+        Public Function GetByFileName(fileName As String, Optional verbose As Boolean = False) As IEnumerable(Of mzPack)
             If Not cache.ContainsKey(fileName) Then
                 Return Nothing
             Else
-                Return GetByFileName(cache(fileName))
+                Return GetByFileName(cache(fileName), verbose)
             End If
         End Function
 
@@ -101,12 +101,16 @@ Namespace MZWork
             Next
         End Function
 
-        Private Iterator Function GetByFileName(raws As NamedValue(Of Raw)()) As IEnumerable(Of mzPack)
+        Private Iterator Function GetByFileName(raws As NamedValue(Of Raw)(), verbose As Boolean) As IEnumerable(Of mzPack)
             For Each cache As NamedValue(Of Raw) In ReleaseCache(raws)
                 Dim meta As Raw = cache.Value
                 Dim tempfile As String = meta.cache
 
-                Yield mzPack.Read(tempfile, ignoreThumbnail:=True)
+                Yield mzPack.Read(
+                    filepath:=tempfile,
+                    ignoreThumbnail:=True,
+                    verbose:=verbose
+                )
             Next
         End Function
 

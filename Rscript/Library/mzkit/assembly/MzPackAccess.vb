@@ -130,8 +130,11 @@ Module MzPackAccess
 
     <ExportAPI("readFileCache")>
     <RApiReturn(GetType(mzPack))>
-    Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String) As Object
-        Return mzwork.GetByFileName(fileName).ToArray
+    Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String, Optional env As Environment = Nothing) As Object
+        Dim verbose As Boolean = env.globalEnvironment.options.verbose
+        Dim cache = mzwork.GetByFileName(fileName, verbose).ToArray
+
+        Return cache
     End Function
 
     <ExportAPI("mzpack")>
