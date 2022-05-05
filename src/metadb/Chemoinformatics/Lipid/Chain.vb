@@ -66,6 +66,10 @@ Public Class Group : Inherits BondPosition
 
     Public Property groupName As String
 
+    Public Overrides Function ToString() As String
+        Return $"{groupName}({index}{[structure]})"
+    End Function
+
 End Class
 
 Public Class BondPosition
@@ -75,7 +79,11 @@ Public Class BondPosition
     ''' E/Z
     ''' </summary>
     ''' <returns></returns>
-    Public Property [structure] As Char
+    Public Property [structure] As String
+
+    Public Overrides Function ToString() As String
+        Return $"{index}{[structure]}"
+    End Function
 
     Friend Shared Iterator Function ParseStructure(components As String) As IEnumerable(Of BondPosition)
         If components = "" Then
@@ -97,7 +105,13 @@ Public Class BondPosition
             tokens = components.GetStackValue("(", ")").Split(","c)
 
             For Each token As String In tokens
-                Yield New BondPosition
+                Dim index As String = token.Match("\d+")
+                Dim t As String = token.StringReplace("\d+", "")
+
+                Yield New BondPosition With {
+                    .index = Integer.Parse(index),
+                    .[structure] = t
+                }
             Next
         End If
     End Function
