@@ -31,7 +31,7 @@
     End Function
 
     Friend Shared Function ParseName(components As String) As Chain
-        Dim overview As String() = components.Match(".+[:].+").Split(":"c)
+        Dim overview As String() = components.Match(".+[:]\d+").Split(":"c)
         Dim carbons As Integer
         Dim tag As String = Nothing
 

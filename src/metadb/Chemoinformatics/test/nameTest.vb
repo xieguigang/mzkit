@@ -91,8 +91,9 @@ Module nameTest
                         Call Console.WriteLine(name.GetJson)
                     End Sub
 
-        Call print("LysoPC(20:5)")
-        Call print("SM(d19:1/16:0)")
+        ' Call print("LysoPC(20:5)")
+        ' Call print("SM(d19:1/16:0)")
+        Call print("LysoPC(20:5(5Z,8Z,11Z,14Z,17Z))")
 
         Pause()
     End Sub
