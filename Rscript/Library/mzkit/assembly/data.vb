@@ -56,6 +56,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -333,17 +334,21 @@ Module data
 
         If ms1_scans.isError Then
             If TypeOf ms1 Is mzPack Then
-                Return DirectCast(ms1, mzPack).MS _
-                    .Select(Function(scan)
-                                Dim i As Double = scan.GetIntensity(mz, mzdiff)
-                                Dim tick As New ChromatogramTick With {
-                                    .Intensity = i,
-                                    .Time = scan.rt
-                                }
+                Return DirectCast(ms1, mzPack).rawXIC(mz, mzdiff)
+            ElseIf TypeOf ms1 Is mzPack() Then
+                Dim all = DirectCast(ms1, mzPack())
 
-                                Return tick
-                            End Function) _
-                    .ToArray
+                If all.Length = 1 Then
+                    Return all(Scan0).rawXIC(mz, mzdiff)
+                Else
+                    Dim list As New list With {.slots = New Dictionary(Of String, Object)}
+
+                    For i As Integer = 0 To all.Length - 1
+                        Call list.add($"#{i + 1}", all(i).rawXIC(mz, mzdiff))
+                    Next
+
+                    Return list
+                End If
             Else
                 Return ms1_scans.getError
             End If
@@ -358,6 +363,21 @@ Module data
             .ToArray
 
         Return REnv.TryCastGenericArray(xicFilter, env)
+    End Function
+
+    <Extension>
+    Private Function rawXIC(ms1 As mzPack, mz As Double, mzdiff As Tolerance) As ChromatogramTick()
+        Return ms1.MS _
+            .Select(Function(scan)
+                        Dim i As Double = scan.GetIntensity(mz, mzdiff)
+                        Dim tick As New ChromatogramTick With {
+                            .Intensity = i,
+                            .Time = scan.rt
+                        }
+
+                        Return tick
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>
