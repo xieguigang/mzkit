@@ -145,6 +145,10 @@ Module MetaDbXref
         Dim t As String() = g.Select(Function(i) i.structure).ToArray
         Dim name As String() = g.Select(Function(i) i.groupName).ToArray
 
+        If g.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Return New dataframe With {
             .columns = New Dictionary(Of String, Array) From {
                 {"index", index},
@@ -158,6 +162,10 @@ Module MetaDbXref
     Private Function boundList(b As BondPosition()) As dataframe
         Dim index As Integer() = b.Select(Function(i) i.index).ToArray
         Dim t As String() = b.Select(Function(i) i.structure).ToArray
+
+        If b.IsNullOrEmpty Then
+            Return Nothing
+        End If
 
         Return New dataframe With {
             .columns = New Dictionary(Of String, Array) From {
