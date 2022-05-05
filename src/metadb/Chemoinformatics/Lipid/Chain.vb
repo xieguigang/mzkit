@@ -90,13 +90,16 @@ Public Class BondPosition
             Return
         End If
 
-        Dim groupInfo As String = components.StringReplace("\(.*\)", "")
+        Dim groupInfo As String = components.GetTagValue("-", failureNoName:=False).Value
         Dim tokens As String() = groupInfo.Split("-"c)
 
-        components = components.Match("\(.*\)")
+        components = components.Replace($"-{groupInfo}", "")
 
         If Not (tokens.Length = 1 AndAlso tokens(Scan0) = "") Then
             For Each token As String In tokens
+                Dim index = token.Match("\(\d+[a-zA-Z]\)")
+                token = token.Replace(index, "")
+
                 Yield New Group
             Next
         End If
