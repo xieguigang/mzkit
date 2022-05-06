@@ -65,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -326,27 +327,59 @@ Module data
                               Optional tolerance As Object = "ppm:20",
                               Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True)
         Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim mzdiff As Tolerance
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        Else
+            mzdiff = mzErr.TryCast(Of Tolerance)
         End If
 
-        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+        If TypeOf ms1 Is mzPack Then
+            Return DirectCast(ms1, mzPack).getRawXICSet(mzdiff)
+        ElseIf TypeOf ms1 Is mzPack() Then
+            Dim list As mzPack() = DirectCast(ms1, mzPack())
 
-        If ms1_scans.isError Then
-            Return ms1_scans.getError
+            If list.Length = 1 Then
+                Return list(Scan0).getRawXICSet(mzdiff)
+            Else
+                Dim output As New list With {
+                    .slots = New Dictionary(Of String, Object)
+                }
+
+                For i As Integer = 0 To list.Length - 1
+                    Call output.add(list(i).source Or $"#{i + 1}".AsDefault, list(i).getRawXICSet(mzdiff))
+                Next
+
+                Return output
+            End If
+        Else
+            Return pipeline _
+                .TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True) _
+                .populates(Of IMs1)(env) _
+                .getXICPoints(mzdiff)
         End If
+    End Function
 
-        Dim mzgroups = ms1_scans.populates(Of IMs1)(env).GroupBy(Function(x) x.mz, mzdiff).ToArray
+    <Extension>
+    Private Function getXICPoints(Of T As IMs1)(ms1_scans As IEnumerable(Of T), mzdiff As Tolerance) As list
+        Dim mzgroups = ms1_scans.GroupBy(Function(x) x.mz, mzdiff).ToArray
         Dim xic As New list With {.slots = New Dictionary(Of String, Object)}
 
-        For Each mzi As NamedCollection(Of IMs1) In mzgroups
-            xic.add(Val(mzi.name).ToString("F4"), mzi.ToArray)
+        For Each mzi As NamedCollection(Of T) In mzgroups
+            xic.add(Val(mzi.name).ToString("F4"), mzi.OrderBy(Function(ti) ti.rt).ToArray)
         Next
 
         Return xic
+    End Function
+
+    <Extension>
+    Private Function getRawXICSet(raw As mzPack, tolerance As Tolerance) As list
+        Dim allPoints = raw.GetAllScanMs1().ToArray
+        Dim pack = allPoints.getXICPoints(tolerance)
+
+        Return pack
     End Function
 
     ''' <summary>

@@ -180,6 +180,18 @@ Module ChromatogramTools
         Return overlaps(names)
     End Function
 
+    <ExportAPI("topInto")>
+    Public Function topInto(overlaps As ChromatogramOverlap, n As Integer) As ChromatogramOverlap
+        Dim topNames = overlaps.getNames.OrderByDescending(Function(id) overlaps(id).maxInto).Take(n).ToArray
+        Dim subset As New ChromatogramOverlap
+
+        For Each id As String In topNames
+            Call subset.overlaps.Add(id, overlaps(id))
+        Next
+
+        Return subset
+    End Function
+
     ''' <summary>
     ''' set new labels to the chromatogram overlap data
     ''' </summary>
