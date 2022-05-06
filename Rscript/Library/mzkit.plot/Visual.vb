@@ -179,6 +179,11 @@ Module Visual
         Dim data As NamedCollection(Of ChromatogramTick)
 
         For Each raw In x.overlaps
+            If raw.Value Is Nothing OrElse raw.Value.scan_time.IsNullOrEmpty Then
+                Call env.AddMessage($"missing chromatogram of {raw.Key}!")
+                Continue For
+            End If
+
             data = New NamedCollection(Of ChromatogramTick) With {
                 .name = raw.Key,
                 .value = raw.Value.GetTicks(isBPC).ToArray
