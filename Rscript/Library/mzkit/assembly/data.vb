@@ -199,11 +199,37 @@ Module data
         End If
     End Function
 
+    ''' <summary>
+    ''' get the size of the target ms peaks
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <returns></returns>
     <ExportAPI("nsize")>
-    Public Function nfragments(matrix As LibraryMatrix) As Integer
-        Return matrix.Length
+    <RApiReturn(GetType(Integer))>
+    Public Function nfragments(matrix As Object, Optional env As Environment = Nothing) As Object
+        If matrix Is Nothing Then
+            Return 0
+        ElseIf TypeOf matrix Is LibraryMatrix Then
+            Return DirectCast(matrix, LibraryMatrix).Length
+        ElseIf TypeOf matrix Is PeakMs2 Then
+            Return DirectCast(matrix, PeakMs2).fragments
+        Else
+            Return Message.InCompatibleType(GetType(LibraryMatrix), matrix.GetType, env)
+        End If
     End Function
 
+    ''' <summary>
+    ''' create a new ms2 peaks data object
+    ''' </summary>
+    ''' <param name="precursor"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="into"></param>
+    ''' <param name="totalIons"></param>
+    ''' <param name="file"></param>
+    ''' <param name="meta"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peakMs2")>
     Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
                                   Optional totalIons As Double = 0,
@@ -215,7 +241,14 @@ Module data
         Return New PeakMs2 With {
             .mz = precursor,
             .intensity = totalIons,
-            .mzInto = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray,
+            .mzInto = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = into(i)
+                            }
+                        End Function) _
+                .ToArray,
             .rt = rt,
             .file = file,
             .meta = meta.AsGeneric(Of String)(env)
@@ -277,8 +310,19 @@ Module data
         }
     End Function
 
+    ''' <summary>
+    ''' grouping of the ms1 scan points by m/z data
+    ''' </summary>
+    ''' <param name="ms1"></param>
+    ''' <param name="tolerance">
+    ''' the m/z diff tolerance value for grouping ms1 scan point 
+    ''' based on its ``m/z`` value
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("XIC_groups")>
-    Public Function XICGroups(<RRawVectorArgument> ms1 As Object,
+    Public Function XICGroups(<RRawVectorArgument>
+                              ms1 As Object,
                               Optional tolerance As Object = "ppm:20",
                               Optional env As Environment = Nothing) As Object
 
