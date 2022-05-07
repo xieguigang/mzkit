@@ -1,3 +1,3 @@
-﻿Public Class Reader
+﻿Public Module Reader
 
-End Class
+End Module
