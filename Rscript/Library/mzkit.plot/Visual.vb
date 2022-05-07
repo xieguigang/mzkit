@@ -179,6 +179,11 @@ Module Visual
         Dim data As NamedCollection(Of ChromatogramTick)
 
         For Each raw In x.overlaps
+            If raw.Value Is Nothing OrElse raw.Value.scan_time.IsNullOrEmpty Then
+                Call env.AddMessage($"missing chromatogram of {raw.Key}!")
+                Continue For
+            End If
+
             data = New NamedCollection(Of ChromatogramTick) With {
                 .name = raw.Key,
                 .value = raw.Value.GetTicks(isBPC).ToArray
@@ -293,9 +298,15 @@ Module Visual
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1920,900")
+        Dim alignment As Object = args.getByName("alignment")
 
-        If mirror Then
-            Return SpectrumPlot(spectrum, title:=If(title, "Mass Spectrum Plot"), env:=env)
+        If mirror OrElse Not alignment Is Nothing Then
+            Return Visual.SpectrumPlot(
+                spectrum:=spectrum,
+                alignment:=alignment,
+                title:=If(title, "Mass Spectrum Plot"),
+                env:=env
+            )
         Else
             Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
 

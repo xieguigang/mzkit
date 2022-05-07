@@ -3,10 +3,10 @@
 m/z data operator module
 
 + [unionPeaks](data/unionPeaks.1) 
-+ [nsize](data/nsize.1) 
-+ [peakMs2](data/peakMs2.1) 
++ [nsize](data/nsize.1) get the size of the target ms peaks
++ [peakMs2](data/peakMs2.1) create a new ms2 peaks data object
 + [libraryMatrix](data/libraryMatrix.1) Create a library matrix object
-+ [XIC_groups](data/XIC_groups.1) 
++ [XIC_groups](data/XIC_groups.1) grouping of the ms1 scan points by m/z data
 + [XIC](data/XIC.1) get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
 + [rt_slice](data/rt_slice.1) slice a region of ms1 scan data by a given rt window.
 + [intensity](data/intensity.1) get intensity value from the ion scan points

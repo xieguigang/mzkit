@@ -1,8 +1,10 @@
 # mzPack
 
-
+raw data accessor for the mzpack data object
 
 + [open.mzwork](mzPack/open.mzwork.1) open mzwork file and then populate all of the mzpack raw data file
++ [mzwork](mzPack/mzwork.1) 
++ [readFileCache](mzPack/readFileCache.1) 
 + [mzpack](mzPack/mzpack.1) 
 + [ls](mzPack/ls.1) 
 + [metadata](mzPack/metadata.1) 

@@ -70,6 +70,8 @@ Namespace MZWork
 
     Public Class Raw
 
+#Region "Cache Store"
+
         ''' <summary>
         ''' 原始数据文件位置
         ''' </summary>
@@ -96,6 +98,8 @@ Namespace MZWork
         ''' <returns></returns>
         <MessagePackMember(4)> Public Property numOfScan2 As Integer
 
+#End Region
+
         Dim loaded As mzPack
         Dim ms1 As Dictionary(Of String, ScanMS1)
         Dim ms2 As Dictionary(Of String, ScanMS2)
@@ -111,6 +115,18 @@ Namespace MZWork
                 Return cache.FileExists
             End Get
         End Property
+
+        Public Sub New()
+        End Sub
+
+        Sub New(copy As Raw)
+            Me.cache = copy.cache
+            Me.source = copy.source
+            Me.rtmin = copy.rtmin
+            Me.rtmax = copy.rtmax
+            Me.numOfScan1 = copy.numOfScan1
+            Me.numOfScan2 = copy.numOfScan2
+        End Sub
 
         Public Function GetLoadedMzpack() As mzPack
             Return loaded

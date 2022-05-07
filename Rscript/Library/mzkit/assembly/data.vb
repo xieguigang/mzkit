@@ -56,6 +56,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -64,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -84,7 +86,17 @@ Module data
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
     End Sub
+
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
+        table.columns("intensity") = TIC.Select(Function(t) t.Intensity).ToArray
+
+        Return table
+    End Function
 
     Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
         Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
@@ -188,11 +200,37 @@ Module data
         End If
     End Function
 
+    ''' <summary>
+    ''' get the size of the target ms peaks
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <returns></returns>
     <ExportAPI("nsize")>
-    Public Function nfragments(matrix As LibraryMatrix) As Integer
-        Return matrix.Length
+    <RApiReturn(GetType(Integer))>
+    Public Function nfragments(matrix As Object, Optional env As Environment = Nothing) As Object
+        If matrix Is Nothing Then
+            Return 0
+        ElseIf TypeOf matrix Is LibraryMatrix Then
+            Return DirectCast(matrix, LibraryMatrix).Length
+        ElseIf TypeOf matrix Is PeakMs2 Then
+            Return DirectCast(matrix, PeakMs2).fragments
+        Else
+            Return Message.InCompatibleType(GetType(LibraryMatrix), matrix.GetType, env)
+        End If
     End Function
 
+    ''' <summary>
+    ''' create a new ms2 peaks data object
+    ''' </summary>
+    ''' <param name="precursor"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="into"></param>
+    ''' <param name="totalIons"></param>
+    ''' <param name="file"></param>
+    ''' <param name="meta"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peakMs2")>
     Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
                                   Optional totalIons As Double = 0,
@@ -204,7 +242,14 @@ Module data
         Return New PeakMs2 With {
             .mz = precursor,
             .intensity = totalIons,
-            .mzInto = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray,
+            .mzInto = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = into(i)
+                            }
+                        End Function) _
+                .ToArray,
             .rt = rt,
             .file = file,
             .meta = meta.AsGeneric(Of String)(env)
@@ -266,32 +311,75 @@ Module data
         }
     End Function
 
+    ''' <summary>
+    ''' grouping of the ms1 scan points by m/z data
+    ''' </summary>
+    ''' <param name="ms1"></param>
+    ''' <param name="tolerance">
+    ''' the m/z diff tolerance value for grouping ms1 scan point 
+    ''' based on its ``m/z`` value
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("XIC_groups")>
-    Public Function XICGroups(<RRawVectorArgument> ms1 As Object,
+    Public Function XICGroups(<RRawVectorArgument>
+                              ms1 As Object,
                               Optional tolerance As Object = "ppm:20",
                               Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True)
         Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim mzdiff As Tolerance
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        Else
+            mzdiff = mzErr.TryCast(Of Tolerance)
         End If
 
-        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+        If TypeOf ms1 Is mzPack Then
+            Return DirectCast(ms1, mzPack).getRawXICSet(mzdiff)
+        ElseIf TypeOf ms1 Is mzPack() Then
+            Dim list As mzPack() = DirectCast(ms1, mzPack())
 
-        If ms1_scans.isError Then
-            Return ms1_scans.getError
+            If list.Length = 1 Then
+                Return list(Scan0).getRawXICSet(mzdiff)
+            Else
+                Dim output As New list With {
+                    .slots = New Dictionary(Of String, Object)
+                }
+
+                For i As Integer = 0 To list.Length - 1
+                    Call output.add(list(i).source Or $"#{i + 1}".AsDefault, list(i).getRawXICSet(mzdiff))
+                Next
+
+                Return output
+            End If
+        Else
+            Return pipeline _
+                .TryCreatePipeline(Of IMs1)(ms1, env, suppress:=True) _
+                .populates(Of IMs1)(env) _
+                .getXICPoints(mzdiff)
         End If
+    End Function
 
-        Dim mzgroups = ms1_scans.populates(Of IMs1)(env).GroupBy(Function(x) x.mz, mzdiff).ToArray
+    <Extension>
+    Private Function getXICPoints(Of T As IMs1)(ms1_scans As IEnumerable(Of T), mzdiff As Tolerance) As list
+        Dim mzgroups = ms1_scans.GroupBy(Function(x) x.mz, mzdiff).ToArray
         Dim xic As New list With {.slots = New Dictionary(Of String, Object)}
 
-        For Each mzi As NamedCollection(Of IMs1) In mzgroups
-            xic.add(Val(mzi.name).ToString("F4"), mzi.ToArray)
+        For Each mzi As NamedCollection(Of T) In mzgroups
+            xic.add(Val(mzi.name).ToString("F4"), mzi.OrderBy(Function(ti) ti.rt).ToArray)
         Next
 
         Return xic
+    End Function
+
+    <Extension>
+    Private Function getRawXICSet(raw As mzPack, tolerance As Tolerance) As list
+        Dim allPoints = raw.GetAllScanMs1().ToArray
+        Dim pack = allPoints.getXICPoints(tolerance)
+
+        Return pack
     End Function
 
     ''' <summary>
@@ -323,17 +411,21 @@ Module data
 
         If ms1_scans.isError Then
             If TypeOf ms1 Is mzPack Then
-                Return DirectCast(ms1, mzPack).MS _
-                    .Select(Function(scan)
-                                Dim i As Double = scan.GetIntensity(mz, mzdiff)
-                                Dim tick As New ChromatogramTick With {
-                                    .Intensity = i,
-                                    .Time = scan.rt
-                                }
+                Return DirectCast(ms1, mzPack).rawXIC(mz, mzdiff)
+            ElseIf TypeOf ms1 Is mzPack() Then
+                Dim all = DirectCast(ms1, mzPack())
 
-                                Return tick
-                            End Function) _
-                    .ToArray
+                If all.Length = 1 Then
+                    Return all(Scan0).rawXIC(mz, mzdiff)
+                Else
+                    Dim list As New list With {.slots = New Dictionary(Of String, Object)}
+
+                    For i As Integer = 0 To all.Length - 1
+                        Call list.add($"#{i + 1}", all(i).rawXIC(mz, mzdiff))
+                    Next
+
+                    Return list
+                End If
             Else
                 Return ms1_scans.getError
             End If
@@ -348,6 +440,21 @@ Module data
             .ToArray
 
         Return REnv.TryCastGenericArray(xicFilter, env)
+    End Function
+
+    <Extension>
+    Private Function rawXIC(ms1 As mzPack, mz As Double, mzdiff As Tolerance) As ChromatogramTick()
+        Return ms1.MS _
+            .Select(Function(scan)
+                        Dim i As Double = scan.GetIntensity(mz, mzdiff)
+                        Dim tick As New ChromatogramTick With {
+                            .Intensity = i,
+                            .Time = scan.rt
+                        }
+
+                        Return tick
+                    End Function) _
+            .ToArray
     End Function
 
     ''' <summary>
