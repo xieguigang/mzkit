@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::57dac333c3d84ffb0495b252f0d502a3, mzkit\src\metadb\Massbank\MetaLib\Models\MetaInfo.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 43
-    '    Code Lines: 29
-    ' Comment Lines: 4
-    '   Blank Lines: 10
-    '     File Size: 1.35 KB
+' Summaries:
 
 
-    '     Class MetaInfo
-    ' 
-    '         Properties: exact_mass, formula, ID, name, synonym
-    '                     xref
-    ' 
-    '         Function: Equals, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 43
+'    Code Lines: 29
+' Comment Lines: 4
+'   Blank Lines: 10
+'     File Size: 1.35 KB
+
+
+'     Class MetaInfo
+' 
+'         Properties: exact_mass, formula, ID, name, synonym
+'                     xref
+' 
+'         Function: Equals, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace MetaLib.Models
 
@@ -69,16 +70,16 @@ Namespace MetaLib.Models
         ''' 该物质在整合库之中的唯一标识符
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
-        <XmlAttribute> Public Property formula As String
-        <XmlAttribute> Public Property exact_mass As Double
+        <MessagePackMember(0)> <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
+        <MessagePackMember(1)> <XmlAttribute> Public Property formula As String
+        <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double
 
-        Public Property name As String
+        <MessagePackMember(3)> Public Property name As String
 
         <XmlElement>
-        Public Property synonym As String()
+        <MessagePackMember(4)> Public Property synonym As String()
 
-        Public Property xref As xref
+        <MessagePackMember(5)> Public Property xref As xref
 
         Public Overrides Function ToString() As String
             Return name
