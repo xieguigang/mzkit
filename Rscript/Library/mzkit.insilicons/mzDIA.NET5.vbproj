@@ -111,7 +111,7 @@
 
   
   <ItemGroup>
-    <None Include="..\..\..\src\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
