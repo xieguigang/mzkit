@@ -1,7 +1,3 @@
-[submodule "visual/KEGG_canvas"]
-	path = visual/KEGG_canvas
-	url = https://github.com/GCModeller-Cloud/KEGG-metabolite-network.git
-
 [submodule "Rscript/Library/MSI_app"]
 	path = Rscript/Library/MSI_app
 	url = https://gitee.com/xieguigang/ms-imaging.git
@@ -10,4 +6,4 @@
 	url = https://github.com/xieguigang/mzkit_win32.git
 [submodule "src/visualize/KCF"]
 	path = src/visualize/KCF
-	url = https://github.com/BioDeep/KEGG.molDraw.git
+	url = https://gitee.com/xieguigang/KEGG.molDraw.git
