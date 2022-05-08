@@ -88,6 +88,16 @@ Namespace DataReader
             End Get
         End Property
 
+        Public ReadOnly Property maxInto As Double
+            Get
+                If length = 0 Then
+                    Return 0
+                Else
+                    Return TIC.Max
+                End If
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"Chromatogram between scan_time [{CInt(scan_time.Min)},{CInt(scan_time.Max)}]"
         End Function

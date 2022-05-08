@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary</RootNamespace>
+    <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+    <AssemblyName>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Description>The annotation library model for store of the MS reference data</Description>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\Massbank\massbank.NET5.vbproj" />
+  </ItemGroup>
+
+</Project>

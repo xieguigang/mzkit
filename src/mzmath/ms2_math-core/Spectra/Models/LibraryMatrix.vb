@@ -94,6 +94,7 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public Property centroid As Boolean
+        Public Property parentMz As Double
 
         Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As LibraryMatrix
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

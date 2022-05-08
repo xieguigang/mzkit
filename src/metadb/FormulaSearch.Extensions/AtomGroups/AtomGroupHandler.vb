@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Reflection
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.My
@@ -78,28 +79,101 @@ Public Class AtomGroupHandler
                         End Function)
     End Function
 
-    Sub New()
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In alkyl Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In ketones Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In amines Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In alkenyl Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(From i In others Select New NamedValue(Of (Double, Formula))(i.Key, (i.Value.ExactMass, i.Value)))
+    Public Shared ReadOnly Property AllAnnotations As FragmentAnnotationHolder()
+        Get
+            Return SingletonList(Of FragmentAnnotationHolder).ForEach.ToArray
+        End Get
+    End Property
+
+    Shared Sub New()
+        Call SingletonList(Of FragmentAnnotationHolder).Add(From i In alkyl Select New FragmentAnnotationHolder(i.Value))
+        Call SingletonList(Of FragmentAnnotationHolder).Add(From i In ketones Select New FragmentAnnotationHolder(i.Value))
+        Call SingletonList(Of FragmentAnnotationHolder).Add(From i In amines Select New FragmentAnnotationHolder(i.Value))
+        Call SingletonList(Of FragmentAnnotationHolder).Add(From i In alkenyl Select New FragmentAnnotationHolder(i.Value))
+        Call SingletonList(Of FragmentAnnotationHolder).Add(From i In others Select New FragmentAnnotationHolder(i.Value))
+
+        Call Multiple(SingletonList(Of FragmentAnnotationHolder).ForEach.ToArray)
+        Call MixAll(SingletonList(Of FragmentAnnotationHolder).ForEach.ToArray)
     End Sub
 
-    Public Sub Register(name As String, formula As String)
+    Public Shared Sub Clear()
+        Call SingletonList(Of FragmentAnnotationHolder).Clear()
+    End Sub
+
+    ''' <summary>
+    ''' x2
+    ''' </summary>
+    Private Shared Sub Multiple(all As FragmentAnnotationHolder())
+        For Each item In all
+            SingletonList(Of FragmentAnnotationHolder).Add(item * 2)
+        Next
+    End Sub
+
+    Private Shared Sub MixAll(all As FragmentAnnotationHolder())
+        Dim mix As FragmentAnnotationHolder
+
+        ' a + b
+        For Each a In all
+            For Each b In From i In all Where i.name <> a.name
+                SingletonList(Of FragmentAnnotationHolder).Add(a + b)
+            Next
+        Next
+
+        ' a - b
+        For Each a In all
+            For Each b In From i In all Where i.name <> a.name
+                mix = a - b
+
+                If mix.exactMass > 0 Then
+                    SingletonList(Of FragmentAnnotationHolder).Add(mix)
+                End If
+            Next
+        Next
+    End Sub
+
+    Public Shared Sub Register(annotations As IEnumerable(Of FragmentAnnotationHolder))
+        Dim list As FragmentAnnotationHolder() = annotations.ToArray
+
+        For Each [single] As FragmentAnnotationHolder In list
+            Call SingletonList(Of FragmentAnnotationHolder).Add([single])
+        Next
+
+        Call Multiple(list)
+        Call MixAll(list)
+    End Sub
+
+    Public Shared Function CreateModel(name As String, formula As String) As FragmentAnnotationHolder
         Dim chemical As Formula = FormulaScanner.ScanFormula(formula)
-        Dim exactMass As Double = chemical.ExactMass
+        Dim anno As New FragmentAnnotationHolder(chemical, name)
 
-        Call SingletonList(Of NamedValue(Of (Double, Formula))).Add(New NamedValue(Of (Double, Formula))(name, (exactMass, chemical)))
-    End Sub
+        Return anno
+    End Function
 
-    Public Shared Function GetByMass(mass As Double, Optional da As Double = 0.1) As NamedValue(Of Formula)
-        For Each group As NamedValue(Of (ExactMass As Double, Formula)) In SingletonList(Of NamedValue(Of (Double, Formula))).ForEach
-            If stdNum.Abs(group.Value.ExactMass - mass) <= da Then
-                Return New NamedValue(Of Formula) With {
-                    .Name = group.Name,
-                    .Value = group.Value.Item2
-                }
+    Public Shared Function CreateModel(name As String, exactMass As Double) As FragmentAnnotationHolder
+        Dim group As New MassGroup With {
+            .name = name,
+            .exactMass = exactMass
+        }
+
+        Return New FragmentAnnotationHolder(group)
+    End Function
+
+    Public Shared Function GetByMass(mass As Double,
+                                     Optional da As Double = 0.1,
+                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
+
+        For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach
+            If stdNum.Abs(group.exactMass - mass) <= da Then
+                Return group
+            ElseIf Not adducts Is Nothing Then
+                ' test on adducts
+                For Each type As MzCalculator In adducts
+                    Dim mz As Double = type.CalcMZ(group.exactMass)
+
+                    If stdNum.Abs(mz - mass) <= da Then
+                        Return New FragmentAnnotationHolder(MassGroup.CreateAdducts(group, adducts:=type))
+                    End If
+                Next
             End If
         Next
 
@@ -108,7 +182,8 @@ Public Class AtomGroupHandler
 
     Public Shared Function FindDelta(mz1 As Double, mz2 As Double,
                                      Optional ByRef delta As Integer = 0,
-                                     Optional da As Double = 0.1) As NamedValue(Of Formula)
+                                     Optional da As Double = 0.1,
+                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
         Dim d As Double = mz1 - mz2
         Dim dmass As Double = stdNum.Abs(d)
 
@@ -118,7 +193,7 @@ Public Class AtomGroupHandler
             delta = stdNum.Sign(d)
         End If
 
-        Dim group As NamedValue(Of Formula) = GetByMass(dmass, da)
+        Dim group As FragmentAnnotationHolder = GetByMass(dmass, da, adducts)
         Return group
     End Function
 End Class

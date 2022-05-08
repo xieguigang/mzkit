@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime
@@ -95,6 +96,83 @@ Module MetaDbXref
         Return New dataframe With {
             .columns = columns,
             .rownames = columns!unique_id
+        }
+    End Function
+
+    <ExportAPI("parseLipidName")>
+    Public Function ParseLipidName(<RRawVectorArgument>
+                                   name As Object,
+                                   Optional keepsRaw As Boolean = False,
+                                   Optional env As Environment = Nothing) As Object
+
+        If keepsRaw Then
+            Return SMRUCC.Rsharp.EvaluateFramework(Of String, LipidName)(env, name, eval:=AddressOf LipidName.ParseLipidName)
+        Else
+            Return SMRUCC.Rsharp.EvaluateFramework(Of String, list)(
+                env:=env,
+                x:=name,
+                eval:=Function(nameStr As String)
+                          Dim lipid As LipidName = LipidName.ParseLipidName(nameStr)
+                          Dim rlist As New list
+                          Dim chains As New list
+                          Dim i As i32 = 1
+
+                          For Each chain As Chain In lipid.chains
+                              Dim chainList As New list
+
+                              chainList.add("carbons", chain.carbons)
+                              chainList.add("doubleBonds", chain.doubleBonds)
+                              chainList.add("tag", chain.tag)
+                              chainList.add("groups", boundList(chain.groups))
+                              chainList.add("index", boundList(chain.position))
+
+                              chains.add($"#{++i}", chainList)
+                          Next
+
+                          rlist.add("class", lipid.className)
+                          rlist.add("chains", chains)
+                          rlist.add("name", lipid.ToString)
+                          rlist.add("overview_name", lipid.ToOverviewName)
+                          rlist.add("systematic_name", lipid.ToSystematicName)
+
+                          Return rlist
+                      End Function)
+        End If
+    End Function
+
+    Private Function boundList(g As Group()) As dataframe
+        Dim index As Integer() = g.Select(Function(i) i.index).ToArray
+        Dim t As String() = g.Select(Function(i) i.structure).ToArray
+        Dim name As String() = g.Select(Function(i) i.groupName).ToArray
+
+        If g.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"index", index},
+                {"type", t},
+                {"groupName", name}
+            },
+            .rownames = g.Select(Function(i) i.ToString).ToArray
+        }
+    End Function
+
+    Private Function boundList(b As BondPosition()) As dataframe
+        Dim index As Integer() = b.Select(Function(i) i.index).ToArray
+        Dim t As String() = b.Select(Function(i) i.structure).ToArray
+
+        If b.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"index", index},
+                {"type", t}
+            },
+            .rownames = b.Select(Function(i) i.ToString).ToArray
         }
     End Function
 

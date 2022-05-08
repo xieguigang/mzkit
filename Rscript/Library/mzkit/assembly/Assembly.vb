@@ -100,10 +100,13 @@ Module Assembly
     End Sub
 
     Private Function MatrixDataFrame(peak As PeakMs2, args As Rlist, env As Environment) As dataframe
-        Dim dataframe As New dataframe With {.columns = New Dictionary(Of String, Array)}
+        Dim dataframe As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
 
         dataframe.columns("mz") = peak.mzInto.Select(Function(x) x.mz).ToArray
         dataframe.columns("into") = peak.mzInto.Select(Function(x) x.intensity).ToArray
+        dataframe.columns("annotation") = peak.mzInto.Select(Function(x) x.Annotation).ToArray
 
         Return dataframe
     End Function

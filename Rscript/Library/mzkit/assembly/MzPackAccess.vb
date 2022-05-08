@@ -71,6 +71,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports stdNum = System.Math
 
+''' <summary>
+''' raw data accessor for the mzpack data object
+''' </summary>
 <Package("mzPack")>
 Module MzPackAccess
 
@@ -110,6 +113,33 @@ Module MzPackAccess
         Return pipeline.CreateFromPopulator(stream)
     End Function
 
+    <ExportAPI("mzwork")>
+    <RApiReturn(GetType(WorkspaceAccess))>
+    Public Function open_mzwork(file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        Dim println As Action(Of Object) = env.WriteLineHandler
+
+        Return New WorkspaceAccess(
+            file:=buffer.TryCast(Of Stream),
+            msg:=Sub(line)
+                     Call println(line)
+                 End Sub)
+    End Function
+
+    <ExportAPI("readFileCache")>
+    <RApiReturn(GetType(mzPack))>
+    Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String, Optional env As Environment = Nothing) As Object
+        Dim verbose As Boolean = env.globalEnvironment.options.verbose
+        Dim cache = mzwork.GetByFileName(fileName, verbose).ToArray
+
+        Return cache
+    End Function
+
     <ExportAPI("mzpack")>
     <RApiReturn(GetType(mzPackReader))>
     Public Function open_mzpack(file As Object, Optional env As Environment = Nothing) As Object
@@ -123,8 +153,19 @@ Module MzPackAccess
     End Function
 
     <ExportAPI("ls")>
-    Public Function index(mzpack As mzPackReader) As String()
-        Return mzpack.EnumerateIndex.ToArray
+    <RApiReturn(GetType(String))>
+    Public Function index(mzpack As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf mzpack Is mzPackReader Then
+            Return DirectCast(mzpack, mzPackReader) _
+                .EnumerateIndex _
+                .ToArray
+        ElseIf TypeOf mzpack Is WorkspaceAccess Then
+            Return DirectCast(mzpack, WorkspaceAccess).ListAllFileNames
+        Else
+            Return Message.InCompatibleType(GetType(mzPackReader), mzpack.GetType, env)
+        End If
     End Function
 
     <ExportAPI("metadata")>
