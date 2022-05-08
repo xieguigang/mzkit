@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
@@ -26,6 +27,20 @@ Public Class Metabolite
     <MessagePackMember(1)> Public Property precursors As PrecursorData()
     <MessagePackMember(2)> Public Property spectrums As Spectrum()
 
+    ''' <summary>
+    ''' the fragment annotation list
+    ''' 
+    ''' intensity value in this collection is
+    ''' the occupation count of the target 
+    ''' annotation
+    ''' </summary>
+    ''' <returns></returns>
+    <MessagePackMember(3)> Public Property fragments As ms2()
+
+    Public Sub SetFragments()
+        fragments = LibraryFile.AnnotationSet(spectrums)
+    End Sub
+
 End Class
 
 Public Class PrecursorData
@@ -48,5 +63,16 @@ Public Class Spectrum
     <MessagePackMember(2)> Public Property ionMode As Integer
     <MessagePackMember(3)> Public Property intensity As Double()
     <MessagePackMember(4)> Public Property annotations As String()
+
+    Public Function getMatrix() As IEnumerable(Of ms2)
+        Return mz _
+            .Select(Function(mzi, i)
+                        Return New ms2 With {
+                            .mz = mzi,
+                            .intensity = intensity(i),
+                            .Annotation = annotations(i)
+                        }
+                    End Function)
+    End Function
 
 End Class

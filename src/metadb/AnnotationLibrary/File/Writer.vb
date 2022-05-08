@@ -97,17 +97,24 @@ Public Class Writer : Implements IDisposable
         If Not missing Then
             Dim buffer = pack.Open
             Dim current As Metabolite = MsgPackSerializer.Deserialize(Of Metabolite)(buffer)
+            Dim ions As PrecursorData() = ref.precursors _
+                .JoinIterates(current.precursors) _
+                .ToArray
+            Dim spectrumPeaks = ref.spectrums _
+                .JoinIterates(current.spectrums) _
+                .ToArray
 
             ' union two object
             ref = New Metabolite With {
                 .annotation = ref.annotation,
-                .precursors = ref.precursors.JoinIterates(current.precursors).ToArray,
-                .spectrums = ref.spectrums.JoinIterates(current.spectrums).ToArray
+                .precursors = ions,
+                .spectrums = spectrumPeaks
             }
 
             Call buffer.Close()
         End If
 
+        Call ref.SetFragments()
         Call MsgPackSerializer.SerializeObject(ref, pack.Open, closeFile:=True)
     End Sub
 
