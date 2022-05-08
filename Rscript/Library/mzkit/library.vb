@@ -1,18 +1,17 @@
 ﻿
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine.AnnotationLibrary
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Repository
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
-Imports REnv = SMRUCC.Rsharp.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Data.Repository
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("annotation")>
 Module library
