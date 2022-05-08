@@ -143,6 +143,7 @@
 		<ProjectReference Include="..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj" />
+		<ProjectReference Include="..\..\..\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj" />
 		
 
 

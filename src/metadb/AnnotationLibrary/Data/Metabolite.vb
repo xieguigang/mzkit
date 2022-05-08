@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
@@ -8,12 +9,14 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Public Class Metabolite
 
     Public ReadOnly Property Id As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return annotation.ID
         End Get
     End Property
 
     Public ReadOnly Property exactMass As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return FormulaScanner.ScanFormula(annotation.formula).ExactMass
         End Get
