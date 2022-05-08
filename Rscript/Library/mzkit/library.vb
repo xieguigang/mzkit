@@ -1,4 +1,5 @@
 ﻿
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
@@ -9,12 +10,65 @@ Imports Microsoft.VisualBasic.Data.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("annotation")>
 Module library
+
+    <ExportAPI("saveLibrary")>
+    Public Function SaveResult(<RRawVectorArgument>
+                               references As Object,
+                               file As Object,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of Metabolite)(references, env)
+
+        If data.isError Then
+            Return data.getError
+        End If
+
+        Using package As New Writer(buffer.TryCast(Of Stream))
+            For Each met As Metabolite In data.populates(Of Metabolite)(env)
+                Call package.AddReference(met)
+            Next
+        End Using
+
+        Return True
+    End Function
+
+    <ExportAPI("openLibrary")>
+    Public Function createLibraryIO(file As Object,
+                                    Optional read As Boolean = True,
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        If read Then
+            Throw New NotImplementedException
+        Else
+            Return New Writer(buffer.TryCast(Of Stream))
+        End If
+    End Function
+
+    <ExportAPI("addReference")>
+    Public Function AddReference(library As Writer, ref As Metabolite) As Writer
+        Call library.AddReference(ref)
+        Return library
+    End Function
 
     <ExportAPI("annotation")>
     Public Function createAnnotation(id As String,
