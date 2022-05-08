@@ -4,3 +4,6 @@
 [submodule "src/mzkit"]
 	path = src/mzkit
 	url = https://github.com/xieguigang/mzkit_win32.git
+[submodule "src/visual/KCF"]
+	path = src/visual/KCF
+	url = https://gitee.com/xieguigang/KEGG.molDraw.git
