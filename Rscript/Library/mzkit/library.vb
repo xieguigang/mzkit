@@ -67,7 +67,10 @@ Module library
 
     <ExportAPI("queryByMz")>
     <RApiReturn(GetType(Metabolite))>
-    Public Function queryByMz([lib] As Reader, mz As Double, Optional tolerance As Object = Nothing, Optional env As Environment = Nothing) As Object
+    Public Function queryByMz([lib] As Reader, mz As Double,
+                              Optional tolerance As Object = Nothing,
+                              Optional env As Environment = Nothing) As Object
+
         Dim mzdiff = Math.getTolerance(tolerance, env)
 
         If mzdiff Like GetType(Message) Then
