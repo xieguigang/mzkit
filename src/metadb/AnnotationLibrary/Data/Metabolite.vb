@@ -29,6 +29,12 @@ Public Class Metabolite
         End Get
     End Property
 
+    Public ReadOnly Property mz As Double()
+        Get
+            Return precursors.Select(Function(p) p.mz).ToArray
+        End Get
+    End Property
+
     <MessagePackMember(0)> Public Property annotation As MetaInfo
     <MessagePackMember(1)> Public Property precursors As PrecursorData()
     <MessagePackMember(2)> Public Property spectrums As Spectrum()
