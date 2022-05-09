@@ -49,6 +49,8 @@ Public Class Metabolite
     ''' <returns></returns>
     <MessagePackMember(3)> Public Property fragments As ms2()
 
+    Public Property spectrumBlockId As String
+
     Public Sub SetFragments()
         fragments = LibraryFile.AnnotationSet(spectrums)
     End Sub

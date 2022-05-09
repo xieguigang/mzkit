@@ -24,17 +24,32 @@ Public Class Reader : Inherits LibraryFile
             .ToArray
     End Sub
 
+    Public Function GetSpectrums(spectrumBlockId As String) As Spectrum()
+        Dim spectrumName As String = $"{spectrumBlockId.Substring(0, 2)}/{spectrumBlockId}.dat"
+        Dim pack As ZipArchiveEntry = file.Entries _
+            .Where(Function(i) i.FullName = spectrumName) _
+            .FirstOrDefault
+
+        Using msBuffer As Stream = pack.Open
+            Return MsgPackSerializer.Deserialize(Of Spectrum())(msBuffer)
+        End Using
+    End Function
+
     Public Iterator Function QueryByMz(mz As Double, mzdiff As Tolerance) As IEnumerable(Of Metabolite)
+        Dim data As Metabolite
+
         For Each index As MassIndex In Me.index
             If mzdiff(mz, index.mz) Then
                 For Each key As String In index.referenceIds
-                    Dim fullName As String = $"{key.Substring(0, 2)}/{key}.dat"
+                    Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
                     Dim pack As ZipArchiveEntry = file.Entries _
                         .Where(Function(i) i.FullName = fullName) _
                         .FirstOrDefault
-                    Dim data As Metabolite = MsgPackSerializer.Deserialize(Of Metabolite)(pack.Open)
 
-                    Yield data
+                    data = MsgPackSerializer.Deserialize(Of Metabolite)(pack.Open)
+                    data.spectrumBlockId = key
+
+                    Yield Data
                 Next
             End If
         Next
