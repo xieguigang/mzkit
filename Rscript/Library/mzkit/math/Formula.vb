@@ -291,6 +291,11 @@ Module FormulaTools
     End Function
 
     <ROperator("-")>
+    Public Function minus(ionFormula As Formula, precursor As MzCalculator, Optional env As Environment = Nothing) As Formula
+
+    End Function
+
+    <ROperator("-")>
     Public Function minus(total As Formula, part As Formula, Optional env As Environment = Nothing) As Formula
         Dim delta = total - part
         Dim negative = delta.CountsByElement.Where(Function(c) c.Value < 0).ToDictionary
