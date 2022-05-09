@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Public MustInherit Class LibraryFile
 
     Friend Const IndexPath As String = ".metadata/index"
+    Friend Const annotationPath As String = ".metadata/annotations"
 
     Protected file As ZipArchive
 

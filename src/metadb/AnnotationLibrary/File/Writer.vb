@@ -85,9 +85,11 @@ Public Class Writer : Inherits LibraryFile
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddReference(ref As Metabolite)
         Dim key As String = AddIndex(ref)
-        Dim fullName As String = $"{key.Substring(0, 2)}/{key}.dat"
+        Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
+        Dim spectrumName As String = $"{key.Substring(0, 2)}/{key}.dat"
         Dim missing As Boolean = False
         Dim pack As ZipArchiveEntry = getSection(fullName, missing)
+        Dim targetSpectrum = getSection(spectrumName, missing)
 
         If Not missing Then
             Dim buffer = pack.Open
@@ -95,9 +97,15 @@ Public Class Writer : Inherits LibraryFile
             Dim ions As PrecursorData() = ref.precursors _
                 .JoinIterates(current.precursors) _
                 .ToArray
-            Dim spectrumPeaks = ref.spectrums _
-                .JoinIterates(current.spectrums) _
-                .ToArray
+            Dim spectrumPeaks As Spectrum()
+
+            If Not missing Then
+                Using msBuffer = targetSpectrum.Open
+                    spectrumPeaks = ref.spectrums _
+                        .JoinIterates(MsgPackSerializer.Deserialize(Of Spectrum())(msBuffer)) _
+                        .ToArray
+                End Using
+            End If
 
             ' union two object
             ref = New Metabolite With {
@@ -124,7 +132,11 @@ Public Class Writer : Inherits LibraryFile
                     End Function) _
             .ToArray
 
+        Dim spectrums = ref.spectrums
+        ref.spectrums = Nothing
+
         Call MsgPackSerializer.SerializeObject(ref, pack.Open, closeFile:=True)
+        Call MsgPackSerializer.SerializeObject(spectrums, targetSpectrum.Open, closeFile:=True)
     End Sub
 
     ''' <summary>
