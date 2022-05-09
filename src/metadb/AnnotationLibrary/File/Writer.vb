@@ -7,10 +7,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.SecurityString
 Imports stdNum = System.Math
 
-Public Class Writer : Implements IDisposable
+Public Class Writer : Inherits LibraryFile
+    Implements IDisposable
 
     Dim disposedValue As Boolean
-    Dim file As ZipArchive
     Dim index As New List(Of DynamicIndex)
     Dim mzcalc As New Dictionary(Of String, MzCalculator)
 
@@ -18,8 +18,6 @@ Public Class Writer : Implements IDisposable
         Public mz As Double
         Public keys As New List(Of String)
     End Class
-
-    Const IndexPath As String = ".metadata/index"
 
     Sub New(file As String, Optional truncated As Boolean = False)
         Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True), truncated)
@@ -41,19 +39,14 @@ Public Class Writer : Implements IDisposable
         End If
     End Sub
 
-    Private Sub LoadIndex()
-        Dim list = From file As ZipArchiveEntry
-                   In Me.file.Entries
-                   Where file.FullName.StartsWith(IndexPath)
-
-        For Each i As ZipArchiveEntry In list
-            Dim tmp As MassIndex = MsgPackSerializer.Deserialize(Of MassIndex)(i.Open)
+    Private Overloads Sub LoadIndex()
+        For Each index As MassIndex In LibraryFile.LoadIndex(file)
             Dim target As New DynamicIndex With {
-                .mz = tmp.mz,
-                .keys = tmp.referenceIds.AsList
+                .mz = index.mz,
+                .keys = index.referenceIds.AsList
             }
 
-            Call index.Add(target)
+            Call Me.index.Add(target)
         Next
     End Sub
 
@@ -75,7 +68,9 @@ Public Class Writer : Implements IDisposable
     End Sub
 
     Private Function getSection(fullName As String, ByRef missing As Boolean) As ZipArchiveEntry
-        Dim pack As ZipArchiveEntry = file.Entries.Where(Function(i) i.FullName = fullName).FirstOrDefault
+        Dim pack As ZipArchiveEntry = file.Entries _
+            .Where(Function(i) i.FullName = fullName) _
+            .FirstOrDefault
 
         If pack Is Nothing Then
             pack = file.CreateEntry(fullName)
@@ -120,7 +115,8 @@ Public Class Writer : Implements IDisposable
                         Dim i As Integer() = which(m.intensity.Select(Function(into) into > 0))
 
                         Return New Spectrum With {
-                            .guid = m.guid, .ionMode = m.ionMode,
+                            .guid = m.guid,
+                            .ionMode = m.ionMode,
                             .mz = i.Select(Function(idx) m.mz(idx)).ToArray,
                             .annotations = i.Select(Function(idx) m.annotations(idx)).ToArray,
                             .intensity = i.Select(Function(idx) m.intensity(idx)).ToArray
