@@ -12,7 +12,7 @@ Public Class Writer : Implements IDisposable
     Dim disposedValue As Boolean
     Dim file As ZipArchive
     Dim index As New List(Of DynamicIndex)
-    Dim mzcalc As Dictionary(Of String, MzCalculator)
+    Dim mzcalc As New Dictionary(Of String, MzCalculator)
 
     Private Class DynamicIndex
         Public mz As Double
@@ -114,7 +114,20 @@ Public Class Writer : Implements IDisposable
             Call buffer.Close()
         End If
 
-        Call ref.SetFragments()
+        ref.fragments = LibraryFile.AnnotationSet(ref.spectrums)
+        ref.spectrums = ref.spectrums _
+            .Select(Function(m)
+                        Dim i As Integer() = which(m.intensity.Select(Function(into) into > 0))
+
+                        Return New Spectrum With {
+                            .guid = m.guid, .ionMode = m.ionMode,
+                            .mz = i.Select(Function(idx) m.mz(idx)).ToArray,
+                            .annotations = i.Select(Function(idx) m.annotations(idx)).ToArray,
+                            .intensity = i.Select(Function(idx) m.intensity(idx)).ToArray
+                        }
+                    End Function) _
+            .ToArray
+
         Call MsgPackSerializer.SerializeObject(ref, pack.Open, closeFile:=True)
     End Sub
 
