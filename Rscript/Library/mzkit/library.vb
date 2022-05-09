@@ -92,7 +92,8 @@ Module library
                                     Optional read As Boolean = True,
                                     Optional env As Environment = Nothing) As Object
 
-        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
+        Dim mode As IO.FileAccess = If(read, IO.FileAccess.Read, IO.FileAccess.Write)
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, mode, env)
 
         If buffer Like GetType(Message) Then
             Return buffer.TryCast(Of Message)
