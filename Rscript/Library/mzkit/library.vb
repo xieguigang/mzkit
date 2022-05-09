@@ -1,5 +1,6 @@
 ﻿
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
@@ -58,10 +59,22 @@ Module library
         End If
 
         If read Then
-            Throw New NotImplementedException
+            Return New Reader(buffer.TryCast(Of Stream))
         Else
             Return New Writer(buffer.TryCast(Of Stream))
         End If
+    End Function
+
+    <ExportAPI("queryByMz")>
+    <RApiReturn(GetType(Metabolite))>
+    Public Function queryByMz([lib] As Reader, mz As Double, Optional tolerance As Object = Nothing, Optional env As Environment = Nothing) As Object
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Return [lib].QueryByMz(mz, mzdiff.TryCast(Of Tolerance)).ToArray
     End Function
 
     <ExportAPI("addReference")>
