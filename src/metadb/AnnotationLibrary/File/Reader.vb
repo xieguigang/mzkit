@@ -25,7 +25,7 @@ Public Class Reader : Inherits LibraryFile
     End Sub
 
     Public Function GetSpectrums(spectrumBlockId As String) As Spectrum()
-        Dim spectrumName As String = $"{spectrumBlockId.Substring(0, 2)}/{spectrumBlockId}.dat"
+        Dim spectrumName As String = $"{spectrumBlockId.Substring(0, 2)}/{spectrumBlockId}.mat"
         Dim pack As ZipArchiveEntry = file.Entries _
             .Where(Function(i) i.FullName = spectrumName) _
             .FirstOrDefault

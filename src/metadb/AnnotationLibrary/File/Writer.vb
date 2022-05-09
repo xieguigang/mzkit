@@ -86,7 +86,7 @@ Public Class Writer : Inherits LibraryFile
     Public Sub AddReference(ref As Metabolite)
         Dim key As String = AddIndex(ref)
         Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
-        Dim spectrumName As String = $"{key.Substring(0, 2)}/{key}.dat"
+        Dim spectrumName As String = $"{key.Substring(0, 2)}/{key}.mat"
         Dim missing As Boolean = False
         Dim pack As ZipArchiveEntry = getSection(fullName, missing)
         Dim targetSpectrum = getSection(spectrumName, missing)
