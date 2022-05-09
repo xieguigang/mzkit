@@ -1,5 +1,7 @@
 ﻿
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -45,6 +47,44 @@ Module library
         End Using
 
         Return True
+    End Function
+
+    <ExportAPI("populateIonData")>
+    <Extension>
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function PopulateIonData(raw As mzPack, mzdiff As Object, Optional env As Environment = Nothing) As Object
+        Dim tolerance = Math.getTolerance(mzdiff, env)
+
+        If tolerance Like GetType(Message) Then
+            Return tolerance.TryCast(Of Message)
+        End If
+
+        Dim mzErr As Tolerance = tolerance.TryCast(Of Tolerance)
+        Dim ions As New List(Of PeakMs2)
+
+        For Each ms1 In raw.MS
+            For Each ms2 In ms1.products.SafeQuery
+                For Each mzi As Double In ms1.mz
+                    If mzErr(mzi, ms2.parentMz) Then
+                        Dim ion2 As New PeakMs2 With {
+                            .mz = mzi,
+                            .rt = ms1.rt,
+                            .file = raw.source,
+                            .lib_guid = ms2.scan_id,
+                            .activation = ms2.activationMethod.Description,
+                            .collisionEnergy = ms2.collisionEnergy,
+                            .intensity = ms2.intensity,
+                            .scan = ms2.scan_id,
+                            .mzInto = ms2.GetMs.ToArray
+                        }
+
+                        Call ions.Add(ion2)
+                    End If
+                Next
+            Next
+        Next
+
+        Return ions.ToArray
     End Function
 
     <ExportAPI("openLibrary")>
