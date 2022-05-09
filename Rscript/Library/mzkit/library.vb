@@ -133,7 +133,7 @@ Module library
 
             mz = REnv.asVector(Of Double)(df("mz"))
             intensity = REnv.asVector(Of Double)(df("intensity"))
-            annotations = REnv.asVector(Of Double)(df("annotation"))
+            annotations = REnv.asVector(Of String)(df("annotation"))
             ionMode = ParseIonMode(any.ToString(ionMode))
         ElseIf TypeOf data Is LibraryMatrix Then
             Dim mat As LibraryMatrix = DirectCast(data, LibraryMatrix)
