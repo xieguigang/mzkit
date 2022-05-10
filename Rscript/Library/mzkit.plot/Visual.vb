@@ -112,18 +112,15 @@ Module Visual
         Dim pairwise = aligns.GetAlignmentMirror
         Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
 
-        Return pairwise.query _
-            .MirrorPlot(
-                plotTitle:=title,
-                drawGrid:=True,
-                tagXFormat:="F2",
-                labelDisplayIntensity:=0.5,
-                titles:={
-                    aligns.query.id,
-                    aligns.reference.id
-                },
-                driver:=env.getDriver
-            )
+        Return MassSpectra.AlignMirrorPlot(
+            query:=pairwise.query,
+            ref:=pairwise.ref,
+            title:=title,
+            drawGrid:=True,
+            tagXFormat:="F2",
+            labelDisplayIntensity:=0.5,
+            driver:=env.getDriver
+        )
     End Function
 
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
