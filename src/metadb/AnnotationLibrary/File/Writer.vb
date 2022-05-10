@@ -7,19 +7,17 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.SecurityString
 Imports stdNum = System.Math
 
-Public Class Writer : Implements IDisposable
+Public Class Writer : Inherits LibraryFile
+    Implements IDisposable
 
     Dim disposedValue As Boolean
-    Dim file As ZipArchive
     Dim index As New List(Of DynamicIndex)
-    Dim mzcalc As Dictionary(Of String, MzCalculator)
+    Dim mzcalc As New Dictionary(Of String, MzCalculator)
 
     Private Class DynamicIndex
         Public mz As Double
         Public keys As New List(Of String)
     End Class
-
-    Const IndexPath As String = ".metadata/index"
 
     Sub New(file As String, Optional truncated As Boolean = False)
         Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True), truncated)
@@ -41,19 +39,14 @@ Public Class Writer : Implements IDisposable
         End If
     End Sub
 
-    Private Sub LoadIndex()
-        Dim list = From file As ZipArchiveEntry
-                   In Me.file.Entries
-                   Where file.FullName.StartsWith(IndexPath)
-
-        For Each i As ZipArchiveEntry In list
-            Dim tmp As MassIndex = MsgPackSerializer.Deserialize(Of MassIndex)(i.Open)
+    Private Overloads Sub LoadIndex()
+        For Each index As MassIndex In LibraryFile.LoadIndex(file)
             Dim target As New DynamicIndex With {
-                .mz = tmp.mz,
-                .keys = tmp.referenceIds.AsList
+                .mz = index.mz,
+                .keys = index.referenceIds.AsList
             }
 
-            Call index.Add(target)
+            Call Me.index.Add(target)
         Next
     End Sub
 
@@ -75,7 +68,9 @@ Public Class Writer : Implements IDisposable
     End Sub
 
     Private Function getSection(fullName As String, ByRef missing As Boolean) As ZipArchiveEntry
-        Dim pack As ZipArchiveEntry = file.Entries.Where(Function(i) i.FullName = fullName).FirstOrDefault
+        Dim pack As ZipArchiveEntry = file.Entries _
+            .Where(Function(i) i.FullName = fullName) _
+            .FirstOrDefault
 
         If pack Is Nothing Then
             pack = file.CreateEntry(fullName)
@@ -90,19 +85,29 @@ Public Class Writer : Implements IDisposable
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddReference(ref As Metabolite)
         Dim key As String = AddIndex(ref)
-        Dim fullName As String = $"{key.Substring(0, 2)}/{key}.dat"
+        Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
+        Dim spectrumName As String = $"{key.Substring(0, 2)}/{key}.mat"
         Dim missing As Boolean = False
+        Dim missingMsData As Boolean = False
         Dim pack As ZipArchiveEntry = getSection(fullName, missing)
+        Dim targetSpectrum = getSection(spectrumName, missingMsData)
 
         If Not missing Then
+            ' join the existed spectrum data in the current library file
             Dim buffer = pack.Open
             Dim current As Metabolite = MsgPackSerializer.Deserialize(Of Metabolite)(buffer)
             Dim ions As PrecursorData() = ref.precursors _
                 .JoinIterates(current.precursors) _
                 .ToArray
-            Dim spectrumPeaks = ref.spectrums _
-                .JoinIterates(current.spectrums) _
-                .ToArray
+            Dim spectrumPeaks As Spectrum() = Nothing
+
+            If Not missingMsData Then
+                Using msBuffer = targetSpectrum.Open
+                    spectrumPeaks = ref.spectrums _
+                        .JoinIterates(MsgPackSerializer.Deserialize(Of Spectrum())(msBuffer)) _
+                        .ToArray
+                End Using
+            End If
 
             ' union two object
             ref = New Metabolite With {
@@ -114,8 +119,42 @@ Public Class Writer : Implements IDisposable
             Call buffer.Close()
         End If
 
-        Call ref.SetFragments()
+        ref.precursors = ref.precursors _
+            .GroupBy(Function(t) $"[{t.ion}]{t.charge}") _
+            .Select(Function(p)
+                        Return New PrecursorData With {
+                            .charge = p.First.charge,
+                            .ion = p.First.ion,
+                            .mz = p.Select(Function(a) a.mz).Average,
+                            .rt = p _
+                                .Select(Function(a) a.rt) _
+                                .IteratesALL _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
+        ref.fragments = LibraryFile.AnnotationSet(ref.spectrums)
+        ref.spectrums = ref.spectrums _
+            .Select(Function(m)
+                        Dim i As Integer() = which(m.intensity.Select(Function(into) into > 0))
+
+                        Return New Spectrum With {
+                            .guid = m.guid,
+                            .ionMode = m.ionMode,
+                            .mz = i.Select(Function(idx) m.mz(idx)).ToArray,
+                            .annotations = i.Select(Function(idx) m.annotations(idx)).ToArray,
+                            .intensity = i _
+                                .Select(Function(idx) m.intensity(idx)) _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
+
+        Dim spectrums = ref.spectrums
+        ref.spectrums = Nothing
+
         Call MsgPackSerializer.SerializeObject(ref, pack.Open, closeFile:=True)
+        Call MsgPackSerializer.SerializeObject(spectrums, targetSpectrum.Open, closeFile:=True)
     End Sub
 
     ''' <summary>

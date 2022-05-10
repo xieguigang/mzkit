@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::e57e40635c2fe3d3f353c5e60a703e98, mzkit\src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 117
-    '    Code Lines: 57
-    ' Comment Lines: 45
-    '   Blank Lines: 15
-    '     File Size: 4.06 KB
+' Summaries:
 
 
-    '     Class PeakMs2
-    ' 
-    '         Properties: activation, collisionEnergy, file, fragments, intensity
-    '                     lib_guid, meta, Ms2Intensity, mz, mzInto
-    '                     precursor_type, rt, scan
-    ' 
-    '         Function: AlignMatrix, GetIntensity, RtInSecond, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 117
+'    Code Lines: 57
+' Comment Lines: 45
+'   Blank Lines: 15
+'     File Size: 4.06 KB
+
+
+'     Class PeakMs2
+' 
+'         Properties: activation, collisionEnergy, file, fragments, intensity
+'                     lib_guid, meta, Ms2Intensity, mz, mzInto
+'                     precursor_type, rt, scan
+' 
+'         Function: AlignMatrix, GetIntensity, RtInSecond, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports stdNum = System.Math
 
 Namespace Spectra
@@ -115,6 +116,7 @@ Namespace Spectra
         ''' 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
         ''' </summary>
         ''' <returns></returns>
+        <ScriptIgnore>
         Public ReadOnly Property Ms2Intensity As Double
             Get
                 Return Aggregate mz As ms2
@@ -123,6 +125,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <ScriptIgnore>
         Public ReadOnly Property fragments As Integer
             Get
                 If mzInto Is Nothing Then

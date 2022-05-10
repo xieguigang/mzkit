@@ -1,5 +1,8 @@
 ﻿
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
@@ -46,22 +49,76 @@ Module library
         Return True
     End Function
 
+    <ExportAPI("populateIonData")>
+    <Extension>
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function PopulateIonData(raw As mzPack, mzdiff As Object, Optional env As Environment = Nothing) As Object
+        Dim tolerance = Math.getTolerance(mzdiff, env)
+
+        If tolerance Like GetType(Message) Then
+            Return tolerance.TryCast(Of Message)
+        End If
+
+        Dim mzErr As Tolerance = tolerance.TryCast(Of Tolerance)
+        Dim ions As New List(Of PeakMs2)
+
+        For Each ms1 In raw.MS
+            For Each ms2 In ms1.products.SafeQuery
+                For Each mzi As Double In ms1.mz
+                    If mzErr(mzi, ms2.parentMz) Then
+                        Dim ion2 As New PeakMs2 With {
+                            .mz = mzi,
+                            .rt = ms1.rt,
+                            .file = raw.source,
+                            .lib_guid = ms2.scan_id,
+                            .activation = ms2.activationMethod.Description,
+                            .collisionEnergy = ms2.collisionEnergy,
+                            .intensity = ms2.intensity,
+                            .scan = ms2.scan_id,
+                            .mzInto = ms2.GetMs.ToArray
+                        }
+
+                        Call ions.Add(ion2)
+                    End If
+                Next
+            Next
+        Next
+
+        Return ions.ToArray
+    End Function
+
     <ExportAPI("openLibrary")>
     Public Function createLibraryIO(file As Object,
                                     Optional read As Boolean = True,
                                     Optional env As Environment = Nothing) As Object
 
-        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
+        Dim mode As IO.FileAccess = If(read, IO.FileAccess.Read, IO.FileAccess.Write)
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, mode, env)
 
         If buffer Like GetType(Message) Then
             Return buffer.TryCast(Of Message)
         End If
 
         If read Then
-            Throw New NotImplementedException
+            Return New Reader(buffer.TryCast(Of Stream))
         Else
             Return New Writer(buffer.TryCast(Of Stream))
         End If
+    End Function
+
+    <ExportAPI("queryByMz")>
+    <RApiReturn(GetType(Metabolite))>
+    Public Function queryByMz([lib] As Reader, mz As Double,
+                              Optional tolerance As Object = Nothing,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Return [lib].QueryByMz(mz, mzdiff.TryCast(Of Tolerance)).ToArray
     End Function
 
     <ExportAPI("addReference")>
@@ -99,6 +156,11 @@ Module library
         }
     End Function
 
+    ''' <summary>
+    ''' create precursor ion library dataset
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <ExportAPI("precursorIons")>
     Public Function createPrecursorIons(data As dataframe) As PrecursorData()
         Dim mz As Double() = REnv.asVector(Of Double)(data("mz"))
@@ -110,7 +172,7 @@ Module library
             .Select(Function(mzi, i)
                         Return New PrecursorData With {
                             .mz = mzi,
-                            .rt = rt(i),
+                            .rt = New Double() {rt(i)},
                             .charge = charge(i),
                             .ion = ion(i)
                         }
@@ -133,7 +195,7 @@ Module library
 
             mz = REnv.asVector(Of Double)(df("mz"))
             intensity = REnv.asVector(Of Double)(df("intensity"))
-            annotations = REnv.asVector(Of Double)(df("annotation"))
+            annotations = REnv.asVector(Of String)(df("annotation"))
             ionMode = ParseIonMode(any.ToString(ionMode))
         ElseIf TypeOf data Is LibraryMatrix Then
             Dim mat As LibraryMatrix = DirectCast(data, LibraryMatrix)

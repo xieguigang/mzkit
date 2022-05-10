@@ -1,8 +1,14 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports System.IO.Compression
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
-Public Class LibraryFile
+Public MustInherit Class LibraryFile
+
+    Friend Const IndexPath As String = ".metadata/index"
+    Friend Const annotationPath As String = ".metadata/annotations"
+
+    Protected file As ZipArchive
 
     Private Class AnnotationSchema : Inherits SchemaProvider(Of ms2)
 
@@ -20,6 +26,16 @@ Public Class LibraryFile
     Shared Sub New()
         Call MsgPackSerializer.DefaultContext.RegisterSerializer(New AnnotationSchema)
     End Sub
+
+    Friend Shared Iterator Function LoadIndex(zip As ZipArchive) As IEnumerable(Of MassIndex)
+        Dim list = From file As ZipArchiveEntry
+                   In zip.Entries
+                   Where file.FullName.StartsWith(IndexPath)
+
+        For Each i As ZipArchiveEntry In list
+            Yield MsgPackSerializer.Deserialize(Of MassIndex)(i.Open)
+        Next
+    End Function
 
     ''' <summary>
     ''' create peak fragment annotation list

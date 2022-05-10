@@ -61,6 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -108,6 +109,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <ScriptIgnore>
         Public ReadOnly Property intensity As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -121,6 +123,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <ScriptIgnore>
         Public ReadOnly Property mz As Double()
             Get
                 Return ms2.Select(Function(i) i.mz).ToArray

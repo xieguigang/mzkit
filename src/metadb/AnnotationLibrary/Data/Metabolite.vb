@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' data model of the metabolite ms reference data
@@ -23,6 +24,23 @@ Public Class Metabolite
         End Get
     End Property
 
+    Public ReadOnly Property rt As Double()
+        Get
+            Return precursors _
+                .Select(Function(p) p.rt) _
+                .IteratesALL _
+                .ToArray
+        End Get
+    End Property
+
+    Public ReadOnly Property mz As Double()
+        Get
+            Return precursors _
+                .Select(Function(p) p.mz) _
+                .ToArray
+        End Get
+    End Property
+
     <MessagePackMember(0)> Public Property annotation As MetaInfo
     <MessagePackMember(1)> Public Property precursors As PrecursorData()
     <MessagePackMember(2)> Public Property spectrums As Spectrum()
@@ -37,9 +55,7 @@ Public Class Metabolite
     ''' <returns></returns>
     <MessagePackMember(3)> Public Property fragments As ms2()
 
-    Public Sub SetFragments()
-        fragments = LibraryFile.AnnotationSet(spectrums)
-    End Sub
+    Public Property spectrumBlockId As String
 
 End Class
 
@@ -47,7 +63,7 @@ Public Class PrecursorData
 
     <MessagePackMember(0)> Public Property ion As String
     <MessagePackMember(1)> Public Property charge As Integer
-    <MessagePackMember(2)> Public Property rt As Double
+    <MessagePackMember(2)> Public Property rt As Double()
     ''' <summary>
     ''' the experiment m/z data
     ''' </summary>

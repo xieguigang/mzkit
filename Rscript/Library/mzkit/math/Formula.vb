@@ -87,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -288,6 +289,39 @@ Module FormulaTools
     <ROperator("+")>
     Public Function add(part1 As Formula, part2 As Formula) As Formula
         Return part1 + part2
+    End Function
+
+    ''' <summary>
+    ''' Removes the precrusor ion groups
+    ''' </summary>
+    ''' <param name="ionFormula"></param>
+    ''' <param name="precursor"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ROperator("-")>
+    Public Function minus(ionFormula As Formula, precursor As MzCalculator, Optional env As Environment = Nothing) As Formula
+        Dim ionName As String = precursor.name
+        Dim ion = Parser.Formula(precursor.name)
+
+        If ion Like GetType(String) Then
+            Throw New InvalidExpressionException(ion.TryCast(Of String))
+        Else
+            For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
+                Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
+
+                subIon *= stdNum.Abs(part.sign)
+
+                If part.sign > 0 Then
+                    ' delete part
+                    ionFormula -= subIon
+                Else
+                    ' add part
+                    ionFormula += subIon
+                End If
+            Next
+        End If
+
+        Return ionFormula
     End Function
 
     <ROperator("-")>

@@ -105,7 +105,10 @@ Namespace Ms1.PrecursorType
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
+        Public Function ParseMzCalculator(precursor_type$,
+                                          Optional ionMode$ = "+",
+                                          Optional skipEvalAdducts As Boolean = False) As MzCalculator
+
             Static cache As New Dictionary(Of String, Dictionary(Of String, MzCalculator)) From {
                 {"+", New Dictionary(Of String, MzCalculator)},
                 {"-", New Dictionary(Of String, MzCalculator)}
@@ -121,7 +124,10 @@ Namespace Ms1.PrecursorType
         End Function
 
         <Extension>
-        Private Function ParseMzCalculatorInternal(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
+        Private Function ParseMzCalculatorInternal(precursor_type$,
+                                                   Optional ionMode$ = "+",
+                                                   Optional skipEvalAdducts As Boolean = False) As MzCalculator
+
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge

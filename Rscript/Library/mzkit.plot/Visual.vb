@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -104,7 +105,23 @@ Module Visual
         Call Internal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
         Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
         Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
+        Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
     End Sub
+
+    Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
+        Dim pairwise = aligns.GetAlignmentMirror
+        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+
+        Return MassSpectra.AlignMirrorPlot(
+            query:=pairwise.query,
+            ref:=pairwise.ref,
+            title:=title,
+            drawGrid:=True,
+            tagXFormat:="F2",
+            labelDisplayIntensity:=0.5,
+            driver:=env.getDriver
+        )
+    End Function
 
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
