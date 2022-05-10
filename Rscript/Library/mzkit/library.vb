@@ -156,6 +156,11 @@ Module library
         }
     End Function
 
+    ''' <summary>
+    ''' create precursor ion library dataset
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <ExportAPI("precursorIons")>
     Public Function createPrecursorIons(data As dataframe) As PrecursorData()
         Dim mz As Double() = REnv.asVector(Of Double)(data("mz"))
@@ -167,7 +172,7 @@ Module library
             .Select(Function(mzi, i)
                         Return New PrecursorData With {
                             .mz = mzi,
-                            .rt = rt(i),
+                            .rt = New Double() {rt(i)},
                             .charge = charge(i),
                             .ion = ion(i)
                         }
