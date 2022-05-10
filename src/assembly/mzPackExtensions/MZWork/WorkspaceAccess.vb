@@ -105,12 +105,15 @@ Namespace MZWork
             For Each cache As NamedValue(Of Raw) In ReleaseCache(raws)
                 Dim meta As Raw = cache.Value
                 Dim tempfile As String = meta.cache
-
-                Yield mzPack.Read(
+                Dim pack As mzPack = mzPack.Read(
                     filepath:=tempfile,
                     ignoreThumbnail:=True,
                     verbose:=verbose
                 )
+
+                pack.source = meta.source.FileName
+
+                Yield pack
             Next
         End Function
 
