@@ -125,7 +125,7 @@ Public Class Writer : Inherits LibraryFile
                         Return New PrecursorData With {
                             .charge = p.First.charge,
                             .ion = p.First.ion,
-                            .mz = p.Select(Function(a) .mz).Average,
+                            .mz = p.Select(Function(a) a.mz).Average,
                             .rt = p _
                                 .Select(Function(a) a.rt) _
                                 .IteratesALL _
