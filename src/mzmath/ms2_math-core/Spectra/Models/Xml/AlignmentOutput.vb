@@ -91,7 +91,11 @@ Namespace Spectra.Xml
             Get
                 Return alignments _
                     .Where(Function(a)
-                               Return Not Double.Parse(a.da).IsNaNImaginary
+                               If a.da = "NA" Then
+                                   Return False
+                               Else
+                                   Return Not Double.Parse(a.da).IsNaNImaginary
+                               End If
                            End Function) _
                     .Count
             End Get
