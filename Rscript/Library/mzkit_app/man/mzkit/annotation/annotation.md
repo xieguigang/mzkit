@@ -9,5 +9,5 @@
 + [addReference](annotation/addReference.1) 
 + [annotation](annotation/annotation.1) 
 + [metabolite](annotation/metabolite.1) 
-+ [precursorIons](annotation/precursorIons.1) 
++ [precursorIons](annotation/precursorIons.1) create precursor ion library dataset
 + [asSpectrum](annotation/asSpectrum.1) 
