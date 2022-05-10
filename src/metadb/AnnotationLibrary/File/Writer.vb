@@ -88,18 +88,20 @@ Public Class Writer : Inherits LibraryFile
         Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
         Dim spectrumName As String = $"{key.Substring(0, 2)}/{key}.mat"
         Dim missing As Boolean = False
+        Dim missingMsData As Boolean = False
         Dim pack As ZipArchiveEntry = getSection(fullName, missing)
-        Dim targetSpectrum = getSection(spectrumName, missing)
+        Dim targetSpectrum = getSection(spectrumName, missingMsData)
 
         If Not missing Then
+            ' join the existed spectrum data in the current library file
             Dim buffer = pack.Open
             Dim current As Metabolite = MsgPackSerializer.Deserialize(Of Metabolite)(buffer)
             Dim ions As PrecursorData() = ref.precursors _
                 .JoinIterates(current.precursors) _
                 .ToArray
-            Dim spectrumPeaks As Spectrum()
+            Dim spectrumPeaks As Spectrum() = Nothing
 
-            If Not missing Then
+            If Not missingMsData Then
                 Using msBuffer = targetSpectrum.Open
                     spectrumPeaks = ref.spectrums _
                         .JoinIterates(MsgPackSerializer.Deserialize(Of Spectrum())(msBuffer)) _
@@ -117,6 +119,20 @@ Public Class Writer : Inherits LibraryFile
             Call buffer.Close()
         End If
 
+        ref.precursors = ref.precursors _
+            .GroupBy(Function(t) $"[{t.ion}]{t.charge}") _
+            .Select(Function(p)
+                        Return New PrecursorData With {
+                            .charge = p.First.charge,
+                            .ion = p.First.ion,
+                            .mz = p.Select(Function(a) .mz).Average,
+                            .rt = p _
+                                .Select(Function(a) a.rt) _
+                                .IteratesALL _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
         ref.fragments = LibraryFile.AnnotationSet(ref.spectrums)
         ref.spectrums = ref.spectrums _
             .Select(Function(m)
@@ -127,7 +143,9 @@ Public Class Writer : Inherits LibraryFile
                             .ionMode = m.ionMode,
                             .mz = i.Select(Function(idx) m.mz(idx)).ToArray,
                             .annotations = i.Select(Function(idx) m.annotations(idx)).ToArray,
-                            .intensity = i.Select(Function(idx) m.intensity(idx)).ToArray
+                            .intensity = i _
+                                .Select(Function(idx) m.intensity(idx)) _
+                                .ToArray
                         }
                     End Function) _
             .ToArray
