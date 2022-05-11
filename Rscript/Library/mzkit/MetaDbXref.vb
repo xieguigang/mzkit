@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
@@ -73,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
 ''' 
@@ -247,12 +249,19 @@ Module MetaDbXref
     ''' get duplictaed raw annotation results.
     ''' </summary>
     ''' <param name="engine"></param>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">
+    ''' a m/z numeric vector or a object list that 
+    ''' contains the data mapping of unique id to 
+    ''' m/z value.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
     <RApiReturn(GetType(MzQuery))>
-    Public Function ms1Search(engine As Object, mz As Double(),
+    Public Function ms1Search(engine As Object,
+                              <RRawVectorArgument>
+                              mz As Object,
                               Optional unique As Boolean = False,
+                              Optional uniqueByScore As Boolean = False,
                               Optional env As Environment = Nothing) As Object
 
         Dim queryEngine As IMzQuery
@@ -265,13 +274,60 @@ Module MetaDbXref
             Return Internal.debug.stop("invalid handler type!", env)
         End If
 
-        If mz.IsNullOrEmpty Then
+        If mz Is Nothing Then
             Return Nothing
-        ElseIf mz.Length = 1 Then
+        End If
+
+        If TypeOf mz Is list Then
+            Return DirectCast(mz, list).searchMzList(queryEngine, unique, uniqueByScore, env)
+        Else
+            Return DirectCast(REnv.asVector(Of Double)(mz), Double()).searchMzVector(queryEngine, unique, uniqueByScore)
+        End If
+    End Function
+
+    <Extension>
+    Private Function searchMzList(mz As list,
+                                  queryEngine As IMzQuery,
+                                  unique As Boolean,
+                                  uniqueByScore As Boolean,
+                                  env As Environment) As Object
+        Return New list With {
+            .slots = mz.slots _
+                .ToDictionary(Function(id) id.Key,
+                              Function(id)
+                                  Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
+                                  Dim all = queryEngine.QueryByMz(mzi).ToArray
+
+                                  If unique Then
+                                      If uniqueByScore Then
+                                          Return all _
+                                             .OrderByDescending(Function(d) d.score) _
+                                             .FirstOrDefault
+                                      Else
+                                          Return all _
+                                             .OrderBy(Function(d) d.ppm) _
+                                             .FirstOrDefault
+                                      End If
+                                  Else
+                                      Return all
+                                  End If
+                              End Function)
+        }
+    End Function
+
+    <Extension>
+    Private Function searchMzVector(mz As Double(), queryEngine As IMzQuery, unique As Boolean, uniqueByScore As Boolean) As Object
+        If mz.Length = 1 Then
             Dim all = queryEngine.QueryByMz(mz(Scan0)).ToArray
 
             If unique Then
-                Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
+                If uniqueByScore Then
+                    Return all _
+                        .OrderByDescending(Function(d) d.score) _
+                        .FirstOrDefault
+                Else
+                    Return all.OrderBy(Function(d) d.ppm).FirstOrDefault
+                End If
             Else
                 Return all
             End If
@@ -281,17 +337,20 @@ Module MetaDbXref
                     .Select(Function(mzi, i) (mzi, i)) _
                     .AsParallel _
                     .Select(Function(t)
-                                Dim result As Object
                                 Dim mzi As Double = t.mzi
                                 Dim i As Integer = t.i
+                                Dim result As Object = queryEngine.QueryByMz(mzi).ToArray
 
                                 If unique Then
-                                    result = queryEngine _
-                                        .QueryByMz(mzi) _
-                                        .OrderBy(Function(d) d.ppm) _
-                                        .FirstOrDefault
-                                Else
-                                    result = queryEngine.QueryByMz(mzi).ToArray
+                                    If uniqueByScore Then
+                                        result = DirectCast(result, MzQuery()) _
+                                            .OrderByDescending(Function(d) d.score) _
+                                            .FirstOrDefault
+                                    Else
+                                        result = DirectCast(result, MzQuery()) _
+                                            .OrderBy(Function(d) d.ppm) _
+                                            .FirstOrDefault
+                                    End If
                                 End If
 
                                 Return (mzi.ToString, result, i)
