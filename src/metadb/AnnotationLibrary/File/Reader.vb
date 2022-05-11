@@ -31,7 +31,8 @@ Public Class Reader : Inherits LibraryFile
         Me.index = New BlockSearchFunction(Of MassIndex)(
             data:=rawIndex,
             eval:=Function(i) i.mz,
-            tolerance:=massDiff
+            tolerance:=massDiff,
+            factor:=5
         )
     End Sub
 
