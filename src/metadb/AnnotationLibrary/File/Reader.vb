@@ -1,27 +1,38 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 
 Public Class Reader : Inherits LibraryFile
     Implements IDisposable
 
-    Dim index As MassIndex()
+    Dim index As BlockSearchFunction(Of MassIndex)
     Dim disposedValue As Boolean
 
-    Sub New(file As String)
-        Call Me.New(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(file As String, massDiff As Double)
+        Call Me.New(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True), massDiff)
     End Sub
 
-    Sub New(file As Stream)
-        Call Me.New(New ZipArchive(file, ZipArchiveMode.Read))
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(file As Stream, massDiff As Double)
+        Call Me.New(New ZipArchive(file, ZipArchiveMode.Read), massDiff)
     End Sub
 
-    Sub New(file As ZipArchive)
+    Sub New(file As ZipArchive, massDiff As Double)
         Me.file = file
-        Me.index = LibraryFile _
+
+        Dim rawIndex = LibraryFile _
             .LoadIndex(file) _
             .ToArray
+
+        Me.index = New BlockSearchFunction(Of MassIndex)(
+            data:=rawIndex,
+            eval:=Function(i) i.mz,
+            tolerance:=massDiff
+        )
     End Sub
 
     Public Function GetSpectrums(spectrumBlockId As String) As Spectrum()
@@ -37,8 +48,9 @@ Public Class Reader : Inherits LibraryFile
 
     Public Iterator Function QueryByMz(mz As Double, mzdiff As Tolerance) As IEnumerable(Of Metabolite)
         Dim data As Metabolite
+        Dim query As IEnumerable(Of MassIndex) = index.Search(New MassIndex With {.mz = mz})
 
-        For Each index As MassIndex In Me.index
+        For Each index As MassIndex In query
             If mzdiff(mz, index.mz) Then
                 For Each key As String In index.referenceIds
                     Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
@@ -49,7 +61,7 @@ Public Class Reader : Inherits LibraryFile
                     data = MsgPackSerializer.Deserialize(Of Metabolite)(pack.Open)
                     data.spectrumBlockId = key
 
-                    Yield Data
+                    Yield data
                 Next
             End If
         Next

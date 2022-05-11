@@ -90,6 +90,7 @@ Module library
     <ExportAPI("openLibrary")>
     Public Function createLibraryIO(file As Object,
                                     Optional read As Boolean = True,
+                                    Optional massDiff As Double = 0.05,
                                     Optional env As Environment = Nothing) As Object
 
         Dim mode As IO.FileAccess = If(read, IO.FileAccess.Read, IO.FileAccess.Write)
@@ -100,7 +101,7 @@ Module library
         End If
 
         If read Then
-            Return New Reader(buffer.TryCast(Of Stream))
+            Return New Reader(buffer.TryCast(Of Stream), massDiff)
         Else
             Return New Writer(buffer.TryCast(Of Stream))
         End If
