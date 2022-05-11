@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 
@@ -67,12 +68,20 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider}) : Implements IMzQuery
 
+    Friend Structure IonIndex
+
+        Dim mz As Double
+        Dim precursor As String
+        Dim compound As Compound
+
+    End Structure
+
     ReadOnly precursorTypes As MzCalculator()
     ''' <summary>
     ''' mass tolerance value for match sample mz and threocal mz
     ''' </summary>
     ReadOnly tolerance As Tolerance
-    ReadOnly mzIndex As (Double, Compound())()
+    ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
     ReadOnly score As Func(Of Compound, Double)
 
     ''' <summary>
@@ -110,17 +119,28 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                           Function(cgroup)
                               Return cgroup.First
                           End Function)
-        Me.mzIndex = Me.index _
+
+        Dim mzset = Me.index _
             .Values _
             .Select(Function(c)
-                        Return precursorTypes.Select(Function(t) (t.CalcMZ(c.ExactMass), c))
+                        Return precursorTypes _
+                            .Select(Function(t)
+                                        Return New IonIndex With {
+                                            .compound = c,
+                                            .mz = t.CalcMZ(c.ExactMass),
+                                            .precursor = t.ToString
+                                        }
+                                    End Function)
                     End Function) _
             .IteratesALL _
-            .GroupBy(Function(d) d.Item1) _
-            .Select(Function(g)
-                        Return (g.Key, g.Select(Function(i) i.c).ToArray)
-                    End Function) _
             .ToArray
+
+        Me.mzIndex = New BlockSearchFunction(Of IonIndex)(
+            data:=mzset,
+            eval:=Function(m) m.mz,
+            tolerance:=0.3,
+            factor:=2
+        )
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -148,11 +168,11 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' the query score is zero from this function
     ''' </remarks>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
-        Dim query As New MassIndexKey With {.mz = mz}
+        Dim query As New IonIndex With {.mz = mz}
         Dim result As Compound() = mzIndex _
-            .Where(Function(d) tolerance(d.Item1, mz)) _
-            .Select(Function(d) d.Item2) _
-            .IteratesALL _
+            .Search(query) _
+            .Where(Function(d) tolerance(d.mz, mz)) _
+            .Select(Function(d) d.compound) _
             .GroupBy(Function(d) d.Identity) _
             .Select(Function(g)
                         Return g.First
