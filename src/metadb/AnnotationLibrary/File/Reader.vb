@@ -52,7 +52,7 @@ Public Class Reader : Inherits LibraryFile
 
         For Each index As MassIndex In query
             If mzdiff(mz, index.mz) Then
-                For Each key As String In index.referenceIds.Distinct
+                For Each key As String In index.referenceIds
                     Dim fullName As String = $"{LibraryFile.annotationPath}/{key.Substring(0, 2)}/{key}.dat"
                     Dim pack As ZipArchiveEntry = file.Entries _
                         .Where(Function(i) i.FullName = fullName) _

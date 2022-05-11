@@ -31,9 +31,13 @@ Public MustInherit Class LibraryFile
         Dim list = From file As ZipArchiveEntry
                    In zip.Entries
                    Where file.FullName.StartsWith(IndexPath)
+        Dim mass As MassIndex
 
         For Each i As ZipArchiveEntry In list
-            Yield MsgPackSerializer.Deserialize(Of MassIndex)(i.Open)
+            mass = MsgPackSerializer.Deserialize(Of MassIndex)(i.Open)
+            mass.referenceIds = mass.referenceIds.Distinct.ToArray
+
+            Yield mass
         Next
     End Function
 
