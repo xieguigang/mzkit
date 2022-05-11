@@ -372,7 +372,10 @@ Module MetaDbXref
     ''' <returns></returns>
     <ExportAPI("uniqueFeatures")>
     <RApiReturn(GetType(dataframe))>
-    Public Function searchTable(query As list, Optional env As Environment = Nothing) As Object
+    Public Function searchTable(query As list,
+                                Optional uniqueByScore As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim mz As String() = query.getNames
         Dim mzquery = mz _
             .Select(Function(mzi)
@@ -381,31 +384,49 @@ Module MetaDbXref
                         Dim unique As MzQuery = Nothing
 
                         If Not all.IsNullOrEmpty Then
-                            unique = all.OrderBy(Function(d) d.ppm).First
+                            If uniqueByScore Then
+                                unique = all _
+                                    .OrderByDescending(Function(d) d.score) _
+                                    .First
+                            Else
+                                unique = all.OrderBy(Function(d) d.ppm).First
+                            End If
                         End If
 
                         Return New NamedValue(Of MzQuery)(mzi, unique)
                     End Function) _
             .ToArray
+        Dim betterJ As Boolean
+
         ' unique between features
         ' via min ppm?
         For i As Integer = 0 To mz.Length - 1
-            If Not mzquery(i).Value.isEmpty Then
-                For j As Integer = 0 To mz.Length - 1
-                    If i = j Then
-                        Continue For
-                    ElseIf mzquery(j).Value.unique_id = mzquery(i).Value.unique_id Then
-                        If mzquery(j).Value.ppm < mzquery(i).Value.ppm Then
-                            ' j is better
-                            mzquery(i) = New NamedValue(Of MzQuery)(mz(i), New MzQuery With {.mz = Val(mz(i))})
-                            Exit For
-                        Else
-                            ' i is better
-                            mzquery(j) = New NamedValue(Of MzQuery)(mz(j), New MzQuery With {.mz = Val(mz(j))})
-                        End If
-                    End If
-                Next
+            If mzquery(i).Value.isEmpty Then
+                Continue For
             End If
+
+            For j As Integer = 0 To mz.Length - 1
+                If i = j OrElse mzquery(j).Value.unique_id <> mzquery(i).Value.unique_id Then
+                    Continue For
+                End If
+
+                If uniqueByScore Then
+                    betterJ = mzquery(j).Value.score > mzquery(i).Value.score
+                Else
+                    betterJ = mzquery(j).Value.ppm < mzquery(i).Value.ppm
+                End If
+
+                If betterJ Then
+                    ' j is better
+                    ' set i to nothing
+                    mzquery(i) = New NamedValue(Of MzQuery)(mz(i), New MzQuery With {.mz = mzquery(i).Value.mz})
+                    Exit For
+                Else
+                    ' i is better
+                    ' set j to nothing
+                    mzquery(j) = New NamedValue(Of MzQuery)(mz(j), New MzQuery With {.mz = mzquery(j).Value.mz})
+                End If
+            Next
         Next
 
         Return New dataframe With {

@@ -175,7 +175,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFileReader.NET5", "..\..\
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormulaSearch.Extensions.NET5", "..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj", "{65F8866B-F719-414B-A4E7-8D945E9F0419}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnnotationLibrary", "..\..\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj", "{86A3B54B-208D-4CF4-8DA5-706F60231280}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "AnnotationLibrary", "..\..\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj", "{86A3B54B-208D-4CF4-8DA5-706F60231280}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
