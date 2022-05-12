@@ -16,4 +16,8 @@ Public Class MassIndex
     ''' <returns></returns>
     <MessagePackMember(1)> Public Property referenceIds As String()
 
+    Public Overrides Function ToString() As String
+        Return mz.ToString("F4")
+    End Function
+
 End Class

@@ -613,7 +613,7 @@ Module data
     End Function
 
     <ExportAPI("read.MsMatrix")>
-    Public Function readMatrix(file As String) As Library()
-        Return file.LoadCsv(Of Library)
+    Public Function readMatrix(file As String) As Spectra.Library()
+        Return file.LoadCsv(Of Spectra.Library)
     End Function
 End Module

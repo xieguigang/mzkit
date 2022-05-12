@@ -55,6 +55,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -193,6 +194,11 @@ Module MetaDbXref
                         End Function) _
                 .ToArray
         End If
+    End Function
+
+    <ExportAPI("precursorIon")>
+    Public Function ParsePrecursorIon(ion As String) As MzCalculator
+        Return ParseMzCalculator(ion, ion.Last)
     End Function
 
     ''' <summary>

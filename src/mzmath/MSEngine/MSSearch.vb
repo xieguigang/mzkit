@@ -68,6 +68,9 @@ Imports Microsoft.VisualBasic.Linq
 Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider}) : Implements IMzQuery
 
     ReadOnly precursorTypes As MzCalculator()
+    ''' <summary>
+    ''' mass tolerance value for match sample mz and threocal mz
+    ''' </summary>
     ReadOnly tolerance As Tolerance
     ReadOnly mzIndex As (Double, Compound())()
     ReadOnly score As Func(Of Compound, Double)
@@ -84,6 +87,15 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         End Get
     End Property
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="tolerance">
+    ''' the mass tolerance value between two mass value
+    ''' </param>
+    ''' <param name="precursorTypes"></param>
+    ''' <param name="score"></param>
     Sub New(tree As IEnumerable(Of Compound),
             tolerance As Tolerance,
             precursorTypes As MzCalculator(),

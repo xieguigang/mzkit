@@ -6,7 +6,7 @@
     <AssemblyName>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;LipidSearch</Configurations>
     <Description>The annotation library model for store of the MS reference data</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -29,11 +29,19 @@
     <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
     <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
     <DocumentationFile>BioNovoGene.BioDeep.MSEngine.AnnotationLibrary.xml</DocumentationFile>
   </PropertyGroup>
 
