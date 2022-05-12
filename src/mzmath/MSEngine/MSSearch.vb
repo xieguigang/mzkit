@@ -136,11 +136,20 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             .Where(Function(i) i.mz > 0) _
             .ToArray
 
+        ' 20220512
+        '
+        ' too small tolerance error will cause too much elements to
+        ' sort
+        ' and then will cause the error of 
+        ' Stack overflow.
+        ' Repeat 3075 times: 
+        ' --------------------------------
+        '   at Microsoft.VisualBasic.ComponentModel.Algorithm.QuickSortFunction
         Me.mzIndex = New BlockSearchFunction(Of IonIndex)(
             data:=mzset,
             eval:=Function(m) m.mz,
-            tolerance:=0.3,
-            factor:=2
+            tolerance:=1,
+            factor:=3
         )
     End Sub
 
