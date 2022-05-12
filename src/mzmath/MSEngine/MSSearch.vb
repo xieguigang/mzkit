@@ -133,6 +133,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                                     End Function)
                     End Function) _
             .IteratesALL _
+            .Where(Function(i) i.mz > 0) _
             .ToArray
 
         Me.mzIndex = New BlockSearchFunction(Of IonIndex)(
