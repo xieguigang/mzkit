@@ -145,6 +145,9 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         ' Repeat 3075 times: 
         ' --------------------------------
         '   at Microsoft.VisualBasic.ComponentModel.Algorithm.QuickSortFunction
+        '
+        ' pipeline has been test for MS-imaging data analysis
+        '
         Me.mzIndex = New BlockSearchFunction(Of IonIndex)(
             data:=mzset,
             eval:=Function(m) m.mz,
