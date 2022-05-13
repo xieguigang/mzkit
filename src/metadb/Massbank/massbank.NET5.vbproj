@@ -126,6 +126,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
