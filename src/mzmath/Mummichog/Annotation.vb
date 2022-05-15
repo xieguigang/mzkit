@@ -14,10 +14,10 @@ Public Module Annotation
 
         Dim result, tmp1 As ActivityEnrichment()
         Dim allsubgraph As NamedValue(Of NetworkGraph)() = background.ToArray
-        Dim input As String()
         Dim scores As IEnumerable(Of ActivityEnrichment)
         Dim maxScore As Double = -9999999
         Dim score As Double
+        Dim input As Dictionary(Of String, MzQuery)
 
         If modelSize <= 0 Then
             modelSize = allsubgraph _
@@ -31,7 +31,7 @@ Public Module Annotation
         result = Nothing
 
         For Each candidateList As MzQuery() In candidates.CreateCombinations(permutation)
-            input = candidateList.Select(Function(c) c.unique_id).ToArray
+            input = candidateList.ToDictionary(Function(a) a.unique_id)
             scores = From graph As NamedValue(Of NetworkGraph)
                      In allsubgraph.AsParallel
                      Let query = ActivityEnrichment.Evaluate(input, background:=graph, modelSize:=modelSize)
