@@ -16,6 +16,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Module Mummichog
 
     <ExportAPI("peakList_annotation")>
+    <RApiReturn(GetType(ActivityEnrichment))>
     Public Function PeakListAnnotation(background As list, candidates As MzSet(),
                                        Optional minhit As Integer = 3,
                                        Optional permutation As Integer = 100,
@@ -39,13 +40,12 @@ Module Mummichog
             End If
         Next
 
-        Dim result = candidates.PeakListAnnotation(
+        Dim result As ActivityEnrichment() = candidates.PeakListAnnotation(
             background:=models,
             minhit:=minhit,
             permutation:=permutation,
             modelSize:=modelSize
-        ) _
-            .ToArray
+        )
 
         Return result
     End Function
