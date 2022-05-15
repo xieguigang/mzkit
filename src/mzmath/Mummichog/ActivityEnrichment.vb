@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
@@ -31,25 +32,40 @@ Public Class ActivityEnrichment
     ''' <returns></returns>
     Public Property Fisher As FishersExactPvalues
     Public Property Hits As String()
+    ''' <summary>
+    ''' usually the pathway name
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Name As String
+    ''' <summary>
+    ''' the pathway description details
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Description As String
 
-    Public Shared Function Evaluate(input As IEnumerable(Of String), background As NetworkGraph, modelSize As Integer) As ActivityEnrichment
+    Public Shared Function Evaluate(input As IEnumerable(Of String), background As NamedValue(Of NetworkGraph), modelSize As Integer) As ActivityEnrichment
         Dim allInputId As String() = input.ToArray
         Dim mapping As NetworkGraph = getSubGraph(allInputId, background)
+        Dim graph As NetworkGraph = background.Value
         Dim modularity As Double = Communities.Modularity(g:=mapping)
         Dim F As FishersExactPvalues = FishersExactTest.FishersExact(
             n11:=mapping.vertex.Count,
-            n12:=background.vertex.Count,
+            n12:=graph.vertex.Count,
             n21:=allInputId.Length - mapping.vertex.Count,
-            n22:=modelSize - background.vertex.Count
+            n22:=modelSize - graph.vertex.Count
         )
+        Dim name As String = background.Name
+        Dim description As String = background.Description
 
         Return New ActivityEnrichment With {
             .Q = modularity,
-            .Background = background.vertex.Count,
+            .Background = graph.vertex.Count,
             .Hits = mapping.vertex _
                 .Select(Function(v) v.label) _
                 .ToArray,
-            .Fisher = F
+            .Fisher = F,
+            .Name = name,
+            .Description = description
         }
     End Function
 

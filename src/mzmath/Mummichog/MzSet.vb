@@ -15,4 +15,8 @@
         End Get
     End Property
 
+    Public Overrides Function ToString() As String
+        Return $"{mz.ToString("F4")}: {query.Select(Function(i) i.name).JoinBy("; ")}"
+    End Function
+
 End Class
