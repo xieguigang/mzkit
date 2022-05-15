@@ -33,7 +33,10 @@ Module Mummichog
                 .Description = slot.getValue({"desc", "description"}, env, "NA"),
                 .Value = slot.getValue(Of NetworkGraph)({"model", "background", "graph"}, env)
             }
-            models.Add(graph)
+
+            If graph.Value.vertex.Count > 0 Then
+                Call models.Add(graph)
+            End If
         Next
 
         Dim result = candidates.PeakListAnnotation(
