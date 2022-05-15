@@ -1,5 +1,6 @@
 require(mzkit);
 require(GCModeller);
+require(JSON);
 
 #' title: Mummichog peak list annotation
 #' author: xieguigang <xie.guigang@gcmodeller.org>
@@ -48,10 +49,11 @@ const kegg_compounds = GCModeller::kegg_compounds(rawList = TRUE)
 const mzSet = mzlist 
 |> readLines()
 |> as.numeric()
+|> take(3000)
 |> queryCandidateSet(msData = kegg_compounds)
 ;
 
-kegg_maps
+result = kegg_maps
 |> kegg_background(reactions = kegg_reactions)
 |> peakList_annotation(
     candidates = mzSet,
@@ -59,3 +61,15 @@ kegg_maps
     permutation = permutation
 )
 ;
+
+result
+|> json_encode()
+|> writeLines(con = `${dirname(output)}/${basename(output)}.json`)
+;
+
+result = as.data.frame(result);
+
+print("view of the annotation result output:");
+print(result, max.print = 13);
+
+write.csv(result, file = output);

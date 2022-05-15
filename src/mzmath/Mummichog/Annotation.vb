@@ -37,7 +37,7 @@ Public Module Annotation
                      Let query = ActivityEnrichment.Evaluate(input, background:=graph, modelSize:=modelSize)
                      Where query.Background > 0 AndAlso Not query.Q.IsNaNImaginary
                      Select query
-                     Order By query.Activity
+                     Order By query.Activity Descending
             tmp1 = scores.ToArray
             score = Aggregate v As ActivityEnrichment
                     In tmp1

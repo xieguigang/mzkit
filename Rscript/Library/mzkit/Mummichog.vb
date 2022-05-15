@@ -15,6 +15,12 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("Mummichog")>
 Module Mummichog
 
+    Sub New()
+
+    End Sub
+
+
+
     <ExportAPI("peakList_annotation")>
     <RApiReturn(GetType(ActivityEnrichment))>
     Public Function PeakListAnnotation(background As list, candidates As MzSet(),
