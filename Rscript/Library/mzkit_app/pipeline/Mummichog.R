@@ -1,5 +1,7 @@
 require(mzkit);
 
+imports "Mummichog" from "mzkit";
+
 [@info "A text file that contains a list of the MS1 
         m/z peaks to run data annotations, the text 
         file format should be multiple lines data, 
@@ -16,3 +18,4 @@ const output as string = ?"--save" || `${dirname(mzlist)}/${basename(mzlist)}_an
 const minHits as integer = ?"--minhits" || 3;
 [@info "the number of times to run annotation permutation."]
 const permutation as integer = ?"--permutation" || 100;
+
