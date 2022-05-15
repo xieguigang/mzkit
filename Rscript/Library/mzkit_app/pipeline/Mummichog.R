@@ -36,6 +36,8 @@ if(!file.exists(mzlist)) {
     stop(`the given m/z peak list input data file is not found on your filesystem location: '${mzlist}'!`);
 }
 
+print("loading of the KEGG data repository for run data annotations!");
+
 const kegg_reactions = GCModeller::kegg_reactions(raw = TRUE);
 const kegg_maps      = GCModeller::kegg_maps(rawMaps = TRUE);
 const kegg_compounds = GCModeller::kegg_compounds(rawList = TRUE)
@@ -45,6 +47,8 @@ const kegg_compounds = GCModeller::kegg_compounds(rawList = TRUE)
 )
 ;
 
+print("query kegg metabolite candidates...");
+
 # get a list of candidate results
 const mzSet = mzlist 
 |> readLines()
@@ -52,6 +56,8 @@ const mzSet = mzlist
 |> take(3000)
 |> queryCandidateSet(msData = kegg_compounds)
 ;
+
+print("run data annotations!");
 
 result = kegg_maps
 |> kegg_background(reactions = kegg_reactions)
@@ -62,6 +68,8 @@ result = kegg_maps
 )
 ;
 
+print("output results...");
+
 result
 |> json_encode()
 |> writeLines(con = `${dirname(output)}/${basename(output)}.json`)
@@ -70,6 +78,6 @@ result
 result = as.data.frame(result);
 
 print("view of the annotation result output:");
-print(result, max.print = 13);
+print(result, max.print = 13, select = ["description","Q","input_size","background_size","activity","p-value"]);
 
 write.csv(result, file = output);

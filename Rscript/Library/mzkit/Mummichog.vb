@@ -27,7 +27,7 @@ Module Mummichog
                 .ToArray
         }
 
-        Call output.add("description", result.Select(Function(i) i.Description))
+        Call output.add("description", result.Select(Function(i) Mid(i.Description, 1, 32)))
         Call output.add("Q", result.Select(Function(i) i.Q))
         Call output.add("input_size", result.Select(Function(i) i.Input))
         Call output.add("background_size", result.Select(Function(i) i.Background))
