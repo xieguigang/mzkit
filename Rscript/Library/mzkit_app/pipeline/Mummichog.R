@@ -53,7 +53,7 @@ print("query kegg metabolite candidates...");
 const mzSet = mzlist 
 |> readLines()
 |> as.numeric()
-# |> take(10000)
+|> take(20000)
 |> queryCandidateSet(msData = kegg_compounds)
 ;
 
