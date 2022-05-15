@@ -44,6 +44,10 @@ Public Class ActivityEnrichment
     ''' <returns></returns>
     Public Property Description As String
 
+    Public Overrides Function ToString() As String
+        Return $"{Name}: activity={Activity.ToString("F4")}, fisher={Fisher.two_tail_pvalue.ToString("G4")}"
+    End Function
+
     Public Shared Function Evaluate(input As IEnumerable(Of String), background As NamedValue(Of NetworkGraph), modelSize As Integer) As ActivityEnrichment
         Dim allInputId As String() = input.ToArray
         Dim mapping As NetworkGraph = getSubGraph(allInputId, background)

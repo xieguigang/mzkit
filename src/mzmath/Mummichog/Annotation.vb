@@ -34,7 +34,10 @@ Public Module Annotation
             input = candidateList.Select(Function(c) c.unique_id).ToArray
             scores = From graph As NamedValue(Of NetworkGraph)
                      In allsubgraph.AsParallel
-                     Select ActivityEnrichment.Evaluate(input, background:=graph, modelSize:=modelSize)
+                     Let query = ActivityEnrichment.Evaluate(input, background:=graph, modelSize:=modelSize)
+                     Where query.Background > 0
+                     Select query
+                     Order By query.Activity
             tmp1 = scores.ToArray
             score = Aggregate v As ActivityEnrichment
                     In tmp1

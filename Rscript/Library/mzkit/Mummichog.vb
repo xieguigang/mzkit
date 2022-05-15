@@ -71,7 +71,9 @@ Module Mummichog
                               Return r.First
                           End Function)
         Dim subgraphs = KEGG.CreateBackground(maps, networkIndex).ToArray
-        Dim graphSet As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim graphSet As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
         Dim model As list
 
         For Each graph As NamedValue(Of NetworkGraph) In subgraphs
