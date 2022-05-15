@@ -50,10 +50,10 @@ Public Module KEGG
             Next
 
             Yield New NamedValue(Of NetworkGraph) With {
-                .Name = map.Name _
+                .Name = If(map.id.IsPattern("\d+"), $"map{map.id}", map.id),
+                .Description = map.Name _
                     .Replace("Reference pathway", "") _
                     .Trim(" "c, "-"c),
-                .Description = map.description,
                 .Value = model
             }
         Next
