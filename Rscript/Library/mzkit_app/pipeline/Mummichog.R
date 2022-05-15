@@ -1,6 +1,11 @@
 require(mzkit);
 require(GCModeller);
 
+#' title: Mummichog peak list annotation
+#' author: xieguigang <xie.guigang@gcmodeller.org>
+#' description: do ms1 peaks annotation based on the 
+#'   Mummichog algorithm.
+
 imports "Mummichog" from "mzkit";
 imports "metadna" from "mzDIA";
 imports "repository" from "kegg_kit";

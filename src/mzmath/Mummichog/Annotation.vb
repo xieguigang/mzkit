@@ -43,6 +43,7 @@ Public Module Annotation
         Return From mzi As Double
                In peaks
                Let candidates = MsDb.QueryByMz(mzi).ToArray
+               Where candidates.Count > 0
                Select New MzSet With {
                    .mz = mzi,
                    .query = candidates
