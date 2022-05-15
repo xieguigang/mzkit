@@ -16,10 +16,27 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Module Mummichog
 
     Sub New()
-
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
     End Sub
 
+    Private Function getResultTable(result As ActivityEnrichment(), args As list, env As Environment) As dataframe
+        Dim output As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = result _
+                .Select(Function(i) i.Name) _
+                .ToArray
+        }
 
+        Call output.add("description", result.Select(Function(i) i.Description))
+        Call output.add("Q", result.Select(Function(i) i.Q))
+        Call output.add("input_size", result.Select(Function(i) i.Input))
+        Call output.add("background_size", result.Select(Function(i) i.Background))
+        Call output.add("activity", result.Select(Function(i) i.Activity))
+        Call output.add("p-value", result.Select(Function(i) i.Fisher.two_tail_pvalue))
+        Call output.add("hits", result.Select(Function(i) i.Hits.JoinBy("; ")))
+
+        Return output
+    End Function
 
     <ExportAPI("peakList_annotation")>
     <RApiReturn(GetType(ActivityEnrichment))>
