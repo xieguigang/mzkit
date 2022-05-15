@@ -23,7 +23,7 @@ Public Module KEGG
             Dim reactionIds As String() = allShapes.Where(Function(id) id.IsPattern("R\d{5}")).ToArray
             Dim model As New NetworkGraph
 
-            For Each id As String In reactionIds
+            For Each id As String In reactionIds.Where(AddressOf reactions.ContainsKey)
                 Dim reaction As Reaction = reactions(id)
                 Dim formula As Equation = reaction.ReactionModel
 
