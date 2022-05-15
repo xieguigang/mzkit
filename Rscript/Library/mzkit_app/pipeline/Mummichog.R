@@ -77,6 +77,9 @@ result
 
 result = as.data.frame(result);
 
+print("total activity enrichment score is:");
+print(sum(result[, "activity"]));
+
 print("view of the annotation result output:");
 print(result, max.print = 13, select = ["description","Q","input_size","background_size","activity","p-value"]);
 
