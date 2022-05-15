@@ -1,6 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemoinformatics
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
@@ -41,7 +39,7 @@ Public Module Annotation
     End Function
 
     <Extension>
-    Public Function GetCandidateSet(Of C As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider})(MsDb As MSSearch(Of C), peaks As IEnumerable(Of Double)) As IEnumerable(Of MzSet)
+    Public Function GetCandidateSet(MsDb As IMzQuery, peaks As IEnumerable(Of Double)) As IEnumerable(Of MzSet)
         Return From mzi As Double
                In peaks
                Let candidates = MsDb.QueryByMz(mzi).ToArray
