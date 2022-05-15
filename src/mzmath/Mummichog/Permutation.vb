@@ -24,7 +24,10 @@ Public Module Permutation
                 End If
             Next
 
-            Yield block.ToArray
+            Yield block _
+                .GroupBy(Function(a) a.unique_id) _
+                .Select(Function(a) a.OrderBy(Function(v) v.ppm).First) _
+                .ToArray
         Next
     End Function
 
