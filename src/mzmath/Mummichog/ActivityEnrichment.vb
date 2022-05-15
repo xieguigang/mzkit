@@ -2,6 +2,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 
 Public Class ActivityEnrichment
@@ -69,6 +70,12 @@ Public Class ActivityEnrichment
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="input">the raw candidate input id list</param>
+    ''' <param name="background"></param>
+    ''' <returns></returns>
     Private Shared Function getSubGraph(input As IEnumerable(Of String), background As NetworkGraph) As NetworkGraph
         Dim subgraph As New NetworkGraph
         Dim idIndex As Index(Of String) = input.Indexing
@@ -78,7 +85,12 @@ Public Class ActivityEnrichment
                    End Function) _
             .ToArray
 
-        For Each id As String In idIndex.Objects
+        For Each id As String In edgeBundles _
+            .Select(Function(l) {l.U, l.V}) _
+            .IteratesALL _
+            .Select(Function(v) v.label) _
+            .Distinct
+
             Call subgraph.CreateNode(id, background.GetElementByID(id).data)
         Next
         For Each edge As Edge In edgeBundles
