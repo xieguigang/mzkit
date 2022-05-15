@@ -10,6 +10,7 @@ Public Module Permutation
         Dim block As New List(Of MzQuery)
         Dim target As MzQuery
         Dim filter As Index(Of String) = {}
+        Dim delta As Integer = permutations / 10
 
         For i As Integer = 0 To permutations
             Call filter.Clear()
@@ -28,6 +29,10 @@ Public Module Permutation
                 .GroupBy(Function(a) a.unique_id) _
                 .Select(Function(a) a.OrderBy(Function(v) v.ppm).First) _
                 .ToArray
+
+            If i Mod delta = 0 Then
+                Call Console.WriteLine($" -- {(i / permutations * 100).ToString("F2")}% [{i}/{permutations}]")
+            End If
         Next
     End Function
 
