@@ -35,7 +35,7 @@ Public Module Annotation
             scores = From graph As NamedValue(Of NetworkGraph)
                      In allsubgraph.AsParallel
                      Let query = ActivityEnrichment.Evaluate(input, background:=graph, modelSize:=modelSize)
-                     Where query.Background > 0
+                     Where query.Background > 0 AndAlso Not query.Q.IsNaNImaginary
                      Select query
                      Order By query.Activity
             tmp1 = scores.ToArray
