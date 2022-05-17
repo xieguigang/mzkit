@@ -59,9 +59,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Point = System.Drawing.Point
 
@@ -122,11 +124,16 @@ Public Class IonStat
         For Each ion In ions
             Dim pixels = Grid(Of (Point, ms2)).Create(ion, Function(x) x.Item1)
             Dim basePixel = ion.OrderByDescending(Function(i) i.ms.intensity).First
-            Dim intensity As Double() = ion.Select(Function(i) i.ms.intensity).ToArray
-            Dim Q = intensity.Quartile
+            Dim intensity As Double() = ion _
+                .Select(Function(i) i.ms.intensity) _
+                .ToArray
+            Dim Q As DataQuartile = intensity.Quartile
             Dim counts As New List(Of Double)
 
-            For Each top In ion.OrderByDescending(Function(i) i.ms.intensity).Take(30)
+            For Each top As (pixel As Point, ms As ms2) In From i As (pixel As Point, ms As ms2)
+                                                           In ion
+                                                           Order By i.ms.intensity Descending
+                                                           Take 30
                 Dim count As Integer = pixels _
                     .Query(top.pixel.X, top.pixel.Y, nsize) _
                     .Where(Function(i)
@@ -135,7 +142,7 @@ Public Class IonStat
                     .Count
                 Dim density As Double = count / A
 
-                counts.Add(density)
+                Call counts.Add(density)
             Next
 
             Yield New IonStat With {
@@ -148,8 +155,22 @@ Public Class IonStat
                 .Q2Intensity = Q.Q2,
                 .Q3Intensity = Q.Q3,
                 .density = counts.Average,
-                .RSD = intensity.RSD * 100
+                .RSD = fillVector(intensity).RSD * 100
             }
         Next
+    End Function
+
+    Private Shared Function fillVector(v As Double()) As Vector
+        If v.Any(Function(vi) vi > 0) Then
+            Dim fill As Vector = {v.Where(Function(i) i > 0).Min}
+            Dim peakfill As Vector = v.AsVector
+
+            peakfill(peakfill <= 0) = fill
+
+            Return peakfill
+        Else
+            ' all is zero!
+            Return v
+        End If
     End Function
 End Class
