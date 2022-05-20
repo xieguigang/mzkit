@@ -476,6 +476,26 @@ Module metaDNAInfer
 
 #Region "kegg"
 
+    ''' <summary>
+    ''' create the kegg compound ms1 annotation query engine.
+    ''' </summary>
+    ''' <param name="kegg">
+    ''' a set of kegg compound data
+    ''' </param>
+    ''' <param name="precursors">
+    ''' a character vector of the ms1 precursor ion names.
+    ''' </param>
+    ''' <param name="mzdiff">
+    ''' the mass tolerance value to match between the 
+    ''' experiment m/z value and the reference m/z value
+    ''' which is calculated from the compound exact mass
+    ''' with a given specific ion precursor type.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a data query engine model to run ms1 data search 
+    ''' for the kegg metaolite compounds.
+    ''' </returns>
     <ExportAPI("annotationSet")>
     <RApiReturn(GetType(KEGGHandler))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
@@ -483,6 +503,7 @@ Module metaDNAInfer
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
                                      Optional env As Environment = Nothing) As Object
+
         Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
         Dim mzErr = Math.getTolerance(mzdiff, env)
 
@@ -505,7 +526,9 @@ Module metaDNAInfer
     ''' <summary>
     ''' load kegg compounds
     ''' </summary>
-    ''' <param name="repo"></param>
+    ''' <param name="repo">
+    ''' the file path to the messagepack data repository
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
@@ -521,6 +544,11 @@ Module metaDNAInfer
         End If
     End Function
 
+    ''' <summary>
+    ''' load the kegg reaction class data.
+    ''' </summary>
+    ''' <param name="repo"></param>
+    ''' <returns></returns>
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object
