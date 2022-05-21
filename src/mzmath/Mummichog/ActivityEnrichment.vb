@@ -32,6 +32,10 @@ Public Class ActivityEnrichment
     ''' </summary>
     ''' <returns></returns>
     Public Property Fisher As FishersExactPvalues
+    ''' <summary>
+    ''' the ms1 peak list annotation result
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Hits As MzQuery()
     ''' <summary>
     ''' usually the pathway name

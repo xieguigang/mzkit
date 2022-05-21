@@ -71,8 +71,8 @@ Public Structure MzQuery
     ''' <returns></returns>
     <XmlAttribute> Public Property mz As Double
     ''' <summary>
-    ''' the evaluated m/z value based on the 
-    ''' precursor type and formula string 
+    ''' the evaluated theoretical m/z value based 
+    ''' on the precursor type and formula string 
     ''' data.
     ''' </summary>
     ''' <returns></returns>
