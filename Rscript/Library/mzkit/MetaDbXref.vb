@@ -181,7 +181,11 @@ Module MetaDbXref
 
     <ExportAPI("annotationStream")>
     <RApiReturn(GetType(MetaboliteAnnotation))>
-    Public Function AnnotationStream(id As String(), name As String(), formula As String(), Optional env As Environment = Nothing) As Object
+    Public Function AnnotationStream(id As String(),
+                                     name As String(),
+                                     formula As String(),
+                                     Optional env As Environment = Nothing) As Object
+
         If id.Length <> name.Length OrElse name.Length <> formula.Length Then
             Return Internal.debug.stop("vector size of the annotation data should be equals to each other!", env)
         Else
