@@ -118,6 +118,14 @@ Public Structure MzQuery
         }
     End Function
 
+    ''' <summary>
+    ''' makes a unique reference key of current mz query result
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared Function ReferenceKey(query As MzQuery) As String
+        Return $"{query.mz.ToString("F4")}|{query.unique_id}"
+    End Function
+
     Public Overrides Function ToString() As String
         Dim prefix As String = $"{unique_id} {precursorType}, m/z {mz.ToString("F4")}"
 

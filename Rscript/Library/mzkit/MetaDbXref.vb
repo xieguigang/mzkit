@@ -254,6 +254,10 @@ Module MetaDbXref
     ''' contains the data mapping of unique id to 
     ''' m/z value.
     ''' </param>
+    ''' <param name="uniqueByScore">
+    ''' only works when <paramref name="unique"/> parameter
+    ''' value is set to value TRUE.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("ms1_search")>
     <RApiReturn(GetType(MzQuery))>
@@ -367,27 +371,57 @@ Module MetaDbXref
     ''' <summary>
     ''' unique of the peak annotation features
     ''' </summary>
-    ''' <param name="query"></param>
+    ''' <param name="query">
+    ''' all query result that comes from the ms1_search function.
+    ''' </param>
+    ''' <param name="scoreFactors">
+    ''' the reference name this score data must be 
+    ''' generated via the <see cref="MzQuery.ReferenceKey(MzQuery)"/> 
+    ''' function.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("uniqueFeatures")>
     <RApiReturn(GetType(dataframe))>
     Public Function searchTable(query As list,
                                 Optional uniqueByScore As Boolean = False,
+                                Optional scoreFactors As list = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mz As String() = query.getNames
-        Dim mzquery = mz _
+        Dim scores As New Dictionary(Of String, Double)
+
+        If Not scoreFactors Is Nothing Then
+            For Each name As String In scoreFactors.getNames
+                Call scores.Add(name, scoreFactors.getValue(Of Double)(name, env))
+            Next
+        End If
+
+        Dim mzqueries = mz _
             .Select(Function(mzi)
                         ' unique of rows
-                        Dim all = query.getValue(Of MzQuery())(mzi, env)
+                        Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
                         Dim unique As MzQuery = Nothing
 
                         If Not all.IsNullOrEmpty Then
                             If uniqueByScore Then
-                                unique = all _
-                                    .OrderByDescending(Function(d) d.score) _
-                                    .First
+                                If scores.Count > 0 Then
+                                    unique = all _
+                                        .OrderByDescending(Function(d)
+                                                               Dim key As String = MzQuery.ReferenceKey(d)
+
+                                                               If scores.ContainsKey(key) Then
+                                                                   Return d.score * scores(key)
+                                                               Else
+                                                                   Return d.score
+                                                               End If
+                                                           End Function) _
+                                        .First
+                                Else
+                                    unique = all _
+                                        .OrderByDescending(Function(d) d.score) _
+                                        .First
+                                End If
                             Else
                                 unique = all.OrderBy(Function(d) d.ppm).First
                             End If
@@ -401,30 +435,46 @@ Module MetaDbXref
         ' unique between features
         ' via min ppm?
         For i As Integer = 0 To mz.Length - 1
-            If mzquery(i).Value.isEmpty Then
+            If mzqueries(i).Value.isEmpty Then
                 Continue For
             End If
 
             For j As Integer = 0 To mz.Length - 1
-                If i = j OrElse mzquery(j).Value.unique_id <> mzquery(i).Value.unique_id Then
+                If i = j OrElse mzqueries(j).Value.unique_id <> mzqueries(i).Value.unique_id Then
                     Continue For
                 End If
 
                 If uniqueByScore Then
-                    betterJ = mzquery(j).Value.score > mzquery(i).Value.score
+                    If scores.Count > 0 Then
+                        Dim sj As Double = mzqueries(j).Value.score
+                        Dim si As Double = mzqueries(i).Value.score
+                        Dim kj = MzQuery.ReferenceKey(mzqueries(j))
+                        Dim ki = MzQuery.ReferenceKey(mzqueries(i))
+
+                        If scores.ContainsKey(kj) Then
+                            sj *= scores(kj)
+                        End If
+                        If scores.ContainsKey(ki) Then
+                            si *= scores(ki)
+                        End If
+
+                        betterJ = sj > si
+                    Else
+                        betterJ = mzqueries(j).Value.score > mzqueries(i).Value.score
+                    End If
                 Else
-                    betterJ = mzquery(j).Value.ppm < mzquery(i).Value.ppm
+                    betterJ = mzqueries(j).Value.ppm < mzqueries(i).Value.ppm
                 End If
 
                 If betterJ Then
                     ' j is better
                     ' set i to nothing
-                    mzquery(i) = New NamedValue(Of MzQuery)(mz(i), New MzQuery With {.mz = mzquery(i).Value.mz})
+                    mzqueries(i) = New NamedValue(Of MzQuery)(mz(i), New MzQuery With {.mz = mzqueries(i).Value.mz})
                     Exit For
                 Else
                     ' i is better
                     ' set j to nothing
-                    mzquery(j) = New NamedValue(Of MzQuery)(mz(j), New MzQuery With {.mz = mzquery(j).Value.mz})
+                    mzqueries(j) = New NamedValue(Of MzQuery)(mz(j), New MzQuery With {.mz = mzqueries(j).Value.mz})
                 End If
             Next
         Next
@@ -432,13 +482,13 @@ Module MetaDbXref
         Return New dataframe With {
             .rownames = mz,
             .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mzquery.Select(Function(i) i.Value.mz).ToArray},
-                {"theoretical_mz", mzquery.Select(Function(i) i.Value.mz_ref).ToArray},
-                {"ppm", mzquery.Select(Function(i) i.Value.ppm).ToArray},
-                {"precursor_type", mzquery.Select(Function(i) i.Value.precursorType).ToArray},
-                {"unique_id", mzquery.Select(Function(i) i.Value.unique_id).ToArray},
-                {"name", mzquery.Select(Function(i) i.Value.name).ToArray},
-                {"score", mzquery.Select(Function(i) i.Value.score).ToArray}
+                {"m/z", mzqueries.Select(Function(i) i.Value.mz).ToArray},
+                {"theoretical_mz", mzqueries.Select(Function(i) i.Value.mz_ref).ToArray},
+                {"ppm", mzqueries.Select(Function(i) i.Value.ppm).ToArray},
+                {"precursor_type", mzqueries.Select(Function(i) i.Value.precursorType).ToArray},
+                {"unique_id", mzqueries.Select(Function(i) i.Value.unique_id).ToArray},
+                {"name", mzqueries.Select(Function(i) i.Value.name).ToArray},
+                {"score", mzqueries.Select(Function(i) i.Value.score).ToArray}
             }
         }
     End Function

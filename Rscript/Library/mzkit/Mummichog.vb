@@ -46,24 +46,24 @@ Module Mummichog
     ''' <returns></returns>
     <ExportAPI("mzScore")>
     Public Function mzScore(result As ActivityEnrichment()) As dataframe
-        Dim allUnion = result _
+        Dim allUnion As MzQuery() = result _
             .Select(Function(a) a.Hits.SafeQuery) _
             .IteratesALL _
-            .GroupBy(Function(a) $"{a.mz.ToString("F4")}|{a.unique_id}") _
+            .GroupBy(Function(a) MzQuery.ReferenceKey(a)) _
             .Select(Function(a) a.First) _
             .ToArray
         Dim scores As New dataframe With {.columns = New Dictionary(Of String, Array)}
         Dim unionScore As New Dictionary(Of String, Double)
 
         For Each a As MzQuery In allUnion
-            Call unionScore.Add($"{a.mz.ToString("F4")}|{a.unique_id}", 0)
+            Call unionScore.Add(MzQuery.ReferenceKey(a), 0)
         Next
 
         For Each pathway As ActivityEnrichment In result
             Dim score As Double = pathway.Activity
 
             For Each hit In pathway.Hits.SafeQuery
-                unionScore($"{hit.mz.ToString("F4")}|{hit.unique_id}") += score
+                unionScore(MzQuery.ReferenceKey(hit)) += score
             Next
         Next
 
@@ -73,7 +73,7 @@ Module Mummichog
         Call scores.add("unique_id", allUnion.Select(Function(i) i.unique_id))
         Call scores.add("name", allUnion.Select(Function(i) i.name))
         Call scores.add("precursor_type", allUnion.Select(Function(i) i.precursorType))
-        Call scores.add("score", allUnion.Select(Function(a) unionScore($"{a.mz.ToString("F4")}|{a.unique_id}")))
+        Call scores.add("score", allUnion.Select(Function(a) unionScore(MzQuery.ReferenceKey(a))))
 
         Return scores
     End Function
