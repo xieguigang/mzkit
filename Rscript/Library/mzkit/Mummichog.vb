@@ -39,10 +39,15 @@ Module Mummichog
         Return output
     End Function
 
+    ''' <summary>
+    ''' export of the annotation score result table
+    ''' </summary>
+    ''' <param name="result"></param>
+    ''' <returns></returns>
     <ExportAPI("mzScore")>
     Public Function mzScore(result As ActivityEnrichment()) As dataframe
         Dim allUnion = result _
-            .Select(Function(a) a.Hits) _
+            .Select(Function(a) a.Hits.SafeQuery) _
             .IteratesALL _
             .GroupBy(Function(a) $"{a.mz.ToString("F4")}|{a.unique_id}") _
             .Select(Function(a) a.First) _
@@ -57,7 +62,7 @@ Module Mummichog
         For Each pathway As ActivityEnrichment In result
             Dim score As Double = pathway.Activity
 
-            For Each hit In pathway.Hits
+            For Each hit In pathway.Hits.SafeQuery
                 unionScore($"{hit.mz.ToString("F4")}|{hit.unique_id}") += score
             Next
         Next
