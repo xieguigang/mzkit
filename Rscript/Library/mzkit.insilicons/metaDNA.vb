@@ -500,7 +500,7 @@ Module metaDNAInfer
     <ExportAPI("annotationSet")>
     <RApiReturn(GetType(KEGGHandler))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
-                                     <RRawVectorArgument(GetType(String))>
+                                     <RRawVectorArgument()>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
                                      Optional env As Environment = Nothing) As Object
@@ -520,6 +520,9 @@ Module metaDNAInfer
         If typeList.isError Then
             Dim types As String() = typeList _
                 .populates(Of String)(env) _
+                .Select(Function(str) str.Split("|"c)) _
+                .IteratesALL _
+                .Distinct _
                 .ToArray
 
             calculators = Provider.Calculators(types)
