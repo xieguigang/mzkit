@@ -71,8 +71,8 @@ Public Structure MzQuery
     ''' <returns></returns>
     <XmlAttribute> Public Property mz As Double
     ''' <summary>
-    ''' the evaluated m/z value based on the 
-    ''' precursor type and formula string 
+    ''' the evaluated theoretical m/z value based 
+    ''' on the precursor type and formula string 
     ''' data.
     ''' </summary>
     ''' <returns></returns>
@@ -116,6 +116,14 @@ Public Structure MzQuery
             .name = name,
             .mz_ref = mz_ref
         }
+    End Function
+
+    ''' <summary>
+    ''' makes a unique reference key of current mz query result
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared Function ReferenceKey(query As MzQuery) As String
+        Return $"{query.mz.ToString("F4")}|{query.unique_id}"
     End Function
 
     Public Overrides Function ToString() As String

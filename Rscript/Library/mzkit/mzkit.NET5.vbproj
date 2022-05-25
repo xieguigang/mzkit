@@ -7,6 +7,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 		<Authors>xieguigang</Authors>
 		<Company>BioNovoGene</Company>
 		<Product>BioDeep</Product>

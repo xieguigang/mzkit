@@ -87,7 +87,23 @@ Module ChromatogramTools
 
     Sub New()
         Call ConsolePrinter.AttachConsoleFormatter(Of ChromatogramOverlap)(AddressOf overlapsSummary)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramOverlap), AddressOf overlapsTable)
     End Sub
+
+    Private Function overlapsTable(data As ChromatogramOverlap, args As list, env As Environment) As dataframe
+        Dim summary As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = data.overlaps.Keys.ToArray
+        }
+        Dim seq = summary.rownames _
+            .Select(Function(key) data(key)) _
+            .ToArray
+
+        summary.add("TIC", seq.Select(Function(t) t.TIC.Sum))
+        summary.add("BPC", seq.Select(Function(t) t.maxInto))
+
+        Return summary
+    End Function
 
     Private Function overlapsSummary(data As ChromatogramOverlap) As String
         Dim text As New StringBuilder

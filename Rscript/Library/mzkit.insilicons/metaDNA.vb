@@ -483,7 +483,8 @@ Module metaDNAInfer
     ''' a set of kegg compound data
     ''' </param>
     ''' <param name="precursors">
-    ''' a character vector of the ms1 precursor ion names.
+    ''' a character vector of the ms1 precursor ion names or 
+    ''' a list of the given mzcalculator object models.
     ''' </param>
     ''' <param name="mzdiff">
     ''' the mass tolerance value to match between the 
@@ -499,7 +500,7 @@ Module metaDNAInfer
     <ExportAPI("annotationSet")>
     <RApiReturn(GetType(KEGGHandler))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
-                                     <RRawVectorArgument(GetType(String))>
+                                     <RRawVectorArgument()>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
                                      Optional env As Environment = Nothing) As Object
@@ -513,8 +514,23 @@ Module metaDNAInfer
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim types As String() = REnv.asVector(Of String)(precursors)
-        Dim calculators As MzCalculator() = Provider.Calculators(types)
+        Dim typeList As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(precursors, env, suppress:=True)
+        Dim calculators As MzCalculator()
+
+        If typeList.isError Then
+            Dim types As String() = typeList _
+                .populates(Of String)(env) _
+                .Select(Function(str) str.Split("|"c)) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+
+            calculators = Provider.Calculators(types)
+        Else
+            calculators = typeList _
+                .populates(Of MzCalculator)(env) _
+                .ToArray
+        End If
 
         Return KEGGHandler.CreateIndex(
             compounds:=keggSet.populates(Of KeggCompound)(env),
