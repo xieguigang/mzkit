@@ -286,4 +286,15 @@ Public Class MSJointConnection : Implements IMzQuery
     Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
         Return kegg.GetAnnotation(uniqueId)
     End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="uniqueId"></param>
+    ''' <returns>
+    ''' <see cref="Compound"/>
+    ''' </returns>
+    Public Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
+        Return kegg.GetCompound(uniqueId).KEGG
+    End Function
 End Class
