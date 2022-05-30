@@ -249,4 +249,8 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             Return (meta.CommonName, meta.Formula)
         End If
     End Function
+
+    Private Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
+        Return GetCompound(uniqueId)
+    End Function
 End Class

@@ -293,6 +293,32 @@ Module MetaDbXref
         End If
     End Function
 
+    <ExportAPI("getMetadata")>
+    Public Function getMetadata(engine As Object, uniqueId As list, Optional env As Environment = Nothing) As Object
+        Dim queryEngine As IMzQuery
+
+        If engine.GetType.ImplementInterface(Of IMzQuery) Then
+            queryEngine = engine
+        Else
+            Return Internal.debug.stop("invalid handler type!", env)
+        End If
+
+        Return New list With {
+            .slots = uniqueId _
+                .getNames _
+                .ToDictionary(Function(name) name,
+                              Function(name)
+                                  Dim id As String = uniqueId.getValue(Of String)(name, env, [default]:="")
+
+                                  If id.StringEmpty Then
+                                      Return Nothing
+                                  Else
+                                      Return queryEngine.GetMetadata(id)
+                                  End If
+                              End Function)
+        }
+    End Function
+
     <Extension>
     Private Function searchMzList(mz As list,
                                   queryEngine As IMzQuery,
