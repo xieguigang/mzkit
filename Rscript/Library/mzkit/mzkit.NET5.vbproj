@@ -165,6 +165,7 @@
 		<ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
+		<ProjectReference Include="..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
 	</ItemGroup>
 
 	<ItemGroup>
