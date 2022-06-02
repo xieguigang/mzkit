@@ -2,15 +2,68 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("TissueMorphology")>
 Module TissueMorphology
+
+    Sub New()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(TissueRegion()), AddressOf createTissueTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(UMAPPoint()), AddressOf createUMAPTable)
+    End Sub
+
+    Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
+        Dim labels As String() = tissues.Select(Function(i) i.label).ToArray
+        Dim colors As String() = tissues.Select(Function(i) i.color.ToHtmlColor).ToArray
+        Dim x As New List(Of Integer)
+        Dim y As New List(Of Integer)
+
+        For Each region In tissues
+            For Each p As Point In region.points
+                x.Add(p.X)
+                y.Add(p.Y)
+            Next
+        Next
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"label", labels},
+                {"color", colors},
+                {"x", x.ToArray},
+                {"y", y.ToArray}
+            }
+        }
+    End Function
+
+    Private Function createUMAPTable(umap As UMAPPoint(), args As list, env As Environment) As dataframe
+        Dim px As Integer() = umap.Select(Function(i) i.Pixel.X).ToArray
+        Dim py As Integer() = umap.Select(Function(i) i.Pixel.Y).ToArray
+        Dim x As Double() = umap.Select(Function(i) i.x).ToArray
+        Dim y As Double() = umap.Select(Function(i) i.y).ToArray
+        Dim z As Double() = umap.Select(Function(i) i.z).ToArray
+        Dim cluster As Integer() = umap.Select(Function(i) i.class).ToArray
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"px", px},
+                {"py", py},
+                {"x", x},
+                {"y", y},
+                {"z", z},
+                {"cluster", cluster}
+            },
+            .rownames = px _
+                .Select(Function(xi, i) $"{xi},{py(i)}") _
+                .ToArray
+        }
+    End Function
 
     <ExportAPI("UMAPsample")>
     Public Function createUMAPsample(<RRawVectorArgument>
@@ -78,6 +131,32 @@ Module TissueMorphology
 
         Using buffer As Stream = saveBuf.TryCast(Of Stream)
             Return tissueMorphology.WriteCDF(umap, file:=buffer)
+        End Using
+    End Function
+
+    <ExportAPI("loadTissue")>
+    Public Function loadTissue(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If readBuf Like GetType(Message) Then
+            Return readBuf.TryCast(Of Message)
+        End If
+
+        Using buffer As Stream = readBuf.TryCast(Of Stream)
+            Return buffer.ReadTissueMorphology.ToArray
+        End Using
+    End Function
+
+    <ExportAPI("loadUMAP")>
+    Public Function loadUMAP(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If readBuf Like GetType(Message) Then
+            Return readBuf.TryCast(Of Message)
+        End If
+
+        Using buffer As Stream = readBuf.TryCast(Of Stream)
+            Return buffer.ReadUMAP
         End Using
     End Function
 End Module
