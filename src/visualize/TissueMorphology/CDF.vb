@@ -65,7 +65,31 @@ Public Module CDF
     End Function
 
     <Extension>
-    Public Iterator Function ReadCDF(file As Stream) As IEnumerable(Of TissueRegion)
+    Public Function ReadUMAP(file As Stream) As UMAPPoint()
+        Using cdf As New netCDFReader(file)
+            Dim sampleX As integers = cdf.getDataVariable("sampleX")
+            Dim sampleY As integers = cdf.getDataVariable("sampleY")
+            Dim umapX As doubles = cdf.getDataVariable("umapX")
+            Dim umapY As doubles = cdf.getDataVariable("umapY")
+            Dim umapZ As doubles = cdf.getDataVariable("umapZ")
+            Dim clusters As integers = cdf.getDataVariable("cluster")
+
+            Return clusters _
+                .Select(Function(cl, i)
+                            Return New UMAPPoint With {
+                                .[class] = cl,
+                                .Pixel = New Point(sampleX(i), sampleY(i)),
+                                .x = umapX(i),
+                                .y = umapY(i),
+                                .z = umapZ(i)
+                            }
+                        End Function) _
+                .ToArray
+        End Using
+    End Function
+
+    <Extension>
+    Public Iterator Function ReadTissueMorphology(file As Stream) As IEnumerable(Of TissueRegion)
         Using cdf As New netCDFReader(file)
             Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger
 
