@@ -13,7 +13,7 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module CDF
 
     <Extension>
-    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream) As Boolean
+    Public Function WriteCDF(tissueMorphology As TissueRegion(), umap As UMAPPoint(), file As Stream) As Boolean
         Using cdf As New CDFWriter(file)
             Dim attrs As New List(Of attribute)
             Dim pixels As New List(Of Integer)
@@ -23,8 +23,10 @@ Public Module CDF
             Dim uniqueId As String
 
             attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
+            attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
             cdf.GlobalAttributes(attrs.PopAll)
 
+            ' write region data
             For Each region As TissueRegion In tissueMorphology
                 attrs.Add(New attribute With {.name = "label", .type = CDFDataTypes.CHAR, .value = region.label})
                 attrs.Add(New attribute With {.name = "color", .type = CDFDataTypes.CHAR, .value = region.color.ToHtmlColor})
@@ -40,6 +42,23 @@ Public Module CDF
                 dims = New Dimension With {.name = $"sizeof_{uniqueId}", .size = vec.Length}
                 cdf.AddVariable(uniqueId, vec, dims, attrs.PopAll)
             Next
+
+            ' write umap sample data
+            Dim sampleX As Integer() = umap.Select(Function(p) p.Pixel.X).ToArray
+            Dim sampleY As Integer() = umap.Select(Function(p) p.Pixel.Y).ToArray
+            Dim umapX As Double() = umap.Select(Function(p) p.x).ToArray
+            Dim umapY As Double() = umap.Select(Function(p) p.y).ToArray
+            Dim umapZ As Double() = umap.Select(Function(p) p.z).ToArray
+            Dim clusters As Integer() = umap.Select(Function(p) p.class).ToArray
+            Dim umapsize As New Dimension With {.name = "umap_size", .size = umap.Length}
+
+            Call cdf.AddVariable("sampleX", New integers(sampleX), umapsize)
+            Call cdf.AddVariable("sampleY", New integers(sampleY), umapsize)
+            Call cdf.AddVariable("cluster", New integers(clusters), umapsize)
+
+            Call cdf.AddVariable("umapX", New doubles(umapX), umapsize)
+            Call cdf.AddVariable("umapY", New doubles(umapY), umapsize)
+            Call cdf.AddVariable("umapZ", New doubles(umapZ), umapsize)
         End Using
 
         Return True
