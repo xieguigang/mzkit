@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports any = Microsoft.VisualBasic.Scripting
 
 ''' <summary>
 ''' the cdf file data handler
@@ -42,6 +43,37 @@ Public Module CDF
         End Using
 
         Return True
+    End Function
+
+    <Extension>
+    Public Iterator Function ReadCDF(file As Stream) As IEnumerable(Of TissueRegion)
+        Using cdf As New netCDFReader(file)
+            Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger
+
+            For i As Integer = 1 To regions
+                Dim refId As String = $"region_{i}"
+                Dim var As variable = cdf.getDataVariableEntry(refId)
+                Dim name As String = var.FindAttribute("label").value
+                Dim color As String = var.FindAttribute("color").value
+                Dim nsize As Integer = var.FindAttribute("size").value.ParseInteger
+                Dim data As integers = cdf.getDataVariable(var)
+                Dim pixels As Point() = data _
+                    .Split(2) _
+                    .Select(Function(p)
+                                Return New Point With {
+                                    .X = p(Scan0),
+                                    .Y = p(1)
+                                }
+                            End Function) _
+                    .ToArray
+
+                Yield New TissueRegion With {
+                    .color = color.TranslateColor,
+                    .label = name,
+                    .points = pixels
+                }
+            Next
+        End Using
     End Function
 
 End Module
