@@ -127,8 +127,18 @@ Namespace MRM
                                             Optional maxDeletions As Integer = 1,
                                             Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
 
-            Dim [IS] As Dictionary(Of String, [IS]) = ISvector.SafeQuery.ToDictionary(Function(i) i.ID)
+            Dim [IS] As Dictionary(Of String, [IS])
             Dim blanks As New Dictionary(Of String, DataSet)
+
+            If ISvector.SafeQuery.Any(Function(i) i.ID.StringEmpty) Then
+                Throw New InvalidProgramException("there is some empty internal standard reference data in your input, please check of the IS ion table contains empty line or not!")
+            Else
+                [IS] = ISvector _
+                    .SafeQuery _
+                    .ToDictionary(Function(i)
+                                      Return i.ID
+                                  End Function)
+            End If
 
             If Not blankControls.IsNullOrEmpty Then
                 blanks = blankControls.ToDictionary(Function(metabolite) metabolite.ID)
