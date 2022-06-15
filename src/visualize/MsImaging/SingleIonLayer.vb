@@ -87,6 +87,28 @@ Public Class SingleIonLayer
     End Property
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="xy">x,y</param>
+    ''' <returns></returns>
+    Public ReadOnly Property Item(xy As String()) As SingleIonLayer
+        Get
+            Dim xyIndex As Index(Of String) = xy.Indexing
+            Dim pixels As PixelData() = MSILayer _
+                .Where(Function(p)
+                           Return $"{p.x},{p.y}" Like xyIndex
+                       End Function) _
+                .ToArray
+
+            Return New SingleIonLayer With {
+                .DimensionSize = DimensionSize,
+                .IonMz = IonMz,
+                .MSILayer = pixels
+            }
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Removes pixels which relative intensity value is 
     ''' less than the given <paramref name="intocutoff"/> 
     ''' threshold.
