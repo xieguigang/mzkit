@@ -719,6 +719,20 @@ Module MsImaging
         )
     End Function
 
+    <ExportAPI("as.pixels")>
+    <RApiReturn(GetType(String), GetType(Point))>
+    Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
+        If character Then
+            Return layer.MSILayer _
+                .Select(Function(p) $"{p.x},{p.y}") _
+                .ToArray
+        Else
+            Return layer.MSILayer _
+                .Select(Function(p) New Point(p.x, p.y)) _
+                .ToArray
+        End If
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
