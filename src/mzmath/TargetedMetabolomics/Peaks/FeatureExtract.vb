@@ -74,7 +74,9 @@ Public MustInherit Class FeatureExtract(Of Sample)
     ''' Evaluate all feature ROI from the TIC data
     ''' </summary>
     ''' <param name="TIC"></param>
-    ''' <param name="sn"></param>
+    ''' <param name="sn">
+    ''' the s/n threshold
+    ''' </param>
     ''' <param name="baselineQuantile"></param>
     ''' <returns></returns>
     ''' 

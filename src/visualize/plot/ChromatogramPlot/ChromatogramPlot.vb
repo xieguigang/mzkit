@@ -233,6 +233,7 @@ Public Module ChromatogramPlot
                             Optional parallel As Boolean = False,
                             Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
+                            Optional spline As Single = 0,
                             Optional ppi As Double = 100) As GraphicsData
 
         Dim theme As New Theme With {
@@ -276,7 +277,8 @@ Public Module ChromatogramPlot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
-                deln:=deln
+                deln:=deln,
+                bspline:=spline
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel

@@ -270,7 +270,8 @@ Public Class ScanVisual3D : Inherits Plot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,
                 deln:=10,
-                theme:=theme
+                theme:=theme,
+                bspline:=0
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,
