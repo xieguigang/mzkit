@@ -114,6 +114,7 @@ Public Class TICplot : Inherits Plot
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
         Me.deln = deln
+        Me.bspline = bspline
 
         If timeRange Is Nothing Then
             Me.timeRange = {}
