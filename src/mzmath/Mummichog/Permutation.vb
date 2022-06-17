@@ -19,6 +19,10 @@ Public Module Permutation
             For Each mz As MzSet In raw
                 target = mz.GetRandom(filter)
 
+                If target Is Nothing Then
+                    Continue For
+                End If
+
                 If Not target.unique_id Is Nothing Then
                     Call block.Add(target)
                     Call filter.Add(target.unique_id)
