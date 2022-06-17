@@ -59,6 +59,9 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports stdNum = System.Math
 
+''' <summary>
+''' a result peak feature
+''' </summary>
 Public Class PeakFeature
     Implements IRetentionTime
     Implements IROI
