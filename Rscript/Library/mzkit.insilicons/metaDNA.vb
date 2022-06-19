@@ -518,14 +518,20 @@ Module metaDNAInfer
         Dim calculators As MzCalculator()
 
         If typeList.isError Then
-            Dim types As String() = typeList _
-                .populates(Of String)(env) _
-                .Select(Function(str) str.Split("|"c)) _
-                .IteratesALL _
-                .Distinct _
-                .ToArray
+            typeList = pipeline.TryCreatePipeline(Of String)(precursors, env, suppress:=True)
 
-            calculators = Provider.Calculators(types)
+            If typeList.isError Then
+                Return typeList.getError
+            Else
+                Dim types As String() = typeList _
+                    .populates(Of String)(env) _
+                    .Select(Function(str) str.Split("|"c)) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
+
+                calculators = Provider.Calculators(types)
+            End If
         Else
             calculators = typeList _
                 .populates(Of MzCalculator)(env) _
