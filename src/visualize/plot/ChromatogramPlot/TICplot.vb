@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::1ce1bd3057c17418a4d5505fad94c3dc, mzkit\src\visualize\plot\ChromatogramPlot\TICplot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 301
-    '    Code Lines: 244
-    ' Comment Lines: 10
-    '   Blank Lines: 47
-    '     File Size: 11.42 KB
+' Summaries:
 
 
-    ' Class TICplot
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: colorProvider, GetLabels, newPen
-    ' 
-    '     Sub: DrawLabels, DrawTICLegends, PlotInternal, RunPlot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 301
+'    Code Lines: 244
+' Comment Lines: 10
+'   Blank Lines: 47
+'     File Size: 11.42 KB
+
+
+' Class TICplot
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: colorProvider, GetLabels, newPen
+' 
+'     Sub: DrawLabels, DrawTICLegends, PlotInternal, RunPlot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Class TICplot : Inherits Plot
@@ -86,6 +87,7 @@ Public Class TICplot : Inherits Plot
     ReadOnly fillAlpha As Integer
     ReadOnly labelLayoutTicks As Integer = 100
     ReadOnly deln As Integer = 10
+    ReadOnly bspline As Single = 0!
     ''' <summary>
     ''' 当两个滑窗点的时间距离过长的时候，就不进行连接线的绘制操作了
     ''' （插入两个零值的点）
@@ -100,6 +102,7 @@ Public Class TICplot : Inherits Plot
                    fillAlpha As Integer,
                    labelLayoutTicks As Integer,
                    deln As Integer,
+                   bspline As Single,
                    theme As Theme)
 
         MyBase.New(theme)
@@ -111,6 +114,7 @@ Public Class TICplot : Inherits Plot
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
         Me.deln = deln
+        Me.bspline = bspline
 
         If timeRange Is Nothing Then
             Me.timeRange = {}
@@ -207,6 +211,18 @@ Public Class TICplot : Inherits Plot
             If chromatogram.IsNullOrEmpty Then
                 Call $"ion not found in raw file: '{line.name}'".Warning
                 Continue For
+            ElseIf bspline > 0 Then
+                Dim raw As PointF() = chromatogram.Select(Function(t) New PointF(t.Time, t.Intensity)).ToArray
+                Dim interpolate = B_Spline.BSpline(raw, bspline, 10).ToArray
+
+                chromatogram = interpolate _
+                    .Select(Function(pi)
+                                Return New ChromatogramTick With {
+                                    .Time = pi.X,
+                                    .Intensity = pi.Y
+                                }
+                            End Function) _
+                    .ToArray
             End If
 
             legendList += New LegendObject With {

@@ -142,6 +142,16 @@ Namespace Chromatogram
             Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), ticks)
         End Function
 
+        Public Iterator Function GetChromatogramData(background As ChromatogramTick(), rtwin_size As Single) As IEnumerable(Of ChromatogramTick)
+            Dim win2 As New DoubleRange(time.Min - rtwin_size, time.Max + rtwin_size)
+
+            For Each t In background
+                If t.Time >= win2.Min AndAlso t.Time <= win2.Max Then
+                    Yield t
+                End If
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return time.ToString
         End Function

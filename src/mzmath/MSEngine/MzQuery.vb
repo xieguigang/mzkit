@@ -63,7 +63,7 @@ Imports System.Xml.Serialization
 ''' <summary>
 ''' query result of a ms1 m/z ion
 ''' </summary>
-Public Structure MzQuery
+Public Class MzQuery
 
     ''' <summary>
     ''' the source ``m/z`` value
@@ -136,4 +136,4 @@ Public Structure MzQuery
         End If
     End Function
 
-End Structure
+End Class
