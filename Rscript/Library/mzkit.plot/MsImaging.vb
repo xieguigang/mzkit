@@ -650,6 +650,7 @@ Module MsImaging
                                    Optional cutoff As Object = "0.1,0.75",
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
+                                   Optional colorLevels As Integer = 255,
                                    <RRawVectorArgument>
                                    Optional dims As Object = Nothing,
                                    Optional env As Environment = Nothing) As Object
@@ -715,7 +716,8 @@ Module MsImaging
             dimSize:=pointSize,
             colorSet:=colorSet,
             defaultFill:=defaultFill,
-            cutoff:=cutoffRange.TryCast(Of DoubleRange)
+            cutoff:=cutoffRange.TryCast(Of DoubleRange),
+            mapLevels:=colorLevels
         )
     End Function
 
