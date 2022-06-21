@@ -457,7 +457,7 @@ Module MetaDbXref
 
         Dim mz As String() = query.getNames
         Dim scores As New Dictionary(Of String, Double)
-        Dim println = env.WriteLineHandler
+        Dim println As Action(Of Object) = env.WriteLineHandler
 
         If Not scoreFactors Is Nothing Then
             For Each name As String In scoreFactors.getNames
@@ -529,18 +529,33 @@ Module MetaDbXref
             Next
         Next
 
+        println("export result table!")
+
         Return New dataframe With {
             .rownames = mz,
             .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mzqueries.Select(Function(i) i.Value.mz).ToArray},
-                {"theoretical_mz", mzqueries.Select(Function(i) i.Value.mz_ref).ToArray},
-                {"ppm", mzqueries.Select(Function(i) i.Value.ppm).ToArray},
-                {"precursor_type", mzqueries.Select(Function(i) i.Value.precursorType).ToArray},
-                {"unique_id", mzqueries.Select(Function(i) i.Value.unique_id).ToArray},
-                {"name", mzqueries.Select(Function(i) i.Value.name).ToArray},
-                {"score", mzqueries.Select(Function(i) i.Value.score).ToArray}
+                {"m/z", mzqueries.getVector(Function(i) i.Value.mz)},
+                {"theoretical_mz", mzqueries.getVector(Function(i) i.Value.mz_ref)},
+                {"ppm", mzqueries.getVector(Function(i) i.Value.ppm)},
+                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursorType)},
+                {"unique_id", mzqueries.getVector(Function(i) i.Value.unique_id)},
+                {"name", mzqueries.getVector(Function(i) i.Value.name)},
+                {"score", mzqueries.getVector(Function(i) i.Value.score)}
             }
         }
+    End Function
+
+    <Extension>
+    Private Function getVector(Of T)(mzqueries As NamedValue(Of MzQuery)(), accessor As Func(Of NamedValue(Of MzQuery), T)) As T()
+        Return mzqueries _
+            .Select(Function(i)
+                        If i.Value Is Nothing Then
+                            Return Nothing
+                        Else
+                            Return accessor(i)
+                        End If
+                    End Function) _
+            .ToArray
     End Function
 
     <ExportAPI("cbind.metainfo")>
