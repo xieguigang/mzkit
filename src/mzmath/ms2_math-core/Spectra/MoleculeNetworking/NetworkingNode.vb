@@ -127,8 +127,8 @@ Namespace Spectra.MoleculeNetworking
                 .IteratesALL _
                 .GroupBy(Function(a) a.mz, tolerance) _
                 .ToArray
-            Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
-            Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
+            ' Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
+            ' Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
             Dim matrix As ms2() = mz _
                 .Select(Function(a)
                             Return New ms2 With {
@@ -139,16 +139,16 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray _
                 .Centroid(tolerance, cutoff) _
                 .ToArray
-            Dim products As String = matrix _
+            Dim products As ms2() = matrix _
                 .OrderByDescending(Function(a) a.intensity) _
-                .Take(3) _
-                .Select(Function(a) BitConverter.GetBytes(a.mz)) _
-                .IteratesALL _
-                .ToBase64String _
-                .MD5 _
-                .Substring(0, 6) _
-                .ToUpper
-            Dim uid As String = $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
+                .Take(3).ToArray
+            '.Select(Function(a) BitConverter.GetBytes(a.mz)) _
+            '.IteratesALL _
+            '.ToBase64String _
+            '.MD5 _
+            '.Substring(0, 6) _
+            '.ToUpper
+            Dim uid As String = products.Select(Function(i) $"{i.mz.ToString("F3")}:{i.intensity.ToString("F0")}").JoinBy("/") ' $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
             Return New LibraryMatrix With {
                 .centroid = True,
