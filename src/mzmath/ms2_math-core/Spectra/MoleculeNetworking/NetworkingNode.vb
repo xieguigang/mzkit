@@ -148,7 +148,7 @@ Namespace Spectra.MoleculeNetworking
             '.MD5 _
             '.Substring(0, 6) _
             '.ToUpper
-            Dim uid As String = products.Select(Function(i) $"{i.mz.ToString("F3")}:{i.intensity.ToString("F0")}").JoinBy("/") ' $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
+            Dim uid As String = products.Select(Function(i) $"{i.mz.ToString("F3")}:{(i.intensity * 100).ToString("F0")}").JoinBy("/") ' $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
             Return New LibraryMatrix With {
                 .centroid = True,
