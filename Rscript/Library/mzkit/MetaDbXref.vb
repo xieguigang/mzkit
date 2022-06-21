@@ -398,6 +398,43 @@ Module MetaDbXref
         End If
     End Function
 
+    <Extension>
+    Private Function makeUniqueQuery(query As list,
+                                     mzi As String,
+                                     uniqueByScore As Boolean,
+                                     scores As Dictionary(Of String, Double),
+                                     env As Environment) As NamedValue(Of MzQuery)
+        ' unique of rows
+        Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
+        Dim unique As MzQuery = Nothing
+
+        If Not all.IsNullOrEmpty Then
+            If uniqueByScore Then
+                If scores.Count > 0 Then
+                    unique = all _
+                        .OrderByDescending(Function(d)
+                                               Dim key As String = MzQuery.ReferenceKey(d)
+
+                                               If scores.ContainsKey(key) Then
+                                                   Return d.score * scores(key)
+                                               Else
+                                                   Return d.score
+                                               End If
+                                           End Function) _
+                        .First
+                Else
+                    unique = all _
+                        .OrderByDescending(Function(d) d.score) _
+                        .First
+                End If
+            Else
+                unique = all.OrderBy(Function(d) d.ppm).First
+            End If
+        End If
+
+        Return New NamedValue(Of MzQuery)(mzi, unique)
+    End Function
+
     ''' <summary>
     ''' unique of the peak annotation features
     ''' </summary>
@@ -420,56 +457,39 @@ Module MetaDbXref
 
         Dim mz As String() = query.getNames
         Dim scores As New Dictionary(Of String, Double)
+        Dim println = env.WriteLineHandler
 
         If Not scoreFactors Is Nothing Then
             For Each name As String In scoreFactors.getNames
                 Call scores.Add(name, scoreFactors.getValue(Of Double)(name, env))
             Next
+
+            Call println("view of the score factor vector:")
+            Call env.globalEnvironment.Rscript.Inspect(scores)
         End If
+
+        println("make unique for the annotation features...")
 
         Dim mzqueries = mz _
             .Select(Function(mzi)
-                        ' unique of rows
-                        Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
-                        Dim unique As MzQuery = Nothing
-
-                        If Not all.IsNullOrEmpty Then
-                            If uniqueByScore Then
-                                If scores.Count > 0 Then
-                                    unique = all _
-                                        .OrderByDescending(Function(d)
-                                                               Dim key As String = MzQuery.ReferenceKey(d)
-
-                                                               If scores.ContainsKey(key) Then
-                                                                   Return d.score * scores(key)
-                                                               Else
-                                                                   Return d.score
-                                                               End If
-                                                           End Function) _
-                                        .First
-                                Else
-                                    unique = all _
-                                        .OrderByDescending(Function(d) d.score) _
-                                        .First
-                                End If
-                            Else
-                                unique = all.OrderBy(Function(d) d.ppm).First
-                            End If
-                        End If
-
-                        Return New NamedValue(Of MzQuery)(mzi, unique)
+                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, env)
                     End Function) _
             .ToArray
         Dim betterJ As Boolean
 
+        println("make unique for the annotation id...")
+
         ' unique between features
         ' via min ppm?
         For i As Integer = 0 To mz.Length - 1
-            If mzqueries(i).Value.isEmpty Then
+            If MzQuery.IsNullOrEmpty(mzqueries(i).Value) Then
                 Continue For
             End If
 
             For j As Integer = 0 To mz.Length - 1
+                If MzQuery.IsNullOrEmpty(mzqueries(j).Value) Then
+                    Continue For
+                End If
                 If i = j OrElse mzqueries(j).Value.unique_id <> mzqueries(i).Value.unique_id Then
                     Continue For
                 End If
