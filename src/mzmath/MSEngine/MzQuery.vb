@@ -96,6 +96,7 @@ Public Class MzQuery
     Public Property name As String
 
     Friend ReadOnly Property isEmpty As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return mz = 0.0 AndAlso
                 ppm = 0.0 AndAlso
@@ -106,6 +107,7 @@ Public Class MzQuery
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As MzQuery
         Return New MzQuery With {
             .unique_id = unique_id,
@@ -122,6 +124,8 @@ Public Class MzQuery
     ''' makes a unique reference key of current mz query result
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function ReferenceKey(query As MzQuery) As String
         Return $"{query.mz.ToString("F4")}|{query.unique_id}"
     End Function
@@ -134,6 +138,11 @@ Public Class MzQuery
         Else
             Return prefix
         End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function IsNullOrEmpty(hit As MzQuery) As Boolean
+        Return hit Is Nothing OrElse hit.isEmpty
     End Function
 
 End Class

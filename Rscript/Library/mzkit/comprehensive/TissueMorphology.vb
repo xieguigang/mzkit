@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -11,6 +12,10 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
+''' <summary>
+''' tissue morphology data handler for the internal 
+''' bionovogene MS-imaging analysis pipeline.
+''' </summary>
 <Package("TissueMorphology")>
 Module TissueMorphology
 
@@ -93,11 +98,45 @@ Module TissueMorphology
         Return umap
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="labels"></param>
+    ''' <param name="colorSet">
+    ''' the color set schema name or a list of color data 
+    ''' which can be mapping to the given <paramref name="labels"/> 
+    ''' list.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("TissueData")>
-    Public Function createTissueData(x As Integer(), y As Integer(), labels As String(), Optional colorSet As String = "Paper") As TissueRegion()
+    <RApiReturn(GetType(TissueRegion))>
+    Public Function createTissueData(x As Integer(),
+                                     y As Integer(),
+                                     labels As String(),
+                                     Optional colorSet As Object = "Paper",
+                                     Optional env As Environment = Nothing) As Object
+
         Dim labelClass As String() = labels.Distinct.ToArray
-        Dim colors As Color() = Designer.GetColors(colorSet, labelClass.Length)
+        Dim colors As New Dictionary(Of String, Color)
         Dim regions As New Dictionary(Of String, List(Of Point))
+
+        If TypeOf colorSet Is list Then
+            Dim list As list = DirectCast(colorSet, list)
+
+            For Each name As String In list.getNames
+                Call colors.Add(name, RColorPalette.GetRawColor(list.getByName(name)))
+            Next
+        Else
+            Dim colorList = Designer.GetColors(colorSet, labelClass.Length)
+            Dim i As i32 = Scan0
+
+            For Each label As String In labelClass
+                Call colors.Add(label, colorList(++i))
+            Next
+        End If
 
         For Each label As String In labelClass
             Call regions.Add(label, New List(Of Point))
@@ -110,7 +149,7 @@ Module TissueMorphology
         Return regions _
             .Select(Function(r, i)
                         Return New TissueRegion With {
-                            .color = colors(i),
+                            .color = colors(r.Key),
                             .label = r.Key,
                             .points = r.Value.ToArray
                         }

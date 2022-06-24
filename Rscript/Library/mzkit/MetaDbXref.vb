@@ -398,6 +398,43 @@ Module MetaDbXref
         End If
     End Function
 
+    <Extension>
+    Private Function makeUniqueQuery(query As list,
+                                     mzi As String,
+                                     uniqueByScore As Boolean,
+                                     scores As Dictionary(Of String, Double),
+                                     env As Environment) As NamedValue(Of MzQuery)
+        ' unique of rows
+        Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
+        Dim unique As MzQuery = Nothing
+
+        If Not all.IsNullOrEmpty Then
+            If uniqueByScore Then
+                If scores.Count > 0 Then
+                    unique = all _
+                        .OrderByDescending(Function(d)
+                                               Dim key As String = MzQuery.ReferenceKey(d)
+
+                                               If scores.ContainsKey(key) Then
+                                                   Return d.score * scores(key)
+                                               Else
+                                                   Return d.score
+                                               End If
+                                           End Function) _
+                        .First
+                Else
+                    unique = all _
+                        .OrderByDescending(Function(d) d.score) _
+                        .First
+                End If
+            Else
+                unique = all.OrderBy(Function(d) d.ppm).First
+            End If
+        End If
+
+        Return New NamedValue(Of MzQuery)(mzi, unique)
+    End Function
+
     ''' <summary>
     ''' unique of the peak annotation features
     ''' </summary>
@@ -420,56 +457,39 @@ Module MetaDbXref
 
         Dim mz As String() = query.getNames
         Dim scores As New Dictionary(Of String, Double)
+        Dim println As Action(Of Object) = env.WriteLineHandler
 
         If Not scoreFactors Is Nothing Then
             For Each name As String In scoreFactors.getNames
                 Call scores.Add(name, scoreFactors.getValue(Of Double)(name, env))
             Next
+
+            Call println("view of the score factor vector:")
+            Call env.globalEnvironment.Rscript.Inspect(scores)
         End If
+
+        println("make unique for the annotation features...")
 
         Dim mzqueries = mz _
             .Select(Function(mzi)
-                        ' unique of rows
-                        Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
-                        Dim unique As MzQuery = Nothing
-
-                        If Not all.IsNullOrEmpty Then
-                            If uniqueByScore Then
-                                If scores.Count > 0 Then
-                                    unique = all _
-                                        .OrderByDescending(Function(d)
-                                                               Dim key As String = MzQuery.ReferenceKey(d)
-
-                                                               If scores.ContainsKey(key) Then
-                                                                   Return d.score * scores(key)
-                                                               Else
-                                                                   Return d.score
-                                                               End If
-                                                           End Function) _
-                                        .First
-                                Else
-                                    unique = all _
-                                        .OrderByDescending(Function(d) d.score) _
-                                        .First
-                                End If
-                            Else
-                                unique = all.OrderBy(Function(d) d.ppm).First
-                            End If
-                        End If
-
-                        Return New NamedValue(Of MzQuery)(mzi, unique)
+                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, env)
                     End Function) _
             .ToArray
         Dim betterJ As Boolean
 
+        println("make unique for the annotation id...")
+
         ' unique between features
         ' via min ppm?
         For i As Integer = 0 To mz.Length - 1
-            If mzqueries(i).Value.isEmpty Then
+            If MzQuery.IsNullOrEmpty(mzqueries(i).Value) Then
                 Continue For
             End If
 
             For j As Integer = 0 To mz.Length - 1
+                If MzQuery.IsNullOrEmpty(mzqueries(j).Value) Then
+                    Continue For
+                End If
                 If i = j OrElse mzqueries(j).Value.unique_id <> mzqueries(i).Value.unique_id Then
                     Continue For
                 End If
@@ -509,18 +529,33 @@ Module MetaDbXref
             Next
         Next
 
+        println("export result table!")
+
         Return New dataframe With {
             .rownames = mz,
             .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mzqueries.Select(Function(i) i.Value.mz).ToArray},
-                {"theoretical_mz", mzqueries.Select(Function(i) i.Value.mz_ref).ToArray},
-                {"ppm", mzqueries.Select(Function(i) i.Value.ppm).ToArray},
-                {"precursor_type", mzqueries.Select(Function(i) i.Value.precursorType).ToArray},
-                {"unique_id", mzqueries.Select(Function(i) i.Value.unique_id).ToArray},
-                {"name", mzqueries.Select(Function(i) i.Value.name).ToArray},
-                {"score", mzqueries.Select(Function(i) i.Value.score).ToArray}
+                {"m/z", mzqueries.getVector(Function(i) i.Value.mz)},
+                {"theoretical_mz", mzqueries.getVector(Function(i) i.Value.mz_ref)},
+                {"ppm", mzqueries.getVector(Function(i) i.Value.ppm)},
+                {"precursor_type", mzqueries.getVector(Function(i) i.Value.precursorType)},
+                {"unique_id", mzqueries.getVector(Function(i) i.Value.unique_id)},
+                {"name", mzqueries.getVector(Function(i) i.Value.name)},
+                {"score", mzqueries.getVector(Function(i) i.Value.score)}
             }
         }
+    End Function
+
+    <Extension>
+    Private Function getVector(Of T)(mzqueries As NamedValue(Of MzQuery)(), accessor As Func(Of NamedValue(Of MzQuery), T)) As T()
+        Return mzqueries _
+            .Select(Function(i)
+                        If i.Value Is Nothing Then
+                            Return Nothing
+                        Else
+                            Return accessor(i)
+                        End If
+                    End Function) _
+            .ToArray
     End Function
 
     <ExportAPI("cbind.metainfo")>
