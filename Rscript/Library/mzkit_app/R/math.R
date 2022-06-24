@@ -14,16 +14,21 @@ const tolerance = function(kind as string, mzdiff as double) {
 #' @return a result data matrix has been normalized 
 #'     via total sum of the peak area.
 #'
-const normData = function(mat) {
+const normData = function(mat, factor = NULL) {
 	const dat = as.data.frame(mat);
 	const min as double = mzkit::.minPos(dat) / 2;	
-	const factor as double = colnames(dat) 
-	|> lapply(function(i) dat[, i]) 
-	|> unlist() 
-	|> unlist() 
-	|> as.numeric() 
-	|> sum()
-	;
+	
+	if (!is.null(factor)) {
+		factor = as.numeric(factor);
+	} else {
+		factor = colnames(dat) 
+		|> lapply(function(i) dat[, i]) 
+		|> unlist() 
+		|> unlist() 
+		|> as.numeric() 
+		|> sum()
+		;
+	}
 
 	for(name in colnames(dat)) {
 		v = as.numeric(dat[, name]);
