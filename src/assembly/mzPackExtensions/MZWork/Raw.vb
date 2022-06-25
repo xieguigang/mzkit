@@ -189,7 +189,10 @@ mzPackReader:
                     loaded.Thumbnail = Nothing
                 End If
 
-                loaded.Scanners.Clear()
+                If Not loaded.Scanners Is Nothing Then
+                    loaded.Scanners.Clear()
+                End If
+
                 loaded = Nothing
             End If
 
