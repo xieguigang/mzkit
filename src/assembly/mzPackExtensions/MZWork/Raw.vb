@@ -110,6 +110,12 @@ Namespace MZWork
             End Get
         End Property
 
+        Public ReadOnly Property isInMemory As Boolean
+            Get
+                Return loaded IsNot Nothing AndAlso Not cache.FileExists
+            End Get
+        End Property
+
         Public ReadOnly Property cacheFileExists As Boolean
             Get
                 Return cache.FileExists
@@ -117,6 +123,10 @@ Namespace MZWork
         End Property
 
         Public Sub New()
+        End Sub
+
+        Sub New(inMemory As mzPack)
+            Call loadMemory(inMemory)
         End Sub
 
         Sub New(copy As Raw)
@@ -136,6 +146,17 @@ Namespace MZWork
             Return loaded.Thumbnail
         End Function
 
+        Private Sub loadMemory(inMemory As mzPack)
+            loaded = inMemory
+            ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
+            ms2 = loaded.MS _
+                .Select(Function(m1) m1.products) _
+                .IteratesALL _
+                .ToDictionary(Function(m2)
+                                  Return m2.scan_id
+                              End Function)
+        End Sub
+
         Public Function LoadMzpack(reload As Action(Of String, String), Optional verbose As Boolean = True) As Raw
             If isLoaded Then
                 Return Me
@@ -144,15 +165,7 @@ Namespace MZWork
 mzPackReader:
             Try
                 Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    loaded = mzPack.ReadAll(file, verbose:=verbose)
-
-                    ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
-                    ms2 = loaded.MS _
-                        .Select(Function(m1) m1.products) _
-                        .IteratesALL _
-                        .ToDictionary(Function(m2)
-                                          Return m2.scan_id
-                                      End Function)
+                    Call loadMemory(mzPack.ReadAll(file, verbose:=verbose))
                 End Using
             Catch ex As Exception
                 Call ($"It seems that mzPack cache file of {source} is damaged,{vbCrLf} mzkit will going to reload of the source file.").PrintException

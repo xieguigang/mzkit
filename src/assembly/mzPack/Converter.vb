@@ -183,7 +183,9 @@ Public Module Converter
 
     <Extension>
     Public Iterator Function GetUVScans(mzpack As mzPack) As IEnumerable(Of UVScan)
-        If Not mzpack.Scanners.ContainsKey(ExtractUVData.UVScanType) Then
+        If mzpack.Scanners Is Nothing Then
+            Return
+        ElseIf Not mzpack.Scanners.ContainsKey(ExtractUVData.UVScanType) Then
             Return
         End If
 

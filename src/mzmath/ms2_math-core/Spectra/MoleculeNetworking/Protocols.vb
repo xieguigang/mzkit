@@ -95,7 +95,12 @@ Namespace Spectra.MoleculeNetworking
             End Get
         End Property
 
-        Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As LowAbundanceTrimming)
+        Sub New(ms1_tolerance As Tolerance,
+                ms2_tolerance As Tolerance,
+                treeIdentical As Double,
+                treeSimilar As Double,
+                intoCutoff As LowAbundanceTrimming)
+
             Me.treeIdentical = treeIdentical
             Me.treeSimilar = treeSimilar
             Me.intoCutoff = intoCutoff
@@ -123,7 +128,10 @@ Namespace Spectra.MoleculeNetworking
         ''' <param name="raw"></param>
         ''' <returns></returns>
         Friend Iterator Function BinaryTree(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of SpectrumCluster)
-            Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(ms2_tolerance, Nothing, treeIdentical, treeSimilar), showReport:=False)
+            Dim tree As New SpectrumTreeCluster(
+                compares:=SpectrumTreeCluster.SSMCompares(ms2_tolerance, Nothing, treeIdentical, treeSimilar),
+                showReport:=False
+            )
 
             Call tree.doCluster(raw.ToArray)
 
