@@ -171,7 +171,7 @@ Namespace Spectra.MoleculeNetworking
             Next
         End Function
 
-        Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, (id As String, forward#, reverse#))))
+        Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of LinkSet)
             Dim i As i32 = 1
             Dim rawData As NetworkingNode() = nodes.ToArray
 
@@ -190,12 +190,19 @@ Namespace Spectra.MoleculeNetworking
                 Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
                 Call clusters.Add(scan.referenceId, scan)
 
-                Yield New NamedValue(Of Dictionary(Of String, (String, Double, Double))) With {
-                    .Name = scan.referenceId,
-                    .Value = scores.ToDictionary(Function(a) a.id,
-                                                 Function(a)
-                                                     Return (a.id, a.forward, a.reverse)
-                                                 End Function)
+                Dim links = scores _
+                    .ToDictionary(Function(a) a.id,
+                                  Function(a)
+                                      Return New NetworkClusterLinkEndPoint With {
+                                         .id = a.id,
+                                         .forward = a.forward,
+                                         .reverse = a.reverse
+                                      }
+                                  End Function)
+
+                Yield New LinkSet With {
+                    .reference = scan.referenceId,
+                    .links = links
                 }
             Next
         End Function

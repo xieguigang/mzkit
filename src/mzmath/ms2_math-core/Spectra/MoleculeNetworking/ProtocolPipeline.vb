@@ -80,15 +80,19 @@ Namespace Spectra.MoleculeNetworking
             Return Me
         End Function
 
-        Public Function Networking() As NamedValue(Of Dictionary(Of String, (id As String, forward#, reverse#)))()
+        Public Function Networking() As LinkSet()
             Return protocol.Networking(nodes, progress).ToArray
         End Function
 
-        Public Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(aggrate As Func(Of Double, Double, Double)) As IEnumerable(Of T)
-            For Each row As NamedValue(Of Dictionary(Of String, (String, forward#, reverse#))) In protocol.Networking(nodes, progress)
-                Dim obj As New T With {.Key = row.Name}
+        Public Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(aggrate As Func(Of Double, Double, Double)) As IEnumerable(Of T)
+            Return Networking(Of T)(protocol.Networking(nodes, progress), aggrate)
+        End Function
 
-                For Each homologous In row.Value
+        Public Shared Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(linkSet As IEnumerable(Of LinkSet), aggrate As Func(Of Double, Double, Double)) As IEnumerable(Of T)
+            For Each row As LinkSet In linkSet
+                Dim obj As New T With {.Key = row.reference}
+
+                For Each homologous In row.links
                     Call obj.Add(homologous.Key, aggrate(homologous.Value.forward, homologous.Value.reverse))
                 Next
 
@@ -97,4 +101,22 @@ Namespace Spectra.MoleculeNetworking
         End Function
     End Class
 
+    Public Structure LinkSet
+
+        Public Property reference As String
+        Public Property links As Dictionary(Of String, NetworkClusterLinkEndPoint)
+
+    End Structure
+
+    Public Class NetworkClusterLinkEndPoint
+
+        Public Property id As String
+        Public Property forward As Double
+        Public Property reverse As Double
+
+        Public Overrides Function ToString() As String
+            Return $"[{id}] forward:{forward}, reverse:{reverse}"
+        End Function
+
+    End Class
 End Namespace
