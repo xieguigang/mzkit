@@ -106,6 +106,18 @@ Namespace Spectra.MoleculeNetworking
         Public Property reference As String
         Public Property links As Dictionary(Of String, NetworkClusterLinkEndPoint)
 
+        Default Public ReadOnly Property GetScore(id As String) As (forward As Double, reverse As Double)
+            Get
+                Dim partner As NetworkClusterLinkEndPoint = links.TryGetValue(id)
+
+                If Not partner Is Nothing Then
+                    Return (partner.forward, partner.reverse)
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
     End Structure
 
     Public Class NetworkClusterLinkEndPoint
