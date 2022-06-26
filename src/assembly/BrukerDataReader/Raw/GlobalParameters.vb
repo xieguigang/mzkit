@@ -60,7 +60,7 @@
 Imports System
 Imports System.Text
 
-Namespace BrukerDataReader
+Namespace Raw
     Public Class GlobalParameters
         ''' <summary>
         ''' Calibration value A

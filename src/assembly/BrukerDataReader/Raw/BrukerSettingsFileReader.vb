@@ -66,7 +66,8 @@ Imports System.Linq
 Imports System.Text.RegularExpressions
 Imports System.Xml.Linq
 
-Namespace BrukerDataReader
+Namespace Raw
+
     Friend Class BrukerSettingsFileReader
         ' ReSharper disable once CommentTypo
         ' Ignore Spelling: Bruker, paramlist, pre

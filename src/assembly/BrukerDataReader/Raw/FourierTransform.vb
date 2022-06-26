@@ -59,7 +59,7 @@ Imports System
 Imports Microsoft.VisualBasic
 Imports stdNum = System.Math
 
-Namespace BrukerDataReader
+Namespace Raw
     Public Class FourierTransform
         Public Function RealFourierTransform(ByRef data As Double()) As Integer
             ' int iSign = 1;

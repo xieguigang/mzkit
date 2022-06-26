@@ -66,7 +66,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports stdNum = System.Math
 
-Namespace BrukerDataReader
+Namespace Raw
     ' TODO: add apodization ability
     ' TODO: remove all dependence on DeconEngine (FFT, apodization, etc).
 
@@ -132,8 +132,8 @@ Namespace BrukerDataReader
             Parameters = New GlobalParameters With {
                 .ML1 = calA,
                 .ML2 = calB,
-                .SampleRate = sampleRate,
-                .NumValuesInScan = numValuesInScan
+                .sampleRate = sampleRate,
+                .numValuesInScan = numValuesInScan
             }
         End Sub
 

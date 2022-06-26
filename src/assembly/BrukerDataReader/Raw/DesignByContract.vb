@@ -82,8 +82,7 @@
 Imports System
 Imports System.Diagnostics
 
-' ReSharper disable UnusedMember.Global
-Namespace BrukerDataReader
+Namespace Raw
     <AttributeUsage(AttributeTargets.All)>
     Public Class CoverageExcludeAttribute
         Inherits Attribute
