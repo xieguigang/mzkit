@@ -19,19 +19,34 @@ Namespace SCiLSLab
         Public Property create_time As Date
         Public Property metadata As Dictionary(Of String, String)
 
+        Public Shared Function ParseHeader(file As Stream) As PackFile
+            Using reader As New StreamReader(file)
+                Dim byrefPack As New PackFile
+                Call ParseHeader(reader, byrefPack, Nothing)
+                Return byrefPack
+            End Using
+        End Function
+
+        Public Shared Sub ParseHeader(reader As StreamReader, ByRef byrefPack As PackFile, ByRef headerLine As String)
+            Dim line As Value(Of String) = ""
+            Dim comments As New List(Of String)
+
+            Do While (line = reader.ReadLine).StartsWith("#")
+                Call comments.Add(line)
+            Loop
+
+            headerLine = line
+            fillByrefPack(comments, byrefPack)
+            byrefPack.metadata.Add(".header", headerLine)
+        End Sub
+
         Protected Shared Iterator Function ParseTable(Of T)(file As Stream, byrefPack As PackFile, parseLine As LineParser(Of T)) As IEnumerable(Of T)
             Using reader As New StreamReader(file)
-                Dim headerLine As String
+                Dim headerLine As String = Nothing
                 Dim line As Value(Of String) = ""
-                Dim comments As New List(Of String)
 
-                Do While (line = reader.ReadLine).StartsWith("#")
-                    Call comments.Add(line)
-                Loop
-
-                headerLine = line
-                fillByrefPack(comments, byrefPack)
-                byrefPack.metadata.Add(".header", headerLine)
+                Call ParseHeader(reader, byrefPack, headerLine)
+                Call byrefPack.metadata.Add(".header", headerLine)
 
                 Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
 
