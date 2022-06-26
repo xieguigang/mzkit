@@ -17,6 +17,7 @@ Namespace SCiLSLab
         Public Property guid As String
         Public Property type As String
         Public Property create_time As Date
+        Public Property metadata As Dictionary(Of String, String)
 
         Protected Shared Iterator Function ParseTable(Of T)(file As Stream, byrefPack As PackFile, parseLine As LineParser(Of T)) As IEnumerable(Of T)
             Using reader As New StreamReader(file)
@@ -51,12 +52,13 @@ Namespace SCiLSLab
                               End Function)
 
             [byref].comment = comments.Where(Function(c) c.IndexOf(":"c) = -1).JoinBy(vbCrLf)
-            [byref].export_time = meta.TryGetValue("# Export time", [default]:=Now.ToString).ParseDate
-            [byref].raw = meta.TryGetValue("# Generated from file")
-            [byref].fullName = meta.TryGetValue("# Object Full Name")
-            [byref].guid = meta.TryGetValue("# Object ID")
-            [byref].type = meta.TryGetValue("# Object type")
-            [byref].create_time = meta.TryGetValue("# Object creation time", [default]:=Now.ToString).ParseDate
+            [byref].export_time = meta.TryPopOut("# Export time", [default]:=Now.ToString).ParseDate
+            [byref].raw = meta.TryPopOut("# Generated from file")
+            [byref].fullName = meta.TryPopOut("# Object Full Name")
+            [byref].guid = meta.TryPopOut("# Object ID")
+            [byref].type = meta.TryPopOut("# Object type")
+            [byref].create_time = meta.TryPopOut("# Object creation time", [default]:=Now.ToString).ParseDate
+            [byref].metadata = meta
         End Sub
     End Class
 End Namespace
