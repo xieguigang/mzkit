@@ -67,11 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrukerSettingsFileReader.vb" />
-    <Compile Include="DataReader.vb" />
-    <Compile Include="DesignByContract.vb" />
-    <Compile Include="FourierTransform.vb" />
-    <Compile Include="GlobalParameters.vb" />
+    <Compile Include="Raw\BrukerSettingsFileReader.vb" />
+    <Compile Include="Raw\DataReader.vb" />
+    <Compile Include="Raw\DesignByContract.vb" />
+    <Compile Include="Raw\FourierTransform.vb" />
+    <Compile Include="Raw\GlobalParameters.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
