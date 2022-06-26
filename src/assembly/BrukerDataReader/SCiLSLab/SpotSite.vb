@@ -31,7 +31,16 @@ Namespace SCiLSLab
         End Function
 
         Friend Shared Function Parse(row As String(), headers As Index(Of String)) As SpotSite
+            ' Spot index;x;y
+            Dim index As String = row(headers("Spot index"))
+            Dim x As Double = Val(row(headers("x")))
+            Dim y As Double = Val(row(headers("y")))
 
+            Return New SpotSite With {
+                .index = index,
+                .x = x,
+                .y = y
+            }
         End Function
 
     End Class
