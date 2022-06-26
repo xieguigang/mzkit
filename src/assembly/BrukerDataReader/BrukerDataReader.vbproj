@@ -79,7 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Raw\Check.vb" />
     <Compile Include="Raw\CoverageExcludeAttribute.vb" />
-    <Compile Include="SCiLSLab\Class1.vb" />
+    <Compile Include="SCiLSLab\PackFile.vb" />
     <Compile Include="SCiLSLab\SpotSite.vb" />
     <Compile Include="SCiLSLab\SpotMs.vb" />
   </ItemGroup>

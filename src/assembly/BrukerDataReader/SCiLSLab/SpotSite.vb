@@ -1,13 +1,23 @@
 ﻿Imports System.Collections.Generic
 Imports System.Drawing
+Imports System.IO
+Imports System.Linq
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace SCiLSLab
 
-    Public Class SpotPack
+    Public Class SpotPack : Inherits PackFile
 
         Public Property index As Dictionary(Of String, SpotSite)
-        Public Property comment As String
 
+        Public Shared Function ParseFile(file As Stream) As SpotPack
+            Dim pull As New SpotPack
+            Dim spots As SpotSite() = ParseTable(file, pull, AddressOf SpotSite.Parse).ToArray
+
+            pull.index = spots.ToDictionary(Function(sp) sp.index)
+
+            Return pull
+        End Function
     End Class
 
     Public Class SpotSite
@@ -18,6 +28,10 @@ Namespace SCiLSLab
 
         Public Overrides Function ToString() As String
             Return $"spot_{index} [{x},{y}]"
+        End Function
+
+        Friend Shared Function Parse(row As String(), headers As Index(Of String)) As SpotSite
+
         End Function
 
     End Class
