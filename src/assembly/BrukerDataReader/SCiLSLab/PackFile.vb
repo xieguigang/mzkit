@@ -31,6 +31,7 @@ Namespace SCiLSLab
 
                 headerLine = line
                 fillByrefPack(comments, byrefPack)
+                byrefPack.metadata.Add(".header", headerLine)
 
                 Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
 
