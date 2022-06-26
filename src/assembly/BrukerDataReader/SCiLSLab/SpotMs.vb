@@ -1,12 +1,11 @@
 ﻿Imports System.IO
-Imports System.Linq
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace SCiLSLab
 
     Public Class MsPack : Inherits PackFile
 
-        Public Property spots As Dictionary(Of String, SpotMs)
+        Public Property matrix As SpotMs()
         Public Property mz As Double()
 
         Public Shared Function ParseFile(file As Stream) As MsPack
@@ -20,7 +19,7 @@ Namespace SCiLSLab
                 .ToArray
 
             pull.mz = mz
-            pull.spots = spots.ToDictionary(Function(sp) sp.spot_id)
+            pull.matrix = spots
 
             Return pull
         End Function

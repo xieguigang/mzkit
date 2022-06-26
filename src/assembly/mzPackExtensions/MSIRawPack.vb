@@ -59,13 +59,16 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 #End If
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 ''' <summary>
-''' read Xcalibur Raw data file for MS-imaging
+''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
 
@@ -126,5 +129,36 @@ Public Module MSIRawPack
         Next
 
         Return mz.Values.ToArray
+    End Function
+
+    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream) As mzPack
+        Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
+        Dim spotsMs As MsPack = MsPack.ParseFile(msdata)
+        Dim spotsList As New List(Of ScanMS1)
+        Dim i As i32 = Scan0
+
+        For Each spot As SpotMs In spotsMs.matrix
+            Dim xy = spotsXy.index(spot.spot_id)
+            Dim ms1 As New ScanMS1 With {
+                .BPC = spot.intensity.Max,
+                .TIC = spot.intensity.Sum,
+                .into = spot.intensity,
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", xy.x},
+                    {"y", xy.y},
+                    {"spot_id", xy.index}
+                },
+                .mz = spotsMs.mz,
+                .rt = ++i,
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC}"
+            }
+
+            spotsList.Add(ms1)
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .MS = spotsList.ToArray
+        }
     End Function
 End Module
