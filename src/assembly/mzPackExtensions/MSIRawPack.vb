@@ -138,7 +138,8 @@ Public Module MSIRawPack
         Dim i As i32 = Scan0
 
         For Each spot As SpotMs In spotsMs.matrix
-            Dim xy = spotsXy.index(spot.spot_id)
+            Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
+            Dim xy As SpotSite = spotsXy.index(ref)
             Dim ms1 As New ScanMS1 With {
                 .BPC = spot.intensity.Max,
                 .TIC = spot.intensity.Sum,
