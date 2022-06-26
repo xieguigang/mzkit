@@ -69,7 +69,11 @@
   <ItemGroup>
     <Compile Include="Raw\BrukerSettingsFileReader.vb" />
     <Compile Include="Raw\DataReader.vb" />
-    <Compile Include="Raw\Exceptions.vb" />
+    <Compile Include="Raw\Exceptions\AssertionException.vb" />
+    <Compile Include="Raw\Exceptions\PostconditionException.vb" />
+    <Compile Include="Raw\Exceptions\PreconditionException.vb" />
+    <Compile Include="Raw\Exceptions\DesignByContractException.vb" />
+    <Compile Include="Raw\Exceptions\InvariantException.vb" />
     <Compile Include="Raw\FourierTransform.vb" />
     <Compile Include="Raw\GlobalParameters.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
