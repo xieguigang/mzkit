@@ -10,7 +10,13 @@ Namespace SCiLSLab
 
         Public Shared Function ParseFile(file As Stream) As SpotPack
             Dim pull As New SpotPack
-            Dim spots As SpotSite() = ParseTable(file, pull, AddressOf SpotSite.Parse).ToArray
+            Dim spots As SpotSite() = ParseTable(
+                file:=file,
+                byrefPack:=pull,
+                parseLine:=AddressOf SpotSite.Parse,
+                println:=Sub(text)
+                             ' do nothing
+                         End Sub).ToArray
 
             pull.index = spots.ToDictionary(Function(sp) sp.index)
 
@@ -28,7 +34,7 @@ Namespace SCiLSLab
             Return $"spot_{index} [{x},{y}]"
         End Function
 
-        Friend Shared Function Parse(row As String(), headers As Index(Of String)) As SpotSite
+        Friend Shared Function Parse(row As String(), headers As Index(Of String), println As Action(Of String)) As SpotSite
             ' Spot index;x;y
             Dim index As String = row(headers("Spot index"))
             Dim x As Double = Val(row(headers("x")))

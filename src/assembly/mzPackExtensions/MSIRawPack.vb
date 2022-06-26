@@ -131,11 +131,17 @@ Public Module MSIRawPack
         Return mz.Values.ToArray
     End Function
 
-    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream) As mzPack
+    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream, Optional println As Action(Of String) = Nothing) As mzPack
         Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
-        Dim spotsMs As MsPack = MsPack.ParseFile(msdata)
+        Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
         Dim spotsList As New List(Of ScanMS1)
         Dim i As i32 = Scan0
+
+        If println Is Nothing Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
 
         For Each spot As SpotMs In spotsMs.matrix
             Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
@@ -154,6 +160,7 @@ Public Module MSIRawPack
                 .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC}"
             }
 
+            println(ms1.scan_id)
             spotsList.Add(ms1)
         Next
 

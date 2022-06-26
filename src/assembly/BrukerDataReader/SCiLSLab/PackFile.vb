@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Language.Values
 
 Namespace SCiLSLab
 
-    Public Delegate Function LineParser(Of T)(row As String(), headers As Index(Of String)) As T
+    Public Delegate Function LineParser(Of T)(row As String(), headers As Index(Of String), println As Action(Of String)) As T
 
     Public Class PackFile
 
@@ -40,7 +40,10 @@ Namespace SCiLSLab
             byrefPack.metadata.Add(".header", headerLine)
         End Sub
 
-        Protected Shared Iterator Function ParseTable(Of T)(file As Stream, byrefPack As PackFile, parseLine As LineParser(Of T)) As IEnumerable(Of T)
+        Protected Shared Iterator Function ParseTable(Of T)(file As Stream,
+                                                            byrefPack As PackFile,
+                                                            parseLine As LineParser(Of T),
+                                                            println As Action(Of String)) As IEnumerable(Of T)
             Using reader As New StreamReader(file)
                 Dim headerLine As String = Nothing
                 Dim line As Value(Of String) = ""
@@ -51,7 +54,7 @@ Namespace SCiLSLab
                 Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
 
                 Do While (line = reader.ReadLine) IsNot Nothing
-                    Yield parseLine(line.Split(";"c), headers)
+                    Yield parseLine(line.Split(";"c), headers, println)
                 Loop
             End Using
         End Function
