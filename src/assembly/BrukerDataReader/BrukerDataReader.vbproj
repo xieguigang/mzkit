@@ -79,6 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Raw\Check.vb" />
     <Compile Include="Raw\CoverageExcludeAttribute.vb" />
+    <Compile Include="SCiLSLab\Class1.vb" />
+    <Compile Include="SCiLSLab\SpotSite.vb" />
+    <Compile Include="SCiLSLab\SpotMs.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
