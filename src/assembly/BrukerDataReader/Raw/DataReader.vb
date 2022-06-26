@@ -70,8 +70,7 @@ Namespace Raw
     ' TODO: add apodization ability
     ' TODO: remove all dependence on DeconEngine (FFT, apodization, etc).
 
-    Public Class DataReader
-        Implements IDisposable
+    Public Class DataReader : Implements IDisposable
         ' Ignore Spelling: acqu, acqus, apodization, Bruker, fid, ser
 
         Private _numMSScans As Integer = -1
@@ -79,7 +78,7 @@ Namespace Raw
         Private _reader As BinaryReader
         Private _previousStartPosition As Long
         Private _bytesAdvanced As Long
-        Private ReadOnly _fourierTransform As FourierTransform = New FourierTransform()
+        Private ReadOnly _fourierTransform As New FourierTransform()
 
         ''' <summary>
         ''' Constructor for the DataReader class

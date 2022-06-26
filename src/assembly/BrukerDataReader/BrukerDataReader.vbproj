@@ -69,10 +69,12 @@
   <ItemGroup>
     <Compile Include="Raw\BrukerSettingsFileReader.vb" />
     <Compile Include="Raw\DataReader.vb" />
-    <Compile Include="Raw\DesignByContract.vb" />
+    <Compile Include="Raw\Exceptions.vb" />
     <Compile Include="Raw\FourierTransform.vb" />
     <Compile Include="Raw\GlobalParameters.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
+    <Compile Include="Raw\Check.vb" />
+    <Compile Include="Raw\CoverageExcludeAttribute.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
