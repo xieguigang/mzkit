@@ -46,7 +46,7 @@ Namespace SCiLSLab
                 Dim line As Value(Of String) = ""
 
                 Call ParseHeader(reader, byrefPack, headerLine)
-                Call byrefPack.metadata.Add(".header", headerLine)
+                ' Call byrefPack.metadata.Add(".header", headerLine)
 
                 Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
 
