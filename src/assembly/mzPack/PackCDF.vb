@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21fe4e089221091621bcf6be0f53fe6b, src\assembly\mzPack\PackCDF.vb"
+﻿#Region "Microsoft.VisualBasic::21fe4e089221091621bcf6be0f53fe6b, mzkit\src\assembly\mzPack\PackCDF.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 82
+    ' Comment Lines: 17
+    '   Blank Lines: 12
+    '     File Size: 4.35 KB
+
 
     ' Module PackCDF
     ' 

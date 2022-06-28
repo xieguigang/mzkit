@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c51226803a0ad5ed3bbc1d7e75366b9f, src\assembly\ProteoWizard.Interop\Filters\Filter.vb"
+﻿#Region "Microsoft.VisualBasic::c51226803a0ad5ed3bbc1d7e75366b9f, mzkit\src\assembly\ProteoWizard.Interop\Filters\Filter.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 12
+    ' Comment Lines: 2
+    '   Blank Lines: 5
+    '     File Size: 709.00 B
+
 
     '     Class Filter
     ' 

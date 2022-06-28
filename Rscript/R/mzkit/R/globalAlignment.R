@@ -18,8 +18,8 @@
 #' 
 #' @return Entropy difference score between two spectrum
 #' 
-MSDiffEntropy = function(query, ref) {
-  SAB = MSEntropy(MixMS(query, ref));
+MSDiffEntropy = function(query, ref, mzdiff = mzkit::tolerance(0.3, "da")) {
+  SAB = MSEntropy(MixMS(query, ref, mzdiff));
   SA  = MSEntropy(query);
   SB  = MSEntropy(ref);
  

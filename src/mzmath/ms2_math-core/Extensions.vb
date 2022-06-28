@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9b73f290e51030c1e1fa2f07c8ddd45, src\mzmath\ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0f532f03492bfc51b136b3e57fe1dfa0, mzkit\src\mzmath\ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 68
+    ' Comment Lines: 30
+    '   Blank Lines: 11
+    '     File Size: 3.96 KB
+
 
     ' Module Extensions
     ' 

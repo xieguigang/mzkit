@@ -1,68 +1,92 @@
-﻿#Region "Microsoft.VisualBasic::7c12cfb9bed4e3d33a1c5412237a520a, src\visualize\MsImaging\PixelScan\PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::179fe02fc979acc741265803ac3883b3, mzkit\src\visualize\MsImaging\PixelScan\PixelScan.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PixelScan
-    ' 
-    '         Function: GetMs, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 54
+'    Code Lines: 32
+' Comment Lines: 10
+'   Blank Lines: 12
+'     File Size: 2.12 KB
+
+
+'     Class PixelScan
+' 
+'         Function: GetMs, ToString
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Data.GraphTheory
 
 Namespace Pixel
 
-    Public MustInherit Class PixelScan : Implements IDisposable
+    Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D
 
         Dim disposedValue As Boolean
 
-        Public MustOverride ReadOnly Property X As Integer
-        Public MustOverride ReadOnly Property Y As Integer
+        Public MustOverride ReadOnly Property X As Integer Implements IPoint2D.X
+        Public MustOverride ReadOnly Property Y As Integer Implements IPoint2D.Y
+        Public MustOverride ReadOnly Property scanId As String
 
         Public Overridable Function GetMs() As ms2()
             Return GetMsPipe.ToArray
         End Function
 
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
-        Public MustOverride Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+        Public MustOverride Function GetMzIonIntensity() As Double()
+
+        Public Overridable Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+            Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray
+
+            If allMatched.Length = 0 Then
+                Return 0
+            Else
+                Return Aggregate mzi As ms2
+                       In allMatched
+                       Into Max(mzi.intensity)
+            End If
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{X},{Y}]"

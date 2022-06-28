@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::257d0d2a7dc4b7d4589f3d3455296b41, Rscript\Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::6be1297bfc32ab701f164fb9060f397f, mzkit\Rscript\Library\mzkit.plot\Visual.vb"
 
 ' Author:
 ' 
@@ -34,10 +34,21 @@
 
 ' Summaries:
 
+
+' Code Statistics:
+
+'   Total Lines: 590
+'    Code Lines: 458
+' Comment Lines: 72
+'   Blank Lines: 60
+'     File Size: 25.42 KB
+
+
 ' Module Visual
 ' 
-'     Function: getSpectrum, plotChromatogram, plotMS, plotOverlaps, plotRawChromatogram
-'               PlotRawScatter, plotSignal, plotSignal2, PlotUVSignals, Snapshot3D
+'     Function: getSpectrum, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D, plotMS
+'               plotOverlaps, plotPeaktable, plotRawChromatogram, PlotRawScatter, plotSignal
+'               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
 '               SpectrumPlot
 ' 
 '     Sub: Main
@@ -55,10 +66,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -67,6 +81,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -89,7 +104,33 @@ Module Visual
         Call Internal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
         Call Internal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
         Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
+        Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
+        Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
     End Sub
+
+    Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
+        Dim pairwise = aligns.GetAlignmentMirror
+        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+
+        Return MassSpectra.AlignMirrorPlot(
+            query:=pairwise.query,
+            ref:=pairwise.ref,
+            title:=title,
+            drawGrid:=True,
+            tagXFormat:="F2",
+            labelDisplayIntensity:=0.5,
+            driver:=env.getDriver
+        )
+    End Function
+
+    Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
+        Dim theme As New Theme With {
+            .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
+            .colorSet = "Jet"
+        }
+        Dim app As New PeakTablePlot(peakSet, theme)
+        Return app.Plot()
+    End Function
 
     Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
@@ -97,13 +138,28 @@ Module Visual
             .colorSet = args.getValue("colorSet", env, "Jet")
         }
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
-        Dim q As Double = args.getValue("TrIQ", env, 0.85)
-        Dim app As New GCxGCTIC2DPlot(x, q, theme) With {
-            .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
-            .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
-            .legendTitle = "Intensity",
-            .main = "GCxGC 2D Imaging"
-        }
+        Dim q As Double = args.getValue("TrIQ", env, 1.0)
+        Dim qlow As Double = args.getValue("q.low", env, 0.05)
+        Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
+        Dim mesh3D As Boolean = args.getValue("peaks3D", env, False)
+        Dim app As Plot
+
+        If mesh3D Then
+            app = New GCxGCTIC3DPeaks(x, 5, mapLevels, theme) With {
+                .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
+                .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
+                .zlabel = args.getValue("zlab", env, "Intensity"),
+                .legendTitle = "Intensity",
+                .main = "GCxGC 2D Imaging"
+            }
+        Else
+            app = New GCxGCTIC2DPlot(x, qlow, q, mapLevels, theme) With {
+                .xlabel = args.getValue("xlab", env, "Dimension 1 RT(s)"),
+                .ylabel = args.getValue("ylab", env, "Dimension 2 RT(s)"),
+                .legendTitle = "Intensity",
+                .main = "GCxGC 2D Imaging"
+            }
+        End If
 
         Return app.Plot(size)
     End Function
@@ -140,6 +196,11 @@ Module Visual
         Dim data As NamedCollection(Of ChromatogramTick)
 
         For Each raw In x.overlaps
+            If raw.Value Is Nothing OrElse raw.Value.scan_time.IsNullOrEmpty Then
+                Call env.AddMessage($"missing chromatogram of {raw.Key}!")
+                Continue For
+            End If
+
             data = New NamedCollection(Of ChromatogramTick) With {
                 .name = raw.Key,
                 .value = raw.Value.GetTicks(isBPC).ToArray
@@ -200,7 +261,7 @@ Module Visual
 
     <Extension>
     Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
-        Return x.d2chromatogram.plotTIC(args, env)
+        Return x.chromatogram.plotTIC(args, env)
     End Function
 
     <Extension>
@@ -249,13 +310,20 @@ Module Visual
     End Function
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
-        Dim title As String = args.getValue("title", env, "Mass Spectrum Plot")
+        Dim title As String = args.getValue(Of String)("title", env, Nothing)
         Dim mirror As Boolean = args.getValue("mirror", env, False)
         Dim annotateImages As Dictionary(Of String, Image) = args.getValue("images", env, New Dictionary(Of String, Image))
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
+        Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1920,900")
+        Dim alignment As Object = args.getByName("alignment")
 
-        If mirror Then
-            Return SpectrumPlot(spectrum, title:=title)
+        If mirror OrElse Not alignment Is Nothing Then
+            Return Visual.SpectrumPlot(
+                spectrum:=spectrum,
+                alignment:=alignment,
+                title:=If(title, "Mass Spectrum Plot"),
+                env:=env
+            )
         Else
             Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
 
@@ -266,9 +334,71 @@ Module Visual
             Return PeakAssign.DrawSpectrumPeaks(
                 matrix:=ms,
                 images:=annotateImages,
-                labelIntensity:=labeIntensity
+                labelIntensity:=labeIntensity,
+                size:=size,
+                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault
             )
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="GCxGC"></param>
+    ''' <param name="metabolites">
+    ''' [name, rt1, rt2]
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("gcxgc_heatmap")>
+    Public Function PlotGCxGCHeatMap(GCxGC As list, metabolites As dataframe,
+                                     <RRawVectorArgument> Optional rt_width As Object = "60,0.5",
+                                     <RRawVectorArgument> Optional space As Object = "5,5",
+                                     <RRawVectorArgument> Optional size As Object = "3600,2100",
+                                     <RRawVectorArgument> Optional padding As Object = "padding: 200px 600px 250px 250px;",
+                                     Optional colorSet As String = "viridis:turbo",
+                                     Optional mapLevels As Integer = 64,
+                                     Optional labelStyle As String = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";",
+                                     Optional env As Environment = Nothing) As Object
+
+        Dim canvas As String = InteropArgumentHelper.getSize(size, env, "3600,2100")
+        Dim margin = InteropArgumentHelper.getPadding(padding, [default]:="padding: 200px 600px 250px 250px;")
+        Dim margin_grid = InteropArgumentHelper.getSize(space, env, "5,5").SizeParser
+        Dim rt_size = InteropArgumentHelper.getSize(rt_width, env, "5,0.5").Split(","c).Select(AddressOf Val).ToArray
+        Dim samples = GCxGC.getNames _
+            .Select(Function(name)
+                        Return New NamedCollection(Of D2Chromatogram) With {
+                            .name = name,
+                            .value = GCxGC.getValue(Of D2Chromatogram())(name, env, Nothing)
+                        }
+                    End Function) _
+            .Where(Function(d) Not d.value.IsNullOrEmpty) _
+            .ToArray
+        Dim names As String() = REnv.asVector(Of String)(metabolites("name"))
+        Dim rt1 As Double() = REnv.asVector(Of Double)(metabolites("rt1"))
+        Dim rt2 As Double() = REnv.asVector(Of Double)(metabolites("rt2"))
+        Dim points = names _
+            .Select(Function(name, i)
+                        Return New NamedValue(Of PointF)(name, New PointF(rt1(i), rt2(i)))
+                    End Function) _
+            .ToArray
+        Dim theme As New Theme With {
+            .colorSet = colorSet,
+            .padding = margin,
+            .axisLabelCSS = labelStyle
+        }
+        Dim app As New GCxGCHeatMap(
+            gcxgc:=samples,
+            points:=points,
+            rt1:=rt_size(0),
+            rt2:=rt_size(1),
+            mapLevels:=mapLevels,
+            marginX:=margin_grid.Width,
+            marginY:=margin_grid.Height,
+            theme:=theme
+        )
+
+        Return app.Plot(canvas)
     End Function
 
     ''' <summary>
@@ -429,7 +559,8 @@ Module Visual
                     titles:={
                         ms.TryCast(Of LibraryMatrix).name,
                         spectrum.ToString
-                    }
+                    },
+                    driver:=env.getDriver
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)

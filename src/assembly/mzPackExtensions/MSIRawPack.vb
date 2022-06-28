@@ -1,60 +1,78 @@
-﻿#Region "Microsoft.VisualBasic::d9ba01bebe1895ce89fdfdcc6b059472, src\assembly\mzPackExtensions\MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::d9ba01bebe1895ce89fdfdcc6b059472, mzkit\src\assembly\mzPackExtensions\MSIRawPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MSIRawPack
-    ' 
-    '     Function: ExactPixelTable, LoadFromXMSIRaw, PixelScanId
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 69
+'    Code Lines: 45
+' Comment Lines: 11
+'   Blank Lines: 13
+'     File Size: 2.67 KB
+
+
+' Module MSIRawPack
+' 
+'     Function: ExactPixelTable, LoadFromXMSIRaw, PixelScanId
+' 
+' /********************************************************************************/
 
 #End Region
 
+#If netcore5 = 0 Or NET48 Then
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+#End If
+
+Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 ''' <summary>
-''' read Xcalibur Raw data file for MS-imaging
+''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
+
+#If netcore5 = 0 Or NET48 Then
 
     ''' <summary>
     ''' single raw data file as MSI data
@@ -90,6 +108,8 @@ Public Module MSIRawPack
                End Function
     End Function
 
+#End If
+
     <Extension>
     Public Function ExactPixelTable(mzpack As mzPack) As DataSet()
         Dim mz As New Dictionary(Of String, DataSet)
@@ -109,5 +129,44 @@ Public Module MSIRawPack
         Next
 
         Return mz.Values.ToArray
+    End Function
+
+    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
+        Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
+        Dim spotsList As New List(Of ScanMS1)
+        Dim i As i32 = Scan0
+
+        If println Is Nothing Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
+
+        For Each spot As SpotMs In spotsMs.matrix
+            Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
+            Dim xy As SpotSite = spotsXy.index(ref)
+            Dim ms1 As New ScanMS1 With {
+                .BPC = spot.intensity.Max,
+                .TIC = spot.intensity.Sum,
+                .into = spot.intensity,
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", xy.x},
+                    {"y", xy.y},
+                    {"spot_id", xy.index}
+                },
+                .mz = spotsMs.mz,
+                .rt = ++i,
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC}"
+            }
+
+            println(ms1.scan_id)
+            spotsList.Add(ms1)
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .MS = spotsList.ToArray
+        }
     End Function
 End Module

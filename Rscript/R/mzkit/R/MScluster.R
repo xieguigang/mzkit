@@ -18,13 +18,18 @@ MScluster = function(peak_ms2,
                      networking    = FALSE) {
 
   cos = function(query, ref) {
+	entropy = MSDiffEntropy(
+        query  = toMzInto(query),
+        ref    = toMzInto(ref),
+		mzdiff = tolerance
+    );
     query2  = globalAlign(query, ref, tolerance);
     forward = MScos(query2, ref);
     ref     = globalAlign(ref, query, tolerance);
     reverse = MScos(query, ref);
 
     # gets the final global alignment score
-    alignScore = min(forward, reverse);
+    alignScore = min(forward, reverse) * entropy;
 
     if (alignScore >= identical) {
       0;

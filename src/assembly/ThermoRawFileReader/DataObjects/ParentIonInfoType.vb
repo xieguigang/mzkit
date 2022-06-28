@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826b877700c4cd2d51c8186440c4fd70, src\assembly\ThermoRawFileReader\DataObjects\ParentIonInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::826b877700c4cd2d51c8186440c4fd70, mzkit\src\assembly\ThermoRawFileReader\DataObjects\ParentIonInfoType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 28
+    ' Comment Lines: 43
+    '   Blank Lines: 12
+    '     File Size: 2.67 KB
+
 
     '     Structure ParentIonInfoType
     ' 

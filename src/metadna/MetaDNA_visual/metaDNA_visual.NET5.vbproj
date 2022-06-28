@@ -2,39 +2,56 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.MetaDNA.Visual</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.MetaDNA.Visual</AssemblyName>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>Flask.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -45,17 +62,25 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|ARM32'">
-    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|ARM32'">
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.Visual.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+    <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

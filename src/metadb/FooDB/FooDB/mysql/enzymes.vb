@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3de5f6308b3fcb27377b08aed866bcc, src\metadb\FooDB\FooDB\mysql\enzymes.vb"
+﻿#Region "Microsoft.VisualBasic::a3de5f6308b3fcb27377b08aed866bcc, mzkit\src\metadb\FooDB\FooDB\mysql\enzymes.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 263
+    '    Code Lines: 145
+    ' Comment Lines: 96
+    '   Blank Lines: 22
+    '     File Size: 25.25 KB
+
 
     ' Class enzymes
     ' 

@@ -188,8 +188,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VendorStream\VendorStreamLoader.vb" />
+    <Compile Include="VendorStream\WiffRawStream.vb" />
     <Compile Include="ToCDFWriter.vb" />
-    <Compile Include="XRawStream.vb" />
+    <Compile Include="VendorStream\XRawStream.vb" />
     <Compile Include="MSIRawPack.vb" />
     <Compile Include="RawStream.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -229,10 +231,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
-      <Name>R</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
       <Name>BinaryData</Name>
@@ -266,12 +264,16 @@
       <Name>assembly</Name>
     </ProjectReference>
     <ProjectReference Include="..\Comprehensive\Comprehensive.vbproj">
-      <Project>{6F5F8407-DEB8-4B75-BF41-5284772D37DD}</Project>
+      <Project>{6f5f8407-deb8-4b75-bf41-5284772d37dd}</Project>
       <Name>Comprehensive</Name>
     </ProjectReference>
     <ProjectReference Include="..\mzPack\mzPack.vbproj">
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sciexWiffReader\sciexWiffReader.vbproj">
+      <Project>{0d82246c-02c5-4f9e-a571-ea4fa2077059}</Project>
+      <Name>sciexWiffReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\ThermoRawFileReader\ThermoRawFileReader.vbproj">
       <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>

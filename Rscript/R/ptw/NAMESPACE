@@ -1,0 +1,23 @@
+importFrom("stats", "approx", "coef", "sd", "dist", "embed", "runmed", "optim")
+importFrom("graphics", "matplot", "matlines", "legend", "abline", "par", "lines", "plot")
+importFrom("grDevices", "rainbow")
+## importFrom("nloptr", "nloptr")
+importFrom("RcppDE", "DEoptim")
+
+
+## only export functions that are meant to be called by the user
+export("ptw", "baseline.corr", "bestref", "coda", "padzeros",
+       "ptwgrid", "select.traces", "stptw", "whit1", "whit2",
+       "calc.multicoef", "calc.zerocoef", "difsm",
+       "wcc", "wac", "stptw", "wcc.st", "wac.st",
+       "asysm", "warp.time", "pktab2mzchannel", "mzchannel2pktab")
+
+S3method(print, ptw)
+S3method(plot, ptw)
+S3method(predict, ptw)
+S3method(summary, ptw)
+S3method(print, stptw)
+S3method(summary, stptw)
+S3method(plot, stptw)
+
+useDynLib(ptw, .registration=TRUE)

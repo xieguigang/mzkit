@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d2c50178765c4ead3597fce1b5cca4b, src\mzmath\ms2_math-core\Spectra\Models\Xml\Ms2AlignMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::bc36f828b6f7f5ac39906312fed1fbc7, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\Ms2AlignMatrix.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 47
+    ' Comment Lines: 7
+    '   Blank Lines: 6
+    '     File Size: 2.05 KB
+
 
     '     Class Ms2AlignMatrix
     ' 

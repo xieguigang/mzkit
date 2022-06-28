@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41830dd513a2974e15ca932bd1bb6d04, src\visualize\MsImaging\Reader\PixelReader.vb"
+﻿#Region "Microsoft.VisualBasic::e39379304413a49335ef6d672cc8bbcd, mzkit\src\visualize\MsImaging\Reader\PixelReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 299
+    '    Code Lines: 217
+    ' Comment Lines: 41
+    '   Blank Lines: 41
+    '     File Size: 12.16 KB
+
 
     '     Class PixelReader
     ' 
@@ -183,7 +193,7 @@ Namespace Reader
 
             Return New SingleIonLayer With {
                 .DimensionSize = dimension,
-                .IonMz = mz,
+                .IonMz = mz.ToString("F4"),
                 .MSILayer = pixels.ToArray
             }
         End Function

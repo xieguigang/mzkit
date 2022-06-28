@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38869a9a99bff99d249c15c1d9d83b76, src\assembly\mzPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::38869a9a99bff99d249c15c1d9d83b76, mzkit\src\assembly\mzPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 1.31 KB
+
 
     ' Module Extensions
     ' 

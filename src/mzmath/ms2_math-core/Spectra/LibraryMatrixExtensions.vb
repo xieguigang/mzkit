@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daa80f85bbeef9920d1616cdd5fc1471, src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::43a7f4d995b953a082ae2964ed7f2de4, mzkit\src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 63
+    ' Comment Lines: 39
+    '   Blank Lines: 13
+    '     File Size: 4.20 KB
+
 
     '     Module LibraryMatrixExtensions
     ' 
@@ -155,6 +165,15 @@ Namespace Spectra
                             End Function) _
                     .ToArray
             End If
+        End Function
+
+        <Extension>
+        Public Function AbSciexBaselineHandling(msData As IEnumerable(Of ms2), Optional cut As Integer = 2) As IEnumerable(Of ms2)
+            Return msData _
+                .GroupBy(Function(i) i.intensity, offsets:=1) _
+                .Where(Function(i) i.Length < cut) _
+                .Select(Function(i) i.value) _
+                .IteratesALL
         End Function
     End Module
 End Namespace

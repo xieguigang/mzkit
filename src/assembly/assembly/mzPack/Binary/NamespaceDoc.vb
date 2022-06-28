@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e85dd02a7fc1105ec4ebe21c4721df1, src\assembly\assembly\mzPack\Binary\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4cbcf9988e5750f8f4531513d2dfa7f6, mzkit\src\assembly\assembly\mzPack\Binary\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 172.00 B
+
 
     '     Class NamespaceDoc
     ' 

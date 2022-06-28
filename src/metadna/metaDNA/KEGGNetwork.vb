@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59fa5e1e2d2fc7872f5e3d5b9c4f4382, src\metadna\metaDNA\KEGGNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::59fa5e1e2d2fc7872f5e3d5b9c4f4382, mzkit\src\metadna\metaDNA\KEGGNetwork.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 69
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.32 KB
+
 
     ' Class KEGGNetwork
     ' 

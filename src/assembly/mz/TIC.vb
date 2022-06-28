@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89c675c0607e4d4a0522f5b5b484e0bf, src\assembly\mz\TIC.vb"
+﻿#Region "Microsoft.VisualBasic::14a21f988824c7300f4cb4a71a4cf56b, mzkit\src\assembly\mz\TIC.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 143
+    ' Comment Lines: 0
+    '   Blank Lines: 20
+    '     File Size: 7.01 KB
+
 
     ' Module Program
     ' 

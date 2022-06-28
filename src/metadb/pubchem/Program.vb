@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdaf3d5e9d4a96a8634e157debedec48, src\metadb\pubchem\Program.vb"
+﻿#Region "Microsoft.VisualBasic::30444bc63ea66144d670f09ff6a59459, mzkit\src\metadb\pubchem\Program.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 182.00 B
+
 
     ' Module Program
     ' 

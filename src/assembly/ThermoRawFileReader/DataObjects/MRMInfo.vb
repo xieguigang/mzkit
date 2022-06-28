@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a316cd7f42de24b0ca8a9da52cfff5ee, src\assembly\ThermoRawFileReader\DataObjects\MRMInfo.vb"
+﻿#Region "Microsoft.VisualBasic::a316cd7f42de24b0ca8a9da52cfff5ee, mzkit\src\assembly\ThermoRawFileReader\DataObjects\MRMInfo.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 13
+    ' Comment Lines: 11
+    '   Blank Lines: 6
+    '     File Size: 861.00 B
+
 
     '     Class MRMInfo
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c16ff090eabf03f5a4601164203249d, src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::6faa14831f7bab9d50867e4a40bae482, mzkit\src\visualize\MsImaging\PixelScan\mzPackPixel.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 3.11 KB
+
+
     '     Class mzPackPixel
     ' 
-    '         Properties: mz, scan, X, Y
+    '         Properties: mz, scan, scanId, X, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -75,6 +85,12 @@ Namespace Pixel
         Public ReadOnly Property scan As ScanMS1
 
         ReadOnly pixel As Point
+
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return scan.scan_id
+            End Get
+        End Property
 
         Public ReadOnly Property mz As Double()
             Get
@@ -135,6 +151,10 @@ Namespace Pixel
                        In allMatched
                        Into Max(mzi.intensity)
             End If
+        End Function
+
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return scan.into
         End Function
     End Class
 End Namespace

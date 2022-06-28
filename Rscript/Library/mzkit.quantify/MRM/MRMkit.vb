@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb79f4e83cff201ee3a381446819d253, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 832
+    '    Code Lines: 579
+    ' Comment Lines: 166
+    '   Blank Lines: 87
+    '     File Size: 35.91 KB
+
 
     ' Module MRMkit
     ' 
@@ -109,8 +119,8 @@ Module MRMkit
 
     Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
         Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
-        Dim rtmin As Array = peaks.Select(Function(r) r.time.Min).ToArray
-        Dim rtmax As Array = peaks.Select(Function(r) r.time.Max).ToArray
+        Dim rtmin As Double() = peaks.Select(Function(r) r.time.Min).ToArray
+        Dim rtmax As Double() = peaks.Select(Function(r) r.time.Max).ToArray
         Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
         Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
         Dim baseline As Array = peaks.Select(Function(r) r.baseline).ToArray
@@ -122,7 +132,9 @@ Module MRMkit
             .columns = New Dictionary(Of String, Array) From {
                 {NameOf(rt), rt},
                 {NameOf(rtmin), rtmin},
+                {"rt(min)", rtmin.Select(Function(d) d / 60).ToArray},
                 {NameOf(rtmax), rtmax},
+                {"peak_width", (rtmax.AsVector - rtmin.AsVector).ToArray},
                 {NameOf(maxinto), maxinto},
                 {NameOf(nticks), nticks},
                 {NameOf(baseline), baseline},

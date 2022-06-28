@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fbb5f791d726b5cfa4c617c21f2aecd, src\visualize\plot\RawScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3fbb5f791d726b5cfa4c617c21f2aecd, mzkit\src\visualize\plot\RawScatterPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 100
+    ' Comment Lines: 14
+    '   Blank Lines: 13
+    '     File Size: 5.60 KB
+
 
     ' Class RawScatterPlot
     ' 

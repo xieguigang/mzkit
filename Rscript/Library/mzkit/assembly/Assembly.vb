@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5260ff208b4f75f214af371098230f81, Rscript\Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::796f80b7a523ae87269d07985c7b8be6, mzkit\Rscript\Library\mzkit\assembly\Assembly.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 541
+    '    Code Lines: 408
+    ' Comment Lines: 70
+    '   Blank Lines: 63
+    '     File Size: 23.30 KB
+
+
     ' Module Assembly
     ' 
     '     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, LoadIndex
@@ -49,7 +59,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
@@ -60,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
@@ -90,10 +100,13 @@ Module Assembly
     End Sub
 
     Private Function MatrixDataFrame(peak As PeakMs2, args As Rlist, env As Environment) As dataframe
-        Dim dataframe As New dataframe With {.columns = New Dictionary(Of String, Array)}
+        Dim dataframe As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
 
         dataframe.columns("mz") = peak.mzInto.Select(Function(x) x.mz).ToArray
         dataframe.columns("into") = peak.mzInto.Select(Function(x) x.intensity).ToArray
+        dataframe.columns("annotation") = peak.mzInto.Select(Function(x) x.Annotation).ToArray
 
         Return dataframe
     End Function
@@ -109,7 +122,7 @@ Module Assembly
             .Select(Function(d) d.ToString("F4")) _
             .JoinBy(vbTab)
 
-        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
+        Return $"[{xcms_id}, {peak.intensity}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
     End Function
 
     ''' <summary>
@@ -260,9 +273,16 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("write.mgf")>
     <RApiReturn(GetType(Boolean))>
-    Public Function writeMgfIons(<RRawVectorArgument> ions As Object, file$, Optional relativeInto As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function writeMgfIons(<RRawVectorArgument>
+                                 ions As Object,
+                                 file$,
+                                 Optional relativeInto As Boolean = False,
+                                 Optional env As Environment = Nothing) As Object
         If ions Is Nothing Then
             Return Internal.debug.stop("the required ions data can not be nothing!", env)
+        ElseIf ions.GetType.IsArray AndAlso DirectCast(ions, Array).Length = 0 Then
+            env.AddMessage($"write empty mgf data to file '{file}', as the given ions collection is empty...", MSG_TYPES.WRN)
+            Return True
         End If
 
         If ions.GetType() Is GetType(pipeline) Then

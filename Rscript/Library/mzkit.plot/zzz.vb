@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a66a8409ac1b13a70c6c3ee54b6f70b1, Rscript\Library\mzkit.plot\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::cc5193724089256ec0f424a4368e5dcc, mzkit\Rscript\Library\mzkit.plot\zzz.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 279.00 B
+
+
     ' Class zzz
     ' 
     '     Sub: onLoad
@@ -42,9 +52,15 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
+Imports SMRUCC.Rsharp.Runtime.Interop
+
+<Assembly: RPackageModule>
+
 Public Class zzz
 
     Public Shared Sub onLoad()
         Call Visual.Main()
+        Call MSIColorSet.DoRegister()
     End Sub
 End Class

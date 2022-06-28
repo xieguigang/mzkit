@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a1d3bb09e1004f6169ae230e11fe764, src\metadb\MoNA\ReaderViews.vb"
+﻿#Region "Microsoft.VisualBasic::3a1d3bb09e1004f6169ae230e11fe764, mzkit\src\metadb\MoNA\ReaderViews.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 139
+    ' Comment Lines: 11
+    '   Blank Lines: 24
+    '     File Size: 5.42 KB
+
 
     ' Module ReaderViews
     ' 

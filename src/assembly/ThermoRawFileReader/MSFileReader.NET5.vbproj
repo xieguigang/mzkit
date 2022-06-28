@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release</Configurations>
@@ -123,7 +123,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

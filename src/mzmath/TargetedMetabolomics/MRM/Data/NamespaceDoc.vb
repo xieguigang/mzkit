@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e44fdfff7b4c261b031d1e0d5918ad7a, src\mzmath\TargetedMetabolomics\MRM\Data\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f5e05639581747e2b473a1017e7e3d48, mzkit\src\mzmath\TargetedMetabolomics\MRM\Data\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 166.00 B
+
 
     '     Module NamespaceDoc
     ' 

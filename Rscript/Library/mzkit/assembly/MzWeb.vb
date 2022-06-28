@@ -1,47 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::e1de758d386a6ca1b4f70040acd7c80b, Rscript\Library\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::ee4bf54bc8bb39efd4b4fc57a758877e, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MzWeb
-' 
-'     Function: GetChromatogram, loadStream, Ms1ScanPoints, Ms2ScanPeaks, Open
-'               setMzpackThumbnail, ToMzPack, writeMzpack, writeStream, writeToCDF
-' 
-'     Sub: WriteCache
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 338
+    '    Code Lines: 233
+    ' Comment Lines: 68
+    '   Blank Lines: 37
+    '     File Size: 13.10 KB
+
+
+    ' Module MzWeb
+    ' 
+    '     Function: GetChromatogram, loadStream, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks
+    '               Open, openFile, setMzpackThumbnail, TIC, ToMzPack
+    '               writeMzpack, writeStream, writeToCDF
+    ' 
+    '     Sub: WriteCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -54,8 +65,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+#If netcore5 = 0 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+#End If
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -77,6 +91,13 @@ Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromato
 <Package("mzweb")>
 Module MzWeb
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path to the mzpack data file
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("open")>
     Public Function openFile(file As String) As BinaryStreamReader
         Return New BinaryStreamReader(file)
@@ -235,13 +256,24 @@ Module MzWeb
     ''' <param name="file">the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file</param>
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
-    Public Function Open(file As String) As mzPack
+    <RApiReturn(GetType(mzPack))>
+    Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf file Is String Then
+            Return openFromFile(file)
+        Else
+            Throw New NotImplementedException
+        End If
+    End Function
+
+    Private Function openFromFile(file As String) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
+#If netcore5 = 0 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXRaw
             End Using
+#End If
         ElseIf file.ExtensionSuffix("cdf") Then
             ' convert MSI cdf to mzpack
             Using cdf As New netCDFReader(file)
@@ -261,6 +293,12 @@ Module MzWeb
         End If
     End Function
 
+    ''' <summary>
+    ''' set thumbnail image to the raw data file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="thumb"></param>
+    ''' <returns></returns>
     <ExportAPI("setThumbnail")>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
         If TypeOf thumb Is GraphicsData Then
@@ -276,9 +314,77 @@ Module MzWeb
         Return mzpack.GetAllScanMs1.ToArray
     End Function
 
+    <ExportAPI("ms1_peaks")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function Ms1Peaks(mzpack As mzPack,
+                             Optional tolerance As Object = "da:0.001",
+                             Optional cutoff As Double = 0.05,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Dim ms As ms2() = mzpack.MS _
+            .Select(Function(scan) scan.GetMs) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(mzdiff.TryCast(Of Tolerance), New RelativeIntensityCutoff(cutoff)) _
+            .ToArray
+
+        Return New LibraryMatrix With {
+            .centroid = True,
+            .ms2 = ms,
+            .name = mzpack.source & " MS1"
+        }
+    End Function
+
+    ''' <summary>
+    ''' extract ms2 peaks data from the mzpack data object
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="precursorMz">
+    ''' if the precursor m/z data is assign by this parameter
+    ''' value, then this function will extract the ms2 xic data
+    ''' only
+    ''' </param>
+    ''' <param name="tolerance">
+    ''' ppm toleracne error for extract ms2 xic data.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ms2_peaks")>
-    Public Function Ms2ScanPeaks(mzpack As mzPack) As PeakMs2()
-        Return mzpack.GetMs2Peaks.ToArray
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function Ms2ScanPeaks(mzpack As mzPack,
+                                 Optional precursorMz As Double = Double.NaN,
+                                 Optional tolerance As Object = "ppm:30",
+                                 Optional env As Environment = Nothing) As Object
+
+        If precursorMz.IsNaNImaginary Then
+            Return mzpack.GetMs2Peaks.ToArray
+        Else
+            Dim mzerr = Math.getTolerance(tolerance, env)
+
+            If mzerr Like GetType(Message) Then
+                Return mzerr.TryCast(Of Message)
+            End If
+
+            Dim mzdiff As Tolerance = mzerr.TryCast(Of Tolerance)
+            Dim ms2_xic = mzpack.MS _
+                .Select(Function(d) d.products) _
+                .IteratesALL _
+                .Where(Function(scan)
+                           Return mzdiff(scan.parentMz, precursorMz)
+                       End Function) _
+                .Select(Function(mz2)
+                            Return mzPack.CastToPeakMs2(mz2, file:=mzpack.source)
+                        End Function) _
+                .ToArray
+
+            Return ms2_xic
+        End If
     End Function
 
     ''' <summary>
@@ -286,15 +392,31 @@ Module MzWeb
     ''' </summary>
     ''' <param name="assembly"></param>
     ''' <param name="env"></param>
+    ''' <param name="modtime">
+    ''' [GCxGC]
+    ''' the modulation time of the chromatographic run. 
+    ''' modulation period in time unit 'seconds'.
+    ''' </param>
+    ''' <param name="sample_rate">
+    ''' [GCxGC]
+    ''' the sampling rate of the equipment.
+    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    ''' the difference of two adjacent scan time.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function ToMzPack(assembly As Object,
                              Optional modtime As Double = -1,
+                             Optional sample_rate As Double = Double.NaN,
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf assembly Is netCDFReader Then
-            Return GC2Dimensional.ToMzPack(agilentGC:=assembly, modtime:=modtime)
+            Return GC2Dimensional.ToMzPack(
+                agilentGC:=assembly,
+                modtime:=modtime,
+                sam_rate:=sample_rate
+            )
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If

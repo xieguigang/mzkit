@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b75bf3da09e4d4b7f2e7d3cac2e29bc0, src\metadb\Chemoinformatics\InChI\Components.vb"
+﻿#Region "Microsoft.VisualBasic::29933c1fc526aedcae4beac3f613e7dc, mzkit\src\metadb\Chemoinformatics\InChI\Components.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 229
+    '    Code Lines: 82
+    ' Comment Lines: 124
+    '   Blank Lines: 23
+    '     File Size: 9.39 KB
+
 
     '     Class MainLayer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f333fe2a19bf552d4b017ad86f31815d, src\assembly\ThermoRawFileReader\LabelParser.vb"
+﻿#Region "Microsoft.VisualBasic::f333fe2a19bf552d4b017ad86f31815d, mzkit\src\assembly\ThermoRawFileReader\LabelParser.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 44
+    ' Comment Lines: 14
+    '   Blank Lines: 11
+    '     File Size: 5.00 KB
+
 
     ' Module LabelParser
     ' 

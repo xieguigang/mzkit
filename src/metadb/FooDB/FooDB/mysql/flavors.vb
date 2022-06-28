@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae0c2fcb1ba9c0d8aaf36fd41cb07adb, src\metadb\FooDB\FooDB\mysql\flavors.vb"
+﻿#Region "Microsoft.VisualBasic::ae0c2fcb1ba9c0d8aaf36fd41cb07adb, mzkit\src\metadb\FooDB\FooDB\mysql\flavors.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 87
+    ' Comment Lines: 62
+    '   Blank Lines: 22
+    '     File Size: 8.81 KB
+
 
     ' Class flavors
     ' 

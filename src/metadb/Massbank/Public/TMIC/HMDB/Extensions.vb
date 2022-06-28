@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42210fb236840f5b64e39d569fa0aea8, src\metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::171356d0c708a7eff26070c7844a64a1, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 304
+    '    Code Lines: 232
+    ' Comment Lines: 34
+    '   Blank Lines: 38
+    '     File Size: 13.08 KB
+
 
     '     Module HMDBExtensions
     ' 
@@ -200,6 +210,11 @@ Namespace TMIC.HMDB
                    End Function
         End Function
 
+        ''' <summary>
+        ''' parse the ultra large hmdb metabolite database xml file.
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXML(path$) As IEnumerable(Of metabolite)
             Return metabolite.Load(path)

@@ -118,7 +118,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -132,8 +132,8 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

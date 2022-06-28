@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b24d9d667f01098cfe16b08e0d90d9e0, Rscript\Library\mzkit.plot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::687eeca43b0a154b4976d185e367ec17, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
 
 ' Author:
 ' 
@@ -34,13 +34,24 @@
 
 ' Summaries:
 
+
+' Code Statistics:
+
+'   Total Lines: 710
+'    Code Lines: 509
+' Comment Lines: 110
+'   Blank Lines: 91
+'     File Size: 29.74 KB
+
+
 ' Module MsImaging
 ' 
 '     Constructor: (+1 Overloads) Sub New
-'     Function: AutoScaleMax, averageStep, FilterMz, flatten, GetIonLayer
-'               getMSIIons, GetMsMatrx, GetPixel, layer, LoadPixels
-'               MSICoverage, openIndexedCacheFile, plotMSI, quartileRange, renderRowScans
-'               RGB, testLayer, viewer, writeIndexCacheFile, WriteXICCache
+'     Function: AutoScaleMax, averageStep, FilterMz, GetIntensityData, GetIonLayer
+'               getMSIIons, GetMsMatrx, GetPixel, KnnFill, layer
+'               LoadPixels, MSICoverage, openIndexedCacheFile, plotMSI, printLayer
+'               renderRowScans, RGB, testLayer, TrIQRange, viewer
+'               writeIndexCacheFile, WriteXICCache
 ' 
 ' /********************************************************************************/
 
@@ -49,27 +60,26 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -87,7 +97,20 @@ Module MsImaging
 
     Sub New()
         Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
     End Sub
+
+    Private Function printLayer(ion As SingleIonLayer) As String
+        Dim sb As New StringBuilder
+        Dim into = ion.GetIntensity
+
+        Call sb.AppendLine($"m/z {ion.IonMz} has {ion.MSILayer.Length} pixels@[{ion.DimensionSize.Width},{ion.DimensionSize.Height}]")
+        Call sb.AppendLine("----------------------------------")
+        Call sb.AppendLine($"  max intensity: {into.Max}")
+        Call sb.AppendLine($"  min intensity: {into.Min}")
+
+        Return sb.ToString
+    End Function
 
     ''' <summary>
     ''' do MSI rendering
@@ -98,12 +121,12 @@ Module MsImaging
     ''' <returns></returns>
     Private Function plotMSI(ion As SingleIonLayer, args As list, env As Environment) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(args!padding, "padding: 100px 700px 300px 300px"),
+            .padding = InteropArgumentHelper.getPadding(args!padding, "padding:200px 500px 200px 200px"),
             .gridFill = RColorPalette.getColor(args.getByName("grid.fill"), "white"),
             .colorSet = RColorPalette.getColorSet(args.getByName("colorSet"), "Jet")
         }
         Dim cutoff As Double() = args.getValue("into.cutoff", env, {0.1, 0.75})
-        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "8,8")
+        Dim scale As String = InteropArgumentHelper.getSize(args!scale, env, "3,3")
         Dim pixelDrawer As Boolean = args.getValue("pixelDrawer", env, False)
         Dim region As String() = args.getValue(Of String())("region", env, Nothing)
 
@@ -123,10 +146,10 @@ Module MsImaging
             ion = ion.Take(polygon, scale.SizeParser)
         End If
 
-        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme)
+        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme, driver:=env.getDriver)
         Dim size As Size = app.MeasureSize
 
-        Return app.Plot($"{size.Width},{size.Height}")
+        Return app.Plot($"{size.Width},{size.Height}", driver:=env.getDriver)
     End Function
 
     ''' <summary>
@@ -141,8 +164,13 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
-    Public Function TrIQRange(<RRawVectorArgument> data As Object, Optional q As Double = 0.6, Optional env As Environment = Nothing) As Object
-        Dim TrIQ As New TrIQThreshold
+    Public Function TrIQRange(<RRawVectorArgument>
+                              data As Object,
+                              Optional q As Double = 0.6,
+                              Optional levels As Integer = 100,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim TrIQ As New TrIQThreshold With {.levels = levels}
         Dim into As Double()
 
         If TypeOf data Is SingleIonLayer Then
@@ -160,6 +188,23 @@ Module MsImaging
         Dim range As Double = TrIQ.ThresholdValue(into, qcut:=q)
 
         Return {0, range}
+    End Function
+
+    <ExportAPI("intensityLimits")>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+        data.MSILayer = data.MSILayer _
+            .Select(Function(p)
+                        If p.intensity > max Then
+                            p.intensity = max
+                        ElseIf p.intensity < min Then
+                            p.intensity = min
+                        End If
+
+                        Return p
+                    End Function) _
+            .ToArray
+
+        Return data
     End Function
 
     <ExportAPI("write.MSI_XIC")>
@@ -371,7 +416,6 @@ Module MsImaging
                         <RRawVectorArgument>
                         Optional pixelSize As Object = "5,5",
                         Optional tolerance As Object = "da:0.1",
-                        Optional pixelDrawer As Boolean = True,
                         Optional maxCut As Double = 0.75,
                         Optional TrIQ As Boolean = True,
                         Optional env As Environment = Nothing) As Object
@@ -386,7 +430,7 @@ Module MsImaging
         Dim pr As PixelData() = viewer.LoadPixels({r}, errors.TryCast(Of Tolerance)).ToArray
         Dim pg As PixelData() = viewer.LoadPixels({g}, errors.TryCast(Of Tolerance)).ToArray
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As New RectangleRender(env.getDriver(), heatmapRender:=False)
         Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
         Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
         Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
@@ -406,7 +450,7 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function GetIonLayer(viewer As Drawer, mz As Double,
+    Public Function GetIonLayer(viewer As Drawer, mz As Double(),
                                 Optional tolerance As Object = "da:0.1",
                                 Optional env As Environment = Nothing) As Object
 
@@ -495,11 +539,12 @@ Module MsImaging
                           <RRawVectorArgument>
                           Optional pixelSize As Object = "5,5",
                           Optional tolerance As Object = "da:0.1",
-                          Optional color$ = "YlGnBu:c8",
+                          Optional color$ = "viridis:turbo",
                           Optional levels% = 30,
                           <RRawVectorArgument(GetType(Double))>
                           Optional cutoff As Object = "0.1,0.75",
-                          Optional pixelDrawer As Boolean = True,
+                          <RRawVectorArgument>
+                          Optional background As Object = NameOf(Color.Transparent),
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -526,7 +571,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                background:=RColorPalette.getColor(background, "Translate"),
+                driver:=env.getDriver
             )
         Else
             Return viewer.DrawLayer(
@@ -536,7 +582,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
-                pixelDrawer:=pixelDrawer
+                background:=RColorPalette.getColor(background, "Translate"),
+                driver:=env.getDriver
             )
         End If
     End Function
@@ -580,11 +627,10 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"></param>
+    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
     ''' <param name="defaultFill"></param>
     ''' <param name="pixelSize"></param>
     ''' <param name="cutoff"></param>
-    ''' <param name="logE"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
     ''' be treated as background pixels and removed from the MSI 
@@ -593,16 +639,18 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
+    <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
                                    Optional intensity As IntensitySummary = IntensitySummary.Total,
-                                   Optional colorSet$ = "Jet",
+                                   Optional colorSet$ = "viridis:turbo",
                                    Optional defaultFill As String = "Transparent",
-                                   Optional pixelSize$ = "6,6",
+                                   <RRawVectorArgument>
+                                   Optional pixelSize As Object = "6,6",
                                    <RRawVectorArgument(GetType(Double))>
                                    Optional cutoff As Object = "0.1,0.75",
-                                   Optional logE As Boolean = False,
                                    Optional pixelDrawer As Boolean = True,
                                    Optional background As String() = Nothing,
+                                   Optional colorLevels As Integer = 255,
                                    <RRawVectorArgument>
                                    Optional dims As Object = Nothing,
                                    Optional env As Environment = Nothing) As Object
@@ -652,11 +700,11 @@ Module MsImaging
         End If
 
         Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
-        Dim pointSize As Size = pixelSize.SizeParser
+        Dim pointSize As Size = InteropArgumentHelper.getSize(pixelSize, env, "6,6").SizeParser
 
         If cutoffRange Like GetType(Message) Then
             Return cutoffRange.TryCast(Of Message)
@@ -667,10 +715,24 @@ Module MsImaging
             dimension:=dimSize,
             dimSize:=pointSize,
             colorSet:=colorSet,
-            logE:=logE,
             defaultFill:=defaultFill,
-            cutoff:=cutoffRange.TryCast(Of DoubleRange)
+            cutoff:=cutoffRange.TryCast(Of DoubleRange),
+            mapLevels:=colorLevels
         )
+    End Function
+
+    <ExportAPI("as.pixels")>
+    <RApiReturn(GetType(String), GetType(Point))>
+    Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
+        If character Then
+            Return layer.MSILayer _
+                .Select(Function(p) $"{p.x},{p.y}") _
+                .ToArray
+        Else
+            Return layer.MSILayer _
+                .Select(Function(p) New Point(p.x, p.y)) _
+                .ToArray
+        End If
     End Function
 
     ''' <summary>
@@ -694,6 +756,8 @@ Module MsImaging
                                Optional mzdiff As Object = "da:0.1",
                                Optional keepsLayer As Boolean = False,
                                Optional densityCut As Double = 0.1,
+                               Optional qcut As Double = 0.01,
+                               Optional intoCut As Double = 0,
                                Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env)
@@ -702,7 +766,7 @@ Module MsImaging
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=0.01).ToArray
+        Dim layers As DoubleTagged(Of SingleIonLayer)() = raw.GetMSIIons(mzErr, gridSize, qcut:=qcut, intoCut:=intoCut).ToArray
         Dim layerCuts = layers _
             .Where(Function(d) Val(d.TagStr) > densityCut) _
             .OrderByDescending(Function(d) Val(d.TagStr)) _
@@ -734,29 +798,5 @@ Module MsImaging
                         End Function) _
                 .ToArray
         }
-    End Function
-
-    ''' <summary>
-    ''' flatten image layers
-    ''' </summary>
-    ''' <param name="layers">
-    ''' layer bitmaps should be all in equal size
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("flatten")>
-    Public Function flatten(layers As Bitmap(), Optional bg$ = "white") As Bitmap
-        Using g As Graphics2D = New Bitmap(layers(Scan0).Width, layers(Scan0).Height)
-            If Not bg.StringEmpty Then
-                Call g.Clear(bg.GetBrush)
-            End If
-
-            ' 在这里是反向叠加图层的
-            ' 向量中最开始的图层表示为最上层的图层，即最后进行绘制的图层
-            For Each layer As Bitmap In layers.Reverse
-                Call g.DrawImageUnscaled(layer, New Point)
-            Next
-
-            Return g.ImageResource
-        End Using
     End Function
 End Module

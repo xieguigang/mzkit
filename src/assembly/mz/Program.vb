@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76052d0b1d3c080b939ab80d1586e43a, src\assembly\mz\Program.vb"
+﻿#Region "Microsoft.VisualBasic::291ead3b55c7ad6ded8ca54fcbbddcda, mzkit\src\assembly\mz\Program.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 340
+    '    Code Lines: 281
+    ' Comment Lines: 26
+    '   Blank Lines: 33
+    '     File Size: 14.37 KB
+
 
     ' Module Program
     ' 

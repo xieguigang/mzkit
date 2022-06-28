@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fba2ab9d092ca559670365ed950bb295, src\metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::9543833a20205f542b97d4763b6d21f3, mzkit\src\metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 263.00 B
+
+
     ' Class Token
+    ' 
+    '     Properties: ring
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -45,6 +57,8 @@
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Class Token : Inherits CodeToken(Of ElementTypes)
+
+    Public Property ring As Integer?
 
     Sub New(name As ElementTypes, text As String)
         Call MyBase.New(name, text)

@@ -1,50 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::c6387c845279e9943624fe4240ed4926, src\metadb\Massbank\MetaLib\Models\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::720f8900e4a855411ad99ab3ed35df87, mzkit\src\metadb\Massbank\MetaLib\Models\Xref.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class xref
-    ' 
-    '         Properties: CAS, chebi, HMDB, InChI, InChIkey
-    '                     KEGG, metlin, pubchem, SMILES, Wikipedia
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: IsCASNumber, IsChEBI, IsEmpty, IsEmptyXrefId, IsHMDB
-    '                   IsKEGG, Join, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 178
+'    Code Lines: 134
+' Comment Lines: 26
+'   Blank Lines: 18
+'     File Size: 6.18 KB
+
+
+'     Class xref
+' 
+'         Properties: CAS, chebi, HMDB, InChI, InChIkey
+'                     KEGG, metlin, pubchem, SMILES, Wikipedia
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: IsCASNumber, IsChEBI, IsEmpty, IsEmptyXrefId, IsHMDB
+'                   IsKEGG, Join, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -69,25 +80,25 @@ Namespace MetaLib.Models
         ''' chebi主编号
         ''' </summary>
         ''' <returns></returns>
-        Public Property chebi As String
-        Public Property KEGG As String
+        <MessagePackMember(0)> Public Property chebi As String
+        <MessagePackMember(1)> Public Property KEGG As String
         ''' <summary>
         ''' The pubchem cid
         ''' </summary>
         ''' <returns></returns>
-        Public Property pubchem As String
-        Public Property HMDB As String
-        Public Property metlin As String
-        Public Property Wikipedia As String
+        <MessagePackMember(2)> Public Property pubchem As String
+        <MessagePackMember(3)> Public Property HMDB As String
+        <MessagePackMember(4)> Public Property metlin As String
+        <MessagePackMember(5)> Public Property Wikipedia As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
         ''' <returns></returns>
         <XmlElement>
-        Public Property CAS As String()
-        Public Property InChIkey As String
-        Public Property InChI As String
-        Public Property SMILES As String
+        <MessagePackMember(6)> Public Property CAS As String()
+        <MessagePackMember(7)> Public Property InChIkey As String
+        <MessagePackMember(8)> Public Property InChI As String
+        <MessagePackMember(9)> Public Property SMILES As String
 
         Sub New()
         End Sub

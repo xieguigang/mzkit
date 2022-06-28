@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e7154044ce02cec4ec7de2c1bb6406, src\assembly\assembly\UnifyReader\MsDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::95e7154044ce02cec4ec7de2c1bb6406, mzkit\src\assembly\assembly\UnifyReader\MsDataReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 80
+    ' Comment Lines: 11
+    '   Blank Lines: 20
+    '     File Size: 5.01 KB
+
 
     '     Class MsDataReader
     ' 

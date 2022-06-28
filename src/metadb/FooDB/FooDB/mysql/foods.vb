@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff60c585024fee96a3dc07f0b920d270, src\metadb\FooDB\FooDB\mysql\foods.vb"
+﻿#Region "Microsoft.VisualBasic::ff60c585024fee96a3dc07f0b920d270, mzkit\src\metadb\FooDB\FooDB\mysql\foods.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 217
+    '    Code Lines: 117
+    ' Comment Lines: 78
+    '   Blank Lines: 22
+    '     File Size: 18.66 KB
+
 
     ' Class foods
     ' 

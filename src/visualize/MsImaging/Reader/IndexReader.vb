@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6bbe3d66cfc99aa4253904c0c37788c, src\visualize\MsImaging\Reader\IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::a6bbe3d66cfc99aa4253904c0c37788c, mzkit\src\visualize\MsImaging\Reader\IndexReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 32
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 1.42 KB
+
 
     '     Class IndexReader
     ' 

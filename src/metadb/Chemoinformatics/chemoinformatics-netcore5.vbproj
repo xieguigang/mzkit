@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT</Configurations>
+    <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT;mzkit_win32</Configurations>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -24,6 +24,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +99,10 @@
     <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
     <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
   </PropertyGroup>
@@ -116,7 +131,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

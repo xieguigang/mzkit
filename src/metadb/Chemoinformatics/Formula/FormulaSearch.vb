@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61a5e5144d6626c46a1911e6519116de, src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::3eb3338bedd08649e6fa1c47e53c3161, mzkit\src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 232
+    '    Code Lines: 154
+    ' Comment Lines: 36
+    '   Blank Lines: 42
+    '     File Size: 9.85 KB
+
 
     '     Class FormulaSearch
     ' 
@@ -126,6 +136,8 @@ Namespace Formula
                 If Not progressReport Is Nothing Then
                     Call progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
                 End If
+
+                formula.massdiff = stdNum.Abs(formula.ExactMass - exact_mass)
 
                 Yield formula
             Next

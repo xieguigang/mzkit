@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa381c17d0766b01d1ad0c033ee5cce6, src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::aa381c17d0766b01d1ad0c033ee5cce6, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 49
+    ' Comment Lines: 39
+    '   Blank Lines: 11
+    '     File Size: 3.57 KB
+
 
     '     Class ROI
     ' 
@@ -130,6 +140,16 @@ Namespace Chromatogram
                     Return $"[{roi.time.Min.ToString("F0")},{roi.time.Max.ToString("F0")}]"
                 End Function)
             Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), ticks)
+        End Function
+
+        Public Iterator Function GetChromatogramData(background As ChromatogramTick(), rtwin_size As Single) As IEnumerable(Of ChromatogramTick)
+            Dim win2 As New DoubleRange(time.Min - rtwin_size, time.Max + rtwin_size)
+
+            For Each t In background
+                If t.Time >= win2.Min AndAlso t.Time <= win2.Max Then
+                    Yield t
+                End If
+            Next
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a58f92c0aed71924e286eddb36bc1733, src\visualize\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::a58f92c0aed71924e286eddb36bc1733, mzkit\src\visualize\test\Module2.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 967.00 B
+
 
     ' Module Module2
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae51688ac7e8b0e06722a88a0730c5f, src\metadb\FormulaSearch.Extensions\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::3ae51688ac7e8b0e06722a88a0730c5f, mzkit\src\metadb\FormulaSearch.Extensions\Annotation.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 841.00 B
+
 
     ' Class Annotation
     ' 

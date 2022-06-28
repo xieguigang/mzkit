@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a65686ce34dbf8dca677f5adf88329, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::a5c2a3247a77825c654d1171c75bd392, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 104
+    ' Comment Lines: 16
+    '   Blank Lines: 24
+    '     File Size: 5.95 KB
+
 
     '     Class Protocols
     ' 
@@ -85,7 +95,12 @@ Namespace Spectra.MoleculeNetworking
             End Get
         End Property
 
-        Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As LowAbundanceTrimming)
+        Sub New(ms1_tolerance As Tolerance,
+                ms2_tolerance As Tolerance,
+                treeIdentical As Double,
+                treeSimilar As Double,
+                intoCutoff As LowAbundanceTrimming)
+
             Me.treeIdentical = treeIdentical
             Me.treeSimilar = treeSimilar
             Me.intoCutoff = intoCutoff
@@ -113,7 +128,10 @@ Namespace Spectra.MoleculeNetworking
         ''' <param name="raw"></param>
         ''' <returns></returns>
         Friend Iterator Function BinaryTree(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of SpectrumCluster)
-            Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(ms2_tolerance, Nothing, treeIdentical, treeSimilar), showReport:=False)
+            Dim tree As New SpectrumTreeCluster(
+                compares:=SpectrumTreeCluster.SSMCompares(ms2_tolerance, Nothing, treeIdentical, treeSimilar),
+                showReport:=False
+            )
 
             Call tree.doCluster(raw.ToArray)
 
@@ -161,7 +179,7 @@ Namespace Spectra.MoleculeNetworking
             Next
         End Function
 
-        Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, (id As String, forward#, reverse#))))
+        Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of LinkSet)
             Dim i As i32 = 1
             Dim rawData As NetworkingNode() = nodes.ToArray
 
@@ -180,12 +198,19 @@ Namespace Spectra.MoleculeNetworking
                 Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
                 Call clusters.Add(scan.referenceId, scan)
 
-                Yield New NamedValue(Of Dictionary(Of String, (String, Double, Double))) With {
-                    .Name = scan.referenceId,
-                    .Value = scores.ToDictionary(Function(a) a.id,
-                                                 Function(a)
-                                                     Return (a.id, a.forward, a.reverse)
-                                                 End Function)
+                Dim links = scores _
+                    .ToDictionary(Function(a) a.id,
+                                  Function(a)
+                                      Return New NetworkClusterLinkEndPoint With {
+                                         .id = a.id,
+                                         .forward = a.forward,
+                                         .reverse = a.reverse
+                                      }
+                                  End Function)
+
+                Yield New LinkSet With {
+                    .reference = scan.referenceId,
+                    .links = links
                 }
             Next
         End Function

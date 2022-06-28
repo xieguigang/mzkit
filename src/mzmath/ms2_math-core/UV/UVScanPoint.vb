@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc1d422dc7c14a5847a528ed92db8602, src\mzmath\ms2_math-core\UV\UVScanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::6f79b19254459ca9bfeae686ac9abac2, mzkit\src\mzmath\ms2_math-core\UV\UVScanPoint.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 647.00 B
+
 
     '     Class UVScanPoint
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2fcd7f4af7413033bd19a0cccb1b13a, Rscript\Library\mzkit.quantify\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::816bf162dc42e4828bdc03c5deef0b21, mzkit\Rscript\Library\mzkit.quantify\zzz.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 165.00 B
+
+
     ' Class zzz
     ' 
     '     Sub: onLoad
@@ -41,6 +51,10 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports SMRUCC.Rsharp.Runtime.Interop
+
+<Assembly: RPackageModule>
 
 Public Class zzz
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57a95c3145777f8bf81c8ed6a71e2f60, src\visualize\MsImaging\PixelScan\ibdPixel.vb"
+﻿#Region "Microsoft.VisualBasic::bd7794616a13a9e2d0f68e823386acaa, mzkit\src\visualize\MsImaging\PixelScan\ibdPixel.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 68
+    ' Comment Lines: 4
+    '   Blank Lines: 16
+    '     File Size: 2.97 KB
+
+
     '     Class ibdPixel
     ' 
-    '         Properties: X, Y
+    '         Properties: scanId, X, Y
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -65,6 +75,12 @@ Namespace Pixel
 
         Dim memoryCache As ms2()
         Dim enableCache As Boolean = False
+
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return i.ToString
+            End Get
+        End Property
 
         <DebuggerStepThrough>
         Sub New(ibd As ibdReader, pixel As ScanData, Optional enableCache As Boolean = False)
@@ -126,8 +142,8 @@ Namespace Pixel
             Erase memoryCache
         End Sub
 
-        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
-            Throw New NotImplementedException()
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return GetMsPipe.Select(Function(i) i.intensity).ToArray
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2463fc65c0cfdc073abe65e51c69e68, src\visualize\MsImaging\SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::e171128c53298d13f6c81ca09e8dc8da, mzkit\src\visualize\MsImaging\SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 104
+    ' Comment Lines: 23
+    '   Blank Lines: 23
+    '     File Size: 5.13 KB
+
+
     ' Class SingleIonLayer
     ' 
-    '     Properties: DimensionSize, hasZeroPixels, IonMz, MSILayer
+    '     Properties: DimensionSize, hasZeroPixels, IonMz, maxinto, MSILayer
     ' 
-    '     Function: GetIntensity, (+2 Overloads) GetLayer, GetQuartile, MeasureUninSize, Take
-    '               ToString, Trim
+    '     Function: GetIntensity, (+3 Overloads) GetLayer, GetQuartile, IntensityCutoff, MeasureUninSize
+    '               Take, (+2 Overloads) ToString, Trim
     ' 
     ' /********************************************************************************/
 
@@ -55,7 +65,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Class SingleIonLayer
 
-    Public Property IonMz As Double
+    Public Property IonMz As String
     Public Property MSILayer As PixelData()
 
     ''' <summary>
@@ -70,8 +80,63 @@ Public Class SingleIonLayer
         End Get
     End Property
 
+    Public ReadOnly Property maxinto As Double
+        Get
+            Return Aggregate p As PixelData In MSILayer Into Max(p.intensity)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="xy">x,y</param>
+    ''' <returns></returns>
+    Public ReadOnly Property Item(xy As String()) As SingleIonLayer
+        Get
+            Dim xyIndex As Index(Of String) = xy.Indexing
+            Dim pixels As PixelData() = MSILayer _
+                .Where(Function(p)
+                           Return $"{p.x},{p.y}" Like xyIndex
+                       End Function) _
+                .ToArray
+
+            Return New SingleIonLayer With {
+                .DimensionSize = DimensionSize,
+                .IonMz = IonMz,
+                .MSILayer = pixels
+            }
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Removes pixels which relative intensity value is 
+    ''' less than the given <paramref name="intocutoff"/> 
+    ''' threshold.
+    ''' </summary>
+    ''' <param name="intocutoff">
+    ''' relative intensity cutoff value in range ``[0,1]``.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function IntensityCutoff(intocutoff As Double) As SingleIonLayer
+        Dim maxinto As Double = Me.maxinto
+
+        Return New SingleIonLayer With {
+            .DimensionSize = DimensionSize,
+            .IonMz = IonMz,
+            .MSILayer = MSILayer _
+                .Where(Function(p)
+                           Return p.intensity / maxinto >= intocutoff
+                       End Function) _
+                .ToArray
+        }
+    End Function
+
     Public Overrides Function ToString() As String
-        Return $"({MSILayer.Length} pixels) {IonMz.ToString("F4")}"
+        Return $"({MSILayer.Length} pixels) {ToString(Me)}"
+    End Function
+
+    Public Overloads Shared Function ToString(ion As SingleIonLayer) As String
+        Return If(ion.IonMz.IsNumeric, $"m/z {Double.Parse(ion.IonMz).ToString("F4")}", ion.IonMz)
     End Function
 
     Public Function MeasureUninSize(sampling As Integer) As Size
@@ -130,7 +195,7 @@ Public Class SingleIonLayer
             .ToArray
 
         Return New SingleIonLayer With {
-            .IonMz = mz.FirstOrDefault,
+            .IonMz = mz.FirstOrDefault.ToString("F4"),
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }
@@ -148,13 +213,13 @@ Public Class SingleIonLayer
         }
     End Function
 
-    Public Shared Function GetLayer(mz As Double, viewer As Drawer, mzErr As Tolerance) As SingleIonLayer
+    Public Shared Function GetLayer(mz As Double(), viewer As Drawer, mzErr As Tolerance) As SingleIonLayer
         Dim pixels As PixelData() = viewer _
-            .LoadPixels({mz}, mzErr) _
+            .LoadPixels(mz, mzErr) _
             .ToArray
 
         Return New SingleIonLayer With {
-            .IonMz = mz,
+            .IonMz = If(mz.Length = 1, mz(0), mz.Select(Function(d) d.ToString("F4")).JoinBy("+")),
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }

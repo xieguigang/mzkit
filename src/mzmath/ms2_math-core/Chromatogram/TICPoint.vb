@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::325ada35cacf2e0921047c02a31fc6c0, src\mzmath\ms2_math-core\Chromatogram\TICPoint.vb"
+﻿#Region "Microsoft.VisualBasic::05dda47a0bda4ec66a62b17b9f470746, mzkit\src\mzmath\ms2_math-core\Chromatogram\TICPoint.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 546.00 B
+
 
     '     Class TICPoint
     ' 

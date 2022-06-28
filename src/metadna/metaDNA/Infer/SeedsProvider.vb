@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7044eb217e3129b971aa0033fa010cb, src\metadna\metaDNA\Infer\SeedsProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9aa46c533bdfe2ead9fdae5fb463792c, mzkit\src\metadna\metaDNA\Infer\SeedsProvider.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 127
+    ' Comment Lines: 1
+    '   Blank Lines: 22
+    '     File Size: 6.36 KB
+
 
     '     Class SeedsProvider
     ' 
@@ -70,7 +80,7 @@ Namespace Infer
         End Sub
 
         Public Iterator Function CandidateInfers(infer As IEnumerable(Of InferLink)) As IEnumerable(Of CandidateInfer)
-            Dim kegg = infer.GroupBy(Function(i) i.kegg.kegg_id).ToArray
+            Dim kegg = infer.GroupBy(Function(i) i.kegg.unique_id).ToArray
 
             For Each candidate As CandidateInfer In kegg _
                 .AsParallel _
@@ -96,8 +106,8 @@ Namespace Infer
                               Function(c)
                                   Return c.ToArray
                               End Function)
-            Dim kegg_id As String = all.Values.First()(Scan0).kegg.kegg_id
-            Dim kegg As Compound = Me.kegg.GetCompound(kegg_id)
+            Dim kegg_id As String = all.Values.First()(Scan0).kegg.unique_id
+            Dim kegg As Compound = Me.kegg.GetCompound(kegg_id).KEGG
             Dim tree As New SpectrumTreeCluster(showReport:=False)
 
             Call all _

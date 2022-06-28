@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5848ae459081a512ae49e6e1a9671599, src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\product.vb"
+﻿#Region "Microsoft.VisualBasic::bd8f7729d2919fd72ad4ed18e6223abe, mzkit\src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\product.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 588.00 B
+
 
     '     Class product
     ' 

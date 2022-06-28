@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f192025af022a38520c7868f731939a, src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f9eb69508460788d03ef94e118857778, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 158
+    ' Comment Lines: 25
+    '   Blank Lines: 26
+    '     File Size: 9.66 KB
+
 
     ' Module ChromatogramPeakPlot
     ' 
@@ -128,8 +138,8 @@ Public Module ChromatogramPeakPlot
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
-                Dim X = d3js.scale.linear.domain(timeTicks).range(integers:={rect.Left, rect.Right})
-                Dim Y = d3js.scale.linear.domain(intoTicks).range(integers:={rect.Top, rect.Bottom})
+                Dim X = d3js.scale.linear.domain(values:=timeTicks).range(integers:={rect.Left, rect.Right})
+                Dim Y = d3js.scale.linear.domain(values:=intoTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,

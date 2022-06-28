@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86bef1e93dbd834281582480ee924277, Rscript\Library\mzkit\PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::86bef1e93dbd834281582480ee924277, mzkit\Rscript\Library\mzkit\PubChem.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 118
+    ' Comment Lines: 13
+    '   Blank Lines: 24
+    '     File Size: 6.09 KB
+
 
     ' Module PubChemToolKit
     ' 

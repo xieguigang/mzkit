@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6982ff7bb640fb02cbd46e53b8aa5416, src\visualize\MsImaging\IndexedCache\XIC.vb"
+﻿#Region "Microsoft.VisualBasic::6982ff7bb640fb02cbd46e53b8aa5416, mzkit\src\visualize\MsImaging\IndexedCache\XIC.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 884.00 B
+
 
     '     Class XIC
     ' 

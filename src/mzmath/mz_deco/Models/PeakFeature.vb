@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::438dc6bbbe1f42975f2e3c8713966373, src\mzmath\mz_deco\Models\PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::7bd8aea5c778c4e96b5dfd69d6987d37, mzkit\src\mzmath\mz_deco\Models\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 25
+    ' Comment Lines: 32
+    '   Blank Lines: 11
+    '     File Size: 1.95 KB
+
+
     ' Class PeakFeature
     ' 
     '     Properties: area, baseline, integration, maxInto, mz
@@ -49,6 +59,9 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports stdNum = System.Math
 
+''' <summary>
+''' a result peak feature
+''' </summary>
 Public Class PeakFeature
     Implements IRetentionTime
     Implements IROI

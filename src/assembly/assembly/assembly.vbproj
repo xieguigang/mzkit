@@ -515,6 +515,7 @@
     <Compile Include="MarkupData\FastSeekIndex.vb" />
     <Compile Include="MarkupData\imzML\XML\MSISummary.vb" />
     <Compile Include="MarkupData\imzML\XML\ScanReader.vb" />
+    <Compile Include="mzPack\mzXMLWriter.vb" />
     <Compile Include="MarkupData\nmrML\acquisition.vb" />
     <Compile Include="MarkupData\nmrML\spectrum1D.vb" />
     <Compile Include="MarkupData\nmrML\FIDByteFormats.vb" />
@@ -635,7 +636,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
+      <Project>{ab00f8fc-f90f-4f93-bbc0-eff66cc3f8e5}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>

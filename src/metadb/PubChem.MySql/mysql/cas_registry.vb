@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::040cbe579d2a287d14bf9c6fdd678506, src\metadb\PubChem.MySql\mysql\cas_registry.vb"
+﻿#Region "Microsoft.VisualBasic::83f38a7eb5c214f6a164230e5ff0f360, mzkit\src\metadb\PubChem.MySql\mysql\cas_registry.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 75
+    ' Comment Lines: 41
+    '   Blank Lines: 22
+    '     File Size: 4.43 KB
+
 
     ' Class cas_registry
     ' 

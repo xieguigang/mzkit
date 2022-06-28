@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7f11a0d25622d24eb9c745ec79b3f0c, src\assembly\assembly\MarkupData\mzXML\Info.vb"
+﻿#Region "Microsoft.VisualBasic::7e4098ad69a0538da71eae2934a964d3, mzkit\src\assembly\assembly\MarkupData\mzXML\Info.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 43
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 1.66 KB
+
 
     '     Class dataProcessing
     ' 

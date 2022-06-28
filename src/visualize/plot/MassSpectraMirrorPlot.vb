@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b4a9bdfba4ffee0247c7dea443ae08, src\visualize\plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::83b4a9bdfba4ffee0247c7dea443ae08, mzkit\src\visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 86
+    ' Comment Lines: 9
+    '   Blank Lines: 8
+    '     File Size: 4.54 KB
+
 
     ' Module MassSpectra
     ' 
@@ -76,7 +86,8 @@ Public Module MassSpectra
                                Optional xlab$ = "M/Z ratio",
                                Optional ylab$ = "Relative Intensity(%)",
                                Optional drawGrid As Boolean = True,
-                               Optional tagXFormat$ = "F2") As GraphicsData
+                               Optional tagXFormat$ = "F2",
+                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
         Dim b As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(1, library.name)}
@@ -93,7 +104,8 @@ Public Module MassSpectra
             xlab:=xlab,
             ylab:=ylab,
             drawGrid:=drawGrid,
-            tagXFormat:=tagXFormat
+            tagXFormat:=tagXFormat,
+            driver:=driver
         )
     End Function
 
@@ -108,7 +120,8 @@ Public Module MassSpectra
                                     Optional xlab$ = "M/Z ratio",
                                     Optional ylab$ = "Relative Intensity(%)",
                                     Optional tagXFormat$ = "F2",
-                                    Optional drawGrid As Boolean = True) As GraphicsData
+                                    Optional drawGrid As Boolean = True,
+                                    Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
             .Trim(intoCutoff) _
@@ -141,7 +154,8 @@ Public Module MassSpectra
             drawLegend:=drawLegend,
             bg:=bg,
             drawGrid:=drawGrid,
-            tagXFormat:=tagXFormat
+            tagXFormat:=tagXFormat,
+            driver:=driver
         )
     End Function
 End Module

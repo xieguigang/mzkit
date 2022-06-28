@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics.SDF</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics.SDF.Extensions</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release</Configurations>
@@ -79,7 +79,7 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
-    <None Include="..\..\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -88,6 +88,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
     <ProjectReference Include="..\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
   </ItemGroup>

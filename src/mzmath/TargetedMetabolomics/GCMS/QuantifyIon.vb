@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::203b867fa5c1285beb7b938a601f656f, src\mzmath\TargetedMetabolomics\GCMS\QuantifyIon.vb"
+﻿#Region "Microsoft.VisualBasic::c50e4afe02f7cc21692bfaa5b0a89b97, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyIon.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 58
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 3.21 KB
+
 
     '     Class QuantifyIon
     ' 

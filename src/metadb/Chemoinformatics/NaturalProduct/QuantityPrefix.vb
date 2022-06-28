@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a76b410ba68b1088e9ceda2ad703ca12, src\metadb\Chemoinformatics\NaturalProduct\QuantityPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::a76b410ba68b1088e9ceda2ad703ca12, mzkit\src\metadb\Chemoinformatics\NaturalProduct\QuantityPrefix.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 264.00 B
+
 
     '     Enum QuantityPrefix
     ' 

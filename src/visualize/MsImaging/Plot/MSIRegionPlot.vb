@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6baff1fb3fa972f6ae56a50dea473683, src\visualize\MsImaging\Plot\MSIRegionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::729e2febf61fe561aa78da0d259a4751, mzkit\src\visualize\MsImaging\Plot\MSIRegionPlot.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 474.00 B
+
+
     ' Class MSIRegionPlot
     ' 
     '     Constructor: (+1 Overloads) Sub New
@@ -58,4 +68,3 @@ Public Class MSIRegionPlot : Inherits Plot
         Throw New NotImplementedException()
     End Sub
 End Class
-

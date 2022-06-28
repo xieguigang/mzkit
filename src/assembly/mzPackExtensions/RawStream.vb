@@ -1,59 +1,78 @@
-﻿#Region "Microsoft.VisualBasic::dce3d7d4eaa645bbfa140845179ba8ac, src\assembly\mzPackExtensions\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::b5f1465b13f08a25c7450306529af668, mzkit\src\assembly\mzPackExtensions\RawStream.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RawStream
-    ' 
-    '     Function: GetChromatogram, LoadFromXRaw
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 32
+'    Code Lines: 27
+' Comment Lines: 0
+'   Blank Lines: 5
+'     File Size: 1.09 KB
+
+
+' Module RawStream
+' 
+'     Function: GetChromatogram, LoadFromXRaw
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+#If netcore5 = 0 Or NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+#End If
 Imports Microsoft.VisualBasic.Language
 
 Public Module RawStream
 
+#If netcore5 = 0 Or NET48 Then
     <Extension>
-    Public Function LoadFromXRaw(raw As MSFileReader) As mzPack
-        Return New XRawStream(raw).StreamTo
+    Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Return New WiffRawStream(raw).StreamTo(println:=println)
     End Function
+
+    <Extension>
+    Public Function LoadFromXRaw(raw As MSFileReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Return New XRawStream(raw).StreamTo(println:=println)
+    End Function
+#End If
 
     <Extension>
     Public Function GetChromatogram(mzpack As mzPack) As Chromatogram

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7ab8ae70c167eff7902ac3c1aaa1e8e, src\metadb\FooDB\FooDB\mysql\compound_alternate_parents.vb"
+﻿#Region "Microsoft.VisualBasic::e7ab8ae70c167eff7902ac3c1aaa1e8e, mzkit\src\metadb\FooDB\FooDB\mysql\compound_alternate_parents.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 86
+    ' Comment Lines: 62
+    '   Blank Lines: 22
+    '     File Size: 8.69 KB
+
 
     ' Class compound_alternate_parents
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, src\metadb\Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb"
+﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, mzkit\src\metadb\Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 285
+    '    Code Lines: 237
+    ' Comment Lines: 6
+    '   Blank Lines: 42
+    '     File Size: 10.56 KB
+
 
     '     Class GlycosylNameSolver
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::164d9691fabf7bcff85a28e543b6bb33, src\metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6bf210ef233d867e0262765e2ae610d3, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 128
+    ' Comment Lines: 12
+    '   Blank Lines: 17
+    '     File Size: 5.95 KB
+
 
     '     Module Extensions
     ' 

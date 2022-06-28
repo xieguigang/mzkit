@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775fd7ce5d7ce32331eb1730421898eb, src\mzmath\ms2_math-core\UV\PDAPoint.vb"
+﻿#Region "Microsoft.VisualBasic::10e65dcd38a2c0287d5a453f1d073ab4, mzkit\src\mzmath\ms2_math-core\UV\PDAPoint.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 723.00 B
+
 
     '     Class PDAPoint
     ' 

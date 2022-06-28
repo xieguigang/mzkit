@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DD4B546D-F6EC-4C97-9683-D0DC0E9F569E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>mzkit.plot</RootNamespace>
+    <RootNamespace>mzplot</RootNamespace>
     <AssemblyName>mzplot</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -162,11 +162,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\mzkit_app\assembly\</OutputPath>
     <DocumentationFile>mzplot.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -212,6 +214,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChemicalDraw.vb" />
     <Compile Include="MsImaging.vb" />
     <Compile Include="zzz.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -304,9 +307,29 @@
       <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
       <Name>mzPack</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.vbproj">
+      <Project>{a2cdf95f-b0e2-49cc-b3b9-ad8b0e452e4e}</Project>
+      <Name>SMILES</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
+      <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
+      <Name>mz_deco</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
+      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
+      <Name>KCF.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF.IO.vbproj">
+      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
+      <Name>KCF.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.vbproj">
+      <Project>{c9d3d242-e471-4980-a87e-44ba237b79d6}</Project>
+      <Name>KCFDraw</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
@@ -316,9 +339,12 @@
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msplots</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.vbproj">
+      <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>
+      <Name>SDF.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
-  <Import Project="..\mzkit.interop\mzkit.interop.projitems" Label="Shared" />
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
+  <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

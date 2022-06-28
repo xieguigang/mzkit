@@ -1,53 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::8e57e5bd762c4ed7a6f4f51a8c88b428, src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
+﻿#Region "Microsoft.VisualBasic::801efec10dbcc4e33384e3cb233105de, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ScanMS1
-' 
-'         Properties: BPC, meta, products, TIC
-' 
-'         Function: GetIntensity, GetMs1Scans, GetMSIPixel, hasMetaKeys
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 58
+    ' Comment Lines: 22
+    '   Blank Lines: 11
+    '     File Size: 3.03 KB
+
+
+    '     Class ScanMS1
+    ' 
+    '         Properties: BPC, meta, products, rt, TIC
+    ' 
+    '         Function: GetMs1Scans, GetMSIPixel, hasMetaKeys
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -58,8 +67,9 @@ Namespace mzData.mzWebCache
     ''' </summary>
     Public Class ScanMS1 : Inherits MSScan
         Implements ITimeSignal
+        Implements IRetentionTime
 
-        Public Overrides Property rt As Double Implements ITimeSignal.time
+        Public Overrides Property rt As Double Implements ITimeSignal.time, IRetentionTime.rt
         Public Property TIC As Double Implements ITimeSignal.intensity
         Public Property BPC As Double
         Public Property products As ScanMS2()
@@ -105,20 +115,6 @@ Namespace mzData.mzWebCache
             Else
                 Return Nothing
             End If
-        End Function
-
-        Public Function GetIntensity(mz As Double, tolerance As Tolerance) As Integer
-            Dim max As Double = 0
-
-            For i As Integer = 0 To Me.mz.Length - 1
-                If tolerance(mz, Me.mz(i)) Then
-                    If max < into(i) Then
-                        max = into(i)
-                    End If
-                End If
-            Next
-
-            Return max
         End Function
 
         Public Iterator Function GetMs1Scans() As IEnumerable(Of ms1_scan)

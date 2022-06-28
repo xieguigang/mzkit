@@ -4,7 +4,7 @@
 \alias{MSDiffEntropy}
 \title{Evaluate the Entropy difference between two spectrum}
 \usage{
-MSDiffEntropy(query, ref)
+MSDiffEntropy(query, ref, mzdiff = mzkit::tolerance(0.3, "da"))
 }
 \arguments{
 \item{query}{a spectrum for query the database in \code{mzInto} class.}

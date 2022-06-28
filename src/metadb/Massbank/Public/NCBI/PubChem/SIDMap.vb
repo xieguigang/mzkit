@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce977ef43f90559aadfefd987936e807, src\metadb\Massbank\Public\NCBI\PubChem\SIDMap.vb"
+﻿#Region "Microsoft.VisualBasic::aba70ca30362d9d72cfba94dd1e52991, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\SIDMap.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 43
+    ' Comment Lines: 16
+    '   Blank Lines: 10
+    '     File Size: 2.37 KB
+
 
     '     Class SIDMap
     ' 

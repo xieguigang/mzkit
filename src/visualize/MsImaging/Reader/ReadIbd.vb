@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8bd868454cd85fea2859f5882e7e44, src\visualize\MsImaging\Reader\ReadIbd.vb"
+﻿#Region "Microsoft.VisualBasic::ec8bd868454cd85fea2859f5882e7e44, mzkit\src\visualize\MsImaging\Reader\ReadIbd.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 68
+    ' Comment Lines: 5
+    '   Blank Lines: 17
+    '     File Size: 3.06 KB
+
 
     '     Class ReadIbd
     ' 

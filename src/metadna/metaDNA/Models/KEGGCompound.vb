@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::417bc1378fbef78e1b4af06287cd7054, src\metadna\metaDNA\Models\KEGGCompound.vb"
+﻿#Region "Microsoft.VisualBasic::ea5cf9f012b9aca5f60972e9026bfa20, mzkit\src\metadna\metaDNA\Models\KEGGCompound.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 47
+    ' Comment Lines: 3
+    '   Blank Lines: 14
+    '     File Size: 1.84 KB
+
+
     ' Structure KEGGCompound
     ' 
-    '     Properties: ExactMass, kegg_id
+    '     Properties: CommonName, ExactMass, Formula, kegg_id
     ' 
     '     Function: ToString
     ' 
@@ -51,25 +61,60 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 ''' <summary>
 ''' object model wrapper for the KEGG compound in order to apply of the generic ms search engine
 ''' </summary>
-Public Structure KEGGCompound : Implements IReadOnlyId, IExactmassProvider
+Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
-    Public ReadOnly Property ExactMass As Double Implements IExactmassProvider.ExactMass
+    Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
         Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
             Return KEGG.exactMass
         End Get
     End Property
 
     Public ReadOnly Property kegg_id As String Implements IReadOnlyId.Identity
         Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
             Return KEGG.entry
+        End Get
+    End Property
+
+    Public ReadOnly Property CommonName As String Implements ICompoundNameProvider.CommonName
+        Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
+            Return If(KEGG.commonNames.FirstOrDefault, kegg_id)
+        End Get
+    End Property
+
+    Public ReadOnly Property Formula As String Implements IFormulaProvider.Formula
+        Get
+            If KEGG Is Nothing Then
+                Return Nothing
+            End If
+
+            Return KEGG.formula
         End Get
     End Property
 
     Dim KEGG As Compound
 
     Public Overrides Function ToString() As String
+        If KEGG Is Nothing Then
+            Return Nothing
+        End If
+
         Return KEGG.ToString
     End Function
 
-End Structure
+    Public Shared Narrowing Operator CType(cpd As KEGGCompound) As Compound
+        Return cpd.KEGG
+    End Operator
 
+End Structure

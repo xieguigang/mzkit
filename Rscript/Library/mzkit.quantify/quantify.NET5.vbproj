@@ -1,12 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>mzkit</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>mzkit.quantify</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <Authors>xieguigang</Authors>
     <Company>BioNovoGene</Company>
     <Product>BioDeep</Product>
@@ -14,6 +15,8 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
+	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -110,7 +113,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\..\src\mzkit\mzkit\Resources\Flask.png">
+    <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -134,12 +137,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
-    <ProjectReference Include="..\mzkit\mzkit.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -148,6 +146,6 @@
 
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
-  <Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
+	<Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
 
 </Project>

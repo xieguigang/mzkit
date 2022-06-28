@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e34e388cd39ae1fab0f9efd04e2e098c, src\assembly\assembly\MarkupData\XmlParser.vb"
+﻿#Region "Microsoft.VisualBasic::e34e388cd39ae1fab0f9efd04e2e098c, mzkit\src\assembly\assembly\MarkupData\XmlParser.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 52
+    ' Comment Lines: 13
+    '   Blank Lines: 13
+    '     File Size: 2.75 KB
+
 
     '     Class XmlParser
     ' 

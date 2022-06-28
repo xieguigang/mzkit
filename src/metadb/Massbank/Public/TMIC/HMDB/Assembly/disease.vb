@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::606fbe2dc29aeafe456ff8651c2d96ec, src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
+﻿#Region "Microsoft.VisualBasic::2d8ca8cedceec61fb59b662f68f0f711, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 460.00 B
+
 
     '     Class disease
     ' 

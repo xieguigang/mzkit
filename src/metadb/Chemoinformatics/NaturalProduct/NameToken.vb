@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c17940d26a8100873a53e007c86e2069, src\metadb\Chemoinformatics\NaturalProduct\NameToken.vb"
+﻿#Region "Microsoft.VisualBasic::c17940d26a8100873a53e007c86e2069, mzkit\src\metadb\Chemoinformatics\NaturalProduct\NameToken.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 15
+    ' Comment Lines: 15
+    '   Blank Lines: 4
+    '     File Size: 780.00 B
+
 
     '     Class Token
     ' 

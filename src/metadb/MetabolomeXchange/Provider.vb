@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3deddb5b64d8b9c54e5ff997c378f6e, src\metadb\MetabolomeXchange\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::d1226e343f332d77dfbb523f29eda8c9, mzkit\src\metadb\MetabolomeXchange\Provider.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 44
+    ' Comment Lines: 7
+    '   Blank Lines: 7
+    '     File Size: 2.23 KB
+
 
     ' Module Provider
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6830dc93bd36a6d68c3ec2a26c7f6e93, src\metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::90e0d87ce3e8d7fea0419c68a19d7e06, mzkit\src\metadb\SMILES\Graph\ChemicalElement.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 16
+    ' Comment Lines: 8
+    '   Blank Lines: 7
+    '     File Size: 743.00 B
+
+
     ' Class ChemicalElement
     ' 
-    '     Properties: elementName, Keys
+    '     Properties: coordinate, elementName, Keys
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
@@ -59,6 +69,12 @@ Public Class ChemicalElement : Inherits Node
             Return degree.In + degree.Out
         End Get
     End Property
+
+    ''' <summary>
+    ''' 2D coordinate ``[x,y]``
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property coordinate As Double()
 
     Sub New()
     End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c6a8147e3cbda1a3e8e121262090c6, src\assembly\assembly\ASCII\MGF\MgfReader.vb"
+﻿#Region "Microsoft.VisualBasic::182c78fece6a662c393e8ae1ba76da6f, mzkit\src\assembly\assembly\ASCII\MGF\MgfReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 131
+    ' Comment Lines: 6
+    '   Blank Lines: 20
+    '     File Size: 6.17 KB
+
 
     '     Module MgfReader
     ' 

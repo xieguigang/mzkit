@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecc1d48ac2e4f286c729294605cff414, src\visualize\MsImaging\PixelScan\InMemoryPixel.vb"
+﻿#Region "Microsoft.VisualBasic::b7c49eddc0be6a41a66a15a8525ff1ec, mzkit\src\visualize\MsImaging\PixelScan\InMemoryPixel.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 41
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.65 KB
+
+
     '     Class InMemoryPixel
     ' 
-    '         Properties: X, Y
+    '         Properties: scanId, X, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -60,6 +70,12 @@ Namespace Pixel
         Public Overrides ReadOnly Property Y As Integer
 
         Dim data As ms2()
+
+        Public Overrides ReadOnly Property scanId As String
+            Get
+                Return $"({X},{Y})"
+            End Get
+        End Property
 
         Sub New(x As Integer, y As Integer, data As ms2())
             Me.X = x
@@ -93,6 +109,10 @@ Namespace Pixel
                        In allMatched
                        Into Max(mzi.intensity)
             End If
+        End Function
+
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return data.Select(Function(i) i.intensity).ToArray
         End Function
     End Class
 End Namespace

@@ -20,7 +20,9 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +31,9 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -49,38 +53,46 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
     <Optimize>false</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -88,9 +100,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -98,10 +112,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -109,9 +125,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\BioDeep_database\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -119,9 +137,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\BioDeep_database\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -129,9 +149,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\LipidSearch\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -139,9 +161,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\LipidSearch\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -149,19 +173,24 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Rsharp_app_release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
+    <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -169,9 +198,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -179,9 +210,11 @@
     <OutputPath>..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -189,27 +222,33 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -217,9 +256,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -227,9 +268,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\BioDeep_database\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -237,9 +280,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\LipidSearch\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -247,9 +292,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -257,9 +304,11 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.MsImaging.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -283,12 +332,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imaging\KnnInterpolation.vb" />
-    <Compile Include="Imaging\QuantizationThreshold.vb" />
-    <Compile Include="Imaging\MzLayerColorSet.vb" />
-    <Compile Include="Imaging\RectangleRender.vb" />
-    <Compile Include="Imaging\Renderer.vb" />
+    <Compile Include="Blender\MSIColorSet.vb" />
+    <Compile Include="Blender\Renderer\RenderRGB.vb" />
+    <Compile Include="Blender\Renderer\RenderingModes.vb" />
+    <Compile Include="IonStat.vb" />
+    <Compile Include="HeatMapLayer.vb" />
+    <Compile Include="Blender\KnnInterpolation.vb" />
+    <Compile Include="Blender\QuantizationThreshold.vb" />
+    <Compile Include="Blender\MzLayerColorSet.vb" />
+    <Compile Include="Blender\Renderer\RectangleRender.vb" />
+    <Compile Include="Blender\Renderer\Renderer.vb" />
     <Compile Include="LayerHelpers.vb" />
+    <Compile Include="HistologicalImage.vb" />
     <Compile Include="Plot\DualRegionUnionPlot.vb" />
     <Compile Include="Plot\MSIPlot.vb" />
     <Compile Include="Plot\MSIRegionPlot.vb" />
@@ -298,7 +353,7 @@
     <Compile Include="PixelScan\InMemoryVectorPixel.vb" />
     <Compile Include="PixelScan\InMemoryPixel.vb" />
     <Compile Include="PixelsSampler.vb" />
-    <Compile Include="Imaging\PixelRender.vb" />
+    <Compile Include="Blender\Renderer\PixelRender.vb" />
     <Compile Include="IndexedCache\XICReader.vb" />
     <Compile Include="IndexedCache\XICIndex.vb" />
     <Compile Include="IndexedCache\XICWriter.vb" />
@@ -376,6 +431,10 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
+      <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
+      <Name>SignalProcessing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
       <Name>Plots</Name>
@@ -401,7 +460,7 @@
       <Name>mzPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
+      <Project>{ab00f8fc-f90f-4f93-bbc0-eff66cc3f8e5}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>

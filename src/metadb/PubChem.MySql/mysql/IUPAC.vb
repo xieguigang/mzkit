@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad65c7094ef6a8998a4fb2818ee582b3, src\metadb\PubChem.MySql\mysql\IUPAC.vb"
+﻿#Region "Microsoft.VisualBasic::58f6da65c7258382186d6e4583b85422, mzkit\src\metadb\PubChem.MySql\mysql\IUPAC.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 88
+    ' Comment Lines: 41
+    '   Blank Lines: 22
+    '     File Size: 7.30 KB
+
 
     ' Class IUPAC
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9e6dc043db13aacebc1cbe1db46e88d, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMArguments.vb"
+﻿#Region "Microsoft.VisualBasic::d9e6dc043db13aacebc1cbe1db46e88d, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMArguments.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 61
+    ' Comment Lines: 8
+    '   Blank Lines: 10
+    '     File Size: 3.13 KB
+
 
     '     Class MRMArguments
     ' 

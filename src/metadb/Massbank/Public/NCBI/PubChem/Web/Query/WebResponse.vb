@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc05247afd57463bc6bc14952a6b580b, src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::4cbf4fb2fca206e88d41df92e6889252, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebResponse.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 39
+    ' Comment Lines: 5
+    '   Blank Lines: 7
+    '     File Size: 1.95 KB
+
 
     '     Class JsonQuery
     ' 

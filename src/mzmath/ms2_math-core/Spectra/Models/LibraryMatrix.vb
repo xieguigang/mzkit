@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b67a520f378f13bf8502b8376212499a, src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::65a9898b3fd62420ca2f85d23759def0, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 108
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.82 KB
+
+
     '     Class LibraryMatrix
     ' 
     '         Properties: centroid, intensity, ms2, mz, name
@@ -51,6 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -84,6 +95,7 @@ Namespace Spectra
         ''' </summary>
         ''' <returns></returns>
         Public Property centroid As Boolean
+        Public Property parentMz As Double
 
         Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As LibraryMatrix
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -97,6 +109,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <ScriptIgnore>
         Public ReadOnly Property intensity As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -110,6 +123,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <ScriptIgnore>
         Public ReadOnly Property mz As Double()
             Get
                 Return ms2.Select(Function(i) i.mz).ToArray

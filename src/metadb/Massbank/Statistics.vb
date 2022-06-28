@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::146c86f00a2fee256597c35fd3dae058, src\metadb\Massbank\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::9bd2eeacc19fedf44b0d3902572d5748, mzkit\src\metadb\Massbank\Statistics.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 83
+    ' Comment Lines: 14
+    '   Blank Lines: 17
+    '     File Size: 3.84 KB
+
 
     ' Module Statistics
     ' 

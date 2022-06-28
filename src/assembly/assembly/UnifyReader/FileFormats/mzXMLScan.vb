@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdf112021270a0a645b50d7db6660ed5, src\assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::bdf112021270a0a645b50d7db6660ed5, mzkit\src\assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 69
+    ' Comment Lines: 11
+    '   Blank Lines: 15
+    '     File Size: 3.79 KB
+
 
     '     Class mzXMLScan
     ' 

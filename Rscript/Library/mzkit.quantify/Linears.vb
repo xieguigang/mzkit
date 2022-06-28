@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b65057ea431884728ff1a2710ab8aae, Rscript\Library\mzkit.quantify\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::1b65057ea431884728ff1a2710ab8aae, mzkit\Rscript\Library\mzkit.quantify\Linears.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 164
+    ' Comment Lines: 70
+    '   Blank Lines: 27
+    '     File Size: 10.26 KB
+
 
     ' Module Linears
     ' 

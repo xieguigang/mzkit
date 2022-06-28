@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0028740899c4731fefe2e361b0112bf, src\metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
+﻿#Region "Microsoft.VisualBasic::1b4694ff264606d2d9cfd3318e5daaf5, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 58
+    ' Comment Lines: 3
+    '   Blank Lines: 21
+    '     File Size: 2.55 KB
+
 
     '     Class taxonomy
     ' 
