@@ -1,49 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::f17e446fbfc4a75caf25dd3dbff34d43, src\metadna\metaDNA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::e78625b0d2a69186fde9d0c44468d90a, mzkit\src\metadna\metaDNA\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Algorithm
-    ' 
-    '     Properties: ms1Err
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
-    '               GetPerfermanceCounter, GetUnknownSet, RunInfer, RunIteration, SetKeggLibrary
-    '               SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 360
+'    Code Lines: 262
+' Comment Lines: 46
+'   Blank Lines: 52
+'     File Size: 13.05 KB
+
+
+' Class Algorithm
+' 
+'     Properties: ms1Err
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
+'               GetPerfermanceCounter, GetUnknownSet, RunInfer, RunIteration, SetKeggLibrary
+'               SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -233,9 +244,9 @@ Public Class Algorithm
 
         For Each hit As PeakMs2 In candidates
             Dim alignment As InferLink = GetBestQuery(hit, seed)
-            Dim kegg As New KEGGQuery With {
+            Dim kegg As New MzQuery With {
                 .mz = mz,
-                .kegg_id = compound.entry,
+                .unique_id = compound.entry,
                 .precursorType = type.ToString,
                 .ppm = PPMmethod.PPM(mz, hit.mz)
             }
@@ -377,31 +388,37 @@ Public Class Algorithm
         Return DIASearch(GetCandidateSeeds)
     End Function
 
-    Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
+    Private Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
         Call report("Create candidate seeds by query KEGG library...")
 
-        For Each unknown As PeakMs2 In unknowns.EnumerateAllUnknownFeatures
-            Dim seedRef As New LibraryMatrix With {
-                .ms2 = unknown.mzInto,
-                .name = unknown.ToString
-            }
+        Return unknowns _
+            .EnumerateAllUnknownFeatures _
+            .AsParallel _
+            .Select(AddressOf querySingle) _
+            .IteratesALL
+    End Function
 
-            For Each DIAseed As KEGGQuery In kegg.QueryByMz(unknown.mz)
-                Yield New AnnotatedSeed With {
-                    .id = unknown.lib_guid,
-                    .kegg_id = DIAseed.kegg_id,
-                    .parent = New ms1_scan With {
-                        .mz = unknown.mz,
-                        .scan_time = unknown.rt,
-                        .intensity = unknown.Ms2Intensity
-                    },
-                    .products = New Dictionary(Of String, LibraryMatrix) From {
-                        {unknown.lib_guid, seedRef}
-                    },
-                    .parentTrace = 100,
-                    .inferSize = 1
-                }
-            Next
+    Private Iterator Function querySingle(unknown As PeakMs2) As IEnumerable(Of AnnotatedSeed)
+        Dim seedRef As New LibraryMatrix With {
+            .ms2 = unknown.mzInto,
+            .name = unknown.ToString
+        }
+
+        For Each DIAseed As MzQuery In kegg.QueryByMz(unknown.mz)
+            Yield New AnnotatedSeed With {
+                .id = unknown.lib_guid,
+                .kegg_id = DIAseed.unique_id,
+                .parent = New ms1_scan With {
+                    .mz = unknown.mz,
+                    .scan_time = unknown.rt,
+                    .intensity = unknown.Ms2Intensity
+                },
+                .products = New Dictionary(Of String, LibraryMatrix) From {
+                    {unknown.lib_guid, seedRef}
+                },
+                .parentTrace = 100,
+                .inferSize = 1
+            }
         Next
     End Function
 

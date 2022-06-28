@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcdfa0e9545393adb1605dceb545c7fd, src\metadb\FooDB\FooDB\Food.vb"
+﻿#Region "Microsoft.VisualBasic::f9f5d0470396ad3109b3751a25857204, mzkit\src\metadb\FooDB\FooDB\FoodSource.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 32
+    ' Comment Lines: 8
+    '   Blank Lines: 7
+    '     File Size: 1.60 KB
+
 
     '     Class FoodSource
     ' 

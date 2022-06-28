@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3855c80842abafb892b7fa98a4e1f48, src\mzmath\ms2_math-core\Spectra\Models\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::c3855c80842abafb892b7fa98a4e1f48, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\Meta.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 296.00 B
+
 
     '     Class Meta
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30ecf81309e4fd42a7eba536fb9ca06e, src\mzmath\ms2_math-core\Chromatogram\AccumulateROI.vb"
+﻿#Region "Microsoft.VisualBasic::30ecf81309e4fd42a7eba536fb9ca06e, mzkit\src\mzmath\ms2_math-core\Chromatogram\AccumulateROI.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 57
+    ' Comment Lines: 32
+    '   Blank Lines: 7
+    '     File Size: 4.54 KB
+
 
     '     Module AccumulateROI
     ' 

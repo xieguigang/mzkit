@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</ProjectGuid>
+    <ProjectGuid>{AB00F8FC-F90F-4F93-BBC0-EFF66CC3F8E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math</AssemblyName>
@@ -527,6 +527,7 @@
     <Compile Include="Spectra\Alignment\ScoreAggregates.vb" />
     <Compile Include="Spectra\Models\MzAnnotation.vb" />
     <Compile Include="Spectra\Models\ms2.vb" />
+    <Compile Include="Spectra\Models\PeakList.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />

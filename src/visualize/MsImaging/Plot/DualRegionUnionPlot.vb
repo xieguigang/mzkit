@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1d50e3df6a1da75ce5ca01e9c9bf7d6, src\visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f13df6d4ab1d715c56cbcf3d90c2b1d0, mzkit\src\visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 121
+    ' Comment Lines: 1
+    '   Blank Lines: 19
+    '     File Size: 6.12 KB
+
+
     ' Class DualRegionUnionPlot
     ' 
     '     Constructor: (+1 Overloads) Sub New
@@ -48,7 +58,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -104,7 +114,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
            .color = color.ToHtmlColor,
            .fontstyle = theme.legendLabelCSS,
            .style = LegendStyles.Square,
-           .title = ion.IonMz.ToString("F4")
+           .title = Double.Parse(ion.IonMz).ToString("F4")
         }
     End Function
 
@@ -135,8 +145,8 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Dim Xtick As Double() = New DoubleRange({0, MSIsize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, MSIsize.Height}).CreateAxisTicks
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim scaleX = d3js.scale.linear.domain(Xtick).range(New Double() {rect.Left, rect.Right})
-        Dim scaleY = d3js.scale.linear.domain(Ytick).range(New Double() {rect.Top, rect.Bottom})
+        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(New Double() {rect.Left, rect.Right})
+        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
             .AxisTicks = (Xtick.AsVector, Ytick.AsVector),
             .region = rect,
@@ -144,12 +154,12 @@ Public Class DualRegionUnionPlot : Inherits Plot
             .Y = scaleY
         }
         Dim MSI1 As Image, MSI2 As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As New PixelRender(heatmapRender:=False)
 
-        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1)
+        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet1).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
-        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet2)
+        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, Nothing, cutoff:=cutoff, colorSet:=colorSet2).AsGDIImage
         MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale,
@@ -166,7 +176,8 @@ Public Class DualRegionUnionPlot : Inherits Plot
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim labelSize As SizeF = g.MeasureString(region1.IonMz.ToString("F4"), labelFont)
+        Dim label As String = Double.Parse(region1.IonMz).ToString("F4")
+        Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top)
         Dim mz1 = GetMzLegend(region1, colorSet1.Last.Color)
         Dim mz2 = GetMzLegend(region2, colorSet2.Last.Color)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae890895317dc76e31713558b4202d23, src\metadna\metaDNA\Infer\InferLink.vb"
+﻿#Region "Microsoft.VisualBasic::d31f06319f4357aaa069a827e6c83e98, mzkit\src\metadna\metaDNA\Infer\InferLink.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 15
+    ' Comment Lines: 16
+    '   Blank Lines: 8
+    '     File Size: 1.20 KB
+
+
     '     Class InferLink
     ' 
     '         Properties: inferSize, kegg, level, parentTrace, rawFile
@@ -47,6 +57,7 @@
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MSEngine
 
 Namespace Infer
 
@@ -58,7 +69,7 @@ Namespace Infer
         ''' 当前的Feature被推断为的目标KEGG代谢物编号
         ''' </summary>
         ''' <returns></returns>
-        Public Property kegg As KEGGQuery
+        Public Property kegg As MzQuery
 
         ''' <summary>
         ''' 起始值为100

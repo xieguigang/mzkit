@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9261bf84f77f892dd722dd83f32de6a1, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::e678868780d12416cfa16d39427b4d78, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMIonExtract.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 34
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 1.77 KB
+
 
     '     Class SIMIonExtract
     ' 

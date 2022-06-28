@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7240aa070752816b24da20a0da0b623, src\assembly\assembly\MarkupData\imzML\XML\ScanReader.vb"
+﻿#Region "Microsoft.VisualBasic::c7240aa070752816b24da20a0da0b623, mzkit\src\assembly\assembly\MarkupData\imzML\XML\ScanReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 582.00 B
+
 
     '     Class ScanReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4b992b8543f00c89e9d368e6ca2651d, src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
+﻿#Region "Microsoft.VisualBasic::a6496b019dd20d508ded9adb83026b50, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 3.58 KB
+
 
     '     Module NegativeFormula
     ' 
@@ -70,7 +80,8 @@ Namespace Ms1.PrecursorType
                 {"2M+Hac-H", New MzCalculator("[2M+Hac-H]-", charge:=-1, M:=2, adducts:=59.013851, mode:="-")}, ' 2M + 59.013851	    1-	2.00	 59.013851	1765.675631	1693.626149
                 {"3M-H", New MzCalculator("[3M-H]-", charge:=-1, M:=3, adducts:=-1.007276, mode:="-")},         ' 3M - 1.007276	    1-	3.00	  1.007276	2560.999946	2627.952724
                 {"M+CH3COO", New MzCalculator("[M+CH3COO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COO"), mode:="-")},
-                {"M-CH3", New MzCalculator("[M-CH3]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3"), mode:="-")}
+                {"M-CH3", New MzCalculator("[M-CH3]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3"), mode:="-")},
+                {"M+HCOO", New MzCalculator("[M+HCOO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("HCOO"), mode:="-")}   ' 甲酸根
             }
         End Function
     End Module

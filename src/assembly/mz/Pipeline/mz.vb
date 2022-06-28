@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca48b9eb49e9e984616afb002c43f32b, src\assembly\mz\Pipeline\mz.vb"
+﻿#Region "Microsoft.VisualBasic::655ae428c5e8727093b3f2bc3e54667b, mzkit\src\assembly\mz\Pipeline\mz.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 289
+    '    Code Lines: 151
+    ' Comment Lines: 103
+    '   Blank Lines: 35
+    '     File Size: 9.70 KB
+
 
     ' Class mz
     ' 

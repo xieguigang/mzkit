@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54d97d4a65d5ebbbac81e33c6481c412, src\metadb\PubChem.MySql\StorageProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::5b6240ac45bc668d99598fd620fe00a2, mzkit\src\metadb\PubChem.MySql\StorageProcedure.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 137
+    ' Comment Lines: 8
+    '   Blank Lines: 15
+    '     File Size: 6.94 KB
+
 
     ' Module StorageProcedure
     ' 

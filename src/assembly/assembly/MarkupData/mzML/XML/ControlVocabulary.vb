@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66207bf8066b3ad577eae29d6e6ead3f, src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::66207bf8066b3ad577eae29d6e6ead3f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 53
+    ' Comment Lines: 7
+    '   Blank Lines: 18
+    '     File Size: 2.88 KB
+
 
     '     Class cvList
     ' 

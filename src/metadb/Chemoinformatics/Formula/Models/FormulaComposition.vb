@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b54d61dcfcc7314efdfdb1cff8c422b8, src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::abc3cf27d98838f8ac00d8eb0dc8ef2e, mzkit\src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 47
+    ' Comment Lines: 13
+    '   Blank Lines: 10
+    '     File Size: 2.44 KB
+
+
     '     Class FormulaComposition
     ' 
-    '         Properties: charge, HCRatio, ppm
+    '         Properties: charge, HCRatio, massdiff, ppm
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AppendElement, GetCopy, Ratio
@@ -48,10 +58,14 @@
 
 Namespace Formula
 
+    ''' <summary>
+    ''' the formula search result
+    ''' </summary>
     Public Class FormulaComposition : Inherits Formula
 
         Public Property charge As Double
         Public Property ppm As Double
+        Public Property massdiff As Double
 
         ''' <summary>
         ''' Hydrogen/Carbon element ratio

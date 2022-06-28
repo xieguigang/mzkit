@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d361a18407a57a4baa85cd9d51419af9, src\metadb\Massbank\Public\TMIC\HMDB\Spectra\EIMS.vb"
+﻿#Region "Microsoft.VisualBasic::27fbfd3b025d1154f4f2e8a9f04b41f2, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\EIMS.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 479.00 B
+
 
     '     Class EIMS
     ' 

@@ -10,7 +10,7 @@
     <PackageIconUrl />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <OutputType>Exe</OutputType>
-    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.IsotopicTest</StartupObject>
+    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.nameTest</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 

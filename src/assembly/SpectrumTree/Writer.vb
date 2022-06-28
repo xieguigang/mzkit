@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9916938de762729fb28477bc3dfc87b, src\assembly\SpectrumTree\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::f9916938de762729fb28477bc3dfc87b, mzkit\src\assembly\SpectrumTree\Writer.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 129
+    '    Code Lines: 87
+    ' Comment Lines: 17
+    '   Blank Lines: 25
+    '     File Size: 4.55 KB
+
 
     ' Class Writer
     ' 

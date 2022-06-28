@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1fdb26135e6a12a797fd350b5a9f725, src\metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::abde4f5d8b1a36d4eadc699cc78c2acf, mzkit\src\metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 56
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 2.96 KB
+
 
     ' Class PrecursorIonSearch
     ' 
@@ -85,7 +95,10 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
     ''' <param name="charge">abs charge value</param>
     ''' <param name="ionMode">[1, -1]</param>
     ''' <returns></returns>
-    Public Iterator Function SearchByPrecursorMz(mz As Double, charge As Double, ionMode As Integer, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of PrecursorIonComposition)
+    Public Iterator Function SearchByPrecursorMz(mz As Double,
+                                                 charge As Double,
+                                                 ionMode As Integer,
+                                                 Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of PrecursorIonComposition)
         Dim parents As MzCalculator()
 
         If cancel Is Nothing Then

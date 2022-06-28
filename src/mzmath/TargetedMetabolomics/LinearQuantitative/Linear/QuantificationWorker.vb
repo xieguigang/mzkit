@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b89a8baa21296e408e3b38b6f0283354, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
+﻿#Region "Microsoft.VisualBasic::b89a8baa21296e408e3b38b6f0283354, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 129
+    ' Comment Lines: 45
+    '   Blank Lines: 23
+    '     File Size: 7.87 KB
+
 
     '     Module QuantificationWorker
     ' 

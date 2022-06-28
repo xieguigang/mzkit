@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba9723c2ee82d04abb608765056d3bc4, src\metadb\FooDB\FooDB\mysql\pathways.vb"
+﻿#Region "Microsoft.VisualBasic::ba9723c2ee82d04abb608765056d3bc4, mzkit\src\metadb\FooDB\FooDB\mysql\pathways.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 82
+    ' Comment Lines: 59
+    '   Blank Lines: 22
+    '     File Size: 7.63 KB
+
 
     ' Class pathways
     ' 

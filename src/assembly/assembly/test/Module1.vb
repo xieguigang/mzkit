@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557738fa32b1bf0bf29513935142855d, src\assembly\assembly\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::4c79c05a1279b0fb9a8f4136d1cb915c, mzkit\src\assembly\assembly\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 16
+    ' Comment Lines: 27
+    '   Blank Lines: 21
+    '     File Size: 2.38 KB
+
 
     ' Module Module1
     ' 

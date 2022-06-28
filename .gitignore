@@ -7,7 +7,7 @@
 *.userosscache
 *.sln.docstates
 .RData
-
+mzkit_old
 
 Rscript/Library/mzkit_app/assembly
 

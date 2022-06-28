@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9007fe1596949edad562a9f230ffbfb6, src\mzmath\ms2_simulator\FragmentSamples.vb"
+﻿#Region "Microsoft.VisualBasic::2255a5773c85b274cf5238bf66ecd7f3, mzkit\src\mzmath\ms2_simulator\FragmentSamples.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 69
+    ' Comment Lines: 14
+    '   Blank Lines: 11
+    '     File Size: 3.30 KB
+
 
     ' Module FragmentSamples
     ' 

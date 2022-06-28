@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d36d5c3b3c5cd7dbe8fdc8aba3742f, src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3e2345d86a4d8c67807284e06f169b2b, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.45 KB
+
 
     '     Module RepositoryExtensions
     ' 

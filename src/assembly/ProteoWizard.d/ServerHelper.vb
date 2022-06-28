@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8acd45f9178da9f31ecdea9de3a19bc9, src\assembly\ProteoWizard.d\ServerHelper.vb"
+﻿#Region "Microsoft.VisualBasic::fc64bf3404fa9d3d40f4860e6faabb10, mzkit\src\assembly\ProteoWizard.d\ServerHelper.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 16
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 684.00 B
+
 
     ' Module ServerHelper
     ' 

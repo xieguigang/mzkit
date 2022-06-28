@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2eeafba5ad33dbd7084d7327d5038f8, src\visualize\MsImaging\Plot\MSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5bf070eb3f02971f5f7805be1cb42dc5, mzkit\src\visualize\MsImaging\Plot\MSIPlot.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 97
+    ' Comment Lines: 1
+    '   Blank Lines: 16
+    '     File Size: 5.03 KB
+
+
     ' Class MSIPlot
     ' 
     '     Constructor: (+1 Overloads) Sub New
@@ -49,7 +59,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -58,6 +68,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -67,12 +78,14 @@ Public Class MSIPlot : Inherits Plot
     ReadOnly pixelScale As Size
     ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
+    ReadOnly driver As Drivers = Drivers.Default
 
     Public Sub New(ion As SingleIonLayer,
                    pixelScale As Size,
                    cutoff As DoubleRange,
                    pixelDrawer As Boolean,
-                   theme As Theme)
+                   theme As Theme,
+                   driver As Drivers)
 
         Call MyBase.New(theme)
 
@@ -80,6 +93,7 @@ Public Class MSIPlot : Inherits Plot
         Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
+        Me.driver = driver
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -101,19 +115,20 @@ Public Class MSIPlot : Inherits Plot
         Dim Xtick As Double() = New DoubleRange({0, ion.DimensionSize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, ion.DimensionSize.Height}).CreateAxisTicks
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim scaleX = d3js.scale.linear.domain(Xtick).range(New Double() {rect.Left, rect.Right})
-        Dim scaleY = d3js.scale.linear.domain(Ytick).range(New Double() {rect.Top, rect.Bottom})
+        Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(New Double() {rect.Left, rect.Right})
+        Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
             .AxisTicks = (Xtick.AsVector, Ytick.AsVector),
             .region = rect,
             .X = scaleX,
             .Y = scaleY
         }
-        Dim MSI As Image
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
-
-        MSI = engine.RenderPixels(ion.MSILayer, ion.DimensionSize, Nothing, cutoff:=cutoff, colorSet:=theme.colorSet)
-        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        Dim engine As New RectangleRender(Drivers.Default, heatmapRender:=False)
+        Dim colorScale = Designer.GetColors(theme.colorSet, 25).Select(Function(c) New SolidBrush(c)).ToArray
+        Dim scaleSize As New Size With {
+            .Width = rect.Width / ion.DimensionSize.Width,
+            .Height = rect.Height / ion.DimensionSize.Height
+        }
 
         Call g.DrawAxis(canvas, scale,
                         showGrid:=True,
@@ -122,19 +137,21 @@ Public Class MSIPlot : Inherits Plot
                         ylabel:=ylabel,
                         XtickFormat:="F0",
                         YtickFormat:="F0",
-                        htmlLabel:=False)
+                        htmlLabel:=False,
+                        driver:=driver)
 
-        Call g.DrawImage(MSI, rect)
+        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, scaleSize, colorScale, cutoff:=cutoff)
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-        Dim labelSize As SizeF = g.MeasureString(ion.IonMz.ToString("F4"), labelFont)
+        Dim label As String = ion.IonMz
+        Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
         Dim mzLegend As New LegendObject With {
             .color = "black",
             .fontstyle = theme.legendLabelCSS,
             .style = LegendStyles.Square,
-            .title = ion.IonMz.ToString("F4")
+            .title = label
         }
 
         Call Legend.DrawLegends(g, pos, {mzLegend}, $"{labelSize.Height},{labelSize.Height}")

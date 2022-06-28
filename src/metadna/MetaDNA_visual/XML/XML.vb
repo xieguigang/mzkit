@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7d0e9dba3a980ce8ee6bd3ce974ff6e, src\metadna\MetaDNA_visual\XML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::78ba78b58191f49b5c2af850b114a65b, mzkit\src\metadna\MetaDNA_visual\XML\XML.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 18
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 732.00 B
+
 
     ' Class XML
     ' 

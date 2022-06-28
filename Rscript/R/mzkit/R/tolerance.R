@@ -98,7 +98,7 @@ assert.ppm <- function(ppm = 20) {
 #'                is \code{TRUE}, and \code{ppm} method is \code{FALSE}.
 #'    }
 #'
-tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
+tolerance = function(threshold = 0.3, method = c("da", "ppm"), legacy = TRUE) {
   if (method[1] == "da") {
     assert = assert.deltaMass(threshold);
     is.low.resolution = TRUE;
@@ -120,7 +120,8 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
   desc = "%s m/z tolerance with threshold %s(%s).";
   desc = sprintf(desc, resolution, threshold, method[1]);
 
-  new("mzdiff",
+	if (legacy) {
+	  list(
     threshold         = threshold,
     method            = method[1],
     assert            = assert,
@@ -128,4 +129,14 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
     is.low.resolution = is.low.resolution,
     toString          = desc
   );
+	} else {
+	  new("mzdiff",
+    threshold         = threshold,
+    method            = method[1],
+    assert            = assert,
+    massErr           = massErr,
+    is.low.resolution = is.low.resolution,
+    toString          = desc
+  );
+	}
 }

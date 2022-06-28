@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b646dd6f20e5bb7762618ffbe1e5af99, src\mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a507d7951623a4f0e84e0fd4190c891f, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 134
+    ' Comment Lines: 21
+    '   Blank Lines: 27
+    '     File Size: 7.00 KB
+
 
     '     Module Parser
     ' 
@@ -95,7 +105,10 @@ Namespace Ms1.PrecursorType
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
+        Public Function ParseMzCalculator(precursor_type$,
+                                          Optional ionMode$ = "+",
+                                          Optional skipEvalAdducts As Boolean = False) As MzCalculator
+
             Static cache As New Dictionary(Of String, Dictionary(Of String, MzCalculator)) From {
                 {"+", New Dictionary(Of String, MzCalculator)},
                 {"-", New Dictionary(Of String, MzCalculator)}
@@ -111,7 +124,10 @@ Namespace Ms1.PrecursorType
         End Function
 
         <Extension>
-        Private Function ParseMzCalculatorInternal(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
+        Private Function ParseMzCalculatorInternal(precursor_type$,
+                                                   Optional ionMode$ = "+",
+                                                   Optional skipEvalAdducts As Boolean = False) As MzCalculator
+
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge

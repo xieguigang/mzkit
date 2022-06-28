@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89bc286eb820109ec11a19cf5323ea19, src\assembly\ThermoRawFileReader\DataObjects\TuneMethod.vb"
+﻿#Region "Microsoft.VisualBasic::89bc286eb820109ec11a19cf5323ea19, mzkit\src\assembly\ThermoRawFileReader\DataObjects\TuneMethod.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 6
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 347.00 B
+
 
     '     Class TuneMethod
     ' 

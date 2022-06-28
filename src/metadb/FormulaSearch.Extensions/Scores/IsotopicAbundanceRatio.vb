@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f98ef6dbf960a0dfb66613062d7a82e9, src\metadb\FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb"
+﻿#Region "Microsoft.VisualBasic::ad01bd10e428b55975b57701ab63cece, mzkit\src\metadb\FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 46.00 B
+
 
     ' Class IsotopicAbundanceRatio
     ' 

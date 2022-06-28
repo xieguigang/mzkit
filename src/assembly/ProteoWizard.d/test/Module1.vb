@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6be537031ea316a6b840f04cea5c25e5, src\assembly\ProteoWizard.d\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::dab58171962f2351b5efb9351ad2b6dd, mzkit\src\assembly\ProteoWizard.d\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 832.00 B
+
 
     ' Module Module1
     ' 

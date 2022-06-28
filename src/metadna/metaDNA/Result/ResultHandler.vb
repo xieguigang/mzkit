@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0811e6c76643b2ea3389a3d88c35b0ca, src\metadna\metaDNA\Result\ResultHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c2d2528beaa526fbba3b5735debee761, mzkit\src\metadna\metaDNA\Result\ResultHandler.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 81
+    ' Comment Lines: 7
+    '   Blank Lines: 12
+    '     File Size: 4.94 KB
+
+
     ' Module ResultHandler
     ' 
     '     Function: ExportTable, FeatureUniques, GetUniques
@@ -68,7 +78,7 @@ Module ResultHandler
         Dim precursorTypes As Dictionary(Of String, MzCalculator) = kegg.Calculators
 
         For Each infer As CandidateInfer In candidates
-            Dim compound As Compound = kegg.GetCompound(infer.kegg_id)
+            Dim compound As Compound = kegg.GetCompound(infer.kegg_id).KEGG
 
             For Each type As Candidate In infer.infers
                 Dim partner As String = type.infer.reference.id.Split(":"c).Last.Trim

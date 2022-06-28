@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9441b744362afcfc85bcbc047c0ffe4a, src\metadb\MoNA\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::9441b744362afcfc85bcbc047c0ffe4a, mzkit\src\metadb\MoNA\MetaData.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 213
+    '    Code Lines: 182
+    ' Comment Lines: 11
+    '   Blank Lines: 20
+    '     File Size: 7.93 KB
+
 
     ' Class MetaData
     ' 

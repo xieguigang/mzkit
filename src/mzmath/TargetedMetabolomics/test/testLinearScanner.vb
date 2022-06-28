@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef4ed80d69fe8ea9029a54146d29946b, src\mzmath\TargetedMetabolomics\test\testLinearScanner.vb"
+﻿#Region "Microsoft.VisualBasic::374e4589842079178ad89ace902c8a15, mzkit\src\mzmath\TargetedMetabolomics\test\testLinearScanner.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.49 KB
+
 
     ' Module testLinearScanner
     ' 

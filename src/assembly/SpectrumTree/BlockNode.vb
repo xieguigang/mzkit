@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f0aba52a5a2110af929e7a022cebe1, src\assembly\SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::f31ce37d9ff492e909e530f0731d80ca, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 747.00 B
+
 
     ' Class BlockNode
     ' 

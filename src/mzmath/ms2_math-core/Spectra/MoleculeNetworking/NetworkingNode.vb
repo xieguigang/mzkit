@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac0b7704ee5b64793ec64eefa27f7b1d, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
+﻿#Region "Microsoft.VisualBasic::9cfe04024ddaa9d4e440c97820bf17c2, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 84
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 4.04 KB
+
+
     '     Class NetworkingNode
     ' 
     '         Properties: members, mz, referenceId, representation
@@ -51,7 +61,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Spectra.MoleculeNetworking
 
@@ -117,8 +126,8 @@ Namespace Spectra.MoleculeNetworking
                 .IteratesALL _
                 .GroupBy(Function(a) a.mz, tolerance) _
                 .ToArray
-            Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
-            Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
+            ' Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
+            ' Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
             Dim matrix As ms2() = mz _
                 .Select(Function(a)
                             Return New ms2 With {
@@ -129,16 +138,16 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray _
                 .Centroid(tolerance, cutoff) _
                 .ToArray
-            Dim products As String = matrix _
+            Dim products As ms2() = matrix _
                 .OrderByDescending(Function(a) a.intensity) _
-                .Take(3) _
-                .Select(Function(a) BitConverter.GetBytes(a.mz)) _
-                .IteratesALL _
-                .ToBase64String _
-                .MD5 _
-                .Substring(0, 6) _
-                .ToUpper
-            Dim uid As String = $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
+                .Take(3).ToArray
+            '.Select(Function(a) BitConverter.GetBytes(a.mz)) _
+            '.IteratesALL _
+            '.ToBase64String _
+            '.MD5 _
+            '.Substring(0, 6) _
+            '.ToUpper
+            Dim uid As String = products.Select(Function(i) $"{i.mz.ToString("F3")}:{(i.intensity * 100).ToString("F0")}").JoinBy("/") ' $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
             Return New LibraryMatrix With {
                 .centroid = True,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::759e662ed1ef32dbec18532c156c4e83, src\metadb\PubChem.MySql\mysql\structure.vb"
+﻿#Region "Microsoft.VisualBasic::97df55681d799cfd37b37b6878e6a1d8, mzkit\src\metadb\PubChem.MySql\mysql\structure.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 82
+    ' Comment Lines: 47
+    '   Blank Lines: 22
+    '     File Size: 6.26 KB
+
 
     ' Class [structure]
     ' 

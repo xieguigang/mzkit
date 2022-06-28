@@ -1,0 +1,16 @@
+x1 <- c(rep(0, 5), 1,1,1, 20, 40, 20, 1, 1, 1, rep(0, 5))
+x2 <- c(rep(0, 6), 1,1,1, 20, 40, 20, 1, 1, 1, rep(0, 4))
+time <- 1:length(x1)
+library(ptw)
+w1b <- ptw(ref = x1, samp = x2, mode = "backward")
+x2wb <- predict(w1b, x2, what = "response")
+stopifnot(sum(abs(x2wb - w1b$warped.sample), na.rm = TRUE) < 1E-8)
+t2wb <- as.numeric(predict(w1b, time, what = "time"))
+stopifnot(sum(abs(tail(t2wb, -1) - head(time, -1)), na.rm = TRUE) < 0.05)
+
+w1f <- ptw(ref = x1, samp = x2, mode = "forward")
+x2wf <- predict(w1f, x2, what = "response")
+stopifnot(sum(abs(x2wf - w1f$warped.sample), na.rm = TRUE) < 1E-8)
+t2wf <- as.numeric(predict(w1f, time, what = "time"))
+stopifnot(sum(abs(tail(t2wf, -1) - head(time, -1)), na.rm = TRUE) < 0.05)
+

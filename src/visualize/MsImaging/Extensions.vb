@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9e555522d650b96fe5c2e93d0320c36, src\visualize\MsImaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::30a59441dd3db1873b6969bb7a79409b, mzkit\src\visualize\MsImaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 214
+    '    Code Lines: 168
+    ' Comment Lines: 21
+    '   Blank Lines: 25
+    '     File Size: 7.78 KB
+
+
     ' Module Extensions
     ' 
-    '     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, ScanMeltdown
+    '     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, Reset, ScanMeltdown
+    '               Shape
     ' 
     ' /********************************************************************************/
 
@@ -47,12 +58,11 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -60,6 +70,72 @@ Imports Point = System.Drawing.Point
 
 <HideModuleName>
 Public Module Extensions
+
+    ''' <summary>
+    ''' reset sample position
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Reset(raw As mzPack) As mzPack
+        Dim rect As Rectangle = raw.Shape
+        Dim scans As New List(Of ScanMS1)
+        Dim pos As Point
+        Dim meta As Dictionary(Of String, String)
+
+        For Each scan As ScanMS1 In raw.MS
+            pos = scan.GetMSIPixel
+            pos = New Point With {
+                .X = pos.X - rect.Left,
+                .Y = pos.Y - rect.Top
+            }
+            meta = New Dictionary(Of String, String)(scan.meta)
+            meta("x") = pos.X.ToString
+            meta("y") = pos.Y.ToString
+
+            scans += New ScanMS1 With {
+                .BPC = scan.BPC,
+                .into = scan.into,
+                .mz = scan.mz,
+                .products = scan.products,
+                .rt = scan.rt,
+                .TIC = scan.TIC,
+                .scan_id = scan.scan_id,
+                .meta = meta
+            }
+        Next
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = raw.Chromatogram,
+            .MS = scans.ToArray,
+            .Scanners = raw.Scanners,
+            .source = $"reset({raw.source})",
+            .Thumbnail = Nothing
+        }
+    End Function
+
+    ''' <summary>
+    ''' get pixels boundary of the MSImaging
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Shape(raw As mzPack) As Rectangle
+        Dim allPixels As Point() = raw.MS.Select(Function(scan) scan.GetMSIPixel).ToArray
+        Dim top = Aggregate pt As Point In allPixels Into Min(pt.Y)
+        Dim left = Aggregate pt As Point In allPixels Into Min(pt.X)
+        Dim right = Aggregate pt As Point In allPixels Into Max(pt.X)
+        Dim bottom = Aggregate pt As Point In allPixels Into Max(pt.Y)
+        Dim rect As New Rectangle With {
+            .X = left,
+            .Y = top,
+            .Width = right - left,
+            .Height = bottom - top
+        }
+
+        Return rect
+    End Function
 
     ''' <summary>
     ''' parse pixel mapping from 

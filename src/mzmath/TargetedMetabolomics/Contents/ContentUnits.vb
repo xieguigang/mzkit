@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bee199acd85b896b745a20ff4ddde8d, src\mzmath\TargetedMetabolomics\Contents\ContentUnits.vb"
+﻿#Region "Microsoft.VisualBasic::6bee199acd85b896b745a20ff4ddde8d, mzkit\src\mzmath\TargetedMetabolomics\Contents\ContentUnits.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 252.00 B
+
 
     '     Enum ContentUnits
     ' 

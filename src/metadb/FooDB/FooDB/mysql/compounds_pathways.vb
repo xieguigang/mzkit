@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::512edcc1b20ecbb90baa4dc116b47df1, src\metadb\FooDB\FooDB\mysql\compounds_pathways.vb"
+﻿#Region "Microsoft.VisualBasic::512edcc1b20ecbb90baa4dc116b47df1, mzkit\src\metadb\FooDB\FooDB\mysql\compounds_pathways.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 88
+    ' Comment Lines: 64
+    '   Blank Lines: 22
+    '     File Size: 8.97 KB
+
 
     ' Class compounds_pathways
     ' 

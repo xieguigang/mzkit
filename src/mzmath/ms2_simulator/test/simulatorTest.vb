@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb6fbad43e7262f118836c2637c15c1, src\mzmath\ms2_simulator\test\simulatorTest.vb"
+﻿#Region "Microsoft.VisualBasic::ea00c8163af7504ef391fd285310b3a0, mzkit\src\mzmath\ms2_simulator\test\simulatorTest.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.02 KB
+
 
     ' Module simulatorTest
     ' 

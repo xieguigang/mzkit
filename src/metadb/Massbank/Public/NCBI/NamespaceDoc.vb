@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c9d58a5f1ed23d95f473a8e7315b62, src\metadb\Massbank\Public\NCBI\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::e5a30941f57810a67cb881f93d8c62f7, mzkit\src\metadb\Massbank\Public\NCBI\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 184.00 B
+
 
     '     Module NamespaceDoc
     ' 

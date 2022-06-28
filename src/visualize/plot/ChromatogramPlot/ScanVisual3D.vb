@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6309d51625e1474356280576fac9e36, src\visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
+﻿#Region "Microsoft.VisualBasic::e6309d51625e1474356280576fac9e36, mzkit\src\visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 252
+    '    Code Lines: 182
+    ' Comment Lines: 32
+    '   Blank Lines: 38
+    '     File Size: 9.76 KB
+
 
     ' Class ScanVisual3D
     ' 
@@ -260,7 +270,8 @@ Public Class ScanVisual3D : Inherits Plot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,
                 deln:=10,
-                theme:=theme
+                theme:=theme,
+                bspline:=0
             ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel,

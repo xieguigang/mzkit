@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0b6488c49177cd439a4400d94285c1c, src\visualize\MsImaging\PixelScan\InMemoryVectorPixel.vb"
+﻿#Region "Microsoft.VisualBasic::878c530ade724008749a216c9ea6ce8e, mzkit\src\visualize\MsImaging\PixelScan\InMemoryVectorPixel.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 122
+    ' Comment Lines: 4
+    '   Blank Lines: 32
+    '     File Size: 5.49 KB
+
+
     '     Class InMemoryVectorPixel
     ' 
-    '         Properties: intensity, mz, X, Y
+    '         Properties: intensity, mz, scanId, X, Y
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) GetBuffer, GetMsPipe, GetMzIonIntensity, HasAnyMzIon, Parse
     '                   ParseVector
@@ -51,6 +61,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -66,7 +77,17 @@ Namespace Pixel
         Public ReadOnly Property mz As Double()
         Public ReadOnly Property intensity As Double()
 
-        Sub New(x As Integer, y As Integer, mz As Double(), into As Double())
+        Public Overrides ReadOnly Property scanId As String
+
+        <DebuggerStepThrough>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(x As Integer, y As Integer, mz As Double(), into As Double(), Optional scanId As String = "unknown scan")
+            Call Me.New(scanId, x, y, mz, into)
+        End Sub
+
+        <DebuggerStepThrough>
+        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double())
+            Me.scanId = scanId
             Me.X = x
             Me.Y = y
             Me.mz = mz
@@ -78,12 +99,13 @@ Namespace Pixel
         ''' </summary>
         ''' <param name="scan"></param>
         Sub New(scan As ScanMS1)
-            Call Me.New(scan.meta!x, scan.meta!y, scan.mz, scan.into)
+            Call Me.New(scan.scan_id, scan.meta!x, scan.meta!y, scan.mz, scan.into)
         End Sub
 
         Sub New(pixel As PixelScan)
             X = pixel.X
             Y = pixel.Y
+            scanId = pixel.scanId
 
             If TypeOf pixel Is mzPackPixel Then
                 Dim raw As mzPackPixel = DirectCast(pixel, mzPackPixel)
@@ -106,6 +128,7 @@ Namespace Pixel
 
         Public Function GetBuffer() As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
+                file.Write(scanId, BinaryStringFormat.ZeroTerminated)
                 file.Write(X)
                 file.Write(Y)
                 file.Write(mz.Length)
@@ -123,13 +146,14 @@ Namespace Pixel
             End If
 
             Using file As New BinaryDataReader(New MemoryStream(buffer))
+                Dim scanId As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
                 Dim x As Integer = file.ReadInt32
                 Dim y As Integer = file.ReadInt32
                 Dim size As Integer = file.ReadInt32
                 Dim mz As Double() = file.ReadDoubles(size)
                 Dim into As Double() = file.ReadDoubles(size)
 
-                Return New InMemoryVectorPixel(x, y, mz, into)
+                Return New InMemoryVectorPixel(scanId, x, y, mz, into)
             End Using
         End Function
 
@@ -180,16 +204,8 @@ Namespace Pixel
             Next
         End Function
 
-        Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
-            Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray
-
-            If allMatched.Length = 0 Then
-                Return 0
-            Else
-                Return Aggregate mzi As ms2
-                       In allMatched
-                       Into Max(mzi.intensity)
-            End If
+        Public Overrides Function GetMzIonIntensity() As Double()
+            Return intensity
         End Function
     End Class
 

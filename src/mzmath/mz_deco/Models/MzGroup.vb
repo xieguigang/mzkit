@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7755755ecd70ff9dd096754324b7fc87, src\mzmath\mz_deco\Models\MzGroup.vb"
+﻿#Region "Microsoft.VisualBasic::7755755ecd70ff9dd096754324b7fc87, mzkit\src\mzmath\mz_deco\Models\MzGroup.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 185.00 B
+
 
     ' Class MzGroup
     ' 

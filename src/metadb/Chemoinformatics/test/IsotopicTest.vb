@@ -61,9 +61,9 @@ Public Module IsotopicTest
 
     Sub Main()
         Dim formula = FormulaScanner.ScanFormula("C10H16N5O13P3")
-        Dim dist = IsotopicPatterns.IsotopeDistribution.GenerateDistribution(formula)
+        Dim dist = IsotopicPatterns.IsotopeDistribution.Distribution(formula)
 
-        For Each item In dist.data
+        For Each item In dist
             Call Console.WriteLine(item.ToString)
         Next
 

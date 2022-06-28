@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29711b7508c16bcea12700ddb56c7a96, Rscript\Library\mzkit\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::98d78a09fd483712a214e9ddffe6fff8, mzkit\Rscript\Library\mzkit\zzz.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 52
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.76 KB
+
+
     ' Class zzz
     ' 
     '     Function: printLib, printMSScan
@@ -47,7 +57,10 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
+
+<Assembly: RPackageModule>
 
 Public Class zzz
 
@@ -56,6 +69,7 @@ Public Class zzz
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
 
+        Call MetaDbXref.Main()
         Call data.Main()
     End Sub
 

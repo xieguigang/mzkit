@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c473e387f0f2c1916a63c56455f6a3e1, src\metadb\FooDB\FooDB\mysql\compound_external_descriptors.vb"
+﻿#Region "Microsoft.VisualBasic::c473e387f0f2c1916a63c56455f6a3e1, mzkit\src\metadb\FooDB\FooDB\mysql\compound_external_descriptors.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 88
+    ' Comment Lines: 63
+    '   Blank Lines: 22
+    '     File Size: 9.49 KB
+
 
     ' Class compound_external_descriptors
     ' 

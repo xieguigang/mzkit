@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c31510d02d15e62f71baed7391b58e2, src\assembly\assembly\ASCII\MSP\MspParser.vb"
+﻿#Region "Microsoft.VisualBasic::6800f6461e89fa7b72c7a53506f7dc3b, mzkit\src\assembly\assembly\ASCII\MSP\MspParser.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 100
+    ' Comment Lines: 14
+    '   Blank Lines: 17
+    '     File Size: 5.19 KB
+
 
     '     Module MspParser
     ' 

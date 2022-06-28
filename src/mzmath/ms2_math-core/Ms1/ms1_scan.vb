@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e97d6823d3d3bc57d4b0f3b10dc79eb, src\mzmath\ms2_math-core\Ms1\ms1_scan.vb"
+﻿#Region "Microsoft.VisualBasic::5e97d6823d3d3bc57d4b0f3b10dc79eb, mzkit\src\mzmath\ms2_math-core\Ms1\ms1_scan.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 35
+    ' Comment Lines: 14
+    '   Blank Lines: 6
+    '     File Size: 2.31 KB
+
 
     ' Class ms1_scan
     ' 

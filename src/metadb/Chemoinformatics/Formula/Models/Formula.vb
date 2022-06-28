@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::742167e208781834500034f2049bfd2b, src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::742167e208781834500034f2049bfd2b, mzkit\src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 121
+    ' Comment Lines: 25
+    '   Blank Lines: 27
+    '     File Size: 6.41 KB
+
+
     '     Class Formula
     ' 
     '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
@@ -54,7 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Formula
 
     <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
-    Public Class Formula
+    Public Class Formula : Implements IExactMassProvider
 
         ''' <summary>
         ''' atom_count_tuples
@@ -88,12 +98,13 @@ Namespace Formula
         ''' sum all isotopic mass of the atom elements. 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ExactMass As Double
+        Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
             Get
                 Try
                     Return Aggregate element
                        In CountsByElement
-                       Let mass As Double = AllAtomElements(element.Key).isotopic * element.Value
+                       Let isotopic As Double = AllAtomElements(element.Key).isotopic
+                       Let mass As Double = isotopic * element.Value
                        Into Sum(mass)
                 Catch ex As Exception
                     Call $"element key: '{CountsByElement.Keys.Where(Function(e) Not AllAtomElements.ContainsKey(e)).First}' is not exists in hash table!".Warning

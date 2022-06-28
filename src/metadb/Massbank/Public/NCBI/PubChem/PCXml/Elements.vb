@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc4ebbceb464de7ba19edfbaa97da4c9, src\metadb\Massbank\Public\NCBI\PubChem\PCXml\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::f2e470edf2945903ad956d8c7a3cdc4f, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\PCXml\Elements.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.07 KB
+
 
     '     Class Count
     ' 

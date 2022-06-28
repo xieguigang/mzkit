@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23980b94eb626d34d7ca50b947e2e23b, src\visualize\MsImaging\Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::d1767074a04b71a39868f43c8e311d7a, mzkit\src\visualize\MsImaging\Drawer.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 305
+    '    Code Lines: 205
+    ' Comment Lines: 55
+    '   Blank Lines: 45
+    '     File Size: 12.83 KB
+
+
     ' Class Drawer
     ' 
     '     Properties: dimension, pixelReader
@@ -56,11 +66,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Imaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -136,10 +147,11 @@ Public Class Drawer : Implements IDisposable
                                          Optional colorSet$ = "Jet",
                                          Optional pixelSize$ = "3,3",
                                          Optional logE As Boolean = True,
-                                         Optional pixelDrawer As Boolean = True) As Bitmap
+                                         Optional pixelDrawer As Boolean = True,
+                                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim layer As PixelScanIntensity() = pixelReader.GetSummary.GetLayer(summary).ToArray
-        Dim render As Bitmap = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer)
+        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer, driver:=driver)
 
         Return render
     End Function
@@ -148,8 +160,9 @@ Public Class Drawer : Implements IDisposable
                                               Optional cutoff As DoubleRange = Nothing,
                                               Optional colorSet$ = "Jet",
                                               Optional pixelSize$ = "3,3",
-                                              Optional logE As Boolean = True,
-                                              Optional pixelDrawer As Boolean = True) As Bitmap
+                                              Optional pixelDrawer As Boolean = True,
+                                              Optional mapLevels As Integer = 25,
+                                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim pixels As PixelData() = layer _
             .Select(Function(p)
@@ -160,7 +173,7 @@ Public Class Drawer : Implements IDisposable
                         }
                     End Function) _
             .ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(driver, heatmapRender:=False))
 
         Return engine.RenderPixels(
             pixels:=pixels,
@@ -169,7 +182,7 @@ Public Class Drawer : Implements IDisposable
             colorSet:=colorSet,
             defaultFill:="black",
             cutoff:=cutoff,
-            logE:=logE
+            mapLevels:=mapLevels
         )
     End Function
 
@@ -221,7 +234,9 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
-                              Optional pixelDrawer As Boolean = True) As Bitmap
+                              Optional pixelDrawer As Boolean = True,
+                              Optional background As String = NameOf(Color.Transparent),
+                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
@@ -229,11 +244,20 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As New RectangleRender(driver, heatmapRender:=False)
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
-        Return engine.RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, scale:=scale, cutoff:=cutoff)
+        Return engine.RenderPixels(
+            pixels:=pixels,
+            dimension:=dimension,
+            dimSize:=dimSize,
+            colorSet:=colorSet,
+            mapLevels:=mapLevels,
+            scale:=scale,
+            cutoff:=cutoff,
+            defaultFill:=background
+        )
     End Function
 
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance, cut As DoubleRange) As PixelData()
@@ -283,7 +307,9 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional cutoff As DoubleRange = Nothing,
-                              Optional pixelDrawer As Boolean = True) As Bitmap
+                              Optional pixelDrawer As Boolean = True,
+                              Optional background As String = NameOf(Color.Transparent),
+                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
@@ -297,11 +323,19 @@ Public Class Drawer : Implements IDisposable
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender, New RectangleRender)
+        Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
-        Return engine.RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, scale:=scale)
+        Return engine.RenderPixels(
+            pixels:=matrix,
+            dimension:=dimension,
+            dimSize:=dimSize,
+            colorSet:=colorSet,
+            mapLevels:=mapLevels,
+            scale:=scale,
+            defaultFill:=background
+        )
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)

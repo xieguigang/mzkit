@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::586680601360c50685620c6c990c82c9, src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::63a2b588503664b1cb066fd09b7e4ea9, mzkit\src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 54
+    ' Comment Lines: 23
+    '   Blank Lines: 10
+    '     File Size: 3.29 KB
+
+
     ' Module Ms1FeatureExtensions
     ' 
-    '     Function: peakGroup, SequenceOrder
+    '     Function: MzWindow, peakGroup, SequenceOrder
     ' 
     ' /********************************************************************************/
 

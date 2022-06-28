@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b311214792a54c347589c8b9e3ea993b, src\metadb\Chemoinformatics\test\PeakAnnotations.vb"
+﻿#Region "Microsoft.VisualBasic::b311214792a54c347589c8b9e3ea993b, mzkit\src\metadb\Chemoinformatics\test\PeakAnnotations.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 0
+    ' Comment Lines: 67
+    '   Blank Lines: 14
+    '     File Size: 2.87 KB
+
 
     ' 
     ' /********************************************************************************/

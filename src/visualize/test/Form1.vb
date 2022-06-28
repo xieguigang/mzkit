@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a8b462dc6db6f358727d77508101f1e, src\visualize\test\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::9a8b462dc6db6f358727d77508101f1e, mzkit\src\visualize\test\Form1.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 21
+    ' Comment Lines: 12
+    '   Blank Lines: 8
+    '     File Size: 1.44 KB
+
 
     ' Class Form1
     ' 

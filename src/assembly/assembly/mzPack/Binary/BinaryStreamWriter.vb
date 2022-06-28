@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::363d269c4d29147bcfdc0aa0c5ddb660, src\assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::363d269c4d29147bcfdc0aa0c5ddb660, mzkit\src\assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 217
+    '    Code Lines: 141
+    ' Comment Lines: 34
+    '   Blank Lines: 42
+    '     File Size: 7.53 KB
+
 
     '     Class BinaryStreamWriter
     ' 

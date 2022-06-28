@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ea873ef29b9d9f1dad71828a807609c, src\mzmath\ms2_simulator\GA\GA.vb"
+﻿#Region "Microsoft.VisualBasic::ef0016cec4afda4d2567fb5abe2c65da, mzkit\src\mzmath\ms2_simulator\GA\GA.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 2
+    ' Comment Lines: 3
+    '   Blank Lines: 2
+    '     File Size: 108.00 B
+
 
     ' Module GA
     ' 

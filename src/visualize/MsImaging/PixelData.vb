@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01c7470588a8d40515c4c793d5470f21, src\visualize\MsImaging\PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::09e1f2c86f808b0e0155b6ec8d4f4a72, mzkit\src\visualize\MsImaging\PixelData.vb"
 
 ' Author:
 ' 
@@ -34,10 +34,21 @@
 
 ' Summaries:
 
+
+' Code Statistics:
+
+'   Total Lines: 167
+'    Code Lines: 119
+' Comment Lines: 28
+'   Blank Lines: 20
+'     File Size: 6.01 KB
+
+
 ' Class PixelData
 ' 
 '     Properties: intensity, level, mz, x, y
 ' 
+'     Constructor: (+2 Overloads) Sub New
 '     Function: GetBuffer, getIntensityAuto, Parse, ScalePixels, SequenceIndex
 '               ToString
 ' 
@@ -52,18 +63,28 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.IO
+Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 Imports stdNum = System.Math
 
 ''' <summary>
 ''' a pixels point of [x,y,color]
 ''' </summary>
-Public Class PixelData : Implements IMSIPixel, IPoint2D
+Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
-    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X
-    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y
-    Public Property intensity As Double Implements IMSIPixel.intensity
+    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, HeatMapPixel.X
+    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, HeatMapPixel.Y
+    Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
     Public Property level As Double
     Public Property mz As Double
+
+    Sub New()
+    End Sub
+
+    Sub New(x As Integer, y As Integer, into As Double)
+        Me.x = x
+        Me.y = y
+        Me.intensity = intensity
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"
@@ -127,8 +148,14 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D
     ''' intensity range will set to this cutoff range value directlly. otherwise if the max of this range is smaller than 1, 
     ''' then will treated as percentage range. 
     ''' </param>
+    ''' <param name="logE">
+    ''' 20220218 使用log进行缩放的效果很差，在这里默认禁用这个选项
+    ''' </param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(pixels As PixelData(), Optional cutoff As DoubleRange = Nothing, Optional logE As Boolean = False) As PixelData()
+    Public Shared Function ScalePixels(pixels As PixelData(),
+                                       Optional cutoff As DoubleRange = Nothing,
+                                       Optional logE As Boolean = False) As PixelData()
+
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
                         Return getIntensityAuto(p, logE)

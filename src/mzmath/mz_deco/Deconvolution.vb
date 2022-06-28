@@ -1,44 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::46c7e2227e2e77d7e14911c70554a306, src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::97abfd84a38df1113a5b15f8b6fb062d, mzkit\src\mzmath\mz_deco\Deconvolution.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Deconvolution
-    ' 
-    '     Function: DecoMzGroups, GetMzGroups, GetPeakGroups, localMax, localMin
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 162
+'    Code Lines: 117
+' Comment Lines: 28
+'   Blank Lines: 17
+'     File Size: 6.48 KB
+
+
+' Module Deconvolution
+' 
+'     Function: DecoMzGroups, GetMzGroups, GetPeakGroups, localMax, localMin
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -114,23 +124,23 @@ Public Module Deconvolution
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan),
-                                         Optional rtwin As Double = 0.05,
-                                         Optional mzdiff As Tolerance = Nothing) As IEnumerable(Of MzGroup)
+    Public Iterator Function GetMzGroups(Of T As scan)(scans As IEnumerable(Of T),
+                                                       Optional rtwin As Double = 0.05,
+                                                       Optional mzdiff As Tolerance = Nothing) As IEnumerable(Of MzGroup)
 
-        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, mzdiff Or Tolerance.DefaultTolerance)
-            Dim rawGroup As scan() = group.ToArray
-            Dim timePoints As NamedCollection(Of scan)() = rawGroup _
-                .GroupBy(Function(t) t.rt,
+        For Each group As NamedCollection(Of T) In scans.GroupBy(Function(ti) ti.mz, mzdiff Or Tolerance.DefaultTolerance)
+            Dim rawGroup As T() = group.ToArray
+            Dim timePoints As NamedCollection(Of T)() = rawGroup _
+                .GroupBy(Function(ti) ti.rt,
                          Function(a, b)
                              Return stdNum.Abs(a - b) <= rtwin
                          End Function) _
                 .ToArray
             Dim xic As ChromatogramTick() = timePoints _
-                .Select(Function(t)
-                            Dim rt As Double = Aggregate p As scan In t Into Average(p.rt)
+                .Select(Function(ti)
+                            Dim rt As Double = Aggregate p As scan In ti Into Average(p.rt)
                             Dim into As Double = Aggregate p As scan
-                                                 In t
+                                                 In ti
                                                  Into Max(p.intensity)
 
                             Return New ChromatogramTick With {
@@ -138,7 +148,7 @@ Public Module Deconvolution
                                 .Intensity = into
                             }
                         End Function) _
-                .OrderBy(Function(t) t.Time) _
+                .OrderBy(Function(ti) ti.Time) _
                 .ToArray
             Dim mz As Double = rawGroup _
                 .OrderByDescending(Function(d) d.intensity) _

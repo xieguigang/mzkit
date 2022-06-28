@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, src\metadb\Chemoinformatics\Formula\Isotopic\Calculator.vb"
+﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, mzkit\src\metadb\Chemoinformatics\Formula\Isotopic\Calculator.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 63
+    ' Comment Lines: 32
+    '   Blank Lines: 15
+    '     File Size: 4.34 KB
+
 
     '     Class Calculator
     ' 

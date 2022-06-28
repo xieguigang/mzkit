@@ -1,52 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::db60d926c8a4d878f0c0c0bf923cf329, Rscript\Library\mzkit.insilicons\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::29731a29e781e49a6e19e9d4bb820c17, mzkit\Rscript\Library\mzkit.insilicons\metaDNA.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module metaDNAInfer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary, loadKeggNetwork
-    '               loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments
-    '               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+
+' Code Statistics:
+
+'   Total Lines: 418
+'    Code Lines: 321
+' Comment Lines: 33
+'   Blank Lines: 64
+'     File Size: 17.23 KB
+
+
+' Module metaDNAInfer
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, handleSample, loadCompoundLibrary
+'               loadKeggNetwork, loadMetaDNAInferNetwork, MetaDNAAlgorithm, MgfSeeds, readReactionClassTable
+'               ResultAlignments, ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary
+'               SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -86,8 +98,45 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Module metaDNAInfer
 
     Sub New()
-
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
+
+    Private Function getResultTable(list As MetaDNAResult(), args As list, env As Environment) As dataframe
+        Dim data As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        data.columns(NameOf(MetaDNAResult.ROI_id)) = list.Select(Function(i) i.ROI_id).ToArray
+        data.columns(NameOf(MetaDNAResult.query_id)) = list.Select(Function(i) i.query_id).ToArray
+        data.columns(NameOf(MetaDNAResult.mz)) = list.Select(Function(i) i.mz).ToArray
+        data.columns(NameOf(MetaDNAResult.rt)) = list.Select(Function(i) i.rt).ToArray
+        data.columns(NameOf(MetaDNAResult.intensity)) = list.Select(Function(i) i.intensity).ToArray
+        data.columns(NameOf(MetaDNAResult.ppm)) = list.Select(Function(i) i.ppm).ToArray
+        data.columns(NameOf(MetaDNAResult.KEGGId)) = list.Select(Function(i) i.KEGGId).ToArray
+        data.columns(NameOf(MetaDNAResult.precursorType)) = list.Select(Function(i) i.precursorType).ToArray
+        data.columns(NameOf(MetaDNAResult.name)) = list.Select(Function(i) i.name).ToArray
+        data.columns(NameOf(MetaDNAResult.formula)) = list.Select(Function(i) i.formula).ToArray
+        data.columns(NameOf(MetaDNAResult.exactMass)) = list.Select(Function(i) i.exactMass).ToArray
+        data.columns(NameOf(MetaDNAResult.mzCalc)) = list.Select(Function(i) i.mzCalc).ToArray
+
+        data.columns(NameOf(MetaDNAResult.inferLevel)) = list.Select(Function(i) i.inferLevel).ToArray
+        data.columns(NameOf(MetaDNAResult.inferSize)) = list.Select(Function(i) i.inferSize).ToArray
+        data.columns(NameOf(MetaDNAResult.forward)) = list.Select(Function(i) i.forward).ToArray
+        data.columns(NameOf(MetaDNAResult.reverse)) = list.Select(Function(i) i.reverse).ToArray
+        data.columns(NameOf(MetaDNAResult.jaccard)) = list.Select(Function(i) i.jaccard).ToArray
+        data.columns(NameOf(MetaDNAResult.mirror)) = list.Select(Function(i) i.mirror).ToArray
+        data.columns(NameOf(MetaDNAResult.score1)) = list.Select(Function(i) i.score1).ToArray
+        data.columns(NameOf(MetaDNAResult.score2)) = list.Select(Function(i) i.score2).ToArray
+        data.columns(NameOf(MetaDNAResult.pvalue)) = list.Select(Function(i) i.pvalue).ToArray
+
+        data.columns(NameOf(MetaDNAResult.seed)) = list.Select(Function(i) i.seed).ToArray
+        data.columns(NameOf(MetaDNAResult.parentTrace)) = list.Select(Function(i) i.parentTrace).ToArray
+        data.columns(NameOf(MetaDNAResult.partnerKEGGId)) = list.Select(Function(i) i.partnerKEGGId).ToArray
+        data.columns(NameOf(MetaDNAResult.reaction)) = list.Select(Function(i) i.reaction).ToArray
+        data.columns(NameOf(MetaDNAResult.KEGG_reaction)) = list.Select(Function(i) i.KEGG_reaction).ToArray
+
+        Return data
+    End Function
 
     ''' <summary>
     ''' Load network graph model from the kegg metaDNA infer network data.
@@ -183,6 +232,15 @@ Module metaDNAInfer
         Return metadna.SetSearchRange(types)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="kegg">
+    ''' a collection of the kegg compound data.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetKeggLibrary(metadna As Algorithm,
@@ -198,6 +256,15 @@ Module metaDNAInfer
         Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="links">
+    ''' a collection of the reaction class data
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetInferNetwork(metadna As Algorithm,
@@ -213,6 +280,15 @@ Module metaDNAInfer
         Return metadna.SetNetwork(network.populates(Of ReactionClass)(env))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="sample">
+    ''' a collection of the mzkit peak ms2 data objects
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function handleSample(metadna As Algorithm,
@@ -400,6 +476,82 @@ Module metaDNAInfer
 
 #Region "kegg"
 
+    ''' <summary>
+    ''' create the kegg compound ms1 annotation query engine.
+    ''' </summary>
+    ''' <param name="kegg">
+    ''' a set of kegg compound data
+    ''' </param>
+    ''' <param name="precursors">
+    ''' a character vector of the ms1 precursor ion names or 
+    ''' a list of the given mzcalculator object models.
+    ''' </param>
+    ''' <param name="mzdiff">
+    ''' the mass tolerance value to match between the 
+    ''' experiment m/z value and the reference m/z value
+    ''' which is calculated from the compound exact mass
+    ''' with a given specific ion precursor type.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a data query engine model to run ms1 data search 
+    ''' for the kegg metaolite compounds.
+    ''' </returns>
+    <ExportAPI("annotationSet")>
+    <RApiReturn(GetType(KEGGHandler))>
+    Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
+                                     <RRawVectorArgument()>
+                                     Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
+                                     Optional mzdiff As Object = "ppm:20",
+                                     Optional env As Environment = Nothing) As Object
+
+        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim mzErr = Math.getTolerance(mzdiff, env)
+
+        If keggSet.isError Then
+            Return keggSet.getError
+        ElseIf mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim typeList As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(precursors, env, suppress:=True)
+        Dim calculators As MzCalculator()
+
+        If typeList.isError Then
+            typeList = pipeline.TryCreatePipeline(Of String)(precursors, env, suppress:=True)
+
+            If typeList.isError Then
+                Return typeList.getError
+            Else
+                Dim types As String() = typeList _
+                    .populates(Of String)(env) _
+                    .Select(Function(str) str.Split("|"c)) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
+
+                calculators = Provider.Calculators(types)
+            End If
+        Else
+            calculators = typeList _
+                .populates(Of MzCalculator)(env) _
+                .ToArray
+        End If
+
+        Return KEGGHandler.CreateIndex(
+            compounds:=keggSet.populates(Of KeggCompound)(env),
+            types:=calculators,
+            tolerance:=mzErr.TryCast(Of Tolerance)
+        )
+    End Function
+
+    ''' <summary>
+    ''' load kegg compounds
+    ''' </summary>
+    ''' <param name="repo">
+    ''' the file path to the messagepack data repository
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object
@@ -414,6 +566,11 @@ Module metaDNAInfer
         End If
     End Function
 
+    ''' <summary>
+    ''' load the kegg reaction class data.
+    ''' </summary>
+    ''' <param name="repo"></param>
+    ''' <returns></returns>
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b7b3c7547f5be7457622b23852d5f03, src\assembly\assembly\MarkupData\mzML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3b7b3c7547f5be7457622b23852d5f03, mzkit\src\assembly\assembly\MarkupData\mzML\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 128
+    ' Comment Lines: 21
+    '   Blank Lines: 18
+    '     File Size: 6.98 KB
+
 
     '     Module Extensions
     ' 

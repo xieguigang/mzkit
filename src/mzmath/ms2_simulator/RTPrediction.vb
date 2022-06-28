@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d631f7868103d540effdaed0608b163, src\mzmath\ms2_simulator\RTPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::3d631f7868103d540effdaed0608b163, mzkit\src\mzmath\ms2_simulator\RTPrediction.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 71
+    ' Comment Lines: 24
+    '   Blank Lines: 12
+    '     File Size: 4.29 KB
+
 
     ' Module RTPrediction
     ' 

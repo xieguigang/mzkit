@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93116417cc5d6a04ec2f56be22f2e5ff, src\metadb\FooDB\FooDB\mysql\foodcomex_compounds.vb"
+﻿#Region "Microsoft.VisualBasic::93116417cc5d6a04ec2f56be22f2e5ff, mzkit\src\metadb\FooDB\FooDB\mysql\foodcomex_compounds.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 257
+    '    Code Lines: 144
+    ' Comment Lines: 91
+    '   Blank Lines: 22
+    '     File Size: 30.18 KB
+
 
     ' Class foodcomex_compounds
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a36121ce94726f4a048c34c2fd61747f, src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::a36121ce94726f4a048c34c2fd61747f, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 217
+    '    Code Lines: 124
+    ' Comment Lines: 64
+    '   Blank Lines: 29
+    '     File Size: 8.94 KB
+
 
     '     Module PeakArea
     ' 

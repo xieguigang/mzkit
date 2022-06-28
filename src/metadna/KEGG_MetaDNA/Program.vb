@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::650105e9e7f20a925df450bb56765e29, src\metadna\KEGG_MetaDNA\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d8e4f87b23d3892d2ce3a6fe059288fb, mzkit\src\metadna\KEGG_MetaDNA\Program.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 148
+    ' Comment Lines: 34
+    '   Blank Lines: 30
+    '     File Size: 8.84 KB
+
 
     ' Module Program
     ' 

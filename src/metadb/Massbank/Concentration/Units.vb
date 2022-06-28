@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6014c098c1f4fc70d51d2f4c2495db28, src\metadb\Massbank\Concentration\Units.vb"
+﻿#Region "Microsoft.VisualBasic::6014c098c1f4fc70d51d2f4c2495db28, mzkit\src\metadb\Massbank\Concentration\Units.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 29
+    ' Comment Lines: 69
+    '   Blank Lines: 4
+    '     File Size: 2.77 KB
+
 
     ' Enum Units
     ' 

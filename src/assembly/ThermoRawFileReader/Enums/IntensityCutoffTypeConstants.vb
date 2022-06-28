@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0391611c8a80530eb641c7aa23638cae, src\assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::0391611c8a80530eb641c7aa23638cae, mzkit\src\assembly\ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 6
+    ' Comment Lines: 13
+    '   Blank Lines: 2
+    '     File Size: 600.00 B
+
 
     ' Enum IntensityCutoffTypeConstants
     ' 

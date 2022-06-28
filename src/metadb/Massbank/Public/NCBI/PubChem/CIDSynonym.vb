@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e74028fcef40889d8514c489d732468, src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
+﻿#Region "Microsoft.VisualBasic::6df00ce9130666318e44b71e4c3adfa8, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 108
+    ' Comment Lines: 26
+    '   Blank Lines: 19
+    '     File Size: 5.41 KB
+
 
     '     Class CIDSynonym
     ' 

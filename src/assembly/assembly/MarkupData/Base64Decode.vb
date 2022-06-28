@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b59f27d18f2657b019d42051d7bd89e, src\assembly\assembly\MarkupData\Base64Decode.vb"
+﻿#Region "Microsoft.VisualBasic::9470701760654d47c9d3738200180a52, mzkit\src\assembly\assembly\MarkupData\Base64Decode.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 46
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 2.15 KB
+
 
     '     Module Base64Decoder
     ' 

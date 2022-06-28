@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac64ac5731b624d86d8aa24375f6e9c, src\metadb\SMILES\Graph\ChemicalKey.vb"
+﻿#Region "Microsoft.VisualBasic::aac64ac5731b624d86d8aa24375f6e9c, mzkit\src\metadb\SMILES\Graph\ChemicalKey.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 324.00 B
+
+
     ' Class ChemicalKey
     ' 
     '     Properties: bond
@@ -48,6 +58,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
 Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
 
+    ''' <summary>
+    ''' the charge of current chemical key
+    ''' </summary>
+    ''' <returns></returns>
     Public Property bond As Bonds
 
     Public Overrides Function ToString() As String

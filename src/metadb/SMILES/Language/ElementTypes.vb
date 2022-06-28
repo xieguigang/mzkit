@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a73b0e76be8e497a549d3918193c4bbe, src\metadb\SMILES\Language\ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::a73b0e76be8e497a549d3918193c4bbe, mzkit\src\metadb\SMILES\Language\ElementTypes.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 77.00 B
+
 
     ' Enum ElementTypes
     ' 

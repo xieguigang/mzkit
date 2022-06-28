@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7684839e2aba9b3fdc22e309763d57a3, src\mzmath\ms2_math-core\Spectra\Models\Fragments.vb"
+﻿#Region "Microsoft.VisualBasic::7684839e2aba9b3fdc22e309763d57a3, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Fragments.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 12
+    ' Comment Lines: 23
+    '   Blank Lines: 3
+    '     File Size: 1.17 KB
+
 
     '     Class Library
     ' 

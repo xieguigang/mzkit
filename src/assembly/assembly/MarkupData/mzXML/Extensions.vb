@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c499a3c0e741cf4e91a0c22d4013747f, src\assembly\assembly\MarkupData\mzXML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3553e814ae8b8f90d45752aa9f7a8187, mzkit\src\assembly\assembly\MarkupData\mzXML\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 51
+    ' Comment Lines: 25
+    '   Blank Lines: 12
+    '     File Size: 3.28 KB
+
+
     '     Module Extensions
     ' 
     '         Function: AsMs2, (+2 Overloads) ExtractMzI, getName, IsIntact
@@ -57,6 +67,13 @@ Namespace MarkupData.mzXML
         ''' </summary>
         ''' <param name="peaks"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the encoded peaks data base64 string content:
+        ''' 
+        ''' ```
+        ''' [intensity,mz][intensity,mz]
+        ''' ```
+        ''' </remarks>
         <Extension>
         Public Function ExtractMzI(peaks As peaks) As ms2()
             Dim floats#() = peaks.Base64Decode(True)

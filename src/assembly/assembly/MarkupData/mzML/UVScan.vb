@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1fac21ff6f7c4e0508edd687059ded, src\assembly\assembly\MarkupData\mzML\UVScan.vb"
+﻿#Region "Microsoft.VisualBasic::5f1fac21ff6f7c4e0508edd687059ded, mzkit\src\assembly\assembly\MarkupData\mzML\UVScan.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 992.00 B
+
 
     '     Class UVScan
     ' 

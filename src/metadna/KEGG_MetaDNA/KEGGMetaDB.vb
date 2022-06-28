@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::767394fe53d01970836e473a63e548a6, src\metadna\KEGG_MetaDNA\KEGGMetaDB.vb"
+﻿#Region "Microsoft.VisualBasic::63238d83d53439bb8a95b45fe7659659, mzkit\src\metadna\KEGG_MetaDNA\KEGGMetaDB.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 12
+    ' Comment Lines: 11
+    '   Blank Lines: 5
+    '     File Size: 753.00 B
+
 
     ' Class KEGGMetaDB
     ' 

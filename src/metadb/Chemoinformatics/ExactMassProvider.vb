@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9a38a51eaaf34366b2b28b27ddb16aa, src\metadb\Chemoinformatics\ExactMassProvider.vb"
+﻿#Region "Microsoft.VisualBasic::735a139cfbead7cc56a9286915e5e6c5, mzkit\src\metadb\Chemoinformatics\ExactMassProvider.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,46 @@
 
     ' Summaries:
 
-    ' Interface IExactmassProvider
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 299.00 B
+
+
+    ' Interface IExactMassProvider
     ' 
     '     Properties: ExactMass
+    ' 
+    ' Interface ICompoundNameProvider
+    ' 
+    '     Properties: CommonName
+    ' 
+    ' Interface IFormulaProvider
+    ' 
+    '     Properties: Formula
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Public Interface IExactmassProvider
+Public Interface IExactMassProvider
 
     ReadOnly Property ExactMass As Double
+
+End Interface
+
+Public Interface ICompoundNameProvider
+
+    ReadOnly Property CommonName As String
+
+End Interface
+
+Public Interface IFormulaProvider
+
+    ReadOnly Property Formula As String
 
 End Interface

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8815c5b64ff166acf2ca29490e3c113, src\assembly\assembly\UnifyReader\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::e8815c5b64ff166acf2ca29490e3c113, mzkit\src\assembly\assembly\UnifyReader\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 51
+    ' Comment Lines: 21
+    '   Blank Lines: 11
+    '     File Size: 3.05 KB
+
 
     '     Class Chromatogram
     ' 
@@ -75,6 +85,16 @@ Namespace DataReader
         Public ReadOnly Property length As Integer
             Get
                 Return scan_time.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property maxInto As Double
+            Get
+                If length = 0 Then
+                    Return 0
+                Else
+                    Return TIC.Max
+                End If
             End Get
         End Property
 

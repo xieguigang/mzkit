@@ -65,7 +65,7 @@ Namespace MetaLib
     ''' handler for exact mass of the metabolites annotation on MS1 level.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class ExactMassSearch(Of T As IExactmassProvider)
+    Public Class ExactMassSearch(Of T As IExactMassProvider)
 
         ReadOnly index As OrderSelector(Of MassCompares)
 
@@ -90,11 +90,11 @@ Namespace MetaLib
         End Function
     End Class
 
-    Friend Structure MassQuery : Implements IExactmassProvider
+    Friend Structure MassQuery : Implements IExactMassProvider
 
         Dim mass As Double
 
-        Public ReadOnly Property ExactMass As Double Implements IExactmassProvider.ExactMass
+        Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
             Get
                 Return mass
             End Get
@@ -108,9 +108,9 @@ Namespace MetaLib
 
     Public Structure MassCompares : Implements IComparable(Of Double), IComparable
 
-        Dim obj As IExactmassProvider
+        Dim obj As IExactMassProvider
 
-        Sub New(x As IExactmassProvider)
+        Sub New(x As IExactMassProvider)
             obj = x
         End Sub
 

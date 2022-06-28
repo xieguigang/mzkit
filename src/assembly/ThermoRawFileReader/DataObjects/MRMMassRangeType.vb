@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73314f2473beb3b87b43f47d855134e3, src\assembly\ThermoRawFileReader\DataObjects\MRMMassRangeType.vb"
+﻿#Region "Microsoft.VisualBasic::73314f2473beb3b87b43f47d855134e3, mzkit\src\assembly\ThermoRawFileReader\DataObjects\MRMMassRangeType.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 11
+    ' Comment Lines: 18
+    '   Blank Lines: 5
+    '     File Size: 875.00 B
+
 
     '     Structure MRMMassRangeType
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8952d6cbd6bb90fe59af7d6ea04728d8, src\metadna\metaDNA\Models\UnknownSet.vb"
+﻿#Region "Microsoft.VisualBasic::8952d6cbd6bb90fe59af7d6ea04728d8, mzkit\src\metadna\metaDNA\Models\UnknownSet.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 136
+    ' Comment Lines: 33
+    '   Blank Lines: 27
+    '     File Size: 7.12 KB
+
 
     ' Class UnknownSet
     ' 

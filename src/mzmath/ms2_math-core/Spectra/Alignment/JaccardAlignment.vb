@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca1e2d8d2e0bc8aaf1fe0a2f3bf22421, src\mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::0d193bf53959db611388a2836a0bccb2, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.27 KB
+
 
     '     Class JaccardAlignment
     ' 

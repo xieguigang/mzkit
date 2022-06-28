@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, src\assembly\assembly\UnifyReader\IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, mzkit\src\assembly\assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 961.00 B
+
 
     '     Interface IDataReader
     ' 

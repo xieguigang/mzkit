@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae899b272ef0ae9210a447bdcc6231b2, src\assembly\ThermoRawFileReader\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::a17f823f30dfc6297ff3e5d914f2c3b0, mzkit\src\assembly\ThermoRawFileReader\test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 458.00 B
+
+
     ' Module Module1
     ' 
     '     Sub: Main
@@ -49,8 +59,6 @@ Module Module1
 
     Sub Main()
         Dim raw As New MSFileReader("E:\mzkit\DATA\test\Angiotensin_AllScans.raw")
-
-        Call raw.LoadFile()
 
         For Each scan As RawLabelData In raw.GetLabelData
             Call Console.WriteLine(scan.ToString)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc5df4d0876938397dabb132b1518b24, src\assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::7a82959c1a035abe44681697629d8419, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 71
+    ' Comment Lines: 28
+    '   Blank Lines: 13
+    '     File Size: 4.43 KB
+
+
     '     Class scan
     ' 
     '         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
@@ -57,10 +67,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkupData.mzXML
 
+    Public Interface IMsScanData
+
+        ReadOnly Property MSLevel As Integer
+        ReadOnly Property ScanTime As Double
+        ReadOnly Property TotalIonCurrent As Double
+        ReadOnly Property BasePeakIntensity As Double
+
+    End Interface
+
     ''' <summary>
     ''' 一个一级或者二级的扫描结果数据的模型
     ''' </summary>
-    Public Class scan
+    Public Class scan : Implements IMsScanData
 
         ''' <summary>
         ''' The scan number
@@ -85,13 +104,13 @@ Namespace MarkupData.mzXML
         ''' 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property msLevel As Integer
+        <XmlAttribute> Public Property msLevel As Integer Implements IMsScanData.MSLevel
         <XmlAttribute> Public Property peaksCount As Integer
         <XmlAttribute> Public Property polarity As String
         <XmlAttribute> Public Property retentionTime As String
         <XmlAttribute> Public Property basePeakMz As Double
-        <XmlAttribute> Public Property basePeakIntensity As Double
-        <XmlAttribute> Public Property totIonCurrent As Double
+        <XmlAttribute> Public Property basePeakIntensity As Double Implements IMsScanData.BasePeakIntensity
+        <XmlAttribute> Public Property totIonCurrent As Double Implements IMsScanData.TotalIonCurrent
         <XmlAttribute> Public Property collisionEnergy As String
         <XmlAttribute> Public Property lowMz As Double
         <XmlAttribute> Public Property highMz As Double
@@ -99,6 +118,16 @@ Namespace MarkupData.mzXML
 
         Public Property precursorMz As precursorMz
         Public Property peaks As peaks
+
+        ''' <summary>
+        ''' parse of the data field: <see cref="retentionTime"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ScanTime As Double Implements IMsScanData.ScanTime
+            Get
+                Return PeakMs2.RtInSecond(retentionTime)
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03bbc750bb871f6f3c73b19e400d5492, src\mzmath\MSEngine\MzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::e8d9aca82d3f898be30c80c13d54d948, mzkit\src\mzmath\MSEngine\MzQuery.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 42
+    ' Comment Lines: 21
+    '   Blank Lines: 11
+    '     File Size: 2.09 KB
+
+
     ' Structure MzQuery
     ' 
-    '     Properties: isEmpty, mz, ppm, precursorType, score
-    '                 unique_id
+    '     Properties: isEmpty, mz, mz_ref, name, ppm
+    '                 precursorType, score, unique_id
     ' 
     '     Function: Clone, ToString
     ' 
@@ -53,9 +63,20 @@ Imports System.Xml.Serialization
 ''' <summary>
 ''' query result of a ms1 m/z ion
 ''' </summary>
-Public Structure MzQuery
+Public Class MzQuery
 
+    ''' <summary>
+    ''' the source ``m/z`` value
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property mz As Double
+    ''' <summary>
+    ''' the evaluated theoretical m/z value based 
+    ''' on the precursor type and formula string 
+    ''' data.
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlAttribute> Public Property mz_ref As Double
     <XmlAttribute> Public Property ppm As Double
     <XmlAttribute> Public Property precursorType As String
 
@@ -63,7 +84,7 @@ Public Structure MzQuery
     ''' the unique id of the target query result metabolite
     ''' </summary>
     ''' <returns></returns>
-    <XmlText> Public Property unique_id As String
+    <XmlAttribute> Public Property unique_id As String
 
     ''' <summary>
     ''' used in MSJointConnection peak list annotation.
@@ -71,24 +92,42 @@ Public Structure MzQuery
     ''' <returns></returns>
     <XmlAttribute> Public Property score As Double
 
+    <XmlText>
+    Public Property name As String
+
     Friend ReadOnly Property isEmpty As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return mz = 0.0 AndAlso
                 ppm = 0.0 AndAlso
                 score = 0.0 AndAlso
                 precursorType.StringEmpty AndAlso
-                unique_id.StringEmpty
+                unique_id.StringEmpty AndAlso
+                name.StringEmpty
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As MzQuery
         Return New MzQuery With {
             .unique_id = unique_id,
             .mz = mz,
             .ppm = ppm,
             .precursorType = precursorType,
-            .score = score
+            .score = score,
+            .name = name,
+            .mz_ref = mz_ref
         }
+    End Function
+
+    ''' <summary>
+    ''' makes a unique reference key of current mz query result
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function ReferenceKey(query As MzQuery) As String
+        Return $"{query.mz.ToString("F4")}|{query.unique_id}"
     End Function
 
     Public Overrides Function ToString() As String
@@ -101,4 +140,9 @@ Public Structure MzQuery
         End If
     End Function
 
-End Structure
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function IsNullOrEmpty(hit As MzQuery) As Boolean
+        Return hit Is Nothing OrElse hit.isEmpty
+    End Function
+
+End Class
