@@ -78,6 +78,10 @@ Namespace mzData.mzWebCache
         Public ReadOnly Property mzmin As Double
         Public ReadOnly Property mzmax As Double
 
+        ''' <summary>
+        ''' "BioNovoGene/mzWebStream"
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property magic As String Implements IMagicBlock.magic
             Get
                 Return BinaryStreamWriter.Magic
@@ -157,6 +161,8 @@ Namespace mzData.mzWebCache
             Dim range As Double() = file.ReadDoubles(4)
             Dim start As Long
 
+            ' the first 32 Bytes is the summary of the MS1
+            ' data which is followd the magic header
             _mzmin = range(0)
             _mzmax = range(1)
             _rtmin = range(2)
