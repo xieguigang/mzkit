@@ -68,7 +68,11 @@ Public Module PackCDF
             .IteratesALL _
             .OrderBy(Function(x) x) _
             .ToArray
-        Dim avgLen As Integer = overlaps.overlaps.Select(Function(c) c.Value.scan_time.Length).Average
+        Dim avgLen As Integer = overlaps.overlaps _
+            .Select(Function(c)
+                        Return c.Value.scan_time.Length
+                    End Function) _
+            .Average
         Dim rtmin As Double = union.Min
         Dim rtmax As Double = union.Max
         Dim dt As Double = (rtmax - rtmin) / avgLen
