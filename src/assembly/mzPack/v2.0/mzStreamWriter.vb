@@ -36,7 +36,7 @@ Public Module mzStreamWriter
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
 
         For Each ms1 In mzpack.MS
-            Dim dir As String = $"/MS/{ms1.scan_id}"
+            Dim dir As String = $"/MS/{ms1.scan_id}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
 
             Call dirMetadata.Add("scan_id", ms1.scan_id)
