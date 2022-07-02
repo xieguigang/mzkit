@@ -36,19 +36,19 @@ Public Module mzStreamWriter
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
 
         For Each ms1 In mzpack.MS
-            Dim dir As String = $"/MS/{ms1.scan_id}/"
+            Dim dir As String = $"/MS/{ms1.scan_id.Replace("\", "/").Replace("/", "_")}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
 
             Call dirMetadata.Add("scan_id", ms1.scan_id)
             Call dirMetadata.Add("products", ms1.products.TryCount)
             Call dirMetadata.Add("id", ms1.products.SafeQuery.Select(Function(i) i.scan_id).ToArray)
 
-            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.dat"))
+            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.mz"))
                 Call ms1.WriteScan1(scan1)
             End Using
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id}.date"))
+                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz"))
                     Call product.WriteBuffer(scan2)
                 End Using
             Next
