@@ -47,6 +47,12 @@ Public Module mzStreamWriter
                 Call ms1.WriteScan1(scan1)
             End Using
 
+            For Each product As ScanMS2 In ms1.products.SafeQuery
+                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id}.date"))
+                    Call product.WriteBuffer(scan2)
+                End Using
+            Next
+
             Call pack.SetAttribute(dir, dirMetadata)
         Next
     End Sub
