@@ -236,4 +236,22 @@ Module MzPackAccess
             .source = "<assembly>"
         }
     End Function
+
+    ''' <summary>
+    ''' write mzPack in v2 format
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("packStream")>
+    Public Function writeStream(data As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        Else
+            Return data.WriteStream(buffer)
+        End If
+    End Function
 End Module
