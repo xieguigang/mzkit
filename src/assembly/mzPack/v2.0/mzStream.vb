@@ -30,7 +30,9 @@ Public Class mzStream : Implements IDisposable
     ''' </summary>
     ''' <returns></returns>
     Public Function ReadModel() As mzPack
-        Return New mzPack With {.Application = Application}
+        Return New mzPack With {
+            .Application = Application
+        }
     End Function
 
     Private Function safeParseClassType() As FileApplicationClass
