@@ -6,6 +6,19 @@ Namespace mzData.mzWebCache
 
     Public Module Serialization
 
+        Public Sub ReadScan1(ms1 As ScanMS1, file As BinaryDataReader)
+            ms1.rt = file.ReadDouble
+            ms1.BPC = file.ReadDouble
+            ms1.TIC = file.ReadDouble
+
+            Dim nsize As Integer = file.ReadInt32
+            Dim mz As Double() = file.ReadDoubles(nsize)
+            Dim into As Double() = file.ReadDoubles(nsize)
+
+            ms1.mz = mz
+            ms1.into = into
+        End Sub
+
         <Extension>
         Public Sub WriteScan1(scan As ScanMS1, file As BinaryDataWriter)
             ' write MS1 scan information

@@ -278,18 +278,11 @@ Namespace mzData.mzWebCache
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
             Call pointTo(scanId)
+            Call Serialization.ReadScan1(ms1, file)
 
 #If UNIX = 0 Then
             Call Application.DoEvents()
 #End If
-
-            ms1.rt = file.ReadDouble
-            ms1.BPC = file.ReadDouble
-            ms1.TIC = file.ReadDouble
-
-            Dim nsize As Integer = file.ReadInt32
-            Dim mz As Double() = file.ReadDoubles(nsize)
-            Dim into As Double() = file.ReadDoubles(nsize)
 
             If Not skipProducts Then
                 Dim nsize2 As Integer = file.ReadInt32
@@ -300,9 +293,6 @@ Namespace mzData.mzWebCache
                     ms1.products = {}
                 End If
             End If
-
-            ms1.mz = mz
-            ms1.into = into
 
             If metadata.ContainsKey(ms1.scan_id) Then
                 ms1.meta = metadata(ms1.scan_id)

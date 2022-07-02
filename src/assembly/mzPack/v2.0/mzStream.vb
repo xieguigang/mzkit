@@ -25,6 +25,16 @@ Public Class mzStream : Implements IDisposable
         Application = safeParseClassType()
     End Sub
 
+    Public Function ReadMS1(scan_id As String) As ScanMS1
+        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+
+    End Function
+
+    Public Function ReadScan(scan_id As String) As ScanMS1
+        Dim ms1 As ScanMS1 = ReadMS1(scan_id)
+
+    End Function
+
     ''' <summary>
     ''' read all data into memory(memory load = max)
     ''' </summary>
