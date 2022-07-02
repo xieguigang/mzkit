@@ -72,7 +72,8 @@ Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 ''' <summary>
-''' mzPack文件格式模型
+''' the unify in-memory data model of the mzkit MS data model.
+''' (mzPack文件格式模型)
 ''' </summary>
 Public Class mzPack
 
