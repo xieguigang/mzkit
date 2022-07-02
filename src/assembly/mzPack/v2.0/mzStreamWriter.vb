@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Linq
 
 Public Module mzStreamWriter
 
@@ -35,10 +36,18 @@ Public Module mzStreamWriter
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
 
         For Each ms1 In mzpack.MS
-            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"/MS/{ms1.scan_id}/Scan1.dat"))
+            Dim dir As String = $"/MS/{ms1.scan_id}"
+            Dim dirMetadata As New Dictionary(Of String, Object)
+
+            Call dirMetadata.Add("scan_id", ms1.scan_id)
+            Call dirMetadata.Add("products", ms1.products.TryCount)
+            Call dirMetadata.Add("id", ms1.products.SafeQuery.Select(Function(i) i.scan_id).ToArray)
+
+            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.dat"))
                 Call ms1.WriteScan1(scan1)
             End Using
 
+            Call pack.SetAttribute(dir, dirMetadata)
         Next
     End Sub
 End Module
