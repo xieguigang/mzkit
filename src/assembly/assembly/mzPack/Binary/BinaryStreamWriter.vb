@@ -148,19 +148,7 @@ Namespace mzData.mzWebCache
                 )
             End If
 
-            ' write MS1 scan information
-            ' this first zero int32 is a 
-            ' placeholder for indicate the byte size
-            ' of this ms1 data region
-            Call file.Write(0)
-            Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
-            Call file.Write(scan.rt)
-            Call file.Write(scan.BPC)
-            Call file.Write(scan.TIC)
-            Call file.Write(scan.mz.Length)
-            Call file.Write(scan.mz)
-            Call file.Write(scan.into)
-            Call file.Flush()
+            Call scan.WriteScan1(file)
 
             Dim size As Integer = file.Position - start
             Dim products As ScanMS2()
