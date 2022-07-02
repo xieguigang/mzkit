@@ -18,3 +18,9 @@ HDS::getText(data, "/.etc/metadata.json")
 |> json_decode()
 |> str()
 ;
+
+
+HDS::getText(data, "/.etc/ms_scans.json")
+|> json_decode()
+|> str()
+;

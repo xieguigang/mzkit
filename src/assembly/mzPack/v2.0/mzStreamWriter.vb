@@ -25,6 +25,7 @@ Public Module mzStreamWriter
             Call metadata.Add("github", "https://github.com/xieguigang/mzkit")
             Call metadata.Add("application", GetType(mzPack).Assembly.ToString)
             Call metadata.Add("platform", If(App.IsMicrosoftPlatform, "Microsoft Windows", "UNIX/LINUX"))
+            Call metadata.Add("source", mzpack.source)
             Call pack.WriteText(metadata.GetJson, ".etc/metadata.json")
         End Using
 
@@ -88,6 +89,8 @@ Public Module mzStreamWriter
         Call index.Add(NameOf(mzmax), mzmax)
         Call index.Add(NameOf(rtmin), rtmin)
         Call index.Add(NameOf(rtmax), rtmax)
+        Call index.Add("totalIons", mzpack.totalIons)
+        Call index.Add("maxIntensity", mzpack.maxIntensity)
 
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
         Call pack.WriteText(index.GetJson, ".etc/ms_scans.json")
