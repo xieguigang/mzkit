@@ -1,5 +1,6 @@
 require(mzkit);
 require(HDS);
+require(JSON);
 
 imports "mzPack" from "mzkit";
 imports "mzweb" from "mzkit";
@@ -12,3 +13,8 @@ mzPack::packStream(data, file = v2file);
 data = HDS::openStream(v2file);
 
 print(HDS::tree(data, showReadme = FALSE));
+
+HDS::getText(data, "/.etc/metadata.json")
+|> json_decode()
+|> str()
+;

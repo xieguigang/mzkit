@@ -5,16 +5,26 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module mzStreamWriter
 
     <Extension>
     Public Function WriteStream(mzpack As mzPack, file As Stream, Optional meta_size As Long = 4 * 1024 * 1024) As Boolean
+        Dim metadata As New Dictionary(Of String, String)
+
         Using pack As New StreamPack(file)
             Call pack.Clear(meta_size)
             Call mzpack.WriteStream(pack)
             Call pack.WriteText(mzpack.readme, "readme.txt")
+            Call metadata.Add("thumbnail", mzpack.Thumbnail IsNot Nothing)
+            Call metadata.Add("ms1", mzpack.MS.TryCount)
+            Call metadata.Add("create_time", Now.ToString)
+            Call metadata.Add("github", "https://github.com/xieguigang/mzkit")
+            Call metadata.Add("application", GetType(mzPack).Assembly.ToString)
+            Call pack.WriteText(metadata.GetJson, ".etc/metadata.json")
         End Using
 
         Return True
@@ -55,5 +65,11 @@ Public Module mzStreamWriter
 
             Call pack.SetAttribute(dir, dirMetadata)
         Next
+
+        If Not mzpack.Thumbnail Is Nothing Then
+            Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
+                Call mzpack.Thumbnail.Save(snapshot, ImageFormats.Png.GetFormat)
+            End Using
+        End If
     End Sub
 End Module
