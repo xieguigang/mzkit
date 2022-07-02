@@ -20,6 +20,27 @@ Namespace mzData.mzWebCache
         End Sub
 
         <Extension>
+        Public Function ReadScanMs2(file As BinaryDataReader) As ScanMS2
+            Dim ms2 As New ScanMS2 With {
+                .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
+                .parentMz = file.ReadDouble,
+                .rt = file.ReadDouble,
+                .intensity = file.ReadDouble,
+                .polarity = file.ReadInt32,
+                .charge = file.ReadInt32,
+                .activationMethod = file.ReadByte,
+                .collisionEnergy = file.ReadDouble,
+                .centroided = file.ReadByte = 1
+            }
+            Dim productSize As Integer = file.ReadInt32
+
+            ms2.mz = file.ReadDoubles(productSize)
+            ms2.into = file.ReadDoubles(productSize)
+
+            Return ms2
+        End Function
+
+        <Extension>
         Public Sub WriteScan1(scan As ScanMS1, file As BinaryDataWriter)
             ' write MS1 scan information
             ' this first zero int32 is a 

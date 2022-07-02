@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
@@ -27,12 +28,30 @@ Public Class mzStream : Implements IDisposable
 
     Public Function ReadMS1(scan_id As String) As ScanMS1
         Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
-
+        Dim buffer As Stream = pack.OpenBlock(refer)
+        Dim reader As New BinaryDataReader(buffer)
+        Dim ms1 As New ScanMS1
+        Call Serialization.ReadScan1(ms1, file:=reader)
+        Return ms1
     End Function
 
     Public Function ReadScan(scan_id As String) As ScanMS1
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
+        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/"
+        Dim dir = pack.GetObject(refer)
+        Dim n As Integer = dir.attributes.GetValue("products")
+        Dim id2 As String() = dir.attributes.GetValue("id")
 
+        ms1.products = New ScanMS2(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
+            Dim reader As New BinaryDataReader(buffer)
+
+            ms1.products(i) = Serialization.ReadScanMs2(reader)
+        Next
+
+        Return ms1
     End Function
 
     ''' <summary>
