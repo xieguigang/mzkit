@@ -24,6 +24,7 @@ Public Module mzStreamWriter
             Call metadata.Add("create_time", Now.ToString)
             Call metadata.Add("github", "https://github.com/xieguigang/mzkit")
             Call metadata.Add("application", GetType(mzPack).Assembly.ToString)
+            Call metadata.Add("platform", If(App.IsMicrosoftPlatform, "Microsoft Windows", "UNIX/LINUX"))
             Call pack.WriteText(metadata.GetJson, ".etc/metadata.json")
         End Using
 
@@ -43,7 +44,11 @@ Public Module mzStreamWriter
 
     <Extension>
     Private Sub WriteStream(mzpack As mzPack, pack As StreamPack)
-        Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
+        Dim index As New Dictionary(Of String, Double)
+        Dim rtmin As Double = 99999
+        Dim rtmax As Double = -9999
+        Dim mzmin As Double = 99999
+        Dim mzmax As Double = -9999
 
         For Each ms1 In mzpack.MS
             Dim dir As String = $"/MS/{ms1.scan_id.Replace("\", "/").Replace("/", "_")}/"
@@ -61,10 +66,31 @@ Public Module mzStreamWriter
                 Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz"))
                     Call product.WriteBuffer(scan2)
                 End Using
+
+                If product.rt > rtmax Then
+                    rtmax = product.rt
+                End If
+                If product.rt < rtmin Then
+                    rtmin = product.rt
+                End If
+                If product.parentMz > mzmax Then
+                    mzmax = product.parentMz
+                End If
+                If product.parentMz < mzmin Then
+                    mzmin = product.parentMz
+                End If
             Next
 
             Call pack.SetAttribute(dir, dirMetadata)
         Next
+
+        Call index.Add(NameOf(mzmin), mzmin)
+        Call index.Add(NameOf(mzmax), mzmax)
+        Call index.Add(NameOf(rtmin), rtmin)
+        Call index.Add(NameOf(rtmax), rtmax)
+
+        Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
+        Call pack.WriteText(index.GetJson, "./etc/ms_scans.json")
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
