@@ -11,4 +11,4 @@ mzPack::packStream(data, file = v2file);
 
 data = HDS::openStream(v2file);
 
-print(HDS::tree(data));
+print(HDS::tree(data, showReadme = FALSE));
