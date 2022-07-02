@@ -140,4 +140,8 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="v2.0\" />
+  </ItemGroup>
+
 </Project>
