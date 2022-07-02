@@ -90,7 +90,7 @@ Public Module mzStreamWriter
         Call index.Add(NameOf(rtmax), rtmax)
 
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
-        Call pack.WriteText(index.GetJson, "./etc/ms_scans.json")
+        Call pack.WriteText(index.GetJson, ".etc/ms_scans.json")
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
