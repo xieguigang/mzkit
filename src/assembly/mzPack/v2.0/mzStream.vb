@@ -6,6 +6,10 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 
+#If UNIX = 0 Then
+Imports Microsoft.VisualBasic.ApplicationServices
+#End If
+
 ''' <summary>
 ''' mzPack format in HDS stream file
 ''' </summary>
@@ -16,6 +20,21 @@ Public Class mzStream : Implements IDisposable
     Dim disposedValue As Boolean
 
     Public ReadOnly Property Application As FileApplicationClass
+
+    ''' <summary>
+    ''' get all ms1 scan id
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property MS1 As String()
+        Get
+            Dim dir As StreamGroup = pack.GetObject("/MS/")
+            Dim dirs = dir.files
+
+            Return dirs _
+                .Select(Function(d) d.fileName) _
+                .ToArray
+        End Get
+    End Property
 
     Sub New(filepath As String)
         Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
@@ -29,7 +48,7 @@ Public Class mzStream : Implements IDisposable
     Public Function ReadMS1(scan_id As String) As ScanMS1
         Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
-        Dim reader As New BinaryDataReader(buffer)
+        Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
         Dim ms1 As New ScanMS1
         Call Serialization.ReadScan1(ms1, file:=reader)
         Return ms1
@@ -46,10 +65,16 @@ Public Class mzStream : Implements IDisposable
 
         For i As Integer = 0 To n - 1
             Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
-            Dim reader As New BinaryDataReader(buffer)
+            Dim reader As New BinaryDataReader(buffer) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
 
             ms1.products(i) = Serialization.ReadScanMs2(reader)
         Next
+
+#If UNIX = 0 Then
+        Call Application.DoEvents()
+#End If
 
         Return ms1
     End Function
@@ -60,7 +85,10 @@ Public Class mzStream : Implements IDisposable
     ''' <returns></returns>
     Public Function ReadModel() As mzPack
         Return New mzPack With {
-            .Application = Application
+            .Application = Application,
+            .MS = MS1 _
+                .Select(AddressOf ReadScan) _
+                .ToArray
         }
     End Function
 

@@ -59,12 +59,12 @@ Public Module mzStreamWriter
             Call dirMetadata.Add("products", ms1.products.TryCount)
             Call dirMetadata.Add("id", ms1.products.SafeQuery.Select(Function(i) i.scan_id).ToArray)
 
-            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.mz"))
+            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.mz")) With {.ByteOrder = ByteOrder.LittleEndian}
                 Call ms1.WriteScan1(scan1)
             End Using
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz"))
+                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {.ByteOrder = ByteOrder.LittleEndian}
                     Call product.WriteBuffer(scan2)
                 End Using
 
