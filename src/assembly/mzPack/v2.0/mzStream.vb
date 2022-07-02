@@ -1,9 +1,11 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 
 #If UNIX = 0 Then
@@ -18,8 +20,15 @@ Public Class mzStream : Implements IDisposable
     ReadOnly pack As StreamPack
 
     Dim disposedValue As Boolean
+    Dim meta As Dictionary(Of String, String)
+    Dim summary As Dictionary(Of String, Double)
 
     Public ReadOnly Property Application As FileApplicationClass
+    Public ReadOnly Property sourceName As String
+        Get
+            Return meta.TryGetValue("source")
+        End Get
+    End Property
 
     ''' <summary>
     ''' get all ms1 scan id
@@ -43,6 +52,8 @@ Public Class mzStream : Implements IDisposable
     Sub New(stream As Stream)
         pack = New StreamPack(stream)
         Application = safeParseClassType()
+        meta = pack.ReadText("/.etc/metadata.json").LoadJSON(Of Dictionary(Of String, String))
+        summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
     End Sub
 
     Public Function ReadMS1(scan_id As String) As ScanMS1
@@ -79,6 +90,16 @@ Public Class mzStream : Implements IDisposable
         Return ms1
     End Function
 
+    Public Function GetThumbnail() As Image
+        If pack.GetObject("/thumbnail.png") Is Nothing Then
+            Return Nothing
+        End If
+
+        Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
+            Return Image.FromStream(snapshot)
+        End Using
+    End Function
+
     ''' <summary>
     ''' read all data into memory(memory load = max)
     ''' </summary>
@@ -88,13 +109,15 @@ Public Class mzStream : Implements IDisposable
             .Application = Application,
             .MS = MS1 _
                 .Select(AddressOf ReadScan) _
-                .ToArray
+                .ToArray,
+            .source = sourceName,
+            .Thumbnail = GetThumbnail()
         }
     End Function
 
     Private Function safeParseClassType() As FileApplicationClass
         Return Strings _
-            .Trim(pack.ReadText(".etc/app.cls")) _
+            .Trim(pack.ReadText("/.etc/app.cls")) _
             .Trim(asciiA.TAB, asciiA.CR, asciiA.LF) _
             .DoCall(Function(str)
                         If str = "" Then
