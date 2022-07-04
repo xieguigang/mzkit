@@ -21,6 +21,10 @@ Public Class ActivityEnrichment
 
     Public Property Background As Integer
 
+    ''' <summary>
+    ''' Q * Input / Background
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Activity As Double
         Get
             Return Q * Input / Background
@@ -66,7 +70,7 @@ Public Class ActivityEnrichment
         Dim description As String = background.Description
 
         Return New ActivityEnrichment With {
-            .Q = modularity,
+            .Q = (modularity - -0.5) / (1 - -0.5),  ' [-0.5, 1] -> [0, 1]
             .Background = graph.vertex.Count,
             .Hits = mapping.vertex _
                 .Where(Function(v) input.ContainsKey(v.label)) _
@@ -93,6 +97,7 @@ Public Class ActivityEnrichment
                    End Function) _
             .ToArray
 
+        ' get connected nodes
         For Each id As String In edgeBundles _
             .Select(Function(l) {l.U, l.V}) _
             .IteratesALL _
@@ -108,6 +113,15 @@ Public Class ActivityEnrichment
                 weight:=edge.weight,
                 data:=edge.data
             )
+        Next
+
+        ' add island nodes
+        For Each v As Node In background.vertex
+            If v.label Like idIndex Then
+                If subgraph.GetElementByID(v.label) Is Nothing Then
+                    Call subgraph.CreateNode(v.label, v.data)
+                End If
+            End If
         Next
 
         Return subgraph

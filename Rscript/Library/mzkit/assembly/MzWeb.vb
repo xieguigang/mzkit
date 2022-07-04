@@ -323,6 +323,10 @@ Module MzWeb
             thumb = DirectCast(thumb, RFunction).Invoke(env, InvokeParameter.CreateLiterals(mzpack))
         End If
 
+        If TypeOf thumb Is Message Then
+            Return thumb
+        End If
+
         If TypeOf thumb Is GraphicsData Then
             thumb = DirectCast(thumb, GraphicsData).AsGDIImage
         ElseIf (Not TypeOf thumb Is Image) AndAlso (Not TypeOf thumb Is Bitmap) Then

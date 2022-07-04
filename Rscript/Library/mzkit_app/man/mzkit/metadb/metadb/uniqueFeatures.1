@@ -6,6 +6,7 @@ uniqueFeatures \- unique of the peak annotation features
 \fIuniqueFeatures(\fBquery\fR as list, 
 \fBuniqueByScore\fR as boolean = FALSE, 
 \fBscoreFactors\fR as list = \fB<NULL>\fR, 
+\fBformat\fR as string = "F4", 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -20,8 +21,13 @@ unique of the peak annotation features
 .PP
 \fBscoreFactors\fB \fR\- 
  the reference name this score data must be 
- generated via the @\fBM:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery)\fR 
+ generated via the @\fBM:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery,System.String)\fR 
  function.
+. 
+.PP
+.PP
+\fBformat\fB \fR\- 
+ the numeric format of the mz value for generate the reference key
 . 
 .PP
 .PP
