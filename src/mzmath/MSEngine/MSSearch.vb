@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::ac2fc53da570afe62f72f35b1a7bf275, mzkit\src\mzmath\MSEngine\MSSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 138
-    '    Code Lines: 91
-    ' Comment Lines: 27
-    '   Blank Lines: 20
-    '     File Size: 5.69 KB
+' Summaries:
 
 
-    ' Class MSSearch
-    ' 
-    '     Properties: Calculators
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateIndex, GetAnnotation, GetCompound, MSetAnnotation, QueryByMz
-    '               ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 138
+'    Code Lines: 91
+' Comment Lines: 27
+'   Blank Lines: 20
+'     File Size: 5.69 KB
+
+
+' Class MSSearch
+' 
+'     Properties: Calculators
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateIndex, GetAnnotation, GetCompound, MSetAnnotation, QueryByMz
+'               ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,6 +83,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ReadOnly tolerance As Tolerance
     ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
     ReadOnly score As Func(Of Compound, Double)
+    ReadOnly xrefs As Func(Of Compound, Dictionary(Of String, String))
 
     ''' <summary>
     ''' index by unique id
@@ -108,10 +109,12 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     Sub New(tree As IEnumerable(Of Compound),
             tolerance As Tolerance,
             precursorTypes As MzCalculator(),
-            Optional score As Func(Of Compound, Double) = Nothing)
+            Optional score As Func(Of Compound, Double) = Nothing,
+            Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing)
 
         Me.tolerance = tolerance
         Me.precursorTypes = precursorTypes
+        Me.xrefs = xrefs
         Me.score = If(score, New Func(Of Compound, Double)(Function() 0.0))
         Me.index = tree _
             .GroupBy(Function(c) c.Identity) _
@@ -252,5 +255,15 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
 
     Private Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
         Return GetCompound(uniqueId)
+    End Function
+
+    Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMzQuery.GetDbXref
+        Dim compound As Compound = GetCompound(uniqueId)
+
+        If xrefs Is Nothing OrElse compound Is Nothing Then
+            Return New Dictionary(Of String, String)
+        Else
+            Return xrefs(compound)
+        End If
     End Function
 End Class
