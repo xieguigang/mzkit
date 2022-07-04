@@ -263,7 +263,16 @@ Public Class mzPack
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Write(file As Stream, Optional progress As Action(Of String) = Nothing) As Boolean
-        Return v1MemoryLoader.Write(Me, file, progress)
+    Public Function Write(file As Stream,
+                          Optional version As Integer = 2,
+                          Optional progress As Action(Of String) = Nothing) As Boolean
+
+        If version = 1 Then
+            Return v1MemoryLoader.Write(Me, file, progress)
+        ElseIf version = 2 Then
+            Return Me.WriteStream(file)
+        Else
+            Return False
+        End If
     End Function
 End Class
