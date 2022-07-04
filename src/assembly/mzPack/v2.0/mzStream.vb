@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 
 #If UNIX = 0 Then
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Application
 #End If
 
 ''' <summary>
@@ -64,7 +64,7 @@ Public Class mzStream : Implements IDisposable
 
         Call Serialization.ReadScan1(ms1, file:=reader)
 #If UNIX = 0 Then
-        Call Application.DoEvents()
+        Call DoEvents()
 #End If
         Return ms1
     End Function
