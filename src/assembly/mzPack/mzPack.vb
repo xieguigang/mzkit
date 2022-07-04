@@ -256,7 +256,7 @@ Public Class mzPack
         If ver = 1 Then
             Return v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
         ElseIf ver = 2 Then
-            Throw New NotImplementedException
+            Return New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
         Else
             Throw New InvalidProgramException("unknow file format!")
         End If
