@@ -77,6 +77,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -84,6 +85,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
@@ -302,23 +304,56 @@ Module MzWeb
     ''' set thumbnail image to the raw data file
     ''' </summary>
     ''' <param name="mzpack"></param>
-    ''' <param name="thumb"></param>
-    ''' <returns></returns>
+    ''' <param name="thumb">
+    ''' Thumbnail image object data can be a gdi+ image or 
+    ''' bitmap or a gdi+ canvas object in type <see cref="ImageData"/>.
+    ''' </param>
+    ''' <returns>
+    ''' returns a modified mzpack data object with Thumbnail 
+    ''' property data has been updated.
+    ''' </returns>
     <ExportAPI("setThumbnail")>
-    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
+    <RApiReturn(GetType(mzPack))>
+    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Internal.debug.stop("the required mzpack data object can not be nothing!", env)
+        End If
+        If thumb Is Nothing Then
+            mzpack.Thumbnail = Nothing
+            Return mzpack
+        ElseIf thumb.GetType.ImplementInterface(Of RFunction) Then
+            thumb = DirectCast(thumb, RFunction).Invoke(env, InvokeParameter.CreateLiterals(mzpack))
+        End If
+
         If TypeOf thumb Is GraphicsData Then
             thumb = DirectCast(thumb, GraphicsData).AsGDIImage
+        ElseIf (Not TypeOf thumb Is Image) AndAlso (Not TypeOf thumb Is Bitmap) Then
+            Return Message.InCompatibleType(GetType(Image), thumb.GetType, env)
         End If
 
         mzpack.Thumbnail = DirectCast(thumb, Image)
+
         Return mzpack
     End Function
 
+    ''' <summary>
+    ''' get all ms1 scan data points
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
     End Function
 
+    ''' <summary>
+    ''' get a overview ms1 spectrum data from the mzpack raw data
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function Ms1Peaks(mzpack As mzPack,
