@@ -113,6 +113,12 @@ Module MzPackAccess
         Return pipeline.CreateFromPopulator(stream)
     End Function
 
+    ''' <summary>
+    ''' open a mzwork package file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("mzwork")>
     <RApiReturn(GetType(WorkspaceAccess))>
     Public Function open_mzwork(file As Object, Optional env As Environment = Nothing) As Object
@@ -131,6 +137,14 @@ Module MzPackAccess
                  End Sub)
     End Function
 
+    ''' <summary>
+    ''' read mzpack data from the mzwork package by a 
+    ''' given raw data file name as reference id
+    ''' </summary>
+    ''' <param name="mzwork"></param>
+    ''' <param name="fileName"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("readFileCache")>
     <RApiReturn(GetType(mzPack))>
     Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String, Optional env As Environment = Nothing) As Object
@@ -140,6 +154,15 @@ Module MzPackAccess
         Return cache
     End Function
 
+    ''' <summary>
+    ''' open a mzpack data object reader, not read all data into memory in one time.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' the ms scan data can be load into memory in lazy 
+    ''' require by a given scan id of the target ms1 scan
+    ''' </returns>
     <ExportAPI("mzpack")>
     <RApiReturn(GetType(mzPackReader))>
     Public Function open_mzpack(file As Object, Optional env As Environment = Nothing) As Object
@@ -152,11 +175,23 @@ Module MzPackAccess
         Return New mzPackReader(buffer.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' show all ms1 scan id in a mzpack data object or 
+    ''' show all raw data file names in a mzwork data 
+    ''' package.
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ls")>
     <RApiReturn(GetType(String))>
     Public Function index(mzpack As Object, Optional env As Environment = Nothing) As Object
         If mzpack Is Nothing Then
             Return Nothing
+        ElseIf TypeOf mzpack Is mzPack Then
+            Return DirectCast(mzpack, mzPack).MS _
+                .Select(Function(m) m.scan_id) _
+                .ToArray
         ElseIf TypeOf mzpack Is mzPackReader Then
             Return DirectCast(mzpack, mzPackReader) _
                 .EnumerateIndex _
@@ -168,6 +203,12 @@ Module MzPackAccess
         End If
     End Function
 
+    ''' <summary>
+    ''' get metadata list from a specific ms1 scan
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="index">the scan id of the target ms1 scan data</param>
+    ''' <returns></returns>
     <ExportAPI("metadata")>
     Public Function GetMetaData(mzpack As mzPackReader, index As String) As list
         Return New list(mzpack.GetMetadata(index))
@@ -192,6 +233,13 @@ Module MzPackAccess
         Return info
     End Function
 
+    ''' <summary>
+    ''' method for write mzpack data object as a mzML file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("convertTo_mzXML")>
     <RApiReturn(GetType(Boolean))>
     Public Function convertTo_mzXML(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
@@ -208,6 +256,13 @@ Module MzPackAccess
         Return True
     End Function
 
+    ''' <summary>
+    ''' pack mzkit ms2 peaks data as a mzpack data object
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="timeWindow"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("packData")>
     <RApiReturn(GetType(mzPack))>
     Public Function packData(<RRawVectorArgument>

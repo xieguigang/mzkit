@@ -300,8 +300,14 @@ Module MzWeb
     ''' set thumbnail image to the raw data file
     ''' </summary>
     ''' <param name="mzpack"></param>
-    ''' <param name="thumb"></param>
-    ''' <returns></returns>
+    ''' <param name="thumb">
+    ''' Thumbnail image object data can be a gdi+ image or 
+    ''' bitmap or a gdi+ canvas object in type <see cref="ImageData"/>.
+    ''' </param>
+    ''' <returns>
+    ''' returns a modified mzpack data object with Thumbnail 
+    ''' property data has been updated.
+    ''' </returns>
     <ExportAPI("setThumbnail")>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
         If TypeOf thumb Is GraphicsData Then
@@ -312,11 +318,24 @@ Module MzWeb
         Return mzpack
     End Function
 
+    ''' <summary>
+    ''' get all ms1 scan data points
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
     End Function
 
+    ''' <summary>
+    ''' get a overview ms1 spectrum data from the mzpack raw data
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function Ms1Peaks(mzpack As mzPack,
