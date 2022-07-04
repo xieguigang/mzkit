@@ -64,6 +64,7 @@ Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
@@ -436,8 +437,37 @@ Module MetaDbXref
     End Function
 
     <ExportAPI("excludeFeatures")>
-    Public Function excludeFeatures(query As list, id As String(), field As String) As list
-        Return query
+    Public Function excludeFeatures(query As list,
+                                    id As String(),
+                                    field As String,
+                                    metadb As IMzQuery,
+                                    Optional env As Environment = Nothing) As list
+
+        Dim includes As Index(Of String) = id.Indexing
+        Dim sublist As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim hits As MzQuery()
+
+        For Each name As String In query.getNames
+            hits = query.getValue(Of MzQuery())(name, env:=env, [default]:={})
+            hits = hits _
+                .Where(Function(m)
+                           Dim xrefs = metadb.GetDbXref(m.unique_id)
+                           Dim rid As String = xrefs.TryGetValue(field)
+
+                           If rid.StringEmpty Then
+                               Return True
+                           Else
+                               Return rid Like includes
+                           End If
+                       End Function) _
+                .ToArray
+
+            If hits.Length > 0 Then
+                Call sublist.add(name, hits)
+            End If
+        Next
+
+        Return sublist
     End Function
 
     ''' <summary>

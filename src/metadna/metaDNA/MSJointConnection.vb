@@ -301,14 +301,14 @@ Public Class MSJointConnection : Implements IMzQuery
         Return kegg.GetCompound(uniqueId).KEGG
     End Function
 
-    Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String()) Implements IMzQuery.GetDbXref
+    Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMzQuery.GetDbXref
         Dim compound As Compound = GetMetadata(uniqueId)
 
         If compound Is Nothing Then
-            Return New Dictionary(Of String, String())
+            Return New Dictionary(Of String, String)
         Else
-            Return New Dictionary(Of String, String()) From {
-                {"kegg", {compound.entry}}
+            Return New Dictionary(Of String, String) From {
+                {"kegg", compound.entry}
             }
         End If
     End Function
