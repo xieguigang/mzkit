@@ -435,6 +435,11 @@ Module MetaDbXref
         Return New NamedValue(Of MzQuery)(mzi, unique)
     End Function
 
+    <ExportAPI("excludeFeatures")>
+    Public Function excludeFeatures(query As list, id As String(), field As String) As list
+        Return query
+    End Function
+
     ''' <summary>
     ''' unique of the peak annotation features
     ''' </summary>
