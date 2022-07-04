@@ -242,7 +242,9 @@ Public Class mzPack
     End Function
 
     ''' <summary>
-    ''' 一次性加载所有原始数据
+    ''' load all content data in mzpack object into memory at one time.
+    ''' the file format version is test from the magic number.
+    ''' (一次性加载所有原始数据)
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>

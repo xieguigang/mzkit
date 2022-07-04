@@ -230,15 +230,25 @@ Module MzWeb
         End Using
     End Sub
 
+    ''' <summary>
+    ''' write version 2 format of the mzpack by default
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.mzPack")>
-    Public Function writeMzpack(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeMzpack(mzpack As mzPack, file As Object,
+                                Optional version As Integer = 2,
+                                Optional env As Environment = Nothing) As Object
+
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then
             Return filestream.TryCast(Of Message)
         End If
 
-        Return mzpack.Write(filestream.TryCast(Of Stream))
+        Return mzpack.Write(filestream.TryCast(Of Stream), version)
     End Function
 
     <ExportAPI("write.cdf")>
