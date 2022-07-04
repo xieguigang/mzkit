@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::363d269c4d29147bcfdc0aa0c5ddb660, mzkit\src\assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 217
-    '    Code Lines: 141
-    ' Comment Lines: 34
-    '   Blank Lines: 42
-    '     File Size: 7.53 KB
+' Summaries:
 
 
-    '     Class BinaryStreamWriter
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) Write, (+2 Overloads) WriteBuffer, writeIndex, writeMetaData
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 217
+'    Code Lines: 141
+' Comment Lines: 34
+'   Blank Lines: 42
+'     File Size: 7.53 KB
+
+
+'     Class BinaryStreamWriter
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Sub: (+2 Overloads) Dispose, (+2 Overloads) Write, (+2 Overloads) WriteBuffer, writeIndex, writeMetaData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -148,19 +149,7 @@ Namespace mzData.mzWebCache
                 )
             End If
 
-            ' write MS1 scan information
-            ' this first zero int32 is a 
-            ' placeholder for indicate the byte size
-            ' of this ms1 data region
-            Call file.Write(0)
-            Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
-            Call file.Write(scan.rt)
-            Call file.Write(scan.BPC)
-            Call file.Write(scan.TIC)
-            Call file.Write(scan.mz.Length)
-            Call file.Write(scan.mz)
-            Call file.Write(scan.into)
-            Call file.Flush()
+            Call scan.WriteScan1(file)
 
             Dim size As Integer = file.Position - start
             Dim products As ScanMS2()
@@ -195,26 +184,12 @@ Namespace mzData.mzWebCache
                 mzmax = scan.parentMz
             End If
 
-            Call WriteBuffer(scan, file)
+            Call scan.WriteBuffer(file)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub WriteBuffer(scan As ScanMS2, buffer As Stream)
-            Call WriteBuffer(scan, New BinaryDataWriter(buffer))
-        End Sub
-
-        Private Shared Sub WriteBuffer(scan As ScanMS2, file As BinaryDataWriter)
-            Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
-            Call file.Write(scan.parentMz)
-            Call file.Write(scan.rt)
-            Call file.Write(scan.intensity)
-            Call file.Write(scan.polarity)
-            Call file.Write(scan.charge)
-            Call file.Write(scan.activationMethod)
-            Call file.Write(scan.collisionEnergy)
-            Call file.Write(CByte(If(scan.centroided, 1, 0)))
-            Call file.Write(scan.mz.Length)
-            Call file.Write(scan.mz)
-            Call file.Write(scan.into)
+            Call scan.WriteBuffer(New BinaryDataWriter(buffer))
         End Sub
 
         Protected Overridable Sub writeIndex()

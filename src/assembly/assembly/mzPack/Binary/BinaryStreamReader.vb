@@ -63,7 +63,9 @@
 
 Imports System.IO
 Imports System.Runtime.InteropServices
+#If UNIX = 0 Then
 Imports Microsoft.VisualBasic.ApplicationServices
+#End If
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -278,18 +280,11 @@ Namespace mzData.mzWebCache
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
             Call pointTo(scanId)
+            Call Serialization.ReadScan1(ms1, file)
 
 #If UNIX = 0 Then
             Call Application.DoEvents()
 #End If
-
-            ms1.rt = file.ReadDouble
-            ms1.BPC = file.ReadDouble
-            ms1.TIC = file.ReadDouble
-
-            Dim nsize As Integer = file.ReadInt32
-            Dim mz As Double() = file.ReadDoubles(nsize)
-            Dim into As Double() = file.ReadDoubles(nsize)
 
             If Not skipProducts Then
                 Dim nsize2 As Integer = file.ReadInt32
@@ -301,9 +296,6 @@ Namespace mzData.mzWebCache
                 End If
             End If
 
-            ms1.mz = mz
-            ms1.into = into
-
             If metadata.ContainsKey(ms1.scan_id) Then
                 ms1.meta = metadata(ms1.scan_id)
             End If
@@ -312,27 +304,8 @@ Namespace mzData.mzWebCache
         End Function
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
-            Dim ms2 As ScanMS2
-            Dim productSize As Integer
-
             For i As Integer = 0 To nsize - 1
-                ms2 = New ScanMS2 With {
-                    .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
-                    .parentMz = file.ReadDouble,
-                    .rt = file.ReadDouble,
-                    .intensity = file.ReadDouble,
-                    .polarity = file.ReadInt32,
-                    .charge = file.ReadInt32,
-                    .activationMethod = file.ReadByte,
-                    .collisionEnergy = file.ReadDouble,
-                    .centroided = file.ReadByte = 1
-                }
-                productSize = file.ReadInt32
-
-                ms2.mz = file.ReadDoubles(productSize)
-                ms2.into = file.ReadDoubles(productSize)
-
-                Yield ms2
+                Yield file.ReadScanMs2
             Next
         End Function
 

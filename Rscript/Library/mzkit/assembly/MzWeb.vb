@@ -264,9 +264,11 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String Then
-            Return openFromFile(file)
+            Dim mzpack As mzPack = openFromFile(file)
+            mzpack.source = DirectCast(file, String).FileName
+            Return mzpack
         Else
-            Throw New NotImplementedException
+            Return Internal.debug.stop(New NotImplementedException, env)
         End If
     End Function
 
