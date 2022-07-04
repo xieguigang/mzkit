@@ -1,75 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::a273e214adaf08d4a2f3cf4302f747ae, mzkit\src\assembly\mzPack\mzPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 242
-    '    Code Lines: 182
-    ' Comment Lines: 28
-    '   Blank Lines: 32
-    '     File Size: 8.55 KB
+' Summaries:
 
 
-    ' Class mzPack
-    ' 
-    '     Properties: Application, Chromatogram, CountMs2, maxIntensity, MS
-    '                 rtmax, rtmin, Scanners, source, Thumbnail
-    '                 totalIons
-    ' 
-    '     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-    '               GetXIC, hasMs2, PopulateAllScans, Read, ReadAll
-    '               ToString, Write
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 242
+'    Code Lines: 182
+' Comment Lines: 28
+'   Blank Lines: 32
+'     File Size: 8.55 KB
+
+
+' Class mzPack
+' 
+'     Properties: Application, Chromatogram, CountMs2, maxIntensity, MS
+'                 rtmax, rtmin, Scanners, source, Thumbnail
+'                 totalIons
+' 
+'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
+'               GetXIC, hasMs2, PopulateAllScans, Read, ReadAll
+'               ToString, Write
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
@@ -135,6 +134,7 @@ Public Class mzPack
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetBasePeak() As ms2
         Return MS _
             .Select(Function(scan) scan.GetMs) _
@@ -143,6 +143,7 @@ Public Class mzPack
             .FirstOrDefault
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return source
     End Function
@@ -151,10 +152,13 @@ Public Class mzPack
     ''' is there any MS2 data in current raw data file?
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function hasMs2() As Boolean
         Return MS.Any(Function(ms1) Not ms1.products.IsNullOrEmpty)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAllParentMz(tolerance As Tolerance) As Double()
         Return MS _
             .Select(Function(scan) scan.mz) _
@@ -166,6 +170,7 @@ Public Class mzPack
             .ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetXIC(mz As Double, mzErr As Tolerance) As ChromatogramTick()
         Return MS _
             .Select(Function(i)
@@ -209,6 +214,8 @@ Public Class mzPack
     ''' </summary>
     ''' <param name="ms2"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CastToPeakMs2(ms2 As ScanMS2, Optional file As String = "n/a") As PeakMs2
         Return New PeakMs2 With {
             .activation = ms2.activationMethod.ToString,
@@ -234,27 +241,6 @@ Public Class mzPack
         End Using
     End Function
 
-    Private Shared Iterator Function PopulateAllScans(mzpack As mzPackReader, skipMsn As Boolean, verbose As Boolean) As IEnumerable(Of ScanMS1)
-        Dim allIndex As String() = mzpack.EnumerateIndex.ToArray
-        Dim i As i32 = 0
-        Dim d As Integer = allIndex.Length / 10
-        Dim j As Integer = 0
-
-        For Each id As String In allIndex
-            j += 1
-
-            Yield mzpack.ReadScan(id, skipMsn)
-
-            If ++i = d Then
-                If verbose Then
-                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
-                End If
-
-                i = 0
-            End If
-        Next
-    End Function
-
     ''' <summary>
     ''' 一次性加载所有原始数据
     ''' </summary>
@@ -265,50 +251,19 @@ Public Class mzPack
                                    Optional skipMsn As Boolean = False,
                                    Optional verbose As Boolean = True) As mzPack
 
-        Using mzpack As New mzPackReader(file)
-            Dim allMSscans As ScanMS1() = PopulateAllScans(mzpack, skipMsn, verbose).ToArray
-            Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
-            Dim source As String = Nothing
+        Dim ver As Integer = file.GetFormatVersion
 
-            If TypeOf file Is FileStream Then
-                source = DirectCast(file, FileStream).Name.FileName
-            End If
-
-            For Each id As String In mzpack.ChromatogramScanners
-                Using buffer As Stream = mzpack.OpenScannerData(id)
-                    scanners(id) = buffer.ReadPackData
-                End Using
-            Next
-
-            Return New mzPack With {
-                .Thumbnail = If(ignoreThumbnail, Nothing, mzpack.GetThumbnail),
-                .MS = allMSscans,
-                .Scanners = scanners,
-                .Chromatogram = mzpack.chromatogram,
-                .source = source
-            }
-        End Using
+        If ver = 1 Then
+            Return v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
+        ElseIf ver = 2 Then
+            Throw New NotImplementedException
+        Else
+            Throw New InvalidProgramException("unknow file format!")
+        End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Write(file As Stream, Optional progress As Action(Of String) = Nothing) As Boolean
-        Using mzpack As New mzPackWriter(file)
-            For Each scan As ScanMS1 In MS
-                Call mzpack.Write(scan)
-
-                If Not progress Is Nothing Then
-                    Call progress("write: " & scan.scan_id)
-                End If
-            Next
-
-            For Each scanner In Scanners.SafeQuery
-                Call mzpack.AddOtherScanner(scanner.Key, scanner.Value)
-            Next
-
-            Call mzpack.SetChromatogram(Chromatogram)
-            Call mzpack.SetThumbnail(Thumbnail)
-            Call file.Flush()
-        End Using
-
-        Return True
+        Return v1MemoryLoader.Write(Me, file, progress)
     End Function
 End Class
