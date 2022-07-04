@@ -84,6 +84,7 @@ Public Module Extensions
         Call file.Read(buf1, Scan0, buf1.Length)
         Call file.Seek(Scan0, origin:=SeekOrigin.Begin)
         Call file.Read(buf2, Scan0, buf2.Length)
+        Call file.Seek(Scan0, origin:=SeekOrigin.Begin)
 
         If Encoding.ASCII.GetString(buf1) = mzPackWriter.Magic Then
             Return 1

@@ -8,7 +8,7 @@ biodeep mzweb data viewer raw data file helper
 + [load.stream](mzweb/load.stream.1) load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.
 + [write.cache](mzweb/write.cache.1) write ASCII text format of mzweb stream
 + [packBin](mzweb/packBin.1) write binary format of mzweb stream data
-+ [write.mzPack](mzweb/write.mzPack.1) 
++ [write.mzPack](mzweb/write.mzPack.1) write version 2 format of the mzpack by default
 + [write.cdf](mzweb/write.cdf.1) 
 + [open.mzpack](mzweb/open.mzpack.1) open a raw data files in common raw data format and then returns 
 + [setThumbnail](mzweb/setThumbnail.1) set thumbnail image to the raw data file

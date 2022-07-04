@@ -11,3 +11,4 @@ raw data accessor for the mzpack data object
 + [scaninfo](mzPack/scaninfo.1) 
 + [convertTo_mzXML](mzPack/convertTo_mzXML.1) method for write mzpack data object as a mzML file
 + [packData](mzPack/packData.1) pack mzkit ms2 peaks data as a mzpack data object
++ [packStream](mzPack/packStream.1) write mzPack in v2 format
