@@ -126,8 +126,8 @@ Public Class MzQuery
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function ReferenceKey(query As MzQuery) As String
-        Return $"{query.mz.ToString("F4")}|{query.unique_id}"
+    Public Shared Function ReferenceKey(query As MzQuery, Optional format As String = "F4") As String
+        Return $"{query.mz.ToString(format)}|{query.unique_id}"
     End Function
 
     Public Overrides Function ToString() As String

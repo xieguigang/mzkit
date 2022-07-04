@@ -404,6 +404,7 @@ Module MetaDbXref
                                      mzi As String,
                                      uniqueByScore As Boolean,
                                      scores As Dictionary(Of String, Double),
+                                     format As String,
                                      env As Environment) As NamedValue(Of MzQuery)
         ' unique of rows
         Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
@@ -414,7 +415,7 @@ Module MetaDbXref
                 If scores.Count > 0 Then
                     unique = all _
                         .OrderByDescending(Function(d)
-                                               Dim key As String = MzQuery.ReferenceKey(d)
+                                               Dim key As String = MzQuery.ReferenceKey(d, format)
 
                                                If scores.ContainsKey(key) Then
                                                    Return d.score * scores(key)
@@ -478,8 +479,11 @@ Module MetaDbXref
     ''' </param>
     ''' <param name="scoreFactors">
     ''' the reference name this score data must be 
-    ''' generated via the <see cref="MzQuery.ReferenceKey(MzQuery)"/> 
+    ''' generated via the <see cref="MzQuery.ReferenceKey(MzQuery,String)"/> 
     ''' function.
+    ''' </param>
+    ''' <param name="format">
+    ''' the numeric format of the mz value for generate the reference key
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -488,6 +492,7 @@ Module MetaDbXref
     Public Function searchTable(query As list,
                                 Optional uniqueByScore As Boolean = False,
                                 Optional scoreFactors As list = Nothing,
+                                Optional format As String = "F4",
                                 Optional env As Environment = Nothing) As Object
 
         Dim mz As String() = query.getNames
@@ -507,7 +512,7 @@ Module MetaDbXref
 
         Dim mzqueries = mz _
             .Select(Function(mzi)
-                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, env)
+                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, format, env)
                     End Function) _
             .ToArray
         Dim betterJ As Boolean
@@ -533,8 +538,8 @@ Module MetaDbXref
                     If scores.Count > 0 Then
                         Dim sj As Double = mzqueries(j).Value.score
                         Dim si As Double = mzqueries(i).Value.score
-                        Dim kj = MzQuery.ReferenceKey(mzqueries(j))
-                        Dim ki = MzQuery.ReferenceKey(mzqueries(i))
+                        Dim kj = MzQuery.ReferenceKey(mzqueries(j), format)
+                        Dim ki = MzQuery.ReferenceKey(mzqueries(i), format)
 
                         If scores.ContainsKey(kj) Then
                             sj *= scores(kj)
