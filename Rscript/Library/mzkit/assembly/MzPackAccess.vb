@@ -54,7 +54,6 @@
 
 Imports System.IO
 Imports System.IO.Compression
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -284,7 +283,7 @@ Module MzPackAccess
             .ToArray
         Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)
                         In groupScans
-                        Select list.scan1).ToArray
+                        Select list.Scan1).ToArray
 
         Return New mzPack With {
             .Application = FileApplicationClass.LCMS,
@@ -293,31 +292,21 @@ Module MzPackAccess
         }
     End Function
 
-    <Extension>
-    Private Function scan1(list As NamedCollection(Of PeakMs2)) As ScanMS1
-        Dim scan2 As ScanMS2() = list _
-            .Select(Function(i)
-                        Return New ScanMS2 With {
-                            .centroided = True,
-                            .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
-                            .into = i.mzInto.Select(Function(mzi) mzi.intensity).ToArray,
-                            .parentMz = i.mz,
-                            .intensity = i.intensity,
-                            .rt = i.rt,
-                            .scan_id = $"{i.file}#{i.lib_guid}",
-                            .collisionEnergy = i.collisionEnergy
-                        }
-                    End Function) _
-            .ToArray
+    ''' <summary>
+    ''' write mzPack in v2 format
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("packStream")>
+    Public Function writeStream(data As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
-        Return New ScanMS1 With {
-           .into = scan2.Select(Function(i) i.intensity).ToArray,
-           .mz = scan2.Select(Function(i) i.parentMz).ToArray,
-           .products = scan2,
-           .rt = Val(list.name),
-           .scan_id = list.name,
-           .TIC = .into.Sum,
-           .BPC = .into.Max
-        }
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        Else
+            Return data.WriteStream(buffer)
+        End If
     End Function
 End Module
