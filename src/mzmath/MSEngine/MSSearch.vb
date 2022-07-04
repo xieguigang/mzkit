@@ -90,6 +90,12 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' </summary>
     Friend ReadOnly index As Dictionary(Of String, Compound)
 
+    Public ReadOnly Property Metadata As IEnumerable(Of Compound)
+        Get
+            Return index.Values
+        End Get
+    End Property
+
     Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
