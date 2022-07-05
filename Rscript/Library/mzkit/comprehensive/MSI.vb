@@ -181,7 +181,18 @@ Module MSI
                 }
             }
         ElseIf file.ExtensionSuffix("mzpack") Then
-            Using reader As New BinaryStreamReader(file)
+            Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Dim ver As Integer = buf.GetFormatVersion
+                Dim reader As IMzPackReader
+
+                If ver = 1 Then
+                    reader = New BinaryStreamReader(buf)
+                ElseIf ver = 2 Then
+                    reader = New mzStream(buf)
+                Else
+                    Return Internal.debug.stop(New NotImplementedException, env)
+                End If
+
                 Dim allMeta = reader.EnumerateIndex _
                     .Select(AddressOf reader.GetMetadata) _
                     .IteratesALL _

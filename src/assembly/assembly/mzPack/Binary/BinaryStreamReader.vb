@@ -80,9 +80,15 @@ Namespace mzData.mzWebCache
         ''' </summary>
         ''' <returns></returns>
         ReadOnly Property source As String
-
+        ReadOnly Property rtmax As Double
         Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1
         Function GetMetadata(id As String) As Dictionary(Of String, String)
+
+        Sub ReadChromatogramTick(scanId As String,
+                                 <Out> ByRef scan_time As Double,
+                                 <Out> ByRef BPC As Double,
+                                 <Out> ByRef TIC As Double)
+        Function hasMs2(Optional sampling As Integer = 64) As Boolean
 
     End Interface
 
@@ -100,7 +106,7 @@ Namespace mzData.mzWebCache
         Protected MSscannerIndex As BufferRegion
 
         Public ReadOnly Property rtmin As Double
-        Public ReadOnly Property rtmax As Double
+        Public ReadOnly Property rtmax As Double Implements IMzPackReader.rtmax
         Public ReadOnly Property mzmin As Double
         Public ReadOnly Property mzmax As Double
 
@@ -270,7 +276,7 @@ Namespace mzData.mzWebCache
             Return dataSize
         End Function
 
-        Public Function hasMs2(Optional sampling As Integer = 64) As Boolean
+        Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
             For Each scanId As String In EnumerateIndex.Take(sampling)
                 Call pointTo(scanId)
 
@@ -294,7 +300,7 @@ Namespace mzData.mzWebCache
         Public Sub ReadChromatogramTick(scanId As String,
                                         <Out> ByRef scan_time As Double,
                                         <Out> ByRef BPC As Double,
-                                        <Out> ByRef TIC As Double)
+                                        <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
             Call pointTo(scanId)
 
             scan_time = file.ReadDouble

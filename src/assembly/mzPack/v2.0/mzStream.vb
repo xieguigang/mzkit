@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -47,6 +48,12 @@ Public Class mzStream : Implements IMzPackReader
         End Get
     End Property
 
+    Public ReadOnly Property rtmax As Double Implements IMzPackReader.rtmax
+        Get
+            Return summary!rtmax
+        End Get
+    End Property
+
     Sub New(filepath As String)
         Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
     End Sub
@@ -83,6 +90,38 @@ Public Class mzStream : Implements IMzPackReader
 
         Return ms1
     End Function
+
+    Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
+        For Each scanId As String In MS1.Take(sampling)
+            Dim refer As String = $"/MS/{scanId.Replace("\", "/").Replace("/", "_")}/"
+            Dim dir = pack.GetObject(refer)
+            Dim n As Integer = dir.attributes.GetValue("products")
+
+            If n > 0 Then
+                Return True
+            End If
+        Next
+
+        Return False
+    End Function
+
+    Public Sub ReadChromatogramTick(scanId As String,
+                                    <Out> ByRef scan_time As Double,
+                                    <Out> ByRef BPC As Double,
+                                    <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
+
+        Dim refer As String = $"/MS/{scanId.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+        Dim buffer As Stream = pack.OpenBlock(refer)
+        Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
+        Dim ms1 As New ScanMS1
+
+        ' required of read the metadata
+        Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
+
+        scan_time = ms1.rt
+        BPC = ms1.BPC
+        TIC = ms1.TIC
+    End Sub
 
     Public Function GetMetadata(scan_id As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
         Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"

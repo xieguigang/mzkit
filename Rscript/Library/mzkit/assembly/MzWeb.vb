@@ -104,12 +104,12 @@ Module MzWeb
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("open")>
-    Public Function openFile(file As String) As BinaryStreamReader
-        Return New BinaryStreamReader(file)
+    Public Function openFile(file As String, Optional env As Environment = Nothing) As IMzPackReader
+        Return MzPackAccess.open_mzpack(file, env)
     End Function
 
     <ExportAPI("TIC")>
-    Public Function TIC(mzpack As BinaryStreamReader) As ChromatogramTick()
+    Public Function TIC(mzpack As IMzPackReader) As ChromatogramTick()
         Dim keys As String() = mzpack.EnumerateIndex.ToArray
         Dim ticks As ChromatogramTick() = keys _
             .Select(Function(i)
