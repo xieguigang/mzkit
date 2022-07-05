@@ -66,17 +66,23 @@ Public Module mzStreamWriter
         Dim mzmin As Double = 99999
         Dim mzmax As Double = -9999
 
-        For Each ms1 In mzpack.MS
+        For Each ms1 As ScanMS1 In mzpack.MS
             Dim dir As String = $"/MS/{ms1.scan_id.Replace("\", "/").Replace("/", "_")}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
+            Dim ms1Bin As String = $"{dir}/Scan1.mz"
+            Dim ms1Metadata As New Dictionary(Of String, Object)
 
             Call dirMetadata.Add("scan_id", ms1.scan_id)
             Call dirMetadata.Add("products", ms1.products.TryCount)
             Call dirMetadata.Add("id", ms1.products.SafeQuery.Select(Function(i) i.scan_id).ToArray)
 
-            Using scan1 As New BinaryDataWriter(pack.OpenBlock($"{dir}/Scan1.mz")) With {.ByteOrder = ByteOrder.LittleEndian}
+            Using scan1 As New BinaryDataWriter(pack.OpenBlock(ms1Bin)) With {.ByteOrder = ByteOrder.LittleEndian}
                 Call ms1.WriteScan1(scan1)
             End Using
+
+            For Each tag In ms1.meta.SafeQuery
+                Call ms1Metadata.Add(tag.Key, tag.Value)
+            Next
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
                 Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {.ByteOrder = ByteOrder.LittleEndian}
@@ -97,6 +103,7 @@ Public Module mzStreamWriter
                 End If
             Next
 
+            Call pack.SetAttribute(ms1Bin, ms1Metadata)
             Call pack.SetAttribute(dir, dirMetadata)
         Next
 
