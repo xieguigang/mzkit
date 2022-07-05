@@ -62,7 +62,8 @@ Public Class mzStream : Implements IDisposable
         Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
         Dim ms1 As New ScanMS1
 
-        Call Serialization.ReadScan1(ms1, file:=reader)
+        ' required of read the metadata
+        Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
 #If UNIX = 0 Then
         Call Application.DoEvents()
 #End If

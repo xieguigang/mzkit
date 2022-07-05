@@ -231,12 +231,24 @@ Namespace mzData.mzWebCache
             Return data
         End Function
 
+        ''' <summary>
+        ''' move to target offset and then read the
+        ''' data buffer size integer value
+        ''' </summary>
+        ''' <param name="scanId"></param>
+        ''' <returns>
+        ''' the data size of the current ms1 scan data
+        ''' </returns>
         Private Function pointTo(scanId As String) As Integer
             Dim dataSize As Integer
 
+            ' move to target offset
+            ' and then read the data buffer size integer value
             file.Seek(offset:=index(scanId), origin:=SeekOrigin.Begin)
             dataSize = file.ReadInt32
 
+            ' this function also read the scan id string for verify
+            ' the scan id parameter value
             If file.ReadString(BinaryStringFormat.ZeroTerminated) <> scanId Then
                 Throw New InvalidProgramException("unsure why these two scan id mismatch?")
             End If
@@ -279,8 +291,11 @@ Namespace mzData.mzWebCache
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
+            ' metadata of a ms1 scan has already been read
+            ' in the pointTo function
+            ' skip of the meta data parser at here
             Call pointTo(scanId)
-            Call Serialization.ReadScan1(ms1, file)
+            Call Serialization.ReadScan1(ms1, file, readmeta:=False)
 
 #If UNIX = 0 Then
             Call Application.DoEvents()

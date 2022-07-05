@@ -11,7 +11,12 @@ Namespace mzData.mzWebCache
         ''' </summary>
         ''' <param name="ms1"></param>
         ''' <param name="file">should be in little endian byte order</param>
-        Public Sub ReadScan1(ms1 As ScanMS1, file As BinaryDataReader)
+        Public Sub ReadScan1(ms1 As ScanMS1, file As BinaryDataReader, Optional readmeta As Boolean = False)
+            If readmeta Then
+                file.ReadInt32()
+                ms1.scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated)
+            End If
+
             ms1.rt = file.ReadDouble
             ms1.BPC = file.ReadDouble
             ms1.TIC = file.ReadDouble
@@ -23,32 +28,6 @@ Namespace mzData.mzWebCache
             ms1.mz = mz
             ms1.into = into
         End Sub
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file">should be in little endian byte order</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function ReadScanMs2(file As BinaryDataReader) As ScanMS2
-            Dim ms2 As New ScanMS2 With {
-                .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
-                .parentMz = file.ReadDouble,
-                .rt = file.ReadDouble,
-                .intensity = file.ReadDouble,
-                .polarity = file.ReadInt32,
-                .charge = file.ReadInt32,
-                .activationMethod = file.ReadByte,
-                .collisionEnergy = file.ReadDouble,
-                .centroided = file.ReadByte = 1
-            }
-            Dim productSize As Integer = file.ReadInt32
-
-            ms2.mz = file.ReadDoubles(productSize)
-            ms2.into = file.ReadDoubles(productSize)
-
-            Return ms2
-        End Function
 
         ''' <summary>
         ''' 
@@ -92,5 +71,31 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.mz)
             Call file.Write(scan.into)
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file">should be in little endian byte order</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ReadScanMs2(file As BinaryDataReader) As ScanMS2
+            Dim ms2 As New ScanMS2 With {
+                .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
+                .parentMz = file.ReadDouble,
+                .rt = file.ReadDouble,
+                .intensity = file.ReadDouble,
+                .polarity = file.ReadInt32,
+                .charge = file.ReadInt32,
+                .activationMethod = file.ReadByte,
+                .collisionEnergy = file.ReadDouble,
+                .centroided = file.ReadByte = 1
+            }
+            Dim productSize As Integer = file.ReadInt32
+
+            ms2.mz = file.ReadDoubles(productSize)
+            ms2.into = file.ReadDoubles(productSize)
+
+            Return ms2
+        End Function
     End Module
 End Namespace
