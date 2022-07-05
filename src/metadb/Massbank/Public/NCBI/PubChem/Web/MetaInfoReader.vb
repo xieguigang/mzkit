@@ -174,6 +174,10 @@ Namespace NCBI.PubChem
             Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
             Dim computedProperties As Section = view("Chemical and Physical Properties")("Computed Properties")
             Dim experimentProperties As Section = view("Chemical and Physical Properties")("Experimental Properties")
+            Dim otherId = view _
+                .GetInformList("/Names and Identifiers/Synonyms/Depositor-Supplied Synonyms/*") _
+                .Select(Function(a) any.ToString(a.InfoValue).stripMarkupString) _
+                .ToArray
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
@@ -213,7 +217,7 @@ Namespace NCBI.PubChem
                 .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
                 .SMILES = SMILES,
                 .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
-                .ChEMBL = view.Reference.GetReferenceID("ChEMBL"),
+                .ChEMBL = otherId.Where(Function(id) id.StartsWith("ChEMBL")).FirstOrDefault,
                 .Wikipedia = wikipedia
             }
             Dim commonName$ = view.RecordTitle
