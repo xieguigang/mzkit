@@ -13,3 +13,5 @@ data = HDS::openStream(v2raw);
 close(data);
 
 data = open.mzpack(v2raw);
+
+str(data);
