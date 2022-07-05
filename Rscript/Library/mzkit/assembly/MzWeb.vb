@@ -275,7 +275,11 @@ Module MzWeb
     Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String Then
             Dim mzpack As mzPack = openFromFile(file)
-            mzpack.source = DirectCast(file, String).FileName
+
+            If mzpack.source.StringEmpty Then
+                mzpack.source = DirectCast(file, String).FileName
+            End If
+
             Return mzpack
         Else
             Return Internal.debug.stop(New NotImplementedException, env)

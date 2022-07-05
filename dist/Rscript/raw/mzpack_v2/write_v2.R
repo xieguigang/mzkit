@@ -28,3 +28,5 @@ HDS::getText(data, "/.etc/ms_scans.json")
 close(data);
 
 data = open.mzpack(v2file);
+
+str(data);
