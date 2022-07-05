@@ -243,7 +243,7 @@ Namespace NCBI.PubChem
                     Continue For
                 End If
 
-                Yield name
+                Yield name.TrimNewLine.Trim
             Next
         End Function
     End Module
