@@ -213,4 +213,9 @@ Module PubChemToolKit
     Public Function readPugViewXml(file As String) As PugViewRecord
         Return file.LoadXml(Of PugViewRecord)
     End Function
+
+    <ExportAPI("metadata.pugView")>
+    Public Function GetMetaInfo(pugView As PugViewRecord) As MetaLib
+        Return pugView.GetMetaInfo
+    End Function
 End Module
