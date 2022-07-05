@@ -60,13 +60,21 @@ Public Class mzStream : Implements IDisposable
         Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
         Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
-        Dim ms1 As New ScanMS1
+        Dim ms1 As New ScanMS1 With {.meta = New Dictionary(Of String, String)}
+        Dim metadata As StreamObject = pack.GetObject(refer)
 
         ' required of read the metadata
         Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
 #If UNIX = 0 Then
         Call DoEvents()
 #End If
+
+        If metadata.hasAttributes Then
+            For Each tag As String In metadata.attributes
+                Call ms1.meta.Add(tag, metadata.GetAttribute(tag))
+            Next
+        End If
+
         Return ms1
     End Function
 
