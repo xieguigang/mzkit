@@ -13,7 +13,7 @@ Namespace mzData.mzWebCache
         ''' <param name="file">should be in little endian byte order</param>
         Public Sub ReadScan1(ms1 As ScanMS1, file As BinaryDataReader, Optional readmeta As Boolean = False)
             If readmeta Then
-                file.ReadInt32()
+                Dim size As Integer = file.ReadInt32()
                 ms1.scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated)
             End If
 

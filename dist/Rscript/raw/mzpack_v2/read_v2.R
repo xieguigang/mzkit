@@ -9,7 +9,7 @@ const v2raw = "V:\project\CRO\Test_Brain_chca(10MG0.1%FA)_Tri_L15_15%_10mmmin202
 
 data = HDS::openStream(v2raw);
 
-print(HDS::tree(data, showReadme = FALSE));
+# print(HDS::tree(data, showReadme = FALSE));
 close(data);
 
 data = open.mzpack(v2raw);

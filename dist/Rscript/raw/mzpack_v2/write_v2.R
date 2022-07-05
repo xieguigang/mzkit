@@ -5,7 +5,7 @@ require(JSON);
 imports "mzPack" from "mzkit";
 imports "mzweb" from "mzkit";
 
-data = open.mzpack("E:\mzkit\DATA\test\Angiotensin_AllScans.mzML");
+data = open.mzpack("/mzkit\DATA\test\Angiotensin_AllScans.mzML");
 v2file = `${@dir}/Angiotensin_AllScans.mzPack`;
 
 mzPack::packStream(data, file = v2file);
@@ -24,3 +24,7 @@ HDS::getText(data, "/.etc/ms_scans.json")
 |> json_decode()
 |> str()
 ;
+
+close(data);
+
+data = open.mzpack(v2file);
