@@ -243,7 +243,7 @@ Namespace NCBI.PubChem
                     Continue For
                 End If
 
-                Yield name.TrimNewLine.Trim
+                Yield name.TrimNewLine.Trim.StringReplace("\s{2,}", " ")
             Next
         End Function
     End Module
