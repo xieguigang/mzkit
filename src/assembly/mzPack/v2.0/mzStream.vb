@@ -61,7 +61,11 @@ Public Class mzStream : Implements IDisposable
         Dim buffer As Stream = pack.OpenBlock(refer)
         Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
         Dim ms1 As New ScanMS1
+
         Call Serialization.ReadScan1(ms1, file:=reader)
+#If UNIX = 0 Then
+        Call Application.DoEvents()
+#End If
         Return ms1
     End Function
 
@@ -83,10 +87,6 @@ Public Class mzStream : Implements IDisposable
             ms1.products(i) = Serialization.ReadScanMs2(reader)
         Next
 
-#If UNIX = 0 Then
-        Call Application.DoEvents()
-#End If
-
         Return ms1
     End Function
 
@@ -104,14 +104,25 @@ Public Class mzStream : Implements IDisposable
     ''' read all data into memory(memory load = max)
     ''' </summary>
     ''' <returns></returns>
-    Public Function ReadModel() As mzPack
+    Public Function ReadModel(Optional ignoreThumbnail As Boolean = False,
+                              Optional skipMsn As Boolean = False,
+                              Optional verbose As Boolean = False) As mzPack
+
+        Dim MsReader As Func(Of String, ScanMS1)
+
+        If skipMsn Then
+            MsReader = AddressOf ReadMS1
+        Else
+            MsReader = AddressOf ReadScan
+        End If
+
         Return New mzPack With {
             .Application = Application,
             .MS = MS1 _
-                .Select(AddressOf ReadScan) _
+                .Select(MsReader) _
                 .ToArray,
             .source = sourceName,
-            .Thumbnail = GetThumbnail()
+            .Thumbnail = If(ignoreThumbnail, Nothing, GetThumbnail())
         }
     End Function
 

@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -84,6 +85,22 @@ Public Module mzStreamWriter
 
             Call pack.SetAttribute(dir, dirMetadata)
         Next
+
+        If Not mzpack.Scanners.IsNullOrEmpty Then
+            For Each name As String In mzpack.Scanners.Keys
+                Dim scanner As ChromatogramOverlap = mzpack.Scanners(name)
+
+                Using buffer As Stream = pack.OpenBlock($"/Scanners/{name}.cdf")
+                    Call scanner.SavePackData(buffer)
+                End Using
+            Next
+        End If
+
+        If Not mzpack.Chromatogram Is Nothing Then
+            Using buffer As New BinaryDataWriter(pack.OpenBlock("/MS/chromatogram.cdf")) With {.ByteOrder = ByteOrder.LittleEndian}
+                Call buffer.Write(mzpack.Chromatogram.GetBytes)
+            End Using
+        End If
 
         Call index.Add(NameOf(mzmin), mzmin)
         Call index.Add(NameOf(mzmax), mzmax)

@@ -52,16 +52,47 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
 
 <HideModuleName>
 Public Module Extensions
+
+    ''' <summary>
+    ''' get of the mzpack file reader format version number
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>
+    ''' +  1 for v1 legacy version
+    ''' +  2 for v2 HDS advanced version
+    ''' + -1 means invalid file format
+    ''' </returns>
+    <Extension>
+    Public Function GetFormatVersion(file As Stream) As Integer
+        Dim buf1 As Byte() = New Byte(mzPackWriter.Magic.Length - 1) {}
+        Dim buf2 As Byte() = New Byte(StreamPack.Magic.Length - 1) {}
+
+        Call file.Seek(Scan0, origin:=SeekOrigin.Begin)
+        Call file.Read(buf1, Scan0, buf1.Length)
+        Call file.Seek(Scan0, origin:=SeekOrigin.Begin)
+        Call file.Read(buf2, Scan0, buf2.Length)
+
+        If Encoding.ASCII.GetString(buf1) = mzPackWriter.Magic Then
+            Return 1
+        ElseIf Encoding.ASCII.GetString(buf2) = StreamPack.Magic Then
+            Return 2
+        Else
+            Return -1
+        End If
+    End Function
 
     <Extension>
     Public Function GetAllCentroidScanMs1(MS As ScanMS1(), centroid As Tolerance) As IEnumerable(Of ms1_scan)
