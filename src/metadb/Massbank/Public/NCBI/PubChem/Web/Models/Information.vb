@@ -1,95 +1,96 @@
 ﻿#Region "Microsoft.VisualBasic::a96cf4c6bf3f4e078158103d4d02a4f0, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Models\Information.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 171
-    '    Code Lines: 137
-    ' Comment Lines: 5
-    '   Blank Lines: 29
-    '     File Size: 6.00 KB
+' Summaries:
 
 
-    '     Class Value
-    ' 
-    '         Properties: [Boolean], DateISO8601, ExternalDataURL, MimeType, Number
-    '                     StringWithMarkup, Unit
-    ' 
-    '     Class StringWithMarkup
-    ' 
-    '         Properties: [String], Markups
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Markup
-    ' 
-    '         Properties: Extra, Length, Start, Type, URL
-    ' 
-    '     Class Information
-    ' 
-    '         Properties: Description, ExternalDataMimeType, ExternalDataURL, InfoType, InfoValue
-    '                     Name, ReferenceNumber, Table, URL, Value
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Table
-    ' 
-    '         Properties: ColumnNames, ExternalTableName, Rows
-    ' 
-    '         Function: ToDictionary, ToString
-    ' 
-    '     Class Row
-    ' 
-    '         Properties: Cells
-    ' 
-    '     Class Reference
-    ' 
-    '         Properties: ANID, Description, IsToxnet, Name, ReferenceNumber
-    '                     SourceID, SourceName, URL
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 171
+'    Code Lines: 137
+' Comment Lines: 5
+'   Blank Lines: 29
+'     File Size: 6.00 KB
+
+
+'     Class Value
+' 
+'         Properties: [Boolean], DateISO8601, ExternalDataURL, MimeType, Number
+'                     StringWithMarkup, Unit
+' 
+'     Class StringWithMarkup
+' 
+'         Properties: [String], Markups
+' 
+'         Function: ToString
+' 
+'     Class Markup
+' 
+'         Properties: Extra, Length, Start, Type, URL
+' 
+'     Class Information
+' 
+'         Properties: Description, ExternalDataMimeType, ExternalDataURL, InfoType, InfoValue
+'                     Name, ReferenceNumber, Table, URL, Value
+' 
+'         Function: ToString
+' 
+'     Class Table
+' 
+'         Properties: ColumnNames, ExternalTableName, Rows
+' 
+'         Function: ToDictionary, ToString
+' 
+'     Class Row
+' 
+'         Properties: Cells
+' 
+'     Class Reference
+' 
+'         Properties: ANID, Description, IsToxnet, Name, ReferenceNumber
+'                     SourceID, SourceName, URL
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -97,6 +98,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace NCBI.PubChem
 
     Public Class Value
+
         <XmlElement("StringWithMarkup")>
         Public Property StringWithMarkup As StringWithMarkup()
         Public Property ExternalDataURL As String
@@ -105,6 +107,7 @@ Namespace NCBI.PubChem
         Public Property Unit As String
         Public Property DateISO8601 As String
         Public Property [Boolean] As Boolean
+
     End Class
 
     Public Class StringWithMarkup
@@ -130,15 +133,27 @@ Namespace NCBI.PubChem
     Public Class Information
 
         Public Property ReferenceNumber As String
-        Public Property Name As String
         Public Property Description As String
-
+        Public Property Reference As String
         Public Property Value As Value
         <XmlElement("StringValueList")>
         Public Property Table As Table
         Public Property URL As String
         Public Property ExternalDataURL As String
         Public Property ExternalDataMimeType As String
+
+        Public ReadOnly Property UnitValue As UnitValue
+            Get
+                If Value.Unit.StringEmpty Then
+                    Return Nothing
+                Else
+                    Return New UnitValue With {
+                        .value = Me.GetInformationNumber,
+                        .unit = Value.Unit
+                    }
+                End If
+            End Get
+        End Property
 
         ''' <summary>
         ''' Try get data type of the information its <see cref="Value"/>
@@ -185,15 +200,15 @@ Namespace NCBI.PubChem
 
         Public Overrides Function ToString() As String
             If InfoType Is GetType(String()) Then
-                Return $"Dim {Name} As {InfoType.FullName} = {DirectCast(InfoValue, String()).GetJson}"
+                Return $"({InfoType.FullName}) {DirectCast(InfoValue, String()).GetJson}"
             Else
-                Return $"Dim {Name} As {InfoType.FullName} = {InfoValue}"
+                Return $"({InfoType.FullName}) {InfoValue}"
             End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(info As Information) As NamedValue(Of Object)
-            Return New NamedValue(Of Object)(info.Name, info.InfoValue, info.Description)
+            Return New NamedValue(Of Object)(info.ReferenceNumber, info.InfoValue, info.Description)
         End Operator
     End Class
 

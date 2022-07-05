@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::ee4bf54bc8bb39efd4b4fc57a758877e, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 338
-    '    Code Lines: 233
-    ' Comment Lines: 68
-    '   Blank Lines: 37
-    '     File Size: 13.10 KB
+' Summaries:
 
 
-    ' Module MzWeb
-    ' 
-    '     Function: GetChromatogram, loadStream, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks
-    '               Open, openFile, setMzpackThumbnail, TIC, ToMzPack
-    '               writeMzpack, writeStream, writeToCDF
-    ' 
-    '     Sub: WriteCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 338
+'    Code Lines: 233
+' Comment Lines: 68
+'   Blank Lines: 37
+'     File Size: 13.10 KB
+
+
+' Module MzWeb
+' 
+'     Function: GetChromatogram, loadStream, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks
+'               Open, openFile, setMzpackThumbnail, TIC, ToMzPack
+'               writeMzpack, writeStream, writeToCDF
+' 
+'     Sub: WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,6 +77,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -84,6 +85,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
@@ -102,12 +104,12 @@ Module MzWeb
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("open")>
-    Public Function openFile(file As String) As BinaryStreamReader
-        Return New BinaryStreamReader(file)
+    Public Function openFile(file As String, Optional env As Environment = Nothing) As IMzPackReader
+        Return MzPackAccess.open_mzpack(file, env)
     End Function
 
     <ExportAPI("TIC")>
-    Public Function TIC(mzpack As BinaryStreamReader) As ChromatogramTick()
+    Public Function TIC(mzpack As IMzPackReader) As ChromatogramTick()
         Dim keys As String() = mzpack.EnumerateIndex.ToArray
         Dim ticks As ChromatogramTick() = keys _
             .Select(Function(i)
@@ -228,15 +230,25 @@ Module MzWeb
         End Using
     End Sub
 
+    ''' <summary>
+    ''' write version 2 format of the mzpack by default
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.mzPack")>
-    Public Function writeMzpack(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeMzpack(mzpack As mzPack, file As Object,
+                                Optional version As Integer = 2,
+                                Optional env As Environment = Nothing) As Object
+
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then
             Return filestream.TryCast(Of Message)
         End If
 
-        Return mzpack.Write(filestream.TryCast(Of Stream))
+        Return mzpack.Write(filestream.TryCast(Of Stream), version)
     End Function
 
     <ExportAPI("write.cdf")>
@@ -262,9 +274,15 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String Then
-            Return openFromFile(file)
+            Dim mzpack As mzPack = openFromFile(file)
+
+            If mzpack.source.StringEmpty Then
+                mzpack.source = DirectCast(file, String).FileName
+            End If
+
+            Return mzpack
         Else
-            Throw New NotImplementedException
+            Return Internal.debug.stop(New NotImplementedException, env)
         End If
     End Function
 
@@ -300,23 +318,60 @@ Module MzWeb
     ''' set thumbnail image to the raw data file
     ''' </summary>
     ''' <param name="mzpack"></param>
-    ''' <param name="thumb"></param>
-    ''' <returns></returns>
+    ''' <param name="thumb">
+    ''' Thumbnail image object data can be a gdi+ image or 
+    ''' bitmap or a gdi+ canvas object in type <see cref="ImageData"/>.
+    ''' </param>
+    ''' <returns>
+    ''' returns a modified mzpack data object with Thumbnail 
+    ''' property data has been updated.
+    ''' </returns>
     <ExportAPI("setThumbnail")>
-    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object) As mzPack
+    <RApiReturn(GetType(mzPack))>
+    Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Internal.debug.stop("the required mzpack data object can not be nothing!", env)
+        End If
+        If thumb Is Nothing Then
+            mzpack.Thumbnail = Nothing
+            Return mzpack
+        ElseIf thumb.GetType.ImplementInterface(Of RFunction) Then
+            thumb = DirectCast(thumb, RFunction).Invoke(env, InvokeParameter.CreateLiterals(mzpack))
+        End If
+
+        If TypeOf thumb Is Message Then
+            Return thumb
+        End If
+
         If TypeOf thumb Is GraphicsData Then
             thumb = DirectCast(thumb, GraphicsData).AsGDIImage
+        ElseIf (Not TypeOf thumb Is Image) AndAlso (Not TypeOf thumb Is Bitmap) Then
+            Return Message.InCompatibleType(GetType(Image), thumb.GetType, env)
         End If
 
         mzpack.Thumbnail = DirectCast(thumb, Image)
+
         Return mzpack
     End Function
 
+    ''' <summary>
+    ''' get all ms1 scan data points
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
     End Function
 
+    ''' <summary>
+    ''' get a overview ms1 spectrum data from the mzpack raw data
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function Ms1Peaks(mzpack As mzPack,

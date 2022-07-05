@@ -144,7 +144,7 @@ Public Module Extensions
     ''' [xy => index]
     ''' </returns>
     <Extension>
-    Public Function GetPixelKeys(raw As BinaryStreamReader) As Dictionary(Of String, String())
+    Public Function GetPixelKeys(raw As IMzPackReader) As Dictionary(Of String, String())
         Return raw.EnumerateIndex _
             .Select(Function(id)
                         Dim meta = raw.GetMetadata(id)

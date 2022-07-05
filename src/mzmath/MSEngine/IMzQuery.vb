@@ -57,6 +57,7 @@ Public Interface IMzQuery
     Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
     Function GetAnnotation(uniqueId As String) As (name As String, formula As String)
     Function GetMetadata(uniqueId As String) As Object
+    Function GetDbXref(uniqueId As String) As Dictionary(Of String, String)
 
     ''' <summary>
     ''' query a set of m/z peak list

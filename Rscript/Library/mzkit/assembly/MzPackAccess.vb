@@ -54,7 +54,6 @@
 
 Imports System.IO
 Imports System.IO.Compression
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -113,6 +112,12 @@ Module MzPackAccess
         Return pipeline.CreateFromPopulator(stream)
     End Function
 
+    ''' <summary>
+    ''' open a mzwork package file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("mzwork")>
     <RApiReturn(GetType(WorkspaceAccess))>
     Public Function open_mzwork(file As Object, Optional env As Environment = Nothing) As Object
@@ -131,6 +136,14 @@ Module MzPackAccess
                  End Sub)
     End Function
 
+    ''' <summary>
+    ''' read mzpack data from the mzwork package by a 
+    ''' given raw data file name as reference id
+    ''' </summary>
+    ''' <param name="mzwork"></param>
+    ''' <param name="fileName"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("readFileCache")>
     <RApiReturn(GetType(mzPack))>
     Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String, Optional env As Environment = Nothing) As Object
@@ -140,6 +153,15 @@ Module MzPackAccess
         Return cache
     End Function
 
+    ''' <summary>
+    ''' open a mzpack data object reader, not read all data into memory in one time.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' the ms scan data can be load into memory in lazy 
+    ''' require by a given scan id of the target ms1 scan
+    ''' </returns>
     <ExportAPI("mzpack")>
     <RApiReturn(GetType(mzPackReader))>
     Public Function open_mzpack(file As Object, Optional env As Environment = Nothing) As Object
@@ -149,14 +171,34 @@ Module MzPackAccess
             Return buffer.TryCast(Of Message)
         End If
 
-        Return New mzPackReader(buffer.TryCast(Of Stream))
+        Dim ver As Integer = buffer.TryCast(Of Stream).GetFormatVersion
+
+        If ver = 1 Then
+            Return New mzPackReader(buffer.TryCast(Of Stream))
+        ElseIf ver = 2 Then
+            Return New mzStream(buffer.TryCast(Of Stream))
+        Else
+            Return Internal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
+        End If
     End Function
 
+    ''' <summary>
+    ''' show all ms1 scan id in a mzpack data object or 
+    ''' show all raw data file names in a mzwork data 
+    ''' package.
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("ls")>
     <RApiReturn(GetType(String))>
     Public Function index(mzpack As Object, Optional env As Environment = Nothing) As Object
         If mzpack Is Nothing Then
             Return Nothing
+        ElseIf TypeOf mzpack Is mzPack Then
+            Return DirectCast(mzpack, mzPack).MS _
+                .Select(Function(m) m.scan_id) _
+                .ToArray
         ElseIf TypeOf mzpack Is mzPackReader Then
             Return DirectCast(mzpack, mzPackReader) _
                 .EnumerateIndex _
@@ -168,6 +210,12 @@ Module MzPackAccess
         End If
     End Function
 
+    ''' <summary>
+    ''' get metadata list from a specific ms1 scan
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="index">the scan id of the target ms1 scan data</param>
+    ''' <returns></returns>
     <ExportAPI("metadata")>
     Public Function GetMetaData(mzpack As mzPackReader, index As String) As list
         Return New list(mzpack.GetMetadata(index))
@@ -192,6 +240,13 @@ Module MzPackAccess
         Return info
     End Function
 
+    ''' <summary>
+    ''' method for write mzpack data object as a mzML file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("convertTo_mzXML")>
     <RApiReturn(GetType(Boolean))>
     Public Function convertTo_mzXML(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
@@ -208,6 +263,13 @@ Module MzPackAccess
         Return True
     End Function
 
+    ''' <summary>
+    ''' pack mzkit ms2 peaks data as a mzpack data object
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="timeWindow"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("packData")>
     <RApiReturn(GetType(mzPack))>
     Public Function packData(<RRawVectorArgument>
@@ -229,7 +291,7 @@ Module MzPackAccess
             .ToArray
         Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)
                         In groupScans
-                        Select list.scan1).ToArray
+                        Select list.Scan1).ToArray
 
         Return New mzPack With {
             .Application = FileApplicationClass.LCMS,
@@ -238,31 +300,21 @@ Module MzPackAccess
         }
     End Function
 
-    <Extension>
-    Private Function scan1(list As NamedCollection(Of PeakMs2)) As ScanMS1
-        Dim scan2 As ScanMS2() = list _
-            .Select(Function(i)
-                        Return New ScanMS2 With {
-                            .centroided = True,
-                            .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
-                            .into = i.mzInto.Select(Function(mzi) mzi.intensity).ToArray,
-                            .parentMz = i.mz,
-                            .intensity = i.intensity,
-                            .rt = i.rt,
-                            .scan_id = $"{i.file}#{i.lib_guid}",
-                            .collisionEnergy = i.collisionEnergy
-                        }
-                    End Function) _
-            .ToArray
+    ''' <summary>
+    ''' write mzPack in v2 format
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("packStream")>
+    Public Function writeStream(data As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
-        Return New ScanMS1 With {
-           .into = scan2.Select(Function(i) i.intensity).ToArray,
-           .mz = scan2.Select(Function(i) i.parentMz).ToArray,
-           .products = scan2,
-           .rt = Val(list.name),
-           .scan_id = list.name,
-           .TIC = .into.Sum,
-           .BPC = .into.Max
-        }
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        Else
+            Return data.WriteStream(buffer)
+        End If
     End Function
 End Module

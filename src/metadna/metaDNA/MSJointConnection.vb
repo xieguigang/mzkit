@@ -64,6 +64,9 @@ Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 
+''' <summary>
+''' the kegg database annotation search helper
+''' </summary>
 Public Class MSJointConnection : Implements IMzQuery
 
     ReadOnly kegg As KEGGHandler
@@ -296,5 +299,17 @@ Public Class MSJointConnection : Implements IMzQuery
     ''' </returns>
     Public Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
         Return kegg.GetCompound(uniqueId).KEGG
+    End Function
+
+    Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMzQuery.GetDbXref
+        Dim compound As Compound = GetMetadata(uniqueId)
+
+        If compound Is Nothing Then
+            Return New Dictionary(Of String, String)
+        Else
+            Return New Dictionary(Of String, String) From {
+                {"kegg", compound.entry}
+            }
+        End If
     End Function
 End Class

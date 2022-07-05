@@ -4,7 +4,8 @@
 setThumbnail \- set thumbnail image to the raw data file
 .SH SYNOPSIS
 \fIsetThumbnail(\fBmzpack\fR as <generic> mzPack, 
-\fBthumb\fR as any);\fR
+\fBthumb\fR as any, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 set thumbnail image to the raw data file
@@ -14,7 +15,15 @@ set thumbnail image to the raw data file
 \fBmzpack\fB \fR\- -. 
 .PP
 .PP
-\fBthumb\fB \fR\- -. 
+\fBthumb\fB \fR\- 
+ Thumbnail image object data can be a gdi+ image or 
+ bitmap or a gdi+ canvas object in type @\fBT:Microsoft.VisualBasic.Imaging.Driver.ImageData\fR.
+. 
+.PP
+.SH VALUE
+.PP
+returns a modified mzpack data object with Thumbnail 
+ property data has been updated.
 .PP
 .SH SEE ALSO
 mzweb

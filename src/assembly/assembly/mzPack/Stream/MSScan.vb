@@ -58,14 +58,16 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace mzData.mzWebCache
 
     Public Class MSScan : Inherits PeakList
         Implements IRetentionTime
+        Implements INamedValue
 
         Public Overridable Property rt As Double Implements IRetentionTime.rt
-        Public Property scan_id As String
+        Public Property scan_id As String Implements INamedValue.Key
 
         Public Overrides Function ToString() As String
             Return scan_id

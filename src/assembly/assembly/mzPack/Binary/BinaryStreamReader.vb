@@ -63,17 +63,39 @@
 
 Imports System.IO
 Imports System.Runtime.InteropServices
+#If UNIX = 0 Then
 Imports Microsoft.VisualBasic.ApplicationServices
+#End If
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
+    Public Interface IMzPackReader
+
+        ReadOnly Property EnumerateIndex As IEnumerable(Of String)
+        ''' <summary>
+        ''' the source file name of current raw data file
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property source As String
+        ReadOnly Property rtmax As Double
+        Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1
+        Function GetMetadata(id As String) As Dictionary(Of String, String)
+
+        Sub ReadChromatogramTick(scanId As String,
+                                 <Out> ByRef scan_time As Double,
+                                 <Out> ByRef BPC As Double,
+                                 <Out> ByRef TIC As Double)
+        Function hasMs2(Optional sampling As Integer = 64) As Boolean
+
+    End Interface
+
     ''' <summary>
     ''' the binary mzpack data reader
     ''' </summary>
-    Public Class BinaryStreamReader : Implements IMagicBlock
+    Public Class BinaryStreamReader : Implements IMagicBlock, IMzPackReader
         Implements IDisposable
 
         Dim disposedValue As Boolean
@@ -84,7 +106,7 @@ Namespace mzData.mzWebCache
         Protected MSscannerIndex As BufferRegion
 
         Public ReadOnly Property rtmin As Double
-        Public ReadOnly Property rtmax As Double
+        Public ReadOnly Property rtmax As Double Implements IMzPackReader.rtmax
         Public ReadOnly Property mzmin As Double
         Public ReadOnly Property mzmax As Double
 
@@ -102,7 +124,7 @@ Namespace mzData.mzWebCache
         ''' get index key of all ms1 scan
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property EnumerateIndex As IEnumerable(Of String)
+        Public ReadOnly Property EnumerateIndex As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
             Get
                 Return index.Keys
             End Get
@@ -110,7 +132,7 @@ Namespace mzData.mzWebCache
 
         Public ReadOnly Property filepath As String
 
-        Public ReadOnly Property source As String
+        Public ReadOnly Property source As String Implements IMzPackReader.source
             Get
                 If filepath.StringEmpty Then
                     Return "n/a"
@@ -157,7 +179,7 @@ Namespace mzData.mzWebCache
         ''' <returns>
         ''' returns NULL if the meta data is not found
         ''' </returns>
-        Public Function GetMetadata(index As String) As Dictionary(Of String, String)
+        Public Function GetMetadata(index As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
             Return metadata.TryGetValue(index)
         End Function
 
@@ -229,12 +251,24 @@ Namespace mzData.mzWebCache
             Return data
         End Function
 
+        ''' <summary>
+        ''' move to target offset and then read the
+        ''' data buffer size integer value
+        ''' </summary>
+        ''' <param name="scanId"></param>
+        ''' <returns>
+        ''' the data size of the current ms1 scan data
+        ''' </returns>
         Private Function pointTo(scanId As String) As Integer
             Dim dataSize As Integer
 
+            ' move to target offset
+            ' and then read the data buffer size integer value
             file.Seek(offset:=index(scanId), origin:=SeekOrigin.Begin)
             dataSize = file.ReadInt32
 
+            ' this function also read the scan id string for verify
+            ' the scan id parameter value
             If file.ReadString(BinaryStringFormat.ZeroTerminated) <> scanId Then
                 Throw New InvalidProgramException("unsure why these two scan id mismatch?")
             End If
@@ -242,7 +276,7 @@ Namespace mzData.mzWebCache
             Return dataSize
         End Function
 
-        Public Function hasMs2(Optional sampling As Integer = 64) As Boolean
+        Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
             For Each scanId As String In EnumerateIndex.Take(sampling)
                 Call pointTo(scanId)
 
@@ -266,7 +300,7 @@ Namespace mzData.mzWebCache
         Public Sub ReadChromatogramTick(scanId As String,
                                         <Out> ByRef scan_time As Double,
                                         <Out> ByRef BPC As Double,
-                                        <Out> ByRef TIC As Double)
+                                        <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
             Call pointTo(scanId)
 
             scan_time = file.ReadDouble
@@ -274,22 +308,18 @@ Namespace mzData.mzWebCache
             TIC = file.ReadDouble
         End Sub
 
-        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
+        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
+            ' metadata of a ms1 scan has already been read
+            ' in the pointTo function
+            ' skip of the meta data parser at here
             Call pointTo(scanId)
+            Call Serialization.ReadScan1(ms1, file, readmeta:=False)
 
 #If UNIX = 0 Then
             Call Application.DoEvents()
 #End If
-
-            ms1.rt = file.ReadDouble
-            ms1.BPC = file.ReadDouble
-            ms1.TIC = file.ReadDouble
-
-            Dim nsize As Integer = file.ReadInt32
-            Dim mz As Double() = file.ReadDoubles(nsize)
-            Dim into As Double() = file.ReadDoubles(nsize)
 
             If Not skipProducts Then
                 Dim nsize2 As Integer = file.ReadInt32
@@ -301,9 +331,6 @@ Namespace mzData.mzWebCache
                 End If
             End If
 
-            ms1.mz = mz
-            ms1.into = into
-
             If metadata.ContainsKey(ms1.scan_id) Then
                 ms1.meta = metadata(ms1.scan_id)
             End If
@@ -312,27 +339,8 @@ Namespace mzData.mzWebCache
         End Function
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
-            Dim ms2 As ScanMS2
-            Dim productSize As Integer
-
             For i As Integer = 0 To nsize - 1
-                ms2 = New ScanMS2 With {
-                    .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
-                    .parentMz = file.ReadDouble,
-                    .rt = file.ReadDouble,
-                    .intensity = file.ReadDouble,
-                    .polarity = file.ReadInt32,
-                    .charge = file.ReadInt32,
-                    .activationMethod = file.ReadByte,
-                    .collisionEnergy = file.ReadDouble,
-                    .centroided = file.ReadByte = 1
-                }
-                productSize = file.ReadInt32
-
-                ms2.mz = file.ReadDoubles(productSize)
-                ms2.into = file.ReadDoubles(productSize)
-
-                Yield ms2
+                Yield file.ReadScanMs2
             Next
         End Function
 

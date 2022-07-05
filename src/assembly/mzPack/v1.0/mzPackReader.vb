@@ -87,6 +87,10 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         Call MyBase.New(file)
     End Sub
 
+    ''' <summary>
+    ''' create a new version 1 mzpack file reader
+    ''' </summary>
+    ''' <param name="file"></param>
     Sub New(file As Stream)
         Call MyBase.New(file)
     End Sub

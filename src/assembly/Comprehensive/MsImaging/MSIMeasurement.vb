@@ -85,13 +85,13 @@ Namespace MsImaging
             End If
         End Function
 
-        Public Shared Function Measure(raw As IEnumerable(Of BinaryStreamReader)) As MSIMeasurement
+        Public Shared Function Measure(raw As IEnumerable(Of IMzPackReader)) As MSIMeasurement
             Dim scans As New List(Of Integer)
             Dim maxrt As New List(Of Double)
             Dim maxScan As Integer
             Dim scanMs2 As Boolean = False
 
-            For Each file As BinaryStreamReader In raw
+            For Each file As IMzPackReader In raw
                 maxScan = file.EnumerateIndex.Count
                 scans.Add(maxScan)
                 maxrt.Add(file.rtmax)
