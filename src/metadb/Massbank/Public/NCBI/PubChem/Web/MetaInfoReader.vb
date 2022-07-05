@@ -57,6 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
@@ -171,7 +172,8 @@ Namespace NCBI.PubChem
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
-            Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
+            Dim computedProperties As Section = view("Chemical and Physical Properties")("Computed Properties")
+            Dim experimentProperties As Section = view("Chemical and Physical Properties")("Experimental Properties")
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
@@ -181,6 +183,7 @@ Namespace NCBI.PubChem
                         End Function) _
                 .ToArray
             Dim CASNumber$()
+            Dim wikipedia As String
 
             If synonyms Is Nothing Then
                 synonyms = {}
@@ -190,8 +193,10 @@ Namespace NCBI.PubChem
                 CASNumber = synonyms _
                     .Where(Function(id) id.IsPattern("\d+([-]\d+)+")) _
                     .ToArray
+                wikipedia = view.Reference.GetReferenceID("Wikipedia")
             Else
                 CASNumber = otherNames("CAS")?.GetInformationStrings("CAS", True)
+                wikipedia = otherNames("Wikipedia")?.GetInformationString("Wikipedia")
             End If
 
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
@@ -209,7 +214,7 @@ Namespace NCBI.PubChem
                 .SMILES = SMILES,
                 .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
                 .ChEMBL = view.Reference.GetReferenceID("ChEMBL"),
-                .Wikipedia = view.Reference.GetReferenceID("Wikipedia")
+                .Wikipedia = wikipedia
             }
             Dim commonName$ = view.RecordTitle
 
@@ -238,7 +243,8 @@ Namespace NCBI.PubChem
                 .exact_mass = exact_mass,
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray,
-                .organism = taxon
+                .organism = taxon,
+                .chemical = computedProperties.parseChemical(experimentProperties)
             }
         End Function
 
@@ -262,6 +268,50 @@ Namespace NCBI.PubChem
 
                 Yield name.stripMarkupString
             Next
+        End Function
+
+        <Extension>
+        Private Function parseChemical(computedProperties As Section, experiments As Section) As ChemicalDescriptor
+            Return New ChemicalDescriptor With {
+                .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
+                .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
+                .AtomUdefStereoCount = computedProperties("Undefined Atom Stereocenter Count").GetInformationNumber("*"),
+                .BondDefStereoCount = computedProperties("Defined Bond Stereocenter Count").GetInformationNumber("*"),
+                .BondUdefStereoCount = computedProperties("Undefined Bond Stereocenter Count").GetInformationNumber("*"),
+                .Complexity = computedProperties("Complexity").GetInformationNumber("*"),
+                .ComponentCount = computedProperties("").GetInformationNumber("*"),
+                .ExactMass = computedProperties("Exact Mass").GetInformationNumber("*"),
+                .FormalCharge = computedProperties("Formal Charge").GetInformationNumber("*"),
+                .HeavyAtoms = computedProperties("Heavy Atom Count").GetInformationNumber("*"),
+                .HydrogenAcceptor = computedProperties("Hydrogen Bond Acceptor Count").GetInformationNumber("*"),
+                .HydrogenDonors = computedProperties("Hydrogen Bond Donor Count").GetInformationNumber("*"),
+                .IsotopicAtomCount = computedProperties("Isotope Atom Count").GetInformationNumber("*"),
+                .RotatableBonds = computedProperties("Rotatable Bond Count").GetInformationNumber("*"),
+                .TautoCount = computedProperties("").GetInformationNumber("*"),
+                .TopologicalPolarSurfaceArea = computedProperties("Topological Polar Surface Area").GetInformationNumber("*"),
+                .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
+                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*"),
+                .CCS = experiments("Collision Cross Section") _
+                    .Information _
+                    .Select(Function(c)
+                                Return New CCS With {
+                                    .value = c.Value.ToString,
+                                    .reference = c.Reference
+                                }
+                            End Function) _
+                    .ToArray,
+                .LogP = experiments("LogP").GetInformationNumber("*"),
+                .Solubility = experiments("Solubility") _
+                    .Information _
+                    .Where(Function(a) Not a.UnitValue Is Nothing) _
+                    .Select(Function(a) a.UnitValue) _
+                    .FirstOrDefault,
+                .MeltingPoint = experiments("Melting Point") _
+                    .Information _
+                    .Where(Function(a) Not a.UnitValue Is Nothing) _
+                    .Select(Function(a) a.UnitValue) _
+                    .FirstOrDefault
+            }
         End Function
     End Module
 End Namespace

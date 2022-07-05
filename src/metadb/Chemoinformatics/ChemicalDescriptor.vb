@@ -63,6 +63,31 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
+Public Class UnitValue
+
+    Public Property value As Double
+    Public Property unit As String
+
+    Sub New()
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"{value} {unit}"
+    End Function
+
+End Class
+
+Public Class CCS
+
+    Public Property value As String
+    Public Property reference As String
+
+    Public Overrides Function ToString() As String
+        Return value
+    End Function
+
+End Class
+
 ''' <summary>
 ''' Chemical descriptor
 ''' </summary>
@@ -103,6 +128,11 @@ Public Class ChemicalDescriptor
     Public Property BondUdefStereoCount As Integer
     Public Property ComponentCount As Integer
     Public Property TautoCount As Integer
+    Public Property CovalentlyBonded As Integer
+    Public Property MeltingPoint As UnitValue
+    Public Property Solubility As UnitValue
+    Public Property LogP As Double
+    Public Property CCS As CCS()
 
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
