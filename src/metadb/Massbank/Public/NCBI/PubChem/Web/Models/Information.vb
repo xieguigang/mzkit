@@ -98,6 +98,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace NCBI.PubChem
 
     Public Class Value
+
         <XmlElement("StringWithMarkup")>
         Public Property StringWithMarkup As StringWithMarkup()
         Public Property ExternalDataURL As String
@@ -106,6 +107,7 @@ Namespace NCBI.PubChem
         Public Property Unit As String
         Public Property DateISO8601 As String
         Public Property [Boolean] As Boolean
+
     End Class
 
     Public Class StringWithMarkup

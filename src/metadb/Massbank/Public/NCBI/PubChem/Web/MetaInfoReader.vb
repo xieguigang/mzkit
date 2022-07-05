@@ -299,8 +299,8 @@ Namespace NCBI.PubChem
                     .Information _
                     .Select(Function(c)
                                 Return New CCS With {
-                                    .value = c.Value.ToString,
-                                    .reference = c.Reference
+                                    .value = any.ToString(c.InfoValue).stripMarkupString,
+                                    .reference = c.Reference.stripMarkupString
                                 }
                             End Function) _
                     .ToArray,
