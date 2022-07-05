@@ -72,10 +72,24 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
+    Public Interface IMzPackReader
+
+        ReadOnly Property EnumerateIndex As IEnumerable(Of String)
+        ''' <summary>
+        ''' the source file name of current raw data file
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property source As String
+
+        Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1
+        Function GetMetadata(id As String) As Dictionary(Of String, String)
+
+    End Interface
+
     ''' <summary>
     ''' the binary mzpack data reader
     ''' </summary>
-    Public Class BinaryStreamReader : Implements IMagicBlock
+    Public Class BinaryStreamReader : Implements IMagicBlock, IMzPackReader
         Implements IDisposable
 
         Dim disposedValue As Boolean
@@ -104,7 +118,7 @@ Namespace mzData.mzWebCache
         ''' get index key of all ms1 scan
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property EnumerateIndex As IEnumerable(Of String)
+        Public ReadOnly Property EnumerateIndex As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
             Get
                 Return index.Keys
             End Get
@@ -112,7 +126,7 @@ Namespace mzData.mzWebCache
 
         Public ReadOnly Property filepath As String
 
-        Public ReadOnly Property source As String
+        Public ReadOnly Property source As String Implements IMzPackReader.source
             Get
                 If filepath.StringEmpty Then
                     Return "n/a"
@@ -159,7 +173,7 @@ Namespace mzData.mzWebCache
         ''' <returns>
         ''' returns NULL if the meta data is not found
         ''' </returns>
-        Public Function GetMetadata(index As String) As Dictionary(Of String, String)
+        Public Function GetMetadata(index As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
             Return metadata.TryGetValue(index)
         End Function
 
@@ -288,7 +302,7 @@ Namespace mzData.mzWebCache
             TIC = file.ReadDouble
         End Sub
 
-        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
+        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
             ' metadata of a ms1 scan has already been read

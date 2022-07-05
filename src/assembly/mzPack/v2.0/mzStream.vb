@@ -15,7 +15,8 @@ Imports Microsoft.VisualBasic.ApplicationServices.Application
 ''' <summary>
 ''' mzPack format in HDS stream file
 ''' </summary>
-Public Class mzStream : Implements IDisposable
+Public Class mzStream : Implements IMzPackReader
+    Implements IDisposable
 
     ReadOnly pack As StreamPack
 
@@ -24,7 +25,8 @@ Public Class mzStream : Implements IDisposable
     Dim summary As Dictionary(Of String, Double)
 
     Public ReadOnly Property Application As FileApplicationClass
-    Public ReadOnly Property sourceName As String
+
+    Public ReadOnly Property sourceName As String Implements IMzPackReader.source
         Get
             Return meta.TryGetValue("source")
         End Get
@@ -34,7 +36,7 @@ Public Class mzStream : Implements IDisposable
     ''' get all ms1 scan id
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property MS1 As String()
+    Public ReadOnly Property MS1 As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
         Get
             Dim dir As StreamGroup = pack.GetObject("/MS/")
             Dim dirs = dir.files
@@ -49,6 +51,10 @@ Public Class mzStream : Implements IDisposable
         Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
     End Sub
 
+    ''' <summary>
+    ''' create a new version 2 mzpack file reader
+    ''' </summary>
+    ''' <param name="stream"></param>
     Sub New(stream As Stream)
         pack = New StreamPack(stream)
         Application = safeParseClassType()
@@ -78,23 +84,40 @@ Public Class mzStream : Implements IDisposable
         Return ms1
     End Function
 
-    Public Function ReadScan(scan_id As String) As ScanMS1
+    Public Function GetMetadata(scan_id As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
+        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+        Dim metadata As StreamObject = pack.GetObject(refer)
+        Dim meta As New Dictionary(Of String, String)
+
+        If metadata.hasAttributes Then
+            For Each tag As String In metadata.attributes
+                Call meta.Add(tag, metadata.GetAttribute(tag))
+            Next
+        End If
+
+        Return meta
+    End Function
+
+    Public Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
         Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/"
         Dim dir = pack.GetObject(refer)
         Dim n As Integer = dir.attributes.GetValue("products")
-        Dim id2 As String() = dir.attributes.GetValue("id")
+        Dim id2 As String() = Nothing
 
-        ms1.products = New ScanMS2(n - 1) {}
+        If Not skipProducts Then
+            id2 = dir.attributes.GetValue("id")
+            ms1.products = New ScanMS2(n - 1) {}
 
-        For i As Integer = 0 To n - 1
-            Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
-            Dim reader As New BinaryDataReader(buffer) With {
-                .ByteOrder = ByteOrder.LittleEndian
-            }
+            For i As Integer = 0 To n - 1
+                Dim buffer As Stream = pack.OpenBlock($"{refer}/{id2(i).MD5}.mz")
+                Dim reader As New BinaryDataReader(buffer) With {
+                    .ByteOrder = ByteOrder.LittleEndian
+                }
 
-            ms1.products(i) = Serialization.ReadScanMs2(reader)
-        Next
+                ms1.products(i) = Serialization.ReadScanMs2(reader)
+            Next
+        End If
 
         Return ms1
     End Function

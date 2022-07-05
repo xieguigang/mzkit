@@ -171,7 +171,15 @@ Module MzPackAccess
             Return buffer.TryCast(Of Message)
         End If
 
-        Return New mzPackReader(buffer.TryCast(Of Stream))
+        Dim ver As Integer = buffer.TryCast(Of Stream).GetFormatVersion
+
+        If ver = 1 Then
+            Return New mzPackReader(buffer.TryCast(Of Stream))
+        ElseIf ver = 2 Then
+            Return New mzStream(buffer.TryCast(Of Stream))
+        Else
+            Return Internal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
+        End If
     End Function
 
     ''' <summary>
