@@ -12,8 +12,22 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module mzStreamWriter
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <param name="meta_size">
+    ''' too small buffer size will make the data corrept
+    ''' if the tree size is greater than this buffer size 
+    ''' parameter value.
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
-    Public Function WriteStream(mzpack As mzPack, file As Stream, Optional meta_size As Long = 4 * 1024 * 1024) As Boolean
+    Public Function WriteStream(mzpack As mzPack,
+                                file As Stream,
+                                Optional meta_size As Long = 8 * 1024 * 1024) As Boolean
+
         Dim metadata As New Dictionary(Of String, String)
 
         Using pack As New StreamPack(file)
