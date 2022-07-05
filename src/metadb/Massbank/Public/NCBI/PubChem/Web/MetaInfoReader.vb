@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::df29207c9700d5338dc6f745e03145dd, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 194
-    '    Code Lines: 149
-    ' Comment Lines: 20
-    '   Blank Lines: 25
-    '     File Size: 7.41 KB
+' Summaries:
 
 
-    '     Module MetaInfoReader
-    ' 
-    '         Function: GetInform, GetInformList, GetMetaInfo, getSynonyms, navigateView
-    '                   removesDbEntry
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 194
+'    Code Lines: 149
+' Comment Lines: 20
+'   Blank Lines: 25
+'     File Size: 7.41 KB
+
+
+'     Module MetaInfoReader
+' 
+'         Function: GetInform, GetInformList, GetMetaInfo, getSynonyms, navigateView
+'                   removesDbEntry
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 Imports MetaInfo = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Namespace NCBI.PubChem
@@ -165,9 +166,9 @@ Namespace NCBI.PubChem
             Dim identifier As Section = view("Names and Identifiers")
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
-            Dim SMILES = view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0")
-            Dim InChIKey = descriptors("InChI Key").GetInformationString("#0")
-            Dim InChI = descriptors("InChI").GetInformationString("#0")
+            Dim SMILES As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0").InfoValue).stripMarkupString
+            Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
+            Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
             Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
@@ -198,7 +199,7 @@ Namespace NCBI.PubChem
                                                     Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
                                                 End Function),
                 .HMDB = view.Reference.GetHMDBId,
-                .SMILES = SMILES.InfoValue
+                .SMILES = SMILES
             }
             Dim commonName$ = view.RecordTitle
 
@@ -231,6 +232,11 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
+        Private Function stripMarkupString(str As String) As String
+            Return str.TrimNewLine.Trim.StringReplace("\s{2,}", " ")
+        End Function
+
+        <Extension>
         Private Iterator Function removesDbEntry(synonyms As String()) As IEnumerable(Of String)
             For Each name As String In synonyms
                 If name.IsPattern("\d+") Then
@@ -243,7 +249,7 @@ Namespace NCBI.PubChem
                     Continue For
                 End If
 
-                Yield name.TrimNewLine.Trim.StringReplace("\s{2,}", " ")
+                Yield name.stripMarkupString
             Next
         End Function
     End Module
