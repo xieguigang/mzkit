@@ -208,4 +208,9 @@ Module PubChemToolKit
 
         Return ls
     End Function
+
+    <ExportAPI("read.pugView")>
+    Public Function readPugViewXml(file As String) As PugViewRecord
+        Return file.LoadXml(Of PugViewRecord)
+    End Function
 End Module
