@@ -130,7 +130,6 @@ Namespace NCBI.PubChem
     Public Class Information
 
         Public Property ReferenceNumber As String
-        Public Property Name As String
         Public Property Description As String
 
         Public Property Value As Value
@@ -185,15 +184,15 @@ Namespace NCBI.PubChem
 
         Public Overrides Function ToString() As String
             If InfoType Is GetType(String()) Then
-                Return $"Dim {Name} As {InfoType.FullName} = {DirectCast(InfoValue, String()).GetJson}"
+                Return $"({InfoType.FullName}) {DirectCast(InfoValue, String()).GetJson}"
             Else
-                Return $"Dim {Name} As {InfoType.FullName} = {InfoValue}"
+                Return $"({InfoType.FullName}) {InfoValue}"
             End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(info As Information) As NamedValue(Of Object)
-            Return New NamedValue(Of Object)(info.Name, info.InfoValue, info.Description)
+            Return New NamedValue(Of Object)(info.ReferenceNumber, info.InfoValue, info.Description)
         End Operator
     End Class
 

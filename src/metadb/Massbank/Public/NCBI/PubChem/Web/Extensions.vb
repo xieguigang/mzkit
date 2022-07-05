@@ -138,11 +138,11 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Private Function matchName(i As Information, key$) As Boolean
+        Private Function matchReferenceNumber(i As Information, key$) As Boolean
             If key.StringEmpty Then
-                Return i.Name.StringEmpty
+                Return i.ReferenceNumber.StringEmpty
             Else
-                Return i.Name = key OrElse i.Name.TextEquals(key)
+                Return i.ReferenceNumber = key OrElse i.ReferenceNumber.TextEquals(key)
             End If
         End Function
 
@@ -168,9 +168,6 @@ Namespace NCBI.PubChem
                 Return section _
                     .Information _
                     .SafeQuery _
-                    .Where(Function(i)
-                               Return i.matchName(key)
-                           End Function) _
                     .ToArray
             Else
                 If key.IsPattern("[#]\d+") Then
@@ -186,9 +183,7 @@ Namespace NCBI.PubChem
                     Return section _
                         .Information _
                         .SafeQuery _
-                        .FirstOrDefault(Function(i)
-                                            Return i.matchName(key)
-                                        End Function)
+                        .FirstOrDefault
                 End If
             End If
         End Function
