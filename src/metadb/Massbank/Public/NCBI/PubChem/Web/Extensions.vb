@@ -199,10 +199,10 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Friend Function GetHMDBId(refs As Reference()) As String
+        Friend Function GetReferenceID(refs As Reference(), sourceName As String) As String
             Return refs.SafeQuery _
                 .FirstOrDefault(Function(ref)
-                                    Return ref.SourceName = PugViewRecord.HMDB
+                                    Return ref.SourceName = sourceName
                                 End Function) _
                ?.SourceID
         End Function

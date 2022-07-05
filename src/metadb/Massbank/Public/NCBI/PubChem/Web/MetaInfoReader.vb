@@ -172,7 +172,14 @@ Namespace NCBI.PubChem
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
             Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
-            ' Dim properties = Table.ToDictionary(computedProperties)
+            Dim taxon = view("Taxonomy") _
+                .GetInformation("*", multipleInfo:=True) _
+                .TryCast(Of Information()) _
+                .Where(Function(i) Not i.URL.StringEmpty) _
+                .Select(Function(i)
+                            Return any.ToString(i.InfoValue).stripMarkupString
+                        End Function) _
+                .ToArray
             Dim CASNumber$()
 
             If synonyms Is Nothing Then
@@ -198,8 +205,11 @@ Namespace NCBI.PubChem
                                                     ' KEGG编号是C开头,后面跟随5个数字
                                                     Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
                                                 End Function),
-                .HMDB = view.Reference.GetHMDBId,
-                .SMILES = SMILES
+                .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
+                .SMILES = SMILES,
+                .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
+                .ChEMBL = view.Reference.GetReferenceID("ChEMBL"),
+                .Wikipedia = view.Reference.GetReferenceID("Wikipedia")
             }
             Dim commonName$ = view.RecordTitle
 
@@ -227,7 +237,8 @@ Namespace NCBI.PubChem
                 .name = commonName,
                 .exact_mass = exact_mass,
                 .ID = view.RecordNumber,
-                .synonym = synonyms.removesDbEntry.ToArray
+                .synonym = synonyms.removesDbEntry.ToArray,
+                .organism = taxon
             }
         End Function
 

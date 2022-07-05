@@ -75,16 +75,7 @@ Namespace MetaLib.Models
 
 #End Region
 
-        ''' <summary>
-        ''' 仅限于人体内环境，这个化合物所存在的组织列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property tissue_locations As String()
-        ''' <summary>
-        ''' 仅限于人体内环境，这个化合物所存在的生物体液列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property biofluid_locations As String()
+        Public Property organism As String()
 
         ''' <summary>
         ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="xref.KEGG"/>
