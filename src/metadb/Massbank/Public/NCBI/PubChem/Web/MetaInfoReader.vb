@@ -183,7 +183,13 @@ Namespace NCBI.PubChem
                 .GetInformList("/Names and Identifiers/Synonyms/Depositor-Supplied Synonyms/*") _
                 .Select(Function(a) any.ToString(a.InfoValue).stripMarkupString) _
                 .ToArray
-            Dim tissues = view.GetInform("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations")?.Value?.StringWithMarkup.SafeQuery.Select(Function(a) a.String.stripMarkupString).ToArray
+            Dim tissues = view _
+                 .GetInform("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*") _
+                ?.Value _
+                ?.StringWithMarkup _
+                 .SafeQuery _
+                 .Select(Function(a) a.String.stripMarkupString) _
+                 .ToArray
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
