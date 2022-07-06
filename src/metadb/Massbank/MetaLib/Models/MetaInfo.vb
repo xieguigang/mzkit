@@ -75,7 +75,8 @@ Namespace MetaLib.Models
         <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double
 
         <MessagePackMember(3)> Public Property name As String
-
+        Public Property IUPACName As String
+        Public Property description As String
         <XmlElement>
         <MessagePackMember(4)> Public Property synonym As String()
 

@@ -1,0 +1,62 @@
+﻿[
+   	{
+		"cid": "5957",
+		"taxid": "9606",
+		"taxname": "Homo sapiens",
+		"dois": ["10.1007/S11306-016-1051-4","10.1007/S11306-015-0840-5"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q15978631",
+		"wikidataref": ["Q28601559","Q57014230"],
+		"cmpdname": "Adenosine-5'-triphosphate"
+	},
+	{
+		"cid": "5957",
+		"taxid": "3702",
+		"taxname": "Arabidopsis thaliana",
+		"dois": ["10.1111/TPJ.14594"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q158695",
+		"wikidataref": "Q91065373",
+		"cmpdname": "Adenosine-5'-triphosphate"
+	},
+	{
+		"cid": "5957",
+		"taxid": "4896",
+		"taxname": "Schizosaccharomyces pombe",
+		"dois": ["10.1039/C4MB00346B"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q2236682",
+		"wikidataref": "Q50466319",
+		"cmpdname": "Adenosine-5'-triphosphate"
+	},
+	{
+		"cid": "5957",
+		"taxid": "3055",
+		"taxname": "Chlamydomonas reinhardtii",
+		"dois": ["10.1074/JBC.M110.122812"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q291827",
+		"wikidataref": "Q34144713",
+		"cmpdname": "Adenosine-5'-triphosphate"
+	},
+	{
+		"cid": "5957",
+		"taxid": "7370",
+		"taxname": "Musca domestica",
+		"dois": ["10.1042/BJ0750038"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q166111",
+		"wikidataref": "Q41833100",
+		"cmpdname": "Adenosine-5'-triphosphate"
+	},
+	{
+		"cid": "5957",
+		"taxid": "4233",
+		"taxname": "Helianthus tuberosus",
+		"dois": ["10.1080/00021369.1967.10858790"],
+		"wikidatacmpd": "Q80863",
+		"wikidatataxon": "Q146190",
+		"wikidataref": "Q104982286",
+		"cmpdname": "Adenosine-5'-triphosphate"
+	}
+]

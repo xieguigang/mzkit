@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::86bef1e93dbd834281582480ee924277, mzkit\Rscript\Library\mzkit\PubChem.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 155
-    '    Code Lines: 118
-    ' Comment Lines: 13
-    '   Blank Lines: 24
-    '     File Size: 6.09 KB
+' Summaries:
 
 
-    ' Module PubChemToolKit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CID, ImageFlyGetImages, pubchemUrl, pugView, queryPubChem
-    '               ReadSIDMap, SIDMapTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 155
+'    Code Lines: 118
+' Comment Lines: 13
+'   Blank Lines: 24
+'     File Size: 6.09 KB
+
+
+' Module PubChemToolKit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CID, ImageFlyGetImages, pubchemUrl, pugView, queryPubChem
+'               ReadSIDMap, SIDMapTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -124,6 +125,18 @@ Module PubChemToolKit
         Next
 
         Return images
+    End Function
+
+    <ExportAPI("query.external")>
+    Public Function queryExternalMetadata(cid As String, Optional cache$ = "./pubchem/") As list
+        Dim query As New QueryPathways(cache)
+        Dim result As New list With {.slots = New Dictionary(Of String, Object)}
+
+        result.add("pathways", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.pathways)))
+        result.add("taxonomy", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.taxonomy)))
+        result.add("reaction", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.reaction)))
+
+        Return result
     End Function
 
     ''' <summary>

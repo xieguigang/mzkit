@@ -1,0 +1,22 @@
+﻿[
+   	{
+		"cid": "2244",
+		"taxid": "43503",
+		"taxname": "Ixora coccinea",
+		"dois": ["10.1016/J.BMCL.2010.10.058"],
+		"wikidatacmpd": "Q18216",
+		"wikidatataxon": "Q1856114",
+		"wikidataref": "Q39627968",
+		"cmpdname": "Aspirin"
+	},
+	{
+		"cid": "2244",
+		"taxid": "49827",
+		"taxname": "Glycyrrhiza glabra",
+		"dois": ["10.1021/NP50008A004"],
+		"wikidatacmpd": "Q18216",
+		"wikidatataxon": "Q257106",
+		"wikidataref": "Q71214999",
+		"cmpdname": "Aspirin"
+	}
+]

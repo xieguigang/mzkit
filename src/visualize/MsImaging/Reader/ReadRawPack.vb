@@ -65,6 +65,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -162,6 +163,8 @@ Namespace Reader
         End Function
 
         Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
+            Call RunSlavePipeline.SendMessage("create grid data...")
+
             Me.pixels = pixels _
                 .GroupBy(Function(p) p.X) _
                 .ToDictionary(Function(p) p.Key.ToString,
@@ -179,6 +182,8 @@ Namespace Reader
         End Function
 
         Private Overloads Sub ReadDimensions()
+            Call RunSlavePipeline.SendMessage("detect canvas dimensions...")
+
             Dim width As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.X)).Max
             Dim height As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.Y)).Max
 

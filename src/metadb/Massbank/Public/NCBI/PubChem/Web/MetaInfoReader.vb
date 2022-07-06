@@ -168,16 +168,35 @@ Namespace NCBI.PubChem
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
             Dim SMILES As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0").InfoValue).stripMarkupString
+            Dim IUPAC As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/IUPAC Name/#0").InfoValue).stripMarkupString
+            Dim desc As String() = view _
+                .GetInformList("/Names and Identifiers/Record Description/*") _
+                .Select(Function(i)
+                            Return any.ToString(i.InfoValue).stripMarkupString
+                        End Function) _
+                .ToArray
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
-            Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
+            Dim synonyms = identifier("Synonyms") _
+                .getSynonyms _
+                .Distinct _
+                .Select(Function(name) name.stripMarkupString) _
+                .OrderBy(Function(s) s) _
+                .ToArray
             Dim computedProperties As Section = view("Chemical and Physical Properties")("Computed Properties")
             Dim experimentProperties As Section = view("Chemical and Physical Properties")("Experimental Properties")
             Dim otherId = view _
                 .GetInformList("/Names and Identifiers/Synonyms/Depositor-Supplied Synonyms/*") _
                 .Select(Function(a) any.ToString(a.InfoValue).stripMarkupString) _
                 .ToArray
+            Dim tissues = view _
+                 .GetInform("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*") _
+                ?.Value _
+                ?.StringWithMarkup _
+                 .SafeQuery _
+                 .Select(Function(a) a.String.stripMarkupString) _
+                 .ToArray
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
@@ -209,16 +228,19 @@ Namespace NCBI.PubChem
                 .CAS = CASNumber,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
-                .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),
-                .KEGG = synonyms.FirstOrDefault(Function(id)
-                                                    ' KEGG编号是C开头,后面跟随5个数字
-                                                    Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
-                                                End Function),
+                .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
+                .KEGG = getXrefId(synonyms, otherId, Function(id)
+                                                         ' KEGG编号是C开头,后面跟随5个数字
+                                                         Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
+                                                     End Function),
                 .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
                 .SMILES = SMILES,
                 .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
-                .ChEMBL = otherId.Where(Function(id) id.StartsWith("ChEMBL")).FirstOrDefault,
-                .Wikipedia = wikipedia
+                .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
+                .Wikipedia = wikipedia,
+                .lipidmaps = view.Reference.GetReferenceID("LIPID MAPS"),
+                .MeSH = view.Reference.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
+                .ChemIDplus = view.Reference.GetReferenceID("ChemIDplus")
             }
             Dim commonName$ = view.RecordTitle
 
@@ -248,8 +270,22 @@ Namespace NCBI.PubChem
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray,
                 .organism = taxon,
-                .chemical = computedProperties.parseChemical(experimentProperties)
+                .chemical = computedProperties.parseChemical(experimentProperties),
+                .samples = tissues,
+                .IUPACName = IUPAC,
+                .description = desc.JoinBy(vbCrLf)
             }
+        End Function
+
+        <Extension>
+        Public Function getXrefId(synonyms As String(), otherId As String(), getId As Func(Of String, Boolean)) As String
+            Dim id As String = synonyms.Where(getId).FirstOrDefault
+
+            If id.StringEmpty Then
+                id = otherId.Where(getId).FirstOrDefault
+            End If
+
+            Return id
         End Function
 
         <Extension>
@@ -296,7 +332,7 @@ Namespace NCBI.PubChem
                 .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
                 .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*"),
                 .CCS = experiments("Collision Cross Section") _
-                    .Information _
+                   ?.Information _
                     .Select(Function(c)
                                 Return New CCS With {
                                     .value = any.ToString(c.InfoValue).stripMarkupString,
@@ -306,12 +342,12 @@ Namespace NCBI.PubChem
                     .ToArray,
                 .LogP = experiments("LogP").GetInformationNumber("*"),
                 .Solubility = experiments("Solubility") _
-                    .Information _
+                   ?.Information _
                     .Where(Function(a) Not a.UnitValue Is Nothing) _
                     .Select(Function(a) a.UnitValue) _
                     .FirstOrDefault,
                 .MeltingPoint = experiments("Melting Point") _
-                    .Information _
+                   ?.Information _
                     .Where(Function(a) Not a.UnitValue Is Nothing) _
                     .Select(Function(a) a.UnitValue) _
                     .FirstOrDefault

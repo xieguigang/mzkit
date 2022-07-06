@@ -87,6 +87,7 @@ Namespace MetaLib.Models
         ''' </summary>
         ''' <returns></returns>
         Public Property pathways As String()
+        Public Property samples As String()
 
         Public Overrides Function ToString() As String
             Return name
