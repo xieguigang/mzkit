@@ -171,7 +171,12 @@ Namespace NCBI.PubChem
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
-            Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
+            Dim synonyms = identifier("Synonyms") _
+                .getSynonyms _
+                .Distinct _
+                .Select(Function(name) name.stripMarkupString) _
+                .OrderBy(Function(s) s) _
+                .ToArray
             Dim computedProperties As Section = view("Chemical and Physical Properties")("Computed Properties")
             Dim experimentProperties As Section = view("Chemical and Physical Properties")("Experimental Properties")
             Dim otherId = view _
@@ -209,15 +214,15 @@ Namespace NCBI.PubChem
                 .CAS = CASNumber,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
-                .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),
-                .KEGG = synonyms.FirstOrDefault(Function(id)
-                                                    ' KEGG编号是C开头,后面跟随5个数字
-                                                    Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
-                                                End Function),
+                .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
+                .KEGG = getXrefId(synonyms, otherId, Function(id)
+                                                         ' KEGG编号是C开头,后面跟随5个数字
+                                                         Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
+                                                     End Function),
                 .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
                 .SMILES = SMILES,
                 .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
-                .ChEMBL = otherId.Where(Function(id) id.StartsWith("ChEMBL")).FirstOrDefault,
+                .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
                 .Wikipedia = wikipedia
             }
             Dim commonName$ = view.RecordTitle
@@ -250,6 +255,17 @@ Namespace NCBI.PubChem
                 .organism = taxon,
                 .chemical = computedProperties.parseChemical(experimentProperties)
             }
+        End Function
+
+        <Extension>
+        Public Function getXrefId(synonyms As String(), otherId As String(), getId As Func(Of String, Boolean)) As String
+            Dim id As String = synonyms.Where(getId).FirstOrDefault
+
+            If id.StringEmpty Then
+                id = otherId.Where(getId).FirstOrDefault
+            End If
+
+            Return id
         End Function
 
         <Extension>
