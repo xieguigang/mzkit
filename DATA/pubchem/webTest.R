@@ -4,5 +4,6 @@ require(mzkit);
 
 options(pubchem.http_cache = `${dirname(@script)}/.pubchem`);
 
-print(pubchem_meta("56-65-5"));
 print(pubchem_meta("aspirin"));
+print(pubchem_meta("56-65-5"));
+
