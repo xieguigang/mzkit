@@ -223,7 +223,8 @@ Namespace NCBI.PubChem
                 .SMILES = SMILES,
                 .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
                 .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
-                .Wikipedia = wikipedia
+                .Wikipedia = wikipedia,
+                .lipidmaps = view.Reference.GetReferenceID("LIPID MAPS")
             }
             Dim commonName$ = view.RecordTitle
 

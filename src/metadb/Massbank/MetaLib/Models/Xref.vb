@@ -92,6 +92,7 @@ Namespace MetaLib.Models
         <MessagePackMember(5)> Public Property DrugBank As String
         Public Property ChEMBL As String
         <MessagePackMember(5)> Public Property Wikipedia As String
+        Public Property lipidmaps As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
