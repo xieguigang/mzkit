@@ -39,6 +39,7 @@
     "molecular_framework": null,
     "organism": [],
     "pathways": null,
+    "samples": null,
     "ID": "128861",
     "formula": "C15H11O6+",
     "exact_mass": 287.05556307,
@@ -94,6 +95,8 @@
         "ChEMBL": null,
         "Wikipedia": "Cyanidin",
         "lipidmaps": "LMPK12010002",
+        "MeSH": "cyanidin",
+        "ChemIDplus": "0013306053",
         "CAS": [
             "13306-05-3",
             "13306-05-3",

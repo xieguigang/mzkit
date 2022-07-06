@@ -183,6 +183,7 @@ Namespace NCBI.PubChem
                 .GetInformList("/Names and Identifiers/Synonyms/Depositor-Supplied Synonyms/*") _
                 .Select(Function(a) any.ToString(a.InfoValue).stripMarkupString) _
                 .ToArray
+            Dim tissues = view.GetInform("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations")?.Value?.StringWithMarkup.SafeQuery.Select(Function(a) a.String.stripMarkupString).ToArray
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
@@ -225,7 +226,7 @@ Namespace NCBI.PubChem
                 .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
                 .Wikipedia = wikipedia,
                 .lipidmaps = view.Reference.GetReferenceID("LIPID MAPS"),
-                .MeSH = view.Reference.GetReferenceID("Medical Subject Headings (MeSH)"),
+                .MeSH = view.Reference.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
                 .ChemIDplus = view.Reference.GetReferenceID("ChemIDplus")
             }
             Dim commonName$ = view.RecordTitle
@@ -256,7 +257,8 @@ Namespace NCBI.PubChem
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray,
                 .organism = taxon,
-                .chemical = computedProperties.parseChemical(experimentProperties)
+                .chemical = computedProperties.parseChemical(experimentProperties),
+                .samples = tissues
             }
         End Function
 
