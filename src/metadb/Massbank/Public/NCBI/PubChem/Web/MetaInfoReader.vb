@@ -169,7 +169,12 @@ Namespace NCBI.PubChem
             Dim descriptors = identifier("Computed Descriptors")
             Dim SMILES As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0").InfoValue).stripMarkupString
             Dim IUPAC As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/IUPAC Name/#0").InfoValue).stripMarkupString
-            Dim desc As String() = view.GetInformList("/Names and Identifiers/Record Description").Select(Function(i) any.ToString(i.InfoValue).stripMarkupString).ToArray
+            Dim desc As String() = view _
+                .GetInformList("/Names and Identifiers/Record Description/*") _
+                .Select(Function(i)
+                            Return any.ToString(i.InfoValue).stripMarkupString
+                        End Function) _
+                .ToArray
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
