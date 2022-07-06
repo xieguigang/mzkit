@@ -209,7 +209,7 @@ Namespace NCBI.PubChem
         Friend Function GetReferenceID(refs As Reference(), sourceName As String) As String
             Return refs.SafeQuery _
                 .FirstOrDefault(Function(ref)
-                                    Return ref.SourceName = sourceName
+                                    Return ref.SourceName = sourceName AndAlso ref.Name.Match("\s+Tree", RegexICSng).StringEmpty
                                 End Function) _
                ?.SourceID
         End Function
