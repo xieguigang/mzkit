@@ -312,7 +312,7 @@ Namespace NCBI.PubChem
                 .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
                 .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*"),
                 .CCS = experiments("Collision Cross Section") _
-                    .Information _
+                   ?.Information _
                     .Select(Function(c)
                                 Return New CCS With {
                                     .value = any.ToString(c.InfoValue).stripMarkupString,
@@ -322,12 +322,12 @@ Namespace NCBI.PubChem
                     .ToArray,
                 .LogP = experiments("LogP").GetInformationNumber("*"),
                 .Solubility = experiments("Solubility") _
-                    .Information _
+                   ?.Information _
                     .Where(Function(a) Not a.UnitValue Is Nothing) _
                     .Select(Function(a) a.UnitValue) _
                     .FirstOrDefault,
                 .MeltingPoint = experiments("Melting Point") _
-                    .Information _
+                   ?.Information _
                     .Where(Function(a) Not a.UnitValue Is Nothing) _
                     .Select(Function(a) a.UnitValue) _
                     .FirstOrDefault
