@@ -1,60 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7507954e66f93ff19438a98c5feb76dd, mzkit\src\metadb\Massbank\MetaLib\Models\MetaLib.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 61
-    '    Code Lines: 30
-    ' Comment Lines: 21
-    '   Blank Lines: 10
-    '     File Size: 2.26 KB
+' Summaries:
 
 
-    '     Class MetaLib
-    ' 
-    '         Properties: [class], biofluid_locations, kingdom, molecular_framework, pathways
-    '                     sub_class, super_class, tissue_locations
-    ' 
-    '         Function: Equals, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 61
+'    Code Lines: 30
+' Comment Lines: 21
+'   Blank Lines: 10
+'     File Size: 2.26 KB
+
+
+'     Class MetaLib
+' 
+'         Properties: [class], biofluid_locations, kingdom, molecular_framework, pathways
+'                     sub_class, super_class, tissue_locations
+' 
+'         Function: Equals, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports BioNovoGene.BioDeep.Chemoinformatics
 
 Namespace MetaLib.Models
 
@@ -64,6 +66,8 @@ Namespace MetaLib.Models
     Public Class MetaLib : Inherits MetaInfo
         Implements IEquatable(Of MetaLib)
         Implements ICompoundClass
+
+        Public Property chemical As ChemicalDescriptor
 
 #Region "化合物分类"
 
@@ -75,16 +79,7 @@ Namespace MetaLib.Models
 
 #End Region
 
-        ''' <summary>
-        ''' 仅限于人体内环境，这个化合物所存在的组织列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property tissue_locations As String()
-        ''' <summary>
-        ''' 仅限于人体内环境，这个化合物所存在的生物体液列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property biofluid_locations As String()
+        Public Property organism As String()
 
         ''' <summary>
         ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="xref.KEGG"/>

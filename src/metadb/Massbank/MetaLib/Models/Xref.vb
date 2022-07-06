@@ -89,6 +89,8 @@ Namespace MetaLib.Models
         <MessagePackMember(2)> Public Property pubchem As String
         <MessagePackMember(3)> Public Property HMDB As String
         <MessagePackMember(4)> Public Property metlin As String
+        <MessagePackMember(5)> Public Property DrugBank As String
+        Public Property ChEMBL As String
         <MessagePackMember(5)> Public Property Wikipedia As String
         ''' <summary>
         ''' Multiple CAS id may exists

@@ -70,6 +70,7 @@ Namespace NCBI.PubChem
         Public Property Reference As Reference()
 
         Public Const HMDB$ = "Human Metabolome Database (HMDB)"
+        Public Const DrugBank$ = "DrugBank"
 
         Public Overrides Function ToString() As String
             Return RecordNumber
