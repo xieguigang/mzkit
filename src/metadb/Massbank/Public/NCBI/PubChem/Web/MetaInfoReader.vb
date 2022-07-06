@@ -168,6 +168,8 @@ Namespace NCBI.PubChem
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
             Dim SMILES As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0").InfoValue).stripMarkupString
+            Dim IUPAC As String = any.ToString(view.GetInform("/Names and Identifiers/Computed Descriptors/IUPAC Name/#0").InfoValue).stripMarkupString
+            Dim desc As String() = view.GetInformList("/Names and Identifiers/Record Description").Select(Function(i) any.ToString(i.InfoValue).stripMarkupString).ToArray
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
@@ -264,7 +266,9 @@ Namespace NCBI.PubChem
                 .synonym = synonyms.removesDbEntry.ToArray,
                 .organism = taxon,
                 .chemical = computedProperties.parseChemical(experimentProperties),
-                .samples = tissues
+                .samples = tissues,
+                .IUPACName = IUPAC,
+                .description = desc.JoinBy(vbCrLf)
             }
         End Function
 
