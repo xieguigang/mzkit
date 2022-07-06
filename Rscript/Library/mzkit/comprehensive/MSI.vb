@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
@@ -82,6 +83,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
+''' <summary>
+''' MS-Imaging data handler
+''' </summary>
 <Package("MSI")>
 Module MSI
 
@@ -108,6 +112,30 @@ Module MSI
         Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
 
         Return table
+    End Function
+
+    <ExportAPI("as.layer")>
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function asMSILayer(pixels As PixelData(),
+                               Optional context As String = "MSIlayer",
+                               <RRawVectorArgument>
+                               Optional dims As Object = Nothing,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim size As String = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
+
+        If size = "0,0" Then
+            Dim w = Aggregate px In pixels Into Max(px.x)
+            Dim h = Aggregate py In pixels Into Max(py.y)
+
+            size = $"{w},{h}"
+        End If
+
+        Return New SingleIonLayer With {
+            .DimensionSize = size.SizeParser,
+            .IonMz = context,
+            .MSILayer = pixels.ToArray
+        }
     End Function
 
     ''' <summary>
@@ -446,7 +474,11 @@ Module MSI
     End Function
 
     <ExportAPI("peakMatrix")>
-    Public Function PeakMatrix(raw As mzPack, Optional topN As Integer = 3, Optional mzError As Object = "da:0.05", Optional env As Environment = Nothing) As Object
+    Public Function PeakMatrix(raw As mzPack,
+                               Optional topN As Integer = 3,
+                               Optional mzError As Object = "da:0.05",
+                               Optional env As Environment = Nothing) As Object
+
         Dim err = Math.getTolerance(mzError, env)
 
         If err Like GetType(Message) Then
