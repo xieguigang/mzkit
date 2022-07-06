@@ -1,0 +1,1342 @@
+﻿[
+   	{
+		"cid": "128861",
+		"taxid": "1867339",
+		"taxname": "Cyperus sesquiflorus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q98713492",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "76410",
+		"taxname": "Actinoscirpus grossus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q13012433",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1914845",
+		"taxname": "Schoenus unispiculatus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15559531",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "110284",
+		"taxname": "Eleocharis dulcis",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q932664",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "388575",
+		"taxname": "Machaerina rubiginosa",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15550306",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269565",
+		"taxname": "Bolboschoenus caldwellii",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15558837",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1914811",
+		"taxname": "Schoenus ericetorum",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15559336",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1914837",
+		"taxname": "Schoenus sparteus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15559543",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "435689",
+		"taxname": "Trachystylis stradbrokensis",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15565106",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "140581",
+		"taxname": "Carpha alpina",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15581483",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224677",
+		"taxname": "Carpha nivicola",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583153",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224684",
+		"taxname": "Cyathochaeta diandra",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583301",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "110296",
+		"taxname": "Eleocharis pallens",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583623",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "372386",
+		"taxname": "Eleocharis sphacelata",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583929",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "863326",
+		"taxname": "Eleocharis dietrichiana",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15584157",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "76426",
+		"taxname": "Caustis dioica",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15584560",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "241637",
+		"taxname": "Exocarya sclerioides",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15585110",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "316508",
+		"taxname": "Schoenoplectus tabernaemontani",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q159018",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269556",
+		"taxname": "Fimbristylis pachyptera",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15585283",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269595",
+		"taxname": "Fimbristylis schultzii",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15586055",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "2814769",
+		"taxname": "Isolepis nigricans",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15590041",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224688",
+		"taxname": "Gymnoschoenus sphaerocephalus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q749742",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "130949",
+		"taxname": "Isolepis inundata",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q6085994",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "372397",
+		"taxname": "Lepidosperma laterale",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q6527696",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269567",
+		"taxname": "Bulbostylis densa",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q10871268",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "372401",
+		"taxname": "Schoenus brevifolius",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q7431985",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "388567",
+		"taxname": "Cyperus iria",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q42068",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1914812",
+		"taxname": "Schoenus falcatus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15239732",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "372400",
+		"taxname": "Schoenus apogon",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15249862",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "882628",
+		"taxname": "Schoenus calostachyus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15251435",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "180965",
+		"taxname": "Cyperus congestus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q5882831",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224689",
+		"taxname": "Oreobolus distichus",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15550351",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224690",
+		"taxname": "Oreobolus pumilio",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15550751",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1735510",
+		"taxname": "Scleria mackaviensis",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15562750",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1735542",
+		"taxname": "Scleria sphacelata",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15563779",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269574",
+		"taxname": "Eleocharis cylindrostachys",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15582851",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "178435",
+		"taxname": "Chorizandra cymbaria",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583172",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "241640",
+		"taxname": "Chorizandra sphaerocephala",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583674",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "679958",
+		"taxname": "Eleocharis brassii",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15583718",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "110288",
+		"taxname": "Eleocharis geniculata",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q5359215",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1651857",
+		"taxname": "Gahnia radula",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q5516935",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224686",
+		"taxname": "Gahnia sieberiana",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q5516937",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "76444",
+		"taxname": "Fimbristylis dichotoma",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q10871438",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "269589",
+		"taxname": "Fimbristylis nutans",
+		"dois": ["10.1016/S0031-9422(00)84889-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q10929007",
+		"wikidataref": "Q104846780",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237927",
+		"taxname": "Viburnum carlesii",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q861485",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237959",
+		"taxname": "Viburnum tinus",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q1321268",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237932",
+		"taxname": "Viburnum davidii",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q12027723",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1190426",
+		"taxname": "Viburnum buddleifolium",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15232298",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "432676",
+		"taxname": "Viburnum macrocephalum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15232320",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "179996",
+		"taxname": "Viburnum plicatum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q2723742",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1220046",
+		"taxname": "Viburnum corylifolium",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q17434342",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1444319",
+		"taxname": "Viburnum foetens",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q17434767",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1444320",
+		"taxname": "Viburnum grandiflorum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q10937596",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "61590",
+		"taxname": "Viburnum lentago",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q3321544",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237955",
+		"taxname": "Viburnum rafinesquianum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q104385635",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "224736",
+		"taxname": "Viburnum betulifolium",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q11113571",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "85293",
+		"taxname": "Viburnum opulus",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q156928",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237945",
+		"taxname": "Viburnum lantana",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158508",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237931",
+		"taxname": "Viburnum cylindricum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q11130455",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "185767",
+		"taxname": "Hydrangea aspera",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q1332124",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "860753",
+		"taxname": "Hydrangea heteromalla",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q1073920",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "446156",
+		"taxname": "Viburnum cotinifolium",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q11177675",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "61589",
+		"taxname": "Viburnum dentatum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q4115036",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "436500",
+		"taxname": "Viburnum foetidum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15232289",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237947",
+		"taxname": "Viburnum lobophyllum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15232317",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "432677",
+		"taxname": "Viburnum mongolicum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15232321",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "432680",
+		"taxname": "Viburnum sympodiale",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q10916977",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "152289",
+		"taxname": "Hydrangea anomala",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q148137",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "52833",
+		"taxname": "Hydrangea paniculata",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158443",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "237939",
+		"taxname": "Viburnum farreri",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q3498187",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "47689",
+		"taxname": "Viburnum rhytidophyllum",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q180606",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "60124",
+		"taxname": "Hydrangea quercifolia",
+		"dois": ["10.1016/S0031-9422(00)94161-X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q368161",
+		"wikidataref": "Q104385630",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "260142",
+		"taxname": "Syzygium cumini",
+		"dois": ["10.1016/S2221-1691(12)60050-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q232571",
+		"wikidataref": "Q31114936",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1193841",
+		"taxname": "Pinus brutia var. eldarica",
+		"dois": ["10.1016/S0305-1978(97)00049-5"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q24764435",
+		"wikidataref": "Q58156753",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "88726",
+		"taxname": "Pinus brutia",
+		"dois": ["10.1016/S0305-1978(97)00049-5"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q628329",
+		"wikidataref": "Q58156753",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "71633",
+		"taxname": "Pinus halepensis",
+		"dois": ["10.1016/S0305-1978(97)00049-5"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q211457",
+		"wikidataref": "Q58156753",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "22663",
+		"taxname": "Punica granatum",
+		"dois": ["10.1016/J.JEP.2006.09.006","10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q13188",
+		"wikidataref": ["Q36678093","Q104838291"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "32247",
+		"taxname": "Rubus idaeus",
+		"dois": ["10.1021/JF049450R","10.1111/J.1365-2621.1993.TB06132.X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q12252383",
+		"wikidataref": ["Q45082433","Q104386865"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "57936",
+		"taxname": "Rubus chamaemorus",
+		"dois": ["10.1021/JF049450R"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q160092",
+		"wikidataref": "Q45082433",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3906",
+		"taxname": "Vicia faba",
+		"dois": ["10.1139/B89-200"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q131342",
+		"wikidataref": "Q104385675",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "4397",
+		"taxname": "Hamamelis virginiana",
+		"dois": ["10.1007/BF02323304"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q913129",
+		"wikidataref": "Q104847975",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3726",
+		"taxname": "Raphanus sativus",
+		"dois": ["10.3390/NU11020402"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q7224565",
+		"wikidataref": "Q64256930",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3702",
+		"taxname": "Arabidopsis thaliana",
+		"dois": ["10.1046/J.1365-313X.2003.01834.X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158695",
+		"wikidataref": "Q44563358",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "85856",
+		"taxname": "Magnolia denudata",
+		"dois": ["10.3390/MOLECULES23071558"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q794061",
+		"wikidataref": "Q64883893",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3403",
+		"taxname": "Magnolia liliiflora",
+		"dois": ["10.3390/MOLECULES23071558"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q942031",
+		"wikidataref": "Q64883893",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "4146",
+		"taxname": "Olea europaea",
+		"dois": ["10.1016/S0003-2670(01)01241-7"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q37083",
+		"wikidataref": "Q104385546",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3631",
+		"taxname": "Abutilon theophrasti",
+		"dois": ["10.1007/BF01012523"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q606369",
+		"wikidataref": "Q86844843",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "323115",
+		"taxname": "Petunia exserta",
+		"dois": ["10.1016/S0031-9422(99)00026-6"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q7179423",
+		"wikidataref": "Q59662775",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3885",
+		"taxname": "Phaseolus vulgaris",
+		"dois": ["10.1016/J.FOODCHEM.2004.11.038"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q42339",
+		"wikidataref": "Q104908889",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "180763",
+		"taxname": "Vaccinium myrtillus",
+		"dois": ["10.1016/0031-9422(75)85197-1","10.1076/PHBI.37.2.109.6091","10.1016/S0731-7085(00)00264-8","10.1016/0003-2670(92)85082-H"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q5413585",
+		"wikidataref": ["Q105130214","Q63385959","Q74012136","Q104387022"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "388205",
+		"taxname": "Penstemon serrulatus",
+		"dois": ["10.1515/ZNC-1997-7-803"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q17514290",
+		"wikidataref": "Q104846516",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "218388",
+		"taxname": "Salix lanata",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q163574",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "75707",
+		"taxname": "Salix bebbiana",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q2578880",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "77062",
+		"taxname": "Salix exigua",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q2060469",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "77069",
+		"taxname": "Salix triandra",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q157532",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "75704",
+		"taxname": "Salix alba",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q156918",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "77063",
+		"taxname": "Salix fragilis",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q157518",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "470278",
+		"taxname": "Salix cinerea",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q157540",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "40686",
+		"taxname": "Salix viminalis",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158590",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "172267",
+		"taxname": "Salix caprea",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q159565",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "1087216",
+		"taxname": "Salix candida",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q7404892",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "75712",
+		"taxname": "Salix interior",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q6117348",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "77065",
+		"taxname": "Salix purpurea",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q39708",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "470269",
+		"taxname": "Salix phylicifolia",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q1425243",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "75706",
+		"taxname": "Salix babylonica",
+		"dois": ["10.1016/S0031-9422(00)85563-6","10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q156307",
+		"wikidataref": ["Q104386221","Q104851025"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "75715",
+		"taxname": "Salix pentandra",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158912",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "339964",
+		"taxname": "Salix myrsinifolia",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q159122",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "470274",
+		"taxname": "Salix daphnoides",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q159476",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "395313",
+		"taxname": "Salix arctica",
+		"dois": ["10.1016/S0031-9422(00)88609-4"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q674096",
+		"wikidataref": "Q104851025",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "77064",
+		"taxname": "Salix herbacea",
+		"dois": ["10.1016/S0031-9422(00)85563-6"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q163578",
+		"wikidataref": "Q104386221",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "4151",
+		"taxname": "Antirrhinum majus",
+		"dois": ["10.1515/ZNC-1983-11-1201"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q156843",
+		"wikidataref": "Q105001369",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3724",
+		"taxname": "Matthiola incana",
+		"dois": ["10.1515/ZNC-1983-11-1201","10.1515/ZNC-1983-7-810"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q30063",
+		"wikidataref": ["Q105001369","Q104972022"],
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "13750",
+		"taxname": "Vaccinium macrocarpon",
+		"dois": ["10.1081/JLC-120027089"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q149397",
+		"wikidataref": "Q104387371",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "43364",
+		"taxname": "Aesculus hippocastanum",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q26899",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "180772",
+		"taxname": "Vaccinium vitis-idaea",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q93235",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "283210",
+		"taxname": "Malus pumila",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158657",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3435",
+		"taxname": "Persea americana",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q37153",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3750",
+		"taxname": "Malus domestica",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q18674606",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "407979",
+		"taxname": "Rhododendron rubiginosum",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q7321163",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "49628",
+		"taxname": "Rhododendron ponticum",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q557928",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "175201",
+		"taxname": "Ribes sanguineum",
+		"dois": ["10.1016/0031-9422(75)85197-1"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q149372",
+		"wikidataref": "Q105130214",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "3311",
+		"taxname": "Ginkgo biloba",
+		"dois": ["10.5650/JOS1996.48.719"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q43284",
+		"wikidataref": "Q104386306",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "140997",
+		"taxname": "Crataegus monogyna",
+		"dois": ["10.1016/S0031-9422(00)90397-2"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q161511",
+		"wikidataref": "Q104386572",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "165299",
+		"taxname": "Cissus discolor",
+		"dois": ["10.1111/J.1365-2621.1983.TB09238.X"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q87599449",
+		"wikidataref": "Q104387187",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "714648",
+		"taxname": "Rubus cochinchinensis",
+		"dois": ["10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15230600",
+		"wikidataref": "Q104838291",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "211815",
+		"taxname": "Rubus plicatus",
+		"dois": ["10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q15699806",
+		"wikidataref": "Q104838291",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "35925",
+		"taxname": "Diospyros kaki",
+		"dois": ["10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158482",
+		"wikidataref": "Q104838291",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "36610",
+		"taxname": "Cydonia oblonga",
+		"dois": ["10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q43300",
+		"wikidataref": "Q104838291",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "205042",
+		"taxname": "Acacia dealbata",
+		"dois": ["10.1007/BF00597820"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q757123",
+		"wikidataref": "Q104838291",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "74630",
+		"taxname": "Rosa spinosissima",
+		"dois": ["10.1007/BF00713334"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158359",
+		"wikidataref": "Q104386614",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "42229",
+		"taxname": "Prunus avium",
+		"dois": ["10.1371/JOURNAL.PONE.0121164"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q165137",
+		"wikidataref": "Q35584358",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "510735",
+		"taxname": "Crataegus pinnatifida",
+		"dois": ["10.1021/JF1049062"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q1141735",
+		"wikidataref": "Q42812945",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "367337",
+		"taxname": "Cornus alba",
+		"dois": ["10.1016/J.PHYTOCHEM.2006.11.028"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q158228",
+		"wikidataref": "Q50709495",
+		"cmpdname": "Cyanidin"
+	},
+	{
+		"cid": "128861",
+		"taxid": "179117",
+		"taxname": "Cornus sericea",
+		"dois": ["10.1016/J.PHYTOCHEM.2006.11.028"],
+		"wikidatacmpd": "Q417606",
+		"wikidatataxon": "Q164130",
+		"wikidataref": "Q50709495",
+		"cmpdname": "Cyanidin"
+	}
+]
