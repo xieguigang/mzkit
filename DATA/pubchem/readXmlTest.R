@@ -10,6 +10,13 @@ str(demo);
 
 str(demo$synonym);
 
+
+ext =  query.external(demo$"ID", cache = `${@dir}/pubchem/ext`) |> lapply(json_decode);
+
+demo$pathways = ext$pathways;
+demo$organism = ext$taxonomy;
+demo$reaction = ext$reaction;
+
 demo 
 |> json_encode()
 |> writeLines(con = saveName);
