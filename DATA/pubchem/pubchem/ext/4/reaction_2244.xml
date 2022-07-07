@@ -1,0 +1,45 @@
+﻿[
+   	{
+		"name": "Nsp9 interactions (COVID-19 Disease Map)",
+		"source": "COVID-19 Disease Map",
+		"externalid": "736",
+		"url": "https://fairdomhub.org/models/736",
+		"definition": "Acetylsalicylic acid + EDNRA ⟶ EDNRAcetComp",
+		"reaction": "<a href='https://pubchem.ncbi.nlm.nih.gov/compound/2244'>Acetylsalicylic acid</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/protein/P25101'>EDNRA</a> ⟶ EDNRAcetComp",
+		"cids": [2244],
+		"protacxns": ["P25101"],
+		"geneids": [1909],
+		"taxid": "9606",
+		"taxname": "Homo sapiens (human)",
+		"pmids": [10727528],
+		"cidsreactant": "2244"
+	},
+	{
+		"name": "Drug ADME",
+		"source": "Reactome",
+		"externalid": "R-HSA-9748784",
+		"url": "https://reactome.org/content/detail/R-HSA-9748784",
+		"definition": "ASA + H2O ⟶ ASA- + H+ + H2O",
+		"reaction": "<a href='https://pubchem.ncbi.nlm.nih.gov/compound/2244'>ASA</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/962'>H2O</a> ⟶ <a href='https://pubchem.ncbi.nlm.nih.gov/compound/1038'>H+</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/3434975'>ASA-</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/962'>H2O</a>",
+		"cids": [1038,2244,3434975,962],
+		"taxid": "9606",
+		"taxname": "Homo sapiens (human)",
+		"pmids": [13929721,22674043],
+		"cidsreactant": ["2244","962"],
+		"cidsproduct": ["1038","3434975","962"]
+	},
+	{
+		"name": "Aspirin ADME",
+		"source": "Reactome",
+		"externalid": "R-HSA-9749641",
+		"url": "https://reactome.org/content/detail/R-HSA-9749641",
+		"definition": "ASA + H2O ⟶ ASA- + H+ + H2O",
+		"reaction": "<a href='https://pubchem.ncbi.nlm.nih.gov/compound/2244'>ASA</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/962'>H2O</a> ⟶ <a href='https://pubchem.ncbi.nlm.nih.gov/compound/1038'>H+</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/3434975'>ASA-</a> + <a href='https://pubchem.ncbi.nlm.nih.gov/compound/962'>H2O</a>",
+		"cids": [1038,2244,3434975,962],
+		"taxid": "9606",
+		"taxname": "Homo sapiens (human)",
+		"pmids": [13929721,22674043],
+		"cidsreactant": ["2244","962"],
+		"cidsproduct": ["1038","3434975","962"]
+	}
+]

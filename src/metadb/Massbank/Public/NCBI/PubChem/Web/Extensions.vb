@@ -206,12 +206,19 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Friend Function GetReferenceID(refs As Reference(), sourceName As String) As String
-            Return refs.SafeQuery _
+        Friend Function GetReferenceID(refs As Reference(), sourceName As String, Optional name As Boolean = False) As String
+            Dim refObj = refs.SafeQuery _
                 .FirstOrDefault(Function(ref)
-                                    Return ref.SourceName = sourceName
-                                End Function) _
-               ?.SourceID
+                                    Return ref.SourceName = sourceName AndAlso ref.Name.Match("\s+Tree", RegexICSng).StringEmpty
+                                End Function)
+
+            If refObj Is Nothing Then
+                Return Nothing
+            ElseIf name Then
+                Return refObj.Name
+            Else
+                Return refObj.SourceID
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

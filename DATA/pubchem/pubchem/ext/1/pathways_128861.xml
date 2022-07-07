@@ -1,0 +1,47 @@
+﻿[
+   	{
+		"taxname": "Arabidopsis thaliana (thale cress)",
+		"pwacc": "WikiPathways:WP3620",
+		"name": "Flavonoid pathway",
+		"pwtype": "organism_specific",
+		"url": "https://www.wikipathways.org/index.php/Pathway:WP3620",
+		"source": "WikiPathways",
+		"srcid": "5",
+		"externalid": "WP3620",
+		"extid": "WP3620",
+		"taxid": "3702",
+		"core": "1",
+		"cids": [122850,128861,161172,5280863,5280960,6440013],
+		"pmids": [23473981]
+	},
+	{
+		"taxname": "Arabidopsis thaliana (thale cress)",
+		"pwacc": "WikiPathways:WP3622",
+		"name": "AtMetExpress overview",
+		"pwtype": "organism_specific",
+		"url": "https://www.wikipathways.org/index.php/Pathway:WP3622",
+		"source": "WikiPathways",
+		"srcid": "5",
+		"externalid": "WP3622",
+		"extid": "WP3622",
+		"taxid": "3702",
+		"core": "1",
+		"cids": [51,119,239,243,311,338,649,700,724,743,750,787,892,938,970,985,1005,1045,1060,1102,1110,1150,1174,1198,2526,5281,5610,5779,5862,5950,5951,5958,5960,5961,5962,5988,5997,6057,6106,6137,6140,6262,6267,6274,6287,6288,6305,6306,6322,6508,7427,7618,8742,10267,10690,11005,11197,12647,14985,25310,33032,34756,64689,67678,69507,84740,91552,92133,107689,107737,124886,128861,135191,145742,173183,185698,222284,439162,439194,439242,439709,440667,444173,444493,444972,643757,656523,656525,656531,656539,656541,656545,689043,5280343,5280435,5280450,5280459,5280794,5280863,5280934,5281654,5460407,5486199,6325870,9882882,10197243,10991489,11727586,54670067],
+		"pmids": [25342293]
+	},
+	{
+		"taxname": "Oryza sativa (Asian cultivated rice)",
+		"pwacc": "Plant Reactome:R-OSA-1119440",
+		"name": "Anthocyanin biosynthesis (pelargonidin 3-O-glucoside, cyanidin 3-O-glucoside)",
+		"pwtype": "organism_specific",
+		"category": "pathway",
+		"url": "http://plantreactome.gramene.org/content/detail/R-OSA-1119440",
+		"source": "Plant Reactome",
+		"srcid": "8",
+		"externalid": "R-OSA-1119440",
+		"extid": "R-OSA-1119440",
+		"taxid": "4530",
+		"core": "1",
+		"cids": [280,962,977,6031,67249,71629,128861,160419,164533,439156,440073,441667,443648]
+	}
+]

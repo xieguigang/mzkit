@@ -1,7 +1,8 @@
 # MSI
 
+MS-Imaging data handler
 
-
++ [as.layer](MSI/as.layer.1) 
 + [splice](MSI/splice.1) split the raw 2D MSI data into multiple parts with given parts
 + [pixelId](MSI/pixelId.1) 
 + [pixels](MSI/pixels.1) get pixels size from the raw data file

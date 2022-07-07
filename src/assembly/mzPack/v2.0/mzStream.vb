@@ -1,17 +1,20 @@
-﻿Imports System.Drawing
+﻿#If UNIX = 0 Then
+Imports Microsoft.VisualBasic.ApplicationServices.Application
+#End If
+
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
-
-#If UNIX = 0 Then
-Imports Microsoft.VisualBasic.ApplicationServices.Application
-#End If
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' mzPack format in HDS stream file
@@ -180,6 +183,11 @@ Public Class mzStream : Implements IMzPackReader
                               Optional verbose As Boolean = False) As mzPack
 
         Dim MsReader As Func(Of String, ScanMS1)
+        Dim scans As New List(Of ScanMS1)
+        Dim i As i32 = 0
+        Dim allIndex As String() = MS1
+        Dim d As Integer = allIndex.Length / 10
+        Dim j As Integer = 0
 
         If skipMsn Then
             MsReader = AddressOf ReadMS1
@@ -187,11 +195,22 @@ Public Class mzStream : Implements IMzPackReader
             MsReader = AddressOf ReadScan
         End If
 
+        For Each id As String In allIndex
+            j += 1
+            scans.Add(MsReader(id))
+
+            If ++i = d Then
+                If verbose Then
+                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                End If
+
+                i = 0
+            End If
+        Next
+
         Return New mzPack With {
             .Application = Application,
-            .MS = MS1 _
-                .Select(MsReader) _
-                .ToArray,
+            .MS = scans.ToArray,
             .source = sourceName,
             .Thumbnail = If(ignoreThumbnail, Nothing, GetThumbnail())
         }

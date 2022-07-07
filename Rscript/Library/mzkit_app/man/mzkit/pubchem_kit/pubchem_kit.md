@@ -3,6 +3,7 @@
 
 
 + [image_fly](pubchem_kit/image_fly.1) 
++ [query.external](pubchem_kit/query.external.1) 
 + [CID](pubchem_kit/CID.1) query cid from pubchem database
 + [pubchem_url](pubchem_kit/pubchem_url.1) 
 + [query](pubchem_kit/query.1) query of the pubchem database
