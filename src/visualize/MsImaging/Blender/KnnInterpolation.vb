@@ -211,16 +211,24 @@ Namespace Blender
                 Return Nothing
             End If
 
-            Dim intensity As Double() = query.Select(Function(p) p.intensity).TabulateBin
-            Dim mean As Double = intensity.Average
+            Dim intensity As Double() = (From p As PixelData
+                                         In query
+                                         Where p.intensity > 0
+                                         Let into As Double = p.intensity
+                                         Select into).ToArray
+            Dim mean As Double = intensity.Min
 
-            Return New PixelData With {
-                .intensity = mean,
-                .level = 0,
-                .mz = 0,
-                .x = x,
-                .y = y
-            }
+            If mean = 0.0 Then
+                Return Nothing
+            Else
+                Return New PixelData With {
+                    .intensity = mean,
+                    .level = 0,
+                    .mz = 0,
+                    .x = x,
+                    .y = y
+                }
+            End If
         End Function
 
     End Module
