@@ -272,7 +272,7 @@ Public Class mzPack
         If version = 1 Then
             Return v1MemoryLoader.Write(Me, file, progress)
         ElseIf version = 2 Then
-            Return Me.WriteStream(file)
+            Return Me.WriteStream(file, meta_size:=32 * 1024 * 1024)
         Else
             Return False
         End If
