@@ -185,7 +185,7 @@ Public Class PeakAssign : Inherits Plot
             XtickFormat:="F4",
             YtickFormat:="F0",
             gridFill:=theme.gridFill,
-            xlayout:=XAxisLayoutStyles.None,
+            xlayout:=XAxisLayoutStyles.Bottom,
             tickFontStyle:=theme.axisTickCSS,
             gridX:=Nothing,
             axisStroke:=theme.axisStroke,
