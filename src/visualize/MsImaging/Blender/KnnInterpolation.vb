@@ -144,7 +144,11 @@ Namespace Blender
         End Function
 
         <Extension>
-        Public Function KnnFill(layer As SingleIonLayer, Optional dx As Integer = 10, Optional dy As Integer = 10, Optional q As Double = 0.65) As SingleIonLayer
+        Public Function KnnFill(layer As SingleIonLayer,
+                                Optional dx As Integer = 10,
+                                Optional dy As Integer = 10,
+                                Optional q As Double = 0.65) As SingleIonLayer
+
             Dim size As Size = layer.DimensionSize
             Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q)
 
@@ -197,24 +201,34 @@ Namespace Blender
 
         <Extension>
         Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double) As PixelData
+            ' get non-empty pixels in current region block
             Dim query As PixelData() = graph.Query(x, y, deltaSize).ToArray
+            Dim A As Double = deltaSize.Width * deltaSize.Height
 
             If query.IsNullOrEmpty Then
                 Return Nothing
-            ElseIf (query.Length / (deltaSize.Width * deltaSize.Height)) <= q Then
+            ElseIf (query.Length / A) <= q Then
                 Return Nothing
             End If
 
-            Dim intensity As Double() = query.Select(Function(p) p.intensity).TabulateBin
-            Dim mean As Double = intensity.Average
+            Dim intensity As Double() = (From p As PixelData
+                                         In query
+                                         Where p.intensity > 0
+                                         Let into As Double = p.intensity
+                                         Select into).ToArray
+            Dim mean As Double = intensity.Min
 
-            Return New PixelData With {
-                .intensity = mean,
-                .level = 0,
-                .mz = 0,
-                .x = x,
-                .y = y
-            }
+            If mean = 0.0 Then
+                Return Nothing
+            Else
+                Return New PixelData With {
+                    .intensity = mean,
+                    .level = 0,
+                    .mz = 0,
+                    .x = x,
+                    .y = y
+                }
+            End If
         End Function
 
     End Module
