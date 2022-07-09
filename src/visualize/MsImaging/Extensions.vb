@@ -198,6 +198,12 @@ Public Module Extensions
         Next
     End Function
 
+    ''' <summary>
+    ''' removes the pixel points by the average density cutoff
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="qcut"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function DensityCut(layer As IEnumerable(Of PixelData), Optional qcut As Double = 0.1) As IEnumerable(Of PixelData)
         Dim raw As PixelData() = layer.ToArray

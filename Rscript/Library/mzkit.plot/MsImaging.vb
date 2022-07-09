@@ -190,6 +190,13 @@ Module MsImaging
         Return {0, range}
     End Function
 
+    ''' <summary>
+    ''' trim the intensity data value in a pixels of a ion MS-Imaging layer
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="max"></param>
+    ''' <param name="min"></param>
+    ''' <returns></returns>
     <ExportAPI("intensityLimits")>
     Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
         data.MSILayer = data.MSILayer _
