@@ -158,7 +158,9 @@ Namespace NCBI.PubChem
         ''' <summary>
         ''' Try get data type of the information its <see cref="Value"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns nothing if the given <see cref="Value"/> is nothing
+        ''' </returns>
         Public ReadOnly Property InfoType As Type
             Get
                 If Value Is Nothing Then
