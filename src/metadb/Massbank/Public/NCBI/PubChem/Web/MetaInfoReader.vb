@@ -125,6 +125,10 @@ Namespace NCBI.PubChem
 
         <Extension>
         Private Iterator Function getSynonyms(names As Section) As IEnumerable(Of String)
+            If names Is Nothing Then
+                Return
+            End If
+
             Dim depositor = names("Depositor-Supplied Synonyms")
             Dim mesh = names("MeSH Entry Terms")
 
@@ -207,7 +211,11 @@ Namespace NCBI.PubChem
                 .ToArray
             Dim CASNumber$()
             Dim wikipedia As String
+            Dim referenceList As Reference() = view.Reference
 
+            If referenceList Is Nothing Then
+                referenceList = {}
+            End If
             If synonyms Is Nothing Then
                 synonyms = {}
             End If
@@ -216,7 +224,7 @@ Namespace NCBI.PubChem
                 CASNumber = synonyms _
                     .Where(Function(id) id.IsPattern("\d+([-]\d+)+")) _
                     .ToArray
-                wikipedia = view.Reference.GetReferenceID("Wikipedia")
+                wikipedia = referenceList.GetReferenceID("Wikipedia")
             Else
                 CASNumber = otherNames("CAS")?.GetInformationStrings("CAS", True)
                 wikipedia = otherNames("Wikipedia")?.GetInformationString("Wikipedia")
@@ -229,18 +237,15 @@ Namespace NCBI.PubChem
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
-                .KEGG = getXrefId(synonyms, otherId, Function(id)
-                                                         ' KEGG编号是C开头,后面跟随5个数字
-                                                         Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
-                                                     End Function),
-                .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
+                .KEGG = getXrefId(synonyms, otherId, Function(id) id.IsPattern("C\d{5}", RegexOptions.Singleline)), ' KEGG编号是C开头,后面跟随5个数字
+                .HMDB = referenceList.GetReferenceID(PugViewRecord.HMDB),
                 .SMILES = SMILES,
-                .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
+                .DrugBank = referenceList.GetReferenceID(PugViewRecord.DrugBank),
                 .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
                 .Wikipedia = wikipedia,
-                .lipidmaps = view.Reference.GetReferenceID("LIPID MAPS"),
-                .MeSH = view.Reference.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
-                .ChemIDplus = view.Reference.GetReferenceID("ChemIDplus")
+                .lipidmaps = referenceList.GetReferenceID("LIPID MAPS"),
+                .MeSH = referenceList.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
+                .ChemIDplus = referenceList.GetReferenceID("ChemIDplus")
             }
             Dim commonName$ = view.RecordTitle
 
