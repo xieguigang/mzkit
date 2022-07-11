@@ -312,7 +312,7 @@ Namespace NCBI.PubChem
 
         <Extension>
         Private Function parseChemical(computedProperties As Section, experiments As Section) As ChemicalDescriptor
-            Return New ChemicalDescriptor With {
+            Dim desc As New ChemicalDescriptor With {
                 .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
                 .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
                 .AtomUdefStereoCount = computedProperties("Undefined Atom Stereocenter Count").GetInformationNumber("*"),
@@ -330,28 +330,55 @@ Namespace NCBI.PubChem
                 .TautoCount = computedProperties("").GetInformationNumber("*"),
                 .TopologicalPolarSurfaceArea = computedProperties("Topological Polar Surface Area").GetInformationNumber("*"),
                 .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
-                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*"),
-                .CCS = experiments("Collision Cross Section") _
-                   ?.Information _
-                    .Select(Function(c)
-                                Return New CCS With {
-                                    .value = any.ToString(c.InfoValue).stripMarkupString,
-                                    .reference = c.Reference.stripMarkupString
-                                }
-                            End Function) _
-                    .ToArray,
-                .LogP = experiments("LogP").GetInformationNumber("*"),
-                .Solubility = experiments("Solubility") _
-                   ?.Information _
-                    .Where(Function(a) Not a.UnitValue Is Nothing) _
-                    .Select(Function(a) a.UnitValue) _
-                    .FirstOrDefault,
-                .MeltingPoint = experiments("Melting Point") _
-                   ?.Information _
-                    .Where(Function(a) Not a.UnitValue Is Nothing) _
-                    .Select(Function(a) a.UnitValue) _
-                    .FirstOrDefault
+                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
             }
+
+            desc.LogP = experiments("LogP").GetInformationNumber("*")
+            desc.CCS = experiments.safeProject(
+                key:="Collision Cross Section",
+                 Function(info)
+                     Return info _
+                        .Select(Function(c)
+                                    Return New CCS With {
+                                        .value = any.ToString(c.InfoValue).stripMarkupString,
+                                        .reference = c.Reference.stripMarkupString
+                                    }
+                                End Function) _
+                        .ToArray
+                 End Function)
+            desc.Solubility = experiments.safeProject(
+                key:="Solubility",
+                 Function(info)
+                     Return info _
+                        .Where(Function(a)
+                                   Return Not a.UnitValue Is Nothing
+                               End Function) _
+                        .Select(Function(a) a.UnitValue) _
+                        .FirstOrDefault
+                 End Function)
+            desc.MeltingPoint = experiments.safeProject(
+                key:="Melting Point",
+                 Function(info)
+                     Return info _
+                        .Where(Function(a)
+                                   Return Not a.UnitValue Is Nothing
+                               End Function) _
+                        .Select(Function(a) a.UnitValue) _
+                        .FirstOrDefault
+                 End Function)
+
+            Return desc
+        End Function
+
+        <Extension>
+        Private Function safeProject(Of T)(info As Section, key As String, project As Func(Of Information(), T)) As T
+            Dim raw As Section = info(key)
+
+            If raw Is Nothing Then
+                Return Nothing
+            Else
+                Return project(raw.Information)
+            End If
         End Function
     End Module
 End Namespace
