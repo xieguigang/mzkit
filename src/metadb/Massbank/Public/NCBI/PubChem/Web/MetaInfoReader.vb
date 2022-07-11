@@ -333,39 +333,41 @@ Namespace NCBI.PubChem
                 .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
             }
 
-            desc.LogP = experiments("LogP").GetInformationNumber("*")
-            desc.CCS = experiments.safeProject(
-                key:="Collision Cross Section",
-                 Function(info)
-                     Return info _
-                        .Select(Function(c)
-                                    Return New CCS With {
-                                        .value = any.ToString(c.InfoValue).stripMarkupString,
-                                        .reference = c.Reference.stripMarkupString
-                                    }
-                                End Function) _
-                        .ToArray
-                 End Function)
-            desc.Solubility = experiments.safeProject(
-                key:="Solubility",
-                 Function(info)
-                     Return info _
-                        .Where(Function(a)
-                                   Return Not a.UnitValue Is Nothing
-                               End Function) _
-                        .Select(Function(a) a.UnitValue) _
-                        .FirstOrDefault
-                 End Function)
-            desc.MeltingPoint = experiments.safeProject(
-                key:="Melting Point",
-                 Function(info)
-                     Return info _
-                        .Where(Function(a)
-                                   Return Not a.UnitValue Is Nothing
-                               End Function) _
-                        .Select(Function(a) a.UnitValue) _
-                        .FirstOrDefault
-                 End Function)
+            If Not experiments Is Nothing Then
+                desc.LogP = experiments("LogP").GetInformationNumber("*")
+                desc.CCS = experiments.safeProject(
+                    key:="Collision Cross Section",
+                     Function(info)
+                         Return info _
+                            .Select(Function(c)
+                                        Return New CCS With {
+                                            .value = any.ToString(c.InfoValue).stripMarkupString,
+                                            .reference = c.Reference.stripMarkupString
+                                        }
+                                    End Function) _
+                            .ToArray
+                     End Function)
+                desc.Solubility = experiments.safeProject(
+                    key:="Solubility",
+                     Function(info)
+                         Return info _
+                            .Where(Function(a)
+                                       Return Not a.UnitValue Is Nothing
+                                   End Function) _
+                            .Select(Function(a) a.UnitValue) _
+                            .FirstOrDefault
+                     End Function)
+                desc.MeltingPoint = experiments.safeProject(
+                    key:="Melting Point",
+                     Function(info)
+                         Return info _
+                            .Where(Function(a)
+                                       Return Not a.UnitValue Is Nothing
+                                   End Function) _
+                            .Select(Function(a) a.UnitValue) _
+                            .FirstOrDefault
+                     End Function)
+            End If
 
             Return desc
         End Function
