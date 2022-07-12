@@ -5,6 +5,8 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <Platforms>AnyCPU;ARM32;x64</Platforms>
+	  <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
@@ -12,6 +14,52 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|ARM32'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|ARM32'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|ARM32'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|ARM32'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
   </PropertyGroup>
 
