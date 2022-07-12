@@ -190,7 +190,7 @@ Module MzWeb
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
-    <ExportAPI("write.cache")>
+    <ExportAPI("write.text_cache")>
     Public Function writeStream(scans As pipeline,
                                 Optional file As Object = Nothing,
                                 Optional env As Environment = Nothing) As Object

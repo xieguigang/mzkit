@@ -8,6 +8,8 @@ biodeep mzweb data viewer raw data file helper
 + [load.stream](mzweb/load.stream.1) load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.
 + [write.cache](mzweb/write.cache.1) write ASCII text format of mzweb stream
 + [packBin](mzweb/packBin.1) write binary format of mzweb stream data
++ [read.cache](mzweb/read.cache.1) 
++ [write.cache](mzweb/write.cache.1) write ASCII text format of mzweb stream
 + [write.mzPack](mzweb/write.mzPack.1) write version 2 format of the mzpack by default
 + [write.cdf](mzweb/write.cdf.1) 
 + [open.mzpack](mzweb/open.mzpack.1) open a raw data files in common raw data format and then returns 
@@ -16,3 +18,4 @@ biodeep mzweb data viewer raw data file helper
 + [ms1_peaks](mzweb/ms1_peaks.1) get a overview ms1 spectrum data from the mzpack raw data
 + [ms2_peaks](mzweb/ms2_peaks.1) extract ms2 peaks data from the mzpack data object
 + [as.mzpack](mzweb/as.mzpack.1) convert assembly file to mzpack format data object
++ [mass_calibration](mzweb/mass_calibration.1) do mass calibration
