@@ -76,7 +76,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
+Imports stdVec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -89,6 +89,7 @@ Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' biodeep mzweb data viewer raw data file helper
@@ -478,5 +479,34 @@ Module MzWeb
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' do mass calibration
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("mass_calibration")>
+    <RApiReturn(GetType(mzPack))>
+    Public Function MassCalibration(data As mzPack, Optional env As Environment = Nothing) As Object
+        data.MS = data.MS _
+            .Select(Function(ms)
+                        Dim ms1 As stdVec = ms.mz.AsVector
+
+                        ms.products = ms _
+                            .products _
+                            .SafeQuery _
+                            .Select(Function(m2)
+                                        m2.parentMz = ms.mz(which.Min((ms1 - m2.parentMz).Abs))
+                                        Return m2
+                                    End Function) _
+                            .ToArray
+
+                        Return ms
+                    End Function) _
+            .ToArray
+
+        Return data
     End Function
 End Module
