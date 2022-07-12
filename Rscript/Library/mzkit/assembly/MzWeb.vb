@@ -56,6 +56,10 @@
 
 #End Region
 
+#If netcore5 = 0 Then
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+#End If
+
 Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
@@ -65,23 +69,19 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-#If netcore5 = 0 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-#End If
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports stdVec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -89,7 +89,7 @@ Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
-Imports Microsoft.VisualBasic.Math
+Imports stdVec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' biodeep mzweb data viewer raw data file helper
@@ -230,6 +230,42 @@ Module MzWeb
             End If
         End Using
     End Sub
+
+    <ExportAPI("read.cache")>
+    Public Function readCache(file As String) As PeakMs2()
+        Using buffer As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
+            .ByteOrder = ByteOrder.BigEndian
+        }
+            If buffer.ReadString(BinaryStringFormat.ZeroTerminated) <> "mzcache" Then
+                Throw New InvalidProgramException("magic header should be 'mzcache'!")
+            End If
+
+            Dim nsize As Integer = buffer.ReadInt32
+            Dim data As PeakMs2() = New PeakMs2(nsize - 1) {}
+
+            For i As Integer = 0 To nsize - 1
+                data(i) = mzPack.CastToPeakMs2(Serialization.ReadScanMs2(file:=buffer))
+            Next
+
+            Return data
+        End Using
+    End Function
+
+    <ExportAPI("write.cache")>
+    Public Function writeCache(ions As PeakMs2(), file As String) As Boolean
+        Using buffer As New BinaryDataWriter(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)) With {
+            .ByteOrder = ByteOrder.BigEndian
+        }
+            Call buffer.Write("mzcache", BinaryStringFormat.ZeroTerminated)
+            Call buffer.Write(ions.Length)
+
+            For Each ion As PeakMs2 In ions
+                Call Serialization.WriteBuffer(ion.Scan2, file:=buffer)
+            Next
+        End Using
+
+        Return True
+    End Function
 
     ''' <summary>
     ''' write version 2 format of the mzpack by default
