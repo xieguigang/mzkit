@@ -128,6 +128,7 @@
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj" />
@@ -156,6 +157,7 @@
 		<ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+		<ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
 		<ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\src\mzmath\MSEngine\MSEngine.vbproj" />
 		<ProjectReference Include="..\..\..\src\mzmath\Mummichog\Mummichog.vbproj" />
