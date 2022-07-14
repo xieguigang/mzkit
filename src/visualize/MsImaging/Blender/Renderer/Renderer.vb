@@ -168,7 +168,7 @@ Namespace Blender
                                                     Function(p)
                                                         Return Aggregate pm As PixelData
                                                                In p
-                                                               Into Max(pm.intensity)
+                                                               Into Average(pm.intensity)
                                                     End Function)
                               End Function)
 
