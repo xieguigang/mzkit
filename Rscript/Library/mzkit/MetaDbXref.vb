@@ -485,6 +485,9 @@ Module MetaDbXref
     ''' <param name="format">
     ''' the numeric format of the mz value for generate the reference key
     ''' </param>
+    ''' <param name="removesZERO">
+    ''' removes all metabolites with ZERO score?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("uniqueFeatures")>
@@ -493,6 +496,7 @@ Module MetaDbXref
                                 Optional uniqueByScore As Boolean = False,
                                 Optional scoreFactors As list = Nothing,
                                 Optional format As String = "F4",
+                                Optional removesZERO As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mz As String() = query.getNames
@@ -568,6 +572,23 @@ Module MetaDbXref
                 End If
             Next
         Next
+
+        If removesZERO Then
+            println("removes all result that with ZERO score!")
+            mzqueries = mzqueries _
+                .Select(Function(d)
+                            If d.Value.score = 0 Then
+                                Return New NamedValue(Of MzQuery) With {
+                                    .Name = d.Name,
+                                    .Description = d.Description,
+                                    .Value = New MzQuery With {.mz = d.Value.mz}
+                                }
+                            Else
+                                Return d
+                            End If
+                        End Function) _
+                .ToArray
+        End If
 
         println("export result table!")
 

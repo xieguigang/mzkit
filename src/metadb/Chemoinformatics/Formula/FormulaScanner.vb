@@ -98,6 +98,8 @@ Namespace Formula
             End If
         End Function
 
+        Public Const Pattern As String = "([A-Z][a-z]?\d*)+"
+
         ' H2O
         ' (CH3)3CH
         ' (CH3)4C

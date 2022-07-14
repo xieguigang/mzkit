@@ -259,7 +259,7 @@ Module FormulaTools
     ''' <param name="formula">The input formula string text.</param>
     ''' <returns></returns>
     <ExportAPI("scan")>
-    <RSymbolLanguageMask("[a-zA-Z0-9()]+", True, Test:=GetType(TestFormulaSymbolLang))>
+    <RSymbolLanguageMask(FormulaScanner.Pattern, True, Test:=GetType(TestFormulaSymbolLang))>
     Public Function ScanFormula(formula$, Optional env As Environment = Nothing) As Formula
         Dim globalEnv As GlobalEnvironment = env.globalEnvironment
         Dim n As Integer = globalEnv.options.getOption("formula.polymers_n", 999)
