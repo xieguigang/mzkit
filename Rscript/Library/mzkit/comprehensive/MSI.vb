@@ -120,15 +120,18 @@ Module MSI
                                Optional context As String = "MSIlayer",
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
+                               Optional strict As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim size As String = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
 
         If size = "0,0" Then
-            Dim w = Aggregate px In pixels Into Max(px.x)
-            Dim h = Aggregate py In pixels Into Max(py.y)
+            If strict OrElse pixels.Length > 0 Then
+                Dim w = Aggregate px In pixels Into Max(px.x)
+                Dim h = Aggregate py In pixels Into Max(py.y)
 
-            size = $"{w},{h}"
+                size = $"{w},{h}"
+            End If
         End If
 
         Return New SingleIonLayer With {
