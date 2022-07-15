@@ -158,7 +158,9 @@ Namespace NCBI.PubChem
         ''' <summary>
         ''' Try get data type of the information its <see cref="Value"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns nothing if the given <see cref="Value"/> is nothing
+        ''' </returns>
         Public ReadOnly Property InfoType As Type
             Get
                 If Value Is Nothing Then
@@ -179,9 +181,17 @@ Namespace NCBI.PubChem
             End Get
         End Property
 
+        ''' <summary>
+        ''' this method will returns nothing if the source <see cref="Value"/> is nothing
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property InfoValue As Object
             Get
                 Dim type As Type = InfoType
+
+                If type Is Nothing Then
+                    Return Nothing
+                End If
 
                 Select Case type
                     Case GetType(Double)
@@ -189,11 +199,15 @@ Namespace NCBI.PubChem
                     Case GetType(String)
                         Return Value.StringWithMarkup.First.String
                     Case GetType(String())
-                        Return Value.StringWithMarkup.Select(Function(v) v.String).ToArray
+                        Return Value.StringWithMarkup _
+                            .Select(Function(v) v.String) _
+                            .ToArray
                     Case GetType(Date)
                         Return Date.Parse(Value.DateISO8601)
-                    Case Else
+                    Case GetType(Boolean)
                         Return Value.Boolean
+                    Case Else
+                        Throw New NotImplementedException(type.FullName)
                 End Select
             End Get
         End Property

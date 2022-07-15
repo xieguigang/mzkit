@@ -173,7 +173,29 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetInformation(section As Section, key$, Optional multipleInfo As Boolean = False) As [Variant](Of Information, Information())
             If section Is Nothing Then
-                Return New Information
+                ' Error in <globalEnvironment> -> InitializeEnvironment -> for_loop_[1] -> else_false -> "dumpJSON" -> "dumpJSON" -> dumpJSON<$anonymous_0025a> -> as.list -> "metadata.pugView" -> metadata.pugView
+                ' 1. InvalidCastException: Unable to cast object of type 'BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Information' to type 'BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Information[]'.
+                ' 2. stackFrames:
+                ' at BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.MetaInfoReader.GetMetaInfo(PugViewRecord view)
+                ' at mzkit.PubChemToolKit.GetMetaInfo(PugViewRecord pugView)
+
+                ' R# source: "demo" <- Call "as.list"(Call "metadata.pugView"(&demo))
+
+                ' pubchem_kit.R#_interop::.metadata.pugView at mzkit.dll:line <unknown>
+                ' SMRUCC/R#.call_function."metadata.pugView" at simple_graph.R:line 6
+                ' RConversion.R#_interop::.as.list at REnv.dll:line <unknown>
+                ' SMRUCC/R#.declare_function.dumpJSON<$anonymous_0025a> at simple_graph.R:line 4
+                ' SMRUCC/R#.call_function."dumpJSON" at query.R:line 42
+                ' SMRUCC/R#.call_function."dumpJSON" at query.R:line 42
+                ' SMRUCC/R#_runtime.n/a.else_false at query.R:line 38
+                ' SMRUCC/R#.forloop.for_loop_[1] at query.R:line 32
+                ' SMRUCC/R#.n/a.InitializeEnvironment at query.R:line 0
+                ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
+                If multipleInfo Then
+                    Return New Information() {}
+                Else
+                    Return New Information
+                End If
             Else
                 Return section.InformationNoNull(key, multipleInfo)
             End If

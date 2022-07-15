@@ -167,7 +167,7 @@ Public Class PeakAssign : Inherits Plot
         Dim xscale = d3js.scale.linear().domain(values:=xticks).range(values:={rect.Left, rect.Right})
         Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 110}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
-            .AxisTicks = (xticks.AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
+            .AxisTicks = (xticks.Take(xticks.Length - 1).AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
             .region = canvas.PlotRegion,
             .X = xscale,
             .Y = yscale
@@ -182,7 +182,7 @@ Public Class PeakAssign : Inherits Plot
             showGrid:=True,
             xlabel:=xlabel,
             ylabel:=ylabel,
-            XtickFormat:="F4",
+            XtickFormat:="F0",
             YtickFormat:="F0",
             gridFill:=theme.gridFill,
             xlayout:=XAxisLayoutStyles.Bottom,

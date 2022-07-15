@@ -222,9 +222,20 @@ Module PubChemToolKit
         Return ls
     End Function
 
+    ''' <summary>
+    ''' read xml text and then parse as pugview record data object
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path or the xml text content
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.pugView")>
     Public Function readPugViewXml(file As String) As PugViewRecord
-        Return file.LoadXml(Of PugViewRecord)
+        If file.FileExists Then
+            Return file.LoadXml(Of PugViewRecord)
+        Else
+            Return file.LoadFromXml(Of PugViewRecord)
+        End If
     End Function
 
     <ExportAPI("metadata.pugView")>

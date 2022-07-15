@@ -318,6 +318,7 @@ Module Visual
         Dim alignment As Object = args.getByName("alignment")
 
         If mirror OrElse Not alignment Is Nothing Then
+            ' plot ms alignment
             Return Visual.SpectrumPlot(
                 spectrum:=spectrum,
                 alignment:=alignment,
@@ -331,6 +332,7 @@ Module Visual
                 Return ms.TryCast(Of Message)
             End If
 
+            ' draw a single ms spectrum plot
             Return PeakAssign.DrawSpectrumPeaks(
                 matrix:=ms,
                 images:=annotateImages,

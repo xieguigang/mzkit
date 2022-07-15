@@ -125,6 +125,10 @@ Namespace NCBI.PubChem
 
         <Extension>
         Private Iterator Function getSynonyms(names As Section) As IEnumerable(Of String)
+            If names Is Nothing Then
+                Return
+            End If
+
             Dim depositor = names("Depositor-Supplied Synonyms")
             Dim mesh = names("MeSH Entry Terms")
 
@@ -207,7 +211,11 @@ Namespace NCBI.PubChem
                 .ToArray
             Dim CASNumber$()
             Dim wikipedia As String
+            Dim referenceList As Reference() = view.Reference
 
+            If referenceList Is Nothing Then
+                referenceList = {}
+            End If
             If synonyms Is Nothing Then
                 synonyms = {}
             End If
@@ -216,7 +224,7 @@ Namespace NCBI.PubChem
                 CASNumber = synonyms _
                     .Where(Function(id) id.IsPattern("\d+([-]\d+)+")) _
                     .ToArray
-                wikipedia = view.Reference.GetReferenceID("Wikipedia")
+                wikipedia = referenceList.GetReferenceID("Wikipedia")
             Else
                 CASNumber = otherNames("CAS")?.GetInformationStrings("CAS", True)
                 wikipedia = otherNames("Wikipedia")?.GetInformationString("Wikipedia")
@@ -229,18 +237,15 @@ Namespace NCBI.PubChem
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
-                .KEGG = getXrefId(synonyms, otherId, Function(id)
-                                                         ' KEGG编号是C开头,后面跟随5个数字
-                                                         Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
-                                                     End Function),
-                .HMDB = view.Reference.GetReferenceID(PugViewRecord.HMDB),
+                .KEGG = getXrefId(synonyms, otherId, Function(id) id.IsPattern("C\d{5}", RegexOptions.Singleline)), ' KEGG编号是C开头,后面跟随5个数字
+                .HMDB = referenceList.GetReferenceID(PugViewRecord.HMDB),
                 .SMILES = SMILES,
-                .DrugBank = view.Reference.GetReferenceID(PugViewRecord.DrugBank),
+                .DrugBank = referenceList.GetReferenceID(PugViewRecord.DrugBank),
                 .ChEMBL = getXrefId(synonyms, otherId, Function(id) id.StartsWith("ChEMBL")),
                 .Wikipedia = wikipedia,
-                .lipidmaps = view.Reference.GetReferenceID("LIPID MAPS"),
-                .MeSH = view.Reference.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
-                .ChemIDplus = view.Reference.GetReferenceID("ChemIDplus")
+                .lipidmaps = referenceList.GetReferenceID("LIPID MAPS"),
+                .MeSH = referenceList.GetReferenceID("Medical Subject Headings (MeSH)", name:=True),
+                .ChemIDplus = referenceList.GetReferenceID("ChemIDplus")
             }
             Dim commonName$ = view.RecordTitle
 
@@ -312,7 +317,7 @@ Namespace NCBI.PubChem
 
         <Extension>
         Private Function parseChemical(computedProperties As Section, experiments As Section) As ChemicalDescriptor
-            Return New ChemicalDescriptor With {
+            Dim desc As New ChemicalDescriptor With {
                 .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
                 .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
                 .AtomUdefStereoCount = computedProperties("Undefined Atom Stereocenter Count").GetInformationNumber("*"),
@@ -330,28 +335,57 @@ Namespace NCBI.PubChem
                 .TautoCount = computedProperties("").GetInformationNumber("*"),
                 .TopologicalPolarSurfaceArea = computedProperties("Topological Polar Surface Area").GetInformationNumber("*"),
                 .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
-                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*"),
-                .CCS = experiments("Collision Cross Section") _
-                   ?.Information _
-                    .Select(Function(c)
-                                Return New CCS With {
-                                    .value = any.ToString(c.InfoValue).stripMarkupString,
-                                    .reference = c.Reference.stripMarkupString
-                                }
-                            End Function) _
-                    .ToArray,
-                .LogP = experiments("LogP").GetInformationNumber("*"),
-                .Solubility = experiments("Solubility") _
-                   ?.Information _
-                    .Where(Function(a) Not a.UnitValue Is Nothing) _
-                    .Select(Function(a) a.UnitValue) _
-                    .FirstOrDefault,
-                .MeltingPoint = experiments("Melting Point") _
-                   ?.Information _
-                    .Where(Function(a) Not a.UnitValue Is Nothing) _
-                    .Select(Function(a) a.UnitValue) _
-                    .FirstOrDefault
+                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
             }
+
+            If Not experiments Is Nothing Then
+                desc.LogP = experiments("LogP").GetInformationNumber("*")
+                desc.CCS = experiments.safeProject(
+                    key:="Collision Cross Section",
+                     Function(info)
+                         Return info _
+                            .Select(Function(c)
+                                        Return New CCS With {
+                                            .value = any.ToString(c.InfoValue).stripMarkupString,
+                                            .reference = c.Reference.stripMarkupString
+                                        }
+                                    End Function) _
+                            .ToArray
+                     End Function)
+                desc.Solubility = experiments.safeProject(
+                    key:="Solubility",
+                     Function(info)
+                         Return info _
+                            .Where(Function(a)
+                                       Return Not a.UnitValue Is Nothing
+                                   End Function) _
+                            .Select(Function(a) a.UnitValue) _
+                            .FirstOrDefault
+                     End Function)
+                desc.MeltingPoint = experiments.safeProject(
+                    key:="Melting Point",
+                     Function(info)
+                         Return info _
+                            .Where(Function(a)
+                                       Return Not a.UnitValue Is Nothing
+                                   End Function) _
+                            .Select(Function(a) a.UnitValue) _
+                            .FirstOrDefault
+                     End Function)
+            End If
+
+            Return desc
+        End Function
+
+        <Extension>
+        Private Function safeProject(Of T)(info As Section, key As String, project As Func(Of Information(), T)) As T
+            Dim raw As Section = info(key)
+
+            If raw Is Nothing Then
+                Return Nothing
+            Else
+                Return project(raw.Information)
+            End If
         End Function
     End Module
 End Namespace

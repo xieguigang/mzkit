@@ -9,5 +9,5 @@
 + [query](pubchem_kit/query.1) query of the pubchem database
 + [pugView](pubchem_kit/pugView.1) 
 + [SID_map](pubchem_kit/SID_map.1) 
-+ [read.pugView](pubchem_kit/read.pugView.1) 
++ [read.pugView](pubchem_kit/read.pugView.1) read xml text and then parse as pugview record data object
 + [metadata.pugView](pubchem_kit/metadata.pugView.1) 
