@@ -118,7 +118,7 @@ Public Module mzStreamWriter
         End If
 
         If Not mzpack.Chromatogram Is Nothing Then
-            Using buffer As New BinaryDataWriter(pack.OpenBlock("/MS/chromatogram.cdf")) With {.ByteOrder = ByteOrder.LittleEndian}
+            Using buffer As New BinaryDataWriter(pack.OpenBlock("/chromatogram.cdf")) With {.ByteOrder = ByteOrder.LittleEndian}
                 Call buffer.Write(mzpack.Chromatogram.GetBytes)
             End Using
         End If
