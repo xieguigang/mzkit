@@ -159,6 +159,8 @@ Public Class mzStream : Implements IMzPackReader
 
                 ms1.products(i) = Serialization.ReadScanMs2(reader)
             Next
+        Else
+            ms1.products = {}
         End If
 
         Return ms1
