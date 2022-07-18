@@ -57,6 +57,7 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace MetaLib.Models
 
@@ -67,27 +68,27 @@ Namespace MetaLib.Models
         Implements IEquatable(Of MetaLib)
         Implements ICompoundClass
 
-        Public Property chemical As ChemicalDescriptor
+        <MessagePackMember(8)> Public Property chemical As ChemicalDescriptor
 
 #Region "化合物分类"
 
-        Public Property kingdom As String Implements ICompoundClass.kingdom
-        Public Property super_class As String Implements ICompoundClass.super_class
-        Public Property [class] As String Implements ICompoundClass.class
-        Public Property sub_class As String Implements ICompoundClass.sub_class
-        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+        <MessagePackMember(9)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(10)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(11)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(12)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(13)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 
 #End Region
 
-        Public Property organism As String()
+        <MessagePackMember(14)> Public Property organism As String()
 
         ''' <summary>
         ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="xref.KEGG"/>
         ''' 存在值的时候才会存在这个属性
         ''' </summary>
         ''' <returns></returns>
-        Public Property pathways As String()
-        Public Property samples As String()
+        <MessagePackMember(15)> Public Property pathways As String()
+        <MessagePackMember(16)> Public Property samples As String()
 
         Public Overrides Function ToString() As String
             Return name
