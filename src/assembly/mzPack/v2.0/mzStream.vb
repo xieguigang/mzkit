@@ -147,7 +147,7 @@ Public Class mzStream : Implements IMzPackReader
         Dim n As Integer = dir.attributes.GetValue("products")
         Dim id2 As String() = Nothing
 
-        If Not skipProducts Then
+        If n > 0 AndAlso Not skipProducts Then
             id2 = dir.attributes.GetValue("id")
             ms1.products = New ScanMS2(n - 1) {}
 
@@ -159,6 +159,8 @@ Public Class mzStream : Implements IMzPackReader
 
                 ms1.products(i) = Serialization.ReadScanMs2(reader)
             Next
+        Else
+            ms1.products = {}
         End If
 
         Return ms1

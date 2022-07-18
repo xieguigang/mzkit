@@ -157,25 +157,33 @@ Namespace MZWork
                               End Function)
         End Sub
 
-        Public Function LoadMzpack(reload As Action(Of String, String), Optional verbose As Boolean = True) As Raw
+        Public Function LoadMzpack(reload As Action(Of String, String),
+                                   Optional verbose As Boolean = True,
+                                   Optional strict As Boolean = True) As Raw
             If isLoaded Then
                 Return Me
             End If
 
-mzPackReader:
-            Try
+            If strict Then
                 Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                     Call loadMemory(mzPack.ReadAll(file, verbose:=verbose))
                 End Using
-            Catch ex As Exception
-                Call ($"It seems that mzPack cache file of {source} is damaged,{vbCrLf} mzkit will going to reload of the source file.").PrintException
+            Else
+mzPackReader:
+                Try
+                    Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                        Call loadMemory(mzPack.ReadAll(file, verbose:=verbose))
+                    End Using
+                Catch ex As Exception
+                    Call ($"It seems that mzPack cache file of {source} is damaged,{vbCrLf} mzkit will going to reload of the source file.").PrintException
 
-                SyncLock reload
-                    Call reload(source, cache)
-                End SyncLock
+                    SyncLock reload
+                        Call reload(source, cache)
+                    End SyncLock
 
-                GoTo mzPackReader
-            End Try
+                    GoTo mzPackReader
+                End Try
+            End If
 
             Return Me
         End Function
