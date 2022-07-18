@@ -118,6 +118,9 @@ Public Module mzStreamWriter
         End If
 
         If Not mzpack.Chromatogram Is Nothing Then
+            ' 20220718  put chromatogram.cdf file into the /MS/ 
+            ' data directory will cause the ms1 data reader error!
+            ' so move this file to root block
             Using buffer As New BinaryDataWriter(pack.OpenBlock("/chromatogram.cdf")) With {.ByteOrder = ByteOrder.LittleEndian}
                 Call buffer.Write(mzpack.Chromatogram.GetBytes)
             End Using
