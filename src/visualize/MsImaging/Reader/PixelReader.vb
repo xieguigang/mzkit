@@ -166,7 +166,9 @@ Namespace Reader
         Public MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
 
         Public Iterator Function FindMatchedPixels(mz As Double(), tolerance As Tolerance) As IEnumerable(Of PixelScan)
-            For Each pixel As PixelScan In AllPixels()
+            Dim allpixels As PixelScan() = Me.AllPixels.ToArray
+
+            For Each pixel As PixelScan In allpixels
                 If pixel.HasAnyMzIon(mz, tolerance) Then
                     Yield pixel
                 End If
@@ -284,15 +286,18 @@ Namespace Reader
                     .Indexing
             End If
 
-            For Each point As PixelScan In FindMatchedPixels(mz, tolerance) _
+            Dim rawMatches = FindMatchedPixels(mz, tolerance).ToArray
+            Dim filterMatches = rawMatches _
                 .Where(Function(p)
                            If filter Is Nothing Then
                                Return True
                            Else
                                Return $"{p.X},{p.Y}" Like filter
                            End If
-                       End Function)
+                       End Function) _
+                .ToArray
 
+            For Each point As PixelScan In filterMatches
                 Dim msScan As ms2() = point.GetMs
                 Dim into As NamedCollection(Of ms2)() = msScan _
                     .Where(Function(m) m.intensity > 0) _
@@ -312,7 +317,9 @@ Namespace Reader
                             .x = point.X,
                             .y = point.Y,
                             .mz = Val(mzi.name),
-                            .intensity = Aggregate x In mzi Into Max(x.intensity)
+                            .intensity = Aggregate x As ms2
+                                         In mzi
+                                         Into Max(x.intensity)
                         }
 
                         Yield pixel

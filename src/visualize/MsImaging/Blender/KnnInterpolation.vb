@@ -168,6 +168,17 @@ Namespace Blender
             Return layer.KnnFill(dx, dy)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <param name="size">
+        ''' the size of the original MS-imaging raw data file
+        ''' </param>
+        ''' <param name="dx"></param>
+        ''' <param name="dy"></param>
+        ''' <param name="q"></param>
+        ''' <returns></returns>
         Public Function KnnFill(pixels As PixelData(), size As Size,
                                 Optional dx As Integer = 3,
                                 Optional dy As Integer = 3,

@@ -117,19 +117,24 @@ Public Module Extensions
     End Function
 
     <Extension>
+    Public Function Scan2(i As PeakMs2) As ScanMS2
+        Return New ScanMS2 With {
+            .centroided = True,
+            .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
+            .into = i.mzInto.Select(Function(mzi) mzi.intensity).ToArray,
+            .parentMz = i.mz,
+            .intensity = i.intensity,
+            .rt = i.rt,
+            .scan_id = $"{i.file}#{i.lib_guid}",
+            .collisionEnergy = i.collisionEnergy
+        }
+    End Function
+
+    <Extension>
     Public Function Scan1(list As NamedCollection(Of PeakMs2)) As ScanMS1
         Dim scan2 As ScanMS2() = list _
             .Select(Function(i)
-                        Return New ScanMS2 With {
-                            .centroided = True,
-                            .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
-                            .into = i.mzInto.Select(Function(mzi) mzi.intensity).ToArray,
-                            .parentMz = i.mz,
-                            .intensity = i.intensity,
-                            .rt = i.rt,
-                            .scan_id = $"{i.file}#{i.lib_guid}",
-                            .collisionEnergy = i.collisionEnergy
-                        }
+                        Return i.Scan2
                     End Function) _
             .ToArray
 

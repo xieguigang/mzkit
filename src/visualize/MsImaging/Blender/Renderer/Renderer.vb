@@ -157,7 +157,7 @@ Namespace Blender
             End If
 
             Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
-            Dim byteRange As DoubleRange = {0, 255}
+            Dim byteRange As DoubleRange = {8, 255}
             Dim xy = channel _
                 .GroupBy(Function(p) p.x) _
                 .ToDictionary(Function(p) p.Key,
@@ -168,7 +168,7 @@ Namespace Blender
                                                     Function(p)
                                                         Return Aggregate pm As PixelData
                                                                In p
-                                                               Into Max(pm.intensity)
+                                                               Into Average(pm.intensity)
                                                     End Function)
                               End Function)
 
