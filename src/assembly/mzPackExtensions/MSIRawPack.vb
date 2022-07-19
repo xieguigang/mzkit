@@ -65,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -148,16 +149,18 @@ Public Module MSIRawPack
         For Each spot As SpotMs In spotsMs.matrix
             Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
             Dim xy As SpotSite = spotsXy.index(ref)
+            Dim into As New Vector(spot.intensity)
+            Dim mz As New Vector(spotsMs.mz)
             Dim ms1 As New ScanMS1 With {
                 .BPC = spot.intensity.Max,
                 .TIC = spot.intensity.Sum,
-                .into = spot.intensity,
+                .into = into(into > 0),
                 .meta = New Dictionary(Of String, String) From {
                     {"x", xy.x - minX},
                     {"y", xy.y - minY},
                     {"spot_id", xy.index}
                 },
-                .mz = spotsMs.mz,
+                .mz = mz(into > 0),
                 .rt = ++i,
                 .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G3")}"
             }
