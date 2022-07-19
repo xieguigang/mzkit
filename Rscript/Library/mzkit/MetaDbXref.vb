@@ -437,6 +437,16 @@ Module MetaDbXref
         Return New NamedValue(Of MzQuery)(mzi, unique)
     End Function
 
+    ''' <summary>
+    ''' removes all of the annotation result which is not 
+    ''' hits in the given ``id`` set.
+    ''' </summary>
+    ''' <param name="query"></param>
+    ''' <param name="id">the required compound id set that should be hit!</param>
+    ''' <param name="field"></param>
+    ''' <param name="metadb"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("excludeFeatures")>
     Public Function excludeFeatures(query As list,
                                     id As String(),
