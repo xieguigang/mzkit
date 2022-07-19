@@ -104,6 +104,10 @@ Namespace MZWork
         Dim ms1 As Dictionary(Of String, ScanMS1)
         Dim ms2 As Dictionary(Of String, ScanMS2)
 
+        ''' <summary>
+        ''' is not loaded mzpack object is nothing 
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property isLoaded As Boolean
             Get
                 Return Not loaded Is Nothing
