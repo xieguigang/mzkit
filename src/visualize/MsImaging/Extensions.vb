@@ -235,11 +235,17 @@ Public Module Extensions
     ''' <param name="MSI"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ScanMeltdown(MSI As mzPack, Optional gridSize As Integer = 2) As mzPack
+    Public Function ScanMeltdown(MSI As mzPack, Optional gridSize As Integer = 2, Optional println As Action(Of String) = Nothing) As mzPack
         Dim graph = Grid(Of ScanMS1).Create(MSI.MS, Function(d) d.GetMSIPixel)
         Dim scans As New List(Of ScanMS1)
         Dim dims As New Size(graph.width, graph.height)
         Dim pixel As ScanMS1
+
+        If println Is Nothing Then
+            println = AddressOf Warning
+        Else
+            Call println("make bugs fixed for RT pixel correction!")
+        End If
 
         For i As Integer = 1 To dims.Width
             For j As Integer = 1 To dims.Height
@@ -258,7 +264,7 @@ Public Module Extensions
                 If Not pixel Is Nothing Then
                     scans.Add(pixel)
                 Else
-                    Call $"Missing pixel data at [{i}, {j}]!".Warning
+                    Call println($"Missing pixel data at [{i}, {j}]!")
                 End If
             Next
         Next
