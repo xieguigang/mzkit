@@ -151,6 +151,9 @@ Public Module MSIRawPack
             Dim xy As SpotSite = spotsXy.index(ref)
             Dim into As New Vector(spot.intensity)
             Dim mz As New Vector(spotsMs.mz)
+            ' 20220719
+            ' x,y should be start from the 1, not ZERO
+            ' or pixel drawing will be error!
             Dim ms1 As New ScanMS1 With {
                 .BPC = spot.intensity.Max,
                 .TIC = spot.intensity.Sum,
