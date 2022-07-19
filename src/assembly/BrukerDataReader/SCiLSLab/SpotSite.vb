@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Linq
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace SCiLSLab
@@ -7,6 +6,20 @@ Namespace SCiLSLab
     Public Class SpotPack : Inherits PackFile
 
         Public Property index As Dictionary(Of String, SpotSite)
+
+        Public Function X() As Double()
+            Return (From p As SpotSite
+                    In index.Values
+                    Let xi As Double = p.x
+                    Select xi).ToArray
+        End Function
+
+        Public Function Y() As Double()
+            Return (From p As SpotSite
+                    In index.Values
+                    Let yi As Double = p.y
+                    Select yi).ToArray
+        End Function
 
         Public Shared Function ParseFile(file As Stream) As SpotPack
             Dim pull As New SpotPack

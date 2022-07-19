@@ -136,6 +136,8 @@ Public Module MSIRawPack
         Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
         Dim spotsList As New List(Of ScanMS1)
         Dim i As i32 = Scan0
+        Dim minX As Double = spotsXy.X.Min
+        Dim minY As Double = spotsXy.Y.Min
 
         If println Is Nothing Then
             println = Sub()
@@ -151,13 +153,13 @@ Public Module MSIRawPack
                 .TIC = spot.intensity.Sum,
                 .into = spot.intensity,
                 .meta = New Dictionary(Of String, String) From {
-                    {"x", xy.x},
-                    {"y", xy.y},
+                    {"x", xy.x - minX},
+                    {"y", xy.y - minY},
                     {"spot_id", xy.index}
                 },
                 .mz = spotsMs.mz,
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G3")}"
             }
 
             println(ms1.scan_id)
