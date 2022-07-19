@@ -156,8 +156,8 @@ Public Module MSIRawPack
                 .TIC = spot.intensity.Sum,
                 .into = into(into > 0),
                 .meta = New Dictionary(Of String, String) From {
-                    {"x", xy.x - minX},
-                    {"y", xy.y - minY},
+                    {"x", CInt(xy.x - minX)},
+                    {"y", CInt(xy.y - minY)},
                     {"spot_id", xy.index}
                 },
                 .mz = mz(into > 0),
