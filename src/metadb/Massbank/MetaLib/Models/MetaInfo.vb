@@ -75,12 +75,12 @@ Namespace MetaLib.Models
         <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double
 
         <MessagePackMember(3)> Public Property name As String
-        Public Property IUPACName As String
-        Public Property description As String
+        <MessagePackMember(4)> Public Property IUPACName As String
+        <MessagePackMember(5)> Public Property description As String
         <XmlElement>
-        <MessagePackMember(4)> Public Property synonym As String()
+        <MessagePackMember(6)> Public Property synonym As String()
 
-        <MessagePackMember(5)> Public Property xref As xref
+        <MessagePackMember(7)> Public Property xref As xref
 
         Public Overrides Function ToString() As String
             Return name
