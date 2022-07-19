@@ -521,28 +521,14 @@ Module MzWeb
     ''' do mass calibration
     ''' </summary>
     ''' <param name="data"></param>
+    ''' <param name="mzdiff">
+    ''' mass tolerance in ppm
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("mass_calibration")>
     <RApiReturn(GetType(mzPack))>
-    Public Function MassCalibration(data As mzPack, Optional env As Environment = Nothing) As Object
-        data.MS = data.MS _
-            .Select(Function(ms)
-                        Dim ms1 As stdVec = ms.mz.AsVector
-
-                        ms.products = ms _
-                            .products _
-                            .SafeQuery _
-                            .Select(Function(m2)
-                                        m2.parentMz = ms.mz(which.Min((ms1 - m2.parentMz).Abs))
-                                        Return m2
-                                    End Function) _
-                            .ToArray
-
-                        Return ms
-                    End Function) _
-            .ToArray
-
-        Return data
+    Public Function MassCalibration(data As mzPack, Optional mzdiff As Double = 20, Optional env As Environment = Nothing) As Object
+        Return data.MassCalibration(ppm:=mzdiff)
     End Function
 End Module

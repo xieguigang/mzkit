@@ -67,6 +67,10 @@ Namespace mzData.mzWebCache
     Public Class ScanMS2 : Inherits MSScan
         Implements IMs1
 
+        ''' <summary>
+        ''' the parent ion m/z
+        ''' </summary>
+        ''' <returns></returns>
         Public Property parentMz As Double Implements IMs1.mz
         Public Overrides Property rt As Double Implements IRetentionTime.rt
         Public Property intensity As Double

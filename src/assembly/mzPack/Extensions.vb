@@ -62,6 +62,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdVec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 <HideModuleName>
 Public Module Extensions
@@ -151,5 +153,43 @@ Public Module Extensions
            .TIC = .into.Sum,
            .BPC = .into.Max
         }
+    End Function
+
+    ''' <summary>
+    ''' do mass calibration
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function MassCalibration(data As mzPack, Optional ppm As Double = 20) As mzPack
+        Dim mzdiff As Tolerance = Tolerance.PPM(ppm)
+
+        data.MS = data.MS _
+            .Select(Function(ms1)
+                        Dim mass2 As New List(Of ScanMS2)
+
+                        For Each scan2 As ScanMS2 In ms1.products.SafeQuery
+                            Dim calibration As ms2 = ms1.GetMs _
+                                .Where(Function(d)
+                                           Return mzdiff(d.mz, scan2.parentMz)
+                                       End Function) _
+                                .OrderByDescending(Function(d) d.intensity) _
+                                .FirstOrDefault
+
+                            If Not calibration Is Nothing Then
+                                scan2.parentMz = calibration.mz
+                            End If
+
+                            mass2.Add(scan2)
+                        Next
+
+                        ms1.products = mass2.ToArray
+
+                        Return ms1
+                    End Function) _
+            .ToArray
+
+        Return data
     End Function
 End Module
