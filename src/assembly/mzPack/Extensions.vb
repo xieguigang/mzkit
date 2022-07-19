@@ -162,8 +162,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function MassCalibration(data As mzPack, Optional ppm As Double = 20) As mzPack
-        Dim mzdiff As Tolerance = Tolerance.PPM(ppm)
+    Public Function MassCalibration(data As mzPack, Optional da As Double = 0.1) As mzPack
+        Dim mzdiff As Tolerance = Tolerance.DeltaMass(da)
 
         data.MS = data.MS _
             .Select(Function(ms1)

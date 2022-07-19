@@ -522,13 +522,13 @@ Module MzWeb
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="mzdiff">
-    ''' mass tolerance in ppm
+    ''' mass tolerance in delta dalton
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("mass_calibration")>
     <RApiReturn(GetType(mzPack))>
-    Public Function MassCalibration(data As mzPack, Optional mzdiff As Double = 20, Optional env As Environment = Nothing) As Object
-        Return data.MassCalibration(ppm:=mzdiff)
+    Public Function MassCalibration(data As mzPack, Optional mzdiff As Double = 0.1, Optional env As Environment = Nothing) As Object
+        Return data.MassCalibration(da:=mzdiff)
     End Function
 End Module
