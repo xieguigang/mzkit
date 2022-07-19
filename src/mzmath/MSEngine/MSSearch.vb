@@ -170,6 +170,16 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Return $"{index.Count} unique compounds, tree with mzdiff: {tolerance} (precursors: {precursorTypes.JoinBy("; ")})"
     End Function
 
+    ''' <summary>
+    ''' get kegg compound by a given kegg id
+    ''' </summary>
+    ''' <param name="id">
+    ''' kegg compound id in pattern ``C\d+``
+    ''' </param>
+    ''' <returns>
+    ''' this function returns nothing if the target compound id
+    ''' is not exists in the current database
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(id As String) As Compound
         Return index.TryGetValue(id)
