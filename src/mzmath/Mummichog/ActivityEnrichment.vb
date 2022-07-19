@@ -13,12 +13,20 @@ Public Class ActivityEnrichment
     ''' <returns></returns>
     Public Property Q As Double
 
+    ''' <summary>
+    ''' the metabolite hits input size
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Input As Integer
         Get
             Return Hits.Length
         End Get
     End Property
 
+    ''' <summary>
+    ''' the pathway map background size
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Background As Integer
 
     ''' <summary>
@@ -36,6 +44,7 @@ Public Class ActivityEnrichment
     ''' </summary>
     ''' <returns></returns>
     Public Property Fisher As FishersExactPvalues
+
     ''' <summary>
     ''' the ms1 peak list annotation result
     ''' </summary>
@@ -56,7 +65,10 @@ Public Class ActivityEnrichment
         Return $"{Name}: activity={Activity.ToString("F4")}, fisher={Fisher.two_tail_pvalue.ToString("G4")}"
     End Function
 
-    Public Shared Function Evaluate(input As Dictionary(Of String, MzQuery), background As NamedValue(Of NetworkGraph), modelSize As Integer) As ActivityEnrichment
+    Public Shared Function Evaluate(input As Dictionary(Of String, MzQuery),
+                                    background As NamedValue(Of NetworkGraph),
+                                    modelSize As Integer) As ActivityEnrichment
+
         Dim mapping As NetworkGraph = getSubGraph(input.Keys, background)
         Dim graph As NetworkGraph = background.Value
         Dim modularity As Double = Communities.Modularity(g:=mapping)

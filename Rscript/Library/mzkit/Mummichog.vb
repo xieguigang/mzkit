@@ -12,6 +12,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports stdNum = System.Math
 
 <Package("Mummichog")>
 Module Mummichog
@@ -42,11 +43,17 @@ Module Mummichog
     ''' <summary>
     ''' export of the annotation score result table
     ''' </summary>
-    ''' <param name="result"></param>
+    ''' <param name="result">
+    ''' the annotation result which is generated from the 
+    ''' ``peakList_annotation`` function.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mzScore")>
-    Public Function mzScore(result As ActivityEnrichment()) As dataframe
-        Dim allUnion As MzQuery() = result _
+    Public Function mzScore(result As ActivityEnrichment(), Optional minHits As Integer = -1) As dataframe
+        Dim resultSet As ActivityEnrichment() = result _
+            .Where(Function(a) a.Input >= minHits) _
+            .ToArray
+        Dim allUnion As MzQuery() = resultSet _
             .Select(Function(a) a.Hits.SafeQuery) _
             .IteratesALL _
             .GroupBy(Function(a) MzQuery.ReferenceKey(a)) _
@@ -59,8 +66,14 @@ Module Mummichog
             Call unionScore.Add(MzQuery.ReferenceKey(a), 0)
         Next
 
-        For Each pathway As ActivityEnrichment In result
+        For Each pathway As ActivityEnrichment In resultSet
             Dim score As Double = pathway.Activity
+
+            If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
+                score *= 100
+            Else
+                score *= -stdNum.Log10(pathway.Fisher.two_tail_pvalue) + 1
+            End If
 
             For Each hit In pathway.Hits.SafeQuery
                 unionScore(MzQuery.ReferenceKey(hit)) += score
