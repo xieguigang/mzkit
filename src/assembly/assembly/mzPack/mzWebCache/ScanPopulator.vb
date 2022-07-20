@@ -146,6 +146,7 @@ Namespace mzData.mzWebCache
 
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
+            Dim ms1Yields As Integer = 0
 
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scanVal As MSScan = CreateScan(scan, ++i)
@@ -153,6 +154,7 @@ Namespace mzData.mzWebCache
                 If reader.GetMsLevel(scan) = 1 Then
                     If Not ms1 Is Nothing Then
                         ms1.products = products.ToArray
+                        ms1Yields += 1
                         products.Clear()
 
                         Yield ms1
@@ -173,7 +175,25 @@ Namespace mzData.mzWebCache
                 products.Clear()
 
                 Yield ms1
+            ElseIf ms1Yields = 0 Then
+                For Each fake As ScanMS1 In yieldFakeMs1(products)
+                    Yield fake
+                Next
             End If
+        End Function
+
+        Private Iterator Function yieldFakeMs1(products As IEnumerable(Of ScanMS2)) As IEnumerable(Of ScanMS1)
+            For Each ms2 As ScanMS2 In products
+                Yield New ScanMS1 With {
+                    .BPC = ms2.intensity,
+                    .into = {ms2.intensity},
+                    .products = {ms2},
+                    .mz = {ms2.parentMz},
+                    .rt = ms2.rt,
+                    .scan_id = "[MS1]" & ms2.scan_id,
+                    .TIC = ms2.intensity
+                }
+            Next
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
