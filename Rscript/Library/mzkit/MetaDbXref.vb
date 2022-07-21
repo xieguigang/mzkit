@@ -427,10 +427,10 @@ Module MetaDbXref
                             .OrderByDescending(Function(d) d.score * scores(MzQuery.ReferenceKey(d, format))) _
                             .ToArray
 
-                        Call println($"take unique [{hits(Scan0).ToString}, {hits(Scan0).score * scores(MzQuery.ReferenceKey(hits(Scan0), format))}], discards:")
+                        Call println($"take unique [{hits(Scan0).ToString}, {hits(Scan0).name}, {hits(Scan0).score * scores(MzQuery.ReferenceKey(hits(Scan0), format))}], discards:")
 
                         For Each r As MzQuery In hits.Skip(1)
-                            Call println($"{r.ToString}: {r.score * scores(MzQuery.ReferenceKey(r, format))}")
+                            Call println($"{r.ToString}, {r.name}: {r.score * scores(MzQuery.ReferenceKey(r, format))}")
                         Next
                     End If
 
@@ -600,10 +600,10 @@ Module MetaDbXref
                         If hitAny AndAlso verbose Then
                             If sj > si Then
                                 ' i is replaced by j
-                                Call println($"'{ki}'[score={si}] is replaced by a better result '{kj}'[score={sj}]!")
+                                Call println($"'{ki}, {mzqueries(i).Name}'[score={si}] is replaced by a better result '{kj}, {mzqueries(j).Name}'[score={sj}]!")
                             Else
                                 ' j is replaced by i
-                                Call println($"'{kj}'[score={sj}] is replaced by a better result '{ki}'[score={si}]!")
+                                Call println($"'{kj}, {mzqueries(j).Name}'[score={sj}] is replaced by a better result '{ki}, {mzqueries(i).Name}'[score={si}]!")
                             End If
                         End If
                     Else
