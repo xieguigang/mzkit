@@ -174,7 +174,8 @@ Public Module MSIRawPack
 
         Return New mzPack With {
             .Application = FileApplicationClass.MSImaging,
-            .MS = spotsList.ToArray
+            .MS = spotsList.ToArray,
+            .source = spotsXy.raw.FileName
         }
     End Function
 End Module

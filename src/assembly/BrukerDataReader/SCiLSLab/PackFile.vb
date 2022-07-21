@@ -12,6 +12,10 @@ Namespace SCiLSLab
 
         Public Property comment As String
         Public Property export_time As Date
+        ''' <summary>
+        ''' the raw data source file path
+        ''' </summary>
+        ''' <returns></returns>
         Public Property raw As String
         Public Property fullName As String
         Public Property guid As String
@@ -24,6 +28,13 @@ Namespace SCiLSLab
                 Dim byrefPack As New PackFile
                 Call ParseHeader(reader, byrefPack, Nothing)
                 Return byrefPack
+            End Using
+        End Function
+
+        Public Shared Function GetGuid(file As String) As String
+            Using buffer As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Dim header As PackFile = ParseHeader(buffer)
+                Return header.guid
             End Using
         End Function
 
