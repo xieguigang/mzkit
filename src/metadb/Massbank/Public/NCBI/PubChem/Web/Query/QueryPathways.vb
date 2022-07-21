@@ -8,12 +8,16 @@ Namespace NCBI.PubChem
 
     Public Class QueryPathways : Inherits WebQuery(Of NamedValue(Of Types))
 
-        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1, Optional offline As Boolean = False)
-            MyBase.New(
+        Public Sub New(<CallerMemberName>
+                       Optional cache As String = Nothing,
+                       Optional interval As Integer = -1,
+                       Optional offline As Boolean = False)
+
+            Call MyBase.New(
                 url:=AddressOf url,
                 contextGuid:=Function(str) $"{str.Value.ToString}_{str.Name}",
                 parser:=Function(str, type) str,
-                prefix:=Function(str) str.Last,
+                prefix:=Function(str) str.MD5.Substring(0, 2),
                 cache:=cache,
                 interval:=interval,
                 offline:=offline
