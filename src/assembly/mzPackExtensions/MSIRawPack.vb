@@ -132,19 +132,14 @@ Public Module MSIRawPack
         Return mz.Values.ToArray
     End Function
 
-    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream, Optional println As Action(Of String) = Nothing) As mzPack
+    Public Function LoadMSIFromSCiLSLab(files As IEnumerable(Of (index$, msdata$)), Optional println As Action(Of String) = Nothing) As mzPack
+
+    End Function
+
+    Private Iterator Function LoadMSISpotsFromSCiLSLab(spots As Stream, msdata As Stream, minX#, minY#, println As Action(Of String)) As IEnumerable(Of ScanMS1)
         Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
         Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
-        Dim spotsList As New List(Of ScanMS1)
         Dim i As i32 = Scan0
-        Dim minX As Double = spotsXy.X.Min
-        Dim minY As Double = spotsXy.Y.Min
-
-        If println Is Nothing Then
-            println = Sub()
-                          ' do nothing
-                      End Sub
-        End If
 
         For Each spot As SpotMs In spotsMs.matrix
             Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
@@ -165,12 +160,28 @@ Public Module MSIRawPack
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G3")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
             }
 
-            println(ms1.scan_id)
-            spotsList.Add(ms1)
+            Call println(ms1.scan_id)
+
+            Yield ms1
         Next
+    End Function
+
+    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
+        Dim spotsList As New List(Of ScanMS1)
+        Dim minX As Double = spotsXy.X.Min
+        Dim minY As Double = spotsXy.Y.Min
+
+        If println Is Nothing Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
+
+        spotsList.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, minX, minY, println))
 
         Return New mzPack With {
             .Application = FileApplicationClass.MSImaging,
