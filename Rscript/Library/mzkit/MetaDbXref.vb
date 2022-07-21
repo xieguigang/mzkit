@@ -535,6 +535,14 @@ Module MetaDbXref
         Dim scores As New Dictionary(Of String, Double)
         Dim println As Action(Of Object) = env.WriteLineHandler
 
+        If Not verbose Then
+            verbose = env.globalEnvironment.options.verbose
+        End If
+
+        If verbose Then
+            Call println("the verbose unique ranking processing details will be reported!")
+        End If
+
         If Not scoreFactors Is Nothing Then
             For Each name As String In scoreFactors.getNames
                 Call scores.Add(name, scoreFactors.getValue(Of Double)(name, env))
