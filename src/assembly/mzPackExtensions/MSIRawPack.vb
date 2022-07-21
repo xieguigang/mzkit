@@ -133,7 +133,34 @@ Public Module MSIRawPack
     End Function
 
     Public Function LoadMSIFromSCiLSLab(files As IEnumerable(Of (index$, msdata$)), Optional println As Action(Of String) = Nothing) As mzPack
+        Dim pixels As New List(Of ScanMS1)
+        Dim rawfiles As New List(Of String)
 
+        If println Is Nothing Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
+
+        For Each tuple In files
+            Using spots As Stream = tuple.index.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Using msdata As Stream = tuple.msdata.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    pixels.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, println))
+                End Using
+            End Using
+
+            rawfiles.Add(PackFile.ParseHeader(tuple.index).raw.FileName)
+        Next
+
+        If rawfiles.Distinct.Count > 1 Then
+            Call println("[warning] the given spots data comes from multiple raw data file!")
+        End If
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.MSImaging,
+            .MS = pixels.ToArray,
+            .source = rawfiles.Distinct.JoinBy("; ")
+        }
     End Function
 
     Private Iterator Function LoadMSISpotsFromSCiLSLab(spots As Stream, msdata As Stream, minX#, minY#, println As Action(Of String)) As IEnumerable(Of ScanMS1)

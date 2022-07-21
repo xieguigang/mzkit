@@ -23,6 +23,12 @@ Namespace SCiLSLab
         Public Property create_time As Date
         Public Property metadata As Dictionary(Of String, String)
 
+        Public Shared Function ParseHeader(file As String) As PackFile
+            Using buffer As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return ParseHeader(buffer)
+            End Using
+        End Function
+
         Public Shared Function ParseHeader(file As Stream) As PackFile
             Using reader As New StreamReader(file)
                 Dim byrefPack As New PackFile
