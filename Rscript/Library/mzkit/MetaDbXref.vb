@@ -405,6 +405,7 @@ Module MetaDbXref
                                      uniqueByScore As Boolean,
                                      scores As Dictionary(Of String, Double),
                                      format As String,
+                                     verbose As Boolean,
                                      env As Environment) As NamedValue(Of MzQuery)
         ' unique of rows
         Dim all As MzQuery() = query.getValue(Of MzQuery())(mzi, env)
@@ -413,6 +414,26 @@ Module MetaDbXref
         If Not all.IsNullOrEmpty Then
             If uniqueByScore Then
                 If scores.Count > 0 Then
+                    Dim hits As MzQuery() = all _
+                        .Where(Function(d)
+                                   Return scores.ContainsKey(MzQuery.ReferenceKey(d, format))
+                               End Function) _
+                        .ToArray
+
+                    If verbose AndAlso hits.Length > 1 Then
+                        Dim println As Action(Of Object) = env.WriteLineHandler
+
+                        hits = hits _
+                            .OrderByDescending(Function(d) d.score * scores(MzQuery.ReferenceKey(d, format))) _
+                            .ToArray
+
+                        Call println($"take unique [{hits(Scan0).ToString}, {hits(Scan0).name}, {hits(Scan0).score * scores(MzQuery.ReferenceKey(hits(Scan0), format))}], discards:")
+
+                        For Each r As MzQuery In hits.Skip(1)
+                            Call println($"{r.ToString}, {r.name}: {r.score * scores(MzQuery.ReferenceKey(r, format))}")
+                        Next
+                    End If
+
                     unique = all _
                         .OrderByDescending(Function(d)
                                                Dim key As String = MzQuery.ReferenceKey(d, format)
@@ -507,11 +528,20 @@ Module MetaDbXref
                                 Optional scoreFactors As list = Nothing,
                                 Optional format As String = "F4",
                                 Optional removesZERO As Boolean = False,
+                                Optional verbose As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mz As String() = query.getNames
         Dim scores As New Dictionary(Of String, Double)
         Dim println As Action(Of Object) = env.WriteLineHandler
+
+        If Not verbose Then
+            verbose = env.globalEnvironment.options.verbose
+        End If
+
+        If verbose Then
+            Call println("the verbose unique ranking processing details will be reported!")
+        End If
 
         If Not scoreFactors Is Nothing Then
             For Each name As String In scoreFactors.getNames
@@ -526,7 +556,7 @@ Module MetaDbXref
 
         Dim mzqueries = mz _
             .Select(Function(mzi)
-                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, format, env)
+                        Return query.makeUniqueQuery(mzi, uniqueByScore, scores, format, verbose, env)
                     End Function) _
             .ToArray
         Dim betterJ As Boolean
@@ -554,15 +584,28 @@ Module MetaDbXref
                         Dim si As Double = mzqueries(i).Value.score
                         Dim kj = MzQuery.ReferenceKey(mzqueries(j), format)
                         Dim ki = MzQuery.ReferenceKey(mzqueries(i), format)
+                        Dim hitAny As Boolean = False
 
                         If scores.ContainsKey(kj) Then
                             sj *= scores(kj)
+                            hitAny = True
                         End If
                         If scores.ContainsKey(ki) Then
                             si *= scores(ki)
+                            hitAny = True
                         End If
 
                         betterJ = sj > si
+
+                        If hitAny AndAlso verbose Then
+                            If sj > si Then
+                                ' i is replaced by j
+                                Call println($"'{ki}, {mzqueries(i).Name}'[score={si}] is replaced by a better result '{kj}, {mzqueries(j).Name}'[score={sj}]!")
+                            Else
+                                ' j is replaced by i
+                                Call println($"'{kj}, {mzqueries(j).Name}'[score={sj}] is replaced by a better result '{ki}, {mzqueries(i).Name}'[score={si}]!")
+                            End If
+                        End If
                     Else
                         betterJ = mzqueries(j).Value.score > mzqueries(i).Value.score
                     End If

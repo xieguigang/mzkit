@@ -130,6 +130,10 @@ Public Class MzQuery
         Return $"{query.mz.ToString(format)}|{query.unique_id}"
     End Function
 
+    ''' <summary>
+    ''' unique_id precursor_type, m/z xxx.xxxx; score=xxx
+    ''' </summary>
+    ''' <returns></returns>
     Public Overrides Function ToString() As String
         Dim prefix As String = $"{unique_id} {precursorType}, m/z {mz.ToString("F4")}"
 

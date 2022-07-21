@@ -127,14 +127,23 @@ Module PubChemToolKit
         Return images
     End Function
 
+    ''' <summary>
+    ''' query of the pathways, taxonomy and reaction 
+    ''' data from the pubchem database.
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <param name="cache$"></param>
+    ''' <returns></returns>
     <ExportAPI("query.external")>
     Public Function queryExternalMetadata(cid As String, Optional cache$ = "./pubchem/") As list
         Dim query As New QueryPathways(cache)
-        Dim result As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim result As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
 
-        result.add("pathways", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.pathways)))
-        result.add("taxonomy", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.taxonomy)))
-        result.add("reaction", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.reaction)))
+        Call result.add("pathways", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.pathways), cacheType:=".json"))
+        Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.taxonomy), cacheType:=".json"))
+        Call result.add("reaction", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.reaction), cacheType:=".json"))
 
         Return result
     End Function
