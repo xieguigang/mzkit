@@ -111,7 +111,7 @@ Namespace NCBI.PubChem
         ''' <param name="name"></param>
         ''' <returns></returns>
         Private Shared Function prefix(name As String) As String
-            Return name.NormalizePathString.Trim("_"c, " "c).First
+            Return name.MD5.Substring(1, 2)
         End Function
 
         Private Shared Function loadQueryJson(jsonText As String, type As Type) As IdentifierList
@@ -127,7 +127,7 @@ Namespace NCBI.PubChem
         End Function
 
         Private Shared Function normalizeFileName(text As String) As String
-            Return text.NormalizePathString(False)
+            Return text.MD5
         End Function
 
         Private Shared Function queryApi(name As String) As String
