@@ -5,7 +5,8 @@ CID \- query cid from pubchem database
 .SH SYNOPSIS
 \fICID(\fBname\fR as string, 
 \fBcache\fR as string = "./.pubchem", 
-\fBoffline\fR as boolean = FALSE);\fR
+\fBoffline\fR as boolean = FALSE, 
+\fBinterval\fR as integer = -1);\fR
 .SH DESCRIPTION
 .PP
 query cid from pubchem database
@@ -15,10 +16,15 @@ query cid from pubchem database
 \fBname\fB \fR\- -. 
 .PP
 .PP
-\fBcache$\fB \fR\- -. 
+\fBcache\fB \fR\- -. 
 .PP
 .PP
 \fBoffline\fB \fR\- -. 
+.PP
+.PP
+\fBinterval\fB \fR\- 
+ the time sleep interval in ms
+. 
 .PP
 .SH SEE ALSO
 pubchem_kit

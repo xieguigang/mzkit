@@ -132,11 +132,17 @@ Module PubChemToolKit
     ''' data from the pubchem database.
     ''' </summary>
     ''' <param name="cid"></param>
-    ''' <param name="cache$"></param>
+    ''' <param name="cache"></param>
+    ''' <param name="interval">
+    ''' the sleep time interval in ms
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("query.external")>
-    Public Function queryExternalMetadata(cid As String, Optional cache$ = "./pubchem/") As list
-        Dim query As New QueryPathways(cache)
+    Public Function queryExternalMetadata(cid As String,
+                                          Optional cache$ = "./pubchem/",
+                                          Optional interval As Integer = -1) As list
+
+        Dim query As New QueryPathways(cache, interval:=interval)
         Dim result As New list With {
             .slots = New Dictionary(Of String, Object)
         }
@@ -152,12 +158,25 @@ Module PubChemToolKit
     ''' query cid from pubchem database
     ''' </summary>
     ''' <param name="name"></param>
-    ''' <param name="cache$"></param>
+    ''' <param name="cache"></param>
     ''' <param name="offline"></param>
+    ''' <param name="interval">
+    ''' the time sleep interval in ms
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("CID")>
-    Public Function CID(name As String, Optional cache$ = "./.pubchem", Optional offline As Boolean = False) As String()
-        Return Query.QueryCID(name, cache, offlineMode:=offline, hitCache:=Nothing)
+    Public Function CID(name As String,
+                        Optional cache$ = "./.pubchem",
+                        Optional offline As Boolean = False,
+                        Optional interval As Integer = -1) As String()
+
+        Return Query.QueryCID(
+            name:=name,
+            cacheFolder:=cache,
+            offlineMode:=offline,
+            hitCache:=Nothing,
+            interval:=interval
+        )
     End Function
 
     <ExportAPI("pubchem_url")>

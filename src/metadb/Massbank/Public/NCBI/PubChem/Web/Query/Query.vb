@@ -71,14 +71,14 @@ Namespace NCBI.PubChem
         ''' <param name="handle"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetQueryHandler(Of T)(handle As String, offline As Boolean) As T
+        Public Function GetQueryHandler(Of T)(handle As String, offline As Boolean, Optional internal As Integer = -1) As T
             If GetType(T) Is GetType(CIDQuery) Then
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New CIDQuery(cache:=handle, offline:=offline)
+                    cache(handle) = New CIDQuery(cache:=handle, offline:=offline, interval:=internal)
                 End If
             Else
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New WebQuery(cache:=handle, offline:=offline)
+                    cache(handle) = New WebQuery(cache:=handle, offline:=offline, interval:=internal)
                 End If
             End If
 
@@ -97,9 +97,10 @@ Namespace NCBI.PubChem
         Public Function QueryCID(name As String,
                                  Optional cacheFolder$ = "./pubchem_cache",
                                  Optional offlineMode As Boolean = False,
-                                 Optional ByRef hitCache As Boolean = False) As String()
+                                 Optional ByRef hitCache As Boolean = False,
+                                 Optional interval As Integer = -1) As String()
 
-            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".GetQueryHandler(Of CIDQuery)(offline:=offlineMode)
+            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".GetQueryHandler(Of CIDQuery)(offline:=offlineMode, internal:=interval)
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json", hitCache:=hitCache)
             Dim CID As String() = Nothing
 

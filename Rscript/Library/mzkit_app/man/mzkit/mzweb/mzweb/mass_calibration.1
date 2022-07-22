@@ -4,6 +4,7 @@
 mass_calibration \- do mass calibration
 .SH SYNOPSIS
 \fImass_calibration(\fBdata\fR as <generic> mzPack, 
+\fBmzdiff\fR as double = 0.1, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -12,6 +13,11 @@ do mass calibration
 .SH OPTIONS
 .PP
 \fBdata\fB \fR\- -. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 
+ mass tolerance in delta dalton
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
