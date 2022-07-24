@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="last-update" content="7/25/2022 3:30:01 AM" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -49,7 +49,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -70,12 +70,12 @@
                     <p>query of the pathways, taxonomy and reaction <br />
  data from the pubchem database.</p>  
                 
-                    <pre><p>let <code>query.external</code> as function(<code>cid</code> as string, <code>cache</code> as string = "./pubchem/") -> <code>list</code> {
+                    <pre><p>let <code>query.external</code> as function(<code>cid</code> as string, <code>cache</code> as string = "./pubchem/", <code>interval</code> as integer = -1) -> <code>list</code> {
     #
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -89,7 +89,10 @@
   <code>cid</code>: -
                 </li>
 <li>
-  <code>cache$</code>: -
+  <code>cache</code>: -
+                </li>
+<li>
+  <code>interval</code>: the sleep time interval in ms
                 </li>
                 </ul>
 </div>
@@ -105,12 +108,15 @@
   <p>
                     <p>query cid from pubchem database</p>  
                 
-                    <pre><p>let <code>CID</code> as function(<code>name</code> as string, <code>cache</code> as string = "./.pubchem", <code>offline</code> as boolean = FALSE) -> <code>string</code> {
+                    <pre><p>let <code>CID</code> as function(<code>name</code> as string, 
+<code>cache</code> as string = "./.pubchem", 
+<code>offline</code> as boolean = FALSE, 
+<code>interval</code> as integer = -1) -> <code>string</code> {
     #
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -124,10 +130,13 @@
   <code>name</code>: -
                 </li>
 <li>
-  <code>cache$</code>: -
+  <code>cache</code>: -
                 </li>
 <li>
   <code>offline</code>: -
+                </li>
+<li>
+  <code>interval</code>: the time sleep interval in ms
                 </li>
                 </ul>
 </div>
@@ -148,7 +157,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -173,7 +182,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -211,7 +220,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -236,7 +245,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -261,7 +270,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
@@ -293,7 +302,7 @@
     # .NET API information
     #
     # module: mzkit.PubChemToolKit
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "pubchem_kit"
     #
