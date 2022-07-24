@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>annotation</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {annotation}">
+      <tbody>
+        <tr>
+          <td>{annotation}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>annotation</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="saveLibrary">
+    <a href="./annotation/saveLibrary.html">saveLibrary</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>saveLibrary</code> as function(<code>references</code> as any, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::SaveResult]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="populateIonData">
+    <a href="./annotation/populateIonData.html">populateIonData</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>populateIonData</code> as function(<code>raw</code> as <generic> mzPack, <code>mzdiff</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::PopulateIonData]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="openLibrary">
+    <a href="./annotation/openLibrary.html">openLibrary</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>openLibrary</code> as function(<code>file</code> as any, 
+<code>read</code> as boolean = TRUE, 
+<code>massDiff</code> as double = 0.05, 
+[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::createLibraryIO]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="queryByMz">
+    <a href="./annotation/queryByMz.html">queryByMz</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>queryByMz</code> as function(<code>lib</code> as <generic> Reader, 
+<code>mz</code> as double, 
+<code>tolerance</code> as any = <code>&lt;NULL&gt;</code>, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Metabolite</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::queryByMz]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="addReference">
+    <a href="./annotation/addReference.html">addReference</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>addReference</code> as function(<code>library</code> as <generic> Writer, <code>ref</code> as <generic> Metabolite) -> <code>&lt;generic&gt; Writer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::AddReference]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="annotation">
+    <a href="./annotation/annotation.html">annotation</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>annotation</code> as function(<code>id</code> as string, 
+<code>formula</code> as string, 
+<code>name</code> as string, 
+<code>synonym</code> as string = <code>&lt;NULL&gt;</code>, 
+<code>xref</code> as <generic> xref = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; MetaInfo</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::createAnnotation]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="metabolite">
+    <a href="./annotation/metabolite.html">metabolite</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>metabolite</code> as function(<code>anno</code> as <generic> MetaInfo, <code>precursors</code> as <generic> PrecursorData[], <code>spectrums</code> as <generic> Spectrum[]) -> <code>&lt;generic&gt; Metabolite</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::createMetabolite]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="precursorIons">
+    <a href="./annotation/precursorIons.html">precursorIons</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>create precursor ion library dataset</p>  
+                
+                    <pre><p>let <code>precursorIons</code> as function(<code>data</code> as <generic> dataframe) -> <code>&lt;generic&gt; PrecursorData[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::createPrecursorIons]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>data</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="asSpectrum">
+    <a href="./annotation/asSpectrum.html">asSpectrum</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>asSpectrum</code> as function(<code>data</code> as any, 
+<code>ionMode</code> as any = <code>&lt;NULL&gt;</code>, 
+<code>guid</code> as string = <code>&lt;NULL&gt;</code>, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Spectrum</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.library
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "annotation"
+    #
+    return call <code>R&#35;.interop_[library::asSpectrum]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

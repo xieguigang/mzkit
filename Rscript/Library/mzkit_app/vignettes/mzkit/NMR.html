@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>NMR</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {NMR}">
+      <tbody>
+        <tr>
+          <td>{NMR}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>NMR</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="read.nmrML">
+    <a href="./NMR/read.nmrML.html">read.nmrML</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>read.nmrML</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; XML</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.NMR
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "NMR"
+    #
+    return call <code>R&#35;.interop_[NMR::readSmall]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="acquisition">
+    <a href="./NMR/acquisition.html">acquisition</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>get all acquisition data in the raw data file</p>  
+                
+                    <pre><p>let <code>acquisition</code> as function(<code>nmrML</code> as <generic> XML) -> <code>&lt;generic&gt; acquisition[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.NMR
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "NMR"
+    #
+    return call <code>R&#35;.interop_[NMR::acquisition]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>nmrML</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="FID">
+    <a href="./NMR/FID.html">FID</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Read Free Induction Decay data matrix</p>  
+                
+                    <pre><p>let <code>FID</code> as function(<code>data</code> as <generic> acquisition) -> <code>&lt;generic&gt; fidComplex[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.NMR
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "NMR"
+    #
+    return call <code>R&#35;.interop_[NMR::GetMatrix]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>data</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="spectrumList">
+    <a href="./NMR/spectrumList.html">spectrumList</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>spectrumList</code> as function(<code>nmrML</code> as <generic> XML) -> <code>&lt;generic&gt; spectrumList[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.NMR
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "NMR"
+    #
+    return call <code>R&#35;.interop_[NMR::spectrumList]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="spectrum">
+    <a href="./NMR/spectrum.html">spectrum</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>spectrum</code> as function(<code>spectrum</code> as <generic> spectrumList, <code>nmrML</code> as <generic> XML) -> <code>&lt;generic&gt; LibraryMatrix</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.NMR
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "NMR"
+    #
+    return call <code>R&#35;.interop_[NMR::spectrumData]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

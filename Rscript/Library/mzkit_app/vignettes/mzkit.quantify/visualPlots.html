@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>visualPlots</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {visualPlots}">
+      <tbody>
+        <tr>
+          <td>{visualPlots}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>visualPlots</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="as.chromatogram">
+    <a href="./visualPlots/as.chromatogram.html">as.chromatogram</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>as.chromatogram</code> as function(<code>data</code> as any, 
+<code>time</code> as string = "Time", 
+<code>into</code> as string = "Intensity", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ChromatogramTick[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Visual
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.quantify.dll
+    # package: "visualPlots"
+    #
+    return call <code>R&#35;.interop_[Visual::asChromatogram]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="standard_curve">
+    <a href="./visualPlots/standard_curve.html">standard_curve</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Draw standard curve</p>  
+                
+                    <pre><p>let <code>standard_curve</code> as function(<code>model</code> as <generic> StandardCurve, 
+<code>title</code> as string = "", 
+<code>samples</code> as <generic> NamedValue`1[] = <code>&lt;NULL&gt;</code>, 
+<code>size</code> as string = "1600,1200", 
+<code>margin</code> as string = "padding: 200px 100px 150px 150px", 
+<code>factorFormat</code> as string = "G4", 
+<code>sampleLabelFont</code> as string = "font-style: normal; font-size: 16; font-family: Segoe UI;", 
+<code>labelerIterations</code> as integer = 1000, 
+<code>gridFill</code> as string = "LightGray") -> <code>&lt;generic&gt; GraphicsData</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Visual
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.quantify.dll
+    # package: "visualPlots"
+    #
+    return call <code>R&#35;.interop_[Visual::DrawStandardCurve]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>model</code>: The linear model of the targeted metabolism model data.
+                </li>
+<li>
+  <code>title</code>: The plot title
+                </li>
+<li>
+  <code>samples</code>: The point data of samples
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="chromatogram.plot">
+    <a href="./visualPlots/chromatogram.plot.html">chromatogram.plot</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>chromatogram.plot</code> as function(<code>mzML</code> as string, <code>ions</code> as <generic> IonPair[], <code>labelLayoutTicks</code> as integer = 2000) -> <code>&lt;generic&gt; GraphicsData</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Visual
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.quantify.dll
+    # package: "visualPlots"
+    #
+    return call <code>R&#35;.interop_[Visual::chromatogramPlot]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MRM.chromatogramPeaks.plot">
+    <a href="./visualPlots/MRM.chromatogramPeaks.plot.html">MRM.chromatogramPeaks.plot</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Visualization plot of the MRM chromatogram peaks data.</p>  
+                
+                    <pre><p>let <code>MRM.chromatogramPeaks.plot</code> as function(<code>chromatogram</code> as any, 
+<code>title</code> as string = "MRM Chromatogram Peak Plot", 
+<code>size</code> as any = "2200,1600", 
+<code>padding</code> as any = "padding: 200px 80px 150px 200px", 
+<code>fill</code> as boolean = TRUE, 
+<code>gridFill</code> as string = "rgb(250,250,250)", 
+<code>lineStyle</code> as string = "stroke: black; stroke-width: 2px; stroke-dash: solid;", 
+<code>relativeTimeScale</code> as any = <code>&lt;NULL&gt;</code>, 
+<code>parallel</code> as boolean = FALSE, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; GraphicsData</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Visual
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.quantify.dll
+    # package: "visualPlots"
+    #
+    return call <code>R&#35;.interop_[Visual::MRMchromatogramPeakPlot]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>chromatogram</code>: the extract MRM chromatogram peaks data.
+                </li>
+<li>
+  <code>title</code>: the plot title
+                </li>
+<li>
+  <code>size</code>: the size of the output image
+                </li>
+<li>
+  <code>fill</code>: fill polygon of the TIC plot?
+                </li>
+<li>
+  <code>gridFill</code>: color value for fill the grid background
+                </li>
+<li>
+  <code>lineStyle</code>: Css value for adjust the plot style of the curve line of the chromatogram peaks data.
+                </li>
+<li>
+  <code>relativeTimeScale</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

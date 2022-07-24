@@ -1,0 +1,536 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>formula</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {formula}">
+      <tbody>
+        <tr>
+          <td>{formula}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>formula</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="registerAnnotations">
+    <a href="./formula/registerAnnotations.html">registerAnnotations</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>registerAnnotations</code> as function(<code>annotation</code> as <generic> dataframe, <code>debug</code> as boolean = TRUE, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::registerAnnotations]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="peakAnnotations">
+    <a href="./formula/peakAnnotations.html">peakAnnotations</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>peakAnnotations</code> as function(<code>library</code> as <generic> LibraryMatrix, 
+<code>massDiff</code> as double = 0.1, 
+<code>isotopeFirst</code> as boolean = TRUE, 
+<code>adducts</code> as <generic> MzCalculator[] = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; LibraryMatrix</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::PeakAnnotation]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="candidates">
+    <a href="./formula/candidates.html">candidates</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>find all of the candidate chemical formulas by a <br />
+ specific exact mass value and a specific mass <br />
+ tolerance value in ppm</p>  
+                
+                    <pre><p>let <code>candidates</code> as function(<code>mass</code> as double, 
+<code>ppm</code> as double = 5, 
+..., 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; FormulaComposition[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::FormulaFinder]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>mass</code>: the exact mass value
+                </li>
+<li>
+  <code>ppm</code>: the mass tolerance value in ppm
+                </li>
+<li>
+  <code>candidateElements</code>: a list configuration of the formula candidates
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="eval">
+    <a href="./formula/eval.html">eval</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>evaluate exact mass for the given formula strings.</p>  
+                
+                    <pre><p>let <code>eval</code> as function(<code>formula</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::EvalFormula]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>formula</code>: a vector of the character formulas.
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="scan">
+    <a href="./formula/scan.html">scan</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Get atom composition from a formula string</p>  
+                
+                    <pre><p>let <code>scan</code> as function(<code>formula</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Formula</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::ScanFormula]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>formula</code>: The input formula string text.
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="getElementCount">
+    <a href="./formula/getElementCount.html">getElementCount</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>getElementCount</code> as function(<code>formula</code> as <generic> Formula, <code>element</code> as string) -> <code>integer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::getElementCount]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="removeElement">
+    <a href="./formula/removeElement.html">removeElement</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>removeElement</code> as function(<code>formula</code> as <generic> Formula, <code>element</code> as string) -> <code>&lt;generic&gt; Formula</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::removeElement]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="read.KCF">
+    <a href="./formula/read.KCF.html">read.KCF</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Read KCF model data</p>  
+                
+                    <pre><p>let <code>read.KCF</code> as function(<code>data</code> as string) -> <code>&lt;generic&gt; KCF</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::readKCF]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>data</code>: The text data or file path
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="KCF.graph">
+    <a href="./formula/KCF.graph.html">KCF.graph</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Create molecular network graph model</p>  
+                
+                    <pre><p>let <code>KCF.graph</code> as function(<code>kcf</code> as <generic> KCF) -> <code>&lt;generic&gt; NetworkGraph</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::CreateGraph]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>kcf</code>: The KCF molecule model
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="parse.SDF">
+    <a href="./formula/parse.SDF.html">parse.SDF</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>parse a single sdf text block</p>  
+                
+                    <pre><p>let <code>parse.SDF</code> as function(<code>data</code> as string, <code>parseStruct</code> as boolean = TRUE) -> <code>&lt;generic&gt; SDF</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::readSDF]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>data</code>: -
+                </li>
+<li>
+  <code>parseStruct</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="SDF.convertKCF">
+    <a href="./formula/SDF.convertKCF.html">SDF.convertKCF</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>SDF.convertKCF</code> as function(<code>sdfModel</code> as <generic> SDF) -> <code>&lt;generic&gt; KCF</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::SDF2KCF]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="download.kcf">
+    <a href="./formula/download.kcf.html">download.kcf</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>download.kcf</code> as function(<code>keggcompoundIDs</code> as string, <code>save</code> as string) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::DownloadKCF]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="open.descriptor.db">
+    <a href="./formula/open.descriptor.db.html">open.descriptor.db</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>open the file handles of the chemical descriptor database.</p>  
+                
+                    <pre><p>let <code>open.descriptor.db</code> as function(<code>dbFile</code> as string) -> <code>&lt;generic&gt; PubChemDescriptorRepo</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::openChemicalDescriptorDatabase]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>dbFile</code>: A directory path which contains the multiple database file of the <br />
+ chemical descriptors.
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="descriptor.matrix">
+    <a href="./formula/descriptor.matrix.html">descriptor.matrix</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>descriptor.matrix</code> as function(<code>repo</code> as <generic> PubChemDescriptorRepo, <code>cid</code> as integer, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; DataSet[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::LoadChemicalDescriptorsMatrix]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="parseSMILES">
+    <a href="./formula/parseSMILES.html">parseSMILES</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>parseSMILES</code> as function(<code>SMILES</code> as string) -> <code>&lt;generic&gt; ChemicalFormula</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::parseSMILES]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="as.formula">
+    <a href="./formula/as.formula.html">as.formula</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>as.formula</code> as function(<code>SMILES</code> as <generic> ChemicalFormula) -> <code>&lt;generic&gt; Formula</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::asFormula]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="isotope_distribution">
+    <a href="./formula/isotope_distribution.html">isotope_distribution</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>isotope_distribution</code> as function(<code>formula</code> as any, 
+<code>prob_threshold</code> as double = 0.001, 
+<code>fwhm</code> as double = 0.1, 
+<code>pad_left</code> as double = 3, 
+<code>pad_right</code> as double = 3, 
+<code>interpolate_grid</code> as double = 0.005) -> <code>&lt;generic&gt; IsotopeDistribution</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.FormulaTools
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "formula"
+    #
+    return call <code>R&#35;.interop_[FormulaTools::IsotopeDistributionSearch]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

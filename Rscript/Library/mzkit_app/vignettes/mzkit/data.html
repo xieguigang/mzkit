@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>data</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {data}">
+      <tbody>
+        <tr>
+          <td>{data}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>data</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="unionPeaks">
+    <a href="./data/unionPeaks.html">unionPeaks</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>unionPeaks</code> as function(<code>peaks</code> as <generic> PeakMs2[], <code>matrix</code> as boolean = FALSE, <code>massDiff</code> as double = 0.1) -> <code>&lt;generic&gt; PeakMs2|&lt;generic&gt; LibraryMatrix</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::unionPeaks]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="nsize">
+    <a href="./data/nsize.html">nsize</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>get the size of the target ms peaks</p>  
+                
+                    <pre><p>let <code>nsize</code> as function(<code>matrix</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>integer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::nfragments]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>matrix</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="peakMs2">
+    <a href="./data/peakMs2.html">peakMs2</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>create a new ms2 peaks data object</p>  
+                
+                    <pre><p>let <code>peakMs2</code> as function(<code>precursor</code> as double, 
+<code>rt</code> as double, 
+<code>mz</code> as double, 
+<code>into</code> as double, 
+<code>totalIons</code> as double = 0, 
+<code>file</code> as string = <code>&lt;NULL&gt;</code>, 
+..., 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::createPeakMs2]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>precursor</code>: -
+                </li>
+<li>
+  <code>rt</code>: -
+                </li>
+<li>
+  <code>mz</code>: -
+                </li>
+<li>
+  <code>into</code>: -
+                </li>
+<li>
+  <code>totalIons</code>: -
+                </li>
+<li>
+  <code>file</code>: -
+                </li>
+<li>
+  <code>meta</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="libraryMatrix">
+    <a href="./data/libraryMatrix.html">libraryMatrix</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Create a library matrix object</p>  
+                
+                    <pre><p>let <code>libraryMatrix</code> as function(<code>matrix</code> as any, 
+<code>title</code> as string = "MS Matrix", 
+<code>parentMz</code> as double = -1, 
+<code>centroid</code> as boolean = FALSE, 
+[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::libraryMatrix]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>matrix</code>: for a dataframe object, should contains column data:<br />
+ mz, into and annotation.
+                </li>
+<li>
+  <code>title</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="XIC_groups">
+    <a href="./data/XIC_groups.html">XIC_groups</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>grouping of the ms1 scan points by m/z data</p>  
+                
+                    <pre><p>let <code>XIC_groups</code> as function(<code>ms1</code> as any, <code>tolerance</code> as any = "ppm:20", [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::XICGroups]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ms1</code>: -
+                </li>
+<li>
+  <code>tolerance</code>: the m/z diff tolerance value for grouping ms1 scan point <br />
+ based on its <code>m/z</code> value
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="XIC">
+    <a href="./data/XIC.html">XIC</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.</p>  
+                
+                    <pre><p>let <code>XIC</code> as function(<code>ms1</code> as any, 
+<code>mz</code> as double, 
+<code>tolerance</code> as any = "ppm:20", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ms1_scan|&lt;generic&gt; ChromatogramTick</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::XIC]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ms1</code>: a sequence data of ms1 scans
+                </li>
+<li>
+  <code>mz</code>: target mz value
+                </li>
+<li>
+  <code>tolerance</code>: tolerance value in unit <code>ppm</code> or <code>da</code> for <br />
+ extract <code>m/z</code> data from the given ms1 ion <br />
+ scans.
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="rt_slice">
+    <a href="./data/rt_slice.html">rt_slice</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>slice a region of ms1 scan data by a given rt window.</p>  
+                
+                    <pre><p>let <code>rt_slice</code> as function(<code>ms1</code> as any, 
+<code>rtmin</code> as double, 
+<code>rtmax</code> as double, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ms1_scan</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::RtSlice]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ms1</code>: a sequence of ms1 scan data.
+                </li>
+<li>
+  <code>rtmin</code>: -
+                </li>
+<li>
+  <code>rtmax</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="intensity">
+    <a href="./data/intensity.html">intensity</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>get intensity value from the ion scan points</p>  
+                
+                    <pre><p>let <code>intensity</code> as function(<code>ticks</code> as any, 
+<code>mz</code> as double = -1, 
+<code>mzdiff</code> as any = "da:0.3", 
+[<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::getIntensity]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ticks</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="scan_time">
+    <a href="./data/scan_time.html">scan_time</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>get scan time value from the ion scan points</p>  
+                
+                    <pre><p>let <code>scan_time</code> as function(<code>ticks</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::getScantime]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ticks</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="make.ROI_names">
+    <a href="./data/make.ROI_names.html">make.ROI_names</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>makes xcms_id format liked ROI unique id</p>  
+                
+                    <pre><p>let <code>make.ROI_names</code> as function(<code>ROIlist</code> as any, <code>name_chrs</code> as boolean = FALSE, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::makeROInames]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>ROIlist</code>: -
+                </li>
+<li>
+  <code>name_chrs</code>: just returns the ROI names character?
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="read.MsMatrix">
+    <a href="./data/read.MsMatrix.html">read.MsMatrix</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>read.MsMatrix</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; Library[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.data
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "data"
+    #
+    return call <code>R&#35;.interop_[data::readMatrix]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

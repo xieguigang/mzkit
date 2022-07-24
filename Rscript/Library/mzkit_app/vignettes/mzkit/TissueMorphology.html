@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>TissueMorphology</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {TissueMorphology}">
+      <tbody>
+        <tr>
+          <td>{TissueMorphology}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>TissueMorphology</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="UMAPsample">
+    <a href="./TissueMorphology/UMAPsample.html">UMAPsample</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>UMAPsample</code> as function(<code>points</code> as any, 
+<code>x</code> as double, 
+<code>y</code> as double, 
+<code>z</code> as double, 
+<code>cluster</code> as integer, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; UMAPPoint[]</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.TissueMorphology
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "TissueMorphology"
+    #
+    return call <code>R&#35;.interop_[TissueMorphology::createUMAPsample]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="TissueData">
+    <a href="./TissueMorphology/TissueData.html">TissueData</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>TissueData</code> as function(<code>x</code> as integer, 
+<code>y</code> as integer, 
+<code>labels</code> as string, 
+<code>colorSet</code> as any = "Paper", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; TissueRegion</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.TissueMorphology
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "TissueMorphology"
+    #
+    return call <code>R&#35;.interop_[TissueMorphology::createTissueData]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>x</code>: -
+                </li>
+<li>
+  <code>y</code>: -
+                </li>
+<li>
+  <code>labels</code>: -
+                </li>
+<li>
+  <code>colorSet</code>: the color set schema name or a list of color data <br />
+ which can be mapping to the given <strong><code>labels</code></strong> <br />
+ list.
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="writeCDF">
+    <a href="./TissueMorphology/writeCDF.html">writeCDF</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>writeCDF</code> as function(<code>tissueMorphology</code> as <generic> TissueRegion[], 
+<code>umap</code> as <generic> UMAPPoint[], 
+<code>file</code> as any, 
+[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.TissueMorphology
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "TissueMorphology"
+    #
+    return call <code>R&#35;.interop_[TissueMorphology::createCDF]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="loadTissue">
+    <a href="./TissueMorphology/loadTissue.html">loadTissue</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>loadTissue</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.TissueMorphology
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "TissueMorphology"
+    #
+    return call <code>R&#35;.interop_[TissueMorphology::loadTissue]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="loadUMAP">
+    <a href="./TissueMorphology/loadUMAP.html">loadUMAP</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>loadUMAP</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.TissueMorphology
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "TissueMorphology"
+    #
+    return call <code>R&#35;.interop_[TissueMorphology::loadUMAP]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>

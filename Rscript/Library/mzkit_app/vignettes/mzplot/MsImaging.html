@@ -1,0 +1,626 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>MsImaging</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {MsImaging}">
+      <tbody>
+        <tr>
+          <td>{MsImaging}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>MsImaging</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="TrIQ">
+    <a href="./MsImaging/TrIQ.html">TrIQ</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>TrIQ</code> as function(<code>data</code> as any, 
+<code>q</code> as double = 0.6, 
+<code>levels</code> as integer = 100, 
+[<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::TrIQRange]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="intensityLimits">
+    <a href="./MsImaging/intensityLimits.html">intensityLimits</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>intensityLimits</code> as function(<code>data</code> as <generic> SingleIonLayer, <code>max</code> as double, <code>min</code> as double = 0) -> <code>&lt;generic&gt; SingleIonLayer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::LimitIntensityRange]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="write.MSI_XIC">
+    <a href="./MsImaging/write.MSI_XIC.html">write.MSI_XIC</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>write.MSI_XIC</code> as function(<code>pixels</code> as any, <code>ibd</code> as <generic> ibdReader, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; XICWriter</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::WriteXICCache]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="write.MSI">
+    <a href="./MsImaging/write.MSI.html">write.MSI</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>write.MSI</code> as function(<code>cache</code> as <generic> XICWriter, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::writeIndexCacheFile]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="open.MSI">
+    <a href="./MsImaging/open.MSI.html">open.MSI</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>open.MSI</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; XICReader</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::openIndexedCacheFile]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="FilterMz">
+    <a href="./MsImaging/FilterMz.html">FilterMz</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>FilterMz</code> as function(<code>viewer</code> as <generic> Drawer, 
+<code>mz</code> as double, 
+<code>tolerance</code> as any = "ppm:20", 
+<code>title</code> as string = "FilterMz", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; LibraryMatrix</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::FilterMz]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MS1">
+    <a href="./MsImaging/MS1.html">MS1</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>MS1</code> as function(<code>viewer</code> as <generic> Drawer, 
+<code>x</code> as integer, 
+<code>y</code> as integer, 
+<code>tolerance</code> as any = "da:0.1", 
+<code>threshold</code> as double = 0.01, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; LibraryMatrix</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::GetMsMatrx]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="viewer">
+    <a href="./MsImaging/viewer.html">viewer</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>viewer</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Drawer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::viewer]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="pixel">
+    <a href="./MsImaging/pixel.html">pixel</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>pixel</code> as function(<code>data</code> as <generic> XICReader, <code>x</code> as integer, <code>y</code> as integer) -> <code>&lt;generic&gt; ibdPixel</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::GetPixel]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="ionLayers">
+    <a href="./MsImaging/ionLayers.html">ionLayers</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>ionLayers</code> as function(<code>imzML</code> as any, 
+<code>mz</code> as double, 
+<code>tolerance</code> as any = "da:0.1", 
+<code>skip_zero</code> as boolean = TRUE, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PixelData</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::LoadPixels]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="rgb">
+    <a href="./MsImaging/rgb.html">rgb</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>rgb</code> as function(<code>viewer</code> as <generic> Drawer, 
+<code>r</code> as double, 
+<code>g</code> as double, 
+<code>b</code> as double, 
+<code>background</code> as string = "black", 
+<code>pixelSize</code> as any = "5,5", 
+<code>tolerance</code> as any = "da:0.1", 
+<code>maxCut</code> as double = 0.75, 
+<code>TrIQ</code> as boolean = TRUE, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Bitmap</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::RGB]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MSIlayer">
+    <a href="./MsImaging/MSIlayer.html">MSIlayer</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>MSIlayer</code> as function(<code>viewer</code> as <generic> Drawer, 
+<code>mz</code> as double, 
+<code>tolerance</code> as any = "da:0.1", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SingleIonLayer</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::GetIonLayer]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="intensity">
+    <a href="./MsImaging/intensity.html">intensity</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>intensity</code> as function(<code>layer</code> as any, <code>summary</code> as <integer> IntensitySummary = [Total], [<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::GetIntensityData]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="knnFill">
+    <a href="./MsImaging/knnFill.html">knnFill</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>knnFill</code> as function(<code>layer</code> as any, 
+<code>gridSize</code> as integer = 3, 
+<code>q</code> as double = 0.8, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SingleIonLayer|&lt;generic&gt; MSISummary</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::KnnFill]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MSI_coverage">
+    <a href="./MsImaging/MSI_coverage.html">MSI_coverage</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>MSI_coverage</code> as function(<code>layer</code> as <generic> SingleIonLayer, <code>xy</code> as <generic> Index`1, <code>samplingRegion</code> as boolean = TRUE) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::MSICoverage]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="assert">
+    <a href="./MsImaging/assert.html">assert</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>assert</code> as function(<code>layer</code> as <generic> SingleIonLayer, 
+<code>xy</code> as <generic> Index`1, 
+<code>cutoff</code> as double = 0.8, 
+<code>samplingRegion</code> as boolean = TRUE) -> <code>boolean</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::testLayer]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="layer">
+    <a href="./MsImaging/layer.html">layer</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>layer</code> as function(<code>viewer</code> as <generic> Drawer, 
+<code>mz</code> as double, 
+<code>pixelSize</code> as any = "5,5", 
+<code>tolerance</code> as any = "da:0.1", 
+<code>color</code> as string = "viridis:turbo", 
+<code>levels</code> as integer = 30, 
+<code>cutoff</code> as any = [0.1,0.75], 
+<code>background</code> as any = "Transparent", 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Bitmap</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::layer]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MSI_summary.scaleMax">
+    <a href="./MsImaging/MSI_summary.scaleMax.html">MSI_summary.scaleMax</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>MSI_summary.scaleMax</code> as function(<code>data</code> as <generic> MSISummary, 
+<code>intensity</code> as <integer> IntensitySummary, 
+<code>qcut</code> as double = 0.75, 
+<code>TrIQ</code> as boolean = TRUE) -> <code>double</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::AutoScaleMax]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="render">
+    <a href="./MsImaging/render.html">render</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>render</code> as function(<code>data</code> as any, 
+<code>intensity</code> as <integer> IntensitySummary = [Total], 
+<code>colorSet</code> as string = "viridis:turbo", 
+<code>defaultFill</code> as string = "Transparent", 
+<code>pixelSize</code> as any = "6,6", 
+<code>cutoff</code> as any = [0.1,0.75], 
+<code>pixelDrawer</code> as boolean = TRUE, 
+<code>background</code> as string = <code>&lt;NULL&gt;</code>, 
+<code>colorLevels</code> as integer = 255, 
+<code>dims</code> as any = <code>&lt;NULL&gt;</code>, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Bitmap</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::renderRowScans]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="as.pixels">
+    <a href="./MsImaging/as.pixels.html">as.pixels</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>as.pixels</code> as function(<code>layer</code> as <generic> SingleIonLayer, <code>character</code> as boolean = TRUE) -> <code>string|&lt;generic&gt; Point</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::asPixels]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="MeasureMSIions">
+    <a href="./MsImaging/MeasureMSIions.html">MeasureMSIions</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>MeasureMSIions</code> as function(<code>raw</code> as <generic> mzPack, 
+<code>gridSize</code> as integer = 6, 
+<code>mzdiff</code> as any = "da:0.1", 
+<code>keepsLayer</code> as boolean = FALSE, 
+<code>densityCut</code> as double = 0.1, 
+<code>qcut</code> as double = 0.01, 
+<code>intoCut</code> as double = 0, 
+[<code>&lt;Environment&gt;</code>]) -> <code>double|&lt;generic&gt; dataframe</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::getMSIIons]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>
