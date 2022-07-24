@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>mzML.ERS</title>
+    <meta name="author" content="xie.guigang@gcmodeller.org" />
+    <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
+    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="generator" content="https://github.com/xieguigang/xDoc" />
+    <meta name="theme-color" content="#333" />
+    <meta name="last-update" content="7/24/2022 2:22:48 PM" />
+    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta class="foundation-data-attribute-namespace" />
+    <meta class="foundation-mq-xxlarge" />
+    <meta class="foundation-mq-xlarge" />
+    <meta class="foundation-mq-large" />
+    <meta class="foundation-mq-medium" />
+    <meta class="foundation-mq-small" />
+    <meta class="foundation-mq-topbar" />
+  </head>
+  <body>
+    <table width="100%" summary="page for {mzML.ERS}">
+      <tbody>
+        <tr>
+          <td>{mzML.ERS}</td>
+          <td style="text-align: right;">R# Documentation</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>mzML.ERS</h1>
+    <hr />
+    <p></p>
+    <div id="main-wrapper">
+                           <div>
+  <h2 id="get_instrument">
+    <a href="./mzML.ERS/get_instrument.html">get_instrument</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>Get photodiode array detector instrument configuration id</p>  
+                
+                    <pre><p>let <code>get_instrument</code> as function(<code>mzml</code> as string) -> <code>string</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ERS
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzML.ERS"
+    #
+    return call <code>R&#35;.interop_[ERS::GetPhotodiodeArrayDetectorInstrumentConfigurationId]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>mzml</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="extract_UVsignals">
+    <a href="./mzML.ERS/extract_UVsignals.html">extract_UVsignals</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>extract_UVsignals</code> as function(<code>rawscans</code> as any, <code>instrumentId</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; GeneralSignal</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ERS
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzML.ERS"
+    #
+    return call <code>R&#35;.interop_[ERS::ExtractERSUVData]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="as.UVtime_signals">
+    <a href="./mzML.ERS/as.UVtime_signals.html">as.UVtime_signals</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>as.UVtime_signals</code> as function(<code>rawscans</code> as any, <code>rawfile</code> as string = "UVraw", [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ERS
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzML.ERS"
+    #
+    return call <code>R&#35;.interop_[ERS::translateToTimeSignals]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="write.UVsignals">
+    <a href="./mzML.ERS/write.UVsignals.html">write.UVsignals</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>write UV signal data into a text file or netCDF4 data file</p>  
+                
+                    <pre><p>let <code>write.UVsignals</code> as function(<code>signals</code> as any, 
+<code>file</code> as string, 
+<code>enable_CDFextension</code> as boolean = FALSE, 
+[<code>&lt;Environment&gt;</code>]) -> <code>boolean</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ERS
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzML.ERS"
+    #
+    return call <code>R&#35;.interop_[ERS::WriteSignal]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>signals</code>: a vector or pipeline of @<code>T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal</code>
+                </li>
+<li>
+  <code>file</code>: the file path of the data file that will be write signal data to it.
+                </li>
+<li>
+  <code>enable_CDFextension</code>: only available for sciBASIC.NET product when this option is set to <code>TRUE</code>. not supports for the <br />
+ standard netcdf library on linux platform or other cdf file reader software like NASA Panoply, etc. 
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="read.UVsignals">
+    <a href="./mzML.ERS/read.UVsignals.html">read.UVsignals</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>read.UVsignals</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ERS
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzML.ERS"
+    #
+    return call <code>R&#35;.interop_[ERS::ReadSignals]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div>
+                       </div>
+  </body>
+</html>
