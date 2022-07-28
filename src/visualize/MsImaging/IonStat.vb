@@ -59,13 +59,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Point = System.Drawing.Point
+Imports stdNum = System.Math
 
 Public Class IonStat
 
@@ -82,7 +82,8 @@ Public Class IonStat
 
     Public Shared Function DoStat(allPixels As PixelScan(),
                                   Optional nsize As Integer = 5,
-                                  Optional da As Double = 0.05) As IEnumerable(Of IonStat)
+                                  Optional da As Double = 0.05,
+                                  Optional mz As Double() = Nothing) As IEnumerable(Of IonStat)
         Return allPixels _
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
@@ -92,6 +93,13 @@ Public Class IonStat
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
+                        If Not mz.IsNullOrEmpty Then
+                            allIons = allIons _
+                                .Where(Function(i)
+                                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
+                                       End Function)
+                        End If
+
                         Return DoStatInternal(allIons, nsize, da)
                     End Function)
     End Function

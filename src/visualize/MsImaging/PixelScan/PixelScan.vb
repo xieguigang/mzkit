@@ -61,6 +61,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 
 Namespace Pixel
 
+    ''' <summary>
+    ''' the abstract model of pixel point [x,y] and method for get ms data vector
+    ''' </summary>
     Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D
 
         Dim disposedValue As Boolean
