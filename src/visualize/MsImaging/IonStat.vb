@@ -98,9 +98,21 @@ Public Class IonStat
                                 .Where(Function(i)
                                            Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
                                        End Function)
-                        End If
 
-                        Return DoStatInternal(allIons, nsize, da)
+                            Dim allHits = DoStatInternal(allIons, nsize, da).ToList
+
+                            For Each mzi As Double In mz
+                                If Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
+                                    ' missing current ion
+                                    ' fill empty
+                                    allHits.Add(New IonStat With {.mz = mzi})
+                                End If
+                            Next
+
+                            Return allHits
+                        Else
+                            Return DoStatInternal(allIons, nsize, da)
+                        End If
                     End Function)
     End Function
 
