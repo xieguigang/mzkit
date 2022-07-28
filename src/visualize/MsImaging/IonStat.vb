@@ -84,7 +84,7 @@ Public Class IonStat
                                   Optional nsize As Integer = 5,
                                   Optional da As Double = 0.05,
                                   Optional mz As Double() = Nothing) As IEnumerable(Of IonStat)
-        Return allPixels _
+        Dim ionList = allPixels _
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
                         Dim ions = i.GetMsPipe.Select(Function(ms) (pt, ms))
@@ -92,28 +92,28 @@ Public Class IonStat
                         Return ions
                     End Function) _
             .IteratesALL _
-            .DoCall(Function(allIons)
-                        If Not mz.IsNullOrEmpty Then
-                            allIons = allIons _
-                                .Where(Function(i)
-                                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
-                                       End Function)
+            .ToArray
 
-                            Dim allHits = DoStatInternal(allIons, nsize, da).ToList
+        If Not mz.IsNullOrEmpty Then
+            Dim allHits = ionList _
+                .Where(Function(i)
+                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
+                       End Function) _
+                .DoCall(Function(allIons) DoStatInternal(allIons, nsize, da)) _
+                .ToList
 
-                            For Each mzi As Double In mz
-                                If Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
-                                    ' missing current ion
-                                    ' fill empty
-                                    allHits.Add(New IonStat With {.mz = mzi})
-                                End If
-                            Next
+            For Each mzi As Double In mz
+                If Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
+                    ' missing current ion
+                    ' fill empty
+                    allHits.Add(New IonStat With {.mz = mzi})
+                End If
+            Next
 
-                            Return allHits
-                        Else
-                            Return DoStatInternal(allIons, nsize, da)
-                        End If
-                    End Function)
+            Return allHits
+        Else
+            Return DoStatInternal(ionList, nsize, da)
+        End If
     End Function
 
     ''' <summary>
