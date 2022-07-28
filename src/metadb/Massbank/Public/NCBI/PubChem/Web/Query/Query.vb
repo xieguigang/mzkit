@@ -93,7 +93,9 @@ Namespace NCBI.PubChem
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="cacheFolder$"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a list of pubchem hit cid
+        ''' </returns>
         Public Function QueryCID(name As String,
                                  Optional cacheFolder$ = "./pubchem_cache",
                                  Optional offlineMode As Boolean = False,
