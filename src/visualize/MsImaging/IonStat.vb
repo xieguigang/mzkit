@@ -103,7 +103,7 @@ Public Class IonStat
                 .ToList
 
             For Each mzi As Double In mz
-                If Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
+                If allHits.Count = 0 OrElse Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
                     ' missing current ion
                     ' fill empty
                     allHits.Add(New IonStat With {.mz = mzi})
