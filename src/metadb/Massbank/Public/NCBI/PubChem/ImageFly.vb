@@ -90,9 +90,16 @@ Namespace NCBI.PubChem
         ''' <returns></returns>
         Public Function GetImage(cid$, Optional width% = 300, Optional height% = 300, Optional doBgTransparent As Boolean = True) As Bitmap
             Dim url$ = $"https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={cid}&width={width}&height={height}"
-            Dim tmp$ = TempFileSystem.GetAppSysTempFile(".png", sessionID:=App.PID)
+            Dim tmp$ = TempFileSystem.GetAppSysTempFile(".png", sessionID:="cid__", prefix:="imageFly___")
+            Dim webget As Double = False
 
-            If Not wget.Download(url, save:=tmp) Then
+            If App.IsConsoleApp Then
+                webget = wget.Download(url, save:=tmp)
+            Else
+                webget = WebServiceUtils.DownloadFile(url, save:=tmp)
+            End If
+
+            If Not webget Then
                 Return Nothing
             ElseIf Not doBgTransparent Then
                 Return tmp.LoadImage
