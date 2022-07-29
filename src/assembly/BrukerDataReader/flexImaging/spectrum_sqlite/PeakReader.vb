@@ -18,9 +18,37 @@ Public Class PeakReader : Implements IDisposable
     Public Iterator Function GetSpectra() As IEnumerable(Of Spectra)
         Dim table As Sqlite3Table = peaks.GetTable("Spectra")
         Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim id As Integer = schema.GetOrdinal(NameOf(Spectra.Id))
+        Dim chip As Integer = schema.GetOrdinal(NameOf(Spectra.Chip))
+        Dim spot As Integer = schema.GetOrdinal(NameOf(Spectra.SpotName))
+        Dim region As Integer = schema.GetOrdinal(NameOf(Spectra.RegionNumber))
+        Dim x As Integer = schema.GetOrdinal(NameOf(Spectra.XIndexPos))
+        Dim y As Integer = schema.GetOrdinal(NameOf(Spectra.YIndexPos))
+        Dim numPeaks As Integer = schema.GetOrdinal(NameOf(Spectra.NumPeaks))
+        Dim mz As Integer = schema.GetOrdinal(NameOf(Spectra.PeakMzValues))
+        Dim into As Integer = schema.GetOrdinal(NameOf(Spectra.PeakIntensityValues))
+        Dim intensity As Double()
+        Dim mzi As Double()
+        Dim intensityBuf As Byte()
+        Dim mzBuf As Byte()
+        Dim npeaks As Integer
 
         For Each row As Sqlite3Row In table.EnumerateRows
+            npeaks = row(numPeaks)
+            intensityBuf = row(into)
+            mzBuf = row(mz)
 
+            Yield New Spectra With {
+                .Chip = row(chip),
+                .SpotName = row(spot),
+                .RegionNumber = row(region),
+                .Id = row(id),
+                .NumPeaks = npeaks,
+                .XIndexPos = row(x),
+                .YIndexPos = row(y),
+                .PeakIntensityValues = intensity,
+                .PeakMzValues = mzi
+            }
         Next
     End Function
 
