@@ -156,8 +156,4 @@
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="flexImaging\spectrum_sqlite\" />
-  </ItemGroup>
-
 </Project>

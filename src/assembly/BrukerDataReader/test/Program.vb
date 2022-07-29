@@ -6,6 +6,17 @@ Imports Microsoft.VisualBasic.Net.Http
 
 Module Program
     Sub Main(args As String())
+        Call spectrum()
+    End Sub
+
+    Sub spectrum()
+        Dim reader As New PeakReader("F:\MSI\YP202130530-V.d\peaks.sqlite")
+        Dim metadtaa = reader.GetProperties.ToArray
+
+        Pause()
+    End Sub
+
+    Sub mcf()
         Dim mcf_idx As New IndexParser("F:\MSI\YP202130530-V.d\b6ad08c2-7356-4a7c-88a5-47809c687c81_2.mcf_idx")
         Dim bytes As Byte()
         Dim blob As New mcfParser("F:\MSI\YP202130530-V.d\b6ad08c2-7356-4a7c-88a5-47809c687c81_2.mcf")
@@ -22,4 +33,5 @@ Module Program
             Console.WriteLine()
         Next
     End Sub
+
 End Module
