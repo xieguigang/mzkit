@@ -157,7 +157,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <Folder Include="flexImaging\spectrum_sqlite\" />
   </ItemGroup>
 
 </Project>
