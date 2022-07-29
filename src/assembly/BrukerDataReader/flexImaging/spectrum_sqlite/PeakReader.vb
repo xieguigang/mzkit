@@ -1,4 +1,5 @@
 ﻿
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
@@ -33,10 +34,21 @@ Public Class PeakReader : Implements IDisposable
         Dim mzBuf As Byte()
         Dim npeaks As Integer
 
+        ' 20220729
+        ' ms spectra data is not network byte order 
+
         For Each row As Sqlite3Row In table.EnumerateRows
             npeaks = row(numPeaks)
             intensityBuf = row(into)
+            intensity = intensityBuf _
+                .Split(4) _
+                .Select(Function(b) CDbl(BitConverter.ToSingle(b, Scan0))) _
+                .ToArray
             mzBuf = row(mz)
+            mzi = mzBuf _
+                .Split(8) _
+                .Select(Function(b) BitConverter.ToDouble(b, Scan0)) _
+                .ToArray
 
             Yield New Spectra With {
                 .Chip = row(chip),

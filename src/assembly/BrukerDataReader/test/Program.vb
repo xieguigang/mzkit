@@ -3,6 +3,7 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
     Sub Main(args As String())
@@ -14,7 +15,7 @@ Module Program
         ' Dim metadtaa = reader.GetProperties.ToArray
 
         For Each scan In reader.GetSpectra
-            Call Console.WriteLine(scan)
+            Call Console.WriteLine(scan.GetJson)
             Call Console.WriteLine()
         Next
 
