@@ -1,5 +1,6 @@
 Imports System
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader
+Imports Microsoft.VisualBasic.Data.IO
 
 Module Program
     Sub Main(args As String())
@@ -10,6 +11,8 @@ Module Program
         For Each index In mcf_idx.GetContainerIndex
             Console.WriteLine(index.ToString)
             bytes = blob.GetBlob(index)
+
+            Dim bin As New BinaryDataReader(bytes)
 
             Pause()
         Next
