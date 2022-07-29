@@ -27,4 +27,14 @@
     ' FOREIGN KEY (AcquisitionKey) REFERENCES AcquisitionKeys(Id)
     ' )
 
+    Public Property Id As Integer
+    Public Property Chip As Integer
+    Public Property SpotName As String
+    Public Property RegionNumber As Integer
+    Public Property XIndexPos As Integer
+    Public Property YIndexPos As Integer
+    Public Property NumPeaks As Integer
+    Public Property PeakMzValues As Double()
+    Public Property PeakIntensityValues As Double()
+
 End Class

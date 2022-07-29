@@ -13,6 +13,11 @@ Module Program
         Dim reader As New PeakReader("F:\MSI\YP202130530-V.d\peaks.sqlite")
         Dim metadtaa = reader.GetProperties.ToArray
 
+        For Each scan In reader.GetSpectra
+            Call Console.WriteLine(scan)
+            Call Console.WriteLine()
+        Next
+
         Pause()
     End Sub
 

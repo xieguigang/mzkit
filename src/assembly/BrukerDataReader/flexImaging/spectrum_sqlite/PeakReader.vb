@@ -15,6 +15,15 @@ Public Class PeakReader : Implements IDisposable
         peaks = Sqlite3Database.OpenFile(file)
     End Sub
 
+    Public Iterator Function GetSpectra() As IEnumerable(Of Spectra)
+        Dim table As Sqlite3Table = peaks.GetTable("Spectra")
+        Dim schema As Schema = table.SchemaDefinition.ParseSchema
+
+        For Each row As Sqlite3Row In table.EnumerateRows
+
+        Next
+    End Function
+
     Public Iterator Function GetProperties() As IEnumerable(Of Properties)
         Dim table As Sqlite3Table = peaks.GetTable("Properties")
         Dim schema As Schema = table.SchemaDefinition.ParseSchema
