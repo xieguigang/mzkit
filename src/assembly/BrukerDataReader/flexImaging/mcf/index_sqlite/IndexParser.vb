@@ -15,9 +15,20 @@ Public Class IndexParser : Implements IDisposable
     Public Iterator Function GetContainerIndex() As IEnumerable(Of ContainerIndex)
         Dim table As Sqlite3Table = sqlite.GetTable("ContainerIndex")
         Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim guidA As Integer = schema.GetOrdinal(NameOf(ContainerIndex.GuidA))
+        Dim guidB As Integer = schema.GetOrdinal(NameOf(ContainerIndex.GuidB))
+        Dim blobType As Integer = schema.GetOrdinal(NameOf(ContainerIndex.BlobResType))
+        Dim offset As Integer = schema.GetOrdinal(NameOf(ContainerIndex.Offset))
+        Dim blobSize As Integer = schema.GetOrdinal(NameOf(ContainerIndex.BlobSize))
 
         For Each row As Sqlite3Row In table.EnumerateRows
-
+            Yield New ContainerIndex With {
+                .BlobResType = row(blobType),
+                .BlobSize = row(blobSize),
+                .GuidA = row(guidA),
+                .GuidB = row(guidB),
+                .Offset = row(offset)
+            }
         Next
     End Function
 
