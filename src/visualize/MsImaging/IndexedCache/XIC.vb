@@ -58,6 +58,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace IndexedCache
@@ -89,7 +90,20 @@ Namespace IndexedCache
         End Sub
 
         Public Overridable Function GetLayer(dims As Size) As SingleIonLayer
+            Dim pixels As New List(Of PixelData)
+            Dim idx As i32 = Scan0
 
+            For i As Integer = 1 To dims.Width
+                For j As Integer = 1 To dims.Height
+                    pixels.Add(New PixelData(i, j, _intensity(++idx)))
+                Next
+            Next
+
+            Return New SingleIonLayer With {
+                .DimensionSize = dims,
+                .IonMz = mz.ToString("F4"),
+                .MSILayer = pixels.ToArray
+            }
         End Function
     End Class
 
