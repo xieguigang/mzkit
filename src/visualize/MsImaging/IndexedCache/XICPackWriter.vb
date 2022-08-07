@@ -2,6 +2,7 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -66,6 +67,7 @@ Namespace IndexedCache
                          End Function, offsets:=da)
             Dim dims As Size = raw.dimension
             Dim total As Integer = dims.Area
+            Dim data As MatrixXIC
 
             Using pack As New XICPackWriter(file)
                 Call pack.SetAttribute(
@@ -75,57 +77,64 @@ Namespace IndexedCache
                 )
 
                 For Each layer In mzgroups
-                    Dim pixels = layer.GroupBy(Function(p) $"{p.pt.X},{p.pt.Y}").ToArray
-                    Dim data As MatrixXIC
-
-                    If pixels.Length / total > spares Then
-                        ' matrix
-                        Dim matrix = Grid(Of IGrouping(Of String, (Point, ms2))) _
-                            .Create(
-                                data:=pixels,
-                                getPixel:=Function(p)
-                                              Dim t As String() = p.Key.Split(","c)
-                                              Dim pt As New Point(t(0), t(1))
-
-                                              Return pt
-                                          End Function)
-                        Dim intensity As New List(Of Double)
-                        Dim hit As Boolean
-
-                        For i As Integer = 1 To dims.Width
-                            For j As Integer = 1 To dims.Height
-                                Dim p = matrix.GetData(i, j, hit)
-
-                                If hit Then
-                                    intensity.Add(p.Average(Function(a) a.Item2.intensity))
-                                Else
-                                    intensity.Add(0)
-                                End If
-                            Next
-                        Next
-
-                        data = New MatrixXIC With {
-                            .mz = Val(layer.name),
-                            .intensity = intensity.ToArray
-                        }
-                    Else
-                        ' point
-                        data = New PointXIC With {
-                            .x = pixels.Select(Function(p) p.First.pt.X).ToArray,
-                            .y = pixels.Select(Function(p) p.First.pt.Y).ToArray,
-                            .mz = Val(layer.name),
-                            .intensity = pixels _
-                                .Select(Function(p)
-                                            Return p.Average(Function(a) a.ms.intensity)
-                                        End Function) _
-                                .ToArray
-                        }
-                    End If
-
-                    Call pack.AddLayer(layer:=data)
+                    data = getLayer(layer, total, spares, dims)
+                    pack.AddLayer(layer:=data)
                 Next
             End Using
         End Sub
+
+        Private Shared Function getLayer(layer As NamedCollection(Of (Point, ms2)), total As Integer, spares As Double, dims As Size) As MatrixXIC
+            Dim pixels = layer _
+                .GroupBy(Function(p)
+                             Dim pt = p.Item1
+                             Return $"{pt.X},{pt.Y}"
+                         End Function) _
+                .ToArray
+
+            If pixels.Length / total > spares Then
+                ' matrix
+                Dim matrix = Grid(Of IGrouping(Of String, (Point, ms2))) _
+                    .Create(
+                        data:=pixels,
+                        getPixel:=Function(p)
+                                      Dim t As String() = p.Key.Split(","c)
+                                      Dim pt As New Point(t(0), t(1))
+
+                                      Return pt
+                                  End Function)
+                Dim intensity As New List(Of Double)
+                Dim hit As Boolean
+
+                For i As Integer = 1 To dims.Width
+                    For j As Integer = 1 To dims.Height
+                        Dim p = matrix.GetData(i, j, hit)
+
+                        If hit Then
+                            intensity.Add(p.Average(Function(a) a.Item2.intensity))
+                        Else
+                            intensity.Add(0)
+                        End If
+                    Next
+                Next
+
+                Return New MatrixXIC With {
+                    .mz = Val(layer.name),
+                    .intensity = intensity.ToArray
+                }
+            Else
+                ' point
+                Return New PointXIC With {
+                    .x = pixels.Select(Function(p) p.First.Item1.X).ToArray,
+                    .y = pixels.Select(Function(p) p.First.Item1.Y).ToArray,
+                    .mz = Val(layer.name),
+                    .intensity = pixels _
+                        .Select(Function(p)
+                                    Return p.Average(Function(a) a.Item2.intensity)
+                                End Function) _
+                        .ToArray
+                }
+            End If
+        End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
