@@ -15,7 +15,7 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module CDF
 
     <Extension>
-    Public Function WriteCDF(tissueMorphology As TissueRegion(), umap As UMAPPoint(), file As Stream) As Boolean
+    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream, Optional umap As UMAPPoint() = Nothing) As Boolean
         Using cdf As New CDFWriter(file)
             Dim attrs As New List(Of attribute)
             Dim pixels As New List(Of Integer)
@@ -23,6 +23,10 @@ Public Module CDF
             Dim vec As integers
             Dim dims As Dimension
             Dim uniqueId As String
+
+            If umap Is Nothing Then
+                umap = {}
+            End If
 
             attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
             attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
