@@ -79,6 +79,11 @@ Public Module FeatureRegions
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' get the dimension size of the ms-imaging canvas
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetDimensionSize(raw As mzPack) As Size
         Dim allPixels As Point() = raw.MS.Select(AddressOf mzPackPixel.GetPixelPoint).ToArray
