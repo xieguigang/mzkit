@@ -31,6 +31,12 @@ Namespace IndexedCache
 
         End Class
 
+        Public ReadOnly Property dimension As Size
+            Get
+                Return dims
+            End Get
+        End Property
+
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
         End Sub
@@ -66,6 +72,14 @@ Namespace IndexedCache
                 factor:=3
             )
         End Sub
+
+        ''' <summary>
+        ''' get all mz data inside target data pack
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetMz() As Double()
+            Return mzquery.Keys
+        End Function
 
         ''' <summary>
         ''' 
