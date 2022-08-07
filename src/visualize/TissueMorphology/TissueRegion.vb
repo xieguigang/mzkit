@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Public Class TissueRegion
 
@@ -26,6 +27,13 @@ Public Class TissueRegion
             Return points.Length
         End Get
     End Property
+
+    Public Iterator Function GetPolygons() As IEnumerable(Of Polygon2D)
+        Yield New Polygon2D(
+            x:=points.Select(Function(i) CDbl(i.X)).ToArray,
+            y:=points.Select(Function(i) CDbl(i.Y)).ToArray
+        )
+    End Function
 
     Public Overrides Function ToString() As String
         Return $"{label} ({color.ToHtmlColor}) has {nsize} pixels."
