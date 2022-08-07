@@ -65,6 +65,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace Pixel
 
+    ''' <summary>
+    ''' pixel model for the imzML file data
+    ''' </summary>
     Public Class ibdPixel : Inherits PixelScan
 
         Public Overrides ReadOnly Property X As Integer
