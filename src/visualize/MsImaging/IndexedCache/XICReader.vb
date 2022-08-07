@@ -1,6 +1,9 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports stdNum = System.Math
@@ -14,6 +17,7 @@ Namespace IndexedCache
         Dim disposedValue As Boolean
         Dim dims As Size
         Dim mzquery As BlockSearchFunction(Of IonIndex)
+        Dim matrix As Grid(Of PixelIndex)
 
         Private Class IonIndex
 
@@ -31,6 +35,12 @@ Namespace IndexedCache
 
         End Class
 
+        Private Class PixelIndex
+            Public Property x As Integer
+            Public Property y As Integer
+            Public Property filename As String
+        End Class
+
         Public ReadOnly Property dimension As Size
             Get
                 Return dims
@@ -45,8 +55,10 @@ Namespace IndexedCache
             stream = New StreamPack(file,, meta_size:=32 * 1024 * 1024)
 
             Dim dims As Integer() = stream.GetGlobalAttribute("dims")
-            Dim layers As StreamGroup = stream.GetObject("layers")
+            Dim layers As StreamGroup = stream.GetObject("/layers/")
+            Dim msdata As StreamGroup = stream.GetObject("/msdata/")
             Dim index As New List(Of IonIndex)
+            Dim pixels As New List(Of PixelIndex)
             Dim mzdiff As Double = stream.GetGlobalAttribute("mzdiff")
 
             Me.dims = New Size(dims(0), dims(1))
@@ -65,11 +77,30 @@ Namespace IndexedCache
                 })
             Next
 
+            For Each obj As StreamObject In msdata.ListFiles
+                If TypeOf obj Is StreamGroup Then
+                    Continue For
+                End If
+
+                Dim x As Integer = obj.GetAttribute("x")
+                Dim y As Integer = obj.GetAttribute("y")
+
+                pixels.Add(New PixelIndex With {
+                    .filename = obj.referencePath.ToString,
+                    .x = x,
+                    .y = y
+                })
+            Next
+
             Me.mzquery = New BlockSearchFunction(Of IonIndex)(
                 data:=index,
                 eval:=Function(a) a.mz,
                 tolerance:=mzdiff,
                 factor:=3
+            )
+            Me.matrix = Grid(Of PixelIndex).Create(
+                data:=pixels,
+                getPixel:=Function(i) New Point(i.x, i.y)
             )
         End Sub
 
@@ -79,6 +110,32 @@ Namespace IndexedCache
         ''' <returns></returns>
         Public Function GetMz() As Double()
             Return mzquery.Keys
+        End Function
+
+        Friend Function GetPixel(x As Integer, y As Integer) As PixelScan
+            Dim hit As Boolean = False
+            Dim index As PixelIndex = matrix.GetData(x, y, hit)
+
+            If Not hit Then
+                Return Nothing
+            Else
+                Using buffer As Stream = stream.OpenBlock(index.filename),
+                    bin As New BinaryDataReader(buffer) With {
+                        .ByteOrder = ByteOrder.BigEndian
+                }
+                    Dim nsize As Integer = bin.ReadInt32
+                    Dim mz As Double() = bin.ReadDoubles(nsize)
+                    Dim intensity As Double() = bin.ReadDoubles(nsize)
+
+                    Return New InMemoryVectorPixel(
+                        index.filename.BaseName,
+                        x:=x,
+                        y:=y,
+                        mz:=mz,
+                        into:=intensity
+                    )
+                End Using
+            End If
         End Function
 
         ''' <summary>

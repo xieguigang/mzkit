@@ -1,9 +1,11 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
@@ -32,7 +34,7 @@ Namespace IndexedCache
         End Sub
 
         Public Sub AddLayer(layer As MatrixXIC)
-            Dim filename As String = $"/layers/{layer.GetType.Name}/{layer.mz}.ms"
+            Dim filename As String = $"/layers/{layer.GetType.Name}/{layer.mz}.dat"
 
             Using buffer As Stream = stream.OpenBlock(filename)
                 Call layer.Serialize(buffer)
@@ -42,6 +44,26 @@ Namespace IndexedCache
 
             obj.attributes.Add("mz", layer.mz)
             obj.attributes.Add("type", If(TypeOf layer Is PointXIC, 1, 0))
+        End Sub
+
+        Public Sub AddMsCache(scan As PixelScan)
+            Dim filename As String = $"/msdata/{scan.Y}/{scan.scanId}.ms"
+            Dim ms1 = scan.GetMs
+
+            Using buffer As Stream = stream.OpenBlock(filename),
+                bin As New BinaryDataWriter(buffer) With {
+                    .ByteOrder = ByteOrder.BigEndian
+            }
+                bin.Write(ms1.Length)
+                bin.Write(ms1.Select(Function(a) a.mz).ToArray)
+                bin.Write(ms1.Select(Function(a) a.intensity).ToArray)
+                bin.Flush()
+            End Using
+
+            Dim obj = stream.GetObject(filename)
+
+            obj.attributes.Add("x", scan.X)
+            obj.attributes.Add("y", scan.Y)
         End Sub
 
         ''' <summary>
@@ -79,6 +101,10 @@ Namespace IndexedCache
                 For Each layer In mzgroups
                     data = getLayer(layer, total, spares, dims)
                     pack.AddLayer(layer:=data)
+                Next
+
+                For Each pixel As PixelScan In raw.AllPixels
+                    Call pack.AddMsCache(scan:=pixel)
                 Next
             End Using
         End Sub
