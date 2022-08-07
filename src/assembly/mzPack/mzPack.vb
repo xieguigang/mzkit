@@ -246,8 +246,12 @@ Public Class mzPack
     ''' the file format version is test from the magic number.
     ''' (一次性加载所有原始数据)
     ''' </summary>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
+    ''' <param name="file">
+    ''' the file version will be automatically detected
+    ''' </param>
+    ''' <returns>
+    ''' a unify mzpack in-memory data model
+    ''' </returns>
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,

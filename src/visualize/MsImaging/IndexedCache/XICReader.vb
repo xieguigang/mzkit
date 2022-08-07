@@ -112,7 +112,7 @@ Namespace IndexedCache
             Return mzquery.Keys
         End Function
 
-        Friend Function GetPixel(x As Integer, y As Integer) As PixelScan
+        Public Function GetPixel(x As Integer, y As Integer) As PixelScan
             Dim hit As Boolean = False
             Dim index As PixelIndex = matrix.GetData(x, y, hit)
 

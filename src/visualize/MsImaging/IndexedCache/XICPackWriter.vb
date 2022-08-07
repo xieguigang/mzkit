@@ -24,7 +24,7 @@ Namespace IndexedCache
         End Sub
 
         Sub New(file As Stream)
-            stream = New StreamPack(file,, meta_size:=32 * 1024 * 1024)
+            stream = New StreamPack(file,, meta_size:=64 * 1024 * 1024)
         End Sub
 
         Public Sub SetAttribute(dims As Size, mzdiff As Double, spares As Double)
