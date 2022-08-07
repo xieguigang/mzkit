@@ -24,14 +24,23 @@ Namespace IndexedCache
             stream = New StreamPack(file,, meta_size:=32 * 1024 * 1024)
         End Sub
 
-        Public Sub SetAttribute(dims As Size)
+        Public Sub SetAttribute(dims As Size, mzdiff As Double, spares As Double)
             Call stream.globalAttributes.Add("dims", {dims.Width, dims.Height})
+            Call stream.globalAttributes.Add("mzdiff", mzdiff)
+            Call stream.globalAttributes.Add("spares", spares)
         End Sub
 
         Public Sub AddLayer(layer As MatrixXIC)
-            Using buffer As Stream = stream.OpenBlock($"/{layer.GetType.Name}/{layer.mz}.ms")
+            Dim filename As String = $"/layers/{layer.GetType.Name}/{layer.mz}.ms"
+
+            Using buffer As Stream = stream.OpenBlock(filename)
                 Call layer.Serialize(buffer)
             End Using
+
+            Dim obj = stream.GetObject(filename)
+
+            obj.attributes.Add("mz", layer.mz)
+            obj.attributes.Add("type", If(TypeOf layer Is PointXIC, 1, 0))
         End Sub
 
         ''' <summary>
@@ -59,7 +68,11 @@ Namespace IndexedCache
             Dim total As Integer = dims.Area
 
             Using pack As New XICPackWriter(file)
-                Call pack.SetAttribute(raw.dimension)
+                Call pack.SetAttribute(
+                    dims:=raw.dimension,
+                    mzdiff:=da,
+                    spares:=spares
+                )
 
                 For Each layer In mzgroups
                     Dim pixels = layer.GroupBy(Function(p) $"{p.pt.X},{p.pt.Y}").ToArray

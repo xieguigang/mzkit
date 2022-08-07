@@ -58,6 +58,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 
@@ -88,6 +89,37 @@ Namespace IndexedCache
             bin.Write(intensity)
             bin.Flush()
         End Sub
+
+        Public Shared Function Decode(data As Stream, dims As Size) As MatrixXIC
+            Using bin As New BinaryDataReader(data) With {
+                .ByteOrder = ByteOrder.BigEndian
+            }
+                Dim type As Integer = bin.ReadByte()
+
+                If type = 0 Then
+                    Dim mz As Double = bin.ReadDouble
+                    Dim intensity As Double() = bin.ReadDoubles(dims.Area)
+
+                    Return New MatrixXIC With {
+                        .mz = mz,
+                        .intensity = intensity
+                    }
+                Else
+                    Dim mz As Double = bin.ReadDouble
+                    Dim nsize As Integer = bin.ReadInt32
+                    Dim intensity As Double() = bin.ReadDoubles(nsize)
+                    Dim x As Integer() = bin.ReadInt32s(nsize)
+                    Dim y As Integer() = bin.ReadInt32s(nsize)
+
+                    Return New PointXIC With {
+                        .intensity = intensity,
+                        .mz = mz,
+                        .x = x,
+                        .y = y
+                    }
+                End If
+            End Using
+        End Function
 
         Public Overridable Function GetLayer(dims As Size) As SingleIonLayer
             Dim pixels As New List(Of PixelData)
