@@ -97,7 +97,10 @@ Namespace NCBI.PubChem
         Public Function GetInformationString(section As Section, key$) As String
             Dim info = section.GetInformation(key).TryCast(Of Information)
 
-            If info Is Nothing OrElse info.Value.StringWithMarkup Is Nothing Then
+            If info Is Nothing OrElse
+                info.Value Is Nothing OrElse
+                info.Value.StringWithMarkup Is Nothing Then
+
                 Return ""
             Else
                 Return info.Value.StringWithMarkup.FirstOrDefault?.String
