@@ -169,7 +169,7 @@ Module TissueMorphology
         End If
 
         Using buffer As Stream = saveBuf.TryCast(Of Stream)
-            Return tissueMorphology.WriteCDF(umap, file:=buffer)
+            Return tissueMorphology.WriteCDF(file:=buffer, umap:=umap)
         End Using
     End Function
 
