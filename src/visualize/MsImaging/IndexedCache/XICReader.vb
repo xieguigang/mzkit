@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -145,7 +146,7 @@ Namespace IndexedCache
         ''' <returns>
         ''' returns nothing if layer not found
         ''' </returns>
-        Public Function GetLayer(mz As Double) As SingleIonLayer
+        Public Function GetLayer(mz As Double, Optional mzdiff As Tolerance = Nothing) As SingleIonLayer
             Dim index As IonIndex() = mzquery _
                 .Search(New IonIndex(mz)) _
                 .ToArray
@@ -157,6 +158,12 @@ Namespace IndexedCache
             Dim ion As IonIndex = index _
                 .OrderBy(Function(i) stdNum.Abs(i.mz - mz)) _
                 .First
+
+            If Not mzdiff Is Nothing Then
+                If Not mzdiff(mz, ion.mz) Then
+                    Return Nothing
+                End If
+            End If
 
             Using buffer As Stream = stream.OpenBlock(ion.filename)
                 Dim layer = MatrixXIC.Decode(buffer, dims)
