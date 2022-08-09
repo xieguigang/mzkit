@@ -233,16 +233,25 @@ Public Module Extensions
     ''' make bugs fixed for RT pixel correction
     ''' </summary>
     ''' <param name="MSI"></param>
+    ''' <param name="println">
+    ''' set this parameter value to nothing will mute the log message echo. 
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ScanMeltdown(MSI As mzPack, Optional gridSize As Integer = 2, Optional println As Action(Of String) = Nothing) As mzPack
+    Public Function ScanMeltdown(MSI As mzPack,
+                                 Optional gridSize As Integer = 2,
+                                 Optional println As Action(Of String) = Nothing) As mzPack
+
         Dim graph = Grid(Of ScanMS1).Create(MSI.MS, Function(d) d.GetMSIPixel)
         Dim scans As New List(Of ScanMS1)
         Dim dims As New Size(graph.width, graph.height)
         Dim pixel As ScanMS1
 
         If println Is Nothing Then
-            println = AddressOf Warning
+            println =
+                Sub()
+
+                End Sub
         Else
             Call println("make bugs fixed for RT pixel correction!")
         End If

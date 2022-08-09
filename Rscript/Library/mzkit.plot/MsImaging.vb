@@ -214,55 +214,37 @@ Module MsImaging
         Return data
     End Function
 
-    <ExportAPI("write.MSI_XIC")>
-    <RApiReturn(GetType(XICWriter))>
-    Public Function WriteXICCache(<RRawVectorArgument> pixels As Object, ibd As ibdReader, Optional env As Environment = Nothing) As Object
+    <ExportAPI("write.mzImage")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function WriteXICCache(<RRawVectorArgument>
+                                  pixels As Object,
+                                  ibd As ibdReader,
+                                  file As Object,
+                                  Optional env As Environment = Nothing) As Object
+
         Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of ScanData)(pixels, env)
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If pixelData.isError Then
             Return pixelData.getError
+        ElseIf buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
         End If
 
-        Dim allPixels As ScanData() = pixelData.populates(Of ScanData)(env).ToArray
-        Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
-        Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
-        Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
+        'Dim allPixels As ScanData() = pixelData.populates(Of ScanData)(env).ToArray
+        'Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
+        'Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
+        'Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
 
-        For Each pixel As ScanData In allPixels
-            Call cache.WritePixels(New ibdPixel(ibd, pixel))
-        Next
+        'For Each pixel As ScanData In allPixels
+        '    Call cache.WritePixels(New ibdPixel(ibd, pixel))
+        'Next
 
-        Call cache.Flush()
+        'Call cache.Flush()
 
-        Return cache
-    End Function
+        'Return cache
 
-    <ExportAPI("write.MSI")>
-    Public Function writeIndexCacheFile(cache As XICWriter, file As Object, Optional env As Environment = Nothing) As Object
-        If file Is Nothing Then
-            Return Internal.debug.stop("the required target file can not be nothing!", env)
-        End If
-
-        Dim stream As Stream
-        Dim autoClose As Boolean = False
-
-        If TypeOf file Is String Then
-            stream = DirectCast(file, String).Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-            autoClose = True
-        ElseIf TypeOf file Is Stream Then
-            stream = file
-        Else
-            Return Message.InCompatibleType(GetType(Stream), file.GetType, env)
-        End If
-
-        Call XICIndex.WriteIndexFile(cache, stream)
-        'Call stream.Flush()
-
-        'If autoClose Then
-        '    Call stream.Close()
-        'End If
-
-        Return True
+        Throw New NotImplementedException
     End Function
 
     <ExportAPI("open.MSI")>
@@ -396,9 +378,8 @@ Module MsImaging
         ElseIf TypeOf imzML Is XICReader Then
             Return mz _
                 .Select(Function(mzi)
-                            Return DirectCast(imzML, XICReader).GetIonLayer(mzi, errors)
+                            Return DirectCast(imzML, XICReader).GetLayer(mzi, errors)
                         End Function) _
-                .IteratesALL _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)

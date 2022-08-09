@@ -69,7 +69,7 @@ Namespace Reader
 
         Public Overrides ReadOnly Property dimension As Size
             Get
-                Return New Size(reader.meta.width, reader.meta.height)
+                Return reader.dimension
             End Get
         End Property
 
@@ -97,8 +97,10 @@ Namespace Reader
         End Function
 
         Public Overrides Iterator Function AllPixels() As IEnumerable(Of PixelScan)
-            For x As Integer = 1 To reader.meta.width
-                For y As Integer = 1 To reader.meta.height
+            Dim dims As Size = dimension
+
+            For x As Integer = 1 To dims.Width
+                For y As Integer = 1 To dims.Height
                     Yield reader.GetPixel(x, y)
                 Next
             Next
