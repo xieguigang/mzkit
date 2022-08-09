@@ -41,11 +41,23 @@ const normData = function(mat, factor = NULL) {
 	dat;
 }
 
+#' Find the min positive value in the given dataset
+#' 
+#' @param mat a dataset object that could be a 
+#'     dataframe or a list data object.
+#' 
+#' @return a numeric value that is the min positive
+#'     value in the mat data input.
+#' 
 const .minPos = function(mat) {
 	let v = [];
 	
-	for(name in colnames(mat)) {
-		v = append(v, mat[, name]);
+	if (typeof(mat) == "list") {
+		v = unlist(mat);
+	} else {
+		for(name in colnames(mat)) {
+			v = append(v, mat[, name]);
+		}
 	}
 	
 	v = as.numeric(v);
@@ -55,19 +67,41 @@ const .minPos = function(mat) {
 
 #' Create a dataset for evaluate ANOVA p-value 
 #' 
+#' @param data a data list object that should contains 
+#'     group sample raw data of the target metabolite 
+#'     ion. the list key name is the sample id and the 
+#'     list element data is the corresponding sample 
+#'     intensity data.
+#' 
+#' @param sampleinfo a list data that should contains 
+#'     the data sample group tag information. the data 
+#'     structre of this list could be two fields are 
+#'     required at least:
+#'         
+#'       + group: the sample group name
+#'       + id: a character vector that contains the sample 
+#'             id to get intensity vector data from the 
+#'             ``data`` parameter.
+#' 
+#' @return a dataframe object that contains two fields:
+#'     ``intensity`` and ``region_group``, which could be 
+#'     used for do stat chartting plot liked bar/box/violin
+#'     and also could be used for evaluated ANOVA F-test 
+#'     p-value result.
+#' 
 const ANOVAGroup = function(data, sampleinfo) {
     if (is.null(data)) {
         NULL;
     } else {
-        region_group = [];
-        intensity = [];
+        let region_group as string = [];
+        let intensity as double = [];
         
         for(group in sampleinfo) {
             intensity = append(intensity, unlist(data[group$id]));
             region_group = append(region_group, rep(group$group, length(group$id)));
         }
 
-        data = data.frame(intensity , region_group);
+        data = data.frame(intensity, region_group);
         data;
     }
 }
