@@ -52,3 +52,22 @@ const .minPos = function(mat) {
 	v = min(v[v > 0]);
 	v;
 }
+
+#' Create a dataset for evaluate ANOVA p-value 
+#' 
+const ANOVAGroup = function(data, sampleinfo) {
+    if (is.null(data)) {
+        NULL;
+    } else {
+        region_group = [];
+        intensity = [];
+        
+        for(group in sampleinfo) {
+            intensity = append(intensity, unlist(data[group$id]));
+            region_group = append(region_group, rep(group$group, length(group$id)));
+        }
+
+        data = data.frame(intensity , region_group);
+        data;
+    }
+}
