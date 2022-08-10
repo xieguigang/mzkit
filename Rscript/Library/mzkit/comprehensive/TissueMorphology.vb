@@ -174,6 +174,7 @@ Module TissueMorphology
     End Function
 
     <ExportAPI("loadTissue")>
+    <RApiReturn(GetType(TissueRegion))>
     Public Function loadTissue(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
@@ -187,6 +188,7 @@ Module TissueMorphology
     End Function
 
     <ExportAPI("loadUMAP")>
+    <RApiReturn(GetType(UMAPPoint))>
     Public Function loadUMAP(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
