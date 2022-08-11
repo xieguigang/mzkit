@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -25,8 +26,14 @@ Module TissueMorphology
     End Sub
 
     Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
-        Dim labels As String() = tissues.Select(Function(i) i.label).ToArray
-        Dim colors As String() = tissues.Select(Function(i) i.color.ToHtmlColor).ToArray
+        Dim labels As String() = tissues _
+            .Select(Function(i) i.label.Replicate(n:=i.nsize)) _
+            .IteratesALL _
+            .ToArray
+        Dim colors As String() = tissues _
+            .Select(Function(i) i.color.ToHtmlColor.Replicate(n:=i.nsize)) _
+            .IteratesALL _
+            .ToArray
         Dim x As New List(Of Integer)
         Dim y As New List(Of Integer)
 
