@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>ChemicalDraw</title>
+    <title>flexImaging</title>
     <meta name="author" content="xie.guigang@gcmodeller.org" />
     <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
@@ -21,61 +21,36 @@
     <meta class="foundation-mq-topbar" />
   </head>
   <body>
-    <table width="100%" summary="page for {ChemicalDraw}">
+    <table width="100%" summary="page for {flexImaging}">
       <tbody>
         <tr>
-          <td>{ChemicalDraw}</td>
+          <td>{flexImaging}</td>
           <td style="text-align: right;">R# Documentation</td>
         </tr>
       </tbody>
     </table>
-    <h1>ChemicalDraw</h1>
+    <h1>flexImaging</h1>
     <hr />
     <p></p>
     <div id="main-wrapper">
                            <div>
-  <h2 id="KCFDraw">
-    <a href="./ChemicalDraw/KCFDraw.html">KCFDraw</a>
+  <h2 id="read.metadata">
+    <a href="./flexImaging/read.metadata.html">read.metadata</a>
   </h2>
   <hr />
   <p>
                       
                 
-                    <pre><p>let <code>KCFDraw</code> as function(<code>molecule</code> as <generic> KCF) -> <code>&lt;generic&gt; GraphicsData</code> {
+                    <pre><p>let <code>read.metadata</code> as function(<code>mcf</code> as string) -> <code>any</code> {
     #
     # .NET API information
     #
-    # module: mzkit.ChemicalDraw
+    # module: mzkit.flexImaging
     # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "ChemicalDraw"
+    # library: mzkit.dll
+    # package: "flexImaging"
     #
-    return call <code>R&#35;.interop_[ChemicalDraw::DrawKCF]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.kcf">
-    <a href="./ChemicalDraw/as.kcf.html">as.kcf</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>as.kcf</code> as function(<code>chemical</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; KCF</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChemicalDraw
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "ChemicalDraw"
-    #
-    return call <code>R&#35;.interop_[ChemicalDraw::AsKCF]</code>(...);
+    return call <code>R&#35;.interop_[flexImaging::ReadMetadata]</code>(...);
 }</p></pre>
 
                     
