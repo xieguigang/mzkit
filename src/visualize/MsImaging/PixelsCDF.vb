@@ -124,6 +124,13 @@ Public Module PixelsCDF
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="cdf">
+    ''' should contains ``mz``, ``intensity``, ``x`` and ``y``
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function LoadPixelsData(cdf As netCDFReader) As IEnumerable(Of PixelData)
         Dim mz As doubles = cdf.getDataVariable("mz")
