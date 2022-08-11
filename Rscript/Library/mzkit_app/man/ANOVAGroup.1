@@ -1,0 +1,22 @@
+﻿.TH ANOVAGROUP 1 2022-08-11 "" "Create a dataset for evaluate ANOVA p-value"
+.SH NAME
+ANOVAGroup \- ANOVAGroup(data, sampleinfo)
+.SH SYNOPSIS
+\fIANOVAGroup(data, sampleinfo)\fR
+.SH OPTIONS
+.PP
+\fBdata\fB \fR\- . a data list object that should contains group sample raw data of the target metabolite ion. the list key name is the sample id and the list element data is the corresponding sample intensity data.
+.PP
+.PP
+\fBsampleinfo\fB \fR\- . a list data that should contains the data sample group tag information. the data structre of this list could be two fields are required at least: + group: the sample group name + id: a character vector that contains the sample id to get intensity vector data from the ``data`` parameter.
+.PP
+.SH VALUE
+.PP
+a dataframe object that contains two fields: ``intensity`` and ``region_group``, which could be used for do stat chartting plot liked bar/box/violin and also could be used for evaluated ANOVA F-test p-value result.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.ANOVAGroup at math.R:line 92
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2022
