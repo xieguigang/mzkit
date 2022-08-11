@@ -4,7 +4,8 @@
 
 + [TrIQ](MsImaging/TrIQ.1) 
 + [intensityLimits](MsImaging/intensityLimits.1) 
-+ [write.mzImage](MsImaging/write.mzImage.1) 
++ [write.MSI_XIC](MsImaging/write.MSI_XIC.1) 
++ [write.MSI](MsImaging/write.MSI.1) 
 + [open.MSI](MsImaging/open.MSI.1) 
 + [FilterMz](MsImaging/FilterMz.1) 
 + [MS1](MsImaging/MS1.1) 
