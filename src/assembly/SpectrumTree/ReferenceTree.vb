@@ -91,10 +91,25 @@ Public Class ReferenceTree : Implements IDisposable
         }
     End Function
 
+    Private Sub WriteTree()
+        Dim jump As Long = spectrum.Position
+        Dim nsize = tree.Count
+
+        Call spectrum.Write(nsize)
+
+        For Each node As BlockNode In tree
+            Call NodeBuffer.Write(node, file:=spectrum)
+        Next
+
+        spectrum.Seek(Magic.Length, SeekOrigin.Begin)
+        spectrum.Write(jump)
+    End Sub
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
+                Call WriteTree()
                 Call spectrum.Flush()
                 Call spectrum.Dispose()
             End If
