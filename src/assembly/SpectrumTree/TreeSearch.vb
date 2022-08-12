@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
+Imports stdNum = System.Math
 
 Public Class TreeSearch : Implements IDisposable
 
@@ -45,6 +46,25 @@ Public Class TreeSearch : Implements IDisposable
     End Function
 
     Public Function Search(centroid As ms2())
+        If tree.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Dim node As BlockNode = tree(Scan0)
+
+        Do While True
+            Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
+            Dim min = stdNum.Min(score.forward, score.reverse)
+            Dim index As Integer = BlockNode.GetIndex(min)
+
+            If index = -1 Then
+                ' is current node cluster member
+                Throw New NotImplementedException
+            Else
+                node = tree(node.childs(index))
+            End If
+        Loop
+
 
     End Function
 
