@@ -23,6 +23,17 @@ Module ReferenceTreePkg
         Return New ReferenceTree(buffer.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("open")>
+    Public Function open(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buffer Like GetType(Message) Then
+            Return buffer.TryCast(Of Message)
+        End If
+
+        Return New TreeSearch(buffer.TryCast(Of Stream))
+    End Function
+
     <ExportAPI("addBucket")>
     Public Function addBucket(tree As ReferenceTree, <RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim list As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)

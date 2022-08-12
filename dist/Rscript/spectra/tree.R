@@ -1,4 +1,4 @@
 require(mzkit);
 
-imports "" from "mzkit";
+imports "spectrumTree" from "mzkit";
 
