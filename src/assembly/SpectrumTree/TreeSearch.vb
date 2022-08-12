@@ -45,7 +45,7 @@ Public Class TreeSearch : Implements IDisposable
         Return matrix.Centroid(da, intocutoff).ToArray
     End Function
 
-    Public Function Search(centroid As ms2())
+    Public Function Search(centroid As ms2()) As ClusterHit
         If tree.IsNullOrEmpty Then
             Return Nothing
         End If
@@ -59,13 +59,30 @@ Public Class TreeSearch : Implements IDisposable
 
             If index = -1 Then
                 ' is current node cluster member
-                Throw New NotImplementedException
+                Return reportClusterHit(centroid, hit:=node, score:=score)
             Else
                 node = tree(node.childs(index))
             End If
         Loop
 
+        Return Nothing
+    End Function
 
+    Private Function reportClusterHit(centroid As ms2(), hit As BlockNode, score As (forward#, reverse#)) As ClusterHit
+        Dim cluster = hit.Members.Select(Function(i) tree(i)).ToArray
+        Dim alignments = cluster.Select(Function(c) GlobalAlignment.TwoDirectionSSM(centroid, c.centroid, da)).ToArray
+        Dim forward = alignments.Select(Function(a) a.forward).ToArray
+        Dim reverse = alignments.Select(Function(a) a.reverse).ToArray
+
+        Return New ClusterHit With {
+            .Id = hit.Id,
+            .forward = score.forward,
+            .reverse = score.reverse,
+            .representive = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray,
+            .ClusterId = cluster.Select(Function(c) c.Id).ToArray,
+            .ClusterForward = forward,
+            .ClusterReverse = reverse
+        }
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
