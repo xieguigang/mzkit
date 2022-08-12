@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "spectrumTree-netcore5", "spectrumTree-netcore5.vbproj", "{70B50354-72A1-4B24-91F2-89118C9EA28E}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "spectrumTree.NETCore5", "spectrumTree.NETCore5.vbproj", "{70B50354-72A1-4B24-91F2-89118C9EA28E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{F28F9255-F77D-461B-9D54-35C7153C920C}"
 EndProject
