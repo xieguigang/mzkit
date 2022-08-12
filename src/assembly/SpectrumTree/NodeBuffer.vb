@@ -42,7 +42,7 @@ Public Module NodeBuffer
             .Id = id,
             .Block = New BufferRegion(pos, size),
             .childs = childs,
-            .Members = New List(Of Integer)(members),
+            .Members = If(childs.Length = 0, Nothing, New List(Of Integer)(members)),
             .centroid = mz _
                 .Select(Function(mzi, i)
                             Return New ms2 With {
