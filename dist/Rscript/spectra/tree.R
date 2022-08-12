@@ -9,7 +9,7 @@ test = "E:\C00006.json"
 |> json_decode()
 ;
 
-str(test);
+str(test$metainfo);
 
 using tree as spectrumTree::open("E:\tree.pack") {
 
@@ -19,7 +19,16 @@ using tree as spectrumTree::open("E:\tree.pack") {
 		)
 		;
 	
-		print(tree |> query(x));
+		hits = tree |> query(x);
+		id = [hits]::ClusterId;
+		
+		id 
+		|> strsplit(" ")
+		|> sapply(r -> r[1])
+		|> groupBy(s -> s)
+		|> lapply(s -> length(s))
+		|> str()
+		;
 	}
 
 }
