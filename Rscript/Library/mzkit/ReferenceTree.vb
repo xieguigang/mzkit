@@ -34,6 +34,14 @@ Module ReferenceTreePkg
         Return New TreeSearch(buffer.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("query")>
+    Public Function Query(tree As TreeSearch, x As LibraryMatrix) As Object
+        Dim centroid = tree.Centroid(x.ms2)
+        Dim result = tree.Search(centroid)
+
+        Return result
+    End Function
+
     <ExportAPI("addBucket")>
     Public Function addBucket(tree As ReferenceTree, <RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim list As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)

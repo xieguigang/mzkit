@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
 
@@ -7,6 +9,8 @@ Public Class TreeSearch : Implements IDisposable
 
     ReadOnly bin As BinaryDataReader
     ReadOnly tree As BlockNode()
+    ReadOnly da As Tolerance
+    ReadOnly intocutoff As RelativeIntensityCutoff
 
     Dim disposedValue As Boolean
 
@@ -31,7 +35,18 @@ Public Class TreeSearch : Implements IDisposable
         For i As Integer = 0 To nsize - 1
             tree(i) = NodeBuffer.Read(bin)
         Next
+
+        da = Tolerance.DeltaMass(0.3)
+        intocutoff = 0.05
     End Sub
+
+    Public Function Centroid(matrix As ms2()) As ms2()
+        Return matrix.Centroid(da, intocutoff).ToArray
+    End Function
+
+    Public Function Search(centroid As ms2())
+
+    End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
