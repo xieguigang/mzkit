@@ -8,7 +8,7 @@ Public Class BlockNode
     ''' 得分0.9以上的都算作为当前节点的等价谱图
     ''' </summary>
     ''' <returns></returns>
-    Public Property Members As Integer()
+    Public Property Members As List(Of Integer)
 
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
