@@ -11,8 +11,6 @@ test = "E:\C00006.json"
 
 str(test);
 
-stop();
-
 using tree as spectrumTree::open("E:\tree.pack") {
 
 	for(ms2 in test$spectra) {
