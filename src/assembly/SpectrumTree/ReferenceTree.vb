@@ -29,7 +29,7 @@ Public Class ReferenceTree : Implements IDisposable
         intocutoff = 0.05
     End Sub
 
-    Private Function Append(data As PeakMs2, isMember As Boolean) As Integer
+    Private Function Append(data As PeakMs2, centroid As ms2(), isMember As Boolean) As Integer
         Dim n As Integer = tree.Count
         Dim childs As Integer()
 
@@ -43,21 +43,22 @@ Public Class ReferenceTree : Implements IDisposable
             .Block = WriteSpectrum(data),
             .childs = childs,
             .Id = data.lib_guid,
-            .Members = If(isMember, Nothing, New List(Of Integer))
+            .Members = If(isMember, Nothing, New List(Of Integer)),
+            .centroid = centroid
         })
 
         Return n
     End Function
 
     Public Sub Push(data As PeakMs2)
+        Dim centroid As ms2() = data.mzInto _
+            .Centroid(da, intocutoff) _
+            .ToArray
+
         If tree.Count = 0 Then
             ' add root node
-            Append(data, isMember:=False)
+            Call Append(data, centroid, isMember:=False)
         Else
-            Dim centroid As ms2() = data.mzInto _
-                .Centroid(da, intocutoff) _
-                .ToArray
-
             Call Push(centroid, node:=tree(Scan0), raw:=data)
         End If
     End Sub
@@ -69,13 +70,13 @@ Public Class ReferenceTree : Implements IDisposable
 
         If i = -1 Then
             ' add to current cluster members
-            node.Members.Add(Append(raw, isMember:=True))
+            node.Members.Add(Append(raw, centroid, isMember:=True))
         ElseIf node.childs(i) > 0 Then
             ' align to next node
             Push(centroid, tree(node.childs(i)), raw)
         Else
             ' create new node
-            node.childs(i) = Append(raw, isMember:=False)
+            node.childs(i) = Append(raw, centroid, isMember:=False)
         End If
     End Sub
 

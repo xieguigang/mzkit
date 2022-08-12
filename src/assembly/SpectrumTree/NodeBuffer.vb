@@ -7,10 +7,14 @@ Public Module NodeBuffer
         Call file.Write(node.Id, BinaryStringFormat.ZeroTerminated)
         Call file.Write(node.Block.position)
         Call file.Write(node.Block.size)
-        Call file.Write(node.Members.Count)
-        Call file.Write(node.Members.ToArray)
         Call file.Write(node.childs.Length)
         Call file.Write(node.childs)
+
+        If Not node.childs.IsNullOrEmpty Then
+            Call file.Write(node.Members.Count)
+            Call file.Write(node.Members.ToArray)
+        End If
+
         Call file.Write(node.centroid.Length)
         Call file.Write(node.centroid.Select(Function(a) a.mz).ToArray)
         Call file.Write(node.centroid.Select(Function(a) a.intensity).ToArray)
@@ -20,10 +24,16 @@ Public Module NodeBuffer
         Dim id As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
         Dim pos As Long = file.ReadInt64
         Dim size As Integer = file.ReadInt32
-        Dim nMembers As Integer = file.ReadInt32
-        Dim members As Integer() = file.ReadInt32s(nMembers)
         Dim nchilds As Integer = file.ReadInt32
         Dim childs As Integer() = file.ReadInt32s(nchilds)
+        Dim nMembers As Integer = 0
+        Dim members As Integer() = Nothing
+
+        If nchilds > 0 Then
+            nMembers = file.ReadInt32
+            members = file.ReadInt32s(nMembers)
+        End If
+
         Dim nsize As Integer = file.ReadInt32
         Dim mz As Double() = file.ReadDoubles(nsize)
         Dim into As Double() = file.ReadDoubles(nsize)
