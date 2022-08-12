@@ -20,7 +20,9 @@ Module ReferenceTreePkg
             Return buffer.TryCast(Of Message)
         End If
 
-        Return New ReferenceTree(buffer.TryCast(Of Stream))
+        Dim stream As Stream = buffer.TryCast(Of Stream)
+        stream.Seek(Scan0, SeekOrigin.Begin)
+        Return New ReferenceTree(stream)
     End Function
 
     <ExportAPI("open")>
