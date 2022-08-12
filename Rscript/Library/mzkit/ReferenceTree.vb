@@ -35,7 +35,7 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("query")>
-    Public Function Query(tree As TreeSearch, x As LibraryMatrix) As Object
+    Public Function QueryTree(tree As TreeSearch, x As LibraryMatrix) As Object
         Dim centroid = tree.Centroid(x.ms2)
         Dim result = tree.Search(centroid)
 
