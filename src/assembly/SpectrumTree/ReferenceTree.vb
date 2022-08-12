@@ -1,13 +1,17 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
+Imports stdNum = System.Math
 
 Public Class ReferenceTree : Implements IDisposable
 
     ReadOnly tree As New List(Of BlockNode)
     ReadOnly spectrum As BinaryDataWriter
+    ReadOnly da As Tolerance
+    ReadOnly intocutoff As RelativeIntensityCutoff
 
     Private disposedValue As Boolean
 
@@ -20,23 +24,71 @@ Public Class ReferenceTree : Implements IDisposable
         spectrum.Write(Magic)
         ' jump point to tree
         spectrum.Write(0&)
+
+        da = Tolerance.DeltaMass(0.3)
+        intocutoff = 0.05
     End Sub
+
+    Private Function Append(data As PeakMs2, isMember As Boolean) As Integer
+        Dim n As Integer = tree.Count
+        Dim childs As Integer()
+
+        If isMember Then
+            childs = {}
+        Else
+            childs = New Integer(9) {}
+        End If
+
+        tree.Add(New BlockNode With {
+            .Block = WriteSpectrum(data),
+            .childs = childs,
+            .Id = data.lib_guid,
+            .Members = If(isMember, Nothing, New List(Of Integer))
+        })
+
+        Return n
+    End Function
 
     Public Sub Push(data As PeakMs2)
         If tree.Count = 0 Then
             ' add root node
-            tree.Add(New BlockNode With {
-                .Block = WriteSpectrum(data),
-                .childs = New Integer(9) {},
-                .Id = data.lib_guid,
-                .Members = New List(Of Integer)
-            })
+            Append(data, isMember:=False)
+        Else
+            Dim centroid As ms2() = data.mzInto _
+                .Centroid(da, intocutoff) _
+                .ToArray
+
+            Call Push(centroid, node:=tree(Scan0), raw:=data)
+        End If
+    End Sub
+
+    Private Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
+        Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
+        Dim min = stdNum.Min(score.forward, score.reverse)
+        Dim i As Integer = BlockNode.GetIndex(min)
+
+        If i = -1 Then
+            ' add to current cluster members
+            node.Members.Add(Append(raw, isMember:=True))
+        ElseIf node.childs(i) > 0 Then
+            ' align to next node
+            Push(centroid, tree(node.childs(i)), raw)
+        Else
+            ' create new node
+            node.childs(i) = Append(raw, isMember:=False)
         End If
     End Sub
 
     Private Function WriteSpectrum(data As PeakMs2) As BufferRegion
         Dim start As Long = spectrum.Position
-        Dim scan As ScanMS2 = data.
+        Dim scan As ScanMS2 = data.Scan2
+
+        Call Serialization.WriteBuffer(scan, file:=spectrum)
+
+        Return New BufferRegion With {
+            .position = start,
+            .size = spectrum.Position - start
+        }
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)

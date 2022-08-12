@@ -80,5 +80,9 @@ Namespace Spectra
             Return $"relative_intensity >= {m_threshold * 100}%"
         End Function
 
+        Public Shared Widening Operator CType(cutoff As Double) As RelativeIntensityCutoff
+            Return New RelativeIntensityCutoff(cutoff)
+        End Operator
+
     End Class
 End Namespace
