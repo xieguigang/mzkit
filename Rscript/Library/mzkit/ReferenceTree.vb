@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -51,6 +52,22 @@ Module ReferenceTreePkg
             Dim result = tree.Search(centroid, maxdepth:=maxdepth)
 
             Return result
+        ElseIf TypeOf x Is list Then
+            Dim output As New list With {.slots = New Dictionary(Of String, Object)}
+            Dim input As list = DirectCast(x, list)
+            Dim result As Object
+
+            For Each name As String In input.getNames
+                result = QueryTree(tree, input(name), maxdepth, env)
+
+                If Program.isException(result) Then
+                    Return result
+                Else
+                    Call output.add(name, result)
+                End If
+            Next
+
+            Return output
         Else
             Throw New NotImplementedException
         End If
