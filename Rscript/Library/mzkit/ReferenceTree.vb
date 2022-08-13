@@ -38,6 +38,7 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("query")>
+    <RApiReturn(GetType(ClusterHit))>
     Public Function QueryTree(tree As TreeSearch, x As Object,
                               Optional maxdepth As Integer = 1024,
                               Optional env As Environment = Nothing) As Object
@@ -45,12 +46,15 @@ Module ReferenceTreePkg
         If TypeOf x Is LibraryMatrix Then
             Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
             Dim result = tree.Search(centroid, maxdepth:=maxdepth)
-
+            result.queryId = DirectCast(x, LibraryMatrix).name
+            result.queryMz = DirectCast(x, LibraryMatrix).parentMz
             Return result
         ElseIf TypeOf x Is PeakMs2 Then
             Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
             Dim result = tree.Search(centroid, maxdepth:=maxdepth)
-
+            result.queryId = DirectCast(x, PeakMs2).lib_guid
+            result.queryMz = DirectCast(x, PeakMs2).mz
+            result.queryRt = DirectCast(x, PeakMs2).rt
             Return result
         ElseIf TypeOf x Is list Then
             Dim output As New list With {.slots = New Dictionary(Of String, Object)}
