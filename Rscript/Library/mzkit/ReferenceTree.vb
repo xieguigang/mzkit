@@ -37,15 +37,18 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("query")>
-    Public Function QueryTree(tree As TreeSearch, x As Object, Optional env As Environment = Nothing) As Object
+    Public Function QueryTree(tree As TreeSearch, x As Object,
+                              Optional maxdepth As Integer = 1024,
+                              Optional env As Environment = Nothing) As Object
+
         If TypeOf x Is LibraryMatrix Then
             Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
-            Dim result = tree.Search(centroid)
+            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
 
             Return result
         ElseIf TypeOf x Is PeakMs2 Then
             Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
-            Dim result = tree.Search(centroid)
+            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
 
             Return result
         Else
