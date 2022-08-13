@@ -37,11 +37,20 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("query")>
-    Public Function QueryTree(tree As TreeSearch, x As LibraryMatrix) As Object
-        Dim centroid = tree.Centroid(x.ms2)
-        Dim result = tree.Search(centroid)
+    Public Function QueryTree(tree As TreeSearch, x As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf x Is LibraryMatrix Then
+            Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
+            Dim result = tree.Search(centroid)
 
-        Return result
+            Return result
+        ElseIf TypeOf x Is PeakMs2 Then
+            Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
+            Dim result = tree.Search(centroid)
+
+            Return result
+        Else
+            Throw New NotImplementedException
+        End If
     End Function
 
     <ExportAPI("addBucket")>
