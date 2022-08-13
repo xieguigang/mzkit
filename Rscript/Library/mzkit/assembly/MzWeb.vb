@@ -231,6 +231,11 @@ Module MzWeb
         End Using
     End Sub
 
+    ''' <summary>
+    ''' read the mzPack data file liked simple msn cached data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <ExportAPI("read.cache")>
     Public Function readCache(file As String) As PeakMs2()
         Using buffer As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
