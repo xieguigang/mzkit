@@ -45,17 +45,23 @@ Public Class TreeSearch : Implements IDisposable
         Return matrix.Centroid(da, intocutoff).ToArray
     End Function
 
-    Public Function Search(centroid As ms2()) As ClusterHit
+    Public Function Search(centroid As ms2(), Optional maxdepth As Integer = 1024) As ClusterHit
         If tree.IsNullOrEmpty Then
             Return Nothing
         End If
 
         Dim node As BlockNode = tree(Scan0)
+        Dim depth As Integer = 0
+        Dim max = (score:=0.0, raw:=(0.0, 0.0), node)
 
         Do While True
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
             Dim min = stdNum.Min(score.forward, score.reverse)
             Dim index As Integer = BlockNode.GetIndex(min)
+
+            If min > max.score Then
+                max = (min, score, node)
+            End If
 
             If index = -1 Then
                 ' is current node cluster member
@@ -63,9 +69,19 @@ Public Class TreeSearch : Implements IDisposable
             Else
                 node = tree(node.childs(index))
             End If
+
+            depth += 1
+
+            If depth > maxdepth Then
+                Exit Do
+            End If
         Loop
 
-        Return Nothing
+        If max.score > 0 Then
+            Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
+        Else
+            Return Nothing
+        End If
     End Function
 
     Private Function reportClusterHit(centroid As ms2(), hit As BlockNode, score As (forward#, reverse#)) As ClusterHit

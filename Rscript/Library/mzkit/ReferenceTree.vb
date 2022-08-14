@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -37,11 +38,51 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("query")>
-    Public Function QueryTree(tree As TreeSearch, x As LibraryMatrix) As Object
-        Dim centroid = tree.Centroid(x.ms2)
-        Dim result = tree.Search(centroid)
+    <RApiReturn(GetType(ClusterHit))>
+    Public Function QueryTree(tree As TreeSearch, x As Object,
+                              Optional maxdepth As Integer = 1024,
+                              Optional env As Environment = Nothing) As Object
 
-        Return result
+        If TypeOf x Is LibraryMatrix Then
+            Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
+            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
+
+            If Not result Is Nothing Then
+                result.queryId = DirectCast(x, LibraryMatrix).name
+                result.queryMz = DirectCast(x, LibraryMatrix).parentMz
+            End If
+
+            Return result
+        ElseIf TypeOf x Is PeakMs2 Then
+            Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
+            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
+
+            If Not result Is Nothing Then
+                result.queryId = DirectCast(x, PeakMs2).lib_guid
+                result.queryMz = DirectCast(x, PeakMs2).mz
+                result.queryRt = DirectCast(x, PeakMs2).rt
+            End If
+
+            Return result
+        ElseIf TypeOf x Is list Then
+            Dim output As New list With {.slots = New Dictionary(Of String, Object)}
+            Dim input As list = DirectCast(x, list)
+            Dim result As Object
+
+            For Each name As String In input.getNames
+                result = QueryTree(tree, input(name), maxdepth, env)
+
+                If Program.isException(result) Then
+                    Return result
+                Else
+                    Call output.add(name, result)
+                End If
+            Next
+
+            Return output
+        Else
+            Throw New NotImplementedException
+        End If
     End Function
 
     <ExportAPI("addBucket")>
