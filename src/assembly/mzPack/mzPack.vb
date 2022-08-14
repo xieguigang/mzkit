@@ -222,7 +222,7 @@ Public Class mzPack
             .collisionEnergy = ms2.collisionEnergy,
             .file = file,
             .intensity = ms2.intensity,
-            .lib_guid = ms2.ToString,
+            .lib_guid = ms2.ToString & $"[{ms2.parentMz.ToString("F4")},{ms2.rt.ToString("F2")}]",
             .meta = New Dictionary(Of String, String),
             .mz = ms2.parentMz,
             .precursor_type = "",

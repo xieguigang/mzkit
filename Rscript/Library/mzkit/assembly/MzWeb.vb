@@ -462,8 +462,10 @@ Module MzWeb
                                  Optional tolerance As Object = "ppm:30",
                                  Optional env As Environment = Nothing) As Object
 
+        Dim ms2peaks As PeakMs2()
+
         If precursorMz.IsNaNImaginary Then
-            Return mzpack.GetMs2Peaks.ToArray
+            ms2peaks = mzpack.GetMs2Peaks.ToArray
         Else
             Dim mzerr = Math.getTolerance(tolerance, env)
 
@@ -483,8 +485,18 @@ Module MzWeb
                         End Function) _
                 .ToArray
 
-            Return ms2_xic
+            ms2peaks = ms2_xic
         End If
+
+        Dim unique As String() = ms2peaks _
+            .Select(Function(p) p.lib_guid) _
+            .uniqueNames
+
+        For i As Integer = 0 To unique.Length - 1
+            ms2peaks(i).lib_guid = unique(i)
+        Next
+
+        Return ms2peaks
     End Function
 
     ''' <summary>
