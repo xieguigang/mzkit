@@ -15,6 +15,7 @@ Public Class ClusterHit
     Public Property queryMz As Double
     Public Property queryRt As Double
 
+    Public Property ClusterRt As Double()
     Public Property ClusterForward As Double()
     Public Property ClusterReverse As Double()
     Public Property ClusterId As String()

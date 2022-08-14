@@ -89,6 +89,7 @@ Public Class TreeSearch : Implements IDisposable
         Dim alignments = cluster.Select(Function(c) GlobalAlignment.TwoDirectionSSM(centroid, c.centroid, da)).ToArray
         Dim forward = alignments.Select(Function(a) a.forward).ToArray
         Dim reverse = alignments.Select(Function(a) a.reverse).ToArray
+        Dim rt As Double() = cluster.Select(Function(c) c.rt).ToArray
 
         Return New ClusterHit With {
             .Id = hit.Id,
@@ -97,7 +98,8 @@ Public Class TreeSearch : Implements IDisposable
             .representive = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray,
             .ClusterId = cluster.Select(Function(c) c.Id).ToArray,
             .ClusterForward = forward,
-            .ClusterReverse = reverse
+            .ClusterReverse = reverse,
+            .ClusterRt = rt
         }
     End Function
 

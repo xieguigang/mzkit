@@ -5,6 +5,7 @@ Public Module NodeBuffer
 
     Friend Sub Write(node As BlockNode, file As BinaryDataWriter)
         Call file.Write(node.Id, BinaryStringFormat.ZeroTerminated)
+        Call file.Write(node.rt)
         Call file.Write(node.Block.position)
         Call file.Write(node.Block.size)
         Call file.Write(node.childs.Length)
@@ -22,6 +23,7 @@ Public Module NodeBuffer
 
     Friend Function Read(file As BinaryDataReader) As BlockNode
         Dim id As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+        Dim rt As Double = file.ReadDouble
         Dim pos As Long = file.ReadInt64
         Dim size As Integer = file.ReadInt32
         Dim nchilds As Integer = file.ReadInt32
@@ -50,7 +52,8 @@ Public Module NodeBuffer
                                 .intensity = into(i)
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .rt = rt
         }
     End Function
 End Module
