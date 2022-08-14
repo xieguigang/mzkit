@@ -49,7 +49,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -74,7 +74,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -87,48 +87,26 @@
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
-  <h2 id="write.MSI_XIC">
-    <a href="./MsImaging/write.MSI_XIC.html">write.MSI_XIC</a>
+  <h2 id="write.mzImage">
+    <a href="./MsImaging/write.mzImage.html">write.mzImage</a>
   </h2>
   <hr />
   <p>
                       
                 
-                    <pre><p>let <code>write.MSI_XIC</code> as function(<code>pixels</code> as any, <code>ibd</code> as <generic> ibdReader, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; XICWriter</code> {
+                    <pre><p>let <code>write.mzImage</code> as function(<code>pixels</code> as any, 
+<code>ibd</code> as <generic> ibdReader, 
+<code>file</code> as any, 
+[<code>&lt;Environment&gt;</code>]) -> <code>boolean</code> {
     #
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
     return call <code>R&#35;.interop_[MsImaging::WriteXICCache]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.MSI">
-    <a href="./MsImaging/write.MSI.html">write.MSI</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>write.MSI</code> as function(<code>cache</code> as <generic> XICWriter, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "MsImaging"
-    #
-    return call <code>R&#35;.interop_[MsImaging::writeIndexCacheFile]</code>(...);
 }</p></pre>
 
                     
@@ -149,7 +127,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -178,7 +156,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -208,7 +186,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -233,7 +211,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -258,7 +236,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -287,7 +265,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -321,7 +299,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -349,7 +327,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -374,7 +352,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -402,7 +380,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -427,7 +405,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -455,7 +433,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -488,7 +466,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -516,7 +494,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -551,7 +529,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -576,7 +554,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #
@@ -608,7 +586,7 @@
     # .NET API information
     #
     # module: mzkit.MsImaging
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "MsImaging"
     #

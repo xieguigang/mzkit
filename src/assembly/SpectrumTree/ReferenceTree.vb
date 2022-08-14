@@ -21,7 +21,7 @@ Public Class ReferenceTree : Implements IDisposable
         spectrum = New BinaryDataWriter(file, Encodings.ASCII) With {
             .ByteOrder = ByteOrder.LittleEndian
         }
-        spectrum.Write(Magic)
+        spectrum.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
         ' jump point to tree
         spectrum.Write(0&)
 

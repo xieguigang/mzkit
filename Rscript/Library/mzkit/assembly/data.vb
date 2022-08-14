@@ -235,6 +235,7 @@ Module data
     Public Function createPeakMs2(precursor As Double, rt As Double, mz As Double(), into As Double(),
                                   Optional totalIons As Double = 0,
                                   Optional file As String = Nothing,
+                                  Optional libname As String = Nothing,
                                   <RListObjectArgument>
                                   Optional meta As list = Nothing,
                                   Optional env As Environment = Nothing) As PeakMs2
@@ -252,7 +253,8 @@ Module data
                 .ToArray,
             .rt = rt,
             .file = file,
-            .meta = meta.AsGeneric(Of String)(env)
+            .meta = meta.AsGeneric(Of String)(env),
+            .lib_guid = libname
         }
     End Function
 
