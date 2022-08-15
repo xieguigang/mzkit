@@ -56,6 +56,9 @@
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' cutoff for n/max(n) relative intensity data result
+    ''' </summary>
     Public Class RelativeIntensityCutoff : Inherits LowAbundanceTrimming
 
         Public Sub New(cutoff As Double)
