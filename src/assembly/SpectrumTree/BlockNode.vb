@@ -34,8 +34,16 @@ Public Class BlockNode
         End Get
     End Property
 
-    Public Shared Function GetIndex(score As Double) As Integer
-        If score > 0.9 Then
+    ''' <summary>
+    ''' the entire reference database must be rebuild after the
+    ''' cutoff value in this function has been modified.
+    ''' </summary>
+    ''' <param name="score"></param>
+    ''' <returns></returns>
+    Friend Shared Function GetIndex(score As Double) As Integer
+        If score > 0.85 Then
+            ' min score greater than 0.85 means equals
+            ' to current spectrum
             Return -1
         ElseIf score > 0.8 Then
             Return 0

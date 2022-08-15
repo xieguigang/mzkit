@@ -3,6 +3,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -98,11 +99,11 @@ Public Class TreeSearch : Implements IDisposable
             .reverse = score.reverse,
             .jaccard = GlobalAlignment.JaccardIndex(hit.centroid, centroid, da),
             .representive = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray,
-            .ClusterId = cluster.Select(Function(c) c.Id).ToArray,
-            .ClusterForward = forward,
-            .ClusterReverse = reverse,
-            .ClusterRt = rt,
-            .ClusterJaccard = jaccard
+            .ClusterId = { .Id}.JoinIterates(cluster.Select(Function(c) c.Id)).ToArray,
+            .ClusterForward = {score.forward}.JoinIterates(forward).ToArray,
+            .ClusterReverse = {score.reverse}.JoinIterates(reverse).ToArray,
+            .ClusterRt = {hit.rt}.JoinIterates(rt).ToArray,
+            .ClusterJaccard = { .jaccard}.JoinIterates(jaccard).ToArray
         }
     End Function
 
