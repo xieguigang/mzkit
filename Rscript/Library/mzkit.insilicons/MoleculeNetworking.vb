@@ -15,6 +15,17 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("MoleculeNetworking")>
 Module MoleculeNetworking
 
+    <ExportAPI("uniqueNames")>
+    Public Function unqiueNames(ions As PeakMs2()) As PeakMs2()
+        Dim id As String() = ions.SafeQuery.Select(Function(i) i.lib_guid).uniqueNames
+
+        For i As Integer = 0 To id.Length - 1
+            ions(i).lib_guid = id(i)
+        Next
+
+        Return ions
+    End Function
+
     <ExportAPI("tree")>
     Public Function Tree(ions As PeakMs2(),
                          Optional mzdiff As Double = 0.3,
