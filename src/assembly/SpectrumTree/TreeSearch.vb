@@ -90,16 +90,19 @@ Public Class TreeSearch : Implements IDisposable
         Dim forward = alignments.Select(Function(a) a.forward).ToArray
         Dim reverse = alignments.Select(Function(a) a.reverse).ToArray
         Dim rt As Double() = cluster.Select(Function(c) c.rt).ToArray
+        Dim jaccard As Double() = cluster.Select(Function(c) GlobalAlignment.JaccardIndex(c.centroid, centroid, da)).ToArray
 
         Return New ClusterHit With {
             .Id = hit.Id,
             .forward = score.forward,
             .reverse = score.reverse,
+            .jaccard = GlobalAlignment.JaccardIndex(hit.centroid, centroid, da),
             .representive = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray,
             .ClusterId = cluster.Select(Function(c) c.Id).ToArray,
             .ClusterForward = forward,
             .ClusterReverse = reverse,
-            .ClusterRt = rt
+            .ClusterRt = rt,
+            .ClusterJaccard = jaccard
         }
     End Function
 
