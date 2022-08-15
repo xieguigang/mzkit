@@ -84,7 +84,19 @@ Module MoleculeNetworking
         For Each key As String In pack.getNames
             Dim cluster As PeakMs2() = pack.getValue(Of PeakMs2())(key, env, [default]:={})
             Dim union As ms2() = cluster _
-                .Select(Function(i) i.mzInto) _
+                .Select(Function(i)
+                            Dim maxinto As Double = i.mzInto _
+                                .Select(Function(mzi) mzi.intensity) _
+                                .Max
+
+                            Return i.mzInto _
+                                .Select(Function(mzi)
+                                            Return New ms2 With {
+                                                .mz = mzi.mz,
+                                                .intensity = mzi.intensity / maxinto
+                                            }
+                                        End Function)
+                        End Function) _
                 .IteratesALL _
                 .ToArray _
                 .Centroid(tolerance, cutoff:=zero) _
