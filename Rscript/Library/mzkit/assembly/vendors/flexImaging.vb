@@ -28,6 +28,7 @@ Module flexImaging
     <ExportAPI("importSpotList")>
     Public Function ImportSpots(spots As String,
                                 spectrum As String,
+                                Optional scale As Boolean = True,
                                 Optional env As Environment = Nothing) As mzPack
 
         Dim println = env.WriteLineHandler
@@ -35,7 +36,13 @@ Module flexImaging
         Using spotFile As Stream = spots.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
             spectraFile As Stream = spectrum.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
 
-            Return LoadMSIFromSCiLSLab(spotFile, spectraFile, Sub(txt) println(txt))
+            Dim data As mzPack = LoadMSIFromSCiLSLab(spotFile, spectraFile, Sub(txt) println(txt))
+
+            If scale Then
+                data = data.ScalePixels
+            End If
+
+            Return data
         End Using
     End Function
 End Module

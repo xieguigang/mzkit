@@ -65,6 +65,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
@@ -219,5 +221,33 @@ Public Module MSIRawPack
             .MS = spotsList.ToArray,
             .source = spotsXy.raw.FileName
         }
+    End Function
+
+    <Extension>
+    Public Function ScalePixels(data As mzPack) As mzPack
+        Dim dx As Double = data.MS _
+            .Select(Function(m) Val(m.meta("x"))) _
+            .OrderBy(Function(xi) xi) _
+            .Distinct _
+            .ToArray _
+            .DoCall(AddressOf NumberGroups.diff) _
+            .Average
+        Dim dy As Double = data.MS _
+            .Select(Function(m) Val(m.meta("y"))) _
+            .OrderBy(Function(xi) xi) _
+            .Distinct _
+            .ToArray _
+            .DoCall(AddressOf NumberGroups.diff) _
+            .Average
+
+        For Each pixelScan As ScanMS1 In data.MS
+            Dim x As Integer = Val(pixelScan.meta("x")) / dx
+            Dim y As Integer = Val(pixelScan.meta("y")) / dy
+
+            pixelScan.meta("x") = x
+            pixelScan.meta("y") = y
+        Next
+
+        Return data
     End Function
 End Module
