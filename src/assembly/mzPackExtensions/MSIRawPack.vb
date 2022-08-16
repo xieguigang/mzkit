@@ -208,6 +208,10 @@ Public Module MSIRawPack
                       End Sub
         End If
 
+        ' reset the stream position to init0 
+        ' due to the reason of SpotPack.ParseFile has
+        ' been moved
+        spots.Seek(Scan0, SeekOrigin.Begin)
         spotsList.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, minX, minY, println))
 
         Return New mzPack With {

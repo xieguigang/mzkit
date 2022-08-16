@@ -1,7 +1,10 @@
 ﻿
+Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
 <Package("flexImaging")>
@@ -20,5 +23,19 @@ Module flexImaging
         meta.add("information", data.Select(Function(a) a.Description.GetTagValue("|").Value))
 
         Return meta
+    End Function
+
+    <ExportAPI("importSpotList")>
+    Public Function ImportSpots(spots As String,
+                                spectrum As String,
+                                Optional env As Environment = Nothing) As mzPack
+
+        Dim println = env.WriteLineHandler
+
+        Using spotFile As Stream = spots.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
+            spectraFile As Stream = spectrum.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+
+            Return LoadMSIFromSCiLSLab(spotFile, spectraFile, Sub(txt) println(txt))
+        End Using
     End Function
 End Module
