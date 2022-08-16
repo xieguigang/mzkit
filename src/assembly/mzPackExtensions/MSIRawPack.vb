@@ -186,6 +186,7 @@ Public Module MSIRawPack
         Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
         Dim i As i32 = Scan0
         Dim hasTagdata As Boolean = Not sampleTag.StringEmpty
+        Dim refTagdata As String = If(hasTagdata, $"{sampleTag}.", "")
 
         For Each spot As SpotMs In spotsMs.matrix
             Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
@@ -206,7 +207,7 @@ Public Module MSIRawPack
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
             }
 
             If hasTagdata Then
