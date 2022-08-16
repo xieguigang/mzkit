@@ -83,12 +83,25 @@ Public Class mzStream : Implements IMzPackReader
         Dim dir As StreamGroup = pack.GetObject("/MS/")
         Dim dirs = dir.files
 
-        For Each ms1 As StreamObject In dirs
-            If ms1.hasAttribute("scan_id") Then
-                Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
-                Dim dirpath As String = ms1.referencePath.ToString
+        For Each subdir As StreamObject In dirs
+            If TypeOf subdir Is StreamGroup AndAlso Not subdir.hasAttributes Then
+                For Each ms1 As StreamObject In DirectCast(subdir, StreamGroup).files
+                    If ms1.hasAttribute("scan_id") Then
+                        Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
+                        Dim dirpath As String = ms1.referencePath.ToString
 
-                Call Me.scan_id.Add(scan_id, dirpath)
+                        Call Me.scan_id.Add(scan_id, dirpath)
+                    End If
+                Next
+            Else
+                Dim ms1 = subdir
+
+                If ms1.hasAttribute("scan_id") Then
+                    Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
+                    Dim dirpath As String = ms1.referencePath.ToString
+
+                    Call Me.scan_id.Add(scan_id, dirpath)
+                End If
             End If
         Next
     End Sub
