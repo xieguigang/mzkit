@@ -47,12 +47,7 @@ Public Class mzStream : Implements IMzPackReader
     ''' <returns></returns>
     Public ReadOnly Property MS1 As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
         Get
-            Dim dir As StreamGroup = pack.GetObject("/MS/")
-            Dim dirs = dir.files
-
-            Return dirs _
-                .Select(Function(d) d.fileName) _
-                .ToArray
+            Return scan_id.Keys
         End Get
     End Property
 
@@ -229,7 +224,7 @@ Public Class mzStream : Implements IMzPackReader
         Dim MsReader As Func(Of String, ScanMS1)
         Dim scans As New List(Of ScanMS1)
         Dim i As i32 = 0
-        Dim allIndex As String() = MS1
+        Dim allIndex As String() = MS1.ToArray
         Dim d As Integer = allIndex.Length / 10
         Dim j As Integer = 0
 
