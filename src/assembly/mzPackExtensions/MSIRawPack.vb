@@ -53,18 +53,20 @@
 #End Region
 
 #If netcore5 = 0 Or NET48 Then
-Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 #End If
 
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
@@ -132,6 +134,12 @@ Public Module MSIRawPack
         Return mz.Values.ToArray
     End Function
 
+    ''' <summary>
+    ''' imports one sample file that contains multiple region data inside
+    ''' </summary>
+    ''' <param name="files"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     Public Function LoadMSIFromSCiLSLab(files As IEnumerable(Of (index$, msdata$)), Optional println As Action(Of String) = Nothing) As mzPack
         Dim pixels As New List(Of ScanMS1)
         Dim rawfiles As New List(Of String)
@@ -142,14 +150,19 @@ Public Module MSIRawPack
                       End Sub
         End If
 
-        For Each tuple In files
+        For Each tuple As (index$, msdata$) In files
+            Dim sampleTag As String = tuple.index.BaseName
+
             Using spots As Stream = tuple.index.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Using msdata As Stream = tuple.msdata.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    pixels.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, println))
+                    Call LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, sampleTag, println) _
+                        .ToArray _
+                        .ScalePixels _
+                        .DoCall(AddressOf pixels.AddRange)
                 End Using
             End Using
 
-            rawfiles.Add(PackFile.ParseHeader(tuple.index).raw.FileName)
+            Call rawfiles.Add(PackFile.ParseHeader(tuple.index).raw.FileName)
         Next
 
         If rawfiles.Distinct.Count > 1 Then
@@ -163,10 +176,17 @@ Public Module MSIRawPack
         }
     End Function
 
-    Private Iterator Function LoadMSISpotsFromSCiLSLab(spots As Stream, msdata As Stream, minX#, minY#, println As Action(Of String)) As IEnumerable(Of ScanMS1)
+    Private Iterator Function LoadMSISpotsFromSCiLSLab(spots As Stream, msdata As Stream,
+                                                       minX#,
+                                                       minY#,
+                                                       sampleTag As String,
+                                                       println As Action(Of String)) As IEnumerable(Of ScanMS1)
+
         Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
         Dim spotsMs As MsPack = MsPack.ParseFile(msdata, println)
         Dim i As i32 = Scan0
+        Dim hasTagdata As Boolean = Not sampleTag.StringEmpty
+        Dim refTagdata As String = If(hasTagdata, $"{sampleTag}.", "")
 
         For Each spot As SpotMs In spotsMs.matrix
             Dim ref As String = (Integer.Parse(spot.spot_id.Match("\d+")) - 1).ToString
@@ -187,10 +207,15 @@ Public Module MSIRawPack
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
             }
 
-            Call println(ms1.scan_id)
+            If hasTagdata Then
+                Call ms1.meta.Add("sample", sampleTag)
+                Call println($"[{sampleTag}] {ms1.scan_id}")
+            Else
+                Call println(ms1.scan_id)
+            End If
 
             Yield ms1
         Next
@@ -201,6 +226,7 @@ Public Module MSIRawPack
         Dim spotsList As New List(Of ScanMS1)
         Dim minX As Double = spotsXy.X.Min
         Dim minY As Double = spotsXy.Y.Min
+        Dim sampleTag As String = spotsXy.raw.BaseName
 
         If println Is Nothing Then
             println = Sub()
@@ -208,12 +234,59 @@ Public Module MSIRawPack
                       End Sub
         End If
 
-        spotsList.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, minX, minY, println))
+        ' reset the stream position to init0 
+        ' due to the reason of SpotPack.ParseFile has
+        ' been moved
+        spots.Seek(Scan0, SeekOrigin.Begin)
+        spotsList.AddRange(LoadMSISpotsFromSCiLSLab(spots, msdata, minX, minY, sampleTag, println))
 
         Return New mzPack With {
             .Application = FileApplicationClass.MSImaging,
             .MS = spotsList.ToArray,
             .source = spotsXy.raw.FileName
         }
+    End Function
+
+    <Extension>
+    Public Function PixelScaler(raw As ScanMS1()) As SizeF
+        Dim dx As Double = raw _
+            .Select(Function(m) Val(m.meta("x"))) _
+            .OrderBy(Function(xi) xi) _
+            .Distinct _
+            .ToArray _
+            .DoCall(AddressOf NumberGroups.diff) _
+            .Average
+        Dim dy As Double = raw _
+            .Select(Function(m) Val(m.meta("y"))) _
+            .OrderBy(Function(xi) xi) _
+            .Distinct _
+            .ToArray _
+            .DoCall(AddressOf NumberGroups.diff) _
+            .Average
+
+        Return New SizeF(dx, dy)
+    End Function
+
+    <Extension>
+    Public Function ScalePixels(data As ScanMS1()) As ScanMS1()
+        Dim scaler = data.PixelScaler
+        Dim dx As Double = scaler.Width
+        Dim dy As Double = scaler.Height
+
+        For Each pixelScan As ScanMS1 In data
+            Dim x As Integer = Val(pixelScan.meta("x")) / dx
+            Dim y As Integer = Val(pixelScan.meta("y")) / dy
+
+            pixelScan.meta("x") = x
+            pixelScan.meta("y") = y
+        Next
+
+        Return data
+    End Function
+
+    <Extension>
+    Public Function ScalePixels(data As mzPack) As mzPack
+        data.MS = data.MS.ScalePixels
+        Return data
     End Function
 End Module
