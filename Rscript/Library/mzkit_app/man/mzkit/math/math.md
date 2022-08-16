@@ -14,6 +14,6 @@ mass spectrometry data math toolkit
 + [tolerance](math/tolerance.1) Create tolerance object
 + [sequenceOrder](math/sequenceOrder.1) reorder scan points into a sequence for downstream data analysis
 + [precursor_types](math/precursor_types.1) create precursor type calculator
-+ [defaultPrecursors](math/defaultPrecursors.1) 
++ [defaultPrecursors](math/defaultPrecursors.1) returns all precursor types for a given libtype
 + [toMS](math/toMS.1) 
 + [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
