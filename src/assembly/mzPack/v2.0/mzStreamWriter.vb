@@ -67,7 +67,8 @@ Public Module mzStreamWriter
         Dim mzmax As Double = -9999
 
         For Each ms1 As ScanMS1 In mzpack.MS
-            Dim dir As String = $"/MS/{ms1.scan_id.Replace("\", "/").Replace("/", "_")}/"
+            Dim sampleTag As String = If(ms1.hasMetaKeys("sample"), ms1.meta("sample"), "")
+            Dim dir As String = $"/MS/{sampleTag}/{ms1.scan_id.Replace("\", "/").Replace("/", "_")}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
             Dim ms1Bin As String = $"{dir}/Scan1.mz"
             Dim ms1Metadata As New Dictionary(Of String, Object)

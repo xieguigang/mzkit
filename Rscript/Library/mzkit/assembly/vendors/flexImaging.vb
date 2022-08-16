@@ -2,6 +2,7 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -44,5 +45,14 @@ Module flexImaging
 
             Return data
         End Using
+    End Function
+
+    <ExportAPI("importsExperiment")>
+    Public Function ImportsExperiment(scans As IEnumerable(Of String), Optional env As Environment = Nothing) As mzPack
+        Dim tuplefiles = scans.CheckSpotFiles.ToArray
+        Dim println = env.WriteLineHandler
+        Dim data As mzPack = MSIRawPack.LoadMSIFromSCiLSLab(tuplefiles, Sub(txt) println(txt))
+
+        Return data
     End Function
 End Module
