@@ -83,7 +83,7 @@ Public Class mzStream : Implements IMzPackReader
                 For Each ms1 As StreamObject In DirectCast(subdir, StreamGroup).files
                     If ms1.hasAttribute("scan_id") Then
                         Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
-                        Dim dirpath As String = ms1.referencePath.ToString
+                        Dim dirpath As String = ms1.referencePath.ToString & "/"
 
                         Call Me.scan_id.Add(scan_id, dirpath)
                     End If
@@ -93,7 +93,7 @@ Public Class mzStream : Implements IMzPackReader
 
                 If ms1.hasAttribute("scan_id") Then
                     Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
-                    Dim dirpath As String = ms1.referencePath.ToString
+                    Dim dirpath As String = ms1.referencePath.ToString & "/"
 
                     Call Me.scan_id.Add(scan_id, dirpath)
                 End If
