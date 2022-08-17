@@ -11,7 +11,11 @@ Namespace NCBI.MeSH
             Dim line As Value(Of String) = ""
             Dim str As String()
             Dim term As Term
-            Dim tree As New Tree(Of Term) With {.Data = New Term With {.term = "/", .tree = {}}}
+            Dim tree As New Tree(Of Term) With {
+                .Data = New Term With {.term = "/", .tree = {}},
+                .Childs = New Dictionary(Of String, Tree(Of Term)),
+                .label = "NCBI MeSH"
+            }
             Dim node As Tree(Of Term)
 
             Do While Not (line = file.ReadLine) Is Nothing
@@ -23,11 +27,15 @@ Namespace NCBI.MeSH
                 node = tree
 
                 For Each lv As String In term.tree
-                    If Not node.childs.ContainsKey(lv) Then
-                        node.Childs.Add(lv, New Tree(Of Term))
+                    If Not node.Childs.ContainsKey(lv) Then
+                        node.Childs.Add(lv, New Tree(Of Term) With {
+                            .Childs = New Dictionary(Of String, Tree(Of Term)),
+                            .label = lv,
+                            .Parent = node
+                        })
                     End If
 
-                    node = node.childs(lv)
+                    node = node.Childs(lv)
                 Next
 
                 node.Data = term
