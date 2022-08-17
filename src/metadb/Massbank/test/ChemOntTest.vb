@@ -50,9 +50,10 @@
 #End Region
 
 'Imports Microsoft.VisualBasic.Data.csv
-'Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module ChemOntTest
 
@@ -68,7 +69,19 @@ Public Module ChemOntTest
     '    End Sub
 
     Sub meshTest()
-        Dim tree = Reader.ParseTree("D:\mzkit\Rscript\Library\mzkit_app\data\mtrees2022.bin".OpenReader)
+        Dim tree = Reader.ParseTree("E:\mzkit\Rscript\Library\mzkit_app\data\mtrees2022.bin".OpenReader)
+        Dim gsea = tree.ImportsTree(
+            Function(t)
+                Return New BackgroundGene With {
+                    .accessionID = t.term,
+                    .[alias] = {t.term},
+                    .locus_tag = New NamedValue With {.name = t.term, .text = t.term},
+                    .name = t.term,
+                    .term_id = {t.term}
+                }
+            End Function)
+
+        Pause()
     End Sub
 
     Sub Main()

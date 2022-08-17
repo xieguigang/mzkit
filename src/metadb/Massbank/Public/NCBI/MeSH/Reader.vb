@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 
@@ -6,12 +7,12 @@ Namespace NCBI.MeSH
 
     Public Module Reader
 
-        Public Function ParseTree(file As StreamReader) As Tree
+        Public Function ParseTree(file As StreamReader) As Tree(Of Term)
             Dim line As Value(Of String) = ""
             Dim str As String()
             Dim term As Term
-            Dim tree As New Tree With {.term = New Term With {.term = "/", .tree = {}}}
-            Dim node As Tree
+            Dim tree As New Tree(Of Term) With {.Data = New Term With {.term = "/", .tree = {}}}
+            Dim node As Tree(Of Term)
 
             Do While Not (line = file.ReadLine) Is Nothing
                 str = line.Split(";"c)
@@ -23,13 +24,13 @@ Namespace NCBI.MeSH
 
                 For Each lv As String In term.tree
                     If Not node.childs.ContainsKey(lv) Then
-                        node.childs.Add(lv, New Tree)
+                        node.Childs.Add(lv, New Tree(Of Term))
                     End If
 
                     node = node.childs(lv)
                 Next
 
-                node.term = term
+                node.Data = term
             Loop
 
             Return tree
