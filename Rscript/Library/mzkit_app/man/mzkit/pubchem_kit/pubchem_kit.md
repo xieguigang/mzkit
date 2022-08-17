@@ -11,3 +11,5 @@
 + [SID_map](pubchem_kit/SID_map.1) 
 + [read.pugView](pubchem_kit/read.pugView.1) read xml text and then parse as pugview record data object
 + [metadata.pugView](pubchem_kit/metadata.pugView.1) 
++ [read.mesh_tree](pubchem_kit/read.mesh_tree.1) 
++ [mesh_background](pubchem_kit/mesh_background.1) 

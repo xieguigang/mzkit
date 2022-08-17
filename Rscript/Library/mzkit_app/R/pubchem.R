@@ -105,3 +105,11 @@ const getQuery as function(fileName) {
     |> graphquery::parseQuery
     ;
 }
+
+const mesh_model = function() {
+    "data/mtrees2022.bin"
+    |> system.file(package = "mzkit")
+    |> read.mesh_tree()
+    |> mesh_background()
+    ;
+}
