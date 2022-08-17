@@ -1,3 +1,6 @@
-﻿Public Class RDF
+﻿Namespace NCBI.MeSH
 
-End Class
+    Public Class RDF
+
+    End Class
+End Namespace
