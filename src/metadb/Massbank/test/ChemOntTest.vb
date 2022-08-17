@@ -68,7 +68,7 @@ Public Module ChemOntTest
     '    End Sub
 
     Sub meshTest()
-        Dim tree = Reader.ParseRDF("F:\Downloads\mesh2021.nt.xml".OpenReader)
+        Dim tree = Reader.ParseTree("D:\mzkit\Rscript\Library\mzkit_app\data\mtrees2022.bin".OpenReader)
     End Sub
 
     Sub Main()
