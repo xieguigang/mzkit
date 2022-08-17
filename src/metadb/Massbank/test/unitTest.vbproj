@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <AssemblyName>test</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT</Configurations>
@@ -10,7 +10,7 @@
     <PackageIconUrl />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <OutputType>Exe</OutputType>
-    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.metaLibLoaderTest</StartupObject>
+    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.ChemOntTest</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
