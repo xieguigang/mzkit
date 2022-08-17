@@ -11,7 +11,7 @@ Namespace NCBI.MeSH
 
             Do While Not (line = file.ReadLine) Is Nothing
                 str = line.Value
-
+                Console.WriteLine(str)
             Loop
         End Function
     End Module
