@@ -64,6 +64,7 @@ Namespace mzData.mzWebCache
     ''' 当前的这个mzpack原始数据文件的应用程序类型
     ''' </summary>
     Public Enum FileApplicationClass
+
         ''' <summary>
         ''' 普通LC-MS非靶向
         ''' </summary>
@@ -76,6 +77,9 @@ Namespace mzData.mzWebCache
         ''' LC-MS/MS靶向
         ''' </summary>
         <Description("60866B4E-708F-4B94-9B22-E4C21D4D97DD")> LCMSMS
+
+#Region "Comprehensive Spectrum"
+
         ''' <summary>
         ''' GCxGC原始数据
         ''' </summary>
@@ -84,5 +88,7 @@ Namespace mzData.mzWebCache
         ''' 质谱成像
         ''' </summary>
         <Description("616DE505-3D78-45FA-BCA7-35ECEF3FE88D")> MSImaging
+#End Region
     End Enum
+
 End Namespace
