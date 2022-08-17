@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <AssemblyName>test</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit;NPSearch;Rsharp_app_release;PlantMAT</Configurations>
@@ -10,7 +10,7 @@
     <PackageIconUrl />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <OutputType>Exe</OutputType>
-    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.metaLibLoaderTest</StartupObject>
+    <StartupObject>BioNovoGene.BioDeep.Chemoinformatics.ChemOntTest</StartupObject>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
@@ -123,6 +123,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
@@ -130,6 +131,7 @@
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj" />
     <ProjectReference Include="..\..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\massbank.NET5.vbproj" />
   </ItemGroup>

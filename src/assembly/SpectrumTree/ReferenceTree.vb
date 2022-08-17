@@ -44,7 +44,8 @@ Public Class ReferenceTree : Implements IDisposable
             .childs = childs,
             .Id = data.lib_guid,
             .Members = If(isMember, Nothing, New List(Of Integer)),
-            .centroid = centroid
+            .centroid = centroid,
+            .rt = data.rt
         })
 
         Return n

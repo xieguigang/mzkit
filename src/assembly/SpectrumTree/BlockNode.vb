@@ -10,7 +10,7 @@ Public Class BlockNode
     ''' </summary>
     ''' <returns></returns>
     Public Property Members As List(Of Integer)
-
+    Public Property rt As Double
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
     ''' 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
@@ -34,8 +34,16 @@ Public Class BlockNode
         End Get
     End Property
 
-    Public Shared Function GetIndex(score As Double) As Integer
-        If score > 0.9 Then
+    ''' <summary>
+    ''' the entire reference database must be rebuild after the
+    ''' cutoff value in this function has been modified.
+    ''' </summary>
+    ''' <param name="score"></param>
+    ''' <returns></returns>
+    Friend Shared Function GetIndex(score As Double) As Integer
+        If score > 0.85 Then
+            ' min score greater than 0.85 means equals
+            ' to current spectrum
             Return -1
         ElseIf score > 0.8 Then
             Return 0

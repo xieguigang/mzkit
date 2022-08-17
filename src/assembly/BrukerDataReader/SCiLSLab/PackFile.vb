@@ -61,19 +61,23 @@ Namespace SCiLSLab
                                                             byrefPack As PackFile,
                                                             parseLine As LineParser(Of T),
                                                             println As Action(Of String)) As IEnumerable(Of T)
-            Using reader As New StreamReader(file)
-                Dim headerLine As String = Nothing
-                Dim line As Value(Of String) = ""
+            ' 20220816
+            ' using closure at here will cause the 
+            ' file closed unexpected, and make the downstream
+            ' data imports function crashed
+            ' so removes the using closure at here
+            Dim reader As New StreamReader(file)
+            Dim headerLine As String = Nothing
+            Dim line As Value(Of String) = ""
 
-                Call ParseHeader(reader, byrefPack, headerLine)
-                ' Call byrefPack.metadata.Add(".header", headerLine)
+            Call ParseHeader(reader, byrefPack, headerLine)
+            ' Call byrefPack.metadata.Add(".header", headerLine)
 
-                Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
+            Dim headers As Index(Of String) = headerLine.Split(";"c).Indexing
 
-                Do While (line = reader.ReadLine) IsNot Nothing
-                    Yield parseLine(line.Split(";"c), headers, println)
-                Loop
-            End Using
+            Do While (line = reader.ReadLine) IsNot Nothing
+                Yield parseLine(line.Split(";"c), headers, println)
+            Loop
         End Function
 
         Private Shared Sub fillByrefPack(comments As IEnumerable(Of String), [byref] As PackFile)

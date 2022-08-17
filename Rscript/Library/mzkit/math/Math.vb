@@ -593,6 +593,11 @@ Module MzMath
                    End Function)
     End Function
 
+    ''' <summary>
+    ''' returns all precursor types for a given libtype
+    ''' </summary>
+    ''' <param name="ionMode"></param>
+    ''' <returns></returns>
     <ExportAPI("defaultPrecursors")>
     Public Function defaultPrecursors(ionMode As String) As MzCalculator()
         Return Provider.GetCalculator(ionMode).Values.ToArray

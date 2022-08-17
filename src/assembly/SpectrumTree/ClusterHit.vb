@@ -10,13 +10,15 @@ Public Class ClusterHit
     Public Property representive As SSM2MatrixFragment()
     Public Property forward As Double
     Public Property reverse As Double
-
+    Public Property jaccard As Double
     Public Property queryId As String
     Public Property queryMz As Double
     Public Property queryRt As Double
 
+    Public Property ClusterRt As Double()
     Public Property ClusterForward As Double()
     Public Property ClusterReverse As Double()
+    Public Property ClusterJaccard As Double()
     Public Property ClusterId As String()
 
 End Class

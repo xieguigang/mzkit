@@ -3,6 +3,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -89,15 +90,20 @@ Public Class TreeSearch : Implements IDisposable
         Dim alignments = cluster.Select(Function(c) GlobalAlignment.TwoDirectionSSM(centroid, c.centroid, da)).ToArray
         Dim forward = alignments.Select(Function(a) a.forward).ToArray
         Dim reverse = alignments.Select(Function(a) a.reverse).ToArray
+        Dim rt As Double() = cluster.Select(Function(c) c.rt).ToArray
+        Dim jaccard As Double() = cluster.Select(Function(c) GlobalAlignment.JaccardIndex(c.centroid, centroid, da)).ToArray
 
         Return New ClusterHit With {
             .Id = hit.Id,
             .forward = score.forward,
             .reverse = score.reverse,
+            .jaccard = GlobalAlignment.JaccardIndex(hit.centroid, centroid, da),
             .representive = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray,
-            .ClusterId = cluster.Select(Function(c) c.Id).ToArray,
-            .ClusterForward = forward,
-            .ClusterReverse = reverse
+            .ClusterId = { .Id}.JoinIterates(cluster.Select(Function(c) c.Id)).ToArray,
+            .ClusterForward = {score.forward}.JoinIterates(forward).ToArray,
+            .ClusterReverse = {score.reverse}.JoinIterates(reverse).ToArray,
+            .ClusterRt = {hit.rt}.JoinIterates(rt).ToArray,
+            .ClusterJaccard = { .jaccard}.JoinIterates(jaccard).ToArray
         }
     End Function
 

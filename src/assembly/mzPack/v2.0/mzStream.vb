@@ -13,6 +13,7 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports any = Microsoft.VisualBasic.Scripting
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 Imports stdNum = System.Math
 
@@ -23,6 +24,10 @@ Public Class mzStream : Implements IMzPackReader
     Implements IDisposable
 
     ReadOnly pack As StreamPack
+    ''' <summary>
+    ''' a global cache of the ms1 scan_id to dir path mapping
+    ''' </summary>
+    ReadOnly scan_id As New Dictionary(Of String, String)
 
     Dim disposedValue As Boolean
     Dim meta As Dictionary(Of String, String)
@@ -42,12 +47,7 @@ Public Class mzStream : Implements IMzPackReader
     ''' <returns></returns>
     Public ReadOnly Property MS1 As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
         Get
-            Dim dir As StreamGroup = pack.GetObject("/MS/")
-            Dim dirs = dir.files
-
-            Return dirs _
-                .Select(Function(d) d.fileName) _
-                .ToArray
+            Return scan_id.Keys
         End Get
     End Property
 
@@ -70,10 +70,47 @@ Public Class mzStream : Implements IMzPackReader
         Application = safeParseClassType()
         meta = pack.ReadText("/.etc/metadata.json").LoadJSON(Of Dictionary(Of String, String))
         summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
+
+        Call cacheScanIndex()
     End Sub
 
+    Private Sub cacheScanIndex()
+        Dim dir As StreamGroup = pack.GetObject("/MS/")
+        Dim dirs = dir.files
+
+        For Each subdir As StreamObject In dirs
+            If TypeOf subdir Is StreamGroup AndAlso Not subdir.hasAttributes Then
+                For Each ms1 As StreamObject In DirectCast(subdir, StreamGroup).files
+                    If ms1.hasAttribute("scan_id") Then
+                        Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
+                        Dim dirpath As String = ms1.referencePath.ToString & "/"
+
+                        Call Me.scan_id.Add(scan_id, dirpath)
+                    End If
+                Next
+            Else
+                Dim ms1 = subdir
+
+                If ms1.hasAttribute("scan_id") Then
+                    Dim scan_id As String = any.ToString(ms1.GetAttribute("scan_id"))
+                    Dim dirpath As String = ms1.referencePath.ToString & "/"
+
+                    Call Me.scan_id.Add(scan_id, dirpath)
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Function findScan1Name(scan_id As String) As String
+        If Me.scan_id.ContainsKey(scan_id) Then
+            Return Me.scan_id(scan_id)
+        Else
+            Return $"/MS/{mzStreamWriter.getScan1DirName(scan_id)}/"
+        End If
+    End Function
+
     Public Function ReadMS1(scan_id As String) As ScanMS1
-        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+        Dim refer As String = $"{findScan1Name(scan_id)}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
         Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
         Dim ms1 As New ScanMS1 With {.meta = New Dictionary(Of String, String)}
@@ -96,7 +133,7 @@ Public Class mzStream : Implements IMzPackReader
 
     Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
         For Each scanId As String In MS1.Take(sampling)
-            Dim refer As String = $"/MS/{scanId.Replace("\", "/").Replace("/", "_")}/"
+            Dim refer As String = findScan1Name(scanId)
             Dim dir = pack.GetObject(refer)
             Dim n As Integer = dir.attributes.GetValue("products")
 
@@ -113,7 +150,7 @@ Public Class mzStream : Implements IMzPackReader
                                     <Out> ByRef BPC As Double,
                                     <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
 
-        Dim refer As String = $"/MS/{scanId.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+        Dim refer As String = $"{findScan1Name(scanId)}/Scan1.mz"
         Dim buffer As Stream = pack.OpenBlock(refer)
         Dim reader As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.LittleEndian}
         Dim ms1 As New ScanMS1
@@ -127,7 +164,7 @@ Public Class mzStream : Implements IMzPackReader
     End Sub
 
     Public Function GetMetadata(scan_id As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
-        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/Scan1.mz"
+        Dim refer As String = $"{findScan1Name(scan_id)}/Scan1.mz"
         Dim metadata As StreamObject = pack.GetObject(refer)
         Dim meta As New Dictionary(Of String, String)
 
@@ -142,7 +179,7 @@ Public Class mzStream : Implements IMzPackReader
 
     Public Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
         Dim ms1 As ScanMS1 = ReadMS1(scan_id)
-        Dim refer As String = $"/MS/{scan_id.Replace("\", "/").Replace("/", "_")}/"
+        Dim refer As String = findScan1Name(scan_id)
         Dim dir = pack.GetObject(refer)
         Dim n As Integer = dir.attributes.GetValue("products")
         Dim id2 As String() = Nothing
@@ -187,7 +224,7 @@ Public Class mzStream : Implements IMzPackReader
         Dim MsReader As Func(Of String, ScanMS1)
         Dim scans As New List(Of ScanMS1)
         Dim i As i32 = 0
-        Dim allIndex As String() = MS1
+        Dim allIndex As String() = MS1.ToArray
         Dim d As Integer = allIndex.Length / 10
         Dim j As Integer = 0
 
