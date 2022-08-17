@@ -1,0 +1,561 @@
+,score,pvalue,FDR,mesh_terms
+Organic Chemicals,0.0131017,2.16512E-27,1.21247E-24,"Trypan Blue;Merbromin;Suloctidil;Iodohippuric Acid;Methylnitronitrosoguanidine;Oxaloacetic Acid;Chlormequat;Aminoethylphosphonic Acid;Tetraethylammonium;Zinc Acetate;Clodronic Acid;Vitamin K 3;Cetrimonium;Putrescine;Oxalic Acid;Trifluoroacetic Acid;Metformin;Penicillamine;Dichloroacetic Acid;Iron-Dextran Complex;4-Aminobenzoic Acid;Valproic Acid;Nitrilotriacetic Acid;Iodoacetic Acid;2,4-Dichlorophenoxyacetic Acid;Mitoguazone;Tetramisole;Zineb;Etidronic Acid;Azathioprine;Etidocaine;Chloralose;Technetium Tc 99m Mertiatide;Inositol 1,4,5-Trisphosphate;Technetium Tc 99m Dimercaptosuccinic Acid;Calcium Citrate;Ipodate;Carubicin;Sildenafil Citrate;Afatinib;Alcuronium;Esomeprazole;Oxytetracycline;Thiocholine;Mesna;Sodium Acetate"
+"Acids, Acyclic",0.0562771,2.55592E-16,7.15658E-14,"Oxaloacetic Acid;Zinc Acetate;Oxalic Acid;Trifluoroacetic Acid;Dichloroacetic Acid;Valproic Acid;Nitrilotriacetic Acid;Iodoacetic Acid;2,4-Dichlorophenoxyacetic Acid;Zineb;Technetium Tc 99m Dimercaptosuccinic Acid;Calcium Citrate;Sodium Acetate"
+Carboxylic Acids,0.0291829,1.39169E-14,2.59782E-12,"Iodohippuric Acid;Oxaloacetic Acid;Zinc Acetate;Oxalic Acid;Trifluoroacetic Acid;Dichloroacetic Acid;4-Aminobenzoic Acid;Valproic Acid;Nitrilotriacetic Acid;Iodoacetic Acid;2,4-Dichlorophenoxyacetic Acid;Zineb;Technetium Tc 99m Dimercaptosuccinic Acid;Calcium Citrate;Sodium Acetate"
+Inorganic Chemicals,0.0163785,4.66416E-13,6.52983E-11,Ammonium Sulfate;Tin Fluorides;Selenic Acid;Vitallium;Tetrathionic Acid;Calcium Sulfate;Iodides;Selenium Oxides;Acidulated Phosphate Fluoride;Potassium Permanganate;Sodium Selenite;Zinc Sulfate;Vanadates;Ferrosoferric Oxide;Osmium Tetroxide;Calcium Citrate;Aluminum Hydroxide;Dithionite
+Acetates,0.148936,3.61172E-12,4.04513E-10,"Zinc Acetate;Trifluoroacetic Acid;Dichloroacetic Acid;Nitrilotriacetic Acid;Iodoacetic Acid;2,4-Dichlorophenoxyacetic Acid;Sodium Acetate"
+"Heterocyclic Compounds, Fused-Ring",0.0149597,2.3692E-09,1.89536E-07,Guanosine Diphosphate Mannose;NADP;Amiodarone;Aminacrine;Azathioprine;Ivabradine;Guanosine Diphosphate Fucose;Sildenafil Citrate;Propidium;Afatinib;Alcuronium;Esomeprazole;Acetyl Coenzyme A
+Sulfur Compounds,0.178571,2.08479E-09,1.94581E-07,Ammonium Sulfate;Tetrathionic Acid;Calcium Sulfate;Zinc Sulfate;Dithionite
+Heterocyclic Compounds,0.00895522,6.23101E-09,3.48936E-07,Guanosine Diphosphate Mannose;NADP;Amiodarone;Aminacrine;Tetramisole;Oxazolone;Azathioprine;Cilazapril;Diphenoxylate;Ivabradine;Guanosine Diphosphate Fucose;Sildenafil Citrate;Propidium;Almitrine;Afatinib;Alcuronium;Esomeprazole;Acetyl Coenzyme A
+Sulfur Compounds,0.0219298,5.05309E-09,3.53716E-07,Trypan Blue;Penicillamine;Tetramisole;Zineb;Azathioprine;Technetium Tc 99m Dimercaptosuccinic Acid;Sildenafil Citrate;Esomeprazole;Thiocholine;Mesna
+Carbohydrates,0.0215983,5.81733E-09,3.61967E-07,"Maltose;Guanosine Diphosphate Mannose;Iron-Dextran Complex;Glucosamine;Gum Arabic;Chloralose;Inositol 1,4,5-Trisphosphate;Guanosine Diphosphate Fucose;Carubicin;Tragacanth"
+"Heterocyclic Compounds, 2-Ring",0.0170543,1.09228E-08,5.09733E-07,Guanosine Diphosphate Mannose;NADP;Amiodarone;Azathioprine;Ivabradine;Guanosine Diphosphate Fucose;Sildenafil Citrate;Afatinib;Alcuronium;Esomeprazole;Acetyl Coenzyme A
+Sulfuric Acids,0.333333,1.05402E-08,5.36593E-07,Ammonium Sulfate;Tetrathionic Acid;Calcium Sulfate;Zinc Sulfate
+Sulfur Acids,0.25,2.79202E-08,1.11681E-06,Ammonium Sulfate;Tetrathionic Acid;Calcium Sulfate;Zinc Sulfate
+Quaternary Ammonium Compounds,0.102041,2.70388E-08,1.16475E-06,Chlormequat;Tetraethylammonium;Cetrimonium;Alcuronium;Thiocholine
+Onium Compounds,0.0980392,3.25747E-08,1.21612E-06,Chlormequat;Tetraethylammonium;Cetrimonium;Alcuronium;Thiocholine
+Purines,0.0508475,5.37984E-08,1.88294E-06,Guanosine Diphosphate Mannose;NADP;Azathioprine;Guanosine Diphosphate Fucose;Sildenafil Citrate;Acetyl Coenzyme A
+Quaternary Ammonium Compounds,0.0862069,5.94032E-08,1.95681E-06,Chlormequat;Tetraethylammonium;Cetrimonium;Alcuronium;Thiocholine
+Selenium Compounds,0.6,2.10811E-07,6.55858E-06,Selenic Acid;Selenium Oxides;Sodium Selenite
+Amines,0.0201511,3.26149E-07,9.61281E-06,Suloctidil;Chlormequat;Tetraethylammonium;Cetrimonium;Putrescine;Etidocaine;Alcuronium;Thiocholine
+Hydrocarbons,0.0117521,4.24172E-07,1.18768E-05,Trypan Blue;Iodohippuric Acid;Vitamin K 3;Trifluoroacetic Acid;Dichloroacetic Acid;4-Aminobenzoic Acid;Iodoacetic Acid;Ipodate;Carubicin;Oxytetracycline;Mesna
+Sulfates,0.3,1.07039E-06,2.85438E-05,Ammonium Sulfate;Calcium Sulfate;Zinc Sulfate
+Organometallic Compounds,0.0888889,1.1779E-06,2.9983E-05,Merbromin;Zineb;Technetium Tc 99m Mertiatide;Technetium Tc 99m Dimercaptosuccinic Acid
+Purine Nucleotides,0.0833333,1.49949E-06,3.65094E-05,Guanosine Diphosphate Mannose;NADP;Guanosine Diphosphate Fucose;Acetyl Coenzyme A
+Purine Nucleotides,0.0816327,1.6199E-06,3.77976E-05,Guanosine Diphosphate Mannose;NADP;Guanosine Diphosphate Fucose;Acetyl Coenzyme A
+Anions,0.0666667,3.46738E-06,7.76692E-05,Iodides;Vanadates;Aluminum Hydroxide;Dithionite
+Ions,0.0615385,4.68868E-06,0.000100987,Iodides;Vanadates;Aluminum Hydroxide;Dithionite
+Electrolytes,0.0597015,5.25672E-06,0.000109028,Iodides;Vanadates;Aluminum Hydroxide;Dithionite
+Sulfhydryl Compounds,0.125,1.07703E-05,0.000215407,Technetium Tc 99m Dimercaptosuccinic Acid;Thiocholine;Mesna
+Trimethyl Ammonium Compounds,0.12,1.20488E-05,0.000232666,Chlormequat;Cetrimonium;Thiocholine
+Guanidines,0.111111,1.48975E-05,0.000269117,Methylnitronitrosoguanidine;Metformin;Mitoguazone
+Ribonucleotides,0.0454545,1.47297E-05,0.000274955,Guanosine Diphosphate Mannose;NADP;Guanosine Diphosphate Fucose;Acetyl Coenzyme A
+"Hydrocarbons, Aromatic",0.0142276,1.64512E-05,0.000287897,Trypan Blue;Iodohippuric Acid;Vitamin K 3;4-Aminobenzoic Acid;Ipodate;Carubicin;Oxytetracycline
+Organophosphonates,0.1,1.99502E-05,0.000338549,Aminoethylphosphonic Acid;Clodronic Acid;Etidronic Acid
+"Hydrocarbons, Halogenated",0.0412371,2.12858E-05,0.00035059,Trifluoroacetic Acid;Dichloroacetic Acid;Iodoacetic Acid;Ipodate
+Amidines,0.0909091,2.6017E-05,0.000364238,Methylnitronitrosoguanidine;Metformin;Mitoguazone
+Guanosine Diphosphate Sugars,0.666667,2.42665E-05,0.000367277,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate Sugars,0.666667,2.42665E-05,0.000367277,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate Sugars,0.666667,2.42665E-05,0.000367277,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate Sugars,0.666667,2.42665E-05,0.000367277,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate Sugars,0.666667,2.42665E-05,0.000367277,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Polysaccharides,0.0357143,3.66445E-05,0.000446108,Maltose;Iron-Dextran Complex;Gum Arabic;Tragacanth
+Acetic Acid,0.5,3.63621E-05,0.000468109,Zinc Acetate;Sodium Acetate
+Guanosine Diphosphate,0.5,3.63621E-05,0.000468109,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate,0.5,3.63621E-05,0.000468109,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanosine Diphosphate,0.5,3.63621E-05,0.000468109,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Dicarboxylic Acids,0.0810811,3.58342E-05,0.000489443,Oxaloacetic Acid;Oxalic Acid;Technetium Tc 99m Dimercaptosuccinic Acid
+Polycyclic Aromatic Hydrocarbons,0.034188,4.32104E-05,0.000514847,Trypan Blue;Vitamin K 3;Carubicin;Oxytetracycline
+Oxalates,0.4,5.08541E-05,0.00057532,Oxaloacetic Acid;Oxalic Acid
+Plant Gums,0.4,5.08541E-05,0.00057532,Gum Arabic;Tragacanth
+Cariostatic Agents,0.4,5.08541E-05,0.00057532,Tin Fluorides;Acidulated Phosphate Fluoride
+Cariostatic Agents,0.4,5.08541E-05,0.00057532,Tin Fluorides;Acidulated Phosphate Fluoride
+Glycosides,0.032,5.54477E-05,0.000597129,Guanosine Diphosphate Mannose;Chloralose;Guanosine Diphosphate Fucose;Carubicin
+"Hydrocarbons, Cyclic",0.0116279,5.77351E-05,0.000610031,Trypan Blue;Iodohippuric Acid;Vitamin K 3;4-Aminobenzoic Acid;Ipodate;Carubicin;Oxytetracycline
+Plant Gums,0.333333,6.77353E-05,0.000695995,Gum Arabic;Tragacanth
+Plant Gums,0.333333,6.77353E-05,0.000695995,Gum Arabic;Tragacanth
+Fluorides,0.285714,8.69979E-05,0.000869979,Tin Fluorides;Acidulated Phosphate Fluoride
+Polycyclic Aromatic Hydrocarbons,0.0273973,9.94333E-05,0.000976889,Trypan Blue;Vitamin K 3;Carubicin;Oxytetracycline
+Hydrofluoric Acid,0.25,0.000108635,0.00104889,Tin Fluorides;Acidulated Phosphate Fluoride
+Fluorine Compounds,0.222222,0.000132638,0.00124836,Tin Fluorides;Acidulated Phosphate Fluoride
+Diphosphonates,0.222222,0.000132638,0.00124836,Clodronic Acid;Etidronic Acid
+"Hydrocarbons, Iodinated",0.2,0.000159001,0.00145968,Iodoacetic Acid;Ipodate
+Organotechnetium Compounds,0.181818,0.000187716,0.0016955,Technetium Tc 99m Mertiatide;Technetium Tc 99m Dimercaptosuccinic Acid
+Calcium Compounds,0.142857,0.000287897,0.00253894,Calcium Sulfate;Calcium Citrate
+Keto Acids,0.142857,0.000287897,0.00253894,Iodohippuric Acid;Oxaloacetic Acid
+Guanine Nucleotides,0.133333,0.000325946,0.00278671,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Guanine Nucleotides,0.133333,0.000325946,0.00278671,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Sodium Compounds,0.125,0.000366309,0.00301667,Acidulated Phosphate Fluoride;Sodium Selenite
+Guanine Nucleotides,0.125,0.000366309,0.00301667,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Plant Exudates,0.125,0.000366309,0.00301667,Gum Arabic;Tragacanth
+"Heterocyclic Compounds, 1-Ring",0.00816803,0.000480944,0.00384755,Tetramisole;Oxazolone;Cilazapril;Diphenoxylate;Sildenafil Citrate;Almitrine;Esomeprazole
+Nucleotides,0.0178571,0.000488998,0.00385688,Guanosine Diphosphate Mannose;NADP;Guanosine Diphosphate Fucose;Acetyl Coenzyme A
+Nucleoside Diphosphate Sugars,0.105263,0.000501219,0.00387148,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Nucleoside Diphosphate Sugars,0.105263,0.000501219,0.00387148,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Nucleotides,0.1,0.00055077,0.00416799,Guanosine Diphosphate Mannose;Guanosine Diphosphate Fucose
+Organophosphorus Compounds,0.0306122,0.000563172,0.00420501,Aminoethylphosphonic Acid;Clodronic Acid;Etidronic Acid
+Naphthacenes,0.0909091,0.000656702,0.00480723,Carubicin;Oxytetracycline
+Naphthacenes,0.0909091,0.000656702,0.00480723,Carubicin;Oxytetracycline
+Adenine Nucleotides,0.08,0.000832566,0.0059774,NADP;Acetyl Coenzyme A
+"Amino Acids, Peptides, and Proteins",0.000335533,0.000922819,0.0065415,Glycine;Penicillamine;Technetium Tc 99m Mertiatide
+Amides,0.0149254,0.000942555,0.00659789,Iodohippuric Acid;Etidocaine;Sildenafil Citrate;Afatinib
+Adenine Nucleotides,0.0740741,0.000961035,0.00660343,NADP;Acetyl Coenzyme A
+Adenine Nucleotides,0.0740741,0.000961035,0.00660343,NADP;Acetyl Coenzyme A
+Minerals,0.0689655,0.00109842,0.00736665,Calcium Sulfate;Ferrosoferric Oxide
+Coenzymes,0.0689655,0.00109842,0.00736665,NADP;Acetyl Coenzyme A
+Polycyclic Compounds,0.00763359,0.00406377,0.00818601,Trypan Blue;Vitamin K 3;17-alpha-Hydroxypregnenolone;Carubicin;Oxytetracycline
+Sulfuric Acids,0.5,0.00467798,0.00864576,Tetrathionic Acid
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Sulfites,0.5,0.00467798,0.00864576,Dithionite
+Sodium Fluoride,0.5,0.00467798,0.00864576,Acidulated Phosphate Fluoride
+Manganese Compounds,0.5,0.00467798,0.00864576,Potassium Permanganate
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Osmium Compounds,0.5,0.00467798,0.00864576,Osmium Tetroxide
+Selenious Acid,0.5,0.00467798,0.00864576,Sodium Selenite
+Sodium Fluoride,0.5,0.00467798,0.00864576,Acidulated Phosphate Fluoride
+Sulfites,0.5,0.00467798,0.00864576,Dithionite
+Vanadium Compounds,0.5,0.00467798,0.00864576,Vanadates
+Chloral Hydrate,0.5,0.00467798,0.00864576,Chloralose
+Metformin,0.5,0.00467798,0.00864576,Metformin
+Nitrosoguanidines,0.5,0.00467798,0.00864576,Methylnitronitrosoguanidine
+Tetraethylammonium Compounds,0.5,0.00467798,0.00864576,Tetraethylammonium
+Toxiferine,0.5,0.00467798,0.00864576,Alcuronium
+Cetrimonium Compounds,0.5,0.00467798,0.00864576,Cetrimonium
+Fluoroacetates,0.5,0.00467798,0.00864576,Trifluoroacetic Acid
+"2,4-Dichlorophenoxyacetic Acid",0.5,0.00467798,0.00864576,"2,4-Dichlorophenoxyacetic Acid"
+Oxalic Acid,0.5,0.00467798,0.00864576,Oxalic Acid
+Oxaloacetates,0.5,0.00467798,0.00864576,Oxaloacetic Acid
+Succimer,0.5,0.00467798,0.00864576,Technetium Tc 99m Dimercaptosuccinic Acid
+Hippurates,0.5,0.00467798,0.00864576,Iodohippuric Acid
+"2,4-Dichlorophenoxyacetic Acid",0.5,0.00467798,0.00864576,"2,4-Dichlorophenoxyacetic Acid"
+Oxaloacetates,0.5,0.00467798,0.00864576,Oxaloacetic Acid
+Hippurates,0.5,0.00467798,0.00864576,Iodohippuric Acid
+Fluoroacetates,0.5,0.00467798,0.00864576,Trifluoroacetic Acid
+Nitrosoguanidines,0.5,0.00467798,0.00864576,Methylnitronitrosoguanidine
+Cetrimonium Compounds,0.5,0.00467798,0.00864576,Cetrimonium
+Tetraethylammonium Compounds,0.5,0.00467798,0.00864576,Tetraethylammonium
+Toxiferine,0.5,0.00467798,0.00864576,Alcuronium
+Penicillamine,0.5,0.00467798,0.00864576,Penicillamine
+Succimer,0.5,0.00467798,0.00864576,Technetium Tc 99m Dimercaptosuccinic Acid
+Omeprazole,0.5,0.00467798,0.00864576,Esomeprazole
+Toxiferine,0.5,0.00467798,0.00864576,Alcuronium
+Omeprazole,0.5,0.00467798,0.00864576,Esomeprazole
+Omeprazole,0.5,0.00467798,0.00864576,Esomeprazole
+Amiodarone,0.5,0.00467798,0.00864576,Amiodarone
+Toxiferine,0.5,0.00467798,0.00864576,Alcuronium
+Toxiferine,0.5,0.00467798,0.00864576,Alcuronium
+Mercaptopurine,0.5,0.00467798,0.00864576,Azathioprine
+Pregnenolone,0.5,0.00467798,0.00864576,17-alpha-Hydroxypregnenolone
+Pregnenolone,0.5,0.00467798,0.00864576,17-alpha-Hydroxypregnenolone
+Glucosamine,0.5,0.00467798,0.00864576,Glucosamine
+Penicillamine,0.5,0.00467798,0.00864576,Penicillamine
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Chromium Alloys,0.5,0.00467798,0.00864576,Vitallium
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Tetrathionic Acid,1,0.00312108,0.00937161,Tetrathionic Acid
+Aluminum Hydroxide,1,0.00312108,0.00937161,Aluminum Hydroxide
+Aluminum Hydroxide,1,0.00312108,0.00937161,Aluminum Hydroxide
+Calcium Citrate,1,0.00312108,0.00937161,Calcium Citrate
+Calcium Sulfate,1,0.00312108,0.00937161,Calcium Sulfate
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Aluminum Hydroxide,1,0.00312108,0.00937161,Aluminum Hydroxide
+Iodides,1,0.00312108,0.00937161,Iodides
+Dithionite,1,0.00312108,0.00937161,Dithionite
+Vanadates,1,0.00312108,0.00937161,Vanadates
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Tin Fluorides,1,0.00312108,0.00937161,Tin Fluorides
+Ferrosoferric Oxide,1,0.00312108,0.00937161,Ferrosoferric Oxide
+Ferrosoferric Oxide,1,0.00312108,0.00937161,Ferrosoferric Oxide
+Potassium Permanganate,1,0.00312108,0.00937161,Potassium Permanganate
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Calcium Sulfate,1,0.00312108,0.00937161,Calcium Sulfate
+Ferrosoferric Oxide,1,0.00312108,0.00937161,Ferrosoferric Oxide
+Ammonium Sulfate,1,0.00312108,0.00937161,Ammonium Sulfate
+Osmium Tetroxide,1,0.00312108,0.00937161,Osmium Tetroxide
+Osmium Tetroxide,1,0.00312108,0.00937161,Osmium Tetroxide
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Potassium Permanganate,1,0.00312108,0.00937161,Potassium Permanganate
+Selenic Acid,1,0.00312108,0.00937161,Selenic Acid
+Sodium Selenite,1,0.00312108,0.00937161,Sodium Selenite
+Selenium Oxides,1,0.00312108,0.00937161,Selenium Oxides
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Sodium Selenite,1,0.00312108,0.00937161,Sodium Selenite
+Dithionite,1,0.00312108,0.00937161,Dithionite
+Ammonium Sulfate,1,0.00312108,0.00937161,Ammonium Sulfate
+Calcium Sulfate,1,0.00312108,0.00937161,Calcium Sulfate
+Zinc Sulfate,1,0.00312108,0.00937161,Zinc Sulfate
+Tetrathionic Acid,1,0.00312108,0.00937161,Tetrathionic Acid
+Tin Fluorides,1,0.00312108,0.00937161,Tin Fluorides
+Vanadates,1,0.00312108,0.00937161,Vanadates
+Zinc Sulfate,1,0.00312108,0.00937161,Zinc Sulfate
+Suloctidil,1,0.00312108,0.00937161,Suloctidil
+Chloralose,1,0.00312108,0.00937161,Chloralose
+Suloctidil,1,0.00312108,0.00937161,Suloctidil
+"Inositol 1,4,5-Trisphosphate",1,0.00312108,0.00937161,"Inositol 1,4,5-Trisphosphate"
+Afatinib,1,0.00312108,0.00937161,Afatinib
+Etidocaine,1,0.00312108,0.00937161,Etidocaine
+Iodohippuric Acid,1,0.00312108,0.00937161,Iodohippuric Acid
+Sildenafil Citrate,1,0.00312108,0.00937161,Sildenafil Citrate
+Mitoguazone,1,0.00312108,0.00937161,Mitoguazone
+Methylnitronitrosoguanidine,1,0.00312108,0.00937161,Methylnitronitrosoguanidine
+Suloctidil,1,0.00312108,0.00937161,Suloctidil
+Etidocaine,1,0.00312108,0.00937161,Etidocaine
+Suloctidil,1,0.00312108,0.00937161,Suloctidil
+Putrescine,1,0.00312108,0.00937161,Putrescine
+Tetraethylammonium,1,0.00312108,0.00937161,Tetraethylammonium
+Alcuronium,1,0.00312108,0.00937161,Alcuronium
+Cetrimonium,1,0.00312108,0.00937161,Cetrimonium
+Chlormequat,1,0.00312108,0.00937161,Chlormequat
+Trypan Blue,1,0.00312108,0.00937161,Trypan Blue
+Sodium Acetate,1,0.00312108,0.00937161,Sodium Acetate
+Zinc Acetate,1,0.00312108,0.00937161,Zinc Acetate
+Dichloroacetic Acid,1,0.00312108,0.00937161,Dichloroacetic Acid
+Trifluoroacetic Acid,1,0.00312108,0.00937161,Trifluoroacetic Acid
+Iodoacetic Acid,1,0.00312108,0.00937161,Iodoacetic Acid
+Nitrilotriacetic Acid,1,0.00312108,0.00937161,Nitrilotriacetic Acid
+Zineb,1,0.00312108,0.00937161,Zineb
+Oxaloacetic Acid,1,0.00312108,0.00937161,Oxaloacetic Acid
+Technetium Tc 99m Dimercaptosuccinic Acid,1,0.00312108,0.00937161,Technetium Tc 99m Dimercaptosuccinic Acid
+Calcium Citrate,1,0.00312108,0.00937161,Calcium Citrate
+Valproic Acid,1,0.00312108,0.00937161,Valproic Acid
+4-Aminobenzoic Acid,1,0.00312108,0.00937161,4-Aminobenzoic Acid
+Iodohippuric Acid,1,0.00312108,0.00937161,Iodohippuric Acid
+Iodohippuric Acid,1,0.00312108,0.00937161,Iodohippuric Acid
+Oxaloacetic Acid,1,0.00312108,0.00937161,Oxaloacetic Acid
+Iron-Dextran Complex,1,0.00312108,0.00937161,Iron-Dextran Complex
+Mesna,1,0.00312108,0.00937161,Mesna
+4-Aminobenzoic Acid,1,0.00312108,0.00937161,4-Aminobenzoic Acid
+Iodohippuric Acid,1,0.00312108,0.00937161,Iodohippuric Acid
+Ipodate,1,0.00312108,0.00937161,Ipodate
+Carubicin,1,0.00312108,0.00937161,Carubicin
+Oxytetracycline,1,0.00312108,0.00937161,Oxytetracycline
+Trypan Blue,1,0.00312108,0.00937161,Trypan Blue
+Vitamin K 3,1,0.00312108,0.00937161,Vitamin K 3
+Dichloroacetic Acid,1,0.00312108,0.00937161,Dichloroacetic Acid
+Trifluoroacetic Acid,1,0.00312108,0.00937161,Trifluoroacetic Acid
+Iodoacetic Acid,1,0.00312108,0.00937161,Iodoacetic Acid
+Ipodate,1,0.00312108,0.00937161,Ipodate
+Vitamin K 3,1,0.00312108,0.00937161,Vitamin K 3
+Methylnitronitrosoguanidine,1,0.00312108,0.00937161,Methylnitronitrosoguanidine
+Cetrimonium,1,0.00312108,0.00937161,Cetrimonium
+Chlormequat,1,0.00312108,0.00937161,Chlormequat
+Tetraethylammonium,1,0.00312108,0.00937161,Tetraethylammonium
+Alcuronium,1,0.00312108,0.00937161,Alcuronium
+Merbromin,1,0.00312108,0.00937161,Merbromin
+Technetium Tc 99m Dimercaptosuccinic Acid,1,0.00312108,0.00937161,Technetium Tc 99m Dimercaptosuccinic Acid
+Technetium Tc 99m Mertiatide,1,0.00312108,0.00937161,Technetium Tc 99m Mertiatide
+Zineb,1,0.00312108,0.00937161,Zineb
+Aminoethylphosphonic Acid,1,0.00312108,0.00937161,Aminoethylphosphonic Acid
+Clodronic Acid,1,0.00312108,0.00937161,Clodronic Acid
+Etidronic Acid,1,0.00312108,0.00937161,Etidronic Acid
+Vitamin K 3,1,0.00312108,0.00937161,Vitamin K 3
+Mesna,1,0.00312108,0.00937161,Mesna
+Technetium Tc 99m Dimercaptosuccinic Acid,1,0.00312108,0.00937161,Technetium Tc 99m Dimercaptosuccinic Acid
+Sildenafil Citrate,1,0.00312108,0.00937161,Sildenafil Citrate
+Esomeprazole,1,0.00312108,0.00937161,Esomeprazole
+Mesna,1,0.00312108,0.00937161,Mesna
+Trypan Blue,1,0.00312108,0.00937161,Trypan Blue
+Tetramisole,1,0.00312108,0.00937161,Tetramisole
+Zineb,1,0.00312108,0.00937161,Zineb
+Azathioprine,1,0.00312108,0.00937161,Azathioprine
+Diphenoxylate,1,0.00312108,0.00937161,Diphenoxylate
+Alcuronium,1,0.00312108,0.00937161,Alcuronium
+Tetramisole,1,0.00312108,0.00937161,Tetramisole
+Oxazolone,1,0.00312108,0.00937161,Oxazolone
+Tetramisole,1,0.00312108,0.00937161,Tetramisole
+Almitrine,1,0.00312108,0.00937161,Almitrine
+Sildenafil Citrate,1,0.00312108,0.00937161,Sildenafil Citrate
+Diphenoxylate,1,0.00312108,0.00937161,Diphenoxylate
+Cilazapril,1,0.00312108,0.00937161,Cilazapril
+Esomeprazole,1,0.00312108,0.00937161,Esomeprazole
+Almitrine,1,0.00312108,0.00937161,Almitrine
+Ivabradine,1,0.00312108,0.00937161,Ivabradine
+Esomeprazole,1,0.00312108,0.00937161,Esomeprazole
+Alcuronium,1,0.00312108,0.00937161,Alcuronium
+Alcuronium,1,0.00312108,0.00937161,Alcuronium
+Azathioprine,1,0.00312108,0.00937161,Azathioprine
+Acetyl Coenzyme A,1,0.00312108,0.00937161,Acetyl Coenzyme A
+NADP,1,0.00312108,0.00937161,NADP
+Guanosine Diphosphate Fucose,1,0.00312108,0.00937161,Guanosine Diphosphate Fucose
+Guanosine Diphosphate Mannose,1,0.00312108,0.00937161,Guanosine Diphosphate Mannose
+Sildenafil Citrate,1,0.00312108,0.00937161,Sildenafil Citrate
+Afatinib,1,0.00312108,0.00937161,Afatinib
+Aminacrine,1,0.00312108,0.00937161,Aminacrine
+Propidium,1,0.00312108,0.00937161,Propidium
+17-alpha-Hydroxypregnenolone,1,0.00312108,0.00937161,17-alpha-Hydroxypregnenolone
+Carubicin,1,0.00312108,0.00937161,Carubicin
+Oxytetracycline,1,0.00312108,0.00937161,Oxytetracycline
+Trypan Blue,1,0.00312108,0.00937161,Trypan Blue
+Vitamin K 3,1,0.00312108,0.00937161,Vitamin K 3
+Gum Arabic,1,0.00312108,0.00937161,Gum Arabic
+Tragacanth,1,0.00312108,0.00937161,Tragacanth
+17-alpha-Hydroxypregnenolone,1,0.00312108,0.00937161,17-alpha-Hydroxypregnenolone
+17-alpha-Hydroxypregnenolone,1,0.00312108,0.00937161,17-alpha-Hydroxypregnenolone
+Acetyl Coenzyme A,1,0.00312108,0.00937161,Acetyl Coenzyme A
+NADP,1,0.00312108,0.00937161,NADP
+Carubicin,1,0.00312108,0.00937161,Carubicin
+Chloralose,1,0.00312108,0.00937161,Chloralose
+Guanosine Diphosphate Fucose,1,0.00312108,0.00937161,Guanosine Diphosphate Fucose
+Guanosine Diphosphate Mannose,1,0.00312108,0.00937161,Guanosine Diphosphate Mannose
+Iron-Dextran Complex,1,0.00312108,0.00937161,Iron-Dextran Complex
+Maltose,1,0.00312108,0.00937161,Maltose
+Maltose,1,0.00312108,0.00937161,Maltose
+Gum Arabic,1,0.00312108,0.00937161,Gum Arabic
+Tragacanth,1,0.00312108,0.00937161,Tragacanth
+"Inositol 1,4,5-Trisphosphate",1,0.00312108,0.00937161,"Inositol 1,4,5-Trisphosphate"
+"Inositol 1,4,5-Trisphosphate",1,0.00312108,0.00937161,"Inositol 1,4,5-Trisphosphate"
+Maltose,1,0.00312108,0.00937161,Maltose
+Sorbic Acid,1,0.00312108,0.00937161,Sorbic Acid
+Valproic Acid,1,0.00312108,0.00937161,Valproic Acid
+Technetium Tc 99m Mertiatide,1,0.00312108,0.00937161,Technetium Tc 99m Mertiatide
+Azathioprine,1,0.00312108,0.00937161,Azathioprine
+Acetyl Coenzyme A,1,0.00312108,0.00937161,Acetyl Coenzyme A
+NADP,1,0.00312108,0.00937161,NADP
+Guanosine Diphosphate Fucose,1,0.00312108,0.00937161,Guanosine Diphosphate Fucose
+Guanosine Diphosphate Mannose,1,0.00312108,0.00937161,Guanosine Diphosphate Mannose
+Acetyl Coenzyme A,1,0.00312108,0.00937161,Acetyl Coenzyme A
+NADP,1,0.00312108,0.00937161,NADP
+Guanosine Diphosphate Fucose,1,0.00312108,0.00937161,Guanosine Diphosphate Fucose
+Guanosine Diphosphate Mannose,1,0.00312108,0.00937161,Guanosine Diphosphate Mannose
+Guanosine Diphosphate Fucose,1,0.00312108,0.00937161,Guanosine Diphosphate Fucose
+Guanosine Diphosphate Mannose,1,0.00312108,0.00937161,Guanosine Diphosphate Mannose
+Gum Arabic,1,0.00312108,0.00937161,Gum Arabic
+Tragacanth,1,0.00312108,0.00937161,Tragacanth
+Clay,1,0.00312108,0.00937161,Clay
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Tin Fluorides,1,0.00312108,0.00937161,Tin Fluorides
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Clay,1,0.00312108,0.00937161,Clay
+Clay,1,0.00312108,0.00937161,Clay
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Acidulated Phosphate Fluoride,1,0.00312108,0.00937161,Acidulated Phosphate Fluoride
+Tin Fluorides,1,0.00312108,0.00937161,Tin Fluorides
+Vitallium,1,0.00312108,0.00937161,Vitallium
+Clay,1,0.00312108,0.00937161,Clay
+Alcohols,0.0132743,0.00576136,0.00983647,"Suloctidil;Chloralose;Inositol 1,4,5-Trisphosphate"
+Glucans,0.0571429,0.0015635,0.0103007,Maltose;Iron-Dextran Complex
+Iodides,0.333333,0.00623244,0.0103107,Iodides
+Ferrous Compounds,0.333333,0.00623244,0.0103107,Ferrosoferric Oxide
+Tin Compounds,0.333333,0.00623244,0.0103107,Tin Fluorides
+Zinc Compounds,0.333333,0.00623244,0.0103107,Zinc Sulfate
+Inositol Phosphates,0.333333,0.00623244,0.0103107,"Inositol 1,4,5-Trisphosphate"
+Putrescine,0.333333,0.00623244,0.0103107,Putrescine
+Thiocholine,0.333333,0.00623244,0.0103107,Thiocholine
+Chloroacetates,0.333333,0.00623244,0.0103107,Dichloroacetic Acid
+Iodoacetates,0.333333,0.00623244,0.0103107,Iodoacetic Acid
+Ethylenebis(dithiocarbamates),0.333333,0.00623244,0.0103107,Zineb
+Pentanoic Acids,0.333333,0.00623244,0.0103107,Valproic Acid
+Chloroacetates,0.333333,0.00623244,0.0103107,Dichloroacetic Acid
+Iodoacetates,0.333333,0.00623244,0.0103107,Iodoacetic Acid
+Thiocholine,0.333333,0.00623244,0.0103107,Thiocholine
+Thiocholine,0.333333,0.00623244,0.0103107,Thiocholine
+Ethylenebis(dithiocarbamates),0.333333,0.00623244,0.0103107,Zineb
+Pregnenolone,0.333333,0.00623244,0.0103107,17-alpha-Hydroxypregnenolone
+Inositol Phosphates,0.333333,0.00623244,0.0103107,"Inositol 1,4,5-Trisphosphate"
+Inositol Phosphates,0.333333,0.00623244,0.0103107,"Inositol 1,4,5-Trisphosphate"
+Pentanoic Acids,0.333333,0.00623244,0.0103107,Valproic Acid
+"Nucleic Acids, Nucleotides, and Nucleosides",0.0094162,0.00167263,0.0108916,Guanosine Diphosphate Mannose;NADP;Azathioprine;Guanosine Diphosphate Fucose;Acetyl Coenzyme A
+Inositol,0.25,0.00778449,0.0121769,"Inositol 1,4,5-Trisphosphate"
+Hippurates,0.25,0.00778449,0.0121769,Iodohippuric Acid
+Citric Acid,0.25,0.00778449,0.0121769,Calcium Citrate
+Hippurates,0.25,0.00778449,0.0121769,Iodohippuric Acid
+Vitamin K,0.25,0.00778449,0.0121769,Vitamin K 3
+Vitamin K,0.25,0.00778449,0.0121769,Vitamin K 3
+Acyl Coenzyme A,0.25,0.00778449,0.0121769,Acetyl Coenzyme A
+Phenanthridines,0.25,0.00778449,0.0121769,Propidium
+Vitamin K,0.25,0.00778449,0.0121769,Vitamin K 3
+Acyl Coenzyme A,0.25,0.00778449,0.0121769,Acetyl Coenzyme A
+Dextrans,0.25,0.00778449,0.0121769,Iron-Dextran Complex
+Inositol,0.25,0.00778449,0.0121769,"Inositol 1,4,5-Trisphosphate"
+Valerates,0.25,0.00778449,0.0121769,Valproic Acid
+Acyl Coenzyme A,0.25,0.00778449,0.0121769,Acetyl Coenzyme A
+Acyl Coenzyme A,0.25,0.00778449,0.0121769,Acetyl Coenzyme A
+Soil,0.25,0.00778449,0.0121769,Clay
+Soil,0.25,0.00778449,0.0121769,Clay
+Soil,0.25,0.00778449,0.0121769,Clay
+Soil,0.25,0.00778449,0.0121769,Clay
+Sulfonic Acids,0.0512821,0.00191709,0.0123399,Trypan Blue;Mesna
+Piperazines,0.05,0.00201087,0.0127964,Sildenafil Citrate;Almitrine
+Manufactured Materials,0.0114504,0.00858353,0.0130619,Tin Fluorides;Vitallium;Acidulated Phosphate Fluoride
+Biomedical and Dental Materials,0.01875,0.00222922,0.0138707,Tin Fluorides;Vitallium;Acidulated Phosphate Fluoride
+"Acids, Noncarboxylic",0.047619,0.00220483,0.0138731,Tetrathionic Acid;Acidulated Phosphate Fluoride
+Chromium Compounds,0.2,0.00933411,0.0139389,Vitallium
+Ferric Compounds,0.2,0.00933411,0.0139389,Ferrosoferric Oxide
+Biogenic Polyamines,0.2,0.00933411,0.0139389,Putrescine
+Valerates,0.2,0.00933411,0.0139389,Valproic Acid
+Naphthoquinones,0.2,0.00933411,0.0139389,Vitamin K 3
+Phytol,0.2,0.00933411,0.0139389,Vitamin K 3
+Naphthoquinones,0.2,0.00933411,0.0139389,Vitamin K 3
+Thionucleosides,0.2,0.00933411,0.0139389,Azathioprine
+Coenzyme A,0.2,0.00933411,0.0139389,Acetyl Coenzyme A
+Coenzyme A,0.2,0.00933411,0.0139389,Acetyl Coenzyme A
+Thionucleosides,0.2,0.00933411,0.0139389,Azathioprine
+Coenzyme A,0.2,0.00933411,0.0139389,Acetyl Coenzyme A
+Coenzyme A,0.2,0.00933411,0.0139389,Acetyl Coenzyme A
+Acids,0.0454545,0.00240729,0.014653,Tetrathionic Acid;Acidulated Phosphate Fluoride
+Biomedical and Dental Materials,0.0182927,0.00238745,0.014692,Tin Fluorides;Vitallium;Acidulated Phosphate Fluoride
+Naphthalenes,0.0444444,0.00251168,0.0150432,Trypan Blue;Vitamin K 3
+Sulfur Acids,0.0444444,0.00251168,0.0150432,Trypan Blue;Mesna
+Sulfur Acids,0.166667,0.0108813,0.0157864,Tetrathionic Acid
+Ammonium Compounds,0.166667,0.0108813,0.0157864,Ammonium Sulfate
+Citrates,0.166667,0.0108813,0.0157864,Calcium Citrate
+Alkanesulfonates,0.166667,0.0108813,0.0157864,Mesna
+Iodobenzenes,0.166667,0.0108813,0.0157864,Ipodate
+Iodobenzenes,0.166667,0.0108813,0.0157864,Ipodate
+Isonipecotic Acids,0.166667,0.0108813,0.0157864,Diphenoxylate
+Isonipecotic Acids,0.166667,0.0108813,0.0157864,Diphenoxylate
+Naphthoquinones,0.166667,0.0108813,0.0157864,Vitamin K 3
+Complex Mixtures,0.0104167,0.0110453,0.0158193,Clay;Gum Arabic;Tragacanth
+Naphthalenes,0.0425532,0.00272678,0.0160737,Trypan Blue;Vitamin K 3
+Biguanides,0.142857,0.0124261,0.0175723,Metformin
+Daunorubicin,0.142857,0.0124261,0.0175723,Carubicin
+2-Pyridinylmethylsulfinylbenzimidazoles,0.142857,0.0124261,0.0175723,Esomeprazole
+2-Pyridinylmethylsulfinylbenzimidazoles,0.142857,0.0124261,0.0175723,Esomeprazole
+2-Pyridinylmethylsulfinylbenzimidazoles,0.142857,0.0124261,0.0175723,Esomeprazole
+Daunorubicin,0.142857,0.0124261,0.0175723,Carubicin
+Daunorubicin,0.142857,0.0124261,0.0175723,Carubicin
+Dental Alloys,0.142857,0.0124261,0.0175723,Vitallium
+Dental Alloys,0.142857,0.0124261,0.0175723,Vitallium
+Benzoates,0.0181818,0.0135099,0.0188667,Iodohippuric Acid;4-Aminobenzoic Acid
+Benzoates,0.018018,0.0137392,0.0191392,Iodohippuric Acid;4-Aminobenzoic Acid
+Iodine Compounds,0.125,0.0139685,0.019196,Iodides
+Potassium Compounds,0.125,0.0139685,0.019196,Potassium Permanganate
+Succinates,0.125,0.0139685,0.019196,Technetium Tc 99m Dimercaptosuccinic Acid
+Phenoxyacetates,0.125,0.0139685,0.019196,"2,4-Dichlorophenoxyacetic Acid"
+Coordination Complexes,0.125,0.0139685,0.019196,Iron-Dextran Complex
+Naphthalenesulfonates,0.125,0.0139685,0.019196,Trypan Blue
+Alkanesulfonates,0.125,0.0139685,0.019196,Mesna
+Naphthalenesulfonates,0.125,0.0139685,0.019196,Trypan Blue
+Tetrahydroisoquinolines,0.125,0.0139685,0.019196,Alcuronium
+Naphthalenesulfonates,0.125,0.0139685,0.019196,Trypan Blue
+Alloys,0.111111,0.0155085,0.0208768,Vitallium
+Tricarboxylic Acids,0.111111,0.0155085,0.0208768,Calcium Citrate
+Sulfoxides,0.111111,0.0155085,0.0208768,Esomeprazole
+Pyridazines,0.111111,0.0155085,0.0208768,Cilazapril
+Glycine,0.111111,0.0155085,0.0208768,Glycine
+Alloys,0.111111,0.0155085,0.0208768,Vitallium
+Alloys,0.111111,0.0155085,0.0208768,Vitallium
+"Heterocyclic Compounds, 3-Ring",0.0165289,0.0161247,0.0214996,Aminacrine;Propidium
+Aluminum Compounds,0.1,0.0170461,0.0225403,Aluminum Hydroxide
+Phenoxyacetates,0.1,0.0170461,0.0225403,"2,4-Dichlorophenoxyacetic Acid"
+Anthracyclines,0.1,0.0170461,0.0225403,Carubicin
+Anthracyclines,0.1,0.0170461,0.0225403,Carubicin
+Hexosamines,0.1,0.0170461,0.0225403,Glucosamine
+Anthracyclines,0.1,0.0170461,0.0225403,Carubicin
+Biopolymers,0.015873,0.017379,0.0227921,Gum Arabic;Tragacanth
+Acetanilides,0.0909091,0.0185813,0.0239207,Etidocaine
+Acetanilides,0.0909091,0.0185813,0.0239207,Etidocaine
+Choline,0.0909091,0.0185813,0.0239207,Thiocholine
+Glycolates,0.0909091,0.0185813,0.0239207,"2,4-Dichlorophenoxyacetic Acid"
+Thiocarbamates,0.0909091,0.0185813,0.0239207,Zineb
+Glycolates,0.0909091,0.0185813,0.0239207,"2,4-Dichlorophenoxyacetic Acid"
+Tetracyclines,0.0909091,0.0185813,0.0239207,Oxytetracycline
+Choline,0.0909091,0.0185813,0.0239207,Thiocholine
+Benzylisoquinolines,0.0909091,0.0185813,0.0239207,Alcuronium
+Benzylisoquinolines,0.0909091,0.0185813,0.0239207,Alcuronium
+Aminoacridines,0.0909091,0.0185813,0.0239207,Aminacrine
+Tetracyclines,0.0909091,0.0185813,0.0239207,Oxytetracycline
+Progesterone Congeners,0.0909091,0.0185813,0.0239207,17-alpha-Hydroxypregnenolone
+Disaccharides,0.0909091,0.0185813,0.0239207,Maltose
+Disaccharides,0.0909091,0.0185813,0.0239207,Maltose
+"Hydrocarbons, Fluorinated",0.0833333,0.0201141,0.0253406,Trifluoroacetic Acid
+Thiocarbamates,0.0833333,0.0201141,0.0253406,Zineb
+Triazines,0.0833333,0.0201141,0.0253406,Almitrine
+Benzofurans,0.0833333,0.0201141,0.0253406,Amiodarone
+Benzene Derivatives,0.00806452,0.0215379,0.0269826,Iodohippuric Acid;4-Aminobenzoic Acid;Ipodate
+Iron Compounds,0.0769231,0.0216445,0.0269953,Ferrosoferric Oxide
+Diamines,0.0769231,0.0216445,0.0269953,Putrescine
+Glucosides,0.0769231,0.0216445,0.0269953,Chloralose
+Phosphates,0.0714286,0.0231725,0.0286143,Acidulated Phosphate Fluoride
+Phosphates,0.0714286,0.0231725,0.0286143,Acidulated Phosphate Fluoride
+para-Aminobenzoates,0.0714286,0.0231725,0.0286143,4-Aminobenzoic Acid
+para-Aminobenzoates,0.0714286,0.0231725,0.0286143,4-Aminobenzoic Acid
+Quinazolines,0.0714286,0.0231725,0.0286143,Afatinib
+Acridines,0.0714286,0.0231725,0.0286143,Aminacrine
+Hydroxides,0.0666667,0.0246981,0.0301328,Aluminum Hydroxide
+Hydroxides,0.0666667,0.0246981,0.0301328,Aluminum Hydroxide
+Ethylene Glycols,0.0666667,0.0246981,0.0301328,Chloralose
+Alkanesulfonic Acids,0.0666667,0.0246981,0.0301328,Mesna
+"Fatty Acids, Volatile",0.0666667,0.0246981,0.0301328,Valproic Acid
+Fatty Acids,0.012987,0.0251233,0.0304525,Sorbic Acid;Valproic Acid
+Phosphoric Acids,0.0625,0.0262214,0.0316807,Acidulated Phosphate Fluoride
+Phosphoric Acids,0.0625,0.0262214,0.0316807,Acidulated Phosphate Fluoride
+Alkanesulfonic Acids,0.0588235,0.0277423,0.0333384,Mesna
+Arylsulfonates,0.0588235,0.0277423,0.0333384,Trypan Blue
+Oligosaccharides,0.0588235,0.0277423,0.0333384,Maltose
+"Acids, Carbocyclic",0.0121212,0.0284833,0.0340826,Iodohippuric Acid;4-Aminobenzoic Acid
+Organomercury Compounds,0.0555556,0.0292608,0.0348639,Merbromin
+Hydroxycorticosteroids,0.0555556,0.0292608,0.0348639,17-alpha-Hydroxypregnenolone
+Amino Sugars,0.0555556,0.0292608,0.0348639,Glucosamine
+Phosphorus Acids,0.0526316,0.030777,0.0364378,Acidulated Phosphate Fluoride
+Alkalies,0.0526316,0.030777,0.0364378,Aluminum Hydroxide
+Azo Compounds,0.0526316,0.030777,0.0364378,Trypan Blue
+Phosphorus Acids,0.05,0.0322907,0.0379891,Acidulated Phosphate Fluoride
+Benzamides,0.05,0.0322907,0.0379891,Iodohippuric Acid
+Arylsulfonic Acids,0.05,0.0322907,0.0379891,Trypan Blue
+Biological Products,0.0111732,0.0330027,0.0386643,Gum Arabic;Tragacanth
+Nitroso Compounds,0.047619,0.0338022,0.039477,Methylnitronitrosoguanidine
+Oxazoles,0.047619,0.0338022,0.039477,Oxazolone
+Benzamides,0.0454545,0.0353112,0.0410681,Iodohippuric Acid
+Benzamides,0.0454545,0.0353112,0.0410681,Iodohippuric Acid
+Quinones,0.0434783,0.036818,0.0426875,Vitamin K 3
+Phosphorus Compounds,0.0416667,0.0383223,0.0442941,Acidulated Phosphate Fluoride
+Polyamines,0.0416667,0.0383223,0.0442941,Putrescine
+Biogenic Amines,0.04,0.0398243,0.0457939,Putrescine
+Benzimidazoles,0.04,0.0398243,0.0457939,Esomeprazole
+Sugar Phosphates,0.04,0.0398243,0.0457939,"Inositol 1,4,5-Trisphosphate"
+"Amino Acids, Sulfur",0.0384615,0.041324,0.0472757,Penicillamine
+"Amino Acids, Sulfur",0.0384615,0.041324,0.0472757,Penicillamine
+Aminobenzoates,0.037037,0.0428214,0.0486409,4-Aminobenzoic Acid
+Aminobenzoates,0.037037,0.0428214,0.0486409,4-Aminobenzoic Acid
+Adrenal Cortex Hormones,0.037037,0.0428214,0.0486409,17-alpha-Hydroxypregnenolone
+Polymers,0.00966184,0.0428063,0.0488218,Gum Arabic;Tragacanth
+Sugar Alcohols,0.0357143,0.0443164,0.0501357,"Inositol 1,4,5-Trisphosphate"
+Glycols,0.0333333,0.0472994,0.0533488,Chloralose
+Sugar Alcohols,0.0333333,0.0472994,0.0533488,"Inositol 1,4,5-Trisphosphate"
+"Technology, Industry, and Agriculture",0.00587084,0.0475439,0.053463,Tin Fluorides;Vitallium;Acidulated Phosphate Fluoride
+Anilides,0.0322581,0.0487875,0.0545874,Etidocaine
+Anilides,0.0322581,0.0487875,0.0545874,Etidocaine
+Diterpenes,0.0322581,0.0487875,0.0545874,Vitamin K 3
+Isoquinolines,0.0322581,0.0487875,0.0545874,Alcuronium
+Geological Phenomena,0.03125,0.0502732,0.0559701,Clay
+Azoles,0.00869565,0.0515619,0.057291,Tetramisole;Oxazolone
+Alkanes,0.030303,0.0517566,0.0573934,Mesna
+Pregnenes,0.0294118,0.0532377,0.0586872,17-alpha-Hydroxypregnenolone
+Dental Materials,0.0294118,0.0532377,0.0586872,Vitallium
+Dental Materials,0.0294118,0.0532377,0.0586872,Vitallium
+Amino Acids,0.00854701,0.0531448,0.0588164,Glycine;Penicillamine
+Nitrogen Compounds,0.0277778,0.0561929,0.0616416,Ammonium Sulfate
+Benzazepines,0.0277778,0.0561929,0.0616416,Ivabradine
+Aminoglycosides,0.027027,0.0576671,0.0630734,Carubicin
+Propanolamines,0.025641,0.0606085,0.0661613,Suloctidil
+Propanolamines,0.025,0.0620758,0.0675655,Suloctidil
+Propanolamines,0.025,0.0620758,0.0675655,Suloctidil
+Thiazoles,0.0238095,0.0650035,0.0704782,Tetramisole
+Sugars,0.0238095,0.0650035,0.0704782,Maltose
+Propanols,0.0232558,0.0664639,0.0716455,Suloctidil
+Carbamates,0.0232558,0.0664639,0.0716455,Zineb
+"Acids, Heterocyclic",0.0232558,0.0664639,0.0716455,Diphenoxylate
+Thiazoles,0.0232558,0.0664639,0.0716455,Tetramisole
+Oxides,0.0227273,0.0679221,0.0727969,Osmium Tetroxide
+Gonadal Steroid Hormones,0.0227273,0.0679221,0.0727969,17-alpha-Hydroxypregnenolone
+Oxygen Compounds,0.0217391,0.0708316,0.0756979,Osmium Tetroxide
+"Hydrocarbons, Chlorinated",0.0212766,0.072283,0.0771018,Dichloroacetic Acid
+Phenethylamines,0.0208333,0.073732,0.078498,Suloctidil
+Sulfonamides,0.0196078,0.0780658,0.0829541,Sildenafil Citrate
+Gonadal Hormones,0.0185185,0.0823793,0.0873719,17-alpha-Hydroxypregnenolone
+Macromolecular Substances,0.00655738,0.0838449,0.0887583,Gum Arabic;Tragacanth
+Piperidines,0.0169492,0.0895237,0.0945911,Diphenoxylate
+Ethylamines,0.015873,0.0951992,0.10021,Suloctidil
+Sulfonamides,0.015873,0.0951992,0.10021,Sildenafil Citrate
+Imidazoles,0.015873,0.0951992,0.10021,Tetramisole
+Oligopeptides,0.0153846,0.0980238,0.102796,Technetium Tc 99m Mertiatide
+Amino Alcohols,0.012987,0.114787,0.120151,Suloctidil
+Amino Alcohols,0.0128205,0.11617,0.121372,Suloctidil
+Aniline Compounds,0.0125,0.118929,0.124023,Etidocaine
+Environment,0.0123457,0.120305,0.125225,Clay
+Pregnanes,0.0119048,0.124422,0.129269,17-alpha-Hydroxypregnenolone
+Hydroxy Acids,0.0113636,0.12988,0.134566,"2,4-Dichlorophenoxyacetic Acid"
+Sulfones,0.0113636,0.12988,0.134566,Sildenafil Citrate
+Lipids,0.00496278,0.132544,0.136945,Sorbic Acid;Valproic Acid
+"Hydrocarbons, Acyclic",0.00952381,0.152702,0.157483,Mesna
+"Fatty Acids, Unsaturated",0.00900901,0.160614,0.165337,Sorbic Acid
+Pyridines,0.008,0.178788,0.183709,Esomeprazole
+Terpenes,0.0078125,0.182631,0.187314,Vitamin K 3
+Nucleosides,0.00724638,0.195312,0.199954,Azathioprine
+Ecological and Environmental Phenomena,0.00689655,0.204072,0.208541,Clay
+Metals,0.00632911,0.220089,0.224498,Vitallium
+Alkaloids,0.00609756,0.227372,0.231506,Alcuronium
+Environment,0.0060241,0.229785,0.233538,Clay
+Biological Phenomena,0.0046729,0.285486,0.289624,Clay
+Physical Phenomena,0.00374532,0.342331,0.346664,Clay
+Hormones,0.00342466,0.367555,0.371536,17-alpha-Hydroxypregnenolone
+"Hormones, Hormone Substitutes, and Hormone Antagonists",0.00325733,0.382224,0.385667,17-alpha-Hydroxypregnenolone
+Steroids,0.00266667,0.444577,0.447775,17-alpha-Hydroxypregnenolone
+Fused-Ring Compounds,0.00265957,0.445445,0.447844,17-alpha-Hydroxypregnenolone
+Enzymes and Coenzymes,0.000834028,0.597932,0.600075,NADP;Acetyl Coenzyme A
+Peptides,0.00099108,1,1.00089,Technetium Tc 99m Mertiatide
+Environment and Public Health,0.00132275,1,1.00089,Clay

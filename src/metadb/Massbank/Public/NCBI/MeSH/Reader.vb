@@ -39,6 +39,7 @@ Namespace NCBI.MeSH
                 Next
 
                 node.Data = term
+                node.label = term.term
             Loop
 
             Return tree
