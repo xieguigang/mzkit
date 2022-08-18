@@ -55,15 +55,20 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -269,5 +274,33 @@ Module PubChemToolKit
     <ExportAPI("metadata.pugView")>
     Public Function GetMetaInfo(pugView As PugViewRecord) As MetaLib
         Return pugView.GetMetaInfo
+    End Function
+
+    <ExportAPI("read.mesh_tree")>
+    Public Function ParseMeshTree(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim stream = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If stream Like GetType(Message) Then
+            Return stream.TryCast(Of Message)
+        End If
+
+        Return MeSH.ParseTree(New StreamReader(stream.TryCast(Of Stream)))
+    End Function
+
+    <ExportAPI("mesh_background")>
+    Public Function MeshBackground(mesh As Tree(Of Term)) As Background
+        Return mesh.ImportsTree(
+            Function(term)
+                Return New BackgroundGene With {
+                    .accessionID = term.term,
+                    .[alias] = {term.term},
+                    .locus_tag = New NamedValue With {
+                        .name = term.term,
+                        .text = term.term
+                    },
+                    .name = term.term,
+                    .term_id = {term.term}
+                }
+            End Function)
     End Function
 End Module

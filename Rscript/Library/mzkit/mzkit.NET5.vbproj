@@ -122,6 +122,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\GSEA\gsea-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj" />
