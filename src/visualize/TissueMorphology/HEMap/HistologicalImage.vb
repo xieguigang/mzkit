@@ -89,7 +89,7 @@ Public Module HistologicalImage
 
     Public Iterator Function GridScan(target As Image,
                                       Optional gridSize As Integer = 25,
-                                      Optional tolerance As Integer = 5,
+                                      Optional tolerance As Integer = 15,
                                       Optional densityGrid As Integer = 5) As IEnumerable(Of Cell)
 
         Dim A As Double = gridSize ^ 2
@@ -109,6 +109,7 @@ Public Module HistologicalImage
                                 End Function) _
                         .IteratesALL _
                         .DoCall(AddressOf Grid(Of Color).Create)
+                    Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
 
                     Yield New Cell With {
                         .X = i,
@@ -116,7 +117,7 @@ Public Module HistologicalImage
                         .B = b,
                         .G = g,
                         .R = r,
-                        .Black = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
+                        .Black = black
                     }
                 Next
             Next
