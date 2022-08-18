@@ -56,6 +56,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -88,12 +89,20 @@ Public Module HistologicalImage
     End Function
 
     Public Iterator Function GridScan(target As Image,
+                                      Optional colors As String() = Nothing,
                                       Optional gridSize As Integer = 25,
                                       Optional tolerance As Integer = 15,
                                       Optional densityGrid As Integer = 5) As IEnumerable(Of Cell)
 
         Dim A As Double = gridSize ^ 2
         Dim sx, sy As Integer
+        Dim colorData As New Dictionary(Of String, Color)
+
+        If Not colors Is Nothing Then
+            For Each cl As String In colors
+                Call colorData.Add(cl, cl.TranslateColor)
+            Next
+        End If
 
         Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(target)
             For i As Integer = 1 To bitmap.Width Step gridSize
@@ -111,8 +120,7 @@ Public Module HistologicalImage
                         .IteratesALL _
                         .DoCall(AddressOf Grid(Of Color).Create)
                     Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
-
-                    Yield New Cell With {
+                    Dim cell As New Cell With {
                         .X = i,
                         .Y = j,
                         .B = b,
@@ -123,9 +131,18 @@ Public Module HistologicalImage
                         .ScaleY = sy
                     }
 
+                    If Not colors Is Nothing Then
+                        For Each cl As String In colors
+                            cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
+                        Next
+                    End If
+
                     sy += 1
+
+                    Yield cell
                 Next
 
+                sy = 0
                 sx += 1
             Next
         End Using

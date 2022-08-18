@@ -41,6 +41,8 @@ Public Class Cell
     ''' <returns></returns>
     Public Property Black As [Object]
 
+    Public Property layers As New Dictionary(Of String, [Object])
+
     Public ReadOnly Property isBlack As Boolean
         Get
             Return Black.Ratio > 0.975

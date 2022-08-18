@@ -9,8 +9,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module Tissue
 
     <ExportAPI("scan_tissue")>
-    Public Function scanTissue(tissue As Image) As Cell()
-        Return HistologicalImage.GridScan(target:=tissue).ToArray
+    Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing) As Cell()
+        Return HistologicalImage.GridScan(target:=tissue, colors:=colors).ToArray
     End Function
 
     <ExportAPI("heatmap_layer")>
@@ -36,7 +36,7 @@ Module Tissue
             Case "black"
                 objs = tissue.Select(Function(i) (i.Black, i)).ToArray
             Case Else
-                Throw New NotImplementedException(target)
+                objs = tissue.Select(Function(i) (i.layers(target), i)).ToArray
         End Select
 
         Select Case Strings.LCase(heatmap)
