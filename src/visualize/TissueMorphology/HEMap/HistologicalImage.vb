@@ -85,4 +85,8 @@ Public Module HistologicalImage
         )
     End Function
 
+    Public Iterator Function GridScan(target As Image, Optional gridSize As Integer = 25) As IEnumerable(Of Cell)
+
+    End Function
+
 End Module
