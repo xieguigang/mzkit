@@ -176,7 +176,7 @@ Module MzPackAccess
         If ver = 1 Then
             Return New mzPackReader(buffer.TryCast(Of Stream))
         ElseIf ver = 2 Then
-            Return New mzStream(buffer.TryCast(Of Stream))
+            Return New mzStream(buffer.TryCast(Of Stream), [readonly]:=True)
         Else
             Return Internal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
         End If
