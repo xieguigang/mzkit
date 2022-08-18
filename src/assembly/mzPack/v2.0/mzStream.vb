@@ -58,7 +58,9 @@ Public Class mzStream : Implements IMzPackReader
     End Property
 
     Sub New(filepath As String)
-        Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
+        Call Me.New(
+            stream:=filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False)
+        )
     End Sub
 
     ''' <summary>
@@ -66,7 +68,7 @@ Public Class mzStream : Implements IMzPackReader
     ''' </summary>
     ''' <param name="stream"></param>
     Sub New(stream As Stream)
-        pack = New StreamPack(stream)
+        pack = New StreamPack(stream, [readonly]:=True)
         Application = safeParseClassType()
         meta = pack.ReadText("/.etc/metadata.json").LoadJSON(Of Dictionary(Of String, String))
         summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
