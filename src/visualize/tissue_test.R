@@ -1,5 +1,6 @@
 require(mzkit);
 require(graphics2D);
+require(filter);
 
 imports "tissue" from "mzplot";
 
@@ -8,11 +9,11 @@ grid = `${@dir}/WeChat Image_20220818211220.jpg`
 |> tissue::scan_tissue(colors = "#f0b20f")
 ;
 
-bitmap(file = `${@dir}/density.png`, size = [2500,5000]);
+bitmap(file = `${@dir}/density.png`, size = [3060,4082], fill = "black");
 
 grid 
 |> heatmap_layer(target = "#f0b20f")
-|> rasterHeatmap()
+|> rasterHeatmap(gauss = 1, fillRect = TRUE)
 ;
 
 dev.off();
