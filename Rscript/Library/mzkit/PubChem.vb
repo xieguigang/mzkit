@@ -289,7 +289,7 @@ Module PubChemToolKit
 
     <ExportAPI("mesh_background")>
     Public Function MeshBackground(mesh As Tree(Of Term)) As Background
-        Return mesh.ImportsTree(
+        Dim bg = mesh.ImportsTree(
             Function(term)
                 Return New BackgroundGene With {
                     .accessionID = term.term,
@@ -302,5 +302,30 @@ Module PubChemToolKit
                     .term_id = {term.term}
                 }
             End Function)
+
+        bg = New Background With {
+            .build = Now,
+            .clusters = bg.clusters _
+                .GroupBy(Function(c) c.ID) _
+                .Select(Function(c)
+                            If c.Count = 1 Then
+                                Return c.First
+                            Else
+                                Return New Cluster With {
+                                    .description = c.Select(Function(i) i.description).Distinct.JoinBy("; "),
+                                    .ID = c.Key,
+                                    .names = c.Select(Function(i) i.names).Distinct.JoinBy("; "),
+                                    .members = c.Select(Function(i) i.members) _
+                                        .IteratesALL _
+                                        .GroupBy(Function(g) g.accessionID) _
+                                        .Select(Function(a) a.First) _
+                                        .ToArray
+                                }
+                            End If
+                        End Function) _
+                .ToArray
+        }
+
+        Return bg
     End Function
 End Module
