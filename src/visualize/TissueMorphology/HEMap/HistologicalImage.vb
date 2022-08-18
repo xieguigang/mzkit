@@ -93,12 +93,13 @@ Public Module HistologicalImage
                                       Optional densityGrid As Integer = 5) As IEnumerable(Of Cell)
 
         Dim A As Double = gridSize ^ 2
+        Dim sx, sy As Integer
 
         Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(target)
             For i As Integer = 1 To bitmap.Width Step gridSize
                 For j As Integer = 1 To bitmap.Height Step gridSize
                     Dim block As Color()() = bitmap _
-                        .GetPixel(New Rectangle(i, j, gridSize, gridSize)) _
+                        .GetPixel(New Rectangle(i, j, gridSize - 1, gridSize - 1)) _
                         .ToArray
                     Dim r = block.IteratesALL.Select(Function(c) CDbl(c.R)).Average
                     Dim g = block.IteratesALL.Select(Function(c) CDbl(c.G)).Average
@@ -117,9 +118,15 @@ Public Module HistologicalImage
                         .B = b,
                         .G = g,
                         .R = r,
-                        .Black = black
+                        .Black = black,
+                        .ScaleX = sx,
+                        .ScaleY = sy
                     }
+
+                    sy += 1
                 Next
+
+                sx += 1
             Next
         End Using
     End Function

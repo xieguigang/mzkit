@@ -16,6 +16,10 @@ Public Class Cell
     ''' </summary>
     ''' <returns></returns>
     Public Property Y As Integer
+
+    Public Property ScaleX As Integer
+    Public Property ScaleY As Integer
+
     ''' <summary>
     ''' average value of Red channel
     ''' </summary>
@@ -37,12 +41,19 @@ Public Class Cell
     ''' <returns></returns>
     Public Property Black As [Object]
 
+    Public ReadOnly Property isBlack As Boolean
+        Get
+            Return Black.Ratio > 0.975
+        End Get
+    End Property
+
 End Class
 
 Public Class [Object]
 
     Public Property Pixels As Integer
     Public Property Density As Double
+    Public Property Ratio As Double
 
     Public Shared Function Eval(rect As Grid(Of Color),
                                 target As Color,
@@ -51,6 +62,7 @@ Public Class [Object]
                                 Optional densityGrid As Integer = 5) As [Object]
 
         Dim hits As New List(Of Integer)
+        Dim A As Double = densityGrid ^ 2
 
         rect = rect _
             .Cells _
@@ -67,7 +79,8 @@ Public Class [Object]
 
         Return New [Object] With {
             .Pixels = rect.Cells.Count,
-            .Density = (New Vector(hits) / (densityGrid ^ 2)).Average
+            .Density = (New Vector(integers:=hits) / A).Average,
+            .Ratio = .Pixels / (gridSize ^ 2)
         }
     End Function
 
