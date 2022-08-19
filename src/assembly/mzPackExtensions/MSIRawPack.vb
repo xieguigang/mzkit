@@ -140,22 +140,32 @@ Public Module MSIRawPack
     ''' <param name="files"></param>
     ''' <param name="println"></param>
     ''' <returns></returns>
-    Public Function LoadMSIFromSCiLSLab(files As IEnumerable(Of (index$, msdata$)), Optional println As Action(Of String) = Nothing) As mzPack
+    Public Function LoadMSIFromSCiLSLab(files As IEnumerable(Of (index$, msdata$)),
+                                        Optional println As Action(Of String) = Nothing,
+                                        Optional verbose As Boolean = True) As mzPack
+
         Dim pixels As New List(Of ScanMS1)
         Dim rawfiles As New List(Of String)
+        Dim mute As Action(Of String) =
+            Sub()
+                ' do nothing
+            End Sub
 
         If println Is Nothing Then
-            println = Sub()
-                          ' do nothing
-                      End Sub
+            println =
+                Sub()
+                    ' do nothing
+                End Sub
         End If
 
         For Each tuple As (index$, msdata$) In files
             Dim sampleTag As String = tuple.index.BaseName
 
+            Call println($" --> {sampleTag}")
+
             Using spots As Stream = tuple.index.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Using msdata As Stream = tuple.msdata.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    Call LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, sampleTag, println) _
+                    Call LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, sampleTag, If(verbose, println, mute)) _
                         .ToArray _
                         .ScalePixels _
                         .DoCall(AddressOf pixels.AddRange)
@@ -193,6 +203,9 @@ Public Module MSIRawPack
             Dim xy As SpotSite = spotsXy.index(ref)
             Dim into As New Vector(spot.intensity)
             Dim mz As New Vector(spotsMs.mz)
+            Dim sx = CInt(xy.x - minX) + 1
+            Dim sy = CInt(xy.y - minY) + 1
+
             ' 20220719
             ' x,y should be start from the 1, not ZERO
             ' or pixel drawing will be error!
@@ -201,13 +214,13 @@ Public Module MSIRawPack
                 .TIC = spot.intensity.Sum,
                 .into = into(into > 0),
                 .meta = New Dictionary(Of String, String) From {
-                    {"x", CInt(xy.x - minX) + 1},
-                    {"y", CInt(xy.y - minY) + 1},
+                    {"x", sx},
+                    {"y", sy},
                     {"spot_id", xy.index}
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} [{sx},{sy}] totalIon:{ .TIC.ToString("G5")}"
             }
 
             If hasTagdata Then

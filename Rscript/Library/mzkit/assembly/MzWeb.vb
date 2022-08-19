@@ -56,7 +56,7 @@
 
 #End Region
 
-#If netcore5 = 0 Then
+#If NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
 
@@ -331,7 +331,7 @@ Module MzWeb
     Private Function openFromFile(file As String) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
             Return Converter.LoadRawFileAuto(xml:=file)
-#If netcore5 = 0 Then
+#If NET48 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXRaw

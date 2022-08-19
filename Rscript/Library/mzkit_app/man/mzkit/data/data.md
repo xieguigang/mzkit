@@ -13,3 +13,4 @@ m/z data operator module
 + [scan_time](data/scan_time.1) get scan time value from the ion scan points
 + [make.ROI_names](data/make.ROI_names.1) makes xcms_id format liked ROI unique id
 + [read.MsMatrix](data/read.MsMatrix.1) 
++ [linearMatrix](data/linearMatrix.1) 

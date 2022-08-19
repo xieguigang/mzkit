@@ -618,4 +618,23 @@ Module data
     Public Function readMatrix(file As String) As Spectra.Library()
         Return file.LoadCsv(Of Spectra.Library)
     End Function
+
+    <ExportAPI("linearMatrix")>
+    Public Function linearMatrix(data As PeakMs2(), Optional topIons As Integer = 5) As String()
+        Dim da = Tolerance.DeltaMass(0.3)
+        Dim into As RelativeIntensityCutoff = 0.0
+
+        Return data _
+            .Select(Function(ms2)
+                        Return ms2.mzInto _
+                            .Centroid(da, into) _
+                            .OrderByDescending(Function(a) a.intensity) _
+                            .Take(topIons) _
+                            .Select(Function(a)
+                                        Return $"{a.mz.ToString("F4")}:{a.intensity.ToString("G5")}"
+                                    End Function) _
+                            .JoinBy("; ")
+                    End Function) _
+            .ToArray
+    End Function
 End Module

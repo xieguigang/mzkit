@@ -71,9 +71,18 @@ Public Module mzStreamWriter
         Dim rtmax As Double = -9999
         Dim mzmin As Double = 99999
         Dim mzmax As Double = -9999
+        Dim samples As New List(Of String)
 
         For Each ms1 As ScanMS1 In mzpack.MS
-            Dim sampleTag As String = If(ms1.hasMetaKeys("sample"), ms1.meta("sample"), "")
+            Dim sampleTag As String
+
+            If ms1.hasMetaKeys("sample") Then
+                sampleTag = ms1.meta("sample")
+                samples.Add(sampleTag)
+            Else
+                sampleTag = ""
+            End If
+
             Dim dir As String = $"/MS/{sampleTag}/{ms1.scan_id.getScan1DirName}/"
             Dim dirMetadata As New Dictionary(Of String, Object)
             Dim ms1Bin As String = $"{dir}/Scan1.mz"
@@ -142,6 +151,7 @@ Public Module mzStreamWriter
 
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
         Call pack.WriteText(index.GetJson, ".etc/ms_scans.json")
+        Call pack.WriteText(samples.Distinct.GetJson, ".etc/sample_tags.json")
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")

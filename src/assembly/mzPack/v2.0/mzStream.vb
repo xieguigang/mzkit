@@ -32,6 +32,7 @@ Public Class mzStream : Implements IMzPackReader
     Dim disposedValue As Boolean
     Dim meta As Dictionary(Of String, String)
     Dim summary As Dictionary(Of String, Double)
+    Dim sampleTags As String()
 
     Public ReadOnly Property Application As FileApplicationClass
 
@@ -57,6 +58,19 @@ Public Class mzStream : Implements IMzPackReader
         End Get
     End Property
 
+    Public ReadOnly Property SampleScans As Dictionary(Of String, String())
+        Get
+            Return sampleTags _
+                .ToDictionary(Function(tag) tag,
+                              Function(tag)
+                                  Return scan_id _
+                                      .Where(Function(r) r.Value.IndexOf(tag) > -1) _
+                                      .Select(Function(a) a.Key) _
+                                      .ToArray
+                              End Function)
+        End Get
+    End Property
+
     Sub New(filepath As String)
         Call Me.New(
             stream:=filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False)
@@ -72,9 +86,19 @@ Public Class mzStream : Implements IMzPackReader
         Application = safeParseClassType()
         meta = pack.ReadText("/.etc/metadata.json").LoadJSON(Of Dictionary(Of String, String))
         summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
+        sampleTags = GetSampleTags(pack)
 
         Call cacheScanIndex()
     End Sub
+
+    Public Shared Function GetSampleTags(buffer As StreamPack) As String()
+        Dim file = buffer.OpenBlock(".etc/sample_tags.json")
+        Dim data As String() = New StreamReader(file) _
+            .ReadToEnd _
+            .LoadObject(GetType(String()))
+
+        Return data
+    End Function
 
     Private Sub cacheScanIndex()
         Dim dir As StreamGroup = pack.GetObject("/MS/")
