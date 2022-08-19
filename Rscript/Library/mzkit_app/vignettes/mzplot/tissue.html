@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>flexImaging</title>
+    <title>tissue</title>
     <meta name="author" content="xie.guigang@gcmodeller.org" />
     <meta name="copyright" content="SMRUCC genomics Copyright (c) 2020" />
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
@@ -21,36 +21,36 @@
     <meta class="foundation-mq-topbar" />
   </head>
   <body>
-    <table width="100%" summary="page for {flexImaging}">
+    <table width="100%" summary="page for {tissue}">
       <tbody>
         <tr>
-          <td>{flexImaging}</td>
+          <td>{tissue}</td>
           <td style="text-align: right;">R# Documentation</td>
         </tr>
       </tbody>
     </table>
-    <h1>flexImaging</h1>
+    <h1>tissue</h1>
     <hr />
     <p></p>
     <div id="main-wrapper">
                            <div>
-  <h2 id="read.metadata">
-    <a href="./flexImaging/read.metadata.html">read.metadata</a>
+  <h2 id="scan_tissue">
+    <a href="./tissue/scan_tissue.html">scan_tissue</a>
   </h2>
   <hr />
   <p>
                       
                 
-                    <pre><p>let <code>read.metadata</code> as function(<code>mcf</code> as string) -> <code>any</code> {
+                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, <code>colors</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Cell[]</code> {
     #
     # .NET API information
     #
-    # module: mzkit.flexImaging
+    # module: mzkit.Tissue
     # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "flexImaging"
+    # library: mzplot.dll
+    # package: "tissue"
     #
-    return call <code>R&#35;.interop_[flexImaging::ReadMetadata]</code>(...);
+    return call <code>R&#35;.interop_[Tissue::scanTissue]</code>(...);
 }</p></pre>
 
                     
@@ -59,51 +59,23 @@
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
-  <h2 id="importSpotList">
-    <a href="./flexImaging/importSpotList.html">importSpotList</a>
+  <h2 id="heatmap_layer">
+    <a href="./tissue/heatmap_layer.html">heatmap_layer</a>
   </h2>
   <hr />
   <p>
                       
                 
-                    <pre><p>let <code>importSpotList</code> as function(<code>spots</code> as string, 
-<code>spectrum</code> as string, 
-<code>scale</code> as boolean = TRUE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
+                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as string = "density", <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
     #
     # .NET API information
     #
-    # module: mzkit.flexImaging
+    # module: mzkit.Tissue
     # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "flexImaging"
+    # library: mzplot.dll
+    # package: "tissue"
     #
-    return call <code>R&#35;.interop_[flexImaging::ImportSpots]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="importsExperiment">
-    <a href="./flexImaging/importsExperiment.html">importsExperiment</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>importsExperiment</code> as function(<code>scans</code> as <generic> IEnumerable`1, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.flexImaging
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "flexImaging"
-    #
-    return call <code>R&#35;.interop_[flexImaging::ImportsExperiment]</code>(...);
+    return call <code>R&#35;.interop_[Tissue::getTargets]</code>(...);
 }</p></pre>
 
                     
