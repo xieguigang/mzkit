@@ -203,6 +203,9 @@ Public Module MSIRawPack
             Dim xy As SpotSite = spotsXy.index(ref)
             Dim into As New Vector(spot.intensity)
             Dim mz As New Vector(spotsMs.mz)
+            Dim sx = CInt(xy.x - minX) + 1
+            Dim sy = CInt(xy.y - minY) + 1
+
             ' 20220719
             ' x,y should be start from the 1, not ZERO
             ' or pixel drawing will be error!
@@ -211,13 +214,13 @@ Public Module MSIRawPack
                 .TIC = spot.intensity.Sum,
                 .into = into(into > 0),
                 .meta = New Dictionary(Of String, String) From {
-                    {"x", CInt(xy.x - minX) + 1},
-                    {"y", CInt(xy.y - minY) + 1},
+                    {"x", sx},
+                    {"y", sy},
                     {"spot_id", xy.index}
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} [{sx},{sy}] totalIon:{ .TIC.ToString("G5")}"
             }
 
             If hasTagdata Then

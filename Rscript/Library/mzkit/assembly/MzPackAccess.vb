@@ -61,8 +61,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MZWork
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -75,6 +77,22 @@ Imports stdNum = System.Math
 ''' </summary>
 <Package("mzPack")>
 Module MzPackAccess
+
+    <ExportAPI("getSampleTags")>
+    Public Function getSampleTags(mzpack As String) As String()
+        Dim file As New StreamPack(mzpack)
+        Dim data As String() = mzStream.GetSampleTags(file)
+
+        Return data
+    End Function
+
+    <ExportAPI("split_samples")>
+    Public Function SplitSamples(mzpack As String) As Object
+        Dim raw As New mzStream(mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
+        Dim tags = raw.SampleScans
+
+        Throw New NotImplementedException
+    End Function
 
     ''' <summary>
     ''' open mzwork file and then populate all of the mzpack raw data file

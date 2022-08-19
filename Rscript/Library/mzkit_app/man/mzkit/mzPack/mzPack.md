@@ -2,6 +2,8 @@
 
 raw data accessor for the mzpack data object
 
++ [getSampleTags](mzPack/getSampleTags.1) 
++ [split_samples](mzPack/split_samples.1) 
 + [open.mzwork](mzPack/open.mzwork.1) open mzwork file and then populate all of the mzpack raw data file
 + [mzwork](mzPack/mzwork.1) open a mzwork package file
 + [readFileCache](mzPack/readFileCache.1) read mzpack data from the mzwork package by a 
