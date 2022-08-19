@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::878c530ade724008749a216c9ea6ce8e, mzkit\src\visualize\MsImaging\PixelScan\InMemoryVectorPixel.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 158
-    '    Code Lines: 122
-    ' Comment Lines: 4
-    '   Blank Lines: 32
-    '     File Size: 5.49 KB
+' Summaries:
 
 
-    '     Class InMemoryVectorPixel
-    ' 
-    '         Properties: intensity, mz, scanId, X, Y
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) GetBuffer, GetMsPipe, GetMzIonIntensity, HasAnyMzIon, Parse
-    '                   ParseVector
-    ' 
-    '         Sub: release
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 158
+'    Code Lines: 122
+' Comment Lines: 4
+'   Blank Lines: 32
+'     File Size: 5.49 KB
+
+
+'     Class InMemoryVectorPixel
+' 
+'         Properties: intensity, mz, scanId, X, Y
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) GetBuffer, GetMsPipe, GetMzIonIntensity, HasAnyMzIon, Parse
+'                   ParseVector
+' 
+'         Sub: release
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,9 +79,20 @@ Namespace Pixel
 
         Public Overrides ReadOnly Property scanId As String
 
+        Public Overrides ReadOnly Property sampleTag As String
+            Get
+                Return "in-memory cache"
+            End Get
+        End Property
+
         <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(x As Integer, y As Integer, mz As Double(), into As Double(), Optional scanId As String = "unknown scan")
+        Sub New(x As Integer,
+                y As Integer,
+                mz As Double(),
+                into As Double(),
+                Optional scanId As String = "unknown scan")
+
             Call Me.New(scanId, x, y, mz, into)
         End Sub
 

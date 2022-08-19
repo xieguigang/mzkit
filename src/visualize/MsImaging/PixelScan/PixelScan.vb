@@ -71,6 +71,7 @@ Namespace Pixel
         Public MustOverride ReadOnly Property X As Integer Implements IPoint2D.X
         Public MustOverride ReadOnly Property Y As Integer Implements IPoint2D.Y
         Public MustOverride ReadOnly Property scanId As String
+        Public MustOverride ReadOnly Property sampleTag As String
 
         Public Overridable Function GetMs() As ms2()
             Return GetMsPipe.ToArray

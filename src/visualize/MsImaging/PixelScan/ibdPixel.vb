@@ -79,6 +79,12 @@ Namespace Pixel
         Dim memoryCache As ms2()
         Dim enableCache As Boolean = False
 
+        Public Overrides ReadOnly Property sampleTag As String
+            Get
+                Return raw.UUID
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property scanId As String
             Get
                 Return i.ToString

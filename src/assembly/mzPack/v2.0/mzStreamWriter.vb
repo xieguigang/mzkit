@@ -64,6 +64,8 @@ Public Module mzStreamWriter
         Return scan_id.Replace("\", "/").Replace("/", "_")
     End Function
 
+    Public Const SampleMetaName As String = "sample"
+
     <Extension>
     Private Sub WriteStream(mzpack As mzPack, pack As StreamPack)
         Dim index As New Dictionary(Of String, Double)
@@ -76,8 +78,8 @@ Public Module mzStreamWriter
         For Each ms1 As ScanMS1 In mzpack.MS
             Dim sampleTag As String
 
-            If ms1.hasMetaKeys("sample") Then
-                sampleTag = ms1.meta("sample")
+            If ms1.hasMetaKeys(SampleMetaName) Then
+                sampleTag = ms1.meta(SampleMetaName)
                 samples.Add(sampleTag)
             Else
                 sampleTag = ""
@@ -92,7 +94,9 @@ Public Module mzStreamWriter
             Call dirMetadata.Add("products", ms1.products.TryCount)
             Call dirMetadata.Add("id", ms1.products.SafeQuery.Select(Function(i) i.scan_id).ToArray)
 
-            Using scan1 As New BinaryDataWriter(pack.OpenBlock(ms1Bin)) With {.ByteOrder = ByteOrder.LittleEndian}
+            Using scan1 As New BinaryDataWriter(pack.OpenBlock(ms1Bin)) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
                 Call ms1.WriteScan1(scan1)
             End Using
 
@@ -101,7 +105,9 @@ Public Module mzStreamWriter
             Next
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {.ByteOrder = ByteOrder.LittleEndian}
+                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {
+                    .ByteOrder = ByteOrder.LittleEndian
+                }
                     Call product.WriteBuffer(scan2)
                 End Using
 
@@ -137,7 +143,9 @@ Public Module mzStreamWriter
             ' 20220718  put chromatogram.cdf file into the /MS/ 
             ' data directory will cause the ms1 data reader error!
             ' so move this file to root block
-            Using buffer As New BinaryDataWriter(pack.OpenBlock("/chromatogram.cdf")) With {.ByteOrder = ByteOrder.LittleEndian}
+            Using buffer As New BinaryDataWriter(pack.OpenBlock("/chromatogram.cdf")) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
                 Call buffer.Write(mzpack.Chromatogram.GetBytes)
             End Using
         End If
