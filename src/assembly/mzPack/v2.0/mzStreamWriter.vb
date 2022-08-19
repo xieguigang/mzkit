@@ -151,7 +151,7 @@ Public Module mzStreamWriter
 
         Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
         Call pack.WriteText(index.GetJson, ".etc/ms_scans.json")
-        Call pack.WriteText(samples.GetJson, ".etc/sample_tags.json")
+        Call pack.WriteText(samples.Distinct.GetJson, ".etc/sample_tags.json")
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
