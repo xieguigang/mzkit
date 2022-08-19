@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 Imports stdNum = System.Math
 
@@ -76,6 +77,7 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
     Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
     Public Property level As Double
     Public Property mz As Double
+    Public Property sampleTag As String
 
     Sub New()
     End Sub
@@ -98,6 +100,20 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
             Call file.Write(data.Select(Function(i) i.intensity).ToArray)
             Call file.Write(data.Select(Function(i) i.level).ToArray)
             Call file.Write(data.Select(Function(i) i.mz).ToArray)
+
+            Dim tags As String() = data.Select(Function(i) i.sampleTag).ToArray
+
+            If tags.Distinct.Count = 1 Then
+                Call file.Write(-1)
+                Call file.Write(tags(Scan0), BinaryStringFormat.ZeroTerminated)
+            Else
+                Dim tagIndex = tags.Distinct.Indexing
+
+                Call file.Write(tagIndex.Count)
+                Call file.Write(tagIndex.Objects.GetJson, BinaryStringFormat.ZeroTerminated)
+                Call file.Write(tags.Select(Function(str) tagIndex.IndexOf(str)).ToArray)
+            End If
+
             Call file.Flush()
 
             Return buf.ToArray
@@ -112,6 +128,24 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
             Dim intensity As Double() = file.ReadDoubles(size)
             Dim level As Double() = file.ReadDoubles(size)
             Dim mz As Double() = file.ReadDoubles(size)
+            Dim flag As Integer = file.ReadInt32
+            Dim tags As String()
+
+            If flag = -1 Then
+                ' one for all
+                Dim tagAll As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+
+                tags = tagAll.Replicate(size).ToArray
+            Else
+                Dim tagVector As String() = file _
+                    .ReadString(BinaryStringFormat.ZeroTerminated) _
+                    .LoadJSON(Of String())
+
+                tags = file _
+                    .ReadInt32s(size) _
+                    .Select(Function(i) tagVector(i)) _
+                    .ToArray
+            End If
 
             Return x _
                 .Select(Function(xi, i)
@@ -120,7 +154,8 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
                                 .y = y(i),
                                 .intensity = intensity(i),
                                 .level = level(i),
-                                .mz = mz(i)
+                                .mz = mz(i),
+                                .sampleTag = tags(i)
                             }
                         End Function) _
                 .ToArray
