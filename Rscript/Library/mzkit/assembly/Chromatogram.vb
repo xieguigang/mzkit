@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::e46752f7d44833e0728195a86ca14233, mzkit\Rscript\Library\mzkit\assembly\Chromatogram.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 197
-    '    Code Lines: 160
-    ' Comment Lines: 10
-    '   Blank Lines: 27
-    '     File Size: 7.80 KB
+' Summaries:
 
 
-    ' Module ChromatogramTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: addOverlaps, asChromatogram, overlaps, overlapsSummary, ReadData
-    '               scaleScanTime, setLabels, subset
-    ' 
-    '     Sub: PackData
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 197
+'    Code Lines: 160
+' Comment Lines: 10
+'   Blank Lines: 27
+'     File Size: 7.80 KB
+
+
+' Module ChromatogramTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: addOverlaps, asChromatogram, overlaps, overlapsSummary, ReadData
+'               scaleScanTime, setLabels, subset
+' 
+'     Sub: PackData
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,8 +63,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -253,6 +255,25 @@ Module ChromatogramTools
         Else
             Return overlaps
         End If
+    End Function
+
+    <ExportAPI("overlapsMatrix")>
+    Public Function overlapsMatrix(overlaps As ChromatogramOverlap, Optional dt As Double = 0.3) As Object
+        Dim rulerRT As Double() = overlaps.UnionTimeSeq(dt)
+        Dim matrix As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call matrix.add("RT", rulerRT)
+
+        For Each chr As NamedValue(Of Chromatogram) In overlaps.EnumerateSignals
+            Dim TIC As GeneralSignal = chr.Value.GetSignal(isbpc:=False)
+            Dim line = Resampler.CreateSampler(TIC)(rulerRT).ToArray
+
+            Call matrix.add(chr.Name, line)
+        Next
+
+        Return matrix
     End Function
 
     <ExportAPI("overlaps")>

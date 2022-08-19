@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module PackCDF
 
     <Extension>
-    Private Function UnionTimeSeq(overlaps As ChromatogramOverlap) As Double()
+    Public Function UnionTimeSeq(overlaps As ChromatogramOverlap, Optional dt As Double = -1) As Double()
         Dim union As Double() = overlaps.overlaps _
             .Values _
             .Select(Function(sig) sig.scan_time) _
@@ -87,7 +87,10 @@ Public Module PackCDF
             .Average
         Dim rtmin As Double = union.Min
         Dim rtmax As Double = union.Max
-        Dim dt As Double = (rtmax - rtmin) / avgLen
+
+        If dt <= 0 Then
+            dt = (rtmax - rtmin) / avgLen
+        End If
 
         Return seq(union.Min, union.Max, by:=dt).ToArray
     End Function
