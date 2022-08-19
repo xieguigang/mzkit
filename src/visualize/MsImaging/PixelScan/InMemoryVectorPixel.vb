@@ -62,6 +62,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -79,11 +80,7 @@ Namespace Pixel
 
         Public Overrides ReadOnly Property scanId As String
 
-        Public Overrides ReadOnly Property sampleTag As String
-            Get
-                Return "in-memory cache"
-            End Get
-        End Property
+        Public Overrides ReadOnly Property sampleTag As String = "in-memory cache"
 
         <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -97,12 +94,16 @@ Namespace Pixel
         End Sub
 
         <DebuggerStepThrough>
-        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double())
+        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double(), Optional sampleTag As String = Nothing)
             Me.scanId = scanId
             Me.X = x
             Me.Y = y
             Me.mz = mz
             Me.intensity = into
+
+            If Not sampleTag.StringEmpty Then
+                Me.sampleTag = sampleTag
+            End If
         End Sub
 
         ''' <summary>
@@ -111,12 +112,17 @@ Namespace Pixel
         ''' <param name="scan"></param>
         Sub New(scan As ScanMS1)
             Call Me.New(scan.scan_id, scan.meta!x, scan.meta!y, scan.mz, scan.into)
+
+            If scan.hasMetaKeys(mzStreamWriter.SampleMetaName) Then
+                sampleTag = scan.meta(mzStreamWriter.SampleMetaName)
+            End If
         End Sub
 
         Sub New(pixel As PixelScan)
             X = pixel.X
             Y = pixel.Y
             scanId = pixel.scanId
+            sampleTag = pixel.sampleTag
 
             If TypeOf pixel Is mzPackPixel Then
                 Dim raw As mzPackPixel = DirectCast(pixel, mzPackPixel)
@@ -140,6 +146,7 @@ Namespace Pixel
         Public Function GetBuffer() As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
                 file.Write(scanId, BinaryStringFormat.ZeroTerminated)
+                file.Write(Strings.Trim(sampleTag), BinaryStringFormat.ZeroTerminated)
                 file.Write(X)
                 file.Write(Y)
                 file.Write(mz.Length)
@@ -158,13 +165,14 @@ Namespace Pixel
 
             Using file As New BinaryDataReader(New MemoryStream(buffer))
                 Dim scanId As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+                Dim sampletag As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
                 Dim x As Integer = file.ReadInt32
                 Dim y As Integer = file.ReadInt32
                 Dim size As Integer = file.ReadInt32
                 Dim mz As Double() = file.ReadDoubles(size)
                 Dim into As Double() = file.ReadDoubles(size)
 
-                Return New InMemoryVectorPixel(scanId, x, y, mz, into)
+                Return New InMemoryVectorPixel(scanId, x, y, mz, into, sampletag)
             End Using
         End Function
 
