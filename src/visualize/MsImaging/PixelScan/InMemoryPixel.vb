@@ -77,6 +77,12 @@ Namespace Pixel
             End Get
         End Property
 
+        Public Overrides ReadOnly Property sampleTag As String
+            Get
+                Return "in-memory cache"
+            End Get
+        End Property
+
         Sub New(x As Integer, y As Integer, data As ms2())
             Me.X = x
             Me.Y = y

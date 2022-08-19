@@ -220,7 +220,7 @@ Public Module MSIRawPack
                 },
                 .mz = mz(into > 0),
                 .rt = ++i,
-                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} [{sx},{sy}] totalIon:{ .TIC.ToString("G5")}"
+                .scan_id = $"[MS1][{CInt(xy.x)},{CInt(xy.y)}] {refTagdata}{spot.spot_id} totalIon:{ .TIC.ToString("G5")}"
             }
 
             If hasTagdata Then
@@ -292,6 +292,7 @@ Public Module MSIRawPack
 
             pixelScan.meta("x") = x
             pixelScan.meta("y") = y
+            pixelScan.scan_id = $"{pixelScan.scan_id}@[{x},{y}]"
         Next
 
         Return data
