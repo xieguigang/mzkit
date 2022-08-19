@@ -51,7 +51,12 @@ Module flexImaging
     Public Function ImportsExperiment(scans As IEnumerable(Of String), Optional env As Environment = Nothing) As mzPack
         Dim tuplefiles = scans.CheckSpotFiles.ToArray
         Dim println = env.WriteLineHandler
-        Dim data As mzPack = MSIRawPack.LoadMSIFromSCiLSLab(tuplefiles, Sub(txt) println(txt))
+        Dim verbose As Boolean = env.globalEnvironment.options.verbose
+        Dim data As mzPack = MSIRawPack.LoadMSIFromSCiLSLab(
+            files:=tuplefiles,
+            println:=Sub(txt) println(txt),
+            verbose:=verbose
+        )
 
         Return data
     End Function
