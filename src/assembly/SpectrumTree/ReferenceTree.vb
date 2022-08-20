@@ -8,16 +8,18 @@ Imports stdNum = System.Math
 
 Public Class ReferenceTree : Implements IDisposable
 
-    ReadOnly tree As New List(Of BlockNode)
+    Protected ReadOnly tree As New List(Of BlockNode)
+    Protected ReadOnly da As Tolerance
+
     ReadOnly spectrum As BinaryDataWriter
-    ReadOnly da As Tolerance
     ReadOnly intocutoff As RelativeIntensityCutoff
+    ReadOnly nbranch As Integer = 10
 
     Private disposedValue As Boolean
 
     Public Const Magic As String = "BioDeep/ReferenceTree"
 
-    Sub New(file As Stream)
+    Protected Sub New(file As Stream, nbranchs As Integer)
         spectrum = New BinaryDataWriter(file, Encodings.ASCII) With {
             .ByteOrder = ByteOrder.LittleEndian
         }
@@ -27,16 +29,21 @@ Public Class ReferenceTree : Implements IDisposable
 
         da = Tolerance.DeltaMass(0.3)
         intocutoff = 0.05
+        nbranch = nbranchs
     End Sub
 
-    Private Function Append(data As PeakMs2, centroid As ms2(), isMember As Boolean) As Integer
+    Sub New(file As Stream)
+        Call Me.New(file, nbranchs:=10)
+    End Sub
+
+    Protected Overridable Function Append(data As PeakMs2, centroid As ms2(), isMember As Boolean) As Integer
         Dim n As Integer = tree.Count
         Dim childs As Integer()
 
         If isMember Then
             childs = {}
         Else
-            childs = New Integer(9) {}
+            childs = New Integer(nbranch - 1) {}
         End If
 
         tree.Add(New BlockNode With {
@@ -64,7 +71,7 @@ Public Class ReferenceTree : Implements IDisposable
         End If
     End Sub
 
-    Private Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
+    Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
         Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
         Dim min = stdNum.Min(score.forward, score.reverse)
         Dim i As Integer = BlockNode.GetIndex(min)

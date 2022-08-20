@@ -68,4 +68,16 @@ Public Class BlockNode
         End If
     End Function
 
+    Friend Shared Function GetBinaryIndex(score As Double) As Integer
+        If score < 0.6 Then
+            ' index = 0
+            Return -1
+        ElseIf score < 0.85 Then
+            ' index = 1
+            Return 1
+        Else
+            ' add to current member list
+            Return 0
+        End If
+    End Function
 End Class
