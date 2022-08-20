@@ -44,6 +44,14 @@ Public Class TreeSearch : Implements IDisposable
         is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
     End Sub
 
+    Public Overrides Function ToString() As String
+        If is_binary Then
+            Return "binary_spectrum_tree"
+        Else
+            Return "spectrum_cluster_tree"
+        End If
+    End Function
+
     Public Function Centroid(matrix As ms2()) As ms2()
         Return matrix.Centroid(da, intocutoff).ToArray
     End Function

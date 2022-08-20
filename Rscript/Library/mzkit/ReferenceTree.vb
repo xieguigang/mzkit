@@ -12,9 +12,18 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("spectrumTree")>
 Module ReferenceTreePkg
 
+    ''' <summary>
+    ''' create new reference spectrum database
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("new")>
     <RApiReturn(GetType(ReferenceTree))>
-    Public Function CreateNew(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function CreateNew(file As Object,
+                              Optional binary As Boolean = True,
+                              Optional env As Environment = Nothing) As Object
+
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If buffer Like GetType(Message) Then
@@ -22,10 +31,23 @@ Module ReferenceTreePkg
         End If
 
         Dim stream As Stream = buffer.TryCast(Of Stream)
-        stream.Seek(Scan0, SeekOrigin.Begin)
-        Return New ReferenceTree(stream)
+        Call stream.Seek(Scan0, SeekOrigin.Begin)
+
+        If binary Then
+            Return New ReferenceBinaryTree(stream)
+        Else
+            Return New ReferenceTree(stream)
+        End If
     End Function
 
+    ''' <summary>
+    ''' open the reference spectrum database file and 
+    ''' then create a host to run spectrum cluster 
+    ''' search
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("open")>
     Public Function open(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
