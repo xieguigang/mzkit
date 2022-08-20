@@ -39,9 +39,9 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>create new reference spectrum database</p>  
                 
-                    <pre><p>let <code>new</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ReferenceTree</code> {
+                    <pre><p>let <code>new</code> as function(<code>file</code> as any, <code>binary</code> as boolean = TRUE, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ReferenceTree</code> {
     #
     # .NET API information
     #
@@ -53,7 +53,17 @@
     return call <code>R&#35;.interop_[ReferenceTreePkg::CreateNew]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>file</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
@@ -64,7 +74,9 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>open the reference spectrum database file and <br />
+ then create a host to run spectrum cluster <br />
+ search</p>  
                 
                     <pre><p>let <code>open</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
     #
@@ -78,7 +90,17 @@
     return call <code>R&#35;.interop_[ReferenceTreePkg::open]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>file</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
