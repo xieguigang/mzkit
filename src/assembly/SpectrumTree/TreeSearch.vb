@@ -13,6 +13,7 @@ Public Class TreeSearch : Implements IDisposable
     ReadOnly tree As BlockNode()
     ReadOnly da As Tolerance
     ReadOnly intocutoff As RelativeIntensityCutoff
+    ReadOnly is_binary As Boolean
 
     Dim disposedValue As Boolean
 
@@ -40,6 +41,7 @@ Public Class TreeSearch : Implements IDisposable
 
         da = Tolerance.DeltaMass(0.3)
         intocutoff = 0.05
+        is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
     End Sub
 
     Public Function Centroid(matrix As ms2()) As ms2()
@@ -58,7 +60,21 @@ Public Class TreeSearch : Implements IDisposable
         Do While True
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
             Dim min = stdNum.Min(score.forward, score.reverse)
-            Dim index As Integer = BlockNode.GetIndex(min)
+            Dim index As Integer
+
+            If is_binary Then
+                index = BlockNode.GetBinaryIndex(min)
+
+                ' translate index from binary comparision
+                ' to normal index
+                If index = 0 Then
+                    index = -1
+                ElseIf index = -1 Then
+                    index = 0
+                End If
+            Else
+                index = BlockNode.GetIndex(min)
+            End If
 
             If min > max.score Then
                 max = (min, score, node)
