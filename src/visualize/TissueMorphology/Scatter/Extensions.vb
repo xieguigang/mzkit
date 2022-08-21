@@ -16,16 +16,22 @@ Public Module Extensions
         Dim y As New List(Of Integer)
         Dim regions As Polygon2D() = polygons.SafeQuery.ToArray
 
-        For i As Integer = 1 To dimension.Width
-            For j As Integer = 1 To dimension.Height
+        If regions.Length = 1 AndAlso regions(Scan0).length > 512 Then
+            ' is a pack of density pixels
+            Call x.AddRange(regions(Scan0).xpoints.Select(Function(xi) CInt(xi)))
+            Call y.AddRange(regions(Scan0).ypoints.Select(Function(yi) CInt(yi)))
+        Else
+            For i As Integer = 1 To dimension.Width
+                For j As Integer = 1 To dimension.Height
 #Disable Warning
-                If regions.Any(Function(r) r.inside(i, j)) Then
-                    x.Add(i)
-                    y.Add(j)
-                End If
+                    If regions.Any(Function(r) r.inside(i, j)) Then
+                        Call x.Add(i)
+                        Call y.Add(j)
+                    End If
 #Enable Warning
+                Next
             Next
-        Next
+        End If
 
         Return New TissueRegion With {
             .color = color,
