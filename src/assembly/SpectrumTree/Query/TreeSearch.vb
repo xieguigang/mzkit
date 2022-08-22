@@ -93,6 +93,38 @@ Public Class TreeSearch : Implements IDisposable
         Return matrix.Centroid(da, intocutoff).ToArray
     End Function
 
+    ''' <summary>
+    ''' populate the top cluster
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <param name="mz1"></param>
+    ''' <returns></returns>
+    Public Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+        Dim candidates As BlockNode() = QueryByMz(mz1)
+        Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates(Scan0))
+
+        For Each hit As BlockNode In candidates
+            Dim score = GlobalAlignment.TwoDirectionSSM(centroid, hit.centroid, da)
+            Dim min = stdNum.Min(score.forward, score.reverse)
+
+            If min > max.score Then
+                max = (min, score, hit)
+            End If
+        Next
+
+        If max.score > 0 Then
+            Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' search by tree query
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <param name="maxdepth"></param>
+    ''' <returns></returns>
     Public Function Search(centroid As ms2(), Optional maxdepth As Integer = 1024) As ClusterHit
         If tree.IsNullOrEmpty Then
             Return Nothing
