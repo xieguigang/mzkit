@@ -2,6 +2,7 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -14,6 +15,7 @@ Public Class TreeSearch : Implements IDisposable
     ReadOnly da As Tolerance
     ReadOnly intocutoff As RelativeIntensityCutoff
     ReadOnly is_binary As Boolean
+    ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
 
     Dim disposedValue As Boolean
 
@@ -32,16 +34,36 @@ Public Class TreeSearch : Implements IDisposable
         bin.Seek(jump, SeekOrigin.Begin)
 
         Dim nsize = bin.ReadInt32
+        Dim mzset As New List(Of IonIndex)
 
         tree = New BlockNode(nsize - 1) {}
 
         For i As Integer = 0 To nsize - 1
             tree(i) = NodeBuffer.Read(bin)
+#Disable Warning
+            If Not tree(i).isLeaf Then
+                Call mzset.AddRange(tree(i).mz _
+                    .Select(Function(mzi)
+                                Return New IonIndex With {
+                                    .mz = mzi,
+                                    .node = i
+                                }
+                            End Function))
+            End If
+#Enable Warning
         Next
 
         da = Tolerance.DeltaMass(0.3)
         intocutoff = 0.05
         is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
+        ' see dev notes about the mass tolerance in 
+        ' MSSearch module
+        mzIndex = New BlockSearchFunction(Of IonIndex)(
+            data:=mzset,
+            eval:=Function(m) m.mz,
+            tolerance:=1,
+            factor:=3
+        )
     End Sub
 
     Public Overrides Function ToString() As String
