@@ -10,6 +10,7 @@ Public Class BlockNode
     ''' </summary>
     ''' <returns></returns>
     Public Property Members As List(Of Integer)
+    Public Property mz As List(Of Double)
     Public Property rt As Double
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
@@ -68,4 +69,16 @@ Public Class BlockNode
         End If
     End Function
 
+    Friend Shared Function GetBinaryIndex(score As Double) As Integer
+        If score < 0.6 Then
+            ' index = 0
+            Return -1
+        ElseIf score < 0.85 Then
+            ' index = 1
+            Return 1
+        Else
+            ' add to current member list
+            Return 0
+        End If
+    End Function
 End Class
