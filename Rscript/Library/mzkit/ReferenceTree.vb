@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -63,48 +64,93 @@ Module ReferenceTreePkg
     <RApiReturn(GetType(ClusterHit))>
     Public Function QueryTree(tree As TreeSearch, x As Object,
                               Optional maxdepth As Integer = 1024,
+                              Optional treeSearch As Boolean = False,
                               Optional env As Environment = Nothing) As Object
 
         If TypeOf x Is LibraryMatrix Then
-            Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
-            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
-
-            If Not result Is Nothing Then
-                result.queryId = DirectCast(x, LibraryMatrix).name
-                result.queryMz = DirectCast(x, LibraryMatrix).parentMz
-            End If
-
-            Return result
+            Return DirectCast(x, LibraryMatrix).QuerySingle(tree, maxdepth, treeSearch, env)
         ElseIf TypeOf x Is PeakMs2 Then
-            Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
-            Dim result = tree.Search(centroid, maxdepth:=maxdepth)
-
-            If Not result Is Nothing Then
-                result.queryId = DirectCast(x, PeakMs2).lib_guid
-                result.queryMz = DirectCast(x, PeakMs2).mz
-                result.queryRt = DirectCast(x, PeakMs2).rt
-            End If
-
-            Return result
+            Return DirectCast(x, PeakMs2).QuerySingle(tree, maxdepth, treeSearch, env)
         ElseIf TypeOf x Is list Then
-            Dim output As New list With {.slots = New Dictionary(Of String, Object)}
-            Dim input As list = DirectCast(x, list)
-            Dim result As Object
-
-            For Each name As String In input.getNames
-                result = QueryTree(tree, input(name), maxdepth, env)
-
-                If Program.isException(result) Then
-                    Return result
-                Else
-                    Call output.add(name, result)
-                End If
-            Next
-
-            Return output
+            Return DirectCast(x, list).QueryTree(tree, maxdepth, treeSearch, env)
         Else
             Throw New NotImplementedException
         End If
+    End Function
+
+    <Extension>
+    Private Function QuerySingle(x As LibraryMatrix, tree As TreeSearch,
+                                 Optional maxdepth As Integer = 1024,
+                                 Optional treeSearch As Boolean = False,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
+        Dim result As ClusterHit
+
+        If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
+            Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+        End If
+        If treeSearch Then
+            result = tree.Search(centroid, maxdepth:=maxdepth)
+        Else
+            result = tree.Search(centroid, mz1:=x.parentMz)
+        End If
+
+        If Not result Is Nothing Then
+            result.queryId = DirectCast(x, LibraryMatrix).name
+            result.queryMz = DirectCast(x, LibraryMatrix).parentMz
+        End If
+
+        Return result
+    End Function
+
+    <Extension>
+    Private Function QuerySingle(x As PeakMs2, tree As TreeSearch,
+                                 Optional maxdepth As Integer = 1024,
+                                 Optional treeSearch As Boolean = False,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
+        Dim result As ClusterHit
+
+        If (Not treeSearch) AndAlso x.mz <= 0.0 Then
+            Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+        End If
+        If treeSearch Then
+            result = tree.Search(centroid, maxdepth:=maxdepth)
+        Else
+            result = tree.Search(centroid, mz1:=x.mz)
+        End If
+
+        If Not result Is Nothing Then
+            result.queryId = DirectCast(x, PeakMs2).lib_guid
+            result.queryMz = DirectCast(x, PeakMs2).mz
+            result.queryRt = DirectCast(x, PeakMs2).rt
+        End If
+
+        Return result
+    End Function
+
+    <Extension>
+    Private Function QueryTree(input As list, tree As TreeSearch,
+                               Optional maxdepth As Integer = 1024,
+                               Optional treeSearch As Boolean = False,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim output As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim result As Object
+
+        For Each name As String In input.getNames
+            result = QueryTree(tree, input(name), maxdepth, treeSearch, env)
+
+            If Program.isException(result) Then
+                Return result
+            Else
+                Call output.add(name, result)
+            End If
+        Next
+
+        Return output
     End Function
 
     <ExportAPI("addBucket")>
