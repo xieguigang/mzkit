@@ -10,6 +10,7 @@ Public Class BlockNode
     ''' </summary>
     ''' <returns></returns>
     Public Property Members As List(Of Integer)
+    Public Property mz As List(Of Double)
     Public Property rt As Double
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
