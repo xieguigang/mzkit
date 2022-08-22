@@ -66,6 +66,21 @@ Public Class TreeSearch : Implements IDisposable
         )
     End Sub
 
+    Public Function QueryByMz(mz As Double) As BlockNode()
+        Dim query As New IonIndex With {.mz = mz}
+        Dim result As BlockNode() = mzIndex _
+            .Search(query) _
+            .Where(Function(d) da(d.mz, mz)) _
+            .Select(Function(d) tree(d.node)) _
+            .GroupBy(Function(d) d.Id) _
+            .Select(Function(g)
+                        Return g.First
+                    End Function) _
+            .ToArray
+
+        Return result
+    End Function
+
     Public Overrides Function ToString() As String
         If is_binary Then
             Return "binary_spectrum_tree"
