@@ -14,7 +14,7 @@ raw = [
 
 raw = raw 
 |> lapply(open.mzpack) 
-|> lapply(ms2_peaks) 
+|> lapply(x -> ms2_peaks(x)) 
 |> lapply(uniqueNames) 
 |> unlist()
 ;
