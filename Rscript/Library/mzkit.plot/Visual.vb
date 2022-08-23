@@ -684,13 +684,17 @@ Module Visual
     <ExportAPI("plotNetworkClusterHistogram")>
     Public Function plotMolecularNetworkingHistogram(mn As NetworkGraph,
                                                      <RRawVectorArgument> Optional size As Object = "2700,2000",
-                                                     <RRawVectorArgument> Optional padding As Object = g.DefaultPadding,
+                                                     <RRawVectorArgument> Optional padding As Object = "padding:100px 300px 200px 200px;",
+                                                     Optional dpi As Integer = 300,
                                                      Optional env As Environment = Nothing) As Object
         Dim theme As New Theme With {
             .padding = InteropArgumentHelper.getPadding(padding, [default]:=g.DefaultPadding)
         }
-        Dim app As New PlotMNHist(mn, theme)
+        Dim app As New PlotMNHist(mn, theme) With {
+            .xlabel = "retention time",
+            .ylabel = "histogram"
+        }
 
-        Return app.Plot(size:=InteropArgumentHelper.getSize(size, env, [default]:="2700,2000"))
+        Return app.Plot(size:=InteropArgumentHelper.getSize(size, env, [default]:="2700,2000"), ppi:=dpi)
     End Function
 End Module

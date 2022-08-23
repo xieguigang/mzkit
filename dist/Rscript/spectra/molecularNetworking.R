@@ -24,9 +24,9 @@ print(raw);
 network = raw 
 |> MoleculeNetworking::tree()
 |> as.graph(ions = raw)
-|> louvain_cluster()
+|> louvain_cluster(eps = 1, prefix = "family_")
 ;
 
 bitmap(file = `${@dir}/hist.png`) {
-	plotNetworkClusterHistogram(network);
+	plotNetworkClusterHistogram(network, size = [3600, 2400]);
 }
