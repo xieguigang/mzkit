@@ -2,6 +2,7 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -14,6 +15,7 @@ Public Class TreeSearch : Implements IDisposable
     ReadOnly da As Tolerance
     ReadOnly intocutoff As RelativeIntensityCutoff
     ReadOnly is_binary As Boolean
+    ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
 
     Dim disposedValue As Boolean
 
@@ -32,17 +34,52 @@ Public Class TreeSearch : Implements IDisposable
         bin.Seek(jump, SeekOrigin.Begin)
 
         Dim nsize = bin.ReadInt32
+        Dim mzset As New List(Of IonIndex)
 
         tree = New BlockNode(nsize - 1) {}
 
         For i As Integer = 0 To nsize - 1
             tree(i) = NodeBuffer.Read(bin)
+#Disable Warning
+            If Not tree(i).isLeaf Then
+                Call mzset.AddRange(tree(i).mz _
+                    .Select(Function(mzi)
+                                Return New IonIndex With {
+                                    .mz = mzi,
+                                    .node = i
+                                }
+                            End Function))
+            End If
+#Enable Warning
         Next
 
         da = Tolerance.DeltaMass(0.3)
         intocutoff = 0.05
         is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
+        ' see dev notes about the mass tolerance in 
+        ' MSSearch module
+        mzIndex = New BlockSearchFunction(Of IonIndex)(
+            data:=mzset,
+            eval:=Function(m) m.mz,
+            tolerance:=1,
+            factor:=3
+        )
     End Sub
+
+    Public Function QueryByMz(mz As Double) As BlockNode()
+        Dim query As New IonIndex With {.mz = mz}
+        Dim result As BlockNode() = mzIndex _
+            .Search(query) _
+            .Where(Function(d) da(d.mz, mz)) _
+            .Select(Function(d) tree(d.node)) _
+            .GroupBy(Function(d) d.Id) _
+            .Select(Function(g)
+                        Return g.First
+                    End Function) _
+            .ToArray
+
+        Return result
+    End Function
 
     Public Overrides Function ToString() As String
         If is_binary Then
@@ -56,6 +93,38 @@ Public Class TreeSearch : Implements IDisposable
         Return matrix.Centroid(da, intocutoff).ToArray
     End Function
 
+    ''' <summary>
+    ''' populate the top cluster
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <param name="mz1"></param>
+    ''' <returns></returns>
+    Public Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+        Dim candidates As BlockNode() = QueryByMz(mz1)
+        Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates.ElementAtOrNull(Scan0))
+
+        For Each hit As BlockNode In candidates
+            Dim score = GlobalAlignment.TwoDirectionSSM(centroid, hit.centroid, da)
+            Dim min = stdNum.Min(score.forward, score.reverse)
+
+            If min > max.score Then
+                max = (min, score, hit)
+            End If
+        Next
+
+        If max.score > 0 Then
+            Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' search by tree query
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <param name="maxdepth"></param>
+    ''' <returns></returns>
     Public Function Search(centroid As ms2(), Optional maxdepth As Integer = 1024) As ClusterHit
         If tree.IsNullOrEmpty Then
             Return Nothing

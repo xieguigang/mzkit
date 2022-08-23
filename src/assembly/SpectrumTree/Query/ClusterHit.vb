@@ -21,4 +21,8 @@ Public Class ClusterHit
     Public Property ClusterJaccard As Double()
     Public Property ClusterId As String()
 
+    Public Overrides Function ToString() As String
+        Return Id
+    End Function
+
 End Class

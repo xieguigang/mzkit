@@ -3,14 +3,18 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("MoleculeNetworking")>
 Module MoleculeNetworking
@@ -26,6 +30,58 @@ Module MoleculeNetworking
         Return ions
     End Function
 
+    <ExportAPI("as.graph")>
+    Public Function createGraph(tree As ClusterTree, ions As PeakMs2()) As NetworkGraph
+        Dim g As New NetworkGraph
+        Dim bins As list = tree.MsBin(ions)
+        Dim seed As Node
+
+        For Each bin In bins.slots
+            ions = REnv.asVector(Of PeakMs2)(bin.Value)
+            seed = g.CreateNode(
+                label:=bin.Key,
+                data:=New NodeData With {
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"rt", ions.Where(Function(d) d.lib_guid = bin.Key).First.rt}
+                    },
+                    .label = bin.Key,
+                    .origID = bin.Key
+                }
+            )
+
+            For Each ion In ions.Where(Function(i) i.lib_guid <> bin.Key)
+                If g.GetElementByID(ion.lib_guid) Is Nothing Then
+                    g.CreateNode(
+                        label:=ion.lib_guid,
+                        data:=New NodeData With {
+                            .label = ion.lib_guid,
+                            .origID = ion.lib_guid,
+                            .Properties = New Dictionary(Of String, String) From {
+                                {"rt", ion.rt}
+                            }
+                        }
+                    )
+                End If
+
+                Call g.CreateEdge(u:=g.GetElementByID(bin.Key), v:=g.GetElementByID(ion.lib_guid), 1)
+            Next
+        Next
+
+        For Each layer In ClusterTree.GetClusters(tree)
+            If Not layer.Childs.IsNullOrEmpty Then
+                For Each child As Tree(Of String) In layer.Childs.Values
+                    Call g.CreateEdge(
+                        u:=g.GetElementByID(layer.Data),
+                        v:=g.GetElementByID(child.Data),
+                        weight:=0.5
+                    )
+                Next
+            End If
+        Next
+
+        Return g
+    End Function
+
     <ExportAPI("tree")>
     Public Function Tree(ions As PeakMs2(),
                          Optional mzdiff As Double = 0.3,
@@ -35,6 +91,12 @@ Module MoleculeNetworking
         Return ions.Tree(mzdiff, intocutoff, equals)
     End Function
 
+    ''' <summary>
+    ''' populate a list of peak ms2 cluster data
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="ions"></param>
+    ''' <returns></returns>
     <ExportAPI("msBin")>
     <Extension>
     Public Function MsBin(tree As ClusterTree, ions As PeakMs2()) As list
@@ -105,6 +167,28 @@ Module MoleculeNetworking
                 .Select(Function(c) c.rt) _
                 .TabulateBin _
                 .Average
+            Dim mz1 As Double
+            Dim metadata = cluster _
+                .Select(Function(c) c.meta) _
+                .IteratesALL _
+                .GroupBy(Function(t) t.Key) _
+                .ToDictionary(Function(t) t.Key,
+                                Function(t)
+                                    Return t _
+                                        .Select(Function(ti) ti.Value) _
+                                        .Distinct _
+                                        .JoinBy("; ")
+                                End Function)
+
+            If cluster.Length = 1 Then
+                mz1 = cluster(Scan0).mz
+            Else
+                mz1 = 0
+                metadata("mz1") = cluster _
+                    .Select(Function(c) c.mz) _
+                    .ToArray _
+                    .GetJson
+            End If
 
             output.Add(New PeakMs2 With {
                 .rt = rt,
@@ -113,21 +197,11 @@ Module MoleculeNetworking
                 .file = key,
                 .intensity = cluster.Sum(Function(c) c.intensity),
                 .lib_guid = key,
-                .mz = 0,
+                .mz = mz1,
                 .mzInto = union,
                 .precursor_type = "NA",
                 .scan = "NA",
-                .meta = cluster _
-                    .Select(Function(c) c.meta) _
-                    .IteratesALL _
-                    .GroupBy(Function(t) t.Key) _
-                    .ToDictionary(Function(t) t.Key,
-                                  Function(t)
-                                      Return t _
-                                          .Select(Function(ti) ti.Value) _
-                                          .Distinct _
-                                          .JoinBy("; ")
-                                  End Function)
+                .meta = metadata
             })
         Next
 

@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
@@ -294,7 +295,11 @@ Module MzWeb
     End Function
 
     <ExportAPI("write.cdf")>
-    Public Function writeToCDF(mzpack As mzPack, file As Object, Optional Ms2Only As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function writeToCDF(mzpack As mzPack,
+                               file As Object,
+                               Optional Ms2Only As Boolean = False,
+                               Optional env As Environment = Nothing) As Object
+
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then
@@ -460,6 +465,7 @@ Module MzWeb
     Public Function Ms2ScanPeaks(mzpack As mzPack,
                                  Optional precursorMz As Double = Double.NaN,
                                  Optional tolerance As Object = "ppm:30",
+                                 Optional tag_source As Boolean = True,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -488,9 +494,20 @@ Module MzWeb
             ms2peaks = ms2_xic
         End If
 
+        Return ms2peaks.uniqueReference(tag_source)
+    End Function
+
+    <Extension>
+    Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As String) As PeakMs2()
         Dim unique As String() = ms2peaks _
-            .Select(Function(p) p.lib_guid) _
-            .uniqueNames
+          .Select(Function(p)
+                      If tag_source Then
+                          Return $"{p.file} {p.lib_guid}"
+                      Else
+                          Return p.lib_guid
+                      End If
+                  End Function) _
+          .uniqueNames
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)

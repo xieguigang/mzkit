@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -36,6 +37,20 @@ Public Class ReferenceTree : Implements IDisposable
         Call Me.New(file, nbranchs:=10)
     End Sub
 
+    Private Shared Iterator Function getMz(data As PeakMs2) As IEnumerable(Of Double)
+        If data.mz > 0 Then
+            Yield data.mz
+        Else
+            If Not data.meta.IsNullOrEmpty Then
+                If data.meta.ContainsKey("mz1") Then
+                    For Each mzi As Double In data.meta("mz1").LoadJSON(Of Double())
+                        Yield mzi
+                    Next
+                End If
+            End If
+        End If
+    End Function
+
     Protected Overridable Function Append(data As PeakMs2, centroid As ms2(), isMember As Boolean) As Integer
         Dim n As Integer = tree.Count
         Dim childs As Integer()
@@ -46,13 +61,14 @@ Public Class ReferenceTree : Implements IDisposable
             childs = New Integer(nbranch - 1) {}
         End If
 
-        tree.Add(New BlockNode With {
+        Call tree.Add(New BlockNode With {
             .Block = WriteSpectrum(data),
             .childs = childs,
             .Id = data.lib_guid,
             .Members = If(isMember, Nothing, New List(Of Integer)),
             .centroid = centroid,
-            .rt = data.rt
+            .rt = data.rt,
+            .mz = New List(Of Double)(getMz(data))
         })
 
         Return n
@@ -73,15 +89,18 @@ Public Class ReferenceTree : Implements IDisposable
 
     Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
         Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-        Dim min = stdNum.Min(score.forward, score.reverse)
+        Dim min As Double = stdNum.Min(score.forward, score.reverse)
         Dim i As Integer = BlockNode.GetIndex(min)
 
         If i = -1 Then
             ' add to current cluster members
-            node.Members.Add(Append(raw, centroid, isMember:=True))
+            i = Append(raw, centroid, isMember:=True)
+
+            Call node.mz.AddRange(getMz(raw))
+            Call node.Members.Add(i)
         ElseIf node.childs(i) > 0 Then
             ' align to next node
-            Push(centroid, tree(node.childs(i)), raw)
+            Call Push(centroid, tree(node.childs(i)), raw)
         Else
             ' create new node
             node.childs(i) = Append(raw, centroid, isMember:=False)
@@ -110,8 +129,8 @@ Public Class ReferenceTree : Implements IDisposable
             Call NodeBuffer.Write(node, file:=spectrum)
         Next
 
-        spectrum.Seek(Magic.Length, SeekOrigin.Begin)
-        spectrum.Write(jump)
+        Call spectrum.Seek(Magic.Length, SeekOrigin.Begin)
+        Call spectrum.Write(jump)
     End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)
