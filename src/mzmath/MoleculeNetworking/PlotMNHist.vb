@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
@@ -9,11 +10,19 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 ''' </summary>
 Public Class PlotMNHist : Inherits Plot
 
-    Public Sub New(theme As Theme)
+    ReadOnly g As NetworkGraph
+
+    Public Sub New(g As NetworkGraph, theme As Theme)
         MyBase.New(theme)
+        Me.g = g
     End Sub
 
+    Private Function createClusterHistogram() As HistogramGroup
+
+    End Function
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Throw New NotImplementedException()
+        Dim hist As HistogramGroup = createClusterHistogram()
+
     End Sub
 End Class

@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -24,6 +25,11 @@ Module MoleculeNetworking
         Next
 
         Return ions
+    End Function
+
+    <ExportAPI("as.graph")>
+    Public Function createGraph(tree As ClusterTree) As NetworkGraph
+
     End Function
 
     <ExportAPI("tree")>
