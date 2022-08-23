@@ -202,17 +202,24 @@ Public Module PixelsCDF
     End Function
 
     <Extension>
-    Public Function CreatePixelReader(allPixels As PixelScan()) As ReadRawPack
+    Public Function CreatePixelReader(allPixels As PixelScan(),
+                                      Optional offsetX As Integer = 0,
+                                      Optional offsetY As Integer = 0) As ReadRawPack
+
         Dim w = Aggregate i In allPixels Into Max(i.X)
         Dim h = Aggregate i In allPixels Into Max(i.Y)
         Dim size As New Size With {
-           .Width = w,
-           .Height = h
+           .Width = w + offsetX,
+           .Height = h + offsetY
         }
         Dim pixels As New List(Of mzPackPixel)
 
         For Each scan As PixelScan In allPixels
-            pixels += New mzPackPixel(scan.CreateMs1, scan.X, scan.Y)
+            pixels += New mzPackPixel(
+                scan:=scan.CreateMs1,
+                x:=scan.X + offsetX,
+                y:=scan.Y + offsetY
+            )
         Next
 
         Return New ReadRawPack(pixels, size)
