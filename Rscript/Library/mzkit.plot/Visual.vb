@@ -688,7 +688,9 @@ Module Visual
                                                      Optional dpi As Integer = 300,
                                                      Optional env As Environment = Nothing) As Object
         Dim theme As New Theme With {
-            .padding = InteropArgumentHelper.getPadding(padding, [default]:=g.DefaultPadding)
+            .padding = InteropArgumentHelper.getPadding(padding, [default]:=g.DefaultPadding),
+            .YaxisTickFormat = "F0",
+            .XaxisTickFormat = "F0"
         }
         Dim app As New PlotMNHist(mn, theme) With {
             .xlabel = "retention time",

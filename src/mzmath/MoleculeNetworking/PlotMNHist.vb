@@ -46,7 +46,7 @@ Public Class PlotMNHist : Inherits Plot
             .ToArray
         Dim range As New DoubleRange(rt)
         Dim hist As DataBinBox(Of Double)() = rt _
-            .Hist((range.Max - range.Min) / 30) _
+            .Hist((range.Max - range.Min) / 120) _
             .ToArray
         Dim data As PointData() = hist _
             .Select(Function(bin)
@@ -54,6 +54,7 @@ Public Class PlotMNHist : Inherits Plot
                             .pt = New PointF(If(bin.Count = 0, 0.0, bin.Raw.Average), bin.Count)
                         }
                     End Function) _
+            .OrderBy(Function(p) p.pt.X) _
             .ToArray
 
         Return New SerialData With {
