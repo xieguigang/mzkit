@@ -187,6 +187,11 @@ Public Module PixelsCDF
         }
     End Function
 
+    ''' <summary>
+    ''' convert the layer matrix as the MSimaging pixel data reader
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreatePixelReader(cdf As netCDFReader) As ReadRawPack
         Dim size As Size = cdf.GetMsiDimension
@@ -201,6 +206,13 @@ Public Module PixelsCDF
         Return New ReadRawPack(pixels, size)
     End Function
 
+    ''' <summary>
+    ''' create data reader from a given collection of the pixel data
+    ''' </summary>
+    ''' <param name="allPixels">
+    ''' maybe a subset of the pixel data
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreatePixelReader(allPixels As PixelScan()) As ReadRawPack
         Dim w = Aggregate i In allPixels Into Max(i.X)
