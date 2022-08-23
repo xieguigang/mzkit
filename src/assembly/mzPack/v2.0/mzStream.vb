@@ -92,12 +92,18 @@ Public Class mzStream : Implements IMzPackReader
     End Sub
 
     Public Shared Function GetSampleTags(buffer As StreamPack) As String()
-        Dim file = buffer.OpenBlock(".etc/sample_tags.json")
-        Dim data As String() = New StreamReader(file) _
-            .ReadToEnd _
-            .LoadObject(GetType(String()))
+        Const sample_tags As String = ".etc/sample_tags.json"
 
-        Return data
+        If buffer.FileExists(sample_tags) Then
+            Dim file = buffer.OpenBlock(".etc/sample_tags.json")
+            Dim data As String() = New StreamReader(file) _
+                .ReadToEnd _
+                .LoadObject(GetType(String()))
+
+            Return data
+        Else
+            Return New String() {"*"}
+        End If
     End Function
 
     Private Sub cacheScanIndex()

@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -72,6 +73,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -677,5 +679,24 @@ Module Visual
             line_width:=line_width,
             legendTitle:=legendTitle
         )
+    End Function
+
+    <ExportAPI("plotNetworkClusterHistogram")>
+    Public Function plotMolecularNetworkingHistogram(mn As NetworkGraph,
+                                                     <RRawVectorArgument> Optional size As Object = "2700,2000",
+                                                     <RRawVectorArgument> Optional padding As Object = "padding:100px 300px 200px 200px;",
+                                                     Optional dpi As Integer = 300,
+                                                     Optional env As Environment = Nothing) As Object
+        Dim theme As New Theme With {
+            .padding = InteropArgumentHelper.getPadding(padding, [default]:=g.DefaultPadding),
+            .YaxisTickFormat = "F0",
+            .XaxisTickFormat = "F0"
+        }
+        Dim app As New PlotMNHist(mn, theme) With {
+            .xlabel = "retention time",
+            .ylabel = "histogram"
+        }
+
+        Return app.Plot(size:=InteropArgumentHelper.getSize(size, env, [default]:="2700,2000"), ppi:=dpi)
     End Function
 End Module
