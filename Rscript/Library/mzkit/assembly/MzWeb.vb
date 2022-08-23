@@ -294,7 +294,11 @@ Module MzWeb
     End Function
 
     <ExportAPI("write.cdf")>
-    Public Function writeToCDF(mzpack As mzPack, file As Object, Optional Ms2Only As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function writeToCDF(mzpack As mzPack,
+                               file As Object,
+                               Optional Ms2Only As Boolean = False,
+                               Optional env As Environment = Nothing) As Object
+
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then
