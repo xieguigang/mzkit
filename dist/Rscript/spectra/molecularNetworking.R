@@ -19,9 +19,11 @@ raw = raw
 |> unlist()
 ;
 
+print(raw);
+
 network = raw 
 |> MoleculeNetworking::tree()
-|> as.graph()
+|> as.graph(ions = raw)
 |> louvain_cluster()
 ;
 
