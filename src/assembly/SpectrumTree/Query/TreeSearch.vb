@@ -101,7 +101,7 @@ Public Class TreeSearch : Implements IDisposable
     ''' <returns></returns>
     Public Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
         Dim candidates As BlockNode() = QueryByMz(mz1)
-        Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates(Scan0))
+        Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates.ElementAtOrNull(Scan0))
 
         For Each hit As BlockNode In candidates
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, hit.centroid, da)

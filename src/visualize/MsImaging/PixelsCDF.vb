@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
+Imports stdNum = System.Math
 
 Public Module PixelsCDF
 
@@ -173,8 +174,19 @@ Public Module PixelsCDF
     End Function
 
     <Extension>
-    Public Function CreateMs1(pixel As PixelScan) As ScanMS1
+    Public Function CreateMs1(pixel As PixelScan,
+                              Optional excludesMz As Double() = Nothing,
+                              Optional mzdiff As Double = 0.05) As ScanMS1
+
         Dim matrix As ms2() = pixel.GetMs
+
+        If Not excludesMz.IsNullOrEmpty Then
+            matrix = matrix _
+                .Where(Function(mzi)
+                           Return Not excludesMz.Any(Function(d) stdNum.Abs(d - mzi.mz) <= mzdiff)
+                       End Function) _
+                .ToArray
+        End If
 
         Return New ScanMS1 With {
             .mz = matrix.Select(Function(m) m.mz).ToArray,
@@ -187,6 +199,11 @@ Public Module PixelsCDF
         }
     End Function
 
+    ''' <summary>
+    ''' convert the layer matrix as the MSimaging pixel data reader
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreatePixelReader(cdf As netCDFReader) As ReadRawPack
         Dim size As Size = cdf.GetMsiDimension
@@ -201,10 +218,19 @@ Public Module PixelsCDF
         Return New ReadRawPack(pixels, size)
     End Function
 
+    ''' <summary>
+    ''' create data reader from a given collection of the pixel data
+    ''' </summary>
+    ''' <param name="allPixels">
+    ''' maybe a subset of the pixel data
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreatePixelReader(allPixels As PixelScan(),
                                       Optional offsetX As Integer = 0,
-                                      Optional offsetY As Integer = 0) As ReadRawPack
+                                      Optional offsetY As Integer = 0,
+                                      Optional excludesMz As Double() = Nothing,
+                                      Optional mzdiff As Double = 0.05) As ReadRawPack
 
         Dim w = Aggregate i In allPixels Into Max(i.X)
         Dim h = Aggregate i In allPixels Into Max(i.Y)
@@ -213,13 +239,18 @@ Public Module PixelsCDF
            .Height = h + offsetY
         }
         Dim pixels As New List(Of mzPackPixel)
+        Dim point As mzPackPixel
 
         For Each scan As PixelScan In allPixels
-            pixels += New mzPackPixel(
-                scan:=scan.CreateMs1,
+            point = New mzPackPixel(
+                scan:=scan.CreateMs1(excludesMz, mzdiff),
                 x:=scan.X + offsetX,
                 y:=scan.Y + offsetY
             )
+
+            If point.mz.Length > 0 Then
+                pixels += point
+            End If
         Next
 
         Return New ReadRawPack(pixels, size)

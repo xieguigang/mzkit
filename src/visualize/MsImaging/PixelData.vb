@@ -105,7 +105,7 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
             If tags.Distinct.Count = 1 Then
                 Call file.Write(-1)
-                Call file.Write(tags(Scan0), BinaryStringFormat.ZeroTerminated)
+                Call file.Write(If(tags(Scan0), "sample"), BinaryStringFormat.ZeroTerminated)
             Else
                 Dim tagIndex = tags.Distinct.Indexing
 

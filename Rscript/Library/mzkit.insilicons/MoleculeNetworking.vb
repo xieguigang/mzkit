@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -166,6 +167,28 @@ Module MoleculeNetworking
                 .Select(Function(c) c.rt) _
                 .TabulateBin _
                 .Average
+            Dim mz1 As Double
+            Dim metadata = cluster _
+                .Select(Function(c) c.meta) _
+                .IteratesALL _
+                .GroupBy(Function(t) t.Key) _
+                .ToDictionary(Function(t) t.Key,
+                                Function(t)
+                                    Return t _
+                                        .Select(Function(ti) ti.Value) _
+                                        .Distinct _
+                                        .JoinBy("; ")
+                                End Function)
+
+            If cluster.Length = 1 Then
+                mz1 = cluster(Scan0).mz
+            Else
+                mz1 = 0
+                metadata("mz1") = cluster _
+                    .Select(Function(c) c.mz) _
+                    .ToArray _
+                    .GetJson
+            End If
 
             output.Add(New PeakMs2 With {
                 .rt = rt,
@@ -174,21 +197,11 @@ Module MoleculeNetworking
                 .file = key,
                 .intensity = cluster.Sum(Function(c) c.intensity),
                 .lib_guid = key,
-                .mz = 0,
+                .mz = mz1,
                 .mzInto = union,
                 .precursor_type = "NA",
                 .scan = "NA",
-                .meta = cluster _
-                    .Select(Function(c) c.meta) _
-                    .IteratesALL _
-                    .GroupBy(Function(t) t.Key) _
-                    .ToDictionary(Function(t) t.Key,
-                                  Function(t)
-                                      Return t _
-                                          .Select(Function(ti) ti.Value) _
-                                          .Distinct _
-                                          .JoinBy("; ")
-                                  End Function)
+                .meta = metadata
             })
         Next
 
