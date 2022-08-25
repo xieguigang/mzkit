@@ -13,7 +13,8 @@ Public Class LayerRender
             Dim fill As New SolidBrush(region.color.Alpha(255 * alphaLevel))
 
             For Each p As Point In region.points
-                Call g.FillRectangle(fill, New Rectangle(p, dotSize))
+                p = New Point(p.X * dotSize.Width, p.Y * dotSize.Height)
+                g.FillRectangle(fill, New Rectangle(p, dotSize))
             Next
         Next
     End Sub
