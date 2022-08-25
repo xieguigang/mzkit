@@ -136,9 +136,9 @@ Public Module CDF
     End Function
 
     <Extension>
-    Public Function ReadTissueMorphology(file As Stream) As IEnumerable(Of TissueRegion)
+    Public Function ReadTissueMorphology(file As Stream) As TissueRegion()
         Using cdf As New netCDFReader(file)
-            Return cdf.ReadTissueMorphology
+            Return cdf.ReadTissueMorphology.ToArray
         End Using
     End Function
 
