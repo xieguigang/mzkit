@@ -138,6 +138,9 @@ Public Module CDF
     <Extension>
     Public Function ReadTissueMorphology(file As Stream) As TissueRegion()
         Using cdf As New netCDFReader(file)
+            ' 20220825 由于在这使用了using进行文件资源的自动释放
+            ' 所以在这里不可以使用迭代器进行数据返回
+            ' 否则文件读取模块会因为using语句自动释放资源导致报错
             Return cdf.ReadTissueMorphology.ToArray
         End Using
     End Function
