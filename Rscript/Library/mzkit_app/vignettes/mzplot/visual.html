@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-08-22" />
+    <meta name="last-update" content="2022-08-25" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -181,6 +181,35 @@
     # package: "visual"
     #
     return call <code>R&#35;.interop_[Visual::PlotUVSignals]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="plotNetworkClusterHistogram">
+    <a href="./visual/plotNetworkClusterHistogram.html">plotNetworkClusterHistogram</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>plotNetworkClusterHistogram</code> as function(<code>mn</code> as <generic> NetworkGraph, 
+<code>size</code> as any = "2700,2000", 
+<code>padding</code> as any = "padding:100px 300px 200px 200px;", 
+<code>dpi</code> as integer = 300, 
+[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Visual
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "visual"
+    #
+    return call <code>R&#35;.interop_[Visual::plotMolecularNetworkingHistogram]</code>(...);
 }</p></pre>
 
                     
