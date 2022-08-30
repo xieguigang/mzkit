@@ -287,6 +287,8 @@ Public Module MSIRawPack
             .Select(Function(m) Val(m.meta("y"))) _
             .Max
 
+        h /= dy
+
         For Each pixelScan As ScanMS1 In data
             Dim x As Integer = Val(pixelScan.meta("x")) / dx
             Dim y As Integer = Val(pixelScan.meta("y")) / dy
