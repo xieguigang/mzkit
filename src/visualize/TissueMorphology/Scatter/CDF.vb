@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
@@ -13,6 +14,17 @@ Imports any = Microsoft.VisualBasic.Scripting
 ''' the cdf file data handler
 ''' </summary>
 Public Module CDF
+
+    <Extension>
+    Public Function IsTissueMorphologyCDF(cdf As netCDFReader) As Boolean
+        Static attrNames As Index(Of String) = {"regions", "umap_sample"}
+        Static varNames As String() = {
+            "sampleX", "sampleY", "cluster", "umapX", "umapY", "umapZ"
+        }
+
+        Return cdf.globalAttributes.All(Function(a) a.name Like attrNames) AndAlso
+            varNames.All(Function(name) cdf.dataVariableExists(name))
+    End Function
 
     <Extension>
     Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream, Optional umap As UMAPPoint() = Nothing) As Boolean
@@ -95,33 +107,41 @@ Public Module CDF
     End Function
 
     <Extension>
-    Public Iterator Function ReadTissueMorphology(file As Stream) As IEnumerable(Of TissueRegion)
+    Public Iterator Function ReadTissueMorphology(cdf As netCDFReader) As IEnumerable(Of TissueRegion)
+        Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger
+
+        For i As Integer = 1 To regions
+            Dim refId As String = $"region_{i}"
+            Dim var As variable = cdf.getDataVariableEntry(refId)
+            Dim name As String = var.FindAttribute("label").value
+            Dim color As String = var.FindAttribute("color").value
+            Dim nsize As Integer = var.FindAttribute("size").value.ParseInteger
+            Dim data As integers = cdf.getDataVariable(var)
+            Dim pixels As Point() = data _
+                .Split(2) _
+                .Select(Function(p)
+                            Return New Point With {
+                                .X = p(Scan0),
+                                .Y = p(1)
+                            }
+                        End Function) _
+                .ToArray
+
+            Yield New TissueRegion With {
+                .color = color.TranslateColor,
+                .label = name,
+                .points = pixels
+            }
+        Next
+    End Function
+
+    <Extension>
+    Public Function ReadTissueMorphology(file As Stream) As TissueRegion()
         Using cdf As New netCDFReader(file)
-            Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger
-
-            For i As Integer = 1 To regions
-                Dim refId As String = $"region_{i}"
-                Dim var As variable = cdf.getDataVariableEntry(refId)
-                Dim name As String = var.FindAttribute("label").value
-                Dim color As String = var.FindAttribute("color").value
-                Dim nsize As Integer = var.FindAttribute("size").value.ParseInteger
-                Dim data As integers = cdf.getDataVariable(var)
-                Dim pixels As Point() = data _
-                    .Split(2) _
-                    .Select(Function(p)
-                                Return New Point With {
-                                    .X = p(Scan0),
-                                    .Y = p(1)
-                                }
-                            End Function) _
-                    .ToArray
-
-                Yield New TissueRegion With {
-                    .color = color.TranslateColor,
-                    .label = name,
-                    .points = pixels
-                }
-            Next
+            ' 20220825 由于在这使用了using进行文件资源的自动释放
+            ' 所以在这里不可以使用迭代器进行数据返回
+            ' 否则文件读取模块会因为using语句自动释放资源导致报错
+            Return cdf.ReadTissueMorphology.ToArray
         End Using
     End Function
 

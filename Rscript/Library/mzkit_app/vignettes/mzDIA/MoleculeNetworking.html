@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-08-22" />
+    <meta name="last-update" content="2022-08-30" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -59,6 +59,31 @@
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
+  <h2 id="as.graph">
+    <a href="./MoleculeNetworking/as.graph.html">as.graph</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>as.graph</code> as function(<code>tree</code> as <generic> ClusterTree, <code>ions</code> as <generic> PeakMs2[]) -> <code>&lt;generic&gt; NetworkGraph</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MoleculeNetworking
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzDIA.dll
+    # package: "MoleculeNetworking"
+    #
+    return call <code>R&#35;.interop_[MoleculeNetworking::createGraph]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
   <h2 id="tree">
     <a href="./MoleculeNetworking/tree.html">tree</a>
   </h2>
@@ -92,7 +117,7 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>populate a list of peak ms2 cluster data</p>  
                 
                     <pre><p>let <code>msBin</code> as function(<code>tree</code> as <generic> ClusterTree, <code>ions</code> as <generic> PeakMs2[]) -> <code>list</code> {
     #
@@ -106,7 +131,17 @@
     return call <code>R&#35;.interop_[MoleculeNetworking::MsBin]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>tree</code>: -
+                </li>
+<li>
+  <code>ions</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 

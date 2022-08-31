@@ -166,8 +166,6 @@ Public Module MSIRawPack
             Using spots As Stream = tuple.index.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Using msdata As Stream = tuple.msdata.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                     Call LoadMSISpotsFromSCiLSLab(spots, msdata, 1, 1, sampleTag, If(verbose, println, mute)) _
-                        .ToArray _
-                        .ScalePixels _
                         .DoCall(AddressOf pixels.AddRange)
                 End Using
             End Using
@@ -181,7 +179,7 @@ Public Module MSIRawPack
 
         Return New mzPack With {
             .Application = FileApplicationClass.MSImaging,
-            .MS = pixels.ToArray,
+            .MS = pixels.ToArray.ScalePixels,
             .source = rawfiles.Distinct.JoinBy("; ")
         }
     End Function
@@ -281,14 +279,23 @@ Public Module MSIRawPack
     End Function
 
     <Extension>
-    Public Function ScalePixels(data As ScanMS1()) As ScanMS1()
+    Public Function ScalePixels(data As ScanMS1(), Optional flip As Boolean = True) As ScanMS1()
         Dim scaler = data.PixelScaler
         Dim dx As Double = scaler.Width
         Dim dy As Double = scaler.Height
+        Dim h As Double = data _
+            .Select(Function(m) Val(m.meta("y"))) _
+            .Max
+
+        h /= dy
 
         For Each pixelScan As ScanMS1 In data
             Dim x As Integer = Val(pixelScan.meta("x")) / dx
             Dim y As Integer = Val(pixelScan.meta("y")) / dy
+
+            If flip Then
+                y = h - y + 1
+            End If
 
             pixelScan.meta("x") = x
             pixelScan.meta("y") = y
