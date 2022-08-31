@@ -66,6 +66,7 @@ Public Module HeatMapLayer
         Dim project =
             Function(selector As Func(Of [Object], Double))
                 Return objs _
+                    .Where(Function(i) i.obj IsNot Nothing) _
                     .Select(Function(i)
                                 Return New PixelData With {
                                     .Scale = selector(i.obj),
@@ -81,7 +82,13 @@ Public Module HeatMapLayer
                 objs = grid.Select(Function(i) (i.Black, i)).ToArray
             Case Else
                 objs = grid _
-                    .Select(Function(i) (i.layers(channel), i)) _
+                    .Select(Function(i)
+                                If i.layers.ContainsKey(channel) Then
+                                    Return (i.layers(channel), i)
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
                     .ToArray
         End Select
 
