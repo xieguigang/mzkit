@@ -9,8 +9,19 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module Tissue
 
     <ExportAPI("scan_tissue")>
-    Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing) As Cell()
-        Return HistologicalImage.GridScan(target:=tissue, colors:=colors).ToArray
+    Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing,
+                               Optional gridSize As Integer = 25,
+                               Optional tolerance As Integer = 15,
+                               Optional densityGrid As Integer = 5) As Cell()
+
+        Return HistologicalImage.GridScan(
+            target:=tissue,
+            colors:=colors,
+            gridSize:=gridSize,
+            tolerance:=tolerance,
+            densityGrid:=densityGrid
+        ) _
+        .ToArray
     End Function
 
     <ExportAPI("heatmap_layer")>
