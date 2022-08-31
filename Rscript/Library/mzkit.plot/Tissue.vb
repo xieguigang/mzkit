@@ -15,36 +15,9 @@ Module Tissue
 
     <ExportAPI("heatmap_layer")>
     Public Function getTargets(tissue As Cell(),
-                               Optional heatmap As String = "density",
+                               Optional heatmap As Layers = Layers.Density,
                                Optional target As String = "black") As PixelData()
 
-        Dim objs As (obj As [Object], cell As Cell)() = Nothing
-        Dim project =
-            Function(selector As Func(Of [Object], Double))
-                Return objs _
-                    .Select(Function(i)
-                                Return New PixelData With {
-                                    .Scale = selector(i.obj),
-                                    .X = i.cell.ScaleX,
-                                    .Y = i.cell.ScaleY
-                                }
-                            End Function) _
-                    .ToArray
-            End Function
-
-        Select Case Strings.LCase(target)
-            Case "black"
-                objs = tissue.Select(Function(i) (i.Black, i)).ToArray
-            Case Else
-                objs = tissue.Select(Function(i) (i.layers(target), i)).ToArray
-        End Select
-
-        Select Case Strings.LCase(heatmap)
-            Case "pixels" : Return project(Function(i) i.Pixels)
-            Case "density" : Return project(Function(i) i.Density)
-            Case "ratio" : Return project(Function(i) i.Ratio)
-            Case Else
-                Throw New NotImplementedException(heatmap)
-        End Select
+        Return tissue.GetHeatMapLayer(heatmap, target)
     End Function
 End Module
