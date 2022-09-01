@@ -16,6 +16,9 @@ Public Class TissueRegion
     ''' current Tissue Morphology region.
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' A raster matrix
+    ''' </remarks>
     Public Property points As Point()
 
     ''' <summary>
@@ -33,6 +36,10 @@ Public Class TissueRegion
             x:=points.Select(Function(i) CDbl(i.X)).ToArray,
             y:=points.Select(Function(i) CDbl(i.Y)).ToArray
         )
+    End Function
+
+    Public Function IsInside(px As Integer, py As Integer) As Boolean
+        Return points.Any(Function(p) p.X = px AndAlso p.Y = py)
     End Function
 
     Public Overrides Function ToString() As String

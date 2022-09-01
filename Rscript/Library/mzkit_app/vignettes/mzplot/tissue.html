@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-08-30" />
+    <meta name="last-update" content="2022-09-01" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -41,7 +41,11 @@
   <p>
                       
                 
-                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, <code>colors</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Cell[]</code> {
+                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, 
+<code>colors</code> as string = <code>&lt;NULL&gt;</code>, 
+<code>gridSize</code> as integer = 25, 
+<code>tolerance</code> as integer = 15, 
+<code>densityGrid</code> as integer = 5) -> <code>&lt;generic&gt; Cell[]</code> {
     #
     # .NET API information
     #
@@ -66,7 +70,7 @@
   <p>
                       
                 
-                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as string = "density", <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
+                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as <integer> Layers = [Density], <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
     #
     # .NET API information
     #

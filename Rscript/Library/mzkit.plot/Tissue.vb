@@ -9,42 +9,26 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module Tissue
 
     <ExportAPI("scan_tissue")>
-    Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing) As Cell()
-        Return HistologicalImage.GridScan(target:=tissue, colors:=colors).ToArray
+    Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing,
+                               Optional gridSize As Integer = 25,
+                               Optional tolerance As Integer = 15,
+                               Optional densityGrid As Integer = 5) As Cell()
+
+        Return HistologicalImage.GridScan(
+            target:=tissue,
+            colors:=colors,
+            gridSize:=gridSize,
+            tolerance:=tolerance,
+            densityGrid:=densityGrid
+        ) _
+        .ToArray
     End Function
 
     <ExportAPI("heatmap_layer")>
     Public Function getTargets(tissue As Cell(),
-                               Optional heatmap As String = "density",
+                               Optional heatmap As Layers = Layers.Density,
                                Optional target As String = "black") As PixelData()
 
-        Dim objs As (obj As [Object], cell As Cell)() = Nothing
-        Dim project =
-            Function(selector As Func(Of [Object], Double))
-                Return objs _
-                    .Select(Function(i)
-                                Return New PixelData With {
-                                    .Scale = selector(i.obj),
-                                    .X = i.cell.ScaleX,
-                                    .Y = i.cell.ScaleY
-                                }
-                            End Function) _
-                    .ToArray
-            End Function
-
-        Select Case Strings.LCase(target)
-            Case "black"
-                objs = tissue.Select(Function(i) (i.Black, i)).ToArray
-            Case Else
-                objs = tissue.Select(Function(i) (i.layers(target), i)).ToArray
-        End Select
-
-        Select Case Strings.LCase(heatmap)
-            Case "pixels" : Return project(Function(i) i.Pixels)
-            Case "density" : Return project(Function(i) i.Density)
-            Case "ratio" : Return project(Function(i) i.Ratio)
-            Case Else
-                Throw New NotImplementedException(heatmap)
-        End Select
+        Return tissue.GetHeatMapLayer(heatmap, target)
     End Function
 End Module
