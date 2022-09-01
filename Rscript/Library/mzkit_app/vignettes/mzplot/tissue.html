@@ -41,12 +41,16 @@
   <p>
                       
                 
-                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, <code>colors</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Cell[]</code> {
+                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, 
+<code>colors</code> as string = <code>&lt;NULL&gt;</code>, 
+<code>gridSize</code> as integer = 25, 
+<code>tolerance</code> as integer = 15, 
+<code>densityGrid</code> as integer = 5) -> <code>&lt;generic&gt; Cell[]</code> {
     #
     # .NET API information
     #
     # module: mzkit.Tissue
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "tissue"
     #
@@ -66,12 +70,12 @@
   <p>
                       
                 
-                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as string = "density", <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
+                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as <integer> Layers = [Density], <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
     #
     # .NET API information
     #
     # module: mzkit.Tissue
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzplot.dll
     # package: "tissue"
     #

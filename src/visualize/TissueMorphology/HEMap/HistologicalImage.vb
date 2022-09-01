@@ -88,6 +88,17 @@ Public Module HistologicalImage
         )
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="target"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="tolerance">
+    ''' the color channel tolerance, [0, 255]
+    ''' </param>
+    ''' <param name="densityGrid"></param>
+    ''' <returns></returns>
     Public Iterator Function GridScan(target As Image,
                                       Optional colors As String() = Nothing,
                                       Optional gridSize As Integer = 25,

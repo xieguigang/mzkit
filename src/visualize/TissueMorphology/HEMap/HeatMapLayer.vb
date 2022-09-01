@@ -1,59 +1,110 @@
 ﻿#Region "Microsoft.VisualBasic::147f18287176e5332a008a3eb84df81c, mzkit\src\visualize\MsImaging\HeatMapLayer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 5
-    '    Code Lines: 2
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 44.00 B
+' Summaries:
 
 
-    ' Module HeatMapLayer
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 5
+'    Code Lines: 2
+' Comment Lines: 0
+'   Blank Lines: 3
+'     File Size: 44.00 B
+
+
+' Module HeatMapLayer
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+
 Public Module HeatMapLayer
 
+    <Extension>
+    Public Function GetHeatMapLayer(grid As Cell(),
+                                    Optional heatmap As Layers = Layers.Density,
+                                    Optional channel As String = "black") As PixelData()
 
+        Dim objs As (obj As [Object], cell As Cell)() = Nothing
+        Dim project =
+            Function(selector As Func(Of [Object], Double))
+                Return objs _
+                    .Where(Function(i) i.obj IsNot Nothing) _
+                    .Select(Function(i)
+                                Return New PixelData With {
+                                    .Scale = selector(i.obj),
+                                    .X = i.cell.ScaleX,
+                                    .Y = i.cell.ScaleY
+                                }
+                            End Function) _
+                    .ToArray
+            End Function
+
+        Select Case Strings.LCase(channel)
+            Case "black"
+                objs = grid.Select(Function(i) (i.Black, i)).ToArray
+            Case Else
+                objs = grid _
+                    .Select(Function(i)
+                                If i.layers.ContainsKey(channel) Then
+                                    Return (i.layers(channel), i)
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
+                    .ToArray
+        End Select
+
+        Select Case heatmap
+            Case Layers.Pixels : Return project(Function(i) i.Pixels)
+            Case Layers.Density : Return project(Function(i) i.Density)
+            Case Layers.Ratio : Return project(Function(i) i.Ratio)
+            Case Else
+                Throw New NotImplementedException(heatmap.Description)
+        End Select
+    End Function
 
 End Module
+
+Public Enum Layers
+    Pixels
+    Density
+    Ratio
+End Enum
