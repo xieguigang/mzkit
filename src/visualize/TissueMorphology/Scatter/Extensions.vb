@@ -6,11 +6,19 @@ Imports Microsoft.VisualBasic.Linq
 <HideModuleName>
 Public Module Extensions
 
+    ''' <summary>
+    ''' make polygon shape object raster matrix
+    ''' </summary>
+    ''' <param name="polygons"></param>
+    ''' <param name="dimension"></param>
+    ''' <param name="label"></param>
+    ''' <param name="color"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Geometry2D(polygons As IEnumerable(Of Polygon2D),
-                               dimension As Size,
-                               label As String,
-                               color As Color) As TissueRegion
+    Public Function RasterGeometry2D(polygons As IEnumerable(Of Polygon2D),
+                                     dimension As Size,
+                                     label As String,
+                                     color As Color) As TissueRegion
 
         Dim x As New List(Of Integer)
         Dim y As New List(Of Integer)
