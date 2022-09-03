@@ -40,6 +40,21 @@ Public Module CDF
     End Function
 
     <Extension>
+    Public Function GetDimension(cdf As netCDFReader) As Size
+        If cdf.attributeExists("scan_x") AndAlso cdf.attributeExists("scan_y") Then
+            Dim scan_x As Integer = any.ToString(cdf("scan_x")).ParseInteger
+            Dim scan_y As Integer = any.ToString(cdf("scan_y")).ParseInteger
+
+            Return New Size(scan_x, scan_y)
+        Else
+            Return cdf _
+                .ReadTissueMorphology _
+                .ToArray _
+                .GetDimension
+        End If
+    End Function
+
+    <Extension>
     Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream,
                              Optional dimension As Size = Nothing,
                              Optional umap As UMAPPoint() = Nothing) As Boolean
