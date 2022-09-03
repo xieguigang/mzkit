@@ -171,6 +171,14 @@ Public Module CDF
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' target file stream will be close automatically
+    ''' </remarks>
     <Extension>
     Public Function ReadTissueMorphology(file As Stream) As TissueRegion()
         Using cdf As New netCDFReader(file)
