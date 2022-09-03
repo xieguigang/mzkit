@@ -33,6 +33,11 @@ Public Module CDF
             .Select(Function(t) t.points) _
             .IteratesALL _
             .ToArray
+
+        If allPixels.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Dim w = Aggregate p In allPixels Into Max(p.X)
         Dim h = Aggregate p In allPixels Into Max(p.Y)
 
