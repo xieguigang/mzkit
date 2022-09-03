@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
 ''' <summary>
@@ -27,7 +28,22 @@ Public Module CDF
     End Function
 
     <Extension>
-    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream, Optional umap As UMAPPoint() = Nothing) As Boolean
+    Public Function GetDimension(tissueMorphology As TissueRegion()) As Size
+        Dim allPixels As Point() = tissueMorphology _
+            .Select(Function(t) t.points) _
+            .IteratesALL _
+            .ToArray
+        Dim w = Aggregate p In allPixels Into Max(p.X)
+        Dim h = Aggregate p In allPixels Into Max(p.Y)
+
+        Return New Size(w, h)
+    End Function
+
+    <Extension>
+    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream,
+                             Optional dimension As Size = Nothing,
+                             Optional umap As UMAPPoint() = Nothing) As Boolean
+
         Using cdf As New CDFWriter(file)
             Dim attrs As New List(Of attribute)
             Dim pixels As New List(Of Integer)
@@ -39,7 +55,12 @@ Public Module CDF
             If umap Is Nothing Then
                 umap = {}
             End If
+            If dimension.IsEmpty Then
+                dimension = tissueMorphology.GetDimension
+            End If
 
+            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.INT, .value = dimension.Width})
+            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.INT, .value = dimension.Height})
             attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
             attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
             cdf.GlobalAttributes(attrs.PopAll)
