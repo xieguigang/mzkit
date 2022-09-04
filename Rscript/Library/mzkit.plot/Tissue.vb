@@ -31,4 +31,12 @@ Module Tissue
 
         Return tissue.GetHeatMapLayer(heatmap, target)
     End Function
+
+    <ExportAPI("RSD")>
+    Public Function RSD(layer As PixelData(),
+                        Optional nbags As Integer = 300,
+                        Optional nsamples As Integer = 32) As Double()
+
+        Return layer.RSD(nbags, nsamples)
+    End Function
 End Module
