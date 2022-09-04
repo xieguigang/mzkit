@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-09-02" />
+    <meta name="last-update" content="2022-09-04" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -328,9 +328,12 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>count pixels/density/etc for each ions m/z data</p>  
                 
-                    <pre><p>let <code>ionStat</code> as function(<code>raw</code> as <generic> mzPack, <code>gridSize</code> as integer = 5, <code>da</code> as double = 0.01) -> <code>&lt;generic&gt; IonStat[]</code> {
+                    <pre><p>let <code>ionStat</code> as function(<code>raw</code> as <generic> mzPack, 
+<code>grid_size</code> as integer = 5, 
+<code>da</code> as double = 0.01, 
+<code>parallel</code> as boolean = TRUE) -> <code>&lt;generic&gt; IonStat[]</code> {
     #
     # .NET API information
     #
@@ -342,7 +345,20 @@
     return call <code>R&#35;.interop_[MSI::IonStats]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>raw</code>: -
+                </li>
+<li>
+  <code>grid_size</code>: -
+                </li>
+<li>
+  <code>da</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
