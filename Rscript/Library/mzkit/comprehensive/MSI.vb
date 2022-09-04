@@ -371,9 +371,26 @@ Module MSI
         Return summary.GetBasePeakMz
     End Function
 
+    ''' <summary>
+    ''' count pixels/density/etc for each ions m/z data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="grid_size"></param>
+    ''' <param name="da"></param>
+    ''' <returns></returns>
     <ExportAPI("ionStat")>
-    Public Function IonStats(raw As mzPack, Optional gridSize As Integer = 5, Optional da As Double = 0.01) As IonStat()
-        Return IonStat.DoStat(raw, nsize:=gridSize, da:=da).ToArray
+    Public Function IonStats(raw As mzPack,
+                             Optional grid_size As Integer = 5,
+                             Optional da As Double = 0.01,
+                             Optional parallel As Boolean = True) As IonStat()
+
+        Return IonStat.DoStat(
+            raw:=raw,
+            nsize:=grid_size,
+            da:=da,
+            parallel:=parallel
+        ) _
+        .ToArray
     End Function
 
     <ExportAPI("ions_jointmatrix")>
