@@ -4,6 +4,34 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 
 This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and brought to you by BioNovoGene corporation.
 
+## ``3.5.593.3968`` Sep 1, 2022
+
+> 10.5281/zenodo.7040586
+
++ ``new`` add tissue morphology map overlaps to MSI viewer
++ ``new`` add tissue morphology map editor feature to create custom tissue region for data analysis 
++ ``new`` add HE stain image analysis module
++ ``new`` add a new general table data viewer for open microsoft excel table files 
++ ``new`` add a general data visualization module for plot data based on the table viewer content
++ ``new`` add new ggplot package for data plot pipeline task
++ ``enhancement`` add data visualization template rendering for MS-imaging plot
++ ``enhancement`` enable view multiple sample MS-imaging data
++ ``enhancement`` add online pubchem metabolite database query function for the ion feature in MSI raw data 
++ ``enhancement`` add data compatibility with the bruker SCiLS lab software
++ ``enhancement`` make improvements of the ms1 peak list data annotation function 
++ ``enhancement`` update internal metabolite database, extends database list from KEGG only to KEGG/lipidmaps/chebi
++ ``enhancement`` make the molecular networking viewer interactive
++ ``enhancement`` add ms1 peak deconvolution function to raw data viewer
++ ``enhancement`` add peak finding analysis feature to the general signal data analysis 
++ ``enhancement`` new application installer experience
++ ``enhancement`` upgrade the internal Rstudio environment from .NET4.8 assembly to .NET6.0 assembly
++ ``enhancement`` add mzwork project file for share the workspace between the device
++ ``enhancement`` make improvements of the MRM/GCMS targetted data viewer
++ ``fixed`` add fix patch script to install internal Rstudio environment
++ ``fixed`` upgrade mzPack format to version 2.0, make improvements of the data compatibility between the single sample data and multiple sample data
++ ``fixed`` make bugs fixed of the style tweaking for raw data plot viewer
++ ``fixed`` handling of the data serialization error when raw data file its file path is a windows UNC path
+
 ## ``1.32.7743.6345`` Mar 14, 2021
 
 > 10.5281/zenodo.4603277

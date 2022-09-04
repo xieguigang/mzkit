@@ -54,6 +54,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Public Module HeatMapLayer
 
@@ -99,6 +101,21 @@ Public Module HeatMapLayer
             Case Else
                 Throw New NotImplementedException(heatmap.Description)
         End Select
+    End Function
+
+    <Extension>
+    Public Function RSD(layer As PixelData(),
+                        Optional nbags As Integer = 300,
+                        Optional nsamples As Integer = 32) As Double()
+
+        Dim sampling = Bootstraping.Samples(layer, N:=nsamples, bags:=nbags).ToArray
+        Dim rsdVals As Double() = sampling _
+            .Select(Function(bag)
+                        Return bag.value.Select(Function(a) a.Scale).RSD
+                    End Function) _
+            .ToArray
+
+        Return rsdVals
     End Function
 
 End Module

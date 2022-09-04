@@ -165,8 +165,10 @@ Module TissueMorphology
     End Function
 
     <ExportAPI("writeCDF")>
-    Public Function createCDF(tissueMorphology As TissueRegion(), umap As UMAPPoint(),
+    Public Function createCDF(tissueMorphology As TissueRegion(),
                               file As Object,
+                              Optional umap As UMAPPoint() = Nothing,
+                              Optional dimension As Size = Nothing,
                               Optional env As Environment = Nothing) As Object
 
         Dim saveBuf = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
@@ -176,7 +178,11 @@ Module TissueMorphology
         End If
 
         Using buffer As Stream = saveBuf.TryCast(Of Stream)
-            Return tissueMorphology.WriteCDF(file:=buffer, umap:=umap)
+            Return tissueMorphology.WriteCDF(
+                file:=buffer,
+                umap:=umap,
+                dimension:=dimension
+            )
         End Using
     End Function
 

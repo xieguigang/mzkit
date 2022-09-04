@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
 ''' <summary>
@@ -27,7 +28,42 @@ Public Module CDF
     End Function
 
     <Extension>
-    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream, Optional umap As UMAPPoint() = Nothing) As Boolean
+    Public Function GetDimension(tissueMorphology As TissueRegion()) As Size
+        Dim allPixels As Point() = tissueMorphology _
+            .Select(Function(t) t.points) _
+            .IteratesALL _
+            .ToArray
+
+        If allPixels.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Dim w = Aggregate p In allPixels Into Max(p.X)
+        Dim h = Aggregate p In allPixels Into Max(p.Y)
+
+        Return New Size(w, h)
+    End Function
+
+    <Extension>
+    Public Function GetDimension(cdf As netCDFReader) As Size
+        If cdf.attributeExists("scan_x") AndAlso cdf.attributeExists("scan_y") Then
+            Dim scan_x As Integer = any.ToString(cdf("scan_x")).ParseInteger
+            Dim scan_y As Integer = any.ToString(cdf("scan_y")).ParseInteger
+
+            Return New Size(scan_x, scan_y)
+        Else
+            Return cdf _
+                .ReadTissueMorphology _
+                .ToArray _
+                .GetDimension
+        End If
+    End Function
+
+    <Extension>
+    Public Function WriteCDF(tissueMorphology As TissueRegion(), file As Stream,
+                             Optional dimension As Size = Nothing,
+                             Optional umap As UMAPPoint() = Nothing) As Boolean
+
         Using cdf As New CDFWriter(file)
             Dim attrs As New List(Of attribute)
             Dim pixels As New List(Of Integer)
@@ -39,7 +75,12 @@ Public Module CDF
             If umap Is Nothing Then
                 umap = {}
             End If
+            If dimension.IsEmpty Then
+                dimension = tissueMorphology.GetDimension
+            End If
 
+            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.INT, .value = dimension.Width})
+            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.INT, .value = dimension.Height})
             attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
             attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
             cdf.GlobalAttributes(attrs.PopAll)
@@ -135,6 +176,14 @@ Public Module CDF
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' target file stream will be close automatically
+    ''' </remarks>
     <Extension>
     Public Function ReadTissueMorphology(file As Stream) As TissueRegion()
         Using cdf As New netCDFReader(file)
