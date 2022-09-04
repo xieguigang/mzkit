@@ -7,6 +7,16 @@ Imports Microsoft.VisualBasic.Linq
 Public Module Extensions
 
     <Extension>
+    Public Iterator Function ScalePixels(region As IEnumerable(Of TissueRegion), newDims As Size, Optional currentDims As Size = Nothing) As IEnumerable(Of TissueRegion)
+
+    End Function
+
+    <Extension>
+    Public Function ScalePixels(region As TissueRegion, currentDims As Size, newDims As Size) As TissueRegion
+
+    End Function
+
+    <Extension>
     Public Function Geometry2D(polygons As IEnumerable(Of Polygon2D),
                                dimension As Size,
                                label As String,
