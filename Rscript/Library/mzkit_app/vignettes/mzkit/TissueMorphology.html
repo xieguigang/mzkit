@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-09-01" />
+    <meta name="last-update" content="2022-09-06" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -122,8 +122,9 @@
                       
                 
                     <pre><p>let <code>writeCDF</code> as function(<code>tissueMorphology</code> as <generic> TissueRegion[], 
-<code>umap</code> as <generic> UMAPPoint[], 
 <code>file</code> as any, 
+<code>umap</code> as <generic> UMAPPoint[] = <code>&lt;NULL&gt;</code>, 
+<code>dimension</code> as <generic> Size = <code>&lt;NULL&gt;</code>, 
 [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
     #
     # .NET API information
