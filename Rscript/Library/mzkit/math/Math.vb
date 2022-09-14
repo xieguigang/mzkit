@@ -268,6 +268,20 @@ Module MzMath
         Return Spectra.SpectrumTreeCluster.SSMCompares(errors.TryCast(Of Tolerance), Nothing, equals_score, gt_score, score_aggregate)
     End Function
 
+    <ExportAPI("jaccard")>
+    Public Function jaccard(query As Double(), ref As Double(),
+                            Optional tolerance As Object = "da:0.3",
+                            Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Return GlobalAlignment.JaccardIndex(query, ref, mzErr)
+    End Function
+
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,
