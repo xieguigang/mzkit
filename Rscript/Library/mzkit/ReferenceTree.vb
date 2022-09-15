@@ -61,13 +61,17 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("jaccardSet")>
-    Public Function createJaccardSet(libname As String(), mz As Double(), rt As Double(), mzset As String()) As JaccardSearch
+    Public Function createJaccardSet(libname As String(),
+                                     mz As Double(),
+                                     mzset As String(),
+                                     Optional rt As Double() = Nothing) As JaccardSearch
+
         Dim dataset As JaccardSet() = libname _
             .Select(Function(a, i)
                         Return New JaccardSet With {
                             .libname = a,
                             .mz1 = mz(i),
-                            .rt = rt(i),
+                            .rt = rt.ElementAtOrDefault(i),
                             .ms2 = mzset(i) _
                                 .StringSplit(",\s*") _
                                 .Select(AddressOf Conversion.Val) _
