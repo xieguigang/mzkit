@@ -73,7 +73,10 @@ Module ReferenceTreePkg
                             .mz1 = mz(i),
                             .rt = rt.ElementAtOrDefault(i),
                             .ms2 = mzset(i) _
-                                .StringSplit(",\s*") _
+                                .Replace("["c, "") _
+                                .Replace("]"c, "") _
+                                .Replace(" "c, "") _
+                                .Split(","c) _
                                 .Select(AddressOf Conversion.Val) _
                                 .ToArray
                         }
