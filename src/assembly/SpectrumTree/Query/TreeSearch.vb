@@ -18,14 +18,23 @@ Public Class JaccardSet : Implements INamedValue
     Public Property ms2 As Double()
     Public Property rt As Double
 
+    Public Overrides Function ToString() As String
+        Return libname
+    End Function
+
 End Class
 
-Public Class JaccardSearch : Inherits Search
+Public Class JaccardSearch : Inherits Ms2Search
 
     ''' <summary>
     ''' the ms2 fragment data pack
     ''' </summary>
     ReadOnly mzSet As JaccardSet()
+
+    Sub New(ref As IEnumerable(Of JaccardSet))
+        Call MyBase.New
+        mzSet = ref.ToArray
+    End Sub
 
     Public Overrides Function Search(centroid() As ms2, mz1 As Double) As ClusterHit
         Dim query As Double() = centroid.Select(Function(i) i.mz).ToArray
@@ -75,15 +84,44 @@ Public Class JaccardSearch : Inherits Search
         End If
     End Function
 
-    Private Function score(centroid() As ms2, ref As JaccardSet, itr As Double(), uni As Double()) As (jaccard As Double, forward As Double, reverse As Double, alignment As SSM2MatrixFragment())
+    ''' <summary>
+    ''' create jaccard data alignment result
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <param name="ref"></param>
+    ''' <param name="itr"></param>
+    ''' <param name="uni"></param>
+    ''' <returns></returns>
+    Private Function score(centroid() As ms2,
+                           ref As JaccardSet,
+                           itr As Double(),
+                           uni As Double()) As (jaccard As Double, forward As Double, reverse As Double, alignment As SSM2MatrixFragment())
 
+        Dim jaccard As Double = itr.Length / uni.Length
+        Dim hits = itr _
+            .Select(Function(mzi)
+                        Return centroid _
+                            .Where(Function(m) da(m.mz, mzi)) _
+                            .OrderByDescending(Function(m) m.intensity) _
+                            .First
+                    End Function) _
+            .ToArray
+        Dim cos = GlobalAlignment.TwoDirectionSSM(centroid, hits, da)
+        Dim align = GlobalAlignment.CreateAlignment(centroid, hits, da).ToArray
+
+        Return (jaccard, cos.forward, cos.reverse, align)
     End Function
 End Class
 
-Public MustInherit Class Search
+Public MustInherit Class Ms2Search
 
-    Protected da As Tolerance
-    Protected intocutoff As RelativeIntensityCutoff
+    Protected ReadOnly da As Tolerance
+    Protected ReadOnly intocutoff As RelativeIntensityCutoff
+
+    Sub New(Optional da As Double = 0.3, Optional intocutoff As Double = 0.05)
+        Me.da = Tolerance.DeltaMass(da)
+        Me.intocutoff = intocutoff
+    End Sub
 
     Public Function Centroid(matrix As ms2()) As ms2()
         Return matrix.Centroid(da, intocutoff).ToArray
@@ -93,7 +131,7 @@ Public MustInherit Class Search
 
 End Class
 
-Public Class TreeSearch : Inherits Search
+Public Class TreeSearch : Inherits Ms2Search
     Implements IDisposable
 
     ReadOnly bin As BinaryDataReader
@@ -104,6 +142,8 @@ Public Class TreeSearch : Inherits Search
     Dim disposedValue As Boolean
 
     Sub New(stream As Stream)
+        Call MyBase.New
+
         bin = New BinaryDataReader(stream, encoding:=Encodings.ASCII) With {
             .ByteOrder = ByteOrder.LittleEndian
         }
@@ -137,8 +177,6 @@ Public Class TreeSearch : Inherits Search
 #Enable Warning
         Next
 
-        da = Tolerance.DeltaMass(0.3)
-        intocutoff = 0.05
         is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
         ' see dev notes about the mass tolerance in 
         ' MSSearch module
