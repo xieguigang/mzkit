@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-09-14" />
+    <meta name="last-update" content="2022-09-15" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -106,6 +106,34 @@
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
+  <h2 id="jaccardSet">
+    <a href="./spectrumTree/jaccardSet.html">jaccardSet</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>jaccardSet</code> as function(<code>libname</code> as string, 
+<code>mz</code> as double, 
+<code>mzset</code> as string, 
+<code>rt</code> as double = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; JaccardSearch</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.ReferenceTreePkg
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "spectrumTree"
+    #
+    return call <code>R&#35;.interop_[ReferenceTreePkg::createJaccardSet]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
   <h2 id="query">
     <a href="./spectrumTree/query.html">query</a>
   </h2>
@@ -113,7 +141,7 @@
   <p>
                       
                 
-                    <pre><p>let <code>query</code> as function(<code>tree</code> as <generic> TreeSearch, 
+                    <pre><p>let <code>query</code> as function(<code>tree</code> as <generic> Ms2Search, 
 <code>x</code> as any, 
 <code>maxdepth</code> as integer = 1024, 
 <code>treeSearch</code> as boolean = FALSE, 
