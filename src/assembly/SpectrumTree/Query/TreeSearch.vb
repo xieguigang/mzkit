@@ -30,10 +30,13 @@ Public Class JaccardSearch : Inherits Ms2Search
     ''' the ms2 fragment data pack
     ''' </summary>
     ReadOnly mzSet As JaccardSet()
+    ReadOnly cutoff As Double
 
-    Sub New(ref As IEnumerable(Of JaccardSet))
+    Sub New(ref As IEnumerable(Of JaccardSet), cutoff As Double)
         Call MyBase.New
-        mzSet = ref.ToArray
+
+        Me.mzSet = ref.ToArray
+        Me.cutoff = cutoff
     End Sub
 
     Public Overrides Function Search(centroid() As ms2, mz1 As Double) As ClusterHit
@@ -46,7 +49,7 @@ Public Class JaccardSearch : Inherits Ms2Search
 
                         Return (i, itr, uni)
                     End Function) _
-            .Where(Function(j) j.itr.Length / j.uni.Length > 0.01) _
+            .Where(Function(j) j.itr.Length / j.uni.Length > cutoff) _
             .ToArray
 
         If jaccard.Length > 0 Then

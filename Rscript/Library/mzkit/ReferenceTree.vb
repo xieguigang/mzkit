@@ -64,7 +64,9 @@ Module ReferenceTreePkg
     Public Function createJaccardSet(libname As String(),
                                      mz As Double(),
                                      mzset As String(),
-                                     Optional rt As Double() = Nothing) As JaccardSearch
+                                     Optional rt As Double() = Nothing,
+                                     Optional cutoff As Double = 0.1,
+                                     Optional env As Environment = Nothing) As JaccardSearch
 
         Dim dataset As JaccardSet() = libname _
             .Select(Function(a, i)
@@ -82,8 +84,11 @@ Module ReferenceTreePkg
                         }
                     End Function) _
             .ToArray
+        Dim println = env.WriteLineHandler
 
-        Return New JaccardSearch(dataset)
+        Call println($"Do jaccard match with cutoff value: {cutoff}!")
+
+        Return New JaccardSearch(dataset, cutoff)
     End Function
 
     <ExportAPI("query")>
