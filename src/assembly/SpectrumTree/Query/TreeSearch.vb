@@ -2,18 +2,102 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
-Public Class TreeSearch : Implements IDisposable
+Public Class JaccardSet : Implements INamedValue
+
+    Public Property libname As String Implements INamedValue.Key
+    Public Property mz1 As Double
+    Public Property ms2 As Double()
+    Public Property rt As Double
+
+End Class
+
+Public Class JaccardSearch : Inherits Search
+
+    ''' <summary>
+    ''' the ms2 fragment data pack
+    ''' </summary>
+    ReadOnly mzSet As JaccardSet()
+
+    Public Overrides Function Search(centroid() As ms2, mz1 As Double) As ClusterHit
+        Dim query As Double() = centroid.Select(Function(i) i.mz).ToArray
+        Dim subset = mzSet.Where(Function(i) da(mz1, i.mz1)).ToArray
+        Dim jaccard = subset _
+            .Select(Function(i)
+                        Dim itr = GlobalAlignment.MzIntersect(i.ms2, query, da)
+                        Dim uni = GlobalAlignment.MzUnion(i.ms2, query, da)
+
+                        Return (i, itr, uni)
+                    End Function) _
+            .Where(Function(j) j.itr.Length / j.uni.Length > 0.01) _
+            .ToArray
+
+        If jaccard.Length > 0 Then
+            Dim scores = jaccard.Select(Function(j) score(centroid, j.i, j.itr, j.uni)).ToArray
+            Dim i As Integer = which.Max(scores.Select(Function(s) stdNum.Max(stdNum.Min(s.forward, s.reverse), s.jaccard)))
+            Dim alignments = scores _
+                .Select(Function(a) a.alignment) _
+                .IteratesALL _
+                .GroupBy(Function(a) a.mz, da) _
+                .Select(Function(a)
+                            Return New SSM2MatrixFragment With {
+                                .mz = Val(a.name),
+                                .da = da.DeltaTolerance,
+                                .query = a.First.query,
+                                .ref = a.Select(Function(ai) ai.ref).Average
+                            }
+                        End Function) _
+                .ToArray
+
+            Return New ClusterHit With {
+                .jaccard = scores.Select(Function(a) a.jaccard).Average,
+                .ClusterForward = scores.Select(Function(a) a.forward).ToArray,
+                .ClusterReverse = scores.Select(Function(a) a.reverse).ToArray,
+                .ClusterJaccard = scores.Select(Function(a) a.jaccard).ToArray,
+                .ClusterId = jaccard.Select(Function(a) a.i.libname).ToArray,
+                .ClusterRt = jaccard.Select(Function(a) a.i.rt).ToArray,
+                .Id = jaccard(i).i.libname,
+                .queryMz = mz1,
+                .forward = .ClusterForward.Average,
+                .reverse = .ClusterReverse.Average,
+                .representive = alignments
+            }
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Private Function score(centroid() As ms2, ref As JaccardSet, itr As Double(), uni As Double()) As (jaccard As Double, forward As Double, reverse As Double, alignment As SSM2MatrixFragment())
+
+    End Function
+End Class
+
+Public MustInherit Class Search
+
+    Protected da As Tolerance
+    Protected intocutoff As RelativeIntensityCutoff
+
+    Public Function Centroid(matrix As ms2()) As ms2()
+        Return matrix.Centroid(da, intocutoff).ToArray
+    End Function
+
+    Public MustOverride Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+
+End Class
+
+Public Class TreeSearch : Inherits Search
+    Implements IDisposable
 
     ReadOnly bin As BinaryDataReader
     ReadOnly tree As BlockNode()
-    ReadOnly da As Tolerance
-    ReadOnly intocutoff As RelativeIntensityCutoff
     ReadOnly is_binary As Boolean
     ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
 
@@ -89,17 +173,13 @@ Public Class TreeSearch : Implements IDisposable
         End If
     End Function
 
-    Public Function Centroid(matrix As ms2()) As ms2()
-        Return matrix.Centroid(da, intocutoff).ToArray
-    End Function
-
     ''' <summary>
     ''' populate the top cluster
     ''' </summary>
     ''' <param name="centroid"></param>
     ''' <param name="mz1"></param>
     ''' <returns></returns>
-    Public Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+    Public Overrides Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
         Dim candidates As BlockNode() = QueryByMz(mz1)
         Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates.ElementAtOrNull(Scan0))
 
@@ -125,7 +205,7 @@ Public Class TreeSearch : Implements IDisposable
     ''' <param name="centroid"></param>
     ''' <param name="maxdepth"></param>
     ''' <returns></returns>
-    Public Function Search(centroid As ms2(), Optional maxdepth As Integer = 1024) As ClusterHit
+    Public Overloads Function Search(centroid As ms2(), Optional maxdepth As Integer = 1024) As ClusterHit
         If tree.IsNullOrEmpty Then
             Return Nothing
         End If
