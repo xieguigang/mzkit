@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-09-15" />
+    <meta name="last-update" content="2022-09-16" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -116,7 +116,9 @@
                     <pre><p>let <code>jaccardSet</code> as function(<code>libname</code> as string, 
 <code>mz</code> as double, 
 <code>mzset</code> as string, 
-<code>rt</code> as double = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; JaccardSearch</code> {
+<code>rt</code> as double = <code>&lt;NULL&gt;</code>, 
+<code>cutoff</code> as double = 0.1, 
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; JaccardSearch</code> {
     #
     # .NET API information
     #
