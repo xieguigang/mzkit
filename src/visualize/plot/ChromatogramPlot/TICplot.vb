@@ -58,6 +58,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -231,10 +232,18 @@ Public Class TICplot : Inherits Plot
                 .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Rectangle
             }
-            peakTimes += New NamedValue(Of ChromatogramTick) With {
-                .Name = line.name,
-                .Value = chromatogram(which.Max(chromatogram.Shadows!Intensity))
-            }
+
+            If theme.drawLabels Then
+                Dim data As New MzGroup With {.mz = 0, .XIC = chromatogram}
+                Dim peaks = data.GetPeakGroups({5, 60}).ToArray
+
+                peakTimes += From ROI As PeakFeature
+                             In peaks
+                             Select New NamedValue(Of ChromatogramTick) With {
+                                 .Name = ROI.rt.ToString("F1"),
+                                 .Value = New ChromatogramTick With {.Intensity = ROI.maxInto, .Time = ROI.rt}
+                             }
+            End If
 
             Dim bottom% = canvas.Bottom - 6
             Dim viz = g
