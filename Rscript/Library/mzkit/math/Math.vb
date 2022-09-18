@@ -268,6 +268,42 @@ Module MzMath
         Return Spectra.SpectrumTreeCluster.SSMCompares(errors.TryCast(Of Tolerance), Nothing, equals_score, gt_score, score_aggregate)
     End Function
 
+    <ExportAPI("jaccard")>
+    Public Function jaccard(query As Double(), ref As Double(),
+                            Optional tolerance As Object = "da:0.3",
+                            Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Return GlobalAlignment.JaccardIndex(query, ref, mzErr)
+    End Function
+
+    <ExportAPI("jaccardSet")>
+    Public Function jaccardSet(query As Double(), ref As Double(),
+                               Optional tolerance As Object = "da:0.3",
+                               Optional env As Environment = Nothing)
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim union As Double() = GlobalAlignment.MzUnion(query, ref, mzErr)
+        Dim intersects As Double() = GlobalAlignment.MzIntersect(query, ref, mzErr)
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"intersect", intersects},
+                {"union", union}
+            }
+        }
+    End Function
+
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,

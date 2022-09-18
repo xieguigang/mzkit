@@ -60,9 +60,40 @@ Module ReferenceTreePkg
         Return New TreeSearch(buffer.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("jaccardSet")>
+    Public Function createJaccardSet(libname As String(),
+                                     mz As Double(),
+                                     mzset As String(),
+                                     Optional rt As Double() = Nothing,
+                                     Optional cutoff As Double = 0.1,
+                                     Optional env As Environment = Nothing) As JaccardSearch
+
+        Dim dataset As JaccardSet() = libname _
+            .Select(Function(a, i)
+                        Return New JaccardSet With {
+                            .libname = a,
+                            .mz1 = mz(i),
+                            .rt = rt.ElementAtOrDefault(i),
+                            .ms2 = mzset(i) _
+                                .Replace("["c, "") _
+                                .Replace("]"c, "") _
+                                .Replace(" "c, "") _
+                                .Split(","c) _
+                                .Select(AddressOf Conversion.Val) _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
+        Dim println = env.WriteLineHandler
+
+        Call println($"Do jaccard match with cutoff value: {cutoff}!")
+
+        Return New JaccardSearch(dataset, cutoff)
+    End Function
+
     <ExportAPI("query")>
     <RApiReturn(GetType(ClusterHit))>
-    Public Function QueryTree(tree As TreeSearch, x As Object,
+    Public Function QueryTree(tree As Ms2Search, x As Object,
                               Optional maxdepth As Integer = 1024,
                               Optional treeSearch As Boolean = False,
                               Optional env As Environment = Nothing) As Object
@@ -79,7 +110,7 @@ Module ReferenceTreePkg
     End Function
 
     <Extension>
-    Private Function QuerySingle(x As LibraryMatrix, tree As TreeSearch,
+    Private Function QuerySingle(x As LibraryMatrix, tree As Ms2Search,
                                  Optional maxdepth As Integer = 1024,
                                  Optional treeSearch As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
@@ -91,7 +122,7 @@ Module ReferenceTreePkg
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
         End If
         If treeSearch Then
-            result = tree.Search(centroid, maxdepth:=maxdepth)
+            result = DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)
         Else
             result = tree.Search(centroid, mz1:=x.parentMz)
         End If
@@ -105,7 +136,7 @@ Module ReferenceTreePkg
     End Function
 
     <Extension>
-    Private Function QuerySingle(x As PeakMs2, tree As TreeSearch,
+    Private Function QuerySingle(x As PeakMs2, tree As Ms2Search,
                                  Optional maxdepth As Integer = 1024,
                                  Optional treeSearch As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
@@ -117,7 +148,7 @@ Module ReferenceTreePkg
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
         End If
         If treeSearch Then
-            result = tree.Search(centroid, maxdepth:=maxdepth)
+            result = DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)
         Else
             result = tree.Search(centroid, mz1:=x.mz)
         End If
@@ -132,7 +163,7 @@ Module ReferenceTreePkg
     End Function
 
     <Extension>
-    Private Function QueryTree(input As list, tree As TreeSearch,
+    Private Function QueryTree(input As list, tree As Ms2Search,
                                Optional maxdepth As Integer = 1024,
                                Optional treeSearch As Boolean = False,
                                Optional env As Environment = Nothing) As Object

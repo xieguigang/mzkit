@@ -169,8 +169,7 @@ Namespace Spectra
             Return JaccardIndex(mzx, mzy, tolerance)
         End Function
 
-        Public Function JaccardIndex(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double
-            Dim union As Double() = MzUnion(mzx, mzy, tolerance)
+        Public Function MzIntersect(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
             Dim intersects As New List(Of Double)
 
             For Each xi In mzx
@@ -182,10 +181,17 @@ Namespace Spectra
                 Next
             Next
 
-            Return intersects.Count / union.Length
+            Return intersects.ToArray
         End Function
 
-        Private Function MzUnion(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
+        Public Function JaccardIndex(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double
+            Dim union As Double() = MzUnion(mzx, mzy, tolerance)
+            Dim intersects As Double() = MzIntersect(mzx, mzy, tolerance)
+
+            Return intersects.Length / union.Length
+        End Function
+
+        Public Function MzUnion(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
             Return mzx _
                 .JoinIterates(mzy) _
                 .GroupBy(Function(mz) mz, tolerance.Equals) _
