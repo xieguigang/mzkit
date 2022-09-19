@@ -66,7 +66,7 @@ Public Module GridScanner
                                       Optional repeats As Integer = 3,
                                       Optional bag_size As Integer = 32,
                                       Optional mzdiff As Double = 0.01,
-                                      Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
+                                      Optional equals As Double = 0.6) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.MS.Select(Function(i) DirectCast(i, IMsScan)),
@@ -93,11 +93,11 @@ Public Module GridScanner
             grid2 _
             .PopulateIonMatrix(region, repeats, bag_size, mzdiff) _
             .ToDictionary(Function(e) e.ID)
-        Dim align As New CorrelationAligner(matrix, equals)
+        Dim align As New CorrelationAligner(matrix)
         Dim root As New ClusterTree
 
         For Each key As String In matrix.Keys
-            Call ClusterTree.Add(root, key, align, 0.8)
+            Call ClusterTree.Add(root, key, align, equals)
         Next
 
         For Each cluster As ClusterTree In ClusterTree.GetClusters(root)
@@ -119,9 +119,9 @@ Public Module GridScanner
         ReadOnly matrix As Dictionary(Of String, EntityClusterModel)
         ReadOnly sampling As String()
 
-        Public Sub New(matrix As Dictionary(Of String, EntityClusterModel), equals As Double)
-            ' gt parameter is no used
-            Call MyBase.New(equals, gt:=-1)
+        Public Sub New(matrix As Dictionary(Of String, EntityClusterModel))
+            ' equals/gt parameter is no used
+            Call MyBase.New(equals:=-1, gt:=-1)
 
             Me.matrix = matrix
             Me.sampling = matrix.Values _
