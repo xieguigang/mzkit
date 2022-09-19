@@ -4,22 +4,34 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Module GridScanner
 
+    ''' <summary>
+    ''' populate ion co-localization cluster data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="grid_width"></param>
+    ''' <param name="grid_height"></param>
+    ''' <param name="repeats"></param>
+    ''' <param name="bag_size"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="equals"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function IonColocalization(raw As mzPack,
-                                      Optional grid_width As Integer = 5,
-                                      Optional grid_height As Integer = 5,
-                                      Optional repeats As Integer = 3,
-                                      Optional bag_size As Integer = 32,
-                                      Optional mzdiff As Double = 0.01) As IEnumerable
+    Public Iterator Function IonColocalization(raw As mzPack,
+                                               Optional grid_width As Integer = 5,
+                                               Optional grid_height As Integer = 5,
+                                               Optional repeats As Integer = 3,
+                                               Optional bag_size As Integer = 32,
+                                               Optional mzdiff As Double = 0.01,
+                                               Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
 
@@ -27,11 +39,52 @@ Public Module GridScanner
         grid_height = grid2.height / grid_height
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
-        Dim matrix = grid2 _
+        Dim matrix As Dictionary(Of String, EntityClusterModel) =
+            grid2 _
             .PopulateIonMatrix(region, repeats, bag_size, mzdiff) _
-            .ToArray
+            .ToDictionary(Function(e) e.ID)
+        Dim align As New CorrelationAligner(matrix, equals)
+        Dim root As New ClusterTree
 
+        For Each key As String In matrix.Keys
+            Call ClusterTree.Add(root, key, align, 0.8)
+        Next
+
+        For Each cluster As ClusterTree In ClusterTree.GetClusters(root)
+            Dim obj = matrix(cluster.Data)
+
+            obj.Cluster = cluster.Data
+            Yield obj
+
+            For Each id As String In cluster.Members
+                obj = matrix(id)
+                obj.Cluster = cluster.Data
+                Yield obj
+            Next
+        Next
     End Function
+
+    Private Class CorrelationAligner : Inherits ComparisonProvider
+
+        ReadOnly matrix As Dictionary(Of String, EntityClusterModel)
+        ReadOnly sampling As String()
+
+        Public Sub New(matrix As Dictionary(Of String, EntityClusterModel), equals As Double)
+            ' gt parameter is no used
+            Call MyBase.New(equals, gt:=-1)
+
+            Me.matrix = matrix
+            Me.sampling = matrix.Values _
+                .First _
+                .Properties _
+                .Keys _
+                .ToArray
+        End Sub
+
+        Public Overrides Function GetSimilarity(x As String, y As String) As Double
+            Return matrix(x)(sampling).Pearson(matrix(y)(sampling))
+        End Function
+    End Class
 
     <Extension>
     Private Iterator Function PopulateIonMatrix(grid2 As Grid(Of ScanMS1),
