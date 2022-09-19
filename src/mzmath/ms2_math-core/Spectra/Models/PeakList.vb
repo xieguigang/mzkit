@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
 Namespace Spectra
 
@@ -93,4 +94,9 @@ Namespace Spectra
         End Sub
 
     End Class
+
+    Public Interface IMsScan
+        Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+        Function GetMs() As IEnumerable(Of ms2)
+    End Interface
 End Namespace

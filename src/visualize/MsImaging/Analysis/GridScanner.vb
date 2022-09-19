@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -25,20 +26,69 @@ Public Module GridScanner
     ''' <param name="equals"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function IonColocalization(raw As mzPack,
-                                               Optional grid_width As Integer = 5,
-                                               Optional grid_height As Integer = 5,
-                                               Optional repeats As Integer = 3,
-                                               Optional bag_size As Integer = 32,
-                                               Optional mzdiff As Double = 0.01,
-                                               Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
+    Public Function IonColocalization(raw As IEnumerable(Of PixelScan),
+                                      Optional grid_width As Integer = 5,
+                                      Optional grid_height As Integer = 5,
+                                      Optional repeats As Integer = 3,
+                                      Optional bag_size As Integer = 32,
+                                      Optional mzdiff As Double = 0.01,
+                                      Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
 
-        Dim grid2 = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
+        Dim grid2 = Grid(Of IMsScan).Create(
+            data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
+            getX:=Function(scan) DirectCast(scan, PixelScan).X,
+            getY:=Function(scan) DirectCast(scan, PixelScan).Y
+        )
 
         grid_width = grid2.width / grid_width
         grid_height = grid2.height / grid_height
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
+
+        Return grid2.PopulateClusters(region, repeats, bag_size, mzdiff, equals)
+    End Function
+
+    ''' <summary>
+    ''' populate ion co-localization cluster data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="grid_width"></param>
+    ''' <param name="grid_height"></param>
+    ''' <param name="repeats"></param>
+    ''' <param name="bag_size"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="equals"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IonColocalization(raw As mzPack,
+                                      Optional grid_width As Integer = 5,
+                                      Optional grid_height As Integer = 5,
+                                      Optional repeats As Integer = 3,
+                                      Optional bag_size As Integer = 32,
+                                      Optional mzdiff As Double = 0.01,
+                                      Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
+
+        Dim grid2 = Grid(Of IMsScan).Create(
+            data:=raw.MS.Select(Function(i) DirectCast(i, IMsScan)),
+            getPixel:=Function(scan) DirectCast(scan, ScanMS1).GetMSIPixel
+        )
+
+        grid_width = grid2.width / grid_width
+        grid_height = grid2.height / grid_height
+
+        Dim region As New Size(grid_width / 2, grid_height / 2)
+
+        Return grid2.PopulateClusters(region, repeats, bag_size, mzdiff, equals)
+    End Function
+
+    <Extension>
+    Private Iterator Function PopulateClusters(grid2 As Grid(Of IMsScan),
+                                               region As Size,
+                                               repeats As Integer,
+                                               bag_size As Integer,
+                                               mzdiff As Double,
+                                               equals As Double) As IEnumerable(Of EntityClusterModel)
+
         Dim matrix As Dictionary(Of String, EntityClusterModel) =
             grid2 _
             .PopulateIonMatrix(region, repeats, bag_size, mzdiff) _
@@ -87,14 +137,14 @@ Public Module GridScanner
     End Class
 
     <Extension>
-    Private Iterator Function PopulateIonMatrix(grid2 As Grid(Of ScanMS1),
+    Private Iterator Function PopulateIonMatrix(grid2 As Grid(Of IMsScan),
                                                 region As Size,
                                                 repeats As Integer,
                                                 bag_size As Integer,
                                                 mzdiff As Double) As IEnumerable(Of EntityClusterModel)
 
-        Dim blocks As New Dictionary(Of String, SeqValue(Of ScanMS1())())
-        Dim points As ScanMS1()
+        Dim blocks As New Dictionary(Of String, SeqValue(Of IMsScan())())
+        Dim points As IMsScan()
         Dim grid_width = region.Width * 2
         Dim grid_height = region.Height * 2
 
@@ -132,7 +182,7 @@ Public Module GridScanner
             For Each scan In blocks
                 For Each group In scan.Value
                     ion($"{scan.Key}-{group.i}") = group.value _
-                        .Select(Function(p) p.GetIntensity(mz.mz, mzErr)) _
+                        .Select(Function(p) p.GetMzIonIntensity(mz.mz, mzErr)) _
                         .Average
                 Next
             Next

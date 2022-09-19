@@ -65,6 +65,7 @@ Namespace mzData.mzWebCache
     Public Class MSScan : Inherits PeakList
         Implements IRetentionTime
         Implements INamedValue
+        Implements IMsScan
 
         Public Overridable Property rt As Double Implements IRetentionTime.rt
         Public Property scan_id As String Implements INamedValue.Key
@@ -79,7 +80,7 @@ Namespace mzData.mzWebCache
         ''' <param name="mz"></param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
-        Public Function GetIntensity(mz As Double, tolerance As Tolerance) As Integer
+        Public Function GetIntensity(mz As Double, tolerance As Tolerance) As Double Implements IMsScan.GetMzIonIntensity
             Dim max As Double = 0
 
             For i As Integer = 0 To Me.mz.Length - 1
@@ -97,7 +98,7 @@ Namespace mzData.mzWebCache
         ''' create matrix from [<see cref="mz"/>...] and [<see cref="into"/>...] these two vector
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetMs() As IEnumerable(Of ms2)
+        Public Iterator Function GetMs() As IEnumerable(Of ms2) Implements IMsScan.GetMs
             If mz Is Nothing Then
                 Return
             End If

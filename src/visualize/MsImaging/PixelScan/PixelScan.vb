@@ -64,7 +64,7 @@ Namespace Pixel
     ''' <summary>
     ''' the abstract model of pixel point [x,y] and method for get ms data vector
     ''' </summary>
-    Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D
+    Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D, IMsScan
 
         Dim disposedValue As Boolean
 
@@ -80,7 +80,7 @@ Namespace Pixel
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
         Public MustOverride Function GetMzIonIntensity() As Double()
 
-        Public Overridable Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+        Public Overridable Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double Implements IMsScan.GetMzIonIntensity
             Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray
 
             If allMatched.Length = 0 Then
@@ -96,7 +96,7 @@ Namespace Pixel
             Return $"[{X},{Y}]"
         End Function
 
-        Protected Friend MustOverride Function GetMsPipe() As IEnumerable(Of ms2)
+        Protected Friend MustOverride Function GetMsPipe() As IEnumerable(Of ms2) Implements IMsScan.GetMs
         Protected Friend MustOverride Sub release()
 
         Private Sub Dispose(disposing As Boolean)
