@@ -96,7 +96,8 @@ Namespace Spectra
     End Class
 
     Public Interface IMsScan
-        Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+
         Function GetMs() As IEnumerable(Of ms2)
+        Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
     End Interface
 End Namespace
