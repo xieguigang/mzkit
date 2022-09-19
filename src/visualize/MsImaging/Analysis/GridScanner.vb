@@ -8,6 +8,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
@@ -31,8 +32,8 @@ Public Module GridScanner
                                       Optional grid_height As Integer = 5,
                                       Optional repeats As Integer = 3,
                                       Optional bag_size As Integer = 32,
-                                      Optional mzdiff As Double = 0.01,
-                                      Optional equals As Double = 0.8) As IEnumerable(Of EntityClusterModel)
+                                      Optional mzdiff As Double = 0.1,
+                                      Optional equals As Double = 0.6) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
@@ -65,7 +66,7 @@ Public Module GridScanner
                                       Optional grid_height As Integer = 5,
                                       Optional repeats As Integer = 3,
                                       Optional bag_size As Integer = 32,
-                                      Optional mzdiff As Double = 0.01,
+                                      Optional mzdiff As Double = 0.1,
                                       Optional equals As Double = 0.6) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
@@ -95,6 +96,7 @@ Public Module GridScanner
             .ToDictionary(Function(e) e.ID)
         Dim align As New CorrelationAligner(matrix)
         Dim root As New ClusterTree
+        Dim i As Integer = 1
 
         For Each key As String In matrix.Keys
             Call ClusterTree.Add(root, key, align, equals)
@@ -103,14 +105,16 @@ Public Module GridScanner
         For Each cluster As ClusterTree In ClusterTree.GetClusters(root)
             Dim obj = matrix(cluster.Data)
 
-            obj.Cluster = cluster.Data
+            obj.Cluster = "group_" & i
             Yield obj
 
             For Each id As String In cluster.Members
                 obj = matrix(id)
-                obj.Cluster = cluster.Data
+                obj.Cluster = "group_" & i
                 Yield obj
             Next
+
+            i += 1
         Next
     End Function
 
