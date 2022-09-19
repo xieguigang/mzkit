@@ -58,6 +58,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -231,10 +232,18 @@ Public Class TICplot : Inherits Plot
                 .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Rectangle
             }
-            peakTimes += New NamedValue(Of ChromatogramTick) With {
-                .Name = line.name,
-                .Value = chromatogram(which.Max(chromatogram.Shadows!Intensity))
-            }
+
+            If theme.drawLabels Then
+                Dim data As New MzGroup With {.mz = 0, .XIC = chromatogram}
+                Dim peaks = data.GetPeakGroups({5, 60}).ToArray
+
+                peakTimes += From ROI As PeakFeature
+                             In peaks
+                             Select New NamedValue(Of ChromatogramTick) With {
+                                 .Name = ROI.rt.ToString("F1"),
+                                 .Value = New ChromatogramTick With {.Intensity = ROI.maxInto, .Time = ROI.rt}
+                             }
+            End If
 
             Dim bottom% = canvas.Bottom - 6
             Dim viz = g
@@ -306,6 +315,11 @@ Public Class TICplot : Inherits Plot
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
             Dim location As PointF = scaler.Translate(ion.Value)
 
+            location = New PointF With {
+                .X = location.X - labelSize.Width / 2,
+                .Y = location.Y - labelSize.Height * 1.0125
+            }
+
             Yield New Label With {
                 .height = labelSize.Height,
                 .width = labelSize.Width,
@@ -321,17 +335,22 @@ Public Class TICplot : Inherits Plot
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
-        Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
-            .Labels(labels) _
-            .Anchors(anchors) _
-            .Width(rect.Width) _
-            .Height(rect.Height) _
-            .Start(showProgress:=False, nsweeps:=labelLayoutTicks)
+        If labelLayoutTicks > 0 Then
+            Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
+                .Labels(labels) _
+                .Anchors(anchors) _
+                .Width(rect.Width) _
+                .Height(rect.Height) _
+                .Start(showProgress:=False, nsweeps:=labelLayoutTicks)
+        End If
 
         Dim labelBrush As Brush = theme.tagColor.GetBrush
 
         For Each i As SeqValue(Of Label) In labels.SeqIterator
-            Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
+            If labelLayoutTicks > 0 Then
+                Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
+            End If
+
             Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
         Next
     End Sub
