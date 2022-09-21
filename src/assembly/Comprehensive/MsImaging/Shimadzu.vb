@@ -27,7 +27,10 @@ Public Module Shimadzu
         End If
     End Function
 
-    Public Function ImportsMzPack(file As Stream, Optional sample As String = Nothing) As mzPack
+    Public Function ImportsMzPack(file As Stream,
+                                  Optional sample As String = Nothing,
+                                  Optional println As Action(Of String) = Nothing) As mzPack
+
         Using buffer As New StreamReader(file)
             Dim headers As String() = buffer.ReadLine.Split(","c)
             Dim mz As Double() = headers _
@@ -63,6 +66,10 @@ Public Module Shimadzu
                     .TIC = intensity.Sum,
                     .scan_id = $"[MS1][{x},{y}][{sample}] Full Scan, ROI={ROI}, total_ions={ .TIC}"
                 }
+
+                If Not println Is Nothing Then
+                    Call println(scans.Last.scan_id)
+                End If
             Loop
 
             Return New mzPack With {
