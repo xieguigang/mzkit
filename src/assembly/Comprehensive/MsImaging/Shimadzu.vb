@@ -63,7 +63,12 @@ Public Module Shimadzu
                 scans += New ScanMS1 With {
                     .BPC = intensity.Max,
                     .into = intensity(i),
-                    .meta = New Dictionary(Of String, String) From {{"ROI", ROI}, {"x", x}, {"y", y}},
+                    .meta = New Dictionary(Of String, String) From {
+                        {"sample", sample},
+                        {"ROI", ROI},
+                        {"x", x},
+                        {"y", y}
+                    },
                     .mz = mz(i),
                     .products = Nothing,
                     .rt = buffer.BaseStream.Position,
