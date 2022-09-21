@@ -2,6 +2,8 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
+Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Shimadzu
 
@@ -33,16 +35,17 @@ Public Module Shimadzu
 
         Using buffer As New StreamReader(file)
             Dim headers As String() = buffer.ReadLine.Split(","c)
-            Dim mz As Double() = headers _
+            Dim mz As Vector = headers _
                 .Skip(3) _
                 .Select(AddressOf Double.Parse) _
-                .ToArray
+                .AsVector
             Dim line As Value(Of String) = ""
             Dim tokens As String()
             Dim x, y As Integer
             Dim ROI As String
-            Dim intensity As Double()
+            Dim intensity As Vector
             Dim scans As New List(Of ScanMS1)
+            Dim i As BooleanVector
 
             sample = If(sample.StringEmpty, GetFileTag(file), sample)
 
@@ -54,13 +57,14 @@ Public Module Shimadzu
                 intensity = tokens _
                     .Skip(3) _
                     .Select(AddressOf Double.Parse) _
-                    .ToArray
+                    .AsVector
+                i = intensity > 0
 
                 scans += New ScanMS1 With {
                     .BPC = intensity.Max,
-                    .into = intensity,
+                    .into = intensity(i),
                     .meta = New Dictionary(Of String, String) From {{"ROI", ROI}, {"x", x}, {"y", y}},
-                    .mz = mz,
+                    .mz = mz(i),
                     .products = Nothing,
                     .rt = buffer.BaseStream.Position,
                     .TIC = intensity.Sum,
