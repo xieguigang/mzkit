@@ -147,6 +147,7 @@ Namespace Reader
 
         Private Function GetIntensitySummary(r As IEnumerable(Of PixelScan)) As iPixelIntensity()
             Return r _
+                .Where(Function(i) i.HasAnyMzIon) _
                 .Select(Function(p)
                             Dim matrix = p.GetMs
                             Dim into As Double() = matrix.Select(Function(i) i.intensity).ToArray

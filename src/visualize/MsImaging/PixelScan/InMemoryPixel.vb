@@ -89,6 +89,10 @@ Namespace Pixel
             Me.data = data
         End Sub
 
+        Public Overrides Function HasAnyMzIon() As Boolean
+            Return Not data.IsNullOrEmpty
+        End Function
+
         Protected Friend Overrides Sub release()
             Erase data
         End Sub

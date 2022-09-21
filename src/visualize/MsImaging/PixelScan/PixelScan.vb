@@ -77,6 +77,11 @@ Namespace Pixel
             Return GetMsPipe.ToArray
         End Function
 
+        ''' <summary>
+        ''' current pixel scan is empty or not?
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride Function HasAnyMzIon() As Boolean
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
         Public MustOverride Function GetMzIonIntensity() As Double()
 

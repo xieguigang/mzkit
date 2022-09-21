@@ -122,6 +122,10 @@ Namespace Pixel
             End If
         End Function
 
+        Public Overrides Function HasAnyMzIon() As Boolean
+            Return Not GetMs.IsNullOrEmpty
+        End Function
+
         Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
             Return raw.GetMSMSPipe(i)
         End Function

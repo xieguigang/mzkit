@@ -119,6 +119,10 @@ Namespace Pixel
             End If
         End Sub
 
+        Public Overrides Function HasAnyMzIon() As Boolean
+            Return scan.size > 0
+        End Function
+
         Public Shared Function GetPixelPoint(scan As ScanMS1) As Point
             If scan.hasMetaKeys("x", "y") Then
                 Return New Point With {
