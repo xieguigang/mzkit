@@ -21,9 +21,13 @@ Public Module MergeSliders
     <Extension>
     Public Function JoinMSISamples(samples As IEnumerable(Of mzPack),
                                    Optional relativePos As Boolean = True,
-                                   Optional padding As Integer = 10) As mzPack
+                                   Optional padding As Integer = 10,
+                                   Optional println As Action(Of String) = Nothing) As mzPack
         Dim polygons = samples _
-            .Select(Function(ms) (ms, New Polygon2D(ms.MS.Select(Function(a) a.GetMSIPixel)))) _
+            .Select(Function(ms)
+                        Call println($"load {ms.source}!")
+                        Return (ms, New Polygon2D(ms.MS.Select(Function(a) a.GetMSIPixel)))
+                    End Function) _
             .ToArray
         Dim maxHeight As Integer = polygons.Select(Function(a) a.Item2.ypoints).IteratesALL.Max
         Dim left As Integer = polygons.First.Item2.xpoints.Min + padding
@@ -34,6 +38,8 @@ Public Module MergeSliders
             Dim height As Double = sample.shape.height
             Dim deltaY As Double = (maxHeight - height) / 2
             Dim sampleid As String = sample.Ms.source
+
+            Call println(" >>> " & sampleid)
 
             For Each scan As ScanMS1 In sample.Ms.MS
                 If relativePos Then
