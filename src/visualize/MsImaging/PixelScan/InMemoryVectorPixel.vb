@@ -143,6 +143,10 @@ Namespace Pixel
         Sub New()
         End Sub
 
+        Public Overrides Function HasAnyMzIon() As Boolean
+            Return Not mz.IsNullOrEmpty
+        End Function
+
         Public Function GetBuffer() As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
                 file.Write(scanId, BinaryStringFormat.ZeroTerminated)
