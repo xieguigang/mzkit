@@ -69,6 +69,8 @@ Public Module MergeSliders
                     union.Add(scan)
                 End If
             Next
+
+            left += padding * 2 + (sample.shape.xpoints.Max - sample.shape.xpoints.Min)
         Next
 
         Return New mzPack With {
