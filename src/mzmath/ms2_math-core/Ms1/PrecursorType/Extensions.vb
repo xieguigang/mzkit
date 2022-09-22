@@ -114,13 +114,19 @@ Namespace Ms1.PrecursorType
                 {"-", New Dictionary(Of String, MzCalculator)}
             }
 
-            If cache(ionMode).ContainsKey(precursor_type) Then
-                Return cache(ionMode)(precursor_type)
-            Else
-                Dim mz = ParseMzCalculatorInternal(precursor_type, ionMode, skipEvalAdducts)
+            SyncLock cache
+                If cache(ionMode).ContainsKey(precursor_type) Then
+                    Return cache(ionMode)(precursor_type)
+                End If
+            End SyncLock
+
+            Dim mz As MzCalculator = ParseMzCalculatorInternal(precursor_type, ionMode, skipEvalAdducts)
+
+            SyncLock cache
                 cache(ionMode).Add(precursor_type, mz)
-                Return mz
-            End If
+            End SyncLock
+
+            Return mz
         End Function
 
         <Extension>
