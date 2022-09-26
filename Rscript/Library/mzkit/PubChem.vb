@@ -61,6 +61,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -187,6 +188,21 @@ Module PubChemToolKit
     <ExportAPI("pubchem_url")>
     Public Function pubchemUrl(cid As String) As String
         Return WebQuery.pugViewApi(cid)
+    End Function
+
+    <ExportAPI("query.knowlegde_graph")>
+    Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
+        Dim geneSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
+        Dim diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
+        Dim metaboliteSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalNeighbor, cache)
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"genes", geneSet},
+                {"disease", diseaseSet},
+                {"compounds", metaboliteSet}
+            }
+        }
     End Function
 
     ''' <summary>
