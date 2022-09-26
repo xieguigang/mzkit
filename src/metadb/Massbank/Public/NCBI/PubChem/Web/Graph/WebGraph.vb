@@ -8,7 +8,14 @@ Namespace NCBI.PubChem.Graph
     Public Enum Types
         ChemicalGeneSymbolNeighbor
         ChemicalDiseaseNeighbor
+        ChemicalNeighbor
     End Enum
+
+    Public Class LinkDataSet
+
+        Public Property LinkData As MeshGraph()
+
+    End Class
 
     Public Class WebGraph : Inherits WebQuery(Of (cid As String, type As Types))
 
@@ -29,7 +36,7 @@ Namespace NCBI.PubChem.Graph
         End Sub
 
         Private Shared Function parseJSON(data As String, schema As Type) As Object
-            Return data.LoadJSON(Of MeshGraph)
+            Return data.LoadJSON(Of LinkDataSet)
         End Function
 
         Private Shared Function getJSONUrl(q As (cid As String, type As Types)) As String
@@ -40,7 +47,7 @@ Namespace NCBI.PubChem.Graph
                                                Optional type As Types = Types.ChemicalDiseaseNeighbor,
                                                Optional cache As String = "./graph",
                                                Optional interval As Integer = -1,
-                                               Optional offline As Boolean = False) As MeshGraph
+                                               Optional offline As Boolean = False) As MeshGraph()
 
             Static web As New Dictionary(Of String, WebGraph)
 
@@ -48,10 +55,11 @@ Namespace NCBI.PubChem.Graph
                 key:=cache,
                 lazyValue:=Function() New WebGraph(cache, interval, offline)
             ) _
-                .Query(Of MeshGraph)(
+                .Query(Of LinkDataSet)(
                     context:=(cid, type),
                     cacheType:=".json"
-                )
+                ) _
+               ?.LinkData
         End Function
     End Class
 End Namespace

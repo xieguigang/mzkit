@@ -11,6 +11,7 @@ Namespace NCBI.PubChem.Graph
 
         Public Property ChemicalDiseaseNeighbor As MeshGraph
         Public Property ChemicalGeneSymbolNeighbor As MeshGraph
+        Public Property ChemicalNeighbor As MeshGraph
 
     End Class
 
