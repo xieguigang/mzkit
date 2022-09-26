@@ -192,7 +192,7 @@ Module PubChemToolKit
 
     <ExportAPI("query.knowlegde_graph")>
     Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
-        Dim geneSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
+        Dim geneSet As MeshGraph() = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
         Dim diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
         Dim metaboliteSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalNeighbor, cache)
 

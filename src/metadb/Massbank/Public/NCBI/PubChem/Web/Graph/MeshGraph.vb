@@ -9,12 +9,15 @@ Namespace NCBI.PubChem.Graph
 
     Public Class Evidence
 
-        Public Property ChemicalDiseaseNeighbor As MeshGraph
-        Public Property ChemicalGeneSymbolNeighbor As MeshGraph
-        Public Property ChemicalNeighbor As MeshGraph
+        Public Property ChemicalDiseaseNeighbor As PubChemGraph
+        Public Property ChemicalGeneSymbolNeighbor As PubChemGraph
+        Public Property ChemicalNeighbor As PubChemGraph
 
     End Class
 
+    ''' <summary>
+    ''' graph [id1 -> id2] with evidences
+    ''' </summary>
     Public Class MeshGraph
 
         Public Property ID_1 As GraphId
