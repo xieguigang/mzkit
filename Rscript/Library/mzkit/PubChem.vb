@@ -153,9 +153,9 @@ Module PubChemToolKit
             .slots = New Dictionary(Of String, Object)
         }
 
-        Call result.add("pathways", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.pathways), cacheType:=".json"))
-        Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.taxonomy), cacheType:=".json"))
-        Call result.add("reaction", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.reaction), cacheType:=".json"))
+        Call result.add("pathways", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.pathways), cacheType:=".json"))
+        Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.taxonomy), cacheType:=".json"))
+        Call result.add("reaction", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.reaction), cacheType:=".json"))
 
         Return result
     End Function
