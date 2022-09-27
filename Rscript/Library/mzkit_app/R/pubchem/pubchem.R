@@ -73,21 +73,24 @@ const .extract_pubmed_evidence = function(evidence, u, v, type = ["genes","disea
         Journal = [Article]::Journal,
         Citation = [Article]::Citation,
         ChemicalName = term$query,
-        partner = term$partner,
-		type = type
+        partner = term$partner
     );
 
-    pubmed[, "u"] = u;
-    pubmed[, "v"] = v;
-    pubmed[, "NeighborName"] = [evidence]::NeighborName;
-    pubmed[, "OrderingByCooccurrenceScore"] = [evidence]::OrderingByCooccurrenceScore;
-    pubmed[, "QueryArticleCount"] = [evidence]::QueryArticleCount;
-    pubmed[, "NeighborArticleCount"] = [evidence]::NeighborArticleCount;
-    pubmed[, "TotalArticleCount"] = [evidence]::TotalArticleCount;
-    pubmed[, "EffectiveTotalArticleCount"] = [evidence]::EffectiveTotalArticleCount;
-    pubmed[, "ArticleCount"] = [evidence]::ArticleCount;
-    pubmed[, "CooccurrenceScore"] = [evidence]::CooccurrenceScore;
+	if (length(Article) > 0) {
+		pubmed[, "u"] = u;
+		pubmed[, "v"] = v;
+		pubmed[, "NeighborName"] = [evidence]::NeighborName;
+		pubmed[, "OrderingByCooccurrenceScore"] = [evidence]::OrderingByCooccurrenceScore;
+		pubmed[, "QueryArticleCount"] = [evidence]::QueryArticleCount;
+		pubmed[, "NeighborArticleCount"] = [evidence]::NeighborArticleCount;
+		pubmed[, "TotalArticleCount"] = [evidence]::TotalArticleCount;
+		pubmed[, "EffectiveTotalArticleCount"] = [evidence]::EffectiveTotalArticleCount;
+		pubmed[, "ArticleCount"] = [evidence]::ArticleCount;
+		pubmed[, "CooccurrenceScore"] = [evidence]::CooccurrenceScore;
 
-    # print(pubmed, max.print = 6);
-    pubmed;
+		# print(pubmed, max.print = 6);
+		pubmed;
+	} else {
+		NULL;
+	}    
 }
