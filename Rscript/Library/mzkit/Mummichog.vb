@@ -107,11 +107,13 @@ Module Mummichog
                                        Optional minhit As Integer = 3,
                                        Optional permutation As Integer = 100,
                                        Optional modelSize As Integer = -1,
+                                       Optional pinned As String() = Nothing,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
         Dim graph As NamedValue(Of NetworkGraph)
         Dim slot As list
+        Dim println As Action(Of Object) = env.WriteLineHandler
 
         For Each name As String In background.getNames
             slot = background.getByName(name)
@@ -126,11 +128,17 @@ Module Mummichog
             End If
         Next
 
+        If Not pinned.IsNullOrEmpty Then
+            Call println("a set of metabolites will pinned in the annotation loops:")
+            Call println(pinned)
+        End If
+
         Dim result As ActivityEnrichment() = candidates.PeakListAnnotation(
             background:=models,
             minhit:=minhit,
             permutation:=permutation,
-            modelSize:=modelSize
+            modelSize:=modelSize,
+            pinned:=pinned
         )
 
         Return result

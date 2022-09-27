@@ -67,7 +67,8 @@ Public Class ActivityEnrichment
 
     Public Shared Function Evaluate(input As Dictionary(Of String, MzQuery),
                                     background As NamedValue(Of NetworkGraph),
-                                    modelSize As Integer) As ActivityEnrichment
+                                    modelSize As Integer,
+                                    pinList As Index(Of String)) As ActivityEnrichment
 
         Dim mapping As NetworkGraph = getSubGraph(input.Keys, background)
         Dim graph As NetworkGraph = background.Value
@@ -80,14 +81,19 @@ Public Class ActivityEnrichment
         )
         Dim name As String = background.Name
         Dim description As String = background.Description
+        Dim hits As MzQuery() = mapping.vertex _
+            .Where(Function(v) input.ContainsKey(v.label)) _
+            .Select(Function(v) input(v.label)) _
+            .ToArray
+
+        If hits.Any(Function(m) m.unique_id Like pinList) Then
+            modularity = 1
+        End If
 
         Return New ActivityEnrichment With {
             .Q = (modularity - -0.5) / (1 - -0.5),  ' [-0.5, 1] -> [0, 1]
             .Background = graph.vertex.Count,
-            .Hits = mapping.vertex _
-                .Where(Function(v) input.ContainsKey(v.label)) _
-                .Select(Function(v) input(v.label)) _
-                .ToArray,
+            .Hits = hits,
             .Fisher = F,
             .Name = name,
             .Description = description
