@@ -60,23 +60,33 @@ const .term_maps = function(type = ["genes","disease","compounds"], x) {
 
 const .extract_pubmed_evidence = function(evidence, u, v, type = ["genes","disease","compounds"]) {
     let Article = [evidence]::Article;
+	let nsize = length(Article);
+	let na = rep("", nsize);
+	let safeProj = function(x) {
+		if ([length(x) == 0] || [length(x) != nsize]) {
+			na;
+		} else {
+			x;
+		}
+	}
 	let term = .term_maps(type, Article);
     let pubmed = data.frame(
-        GenericArticleId = [Article]::GenericArticleId,
-        RelevanceScore = [Article]::RelevanceScore,
-        PMID = [Article]::PMID,
-        DOI = [Article]::DOI,
-        PublicationDate = [Article]::PublicationDate,
-        IsReview = [Article]::IsReview,
-        Title = [Article]::Title,
-        Author = [Article]::Author,
-        Journal = [Article]::Journal,
-        Citation = [Article]::Citation,
+        GenericArticleId = safeProj([Article]::GenericArticleId),
+        RelevanceScore = safeProj([Article]::RelevanceScore),
+        PMID = safeProj([Article]::PMID),
+        DOI = safeProj([Article]::DOI),
+        PublicationDate = safeProj([Article]::PublicationDate),
+        IsReview = safeProj([Article]::IsReview),
+        Title = safeProj([Article]::Title),
+        Author = safeProj([Article]::Author),
+        Journal = safeProj([Article]::Journal),
+        Citation = safeProj([Article]::Citation),
         ChemicalName = term$query,
         partner = term$partner
     );
 
 	if (length(Article) > 0) {
+		pubmed[, "type"] = type;
 		pubmed[, "u"] = u;
 		pubmed[, "v"] = v;
 		pubmed[, "NeighborName"] = [evidence]::NeighborName;
