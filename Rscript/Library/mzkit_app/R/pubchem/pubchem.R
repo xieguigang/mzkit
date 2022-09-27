@@ -69,7 +69,7 @@ const .extract_pubmed_evidence = function(evidence, u, v, type = ["genes","disea
 			x;
 		}
 	}
-	let term = .term_maps(type, Article); str(term);
+	let term = .term_maps(type, Article); # str(term);
     let pubmed = data.frame(
         GenericArticleId = safeProj([Article]::GenericArticleId),
         RelevanceScore = safeProj([Article]::RelevanceScore),
