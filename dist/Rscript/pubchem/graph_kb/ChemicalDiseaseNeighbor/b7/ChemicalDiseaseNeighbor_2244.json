@@ -1,0 +1,2460 @@
+﻿{
+  "LinkDataSet": {
+    "LinkData": [
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D006470"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Hemorrhage",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 132002,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 9786,
+            "CooccurrenceScore": 246036,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "bleeding; major bleeding"
+              },
+              {
+                "GenericArticleId": 3442515,
+                "RelevanceScore": 275,
+                "PMID": 35241374,
+                "DOI": "10.1016/j.ejvs.2021.12.037",
+                "PublicationDate": "2022-02-27",
+                "IsReview": true,
+                "Title": "Peri-Operative Outcomes of Carotid Endarterectomy are Not Improved on Dual Antiplatelet Therapy vs. Aspirin Monotherapy: A Systematic Review and Meta-Analysis",
+                "Author": "Jerry C Ku, Shervin Taslimi, Jeffrey Zuccato, Christopher R Pasarikovski, Nathalie Nasr, Ofir Chechik, Emiliano Chisci, Daniele Bissacco, Vincent Larrue, Yefim Rabinovich, Stefano Michelagnoli, Piergiorgio G Settembrini, Stefano M Priola, Michael D Cusimano, Victor X D Yang, R Loch Macdonald",
+                "Journal": "European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "bleeding; haemorrhagic"
+              },
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "hemorrhagic; major bleeding"
+              },
+              {
+                "GenericArticleId": 3732427,
+                "RelevanceScore": 275,
+                "PMID": 35717551,
+                "DOI": "10.1007/s12029-022-00842-y",
+                "PublicationDate": "2022-06-18",
+                "IsReview": true,
+                "Title": "Regular Aspirin Use Is Associated with a Reduced Risk of Hepatocellular Carcinoma (HCC) in Chronic Liver Disease: a Systematic Review and Meta-analysis",
+                "Author": "Jin Lin Tan, Sandeep Sidhu-Brar, Richard Woodman, Mohamed Asif Chinnaratha",
+                "Journal": "Journal of gastrointestinal cancer",
+                "Citation": "2022 Jun; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "bleeds"
+              },
+              {
+                "GenericArticleId": 3747722,
+                "RelevanceScore": 275,
+                "PMID": 35757317,
+                "DOI": "10.1016/j.ajpc.2022.100363",
+                "PublicationDate": "2022-09-01",
+                "IsReview": true,
+                "Title": "Implications of the heterogeneity between guideline recommendations for the use of low dose aspirin in primary prevention of cardiovascular disease",
+                "Author": "Xiao-Ying Li, Li Li, Sang-Hoon Na, Francesca Santilli, Zhongwei Shi, Michael Blaha",
+                "Journal": "American journal of preventive cardiology",
+                "Citation": "2022 Sep; 11(?):100363",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "bleeding"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D013927"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Thrombosis",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 73130,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 8038,
+            "CooccurrenceScore": 232228,
+            "Article": [
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thrombosis"
+              },
+              {
+                "GenericArticleId": 3772820,
+                "RelevanceScore": 275,
+                "PMID": 35829979,
+                "DOI": "10.1007/s10557-022-07367-3",
+                "PublicationDate": "2022-07-13",
+                "IsReview": true,
+                "Title": "The Cost of Breaking Even: a Perspective on the Net Clinical Impact of Adding Aspirin to Antithrombotic Therapies in Patients with Atrial Fibrillation Undergoing Percutaneous Coronary Intervention",
+                "Author": "Jeffrey Triska, Faris Haddadin, Luai Madanat, Ahmad Jabri, Marilyne Daher, Yochai Birnbaum, Hani Jneid",
+                "Journal": "Cardiovascular drugs and therapy",
+                "Citation": "2022 Jul; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thrombosis"
+              },
+              {
+                "GenericArticleId": 5829876,
+                "RelevanceScore": 275,
+                "PMID": 34760289,
+                "DOI": "10.1302/2058-5241.6.200120",
+                "PublicationDate": "2021-10-01",
+                "IsReview": true,
+                "Title": "Prevention of venous thromboembolism with aspirin following knee surgery: A systematic review and meta-analysis",
+                "Author": "Stephanie Marrannes, Klaas Victor, Nele Arnout, Tine De Backer, Jan Victor, Thomas Tampere",
+                "Journal": "EFORT open reviews",
+                "Citation": "2021 Oct; 6(10):892-904",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thromboprophylaxis"
+              },
+              {
+                "GenericArticleId": 3234606,
+                "RelevanceScore": 270,
+                "PMID": 34975490,
+                "DOI": "10.3389/fphar.2021.794417",
+                "PublicationDate": "2021-01-01",
+                "IsReview": true,
+                "Title": "Mechanism of Improving Aspirin Resistance: Blood-Activating Herbs Combined With Aspirin in Treating Atherosclerotic Cardiovascular Diseases",
+                "Author": "Yixi Zhao, Shengjie Yang, Min Wu",
+                "Journal": "Frontiers in pharmacology",
+                "Citation": "2021; 12(?):794417",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thrombotic disease"
+              },
+              {
+                "GenericArticleId": 4905938,
+                "RelevanceScore": 270,
+                "PMID": 32721423,
+                "DOI": "10.1016/j.clinbiochem.2020.07.003",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "Aspirin: Bitter pill or miracle drug?",
+                "Author": "Clare Fiala, Maria D Pasic",
+                "Journal": "Clinical biochemistry",
+                "Citation": "2020 Nov; 85(?):1-4",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "thrombotic"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D009203"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Myocardial Infarction",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 84821,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 7155,
+            "CooccurrenceScore": 199980,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "myocardial infarction"
+              },
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "myocardial infarction"
+              },
+              {
+                "GenericArticleId": 3750294,
+                "RelevanceScore": 275,
+                "PMID": 35764143,
+                "DOI": "10.1016/j.cpcardiol.2022.101292",
+                "PublicationDate": "2022-06-25",
+                "IsReview": true,
+                "Title": "P2Y12 Inhibitors versus Aspirin Monotherapy for Long-term Secondary Prevention of Atherosclerotic Cardiovascular Disease Events: A Systematic Review and Meta-analysis",
+                "Author": "Ahmad Al-Abdouh, Waiel Abusnina, Mohammed Mhanna, Qais Radideh, Hossam Alzu, Anan Abu Rmilah, Ahmad Jabri, Mahmoud Barbarawi, Khaldun Obeidat, Taqwa Alabduh, Erin D Michos, Talal Alnabelsi, Timir K Paul",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Jun; ?(?):101292",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "myocardial infarction"
+              },
+              {
+                "GenericArticleId": 5058409,
+                "RelevanceScore": 270,
+                "PMID": 32886529,
+                "DOI": "10.1161/circulationaha.120.045695",
+                "PublicationDate": "2020-10-20",
+                "IsReview": true,
+                "Title": "Lifelong Aspirin for All in the Secondary Prevention of Chronic Coronary Syndrome: Still Sacrosanct or Is Reappraisal Warranted?",
+                "Author": "Alan P Jacobsen, Inbar Raber, Cian P McCarthy, Roger S Blumenthal, Deepak L Bhatt, Ronan W Cusack, Patrick W J C Serruys, William Wijns, John W McEvoy",
+                "Journal": "Circulation",
+                "Citation": "2020 10; 142(16):1579-1590",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "myocardial infarction"
+              },
+              {
+                "GenericArticleId": 5086581,
+                "RelevanceScore": 270,
+                "PMID": 32962804,
+                "DOI": "10.1016/j.amjcard.2020.07.061",
+                "PublicationDate": "2020-11-15",
+                "IsReview": true,
+                "Title": "Optimizing Monotherapy Selection, Aspirin Versus P2Y12 Inhibitors, Following Percutaneous Coronary Intervention",
+                "Author": "Charan Yerasi, Brian C Case, Brian J Forrestal, Rebecca Torguson, William S Weintraub, Hector M Garcia-Garcia, Ron Waksman",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2020 11; 135(?):154-165",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "myocardial infarction"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D020521"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Stroke",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 88023,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 6270,
+            "CooccurrenceScore": 173769,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "stroke"
+              },
+              {
+                "GenericArticleId": 3442515,
+                "RelevanceScore": 275,
+                "PMID": 35241374,
+                "DOI": "10.1016/j.ejvs.2021.12.037",
+                "PublicationDate": "2022-02-27",
+                "IsReview": true,
+                "Title": "Peri-Operative Outcomes of Carotid Endarterectomy are Not Improved on Dual Antiplatelet Therapy vs. Aspirin Monotherapy: A Systematic Review and Meta-Analysis",
+                "Author": "Jerry C Ku, Shervin Taslimi, Jeffrey Zuccato, Christopher R Pasarikovski, Nathalie Nasr, Ofir Chechik, Emiliano Chisci, Daniele Bissacco, Vincent Larrue, Yefim Rabinovich, Stefano Michelagnoli, Piergiorgio G Settembrini, Stefano M Priola, Michael D Cusimano, Victor X D Yang, R Loch Macdonald",
+                "Journal": "European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stroke"
+              },
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stroke"
+              },
+              {
+                "GenericArticleId": 3750294,
+                "RelevanceScore": 275,
+                "PMID": 35764143,
+                "DOI": "10.1016/j.cpcardiol.2022.101292",
+                "PublicationDate": "2022-06-25",
+                "IsReview": true,
+                "Title": "P2Y12 Inhibitors versus Aspirin Monotherapy for Long-term Secondary Prevention of Atherosclerotic Cardiovascular Disease Events: A Systematic Review and Meta-analysis",
+                "Author": "Ahmad Al-Abdouh, Waiel Abusnina, Mohammed Mhanna, Qais Radideh, Hossam Alzu, Anan Abu Rmilah, Ahmad Jabri, Mahmoud Barbarawi, Khaldun Obeidat, Taqwa Alabduh, Erin D Michos, Talal Alnabelsi, Timir K Paul",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Jun; ?(?):101292",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stroke"
+              },
+              {
+                "GenericArticleId": 3763283,
+                "RelevanceScore": 275,
+                "PMID": 35800088,
+                "DOI": "10.3389/fneur.2022.856239",
+                "PublicationDate": "2022-01-01",
+                "IsReview": true,
+                "Title": "Aspirin for Primary Stroke Prevention; Evidence for a Differential Effect in Men and Women",
+                "Author": "Zuzana Gdovinova, Christine Kremer, Svetlana Lorenzano, Jesse Dawson, Avtar Lal, Valeria Caso",
+                "Journal": "Frontiers in neurology",
+                "Citation": "2022; 13(?):856239",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stroke"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D001791"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Blood Platelet Disorders",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 25803,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 4069,
+            "CooccurrenceScore": 144471,
+            "Article": [
+              {
+                "GenericArticleId": 5099275,
+                "RelevanceScore": 270,
+                "PMID": 32997790,
+                "DOI": "10.1002/ijc.33323",
+                "PublicationDate": "2021-03-15",
+                "IsReview": true,
+                "Title": "A potential role for aspirin in the prevention and treatment of cholangiocarcinoma",
+                "Author": "Xizi Shen, Xingping Shen",
+                "Journal": "International journal of cancer",
+                "Citation": "2021 03; 148(6):1323-1330",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "platelet aggregation"
+              },
+              {
+                "GenericArticleId": 5118186,
+                "RelevanceScore": 270,
+                "PMID": 33050859,
+                "DOI": "10.2174/1389450121999201013152931",
+                "PublicationDate": "2021-01-01",
+                "IsReview": true,
+                "Title": "Progress on the Mechanism for Aspirin's Anti-tumor Effects",
+                "Author": "Lin Zheng, Weibiao Lv, Yuanqing Zhou, Xu Lin, Jie Yao",
+                "Journal": "Current drug targets",
+                "Citation": "2021; 22(1):105-111",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "platelet aggregation"
+              },
+              {
+                "GenericArticleId": 5194283,
+                "RelevanceScore": 270,
+                "PMID": 33258099,
+                "DOI": "10.1007/s43441-020-00156-w",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "A Systematic Review of the Efficacy and Safety of Aspirin When Delivered at Different Medication Times for the Primary and Secondary Prevention of Cardiovascular and Cerebrovascular Diseases",
+                "Author": "Boya Zhou, Qiaoyu Wang, Zhigang Zhao, Xin Feng",
+                "Journal": "Therapeutic innovation & regulatory science",
+                "Citation": "2020 11; 54(6):1339-1348",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "platelet aggregation"
+              },
+              {
+                "GenericArticleId": 1248411,
+                "RelevanceScore": 265,
+                "PMID": 29512148,
+                "DOI": "10.1111/bph.14196",
+                "PublicationDate": "2019-04-01",
+                "IsReview": true,
+                "Title": "Eicosanoids in platelets and the effect of their modulation by aspirin in the cardiovascular system (and beyond)",
+                "Author": "Marilena Crescente, Laura Menke, Melissa V Chan, Paul C Armstrong, Timothy D Warner",
+                "Journal": "British journal of pharmacology",
+                "Citation": "2019 04; 176(8):988-999",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "platelet aggregation"
+              },
+              {
+                "GenericArticleId": 3241182,
+                "RelevanceScore": 265,
+                "PMID": 34993763,
+                "DOI": "10.1007/s11357-021-00499-8",
+                "PublicationDate": "2022-01-07",
+                "IsReview": false,
+                "Title": "Premorbid aspirin use is not associated with lower mortality in older inpatients with SARS-CoV-2 pneumonia",
+                "Author": "Coralie Sullerot, Kevin Bouiller, Caroline Laborde, Marine Gilis, Amélie Fèvre, Arthur Hacquin, Patrick Manckoundia, Florence Hoefler, Messaline Bermejo, Aline Mendes, Christine Serratrice, Virginie Prendki, Stéphane Sanchez, Alain Putot",
+                "Journal": "GeroScience",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "platelet aggregation"
+              },
+              {
+                "GenericArticleId": 3243699,
+                "RelevanceScore": 265,
+                "PMID": 35000048,
+                "DOI": "10.1007/s11033-022-07124-7",
+                "PublicationDate": "2022-01-09",
+                "IsReview": false,
+                "Title": "COX-1, COX-2 and CYP2C19 variations may be related to cardiovascular events due to acetylsalicylic acid resistance",
+                "Author": "Deniz Kirac, Aysun Erdem Yaman, Tansu Doran, Mujgan Mihmanli, Elif Cigdem Keles",
+                "Journal": "Molecular biology reports",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "platelet aggregation"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D002318"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Cardiovascular Diseases",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 157520,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 5585,
+            "CooccurrenceScore": 134149,
+            "Article": [
+              {
+                "GenericArticleId": 3376886,
+                "RelevanceScore": 275,
+                "PMID": 35060092,
+                "DOI": "10.1007/s40262-021-01090-2",
+                "PublicationDate": "2022-01-20",
+                "IsReview": true,
+                "Title": "Pharmacokinetic and Pharmacodynamic Profile of a Novel Phospholipid Aspirin Formulation",
+                "Author": "Dominick J Angiolillo, Jayne Prats, Efthymios N Deliargyris, David J Schneider, James Scheiman, Carey Kimmelstiel, Ph Gabriel Steg, Mark Alberts, Todd Rosengart, Roxana Mehran, Deepak L Bhatt",
+                "Journal": "Clinical pharmacokinetics",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "cardiovascular events"
+              },
+              {
+                "GenericArticleId": 3382344,
+                "RelevanceScore": 275,
+                "PMID": 35075415,
+                "DOI": "10.5812/aapm.118909",
+                "PublicationDate": "2021-10-01",
+                "IsReview": true,
+                "Title": "Clinical Applications of Aspirin as a Multi-potent Drug Beyond Cardiovascular Implications: A Proof of Concept for Anesthesiologists- A Narrative Review",
+                "Author": "Aysa Rezabakhsh, Ata Mahmoodpoor, Maryam Soleimanpour, Kavous Shahsavarinia, Hassan Soleimanpour",
+                "Journal": "Anesthesiology and pain medicine",
+                "Citation": "2021 Oct; 11(5):e118909",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "cardiovascular diseases"
+              },
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "cardiovascular events"
+              },
+              {
+                "GenericArticleId": 3480711,
+                "RelevanceScore": 275,
+                "PMID": 35344187,
+                "DOI": "10.1007/s40119-022-00255-9",
+                "PublicationDate": "2022-03-28",
+                "IsReview": true,
+                "Title": "Coronary Artery Disease and Aspirin Intolerance: Background and Insights on Current Management",
+                "Author": "Ravi A Thakker, Leonardo Salazar, Deaa Abu Jazar, Pooja Bhakta, Bryan Baker, Chandani Patel, Ayman Elbadawi, Mayank Agarwal, Aiham Albaeni, Mohammed Saleh, Jonathan Esclovan, Danielle El Haddad, Hashim Alwash, Ankur Kalra, Sachin S Goel, Robert Jay Widmer, Khaled Chatila, Wissam Khalife, Afaq Motiwala, Jennifer McCracken, Hani Jneid, Syed Gilani",
+                "Journal": "Cardiology and therapy",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "cardiovascular disease"
+              },
+              {
+                "GenericArticleId": 3747722,
+                "RelevanceScore": 275,
+                "PMID": 35757317,
+                "DOI": "10.1016/j.ajpc.2022.100363",
+                "PublicationDate": "2022-09-01",
+                "IsReview": true,
+                "Title": "Implications of the heterogeneity between guideline recommendations for the use of low dose aspirin in primary prevention of cardiovascular disease",
+                "Author": "Xiao-Ying Li, Li Li, Sang-Hoon Na, Francesca Santilli, Zhongwei Shi, Michael Blaha",
+                "Journal": "American journal of preventive cardiology",
+                "Citation": "2022 Sep; 11(?):100363",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "cardiovascular disease"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D054058"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Acute Coronary Syndrome",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 14458,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2934,
+            "CooccurrenceScore": 114963,
+            "Article": [
+              {
+                "GenericArticleId": 3480711,
+                "RelevanceScore": 275,
+                "PMID": 35344187,
+                "DOI": "10.1007/s40119-022-00255-9",
+                "PublicationDate": "2022-03-28",
+                "IsReview": true,
+                "Title": "Coronary Artery Disease and Aspirin Intolerance: Background and Insights on Current Management",
+                "Author": "Ravi A Thakker, Leonardo Salazar, Deaa Abu Jazar, Pooja Bhakta, Bryan Baker, Chandani Patel, Ayman Elbadawi, Mayank Agarwal, Aiham Albaeni, Mohammed Saleh, Jonathan Esclovan, Danielle El Haddad, Hashim Alwash, Ankur Kalra, Sachin S Goel, Robert Jay Widmer, Khaled Chatila, Wissam Khalife, Afaq Motiwala, Jennifer McCracken, Hani Jneid, Syed Gilani",
+                "Journal": "Cardiology and therapy",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "acute coronary syndrome"
+              },
+              {
+                "GenericArticleId": 4620063,
+                "RelevanceScore": 270,
+                "PMID": 31957518,
+                "DOI": "10.1080/09537104.2020.1714574",
+                "PublicationDate": "2021-01-02",
+                "IsReview": true,
+                "Title": "Novel approaches to P2Y12 inhibition and aspirin dosing",
+                "Author": "William A E Parker, Robert F Storey",
+                "Journal": "Platelets",
+                "Citation": "2021 Jan; 32(1):7-14",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "acute coronary syndromes"
+              },
+              {
+                "GenericArticleId": 5353952,
+                "RelevanceScore": 270,
+                "PMID": 33706986,
+                "DOI": "10.1016/j.amjcard.2020.12.018",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "Overview of Aspirin and Platelet Biology",
+                "Author": "Carlos G Santos-Gallego, Juan Badimon",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2021 04; 144 Suppl 1(?):S2-S9",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "acute coronary syndrome"
+              },
+              {
+                "GenericArticleId": 5353954,
+                "RelevanceScore": 270,
+                "PMID": 33706988,
+                "DOI": "10.1016/j.amjcard.2020.12.017",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "Role and Timing of Aspirin Therapy Following PCI in Patients With Atrial Fibrillation",
+                "Author": "Christopher P Cannon",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2021 04; 144 Suppl 1(?):S32-S39",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "acute coronary syndromes"
+              },
+              {
+                "GenericArticleId": 3542968,
+                "RelevanceScore": 265,
+                "PMID": 30091133,
+                "DOI": "10.5603/kp.a2018.0159",
+                "PublicationDate": "2018-01-01",
+                "IsReview": true,
+                "Title": "Acetylsalicylic acid and clopidogrel hyporesponsiveness following acute coronary syndromes",
+                "Author": "Udaya S Tantry, Eliano P Navarese, Kevin P Bliden, Paul A Gurbel",
+                "Journal": "Kardiologia polska",
+                "Citation": "2018; 76(9):1312-1319",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "acute coronary syndrome; acute coronary syndromes"
+              },
+              {
+                "GenericArticleId": 3630499,
+                "RelevanceScore": 265,
+                "PMID": 35470799,
+                "DOI": "10.4244/eij-d-22-00135",
+                "PublicationDate": "2022-04-26",
+                "IsReview": false,
+                "Title": "Impact of one-month DAPT followed by aspirin monotherapy in patients undergoing percutaneous coronary intervention according to clinical presentation: a post hoc analysis of the randomised One-Month DAPT trial",
+                "Author": "Yong-Joon Lee, Jae Young Cho, Kyeong Ho Yun, Seung-Jun Lee, Sung-Jin Hong, Chul-Min Ahn, Byeong-Keuk Kim, Young-Guk Ko, Donghoon Choi, Myeong-Ki Hong, Yangsoo Jang, Jung-Sun Kim",
+                "Journal": "EuroIntervention : journal of EuroPCR in collaboration with the Working Group on Interventional Cardiology of the European Society of Cardiology",
+                "Citation": "2022 Apr; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "acute coronary syndrome"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D007511"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ischemia",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 144292,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 4038,
+            "CooccurrenceScore": 99240,
+            "Article": [
+              {
+                "GenericArticleId": 3376886,
+                "RelevanceScore": 275,
+                "PMID": 35060092,
+                "DOI": "10.1007/s40262-021-01090-2",
+                "PublicationDate": "2022-01-20",
+                "IsReview": true,
+                "Title": "Pharmacokinetic and Pharmacodynamic Profile of a Novel Phospholipid Aspirin Formulation",
+                "Author": "Dominick J Angiolillo, Jayne Prats, Efthymios N Deliargyris, David J Schneider, James Scheiman, Carey Kimmelstiel, Ph Gabriel Steg, Mark Alberts, Todd Rosengart, Roxana Mehran, Deepak L Bhatt",
+                "Journal": "Clinical pharmacokinetics",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic"
+              },
+              {
+                "GenericArticleId": 3442515,
+                "RelevanceScore": 275,
+                "PMID": 35241374,
+                "DOI": "10.1016/j.ejvs.2021.12.037",
+                "PublicationDate": "2022-02-27",
+                "IsReview": true,
+                "Title": "Peri-Operative Outcomes of Carotid Endarterectomy are Not Improved on Dual Antiplatelet Therapy vs. Aspirin Monotherapy: A Systematic Review and Meta-Analysis",
+                "Author": "Jerry C Ku, Shervin Taslimi, Jeffrey Zuccato, Christopher R Pasarikovski, Nathalie Nasr, Ofir Chechik, Emiliano Chisci, Daniele Bissacco, Vincent Larrue, Yefim Rabinovich, Stefano Michelagnoli, Piergiorgio G Settembrini, Stefano M Priola, Michael D Cusimano, Victor X D Yang, R Loch Macdonald",
+                "Journal": "European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischaemic"
+              },
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic"
+              },
+              {
+                "GenericArticleId": 3480711,
+                "RelevanceScore": 275,
+                "PMID": 35344187,
+                "DOI": "10.1007/s40119-022-00255-9",
+                "PublicationDate": "2022-03-28",
+                "IsReview": true,
+                "Title": "Coronary Artery Disease and Aspirin Intolerance: Background and Insights on Current Management",
+                "Author": "Ravi A Thakker, Leonardo Salazar, Deaa Abu Jazar, Pooja Bhakta, Bryan Baker, Chandani Patel, Ayman Elbadawi, Mayank Agarwal, Aiham Albaeni, Mohammed Saleh, Jonathan Esclovan, Danielle El Haddad, Hashim Alwash, Ankur Kalra, Sachin S Goel, Robert Jay Widmer, Khaled Chatila, Wissam Khalife, Afaq Motiwala, Jennifer McCracken, Hani Jneid, Syed Gilani",
+                "Journal": "Cardiology and therapy",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic"
+              },
+              {
+                "GenericArticleId": 3763283,
+                "RelevanceScore": 275,
+                "PMID": 35800088,
+                "DOI": "10.3389/fneur.2022.856239",
+                "PublicationDate": "2022-01-01",
+                "IsReview": true,
+                "Title": "Aspirin for Primary Stroke Prevention; Evidence for a Differential Effect in Men and Women",
+                "Author": "Zuzana Gdovinova, Christine Kremer, Svetlana Lorenzano, Jesse Dawson, Avtar Lal, Valeria Caso",
+                "Journal": "Frontiers in neurology",
+                "Citation": "2022; 13(?):856239",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D000083242"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ischemic Stroke",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 23107,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2536,
+            "CooccurrenceScore": 91818,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "ischemic stroke"
+              },
+              {
+                "GenericArticleId": 3442515,
+                "RelevanceScore": 275,
+                "PMID": 35241374,
+                "DOI": "10.1016/j.ejvs.2021.12.037",
+                "PublicationDate": "2022-02-27",
+                "IsReview": true,
+                "Title": "Peri-Operative Outcomes of Carotid Endarterectomy are Not Improved on Dual Antiplatelet Therapy vs. Aspirin Monotherapy: A Systematic Review and Meta-Analysis",
+                "Author": "Jerry C Ku, Shervin Taslimi, Jeffrey Zuccato, Christopher R Pasarikovski, Nathalie Nasr, Ofir Chechik, Emiliano Chisci, Daniele Bissacco, Vincent Larrue, Yefim Rabinovich, Stefano Michelagnoli, Piergiorgio G Settembrini, Stefano M Priola, Michael D Cusimano, Victor X D Yang, R Loch Macdonald",
+                "Journal": "European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischaemic stroke"
+              },
+              {
+                "GenericArticleId": 3479877,
+                "RelevanceScore": 275,
+                "PMID": 35341798,
+                "DOI": "10.1016/j.cpcardiol.2022.101174",
+                "PublicationDate": "2022-03-24",
+                "IsReview": true,
+                "Title": "Clopidogrel Versus Aspirin Monotherapy Following Dual Antiplatelet Therapy After Percutaneous Coronary Intervention: A Systematic Review and Meta-analysis",
+                "Author": "Bryan E-Xin Tan, Pui Yen Wong, Bipul Baibhav, Samarthkumar Thakkar, Abdullah Zoheb Azhar, Mohan Rao, Jim W Cheung",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Mar; ?(?):101174",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic stroke"
+              },
+              {
+                "GenericArticleId": 3763283,
+                "RelevanceScore": 275,
+                "PMID": 35800088,
+                "DOI": "10.3389/fneur.2022.856239",
+                "PublicationDate": "2022-01-01",
+                "IsReview": true,
+                "Title": "Aspirin for Primary Stroke Prevention; Evidence for a Differential Effect in Men and Women",
+                "Author": "Zuzana Gdovinova, Christine Kremer, Svetlana Lorenzano, Jesse Dawson, Avtar Lal, Valeria Caso",
+                "Journal": "Frontiers in neurology",
+                "Citation": "2022; 13(?):856239",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic stroke"
+              },
+              {
+                "GenericArticleId": 5198972,
+                "RelevanceScore": 270,
+                "PMID": 33271959,
+                "DOI": "10.3390/jcm9123907",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "Effectiveness of Platelet Function Analysis-Guided Aspirin and/or Clopidogrel Therapy in Preventing Secondary Stroke: A Systematic Review and Meta-Analysis",
+                "Author": "Ann-Rong Yan, Mark Naunton, Gregory M Peterson, Israel Fernandez-Cadenas, Reza Mortazavi",
+                "Journal": "Journal of clinical medicine",
+                "Citation": "2020 Dec; 9(12):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ischemic stroke"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D003324"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Coronary Artery Disease",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 49480,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2709,
+            "CooccurrenceScore": 84986,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "atherosclerotic cardiovascular disease"
+              },
+              {
+                "GenericArticleId": 3480711,
+                "RelevanceScore": 275,
+                "PMID": 35344187,
+                "DOI": "10.1007/s40119-022-00255-9",
+                "PublicationDate": "2022-03-28",
+                "IsReview": true,
+                "Title": "Coronary Artery Disease and Aspirin Intolerance: Background and Insights on Current Management",
+                "Author": "Ravi A Thakker, Leonardo Salazar, Deaa Abu Jazar, Pooja Bhakta, Bryan Baker, Chandani Patel, Ayman Elbadawi, Mayank Agarwal, Aiham Albaeni, Mohammed Saleh, Jonathan Esclovan, Danielle El Haddad, Hashim Alwash, Ankur Kalra, Sachin S Goel, Robert Jay Widmer, Khaled Chatila, Wissam Khalife, Afaq Motiwala, Jennifer McCracken, Hani Jneid, Syed Gilani",
+                "Journal": "Cardiology and therapy",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "coronary artery disease"
+              },
+              {
+                "GenericArticleId": 3750294,
+                "RelevanceScore": 275,
+                "PMID": 35764143,
+                "DOI": "10.1016/j.cpcardiol.2022.101292",
+                "PublicationDate": "2022-06-25",
+                "IsReview": true,
+                "Title": "P2Y12 Inhibitors versus Aspirin Monotherapy for Long-term Secondary Prevention of Atherosclerotic Cardiovascular Disease Events: A Systematic Review and Meta-analysis",
+                "Author": "Ahmad Al-Abdouh, Waiel Abusnina, Mohammed Mhanna, Qais Radideh, Hossam Alzu, Anan Abu Rmilah, Ahmad Jabri, Mahmoud Barbarawi, Khaldun Obeidat, Taqwa Alabduh, Erin D Michos, Talal Alnabelsi, Timir K Paul",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2022 Jun; ?(?):101292",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerotic cardiovascular disease"
+              },
+              {
+                "GenericArticleId": 4620063,
+                "RelevanceScore": 270,
+                "PMID": 31957518,
+                "DOI": "10.1080/09537104.2020.1714574",
+                "PublicationDate": "2021-01-02",
+                "IsReview": true,
+                "Title": "Novel approaches to P2Y12 inhibition and aspirin dosing",
+                "Author": "William A E Parker, Robert F Storey",
+                "Journal": "Platelets",
+                "Citation": "2021 Jan; 32(1):7-14",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "coronary artery disease"
+              },
+              {
+                "GenericArticleId": 4719468,
+                "RelevanceScore": 270,
+                "PMID": 32222319,
+                "DOI": "10.1016/j.cpcardiol.2020.100553",
+                "PublicationDate": "2021-03-01",
+                "IsReview": true,
+                "Title": "Aspirin for Primary Prevention of Coronary Artery Disease",
+                "Author": "Aditi Ujjawal, Manasvi Gupta, Raktim K Ghosh, Vardhmaan Jain, Dhrubajyoti Bandyopadhyay, Arman Qamar, Wilbert S Aronow, Prakash Deedwania, Samir Kapadia, Carl J Lavie",
+                "Journal": "Current problems in cardiology",
+                "Citation": "2021 Mar; 46(3):100553",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "coronary artery disease"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D013923"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Thromboembolism",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 17858,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2093,
+            "CooccurrenceScore": 79203,
+            "Article": [
+              {
+                "GenericArticleId": 3490053,
+                "RelevanceScore": 275,
+                "PMID": 35370686,
+                "DOI": "10.3389/fphar.2022.849628",
+                "PublicationDate": "2022-01-01",
+                "IsReview": true,
+                "Title": "Aspirin in COVID-19: Pros and Cons",
+                "Author": "Rana Zareef, Marwa Diab, Tala Al Saleh, Adham Makarem, Nour K Younis, Fadi Bitar, Mariam Arabi",
+                "Journal": "Frontiers in pharmacology",
+                "Citation": "2022; 13(?):849628",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thromboembolic"
+              },
+              {
+                "GenericArticleId": 5416562,
+                "RelevanceScore": 270,
+                "PMID": 33879541,
+                "DOI": "10.1136/fmch-2020-000741",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "Rationales and uncertainties for aspirin use in COVID-19: a narrative review",
+                "Author": "Hazem A Sayed Ahmed, Eric Merrell, Mansoura Ismail, Anwar I Joudeh, Jeffrey B Riley, Ahmed Shawkat, Hanan Habeb, Edward Darling, Reda A Goweda, Mohamed H Shehata, Hossam Amin, Gary F Nieman, Hani Aiash",
+                "Journal": "Family medicine and community health",
+                "Citation": "2021 04; 9(2):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thromboembolism"
+              },
+              {
+                "GenericArticleId": 3361011,
+                "RelevanceScore": 265,
+                "PMID": 35021045,
+                "DOI": "10.1016/j.ijpharm.2022.121453",
+                "PublicationDate": "2022-01-10",
+                "IsReview": false,
+                "Title": "Going green: Development of a sustainable lipid-based enteric coating formulation for low-dose aspirin multiparticulate systems",
+                "Author": "Sonja Schertel, Carolina Corzo, Lukas Leitner, Julia Karrer, Daniel Engel, Yannik Teichmann, Andreas Zimmer, Sharareh Salar-Behzadi",
+                "Journal": "International journal of pharmaceutics",
+                "Citation": "2022 Jan; 614(?):121453",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "thromboembolism"
+              },
+              {
+                "GenericArticleId": 3456015,
+                "RelevanceScore": 265,
+                "PMID": 35277799,
+                "DOI": "10.1007/s11605-022-05287-z",
+                "PublicationDate": "2022-03-11",
+                "IsReview": false,
+                "Title": "Cost-Effectiveness of Aspirin for Extended Venous Thromboembolism Prophylaxis After Major Surgery for Inflammatory Bowel Disease",
+                "Author": "Ira L Leeds, Bradford Sklow, Emre Gorgun, David Liska, Amy L Lightner, Tracy L Hull, Scott R Steele, Stefan D Holubar",
+                "Journal": "Journal of gastrointestinal surgery : official journal of the Society for Surgery of the Alimentary Tract",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "thromboembolism"
+              },
+              {
+                "GenericArticleId": 3488678,
+                "RelevanceScore": 265,
+                "PMID": 35366783,
+                "DOI": "10.2174/1871525720666220401102728",
+                "PublicationDate": "2022-04-01",
+                "IsReview": false,
+                "Title": "Effect of Aspirin on the prevention of pro-thrombotic states in hospitalized COVID-19 patients: Systematic review",
+                "Author": "Masoumeh Abdi, Zahra Hosseini, Fatemeh Shirjan, Leila Mohammadi, Sahel Shafiee Dolat Abadi, Nilofar Massoudi, Moein Zangiabadian, Mohammad Javad Nasiri",
+                "Journal": "Cardiovascular & hematological agents in medicinal chemistry",
+                "Citation": "2022 Apr; ?(?):",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "thromboembolic"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D001281"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Atrial Fibrillation",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 31965,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2312,
+            "CooccurrenceScore": 78945,
+            "Article": [
+              {
+                "GenericArticleId": 3772820,
+                "RelevanceScore": 275,
+                "PMID": 35829979,
+                "DOI": "10.1007/s10557-022-07367-3",
+                "PublicationDate": "2022-07-13",
+                "IsReview": true,
+                "Title": "The Cost of Breaking Even: a Perspective on the Net Clinical Impact of Adding Aspirin to Antithrombotic Therapies in Patients with Atrial Fibrillation Undergoing Percutaneous Coronary Intervention",
+                "Author": "Jeffrey Triska, Faris Haddadin, Luai Madanat, Ahmad Jabri, Marilyne Daher, Yochai Birnbaum, Hani Jneid",
+                "Journal": "Cardiovascular drugs and therapy",
+                "Citation": "2022 Jul; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              },
+              {
+                "GenericArticleId": 5058409,
+                "RelevanceScore": 270,
+                "PMID": 32886529,
+                "DOI": "10.1161/circulationaha.120.045695",
+                "PublicationDate": "2020-10-20",
+                "IsReview": true,
+                "Title": "Lifelong Aspirin for All in the Secondary Prevention of Chronic Coronary Syndrome: Still Sacrosanct or Is Reappraisal Warranted?",
+                "Author": "Alan P Jacobsen, Inbar Raber, Cian P McCarthy, Roger S Blumenthal, Deepak L Bhatt, Ronan W Cusack, Patrick W J C Serruys, William Wijns, John W McEvoy",
+                "Journal": "Circulation",
+                "Citation": "2020 10; 142(16):1579-1590",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              },
+              {
+                "GenericArticleId": 5353954,
+                "RelevanceScore": 270,
+                "PMID": 33706988,
+                "DOI": "10.1016/j.amjcard.2020.12.017",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "Role and Timing of Aspirin Therapy Following PCI in Patients With Atrial Fibrillation",
+                "Author": "Christopher P Cannon",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2021 04; 144 Suppl 1(?):S32-S39",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              },
+              {
+                "GenericArticleId": 5507002,
+                "RelevanceScore": 270,
+                "PMID": 34130102,
+                "DOI": "10.1016/j.jstrokecerebrovasdis.2021.105911",
+                "PublicationDate": "2021-08-01",
+                "IsReview": true,
+                "Title": "Aspirin Use and Risk of Subdural Hematoma: Updated Meta-Analysis of Randomized Trials",
+                "Author": "Robert G Hart, Lesly A Pearce, Philip B Gorelick, Ben J Connolly, Luciana Catanese",
+                "Journal": "Journal of stroke and cerebrovascular diseases : the official journal of National Stroke Association",
+                "Citation": "2021 Aug; 30(8):105911",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              },
+              {
+                "GenericArticleId": 230627,
+                "RelevanceScore": 265,
+                "PMID": 29335863,
+                "DOI": "10.1007/s11655-017-2551-4",
+                "PublicationDate": "2019-05-01",
+                "IsReview": true,
+                "Title": "Integrative Medicine on Optimizing Clopidogrel and Aspirin Therapy",
+                "Author": "Hui Chen",
+                "Journal": "Chinese journal of integrative medicine",
+                "Citation": "2019 May; 25(5):395-400",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              },
+              {
+                "GenericArticleId": 3484899,
+                "RelevanceScore": 265,
+                "PMID": 35355928,
+                "DOI": "10.1016/j.ijcha.2022.101016",
+                "PublicationDate": "2022-06-01",
+                "IsReview": false,
+                "Title": "Efficacy and safety of direct oral anticoagulants with and without Aspirin: A systematic review and Meta-analysis",
+                "Author": "Talal Almas, Adeena Musheer, Arooba Ejaz, Fahd Niaz Shaikh, Anousheh Awais Paracha, Fizza Raza, Maryam Sarwar Khan, Fahad Masood, Faiza Siddiqui, Saamia Raza, Muhammad Fahad Wasim, Muhammad Hasnain Mankani, Kaneez Fatima, Abdul Mannan Khan Minhas",
+                "Journal": "International journal of cardiology. Heart & vasculature",
+                "Citation": "2022 Jun; 40(?):101016",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atrial fibrillation"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D003920"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Diabetes Mellitus",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 297395,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 3795,
+            "CooccurrenceScore": 75842,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "diabetes"
+              },
+              {
+                "GenericArticleId": 3782684,
+                "RelevanceScore": 275,
+                "PMID": 35857202,
+                "DOI": "10.1007/s11886-022-01740-2",
+                "PublicationDate": "2022-07-20",
+                "IsReview": true,
+                "Title": "Aspirin for Primary Prevention of Cardiovascular Diseases: \"WALTZ\" with the Evidence",
+                "Author": "Kyriakos Dimitriadis, Emilia Lazarou, Panagiotis Tsioufis, Stergios Soulaidopoulos, Konstantinos Tsioufis",
+                "Journal": "Current cardiology reports",
+                "Citation": "2022 Jul; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 3831030,
+                "RelevanceScore": 275,
+                "PMID": 35985427,
+                "DOI": "10.1016/j.diabres.2022.110043",
+                "PublicationDate": "2022-08-17",
+                "IsReview": true,
+                "Title": "Questions and answers on the use of aspirin for primary prevention of cardiovascular disease in diabetes",
+                "Author": "Ilaria Cavallari, Edoardo Nobile, Aurelio De Filippis, Francesco Veneziano, Ernesto Maddaloni, Gian Paolo Ussia, Francesco Grigioni",
+                "Journal": "Diabetes research and clinical practice",
+                "Citation": "2022 Aug; 191(?):110043",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "diabetes; diabetologist"
+              },
+              {
+                "GenericArticleId": 5846561,
+                "RelevanceScore": 275,
+                "PMID": 34806161,
+                "DOI": "10.1111/ajo.13460",
+                "PublicationDate": "2021-11-21",
+                "IsReview": true,
+                "Title": "Aspirin for the prevention of pre-eclampsia in women with pre-existing diabetes: Systematic review",
+                "Author": "Monica Zen, Rabbia Haider, David Simmons, Michael Peek, Christopher J Nolan, Suja Padmanabhan, Shilpa Jesudason, Thushari I Alahakoon, Ngai Wah Cheung, Vincent W Lee",
+                "Journal": "The Australian & New Zealand journal of obstetrics & gynaecology",
+                "Citation": "2021 Nov; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "diabetes; diabetes mellitus"
+              },
+              {
+                "GenericArticleId": 4620063,
+                "RelevanceScore": 270,
+                "PMID": 31957518,
+                "DOI": "10.1080/09537104.2020.1714574",
+                "PublicationDate": "2021-01-02",
+                "IsReview": true,
+                "Title": "Novel approaches to P2Y12 inhibition and aspirin dosing",
+                "Author": "William A E Parker, Robert F Storey",
+                "Journal": "Platelets",
+                "Citation": "2021 Jan; 32(1):7-14",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "diabetes"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D006973"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Hypertension",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 210317,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 3307,
+            "CooccurrenceScore": 73363,
+            "Article": [
+              {
+                "GenericArticleId": 4858187,
+                "RelevanceScore": 270,
+                "PMID": 32593779,
+                "DOI": "10.1016/j.jogoh.2020.101845",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "Aspirin for the prevention of placenta-mediated complications in pregnant women with chronic hypertension",
+                "Author": "E Lecarpentier, B Haddad",
+                "Journal": "Journal of gynecology obstetrics and human reproduction",
+                "Citation": "2020 Nov; 49(9):101845",
+                "ChemicalName": "acetyl-salicylic acid; aspirin",
+                "DiseaseName": "chronic hypertension"
+              },
+              {
+                "GenericArticleId": 5485939,
+                "RelevanceScore": 270,
+                "PMID": 34073241,
+                "DOI": "10.3390/jcm10112317",
+                "PublicationDate": "2021-05-26",
+                "IsReview": true,
+                "Title": "Pleiotropic Effects of Acetylsalicylic Acid after Coronary Artery Bypass Grafting-Beyond Platelet Inhibition",
+                "Author": "Dominika Siwik, Magdalena Gajewska, Katarzyna Karoń, Kinga Pluta, Mateusz Wondołkowski, Radosław Wilimski, Łukasz Szarpak, Krzysztof J Filipiak, Aleksandra Gąsecka",
+                "Journal": "Journal of clinical medicine",
+                "Citation": "2021 May; 10(11):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "hypertension"
+              },
+              {
+                "GenericArticleId": 5793685,
+                "RelevanceScore": 270,
+                "PMID": 34659994,
+                "DOI": "10.7759/cureus.17783",
+                "PublicationDate": "2021-09-01",
+                "IsReview": true,
+                "Title": "The Relationship Between Caffeine and Caffeinated Drinks in Causing Intracranial Hemorrhage in the Elderly Aspirin-Taking Population: A Systematic Review",
+                "Author": "Aafreen Khan, Mohammed A Abdalla, Christine M Zakhary, Hiam Rushdi, Jaafar A Hamdan, Kerolos N Youssef, Safeera Khan",
+                "Journal": "Cureus",
+                "Citation": "2021 Sep; 13(9):e17783",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "hypertension"
+              },
+              {
+                "GenericArticleId": 203835,
+                "RelevanceScore": 265,
+                "PMID": 29264061,
+                "DOI": "10.1002/jgf2.102",
+                "PublicationDate": "2017-12-01",
+                "IsReview": true,
+                "Title": "Aspirin for primary stroke prevention in elderly patients with vascular risk factors",
+                "Author": "Shinichiro Uchiyama",
+                "Journal": "Journal of general and family medicine",
+                "Citation": "2017 12; 18(6):331-335",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "hypertension"
+              },
+              {
+                "GenericArticleId": 3244429,
+                "RelevanceScore": 265,
+                "PMID": 35002380,
+                "DOI": "10.1016/j.jsps.2021.10.010",
+                "PublicationDate": "2021-12-01",
+                "IsReview": false,
+                "Title": "Aspirin prescribing pattern and guidelines-adherence evaluation for primary prevention of cardiovascular diseases at a teaching hospital",
+                "Author": "Salman Almalki, Abdulaziz Alhossan, Bashayer Alrumayyan, Khansa Alanazi, Saja Bane Gamea, Marwa Alesikri, Ajaz Ahmad, Ziyad Alrabiah",
+                "Journal": "Saudi pharmaceutical journal : SPJ : the official publication of the Saudi Pharmaceutical Society",
+                "Citation": "2021 Dec; 29(12):1426-1431",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "hypertension"
+              },
+              {
+                "GenericArticleId": 3359870,
+                "RelevanceScore": 265,
+                "PMID": 35018441,
+                "DOI": "10.1093/gerona/glac006",
+                "PublicationDate": "2022-01-09",
+                "IsReview": false,
+                "Title": "Influence of Long-term Non-Aspirin NSAID use on Risk of Frailty in Men ≥60 years: The Physicians' Health Study",
+                "Author": "Ariela R Orkaby, Rachel Ward, Jiaying Chen, Akshay Shanbhag, Howard D Sesso, J Michael Gaziano, Luc Djousse, Jane A Driver",
+                "Journal": "The journals of gerontology. Series A, Biological sciences and medical sciences",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "hypertension"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D007249"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Inflammation",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 345923,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 3446,
+            "CooccurrenceScore": 65560,
+            "Article": [
+              {
+                "GenericArticleId": 3750522,
+                "RelevanceScore": 275,
+                "PMID": 35764787,
+                "DOI": "10.1038/s41416-022-01882-8",
+                "PublicationDate": "2022-06-28",
+                "IsReview": true,
+                "Title": "Non-aspirin non-steroidal anti-inflammatory drugs in colorectal cancer: a review of clinical studies",
+                "Author": "Farzana Y Zaman, Suzanne G Orchard, Andrew Haydon, John R Zalcberg",
+                "Journal": "British journal of cancer",
+                "Citation": "2022 Jun; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 3234606,
+                "RelevanceScore": 270,
+                "PMID": 34975490,
+                "DOI": "10.3389/fphar.2021.794417",
+                "PublicationDate": "2021-01-01",
+                "IsReview": true,
+                "Title": "Mechanism of Improving Aspirin Resistance: Blood-Activating Herbs Combined With Aspirin in Treating Atherosclerotic Cardiovascular Diseases",
+                "Author": "Yixi Zhao, Shengjie Yang, Min Wu",
+                "Journal": "Frontiers in pharmacology",
+                "Citation": "2021; 12(?):794417",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4750672,
+                "RelevanceScore": 270,
+                "PMID": 32299015,
+                "DOI": "10.1016/j.coi.2020.02.006",
+                "PublicationDate": "2020-10-01",
+                "IsReview": true,
+                "Title": "Aspirin-exacerbated respiratory disease",
+                "Author": "Hannah Wangberg, Andrew A White",
+                "Journal": "Current opinion in immunology",
+                "Citation": "2020 10; 66(?):9-13",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4845839,
+                "RelevanceScore": 270,
+                "PMID": 32559537,
+                "DOI": "10.1016/j.scitotenv.2020.140043",
+                "PublicationDate": "2020-10-20",
+                "IsReview": true,
+                "Title": "Toxicity of the Non-Steroidal Anti-Inflammatory Drugs (NSAIDs) acetylsalicylic acid, paracetamol, diclofenac, ibuprofen and naproxen towards freshwater invertebrates: A review",
+                "Author": "Marco Parolini",
+                "Journal": "The Science of the total environment",
+                "Citation": "2020 Oct; 740(?):140043",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "inflammation"
+              },
+              {
+                "GenericArticleId": 4905938,
+                "RelevanceScore": 270,
+                "PMID": 32721423,
+                "DOI": "10.1016/j.clinbiochem.2020.07.003",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "Aspirin: Bitter pill or miracle drug?",
+                "Author": "Clare Fiala, Maria D Pasic",
+                "Journal": "Clinical biochemistry",
+                "Citation": "2020 Nov; 85(?):1-4",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "inflammation"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D002546"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ischemic Attack, Transient",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 7088,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1477,
+            "CooccurrenceScore": 64558,
+            "Article": [
+              {
+                "GenericArticleId": 3442515,
+                "RelevanceScore": 275,
+                "PMID": 35241374,
+                "DOI": "10.1016/j.ejvs.2021.12.037",
+                "PublicationDate": "2022-02-27",
+                "IsReview": true,
+                "Title": "Peri-Operative Outcomes of Carotid Endarterectomy are Not Improved on Dual Antiplatelet Therapy vs. Aspirin Monotherapy: A Systematic Review and Meta-Analysis",
+                "Author": "Jerry C Ku, Shervin Taslimi, Jeffrey Zuccato, Christopher R Pasarikovski, Nathalie Nasr, Ofir Chechik, Emiliano Chisci, Daniele Bissacco, Vincent Larrue, Yefim Rabinovich, Stefano Michelagnoli, Piergiorgio G Settembrini, Stefano M Priola, Michael D Cusimano, Victor X D Yang, R Loch Macdonald",
+                "Journal": "European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "transient ischaemic attack"
+              },
+              {
+                "GenericArticleId": 5198972,
+                "RelevanceScore": 270,
+                "PMID": 33271959,
+                "DOI": "10.3390/jcm9123907",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "Effectiveness of Platelet Function Analysis-Guided Aspirin and/or Clopidogrel Therapy in Preventing Secondary Stroke: A Systematic Review and Meta-Analysis",
+                "Author": "Ann-Rong Yan, Mark Naunton, Gregory M Peterson, Israel Fernandez-Cadenas, Reza Mortazavi",
+                "Journal": "Journal of clinical medicine",
+                "Citation": "2020 Dec; 9(12):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "transient ischemic attack"
+              },
+              {
+                "GenericArticleId": 5709091,
+                "RelevanceScore": 270,
+                "PMID": 34432623,
+                "DOI": "10.12788/jfp.0222",
+                "PublicationDate": "2021-07-01",
+                "IsReview": true,
+                "Title": "Primary Prevention of CVD with Aspirin: Benefits vs Risks",
+                "Author": "Steven M Weisman, Stephen Brunton",
+                "Journal": "The Journal of family practice",
+                "Citation": "2021 07; 70(6S):S41-S46",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "transient ischemic attack"
+              },
+              {
+                "GenericArticleId": 2389502,
+                "RelevanceScore": 265,
+                "PMID": 29901608,
+                "DOI": "10.1097/md.0000000000011060",
+                "PublicationDate": "2018-06-01",
+                "IsReview": true,
+                "Title": "Efficacy and safety of CYP2C19 genotype in stroke or transient ischemic attack patients treated with clopidogrel monotherapy or clopidogrel plus aspirin: Protocol for a systemic review and meta-analysis",
+                "Author": "Jia-Chen Yao, Min Cui, Mang-Mang Pan, Zhi-Chun Gu, Wen-Yan Li",
+                "Journal": "Medicine",
+                "Citation": "2018 Jun; 97(24):e11060",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "transient ischemic attack"
+              },
+              {
+                "GenericArticleId": 3368881,
+                "RelevanceScore": 265,
+                "PMID": 35040913,
+                "DOI": "10.1001/jamaneurol.2021.4905",
+                "PublicationDate": "2022-01-18",
+                "IsReview": false,
+                "Title": "Infarct on Brain Imaging, Subsequent Ischemic Stroke, and Clopidogrel-Aspirin Efficacy: A Post Hoc Analysis of a Randomized Clinical Trial",
+                "Author": "Sara K Rostanski, Alexandra Kvernland, Ava L Liberman, Adam de Havenon, Nils Henninger, Brian Mac Grory, Anthony S Kim, J Donald Easton, S Claiborne Johnston, Shadi Yaghi",
+                "Journal": "JAMA neurology",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "minor stroke; transient ischemic attack"
+              },
+              {
+                "GenericArticleId": 3475812,
+                "RelevanceScore": 265,
+                "PMID": 35331593,
+                "DOI": "10.1016/j.ejim.2022.03.017",
+                "PublicationDate": "2022-03-21",
+                "IsReview": false,
+                "Title": "P2Y12 inhibitors plus aspirin for acute treatment and secondary prevention in minor stroke and high-risk transient ischemic attack: A systematic review and meta-analysis",
+                "Author": "Fulvio Pomero, Eleonora Galli, Marta Bellesini, Lorenzo Maroni, Alessandro Squizzato",
+                "Journal": "European journal of internal medicine",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "minor stroke; transient ischemic attack"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D001249"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Asthma",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 63614,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2104,
+            "CooccurrenceScore": 62649,
+            "Article": [
+              {
+                "GenericArticleId": 4750672,
+                "RelevanceScore": 270,
+                "PMID": 32299015,
+                "DOI": "10.1016/j.coi.2020.02.006",
+                "PublicationDate": "2020-10-01",
+                "IsReview": true,
+                "Title": "Aspirin-exacerbated respiratory disease",
+                "Author": "Hannah Wangberg, Andrew A White",
+                "Journal": "Current opinion in immunology",
+                "Citation": "2020 10; 66(?):9-13",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "asthma"
+              },
+              {
+                "GenericArticleId": 5211479,
+                "RelevanceScore": 270,
+                "PMID": 33307116,
+                "DOI": "10.1016/j.jaci.2020.10.043",
+                "PublicationDate": "2021-03-01",
+                "IsReview": true,
+                "Title": "The role of aspirin desensitization followed by oral aspirin therapy in managing patients with aspirin-exacerbated respiratory disease: A Work Group Report from the Rhinitis, Rhinosinusitis and Ocular Allergy Committee of the American Academy of Allergy, Asthma & Immunology",
+                "Author": "Whitney W Stevens, Elina Jerschow, Alan P Baptist, Larry Borish, John V Bosso, Kathleen M Buchheit, Katherine N Cahill, Paloma Campo, Seong H Cho, Anjeni Keswani, Joshua M Levy, Anil Nanda, Tanya M Laidlaw, Andrew A White",
+                "Journal": "The Journal of allergy and clinical immunology",
+                "Citation": "2021 03; 147(3):827-844",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "asthma"
+              },
+              {
+                "GenericArticleId": 5221900,
+                "RelevanceScore": 270,
+                "PMID": 33336175,
+                "DOI": "10.1016/j.wjorl.2020.07.001",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "Olfactory outcomes in the management of aspirin exacerbated respiratory disease related chronic rhinosinusitis",
+                "Author": "Daniel B Spielman, Jonathan Overdevest, David A Gudis",
+                "Journal": "World journal of otorhinolaryngology - head and neck surgery",
+                "Citation": "2020 Dec; 6(4):207-213",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "asthma"
+              },
+              {
+                "GenericArticleId": 5221904,
+                "RelevanceScore": 270,
+                "PMID": 33336179,
+                "DOI": "10.1016/j.wjorl.2020.07.005",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "Appropriate extent of surgery for aspirin-exacerbated respiratory disease",
+                "Author": "Ethan G Muhonen, Khodayar Goshtasbi, Peter Papagiannopoulos, Edward C Kuan",
+                "Journal": "World journal of otorhinolaryngology - head and neck surgery",
+                "Citation": "2020 Dec; 6(4):235-240",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "bronchial asthma"
+              },
+              {
+                "GenericArticleId": 5221905,
+                "RelevanceScore": 270,
+                "PMID": 33336180,
+                "DOI": "10.1016/j.wjorl.2020.07.009",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "Aspirin-exacerbated respiratory disease: Update on medical management",
+                "Author": "Andrew A White, Katharine Woessner, Ronald Simon",
+                "Journal": "World journal of otorhinolaryngology - head and neck surgery",
+                "Citation": "2020 Dec; 6(4):241-247",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "asthma"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D014456"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Ulcer",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 38383,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1810,
+            "CooccurrenceScore": 59701,
+            "Article": [
+              {
+                "GenericArticleId": 5185575,
+                "RelevanceScore": 270,
+                "PMID": 33234770,
+                "DOI": "10.4166/kjg.2020.140",
+                "PublicationDate": "2020-11-25",
+                "IsReview": true,
+                "Title": "Prevention of Peptic Ulcer Associated with Aspirin and Antiplatelet Agent",
+                "Author": "Ji Yong Ahn",
+                "Journal": "The Korean journal of gastroenterology = Taehan Sohwagi Hakhoe chi",
+                "Citation": "2020 11; 76(5):238-241",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ulcer"
+              },
+              {
+                "GenericArticleId": 199831,
+                "RelevanceScore": 265,
+                "PMID": 29253055,
+                "DOI": "10.15403/jgld.2014.1121.264.hra",
+                "PublicationDate": "2017-12-01",
+                "IsReview": true,
+                "Title": "PPIs Prevent Aspirin-Induced Gastrointestinal Bleeding Better than H2RAs. A Systematic Review and Meta-analysis",
+                "Author": "Imre L Szabó, Robert Mátics, Peter Hegyi, Andras Garami, Anita Illés, Patricia Sarlós, Judit Bajor, Akos Szűcs, Dora Mosztbacher, Katalin Márta, Kata Szemes, Kata Csekő, Balint Kővári, Zoltan Rumbus, Áron Vincze",
+                "Journal": "Journal of gastrointestinal and liver diseases : JGLD",
+                "Citation": "2017 Dec; 26(4):395-402",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ulcer"
+              },
+              {
+                "GenericArticleId": 3476356,
+                "RelevanceScore": 265,
+                "PMID": 35333148,
+                "DOI": "10.1080/01913123.2022.2052779",
+                "PublicationDate": "2022-03-04",
+                "IsReview": false,
+                "Title": "Spirulina supplements: an approach moderating aspirin persuaded histological and ultra-structural alterations in albino rats gastric mucosa",
+                "Author": "Sherif A Kamar, Ahmed H Bayoumi, Hagar Yousry Rady",
+                "Journal": "Ultrastructural pathology",
+                "Citation": "2022 Mar; 46(2):204-216",
+                "ChemicalName": "acetyl-salicylic acid; aspirin",
+                "DiseaseName": "ulcer; ulceration"
+              },
+              {
+                "GenericArticleId": 3507394,
+                "RelevanceScore": 265,
+                "PMID": 35419961,
+                "DOI": "10.1111/imj.15732",
+                "PublicationDate": "2022-04-01",
+                "IsReview": false,
+                "Title": "Prior oral proton-pump inhibitor use is associated with reduced severity of aspirin-related upper gastrointestinal bleeding in older people",
+                "Author": "Oyekoya T Ayonrinde, Natasha Walldorf, Nicholas Chan, Nathanael Y Foo, Tithi Kulkarni, John K Olynyk, Frank M Sanfilippo",
+                "Journal": "Internal medicine journal",
+                "Citation": "2022 Apr; 52(4):663-666",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ulceration"
+              },
+              {
+                "GenericArticleId": 3630727,
+                "RelevanceScore": 265,
+                "PMID": 35471505,
+                "DOI": "10.1001/jama.2022.4983",
+                "PublicationDate": "2022-04-26",
+                "IsReview": false,
+                "Title": "Aspirin Use to Prevent Cardiovascular Disease: US Preventive Services Task Force Recommendation Statement",
+                "Author": "Karina W Davidson, Michael J Barry, Carol M Mangione, Michael Cabana, David Chelmow, Tumaini Rucker Coker, Esa M Davis, Katrina E Donahue, Carlos Roberto Jaén, Alex H Krist, Martha Kubik, Li Li, Gbenga Ogedegbe, Lori Pbert, John M Ruiz, James Stevermer, Chien-Wen Tseng, John B Wong",
+                "Journal": "JAMA",
+                "Citation": "2022 04; 327(16):1577-1584",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ulcers"
+              },
+              {
+                "GenericArticleId": 3683012,
+                "RelevanceScore": 265,
+                "PMID": 35586872,
+                "DOI": "10.1177/00031348221103647",
+                "PublicationDate": "2022-05-18",
+                "IsReview": false,
+                "Title": "Aspirin Use as a Risk Factor for Marginal Ulceration in Roux-en-Y Gastric Bypass Patients: A Meta-Analysis of 24,770 Patients",
+                "Author": "Ray C Portela, Ishna Sharma, Ahmet Vahibe, Omer Hassan, Konstantinos Spaniolas, Barham Abu Dayyeh, Benjamin Clapp, Omar M Ghanem",
+                "Journal": "The American surgeon",
+                "Citation": "2022 May; ?(?):31348221103647",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "ulcer; ulceration"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D055963"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Asthma, Aspirin-Induced",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 1058,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1044,
+            "CooccurrenceScore": 58239,
+            "Article": [
+              {
+                "GenericArticleId": 3630082,
+                "RelevanceScore": 275,
+                "PMID": 35469627,
+                "DOI": "10.1016/j.iac.2021.12.005",
+                "PublicationDate": "2022-05-01",
+                "IsReview": true,
+                "Title": "Aspirin-Exacerbated Respiratory Disease: A Unique Case of Drug Hypersensitivity",
+                "Author": "Kristen B Corey, Katherine N Cahill",
+                "Journal": "Immunology and allergy clinics of North America",
+                "Citation": "2022 May; 42(2):421-432",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "aspirin-exacerbated respiratory disease"
+              },
+              {
+                "GenericArticleId": 4750672,
+                "RelevanceScore": 270,
+                "PMID": 32299015,
+                "DOI": "10.1016/j.coi.2020.02.006",
+                "PublicationDate": "2020-10-01",
+                "IsReview": true,
+                "Title": "Aspirin-exacerbated respiratory disease",
+                "Author": "Hannah Wangberg, Andrew A White",
+                "Journal": "Current opinion in immunology",
+                "Citation": "2020 10; 66(?):9-13",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "aspirin-exacerbated respiratory disease"
+              },
+              {
+                "GenericArticleId": 5082086,
+                "RelevanceScore": 270,
+                "PMID": 32950684,
+                "DOI": "10.1016/j.anai.2020.09.011",
+                "PublicationDate": "2021-02-01",
+                "IsReview": true,
+                "Title": "Lipid-mediated innate lymphoid cell recruitment and activation in aspirin-exacerbated respiratory disease",
+                "Author": "Kellen J Cavagnero, Taylor A Doherty",
+                "Journal": "Annals of allergy, asthma & immunology : official publication of the American College of Allergy, Asthma, & Immunology",
+                "Citation": "2021 02; 126(2):135-142",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "aspirin-exacerbated respiratory disease"
+              },
+              {
+                "GenericArticleId": 5122918,
+                "RelevanceScore": 270,
+                "PMID": 33065294,
+                "DOI": "10.1016/j.anai.2020.09.016",
+                "PublicationDate": "2021-02-01",
+                "IsReview": true,
+                "Title": "Local immunoglobulin production in nasal tissues: A key to pathogenesis in chronic rhinosinusitis with nasal polyps and aspirin-exacerbated respiratory disease",
+                "Author": "Kathleen M Buchheit, Kathryn E Hulse",
+                "Journal": "Annals of allergy, asthma & immunology : official publication of the American College of Allergy, Asthma, & Immunology",
+                "Citation": "2021 02; 126(2):127-134",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "aspirin-exacerbated respiratory disease"
+              },
+              {
+                "GenericArticleId": 5211287,
+                "RelevanceScore": 270,
+                "PMID": 33306487,
+                "DOI": "10.1097/aci.0000000000000712",
+                "PublicationDate": "2021-02-01",
+                "IsReview": true,
+                "Title": "Cellular interactions in aspirin-exacerbated respiratory disease",
+                "Author": "Jana H Badrani, Taylor A Doherty",
+                "Journal": "Current opinion in allergy and clinical immunology",
+                "Citation": "2021 02; 21(1):65-70",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "aspirin-exacerbated respiratory disease"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D050197"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Atherosclerosis",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 94602,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2020,
+            "CooccurrenceScore": 55059,
+            "Article": [
+              {
+                "GenericArticleId": 3376886,
+                "RelevanceScore": 275,
+                "PMID": 35060092,
+                "DOI": "10.1007/s40262-021-01090-2",
+                "PublicationDate": "2022-01-20",
+                "IsReview": true,
+                "Title": "Pharmacokinetic and Pharmacodynamic Profile of a Novel Phospholipid Aspirin Formulation",
+                "Author": "Dominick J Angiolillo, Jayne Prats, Efthymios N Deliargyris, David J Schneider, James Scheiman, Carey Kimmelstiel, Ph Gabriel Steg, Mark Alberts, Todd Rosengart, Roxana Mehran, Deepak L Bhatt",
+                "Journal": "Clinical pharmacokinetics",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerotic disease"
+              },
+              {
+                "GenericArticleId": 3747722,
+                "RelevanceScore": 275,
+                "PMID": 35757317,
+                "DOI": "10.1016/j.ajpc.2022.100363",
+                "PublicationDate": "2022-09-01",
+                "IsReview": true,
+                "Title": "Implications of the heterogeneity between guideline recommendations for the use of low dose aspirin in primary prevention of cardiovascular disease",
+                "Author": "Xiao-Ying Li, Li Li, Sang-Hoon Na, Francesca Santilli, Zhongwei Shi, Michael Blaha",
+                "Journal": "American journal of preventive cardiology",
+                "Citation": "2022 Sep; 11(?):100363",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerosis"
+              },
+              {
+                "GenericArticleId": 3234606,
+                "RelevanceScore": 270,
+                "PMID": 34975490,
+                "DOI": "10.3389/fphar.2021.794417",
+                "PublicationDate": "2021-01-01",
+                "IsReview": true,
+                "Title": "Mechanism of Improving Aspirin Resistance: Blood-Activating Herbs Combined With Aspirin in Treating Atherosclerotic Cardiovascular Diseases",
+                "Author": "Yixi Zhao, Shengjie Yang, Min Wu",
+                "Journal": "Frontiers in pharmacology",
+                "Citation": "2021; 12(?):794417",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerotic"
+              },
+              {
+                "GenericArticleId": 5031051,
+                "RelevanceScore": 270,
+                "PMID": 32809173,
+                "DOI": "10.1007/s40256-020-00424-y",
+                "PublicationDate": "2021-03-01",
+                "IsReview": true,
+                "Title": "The Use of Aspirin in Contemporary Primary Prevention of Atherosclerotic Cardiovascular Diseases Revisited: The Increasing Need and Call for a Personalized Therapeutic Approach",
+                "Author": "Zlatko Fras, Amirhossein Sahebkar, Maciej Banach",
+                "Journal": "American journal of cardiovascular drugs : drugs, devices, and other interventions",
+                "Citation": "2021 Mar; 21(2):139-151",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerotic"
+              },
+              {
+                "GenericArticleId": 5038924,
+                "RelevanceScore": 270,
+                "PMID": 32830272,
+                "DOI": "10.1093/rheumatology/keaa335",
+                "PublicationDate": "2020-12-01",
+                "IsReview": true,
+                "Title": "The role of aspirin in the primary prevention of accelerated atherosclerosis in systemic autoimmune rheumatic diseases",
+                "Author": "Serena Fasano, Daniela Iacono, Antonella Riccardi, Francesco Ciccia, Gabriele Valentini",
+                "Journal": "Rheumatology (Oxford, England)",
+                "Citation": "2020 Dec; 59(12):3593-3602",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "atherosclerosis"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D003251"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Constriction, Pathologic",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 38580,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1654,
+            "CooccurrenceScore": 54502,
+            "Article": [
+              {
+                "GenericArticleId": 5353954,
+                "RelevanceScore": 270,
+                "PMID": 33706988,
+                "DOI": "10.1016/j.amjcard.2020.12.017",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "Role and Timing of Aspirin Therapy Following PCI in Patients With Atrial Fibrillation",
+                "Author": "Christopher P Cannon",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2021 04; 144 Suppl 1(?):S32-S39",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "restenosis"
+              },
+              {
+                "GenericArticleId": 3229732,
+                "RelevanceScore": 265,
+                "PMID": 34961950,
+                "DOI": "10.1111/jocs.16189",
+                "PublicationDate": "2021-12-27",
+                "IsReview": false,
+                "Title": "Ticagrelor versus aspirin and vein graft patency after coronary bypass: A randomized trial",
+                "Author": "Alexander Kulik, Amy M Abreu, Viviana Boronat, Nicholas T Kouchoukos, Marc Ruel",
+                "Journal": "Journal of cardiac surgery",
+                "Citation": "2021 Dec; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stenosis"
+              },
+              {
+                "GenericArticleId": 3381767,
+                "RelevanceScore": 265,
+                "PMID": 35073676,
+                "DOI": "10.3760/cma.j.cn112137-20210817-01869",
+                "PublicationDate": "2022-01-25",
+                "IsReview": false,
+                "Title": "[Analysis of the efficacy and safety of low-dose aspirin in preventing renal artery stenosis in kidney transplantation]",
+                "Author": "X Y Tian, W J Duan, X Q Wu, C Zhang, Z W Wang, G H Cao, B Q Ji, Y Gu, T Qin, T Z Yan",
+                "Journal": "Zhonghua yi xue za zhi",
+                "Citation": "2022 Jan; 102(4):273-278",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stenosis"
+              },
+              {
+                "GenericArticleId": 3457308,
+                "RelevanceScore": 265,
+                "PMID": 35281068,
+                "DOI": "10.3389/fimmu.2022.823391",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Low-Molecular-Weight Heparin Versus Aspirin in Early Management of Acute Ischemic Stroke: A Systematic Review and Meta-Analysis",
+                "Author": "Hui Xia, Ziyao Wang, Min Tian, Zunjing Liu, Zhenhua Zhou",
+                "Journal": "Frontiers in immunology",
+                "Citation": "2022; 13(?):823391",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stenosis"
+              },
+              {
+                "GenericArticleId": 3481478,
+                "RelevanceScore": 265,
+                "PMID": 35346499,
+                "DOI": "10.1016/j.clinthera.2022.02.012",
+                "PublicationDate": "2022-03-25",
+                "IsReview": false,
+                "Title": "Cinnamon and Aspirin for Mild Ischemic Stroke or Transient Ischemic Attack: A Pilot Trial",
+                "Author": "Lei Zhang, Zhanhui Li, Yuewen Wu, Yanming Fan, Zhicong He, Peng He, Jingxing Liang",
+                "Journal": "Clinical therapeutics",
+                "Citation": "2022 Mar; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "stenosis"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D010146"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Pain",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 181480,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 2299,
+            "CooccurrenceScore": 53154,
+            "Article": [
+              {
+                "GenericArticleId": 5741436,
+                "RelevanceScore": 275,
+                "PMID": 34519136,
+                "DOI": "10.1111/ene.15103",
+                "PublicationDate": "2022-01-01",
+                "IsReview": true,
+                "Title": "Aspirin, paracetamol (acetaminophen) and caffeine for the treatment of acute migraine attacks: A systemic review and meta-analysis of randomized placebo-controlled trials",
+                "Author": "Hans Christoph Diener, Charly Gaul, Walter Lehmacher, Thomas Weiser",
+                "Journal": "European journal of neurology",
+                "Citation": "2022 Jan; 29(1):350-357",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "pain"
+              },
+              {
+                "GenericArticleId": 4845839,
+                "RelevanceScore": 270,
+                "PMID": 32559537,
+                "DOI": "10.1016/j.scitotenv.2020.140043",
+                "PublicationDate": "2020-10-20",
+                "IsReview": true,
+                "Title": "Toxicity of the Non-Steroidal Anti-Inflammatory Drugs (NSAIDs) acetylsalicylic acid, paracetamol, diclofenac, ibuprofen and naproxen towards freshwater invertebrates: A review",
+                "Author": "Marco Parolini",
+                "Journal": "The Science of the total environment",
+                "Citation": "2020 Oct; 740(?):140043",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "pain"
+              },
+              {
+                "GenericArticleId": 4905938,
+                "RelevanceScore": 270,
+                "PMID": 32721423,
+                "DOI": "10.1016/j.clinbiochem.2020.07.003",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "Aspirin: Bitter pill or miracle drug?",
+                "Author": "Clare Fiala, Maria D Pasic",
+                "Journal": "Clinical biochemistry",
+                "Citation": "2020 Nov; 85(?):1-4",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "pain"
+              },
+              {
+                "GenericArticleId": 5195322,
+                "RelevanceScore": 270,
+                "PMID": 33260951,
+                "DOI": "10.3390/ijms21239018",
+                "PublicationDate": "2020-11-27",
+                "IsReview": true,
+                "Title": "Mechanisms of Colorectal Cancer Prevention by Aspirin-A Literature Review and Perspective on the Role of COX-Dependent and -Independent Pathways",
+                "Author": "Ranjini Sankaranarayanan, D Ramesh Kumar, Meric A Altinoz, G Jayarama Bhat",
+                "Journal": "International journal of molecular sciences",
+                "Citation": "2020 Nov; 21(23):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "pain"
+              },
+              {
+                "GenericArticleId": 5353955,
+                "RelevanceScore": 270,
+                "PMID": 33706989,
+                "DOI": "10.1016/j.amjcard.2020.12.019",
+                "PublicationDate": "2021-04-01",
+                "IsReview": true,
+                "Title": "The Future of Aspirin Therapy in Cardiovascular Disease",
+                "Author": "Deepak L Bhatt, Charles V Pollack",
+                "Journal": "The American journal of cardiology",
+                "Citation": "2021 04; 144 Suppl 1(?):S40-S47",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "pain"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D000789"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Angina, Unstable",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 6008,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1187,
+            "CooccurrenceScore": 53128,
+            "Article": [
+              {
+                "GenericArticleId": 5709091,
+                "RelevanceScore": 270,
+                "PMID": 34432623,
+                "DOI": "10.12788/jfp.0222",
+                "PublicationDate": "2021-07-01",
+                "IsReview": true,
+                "Title": "Primary Prevention of CVD with Aspirin: Benefits vs Risks",
+                "Author": "Steven M Weisman, Stephen Brunton",
+                "Journal": "The Journal of family practice",
+                "Citation": "2021 07; 70(6S):S41-S46",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "unstable angina"
+              },
+              {
+                "GenericArticleId": 3706448,
+                "RelevanceScore": 265,
+                "PMID": 35647761,
+                "DOI": "10.1093/ageing/afac119",
+                "PublicationDate": "2022-06-01",
+                "IsReview": false,
+                "Title": "Apolipoprotein E*Ɛ2 carriers exhibit high aspirin-treated platelet reactivity and low cardiovascular risk during long-term aspirin treatment",
+                "Author": "Xiao-Li Li, Qiang Wang, Guo-Dong Jia, Hui-Jun Yin, Yao-Hui Wang, Chao Hu, Xiao-Qing Wang, Yang Yang",
+                "Journal": "Age and ageing",
+                "Citation": "2022 Jun; 51(6):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina"
+              },
+              {
+                "GenericArticleId": 5647287,
+                "RelevanceScore": 265,
+                "PMID": 34261738,
+                "DOI": "10.1136/heartjnl-2021-319321",
+                "PublicationDate": "2021-11-01",
+                "IsReview": false,
+                "Title": "Aspirin versus P2Y12 inhibitors with anticoagulation therapy for atrial fibrillation",
+                "Author": "Hidehira Fukaya, Junya Ako, Satoshi Yasuda, Koichi Kaikita, Masaharu Akao, Tetsuya Matoba, Masato Nakamra, Katsumi Miyauchi, Nobuhisa Hagiwara, Kazuo Kimura, Atsushi Hirayama, Kunihiko Matsui, Hisao Ogawa",
+                "Journal": "Heart (British Cardiac Society)",
+                "Citation": "2021 11; 107(21):1731-1738",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina"
+              },
+              {
+                "GenericArticleId": 260193,
+                "RelevanceScore": 255,
+                "PMID": 29415754,
+                "DOI": "10.1186/s13063-017-2373-x",
+                "PublicationDate": "2018-02-07",
+                "IsReview": false,
+                "Title": "Guanxinning tablet for patients who switch from dual antiplatelet therapy to aspirin alone after percutaneous coronary intervention: study protocol for a cluster randomized controlled trial",
+                "Author": "Jingen Li, Jianqing Ju, Zhuo Chen, Jing Liu, Fang Lu, Rui Gao, Hao Xu",
+                "Journal": "Trials",
+                "Citation": "2018 Feb; 19(1):93",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina"
+              },
+              {
+                "GenericArticleId": 344197,
+                "RelevanceScore": 255,
+                "PMID": 20410547,
+                "DOI": "10.2146/ajhp080645",
+                "PublicationDate": "2010-05-01",
+                "IsReview": true,
+                "Title": "Safety of fixed-dose aspirin-extended-release dipyridamole in patients with ischemic heart disease",
+                "Author": "Natalie Crown, Tania Mysak",
+                "Journal": "American journal of health-system pharmacy : AJHP : official journal of the American Society of Health-System Pharmacists",
+                "Citation": "2010 May; 67(9):728-33",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "worsening angina"
+              },
+              {
+                "GenericArticleId": 2404167,
+                "RelevanceScore": 255,
+                "PMID": 29943364,
+                "DOI": "10.1007/s10557-018-6802-1",
+                "PublicationDate": "2018-06-01",
+                "IsReview": false,
+                "Title": "Aspirin for Primary Prevention of Cardiovascular Disease and Renal Disease Progression in Chronic Kidney Disease Patients: a Multicenter Randomized Clinical Trial (AASER Study)",
+                "Author": "Marian Goicoechea, Soledad García de Vinuesa, Borja Quiroga, Eduardo Verde, Carmen Bernis, Enrique Morales, Gema Fernández-Juárez, Patricia de Sequera, Ursula Verdalles, Ramón Delgado, Alberto Torres, David Arroyo, Soraya Abad, Alberto Ortiz, José Luño",
+                "Journal": "Cardiovascular drugs and therapy",
+                "Citation": "2018 06; 32(3):255-263",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina pectoris"
+              },
+              {
+                "GenericArticleId": 3439302,
+                "RelevanceScore": 175,
+                "PMID": 35231553,
+                "DOI": "10.1016/j.cjca.2022.02.022",
+                "PublicationDate": "2022-02-26",
+                "IsReview": true,
+                "Title": "The Evolution of Antiplatelet Therapy Following Percutaneous Coronary Interventions: a 40-Year Journey",
+                "Author": "Guillaume Marquis-Gravel, Maxime Robert-Halabi, Kevin R Bainey, Jean-François Tanguay, Shamir R Mehta",
+                "Journal": "The Canadian journal of cardiology",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina"
+              },
+              {
+                "GenericArticleId": 3498352,
+                "RelevanceScore": 175,
+                "PMID": 35396752,
+                "DOI": "10.1111/jcpt.13665",
+                "PublicationDate": "2022-04-09",
+                "IsReview": true,
+                "Title": "High-Dose Clopidogrel versus Ticagrelor in CYP2C19 intermediate or poor metabolizers after percutaneous coronary intervention: A Meta-Analysis of Randomized Trials",
+                "Author": "Xiao-Yan Sheng, Hui-Jie An, Yong-Yang He, Yong-Feng Ye, Jia-Lan Zhao, Sai Li",
+                "Journal": "Journal of clinical pharmacy and therapeutics",
+                "Citation": "2022 Apr; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "unstable angina"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D006471"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Gastrointestinal Hemorrhage",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 9960,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1272,
+            "CooccurrenceScore": 52850,
+            "Article": [
+              {
+                "GenericArticleId": 3420400,
+                "RelevanceScore": 275,
+                "PMID": 35181226,
+                "DOI": "10.1016/j.semerg.2021.12.002",
+                "PublicationDate": "2022-02-15",
+                "IsReview": true,
+                "Title": "Evaluation of prophylaxis in primary prevention with acetylsalicylic acid in people with diabetes: A scoping review",
+                "Author": "A Ruiz-García, V Pallarés-Carratalá, A Serrano-Cumplido, C Escobar-Cervantes, A Barquilla-García, J A Divisón-Garrote, M Turégano-Yedro, M A Prieto-Díaz, S Cinza-Sanjurjo, F J Alonso-Moreno, P Beato-Fernández, L García-Matarín, D Rey-Aldana, E Martín-Rioboó, A Moyá-Amengual, R Crespo-Sabarís, A Piera-Carbonell, J C Romero-Vigara, E Carrasco-Carrasco, S Velilla-Zancada, M C Seoane-Vicente, J L Górriz-Teruel, J Polo-García, V Barrios",
+                "Journal": "Semergen",
+                "Citation": "2022 Feb; ?(?):",
+                "ChemicalName": "acetylsalicylic acid",
+                "DiseaseName": "gastrointestinal bleeding"
+              },
+              {
+                "GenericArticleId": 5283442,
+                "RelevanceScore": 270,
+                "PMID": 33502899,
+                "DOI": "10.1146/annurev-med-051019-102940",
+                "PublicationDate": "2021-01-27",
+                "IsReview": true,
+                "Title": "Aspirin in the Prevention of Cardiovascular Disease and Cancer",
+                "Author": "Emanuela Ricciotti, Garret A FitzGerald",
+                "Journal": "Annual review of medicine",
+                "Citation": "2021 01; 72(?):473-495",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "gastrointestinal bleed"
+              },
+              {
+                "GenericArticleId": 5709091,
+                "RelevanceScore": 270,
+                "PMID": 34432623,
+                "DOI": "10.12788/jfp.0222",
+                "PublicationDate": "2021-07-01",
+                "IsReview": true,
+                "Title": "Primary Prevention of CVD with Aspirin: Benefits vs Risks",
+                "Author": "Steven M Weisman, Stephen Brunton",
+                "Journal": "The Journal of family practice",
+                "Citation": "2021 07; 70(6S):S41-S46",
+                "ChemicalName": "acetylsalicylic acid; aspirin",
+                "DiseaseName": "gastrointestinal bleeding"
+              },
+              {
+                "GenericArticleId": 199831,
+                "RelevanceScore": 265,
+                "PMID": 29253055,
+                "DOI": "10.15403/jgld.2014.1121.264.hra",
+                "PublicationDate": "2017-12-01",
+                "IsReview": true,
+                "Title": "PPIs Prevent Aspirin-Induced Gastrointestinal Bleeding Better than H2RAs. A Systematic Review and Meta-analysis",
+                "Author": "Imre L Szabó, Robert Mátics, Peter Hegyi, Andras Garami, Anita Illés, Patricia Sarlós, Judit Bajor, Akos Szűcs, Dora Mosztbacher, Katalin Márta, Kata Szemes, Kata Csekő, Balint Kővári, Zoltan Rumbus, Áron Vincze",
+                "Journal": "Journal of gastrointestinal and liver diseases : JGLD",
+                "Citation": "2017 Dec; 26(4):395-402",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "gastrointestinal bleeding"
+              },
+              {
+                "GenericArticleId": 201567,
+                "RelevanceScore": 265,
+                "PMID": 29257747,
+                "DOI": "10.1016/j.diabet.2017.11.002",
+                "PublicationDate": "2018-06-01",
+                "IsReview": true,
+                "Title": "Low-dose aspirin for primary prevention of cardiovascular events in patients with diabetes: Benefit or risk?",
+                "Author": "M Leggio, M G Bendini, E Caldarone, M Lombardi, P Severi, S D'Emidio, D C Stavri, M Armeni, V Bravi, A Mazza",
+                "Journal": "Diabetes & metabolism",
+                "Citation": "2018 Jun; 44(3):217-225",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "gastrointestinal bleeding"
+              },
+              {
+                "GenericArticleId": 3363109,
+                "RelevanceScore": 265,
+                "PMID": 35025879,
+                "DOI": "10.1371/journal.pmed.1003880",
+                "PublicationDate": "2022-01-01",
+                "IsReview": false,
+                "Title": "Low-dose aspirin and incidence of lung carcinoma in patients with chronic obstructive pulmonary disease in Hong Kong: A cohort study",
+                "Author": "Si-Yeung Yu, Mary Sau-Man Ip, Xue Li, Ka-Shing Cheung, Qing-Wen Ren, Mei-Zhen Wu, Hang-Long Li, Pui-Fai Wong, Hung-Fat Tse, Kai-Hang Yiu",
+                "Journal": "PLoS medicine",
+                "Citation": "2022 Jan; 19(1):e1003880",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "upper gastrointestinal bleeding"
+              },
+              {
+                "GenericArticleId": 3365544,
+                "RelevanceScore": 265,
+                "PMID": 35032181,
+                "DOI": "10.1007/s00228-021-03247-1",
+                "PublicationDate": "2022-01-15",
+                "IsReview": false,
+                "Title": "Aspirin for the prevention of hepatocellular carcinoma: an updated meta-analysis with particular focus on patients with chronic liver disease",
+                "Author": "Mengshi Yi, Xi Feng, Wei Peng, Fei Teng, Youyin Tang, Zheyu Chen",
+                "Journal": "European journal of clinical pharmacology",
+                "Citation": "2022 Jan; ?(?):",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "gastrointestinal bleeding"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID_1": {
+          "CID": 2244
+        },
+        "ID_2": {
+          "MeSH": "D014652"
+        },
+        "Evidence": {
+          "ChemicalDiseaseNeighbor": {
+            "NeighborName": "Vascular Diseases",
+            "OrderingByCooccurrenceScore": true,
+            "QueryArticleCount": 51875,
+            "NeighborArticleCount": 32811,
+            "TotalArticleCount": 34603510,
+            "EffectiveTotalArticleCount": 6924038,
+            "ArticleCount": 1503,
+            "CooccurrenceScore": 51072,
+            "Article": [
+              {
+                "GenericArticleId": 3831030,
+                "RelevanceScore": 275,
+                "PMID": 35985427,
+                "DOI": "10.1016/j.diabres.2022.110043",
+                "PublicationDate": "2022-08-17",
+                "IsReview": true,
+                "Title": "Questions and answers on the use of aspirin for primary prevention of cardiovascular disease in diabetes",
+                "Author": "Ilaria Cavallari, Edoardo Nobile, Aurelio De Filippis, Francesco Veneziano, Ernesto Maddaloni, Gian Paolo Ussia, Francesco Grigioni",
+                "Journal": "Diabetes research and clinical practice",
+                "Citation": "2022 Aug; 191(?):110043",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "vascular events"
+              },
+              {
+                "GenericArticleId": 4858187,
+                "RelevanceScore": 270,
+                "PMID": 32593779,
+                "DOI": "10.1016/j.jogoh.2020.101845",
+                "PublicationDate": "2020-11-01",
+                "IsReview": true,
+                "Title": "Aspirin for the prevention of placenta-mediated complications in pregnant women with chronic hypertension",
+                "Author": "E Lecarpentier, B Haddad",
+                "Journal": "Journal of gynecology obstetrics and human reproduction",
+                "Citation": "2020 Nov; 49(9):101845",
+                "ChemicalName": "acetyl-salicylic acid; aspirin",
+                "DiseaseName": "vascular disease"
+              },
+              {
+                "GenericArticleId": 5200240,
+                "RelevanceScore": 270,
+                "PMID": 33275727,
+                "DOI": "10.1182/hematology.2020000150",
+                "PublicationDate": "2020-12-04",
+                "IsReview": true,
+                "Title": "Does aspirin prevent venous thromboembolism?",
+                "Author": "Robert Diep, David Garcia",
+                "Journal": "Hematology. American Society of Hematology. Education Program",
+                "Citation": "2020 12; 2020(1):634-641",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "vascular disease"
+              },
+              {
+                "GenericArticleId": 5507002,
+                "RelevanceScore": 270,
+                "PMID": 34130102,
+                "DOI": "10.1016/j.jstrokecerebrovasdis.2021.105911",
+                "PublicationDate": "2021-08-01",
+                "IsReview": true,
+                "Title": "Aspirin Use and Risk of Subdural Hematoma: Updated Meta-Analysis of Randomized Trials",
+                "Author": "Robert G Hart, Lesly A Pearce, Philip B Gorelick, Ben J Connolly, Luciana Catanese",
+                "Journal": "Journal of stroke and cerebrovascular diseases : the official journal of National Stroke Association",
+                "Citation": "2021 Aug; 30(8):105911",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "vascular disease"
+              },
+              {
+                "GenericArticleId": 5793685,
+                "RelevanceScore": 270,
+                "PMID": 34659994,
+                "DOI": "10.7759/cureus.17783",
+                "PublicationDate": "2021-09-01",
+                "IsReview": true,
+                "Title": "The Relationship Between Caffeine and Caffeinated Drinks in Causing Intracranial Hemorrhage in the Elderly Aspirin-Taking Population: A Systematic Review",
+                "Author": "Aafreen Khan, Mohammed A Abdalla, Christine M Zakhary, Hiam Rushdi, Jaafar A Hamdan, Kerolos N Youssef, Safeera Khan",
+                "Journal": "Cureus",
+                "Citation": "2021 Sep; 13(9):e17783",
+                "ChemicalName": "aspirin",
+                "DiseaseName": "vascular events"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
