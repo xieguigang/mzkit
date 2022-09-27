@@ -36,7 +36,7 @@ Namespace NCBI.PubChem.Graph
         End Sub
 
         Private Shared Function parseJSON(data As String, schema As Type) As Object
-            Return data.LoadJSON(Of LinkDataSet)
+            Return data.LoadJSON(Of GraphJSON)
         End Function
 
         Private Shared Function getJSONUrl(q As (cid As String, type As Types)) As String
@@ -51,15 +51,26 @@ Namespace NCBI.PubChem.Graph
 
             Static web As New Dictionary(Of String, WebGraph)
 
-            Return web.ComputeIfAbsent(
+            Dim json As GraphJSON = web.ComputeIfAbsent(
                 key:=cache,
                 lazyValue:=Function() New WebGraph(cache, interval, offline)
             ) _
-                .Query(Of LinkDataSet)(
+                .Query(Of GraphJSON)(
                     context:=(cid, type),
                     cacheType:=".json"
-                ) _
-               ?.LinkData
+                )
+
+            If json Is Nothing OrElse json.LinkDataSet Is Nothing OrElse json.LinkDataSet.LinkData Is Nothing Then
+                Return Nothing
+            Else
+                Return json.LinkDataSet.LinkData
+            End If
         End Function
+    End Class
+
+    Public Class GraphJSON
+
+        Public Property LinkDataSet As LinkDataSet
+
     End Class
 End Namespace
