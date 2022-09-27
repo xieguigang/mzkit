@@ -4,7 +4,7 @@ imports "graphquery" from "webKit";
 
 require(REnv);
 
-const pubchem_meta as function(term) {
+const pubchem_meta = function(term) {
     const cache = getOption("pubchem.http_cache") || stop("the 'pubchem.http_cache' location is not set!");
     const sleep = getOption("http.sleep") || 3;
     const cid   = pubchem_kit::CID(term, cache);
@@ -30,7 +30,7 @@ const pubchem_meta as function(term) {
     } 
 }
 
-const parsePubchemMeta as function(document) {
+const parsePubchemMeta = function(document) {
     const pugView_query = getQuery("pubchem.graphquery");
     const section_data  = getQuery("section_data.graphquery");
     const json = document
@@ -61,7 +61,7 @@ const parsePubchemMeta as function(document) {
     );
 }
 
-const parseXref as function(refs) {
+const parseXref = function(refs) {
     refs = data.frame(
         id      = refs |> sapply(x -> x$id),
         dbName  = refs |> sapply(x -> x$database),
@@ -74,7 +74,7 @@ const parseXref as function(refs) {
     refs;
 } 
 
-const parseDescriptors as function(descriptors) {
+const parseDescriptors = function(descriptors) {
     descriptors$dataList
     |> lapply(getDataValues, names = x -> x$name)
     ;
@@ -82,11 +82,11 @@ const parseDescriptors as function(descriptors) {
 
 #' get values in section$data
 #' 
-const getDataValues as function(section) {
+const getDataValues = function(section) {
     sapply(section$data, x -> x$value);
 }
 
-const parseNames as function(names) {
+const parseNames = function(names) {
     names = lapply(names$dataList, x -> x$data, names = x -> x$name);
     
     names$"Removed Synonyms" = NULL;
@@ -98,18 +98,10 @@ const parseNames as function(names) {
     ;
 }
 
-const getQuery as function(fileName) {
+const getQuery = function(fileName) {
     `graphquery/${fileName}`
     |> system.file(package = "mzkit")
     |> readText
     |> graphquery::parseQuery
-    ;
-}
-
-const mesh_model = function() {
-    "data/mtrees2022.bin"
-    |> system.file(package = "mzkit")
-    |> read.mesh_tree()
-    |> mesh_background()
     ;
 }
