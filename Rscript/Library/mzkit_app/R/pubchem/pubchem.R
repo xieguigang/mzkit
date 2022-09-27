@@ -49,9 +49,9 @@ const .graph_table = function(nodes, type = ["genes","disease","compounds"]) {
 
 const .term_maps = function(type = ["genes","disease","compounds"], x) {
 	const map = {
-		"genes": Article -> list(query = [Article]::ChemicalName, partner = [Article]::GeneSymbolName),
-		"disease": Article -> list(query = [Article]::ChemicalName, partner = [Article]::DiseaseName),
-		"compounds": Article -> list(query = [Article]::ChemicalName_1, partner = [Article]::GeneSymbolName_2)
+		"genes": Article -> list(query = [Article]::ChemicalName, partner = [Article]::GeneSymbolName, type = type),
+		"disease": Article -> list(query = [Article]::ChemicalName, partner = [Article]::DiseaseName, type = type),
+		"compounds": Article -> list(query = [Article]::ChemicalName_1, partner = [Article]::ChemicalName_2, type = type)
 	};
 	const f = map[[type]];
 	
@@ -69,7 +69,7 @@ const .extract_pubmed_evidence = function(evidence, u, v, type = ["genes","disea
 			x;
 		}
 	}
-	let term = .term_maps(type, Article);
+	let term = .term_maps(type, Article); str(term);
     let pubmed = data.frame(
         GenericArticleId = safeProj([Article]::GenericArticleId),
         RelevanceScore = safeProj([Article]::RelevanceScore),
