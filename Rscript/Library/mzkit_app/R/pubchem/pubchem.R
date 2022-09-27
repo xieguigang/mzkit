@@ -36,7 +36,7 @@ const .graph_table = function(nodes, type = ["genes","disease","compounds"]) {
     let v = [{[nodes]::ID_2}]::GraphId;
     let links = [{[nodes]::Evidence}]::Graph;
     let pubmed = lapply(1:length(u), function(i) {
-        .extract_pubmed_evidence(links[i], u[i], v[i]);
+        .extract_pubmed_evidence(links[i], u[i], v[i], type);
     });
     let evidence = NULL;
 
@@ -47,8 +47,20 @@ const .graph_table = function(nodes, type = ["genes","disease","compounds"]) {
     evidence;
 }
 
-const .extract_pubmed_evidence = function(evidence, u, v) {
+const .term_maps = function(type = ["genes","disease","compounds"], x) {
+	const map = {
+		"genes": Article -> list(query = [Article]::ChemicalName, partner = [Article]::GeneSymbolName),
+		"disease": Article -> list(query = [Article]::ChemicalName, partner = [Article]::DiseaseName),
+		"compounds": Article -> list(query = [Article]::ChemicalName_1, partner = [Article]::GeneSymbolName_2)
+	};
+	const f = map[[type]];
+	
+	f(x);
+}
+
+const .extract_pubmed_evidence = function(evidence, u, v, type = ["genes","disease","compounds"]) {
     let Article = [evidence]::Article;
+	let term = .term_maps(type, Article);
     let pubmed = data.frame(
         GenericArticleId = [Article]::GenericArticleId,
         RelevanceScore = [Article]::RelevanceScore,
@@ -60,9 +72,9 @@ const .extract_pubmed_evidence = function(evidence, u, v) {
         Author = [Article]::Author,
         Journal = [Article]::Journal,
         Citation = [Article]::Citation,
-        ChemicalName = [Article]::ChemicalName,
-        DiseaseName = [Article]::DiseaseName,
-        GeneSymbolName = [Article]::GeneSymbolName
+        ChemicalName = term$query,
+        partner = term$partner,
+		type = type
     );
 
     pubmed[, "u"] = u;

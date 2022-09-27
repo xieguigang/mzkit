@@ -87,5 +87,8 @@ Namespace NCBI.PubChem.Graph
         Public Property ChemicalName As String
         Public Property DiseaseName As String
         Public Property GeneSymbolName As String
+        Public Property ChemicalName_1 As String
+        Public Property ChemicalName_2 As String
+
     End Class
 End Namespace
