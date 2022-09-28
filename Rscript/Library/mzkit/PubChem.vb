@@ -303,45 +303,16 @@ Module PubChemToolKit
         Return MeSH.ParseTree(New StreamReader(stream.TryCast(Of Stream)))
     End Function
 
+    ''' <summary>
+    ''' create MeSH ontology gsea background based on the mesh tree
+    ''' </summary>
+    ''' <param name="mesh"></param>
+    ''' <param name="clusters">
+    ''' Create the mesh background about another topic
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("mesh_background")>
-    Public Function MeshBackground(mesh As Tree(Of Term)) As Background
-        Dim bg = mesh.ImportsTree(
-            Function(term)
-                Return New BackgroundGene With {
-                    .accessionID = term.term,
-                    .[alias] = {term.term},
-                    .locus_tag = New NamedValue With {
-                        .name = term.term,
-                        .text = term.term
-                    },
-                    .name = term.term,
-                    .term_id = {term.term}
-                }
-            End Function)
-
-        bg = New Background With {
-            .build = Now,
-            .clusters = bg.clusters _
-                .GroupBy(Function(c) c.ID) _
-                .Select(Function(c)
-                            If c.Count = 1 Then
-                                Return c.First
-                            Else
-                                Return New Cluster With {
-                                    .description = c.Select(Function(i) i.description).Distinct.JoinBy("; "),
-                                    .ID = c.Key,
-                                    .names = c.Select(Function(i) i.names).Distinct.JoinBy("; "),
-                                    .members = c.Select(Function(i) i.members) _
-                                        .IteratesALL _
-                                        .GroupBy(Function(g) g.accessionID) _
-                                        .Select(Function(a) a.First) _
-                                        .ToArray
-                                }
-                            End If
-                        End Function) _
-                .ToArray
-        }
-
-        Return bg
+    Public Function MeshBackground(mesh As Tree(Of Term), Optional clusters As Background = Nothing) As Background
+        Return mesh.MeshTermOntologyBackground
     End Function
 End Module
