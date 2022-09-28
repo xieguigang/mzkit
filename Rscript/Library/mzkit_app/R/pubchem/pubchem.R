@@ -3,11 +3,11 @@
 #' @details MeSH (Medical Subject Headings) is the NLM controlled
 #'     vocabulary thesaurus used for indexing articles for PubMed.
 #' 
-const mesh_model = function() {
+const mesh_model = function(topics = NULL) {
     "data/mtrees2022.bin"
     |> system.file(package = "mzkit")
     |> read.mesh_tree()
-    |> mesh_background()
+    |> mesh_background(clusters = topics)
     ;
 }
 

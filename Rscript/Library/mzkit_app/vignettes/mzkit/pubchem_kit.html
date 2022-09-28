@@ -370,9 +370,9 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>create MeSH ontology gsea background based on the mesh tree</p>  
                 
-                    <pre><p>let <code>mesh_background</code> as function(<code>mesh</code> as <generic> Tree`1) -> <code>&lt;generic&gt; Background</code> {
+                    <pre><p>let <code>mesh_background</code> as function(<code>mesh</code> as <generic> Tree`1, <code>clusters</code> as <generic> Background = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Background</code> {
     #
     # .NET API information
     #
@@ -384,7 +384,17 @@
     return call <code>R&#35;.interop_[PubChemToolKit::MeshBackground]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>mesh</code>: -
+                </li>
+<li>
+  <code>clusters</code>: Create the mesh background about another topic
+                </li>
+                </ul>
+</div>
                        
                     
 

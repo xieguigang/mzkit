@@ -71,15 +71,38 @@ Namespace NCBI.MeSH
                 .id = tree.id,
                 .name = tree.name,
                 .clusters = tree.clusters _
+                    .Where(Function(v) list.ContainsKey(v.ID)) _
                     .Select(Function(cl)
                                 Return joinClusterTopic(cl, list)
                             End Function) _
+                    .Where(Function(cl) Not cl Is Nothing) _
                     .ToArray
             }
         End Function
 
         Private Function joinClusterTopic(node As Cluster, list As Dictionary(Of String, Cluster)) As Cluster
-            Throw New NotImplementedException
+            Dim topics = {node.ID} _
+                .JoinIterates(node.members.Select(Function(a) a.accessionID)) _
+                .Distinct _
+                .Where(Function(v) list.ContainsKey(v)) _
+                .Select(Function(id) list(id)) _
+                .ToArray
+            Dim data As BackgroundGene() = topics _
+                .Select(Function(c) c.members) _
+                .IteratesALL _
+                .ToArray
+            Dim metainfo = list(node.ID)
+
+            If data.Length = 0 Then
+                Return Nothing
+            End If
+
+            Return New Cluster With {
+                .description = metainfo.description,
+                .ID = metainfo.names,
+                .members = data,
+                .names = metainfo.ID
+            }
         End Function
     End Module
 End Namespace
