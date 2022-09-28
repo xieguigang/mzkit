@@ -319,4 +319,9 @@ Module PubChemToolKit
             Return mesh.MeshTopicBackground(clusters)
         End If
     End Function
+
+    <ExportAPI("mesh_level1")>
+    Public Function level1Terms(mesh As Tree(Of Term)) As String()
+        Return mesh.Childs.Values.Select(Function(c) c.Data.ToString).ToArray
+    End Function
 End Module
