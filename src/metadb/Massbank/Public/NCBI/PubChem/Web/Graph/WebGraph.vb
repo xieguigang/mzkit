@@ -19,6 +19,7 @@ Namespace NCBI.PubChem.Graph
 
     Public Class WebGraph : Inherits WebQuery(Of (cid As String, type As Types))
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(<CallerMemberName>
                        Optional cache As String = Nothing,
                        Optional interval As Integer = -1,
@@ -35,10 +36,12 @@ Namespace NCBI.PubChem.Graph
             )
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function parseJSON(data As String, schema As Type) As Object
-            Return data.LoadJSON(Of GraphJSON)
+            Return data.LoadJSON(Of GraphJSON)(throwEx:=False)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function getJSONUrl(q As (cid As String, type As Types)) As String
             Return $"https://pubchem.ncbi.nlm.nih.gov/link_db/link_db_server.cgi?format=JSON&type={q.type.Description}&operation=GetAllLinks&id_1={q.cid}&response_type=display"
         End Function
