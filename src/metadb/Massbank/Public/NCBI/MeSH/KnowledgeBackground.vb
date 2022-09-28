@@ -59,5 +59,27 @@ Namespace NCBI.MeSH
 
             Return bg
         End Function
+
+        <Extension>
+        Public Function MeshTopicBackground(mesh As Tree(Of Term), cluster As Background) As Background
+            Dim tree = mesh.MeshTermOntologyBackground
+            Dim list = cluster.clusters.ToDictionary(Function(c) c.ID)
+
+            Return New Background With {
+                .build = tree.build,
+                .comments = tree.comments,
+                .id = tree.id,
+                .name = tree.name,
+                .clusters = tree.clusters _
+                    .Select(Function(cl)
+                                Return joinClusterTopic(cl, list)
+                            End Function) _
+                    .ToArray
+            }
+        End Function
+
+        Private Function joinClusterTopic(node As Cluster, list As Dictionary(Of String, Cluster)) As Cluster
+            Throw New NotImplementedException
+        End Function
     End Module
 End Namespace

@@ -313,6 +313,10 @@ Module PubChemToolKit
     ''' <returns></returns>
     <ExportAPI("mesh_background")>
     Public Function MeshBackground(mesh As Tree(Of Term), Optional clusters As Background = Nothing) As Background
-        Return mesh.MeshTermOntologyBackground
+        If clusters Is Nothing Then
+            Return mesh.MeshTermOntologyBackground
+        Else
+            Return mesh.MeshTopicBackground(clusters)
+        End If
     End Function
 End Module
