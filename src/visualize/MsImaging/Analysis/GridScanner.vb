@@ -15,25 +15,13 @@ Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Module GridScanner
 
-    ''' <summary>
-    ''' populate ion co-localization cluster data
-    ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="grid_width"></param>
-    ''' <param name="grid_height"></param>
-    ''' <param name="repeats"></param>
-    ''' <param name="bag_size"></param>
-    ''' <param name="mzdiff"></param>
-    ''' <param name="equals"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function IonColocalization(raw As IEnumerable(Of PixelScan),
-                                      Optional grid_width As Integer = 5,
-                                      Optional grid_height As Integer = 5,
-                                      Optional repeats As Integer = 3,
-                                      Optional bag_size As Integer = 32,
-                                      Optional mzdiff As Double = 0.1,
-                                      Optional equals As Double = 0.6) As IEnumerable(Of EntityClusterModel)
+    Public Function PCAGroups(raw As IEnumerable(Of PixelScan),
+                              Optional grid_width As Integer = 5,
+                              Optional grid_height As Integer = 5,
+                              Optional repeats As Integer = 3,
+                              Optional bag_size As Integer = 32,
+                              Optional mzdiff As Double = 0.1,
+                              Optional equals As Double = 0.6)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
@@ -45,8 +33,41 @@ Public Module GridScanner
         grid_height = grid2.height / grid_height
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
+    End Function
 
-        Return grid2.PopulateClusters(region, repeats, bag_size, mzdiff, equals)
+    ''' <summary>
+    ''' populate ion co-localization cluster data
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="grid_width"></param>
+    ''' <param name="grid_height"></param>
+    ''' <param name="repeats"></param>
+    ''' <param name="bag_size"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IonColocalization(raw As IEnumerable(Of PixelScan),
+                                      Optional grid_width As Integer = 5,
+                                      Optional grid_height As Integer = 5,
+                                      Optional repeats As Integer = 3,
+                                      Optional bag_size As Integer = 32,
+                                      Optional mzdiff As Double = 0.1) As IEnumerable(Of EntityClusterModel)
+
+        Dim grid2 = Grid(Of IMsScan).Create(
+            data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
+            getX:=Function(scan) DirectCast(scan, PixelScan).X,
+            getY:=Function(scan) DirectCast(scan, PixelScan).Y
+        )
+
+        grid_width = grid2.width / grid_width
+        grid_height = grid2.height / grid_height
+
+        Dim region As New Size(grid_width / 2, grid_height / 2)
+        Dim matrix As EntityClusterModel() = grid2 _
+            .PopulateIonMatrix(region, repeats, bag_size, mzdiff) _
+            .ToArray
+
+
     End Function
 
     ''' <summary>
