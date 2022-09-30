@@ -56,17 +56,18 @@ Public Module GridScanner
             .ToArray
         Dim metric As New Metric(block_tags)
         ' run dbscan cluster?
-        Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
-            .ComputeClusterDBSCAN(pc3, eps, 3) _
-            .ToArray
+        'Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
+        '    .ComputeClusterDBSCAN(pc3, eps, 3) _
+        '    .ToArray
+        Dim pc3_groups = pc3.Kmeans(expected:=9).ToArray
 
-        For Each group In pc3_groups
-            For Each x As EntityClusterModel In group
-                x.Cluster = group.name
-            Next
-        Next
+        'For Each group In pc3_groups
+        '    For Each x As EntityClusterModel In group
+        '        x.Cluster = group.name
+        '    Next
+        'Next
 
-        Dim pcMatrix = pc3_groups.IteratesAll.ToDictionary(Function(a) a.ID)
+        Dim pcMatrix = pc3_groups.ToDictionary(Function(a) a.ID)
         Dim pc As EntityClusterModel
 
         For Each x As EntityClusterModel In matrix
