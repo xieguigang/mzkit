@@ -5,23 +5,26 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
+Imports Microsoft.VisualBasic.DataMining.DBSCAN
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Module GridScanner
 
-    Public Function PCAGroups(raw As IEnumerable(Of PixelScan),
-                              Optional grid_width As Integer = 5,
-                              Optional grid_height As Integer = 5,
-                              Optional repeats As Integer = 3,
-                              Optional bag_size As Integer = 32,
-                              Optional mzdiff As Double = 0.1,
-                              Optional equals As Double = 0.6)
+    <Extension>
+    Public Iterator Function PCAGroups(raw As IEnumerable(Of PixelScan),
+                                       Optional grid_width As Integer = 5,
+                                       Optional grid_height As Integer = 5,
+                                       Optional repeats As Integer = 3,
+                                       Optional bag_size As Integer = 32,
+                                       Optional mzdiff As Double = 0.1) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
@@ -33,6 +36,46 @@ Public Module GridScanner
         grid_height = grid2.height / grid_height
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
+        Dim matrix As EntityClusterModel() = grid2.PopulateIonMatrix(region, repeats, bag_size, mzdiff).ToArray
+        Dim block_tags = matrix(Scan0).Properties.Keys
+        Dim PCA As New PCA(matrix.Select(Function(r) r(block_tags)))
+        Dim pc3 = PCA _
+            .Project(nPC:=3) _
+            .Select(Function(r, i)
+                        Return New EntityClusterModel With {
+                            .ID = matrix(i).ID,
+                            .Properties = New Dictionary(Of String, Double) From {
+                                {"PC1", r(0)},
+                                {"PC2", r(1)},
+                                {"PC3", r(2)}
+                            }
+                        }
+                    End Function) _
+            .ToArray
+        Dim metric As New Metric(block_tags)
+        ' run dbscan cluster?
+        Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
+            .ComputeClusterDBSCAN(pc3, 0.1, 3) _
+            .ToArray
+
+        For Each group In pc3_groups
+            For Each x As EntityClusterModel In group
+                x.Cluster = group.name
+            Next
+        Next
+
+        Dim pcMatrix = pc3_groups.IteratesAll.ToDictionary(Function(a) a.ID)
+        Dim pc As EntityClusterModel
+
+        For Each x As EntityClusterModel In matrix
+            pc = pcMatrix(x.ID)
+            x.Cluster = pc.Cluster
+            x!PC1 = pc!PC1
+            x!PC2 = pc!PC2
+            x!PC3 = pc!PC3
+
+            Yield x
+        Next
     End Function
 
     ''' <summary>
@@ -51,7 +94,8 @@ Public Module GridScanner
                                       Optional grid_height As Integer = 5,
                                       Optional repeats As Integer = 3,
                                       Optional bag_size As Integer = 32,
-                                      Optional mzdiff As Double = 0.1) As IEnumerable(Of EntityClusterModel)
+                                      Optional mzdiff As Double = 0.1,
+                                      Optional equals As Double = 0.6) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
@@ -63,11 +107,8 @@ Public Module GridScanner
         grid_height = grid2.height / grid_height
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
-        Dim matrix As EntityClusterModel() = grid2 _
-            .PopulateIonMatrix(region, repeats, bag_size, mzdiff) _
-            .ToArray
 
-
+        Return grid2.PopulateClusters(region, repeats, bag_size, mzdiff, equals)
     End Function
 
     ''' <summary>
