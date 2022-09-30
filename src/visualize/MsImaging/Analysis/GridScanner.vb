@@ -25,7 +25,8 @@ Public Module GridScanner
                                        Optional grid_height As Integer = 5,
                                        Optional repeats As Integer = 3,
                                        Optional bag_size As Integer = 32,
-                                       Optional mzdiff As Double = 0.1) As IEnumerable(Of EntityClusterModel)
+                                       Optional mzdiff As Double = 0.1,
+                                       Optional eps As Double = 1) As IEnumerable(Of EntityClusterModel)
 
         Dim grid2 = Grid(Of IMsScan).Create(
             data:=raw.Select(Function(i) DirectCast(i, IMsScan)),
@@ -56,7 +57,7 @@ Public Module GridScanner
         Dim metric As New Metric(block_tags)
         ' run dbscan cluster?
         Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
-            .ComputeClusterDBSCAN(pc3, 0.1, 3) _
+            .ComputeClusterDBSCAN(pc3, eps, 3) _
             .ToArray
 
         For Each group In pc3_groups
