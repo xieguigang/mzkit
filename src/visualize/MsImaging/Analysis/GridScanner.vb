@@ -7,6 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -38,7 +39,7 @@ Public Module GridScanner
         Dim region As New Size(grid_width / 2, grid_height / 2)
         Dim matrix As EntityClusterModel() = grid2.PopulateIonMatrix(region, repeats, bag_size, mzdiff).ToArray
         Dim block_tags = matrix(Scan0).Properties.Keys
-        Dim PCA As New PCA(matrix.Select(Function(r) r(block_tags)))
+        Dim PCA As New PCA(matrix.Z.Select(Function(r) r(block_tags)), center:=False)
         Dim pc3 = PCA _
             .Project(nPC:=3) _
             .Select(Function(r, i)
