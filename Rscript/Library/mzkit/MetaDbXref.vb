@@ -717,4 +717,29 @@ Module MetaDbXref
         End If
     End Function
 
+    <ExportAPI("load_asQueryHits")>
+    Public Function loadQueryHits(x As dataframe, Optional env As Environment = Nothing) As MzQuery()
+        'unique_id,name,mz,ppm,precursorType,score
+        Dim unique_id As String() = REnv.asVector(Of String)(x.getColumnVector("unique_id"))
+        Dim name As String() = REnv.asVector(Of String)(x.getColumnVector("name"))
+        Dim mz As Double() = REnv.asVector(Of Double)(x.getColumnVector("mz"))
+        Dim ppm As Double() = REnv.asVector(Of Double)(x.getColumnVector("ppm"))
+        Dim precursorType As String() = REnv.asVector(Of String)(x.getColumnVector("precursorType"))
+        Dim score As Double() = REnv.asVector(Of Double)(x.getColumnVector("score"))
+
+        Return unique_id _
+            .Select(Function(id, i)
+                        Return New MzQuery With {
+                            .unique_id = id,
+                            .mz = mz(i),
+                            .mz_ref = mz(i),
+                            .name = name(i),
+                            .ppm = ppm(i),
+                            .precursorType = precursorType(i),
+                            .score = score(i)
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
 End Module

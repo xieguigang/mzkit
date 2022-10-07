@@ -68,11 +68,12 @@ Public Class ActivityEnrichment
     Public Shared Function Evaluate(input As Dictionary(Of String, MzQuery),
                                     background As NamedValue(Of NetworkGraph),
                                     modelSize As Integer,
-                                    pinList As Index(Of String)) As ActivityEnrichment
+                                    pinList As Index(Of String),
+                                    ignoreTopology As Boolean) As ActivityEnrichment
 
         Dim mapping As NetworkGraph = getSubGraph(input.Keys, background)
         Dim graph As NetworkGraph = background.Value
-        Dim modularity As Double = Communities.Modularity(g:=mapping)
+        Dim modularity As Double = If(ignoreTopology, 1, Communities.Modularity(g:=mapping))
         Dim F As FishersExactPvalues = FishersExactTest.FishersExact(
             n11:=mapping.vertex.Count,
             n12:=graph.vertex.Count,
@@ -86,6 +87,9 @@ Public Class ActivityEnrichment
             .Select(Function(v) input(v.label)) _
             .ToArray
 
+        ' if any hits in pinned id list
+        ' then the target background network topology
+        ' result will be ignored
         If hits.Any(Function(m) m.unique_id Like pinList) Then
             modularity = 1
         End If

@@ -12,7 +12,8 @@ Public Module Annotation
                                        Optional minhit As Integer = 3,
                                        Optional permutation As Integer = 100,
                                        Optional modelSize As Integer = -1,
-                                       Optional pinned As String() = Nothing) As ActivityEnrichment()
+                                       Optional pinned As String() = Nothing,
+                                       Optional ignoreTopology As Boolean = False) As ActivityEnrichment()
 
         Dim result, tmp1 As ActivityEnrichment()
         Dim allsubgraph As NamedValue(Of NetworkGraph)() = background.ToArray
@@ -41,7 +42,8 @@ Public Module Annotation
                          input:=input,
                          background:=graph,
                          modelSize:=modelSize,
-                         pinList:=pinList
+                         pinList:=pinList,
+                         ignoreTopology:=ignoreTopology
                      )
                      Where query.Background > 0 AndAlso Not query.Q.IsNaNImaginary
                      Select query

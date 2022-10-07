@@ -118,6 +118,7 @@ Module Mummichog
                                        Optional permutation As Integer = 100,
                                        Optional modelSize As Integer = -1,
                                        Optional pinned As String() = Nothing,
+                                       Optional ignore_topology As Boolean = False,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -148,7 +149,8 @@ Module Mummichog
             minhit:=minhit,
             permutation:=permutation,
             modelSize:=modelSize,
-            pinned:=pinned
+            pinned:=pinned,
+            ignoreTopology:=ignore_topology
         )
 
         Return result
