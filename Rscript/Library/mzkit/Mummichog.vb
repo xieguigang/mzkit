@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports SMRUCC.Rsharp.Runtime
@@ -14,6 +15,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports stdNum = System.Math
 
+''' <summary>
+''' 
+''' </summary>
 <Package("Mummichog")>
 Module Mummichog
 
@@ -94,8 +98,12 @@ Module Mummichog
     ''' <summary>
     ''' do ms1 peaks annotation
     ''' </summary>
-    ''' <param name="background"></param>
-    ''' <param name="candidates"></param>
+    ''' <param name="background">
+    ''' the enrichment and network topology graph mode list
+    ''' </param>
+    ''' <param name="candidates">
+    ''' a set of m/z search result list based on the given background model
+    ''' </param>
     ''' <param name="minhit"></param>
     ''' <param name="permutation"></param>
     ''' <param name="modelSize"></param>
@@ -144,6 +152,15 @@ Module Mummichog
         Return result
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="msData">
+    ''' the <see cref="IMzQuery"/> annotation engine
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("queryCandidateSet")>
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
@@ -154,6 +171,29 @@ Module Mummichog
         Else
             Return Message.InCompatibleType(GetType(IMzQuery), msData.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' cast background models for ``peakList_annotation`` analysis based on
+    ''' a given gsea background model object, this conversion will loose
+    ''' all of the network topology information
+    ''' </summary>
+    ''' <param name="background"></param>
+    ''' <returns></returns>
+    <ExportAPI("fromGseaBackground")>
+    Public Function fromGseaBackground(background As Background) As list
+        Return New list With {
+            .slots = background.clusters _
+                .ToDictionary(Function(c) c.ID,
+                              Function(c)
+                                  Dim slot As New list With {.slots = New Dictionary(Of String, Object)}
+
+                                  slot.add("desc", c.names)
+                                  slot.add("model", c.SingularGraph)
+
+                                  Return CObj(slot)
+                              End Function)
+        }
     End Function
 
     ''' <summary>
