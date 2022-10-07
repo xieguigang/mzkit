@@ -61,6 +61,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -152,9 +153,9 @@ Module PubChemToolKit
             .slots = New Dictionary(Of String, Object)
         }
 
-        Call result.add("pathways", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.pathways), cacheType:=".json"))
-        Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.taxonomy), cacheType:=".json"))
-        Call result.add("reaction", query.QueryCacheText(New NamedValue(Of Types)(cid, Types.reaction), cacheType:=".json"))
+        Call result.add("pathways", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.pathways), cacheType:=".json"))
+        Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.taxonomy), cacheType:=".json"))
+        Call result.add("reaction", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.reaction), cacheType:=".json"))
 
         Return result
     End Function
@@ -187,6 +188,21 @@ Module PubChemToolKit
     <ExportAPI("pubchem_url")>
     Public Function pubchemUrl(cid As String) As String
         Return WebQuery.pugViewApi(cid)
+    End Function
+
+    <ExportAPI("query.knowlegde_graph")>
+    Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
+        Dim geneSet As MeshGraph() = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
+        Dim diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
+        Dim metaboliteSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalNeighbor, cache)
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"genes", geneSet},
+                {"disease", diseaseSet},
+                {"compounds", metaboliteSet}
+            }
+        }
     End Function
 
     ''' <summary>
@@ -287,45 +303,25 @@ Module PubChemToolKit
         Return MeSH.ParseTree(New StreamReader(stream.TryCast(Of Stream)))
     End Function
 
+    ''' <summary>
+    ''' create MeSH ontology gsea background based on the mesh tree
+    ''' </summary>
+    ''' <param name="mesh"></param>
+    ''' <param name="clusters">
+    ''' Create the mesh background about another topic
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("mesh_background")>
-    Public Function MeshBackground(mesh As Tree(Of Term)) As Background
-        Dim bg = mesh.ImportsTree(
-            Function(term)
-                Return New BackgroundGene With {
-                    .accessionID = term.term,
-                    .[alias] = {term.term},
-                    .locus_tag = New NamedValue With {
-                        .name = term.term,
-                        .text = term.term
-                    },
-                    .name = term.term,
-                    .term_id = {term.term}
-                }
-            End Function)
+    Public Function MeshBackground(mesh As Tree(Of Term), Optional clusters As Background = Nothing) As Background
+        If clusters Is Nothing Then
+            Return mesh.MeshTermOntologyBackground
+        Else
+            Return mesh.MeshTopicBackground(clusters)
+        End If
+    End Function
 
-        bg = New Background With {
-            .build = Now,
-            .clusters = bg.clusters _
-                .GroupBy(Function(c) c.ID) _
-                .Select(Function(c)
-                            If c.Count = 1 Then
-                                Return c.First
-                            Else
-                                Return New Cluster With {
-                                    .description = c.Select(Function(i) i.description).Distinct.JoinBy("; "),
-                                    .ID = c.Key,
-                                    .names = c.Select(Function(i) i.names).Distinct.JoinBy("; "),
-                                    .members = c.Select(Function(i) i.members) _
-                                        .IteratesALL _
-                                        .GroupBy(Function(g) g.accessionID) _
-                                        .Select(Function(a) a.First) _
-                                        .ToArray
-                                }
-                            End If
-                        End Function) _
-                .ToArray
-        }
-
-        Return bg
+    <ExportAPI("mesh_level1")>
+    Public Function level1Terms(mesh As Tree(Of Term)) As String()
+        Return mesh.Childs.Values.Select(Function(c) c.Data.ToString).ToArray
     End Function
 End Module

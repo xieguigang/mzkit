@@ -29,6 +29,17 @@ Public Module KEGG
         Next
     End Function
 
+    ''' <summary>
+    ''' convert the kegg map object to the graph model
+    ''' </summary>
+    ''' <param name="map"></param>
+    ''' <param name="reactions"></param>
+    ''' <returns>
+    ''' the data graph model contains the metabolite item
+    ''' which is connected via the reaction liks and a set
+    ''' of the single metabolites which is currently no 
+    ''' partner connections in this graph model.
+    ''' </returns>
     <Extension>
     Private Function graphModel(map As Map, reactions As Dictionary(Of String, Reaction)) As NetworkGraph
         Dim allShapes As String() = map.shapes _
@@ -44,6 +55,7 @@ Public Module KEGG
         Dim model As New NetworkGraph
 
         ' add connected graph
+        ' via the reaction links
         For Each id As String In reactionIds.Where(AddressOf reactions.ContainsKey)
             Dim reaction As Reaction = reactions(id)
             Dim formula As Equation = reaction.ReactionModel
@@ -70,6 +82,8 @@ Public Module KEGG
             Next
         Next
 
+        ' add single node into this graph object
+        ' via loop through all shape id
         For Each id As String In allShapes
             If model.GetElementByID(id) Is Nothing Then
                 model.CreateNode(id, New NodeData)

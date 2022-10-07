@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-09-25" />
+    <meta name="last-update" content="2022-09-30" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -162,6 +162,31 @@
     # package: "pubchem_kit"
     #
     return call <code>R&#35;.interop_[PubChemToolKit::pubchemUrl]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="query.knowlegde_graph">
+    <a href="./pubchem_kit/query.knowlegde_graph.html">query.knowlegde_graph</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>query.knowlegde_graph</code> as function(<code>cid</code> as string, <code>cache</code> as string = "./graph_kb") -> <code>list</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.PubChemToolKit
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "pubchem_kit"
+    #
+    return call <code>R&#35;.interop_[PubChemToolKit::QueryKnowledgeGraph]</code>(...);
 }</p></pre>
 
                     
@@ -345,9 +370,9 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>create MeSH ontology gsea background based on the mesh tree</p>  
                 
-                    <pre><p>let <code>mesh_background</code> as function(<code>mesh</code> as <generic> Tree`1) -> <code>&lt;generic&gt; Background</code> {
+                    <pre><p>let <code>mesh_background</code> as function(<code>mesh</code> as <generic> Tree`1, <code>clusters</code> as <generic> Background = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Background</code> {
     #
     # .NET API information
     #
@@ -357,6 +382,41 @@
     # package: "pubchem_kit"
     #
     return call <code>R&#35;.interop_[PubChemToolKit::MeshBackground]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>mesh</code>: -
+                </li>
+<li>
+  <code>clusters</code>: Create the mesh background about another topic
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="mesh_level1">
+    <a href="./pubchem_kit/mesh_level1.html">mesh_level1</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>mesh_level1</code> as function(<code>mesh</code> as <generic> Tree`1) -> <code>string</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.PubChemToolKit
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "pubchem_kit"
+    #
+    return call <code>R&#35;.interop_[PubChemToolKit::level1Terms]</code>(...);
 }</p></pre>
 
                     

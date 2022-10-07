@@ -61,6 +61,9 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 <Assembly: InternalsVisibleTo("mzkit")>
 
+''' <summary>
+''' the metabolite annotation search engine for the kegg metabolites
+''' </summary>
 Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of KEGGCompound)
 
     Private Sub New(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance)
