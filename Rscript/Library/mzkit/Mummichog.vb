@@ -55,7 +55,10 @@ Module Mummichog
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mzScore")>
-    Public Function mzScore(result As ActivityEnrichment(), Optional minHits As Integer = -1) As dataframe
+    Public Function mzScore(result As ActivityEnrichment(),
+                            Optional minHits As Integer = -1,
+                            Optional ignore_topology As Boolean = False) As dataframe
+
         Dim resultSet As ActivityEnrichment() = result _
             .Where(Function(a) a.Input >= minHits) _
             .ToArray
@@ -73,7 +76,7 @@ Module Mummichog
         Next
 
         For Each pathway As ActivityEnrichment In resultSet
-            Dim score As Double = pathway.Activity
+            Dim score As Double = If(ignore_topology, 1, pathway.Activity)
 
             If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
                 score *= 100
