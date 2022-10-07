@@ -96,10 +96,10 @@
   <h4>Arguments</h4>
   <ul>
                    <li>
-  <code>background</code>: -
+  <code>background</code>: the enrichment and network topology graph mode list
                 </li>
 <li>
-  <code>candidates</code>: -
+  <code>candidates</code>: a set of m/z search result list based on the given background model
                 </li>
 <li>
   <code>minhit</code>: -
@@ -139,7 +139,79 @@
     return call <code>R&#35;.interop_[Mummichog::queryCandidateSet]</code>(...);
 }</p></pre>
 
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>mz</code>: -
+                </li>
+<li>
+  <code>msData</code>: the @<code>T:BioNovoGene.BioDeep.MSEngine.IMzQuery</code> annotation engine
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
+                       
                     
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="createMzset">
+    <a href="./Mummichog/createMzset.html">createMzset</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>createMzset</code> as function(<code>query</code> as <generic> MzQuery[], <code>tolerance</code> as any = "ppm:20", [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzSet</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Mummichog
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "Mummichog"
+    #
+    return call <code>R&#35;.interop_[Mummichog::createMzSet]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="fromGseaBackground">
+    <a href="./Mummichog/fromGseaBackground.html">fromGseaBackground</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>cast background models for <code>peakList_annotation</code> analysis based on<br />
+ a given gsea background model object, this conversion will loose<br />
+ all of the network topology information</p>  
+                
+                    <pre><p>let <code>fromGseaBackground</code> as function(<code>background</code> as <generic> Background) -> <code>list</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Mummichog
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "Mummichog"
+    #
+    return call <code>R&#35;.interop_[Mummichog::fromGseaBackground]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>background</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
