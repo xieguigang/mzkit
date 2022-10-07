@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Public Module Annotation
 
@@ -49,9 +50,21 @@ Public Module Annotation
                      Select query
                      Order By query.Activity Descending
             tmp1 = scores.ToArray
-            score = Aggregate v As ActivityEnrichment
-                    In tmp1
-                    Into Sum(v.Activity)
+
+            If ignoreTopology Then
+                score = Aggregate v As ActivityEnrichment
+                        In tmp1
+                        Let pscore As Double = If(
+                            v.Fisher.two_tail_pvalue < 1.0E-100,
+                            100,
+                            -stdNum.Log10(v.Fisher.two_tail_pvalue)
+                        )
+                        Into Sum(pscore)
+            Else
+                score = Aggregate v As ActivityEnrichment
+                        In tmp1
+                        Into Sum(v.Activity)
+            End If
 
             ' evaluate the best candidate collection
             If maxScore < score Then
