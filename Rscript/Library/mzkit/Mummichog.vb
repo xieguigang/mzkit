@@ -1,10 +1,12 @@
-﻿Imports BioNovoGene.BioDeep.MSEngine
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.MSEngine.Mummichog
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -173,6 +175,40 @@ Module Mummichog
         End If
     End Function
 
+    <ExportAPI("createMzset")>
+    <RApiReturn(GetType(MzSet))>
+    Public Function createMzSet(query As MzQuery(),
+                                Optional tolerance As Object = "ppm:20",
+                                Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Dim mzgroup As NamedCollection(Of MzQuery)() = query _
+            .GroupBy(Function(i) i.mz, AddressOf mzdiff.TryCast(Of Tolerance).Equals) _
+            .ToArray
+        Dim mzset As MzSet() = mzgroup _
+            .AsParallel _
+            .Select(Function(mz)
+                        Dim mzi As Double = mz.Select(Function(i) i.mz).Average
+                        Dim candidates = mz _
+                            .GroupBy(Function(i) i.unique_id) _
+                            .Select(Function(i) i.First) _
+                            .ToArray
+
+                        Return New MzSet With {
+                            .mz = mzi,
+                            .query = candidates
+                        }
+                    End Function) _
+            .ToArray
+
+        Return mzset
+    End Function
+
     ''' <summary>
     ''' cast background models for ``peakList_annotation`` analysis based on
     ''' a given gsea background model object, this conversion will loose
@@ -210,7 +246,7 @@ Module Mummichog
                           Function(r)
                               Return r.First
                           End Function)
-        Dim subgraphs = KEGG.CreateBackground(maps, networkIndex).ToArray
+        Dim subgraphs = maps.CreateBackground(networkIndex).ToArray
         Dim graphSet As New list With {
             .slots = New Dictionary(Of String, Object)
         }
