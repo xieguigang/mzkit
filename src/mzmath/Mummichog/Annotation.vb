@@ -46,7 +46,7 @@ Public Module Annotation
                          pinList:=pinList,
                          ignoreTopology:=ignoreTopology
                      )
-                     Where query.Background > 0 AndAlso Not query.Q.IsNaNImaginary
+                     Where query.Background + query.Input > 0 AndAlso Not query.Q.IsNaNImaginary
                      Select query
                      Order By query.Activity Descending
             tmp1 = scores.ToArray
