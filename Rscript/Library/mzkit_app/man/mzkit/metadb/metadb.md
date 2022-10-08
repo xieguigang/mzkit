@@ -11,3 +11,4 @@
 + [excludeFeatures](metadb/excludeFeatures.1) removes all of the annotation result which is not 
 + [uniqueFeatures](metadb/uniqueFeatures.1) unique of the peak annotation features
 + [cbind.metainfo](metadb/cbind.metainfo.1) 
++ [load_asQueryHits](metadb/load_asQueryHits.1) 

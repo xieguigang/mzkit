@@ -41,7 +41,7 @@
   <p>
                     <p>export of the annotation score result table</p>  
                 
-                    <pre><p>let <code>mzScore</code> as function(<code>result</code> as <generic> ActivityEnrichment[], <code>minHits</code> as integer = -1) -> <code>&lt;generic&gt; dataframe</code> {
+                    <pre><p>let <code>mzScore</code> as function(<code>result</code> as <generic> ActivityEnrichment[], <code>minHits</code> as integer = -1, <code>ignore_topology</code> as boolean = FALSE) -> <code>&lt;generic&gt; dataframe</code> {
     #
     # .NET API information
     #
@@ -80,6 +80,7 @@
 <code>permutation</code> as integer = 100, 
 <code>modelSize</code> as integer = -1, 
 <code>pinned</code> as string = <code>&lt;NULL&gt;</code>, 
+<code>ignore_topology</code> as boolean = FALSE, 
 [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ActivityEnrichment</code> {
     #
     # .NET API information

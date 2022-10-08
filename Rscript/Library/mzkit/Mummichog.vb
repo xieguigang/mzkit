@@ -225,6 +225,7 @@ Module Mummichog
     Public Function fromGseaBackground(background As Background) As list
         Return New list With {
             .slots = background.clusters _
+                .Where(Function(c) c.members.Length > 2) _
                 .ToDictionary(Function(c) c.ID,
                               Function(c)
                                   Dim slot As New list With {.slots = New Dictionary(Of String, Object)}
