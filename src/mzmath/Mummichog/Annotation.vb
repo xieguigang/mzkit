@@ -23,6 +23,7 @@ Public Module Annotation
         Dim score As Double
         Dim input As Dictionary(Of String, MzQuery)
         Dim pinList As Index(Of String) = pinned.Indexing
+        Dim nsize As Integer
 
         If modelSize <= 0 Then
             modelSize = allsubgraph _
@@ -46,10 +47,18 @@ Public Module Annotation
                          pinList:=pinList,
                          ignoreTopology:=ignoreTopology
                      )
-                     Where query.Background + query.Input > 0 AndAlso Not query.Q.IsNaNImaginary
+                     Where query.Background > 0 AndAlso
+                         query.Input > 0 AndAlso
+                         query.Activity > 0 AndAlso
+                         Not query.Q.IsNaNImaginary
                      Select query
                      Order By query.Activity Descending
             tmp1 = scores.ToArray
+            nsize = tmp1 _
+                .Select(Function(a) a.Hits) _
+                .IteratesALL _
+                .GroupBy(Function(a) a.unique_id) _
+                .Count
 
             If ignoreTopology Then
                 score = Aggregate v As ActivityEnrichment
@@ -66,10 +75,14 @@ Public Module Annotation
                         Into Sum(v.Activity)
             End If
 
+            score *= nsize
+
             ' evaluate the best candidate collection
             If maxScore < score Then
                 result = tmp1
                 maxScore = score
+
+                Call Console.WriteLine(maxScore)
             End If
         Next
 
