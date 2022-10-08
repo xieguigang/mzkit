@@ -61,6 +61,12 @@ Namespace Spectra
     ''' </summary>
     Public Class RelativeIntensityCutoff : Inherits LowAbundanceTrimming
 
+        ''' <summary>
+        ''' create a new percentage cutoff model
+        ''' </summary>
+        ''' <param name="cutoff">
+        ''' ``[0,1]`` percentage cutoff value
+        ''' </param>
         Public Sub New(cutoff As Double)
             MyBase.New(cutoff)
         End Sub
