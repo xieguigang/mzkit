@@ -70,6 +70,11 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' a pixels point of [x,y,color]
 ''' </summary>
+''' <remarks>
+''' the property <see cref="PixelData.intensity"/> value is the
+''' <see cref="HeatMapPixel.Scale"/> value that could be used for 
+''' create heatmap raster data.
+''' </remarks>
 Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
     Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, HeatMapPixel.X

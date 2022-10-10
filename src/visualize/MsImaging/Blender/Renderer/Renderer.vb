@@ -57,6 +57,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -154,16 +155,33 @@ Namespace Blender
         Protected Function GetPixelChannelReader(channel As PixelData(), cut As DoubleRange) As Func(Of Integer, Integer, Byte)
             If channel.IsNullOrEmpty Then
                 Return Function(x, y) CByte(0)
+            Else
+                Return AddressOf New PixelChannelRaster(channel, cut).GetPixelChannelReader
             End If
+        End Function
 
-            Dim intensityRange As DoubleRange = channel.Select(Function(p) p.intensity).ToArray
-            Dim byteRange As DoubleRange = {8, 255}
-            Dim xy = channel _
-                .GroupBy(Function(p) p.x) _
+    End Class
+
+    Friend Class PixelChannelRaster
+
+        Dim raster As Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel()
+        Dim cut As DoubleRange
+        Dim intensityRange As DoubleRange
+        Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
+        Dim byteRange As DoubleRange = {8, 255}
+
+        Sub New(channel As PixelData(), cut As DoubleRange)
+            Me.cut = cut
+            Me.raster = New HeatMapRaster(Of PixelData)() _
+                .SetDatas(channel.ToList) _
+                .GetRasterPixels _
+                .ToArray
+            Me.xy = raster _
+                .GroupBy(Function(p) p.X) _
                 .ToDictionary(Function(p) p.Key,
                               Function(x)
                                   Return x _
-                                      .GroupBy(Function(p) p.y) _
+                                      .GroupBy(Function(p) p.Y) _
                                       .ToDictionary(Function(p) p.Key,
                                                     Function(p)
                                                         Return Aggregate pm As PixelData
@@ -171,6 +189,11 @@ Namespace Blender
                                                                Into Average(pm.intensity)
                                                     End Function)
                               End Function)
+            Call setRange()
+        End Sub
+
+        Private Sub setRange()
+            Dim intensityRange As DoubleRange = raster.Select(Function(p) p.Scale).ToArray
 
             If Not cut Is Nothing Then
                 Dim length As Double = intensityRange.Length
@@ -180,30 +203,31 @@ Namespace Blender
                 intensityRange = New DoubleRange(dmin, dmax)
             End If
 
-            Return Function(x, y) As Byte
-                       If Not xy.ContainsKey(x) Then
-                           Return 0
-                       End If
+            Me.intensityRange = intensityRange
+        End Sub
 
-                       Dim ylist = xy.Item(x)
+        Public Function GetPixelChannelReader(x As Integer, y As Integer) As Byte
+            If Not xy.ContainsKey(x) Then
+                Return 0
+            End If
 
-                       If Not ylist.ContainsKey(y) Then
-                           Return 0
-                       End If
+            Dim ylist = xy.Item(x)
 
-                       Dim into As Double = ylist.Item(y)
+            If Not ylist.ContainsKey(y) Then
+                Return 0
+            End If
 
-                       If into <= intensityRange.Min Then
-                           into = intensityRange.Min
-                       ElseIf into >= intensityRange.Max Then
-                           into = intensityRange.Max
-                       Else
-                           ' do nothing
-                       End If
+            Dim into As Double = ylist.Item(y)
 
-                       Return CByte(intensityRange.ScaleMapping(into, byteRange))
-                   End Function
+            If into <= intensityRange.Min Then
+                into = intensityRange.Min
+            ElseIf into >= intensityRange.Max Then
+                into = intensityRange.Max
+            Else
+                ' do nothing
+            End If
+
+            Return CByte(intensityRange.ScaleMapping(into, byteRange))
         End Function
-
     End Class
 End Namespace
