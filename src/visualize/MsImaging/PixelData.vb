@@ -198,21 +198,23 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
     ''' </remarks>
     Public Shared Function ScalePixels(pixels As PixelData(),
                                        Optional cutoff As DoubleRange = Nothing,
-                                       Optional logE As Boolean = False) As PixelData()
+                                       Optional logE As Boolean = False,
+                                       Optional gauss As Integer = 32,
+                                       Optional sigma As Integer = 64) As PixelData()
 
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
 
-        pixels = New HeatMapRaster(Of PixelData)() _
-            .SetDatas(pixels.ToList) _
-            .GetRasterPixels(Function(x, y, d)
-                                 Return New PixelData With {
-                                     .x = x,
-                                     .y = y,
-                                     .intensity = d
-                                 }
-                             End Function) _
-            .ToArray
+        'pixels = New HeatMapRaster(Of PixelData)(gauss, sigma) _
+        '    .SetDatas(pixels.ToList) _
+        '    .GetRasterPixels(Function(x, y, d)
+        '                         Return New PixelData With {
+        '                             .x = x,
+        '                             .y = y,
+        '                             .intensity = d
+        '                         }
+        '                     End Function) _
+        '    .ToArray
 
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)

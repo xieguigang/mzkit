@@ -187,7 +187,7 @@ Namespace Blender
             Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
+                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, gauss:=gauss, sigma:=sigma)
                     level = point.level
 
                     If level <= 0.0 Then

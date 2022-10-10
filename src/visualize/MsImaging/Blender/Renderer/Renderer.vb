@@ -68,6 +68,8 @@ Namespace Blender
     Public MustInherit Class Renderer
 
         Protected heatmapMode As Boolean
+        Protected gauss As Integer = 3
+        Protected sigma As Integer = 8
 
         Sub New(heatmapRender As Boolean)
             heatmapMode = heatmapRender
@@ -157,7 +159,7 @@ Namespace Blender
             If channel.IsNullOrEmpty Then
                 Return Function(x, y) CByte(0)
             Else
-                Return AddressOf New PixelChannelRaster(channel, cut).GetPixelChannelReader
+                Return AddressOf New PixelChannelRaster(gauss, sigma, channel, cut).GetPixelChannelReader
             End If
         End Function
 
@@ -171,12 +173,13 @@ Namespace Blender
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
         Dim byteRange As DoubleRange = {8, 255}
 
-        Sub New(channel As PixelData(), cut As DoubleRange)
+        Sub New(gauss As Integer, sigma As Integer, channel As PixelData(), cut As DoubleRange)
             Me.cut = cut
-            Me.raster = New HeatMapRaster(Of PixelData)() _
-                .SetDatas(channel.ToList) _
-                .GetRasterPixels _
-                .ToArray
+            'Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
+            '    .SetDatas(channel.ToList) _
+            '    .GetRasterPixels _
+            '    .ToArray
+            Me.raster = channel
             Me.xy = raster _
                 .GroupBy(Function(p) p.X) _
                 .ToDictionary(Function(p) p.Key,
