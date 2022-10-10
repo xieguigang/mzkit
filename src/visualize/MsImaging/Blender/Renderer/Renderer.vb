@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports RasterPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 
 Namespace Blender
 
@@ -164,7 +165,7 @@ Namespace Blender
 
     Friend Class PixelChannelRaster
 
-        Dim raster As Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel()
+        Dim raster As RasterPixel()
         Dim cut As DoubleRange
         Dim intensityRange As DoubleRange
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
@@ -184,9 +185,9 @@ Namespace Blender
                                       .GroupBy(Function(p) p.Y) _
                                       .ToDictionary(Function(p) p.Key,
                                                     Function(p)
-                                                        Return Aggregate pm As PixelData
+                                                        Return Aggregate pm As RasterPixel
                                                                In p
-                                                               Into Average(pm.intensity)
+                                                               Into Average(pm.Scale)
                                                     End Function)
                               End Function)
             Call setRange()
