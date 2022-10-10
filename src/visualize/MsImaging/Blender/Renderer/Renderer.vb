@@ -68,8 +68,8 @@ Namespace Blender
     Public MustInherit Class Renderer
 
         Protected heatmapMode As Boolean
-        Protected gauss As Integer = 3
-        Protected sigma As Integer = 8
+        Protected gauss As Integer = 8
+        Protected sigma As Integer = 32
 
         Sub New(heatmapRender As Boolean)
             heatmapMode = heatmapRender
@@ -175,10 +175,10 @@ Namespace Blender
 
         Sub New(gauss As Integer, sigma As Integer, channel As PixelData(), cut As DoubleRange)
             Me.cut = cut
-            'Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
-            '    .SetDatas(channel.ToList) _
-            '    .GetRasterPixels _
-            '    .ToArray
+            Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
+                .SetDatas(channel.ToList) _
+                .GetRasterPixels _
+                .ToArray
             Me.raster = channel
             Me.xy = raster _
                 .GroupBy(Function(p) p.X) _

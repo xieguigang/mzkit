@@ -205,7 +205,7 @@ Namespace Blender
                     ' imzXML里面的坐标是从1开始的
                     ' 需要减一转换为.NET中从零开始的位置
                     ' 但是经过scale之后，已经变换为0为底的结果了
-                    Call buffer.SetPixel(point.x, point.y, color)
+                    Call buffer.SetPixel(point.x - 1, point.y - 1, color)
                 Next
             End Using
 
