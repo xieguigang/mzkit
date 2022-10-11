@@ -138,9 +138,29 @@ Namespace MarkupData.mzML
 
         Public Const UVdetector As String = "photodiode array detector"
 
+        ''' <summary>
+        ''' get instrument configuration id of ``photodiode array detector``.
+        ''' </summary>
+        ''' <param name="rawdata"></param>
+        ''' <returns></returns>
         Public Function GetPhotodiodeArrayDetectorInstrumentConfigurationId(rawdata As String) As String
             For Each configuration As instrumentConfiguration In rawdata.LoadXmlDataSet(Of instrumentConfiguration)(, xmlns:=indexedmzML.xmlns)
-                If configuration.componentList.detector.Any(Function(dev) dev.cvParams.Any(Function(a) a.name = UVdetector)) Then
+                If configuration Is Nothing OrElse configuration.componentList Is Nothing Then
+                    Continue For
+                End If
+                If configuration.componentList.detector Is Nothing Then
+                    Continue For
+                End If
+
+                If configuration.componentList.detector _
+                    .Any(Function(dev)
+                             If dev Is Nothing OrElse dev.cvParams Is Nothing Then
+                                 Return False
+                             End If
+
+                             Return dev.cvParams.Any(Function(a) a?.name.TextEquals(UVdetector))
+                         End Function) Then
+
                     Return configuration.id
                 End If
             Next
