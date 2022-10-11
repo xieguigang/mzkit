@@ -292,10 +292,17 @@ Public Class mzStream : Implements IMzPackReader
             .Trim(pack.ReadText("/.etc/app.cls")) _
             .Trim(asciiA.TAB, asciiA.CR, asciiA.LF) _
             .DoCall(Function(str)
-                        If str = "" Then
+                        If str.StringEmpty Then
                             Return FileApplicationClass.LCMS
                         Else
-                            Return DirectCast([Enum].Parse(GetType(FileApplicationClass), str), FileApplicationClass)
+                            Dim app As FileApplicationClass = Nothing
+                            Dim test As Boolean = [Enum].TryParse(str, app)
+
+                            If test Then
+                                Return app
+                            Else
+                                Return FileApplicationClass.LCMS
+                            End If
                         End If
                     End Function)
     End Function
