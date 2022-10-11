@@ -118,6 +118,7 @@ Namespace Blender
 
                         ' imzXML里面的坐标是从1开始的
                         ' 需要减一转换为.NET中从零开始的位置
+                        ' 但是经过scale之后，已经变换为0为底的结果了
                         Call buffer.SetPixel(x - 1, y - 1, color)
                     Next
                 Next
@@ -186,7 +187,7 @@ Namespace Blender
             Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff)
+                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, gauss:=gauss, sigma:=sigma)
                     level = point.level
 
                     If level <= 0.0 Then
@@ -203,6 +204,7 @@ Namespace Blender
 
                     ' imzXML里面的坐标是从1开始的
                     ' 需要减一转换为.NET中从零开始的位置
+                    ' 但是经过scale之后，已经变换为0为底的结果了
                     Call buffer.SetPixel(point.x - 1, point.y - 1, color)
                 Next
             End Using
