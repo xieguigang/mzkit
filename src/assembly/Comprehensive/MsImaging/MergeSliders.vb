@@ -30,13 +30,13 @@ Public Module MergeSliders
                     End Function) _
             .ToArray
         Dim maxHeight As Integer = polygons.Select(Function(a) a.Item2.ypoints).IteratesALL.Max
-        Dim left As Integer = polygons.First.Item2.xpoints.Min + padding
+        Dim left As Integer = polygons.First.Item2.xpoints.Min
         Dim union As New List(Of ScanMS1)
 
         For Each sample As (Ms As mzPack, shape As Polygon2D) In polygons
             Dim minX = sample.shape.xpoints.Min
             Dim height As Double = sample.shape.height
-            Dim deltaY As Double = (maxHeight - height) / 2
+            Dim deltaY As Double = sample.shape.ypoints.Min * -1
             Dim sampleid As String = sample.Ms.source
 
             Call println(" >>> " & sampleid)
