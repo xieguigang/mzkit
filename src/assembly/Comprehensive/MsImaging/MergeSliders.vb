@@ -47,6 +47,10 @@ Public Module MergeSliders
                     Dim xy = scan.GetMSIPixel
                     Dim x As Integer = xy.X - minX + left
                     Dim y As Integer = deltaY + xy.Y
+                    ' 20221013 try to avoid the duplicated scan id
+                    ' confliction in data merge by adding a prefix
+                    ' of the source tag
+                    Dim scan_id As String = $"{sampleid} - {scan.scan_id}"
 
                     meta!x = x
                     meta!y = y
@@ -66,7 +70,7 @@ Public Module MergeSliders
                         .mz = scan.mz,
                         .products = scan.products,
                         .rt = scan.rt,
-                        .scan_id = scan.scan_id,
+                        .scan_id = scan_id,
                         .TIC = scan.TIC
                     }
                     union.Add(scan)
