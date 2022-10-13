@@ -21,7 +21,7 @@ Public Module MergeSliders
     <Extension>
     Public Function JoinMSISamples(samples As IEnumerable(Of mzPack),
                                    Optional relativePos As Boolean = True,
-                                   Optional padding As Integer = 10,
+                                   Optional padding As Integer = 20,
                                    Optional println As Action(Of String) = Nothing) As mzPack
         Dim polygons = samples _
             .Select(Function(ms)

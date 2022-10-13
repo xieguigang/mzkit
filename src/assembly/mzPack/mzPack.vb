@@ -232,12 +232,27 @@ Public Class mzPack
         }
     End Function
 
+    ''' <summary>
+    ''' a wrapper of <see cref="ReadAll(Stream, Boolean, Boolean, Boolean)"/>
+    ''' </summary>
+    ''' <param name="filepath"></param>
+    ''' <param name="ignoreThumbnail"></param>
+    ''' <param name="skipMsn"></param>
+    ''' <param name="verbose"></param>
+    ''' <returns></returns>
     Public Shared Function Read(filepath As String,
                                 Optional ignoreThumbnail As Boolean = False,
+                                Optional skipMsn As Boolean = False,
                                 Optional verbose As Boolean = False) As mzPack
 
         Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Return ReadAll(file, ignoreThumbnail, verbose:=verbose)
+            Dim pack As mzPack = ReadAll(file, ignoreThumbnail, skipMsn:=skipMsn, verbose:=verbose)
+
+            If pack.source.StringEmpty Then
+                pack.source = filepath.FileName
+            End If
+
+            Return pack
         End Using
     End Function
 
@@ -258,14 +273,23 @@ Public Class mzPack
                                    Optional verbose As Boolean = True) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
+        Dim pack As mzPack
 
         If ver = 1 Then
-            Return v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
+            pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
         ElseIf ver = 2 Then
-            Return New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
+            pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
         Else
             Throw New InvalidProgramException("unknow file format!")
         End If
+
+        If pack.source.StringEmpty Then
+            If TypeOf file Is FileStream Then
+                pack.source = DirectCast(file, FileStream).Name.FileName
+            End If
+        End If
+
+        Return pack
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
