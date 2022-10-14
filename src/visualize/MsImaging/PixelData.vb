@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 Imports stdNum = System.Math
@@ -70,6 +71,11 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' a pixels point of [x,y,color]
 ''' </summary>
+''' <remarks>
+''' the property <see cref="PixelData.intensity"/> value is the
+''' <see cref="HeatMapPixel.Scale"/> value that could be used for 
+''' create heatmap raster data.
+''' </remarks>
 Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
     Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, HeatMapPixel.X
@@ -187,17 +193,34 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
     ''' 20220218 使用log进行缩放的效果很差，在这里默认禁用这个选项
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="HeatMapRaster(Of PixelData)"/>
+    ''' </remarks>
     Public Shared Function ScalePixels(pixels As PixelData(),
                                        Optional cutoff As DoubleRange = Nothing,
-                                       Optional logE As Boolean = False) As PixelData()
+                                       Optional logE As Boolean = False,
+                                       Optional gauss As Integer = 32,
+                                       Optional sigma As Integer = 64) As PixelData()
+
+        Dim level As Double
+        Dim levelRange As DoubleRange = New Double() {0, 1}
+
+        'pixels = New HeatMapRaster(Of PixelData)(gauss, sigma) _
+        '    .SetDatas(pixels.ToList) _
+        '    .GetRasterPixels(Function(x, y, d)
+        '                         Return New PixelData With {
+        '                             .x = x,
+        '                             .y = y,
+        '                             .intensity = d
+        '                         }
+        '                     End Function) _
+        '    .ToArray
 
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
                         Return getIntensityAuto(p, logE)
                     End Function) _
             .Range
-        Dim level As Double
-        Dim levelRange As DoubleRange = New Double() {0, 1}
 
         If Not cutoff Is Nothing Then
             If cutoff.Min > 1 Then
