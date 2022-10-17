@@ -608,10 +608,16 @@ Module MsImaging
     Public Function AutoScaleMax(data As MSISummary,
                                  intensity As IntensitySummary,
                                  Optional qcut As Double = 0.75,
-                                 Optional TrIQ As Boolean = True) As Double
+                                 Optional TrIQ As Boolean = True,
+                                 Optional env As Environment = Nothing) As Double
 
         Dim into As Double() = data.GetLayer(intensity).Select(Function(p) p.totalIon).ToArray
         Dim cut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(qcut), New RankQuantileThreshold(qcut))
+        Dim println As Action(Of Object) = env.WriteLineHandler
+
+        Call println("Create intensity cutoff with:")
+        Call println(cut)
+
         Dim scale As Double = cut.ThresholdValue(into)
 
         Return scale
