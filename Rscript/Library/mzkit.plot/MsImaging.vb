@@ -466,6 +466,16 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' do pixel interpolation for run MS-imaging
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="gridSize">
+    ''' knn size
+    ''' </param>
+    ''' <param name="q"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("knnFill")>
     <RApiReturn(GetType(SingleIonLayer), GetType(MSISummary))>
     Public Function KnnFill(layer As Object,
