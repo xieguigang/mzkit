@@ -52,22 +52,26 @@ Public Class JaccardSearch : Inherits Ms2Search
             .Where(Function(j) j.itr.Length / j.uni.Length > cutoff) _
             .ToArray
 
+        ' get a cluster of the hit result
         If jaccard.Length > 0 Then
+            ' get alignment score vector and the alignment details 
             Dim scores = jaccard.Select(Function(j) score(centroid, j.i, j.itr, j.uni)).ToArray
+            ' get index of the max score
             Dim i As Integer = which.Max(scores.Select(Function(s) stdNum.Max(stdNum.Min(s.forward, s.reverse), s.jaccard)))
-            Dim alignments = scores _
-                .Select(Function(a) a.alignment) _
-                .IteratesALL _
-                .GroupBy(Function(a) a.mz, da) _
-                .Select(Function(a)
-                            Return New SSM2MatrixFragment With {
-                                .mz = Val(a.name),
-                                .da = da.DeltaTolerance,
-                                .query = a.First.query,
-                                .ref = a.Select(Function(ai) ai.ref).Average
-                            }
-                        End Function) _
-                .ToArray
+            'Dim alignments = scores _
+            '    .Select(Function(a) a.alignment) _
+            '    .IteratesALL _
+            '    .GroupBy(Function(a) a.mz, da) _
+            '    .Select(Function(a)
+            '                Return New SSM2MatrixFragment With {
+            '                    .mz = Val(a.name),
+            '                    .da = da.DeltaTolerance,
+            '                    .query = a.First.query,
+            '                    .ref = a.Select(Function(ai) ai.ref).Average
+            '                }
+            '            End Function) _
+            '    .ToArray
+            Dim alignments = scores(i).alignment
 
             Return New ClusterHit With {
                 .jaccard = scores.Select(Function(a) a.jaccard).Average,
