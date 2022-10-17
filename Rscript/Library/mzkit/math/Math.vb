@@ -236,7 +236,7 @@ Module MzMath
         Dim x As Double() = REnv.asVector(Of Double)(a)
         Dim y As Double() = REnv.asVector(Of Double)(b)
 
-        Return REnv _
+        Return Vectorization _
             .BinaryCoreInternal(Of Double, Double, Double)(x, y, Function(xi, yi) PPMmethod.PPM(xi, yi)) _
             .ToArray
     End Function
