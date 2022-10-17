@@ -82,8 +82,15 @@ Public Class mzStream : Implements IMzPackReader
     ''' </summary>
     ''' <param name="stream"></param>
     Sub New(stream As Stream)
+        On Error Resume Next
+
         pack = New StreamPack(stream, [readonly]:=True)
         Application = safeParseClassType()
+
+        ' read 3 json metadata file
+
+        ' 20221017 there is a possible error?
+        ' Incorrect JSON string format
         meta = pack.ReadText("/.etc/metadata.json").LoadJSON(Of Dictionary(Of String, String))
         summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
         sampleTags = GetSampleTags(pack)
@@ -91,6 +98,11 @@ Public Class mzStream : Implements IMzPackReader
         Call cacheScanIndex()
     End Sub
 
+    ''' <summary>
+    ''' get all sample tags data from a json text
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <returns></returns>
     Public Shared Function GetSampleTags(buffer As StreamPack) As String()
         Const sample_tags As String = ".etc/sample_tags.json"
 
