@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml
 
 Public Module mzStreamWriter
 
@@ -31,9 +32,11 @@ Public Module mzStreamWriter
         Dim metadata As New Dictionary(Of String, String)
 
         Using pack As New StreamPack(file)
+            Dim summary As New Dictionary(Of String, Double)
+
             Call pack.Clear(meta_size)
-            Call mzpack.WriteStream(pack)
-            Call pack.WriteText(mzpack.readme, "readme.txt")
+            Call mzpack.WriteStream(pack, index:=summary)
+            Call pack.WriteText(mzpack.readme(summary), "readme.txt")
             Call metadata.Add("thumbnail", mzpack.Thumbnail IsNot Nothing)
             Call metadata.Add("ms1", mzpack.MS.TryCount)
             Call metadata.Add("create_time", Now.ToString)
@@ -48,12 +51,20 @@ Public Module mzStreamWriter
     End Function
 
     <Extension>
-    Private Function readme(mzpack As mzPack) As String
+    Private Function readme(mzpack As mzPack, summary As Dictionary(Of String, Double)) As String
         Dim sb As New StringBuilder
         Dim app = mzpack.Application
 
         Call sb.AppendLine($"mzPack data v2.0")
         Call sb.AppendLine($"for MZKit application {app.ToString}({app.Description}) data analysis.")
+        Call sb.AppendLine()
+        Call sb.AppendLine($"has {mzpack.MS.Length} ms scans")
+        Call sb.AppendLine("summary:")
+        Call sb.AppendLine()
+
+        For Each line In summary
+            Call sb.AppendLine($"{line.Key}: {line.Value}")
+        Next
 
         Return sb.ToString
     End Function
@@ -67,8 +78,7 @@ Public Module mzStreamWriter
     Public Const SampleMetaName As String = "sample"
 
     <Extension>
-    Private Sub WriteStream(mzpack As mzPack, pack As StreamPack)
-        Dim index As New Dictionary(Of String, Double)
+    Private Sub WriteStream(mzpack As mzPack, pack As StreamPack, ByRef index As Dictionary(Of String, Double))
         Dim rtmin As Double = 99999
         Dim rtmax As Double = -9999
         Dim mzmin As Double = 99999

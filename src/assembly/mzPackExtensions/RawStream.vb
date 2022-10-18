@@ -64,8 +64,11 @@ Public Module RawStream
 
 #If netcore5 = 0 Or NET48 Then
     <Extension>
-    Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader, Optional println As Action(Of String) = Nothing) As mzPack
-        Return New WiffRawStream(raw).StreamTo(println:=println)
+    Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader,
+                                    Optional checkNoise As Boolean = True,
+                                    Optional println As Action(Of String) = Nothing) As mzPack
+
+        Return New WiffRawStream(raw, checkNoise:=checkNoise).StreamTo(println:=println)
     End Function
 
     <Extension>

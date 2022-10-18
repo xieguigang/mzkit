@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' wiff raw to mzpack convertor
@@ -12,6 +13,7 @@ Imports Microsoft.VisualBasic.Language
 Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
     ReadOnly raw As WiffScanFileReader
+    ReadOnly checkNoise As Boolean = False
 
     Public Overrides ReadOnly Property rawFileName As String
         Get
@@ -19,9 +21,14 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         End Get
     End Property
 
-    Public Sub New(raw As WiffScanFileReader, Optional scanIdFunc As Func(Of ScanInfo, Integer, String) = Nothing)
+    Public Sub New(raw As WiffScanFileReader,
+                   Optional scanIdFunc As Func(Of ScanInfo, Integer, String) = Nothing,
+                   Optional checkNoise As Boolean = True)
+
         MyBase.New(scanIdFunc)
+
         Me.raw = raw
+        Me.checkNoise = checkNoise
     End Sub
 
     Private Shared Sub RemoveAbNoise(ByRef mz As Double(), ByRef into As Double())
@@ -46,7 +53,9 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         Dim into As Double() = msData.into
         Dim scanId As String = scanIdFunc(scan, MSscans.Count)
 
-        Call RemoveAbNoise(mz, into)
+        If checkNoise Then
+            Call RemoveAbNoise(mz, into)
+        End If
 
         If mz.Length = 0 Then
             Return
@@ -58,6 +67,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 MSscans += MS1
             End If
 
+            scanId = $"{scanId},RT={scan.RetentionTime}min; total_ions={scan.TotalIonCurrent.ToString("G4")},basepeak_Mz={mz.ElementAtOrDefault(which.Max(into))}"
             MS1 = New ScanMS1 With {
                 .BPC = scan.BasePeakIntensity,
                 .into = into,

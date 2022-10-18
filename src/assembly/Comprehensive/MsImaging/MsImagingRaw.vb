@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Microsoft.VisualBasic.Text
 
 Namespace MsImaging
 
@@ -103,7 +104,13 @@ Namespace MsImaging
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
             Next
 
-            Return New mzPack With {.MS = pixels.ToArray}
+            Return New mzPack With {
+                .MS = pixels.ToArray,
+                .Application = FileApplicationClass.MSImaging,
+                .source = Strings _
+                    .Trim(labelPrefix) _
+                    .Trim("-"c, " "c, CChar(vbTab), "_"c)
+            }
         End Function
 
         Private Function ParseRowNumber(sourceTag As String, labelPrefix As String) As Integer
