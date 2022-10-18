@@ -135,7 +135,7 @@ Namespace MsImaging
             Dim i As i32 = 1
             Dim y As Integer = ParseRowNumber(row.source, labelPrefix) * yscale
 
-            Call progress($"load: {row.source}...")
+            Call progress($"append_row_data: {row.source} [y={y}]...")
 
             If TypeOf correction Is ScanMs2Correction Then
                 Call DirectCast(correction, ScanMs2Correction).SetMs1Scans(row.MS)
