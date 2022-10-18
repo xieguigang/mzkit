@@ -87,6 +87,7 @@ Namespace MsImaging
                                            Optional intocutoff As Double = 0.0,
                                            Optional yscale As Double = 1,
                                            Optional sumNorm As Boolean = True,
+                                           Optional labelPrefix As String = Nothing,
                                            Optional progress As RunSlavePipeline.SetMessageEventHandler = Nothing) As mzPack
 
             Dim pixels As New List(Of ScanMS1)
@@ -99,10 +100,23 @@ Namespace MsImaging
             End If
 
             For Each row As mzPack In src
-                pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, progress)
+                pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
             Next
 
             Return New mzPack With {.MS = pixels.ToArray}
+        End Function
+
+        Private Function ParseRowNumber(sourceTag As String, labelPrefix As String) As Integer
+            If labelPrefix.StringEmpty Then
+                Return sourceTag _
+                    .Match("\d+") _
+                    .DoCall(AddressOf Integer.Parse)
+            Else
+                Return sourceTag _
+                    .Replace(labelPrefix, "") _
+                    .Match("\d+") _
+                    .DoCall(AddressOf Integer.Parse)
+            End If
         End Function
 
         <Extension>
@@ -111,6 +125,7 @@ Namespace MsImaging
                                              correction As Correction,
                                              cutoff As RelativeIntensityCutoff,
                                              sumNorm As Boolean,
+                                             labelPrefix As String,
                                              progress As RunSlavePipeline.SetMessageEventHandler) As IEnumerable(Of ScanMS1)
             If row?.source.StringEmpty Then
                 Call progress("[warning] source file is empty!")
@@ -118,9 +133,7 @@ Namespace MsImaging
             End If
 
             Dim i As i32 = 1
-            Dim y As Integer = row.source _
-                .Match("\d+") _
-                .DoCall(AddressOf Integer.Parse) * yscale
+            Dim y As Integer = ParseRowNumber(row.source, labelPrefix) * yscale
 
             Call progress($"load: {row.source}...")
 
