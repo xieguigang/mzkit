@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -20,11 +21,20 @@ Public Class TreeSearch : Inherits Ms2Search
     ReadOnly is_binary As Boolean
     ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
 
+    Dim dotcutoff As Double = 0.6
     Dim disposedValue As Boolean
 
-    Sub New(stream As Stream)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="stream"></param>
+    ''' <param name="cutoff">
+    ''' cutoff value for cos similarity
+    ''' </param>
+    Sub New(stream As Stream, Optional cutoff As Double = 0.6)
         Call MyBase.New
 
+        dotcutoff = cutoff
         bin = New BinaryDataReader(stream, encoding:=Encodings.ASCII) With {
             .ByteOrder = ByteOrder.LittleEndian
         }
@@ -69,6 +79,11 @@ Public Class TreeSearch : Inherits Ms2Search
         )
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub SetCutoff(cutoff As Double)
+        dotcutoff = cutoff
+    End Sub
+
     Public Function QueryByMz(mz As Double) As BlockNode()
         Dim query As New IonIndex With {.mz = mz}
         Dim result As BlockNode() = mzIndex _
@@ -111,7 +126,7 @@ Public Class TreeSearch : Inherits Ms2Search
             End If
         Next
 
-        If max.score > 0 Then
+        If max.score > dotcutoff Then
             Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
         Else
             Return Nothing
@@ -170,7 +185,7 @@ Public Class TreeSearch : Inherits Ms2Search
             End If
         Loop
 
-        If max.score > 0 Then
+        If max.score > dotcutoff Then
             Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
         Else
             Return Nothing
