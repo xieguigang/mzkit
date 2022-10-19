@@ -67,7 +67,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 MSscans += MS1
             End If
 
-            scanId = $"{scanId},RT={scan.RetentionTime}min; total_ions={scan.TotalIonCurrent.ToString("G4")},basepeak_Mz={mz.ElementAtOrDefault(which.Max(into))}"
+            scanId = $"{scanId},RT={scan.RetentionTime.ToString("F2")}min; total_ions={scan.TotalIonCurrent.ToString("G4")},basepeak_Mz={mz.ElementAtOrDefault(which.Max(into)).ToString("F4")}"
             MS1 = New ScanMS1 With {
                 .BPC = scan.BasePeakIntensity,
                 .into = into,
