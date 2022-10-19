@@ -60,6 +60,12 @@ Module ReferenceTreePkg
         Return New TreeSearch(buffer.TryCast(Of Stream))
     End Function
 
+    <ExportAPI("dotcutoff")>
+    Public Function set_dotcutoff(search As TreeSearch, cutoff As Double) As TreeSearch
+        Call search.SetCutoff(cutoff)
+        Return search
+    End Function
+
     <ExportAPI("jaccardSet")>
     Public Function createJaccardSet(libname As String(),
                                      mz As Double(),
