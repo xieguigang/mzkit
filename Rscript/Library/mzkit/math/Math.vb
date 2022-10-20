@@ -232,13 +232,19 @@ Module MzMath
     ''' <param name="b">mass b</param>
     ''' <returns></returns>
     <ExportAPI("ppm")>
-    Public Function ppm(<RRawVectorArgument> a As Object, <RRawVectorArgument> b As Object) As Double()
+    Public Function ppm(<RRawVectorArgument> a As Object,
+                        <RRawVectorArgument> b As Object,
+                        Optional env As Environment = Nothing) As Double()
+
         Dim x As Double() = REnv.asVector(Of Double)(a)
         Dim y As Double() = REnv.asVector(Of Double)(b)
 
-        Return Vectorization _
-            .BinaryCoreInternal(Of Double, Double, Double)(x, y, Function(xi, yi) PPMmethod.PPM(xi, yi)) _
-            .ToArray
+        Return Vectorization.BinaryCoreInternal(Of Double, Double, Double)(
+            x:=x,
+            y:=y,
+            [do]:=Function(xi, yi, env2) PPMmethod.PPM(xi, yi),
+            env:=env
+        )
     End Function
 
     ''' <summary>
