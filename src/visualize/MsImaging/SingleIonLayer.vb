@@ -87,7 +87,7 @@ Public Class SingleIonLayer
     End Property
 
     ''' <summary>
-    ''' 
+    ''' Get by pixels
     ''' </summary>
     ''' <param name="xy">x,y</param>
     ''' <returns></returns>

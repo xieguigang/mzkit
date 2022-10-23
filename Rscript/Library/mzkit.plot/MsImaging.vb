@@ -725,6 +725,16 @@ Module MsImaging
         )
     End Function
 
+    ''' <summary>
+    ''' extract the pixel [x,y] information for all of
+    ''' the points in the target <paramref name="layer"/>
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="character">
+    ''' the function will returns the character vector 
+    ''' when this parameter value is set to TRUE
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("as.pixels")>
     <RApiReturn(GetType(String), GetType(Point))>
     Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
