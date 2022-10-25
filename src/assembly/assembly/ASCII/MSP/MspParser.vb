@@ -177,7 +177,7 @@ Namespace ASCII.MSP
 
         <Extension>
         Private Function fillPrecursorInfo(msp As MspData) As MspData
-            If msp.Name.IsPattern("M\d+T\d+") Then
+            If msp.Name.IsPattern("M\d+T\d+(_\d+)?") Then
                 Dim mt = msp.Name.Matches("\d+").Select(Function(a) Val(a)).ToArray
 
                 If msp.PrecursorMZ.StringEmpty Then
