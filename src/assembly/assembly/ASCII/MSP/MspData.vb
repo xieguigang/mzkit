@@ -59,6 +59,7 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
@@ -85,6 +86,7 @@ Namespace ASCII.MSP
         Public Property Instrument As String
         Public Property Ion_mode As String
         Public Property Collision_energy As String
+        Public Property RetentionTime As String
 
         Public Property Peaks As ms2()
         ''' <summary>
@@ -105,6 +107,19 @@ Namespace ASCII.MSP
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseCommentMetaTable(comment As String) As NameValueCollection
             Return comment.ToTable
+        End Function
+
+        Public Shared Function ToScan2(msp As MspData) As ScanMS2
+            Return New ScanMS2 With {
+                .centroided = True,
+                .collisionEnergy = Val(msp.Collision_energy),
+                .into = msp.Peaks.Select(Function(a) a.intensity).ToArray,
+                .intensity = .into.Sum,
+                .mz = msp.Peaks.Select(Function(a) a.mz).ToArray,
+                .parentMz = Val(msp.PrecursorMZ),
+                .rt = Val(msp.RetentionTime),
+                .scan_id = $"[MS2] {msp.Name} basepeak_m/z={msp.Peaks.OrderByDescending(Function(a) a.intensity).First.mz.ToString("F4")}, total_ions={ .intensity}"
+            }
         End Function
     End Class
 End Namespace

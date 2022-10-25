@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::ca8164570d3716f7be3f12139c08e1c4, mzkit\src\assembly\mzPack\Converter.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 153
-    '    Code Lines: 126
-    ' Comment Lines: 5
-    '   Blank Lines: 22
-    '     File Size: 6.29 KB
+' Summaries:
 
 
-    ' Module Converter
-    ' 
-    '     Function: GetUVScans, LoadimzML, LoadMzML, LoadRawFileAuto
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 153
+'    Code Lines: 126
+' Comment Lines: 5
+'   Blank Lines: 22
+'     File Size: 6.29 KB
+
+
+' Module Converter
+' 
+'     Function: GetUVScans, LoadimzML, LoadMzML, LoadRawFileAuto
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
@@ -63,9 +64,41 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports stdNum = System.Math
 
 Public Module Converter
+
+    Public Function LoadMsp(file As String) As mzPack
+        Dim msp As MspData() = MspData.Load(file).ToArray
+        Dim rt_scans = msp _
+            .GroupBy(Function(t) Val(t.RetentionTime), Function(a, b) stdNum.Abs(a - b) <= 2) _
+            .OrderBy(Function(d) Val(d.name)) _
+            .ToArray
+        Dim ms1 = rt_scans _
+            .Select(Function(group, i)
+                        Dim ms2 = group.Select(Function(a) MspData.ToScan2(a)).ToArray
+                        Dim bpc = ms2.OrderByDescending(Function(a) a.intensity).First
+
+                        Return New ScanMS1 With {
+                            .products = ms2,
+                            .BPC = bpc.intensity,
+                            .into = ms2.Select(Function(a) a.intensity).ToArray,
+                            .mz = ms2.Select(Function(a) a.parentMz).ToArray,
+                            .rt = Val(group.name),
+                            .TIC = .into.Sum,
+                            .scan_id = $"[MS1] scan_{i + 1}, {ms2.Length} ions, basePeak_m/z={bpc.parentMz}, total_ions={ .TIC}"
+                        }
+                    End Function) _
+            .ToArray
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.LCMS,
+            .MS = ms1,
+            .source = file.FileName
+        }
+    End Function
 
     ''' <summary>
     ''' A unify method for load mzpack data from mzXML/mzML raw data file

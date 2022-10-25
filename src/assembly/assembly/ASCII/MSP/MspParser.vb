@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::6800f6461e89fa7b72c7a53506f7dc3b, mzkit\src\assembly\assembly\ASCII\MSP\MspParser.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 131
-    '    Code Lines: 100
-    ' Comment Lines: 14
-    '   Blank Lines: 17
-    '     File Size: 5.19 KB
+' Summaries:
 
 
-    '     Module MspParser
-    ' 
-    '         Function: createObject, incorrects, Load, parseMspPeaks
-    ' 
-    '         Sub: TestMissingFields
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 131
+'    Code Lines: 100
+' Comment Lines: 14
+'   Blank Lines: 17
+'     File Size: 5.19 KB
+
+
+'     Module MspParser
+' 
+'         Function: createObject, incorrects, Load, parseMspPeaks
+' 
+'         Sub: TestMissingFields
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports stdNum = System.Math
 
 Namespace ASCII.MSP
 
@@ -163,12 +164,33 @@ Namespace ASCII.MSP
                 .Instrument_type = getValue("Instrument_type"),
                 .Instrument = getValue("Instrument"),
                 .Collision_energy = getValue("Collision_energy"),
-                .Ion_mode = getValue("Ion_mode")
+                .Ion_mode = getValue("Ion_mode"),
+                .RetentionTime = getValue("RETENTIONTIME")
             }
 
             'If metadata.ContainsKey("Synonym") Then
             '    metadata.Remove("Synonym")
             'End If
+
+            Return msp.fillPrecursorInfo
+        End Function
+
+        <Extension>
+        Private Function fillPrecursorInfo(msp As MspData) As MspData
+            If msp.Name.IsPattern("M\d+T\d+") Then
+                Dim mt = msp.Name.Matches("\d+").Select(Function(a) Val(a)).ToArray
+
+                If msp.PrecursorMZ.StringEmpty Then
+                    Dim mz2 = msp.Peaks.Select(Function(p) (p.mz, d:=stdNum.Abs(p.mz - mt(0)))).OrderBy(Function(t) t.d).FirstOrDefault
+
+                    If mz2.d < 1 Then
+                        msp.PrecursorMZ = mz2.mz
+                    End If
+                End If
+                If msp.RetentionTime.StringEmpty Then
+                    msp.RetentionTime = mt.ElementAtOrDefault(1)
+                End If
+            End If
 
             Return msp
         End Function
