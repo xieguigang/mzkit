@@ -99,6 +99,13 @@ Public Class SpectraSection : Inherits MetaInfo
             Return New UnionReader(MetaDB, Me)
         End Get
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(metadata As MetaData)
+        Me.meta = metadata
+    End Sub
 End Class
 
 Public Class SpectraInfo
