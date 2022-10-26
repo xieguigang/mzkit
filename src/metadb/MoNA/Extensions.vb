@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
 <HideModuleName>
@@ -84,8 +85,25 @@ Public Module Extensions
     Friend ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute))
 
     Sub New()
-        names = Mappings.FieldNameMappings(Of MetaData)(explict:=True, reversed:=True)
-        fields = Mappings.GetFields(Of MetaData).ToDictionary
+        ' 20221025 the name/alias name between the data
+        ' property fields can be not duplictaed or some
+        ' information may be loose
+        fields = Mappings.GetFields(Of MetaData)(explict:=True) _
+            .Select(Function(p) p.GetAliasNames.Select(Function(name) (name, p))) _
+            .IteratesALL _
+            .Where(Function(m) Not m.name.StringEmpty) _
+            .GroupBy(Function(a) a.name) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.First.p
+                          End Function)
+        names = fields.Values _
+            .GroupBy(Function(f) f.memberName) _
+            .Select(Function(a) a.First) _
+            .FieldNameMappings(Of MetaData)(
+                reversed:=True,
+                includesAliasNames:=True
+             )
 
         For Each field As BindProperty(Of ColumnAttribute) In fields.Values.ToArray
             If Not fields.ContainsKey(field.memberName) Then
