@@ -61,7 +61,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
-Imports any = Microsoft.VisualBasic.Scripting
 
 <HideModuleName>
 Public Module Extensions
@@ -82,6 +81,9 @@ Public Module Extensions
     End Function
 
     Friend ReadOnly names As Dictionary(Of String, String)
+    ''' <summary>
+    ''' has the alias name mapping
+    ''' </summary>
     Friend ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute))
 
     Sub New()
@@ -139,34 +141,49 @@ Public Module Extensions
     <Extension>
     Public Function FillData(comments As NameValueCollection) As MetaData
         Dim meta As New MetaData
+        Dim type As Type
         Dim castValue As Object
 
-        For Each field As BindProperty(Of ColumnAttribute) In fields.Values
-            Dim name$ = field.Identity
+        For Each field As KeyValuePair(Of String, BindProperty(Of ColumnAttribute)) In fields
+            type = field.Value.Type
 
-            If field.Type.IsArray Then
-                Dim value As String()
-
-                value = comments.GetValues(name)
-
-                If value.IsNullOrEmpty Then
-                    value = comments.GetValues(names(name))
-                End If
-
-                Call field.SetValue(meta, value)
+            If type.IsArray Then
+                castValue = fillArray(field.Key, field.Value, comments)
             Else
-                Dim value$ = comments(name)
-
-                If value.StringEmpty Then
-                    value = comments(names(name))
-                End If
-
-                castValue = any.CTypeDynamic(value, field.Type)
-
-                Call field.SetValue(meta, castValue)
+                castValue = fillScalar(field.Key, field.Value, comments)
             End If
+
+            Call field.Value.SetValue(meta, castValue)
         Next
 
         Return meta
+    End Function
+
+    Private Function fillScalar(name As String, field As BindProperty(Of ColumnAttribute), comments As NameValueCollection) As Object
+        Dim value As String = comments(name)
+        Dim castValue As Object = field.Parse(value)
+
+        Return castValue
+    End Function
+
+    Private Function fillArray(name As String, field As BindProperty(Of ColumnAttribute), comments As NameValueCollection) As Object
+        Dim value As String() = comments.GetValues(name)
+
+        If value.IsNullOrEmpty Then
+            Return Nothing
+        ElseIf field.Type Is GetType(String()) Then
+            Return value
+        Else
+            Dim vec As Array = Array.CreateInstance(
+                elementType:=field.Type.GetElementType,
+                length:=value.Length
+            )
+
+            For i As Integer = 0 To value.Length - 1
+                vec(i) = field.Parse(value(i))
+            Next
+
+            Return vec
+        End If
     End Function
 End Module
