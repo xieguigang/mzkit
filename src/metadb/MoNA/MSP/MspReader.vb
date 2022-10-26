@@ -56,10 +56,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 
 Public Module MspReader
 
-    Public Iterator Function ParseFile(path$,
-                                       Optional parseStruct As Boolean = False,
-                                       Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
-
+    Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
             Dim metadata As MetaData = spectrum.Comments.FillData
             Dim ms2 As New SpectraInfo With {

@@ -64,13 +64,6 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Module ReaderViews
 
     <Extension>
-    Public Function Read_compound_source(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple({NameOf(.compound_class), NameOf(.compound_source)})
-        End With
-    End Function
-
-    <Extension>
     Public Function Read_collision_energy(meta As MetaData) As String
         With meta
             Return .ReadStringMultiple(
@@ -80,13 +73,6 @@ Module ReaderViews
                     NameOf(.source_voltage),
                     NameOf(.ionization_energy)
                 })
-        End With
-    End Function
-
-    <Extension>
-    Public Function Read_instrument_type(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple({NameOf(.ion_source), NameOf(.instrument_type)})
         End With
     End Function
 
@@ -107,59 +93,6 @@ Module ReaderViews
             Else
                 Return Val(s)
             End If
-        End With
-    End Function
-
-    <Extension>
-    Public Function Read_pubchemID(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple({NameOf(.pubchem), NameOf(.pubchem_cid)})
-        End With
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="meta"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Read_precursor_type(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple(
-                {
-                    NameOf(.precursor_type),
-                    NameOf(.adduct),
-                    NameOf(.ion_type)
-                })
-        End With
-    End Function
-
-    <Extension>
-    Public Function Read_source_file(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple({NameOf(.raw_data_file), NameOf(.source_file)})
-        End With
-    End Function
-
-    <Extension>
-    Public Function Read_exact_mass(meta As MetaData) As Double
-        With meta
-            Dim mw = .ReadDoubleMultiple({NameOf(.exact_mass), NameOf(.exactmass)})
-
-            If mw = 0R Then
-                Return .ReadDoubleMultiple({NameOf(.total_exact_mass)})
-            Else
-                Return mw
-            End If
-        End With
-    End Function
-
-    <Extension>
-    Public Function Read_CAS(meta As MetaData) As String()
-        With meta
-            Return .ReadMultiple({NameOf(.cas), NameOf(.cas_number)}) _
-                .As(Of String)() _
-                .ToArray
         End With
     End Function
 

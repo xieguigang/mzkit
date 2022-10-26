@@ -88,7 +88,7 @@ Public Class MetaData
     Public Property accession As String
     Public Property author As String
     Public Property license As String
-    <Column("exact mass", "exactmass")>
+    <Column("exact mass", "exactmass", "total exact mass")>
     Public Property exact_mass As Double
 
     <Column(Name:="collision gas")>
@@ -103,19 +103,13 @@ Public Class MetaData
     Public Property solvent As String
 
     Public Property instrument As String
-    <Column(Name:="instrument type")>
+    <Column("instrument type", "ion source")>
     Public Property instrument_type As String
     <Column(Name:="ms level")>
     Public Property ms_level As String
     <Column(Name:="ionization energy")>
     Public Property ionization_energy As String
 
-    ''' <summary>
-    ''' precursor type的另一种别称
-    ''' </summary>
-    ''' <returns></returns>
-    <Column(Name:="ion type")>
-    Public Property ion_type As String
     <Column(Name:="ionization mode")>
     Public Property ionization_mode As String
     <Column(Name:="Last Auto-Curation")>
@@ -124,8 +118,6 @@ Public Class MetaData
     Public Property InChI As String
     <Column("molecular formula", "formula")>
     Public Property molecular_formula As String
-    <Column(Name:="total exact mass")>
-    Public Property total_exact_mass As Double
 
     Public Property InChIKey As String
 
@@ -153,7 +145,7 @@ Public Class MetaData
     Public Property solvent_b As String
     <Column(Name:="precursor m/z")>
     Public Property precursor_mz As String
-    <Column(Name:="precursor type")>
+    <Column("precursor type", "adduct", "ion type")>
     Public Property precursor_type As String
     <Column(Name:="mass accuracy")>
     Public Property mass_accuracy As Double
@@ -172,16 +164,11 @@ Public Class MetaData
     Public Property chemspider As String
     <Column(Name:="charge state")>
     Public Property charge_state As Integer
-    <Column(Name:="compound source")>
-    Public Property compound_source As String
-    <Column(Name:="compound class")>
+
+    <Column("compound class", "compound source")>
     Public Property compound_class As String
-    <Column(Name:="source file")>
-    Public Property source_file As String
     Public Property origin As String
-    Public Property adduct As String
-    <Column(Name:="ion source")>
-    Public Property ion_source As String
+
     <Column(Name:="collision energy")>
     Public Property collision_energy As String
     <Column(Name:="collision energy voltage")>
@@ -196,7 +183,7 @@ Public Class MetaData
     Public Property source_voltage As String
     <Column(Name:="sample introduction")>
     Public Property sample_introduction As String
-    <Column(Name:="raw data file")>
+    <Column("raw data file", "source file")>
     Public Property raw_data_file As String
     Public Property publication As String
     <Column(Name:="scientific name")>
