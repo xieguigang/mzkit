@@ -61,11 +61,16 @@ Public Module MspReader
                                        Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
 
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
-            Dim metadata As New MetaData With {
-                .accession = spectrum.Name
-            }
+            Dim metadata As MetaData = spectrum.Comments.FillData
             Dim ms2 As New SpectraInfo With {
-                .MassPeaks = spectrum.Peaks
+                .MassPeaks = spectrum.Peaks,
+                .collision_energy = spectrum.Collision_energy,
+                .retention_time = spectrum.RetentionTime,
+                .instrument = spectrum.Instrument,
+                .instrument_type = spectrum.Instrument_type,
+                .MsLevel = spectrum.Spectrum_type,
+                .mz = spectrum.PrecursorMZ,
+                .precursor_type = spectrum.Precursor_type
             }
 
             Yield New SpectraSection(metadata) With {

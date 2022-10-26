@@ -108,10 +108,14 @@ Module Massbank
     ''' <summary>
     ''' read MoNA database file.
     ''' </summary>
-    ''' <param name="rawfile"></param>
+    ''' <param name="rawfile">
+    ''' the database reader is switched automatically 
+    ''' based on this file path its extension name.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>
-    ''' a linq pipeline for populate the spectrum data from the MoNA database.
+    ''' a linq pipeline for populate the spectrum data 
+    ''' from the MoNA database.
     ''' </returns>
     <ExportAPI("read.MoNA")>
     <RApiReturn(GetType(SpectraSection))>

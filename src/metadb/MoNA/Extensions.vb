@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports any = Microsoft.VisualBasic.Scripting
 
 <HideModuleName>
 Public Module Extensions
@@ -115,19 +116,20 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 从头部的<see cref="MspData.Comments"/>字符串之中解析出具体的物质注释信息
+    ''' a unify metadata reader for MoNA database.
+    ''' (从头部的<see cref="MspData.Comments"/>字符串之中解析出具体的物质注释信息)
     ''' </summary>
     ''' <param name="comments$"></param>
     ''' <returns></returns>
     <Extension>
     Public Function FillData(comments As NameValueCollection) As MetaData
-        Dim meta As Object = New MetaData
+        Dim meta As New MetaData
         Dim castValue As Object
 
         For Each field As BindProperty(Of ColumnAttribute) In fields.Values
             Dim name$ = field.Identity
 
-            If field.Type.IsInheritsFrom(GetType(Array)) Then
+            If field.Type.IsArray Then
                 Dim value As String()
 
                 value = comments.GetValues(name)
@@ -144,19 +146,12 @@ Public Module Extensions
                     value = comments(names(name))
                 End If
 
-                castValue = Scripting.CTypeDynamic(value, field.Type)
+                castValue = any.CTypeDynamic(value, field.Type)
 
                 Call field.SetValue(meta, castValue)
             End If
-
-            'table.Remove(name)
-            'table.Remove(names(name))
         Next
 
-        'If table.Count > 0 Then
-        '    Throw New NotImplementedException(table.ToDictionary.GetJson)
-        'End If
-
-        Return DirectCast(meta, MetaData)
+        Return meta
     End Function
 End Module

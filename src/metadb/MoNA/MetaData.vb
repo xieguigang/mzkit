@@ -132,7 +132,6 @@ Public Class MetaData
     Public Property total_exact_mass As Double
 
     Public Property InChIKey As String
-    Public Property copyright As String
 
     ''' <summary>
     ''' 电离模式，通常是ESI
@@ -282,6 +281,11 @@ Public Class MetaData
     Public Property orifice_temp As String
     <Column(Name:="ring voltage")>
     Public Property ring_voltage As String
+
+    Public Property whole As String
+    Public Property [date] As String
+    Public Property copyright As String
+    Public Property comment As String
 
     Public Overrides Function ToString() As String
         Return accession
