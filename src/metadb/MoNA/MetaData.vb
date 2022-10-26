@@ -1,84 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::9441b744362afcfc85bcbc047c0ffe4a, mzkit\src\metadb\MoNA\MetaData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 213
-    '    Code Lines: 182
-    ' Comment Lines: 11
-    '   Blank Lines: 20
-    '     File Size: 7.93 KB
+' Summaries:
 
 
-    ' Class MetaData
-    ' 
-    '     Properties: accession, activation_parameter, activation_time, adduct, author
-    '                 automatic_gain_control, capillary_temperature, capillary_voltage, cas, cas_number
-    '                 cdl_temperature, charge_state, chebi, chemspider, collision_energy
-    '                 collision_energy_voltage, collision_gas, column, column_pressure, column_temperature
-    '                 compound_class, compound_source, copyright, data_format, derivative_formula
-    '                 derivative_mass, derivatization_type, desolvation_gas_flow, desolvation_temperature, exact_mass
-    '                 exactmass, flow_gradient, flow_rate, fragmentation_method, fragmentation_mode
-    '                 hmdb, InChI, InChIKey, instrument, instrument_type
-    '                 ion_guide_peak_voltage, ion_guide_voltage, ion_source, ion_spray_voltage, ion_type
-    '                 ionization, ionization_energy, ionization_mode, kegg, knapsack
-    '                 Last_AutoCuration, lens_voltage, license, lineage, link
-    '                 lipidbank, lipidmaps, mass_accuracy, mass_error, mass_range_mz
-    '                 molecular_formula, ms_level, Mz_exact, name, nebulizer
-    '                 nebulizing_gas, needle_voltage, orifice_temp, orifice_temperature, orifice_voltage
-    '                 origin, Parent, precursor_mz, precursor_type, pubchem
-    '                 pubchem_cid, pubchem_sid, publication, pubmed_id, raw_data_file
-    '                 resolution, resolution_setting, retention_time, ring_voltage, sample
-    '                 sample_introduction, sampling_cone, scanning, scanning_range, scientific_name
-    '                 SMILES, solvent, solvent_a, solvent_acetonitrile, solvent_b
-    '                 source_file, source_temperature, source_voltage, spectrum_type, spray_voltage
-    '                 total_exact_mass, tube_lens_voltage
-    ' 
-    '     Function: ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 213
+'    Code Lines: 182
+' Comment Lines: 11
+'   Blank Lines: 20
+'     File Size: 7.93 KB
+
+
+' Class MetaData
+' 
+'     Properties: accession, activation_parameter, activation_time, adduct, author
+'                 automatic_gain_control, capillary_temperature, capillary_voltage, cas, cas_number
+'                 cdl_temperature, charge_state, chebi, chemspider, collision_energy
+'                 collision_energy_voltage, collision_gas, column, column_pressure, column_temperature
+'                 compound_class, compound_source, copyright, data_format, derivative_formula
+'                 derivative_mass, derivatization_type, desolvation_gas_flow, desolvation_temperature, exact_mass
+'                 exactmass, flow_gradient, flow_rate, fragmentation_method, fragmentation_mode
+'                 hmdb, InChI, InChIKey, instrument, instrument_type
+'                 ion_guide_peak_voltage, ion_guide_voltage, ion_source, ion_spray_voltage, ion_type
+'                 ionization, ionization_energy, ionization_mode, kegg, knapsack
+'                 Last_AutoCuration, lens_voltage, license, lineage, link
+'                 lipidbank, lipidmaps, mass_accuracy, mass_error, mass_range_mz
+'                 molecular_formula, ms_level, Mz_exact, name, nebulizer
+'                 nebulizing_gas, needle_voltage, orifice_temp, orifice_temperature, orifice_voltage
+'                 origin, Parent, precursor_mz, precursor_type, pubchem
+'                 pubchem_cid, pubchem_sid, publication, pubmed_id, raw_data_file
+'                 resolution, resolution_setting, retention_time, ring_voltage, sample
+'                 sample_introduction, sampling_cone, scanning, scanning_range, scientific_name
+'                 SMILES, solvent, solvent_a, solvent_acetonitrile, solvent_b
+'                 source_file, source_temperature, source_voltage, spectrum_type, spray_voltage
+'                 total_exact_mass, tube_lens_voltage
+' 
+'     Function: ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If netcore5 = 0 Then
-Imports System.Data.Linq.Mapping
-#Else
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-#End If
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 
 ''' <summary>
@@ -92,7 +88,7 @@ Public Class MetaData
     Public Property accession As String
     Public Property author As String
     Public Property license As String
-    <Column(Name:="exact mass")>
+    <Column("exact mass", "exactmass")>
     Public Property exact_mass As Double
 
     <Column(Name:="collision gas")>
@@ -163,21 +159,16 @@ Public Class MetaData
     Public Property mass_accuracy As Double
     <Column(Name:="mass error")>
     Public Property mass_error As Double
-    Public Property cas As String
-    <Column(Name:="cas number")>
+    <Column("cas number", "cas")>
     Public Property cas_number As String
-    <Column(Name:="pubchem cid")>
+    <Column("pubchem cid", "pubchem")>
     Public Property pubchem_cid As String
     <Column(Name:="pubchem sid")>
     Public Property pubchem_sid As String
-
     <Column(Name:="pubmed id")>
     Public Property pubmed_id As String
-    Public Property pubchem As String
-
     Public Property knapsack As String
     Public Property lipidbank As String
-
     Public Property chemspider As String
     <Column(Name:="charge state")>
     Public Property charge_state As Integer
@@ -191,7 +182,6 @@ Public Class MetaData
     Public Property adduct As String
     <Column(Name:="ion source")>
     Public Property ion_source As String
-    Public Property exactmass As Double
     <Column(Name:="collision energy")>
     Public Property collision_energy As String
     <Column(Name:="collision energy voltage")>
