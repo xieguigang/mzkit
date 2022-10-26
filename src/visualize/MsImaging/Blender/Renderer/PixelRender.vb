@@ -78,7 +78,9 @@ Namespace Blender
         ''' <param name="R"></param>
         ''' <param name="G"></param>
         ''' <param name="B"></param>
-        ''' <param name="dimension"></param>
+        ''' <param name="dimension">
+        ''' the raw dimension size of the ms-imaging raw data file
+        ''' </param>
         ''' <param name="dimSize">
         ''' set this parameter to value nothing to returns
         ''' the raw image without any scale operation.
@@ -92,6 +94,7 @@ Namespace Blender
                                                       Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
 
+            ' rendering via raw dimesnion size
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
             Dim defaultBackground As Color = background.TranslateColor
             Dim Rchannel = GetPixelChannelReader(R, cut.r)
@@ -124,6 +127,7 @@ Namespace Blender
                 Next
             End Using
 
+            ' no scale
             If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
                 Return New ImageData(raw)
             Else

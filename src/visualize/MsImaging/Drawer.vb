@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -202,20 +203,11 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="scale"></param>
     ''' <returns></returns>
     Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer, scale As InterpolationMode) As Bitmap
-        Dim newSize As New Rectangle(0, 0, newWidth, newHeight)
-        Dim rawSize As New Rectangle(0, 0, raw.Width, raw.Height)
-
         If scale = InterpolationMode.Invalid Then
             scale = InterpolationMode.Default
         End If
 
-        Using layer As Graphics2D = New Bitmap(newWidth, newHeight)
-            layer.InterpolationMode = scale
-            layer.SmoothingMode = SmoothingMode.HighQuality
-            layer.DrawImage(raw, newSize, rawSize, GraphicsUnit.Pixel)
-
-            Return layer.ImageResource
-        End Using
+        Return raw.Resize(newWidth, onlyResizeIfWider:=True, scale:=scale)
     End Function
 
     ''' <summary>
