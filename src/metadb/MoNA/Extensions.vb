@@ -54,9 +54,6 @@
 #End Region
 
 Imports System.Collections.Specialized
-#If netcore5 = 0 Then
-Imports System.Data.Linq.Mapping
-#End If
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -91,8 +88,8 @@ Public Module Extensions
         fields = Mappings.GetFields(Of MetaData).ToDictionary
 
         For Each field As BindProperty(Of ColumnAttribute) In fields.Values.ToArray
-            If Not fields.ContainsKey(field.member.Name) Then
-                fields.Add(field.member.Name, field)
+            If Not fields.ContainsKey(field.memberName) Then
+                fields.Add(field.memberName, field)
             End If
         Next
     End Sub

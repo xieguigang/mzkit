@@ -122,7 +122,7 @@ Public Class MetaData
     Public Property Last_AutoCuration As String
     Public Property SMILES As String()
     Public Property InChI As String
-    <Column(Name:="molecular formula")>
+    <Column("molecular formula", "formula")>
     Public Property molecular_formula As String
     <Column(Name:="total exact mass")>
     Public Property total_exact_mass As Double
