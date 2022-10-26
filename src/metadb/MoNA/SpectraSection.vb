@@ -67,7 +67,14 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Public Class SpectraSection : Inherits MetaInfo
 
     Public Property SpectraInfo As SpectraInfo
+
+    ''' <summary>
+    ''' should contains the necessary header data for <see cref="FillData"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Comment As NameValueCollection
+
+    Dim meta As MetaData = Nothing
 
     ''' <summary>
     ''' MoNA里面都主要是讲注释的信息放在<see cref="Comment"/>字段里面的。
@@ -78,7 +85,11 @@ Public Class SpectraSection : Inherits MetaInfo
     Public ReadOnly Property MetaDB As MetaData
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Comment.FillData
+            If meta Is Nothing Then
+                meta = Comment.FillData
+            End If
+
+            Return meta
         End Get
     End Property
 
