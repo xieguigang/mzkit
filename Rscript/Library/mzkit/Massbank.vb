@@ -114,6 +114,7 @@ Module Massbank
     ''' a linq pipeline for populate the spectrum data from the MoNA database.
     ''' </returns>
     <ExportAPI("read.MoNA")>
+    <RApiReturn(GetType(SpectraSection))>
     Public Function readMoNA(rawfile As String,
                              Optional skipSpectraInfo As Boolean = False,
                              Optional is_gcms As Boolean = False,
@@ -127,6 +128,10 @@ Module Massbank
                         skipSpectraInfo:=skipSpectraInfo,
                         isGcms:=is_gcms
                     ) _
+                    .DoCall(AddressOf pipeline.CreateFromPopulator)
+            Case "msp"
+                Return MspReader _
+                    .ParseFile(rawfile, parseMs2:=Not skipSpectraInfo) _
                     .DoCall(AddressOf pipeline.CreateFromPopulator)
             Case Else
                 Return Internal.debug.stop(New NotSupportedException(rawfile.ExtensionSuffix), env)
