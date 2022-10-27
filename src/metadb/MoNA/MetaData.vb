@@ -114,6 +114,7 @@ Public Class MetaData
     Public Property ionization_mode As String
     <Column(Name:="Last Auto-Curation")>
     Public Property Last_AutoCuration As String
+    <Column("computed SMILES")>
     Public Property SMILES As String()
     Public Property InChI As String
     <Column("molecular formula", "formula")>
