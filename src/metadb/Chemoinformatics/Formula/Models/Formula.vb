@@ -71,7 +71,18 @@ Namespace Formula
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
+
+        ''' <summary>
+        ''' get formula string
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this formula string data is build with the 
+        ''' <see cref="BuildCanonicalFormula"/> function 
+        ''' or user specific input
+        ''' </remarks>
         Public ReadOnly Property EmpiricalFormula As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return m_formula
             End Get
@@ -80,6 +91,7 @@ Namespace Formula
         Friend m_formula As String
 
         Public ReadOnly Property Elements As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return CountsByElement.Keys.ToArray
             End Get
@@ -115,8 +127,11 @@ Namespace Formula
         End Property
 
         Friend ReadOnly Property Counts As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CountsByElement.Select(Function(a) $"{a.Key}: {a.Value}").JoinBy(", ")
+                Return CountsByElement _
+                    .Select(Function(a) $"{a.Key}: {a.Value}") _
+                    .JoinBy(", ")
             End Get
         End Property
 
@@ -131,33 +146,25 @@ Namespace Formula
             CountsByElement = New Dictionary(Of String, Integer)(counts)
 
             If formula.StringEmpty Then
-                Me.m_formula = BuildFormula(CountsByElement)
+                Me.m_formula = Canonical.BuildCanonicalFormula(CountsByElement)
             Else
                 Me.m_formula = formula
             End If
         End Sub
 
-        Public Shared Function BuildFormula(countsByElement As Dictionary(Of String, Integer)) As String
-            Return countsByElement _
-                .Where(Function(e) e.Value > 0) _
-                .Select(Function(e)
-                            Return If(e.Value = 1, e.Key, e.Key & e.Value)
-                        End Function) _
-                .JoinBy("")
-        End Function
-
         ''' <summary>
         ''' show <see cref="EmpiricalFormula"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return EmpiricalFormula
         End Function
 
         Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
-            Dim newComposition = composition _
-                .CountsByElement _
+            Dim newComposition = composition.CountsByElement _
                 .ToDictionary(Function(e) e.Key,
                               Function(e)
                                   Return e.Value * n
@@ -166,6 +173,7 @@ Namespace Formula
             Return New Formula(newComposition, newFormula)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(n%, composition As Formula) As Formula
             Return composition * n
         End Operator
@@ -204,25 +212,28 @@ Namespace Formula
             Return New Formula(newComposition)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(f As Formula, mass As Double) As Double
             Return f.ExactMass - mass
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(mass As Double, f As Formula) As Double
             Return mass - f.ExactMass
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(mass As Double, f As Formula) As Double
             Return mass + f.ExactMass
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(f As Formula, mass As Double) As Double
             Return f.ExactMass + mass
         End Operator
 
         Public Shared Operator /(f As Formula, n As Integer) As Formula
-            Dim newComposition = f _
-                .CountsByElement _
+            Dim newComposition = f.CountsByElement _
                 .ToDictionary(Function(e) e.Key,
                               Function(e)
                                   Return CInt(e.Value / n)

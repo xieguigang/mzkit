@@ -113,7 +113,7 @@ Namespace Formula
             End If
 
             copy.charge = copy.charge + Formula.AllAtomElements(element).charge * count
-            copy.m_formula = Formula.BuildFormula(copy.CountsByElement)
+            copy.m_formula = Canonical.BuildCanonicalFormula(copy.CountsByElement)
 
             Return copy
         End Function
