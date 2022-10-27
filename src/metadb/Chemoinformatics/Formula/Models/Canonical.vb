@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Formula
 
@@ -9,6 +10,11 @@ Namespace Formula
         ''' </summary>
         ReadOnly orders As Index(Of String) = {"C", "H", "N", "O", "P", "S", "Cl"}
         ReadOnly order_string As String() = orders.Objects
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function BuildCanonicalFormula(formula As Formula) As String
+            Return BuildCanonicalFormula(formula.CountsByElement)
+        End Function
 
         Public Function BuildCanonicalFormula(countsByElement As Dictionary(Of String, Integer)) As String
             Dim sb As New List(Of String)
