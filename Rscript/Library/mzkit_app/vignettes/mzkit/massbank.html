@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-10-26" />
+    <meta name="last-update" content="2022-10-27" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -44,7 +44,7 @@
                     <pre><p>let <code>read.MoNA</code> as function(<code>rawfile</code> as string, 
 <code>skipSpectraInfo</code> as boolean = FALSE, 
 <code>is_gcms</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; pipeline</code> {
+[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SpectraSection</code> {
     #
     # .NET API information
     #
@@ -60,7 +60,8 @@
   <h4>Arguments</h4>
   <ul>
                    <li>
-  <code>rawfile</code>: -
+  <code>rawfile</code>: the database reader is switched automatically <br />
+ based on this file path its extension name.
                 </li>
 <li>
   <code>env</code>: -
@@ -68,7 +69,8 @@
                 </ul>
 </div>
                        
-                    <h4>Value</h4><p>a linq pipeline for populate the spectrum data from the MoNA database.</p>
+                    <h4>Value</h4><p>a linq pipeline for populate the spectrum data <br />
+ from the MoNA database.</p>
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
