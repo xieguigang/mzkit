@@ -148,7 +148,7 @@ Public Module Extensions
             type = field.Value.Type
 
             If type.IsArray Then
-                castValue = fillArray(field.Key, field.Value, comments)
+                castValue = fillArrays(field.Key, field.Value, comments)
             Else
                 castValue = fillScalar(field.Key, field.Value, comments)
             End If
@@ -166,7 +166,7 @@ Public Module Extensions
         Return castValue
     End Function
 
-    Private Function fillArray(name As String, field As BindProperty(Of ColumnAttribute), comments As NameValueCollection) As Object
+    Private Function fillArrays(name As String, field As BindProperty(Of ColumnAttribute), comments As NameValueCollection) As Object
         Dim value As String() = comments.GetValues(name)
 
         If value.IsNullOrEmpty Then
