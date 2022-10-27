@@ -268,6 +268,11 @@ Module FormulaTools
         Return formulaObj
     End Function
 
+    <ExportAPI("canonical_formula")>
+    Public Function canonicalFormula(formula As Formula) As String
+        Return Canonical.BuildCanonicalFormula(formula.CountsByElement)
+    End Function
+
 #Region "formula operators"
 
     <ExportAPI("getElementCount")>
