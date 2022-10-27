@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b306d42183b6a5880b53f37bd9a9774, mzkit\src\metadb\MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::735a139cfbead7cc56a9286915e5e6c5, mzkit\src\metadb\Chemoinformatics\ExactMassProvider.vb"
 
 ' Author:
 ' 
@@ -37,47 +37,46 @@
 
 ' Code Statistics:
 
-'   Total Lines: 6
-'    Code Lines: 4
+'   Total Lines: 17
+'    Code Lines: 9
 ' Comment Lines: 0
-'   Blank Lines: 2
-'     File Size: 174.00 B
+'   Blank Lines: 8
+'     File Size: 299.00 B
 
 
-' Module MspReader
+' Interface IExactMassProvider
 ' 
-'     Function: ParseFile
+'     Properties: ExactMass
+' 
+' Interface ICompoundNameProvider
+' 
+'     Properties: CommonName
+' 
+' Interface IFormulaProvider
+' 
+'     Properties: Formula
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
+Namespace Ms1.Annotations
 
-Public Module MspReader
+    Public Interface IExactMassProvider
 
-    Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
-        For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
-            Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
-            Dim ms2 As New SpectraInfo With {
-                .MassPeaks = spectrum.Peaks,
-                .collision_energy = spectrum.Collision_energy,
-                .retention_time = spectrum.RetentionTime,
-                .instrument = spectrum.Instrument,
-                .instrument_type = spectrum.Instrument_type,
-                .MsLevel = spectrum.Spectrum_type,
-                .mz = spectrum.PrecursorMZ,
-                .precursor_type = spectrum.Precursor_type
-            }
+        ReadOnly Property ExactMass As Double
 
-            Yield New SpectraSection(metadata) With {
-                .SpectraInfo = ms2
-            }
-        Next
-    End Function
+    End Interface
 
-    Public Function GetMetadata(spectrum As MspData) As MetaData
-        Dim meta = spectrum.Comments.FillData
-        Return meta
-    End Function
-End Module
+    Public Interface ICompoundNameProvider
+
+        ReadOnly Property CommonName As String
+
+    End Interface
+
+    Public Interface IFormulaProvider
+
+        ReadOnly Property Formula As String
+
+    End Interface
+End Namespace
