@@ -56,11 +56,11 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Massbank.DATA
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Node =
     System.Collections.Generic.Dictionary(Of
         String,

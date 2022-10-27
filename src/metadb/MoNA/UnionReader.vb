@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::647a800d18a54ee5bbfbc919692a9423, mzkit\src\metadb\MoNA\UnionReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 176
-    '    Code Lines: 140
-    ' Comment Lines: 8
-    '   Blank Lines: 28
-    '     File Size: 4.80 KB
+' Summaries:
 
 
-    ' Class UnionReader
-    ' 
-    '     Properties: CAS, chebi, collision_energy, compound_source, exact_mass
-    '                 formula, hmdb, instrument_type, ionMode, precursor_type
-    '                 pubchem, retention_time, sourcefile
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: numericIdInternal, ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 176
+'    Code Lines: 140
+' Comment Lines: 8
+'   Blank Lines: 28
+'     File Size: 4.80 KB
+
+
+' Class UnionReader
+' 
+'     Properties: CAS, chebi, collision_energy, compound_source, exact_mass
+'                 formula, hmdb, instrument_type, ionMode, precursor_type
+'                 pubchem, retention_time, sourcefile
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: numericIdInternal, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,13 +92,13 @@ Public Class UnionReader
 
     Public ReadOnly Property CAS As String()
         Get
-            Return meta.Read_CAS
+            Return meta.cas_number
         End Get
     End Property
 
     Public ReadOnly Property precursor_type As String
         Get
-            Return meta.Read_precursor_type
+            Return meta.precursor_type
         End Get
     End Property
 
@@ -114,13 +114,13 @@ Public Class UnionReader
 
     Public ReadOnly Property instrument_type As String
         Get
-            Return meta.Read_instrument_type
+            Return meta.instrument_type
         End Get
     End Property
 
     Public ReadOnly Property exact_mass As Double
         Get
-            Dim mass# = meta.Read_exact_mass
+            Dim mass# = meta.exact_mass
 
             If mass = 0R Then
                 If mold Like GetType(MspData) Then
@@ -154,7 +154,7 @@ Public Class UnionReader
 
     Public ReadOnly Property pubchem As Long
         Get
-            Return numericIdInternal(meta.Read_pubchemID)
+            Return numericIdInternal(meta.pubchem_cid)
         End Get
     End Property
 
@@ -180,13 +180,13 @@ Public Class UnionReader
 
     Public ReadOnly Property sourcefile As String
         Get
-            Return meta.Read_source_file
+            Return meta.raw_data_file
         End Get
     End Property
 
     Public ReadOnly Property compound_source As String
         Get
-            Return meta.Read_compound_source
+            Return meta.compound_class
         End Get
     End Property
 #End Region

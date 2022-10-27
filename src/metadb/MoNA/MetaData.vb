@@ -152,7 +152,7 @@ Public Class MetaData
     <Column(Name:="mass error")>
     Public Property mass_error As Double
     <Column("cas number", "cas")>
-    Public Property cas_number As String
+    Public Property cas_number As String()
     <Column("pubchem cid", "pubchem")>
     Public Property pubchem_cid As String
     <Column(Name:="pubchem sid")>
