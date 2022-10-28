@@ -109,7 +109,9 @@ Namespace Formula
         ''' </summary>
         ''' <param name="formula$"></param>
         ''' <param name="n">for counting polymers atoms</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the formula string keeps the same order with the input <paramref name="formula"/>
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
             Static cache As New Dictionary(Of String, Formula)
