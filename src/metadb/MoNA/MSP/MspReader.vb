@@ -66,7 +66,7 @@ Public Module MspReader
                 .instrument = spectrum.Instrument,
                 .instrument_type = spectrum.Instrument_type,
                 .MsLevel = spectrum.Spectrum_type,
-                .mz = spectrum.PrecursorMZ,
+                .mz = Val(spectrum.PrecursorMZ),
                 .precursor_type = spectrum.Precursor_type
             }
 
