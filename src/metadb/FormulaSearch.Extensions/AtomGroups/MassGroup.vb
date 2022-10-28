@@ -1,5 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports BioNovoGene.BioDeep.Chemoinformatics
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Public Class MassGroup : Implements IExactMassProvider
 

@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class FragmentAnnotationHolder
