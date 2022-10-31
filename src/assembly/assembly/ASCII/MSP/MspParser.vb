@@ -99,9 +99,11 @@ Namespace ASCII.MSP
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)
                            End Function) _
                     .ToArray
-                Dim metadata As NameValueCollection = parts _
-                    .First _
-                    .Select(Function(s) s.GetTagValue(":", trim:=True)) _
+                Dim metaBlock As String() = parts(Scan0)
+                Dim metadata As NameValueCollection = metaBlock _
+                    .Select(Function(s)
+                                Return s.GetTagValue(":", trim:=True)
+                            End Function) _
                     .NameValueCollection
 
                 If incorrects(metadata) Then
@@ -167,14 +169,20 @@ Namespace ASCII.MSP
         <Extension>
         Private Function createObject(metadata As NameValueCollection, peaksdata As ms2()) As MspData
             Dim read As New AliasLambda With {.metadata = metadata}
-            Dim metaComment$ = read.getValue(NameOf(MspData.Comments), "Comment")
+            Dim metaComment As NameValueCollection = read _
+                .getValue(NameOf(MspData.Comments), "Comment") _
+                .ToTable
             Dim aliasName As String() = read _
                 .getValues("Synonym", "Synon") _
                 .Distinct _
                 .ToArray
+
+            ' join two collection data
+            Call metaComment.Add(metadata)
+
             Dim msp As New MspData With {
                 .Peaks = peaksdata,
-                .Comments = metaComment.ToTable,
+                .Comments = metaComment,
                 .DB_id = read.getValue("DB#"),
                 .Formula = read.getValue(NameOf(MspData.Formula)),
                 .InChIKey = read.getValue(NameOf(MspData.InChIKey)),
@@ -190,10 +198,6 @@ Namespace ASCII.MSP
                 .Ion_mode = read.getValue("Ion_mode"),
                 .RetentionTime = read.getValue("RETENTIONTIME")
             }
-
-            'If metadata.ContainsKey("Synonym") Then
-            '    metadata.Remove("Synonym")
-            'End If
 
             Return msp.fillPrecursorInfo
         End Function

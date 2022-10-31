@@ -81,21 +81,19 @@ Namespace ASCII.MSP
         ''' <summary>
         ''' 解析放置于注释之中的代谢物注释元数据
         ''' </summary>
-        ''' <param name="comments$"></param>
+        ''' <param name="comments"></param>
         ''' <returns></returns>
-        <Extension> Public Function ToTable(comments As String()) As NameValueCollection
+        <Extension>
+        Public Function ToTable(comments As String()) As NameValueCollection
             ' 为了兼容两个SMILES结构
             Dim table As New NameValueCollection
-            Dim data = comments _
+
+            For Each g As NamedValue(Of String) In comments _
                 .Select(Function(s)
                             Return s.GetTagValue("=", trim:=True)
-                        End Function) _
-                .GroupBy(Function(o) o.Name)
+                        End Function)
 
-            For Each g As IGrouping(Of String, NamedValue(Of String)) In data
-                For Each s As NamedValue(Of String) In g
-                    Call table.Add(g.Key, s.Value)
-                Next
+                Call table.Add(g.Name, g.Value)
             Next
 
             Return table
