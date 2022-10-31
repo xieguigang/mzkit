@@ -203,8 +203,13 @@ Public Class MetaData
     <Column(Name:="source temperature")>
     Public Property source_temperature As String
     Public Property chebi As String
+    Public Property chembl As String
+    Public Property wikipedia As String
     Public Property hmdb As String
+    Public Property drugbank As String
     Public Property lipidmaps As String
+    Public Property Mesh As String
+    Public Property ChemIDplus As String
 
     Public Property scanning As String
     <Column(Name:="sampling cone")>
