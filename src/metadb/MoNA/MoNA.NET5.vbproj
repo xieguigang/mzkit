@@ -9,6 +9,15 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+      <PackageLicenseFile>LICENSE</PackageLicenseFile>
+      <Product>BioDeep</Product>
+      <Company>BioNovoGene</Company>
+      <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
+      <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+      <PackageProjectUrl>https://mzkit.org</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/xieguigang/mzkit</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -63,7 +72,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -95,6 +104,10 @@
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
     <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

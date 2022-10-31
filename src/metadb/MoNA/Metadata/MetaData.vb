@@ -140,12 +140,18 @@ Public Class MetaData
     Public Property flow_rate As String
     <Column(Name:="retention time")>
     Public Property retention_time As String
-    <Column(Name:="solvent a")>
+    <Column("solvent a", "SOLVENT A")>
     Public Property solvent_a As String
-    <Column(Name:="solvent b")>
+    <Column("solvent b", "SOLVENT B")>
     Public Property solvent_b As String
+
+    Public Property reanalyze As String
+
     <Column(Name:="precursor m/z")>
     Public Property precursor_mz As String
+    <Column("precursor intensity")>
+    Public Property precursor_intensity As Double
+
     <Column("precursor type", "adduct", "ion type")>
     Public Property precursor_type As String
     <Column(Name:="mass accuracy")>
@@ -268,7 +274,7 @@ Public Class MetaData
     Public Property whole As String
     Public Property [date] As String
     Public Property copyright As String
-    Public Property comment As String
+    Public Property comment As String()
 
     Public Overrides Function ToString() As String
         Return accession
