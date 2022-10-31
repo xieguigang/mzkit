@@ -21,6 +21,12 @@ Public Class ClusterHit
     Public Property ClusterJaccard As Double()
     Public Property ClusterId As String()
 
+    ''' <summary>
+    ''' the basepeak m/z of the sample spectrum
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property basePeak As Double
+
     Public Overrides Function ToString() As String
         Return Id
     End Function
