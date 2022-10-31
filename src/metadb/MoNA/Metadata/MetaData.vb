@@ -82,9 +82,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 ''' </summary>
 Public Class MetaData
 
-    Public Property Mz_exact As Double
-    Public Property Parent As Double
-
     Public Property accession As String
     Public Property author As String
     Public Property license As String
@@ -146,8 +143,9 @@ Public Class MetaData
 
     Public Property reanalyze As String
 
-    <Column(Name:="precursor m/z")>
+    <Column("precursor m/z", "PrecursorMZ", "Mz_exact", "Parent")>
     Public Property precursor_mz As String
+
     <Column("precursor intensity")>
     Public Property precursor_intensity As Double
 
@@ -282,6 +280,6 @@ Public Class MetaData
     Public Property comment As String()
 
     Public Overrides Function ToString() As String
-        Return accession
+        Return $"{accession}: {name}"
     End Function
 End Class
