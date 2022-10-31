@@ -66,13 +66,15 @@ Namespace ASCII.MSP
     Public Module Comments
 
         ''' <summary>
-        ''' 解析放置于注释之中的代谢物注释元数据
+        ''' Parse a given string a key-value tuple data list.
+        ''' (解析放置于注释之中的代谢物注释元数据)
         ''' </summary>
         ''' <param name="comments$"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToTable(comments$) As NameValueCollection
+        <Extension>
+        Public Function ToTable(comments$) As NameValueCollection
             Return CLIParser.GetTokens(comments).ToTable
         End Function
 

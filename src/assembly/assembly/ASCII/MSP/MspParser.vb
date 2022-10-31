@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Namespace ASCII.MSP
@@ -136,36 +137,58 @@ Namespace ASCII.MSP
                 .ToArray
         End Function
 
+        Private Class AliasLambda
+
+            Public metadata As NameValueCollection
+
+            Public Function getValue(ParamArray keys As String()) As String
+                For Each key As String In keys
+                    If metadata.ContainsKey(key) Then
+                        Return metadata(key)
+                    End If
+                Next
+
+                Return ""
+            End Function
+
+            Public Function getValues(ParamArray keys As String()) As String()
+                Dim list As New List(Of String)
+
+                For Each key As String In keys
+                    If metadata.ContainsKey(key) Then
+                        Call list.AddRange(metadata.GetValues(key))
+                    End If
+                Next
+
+                Return list.ToArray
+            End Function
+        End Class
+
         <Extension>
         Private Function createObject(metadata As NameValueCollection, peaksdata As ms2()) As MspData
-            Dim getValue = Function(key$)
-                               If metadata.ContainsKey(key) Then
-                                   Dim value = metadata(key)
-                                   ' metadata.Remove(key)
-                                   Return value
-                               Else
-                                   Return ""
-                               End If
-                           End Function
-
-            Dim metaComment$ = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault
+            Dim read As New AliasLambda With {.metadata = metadata}
+            Dim metaComment$ = read.getValue(NameOf(MspData.Comments), "Comment")
+            Dim aliasName As String() = read _
+                .getValues("Synonym", "Synon") _
+                .Distinct _
+                .ToArray
             Dim msp As New MspData With {
                 .Peaks = peaksdata,
                 .Comments = metaComment.ToTable,
-                .DB_id = getValue("DB#"),
-                .Formula = getValue(NameOf(MspData.Formula)),
-                .InChIKey = getValue(NameOf(MspData.InChIKey)),
-                .MW = Val(getValue(NameOf(MspData.MW)) Or getValue("ExactMass").AsDefault),
-                .Name = getValue(NameOf(MspData.Name)),
-                .PrecursorMZ = getValue(NameOf(MspData.PrecursorMZ)),
-                .Synonyms = metadata.GetValues("Synonym") Or {getValue("Synon")}.AsDefault,
-                .Precursor_type = getValue("Precursor_type"),
-                .Spectrum_type = getValue("Spectrum_type"),
-                .Instrument_type = getValue("Instrument_type"),
-                .Instrument = getValue("Instrument"),
-                .Collision_energy = getValue("Collision_energy"),
-                .Ion_mode = getValue("Ion_mode"),
-                .RetentionTime = getValue("RETENTIONTIME")
+                .DB_id = read.getValue("DB#"),
+                .Formula = read.getValue(NameOf(MspData.Formula)),
+                .InChIKey = read.getValue(NameOf(MspData.InChIKey)),
+                .MW = Val(read.getValue(NameOf(MspData.MW)) Or read.getValue("ExactMass").AsDefault),
+                .Name = read.getValue(NameOf(MspData.Name)),
+                .PrecursorMZ = read.getValue(NameOf(MspData.PrecursorMZ)),
+                .Synonyms = aliasName,
+                .Precursor_type = read.getValue("Precursor_type"),
+                .Spectrum_type = read.getValue("Spectrum_type"),
+                .Instrument_type = read.getValue("Instrument_type"),
+                .Instrument = read.getValue("Instrument"),
+                .Collision_energy = read.getValue("Collision_energy"),
+                .Ion_mode = read.getValue("Ion_mode"),
+                .RetentionTime = read.getValue("RETENTIONTIME")
             }
 
             'If metadata.ContainsKey("Synonym") Then
@@ -175,16 +198,37 @@ Namespace ASCII.MSP
             Return msp.fillPrecursorInfo
         End Function
 
+        ''' <summary>
+        ''' solve the missing ms2 precursor ion information
+        ''' </summary>
+        ''' <param name="msp"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function fillPrecursorInfo(msp As MspData) As MspData
+            ' the name of current ion is a old xcms_id
+            ' in format liked:
+            '
+            '   M{m/z}T{rt in second}
+            '
             If msp.Name.IsPattern("M\d+T\d+(_\d+)?") Then
-                Dim mt = msp.Name.Matches("\d+").Select(Function(a) Val(a)).ToArray
+                ' get mz and rt in integer
+                Dim mt As Double() = msp.Name _
+                    .Matches("\d+") _
+                    .Select(Function(a) Val(a)) _
+                    .ToArray
 
                 If msp.PrecursorMZ.StringEmpty Then
-                    Dim mz2 = msp.Peaks.Select(Function(p) (p.mz, d:=stdNum.Abs(p.mz - mt(0)))).OrderBy(Function(t) t.d).FirstOrDefault
+                    Dim mz2 = msp.Peaks _
+                        .Select(Function(p)
+                                    Return (p.mz, d:=stdNum.Abs(p.mz - mt(0)))
+                                End Function) _
+                        .OrderBy(Function(t) t.d) _
+                        .FirstOrDefault
 
                     If mz2.d < 1 Then
                         msp.PrecursorMZ = mz2.mz
+                    Else
+                        msp.PrecursorMZ = mt(0)
                     End If
                 End If
                 If msp.RetentionTime.StringEmpty Then
