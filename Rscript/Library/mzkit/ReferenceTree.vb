@@ -134,8 +134,12 @@ Module ReferenceTreePkg
         End If
 
         If Not result Is Nothing Then
-            result.queryId = DirectCast(x, LibraryMatrix).name
-            result.queryMz = DirectCast(x, LibraryMatrix).parentMz
+            result.queryId = x.name
+            result.queryMz = x.parentMz
+            result.basePeak = x.ms2 _
+                .OrderByDescending(Function(a) a.intensity) _
+                .FirstOrDefault _
+               ?.mz
         End If
 
         Return result
@@ -160,9 +164,13 @@ Module ReferenceTreePkg
         End If
 
         If Not result Is Nothing Then
-            result.queryId = DirectCast(x, PeakMs2).lib_guid
-            result.queryMz = DirectCast(x, PeakMs2).mz
-            result.queryRt = DirectCast(x, PeakMs2).rt
+            result.queryId = x.lib_guid
+            result.queryMz = x.mz
+            result.queryRt = x.rt
+            result.basePeak = x.mzInto _
+                .OrderByDescending(Function(a) a.intensity) _
+                .FirstOrDefault _
+               ?.mz
         End If
 
         Return result
