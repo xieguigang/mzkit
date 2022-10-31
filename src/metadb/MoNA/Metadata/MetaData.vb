@@ -88,7 +88,7 @@ Public Class MetaData
     Public Property accession As String
     Public Property author As String
     Public Property license As String
-    <Column("exact mass", "exactmass", "total exact mass")>
+    <Column("exact mass", "exactmass", "total exact mass", "ExactMass")>
     Public Property exact_mass As Double
 
     <Column(Name:="collision gas")>
@@ -105,22 +105,21 @@ Public Class MetaData
     Public Property instrument As String
     <Column("instrument type", "ion source")>
     Public Property instrument_type As String
-    <Column(Name:="ms level")>
+    <Column("Spectrum_type", "ms level")>
     Public Property ms_level As String
-    <Column(Name:="ionization energy")>
-    Public Property ionization_energy As String
 
     <Column(Name:="ionization mode")>
     Public Property ionization_mode As String
     <Column(Name:="Last Auto-Curation")>
     Public Property Last_AutoCuration As String
-    <Column("computed SMILES")>
+    <Column("SMILES", "computed SMILES")>
     Public Property SMILES As String()
     Public Property InChI As String
     <Column("molecular formula", "formula")>
     Public Property molecular_formula As String
 
     Public Property InChIKey As String
+    Public Property SPLASH As String
 
     ''' <summary>
     ''' 电离模式，通常是ESI
@@ -152,12 +151,15 @@ Public Class MetaData
     <Column("precursor intensity")>
     Public Property precursor_intensity As Double
 
-    <Column("precursor type", "adduct", "ion type")>
+    <Column("precursor type", "adduct", "ion type", "Precursor_type")>
     Public Property precursor_type As String
-    <Column(Name:="mass accuracy")>
+
+    <Column("mass accuracy", "computed mass accuracy")>
     Public Property mass_accuracy As Double
-    <Column(Name:="mass error")>
+
+    <Column("mass error", "computed mass error")>
     Public Property mass_error As Double
+
     <Column("cas number", "cas")>
     Public Property cas_number As String()
     <Column("pubchem cid", "pubchem")>
@@ -176,18 +178,21 @@ Public Class MetaData
     Public Property compound_class As String
     Public Property origin As String
 
-    <Column(Name:="collision energy")>
-    Public Property collision_energy As String
-    <Column(Name:="collision energy voltage")>
+    <Column("collision energy",
+            "collision energy voltage",
+            "source voltage",
+            "ionization energy")>
     Public Property collision_energy_voltage As String
+
+    <Column("collision energy level")>
+    Public Property collision_energy_level As String
+
     Public Property kegg As String
     <Column(Name:="capillary temperature")>
     Public Property capillary_temperature As String
     <Column(Name:="capillary voltage")>
     Public Property capillary_voltage As String
 
-    <Column(Name:="source voltage")>
-    Public Property source_voltage As String
     <Column(Name:="sample introduction")>
     Public Property sample_introduction As String
     <Column("raw data file", "source file")>

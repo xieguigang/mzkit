@@ -63,19 +63,6 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Module ReaderViews
 
-    <Extension>
-    Public Function Read_collision_energy(meta As MetaData) As String
-        With meta
-            Return .ReadStringMultiple(
-                {
-                    NameOf(.collision_energy),
-                    NameOf(.collision_energy_voltage),
-                    NameOf(.source_voltage),
-                    NameOf(.ionization_energy)
-                })
-        End With
-    End Function
-
     ''' <summary>
     ''' 这个函数会自动对保留时间进行单位的转换，返回结果的单位为秒
     ''' </summary>

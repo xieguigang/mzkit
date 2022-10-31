@@ -70,7 +70,7 @@ Public Class UnionReader
 
     Public ReadOnly Property collision_energy As String
         Get
-            Return meta.Read_collision_energy
+            Return meta.collision_energy_voltage
         End Get
     End Property
 

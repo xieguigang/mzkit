@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 
 Public Module MspReader
@@ -76,8 +77,8 @@ Public Module MspReader
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMetadata(spectrum As MspData) As MetaData
-        Dim meta = spectrum.Comments.FillData
-        Return meta
+        Return spectrum.Comments.FillData
     End Function
 End Module
