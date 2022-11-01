@@ -96,14 +96,17 @@ Namespace IndexedCache
             Dim zero As New RelativeIntensityCutoff(0)
             Dim mzSet = raw.MS _
                 .Select(Function(ms)
-                            Return ms.GetMs
+                            Return ms.mz
                         End Function) _
                 .IteratesALL _
-                .GroupBy(Function(x) x.mz, AddressOf mzErr.Equals) _
-                .Select(Function(a) Aggregate mzi As ms2 In a Into Average(mzi.mz)) _
+                .GroupBy(Function(x) x, AddressOf mzErr.Equals) _
+                .Select(Function(a) Aggregate mzi As Double In a Into Average(mzi)) _
                 .OrderBy(Function(mzi) mzi) _
                 .ToArray
-            Dim mzUnique As Double() = mzSet.Select(Function(mzi) stdNum.Round(mzi, 3)).Distinct.ToArray
+            Dim mzUnique As Double() = mzSet _
+                .Select(Function(mzi) stdNum.Round(mzi, 3)) _
+                .Distinct _
+                .ToArray
             Dim mzIndex As Index(Of String) = mzUnique _
                 .Select(Function(mzi) mzi.ToString) _
                 .Indexing
