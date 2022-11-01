@@ -7,6 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -54,6 +55,8 @@ Namespace IndexedCache
                 For Each pixel As PixelData In matrix
                     Call text.WriteLine($"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}")
                 Next
+
+                Call text.Flush()
             End Using
 
             Return True
@@ -92,12 +95,11 @@ Namespace IndexedCache
         Private Shared Function getMzIndex(raw As mzPack, mzErr As Tolerance) As (Double(), Index(Of String))
             Dim zero As New RelativeIntensityCutoff(0)
             Dim mzSet = raw.MS _
-                .AsParallel _
                 .Select(Function(ms)
-                            Return ms.GetMs.ToArray.Centroid(mzErr, cutoff:=zero)
+                            Return ms.GetMs
                         End Function) _
                 .IteratesALL _
-                .GroupBy(Function(m) m.mz.ToString("F3")) _
+                .GroupBy(Function(x) x.mz, AddressOf mzErr.Equals) _
                 .Select(Function(a) Aggregate mzi As ms2 In a Into Average(mzi.mz)) _
                 .OrderBy(Function(mzi) mzi) _
                 .ToArray

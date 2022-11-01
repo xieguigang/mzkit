@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -567,50 +568,13 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
-                                Optional tolerance As Object = "da:0.05",
+                                Optional tolerance As String = "da:0.005",
                                 Optional env As Environment = Nothing) As Message
 
-        Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, tolerance)
 
-        If mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
-
-        Dim da As Tolerance = mzErr.TryCast(Of Tolerance)
-        Dim allMz As ms2() = raw.MS _
-            .Select(Function(i) i.GetMs) _
-            .IteratesALL _
-            .ToArray _
-            .Centroid(da, New RelativeIntensityCutoff(0.01)) _
-            .OrderBy(Function(i) i.mz) _
-            .ToArray
-        Dim text As New StreamWriter(file)
-
-        Call text.WriteLine({""}.JoinIterates(allMz.Select(Function(a) a.mz.ToString("F4"))).JoinBy(","))
-        Call text.Flush()
-
-        For Each pixel As ScanMS1 In raw.MS
-            Dim pid As String = $"{pixel.meta!x};{pixel.meta!y}"
-            Dim msData = pixel.GetMs.ToArray
-            Dim vec As String() = allMz _
-                .Select(Function(mzi)
-                            Dim mz As ms2 = msData _
-                                .Where(Function(i) da(i.mz, mzi.mz)) _
-                                .FirstOrDefault
-
-                            If mz Is Nothing Then
-                                Return "0"
-                            Else
-                                Return mz.intensity.ToString
-                            End If
-                        End Function) _
-                .ToArray
-
-            Call text.WriteLine({pid}.JoinIterates(vec).JoinBy(","))
-            Call Console.WriteLine(pixel.scan_id)
-        Next
-
-        Call text.Flush()
+        Call matrix.ExportCsvSheet(file)
+        Call file.Flush()
 
         Return Nothing
     End Function
