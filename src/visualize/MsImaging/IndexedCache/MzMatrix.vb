@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -6,6 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
 Namespace IndexedCache
@@ -42,6 +44,20 @@ Namespace IndexedCache
             End Function
 
         End Class
+
+        Public Function ExportCsvSheet(file As Stream) As Boolean
+            Using text As New StreamWriter(file, Encodings.ASCII.CodePage) With {
+                .NewLine = vbLf
+            }
+                Call text.WriteLine("Pixels," & mz.JoinBy(","))
+
+                For Each pixel As PixelData In matrix
+                    Call text.WriteLine($"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}")
+                Next
+            End Using
+
+            Return True
+        End Function
 
         Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.001") As MzMatrix
             Dim mzSet As (mz As Double(), Index As Index(Of String)) = getMzIndex(raw, Ms1.Tolerance.ParseScript(mzdiff))
