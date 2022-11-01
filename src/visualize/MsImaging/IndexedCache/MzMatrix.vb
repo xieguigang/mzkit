@@ -91,6 +91,7 @@ Namespace IndexedCache
                         .Search((mzi, -1)) _
                         .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
                         .First
+
                     v(hit.idx) += scan.into(i)
                 Next
 
@@ -125,7 +126,8 @@ Namespace IndexedCache
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
-                tolerance:=0.5
+                tolerance:=0.5,
+                fuzzy:=True
             )
 
             Return (mzUnique, mzIndex)
