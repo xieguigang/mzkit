@@ -7,7 +7,7 @@ require(mzkit);
 imports "mzweb" from "mzkit";
 imports "MSI" from "mzkit";
 
-const rawfile = "C:\Users\lipidsearch\Downloads\MSI.mzPack";
+const rawfile = "C:\Users\lipidsearch\Downloads\CleanSample.mzPack";
 
 options(memory.load = "max");
 

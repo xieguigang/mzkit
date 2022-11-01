@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -63,7 +64,10 @@ Namespace IndexedCache
         End Function
 
         Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.001") As MzMatrix
-            Dim mzSet As (mz As Double(), Index As Index(Of String)) = getMzIndex(raw, Ms1.Tolerance.ParseScript(mzdiff))
+            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
+                raw:=raw,
+                mzErr:=Ms1.Tolerance.ParseScript(mzdiff)
+            )
             Dim matrix = getMatrix(raw, mzSet.mz.Length, mzSet.Index).ToArray
 
             Return New MzMatrix With {
@@ -73,14 +77,21 @@ Namespace IndexedCache
             }
         End Function
 
-        Private Shared Iterator Function getMatrix(raw As mzPack, len As Integer, mzIndex As Index(Of String)) As IEnumerable(Of PixelData)
+        Private Shared Iterator Function getMatrix(raw As mzPack, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
             For Each scan As ScanMS1 In raw.MS
                 Dim xy As Point = scan.GetMSIPixel
                 Dim v As Double() = New Double(len - 1) {}
                 Dim j As Integer
+                Dim mz As Double() = scan.mz
+                Dim mzi As Double
 
                 For i As Integer = 0 To scan.size - 1
-                    j = mzIndex(x:=scan.mz(i).ToString("F3"))
+                    mzi = mz(i)
+                    j = mzIndex _
+                        .Search((mzi, -1)) _
+                        .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
+                        .First _
+                        .Item2
                     v(j) += scan.into(i)
                 Next
 
@@ -92,11 +103,16 @@ Namespace IndexedCache
             Next
         End Function
 
-        Private Shared Function getMzIndex(raw As mzPack, mzErr As Tolerance) As (Double(), Index(Of String))
+        Private Shared Function getMzIndex(raw As mzPack, mzErr As Tolerance) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
             Dim zero As New RelativeIntensityCutoff(0)
             Dim mzSet = raw.MS _
+                .AsParallel _
                 .Select(Function(ms)
-                            Return ms.mz
+                            Return ms _
+                                .GetMs _
+                                .ToArray _
+                                .Centroid(mzErr, cutoff:=zero) _
+                                .Select(Function(i) i.mz)
                         End Function) _
                 .IteratesALL _
                 .GroupBy(Function(x) x, AddressOf mzErr.Equals) _
@@ -107,9 +123,11 @@ Namespace IndexedCache
                 .Select(Function(mzi) stdNum.Round(mzi, 3)) _
                 .Distinct _
                 .ToArray
-            Dim mzIndex As Index(Of String) = mzUnique _
-                .Select(Function(mzi) mzi.ToString) _
-                .Indexing
+            Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
+                data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
+                eval:=Function(i) i.mz,
+                tolerance:=0.05
+            )
 
             Return (mzUnique, mzIndex)
         End Function
