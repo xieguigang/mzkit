@@ -568,7 +568,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
-                                Optional tolerance As String = "da:0.005",
+                                Optional tolerance As String = "da:0.01",
                                 Optional env As Environment = Nothing) As Message
 
         Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, tolerance)

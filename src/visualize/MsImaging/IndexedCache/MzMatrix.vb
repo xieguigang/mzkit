@@ -63,7 +63,7 @@ Namespace IndexedCache
             Return True
         End Function
 
-        Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.001") As MzMatrix
+        Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.01") As MzMatrix
             Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
                 raw:=raw,
                 mzErr:=Ms1.Tolerance.ParseScript(mzdiff)
@@ -120,13 +120,13 @@ Namespace IndexedCache
                 .OrderBy(Function(mzi) mzi) _
                 .ToArray
             Dim mzUnique As Double() = mzSet _
-                .Select(Function(mzi) stdNum.Round(mzi, 3)) _
-                .Distinct _
+                .GroupBy(Function(mzi) stdNum.Round(mzi, 3)) _
+                .Select(Function(a) a.Average) _
                 .ToArray
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
-                tolerance:=0.5,
+                tolerance:=1,
                 fuzzy:=True
             )
 
