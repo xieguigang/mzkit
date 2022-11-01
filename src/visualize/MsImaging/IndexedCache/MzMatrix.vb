@@ -81,18 +81,17 @@ Namespace IndexedCache
             For Each scan As ScanMS1 In raw.MS
                 Dim xy As Point = scan.GetMSIPixel
                 Dim v As Double() = New Double(len - 1) {}
-                Dim j As Integer
                 Dim mz As Double() = scan.mz
                 Dim mzi As Double
+                Dim hit As (mz As Double, idx As Integer)
 
                 For i As Integer = 0 To scan.size - 1
                     mzi = mz(i)
-                    j = mzIndex _
+                    hit = mzIndex _
                         .Search((mzi, -1)) _
                         .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
-                        .First _
-                        .Item2
-                    v(j) += scan.into(i)
+                        .First
+                    v(hit.idx) += scan.into(i)
                 Next
 
                 Yield New PixelData With {
@@ -126,7 +125,7 @@ Namespace IndexedCache
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
-                tolerance:=0.05
+                tolerance:=0.5
             )
 
             Return (mzUnique, mzIndex)
