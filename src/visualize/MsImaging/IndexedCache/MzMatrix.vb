@@ -52,8 +52,13 @@ Namespace IndexedCache
             }
                 Call text.WriteLine("Pixels," & mz.JoinBy(","))
 
-                For Each pixel As PixelData In matrix
-                    Call text.WriteLine($"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}")
+                For Each pixelLine As String In matrix _
+                    .AsParallel _
+                    .Select(Function(pixel)
+                                Return $"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}"
+                            End Function)
+
+                    Call text.WriteLine(pixelLine)
                 Next
 
                 Call text.Flush()
@@ -62,7 +67,17 @@ Namespace IndexedCache
             Return True
         End Function
 
-        Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As Double = 0.001, Optional freq As Double = 0.001) As MzMatrix
+        ''' <summary>
+        ''' ms-imaging raw data matrix deconvolution
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <param name="freq"></param>
+        ''' <returns></returns>
+        Public Shared Function CreateMatrix(raw As mzPack,
+                                            Optional mzdiff As Double = 0.001,
+                                            Optional freq As Double = 0.001) As MzMatrix
+
             Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
                 raw:=raw,
                 mzdiff:=mzdiff,
