@@ -80,7 +80,7 @@ Namespace GCMS
             Return raw _
                 .IteratesALL _
                 .Select(Function(scan) scan.mz) _
-                .GroupBy(offsets:=0.01) _
+                .GroupBy(offset:=0.01) _
                 .Select(Function(c) Val(c.name)) _
                 .ToArray
         End Function

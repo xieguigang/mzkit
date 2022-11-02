@@ -2,11 +2,9 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
@@ -67,9 +65,6 @@ Namespace IndexedCache
             Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(raw:=raw)
             Dim matrix = getMatrix(raw, mzSet.mz.Length, mzSet.Index).ToArray
 
-            ' removes zero vector
-
-
             Return New MzMatrix With {
                 .matrix = matrix,
                 .mz = mzSet.mz,
@@ -110,10 +105,11 @@ Namespace IndexedCache
                 Call scanMz.AddRange(x)
             Next
 
-            Dim mzUnique As Double() = scanMz _
+            Dim mzBins As NamedCollection(Of Double)() = scanMz _
                 .GroupBy(offset:=0.001) _
-                .Select(Function(v) Val(v.name)) _
+                .OrderBy(Function(a) a.Length) _
                 .ToArray
+            Dim mzUnique As Double() = mzBins.Select(Function(v) Val(v.name)).ToArray
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
