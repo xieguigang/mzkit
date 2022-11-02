@@ -105,7 +105,7 @@ Namespace Spectra
         End Function
 
         Public Function Trim(mz As Double(), into As Double()) As (mz As Double(), into As Double())
-            If m_threshold > 0 Then
+            If m_threshold > 0 AndAlso mz.Length > 0 Then
                 Call lowAbundanceTrimming(mz, into)
             End If
 
