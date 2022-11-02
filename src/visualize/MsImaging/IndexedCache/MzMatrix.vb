@@ -102,24 +102,7 @@ Namespace IndexedCache
                                                            mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
             For Each scan As ScanMS1 In raw.MS
                 Dim xy As Point = scan.GetMSIPixel
-                Dim v As Double() = New Double(len - 1) {}
-                Dim mz As Double() = scan.mz
-                Dim mzi As Double
-                Dim hit As (mz As Double, idx As Integer)
-
-                For i As Integer = 0 To scan.size - 1
-                    mzi = mz(i)
-                    hit = mzIndex _
-                        .Search((mzi, -1)) _
-                        .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
-                        .FirstOrDefault
-
-                    If hit.mz < 1 AndAlso hit.idx = 0 Then
-                        ' missing data
-                    Else
-                        v(hit.idx) += scan.into(i)
-                    End If
-                Next
+                Dim v As Double() = DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
 
                 Yield New PixelData With {
                     .X = xy.X,
@@ -127,6 +110,33 @@ Namespace IndexedCache
                     .intensity = v
                 }
             Next
+        End Function
+
+        Public Shared Function DeconvoluteScan(mz As Double(),
+                                               into As Double(),
+                                               len As Integer,
+                                               mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+
+            Dim v As Double() = New Double(len - 1) {}
+            Dim mzi As Double
+            Dim hit As (mz As Double, idx As Integer)
+            Dim scan_size As Integer = mz.Length
+
+            For i As Integer = 0 To scan_size - 1
+                mzi = mz(i)
+                hit = mzIndex _
+                    .Search((mzi, -1)) _
+                    .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
+                    .FirstOrDefault
+
+                If hit.mz < 1 AndAlso hit.idx = 0 Then
+                    ' missing data
+                Else
+                    v(hit.idx) += into(i)
+                End If
+            Next
+
+            Return v
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
