@@ -18,4 +18,5 @@ MS-Imaging data handler
 + [peakMatrix](MSI/peakMatrix.1) 
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
 + [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
++ [getMatrixIons](MSI/getMatrixIons.1) 
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
