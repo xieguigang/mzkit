@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -40,6 +42,7 @@ Namespace IndexedCache
             Public Property Y As Integer
             Public Property intensity As Double()
 
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Overrides Function ToString() As String
                 Return $"[{X},{Y}]"
             End Function
@@ -78,21 +81,25 @@ Namespace IndexedCache
                                             Optional mzdiff As Double = 0.001,
                                             Optional freq As Double = 0.001) As MzMatrix
 
-            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
-                raw:=raw,
-                mzdiff:=mzdiff,
-                freq:=freq
+            Dim mzSet As Double() = GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+            Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
+                data:=mzSet.Select(Function(mzi, i) (mzi, i)),
+                eval:=Function(i) i.mz,
+                tolerance:=1,
+                fuzzy:=True
             )
-            Dim matrix = getMatrix(raw, mzSet.mz.Length, mzSet.Index).ToArray
+            Dim matrix = deconvoluteMatrix(raw, mzSet.Length, mzIndex).ToArray
 
             Return New MzMatrix With {
                 .matrix = matrix,
-                .mz = mzSet.mz,
+                .mz = mzSet,
                 .tolerance = mzdiff
             }
         End Function
 
-        Private Shared Iterator Function getMatrix(raw As mzPack, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
+        Private Shared Iterator Function deconvoluteMatrix(raw As mzPack,
+                                                           len As Integer,
+                                                           mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
             For Each scan As ScanMS1 In raw.MS
                 Dim xy As Point = scan.GetMSIPixel
                 Dim v As Double() = New Double(len - 1) {}
@@ -122,33 +129,50 @@ Namespace IndexedCache
             Next
         End Function
 
-        Private Shared Function getMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
-            Dim scanMz As New List(Of Double)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
+            Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
+        End Function
 
-            For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
-                Call scanMz.AddRange(x)
-            Next
-
+        ''' <summary>
+        ''' get a m/z vector for run matrix deconvolution
+        ''' </summary>
+        ''' <param name="scanMz"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <param name="freq"></param>
+        ''' <returns></returns>
+        Public Shared Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As Double()
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
                 .GroupBy(offset:=mzdiff) _
                 .Where(Function(v) v.Length > 0) _
                 .OrderByDescending(Function(a) a.Length) _
                 .ToArray
-            Dim counts = mzBins.Select(Function(a) a.Length).AsVector
+            Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
             Dim norm = (counts / counts.Max) * 100
             Dim n As Integer = (norm > freq).Sum
             Dim mzUnique As Double() = mzBins _
                 .Take(n) _
                 .Select(Function(v) v.Average) _
                 .ToArray
-            Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
-                data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
-                eval:=Function(i) i.mz,
-                tolerance:=1,
-                fuzzy:=True
-            )
 
-            Return (mzUnique, mzIndex)
+            Return mzUnique
+        End Function
+
+        ''' <summary>
+        ''' get a m/z vector for run matrix deconvolution
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <param name="freq"></param>
+        ''' <returns></returns>
+        Public Shared Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As Double()
+            Dim scanMz As New List(Of Double)
+
+            For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                Call scanMz.AddRange(x)
+            Next
+
+            Return GetMzIndex(scanMz, mzdiff, freq)
         End Function
     End Class
 End Namespace
