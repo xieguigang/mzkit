@@ -5,8 +5,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -107,9 +110,16 @@ Namespace IndexedCache
 
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
                 .GroupBy(offset:=0.001) _
-                .OrderBy(Function(a) a.Length) _
+                .Where(Function(v) v.Length > 0) _
+                .OrderByDescending(Function(a) a.Length) _
                 .ToArray
-            Dim mzUnique As Double() = mzBins.Select(Function(v) Val(v.name)).ToArray
+            Dim counts = mzBins.Select(Function(a) a.Length).AsVector
+            Dim norm = (counts / counts.Sum) * 100
+            Dim n As Integer = (norm > 1).Sum
+            Dim mzUnique As Double() = mzBins _
+                .Take(n) _
+                .Select(Function(v) v.Average) _
+                .ToArray
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
