@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::68270ea51a8d205c44df9a765897fff4, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 45
-    ' Comment Lines: 16
-    '   Blank Lines: 13
-    '     File Size: 2.44 KB
+' Summaries:
 
 
-    '     Class LowAbundanceTrimming
-    ' 
-    '         Properties: [Default], intoCutff, quantCutoff, threshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ParseScript, Trim
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 45
+' Comment Lines: 16
+'   Blank Lines: 13
+'     File Size: 2.44 KB
+
+
+'     Class LowAbundanceTrimming
+' 
+'         Properties: [Default], intoCutff, quantCutoff, threshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ParseScript, Trim
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
@@ -66,6 +67,7 @@ Namespace Spectra
         Protected ReadOnly m_threshold As Double
 
         Public ReadOnly Property threshold As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return m_threshold
             End Get
@@ -96,6 +98,7 @@ Namespace Spectra
         ''' <returns></returns>
         Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Trim(spectrum As IEnumerable(Of ms2)) As ms2()
             If m_threshold <= 0 Then
                 Return spectrum.ToArray
@@ -104,6 +107,7 @@ Namespace Spectra
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Trim(mz As Double(), into As Double()) As (mz As Double(), into As Double())
             If m_threshold > 0 AndAlso mz.Length > 0 Then
                 Call lowAbundanceTrimming(mz, into)
