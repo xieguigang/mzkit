@@ -130,7 +130,11 @@ Namespace IndexedCache
                     .FirstOrDefault
 
                 If hit.mz < 1 AndAlso hit.idx = 0 Then
+                    ' 20221102
+                    '
                     ' missing data
+                    ' could be caused by the selective ion data export
+                    ' just ignores of this problem
                 Else
                     v(hit.idx) += into(i)
                 End If

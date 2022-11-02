@@ -104,6 +104,15 @@ Namespace Spectra
             End If
         End Function
 
+        Public Function Trim(mz As Double(), into As Double()) As (mz As Double(), into As Double())
+            If m_threshold > 0 Then
+                Call lowAbundanceTrimming(mz, into)
+            End If
+
+            Return (mz, into)
+        End Function
+
+        Protected MustOverride Sub lowAbundanceTrimming(ByRef mz As Double(), ByRef into As Double())
         Protected MustOverride Function lowAbundanceTrimming(spectrum As ms2()) As ms2()
         Public MustOverride Overrides Function ToString() As String
 
