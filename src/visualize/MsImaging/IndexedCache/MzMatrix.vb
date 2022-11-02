@@ -5,10 +5,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
@@ -64,8 +62,12 @@ Namespace IndexedCache
             Return True
         End Function
 
-        Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.01") As MzMatrix
-            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(raw:=raw)
+        Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As Double = 0.001, Optional freq As Double = 0.001) As MzMatrix
+            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
+                raw:=raw,
+                mzdiff:=mzdiff,
+                freq:=freq
+            )
             Dim matrix = getMatrix(raw, mzSet.mz.Length, mzSet.Index).ToArray
 
             Return New MzMatrix With {
@@ -88,9 +90,13 @@ Namespace IndexedCache
                     hit = mzIndex _
                         .Search((mzi, -1)) _
                         .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
-                        .First
+                        .FirstOrDefault
 
-                    v(hit.idx) += scan.into(i)
+                    If hit.mz < 1 AndAlso hit.idx = 0 Then
+                        ' missing data
+                    Else
+                        v(hit.idx) += scan.into(i)
+                    End If
                 Next
 
                 Yield New PixelData With {
@@ -101,7 +107,7 @@ Namespace IndexedCache
             Next
         End Function
 
-        Private Shared Function getMzIndex(raw As mzPack) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
+        Private Shared Function getMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
             Dim scanMz As New List(Of Double)
 
             For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
@@ -109,13 +115,13 @@ Namespace IndexedCache
             Next
 
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
-                .GroupBy(offset:=0.001) _
+                .GroupBy(offset:=mzdiff) _
                 .Where(Function(v) v.Length > 0) _
                 .OrderByDescending(Function(a) a.Length) _
                 .ToArray
             Dim counts = mzBins.Select(Function(a) a.Length).AsVector
-            Dim norm = (counts / counts.Sum) * 100
-            Dim n As Integer = (norm > 1).Sum
+            Dim norm = (counts / counts.Max) * 100
+            Dim n As Integer = (norm > freq).Sum
             Dim mzUnique As Double() = mzBins _
                 .Take(n) _
                 .Select(Function(v) v.Average) _

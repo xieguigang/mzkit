@@ -563,15 +563,15 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="file"></param>
-    ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
-                                Optional tolerance As String = "da:0.01",
+                                Optional mzdiff As Double = 0.001,
+                                Optional q As Double = 0.001,
                                 Optional env As Environment = Nothing) As Message
 
-        Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, tolerance)
+        Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, mzdiff, freq:=q)
 
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
