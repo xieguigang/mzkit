@@ -64,11 +64,11 @@ Namespace IndexedCache
         End Function
 
         Public Shared Function CreateMatrix(raw As mzPack, Optional mzdiff As String = "da:0.01") As MzMatrix
-            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(
-                raw:=raw,
-                mzErr:=Ms1.Tolerance.ParseScript(mzdiff)
-            )
+            Dim mzSet As (mz As Double(), Index As BlockSearchFunction(Of (mz As Double, Integer))) = getMzIndex(raw:=raw)
             Dim matrix = getMatrix(raw, mzSet.mz.Length, mzSet.Index).ToArray
+
+            ' removes zero vector
+
 
             Return New MzMatrix With {
                 .matrix = matrix,
@@ -103,25 +103,16 @@ Namespace IndexedCache
             Next
         End Function
 
-        Private Shared Function getMzIndex(raw As mzPack, mzErr As Tolerance) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
-            Dim zero As New RelativeIntensityCutoff(0)
-            Dim mzSet = raw.MS _
-                .AsParallel _
-                .Select(Function(ms)
-                            Return ms _
-                                .GetMs _
-                                .ToArray _
-                                .Centroid(mzErr, cutoff:=zero) _
-                                .Select(Function(i) i.mz)
-                        End Function) _
-                .IteratesALL _
-                .GroupBy(Function(x) x, AddressOf mzErr.Equals) _
-                .Select(Function(a) Aggregate mzi As Double In a Into Average(mzi)) _
-                .OrderBy(Function(mzi) mzi) _
-                .ToArray
-            Dim mzUnique As Double() = mzSet _
-                .GroupBy(Function(mzi) stdNum.Round(mzi, 3)) _
-                .Select(Function(a) a.Average) _
+        Private Shared Function getMzIndex(raw As mzPack) As (Double(), BlockSearchFunction(Of (mz As Double, Integer)))
+            Dim scanMz As New List(Of Double)
+
+            For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                Call scanMz.AddRange(x)
+            Next
+
+            Dim mzUnique As Double() = scanMz _
+                .GroupBy(offset:=0.001) _
+                .Select(Function(v) Val(v.name)) _
                 .ToArray
             Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzUnique.Select(Function(mzi, i) (mzi, i)),
