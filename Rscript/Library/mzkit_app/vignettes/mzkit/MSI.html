@@ -580,7 +580,8 @@
                 
                     <pre><p>let <code>pixelMatrix</code> as function(<code>raw</code> as <generic> mzPack, 
 <code>file</code> as <generic> Stream, 
-<code>tolerance</code> as string = "da:0.01", 
+<code>mzdiff</code> as double = 0.001, 
+<code>q</code> as double = 0.001, 
 [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Message</code> {
     #
     # .NET API information
@@ -601,9 +602,6 @@
                 </li>
 <li>
   <code>file</code>: -
-                </li>
-<li>
-  <code>tolerance</code>: -
                 </li>
 <li>
   <code>env</code>: -

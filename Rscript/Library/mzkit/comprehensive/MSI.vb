@@ -368,6 +368,7 @@ Module MSI
     End Function
 
     <ExportAPI("basePeakMz")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function basePeakMz(summary As MSISummary) As LibraryMatrix
         Return summary.GetBasePeakMz
     End Function
@@ -556,6 +557,14 @@ Module MSI
     <ExportAPI("pixelIons")>
     Public Function PixelIons(raw As mzPack) As Integer()
         Return raw.MS.Select(Function(scan) scan.size).ToArray
+    End Function
+
+    <ExportAPI("getMatrixIons")>
+    Public Function GetMatrixIons(raw As mzPack,
+                                  Optional mzdiff As Double = 0.001,
+                                  Optional q As Double = 0.001) As Double()
+
+        Return MzMatrix.GetMzIndex(raw, mzdiff, q)
     End Function
 
     ''' <summary>

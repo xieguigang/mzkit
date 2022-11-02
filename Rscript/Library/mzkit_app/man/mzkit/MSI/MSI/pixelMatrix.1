@@ -5,7 +5,8 @@ pixelMatrix \- dumping raw data matrix as text table file.
 .SH SYNOPSIS
 \fIpixelMatrix(\fBraw\fR as <generic> mzPack, 
 \fBfile\fR as <generic> Stream, 
-\fBtolerance\fR as string = "da:0.01", 
+\fBmzdiff\fR as double = 0.001, 
+\fBq\fR as double = 0.001, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,9 +18,6 @@ dumping raw data matrix as text table file.
 .PP
 .PP
 \fBfile\fB \fR\- -. 
-.PP
-.PP
-\fBtolerance\fB \fR\- -. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
