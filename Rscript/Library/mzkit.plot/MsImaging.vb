@@ -393,7 +393,6 @@ Module MsImaging
     ''' <param name="r"></param>
     ''' <param name="g"></param>
     ''' <param name="b"></param>
-    ''' <param name="pixelSize"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -401,11 +400,11 @@ Module MsImaging
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
                         Optional background As String = "black",
-                        <RRawVectorArgument>
-                        Optional pixelSize As Object = "5,5",
                         Optional tolerance As Object = "da:0.1",
                         Optional maxCut As Double = 0.75,
                         Optional TrIQ As Boolean = True,
+                        <RRawVectorArgument(GetType(Integer))>
+                        Optional pixelSize As Object = "5,5",
                         Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -425,7 +424,7 @@ Module MsImaging
         Dim qg As DoubleRange = {0, cut(pg.Select(Function(p) p.intensity).ToArray)}
         Dim qb As DoubleRange = {0, cut(pb.Select(Function(p) p.intensity).ToArray)}
 
-        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, psize, cut:=(qr, qg, qb), background:=background)
+        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, cut:=(qr, qg, qb), background:=background)
     End Function
 
     ''' <summary>

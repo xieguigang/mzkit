@@ -167,6 +167,7 @@ Namespace Blender
         Public Property levels As Integer = 100
 
         Sub New()
+            Call Me.New(0.9)
         End Sub
 
         Sub New(q As Double)
