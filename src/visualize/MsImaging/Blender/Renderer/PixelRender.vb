@@ -169,13 +169,9 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
-        ''' </remarks>
-        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size, colorSet As SolidBrush(),
+        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As GraphicsData
@@ -213,11 +209,7 @@ Namespace Blender
                 Next
             End Using
 
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                Return New ImageData(raw)
-            Else
-                Return New ImageData(Drawer.ScaleLayer(raw, dimension, dimSize, scale))
-            End If
+            Return New ImageData(raw)
         End Function
 
         Public Overrides Function LayerOverlaps(pixels As PixelData()(),

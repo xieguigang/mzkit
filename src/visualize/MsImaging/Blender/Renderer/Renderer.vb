@@ -83,12 +83,10 @@ Namespace Blender
         ''' <param name="colorSet">
         ''' [mz(F4) => color]
         ''' </param>
-        ''' <param name="dimSize"></param>
         ''' <param name="scale"></param>
         ''' <param name="cut"></param>
         ''' <returns></returns>
         Public MustOverride Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet,
-                                                   Optional dimSize As Size = Nothing,
                                                    Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                    Optional cut As DoubleRange = Nothing,
                                                    Optional defaultFill As String = "Transparent",
@@ -101,13 +99,11 @@ Namespace Blender
         ''' <param name="G"></param>
         ''' <param name="B"></param>
         ''' <param name="dimension"></param>
-        ''' <param name="dimSize"></param>
         ''' <param name="scale"></param>
         ''' <param name="cut"></param>
         ''' <returns></returns>
         Public MustOverride Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                          dimension As Size,
-                                                         Optional dimSize As Size = Nothing,
                                                          Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                          Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                          Optional background As String = "black") As GraphicsData
@@ -117,14 +113,10 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
-        ''' </remarks>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size,
                                                   Optional colorSet As String = "YlGnBu:c8",
                                                   Optional mapLevels% = 25,
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
@@ -136,13 +128,9 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
-        ''' </remarks>
-        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size, colorSet As SolidBrush(),
+        Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                   Optional defaultFill As String = "Transparent",
                                                   Optional cutoff As DoubleRange = Nothing) As GraphicsData
