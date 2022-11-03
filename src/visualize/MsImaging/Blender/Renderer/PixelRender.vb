@@ -89,7 +89,6 @@ Namespace Blender
         ''' <returns></returns>
         Public Overrides Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                       dimension As Size,
-                                                      Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
@@ -128,11 +127,7 @@ Namespace Blender
             End Using
 
             ' no scale
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                Return New ImageData(raw)
-            Else
-                Return New ImageData(Drawer.ScaleLayer(raw, dimension, dimSize, scale))
-            End If
+            Return New ImageData(raw)
         End Function
 
         ''' <summary>
@@ -140,14 +135,10 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
-        ''' <param name="dimSize">pixel size</param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' <paramref name="dimSize"/> value set to nothing for returns the raw image
-        ''' </remarks>
-        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
+        Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels% = 25,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
@@ -161,7 +152,7 @@ Namespace Blender
                         End Function) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, dimSize, brushColors, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, brushColors, scale, defaultFill, cutoff)
         End Function
 
         ''' <summary>
@@ -215,7 +206,6 @@ Namespace Blender
         Public Overrides Function LayerOverlaps(pixels As PixelData()(),
                                                 dimension As Size,
                                                 colorSet As MzLayerColorSet,
-                                                Optional dimSize As Size = Nothing,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",

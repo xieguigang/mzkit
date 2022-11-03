@@ -140,7 +140,7 @@ Public Class MSIPlot : Inherits Plot
                         htmlLabel:=False,
                         driver:=driver)
 
-        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, scaleSize, colorScale, cutoff:=cutoff)
+        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, colorScale, cutoff:=cutoff)
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)

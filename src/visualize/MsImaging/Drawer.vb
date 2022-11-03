@@ -146,13 +146,12 @@ Public Class Drawer : Implements IDisposable
     Public Function ShowSummaryRendering(summary As IntensitySummary,
                                          Optional cutoff As DoubleRange = Nothing,
                                          Optional colorSet$ = "Jet",
-                                         Optional pixelSize$ = "3,3",
                                          Optional logE As Boolean = True,
                                          Optional pixelDrawer As Boolean = True,
                                          Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim layer As PixelScanIntensity() = pixelReader.GetSummary.GetLayer(summary).ToArray
-        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, pixelSize, logE, pixelDrawer, driver:=driver)
+        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, logE, pixelDrawer, driver:=driver)
 
         Return render
     End Function
@@ -160,7 +159,6 @@ Public Class Drawer : Implements IDisposable
     Public Shared Function RenderSummaryLayer(layer As PixelScanIntensity(), dimension As Size,
                                               Optional cutoff As DoubleRange = Nothing,
                                               Optional colorSet$ = "Jet",
-                                              Optional pixelSize$ = "3,3",
                                               Optional pixelDrawer As Boolean = True,
                                               Optional mapLevels As Integer = 25,
                                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -179,7 +177,6 @@ Public Class Drawer : Implements IDisposable
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
-            dimSize:=pixelSize.SizeParser,
             colorSet:=colorSet,
             defaultFill:="black",
             cutoff:=cutoff,
@@ -220,7 +217,6 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double,
-                              Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
@@ -230,7 +226,6 @@ Public Class Drawer : Implements IDisposable
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
-        Dim dimSize As Size = pixelSize.SizeParser
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
@@ -243,7 +238,6 @@ Public Class Drawer : Implements IDisposable
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
-            dimSize:=dimSize,
             colorSet:=colorSet,
             mapLevels:=mapLevels,
             scale:=scale,
@@ -300,7 +294,6 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double(),
-                              Optional pixelSize$ = "5,5",
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
@@ -310,7 +303,6 @@ Public Class Drawer : Implements IDisposable
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
-        Dim dimSize As Size = pixelSize.SizeParser
         Dim rawPixels As PixelData()
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
@@ -329,7 +321,6 @@ Public Class Drawer : Implements IDisposable
         Return engine.RenderPixels(
             pixels:=matrix,
             dimension:=dimension,
-            dimSize:=dimSize,
             colorSet:=colorSet,
             mapLevels:=mapLevels,
             scale:=scale,

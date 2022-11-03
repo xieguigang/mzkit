@@ -68,7 +68,6 @@ Namespace Blender
         ReadOnly heatmapMode As Boolean
 
         Public Property dimension As Size
-        Public Property dimSize As SizeF
 
         Public Property Rchannel As Func(Of Integer, Integer, Byte)
         Public Property Gchannel As Func(Of Integer, Integer, Byte)
@@ -83,6 +82,7 @@ Namespace Blender
             Dim plotOffset As Point = region.PlotRegion.Location
             Dim pos As PointF
             Dim rect As RectangleF
+            Dim pixel_size As New SizeF(1, 1)
 
             For x As Integer = 1 To dimension.Width
                 For y As Integer = 1 To dimension.Height
@@ -92,10 +92,10 @@ Namespace Blender
                     Dim color As Color
 
                     pos = New PointF With {
-                        .X = (x - 1) * dimSize.Width + plotOffset.X,
-                        .Y = (y - 1) * dimSize.Height + plotOffset.Y
+                        .X = (x - 1) + plotOffset.X,
+                        .Y = (y - 1) + plotOffset.Y
                     }
-                    rect = New RectangleF(pos, dimSize)
+                    rect = New RectangleF(pos, pixel_size)
 
                     If bR = 0 AndAlso bG = 0 AndAlso bB = 0 Then
                         ' missing a pixel at here?

@@ -85,22 +85,15 @@ Namespace Blender
         Public Overloads Sub ChannelCompositions(gr As IGraphics, region As GraphicsRegion,
                                                  R() As PixelData, G() As PixelData, B() As PixelData,
                                                  dimension As Size,
-                                                 Optional dimSize As SizeF = Nothing,
                                                  Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                  Optional background As String = "black")
 
             Dim defaultBackground As Color = background.TranslateColor
-
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
             Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
                 .Bchannel = GetPixelChannelReader(B, cut.b),
                 .Rchannel = GetPixelChannelReader(R, cut.r),
                 .Gchannel = GetPixelChannelReader(G, cut.g),
-                .dimension = dimension,
-                .dimSize = dimSize
+                .dimension = dimension
             }
 
             Call rgb.Render(gr, region)
@@ -108,26 +101,19 @@ Namespace Blender
 
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
-                                                      Optional dimSize As Size = Nothing,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
 
             Dim defaultBackground As Color = background.TranslateColor
-
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
             Dim Rchannel = GetPixelChannelReader(R, cut.r)
             Dim Gchannel = GetPixelChannelReader(G, cut.g)
             Dim Bchannel = GetPixelChannelReader(B, cut.b)
-            Dim w As Integer = dimension.Width * dimSize.Width
-            Dim h As Integer = dimension.Height * dimSize.Height
+            Dim w As Integer = dimension.Width
+            Dim h As Integer = dimension.Height
             Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
                 .Bchannel = Bchannel,
                 .dimension = dimension,
-                .dimSize = dimSize,
                 .Gchannel = Gchannel,
                 .Rchannel = Rchannel
             }
@@ -141,25 +127,20 @@ Namespace Blender
             )
         End Function
 
-        Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, dimSize As Size, colorSet() As SolidBrush,
+        Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, colorSet() As SolidBrush,
                                           Optional cutoff As DoubleRange = Nothing)
 
-            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, cutoff, dimSize, offset)
+            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, cutoff, offset)
         End Sub
 
-        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size, colorSet() As SolidBrush,
+        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, colorSet() As SolidBrush,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent",
                                                Optional cutoff As DoubleRange = Nothing) As GraphicsData
 
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
-
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
-            Dim w = dimension.Width * dimSize.Width
-            Dim h = dimension.Height * dimSize.Height
+            Dim w = dimension.Width
+            Dim h = dimension.Height
 
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
@@ -167,7 +148,7 @@ Namespace Blender
                 bg:=defaultFill,
                 driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
-                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, dimSize, Nothing)
+                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, Nothing)
                          End Sub)
         End Function
 
@@ -176,7 +157,6 @@ Namespace Blender
         ''' </summary>
         ''' <param name="pixels"></param>
         ''' <param name="dimension"></param>
-        ''' <param name="dimSize"></param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
         ''' <param name="scale"></param>
@@ -185,7 +165,7 @@ Namespace Blender
         ''' </param>
         ''' <param name="cutoff"></param>
         ''' <returns></returns>
-        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, dimSize As Size,
+        Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
@@ -196,7 +176,7 @@ Namespace Blender
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, dimSize, colors, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, colors, scale, defaultFill, cutoff)
         End Function
 
         Private Sub FillLayerInternal(gr As IGraphics,
@@ -204,20 +184,20 @@ Namespace Blender
                                       defaultColor As SolidBrush,
                                       colors As SolidBrush(),
                                       cutoff As DoubleRange,
-                                      dimSize As Size,
-                                      offset As Point)
+                                      Offset As Point)
             Dim color As SolidBrush
             Dim index As Integer
             Dim levelRange As DoubleRange = New Double() {0, 1}
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
+            Dim dimSize As New SizeF(1, 1)
 
             For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, gauss:=gauss, sigma:=sigma)
                 Dim level As Double = point.level
-                Dim pos As New Point With {
-                    .X = (point.x - 1) * dimSize.Width + offset.X,
-                    .Y = (point.y - 1) * dimSize.Height + offset.Y
+                Dim pos As New PointF With {
+                    .X = (point.x - 1) + Offset.X,
+                    .Y = (point.y - 1) + Offset.Y
                 }
-                Dim rect As New Rectangle(pos, dimSize)
+                Dim rect As New RectangleF(pos, dimSize)
 
                 If level <= 0.0 Then
                     color = defaultColor
@@ -238,7 +218,6 @@ Namespace Blender
         End Sub
 
         Public Overrides Function LayerOverlaps(layers()() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
-                                                Optional dimSize As Size = Nothing,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
@@ -246,13 +225,8 @@ Namespace Blender
 
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
             Dim i As i32 = Scan0
-
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
-            Dim w = dimension.Width * dimSize.Width
-            Dim h = dimension.Height * dimSize.Height
+            Dim w = dimension.Width
+            Dim h = dimension.Height
 
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
@@ -266,13 +240,12 @@ Namespace Blender
                                      .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
                                      .ToArray
 
-                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, dimSize, Nothing)
+                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, Nothing)
                              Next
                          End Sub)
         End Function
 
         Public Overloads Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
-                                                Optional dimSize As Size = Nothing,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
@@ -280,13 +253,8 @@ Namespace Blender
 
             Dim layers = colorSet.SelectGroup(pixels).ToArray
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
-
-            If dimSize.Width = 0 OrElse dimSize.Height = 0 Then
-                dimSize = New Size(1, 1)
-            End If
-
-            Dim w = dimension.Width * dimSize.Width
-            Dim h = dimension.Height * dimSize.Height
+            Dim w = dimension.Width
+            Dim h = dimension.Height
 
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
@@ -302,7 +270,7 @@ Namespace Blender
                                               End Function) _
                                       .ToArray
 
-                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, dimSize, Nothing)
+                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, Nothing)
                              Next
                          End Sub)
         End Function
