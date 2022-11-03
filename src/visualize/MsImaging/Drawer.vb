@@ -211,7 +211,6 @@ Public Class Drawer : Implements IDisposable
     ''' apply for metabolite rendering
     ''' </summary>
     ''' <param name="mz"></param>
-    ''' <param name="pixelSize$"></param>
     ''' <param name="toleranceErr"></param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels%"></param>
@@ -288,7 +287,6 @@ Public Class Drawer : Implements IDisposable
     ''' apply for pathway rendering 
     ''' </summary>
     ''' <param name="mz"></param>
-    ''' <param name="pixelSize$"></param>
     ''' <param name="toleranceErr"></param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels%"></param>
