@@ -81,10 +81,6 @@ Namespace Blender
         ''' <param name="dimension">
         ''' the raw dimension size of the ms-imaging raw data file
         ''' </param>
-        ''' <param name="dimSize">
-        ''' set this parameter to value nothing to returns
-        ''' the raw image without any scale operation.
-        ''' </param>
         ''' <param name="scale"></param>
         ''' <returns></returns>
         Public Overrides Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
@@ -92,7 +88,6 @@ Namespace Blender
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
-
             ' rendering via raw dimesnion size
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
             Dim defaultBackground As Color = background.TranslateColor
