@@ -252,6 +252,13 @@ Public Class Drawer : Implements IDisposable
         )
     End Function
 
+    ''' <summary>
+    ''' normalized data from raw intensity to [0,1]
+    ''' </summary>
+    ''' <param name="rawPixels"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="cut"></param>
+    ''' <returns></returns>
     Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance, cut As DoubleRange) As PixelData()
         Dim pixels As New List(Of PixelData)
 
