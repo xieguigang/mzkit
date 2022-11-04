@@ -48,14 +48,17 @@ Namespace Blender.Scaler
                     If hit Then
                         pixel.intensity = u
                     Else
-                        pixel = New PixelData With {
-                            .intensity = u,
-                            .mz = -1,
-                            .x = x,
-                            .y = y
-                        }
+                        ' do not add empty pixel
+                        If u > 0 Then
+                            pixel = New PixelData With {
+                                .intensity = u,
+                                .mz = -1,
+                                .x = x,
+                                .y = y
+                            }
 
-                        Call img.Add(pixel)
+                            Call img.Add(pixel)
+                        End If
                     End If
                 Next
             Next
