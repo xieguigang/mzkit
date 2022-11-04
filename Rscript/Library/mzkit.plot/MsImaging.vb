@@ -149,7 +149,7 @@ Module MsImaging
             ion = ion.Take(polygon, scale.SizeParser)
         End If
 
-        Dim app As New MSIPlot(ion, scale.SizeParser, cutoff, pixelDrawer, theme, driver:=env.getDriver)
+        Dim app As New MSIPlot(ion, scale.SizeParser, pixelDrawer, theme, driver:=env.getDriver)
         Dim size As Size = app.MeasureSize
 
         Return app.Plot($"{size.Width},{size.Height}", driver:=env.getDriver)
@@ -422,12 +422,12 @@ Module MsImaging
         Dim pb As PixelData() = viewer.LoadPixels({b}, errors.TryCast(Of Tolerance)).ToArray
         Dim engine As New RectangleRender(env.getDriver(), heatmapRender:=False)
         Dim qcut As QuantizationThreshold = If(TrIQ, New TrIQThreshold(maxCut), New RankQuantileThreshold(maxCut))
-        Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
-        Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
-        Dim qg As DoubleRange = {0, cut(pg.Select(Function(p) p.intensity).ToArray)}
-        Dim qb As DoubleRange = {0, cut(pb.Select(Function(p) p.intensity).ToArray)}
+        'Dim cut As IQuantizationThreshold = AddressOf qcut.ThresholdValue
+        'Dim qr As DoubleRange = {0, cut(pr.Select(Function(p) p.intensity).ToArray)}
+        'Dim qg As DoubleRange = {0, cut(pg.Select(Function(p) p.intensity).ToArray)}
+        'Dim qb As DoubleRange = {0, cut(pb.Select(Function(p) p.intensity).ToArray)}
 
-        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, cut:=(qr, qg, qb), background:=background)
+        Return engine.ChannelCompositions(pr, pg, pb, viewer.dimension, background:=background)
     End Function
 
     ''' <summary>
@@ -572,7 +572,6 @@ Module MsImaging
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
-                cutoff:=cutoff,
                 background:=RColorPalette.getColor(background, "Translate"),
                 driver:=Drivers.GDI
             ).AsGDIImage
@@ -582,7 +581,6 @@ Module MsImaging
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
-                cutoff:=cutoff,
                 background:=RColorPalette.getColor(background, "Translate"),
                 driver:=Drivers.GDI
             ).AsGDIImage
@@ -724,7 +722,6 @@ Module MsImaging
             dimension:=dimSize,
             colorSet:=colorSet,
             defaultFill:=defaultFill,
-            cutoff:=cutoffRange.TryCast(Of DoubleRange),
             mapLevels:=colorLevels
         ).AsGDIImage
 
