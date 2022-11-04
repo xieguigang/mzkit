@@ -2,16 +2,19 @@
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
-Public Class LogScaler : Inherits Scaler
+Namespace Blender.Scaler
 
-    ReadOnly base As Double = stdNum.E
+    Public Class LogScaler : Inherits Scaler
 
-    Sub New(Optional base As Double = stdNum.E)
-        Me.base = base
-    End Sub
+        ReadOnly base As Double = stdNum.E
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Protected Overrides Function DoIntensityScale(into() As Double) As Double()
-        Return New Vector(into).Log(base)
-    End Function
-End Class
+        Sub New(Optional base As Double = stdNum.E)
+            Me.base = base
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Overrides Function DoIntensityScale(into() As Double) As Double()
+            Return New Vector(into).Log(base)
+        End Function
+    End Class
+End Namespace

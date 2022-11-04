@@ -1,41 +1,44 @@
-﻿Public MustInherit Class Scaler : Implements LayerScaler
+﻿Namespace Blender.Scaler
 
-    Public Interface LayerScaler
-        Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
-    End Interface
+    Public MustInherit Class Scaler : Implements LayerScaler
 
-    Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements LayerScaler.DoIntensityScale
-        Dim pixels = layer.MSILayer
-        Dim intensity As Double() = pixels.Select(Function(i) i.intensity).ToArray
-        Dim maxScale As Double
+        Public Interface LayerScaler
+            Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
+        End Interface
 
-        intensity = DoIntensityScale(intensity)
-        maxScale = intensity.Max
-        pixels = pixels _
-            .Select(Function(p, i)
-                        Return New PixelData With {
-                            .intensity = intensity(i),
-                            .level = .intensity / maxScale,
-                            .mz = p.mz,
-                            .sampleTag = p.sampleTag,
-                            .x = p.x,
-                            .y = p.y
-                        }
-                    End Function) _
-            .ToArray
+        Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements LayerScaler.DoIntensityScale
+            Dim pixels = layer.MSILayer
+            Dim intensity As Double() = pixels.Select(Function(i) i.intensity).ToArray
+            Dim maxScale As Double
 
-        Return New SingleIonLayer With {
-            .DimensionSize = layer.DimensionSize,
-            .IonMz = layer.IonMz,
-            .MSILayer = pixels
-        }
-    End Function
+            intensity = DoIntensityScale(intensity)
+            maxScale = intensity.Max
+            pixels = pixels _
+                .Select(Function(p, i)
+                            Return New PixelData With {
+                                .intensity = intensity(i),
+                                .level = .intensity / maxScale,
+                                .mz = p.mz,
+                                .sampleTag = p.sampleTag,
+                                .x = p.x,
+                                .y = p.y
+                            }
+                        End Function) _
+                .ToArray
 
-    Protected MustOverride Function DoIntensityScale(into As Double()) As Double()
+            Return New SingleIonLayer With {
+                .DimensionSize = layer.DimensionSize,
+                .IonMz = layer.IonMz,
+                .MSILayer = pixels
+            }
+        End Function
 
-    Public Function [Then]([next] As Scaler) As RasterPipeline
-        Return New RasterPipeline From {Me, [next]}
-    End Function
+        Protected MustOverride Function DoIntensityScale(into As Double()) As Double()
 
-End Class
+        Public Function [Then]([next] As Scaler) As RasterPipeline
+            Return New RasterPipeline From {Me, [next]}
+        End Function
 
+    End Class
+
+End Namespace

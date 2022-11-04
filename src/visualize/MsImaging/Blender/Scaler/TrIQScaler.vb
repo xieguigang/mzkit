@@ -1,20 +1,23 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Public Class TrIQScaler : Inherits Scaler
+Namespace Blender.Scaler
 
-    ReadOnly threshold As Double
+    Public Class TrIQScaler : Inherits Scaler
 
-    Sub New(Optional threshold As Double = 0.999)
-        Me.threshold = threshold
-    End Sub
+        ReadOnly threshold As Double
 
-    Protected Overrides Function DoIntensityScale(into() As Double) As Double()
-        Dim q As Double = TrIQ.FindThreshold(into, threshold)
-        Dim v As New Vector(into)
+        Sub New(Optional threshold As Double = 0.999)
+            Me.threshold = threshold
+        End Sub
 
-        v(v > q) = Vector.Scalar(q)
+        Protected Overrides Function DoIntensityScale(into() As Double) As Double()
+            Dim q As Double = TrIQ.FindThreshold(into, threshold)
+            Dim v As New Vector(into)
 
-        Return v
-    End Function
-End Class
+            v(v > q) = Vector.Scalar(q)
+
+            Return v
+        End Function
+    End Class
+End Namespace
