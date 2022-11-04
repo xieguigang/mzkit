@@ -190,8 +190,8 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
 
             If level > 1 Then
                 point.level = 1
-            ElseIf level < 0 Then
-                level = 0
+            ElseIf level <= 0 Then
+                level = -1
             Else
                 point.level = level
             End If
