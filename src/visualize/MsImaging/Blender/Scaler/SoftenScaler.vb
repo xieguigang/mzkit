@@ -10,6 +10,34 @@ Namespace Blender.Scaler
             Me.max = max
         End Sub
 
+        Private Iterator Function PopulateRectangle(img As Grid(Of PixelData), x As Integer, y As Integer) As IEnumerable(Of Double)
+            ' A  B  C  D
+            ' E  F  G  H
+            ' I  J  K  L
+            ' M  N  O  P
+
+            ' F = (A + B + C + E + F + G + I + J + K) / 9
+            Dim A = img.GetData(x - 1, y - 1)
+            Dim B = img.GetData(x, y - 1)
+            Dim C = img.GetData(x + 1, y - 1)
+            Dim E = img.GetData(x - 1, y)
+            Dim F = img.GetData(x, y)
+            Dim G = img.GetData(x + 1, y)
+            Dim I = img.GetData(x - 1, y + 1)
+            Dim J = img.GetData(x, y + 1)
+            Dim K = img.GetData(x + 1, y + 1)
+
+            If A Is Nothing Then Yield 0.0 Else Yield A.intensity
+            If B Is Nothing Then Yield 0.0 Else Yield B.intensity
+            If C Is Nothing Then Yield 0.0 Else Yield C.intensity
+            If E Is Nothing Then Yield 0.0 Else Yield E.intensity
+            If F Is Nothing Then Yield 0.0 Else Yield F.intensity
+            If G Is Nothing Then Yield 0.0 Else Yield G.intensity
+            If I Is Nothing Then Yield 0.0 Else Yield I.intensity
+            If J Is Nothing Then Yield 0.0 Else Yield J.intensity
+            If K Is Nothing Then Yield 0.0 Else Yield K.intensity
+        End Function
+
         Public Overrides Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
             Dim img As Grid(Of PixelData) = Grid(Of PixelData).Create(layer.MSILayer, Function(p) p.x, Function(p) p.y)
             Dim OutPutWid = layer.DimensionSize.Width
@@ -18,32 +46,7 @@ Namespace Blender.Scaler
 
             For x As Integer = 1 To OutPutWid - 2
                 For y As Integer = 1 To OutPutHei - 2
-                    ' A  B  C  D
-                    ' E  F  G  H
-                    ' I  J  K  L
-                    ' M  N  O  P
-
-                    ' F = (A + B + C + E + F + G + I + J + K) / 9
-                    Dim A = img.GetData(x - 1, y - 1)
-                    Dim B = img.GetData(x, y - 1)
-                    Dim C = img.GetData(x + 1, y - 1)
-                    Dim E = img.GetData(x - 1, y)
-                    Dim F = img.GetData(x, y)
-                    Dim G = img.GetData(x + 1, y)
-                    Dim I = img.GetData(x - 1, y + 1)
-                    Dim J = img.GetData(x, y + 1)
-                    Dim K = img.GetData(x + 1, y + 1)
-                    Dim u = New Double() {
-                        A?.intensity,
-                        B?.intensity,
-                        C?.intensity,
-                        E?.intensity,
-                        F?.intensity,
-                        G?.intensity,
-                        I?.intensity,
-                        J?.intensity,
-                        K?.intensity
-                    }.Average
+                    Dim u As Double = PopulateRectangle(img, x, y).Average
 
                     If u < 0 Then u = 0
                     If u > max Then u = max
@@ -54,8 +57,14 @@ Namespace Blender.Scaler
                     If hit Then
                         pixel.intensity = u
                     Else
-                        pixel = New PixelData With {.intensity = u, .mz = -1, .x = x, .y = y}
-                        img.Add(pixel)
+                        pixel = New PixelData With {
+                            .intensity = u,
+                            .mz = -1,
+                            .x = x,
+                            .y = y
+                        }
+
+                        Call img.Add(pixel)
                     End If
                 Next
             Next
