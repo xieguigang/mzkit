@@ -1,6 +1,10 @@
-﻿Public MustInherit Class Scaler
+﻿Public MustInherit Class Scaler : Implements LayerScaler
 
-    Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
+    Public Interface LayerScaler
+        Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
+    End Interface
+
+    Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements LayerScaler.DoIntensityScale
         Dim pixels = layer.MSILayer
         Dim intensity As Double() = pixels.Select(Function(i) i.intensity).ToArray
         Dim maxScale As Double
@@ -30,3 +34,4 @@
     Protected MustOverride Function DoIntensityScale(into As Double()) As Double()
 
 End Class
+
