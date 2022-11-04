@@ -33,5 +33,9 @@
 
     Protected MustOverride Function DoIntensityScale(into As Double()) As Double()
 
+    Public Function [Then]([next] As Scaler) As RasterPipeline
+        Return New RasterPipeline From {Me, [next]}
+    End Function
+
 End Class
 
