@@ -24,6 +24,7 @@ Namespace Blender.Scaler
             Return layer
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetDefaultPipeline() As RasterPipeline
             Return New LogScaler().Then(New TrIQScaler)
         End Function

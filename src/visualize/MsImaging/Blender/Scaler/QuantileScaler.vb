@@ -20,5 +20,9 @@ Namespace Blender.Scaler
 
             Return v
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"Q({q.ToString("F4")})"
+        End Function
     End Class
 End Namespace

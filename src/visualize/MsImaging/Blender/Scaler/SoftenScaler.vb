@@ -66,5 +66,9 @@ Namespace Blender.Scaler
                 .MSILayer = img.EnumerateData.ToArray
             }
         End Function
+
+        Public Overrides Function ToString() As String
+            Return "soften()"
+        End Function
     End Class
 End Namespace

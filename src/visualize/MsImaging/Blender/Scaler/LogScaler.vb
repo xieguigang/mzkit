@@ -16,5 +16,9 @@ Namespace Blender.Scaler
         Protected Overrides Function DoIntensityScale(into() As Double) As Double()
             Return New Vector(into).Log(base)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"log({base.ToString("F4")})"
+        End Function
     End Class
 End Namespace
