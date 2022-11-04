@@ -4,12 +4,6 @@ Namespace Blender.Scaler
 
     Public Class SoftenScaler : Inherits Scaler
 
-        ReadOnly max As QuantizationThreshold
-
-        Sub New(max As QuantizationThreshold)
-            Me.max = max
-        End Sub
-
         Private Iterator Function PopulateRectangle(img As Grid(Of PixelData), x As Integer, y As Integer) As IEnumerable(Of Double)
             ' A  B  C  D
             ' E  F  G  H
@@ -42,17 +36,14 @@ Namespace Blender.Scaler
             Dim img As Grid(Of PixelData) = Grid(Of PixelData).Create(layer.MSILayer, Function(p) p.x, Function(p) p.y)
             Dim OutPutWid = layer.DimensionSize.Width
             Dim OutPutHei = layer.DimensionSize.Height
-            Dim max As Double = Me.max.ThresholdValue(layer.GetIntensity)
 
             For x As Integer = 1 To OutPutWid - 2
                 For y As Integer = 1 To OutPutHei - 2
                     Dim u As Double = PopulateRectangle(img, x, y).Average
-
-                    If u < 0 Then u = 0
-                    If u > max Then u = max
-
                     Dim hit As Boolean = False
                     Dim pixel As PixelData = img.GetData(x, y, hit)
+
+                    If u < 0 Then u = 0
 
                     If hit Then
                         pixel.intensity = u
