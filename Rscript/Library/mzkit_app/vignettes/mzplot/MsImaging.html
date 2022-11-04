@@ -508,6 +508,31 @@
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
+  <h2 id="defaultFilter">
+    <a href="./MsImaging/defaultFilter.html">defaultFilter</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>defaultFilter</code> as function() -> <code>&lt;generic&gt; RasterPipeline</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MsImaging
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzplot.dll
+    # package: "MsImaging"
+    #
+    return call <code>R&#35;.interop_[MsImaging::defaultFilter]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
   <h2 id="render">
     <a href="./MsImaging/render.html">render</a>
   </h2>
@@ -520,8 +545,7 @@
 <code>colorSet</code> as string = "viridis:turbo", 
 <code>defaultFill</code> as string = "Transparent", 
 <code>pixelSize</code> as any = "6,6", 
-<code>cutoff</code> as any = [0.1,0.75], 
-<code>pixelDrawer</code> as boolean = TRUE, 
+<code>filter</code> as <generic> RasterPipeline = <code>&lt;NULL&gt;</code>, 
 <code>background</code> as string = <code>&lt;NULL&gt;</code>, 
 <code>colorLevels</code> as integer = 255, 
 <code>dims</code> as any = <code>&lt;NULL&gt;</code>, 

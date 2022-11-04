@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -627,6 +628,19 @@ Module MsImaging
     End Function
 
     ''' <summary>
+    ''' get the default ms-imaging filter pipeline
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("defaultFilter")>
+    Public Function defaultFilter() As RasterPipeline
+        ' denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
+        Return New DenoiseScaler() _
+            .Then(New TrIQScaler) _
+            .Then(New KNNScaler) _
+            .Then(New SoftenScaler)
+    End Function
+
+    ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
     ''' <param name="data">
@@ -637,7 +651,6 @@ Module MsImaging
     ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
     ''' <param name="defaultFill"></param>
     ''' <param name="pixelSize"></param>
-    ''' <param name="cutoff"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
     ''' be treated as background pixels and removed from the MSI 
@@ -653,9 +666,7 @@ Module MsImaging
                                    Optional defaultFill As String = "Transparent",
                                    <RRawVectorArgument>
                                    Optional pixelSize As Object = "6,6",
-                                   <RRawVectorArgument(GetType(Double))>
-                                   Optional cutoff As Object = "0.1,0.75",
-                                   Optional pixelDrawer As Boolean = True,
+                                   Optional filter As RasterPipeline = Nothing,
                                    Optional background As String() = Nothing,
                                    Optional colorLevels As Integer = 255,
                                    <RRawVectorArgument>
@@ -706,15 +717,14 @@ Module MsImaging
             Return Message.InCompatibleType(GetType(MSISummary), data.GetType, env)
         End If
 
-        Dim cutoffRange = ApiArgumentHelpers.GetDoubleRange(cutoff, env, "0.1,0.75")
         Dim engine As New RectangleRender(env.getDriver, heatmapRender:=False)
         Dim dimSize As Size = InteropArgumentHelper _
             .getSize(dims, env, [default]:=$"{dataSize.Width},{dataSize.Height}") _
             .SizeParser
         Dim pointSize As Size = InteropArgumentHelper.getSize(pixelSize, env, "6,6").SizeParser
 
-        If cutoffRange Like GetType(Message) Then
-            Return cutoffRange.TryCast(Of Message)
+        If Not filter Is Nothing Then
+            pixels = filter.DoIntensityScale(pixels, dimSize)
         End If
 
         Dim image As Image = engine.RenderPixels(

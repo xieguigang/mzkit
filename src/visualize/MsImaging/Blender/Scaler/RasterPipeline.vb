@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Blender.Scaler
 
@@ -20,6 +21,10 @@ Namespace Blender.Scaler
         Public Function [Then](scaler As Scaler) As RasterPipeline
             Call pipeline.Add(scaler)
             Return Me
+        End Function
+
+        Public Function DoIntensityScale(pixels As IEnumerable(Of PixelData), dimSize As Size) As PixelData()
+            Return DoIntensityScale(New SingleIonLayer With {.DimensionSize = dimSize, .IonMz = -1, .MSILayer = pixels.ToArray})
         End Function
 
         Public Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements Scaler.LayerScaler.DoIntensityScale
