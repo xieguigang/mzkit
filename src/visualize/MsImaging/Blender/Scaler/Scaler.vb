@@ -33,7 +33,9 @@
             }
         End Function
 
-        Protected MustOverride Function DoIntensityScale(into As Double()) As Double()
+        Protected Overridable Function DoIntensityScale(into As Double()) As Double()
+            Throw New NotImplementedException
+        End Function
 
         Public Function [Then]([next] As Scaler) As RasterPipeline
             Return New RasterPipeline From {Me, [next]}
