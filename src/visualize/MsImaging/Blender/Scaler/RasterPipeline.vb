@@ -6,6 +6,12 @@ Namespace Blender.Scaler
 
         ReadOnly pipeline As New List(Of Scaler)
 
+        Default Public ReadOnly Property Run(layer As SingleIonLayer) As SingleIonLayer
+            Get
+                Return DoIntensityScale(layer)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(scaler As Scaler)
             Call pipeline.Add(scaler)
