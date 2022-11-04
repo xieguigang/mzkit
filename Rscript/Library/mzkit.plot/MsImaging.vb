@@ -77,6 +77,8 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -88,6 +90,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 
 ''' <summary>
 ''' Visual MS imaging data(*.imzML)
@@ -545,6 +548,7 @@ Module MsImaging
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+        Dim pixel_size As Size = InteropArgumentHelper.getSize(pixelSize, env, "5,5").SizeParser
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
@@ -558,31 +562,33 @@ Module MsImaging
             End If
         End If
 
+        Dim imaging As Image
+
         If mz.IsNullOrEmpty Then
             Return Nothing
         ElseIf mz.Length = 1 Then
-            Return viewer.DrawLayer(
+            imaging = viewer.DrawLayer(
                 mz:=mz(Scan0),
-                pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=env.getDriver
-            )
+                driver:=Drivers.GDI
+            ).AsGDIImage
         Else
-            Return viewer.DrawLayer(
+            imaging = viewer.DrawLayer(
                 mz:=mz,
-                pixelSize:=InteropArgumentHelper.getSize(pixelSize, env, "5,5"),
                 toleranceErr:=errors.TryCast(Of Tolerance).GetScript,
                 colorSet:=color,
                 mapLevels:=levels,
                 cutoff:=cutoff,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=env.getDriver
-            )
+                driver:=Drivers.GDI
+            ).AsGDIImage
         End If
+
+        Return New RasterScaler(imaging).Scale(imaging.Width * pixel_size.Width, imaging.Height * pixel_size.Height)
     End Function
 
     <Extension>
@@ -713,15 +719,16 @@ Module MsImaging
             Return cutoffRange.TryCast(Of Message)
         End If
 
-        Return engine.RenderPixels(
+        Dim image As Image = engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimSize,
-            dimSize:=pointSize,
             colorSet:=colorSet,
             defaultFill:=defaultFill,
             cutoff:=cutoffRange.TryCast(Of DoubleRange),
             mapLevels:=colorLevels
-        )
+        ).AsGDIImage
+
+        Return New RasterScaler(image).Scale(image.Width * pointSize.Width, image.Height * pointSize.Height)
     End Function
 
     ''' <summary>
