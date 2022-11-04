@@ -37,8 +37,8 @@ Namespace Blender.Scaler
             Dim OutPutWid = layer.DimensionSize.Width
             Dim OutPutHei = layer.DimensionSize.Height
 
-            For x As Integer = 1 To OutPutWid - 2
-                For y As Integer = 1 To OutPutHei - 2
+            For x As Integer = 1 To OutPutWid
+                For y As Integer = 1 To OutPutHei
                     Dim u As Double = PopulateRectangle(img, x, y).Average
                     Dim hit As Boolean = False
                     Dim pixel As PixelData = img.GetData(x, y, hit)
