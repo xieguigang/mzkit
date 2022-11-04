@@ -196,11 +196,11 @@ Namespace Blender
                 Else
                     index = levelRange.ScaleMapping(level, indexrange)
 
-                    If index < 0 Then
-                        index = 0
+                    If index <= 0 Then
+                        color = defaultColor
+                    Else
+                        color = colors(index)
                     End If
-
-                    color = colors(index)
                 End If
 
                 ' imzXML里面的坐标是从1开始的

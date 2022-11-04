@@ -269,7 +269,7 @@ Public Class Drawer : Implements IDisposable
                                         ' get the max level pixel
                                         Return (From pt As PixelData
                                                 In point
-                                                Order By pt.level
+                                                Order By pt.intensity
                                                 Descending).First
                                     End Function)
                     End Function) _
