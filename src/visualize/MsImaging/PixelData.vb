@@ -168,90 +168,25 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
         End Using
     End Function
 
-    Private Shared Function getIntensityAuto(p As PixelData, logE As Boolean) As Double
-        If logE Then
-            If p.intensity <= 1 Then
-                Return 0
-            Else
-                Return stdNum.Log(p.intensity)
-            End If
-        Else
-            Return p.intensity
-        End If
-    End Function
-
     ''' <summary>
     ''' 将响应度数据统一缩放到[0,1]之间
     ''' </summary>
     ''' <param name="pixels"></param>
-    ''' <param name="cutoff">
-    ''' if the max of this range is greater than 1, then it means the cutoff value range of this parameter is intensity value
-    ''' intensity range will set to this cutoff range value directlly. otherwise if the max of this range is smaller than 1, 
-    ''' then will treated as percentage range. 
-    ''' </param>
-    ''' <param name="logE">
-    ''' 20220218 使用log进行缩放的效果很差，在这里默认禁用这个选项
-    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' <see cref="HeatMapRaster(Of PixelData)"/>
     ''' </remarks>
-    Public Shared Function ScalePixels(pixels As PixelData(),
-                                       Optional cutoff As DoubleRange = Nothing,
-                                       Optional logE As Boolean = False,
-                                       Optional gauss As Integer = 32,
-                                       Optional sigma As Integer = 64) As PixelData()
-
+    Public Shared Iterator Function ScalePixels(pixels As PixelData()) As IEnumerable(Of PixelData)
         Dim level As Double
         Dim levelRange As DoubleRange = New Double() {0, 1}
-
-        'pixels = New HeatMapRaster(Of PixelData)(gauss, sigma) _
-        '    .SetDatas(pixels.ToList) _
-        '    .GetRasterPixels(Function(x, y, d)
-        '                         Return New PixelData With {
-        '                             .x = x,
-        '                             .y = y,
-        '                             .intensity = d
-        '                         }
-        '                     End Function) _
-        '    .ToArray
-
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p)
-                        Return getIntensityAuto(p, logE)
+                        Return p.intensity
                     End Function) _
-            .Range
-
-        If Not cutoff Is Nothing Then
-            If cutoff.Min > 1 Then
-                intensityRange = cutoff
-            Else
-                intensityRange = New DoubleRange(
-                    intensityRange.Min + intensityRange.Length * cutoff.Min,
-                    intensityRange.Min + intensityRange.Length * cutoff.Max
-                )
-            End If
-        End If
+            .Range()
 
         For Each point As PixelData In pixels
-            Dim intensity As Double = point.intensity
-
-            If logE Then
-                If intensity <= 1 Then
-                    intensity = intensityRange.Min
-                Else
-                    intensity = stdNum.Log(intensity)
-                End If
-            End If
-
-            If intensity < intensityRange.Min Then
-                intensity = intensityRange.Min
-            End If
-            If intensity > intensityRange.Max Then
-                intensity = intensityRange.Max
-            End If
-
-            level = intensityRange.ScaleMapping(intensity, levelRange)
+            level = intensityRange.ScaleMapping(point.intensity, levelRange)
 
             If level > 1 Then
                 point.level = 1
@@ -260,9 +195,9 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
             Else
                 point.level = level
             End If
-        Next
 
-        Return pixels
+            Yield point
+        Next
     End Function
 
     ''' <summary>

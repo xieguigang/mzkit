@@ -76,13 +76,11 @@ Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer
     ReadOnly pixelScale As Size
-    ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
     ReadOnly driver As Drivers = Drivers.Default
 
     Public Sub New(ion As SingleIonLayer,
                    pixelScale As Size,
-                   cutoff As DoubleRange,
                    pixelDrawer As Boolean,
                    theme As Theme,
                    driver As Drivers)
@@ -90,7 +88,6 @@ Public Class MSIPlot : Inherits Plot
         Call MyBase.New(theme)
 
         Me.pixelDrawer = pixelDrawer
-        Me.cutoff = cutoff
         Me.ion = ion
         Me.pixelScale = pixelScale
         Me.driver = driver
@@ -140,7 +137,7 @@ Public Class MSIPlot : Inherits Plot
                         htmlLabel:=False,
                         driver:=driver)
 
-        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, colorScale, cutoff:=cutoff)
+        Call engine.RenderPixels(g, rect.Location, ion.MSILayer, colorScale)
 
         ' draw ion m/z
         Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)

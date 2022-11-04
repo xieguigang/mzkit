@@ -84,11 +84,9 @@ Namespace Blender
         ''' [mz(F4) => color]
         ''' </param>
         ''' <param name="scale"></param>
-        ''' <param name="cut"></param>
         ''' <returns></returns>
         Public MustOverride Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet,
                                                    Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                   Optional cut As DoubleRange = Nothing,
                                                    Optional defaultFill As String = "Transparent",
                                                    Optional mapLevels As Integer = 25) As GraphicsData
 
@@ -100,12 +98,10 @@ Namespace Blender
         ''' <param name="B"></param>
         ''' <param name="dimension"></param>
         ''' <param name="scale"></param>
-        ''' <param name="cut"></param>
         ''' <returns></returns>
         Public MustOverride Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                          dimension As Size,
                                                          Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                         Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                          Optional background As String = "black") As GraphicsData
 
         ''' <summary>
@@ -120,8 +116,7 @@ Namespace Blender
                                                   Optional colorSet As String = "YlGnBu:c8",
                                                   Optional mapLevels% = 25,
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                  Optional defaultFill As String = "Transparent",
-                                                  Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                                  Optional defaultFill As String = "Transparent") As GraphicsData
 
         ''' <summary>
         ''' 将所有的离子混合叠加再一个图层中可视化
@@ -132,22 +127,18 @@ Namespace Blender
         ''' <returns></returns>
         Public MustOverride Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
                                                   Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                  Optional defaultFill As String = "Transparent",
-                                                  Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                                  Optional defaultFill As String = "Transparent") As GraphicsData
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="channel"></param>
-        ''' <param name="cut">
-        ''' [0,1]
-        ''' </param>
         ''' <returns></returns>
-        Protected Function GetPixelChannelReader(channel As PixelData(), cut As DoubleRange) As Func(Of Integer, Integer, Byte)
+        Protected Function GetPixelChannelReader(channel As PixelData()) As Func(Of Integer, Integer, Byte)
             If channel.IsNullOrEmpty Then
                 Return Function(x, y) CByte(0)
             Else
-                Return AddressOf New PixelChannelRaster(gauss, sigma, channel, cut).GetPixelChannelReader
+                Return AddressOf New PixelChannelRaster(gauss, sigma, channel).GetPixelChannelReader
             End If
         End Function
 
@@ -156,13 +147,11 @@ Namespace Blender
     Friend Class PixelChannelRaster
 
         Dim raster As RasterPixel()
-        Dim cut As DoubleRange
         Dim intensityRange As DoubleRange
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
         Dim byteRange As DoubleRange = {8, 255}
 
-        Sub New(gauss As Integer, sigma As Integer, channel As PixelData(), cut As DoubleRange)
-            Me.cut = cut
+        Sub New(gauss As Integer, sigma As Integer, channel As PixelData())
             Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _
                 .SetDatas(channel.ToList) _
                 .GetRasterPixels _
@@ -185,17 +174,9 @@ Namespace Blender
         End Sub
 
         Private Sub setRange()
-            Dim intensityRange As DoubleRange = raster.Select(Function(p) p.Scale).ToArray
-
-            If Not cut Is Nothing Then
-                Dim length As Double = intensityRange.Length
-                Dim dmin = intensityRange.Min + cut.Min * length
-                Dim dmax = intensityRange.Min + cut.Max * length
-
-                intensityRange = New DoubleRange(dmin, dmax)
-            End If
-
-            Me.intensityRange = intensityRange
+            Me.intensityRange = raster _
+                .Select(Function(p) p.Scale) _
+                .ToArray
         End Sub
 
         Public Function GetPixelChannelReader(x As Integer, y As Integer) As Byte

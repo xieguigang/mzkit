@@ -86,14 +86,13 @@ Namespace Blender
         Public Overrides Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                       dimension As Size,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                      Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
             ' rendering via raw dimesnion size
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
             Dim defaultBackground As Color = background.TranslateColor
-            Dim Rchannel = GetPixelChannelReader(R, cut.r)
-            Dim Gchannel = GetPixelChannelReader(G, cut.g)
-            Dim Bchannel = GetPixelChannelReader(B, cut.b)
+            Dim Rchannel = GetPixelChannelReader(R)
+            Dim Gchannel = GetPixelChannelReader(G)
+            Dim Bchannel = GetPixelChannelReader(B)
 
             Using gr As Graphics = Graphics.FromImage(raw)
                 Call gr.Clear(defaultBackground)
@@ -137,8 +136,7 @@ Namespace Blender
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels% = 25,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                               Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                               Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim brushColors As SolidBrush() = Designer _
                 .GetColors(colorSet, mapLevels) _
@@ -147,7 +145,7 @@ Namespace Blender
                         End Function) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, brushColors, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, brushColors, scale, defaultFill)
         End Function
 
         ''' <summary>
@@ -159,8 +157,7 @@ Namespace Blender
         ''' <returns></returns>
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                               Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                               Optional defaultFill As String = "Transparent") As GraphicsData
             Dim color As Color
             Dim colors As Color() = colorSet.Select(Function(br) br.Color).ToArray
             Dim index As Integer
@@ -173,7 +170,7 @@ Namespace Blender
             Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, gauss:=gauss, sigma:=sigma)
+                For Each point As PixelData In PixelData.ScalePixels(pixels)
                     level = point.level
 
                     If level <= 0.0 Then
@@ -202,7 +199,6 @@ Namespace Blender
                                                 dimension As Size,
                                                 colorSet As MzLayerColorSet,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData
 

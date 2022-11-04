@@ -227,7 +227,13 @@ Namespace Blender
                                          Where p.intensity > 0
                                          Let into As Double = p.intensity
                                          Select into).ToArray
-            Dim mean As Double = intensity.Min
+            Dim mean As Double
+
+            If intensity.Length = 0 Then
+                Return Nothing
+            Else
+                mean = intensity.Min
+            End If
 
             If mean = 0.0 Then
                 Return Nothing

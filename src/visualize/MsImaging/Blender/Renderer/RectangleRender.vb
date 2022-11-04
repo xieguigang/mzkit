@@ -85,14 +85,13 @@ Namespace Blender
         Public Overloads Sub ChannelCompositions(gr As IGraphics, region As GraphicsRegion,
                                                  R() As PixelData, G() As PixelData, B() As PixelData,
                                                  dimension As Size,
-                                                 Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                  Optional background As String = "black")
 
             Dim defaultBackground As Color = background.TranslateColor
             Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
-                .Bchannel = GetPixelChannelReader(B, cut.b),
-                .Rchannel = GetPixelChannelReader(R, cut.r),
-                .Gchannel = GetPixelChannelReader(G, cut.g),
+                .Bchannel = GetPixelChannelReader(B),
+                .Rchannel = GetPixelChannelReader(R),
+                .Gchannel = GetPixelChannelReader(G),
                 .dimension = dimension
             }
 
@@ -102,13 +101,12 @@ Namespace Blender
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                      Optional cut As (r As DoubleRange, g As DoubleRange, b As DoubleRange) = Nothing,
                                                       Optional background As String = "black") As GraphicsData
 
             Dim defaultBackground As Color = background.TranslateColor
-            Dim Rchannel = GetPixelChannelReader(R, cut.r)
-            Dim Gchannel = GetPixelChannelReader(G, cut.g)
-            Dim Bchannel = GetPixelChannelReader(B, cut.b)
+            Dim Rchannel = GetPixelChannelReader(R)
+            Dim Gchannel = GetPixelChannelReader(G)
+            Dim Bchannel = GetPixelChannelReader(B)
             Dim w As Integer = dimension.Width
             Dim h As Integer = dimension.Height
             Dim rgb As New RenderRGB(defaultBackground, heatmapMode) With {
@@ -127,16 +125,13 @@ Namespace Blender
             )
         End Function
 
-        Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, colorSet() As SolidBrush,
-                                          Optional cutoff As DoubleRange = Nothing)
-
-            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, cutoff, offset)
+        Public Overloads Sub RenderPixels(g As IGraphics, offset As Point, pixels() As PixelData, colorSet() As SolidBrush)
+            Call FillLayerInternal(g, pixels, colorSet.First, colorSet, offset)
         End Sub
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, colorSet() As SolidBrush,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                               Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                               Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim defaultColor As SolidBrush = defaultFill.GetBrush
             Dim w = dimension.Width
@@ -148,7 +143,7 @@ Namespace Blender
                 bg:=defaultFill,
                 driver:=driver,
                 plotAPI:=Sub(ByRef g, region)
-                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, cutoff, Nothing)
+                             Call FillLayerInternal(g, pixels, defaultColor, colorSet, Nothing)
                          End Sub)
         End Function
 
@@ -163,27 +158,24 @@ Namespace Blender
         ''' <param name="defaultFill">
         ''' the background of the MS-imaging chartting.
         ''' </param>
-        ''' <param name="cutoff"></param>
         ''' <returns></returns>
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                               Optional defaultFill As String = "Transparent",
-                                               Optional cutoff As DoubleRange = Nothing) As GraphicsData
+                                               Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim colors As SolidBrush() = Designer.GetColors(colorSet, mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, colors, scale, defaultFill, cutoff)
+            Return RenderPixels(pixels, dimension, colors, scale, defaultFill)
         End Function
 
         Private Sub FillLayerInternal(gr As IGraphics,
                                       pixels() As PixelData,
                                       defaultColor As SolidBrush,
                                       colors As SolidBrush(),
-                                      cutoff As DoubleRange,
                                       Offset As Point)
             Dim color As SolidBrush
             Dim index As Integer
@@ -191,7 +183,7 @@ Namespace Blender
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
             Dim dimSize As New SizeF(1, 1)
 
-            For Each point As PixelData In PixelData.ScalePixels(pixels, cutoff, gauss:=gauss, sigma:=sigma)
+            For Each point As PixelData In PixelData.ScalePixels(pixels)
                 Dim level As Double = point.level
                 Dim pos As New PointF With {
                     .X = (point.x - 1) + Offset.X,
@@ -219,7 +211,6 @@ Namespace Blender
 
         Public Overrides Function LayerOverlaps(layers()() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
                                                 Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                                                Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData
 
@@ -240,7 +231,7 @@ Namespace Blender
                                      .Select(Function(a) New SolidBrush(baseColor.Alpha(a))) _
                                      .ToArray
 
-                                 Call FillLayerInternal(g, layer, defaultColor, colors, cut, Nothing)
+                                 Call FillLayerInternal(g, layer, defaultColor, colors, Nothing)
                              Next
                          End Sub)
         End Function
@@ -270,7 +261,7 @@ Namespace Blender
                                               End Function) _
                                       .ToArray
 
-                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, cut, Nothing)
+                                 Call FillLayerInternal(g, layer.value, defaultColor, colors, Nothing)
                              Next
                          End Sub)
         End Function

@@ -144,20 +144,18 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     Public Function ShowSummaryRendering(summary As IntensitySummary,
-                                         Optional cutoff As DoubleRange = Nothing,
                                          Optional colorSet$ = "Jet",
                                          Optional logE As Boolean = True,
                                          Optional pixelDrawer As Boolean = True,
                                          Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim layer As PixelScanIntensity() = pixelReader.GetSummary.GetLayer(summary).ToArray
-        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, cutoff, colorSet, logE, pixelDrawer, driver:=driver)
+        Dim render As GraphicsData = RenderSummaryLayer(layer, dimension, colorSet, logE, pixelDrawer, driver:=driver)
 
         Return render
     End Function
 
     Public Shared Function RenderSummaryLayer(layer As PixelScanIntensity(), dimension As Size,
-                                              Optional cutoff As DoubleRange = Nothing,
                                               Optional colorSet$ = "Jet",
                                               Optional pixelDrawer As Boolean = True,
                                               Optional mapLevels As Integer = 25,
@@ -179,7 +177,6 @@ Public Class Drawer : Implements IDisposable
             dimension:=dimension,
             colorSet:=colorSet,
             defaultFill:="black",
-            cutoff:=cutoff,
             mapLevels:=mapLevels
         )
     End Function
@@ -220,7 +217,6 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As DoubleRange = Nothing,
                               Optional pixelDrawer As Boolean = True,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -240,7 +236,6 @@ Public Class Drawer : Implements IDisposable
             colorSet:=colorSet,
             mapLevels:=mapLevels,
             scale:=scale,
-            cutoff:=cutoff,
             defaultFill:=background
         )
     End Function
@@ -250,13 +245,12 @@ Public Class Drawer : Implements IDisposable
     ''' </summary>
     ''' <param name="rawPixels"></param>
     ''' <param name="tolerance"></param>
-    ''' <param name="cut"></param>
     ''' <returns></returns>
-    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance, cut As DoubleRange) As PixelData()
+    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
         Dim pixels As New List(Of PixelData)
 
         For Each mzi In rawPixels.GroupBy(Function(x) x.mz, tolerance).ToArray
-            rawPixels = PixelData.ScalePixels(mzi.ToArray, cutoff:=cut)
+            rawPixels = PixelData.ScalePixels(mzi.ToArray).ToArray
             pixels.AddRange(rawPixels)
         Next
 
@@ -296,7 +290,6 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional cutoff As DoubleRange = Nothing,
                               Optional pixelDrawer As Boolean = True,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -307,7 +300,7 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
         rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
-        rawPixels = ScalePixels(rawPixels, tolerance, cut:=cutoff)
+        rawPixels = ScalePixels(rawPixels, tolerance)
 
         Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 

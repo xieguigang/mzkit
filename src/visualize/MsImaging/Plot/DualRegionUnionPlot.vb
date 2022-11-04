@@ -75,7 +75,6 @@ Public Class DualRegionUnionPlot : Inherits Plot
     ReadOnly region1 As SingleIonLayer
     ReadOnly region2 As SingleIonLayer
     ReadOnly pixelScale As Size
-    ReadOnly cutoff As DoubleRange
     ReadOnly pixelDrawer As Boolean
     ReadOnly colorSet1 As SolidBrush()
     ReadOnly colorSet2 As SolidBrush()
@@ -83,7 +82,6 @@ Public Class DualRegionUnionPlot : Inherits Plot
 
     Public Sub New(region1 As SingleIonLayer, region2 As SingleIonLayer,
                    pixelScale As Size,
-                   cutoff As DoubleRange,
                    pixelDrawer As Boolean,
                    colorSet1 As Color(),
                    colorSet2 As Color(),
@@ -94,7 +92,6 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Me.region1 = region1
         Me.region2 = region2
         Me.pixelDrawer = pixelDrawer
-        Me.cutoff = cutoff
         Me.pixelScale = pixelScale
         Me.colorSet1 = colorSet1.Select(Function(c) New SolidBrush(c)).ToArray
         Me.colorSet2 = colorSet2.Select(Function(c) New SolidBrush(c)).ToArray
@@ -156,10 +153,10 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Dim MSI1 As Image, MSI2 As Image
         Dim engine As New PixelRender(heatmapRender:=False)
 
-        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, cutoff:=cutoff, colorSet:=colorSet1).AsGDIImage
+        MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, colorSet:=colorSet1).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
-        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, cutoff:=cutoff, colorSet:=colorSet2).AsGDIImage
+        MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, colorSet:=colorSet2).AsGDIImage
         MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height, InterpolationMode.Bilinear)
 
         Call g.DrawAxis(canvas, scale,
