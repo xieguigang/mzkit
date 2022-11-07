@@ -238,6 +238,7 @@
 <code>id</code> as string, 
 <code>field</code> as string, 
 <code>metadb</code> as <generic> IMzQuery, 
+<code>includes_metal_ions</code> as boolean = FALSE, 
 [<code>&lt;Environment&gt;</code>]) -> <code>list</code> {
     #
     # .NET API information
@@ -264,6 +265,10 @@
                 </li>
 <li>
   <code>metadb</code>: -
+                </li>
+<li>
+  <code>includes_metal_ions</code>: removes metabolite annotation result which has metal<br />
+ ions inside formula string by default.
                 </li>
 <li>
   <code>env</code>: -

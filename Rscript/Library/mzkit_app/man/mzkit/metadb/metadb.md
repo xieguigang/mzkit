@@ -1,6 +1,6 @@
 # metadb
 
-
+Metabolite annotation database search engine
 
 + [parseLipidName](metadb/parseLipidName.1) 
 + [annotationStream](metadb/annotationStream.1) 

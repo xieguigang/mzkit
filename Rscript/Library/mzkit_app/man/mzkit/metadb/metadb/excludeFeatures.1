@@ -7,6 +7,7 @@ excludeFeatures \- removes all of the annotation result which is not
 \fBid\fR as string, 
 \fBfield\fR as string, 
 \fBmetadb\fR as <generic> IMzQuery, 
+\fBincludes_metal_ions\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -25,6 +26,12 @@ removes all of the annotation result which is not
 .PP
 .PP
 \fBmetadb\fB \fR\- -. 
+.PP
+.PP
+\fBincludes_metal_ions\fB \fR\- 
+ removes metabolite annotation result which has metal
+ ions inside formula string by default.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
