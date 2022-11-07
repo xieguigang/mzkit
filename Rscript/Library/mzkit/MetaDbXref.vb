@@ -78,7 +78,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
-''' 
+''' Metabolite annotation database search engine
 ''' </summary>
 <Package("metadb")>
 Module MetaDbXref
@@ -274,6 +274,7 @@ Module MetaDbXref
                               Optional env As Environment = Nothing) As Object
 
         Dim queryEngine As IMzQuery
+        Dim println = env.WriteLineHandler
 
         If TypeOf engine Is KEGGHandler Then
             queryEngine = DirectCast(engine, KEGGHandler)
@@ -321,6 +322,32 @@ Module MetaDbXref
     End Function
 
     <Extension>
+    Private Function search1(id As KeyValuePair(Of String, Object),
+                             mz As list,
+                             queryEngine As IMzQuery,
+                             unique As Boolean,
+                             uniqueByScore As Boolean,
+                             env As Environment) As Object
+
+        Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
+        Dim all As MzQuery() = queryEngine.QueryByMz(mzi).ToArray
+
+        If unique Then
+            If uniqueByScore Then
+                Return all _
+                   .OrderByDescending(Function(d) d.score) _
+                   .FirstOrDefault
+            Else
+                Return all _
+                   .OrderBy(Function(d) d.ppm) _
+                   .FirstOrDefault
+            End If
+        Else
+            Return all
+        End If
+    End Function
+
+    <Extension>
     Private Function searchMzList(mz As list,
                                   queryEngine As IMzQuery,
                                   unique As Boolean,
@@ -330,22 +357,7 @@ Module MetaDbXref
             .slots = mz.slots _
                 .ToDictionary(Function(id) id.Key,
                               Function(id)
-                                  Dim mzi As Double = mz.getValue(Of Double)(id.Key, env)
-                                  Dim all = queryEngine.QueryByMz(mzi).ToArray
-
-                                  If unique Then
-                                      If uniqueByScore Then
-                                          Return all _
-                                             .OrderByDescending(Function(d) d.score) _
-                                             .FirstOrDefault
-                                      Else
-                                          Return all _
-                                             .OrderBy(Function(d) d.ppm) _
-                                             .FirstOrDefault
-                                      End If
-                                  Else
-                                      Return all
-                                  End If
+                                  Return id.search1(mz, queryEngine, unique, uniqueByScore, env)
                               End Function)
         }
     End Function
@@ -466,6 +478,10 @@ Module MetaDbXref
     ''' <param name="id">the required compound id set that should be hit!</param>
     ''' <param name="field"></param>
     ''' <param name="metadb"></param>
+    ''' <param name="includes_metal_ions">
+    ''' removes metabolite annotation result which has metal
+    ''' ions inside formula string by default.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("excludeFeatures")>
@@ -473,11 +489,18 @@ Module MetaDbXref
                                     id As String(),
                                     field As String,
                                     metadb As IMzQuery,
+                                    Optional includes_metal_ions As Boolean = False,
                                     Optional env As Environment = Nothing) As list
 
         Dim includes As Index(Of String) = id.Indexing
         Dim sublist As New list With {.slots = New Dictionary(Of String, Object)}
         Dim hits As MzQuery()
+
+        If includes_metal_ions Then
+            Call println("the metabolites which contains metal ions inside its formula string will also includes into the search result!")
+        Else
+            Call println("the metabolites which contains metal ions inside its formula string will be removes from the search result!")
+        End If
 
         For Each name As String In query.getNames
             hits = query.getValue(Of MzQuery())(name, env:=env, [default]:={})
@@ -495,7 +518,17 @@ Module MetaDbXref
                 .ToArray
 
             If hits.Length > 0 Then
-                Call sublist.add(name, hits)
+                If Not includes_metal_ions Then
+                    hits = hits _
+                        .Where(Function(m)
+                                   Return Not MetalIons.HasMetalIon(metadb.GetAnnotation(m.unique_id).formula)
+                               End Function) _
+                        .ToArray
+                End If
+
+                If hits.Length > 0 Then
+                    Call sublist.add(name, hits)
+                End If
             End If
         Next
 
