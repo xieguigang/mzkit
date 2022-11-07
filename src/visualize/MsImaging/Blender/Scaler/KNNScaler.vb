@@ -17,5 +17,9 @@ Namespace Blender.Scaler
         Public Overrides Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
             Return layer.KnnFill(k, k, q)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"knn_fill(k：={k})"
+        End Function
     End Class
 End Namespace

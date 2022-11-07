@@ -20,5 +20,9 @@ Namespace Blender.Scaler
                 .IonMz = layer.IonMz
             }
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"denoise(q:={q})"
+        End Function
     End Class
 End Namespace
