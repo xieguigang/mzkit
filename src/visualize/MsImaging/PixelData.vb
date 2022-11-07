@@ -184,8 +184,13 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
                         Return p.intensity
                     End Function) _
             .Range()
+        Dim removesFilterSmall As Boolean = intensityRange.Max > 10
 
         For Each point As PixelData In pixels
+            If removesFilterSmall AndAlso point.intensity < 1 Then
+                Continue For
+            End If
+
             level = intensityRange.ScaleMapping(point.intensity, levelRange)
 
             If level > 1 Then
