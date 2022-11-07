@@ -320,6 +320,9 @@ Module MzWeb
     <ExportAPI("open.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
+        If file Is Nothing Then
+            Return Internal.debug.stop("the required file object can not be nothing!", env)
+        End If
         If TypeOf file Is String Then
             Dim mzpack As mzPack = openFromFile(file)
 
@@ -329,7 +332,7 @@ Module MzWeb
 
             Return mzpack
         Else
-            Return Internal.debug.stop(New NotImplementedException, env)
+            Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
     End Function
 
