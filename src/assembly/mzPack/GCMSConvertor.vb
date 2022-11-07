@@ -10,19 +10,25 @@ Imports stdNum = System.Math
 
 Public Module GCMSConvertor
 
-    Public Function ConvertGCMS(agilentGC As netCDFReader) As mzPack
+    Public Function ConvertGCMS(agilentGC As netCDFReader, Optional println As Action(Of String) = Nothing) As mzPack
+        If println Is Nothing Then
+            println = AddressOf Console.WriteLine
+        End If
+
         Return New mzPack With {
            .Application = FileApplicationClass.GCMS,
-           .MS = LoadMs1Scans(agilentGC).ToArray
+           .MS = LoadMs1Scans(agilentGC, println).ToArray
         }
     End Function
 
-    Public Function LoadMs1Scans(agilentGC As netCDFReader) As IEnumerable(Of ScanMS1)
+    Public Function LoadMs1Scans(agilentGC As netCDFReader, println As Action(Of String)) As IEnumerable(Of ScanMS1)
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
         Dim point_count As integers = agilentGC.getDataVariable("point_count")
-        Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
-        Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
+        Dim mz As Double()() = agilentGC.readMzMatrix(point_count, println).ToArray
+        Dim into As Double()() = agilentGC.readIntoMatrix(point_count, println).ToArray
+
+        Call println("read scan matrix!")
 
         Return scan_time.Array _
             .CreateMSScans(totalIons, mz, into) _
@@ -53,12 +59,12 @@ Public Module GCMSConvertor
     Const intensity_values As String = "intensity_values"
 
     <Extension>
-    Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
+    Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim into As ICDFDataVector = Nothing
         Dim offset As Integer = Scan0
         Dim type As CDFDataTypes = agilentGC.getDataVariableEntry(intensity_values).type
 
-        Call Console.WriteLine("read intensity matrix...")
+        Call println("read intensity matrix...")
         Call agilentGC.getDataVariable("intensity_values", into)
 
         If type = CDFDataTypes.INT Then
@@ -89,11 +95,11 @@ Public Module GCMSConvertor
     End Function
 
     <Extension>
-    Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
+    Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim offset As Integer = Scan0
         Dim mz As shorts = Nothing
 
-        Call Console.WriteLine("read m/z matrix...")
+        Call println("read m/z matrix...")
         Call agilentGC.getDataVariable("mass_values", mz)
 
         For Each width As Integer In point_count

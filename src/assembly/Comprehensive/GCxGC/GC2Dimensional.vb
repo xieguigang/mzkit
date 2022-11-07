@@ -101,7 +101,8 @@ Public Module GC2Dimensional
                              modtime As Double,
                              Optional sam_rate As Double = Double.NaN) As mzPack
 
-        Dim sig As ScanMS1() = GCMSConvertor.LoadMs1Scans(agilentGC).ToArray
+        Dim println As Action(Of String) = AddressOf Console.WriteLine
+        Dim sig As ScanMS1() = GCMSConvertor.LoadMs1Scans(agilentGC, println).ToArray
 
         ' agilentGC.ToString
         '
