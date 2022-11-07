@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -15,9 +16,19 @@ Public Module GCMSConvertor
             println = AddressOf Console.WriteLine
         End If
 
+        Call println("get TIC data...")
+
+        Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
+        Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
+
         Return New mzPack With {
-           .Application = FileApplicationClass.GCMS,
-           .MS = LoadMs1Scans(agilentGC, println).ToArray
+            .Application = FileApplicationClass.GCMS,
+            .MS = LoadMs1Scans(agilentGC, println).ToArray,
+            .Chromatogram = New DataReader.Chromatogram With {
+                .scan_time = scan_time,
+                .BPC = totalIons,
+                .TIC = totalIons
+            }
         }
     End Function
 
@@ -64,7 +75,7 @@ Public Module GCMSConvertor
         Dim offset As Integer = Scan0
         Dim type As CDFDataTypes = agilentGC.getDataVariableEntry(intensity_values).type
 
-        Call println("read intensity matrix...")
+        Call println("read intensity matrix, may takes a long time to run...")
         Call agilentGC.getDataVariable("intensity_values", into)
 
         If type = CDFDataTypes.INT Then
@@ -99,7 +110,7 @@ Public Module GCMSConvertor
         Dim offset As Integer = Scan0
         Dim mz As shorts = Nothing
 
-        Call println("read m/z matrix...")
+        Call println("read m/z matrix, may takes a long time to run...")
         Call agilentGC.getDataVariable("mass_values", mz)
 
         For Each width As Integer In point_count
