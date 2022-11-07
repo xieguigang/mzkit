@@ -521,7 +521,11 @@ Module MetaDbXref
                 If Not includes_metal_ions Then
                     hits = hits _
                         .Where(Function(m)
-                                   Return Not MetalIons.HasMetalIon(metadb.GetAnnotation(m.unique_id).formula)
+                                   Dim formula As String = metadb.GetAnnotation(m.unique_id).formula
+                                   Dim test1 As Boolean = MetalIons.IsOrganic(formula)
+                                   Dim test2 As Boolean = Not MetalIons.HasMetalIon(formula)
+
+                                   Return test1 AndAlso test2
                                End Function) _
                         .ToArray
                 End If

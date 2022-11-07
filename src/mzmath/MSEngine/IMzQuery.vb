@@ -77,8 +77,15 @@ Public Module MetalIons
         "Ba", "Be", "Cs", "Ca", "Cr",
         "Pb", "Li", "Mg", "Hg", "Ni",
         "K", "Ag", "Na", "Sr", "Sn",
-        "Au", "Zn"
-    }
+        "Au", "Zn", "Ce", "Tl", "In",
+        "V", "As", "Mo", "Sm", "Cd",
+        "Si", "Zr", "Ru", "Se", "Nd",
+        "Sb", "I", "Re", "Er", "Tc",
+        "Gd", "Te", "La", "Rb", "Lu",
+        "Ho", "W", "Ga"
+    } _
+    .Distinct _
+    .ToArray
 
     Public Function HasMetalIon(formula As String) As Boolean
         For Each ion As String In ions
@@ -90,4 +97,7 @@ Public Module MetalIons
         Return False
     End Function
 
+    Public Function IsOrganic(formula As String) As Boolean
+        Return InStr(formula, "C") > 0 AndAlso InStr(formula, "H") > 0
+    End Function
 End Module
