@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Net.Http
@@ -7,6 +8,29 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class WebJSON
 
     Friend Const urlBase As String = "https://mona.fiehnlab.ucdavis.edu/rest/spectra/%s"
+
+    Public Property spectrum As String
+    Public Property id As String
+
+    Public Function ParseMatrix() As LibraryMatrix
+        Dim data As String() = spectrum.Split(" "c)
+        Dim mzinto As ms2() = data _
+            .Select(Function(str)
+                        Dim t As String() = str.Split(":"c)
+                        Dim m As New ms2 With {
+                            .mz = Val(t(0)),
+                            .intensity = Val(t(1))
+                        }
+
+                        Return m
+                    End Function) _
+            .ToArray
+
+        Return New LibraryMatrix With {
+            .name = id,
+            .ms2 = mzinto
+        }
+    End Function
 
     Public Shared Function GetJson(id As String, Optional cache As String = "./.mona/") As WebJSON
         Static cachePool As New Dictionary(Of String, QueryWeb)
