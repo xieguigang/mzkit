@@ -1,1 +1,553 @@
-{"compound":[{"inchi":"InChI=1S/C23H28O11/c1-21-8-13(25)12-7-23(21,33-19-17(28)16(27)15(26)14(9-24)32-19)22(12,20(30)34-21)10-31-18(29)11-5-3-2-4-6-11/h2-6,12-17,19,24-28H,7-10H2,1H3/t12-,13+,14+,15+,16-,17+,19-,21-,22-,23-/m0/s1","metaData":[{"category":"none","computed":false,"hidden":false,"name":"InChI","value":"InChI=1S/C23H28O11/c1-21-8-13(25)12-7-23(21,33-19-17(28)16(27)15(26)14(9-24)32-19)22(12,20(30)34-21)10-31-18(29)11-5-3-2-4-6-11/h2-6,12-17,19,24-28H,7-10H2,1H3/t12-,13+,14+,15+,16-,17+,19-,21-,22-,23-/m0/s1"},{"category":"computed","computed":true,"hidden":false,"name":"molecular formula","value":"C23H28O11"},{"category":"computed","computed":true,"hidden":false,"name":"total exact mass","value":480.163161716},{"category":"computed","computed":true,"hidden":false,"name":"SMILES","value":"O=C(OCC12C(=O)OC3(C)CC(O)C2CC31OC4OC(CO)C(O)C(O)C4O)C=5C=CC=CC5"},{"category":"computed","computed":true,"hidden":false,"name":"InChIKey","value":"QQUHMASGPODSIW-ICECTASOSA-N"},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+H-H2O]+","value":943.318953432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+K]+","value":999.424623432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+H]+","value":481.171131716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+Na]+","value":983.316093432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+Cl]-","value":995.779323432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+HAc-H]-","value":1019.370353432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M-H]-","value":479.155885716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M-H]-","value":959.3190474319999},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+Na]+","value":503.152931716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+H-H2O]+","value":463.155791716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+NH4]+","value":978.364903432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+Cl]-","value":515.616161716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+NH4]+","value":498.201741716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+K]+","value":519.261461716},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[2M+H]+","value":961.334293432},{"category":"theoretical adduct","computed":true,"hidden":true,"name":"[M+HAc-H]-","value":539.207191716}],"molFile":"\n  CDK     07162209522D\n\n 34 38  0  0  1  0  0  0  0  0999 V2000\n    1.5791    2.7665    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.8359   -8.0425    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.0949   -7.2255    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4984   -7.3616    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.0164   -5.7276    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4199   -5.8637    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.9587   -1.6519    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.1232    2.0247    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2838   -4.9186    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1854   -1.3698    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6789   -5.0467    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3853   -2.1154    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   -1.1758    1.2747    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -2.8264   -3.5202    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -4.2989   -3.2922    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -4.8510   -1.8912    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   -3.8980   -0.7031    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    5.6004   -3.5487    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.4255   -0.9311    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    3.7305    0.5247    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4223    1.2747    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    2.8489   -0.6888    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    1.4223   -0.2253    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -3.2236   -6.0878    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6653    1.4522    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.2357   -4.4637    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.3341   -1.6666    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4412    0.6951    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    6.8584   -2.7317    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    5.2305    0.5247    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    4.2639   -2.8677    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8863   -2.3503    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4815    0.2347    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.8489    1.7383    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  3  2  2  0  0  0  0\n  4  2  1  0  0  0  0\n  5  3  1  0  0  0  0\n  6  4  2  0  0  0  0\n 11  5  2  0  0  0  0\n 11  6  1  0  0  0  0\n 12  7  1  1  0  0  0\n 13  8  1  0  0  0  0\n 13 12  1  0  0  0  0\n 14  9  1  6  0  0  0\n 15 14  1  0  0  0  0\n 16 15  1  0  0  0  0\n 17 16  1  0  0  0  0\n 18 11  1  0  0  0  0\n 19 17  1  0  0  0  0\n 21  1  1  1  0  0  0\n 21  8  1  0  0  0  0\n 22 10  1  1  0  0  0\n 22 12  1  0  0  0  0\n 22 20  1  0  0  0  0\n 23  7  1  0  0  0  0\n 23 21  1  0  0  0  0\n 23 22  1  0  0  0  0\n 24  9  1  0  0  0  0\n 13 25  1  6  0  0  0\n 15 26  1  1  0  0  0\n 16 27  1  6  0  0  0\n 17 28  1  1  0  0  0\n 29 18  2  0  0  0  0\n 30 20  2  0  0  0  0\n 31 10  1  0  0  0  0\n 31 18  1  0  0  0  0\n 32 14  1  0  0  0  0\n 32 19  1  0  0  0  0\n 19 33  1  6  0  0  0\n 23 33  1  1  0  0  0\n 34 20  1  0  0  0  0\n 34 21  1  0  0  0  0\nM  END\n","names":[{"computed":false,"name":"albiflorin","score":0.0}],"tags":[],"computed":false,"kind":"biological","classification":[{"category":"classification","computed":true,"hidden":false,"name":"kingdom","value":"Organic compounds"},{"category":"classification","computed":true,"hidden":false,"name":"superclass","value":"Lipids and lipid-like molecules"},{"category":"classification","computed":true,"hidden":false,"name":"class","value":"Prenol lipids"},{"category":"classification","computed":true,"hidden":false,"name":"subclass","value":"Terpene glycosides"},{"category":"classification","computed":true,"hidden":false,"name":"direct parent","value":"Terpene glycosides"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Terpene lactones"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Hexoses"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"O-glycosyl compounds"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Bicyclic monoterpenoids"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Benzoic acid esters"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Aromatic monoterpenoids"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Benzoyl derivatives"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Oxepanes"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Dicarboxylic acids and derivatives"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Gamma butyrolactones"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Oxanes"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Tetrahydrofurans"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Secondary alcohols"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Cyclic alcohols and derivatives"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Carboxylic acid esters"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Acetals"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Polyols"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Oxacyclic compounds"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Carbonyl compounds"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Hydrocarbon derivatives"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Organic oxides"},{"category":"classification","computed":true,"hidden":false,"name":"alternative parent","value":"Primary alcohols"}]}],"id":"VF-NPL-QEHF007898","dateCreated":1536935400457,"lastUpdated":1657965122189,"lastCurated":1657965122158,"metaData":[{"computed":false,"hidden":false,"name":"collision energy","value":"45HCD"},{"computed":false,"hidden":false,"name":"raw filename","value":"MX_C2_579_p09_H05_POS_QEHF_194.raw"},{"computed":false,"hidden":false,"name":"averaged scans","value":12},{"computed":false,"hidden":false,"name":"ionization mode","value":"positive"},{"category":"none","computed":false,"hidden":false,"name":"instrument type","value":"ESI-QFT"},{"category":"none","computed":false,"hidden":false,"name":"instrument","value":"Thermo Q Exactive HF"},{"category":"none","computed":false,"hidden":false,"name":"author","value":"Arpana Vaniya"},{"category":"none","computed":false,"hidden":false,"name":"ms level","value":"MS2"},{"category":"none","computed":false,"hidden":false,"name":"source introduction","value":"direct injection"},{"category":"computed","computed":true,"hidden":false,"name":"spectral entropy","value":4.224082714405243},{"category":"computed","computed":true,"hidden":false,"name":"normalized entropy","value":0.735518086316161},{"computed":false,"hidden":false,"name":"precursor m/z","value":519.1262817382812},{"computed":false,"hidden":false,"name":"precursor type","value":"[M+K]+"},{"category":"mass spectrometry","computed":true,"hidden":false,"name":"mass accuracy","unit":"ppm","value":260.39902519689144},{"category":"mass spectrometry","computed":true,"hidden":false,"name":"mass error","unit":"Da","value":-0.13517997771873524}],"score":{"impacts":[{"value":2.0,"reason":"Valid molecular structure(s) provided for biological compound"},{"value":1.0,"reason":"Chromatography identified as LC-MS"},{"value":1.0,"reason":"Ionization mode/type provided"},{"value":1.0,"reason":"MS type/level identified"},{"value":1.0,"reason":"Instrument information provided"},{"value":1.0,"reason":"Collision energy provided"},{"value":-1.0,"reason":"No retention time/index provided"},{"value":1.0,"reason":"Precursor type provided"},{"value":1.0,"reason":"Precursor m/z provided"},{"value":1.0,"reason":"Precursor information and provided compound validated"},{"value":-1.0,"reason":"Poor mass accuracy of 260.399 ppm"}],"score":4.166666666666666},"spectrum":"50.152904:0.073111 50.498133:0.086443 50.500623:1.897859 50.525514:0.076257 52.500726:0.166491 54.098610:2.275540 54.510718:1.922929 55.018676:2.004299 55.029944:0.105154 55.055033:1.079336 55.314426:0.166612 55.537278:1.233292 55.574258:2.136783 55.805454:1.971019 55.963109:0.066914 55.964422:0.145266 56.050259:0.475676 56.216636:0.074019 56.610862:2.257062 56.965542:0.091581 57.034290:0.478616 57.070681:3.786358 57.224104:0.062723 58.024041:0.075656 58.081035:0.071155 58.979520:2.165505 59.049921:0.694788 59.193056:1.890009 59.306629:2.592404 59.576306:0.079321 59.734831:1.353422 60.143010:0.063312 60.170077:0.071941 60.467850:0.070685 60.767287:1.518796 61.011310:0.428208 61.165859:0.517340 61.592578:1.265620 62.000477:0.085938 62.125862:2.338245 62.471354:0.071986 62.842601:1.362987 62.990375:0.078511 64.761438:0.172756 65.859813:2.356201 65.942514:1.602542 65.955227:0.067471 66.564646:2.505680 66.813025:1.994888 67.054946:1.362524 67.373260:2.240691 67.789777:1.227150 69.034089:0.253998 69.070582:1.869671 70.063614:0.141374 70.065795:26.282293 70.113046:2.427527 70.242462:0.073343 71.049819:0.931832 71.069162:0.213073 71.086241:1.018087 71.667870:0.184934 72.081452:4.615347 73.028987:0.329242 73.047489:20.304811 73.065431:0.133227 73.361581:1.205974 73.954777:2.713113 74.047129:0.088963 74.458307:0.083662 75.026812:0.292403 75.707986:0.174914 76.103009:2.618779 76.553592:2.028745 76.562706:0.078236 76.728440:2.100317 77.006015:1.811622 77.711278:0.085729 79.021663:0.888524 79.054844:0.380925 79.366784:0.087279 81.000841:0.074632 81.070559:1.837550 82.022609:0.074793 82.460238:0.075598 82.542817:1.886358 83.049675:0.192909 83.086094:0.628321 83.659241:1.242603 84.109817:1.334991 85.029068:0.272391 85.065323:0.120253 85.101735:0.122794 85.262419:1.219951 85.930407:0.200174 86.096914:0.087180 86.583892:0.816271 87.044702:3.918834 88.059635:1.429915 89.060265:24.361495 91.002003:0.172127 91.057925:76.423473 92.057502:1.779755 92.061218:1.046331 92.904874:0.638159 93.037244:0.800936 93.054736:0.693425 93.070392:0.826497 94.804810:0.195411 95.016417:12.440341 95.049655:0.221646 95.086070:1.996482 96.015998:0.212046 96.030209:3.074581 96.701884:0.603057 96.995649:0.259767 97.013075:0.180344 97.028959:0.259938 97.065348:0.078419 97.076502:1.909860 97.101635:0.584412 97.805470:2.477236 98.096843:0.073167 98.105340:0.086714 98.975960:0.099653 99.044555:0.277136 100.612667:2.378349 100.719528:0.633357 100.976405:0.811738 101.060097:0.255673 101.321835:1.343389 101.677813:1.410634 103.039553:0.088967 104.107278:0.103567 104.794861:1.899953 105.033935:0.875792 105.070239:0.477432 105.073781:0.098934 106.965732:2.397597 107.070546:0.226973 107.086001:0.624524 108.044709:0.079812 108.325999:0.200169 109.068428:0.919677 109.101474:0.957504 110.867687:1.906817 111.044398:0.090819 111.475275:2.119298 112.087262:0.774939 113.026844:0.098534 113.151963:1.414140 114.102883:10.146897 114.586426:1.445589 114.850407:0.082021 116.332317:2.758167 116.666487:0.083313 116.986238:0.176298 118.265490:1.651525 119.016298:0.085032 119.049548:0.091830 119.085822:0.436991 120.443141:1.184491 120.701885:2.542250 121.031853:0.249900 121.065033:0.476448 121.101288:0.519650 122.998761:2.949036 123.044304:0.763262 123.080701:0.120152 124.641124:1.539850 125.096041:0.347814 127.038908:0.112010 128.986248:0.132884 129.918738:0.644122 131.085595:0.183319 131.167614:2.142821 133.004143:0.611253 133.065010:1.064813 133.085986:1.324031 133.101116:0.131649 133.277938:0.654861 134.996657:0.112102 135.080337:0.127105 135.117359:0.176782 135.403069:1.437368 137.059986:0.175635 137.096040:0.101578 141.022305:0.102159 143.001771:0.154141 145.024509:1.308924 145.068083:2.437748 146.705918:2.701330 146.996638:0.299379 147.047139:1.696061 147.080638:0.093112 149.044884:11.554954 149.096355:0.113281 150.044365:0.286227 150.403118:2.165605 151.039778:0.103250 151.075215:0.142557 153.018163:2.621146 153.100779:0.624602 154.109329:2.612537 154.122499:0.092643 154.667822:2.079100 156.138372:0.254516 161.011975:0.802502 161.060047:0.073200 163.039198:0.165963 165.057894:0.214239 167.055394:57.610684 168.054478:2.985584 168.804429:2.686368 169.035024:0.094162 169.052260:0.940687 177.054246:0.224790 179.069516:0.098296 179.921469:2.391791 182.153920:2.933974 189.092840:0.166137 191.071090:0.073517 197.012582:0.212699 197.771302:2.592194 197.998337:1.608669 200.265857:2.093068 200.654614:0.071948 203.326167:2.935016 203.716533:2.427058 206.016975:0.074289 206.911836:0.076376 207.032923:0.089776 207.709903:0.075070 209.048404:0.090531 209.250346:0.649130 209.881558:3.001736 210.185421:2.324488 212.986211:39.421947 212.998178:100.000000 219.017797:0.574922 219.174228:1.425427 220.019641:0.606171 221.084614:0.216432 223.063524:0.408397 225.042784:11.351714 225.649403:0.196815 226.043016:0.601911 227.022325:0.815374 227.039847:0.092658 228.593249:2.638671 233.461356:0.630602 235.028151:0.148052 235.070384:1.399694 236.947285:0.077191 237.027934:1.754492 239.094746:3.514324 240.011655:2.532540 240.097237:0.119728 240.909252:0.088778 243.902361:0.676716 244.365043:2.321968 247.514428:0.076611 248.887661:1.413909 253.038057:3.004261 255.722924:2.214154 261.776314:0.080629 263.203019:1.303034 264.268039:0.421590 265.019896:0.963337 266.557928:0.217127 266.998945:4.300872 267.998578:0.253707 268.977730:0.431688 271.048745:0.665011 272.429908:1.711077 275.680984:0.626620 275.902102:0.105780 278.738136:1.338751 280.739981:1.449515 281.050654:2.926875 281.911101:0.265021 282.051383:0.300909 283.030326:25.170379 283.046409:0.385097 284.030724:5.131829 285.009556:1.483195 285.027690:0.792054 292.903973:0.127847 298.769283:0.641320 298.785410:2.152901 299.061577:60.267105 300.061816:13.138154 301.058470:3.334164 303.019751:0.095208 304.178304:25.799728 306.919769:1.145817 308.055396:0.285173 309.395697:2.180172 310.619357:0.088093 312.924731:2.486762 312.957025:1.371978 318.920606:0.110699 321.799743:0.648171 322.118842:0.095131 324.930563:0.097258 326.066176:0.079806 326.966211:0.429274 330.410566:2.905955 330.518315:2.507052 335.229210:1.515524 336.124184:0.085260 342.997059:1.301992 344.976128:23.958017 345.976522:4.888721 346.973754:1.025072 347.246128:1.637787 349.399149:2.845894 349.440805:2.053259 356.444425:0.093048 356.717898:0.196939 359.026585:0.120520 361.837440:2.603871 362.987515:0.209848 368.643745:3.065648 376.531765:2.668532 380.113192:0.216988 381.418584:2.704173 385.889517:1.292226 392.814503:2.857404 395.474417:0.661188 396.442424:2.759339 397.141570:0.325453 398.279618:2.829349 401.167837:0.377282 403.401859:1.322587 404.265369:1.361830 406.845410:0.742038 408.935463:1.554639 410.554481:3.129583 412.160419:0.090518 419.176487:2.624967 427.942425:1.616039 436.231240:1.919779 436.773745:1.996300 437.187236:0.089428 437.908397:3.082922 441.098948:1.704027 447.347324:0.158550 473.320105:3.092835 476.730923:3.708191 482.444949:0.204342 490.614602:0.651832 502.910917:0.126264 511.623109:1.888598 513.722363:3.090249 517.370838:0.253224 517.512745:0.085696 518.938434:7.767855 519.938710:3.547182 520.580955:0.101975 520.928902:1.560563 521.253232:0.233763 521.922934:0.204984 522.402740:1.973588 536.949495:4.290330 537.949583:2.278285 538.940830:0.599747","splash":{"block1":"splash10","block2":"03dl","block3":"8493000000","block4":"b1f4adb6cd907771ac13","splash":"splash10-03dl-8493000000-b1f4adb6cd907771ac13"},"submitter":{"id":"avaniya@ucdavis.edu","emailAddress":"avaniya@ucdavis.edu","firstName":"Arpana","lastName":"Vaniya","institution":"University of California, Davis"},"tags":[{"ruleBased":false,"text":"VF-NPL"},{"ruleBased":false,"text":"VF-NPL QExactive"},{"ruleBased":true,"text":"LC-MS"}],"library":{"library":"Vaniya/Fiehn Natural Products Library","description":"Vaniya/Fiehn Natural Products Library","link":"","tag":{"ruleBased":false,"text":"VF-NPL"}}}
+{
+  "compound": [
+    {
+      "inchi": "InChI=1S/C23H28O11/c1-21-8-13(25)12-7-23(21,33-19-17(28)16(27)15(26)14(9-24)32-19)22(12,20(30)34-21)10-31-18(29)11-5-3-2-4-6-11/h2-6,12-17,19,24-28H,7-10H2,1H3/t12-,13+,14+,15+,16-,17+,19-,21-,22-,23-/m0/s1",
+      "metaData": [
+        {
+          "category": "none",
+          "computed": false,
+          "hidden": false,
+          "name": "InChI",
+          "value": "InChI=1S/C23H28O11/c1-21-8-13(25)12-7-23(21,33-19-17(28)16(27)15(26)14(9-24)32-19)22(12,20(30)34-21)10-31-18(29)11-5-3-2-4-6-11/h2-6,12-17,19,24-28H,7-10H2,1H3/t12-,13+,14+,15+,16-,17+,19-,21-,22-,23-/m0/s1"
+        },
+        {
+          "category": "computed",
+          "computed": true,
+          "hidden": false,
+          "name": "molecular formula",
+          "value": "C23H28O11"
+        },
+        {
+          "category": "computed",
+          "computed": true,
+          "hidden": false,
+          "name": "total exact mass",
+          "value": 480.163161716
+        },
+        {
+          "category": "computed",
+          "computed": true,
+          "hidden": false,
+          "name": "SMILES",
+          "value": "O=C(OCC12C(=O)OC3(C)CC(O)C2CC31OC4OC(CO)C(O)C(O)C4O)C=5C=CC=CC5"
+        },
+        {
+          "category": "computed",
+          "computed": true,
+          "hidden": false,
+          "name": "InChIKey",
+          "value": "QQUHMASGPODSIW-ICECTASOSA-N"
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+H-H2O]+",
+          "value": 943.318953432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+K]+",
+          "value": 999.424623432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+H]+",
+          "value": 481.171131716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+Na]+",
+          "value": 983.316093432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+Cl]-",
+          "value": 995.779323432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+HAc-H]-",
+          "value": 1019.370353432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M-H]-",
+          "value": 479.155885716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M-H]-",
+          "value": 959.3190474319999
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+Na]+",
+          "value": 503.152931716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+H-H2O]+",
+          "value": 463.155791716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+NH4]+",
+          "value": 978.364903432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+Cl]-",
+          "value": 515.616161716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+NH4]+",
+          "value": 498.201741716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+K]+",
+          "value": 519.261461716
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[2M+H]+",
+          "value": 961.334293432
+        },
+        {
+          "category": "theoretical adduct",
+          "computed": true,
+          "hidden": true,
+          "name": "[M+HAc-H]-",
+          "value": 539.207191716
+        }
+      ],
+      "molFile": "\n  CDK     07162209522D\n\n 34 38  0  0  1  0  0  0  0  0999 V2000\n    1.5791    2.7665    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.8359   -8.0425    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.0949   -7.2255    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4984   -7.3616    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.0164   -5.7276    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.4199   -5.8637    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.9587   -1.6519    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.1232    2.0247    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2838   -4.9186    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1854   -1.3698    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    5.6789   -5.0467    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.3853   -2.1154    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   -1.1758    1.2747    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -2.8264   -3.5202    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -4.2989   -3.2922    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -4.8510   -1.8912    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n   -3.8980   -0.7031    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    5.6004   -3.5487    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.4255   -0.9311    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n    3.7305    0.5247    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4223    1.2747    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    2.8489   -0.6888    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n    1.4223   -0.2253    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n   -3.2236   -6.0878    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6653    1.4522    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.2357   -4.4637    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.3341   -1.6666    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4412    0.6951    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    6.8584   -2.7317    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    5.2305    0.5247    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    4.2639   -2.8677    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8863   -2.3503    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4815    0.2347    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.8489    1.7383    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  3  2  2  0  0  0  0\n  4  2  1  0  0  0  0\n  5  3  1  0  0  0  0\n  6  4  2  0  0  0  0\n 11  5  2  0  0  0  0\n 11  6  1  0  0  0  0\n 12  7  1  1  0  0  0\n 13  8  1  0  0  0  0\n 13 12  1  0  0  0  0\n 14  9  1  6  0  0  0\n 15 14  1  0  0  0  0\n 16 15  1  0  0  0  0\n 17 16  1  0  0  0  0\n 18 11  1  0  0  0  0\n 19 17  1  0  0  0  0\n 21  1  1  1  0  0  0\n 21  8  1  0  0  0  0\n 22 10  1  1  0  0  0\n 22 12  1  0  0  0  0\n 22 20  1  0  0  0  0\n 23  7  1  0  0  0  0\n 23 21  1  0  0  0  0\n 23 22  1  0  0  0  0\n 24  9  1  0  0  0  0\n 13 25  1  6  0  0  0\n 15 26  1  1  0  0  0\n 16 27  1  6  0  0  0\n 17 28  1  1  0  0  0\n 29 18  2  0  0  0  0\n 30 20  2  0  0  0  0\n 31 10  1  0  0  0  0\n 31 18  1  0  0  0  0\n 32 14  1  0  0  0  0\n 32 19  1  0  0  0  0\n 19 33  1  6  0  0  0\n 23 33  1  1  0  0  0\n 34 20  1  0  0  0  0\n 34 21  1  0  0  0  0\nM  END\n",
+      "names": [
+        {
+          "computed": false,
+          "name": "albiflorin",
+          "score": 0.0
+        }
+      ],
+      "tags": [
+      ],
+      "computed": false,
+      "kind": "biological",
+      "classification": [
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "kingdom",
+          "value": "Organic compounds"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "superclass",
+          "value": "Lipids and lipid-like molecules"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "class",
+          "value": "Prenol lipids"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "subclass",
+          "value": "Terpene glycosides"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "direct parent",
+          "value": "Terpene glycosides"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Terpene lactones"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Hexoses"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "O-glycosyl compounds"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Bicyclic monoterpenoids"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Benzoic acid esters"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Aromatic monoterpenoids"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Benzoyl derivatives"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Oxepanes"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Dicarboxylic acids and derivatives"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Gamma butyrolactones"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Oxanes"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Tetrahydrofurans"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Secondary alcohols"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Cyclic alcohols and derivatives"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Carboxylic acid esters"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Acetals"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Polyols"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Oxacyclic compounds"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Carbonyl compounds"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Hydrocarbon derivatives"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Organic oxides"
+        },
+        {
+          "category": "classification",
+          "computed": true,
+          "hidden": false,
+          "name": "alternative parent",
+          "value": "Primary alcohols"
+        }
+      ]
+    }
+  ],
+  "id": "VF-NPL-QEHF007898",
+  "dateCreated": 1536935400457,
+  "lastUpdated": 1657965122189,
+  "lastCurated": 1657965122158,
+  "metaData": [
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "collision energy",
+      "value": "45HCD"
+    },
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "raw filename",
+      "value": "MX_C2_579_p09_H05_POS_QEHF_194.raw"
+    },
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "averaged scans",
+      "value": 12
+    },
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "ionization mode",
+      "value": "positive"
+    },
+    {
+      "category": "none",
+      "computed": false,
+      "hidden": false,
+      "name": "instrument type",
+      "value": "ESI-QFT"
+    },
+    {
+      "category": "none",
+      "computed": false,
+      "hidden": false,
+      "name": "instrument",
+      "value": "Thermo Q Exactive HF"
+    },
+    {
+      "category": "none",
+      "computed": false,
+      "hidden": false,
+      "name": "author",
+      "value": "Arpana Vaniya"
+    },
+    {
+      "category": "none",
+      "computed": false,
+      "hidden": false,
+      "name": "ms level",
+      "value": "MS2"
+    },
+    {
+      "category": "none",
+      "computed": false,
+      "hidden": false,
+      "name": "source introduction",
+      "value": "direct injection"
+    },
+    {
+      "category": "computed",
+      "computed": true,
+      "hidden": false,
+      "name": "spectral entropy",
+      "value": 4.224082714405243
+    },
+    {
+      "category": "computed",
+      "computed": true,
+      "hidden": false,
+      "name": "normalized entropy",
+      "value": 0.735518086316161
+    },
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "precursor m/z",
+      "value": 519.1262817382812
+    },
+    {
+      "computed": false,
+      "hidden": false,
+      "name": "precursor type",
+      "value": "[M+K]+"
+    },
+    {
+      "category": "mass spectrometry",
+      "computed": true,
+      "hidden": false,
+      "name": "mass accuracy",
+      "unit": "ppm",
+      "value": 260.39902519689144
+    },
+    {
+      "category": "mass spectrometry",
+      "computed": true,
+      "hidden": false,
+      "name": "mass error",
+      "unit": "Da",
+      "value": -0.13517997771873524
+    }
+  ],
+  "score": {
+    "impacts": [
+      {
+        "value": 2.0,
+        "reason": "Valid molecular structure(s) provided for biological compound"
+      },
+      {
+        "value": 1.0,
+        "reason": "Chromatography identified as LC-MS"
+      },
+      {
+        "value": 1.0,
+        "reason": "Ionization mode/type provided"
+      },
+      {
+        "value": 1.0,
+        "reason": "MS type/level identified"
+      },
+      {
+        "value": 1.0,
+        "reason": "Instrument information provided"
+      },
+      {
+        "value": 1.0,
+        "reason": "Collision energy provided"
+      },
+      {
+        "value": -1.0,
+        "reason": "No retention time/index provided"
+      },
+      {
+        "value": 1.0,
+        "reason": "Precursor type provided"
+      },
+      {
+        "value": 1.0,
+        "reason": "Precursor m/z provided"
+      },
+      {
+        "value": 1.0,
+        "reason": "Precursor information and provided compound validated"
+      },
+      {
+        "value": -1.0,
+        "reason": "Poor mass accuracy of 260.399 ppm"
+      }
+    ],
+    "score": 4.166666666666666
+  },
+  "spectrum": "50.152904:0.073111 50.498133:0.086443 50.500623:1.897859 50.525514:0.076257 52.500726:0.166491 54.098610:2.275540 54.510718:1.922929 55.018676:2.004299 55.029944:0.105154 55.055033:1.079336 55.314426:0.166612 55.537278:1.233292 55.574258:2.136783 55.805454:1.971019 55.963109:0.066914 55.964422:0.145266 56.050259:0.475676 56.216636:0.074019 56.610862:2.257062 56.965542:0.091581 57.034290:0.478616 57.070681:3.786358 57.224104:0.062723 58.024041:0.075656 58.081035:0.071155 58.979520:2.165505 59.049921:0.694788 59.193056:1.890009 59.306629:2.592404 59.576306:0.079321 59.734831:1.353422 60.143010:0.063312 60.170077:0.071941 60.467850:0.070685 60.767287:1.518796 61.011310:0.428208 61.165859:0.517340 61.592578:1.265620 62.000477:0.085938 62.125862:2.338245 62.471354:0.071986 62.842601:1.362987 62.990375:0.078511 64.761438:0.172756 65.859813:2.356201 65.942514:1.602542 65.955227:0.067471 66.564646:2.505680 66.813025:1.994888 67.054946:1.362524 67.373260:2.240691 67.789777:1.227150 69.034089:0.253998 69.070582:1.869671 70.063614:0.141374 70.065795:26.282293 70.113046:2.427527 70.242462:0.073343 71.049819:0.931832 71.069162:0.213073 71.086241:1.018087 71.667870:0.184934 72.081452:4.615347 73.028987:0.329242 73.047489:20.304811 73.065431:0.133227 73.361581:1.205974 73.954777:2.713113 74.047129:0.088963 74.458307:0.083662 75.026812:0.292403 75.707986:0.174914 76.103009:2.618779 76.553592:2.028745 76.562706:0.078236 76.728440:2.100317 77.006015:1.811622 77.711278:0.085729 79.021663:0.888524 79.054844:0.380925 79.366784:0.087279 81.000841:0.074632 81.070559:1.837550 82.022609:0.074793 82.460238:0.075598 82.542817:1.886358 83.049675:0.192909 83.086094:0.628321 83.659241:1.242603 84.109817:1.334991 85.029068:0.272391 85.065323:0.120253 85.101735:0.122794 85.262419:1.219951 85.930407:0.200174 86.096914:0.087180 86.583892:0.816271 87.044702:3.918834 88.059635:1.429915 89.060265:24.361495 91.002003:0.172127 91.057925:76.423473 92.057502:1.779755 92.061218:1.046331 92.904874:0.638159 93.037244:0.800936 93.054736:0.693425 93.070392:0.826497 94.804810:0.195411 95.016417:12.440341 95.049655:0.221646 95.086070:1.996482 96.015998:0.212046 96.030209:3.074581 96.701884:0.603057 96.995649:0.259767 97.013075:0.180344 97.028959:0.259938 97.065348:0.078419 97.076502:1.909860 97.101635:0.584412 97.805470:2.477236 98.096843:0.073167 98.105340:0.086714 98.975960:0.099653 99.044555:0.277136 100.612667:2.378349 100.719528:0.633357 100.976405:0.811738 101.060097:0.255673 101.321835:1.343389 101.677813:1.410634 103.039553:0.088967 104.107278:0.103567 104.794861:1.899953 105.033935:0.875792 105.070239:0.477432 105.073781:0.098934 106.965732:2.397597 107.070546:0.226973 107.086001:0.624524 108.044709:0.079812 108.325999:0.200169 109.068428:0.919677 109.101474:0.957504 110.867687:1.906817 111.044398:0.090819 111.475275:2.119298 112.087262:0.774939 113.026844:0.098534 113.151963:1.414140 114.102883:10.146897 114.586426:1.445589 114.850407:0.082021 116.332317:2.758167 116.666487:0.083313 116.986238:0.176298 118.265490:1.651525 119.016298:0.085032 119.049548:0.091830 119.085822:0.436991 120.443141:1.184491 120.701885:2.542250 121.031853:0.249900 121.065033:0.476448 121.101288:0.519650 122.998761:2.949036 123.044304:0.763262 123.080701:0.120152 124.641124:1.539850 125.096041:0.347814 127.038908:0.112010 128.986248:0.132884 129.918738:0.644122 131.085595:0.183319 131.167614:2.142821 133.004143:0.611253 133.065010:1.064813 133.085986:1.324031 133.101116:0.131649 133.277938:0.654861 134.996657:0.112102 135.080337:0.127105 135.117359:0.176782 135.403069:1.437368 137.059986:0.175635 137.096040:0.101578 141.022305:0.102159 143.001771:0.154141 145.024509:1.308924 145.068083:2.437748 146.705918:2.701330 146.996638:0.299379 147.047139:1.696061 147.080638:0.093112 149.044884:11.554954 149.096355:0.113281 150.044365:0.286227 150.403118:2.165605 151.039778:0.103250 151.075215:0.142557 153.018163:2.621146 153.100779:0.624602 154.109329:2.612537 154.122499:0.092643 154.667822:2.079100 156.138372:0.254516 161.011975:0.802502 161.060047:0.073200 163.039198:0.165963 165.057894:0.214239 167.055394:57.610684 168.054478:2.985584 168.804429:2.686368 169.035024:0.094162 169.052260:0.940687 177.054246:0.224790 179.069516:0.098296 179.921469:2.391791 182.153920:2.933974 189.092840:0.166137 191.071090:0.073517 197.012582:0.212699 197.771302:2.592194 197.998337:1.608669 200.265857:2.093068 200.654614:0.071948 203.326167:2.935016 203.716533:2.427058 206.016975:0.074289 206.911836:0.076376 207.032923:0.089776 207.709903:0.075070 209.048404:0.090531 209.250346:0.649130 209.881558:3.001736 210.185421:2.324488 212.986211:39.421947 212.998178:100.000000 219.017797:0.574922 219.174228:1.425427 220.019641:0.606171 221.084614:0.216432 223.063524:0.408397 225.042784:11.351714 225.649403:0.196815 226.043016:0.601911 227.022325:0.815374 227.039847:0.092658 228.593249:2.638671 233.461356:0.630602 235.028151:0.148052 235.070384:1.399694 236.947285:0.077191 237.027934:1.754492 239.094746:3.514324 240.011655:2.532540 240.097237:0.119728 240.909252:0.088778 243.902361:0.676716 244.365043:2.321968 247.514428:0.076611 248.887661:1.413909 253.038057:3.004261 255.722924:2.214154 261.776314:0.080629 263.203019:1.303034 264.268039:0.421590 265.019896:0.963337 266.557928:0.217127 266.998945:4.300872 267.998578:0.253707 268.977730:0.431688 271.048745:0.665011 272.429908:1.711077 275.680984:0.626620 275.902102:0.105780 278.738136:1.338751 280.739981:1.449515 281.050654:2.926875 281.911101:0.265021 282.051383:0.300909 283.030326:25.170379 283.046409:0.385097 284.030724:5.131829 285.009556:1.483195 285.027690:0.792054 292.903973:0.127847 298.769283:0.641320 298.785410:2.152901 299.061577:60.267105 300.061816:13.138154 301.058470:3.334164 303.019751:0.095208 304.178304:25.799728 306.919769:1.145817 308.055396:0.285173 309.395697:2.180172 310.619357:0.088093 312.924731:2.486762 312.957025:1.371978 318.920606:0.110699 321.799743:0.648171 322.118842:0.095131 324.930563:0.097258 326.066176:0.079806 326.966211:0.429274 330.410566:2.905955 330.518315:2.507052 335.229210:1.515524 336.124184:0.085260 342.997059:1.301992 344.976128:23.958017 345.976522:4.888721 346.973754:1.025072 347.246128:1.637787 349.399149:2.845894 349.440805:2.053259 356.444425:0.093048 356.717898:0.196939 359.026585:0.120520 361.837440:2.603871 362.987515:0.209848 368.643745:3.065648 376.531765:2.668532 380.113192:0.216988 381.418584:2.704173 385.889517:1.292226 392.814503:2.857404 395.474417:0.661188 396.442424:2.759339 397.141570:0.325453 398.279618:2.829349 401.167837:0.377282 403.401859:1.322587 404.265369:1.361830 406.845410:0.742038 408.935463:1.554639 410.554481:3.129583 412.160419:0.090518 419.176487:2.624967 427.942425:1.616039 436.231240:1.919779 436.773745:1.996300 437.187236:0.089428 437.908397:3.082922 441.098948:1.704027 447.347324:0.158550 473.320105:3.092835 476.730923:3.708191 482.444949:0.204342 490.614602:0.651832 502.910917:0.126264 511.623109:1.888598 513.722363:3.090249 517.370838:0.253224 517.512745:0.085696 518.938434:7.767855 519.938710:3.547182 520.580955:0.101975 520.928902:1.560563 521.253232:0.233763 521.922934:0.204984 522.402740:1.973588 536.949495:4.290330 537.949583:2.278285 538.940830:0.599747",
+  "splash": {
+    "block1": "splash10",
+    "block2": "03dl",
+    "block3": "8493000000",
+    "block4": "b1f4adb6cd907771ac13",
+    "splash": "splash10-03dl-8493000000-b1f4adb6cd907771ac13"
+  },
+  "submitter": {
+    "id": "avaniya@ucdavis.edu",
+    "emailAddress": "avaniya@ucdavis.edu",
+    "firstName": "Arpana",
+    "lastName": "Vaniya",
+    "institution": "University of California, Davis"
+  },
+  "tags": [
+    {
+      "ruleBased": false,
+      "text": "VF-NPL"
+    },
+    {
+      "ruleBased": false,
+      "text": "VF-NPL QExactive"
+    },
+    {
+      "ruleBased": true,
+      "text": "LC-MS"
+    }
+  ],
+  "library": {
+    "library": "Vaniya/Fiehn Natural Products Library",
+    "description": "Vaniya/Fiehn Natural Products Library",
+    "link": "",
+    "tag": {
+      "ruleBased": false,
+      "text": "VF-NPL"
+    }
+  }
+}
