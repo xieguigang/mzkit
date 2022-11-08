@@ -60,7 +60,7 @@ Public Module MspReader
     Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
             Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
-            Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum)
+            Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
 
             Yield New SpectraSection(metadata) With {
                 .SpectraInfo = ms2
@@ -68,7 +68,7 @@ Public Module MspReader
         Next
     End Function
 
-    Public Function ParseSpectrumData(spectrum As MspData) As SpectraInfo
+    Public Function ParseSpectrumData(spectrum As MspData, metadata As MetaData) As SpectraInfo
         Return New SpectraInfo With {
             .MassPeaks = spectrum.Peaks,
             .collision_energy = spectrum.Collision_energy,
