@@ -128,4 +128,8 @@ Public Class SpectraInfo
     Public Property solvent_b As String
 
     Public Property MassPeaks As ms2()
+
+    Public Function ToPeaksMs2() As PeakMs2
+
+    End Function
 End Class
