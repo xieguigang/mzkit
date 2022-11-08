@@ -12,6 +12,10 @@ Public Class WebJSON
     Public Property spectrum As String
     Public Property id As String
 
+    Public Overrides Function ToString() As String
+        Return id
+    End Function
+
     Public Function ParseMatrix() As LibraryMatrix
         Dim data As String() = spectrum.Split(" "c)
         Dim mzinto As ms2() = data _
