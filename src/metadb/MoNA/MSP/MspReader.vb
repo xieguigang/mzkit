@@ -72,10 +72,10 @@ Public Module MspReader
         Return New SpectraInfo With {
             .MassPeaks = spectrum.Peaks,
             .collision_energy = spectrum.Collision_energy,
-            .retention_time = spectrum.RetentionTime,
+            .retention_time = metadata.Read_retention_time,
             .instrument = spectrum.Instrument,
             .instrument_type = spectrum.Instrument_type,
-            .MsLevel = spectrum.Spectrum_type,
+            .MsLevel = metadata.ms_level,
             .mz = Val(spectrum.PrecursorMZ),
             .precursor_type = spectrum.Precursor_type,
             .ion_mode = spectrum.Ion_mode
