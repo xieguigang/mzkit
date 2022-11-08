@@ -77,7 +77,8 @@ Public Module MspReader
             .instrument_type = spectrum.Instrument_type,
             .MsLevel = spectrum.Spectrum_type,
             .mz = Val(spectrum.PrecursorMZ),
-            .precursor_type = spectrum.Precursor_type
+            .precursor_type = spectrum.Precursor_type,
+            .ion_mode = spectrum.Ion_mode
         }
     End Function
 

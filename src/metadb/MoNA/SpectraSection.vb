@@ -129,7 +129,16 @@ Public Class SpectraInfo
 
     Public Property MassPeaks As ms2()
 
-    Public Function ToPeaksMs2() As PeakMs2
-
+    Public Function ToPeaksMs2(Optional id As String = Nothing) As PeakMs2
+        Return New PeakMs2 With {
+            .activation = ionization,
+            .collisionEnergy = collision_energy,
+            .intensity = MassPeaks.Sum(Function(a) a.intensity),
+            .lib_guid = If(id, $""),
+            .mz = mz,
+            .mzInto = MassPeaks,
+            .precursor_type = precursor_type,
+            .rt = retention_time
+        }
     End Function
 End Class
