@@ -248,7 +248,10 @@ Public Class mzPack
         Using file As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Dim pack As mzPack = ReadAll(file, ignoreThumbnail, skipMsn:=skipMsn, verbose:=verbose)
 
-            If pack.source.StringEmpty Then
+            ' 20221109 MSI.mzPack is the internal pipeline raw data file name
+            ' andalso we should treated as empty
+            If pack.source.StringEmpty OrElse
+                pack.source.TextEquals("MSI.mzPack") Then
                 pack.source = filepath.FileName
             End If
 
