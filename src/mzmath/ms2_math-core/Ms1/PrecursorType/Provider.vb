@@ -216,7 +216,13 @@ Namespace Ms1.PrecursorType
         ''' 这个函数返回1或者-1,用来分别对应于阳离子和阴离子
         ''' </summary>
         ''' <param name="mode"></param>
-        ''' <returns></returns>
+        ''' <param name="allowsUnknown">
+        ''' zero will be returns if this parameter value is set to TRUE, otherwise this
+        ''' parser function will throw an exception
+        ''' </param>
+        ''' <returns>
+        ''' function returns 1(positive) or -1(negative)
+        ''' </returns>
         Public Function ParseIonMode(mode$, Optional allowsUnknown As Boolean = False) As Integer
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"

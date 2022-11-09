@@ -91,10 +91,16 @@ Namespace ASCII.MSP
         Public Property RetentionTime As String
 
         Public Property Peaks As ms2()
+
         ''' <summary>
         ''' 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' data in this property consist with the metadata 
+        ''' in the msp fields and the metadata from the 
+        ''' comment text data field.
+        ''' </remarks>
         Public Property Comments As NameValueCollection
 
         Public Overrides Function ToString() As String

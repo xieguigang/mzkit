@@ -60,21 +60,26 @@ Public Module MspReader
     Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
             Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
-            Dim ms2 As New SpectraInfo With {
-                .MassPeaks = spectrum.Peaks,
-                .collision_energy = spectrum.Collision_energy,
-                .retention_time = spectrum.RetentionTime,
-                .instrument = spectrum.Instrument,
-                .instrument_type = spectrum.Instrument_type,
-                .MsLevel = spectrum.Spectrum_type,
-                .mz = Val(spectrum.PrecursorMZ),
-                .precursor_type = spectrum.Precursor_type
-            }
+            Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
 
             Yield New SpectraSection(metadata) With {
                 .SpectraInfo = ms2
             }
         Next
+    End Function
+
+    Public Function ParseSpectrumData(spectrum As MspData, metadata As MetaData) As SpectraInfo
+        Return New SpectraInfo With {
+            .MassPeaks = spectrum.Peaks,
+            .collision_energy = spectrum.Collision_energy,
+            .retention_time = metadata.Read_retention_time,
+            .instrument = spectrum.Instrument,
+            .instrument_type = spectrum.Instrument_type,
+            .MsLevel = metadata.ms_level,
+            .mz = Val(spectrum.PrecursorMZ),
+            .precursor_type = spectrum.Precursor_type,
+            .ion_mode = spectrum.Ion_mode
+        }
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
