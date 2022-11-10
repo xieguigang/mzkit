@@ -2,6 +2,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -140,8 +141,26 @@ Public Class PeakQuery
         End Get
     End Property
 
+    Public ReadOnly Property adducts As String()
+        Get
+            Return peaks _
+                .Select(Function(p) p.annotation) _
+                .Distinct _
+                .ToArray
+        End Get
+    End Property
+
+    Public ReadOnly Property rt As DoubleRange
+        Get
+            Return New DoubleRange(From peak As Peaktable
+                                   In peaks
+                                   Let t = peak.rt
+                                   Select t)
+        End Get
+    End Property
+
     Public Overrides Function ToString() As String
-        Return $"{exactMass.ToString("F4")} has {peaks.Length} peaks: {peaks.Select(Function(p) p.annotation).Distinct.JoinBy("; ")}"
+        Return $"{exactMass.ToString("F4")}@{rt}s has {peaks.Length} peaks: {adducts.JoinBy("; ")}"
     End Function
 
 End Class
