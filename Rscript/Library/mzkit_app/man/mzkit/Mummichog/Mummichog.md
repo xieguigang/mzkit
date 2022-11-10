@@ -8,3 +8,4 @@
 + [createMzset](Mummichog/createMzset.1) 
 + [fromGseaBackground](Mummichog/fromGseaBackground.1) cast background models for ``peakList_annotation`` analysis based on
 + [kegg_background](Mummichog/kegg_background.1) create kegg pathway network graph background model
++ [group_peaks](Mummichog/group_peaks.1) 

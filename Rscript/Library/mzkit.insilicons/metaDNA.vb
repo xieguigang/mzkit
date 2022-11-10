@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -324,48 +325,53 @@ Module metaDNAInfer
                 .DIASearch _
                 .ToArray
         ElseIf TypeOf seeds Is dataframe Then
-            Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
-            Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
-            Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
-            Dim annoSet As NamedValue(Of String)() = id _
-                .Select(Function(uid, i) (uid, kegg_id(i))) _
-                .GroupBy(Function(map) map.uid) _
-                .Select(Function(map)
-                            Return map _
-                                .GroupBy(Function(anno) anno.Item2) _
-                                .Select(Function(anno)
-                                            Return New NamedValue(Of String) With {
-                                                .Name = map.Key,
-                                                .Value = anno.Key
-                                            }
-                                        End Function)
-                        End Function) _
-                .IteratesALL _
-                .Where(Function(map)
-                           Return map.Value.IsPattern("C\d+")
-                       End Function) _
-                .ToArray
-            Dim seedsRaw As AnnotatedSeed()
-
-            If env.globalEnvironment.options.verbose Then
-                Call base.print("Create seeds by dataframe...", , env)
-            End If
-
-            seedsRaw = rawFile.CreateAnnotatedSeeds(annoSet).ToArray
-
-            If env.globalEnvironment.options.verbose Then
-                Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", , env)
-            End If
-
-            infer = metaDNA _
-                .SetSamples(rawFile) _
-                .DIASearch(seedsRaw) _
-                .ToArray
+            infer = DirectCast(seeds, dataframe).InferTable(raw, metaDNA, env)
         Else
             Throw New NotImplementedException
         End If
 
         Return infer
+    End Function
+
+    <Extension>
+    Private Function InferTable(seeds As dataframe, raw As pipeline, metaDNA As Algorithm, env As Environment) As CandidateInfer()
+        Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
+        Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
+        Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+        Dim annoSet As NamedValue(Of String)() = id _
+            .Select(Function(uid, i) (uid, kegg_id(i))) _
+            .GroupBy(Function(map) map.uid) _
+            .Select(Function(map)
+                        Return map _
+                            .GroupBy(Function(anno) anno.Item2) _
+                            .Select(Function(anno)
+                                        Return New NamedValue(Of String) With {
+                                            .Name = map.Key,
+                                            .Value = anno.Key
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .Where(Function(map)
+                       Return map.Value.IsPattern("C\d+")
+                   End Function) _
+            .ToArray
+        Dim seedsRaw As AnnotatedSeed()
+
+        If env.globalEnvironment.options.verbose Then
+            Call base.print("Create seeds by dataframe...", , env)
+        End If
+
+        seedsRaw = rawFile.CreateAnnotatedSeeds(annoSet).ToArray
+
+        If env.globalEnvironment.options.verbose Then
+            Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", , env)
+        End If
+
+        Return metaDNA _
+            .SetSamples(rawFile) _
+            .DIASearch(seedsRaw) _
+            .ToArray
     End Function
 
     ''' <summary>

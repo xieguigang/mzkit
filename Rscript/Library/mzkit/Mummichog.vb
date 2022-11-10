@@ -1,10 +1,13 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.MSEngine.Mummichog
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -271,5 +274,31 @@ Module Mummichog
         Next
 
         Return graphSet
+    End Function
+
+    <ExportAPI("group_peaks")>
+    Public Function GroupPeaks(<RRawVectorArgument>
+                               peaktable As Object,
+                               <RRawVectorArgument(GetType(String))>
+                               Optional adducts As Object = "[M]+|[M+H]+|[M+H2O]+|[M+H-H2O]+",
+                               Optional isotopic_max As Integer = 5,
+                               Optional mzdiff As Double = 0.01,
+                               Optional delta_rt As Double = 3,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim peakSet As [Variant](Of Message, Peaktable()) = Math.GetPeakList(peaktable, env)
+        Dim precursors As MzCalculator() = Math.GetPrecursorTypes(adducts, env)
+
+        If peakSet Like GetType(Message) Then
+            Return peakSet.TryCast(Of Message)
+        End If
+
+        Dim alg As New PeakCorrelation(precursors, isotopic_max)
+        Dim groups As PeakQuery() = alg _
+            .FindExactMass(peakSet.TryCast(Of Peaktable()), delta_rt, mzdiff) _
+            .OrderByDescending(Function(m) m.size) _
+            .ToArray
+
+        Return groups
     End Function
 End Module

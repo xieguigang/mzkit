@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-09" />
+    <meta name="last-update" content="2022-11-10" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -248,6 +248,36 @@
                 </li>
                 </ul>
 </div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="group_peaks">
+    <a href="./Mummichog/group_peaks.html">group_peaks</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>group_peaks</code> as function(<code>peaktable</code> as any, 
+<code>adducts</code> as any = ["[M]+","[M+H]+","[M+H2O]+","[M+H-H2O]+"], 
+<code>isotopic_max</code> as integer = 5, 
+<code>mzdiff</code> as double = 0.01, 
+<code>delta_rt</code> as double = 3, 
+[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.Mummichog
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "Mummichog"
+    #
+    return call <code>R&#35;.interop_[Mummichog::GroupPeaks]</code>(...);
+}</p></pre>
+
+                    
                        
                     
 
