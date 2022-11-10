@@ -280,7 +280,7 @@ Module Mummichog
     Public Function GroupPeaks(<RRawVectorArgument>
                                peaktable As Object,
                                <RRawVectorArgument(GetType(String))>
-                               Optional adducts As Object = "[M]+|[M+H]+|[M+H2O]+",
+                               Optional adducts As Object = "[M]+|[M+H]+|[M+H2O]+|[M+H-H2O]+",
                                Optional isotopic_max As Integer = 5,
                                Optional mzdiff As Double = 0.01,
                                Optional delta_rt As Double = 3,

@@ -150,6 +150,14 @@ Public Class PeakQuery
         End Get
     End Property
 
+    Public ReadOnly Property id_group As String()
+        Get
+            Return peaks _
+                .Select(Function(p) p.name) _
+                .ToArray
+        End Get
+    End Property
+
     Public ReadOnly Property rt As DoubleRange
         Get
             Return New DoubleRange(From peak As Peaktable
