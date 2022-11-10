@@ -279,7 +279,7 @@ Module Mummichog
     <ExportAPI("group_peaks")>
     Public Function GroupPeaks(<RRawVectorArgument>
                                peaktable As Object,
-                               <RRawVectorArgument>
+                               <RRawVectorArgument(GetType(String))>
                                Optional adducts As Object = "[M]+|[M+H]+|[M+H2O]+",
                                Optional isotopic_max As Integer = 5,
                                Optional mzdiff As Double = 0.01,
