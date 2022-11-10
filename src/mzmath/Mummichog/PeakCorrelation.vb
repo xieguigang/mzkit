@@ -27,7 +27,10 @@ Public Class PeakCorrelation
                                            Optional deltaRt As Double = 3,
                                            Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery)
 
-        Dim peakList As Peaktable() = peaktable.OrderBy(Function(d) d.mz).ToArray
+        Dim peakList As Peaktable() = (From d As Peaktable
+                                       In peaktable
+                                       Where d.mz > 0
+                                       Order By d.mz).ToArray
         Dim isotopics As List(Of PeakQuery) = peakList _
             .AsParallel _
             .Select(Function(peak) IsotopicAnnotation(peak, max:=isotopicMax)) _
