@@ -27,7 +27,7 @@ Public Class PeakCorrelation
                                            Optional deltaRt As Double = 3,
                                            Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery)
 
-        Dim peakList As Peaktable() = peaktable.ToArray
+        Dim peakList As Peaktable() = peaktable.OrderBy(Function(d) d.mz).ToArray
         Dim isotopics As List(Of PeakQuery) = peakList _
             .AsParallel _
             .Select(Function(peak) IsotopicAnnotation(peak, max:=isotopicMax)) _
@@ -130,5 +130,15 @@ Public Class PeakQuery
 
     Public Property exactMass As Double
     Public Property peaks As Peaktable()
+
+    Public ReadOnly Property size As Integer
+        Get
+            Return peaks.TryCount
+        End Get
+    End Property
+
+    Public Overrides Function ToString() As String
+        Return $"{exactMass.ToString("F4")} has {peaks.Length} peaks: {peaks.JoinBy("; ")}"
+    End Function
 
 End Class
