@@ -112,6 +112,7 @@ Public Class Peaktable
     ''' <returns></returns>
     Public Property ionization As String
     Public Property energy As String
+    Public Property annotation As String
 
     Public Overrides Function ToString() As String
         Return $"{mz}@{rt}#{scan}-{ionization}-{energy}"
