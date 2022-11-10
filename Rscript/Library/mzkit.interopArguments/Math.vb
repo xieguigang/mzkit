@@ -122,13 +122,31 @@ Module Math
         Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z")
         Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time")
         Dim id As String() = peaktable.getVector(Of String)("xcms_id", "id", "ID", "name", "guid")
+        Dim scan As Integer() = peaktable.getVector(Of Integer)("scan")
+        Dim rtmin As Double() = peaktable.getVector(Of Double)("rtmin")
+        Dim rtmax As Double() = peaktable.getVector(Of Double)("rtmax")
+        Dim maxinto As Double() = peaktable.getVector(Of Double)("maxInto", "maxinto")
+        Dim area As Double() = peaktable.getVector(Of Double)("area")
+        Dim mzmin As Double() = peaktable.getVector(Of Double)("mzmin")
+        Dim mzmax As Double() = peaktable.getVector(Of Double)("mzmax")
+
+        If scan.IsNullOrEmpty Then
+            scan = mz.Sequence.ToArray
+        End If
 
         Return id _
             .Select(Function(uid, i)
                         Return New Peaktable With {
                             .mz = mz(i),
                             .rt = rt(i),
-                            .name = id(i)
+                            .name = id(i),
+                            .scan = scan(i),
+                            .rtmin = rtmin.ElementAtOrDefault(i, .rt),
+                            .rtmax = rtmax.ElementAtOrDefault(i, .rt),
+                            .into = area.ElementAtOrDefault(i),
+                            .maxo = maxinto.ElementAtOrDefault(i),
+                            .mzmin = mzmin.ElementAtOrDefault(i, .mz),
+                            .mzmax = mzmax.ElementAtOrDefault(i, .mz)
                         }
                     End Function) _
             .ToArray

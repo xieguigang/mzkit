@@ -141,7 +141,7 @@ Public Class PeakQuery
     End Property
 
     Public Overrides Function ToString() As String
-        Return $"{exactMass.ToString("F4")} has {peaks.Length} peaks: {peaks.JoinBy("; ")}"
+        Return $"{exactMass.ToString("F4")} has {peaks.Length} peaks: {peaks.Select(Function(p) p.annotation).Distinct.JoinBy("; ")}"
     End Function
 
 End Class
