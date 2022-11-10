@@ -39,10 +39,14 @@ Public Class PeakCorrelation
             .IteratesALL _
             .ToArray
         Dim union = isotopics + adducts
-        Dim mass_group = union.GroupBy(Function(t) t.exactMass, offsets:=mzdiff).ToArray
+        Dim mass_group = union _
+            .GroupBy(Function(t) t.exactMass, offsets:=mzdiff) _
+            .ToArray
 
         For Each mass As NamedCollection(Of PeakQuery) In mass_group
-            Dim time_group = mass.GroupBy(Function(t) t.peaks(Scan0).rt, offsets:=deltaRt).ToArray
+            Dim time_group = mass _
+                .GroupBy(Function(t) t.peaks(Scan0).rt, offsets:=deltaRt) _
+                .ToArray
 
             For Each peak As NamedCollection(Of PeakQuery) In time_group
                 Yield New PeakQuery With {
