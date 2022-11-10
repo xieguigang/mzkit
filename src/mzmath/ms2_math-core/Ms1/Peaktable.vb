@@ -112,8 +112,15 @@ Public Class Peaktable
     ''' <returns></returns>
     Public Property ionization As String
     Public Property energy As String
+    Public Property annotation As String
 
     Public Overrides Function ToString() As String
-        Return $"{mz}@{rt}#{scan}-{ionization}-{energy}"
+        Dim display As String = $"#{scan} {mz}@{rt}_{ionization}_{energy}V"
+
+        If annotation.StringEmpty Then
+            Return display
+        Else
+            Return $"{display}: {annotation}"
+        End If
     End Function
 End Class
