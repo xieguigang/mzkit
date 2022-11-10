@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Language
@@ -97,5 +99,38 @@ Module Math
         End If
 
         Throw New NotImplementedException
+    End Function
+
+    Public Function GetPeakList(peaktable As Object, env As Environment) As [Variant](Of Message, Peaktable())
+        If TypeOf peaktable Is dataframe Then
+            Return PeakListFromDataframe(peaktable)
+        Else
+            Dim peakList As pipeline = pipeline.TryCreatePipeline(Of Peaktable)(peaktable, env)
+
+            If peakList.isError Then
+                Return peakList.getError
+            Else
+                Return peakList _
+                    .populates(Of Peaktable)(env) _
+                    .ToArray
+            End If
+        End If
+    End Function
+
+    <Extension>
+    Public Function PeakListFromDataframe(peaktable As dataframe) As Peaktable()
+        Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z")
+        Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time")
+        Dim id As String() = peaktable.getVector(Of String)("xcms_id", "id", "ID", "name", "guid")
+
+        Return id _
+            .Select(Function(uid, i)
+                        Return New Peaktable With {
+                            .mz = mz(i),
+                            .rt = rt(i),
+                            .name = id(i)
+                        }
+                    End Function) _
+            .ToArray
     End Function
 End Module
