@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-11" />
+    <meta name="last-update" content="2022-11-13" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -46,7 +46,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -78,7 +78,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -103,7 +103,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -138,7 +138,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -176,7 +176,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -214,7 +214,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -249,7 +249,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -281,7 +281,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -319,7 +319,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -360,7 +360,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -386,7 +386,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -398,6 +398,42 @@
   <ul>
                    <li>
   <code>file</code>: the <code>*.mzXML</code>/<code>*.mzML</code>/<code>*.mzPack</code>/<code>*.raw</code> raw data file
+                </li>
+                </ul>
+</div>
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
+  <h2 id="open_mzpack.xml">
+    <a href="./mzweb/open_mzpack.xml.html">open_mzpack.xml</a>
+  </h2>
+  <hr />
+  <p>
+                    <p>open mzpack data from a raw data file in xml file format.</p>  
+                
+                    <pre><p>let <code>open_mzpack.xml</code> as function(<code>file</code> as string, <code>prefer</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; mzPack</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MzWeb
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "mzweb"
+    #
+    return call <code>R&#35;.interop_[MzWeb::openFromFile]</code>(...);
+}</p></pre>
+
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>file</code>: -
+                </li>
+<li>
+  <code>prefer</code>: the prefer file format used when the given <strong><code>file</code></strong> its extension<br />
+ suffix name is <code>XML</code>. value of this parameter could be imzml/mzml/mzxml
                 </li>
                 </ul>
 </div>
@@ -418,7 +454,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -455,7 +491,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -490,7 +526,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -535,7 +571,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -581,7 +617,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #
@@ -627,7 +663,7 @@
     # .NET API information
     #
     # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "mzweb"
     #

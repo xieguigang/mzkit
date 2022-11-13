@@ -13,6 +13,7 @@ biodeep mzweb data viewer raw data file helper
 + [write.mzPack](mzweb/write.mzPack.1) write version 2 format of the mzpack by default
 + [write.cdf](mzweb/write.cdf.1) 
 + [open.mzpack](mzweb/open.mzpack.1) open a raw data files in common raw data format and then returns 
++ [open_mzpack.xml](mzweb/open_mzpack.xml.1) open mzpack data from a raw data file in xml file format.
 + [setThumbnail](mzweb/setThumbnail.1) set thumbnail image to the raw data file
 + [ms1_scans](mzweb/ms1_scans.1) get all ms1 scan data points
 + [ms1_peaks](mzweb/ms1_peaks.1) get a overview ms1 spectrum data from the mzpack raw data
