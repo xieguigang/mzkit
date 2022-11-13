@@ -293,10 +293,30 @@ Module MzPackAccess
     Public Function packData(<RRawVectorArgument>
                              data As Object,
                              Optional timeWindow As Double = 1,
+                             Optional pack_singleCells As Boolean = False,
                              Optional env As Environment = Nothing) As Object
-        Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(data, env)
+
+        Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(data, env, suppress:=True)
 
         If peaks.isError Then
+            peaks = pipeline.TryCreatePipeline(Of ScanMS1)(data, env, suppress:=True)
+
+            If Not peaks.isError Then
+                Dim scanMs1 As ScanMS1() = peaks.populates(Of ScanMS1)(env).ToArray
+
+                If pack_singleCells Then
+                    scanMs1 = (From scan As ScanMS1 In scanMs1 Order By scan.scan_id).ToArray
+
+                    For i As Integer = 0 To scanMs1.Length - 1
+                        scanMs1(i).rt = (i + 1) * timeWindow
+                    Next
+                End If
+
+                Return New mzPack With {
+                    .MS = scanMs1
+                }
+            End If
+
             Return peaks.getError
         End If
 

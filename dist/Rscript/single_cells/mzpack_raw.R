@@ -1,6 +1,7 @@
 # require(mzkit);
 
 imports "mzweb" from "mzkit";
+imports "mzPack" from "mzkit";
 
 raw_files = list.files("P:\20221113_29_single_cell\20221113_29_single_cell_metabolism_SCM", pattern = "*.xml");
 
@@ -17,3 +18,6 @@ for(path in raw_files) {
 
 print(cell_scans);
 
+packData(cell_scans, pack.singleCells = TRUE)
+|> write.mzPack(file = "P:\20221113_29_single_cell\20221113_29_single_cell_metabolism_SCM_MALDI_negative.mzPack")
+;
