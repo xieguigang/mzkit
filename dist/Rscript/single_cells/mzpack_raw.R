@@ -9,7 +9,7 @@ print(basename(raw_files));
 cell_scans = [];
 
 for(path in raw_files) {
-	raw = open_mzpack.xml(path, prefer = "mzml");
+	raw = open_mzpack.xml(path, prefer = "mzxml");
 	cell_scans = append( cell_scans , [raw]::MS);
 	
 	print(basename(path));

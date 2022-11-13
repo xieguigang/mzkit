@@ -84,6 +84,7 @@ Namespace mzData.mzWebCache
         Protected products As New List(Of ScanMS2)
         Protected trim As LowAbundanceTrimming
         Protected ms1Err As Tolerance
+        Protected rawName As String
 
         Protected ReadOnly reader As MsDataReader(Of Scan)
         Protected ReadOnly invalidScans As New List(Of Scan)
@@ -115,10 +116,17 @@ Namespace mzData.mzWebCache
 
         Public Function CreateScan(scan As Scan, Optional uniqueId As String = Nothing) As MSScan
             Dim scan_time As Double = reader.GetScanTime(scan)
-            Dim scan_id As String = If(uniqueId.StringEmpty, reader.GetScanId(scan), $"[{uniqueId}]{reader.GetScanId(scan)}")
-            Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
+            Dim scan_name As String = reader.GetScanId(scan)
 
-            If reader.GetMsLevel(scan) = 1 Then
+            If scan_name.StringEmpty Then
+                scan_name = $"[MS1] {rawName}"
+            End If
+
+            Dim scan_id As String = If(uniqueId.StringEmpty, scan_name, $"[{uniqueId}]{scan_name}")
+            Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
+            Dim msLevel As Integer = reader.GetMsLevel(scan)
+
+            If msLevel = 1 OrElse msLevel = 0 Then
                 Return New ScanMS1 With {
                     .BPC = reader.GetBPC(scan),
                     .TIC = reader.GetTIC(scan),
@@ -150,8 +158,9 @@ Namespace mzData.mzWebCache
 
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scanVal As MSScan = CreateScan(scan, ++i)
+                Dim isMs1 As Boolean = TypeOf scanVal Is ScanMS1
 
-                If reader.GetMsLevel(scan) = 1 Then
+                If isMs1 Then
                     If Not ms1 Is Nothing Then
                         ms1.products = products.ToArray
                         ms1Yields += 1

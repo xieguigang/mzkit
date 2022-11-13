@@ -87,6 +87,10 @@ Namespace MarkupData.mzXML
         End Function
 
         Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
+            If compressionType.StringEmpty Then
+                Return CompressionMode.none
+            End If
+
             If charToModes.ContainsKey(compressionType) Then
                 Return charToModes(compressionType)
             Else

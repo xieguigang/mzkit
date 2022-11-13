@@ -142,9 +142,14 @@ Namespace Spectra
         ''' <param name="rt">诸如``PT508.716S``这样格式的表达式字符串</param>
         ''' <returns></returns>
         Public Shared Function RtInSecond(rt As String) As Double
-            rt = rt.Substring(2)
-            rt = rt.Substring(0, rt.Length - 1)
-            Return Double.Parse(rt)
+            If rt.StringEmpty Then
+                Return 0
+            Else
+                rt = rt.Substring(2)
+                rt = rt.Substring(0, rt.Length - 1)
+
+                Return Double.Parse(rt)
+            End If
         End Function
 
         Public Overrides Function ToString() As String

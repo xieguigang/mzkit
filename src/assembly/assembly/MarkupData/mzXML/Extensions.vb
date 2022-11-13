@@ -127,6 +127,14 @@ Namespace MarkupData.mzXML
         <Extension>
         Public Function getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
+            Dim empty As Boolean =
+                scan.scanType.StringEmpty AndAlso
+                scan.polarity.StringEmpty AndAlso
+                scan.retentionTime.StringEmpty
+
+            If scan.msLevel = 0 AndAlso empty Then
+                Return Nothing
+            End If
 
             If scan.msLevel = 1 Then
                 Return $"[{level}] {scan.scanType} Scan_{scan.num}, ({scan.polarity}) retentionTime={CInt(PeakMs2.RtInSecond(scan.retentionTime))}"
