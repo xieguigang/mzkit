@@ -336,9 +336,19 @@ Module MzWeb
         End If
     End Function
 
-    Private Function openFromFile(file As String) As mzPack
-        If file.ExtensionSuffix("mzXML", "mzML", "imzML") Then
-            Return Converter.LoadRawFileAuto(xml:=file)
+    ''' <summary>
+    ''' open mzpack data from a raw data file in xml file format.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="prefer">
+    ''' the prefer file format used when the given <paramref name="file"/> its extension
+    ''' suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("open_mzpack.xml")>
+    Public Function openFromFile(file As String, Optional prefer As String = Nothing) As mzPack
+        If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
+            Return Converter.LoadRawFileAuto(xml:=file, prefer:=prefer)
 #If NET48 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)

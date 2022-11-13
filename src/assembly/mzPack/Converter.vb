@@ -108,17 +108,29 @@ Public Module Converter
     Public Function LoadRawFileAuto(xml As String,
                                     Optional tolerance$ = "ppm:20",
                                     Optional intocutoff As Double = 0.0001,
-                                    Optional progress As Action(Of String) = Nothing) As mzPack
+                                    Optional progress As Action(Of String) = Nothing,
+                                    Optional prefer As String = Nothing) As mzPack
 
         If xml.ExtensionSuffix("mzXML") Then
-            Return New mzPack With {
-                .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff).Load(xml, progress).ToArray
+mzXML:      Return New mzPack With {
+                .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff) _
+                    .Load(xml, progress) _
+                    .ToArray,
+                .source = xml.BaseName
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
-            Return LoadMzML(xml, tolerance, intocutoff, progress)
+mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-            Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
+            If Not prefer.StringEmpty Then
+                Select Case prefer.ToLower
+                    Case "mzxml" : GoTo mzXML
+                    Case "mzml" : GoTo mzML
+                    Case "imzml" : GoTo imzML
+                End Select
+            End If
+
             Throw New NotImplementedException(xml.ExtensionSuffix)
         End If
     End Function
@@ -210,7 +222,8 @@ Public Module Converter
 
         Return New mzPack With {
             .MS = MS,
-            .Scanners = otherScanner
+            .Scanners = otherScanner,
+            .source = xml.BaseName
         }
     End Function
 
