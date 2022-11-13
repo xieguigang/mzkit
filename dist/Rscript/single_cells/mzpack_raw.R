@@ -1,4 +1,4 @@
-require(mzkit);
+# require(mzkit);
 
 imports "mzweb" from "mzkit";
 
@@ -10,7 +10,9 @@ cell_scans = [];
 
 for(path in raw_files) {
 	raw = open_mzpack.xml(path, prefer = "mzml");
-	cell_scans = cell_scans << [raw]::MS;
+	cell_scans = append( cell_scans , [raw]::MS);
+	
+	print(basename(path));
 }
 
 print(cell_scans);

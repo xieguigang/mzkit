@@ -14,6 +14,7 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
 		<PackageIcon>Flask.png</PackageIcon>
+    <OutputPath>../\mzkit_app\assembly\</OutputPath>
 		<PackageIconUrl />
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	</PropertyGroup>
@@ -58,7 +59,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
 		<DocumentationFile>mzkit.xml</DocumentationFile>
-		<OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+	
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<DebugSymbols>true</DebugSymbols>
@@ -78,7 +79,7 @@
 		<DefineTrace>true</DefineTrace>
 		<GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
 		<DefineConstants>netcore5=1</DefineConstants>
-		<OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+	
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
@@ -101,7 +102,7 @@
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-		<OutputPath>../\mzkit_app\assembly\</OutputPath>
+	
 	</PropertyGroup>
 
 	<ItemGroup>
