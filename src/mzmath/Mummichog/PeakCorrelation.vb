@@ -94,7 +94,7 @@ Public Class PeakCorrelation
                                                                    isotopic As IsotopicAnnotation(Of T),
                                                                    adductAnno As AdductsAnnotation(Of T),
                                                                    Optional deltaRt As Double = 3,
-                                                                   Optional mzdiff As Double = 0.01) As IEnumerable(Of IMS1Annotation)
+                                                                   Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery(Of T))
 
         Dim isotopics As List(Of PeakQuery(Of T)) = PeakList _
             .AsParallel _
