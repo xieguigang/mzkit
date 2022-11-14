@@ -37,11 +37,11 @@ Public Class PeakCorrelation
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function FindExactMass(peaks As IEnumerable(Of PeakMs2),
+    Public Function FindExactMass(peaks As PeakMs2(),
                                   Optional deltaRt As Double = 6,
                                   Optional mzdiff As Double = 0.6) As IEnumerable(Of PeakQuery(Of PeakMs2))
 
-        Return FindExactMass(peaks.ToArray, ms2_isotopic, ms2_adducts, deltaRt, mzdiff)
+        Return FindExactMass(peaks, ms2_isotopic, ms2_adducts, deltaRt, mzdiff)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
