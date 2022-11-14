@@ -76,6 +76,9 @@ Public Class Peaktable
     ''' 可以是差异代谢物的编号
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' xcms_id
+    ''' </remarks>
     Public Property name As String
     Public Property mz As Double Implements IMs1.mz
     Public Property mzmin As Double
