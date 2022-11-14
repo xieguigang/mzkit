@@ -75,9 +75,40 @@ Public Class Atom
     End Function
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)
+        Yield New Atom("Li", 1)
+        Yield New Atom("Na", 1)
+        Yield New Atom("K", 1)
+        Yield New Atom("Rb", 1)
+        Yield New Atom("Cs", 1)
+        Yield New Atom("Fr", 1)
+
+        Yield New Atom("Be", 2)
+        Yield New Atom("Mg", 2)
+        Yield New Atom("Ca", 2)
+        Yield New Atom("Sr", 2)
+        Yield New Atom("Ba", 2)
+        Yield New Atom("Ra", 2)
+
+        Yield New Atom("Sc", 3)
+        Yield New Atom("Y", 3)
+
+        Yield New Atom("Cu", 2)
+        Yield New Atom("Ag", 1)
+        Yield New Atom("Au", 3)
+
         Yield New Atom("C", 4)
+        Yield New Atom("Si", 4)
+        Yield New Atom("Pb", 4)
+        Yield New Atom("F", 1)
+        Yield New Atom("Cl", 7)
+        Yield New Atom("Al", 3)
         Yield New Atom("O", 2)
-        Yield New Atom("N", 3)
+        Yield New Atom("S", 6)
+        Yield New Atom("N", 5)
+        Yield New Atom("P", 5)
+
+        Yield New Atom("Mn", 7)
+        Yield New Atom("Fe", 6)
     End Function
 
 End Class
