@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -10,29 +11,40 @@ Imports Microsoft.VisualBasic.Math
 Public Class PeakCorrelation
 
     ReadOnly adducts As MzCalculator()
-    ReadOnly isotopicMax As Integer
+    ReadOnly ms1_isotopic As IsotopicAnnotation(Of Peaktable)
+    ReadOnly ms1_adducts As AdductsAnnotation(Of Peaktable)
+    ReadOnly ms2_isotopic As IsotopicAnnotation(Of PeakMs2)
+    ReadOnly ms2_adducts As AdductsAnnotation(Of PeakMs2)
 
     Sub New(precursors As IEnumerable(Of MzCalculator), Optional isotopicMax As Integer = 5)
         Me.adducts = precursors.ToArray
-        Me.isotopicMax = isotopicMax
+        Me.ms1_isotopic = New IsotopicAnnotation(Of Peaktable)(
+            max:=isotopicMax,
+            activator:=AddressOf peakMs1Activator
+        )
+        Me.ms1_adducts = New AdductsAnnotation(Of Peaktable)(
+            adducts:=Me.adducts,
+            activator:=AddressOf peakMs1Activator
+        )
+        Me.ms2_isotopic = New IsotopicAnnotation(Of PeakMs2)(
+            max:=isotopicMax,
+            activator:=AddressOf peakMs2Activator
+        )
+        Me.ms2_adducts = New AdductsAnnotation(Of PeakMs2)(
+            adducts:=Me.adducts,
+            activator:=AddressOf peakMs2Activator
+        )
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function FindExactMass(peaks As IEnumerable(Of PeakMs2),
                                   Optional deltaRt As Double = 6,
                                   Optional mzdiff As Double = 0.6) As IEnumerable(Of PeakQuery(Of PeakMs2))
 
-        Dim isotopic As New IsotopicAnnotation(Of PeakMs2)(
-            max:=isotopicMax,
-            activator:=AddressOf peakMs2Activator
-        )
-        Dim adductAnno As New AdductsAnnotation(Of PeakMs2)(
-            adducts:=Me.adducts,
-            activator:=AddressOf peakMs2Activator
-        )
-
-        Return FindExactMass(peaks.ToArray, isotopic, adductAnno, deltaRt, mzdiff)
+        Return FindExactMass(peaks.ToArray, ms2_isotopic, ms2_adducts, deltaRt, mzdiff)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Shared Function peakMs2Activator(peak As PeakMs2, anno As String) As PeakMs2
         Return New PeakMs2 With {
             .activation = peak.activation,
@@ -49,6 +61,7 @@ Public Class PeakCorrelation
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Shared Function peakMs1Activator(peak As Peaktable, anno As String) As Peaktable
         Return New Peaktable With {
             .annotation = anno,
@@ -124,16 +137,8 @@ Public Class PeakCorrelation
                                        In peaktable
                                        Where d.mz > 0
                                        Order By d.mz).ToArray
-        Dim isotopic As New IsotopicAnnotation(Of Peaktable)(
-            max:=isotopicMax,
-            activator:=AddressOf peakMs1Activator
-        )
-        Dim adductAnno As New AdductsAnnotation(Of Peaktable)(
-            adducts:=Me.adducts,
-            activator:=AddressOf peakMs1Activator
-        )
 
-        Return FindExactMass(peakList, isotopic, adductAnno, deltaRt, mzdiff)
+        Return FindExactMass(peakList, ms1_isotopic, ms1_adducts, deltaRt, mzdiff)
     End Function
 End Class
 
