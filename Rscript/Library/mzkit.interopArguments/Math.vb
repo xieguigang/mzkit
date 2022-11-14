@@ -126,7 +126,7 @@ Module Math
         Dim rtmin As Double() = peaktable.getVector(Of Double)("rtmin")
         Dim rtmax As Double() = peaktable.getVector(Of Double)("rtmax")
         Dim maxinto As Double() = peaktable.getVector(Of Double)("maxInto", "maxinto")
-        Dim area As Double() = peaktable.getVector(Of Double)("area")
+        Dim area As Double() = peaktable.getVector(Of Double)("area", "into")
         Dim mzmin As Double() = peaktable.getVector(Of Double)("mzmin")
         Dim mzmax As Double() = peaktable.getVector(Of Double)("mzmax")
 
