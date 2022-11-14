@@ -28,11 +28,11 @@ Public Class PeakCorrelation
         )
         Me.ms2_isotopic = New IsotopicAnnotation(Of PeakMs2)(
             max:=isotopicMax,
-            activator:=AddressOf peakMs2Activator
+            activator:=AddressOf PeakMs2Activator
         )
         Me.ms2_adducts = New AdductsAnnotation(Of PeakMs2)(
             adducts:=Me.adducts,
-            activator:=AddressOf peakMs2Activator
+            activator:=AddressOf PeakMs2Activator
         )
     End Sub
 
@@ -44,8 +44,14 @@ Public Class PeakCorrelation
         Return FindExactMass(peaks, ms2_isotopic, ms2_adducts, deltaRt, mzdiff)
     End Function
 
+    ''' <summary>
+    ''' copy of the ms2 data
+    ''' </summary>
+    ''' <param name="peak"></param>
+    ''' <param name="anno"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function peakMs2Activator(peak As PeakMs2, anno As String) As PeakMs2
+    Public Shared Function PeakMs2Activator(peak As PeakMs2, Optional anno As String = Nothing) As PeakMs2
         Return New PeakMs2 With {
             .activation = peak.activation,
             .collisionEnergy = peak.collisionEnergy,

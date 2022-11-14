@@ -30,6 +30,10 @@ Public Class PeakQuery(Of T As IMS1Annotation)
         End Get
     End Property
 
+    ''' <summary>
+    ''' returns the rt range in [rtmin, rtmax]
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property rt As DoubleRange
         Get
             Return New DoubleRange(From peak As T
