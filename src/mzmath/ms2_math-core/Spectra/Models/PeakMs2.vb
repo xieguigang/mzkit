@@ -67,7 +67,11 @@ Namespace Spectra
     ''' <summary>
     ''' 将mzXML文件之中的每一个ms2 scan转换而来
     ''' </summary>
-    Public Class PeakMs2 : Implements IMs1, IMs1Scan
+    ''' <remarks>
+    ''' A union data model of the ms1 annotation data 
+    ''' associated with the ms2 peak scan data.
+    ''' </remarks>
+    Public Class PeakMs2 : Implements IMs1, IMs1Scan, IMS1Annotation
 
         ''' <summary>
         ''' The precursor ``m/z`` value.
@@ -98,12 +102,12 @@ Namespace Spectra
         ''' <summary>
         ''' A unique variable name, meaning could be different with <see cref="LibraryMatrix.Name" />. 
         ''' </summary>
-        Public Property lib_guid As String
+        Public Property lib_guid As String Implements IMS1Annotation.id
 
         ''' <summary>
         ''' adducts type of the <see cref="mz"/> value.
         ''' </summary>
-        Public Property precursor_type As String
+        Public Property precursor_type As String Implements IMS1Annotation.precursor_type
 
         ''' <summary>
         ''' 二级碎片信息

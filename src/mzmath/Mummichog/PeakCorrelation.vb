@@ -1,5 +1,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -16,6 +17,12 @@ Public Class PeakCorrelation
         Me.isotopicMax = isotopicMax
     End Sub
 
+    Public Iterator Function FindExactMass(peaks As IEnumerable(Of PeakMs2),
+                                           Optional deltaRt As Double = 3,
+                                           Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery(Of PeakMs2))
+
+    End Function
+
     ''' <summary>
     ''' find exact mass group
     ''' </summary>
@@ -25,7 +32,7 @@ Public Class PeakCorrelation
     ''' <returns></returns>
     Public Iterator Function FindExactMass(peaktable As IEnumerable(Of Peaktable),
                                            Optional deltaRt As Double = 3,
-                                           Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery)
+                                           Optional mzdiff As Double = 0.01) As IEnumerable(Of PeakQuery(Of Peaktable))
 
         Dim peakList As Peaktable() = (From d As Peaktable
                                        In peaktable
@@ -67,7 +74,7 @@ Public Class PeakCorrelation
         For Each adduct As MzCalculator In adducts
             Dim exact_mass As Double = adduct.CalcMass(precursorMZ:=peak.mz)
             Dim q As New PeakQuery With {
-                .exactMass = exact_mass,
+                .ExactMass = exact_mass,
                 .peaks = {
                     New Peaktable With {
                         .annotation = adduct.ToString,
@@ -99,7 +106,7 @@ Public Class PeakCorrelation
         For i As Integer = 1 To max
             Dim exact_mass As Double = peak.mz - Element.H * i
             Dim q As New PeakQuery With {
-                .exactMass = exact_mass,
+                .ExactMass = exact_mass,
                 .peaks = {
                     New Peaktable With {
                         .annotation = $"isotopic[M+{i}]",

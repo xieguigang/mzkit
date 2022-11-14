@@ -84,3 +84,10 @@ Public Interface IMs1Scan : Inherits IMs1
     Property intensity As Double
 
 End Interface
+
+Public Interface IMS1Annotation : Inherits IMs1Scan
+
+    Property id As String
+    Property precursor_type As String
+
+End Interface
