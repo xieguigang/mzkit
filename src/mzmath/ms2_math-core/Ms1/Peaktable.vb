@@ -71,12 +71,16 @@ Public Class Peaktable
     Implements IMs1
     Implements IRetentionTime
     Implements IROI
+    Implements IMS1Annotation
 
     ''' <summary>
     ''' 可以是差异代谢物的编号
     ''' </summary>
     ''' <returns></returns>
-    Public Property name As String
+    ''' <remarks>
+    ''' xcms_id
+    ''' </remarks>
+    Public Property name As String Implements IMS1Annotation.id
     Public Property mz As Double Implements IMs1.mz
     Public Property mzmin As Double
     Public Property mzmax As Double
@@ -95,7 +99,7 @@ Public Class Peaktable
 
     Public Property rtmin As Double Implements IROI.rtmin
     Public Property rtmax As Double Implements IROI.rtmax
-    Public Property into As Double
+    Public Property into As Double Implements IMS1Annotation.intensity
     Public Property intb As Double
     Public Property maxo As Double
     Public Property sn As Double
@@ -112,7 +116,7 @@ Public Class Peaktable
     ''' <returns></returns>
     Public Property ionization As String
     Public Property energy As String
-    Public Property annotation As String
+    Public Property annotation As String Implements IMS1Annotation.precursor_type
 
     Public Overrides Function ToString() As String
         Dim display As String = $"#{scan} {mz}@{rt}_{ionization}_{energy}V"

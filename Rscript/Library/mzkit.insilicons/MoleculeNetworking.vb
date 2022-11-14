@@ -59,7 +59,9 @@ Module MoleculeNetworking
     ''' </summary>
     ''' <param name="tree"></param>
     ''' <param name="ions"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a set of ms2 data groups, in format of guid => peakms2 vector tuples
+    ''' </returns>
     <ExportAPI("msBin")>
     <Extension>
     Public Function MsBin(tree As ClusterTree, ions As PeakMs2()) As list

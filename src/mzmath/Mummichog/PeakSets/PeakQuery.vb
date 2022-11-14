@@ -2,10 +2,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
-Public Class PeakQuery
+Public Class PeakQuery(Of T As IMS1Annotation)
 
     Public Property exactMass As Double
-    Public Property peaks As Peaktable()
+    Public Property peaks As T()
 
     Public ReadOnly Property size As Integer
         Get
@@ -16,7 +16,7 @@ Public Class PeakQuery
     Public ReadOnly Property adducts As String()
         Get
             Return peaks _
-                .Select(Function(p) p.annotation) _
+                .Select(Function(p) p.precursor_type) _
                 .Distinct _
                 .ToArray
         End Get
@@ -25,14 +25,18 @@ Public Class PeakQuery
     Public ReadOnly Property id_group As String()
         Get
             Return peaks _
-                .Select(Function(p) p.name) _
+                .Select(Function(p) p.id) _
                 .ToArray
         End Get
     End Property
 
+    ''' <summary>
+    ''' returns the rt range in [rtmin, rtmax]
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property rt As DoubleRange
         Get
-            Return New DoubleRange(From peak As Peaktable
+            Return New DoubleRange(From peak As T
                                    In peaks
                                    Let t = peak.rt
                                    Select t)

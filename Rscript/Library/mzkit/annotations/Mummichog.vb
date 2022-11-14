@@ -294,7 +294,7 @@ Module Mummichog
         End If
 
         Dim alg As New PeakCorrelation(precursors, isotopic_max)
-        Dim groups As PeakQuery() = alg _
+        Dim groups As PeakQuery(Of Peaktable)() = alg _
             .FindExactMass(peakSet.TryCast(Of Peaktable()), delta_rt, mzdiff) _
             .OrderByDescending(Function(m) m.size) _
             .ToArray
