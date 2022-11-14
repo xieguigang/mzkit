@@ -155,7 +155,7 @@ Public Class AdductsAnnotation(Of T As IMS1Annotation)
 
     Sub New(adducts As MzCalculator(), activator As Func(Of T, String, T))
         Me.adducts = adducts
-        Me.adducts = adducts
+        Me.activator = activator
     End Sub
 
     Public Iterator Function AdductsAnnotation(peak As T) As IEnumerable(Of PeakQuery(Of T))
