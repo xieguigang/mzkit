@@ -3,7 +3,7 @@
 	url = https://gitee.com/xieguigang/ms-imaging.git
 [submodule "src/mzkit"]
 	path = src/mzkit
-	url = https://github.com/xieguigang/mzkit_win32.git
+	url = https://gitlink.org.cn/xieguigang/mzkit_win32.git
 [submodule "src/visual/KCF"]
 	path = src/visualize/KCF
 	url = https://gitee.com/xieguigang/KEGG.molDraw.git
