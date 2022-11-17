@@ -2,7 +2,7 @@
 
 # <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4456618.svg)](https://doi.org/10.5281/zenodo.4456618)
 
-> Data toolkits for processing NMR, MALDI MSI, LC-MS and GC-MS raw data, chemoinformatics data analysis and data visualization.
+> Data toolkits for processing NMR, MALDI MSI, MALDI single cell, LC-MS and GC-MS raw data, chemoinformatics data analysis and data visualization.
 
 ![](docs/manual/splash.PNG)
 
