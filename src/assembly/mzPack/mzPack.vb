@@ -103,12 +103,18 @@ Public Class mzPack
 
     Public ReadOnly Property rtmin As Double
         Get
+            If MS.IsNullOrEmpty Then
+                Return 0
+            End If
             Return Aggregate scan As ScanMS1 In MS Into Min(scan.rt)
         End Get
     End Property
 
     Public ReadOnly Property rtmax As Double
         Get
+            If MS.IsNullOrEmpty Then
+                Return 0
+            End If
             Return Aggregate scan As ScanMS1 In MS Into Max(scan.rt)
         End Get
     End Property
@@ -121,6 +127,9 @@ Public Class mzPack
 
     Public ReadOnly Property maxIntensity As Double
         Get
+            If MS.IsNullOrEmpty Then
+                Return 0
+            End If
             Return Aggregate scan As ScanMS1 In MS Into Max(scan.BPC)
         End Get
     End Property

@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 
 ''' <summary>
 ''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
@@ -260,22 +261,22 @@ Public Module MSIRawPack
 
     <Extension>
     Public Function PixelScaler(raw As ScanMS1()) As SizeF
-        Dim dx As Double = raw _
+        Dim vx As Double() = raw _
             .Select(Function(m) Val(m.meta("x"))) _
             .OrderBy(Function(xi) xi) _
             .Distinct _
-            .ToArray _
-            .DoCall(AddressOf NumberGroups.diff) _
-            .Average
-        Dim dy As Double = raw _
+            .ToArray
+        Dim vy As Double() = raw _
             .Select(Function(m) Val(m.meta("y"))) _
             .OrderBy(Function(xi) xi) _
             .Distinct _
-            .ToArray _
-            .DoCall(AddressOf NumberGroups.diff) _
-            .Average
+            .ToArray
+        Dim dx As Double() = NumberGroups.diff(vx)
+        Dim dy As Double() = NumberGroups.diff(vy)
+        Dim ddx As Double = dx.OrderByDescending(Function(xi) xi).Take(dx.Length * 2 / 3).Average
+        Dim ddy As Double = dy.OrderByDescending(Function(yi) yi).Take(dy.Length * 2 / 3).Average
 
-        Return New SizeF(dx, dy)
+        Return New SizeF(ddx, ddy)
     End Function
 
     <Extension>
