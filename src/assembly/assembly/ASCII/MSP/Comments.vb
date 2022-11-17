@@ -75,7 +75,13 @@ Namespace ASCII.MSP
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToTable(comments$) As NameValueCollection
-            Return CLIParser.GetTokens(comments).ToTable
+            Dim meta As NameValueCollection = CLIParser.GetTokens(comments).ToTable
+
+            If (meta.Count = 0 OrElse (meta.Count = 1 AndAlso meta.AllKeys.First.StringEmpty)) AndAlso Not comments.StringEmpty Then
+                meta.Add("Comment", comments)
+            End If
+
+            Return meta
         End Function
 
         ''' <summary>

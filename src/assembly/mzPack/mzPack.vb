@@ -291,6 +291,11 @@ Public Class mzPack
             pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
         ElseIf ver = 2 Then
             pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
+        ElseIf (TypeOf file Is MemoryStream OrElse TypeOf file Is FileStream) AndAlso file.Length = 0 Then
+            ' is empty data
+            Return New mzPack With {
+                .MS = {}
+            }
         Else
             Throw New InvalidProgramException("unknow file format!")
         End If

@@ -183,7 +183,7 @@ Namespace ASCII.MSP
             Dim msp As New MspData With {
                 .Peaks = peaksdata,
                 .Comments = metaComment,
-                .DB_id = read.getValue("DB#"),
+                .DB_id = read.getValue("DB#", "ID"),
                 .Formula = read.getValue(NameOf(MspData.Formula)),
                 .InChIKey = read.getValue(NameOf(MspData.InChIKey)),
                 .MW = Val(read.getValue(NameOf(MspData.MW)) Or read.getValue("ExactMass").AsDefault),
