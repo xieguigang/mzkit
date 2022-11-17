@@ -263,18 +263,20 @@ Public Module MSIRawPack
     Public Function PixelScaler(raw As ScanMS1()) As SizeF
         Dim vx As Double() = raw _
             .Select(Function(m) Val(m.meta("x"))) _
-            .OrderByDescending(Function(xi) xi) _
+            .OrderBy(Function(xi) xi) _
             .Distinct _
             .ToArray
         Dim vy As Double() = raw _
             .Select(Function(m) Val(m.meta("y"))) _
-            .OrderByDescending(Function(xi) xi) _
+            .OrderBy(Function(xi) xi) _
             .Distinct _
             .ToArray
-        Dim dx As Double = NumberGroups.diff(vx.Take(vx.Length / 2).ToArray).Average
-        Dim dy As Double = NumberGroups.diff(vy.Take(vy.Length / 2).ToArray).Average
+        Dim dx As Double() = NumberGroups.diff(vx)
+        Dim dy As Double() = NumberGroups.diff(vy)
+        Dim ddx As Double = dx.OrderByDescending(Function(xi) xi).Take(dx.Length * 2 / 3).Average
+        Dim ddy As Double = dy.OrderByDescending(Function(yi) yi).Take(dy.Length * 2 / 3).Average
 
-        Return New SizeF(dx, dy)
+        Return New SizeF(ddx, ddy)
     End Function
 
     <Extension>
