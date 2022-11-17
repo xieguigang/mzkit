@@ -57,7 +57,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace MarkupData.imzML
 
