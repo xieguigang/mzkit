@@ -8,7 +8,7 @@ Namespace MarkupData.imzML
     Module DataWriter
 
         <Extension>
-        Public Function WriteMzPack(mzpack As IEnumerable(Of ScanMS1), ibd As BinaryDataWriter) As ScanData
+        Public Function WriteMzPack(mzpack As ScanMS1, ibd As BinaryDataWriter) As ScanData
 
         End Function
     End Module

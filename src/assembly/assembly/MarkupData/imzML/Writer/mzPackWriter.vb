@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -62,6 +63,18 @@ Namespace MarkupData.imzML
             Call ibd.Flush()
             Return ""
         End Function
+
+        Private Sub flushXML()
+            Call WriteXMLHeader()
+            Call WriteDescriptions()
+            Call WriteParameters()
+            Call WriteSampleInformation()
+            Call WriteSoftwareInformation()
+            Call WriteMSImgingParameters()
+            Call WriteInstruments()
+            Call WriteDataProcessing()
+            Call WriteDataScans()
+        End Sub
 
         Private Sub WriteXMLHeader()
             Call imzML.WriteLine("<?xml version=""1.0"" encoding=""ISO-8859-1""?>")
@@ -263,8 +276,9 @@ Namespace MarkupData.imzML
             Call imzML.WriteLine("</run>")
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteScan(scan As ScanMS1)
-
+            Call scans.Add(DataWriter.WriteMzPack(scan, ibd))
         End Sub
 
         ''' <summary>
@@ -274,6 +288,8 @@ Namespace MarkupData.imzML
         ''' the file path of the target imzML file
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OpenOutput(output As String) As mzPackWriter
             Return New mzPackWriter(output)
         End Function
@@ -282,6 +298,7 @@ Namespace MarkupData.imzML
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
+                    Call flushXML()
                     Call imzML.WriteLine("</mzML>")
                     Call imzML.Flush()
                     Call imzML.Dispose()
