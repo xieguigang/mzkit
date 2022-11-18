@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace MarkupData.imzML
@@ -83,6 +84,14 @@ Namespace MarkupData.imzML
             For Each scan As ScanData In LoadScans(file:=imzML)
                 Yield New ScanReader(scan, ibd)
             Next
+        End Function
+
+        Friend Shared Iterator Function PopulateFileContentDescriptions(guid As String, ibd_sha1 As String) As IEnumerable(Of cvParam)
+            Yield New cvParam With {.cvRef = "MS", .accession = "MS:1000579", .name = "MS1 spectrum"}
+            Yield New cvParam With {.cvRef = "MS", .accession = "MS:1000128", .name = "profile spectrum"}
+            Yield New cvParam With {.cvRef = "IMS", .accession = "IMS:1000080", .name = "universally unique identifier", .value = guid}
+            Yield New cvParam With {.cvRef = "IMS", .accession = "IMS:1000091", .name = "ibd SHA-1", .value = ibd_sha1}
+            Yield New cvParam With {.cvRef = "IMS", .accession = "IMS:1000031", .name = "processed"}
         End Function
     End Class
 End Namespace
