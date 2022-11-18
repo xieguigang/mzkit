@@ -42,8 +42,6 @@ Namespace MarkupData.imzML
                 .Encoding = Encoding.ASCII
             }
             Me.imzML = New StreamWriter(imzMLfile, text) With {.NewLine = vbLf}
-
-            Call WriteXMLHeader()
         End Sub
 
         Public Function SetSourceLocation(path As String) As mzPackWriter
