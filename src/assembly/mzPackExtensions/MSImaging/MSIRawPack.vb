@@ -52,7 +52,7 @@
 
 #End Region
 
-#If netcore5 = 0 Or NET48 Then
+#If NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
@@ -69,14 +69,13 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 
 ''' <summary>
 ''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
 
-#If netcore5 = 0 Or NET48 Then
+#If NET48 Then
 
     ''' <summary>
     ''' single raw data file as MSI data
