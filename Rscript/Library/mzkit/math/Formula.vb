@@ -439,20 +439,20 @@ Module FormulaTools
         Return sdfModel.ToKCF
     End Function
 
-    <ExportAPI("download.kcf")>
-    Public Function DownloadKCF(keggcompoundIDs As String(), save$) As Object
-        Dim result As New List(Of Object)
-        Dim KCF$
+    '<ExportAPI("download.kcf")>
+    'Public Function DownloadKCF(keggcompoundIDs As String(), save$) As Object
+    '    Dim result As New List(Of Object)
+    '    Dim KCF$
 
-        For Each id As String In keggcompoundIDs.SafeQuery
-            KCF = MetaboliteWebApi.DownloadKCF(id, saveDIR:=save)
+    '    For Each id As String In keggcompoundIDs.SafeQuery
+    '        KCF = MetaboliteWebApi.DownloadKCF(id, saveDIR:=save)
 
-            Call result.Add(KCF)
-            Call Thread.Sleep(1000)
-        Next
+    '        Call result.Add(KCF)
+    '        Call Thread.Sleep(1000)
+    '    Next
 
-        Return result.ToArray
-    End Function
+    '    Return result.ToArray
+    'End Function
 
     ''' <summary>
     ''' open the file handles of the chemical descriptor database. 
