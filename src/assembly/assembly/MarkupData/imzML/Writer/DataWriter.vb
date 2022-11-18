@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
 
+    ''' <summary>
+    ''' the ibd data writer
+    ''' </summary>
     Module DataWriter
 
         <Extension>
@@ -22,7 +25,17 @@ Namespace MarkupData.imzML
         End Function
 
         Private Function WriteArray(array As Double(), ibd As BinaryDataWriter) As ibdPtr
+            Dim offset As Long = ibd.Position
+            Dim bytesize As Long
 
+            ibd.Write(array)
+            bytesize = ibd.Position - offset
+
+            Return New ibdPtr With {
+                .offset = offset,
+                .arrayLength = array.Length,
+                .encodedLength = bytesize
+            }
         End Function
     End Module
 End Namespace
