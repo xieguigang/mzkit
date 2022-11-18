@@ -61,7 +61,7 @@ Module read_mzXML
 
     Dim mzXML = "D:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\lxy-CID30.mzXML"
 
-    Sub Main()
+    Sub Main1()
         ' Call exportMs1()
         Call exportMs2()
     End Sub
