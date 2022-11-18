@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Security.Cryptography
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -26,12 +27,14 @@ Namespace MarkupData.imzML
         Dim scan_type As Integer
         Dim dims As Size
         Dim resolution As Double
+        Dim ibdfilepath As String
 
         Private Sub New(imzML As String)
             Dim text As Encoding = Encoding.GetEncoding("ISO-8859-1")
 
             Me.imzMLfile = imzML.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-            Me.ibdfile = imzML.ChangeSuffix("ibd").Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Me.ibdfilepath = imzML.ChangeSuffix("ibd")
+            Me.ibdfile = ibdfilepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
             Me.ibdfile.Write(guid.ToByteArray, Scan0, guid.ToByteArray.Length)
             Me.ibdfile.Flush()
             Me.ibd = New BinaryDataWriter(ibdfile) With {
@@ -60,8 +63,18 @@ Namespace MarkupData.imzML
         End Function
 
         Private Function MeasureIbdSha1() As String
+            Dim hash As New SHA1CryptoServiceProvider()
+            Dim checksum As String
+            Dim hashVal As Byte()
+
             Call ibd.Flush()
-            Return ""
+            Call ibd.Flush()
+            Call ibd.Dispose()
+
+            hashVal = hash.ComputeHash(ibdfilepath.ReadBinary)
+            checksum = Convert.ToBase64String(hashVal)
+
+            Return checksum
         End Function
 
         Private Sub flushXML()
@@ -297,13 +310,13 @@ Namespace MarkupData.imzML
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
+                    On Error Resume Next
+
                     ' TODO: 释放托管状态(托管对象)
                     Call flushXML()
                     Call imzML.WriteLine("</mzML>")
                     Call imzML.Flush()
                     Call imzML.Dispose()
-                    Call ibd.Flush()
-                    Call ibd.Dispose()
                 End If
 
                 ' TODO: 释放未托管的资源(未托管的对象)并重写终结器

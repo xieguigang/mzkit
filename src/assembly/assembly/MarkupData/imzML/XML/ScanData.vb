@@ -164,9 +164,11 @@ Namespace MarkupData.imzML
             IntPtr = ibdPtr.ParsePtr(scan.binaryDataArrayList(1))
         End Sub
 
+        <DebuggerStepThrough>
         Sub New()
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(copy As ScanData)
             totalIon = copy.totalIon
             x = copy.x
