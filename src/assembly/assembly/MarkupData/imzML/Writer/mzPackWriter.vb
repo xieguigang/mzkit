@@ -7,6 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.SecurityString
 
 Namespace MarkupData.imzML
 
@@ -63,14 +64,12 @@ Namespace MarkupData.imzML
         Private Function MeasureIbdSha1() As String
             Dim hash As New SHA1CryptoServiceProvider()
             Dim checksum As String
-            Dim hashVal As Byte()
 
             Call ibd.Flush()
             Call ibd.Flush()
             Call ibd.Dispose()
 
-            hashVal = hash.ComputeHash(ibdfilepath.ReadBinary)
-            checksum = Convert.ToBase64String(hashVal)
+            checksum = MD5Hash.GetFileMd5(ibdfilepath)
 
             Return checksum
         End Function
@@ -112,8 +111,8 @@ Namespace MarkupData.imzML
                     </fileContent>
                     <sourceFileList count="1">
                         <sourceFile id="sf1" location=<%= sourceLocation.ParentPath %> name=<%= sourceLocation.FileName %>>
-                            <cvParam cvRef="MS" accession="" name="BioNovoGene mzPack"/>
-                            <cvParam cvRef="MS" accession="" name="HDS stream format"/>
+                            <cvParam cvRef="MS" accession="MS:1008974" name="BioNovoGene mzPack"/>
+                            <cvParam cvRef="MS" accession="MS:1001911" name="HDS stream format"/>
                             <cvParam cvRef="MS" accession="MS:1000569" name="SHA-1" value="16899F53AF4AEF90F2DF01E6678C728517F7C3EB"/>
                         </sourceFile>
                     </sourceFileList>
