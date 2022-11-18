@@ -70,6 +70,7 @@ Namespace MarkupData.imzML
             Call ibd.Dispose()
 
             checksum = MD5Hash.GetFileMd5(ibdfilepath)
+            checksum = checksum.Replace("-", "")
 
             Return checksum
         End Function
@@ -105,7 +106,7 @@ Namespace MarkupData.imzML
                     <fileContent>
                         <cvParam cvRef="MS" accession="MS:1000579" name="MS1 spectrum"/>
                         <cvParam cvRef="MS" accession="MS:1000128" name="profile spectrum"/>
-                        <cvParam cvRef="IMS" accession="IMS:1000080" name="universally unique identifier" value=<%= guid.ToString %>/>
+                        <cvParam cvRef="IMS" accession="IMS:1000080" name="universally unique identifier" value=<%= guid.ToString.Replace("-", "") %>/>
                         <cvParam cvRef="IMS" accession="IMS:1000091" name="ibd SHA-1" value=<%= MeasureIbdSha1() %>/>
                         <cvParam cvRef="IMS" accession="IMS:1000031" name="processed"/>
                     </fileContent>
