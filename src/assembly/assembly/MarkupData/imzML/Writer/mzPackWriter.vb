@@ -2,7 +2,6 @@
 Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -19,7 +18,7 @@ Namespace MarkupData.imzML
         ReadOnly guid As Guid = Guid.NewGuid
         ReadOnly imzML As StreamWriter
         ReadOnly ibd As BinaryDataWriter
-        ReadOnly scans As New List(Of scan)
+        ReadOnly scans As New List(Of ScanData)
 
         Dim disposedValue As Boolean
         Dim sourceLocation As String
@@ -232,33 +231,36 @@ Namespace MarkupData.imzML
                 Call imzML.WriteXml(
                     <spectrum id=<%= $"Scan={++i}" %> defaultArrayLength="0" dataProcessingRef="XcaliburProcessing" sourceFileRef="sf1" index=<%= CInt(i) - 1 %>>
                         <referenceableParamGroupRef ref="spectrum1"/>
-                        <cvParam cvRef="MS" accession="MS:1000285" name="total ion current" value=<%= scan. %>/>
+                        <cvParam cvRef="MS" accession="MS:1000285" name="total ion current" value=<%= scan.totalIon %>/>
                         <scanList count="1">
                             <cvParam cvRef="MS" accession="MS:1000795" name="no combination"/>
                             <scan instrumentConfigurationRef="LTQFTUltra0">
                                 <referenceableParamGroupRef ref="scan1"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000050" name="position x" value="1"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000051" name="position y" value="1"/>
+                                <cvParam cvRef="IMS" accession="IMS:1000050" name="position x" value=<%= scan.x %>/>
+                                <cvParam cvRef="IMS" accession="IMS:1000051" name="position y" value=<%= scan.y %>/>
                             </scan>
                         </scanList>
                         <binaryDataArrayList count="2">
                             <binaryDataArray encodedLength="0">
                                 <referenceableParamGroupRef ref="mzArray"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000103" name="external array length" value="300"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000102" name="external offset" value="16"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000104" name="external encoded length" value="1200"/>
+                                <cvParam cvRef="IMS" accession="IMS:1000103" name="external array length" value=<%= scan.MzPtr.arrayLength %>/>
+                                <cvParam cvRef="IMS" accession="IMS:1000102" name="external offset" value=<%= scan.MzPtr.offset %>/>
+                                <cvParam cvRef="IMS" accession="IMS:1000104" name="external encoded length" value=<%= scan.MzPtr.encodedLength %>/>
                                 <binary/>
                             </binaryDataArray>
                             <binaryDataArray encodedLength="0">
                                 <referenceableParamGroupRef ref="intensityArray"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000103" name="external array length" value="300"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000102" name="external offset" value="1216"/>
-                                <cvParam cvRef="IMS" accession="IMS:1000104" name="external encoded length" value="1200"/>
+                                <cvParam cvRef="IMS" accession="IMS:1000103" name="external array length" value=<%= scan.IntPtr.arrayLength %>/>
+                                <cvParam cvRef="IMS" accession="IMS:1000102" name="external offset" value=<%= scan.IntPtr.offset %>/>
+                                <cvParam cvRef="IMS" accession="IMS:1000104" name="external encoded length" value=<%= scan.IntPtr.encodedLength %>/>
                                 <binary/>
                             </binaryDataArray>
                         </binaryDataArrayList>
                     </spectrum>)
             Next
+
+            Call imzML.WriteLine("</spectrumList>")
+            Call imzML.WriteLine("</run>")
         End Sub
 
         Public Sub WriteScan(scan As ScanMS1)
@@ -280,6 +282,7 @@ Namespace MarkupData.imzML
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
+                    Call imzML.WriteLine("</mzML>")
                     Call imzML.Flush()
                     Call imzML.Dispose()
                     Call ibd.Flush()
