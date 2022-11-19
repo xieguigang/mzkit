@@ -76,9 +76,9 @@ Namespace Blender
 
         ReadOnly driver As Drivers
 
+        <DebuggerStepThrough>
         Public Sub New(driver As Drivers, heatmapRender As Boolean)
             MyBase.New(heatmapRender)
-
             Me.driver = driver
         End Sub
 

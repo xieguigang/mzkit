@@ -71,6 +71,7 @@ Namespace Blender
         Protected gauss As Integer = 8
         Protected sigma As Integer = 32
 
+        <DebuggerStepThrough>
         Sub New(heatmapRender As Boolean)
             heatmapMode = heatmapRender
         End Sub
