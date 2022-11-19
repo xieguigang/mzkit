@@ -112,8 +112,8 @@ Namespace MarkupData.imzML
                     </fileContent>
                     <sourceFileList count="1">
                         <sourceFile id="sf1" location=<%= sourceLocation.ParentPath %> name=<%= sourceLocation.FileName %>>
-                            <cvParam cvRef="MS" accession="MS:1008974" name="BioNovoGene mzPack"/>
-                            <cvParam cvRef="MS" accession="MS:1001911" name="HDS stream format"/>
+                            <cvParam cvRef="MS" accession="MS:1000563" name="Thermo RAW format"/>
+                            <cvParam cvRef="MS" accession="MS:1000768" name="Thermo nativeID format"/>
                             <cvParam cvRef="MS" accession="MS:1000569" name="SHA-1" value="16899F53AF4AEF90F2DF01E6678C728517F7C3EB"/>
                         </sourceFile>
                     </sourceFileList>
