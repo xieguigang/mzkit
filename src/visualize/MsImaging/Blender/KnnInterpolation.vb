@@ -84,6 +84,11 @@ Namespace Blender
                                                                             Optional aggregate As Func(Of Integer, Integer, T(), T) = Nothing) As IEnumerable(Of T)
             Dim allPixels = summary.ToArray
             Dim graph As Grid(Of T) = Grid(Of T).Create(allPixels, Function(p) p.x, Function(p) p.y)
+
+            If allPixels.IsNullOrEmpty Then
+                Return
+            End If
+
             Dim size As New Size With {
                 .Width = allPixels.Select(Function(i) i.x).Max,
                 .Height = allPixels.Select(Function(i) i.y).Max
