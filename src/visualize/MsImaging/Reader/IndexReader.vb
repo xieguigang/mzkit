@@ -76,6 +76,12 @@ Namespace Reader
             End Get
         End Property
 
+        Public Overrides ReadOnly Property resolution As Double
+            Get
+                Return 17
+            End Get
+        End Property
+
         Dim reader As XICReader
 
         Sub New(reader As XICReader)

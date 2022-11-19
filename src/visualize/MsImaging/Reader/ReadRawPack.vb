@@ -67,7 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
-Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
@@ -79,6 +79,7 @@ Namespace Reader
     Public Class ReadRawPack : Inherits PixelReader
 
         Public Overrides ReadOnly Property dimension As Size
+        Public Overrides ReadOnly Property resolution As Double
 
         ''' <summary>
         ''' [x, y[]]
@@ -104,12 +105,13 @@ Namespace Reader
                             End Function) _
                     .DoCall(AddressOf loadPixelsArray)
 
-                Call ReadDimensions(raw:=Nothing)
+                Call ReadDimensions(mzpack:=Nothing)
             End Using
         End Sub
 
-        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size)
+        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size, resolution As Double)
             Me.dimension = MsiDim
+            Me.resolution = resolution
 
             Call loadPixelsArray(pixels)
         End Sub
@@ -139,12 +141,23 @@ Namespace Reader
             End If
         End Function
 
-        Private Overloads Sub ReadDimensions(raw As mzPack)
+        Private Overloads Sub ReadDimensions(mzpack As mzPack)
+            Dim metadata As Dictionary(Of String, String)
+            Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
+
+            If mzpack Is Nothing OrElse mzpack.metadata.IsNullOrEmpty Then
+                metadata = New Dictionary(Of String, String)
+            Else
+                metadata = mzpack.metadata
+            End If
+
             Call RunSlavePipeline.SendMessage("detect canvas dimensions...")
 
-            Dim width As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.X)).Max
-            Dim height As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.Y)).Max
+            Dim width As Integer = Val(metadata.TryGetValue("width", [default]:=polygon.xpoints.Max))
+            Dim height As Integer = Val(metadata.TryGetValue("height", [default]:=polygon.ypoints.Max))
+            Dim resolution As Double = Val(metadata.TryGetValue("resolution", [default]:=17))
 
+            _resolution = resolution
             _dimension = New Size(width, height)
         End Sub
 
