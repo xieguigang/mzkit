@@ -44,6 +44,11 @@ Public Module mzStreamWriter
             Call metadata.Add("application", GetType(mzPack).Assembly.ToString)
             Call metadata.Add("platform", If(App.IsMicrosoftPlatform, "Microsoft Windows", "UNIX/LINUX"))
             Call metadata.Add("source", mzpack.source)
+
+            For Each data As KeyValuePair(Of String, String) In mzpack.metadata.SafeQuery
+                metadata(data.Key) = data.Value
+            Next
+
             Call pack.WriteText(metadata.GetJson, ".etc/metadata.json")
         End Using
 

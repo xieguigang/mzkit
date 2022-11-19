@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -93,6 +94,7 @@ Namespace MsImaging
 
             Dim pixels As New List(Of ScanMS1)
             Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+            Dim metadata As New Dictionary(Of String, String)
 
             If progress Is Nothing Then
                 progress = Sub(msg)
@@ -104,12 +106,18 @@ Namespace MsImaging
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
             Next
 
+            Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
+
+            metadata.Add("width", polygon.xpoints.Max)
+            metadata.Add("height", polygon.ypoints.Max)
+
             Return New mzPack With {
                 .MS = pixels.ToArray,
                 .Application = FileApplicationClass.MSImaging,
                 .source = Strings _
                     .Trim(labelPrefix) _
-                    .Trim("-"c, " "c, CChar(vbTab), "_"c)
+                    .Trim("-"c, " "c, CChar(vbTab), "_"c),
+                .metadata = metadata
             }
         End Function
 
