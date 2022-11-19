@@ -9,9 +9,10 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.Xml
 
 Public Module mzStreamWriter
+
+    Public Const metadata_json As String = ".etc/metadata.json"
 
     ''' <summary>
     ''' 
@@ -49,7 +50,7 @@ Public Module mzStreamWriter
                 metadata(data.Key) = data.Value
             Next
 
-            Call pack.WriteText(metadata.GetJson, ".etc/metadata.json")
+            Call pack.WriteText(metadata.GetJson, metadata_json)
         End Using
 
         Return True

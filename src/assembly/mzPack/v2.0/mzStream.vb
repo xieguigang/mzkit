@@ -252,9 +252,11 @@ Public Class mzStream : Implements IMzPackReader
             Return Nothing
         End If
 
+#Disable Warning
         Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
             Return Image.FromStream(snapshot)
         End Using
+#Enable Warning
     End Function
 
     ''' <summary>
@@ -295,7 +297,8 @@ Public Class mzStream : Implements IMzPackReader
             .Application = Application,
             .MS = scans.ToArray,
             .source = sourceName,
-            .Thumbnail = If(ignoreThumbnail, Nothing, GetThumbnail())
+            .Thumbnail = If(ignoreThumbnail, Nothing, GetThumbnail()),
+            .metadata = meta
         }
     End Function
 
