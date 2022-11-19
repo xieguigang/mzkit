@@ -7,6 +7,7 @@ MS-Imaging data handler
 + [pixelId](MSI/pixelId.1) 
 + [pixels](MSI/pixels.1) get pixels size from the raw data file
 + [open.imzML](MSI/open.imzML.1) 
++ [write.imzML](MSI/write.imzML.1) 
 + [row.scans](MSI/row.scans.1) each raw data file is a row scan data
 + [MSI_summary](MSI/MSI_summary.1) Fetch MSI summary data
 + [correction](MSI/correction.1) calculate the X scale
