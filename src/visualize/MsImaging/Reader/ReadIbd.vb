@@ -70,6 +70,9 @@ Imports Application = Microsoft.VisualBasic.Parallel
 
 Namespace Reader
 
+    ''' <summary>
+    ''' handling of the imzml data file
+    ''' </summary>
     Public Class ReadIbd : Inherits PixelReader
 
         Dim pixels As ibdPixel()
