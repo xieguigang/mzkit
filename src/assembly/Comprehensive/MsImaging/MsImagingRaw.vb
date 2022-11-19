@@ -53,22 +53,69 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Microsoft.VisualBasic.Text
 
 Namespace MsImaging
+
+    Public Class Metadata
+
+        Public Property scan_x As Integer
+        Public Property scan_y As Integer
+        Public Property resolution As Double
+
+        Public ReadOnly Property physical_width As Double
+            Get
+                Return scan_x * resolution
+            End Get
+        End Property
+
+        Public ReadOnly Property physical_height As Double
+            Get
+                Return scan_y * resolution
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return $"{scan_x}x{scan_y}@{resolution}um"
+        End Function
+
+    End Class
 
     ''' <summary>
     ''' raw data file reader helper code
     ''' </summary>
     Public Module MsImagingRaw
+
+        <Extension>
+        Public Function GetMSIMetadata(raw As mzPack) As Metadata
+            Dim src As Dictionary(Of String, String) = raw.metadata
+            Dim polygon As New Polygon2D(raw.MS.Select(Function(scan) scan.GetMSIPixel))
+            Dim dims As New Size With {
+                .Width = polygon.xpoints.Max,
+                .Height = polygon.ypoints.Max
+            }
+
+            If src Is Nothing Then
+                src = New Dictionary(Of String, String)
+            End If
+
+            Dim metadata As New Metadata With {
+                .scan_x = Val(src.TryGetValue("width", [default]:=dims.Width)),
+                .scan_y = Val(src.TryGetValue("height", [default]:=dims.Height)),
+                .resolution = Val(src.TryGetValue("resolution", [default]:=17))
+            }
+
+            Return metadata
+        End Function
 
         ''' <summary>
         ''' the y axis row id is measured via the <see cref="mzPack.source"/>.
@@ -93,6 +140,7 @@ Namespace MsImaging
 
             Dim pixels As New List(Of ScanMS1)
             Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+            Dim metadata As New Dictionary(Of String, String)
 
             If progress Is Nothing Then
                 progress = Sub(msg)
@@ -104,12 +152,18 @@ Namespace MsImaging
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
             Next
 
+            Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
+
+            metadata.Add("width", polygon.xpoints.Max)
+            metadata.Add("height", polygon.ypoints.Max)
+
             Return New mzPack With {
                 .MS = pixels.ToArray,
                 .Application = FileApplicationClass.MSImaging,
                 .source = Strings _
                     .Trim(labelPrefix) _
-                    .Trim("-"c, " "c, CChar(vbTab), "_"c)
+                    .Trim("-"c, " "c, CChar(vbTab), "_"c),
+                .metadata = metadata
             }
         End Function
 

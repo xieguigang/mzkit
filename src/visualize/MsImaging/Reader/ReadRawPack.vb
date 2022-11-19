@@ -62,65 +62,24 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
-Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace Reader
 
-    Public Class ReadPixelPack : Inherits PixelReader
-
-        Public Overrides ReadOnly Property dimension As Size
-        Public ReadOnly Property pixels As PixelData()
-
-        Dim matrix As Grid(Of InMemoryVectorPixel)
-
-        Sub New(pixels As IEnumerable(Of PixelData))
-            Me.matrix = pixels _
-                .GroupBy(Function(i) $"{i.x},{i.y}") _
-                .Select(Function(i)
-                            Dim mz As Double() = i.Select(Function(x) x.mz).ToArray
-                            Dim into As Double() = i.Select(Function(x) x.intensity).ToArray
-
-                            Return New InMemoryVectorPixel(i.First.x, i.First.y, mz, into, i.Key)
-                        End Function) _
-                .DoCall(AddressOf Grid(Of InMemoryVectorPixel).Create)
-            Me.pixels = pixels
-            Me.dimension = New Size(matrix.width, matrix.height)
-        End Sub
-
-        Protected Overrides Sub release()
-            Erase _pixels
-        End Sub
-
-        Public Overrides Function GetPixel(x As Integer, y As Integer) As PixelScan
-            Return matrix(x, y)
-        End Function
-
-        Public Overrides Function AllPixels() As IEnumerable(Of PixelScan)
-            Return matrix.EnumerateData.Select(Function(i) DirectCast(i, PixelScan))
-        End Function
-
-        Public Overrides Function LoadMzArray(ppm As Double) As Double()
-            Return pixels _
-                .GroupBy(Function(d) d.mz, Tolerance.PPM(ppm)) _
-                .Select(Function(d)
-                            Return d _
-                                .OrderByDescending(Function(i) i.intensity) _
-                                .First _
-                                .mz
-                        End Function) _
-                .ToArray
-        End Function
-    End Class
-
+    ''' <summary>
+    ''' handling of the mzpack data file
+    ''' </summary>
     Public Class ReadRawPack : Inherits PixelReader
 
         Public Overrides ReadOnly Property dimension As Size
+        Public Overrides ReadOnly Property resolution As Double
 
         ''' <summary>
         ''' [x, y[]]
@@ -134,7 +93,7 @@ Namespace Reader
                         End Function) _
                 .DoCall(AddressOf loadPixelsArray)
 
-            Call ReadDimensions()
+            Call ReadDimensions(mzpack)
         End Sub
 
         Sub New(mzpack As String)
@@ -146,12 +105,13 @@ Namespace Reader
                             End Function) _
                     .DoCall(AddressOf loadPixelsArray)
 
-                Call ReadDimensions()
+                Call ReadDimensions(mzpack:=Nothing)
             End Using
         End Sub
 
-        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size)
+        Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size, resolution As Double)
             Me.dimension = MsiDim
+            Me.resolution = resolution
 
             Call loadPixelsArray(pixels)
         End Sub
@@ -181,12 +141,23 @@ Namespace Reader
             End If
         End Function
 
-        Private Overloads Sub ReadDimensions()
+        Private Overloads Sub ReadDimensions(mzpack As mzPack)
+            Dim metadata As Dictionary(Of String, String)
+            Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
+
+            If mzpack Is Nothing OrElse mzpack.metadata.IsNullOrEmpty Then
+                metadata = New Dictionary(Of String, String)
+            Else
+                metadata = mzpack.metadata
+            End If
+
             Call RunSlavePipeline.SendMessage("detect canvas dimensions...")
 
-            Dim width As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.X)).Max
-            Dim height As Integer = pixels.Select(Function(pr) Aggregate p In pr.Value Into Max(p.Y)).Max
+            Dim width As Integer = Val(metadata.TryGetValue("width", [default]:=polygon.xpoints.Max))
+            Dim height As Integer = Val(metadata.TryGetValue("height", [default]:=polygon.ypoints.Max))
+            Dim resolution As Double = Val(metadata.TryGetValue("resolution", [default]:=17))
 
+            _resolution = resolution
             _dimension = New Size(width, height)
         End Sub
 

@@ -70,6 +70,9 @@ Imports Application = Microsoft.VisualBasic.Parallel
 
 Namespace Reader
 
+    ''' <summary>
+    ''' handling of the imzml data file
+    ''' </summary>
     Public Class ReadIbd : Inherits PixelReader
 
         Dim pixels As ibdPixel()
@@ -83,6 +86,11 @@ Namespace Reader
         End Property
 
         Public Overrides ReadOnly Property dimension As Size
+        Public Overrides ReadOnly Property resolution As Double
+            Get
+                Return 17
+            End Get
+        End Property
 
         Sub New(imzML As String, Optional memoryCache As Boolean = False)
             ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))

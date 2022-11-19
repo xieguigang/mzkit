@@ -77,6 +77,8 @@ Namespace MarkupData.mzML
     Public Class fileDescription
 
         Public Property fileContent As Params
+        Public Property sourceFileList As SourceFileList
+        Public Property contact As Params
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
@@ -85,8 +87,26 @@ Namespace MarkupData.mzML
 
     End Class
 
+    Public Class SourceFileList : Inherits List
+
+        <XmlElement("sourceFile")>
+        Public Property sourceFile As SourceFile()
+
+    End Class
+
+    Public Class SourceFile : Inherits Params
+
+        <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property location As String
+        <XmlAttribute> Public Property name As String
+
+
+    End Class
+
     Public Class List
+
         <XmlAttribute> Public Property count As Integer
+
     End Class
 
     Public Class DataList : Inherits List

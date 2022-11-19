@@ -94,6 +94,7 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property source As String
+    Public Property metadata As New Dictionary(Of String, String)
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描

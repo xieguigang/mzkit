@@ -14,7 +14,6 @@ The chemical formulae toolkit
 + [KCF.graph](formula/KCF.graph.1) Create molecular network graph model
 + [parse.SDF](formula/parse.SDF.1) parse a single sdf text block
 + [SDF.convertKCF](formula/SDF.convertKCF.1) 
-+ [download.kcf](formula/download.kcf.1) 
 + [open.descriptor.db](formula/open.descriptor.db.1) open the file handles of the chemical descriptor database.
 + [descriptor.matrix](formula/descriptor.matrix.1) 
 + [parseSMILES](formula/parseSMILES.1) 

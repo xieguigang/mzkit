@@ -82,6 +82,7 @@ Namespace Reader
         Dim disposedValue As Boolean
         Dim summary As MSISummary
 
+        Public MustOverride ReadOnly Property resolution As Double
         Public MustOverride ReadOnly Property dimension As Size
         Public MustOverride Function GetPixel(x As Integer, y As Integer) As PixelScan
 

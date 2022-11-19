@@ -215,7 +215,7 @@ Public Module PixelsCDF
             End With
         Next
 
-        Return New ReadRawPack(pixels, size)
+        Return New ReadRawPack(pixels, size, resolution:=17)
     End Function
 
     ''' <summary>
@@ -253,6 +253,6 @@ Public Module PixelsCDF
             End If
         Next
 
-        Return New ReadRawPack(pixels, size)
+        Return New ReadRawPack(pixels, size, resolution:=17)
     End Function
 End Module

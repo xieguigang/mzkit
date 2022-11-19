@@ -265,6 +265,11 @@ Module MSI
         }
     End Function
 
+    <ExportAPI("write.imzML")>
+    Public Function write_imzML(mzpack As mzPack, file As String) As Object
+        Return imzXMLWriter.WriteXML(mzpack, output:=file)
+    End Function
+
     ''' <summary>
     ''' each raw data file is a row scan data
     ''' </summary>

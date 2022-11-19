@@ -69,13 +69,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' MS-imaging render canvas
@@ -90,6 +87,9 @@ Public Class Drawer : Implements IDisposable
     ''' the size of the scan in [width,height]
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' get <see cref="pixelReader.dimension"/>
+    ''' </remarks>
     Public ReadOnly Property dimension As Size
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

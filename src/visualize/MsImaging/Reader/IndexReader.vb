@@ -65,11 +65,20 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 
 Namespace Reader
 
+    ''' <summary>
+    ''' handling of the xic index file
+    ''' </summary>
     Public Class IndexReader : Inherits PixelReader
 
         Public Overrides ReadOnly Property dimension As Size
             Get
                 Return reader.dimension
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property resolution As Double
+            Get
+                Return 17
             End Get
         End Property
 
