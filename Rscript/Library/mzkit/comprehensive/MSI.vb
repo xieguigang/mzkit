@@ -205,9 +205,9 @@ Module MSI
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("pixels")>
-    Public Function pixels(file As String, Optional env As Environment = Nothing) As Object
-        If file.ExtensionSuffix("imzml") Then
-            Dim allScans = XML.LoadScans(file).ToArray
+    Public Function pixels(file As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("imzml") Then
+            Dim allScans = XML.LoadScans(CStr(file)).ToArray
             Dim width As Integer = Aggregate p In allScans Into Max(p.x)
             Dim height As Integer = Aggregate p In allScans Into Max(p.y)
 
@@ -217,8 +217,8 @@ Module MSI
                     {"h", height}
                 }
             }
-        ElseIf file.ExtensionSuffix("mzpack") Then
-            Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        ElseIf TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("mzpack") Then
+            Using buf As Stream = CStr(file).Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Dim ver As Integer = buf.GetFormatVersion
                 Dim reader As IMzPackReader
 
@@ -252,6 +252,15 @@ Module MSI
                     }
                 }
             End Using
+        ElseIf TypeOf file Is mzPack Then
+            Dim meta = DirectCast(file, mzPack).GetMSIMetadata
+
+            Return New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"w", meta.scan_x},
+                    {"h", meta.scan_y}
+                }
+            }
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If
