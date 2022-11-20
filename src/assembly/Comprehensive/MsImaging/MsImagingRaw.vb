@@ -58,6 +58,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -65,30 +66,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace MsImaging
-
-    Public Class Metadata
-
-        Public Property scan_x As Integer
-        Public Property scan_y As Integer
-        Public Property resolution As Double
-
-        Public ReadOnly Property physical_width As Double
-            Get
-                Return scan_x * resolution
-            End Get
-        End Property
-
-        Public ReadOnly Property physical_height As Double
-            Get
-                Return scan_y * resolution
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return $"{scan_x}x{scan_y}@{resolution}um"
-        End Function
-
-    End Class
 
     ''' <summary>
     ''' raw data file reader helper code
@@ -103,6 +80,10 @@ Namespace MsImaging
                 .Width = polygon.xpoints.Max,
                 .Height = polygon.ypoints.Max
             }
+            Dim mass = raw.MS _
+                .Select(Function(scan) scan.mz) _
+                .IteratesALL _
+                .ToArray
 
             If src Is Nothing Then
                 src = New Dictionary(Of String, String)
@@ -111,7 +92,8 @@ Namespace MsImaging
             Dim metadata As New Metadata With {
                 .scan_x = Val(src.TryGetValue("width", [default]:=dims.Width)),
                 .scan_y = Val(src.TryGetValue("height", [default]:=dims.Height)),
-                .resolution = Val(src.TryGetValue("resolution", [default]:=17))
+                .resolution = Val(src.TryGetValue("resolution", [default]:=17)),
+                .mass_range = New DoubleRange(mass)
             }
 
             Return metadata

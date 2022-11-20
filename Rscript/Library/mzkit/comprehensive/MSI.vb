@@ -115,6 +115,11 @@ Module MSI
         Return table
     End Function
 
+    <ExportAPI("msi_metadata")>
+    Public Function GetMSIMetadata(raw As mzPack) As Metadata
+        Return raw.GetMSIMetadata
+    End Function
+
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function asMSILayer(pixels As PixelData(),
