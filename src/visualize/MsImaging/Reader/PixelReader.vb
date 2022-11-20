@@ -170,6 +170,16 @@ Namespace Reader
 
         Public MustOverride Function AllPixels() As IEnumerable(Of PixelScan)
 
+        Public Iterator Function FindMatchedPixels(mz As Double, tolerance As Tolerance) As IEnumerable(Of PixelScan)
+            Dim allpixels As PixelScan() = Me.AllPixels.ToArray
+
+            For Each pixel As PixelScan In allpixels
+                If pixel.GetMzIonIntensity(mz, tolerance) > 0 Then
+                    Yield pixel
+                End If
+            Next
+        End Function
+
         Public Iterator Function FindMatchedPixels(mz As Double(), tolerance As Tolerance) As IEnumerable(Of PixelScan)
             Dim allpixels As PixelScan() = Me.AllPixels.ToArray
 
