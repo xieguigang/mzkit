@@ -85,6 +85,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Public Sub New(masses As Double(), intensities As Double())
             Me.mz = masses
             Me.into = intensities
@@ -99,5 +100,6 @@ Namespace Spectra
 
         Function GetMs() As IEnumerable(Of ms2)
         Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+
     End Interface
 End Namespace
