@@ -56,6 +56,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -86,7 +87,7 @@ Public Module FeatureRegions
     ''' <returns></returns>
     <Extension>
     Public Function GetDimensionSize(raw As mzPack) As Size
-        Dim allPixels As Point() = raw.MS.Select(AddressOf mzPackPixel.GetPixelPoint).ToArray
+        Dim allPixels As Point() = raw.MS.Select(Function(p) p.GetMSIPixel).ToArray
         Dim width As Integer = Aggregate pi As Point In allPixels Into Max(pi.X)
         Dim height As Integer = Aggregate pi As Point In allPixels Into Max(pi.Y)
 

@@ -2,6 +2,7 @@
 
 MS-Imaging data handler
 
++ [msi_metadata](MSI/msi_metadata.1) 
 + [as.layer](MSI/as.layer.1) 
 + [splice](MSI/splice.1) split the raw 2D MSI data into multiple parts with given parts
 + [pixelId](MSI/pixelId.1) 

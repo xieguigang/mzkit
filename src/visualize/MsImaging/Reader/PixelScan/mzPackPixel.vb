@@ -65,7 +65,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Pixel
 
@@ -110,10 +109,17 @@ Namespace Pixel
         End Property
 
         Sub New(scan As ScanMS1, Optional x As Integer = Integer.MinValue, Optional y As Integer = Integer.MinValue)
+            'Dim ms1 As ms2() = scan _
+            '    .GetMs _
+            '    .OrderBy(Function(mzi) mzi.mz) _
+            '    .ToArray
+
             Me.scan = scan
+            'Me.scan.mz = ms1.Select(Function(a) a.mz).ToArray
+            'Me.scan.into = ms1.Select(Function(a) a.intensity).ToArray
 
             If x = Integer.MinValue OrElse y = Integer.MinValue Then
-                Me.pixel = GetPixelPoint(scan)
+                Me.pixel = scan.GetMSIPixel
             Else
                 Me.pixel = New Point(x, y)
             End If
@@ -121,20 +127,6 @@ Namespace Pixel
 
         Public Overrides Function HasAnyMzIon() As Boolean
             Return scan.size > 0
-        End Function
-
-        Public Shared Function GetPixelPoint(scan As ScanMS1) As Point
-            If scan.hasMetaKeys("x", "y") Then
-                Return New Point With {
-                    .X = CInt(Val(scan.meta!x)),
-                    .Y = CInt(Val(scan.meta!y))
-                }
-            Else
-                Return scan.scan_id _
-                    .Match("\[\d+,\d+\]") _
-                    .GetStackValue("[", "]") _
-                    .DoCall(AddressOf Casting.PointParser)
-            End If
         End Function
 
         Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
@@ -157,17 +149,19 @@ Namespace Pixel
         End Sub
 
         Public Overrides Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
-            Dim allMatched As ms2() = scan _
-                .GetMs _
-                .Where(Function(mzi) mzdiff(mz, mzi.mz)) _
-                .ToArray
+            Dim allMatched As New List(Of Double)
+            Dim mzRaw As Double() = scan.mz
 
-            If allMatched.Length = 0 Then
+            For i As Integer = 0 To scan.mz.Length - 1
+                If mzdiff(mzRaw(i), mz) Then
+                    Call allMatched.Add(scan.into(i))
+                End If
+            Next
+
+            If allMatched.GetLength = 0 Then
                 Return 0
             Else
-                Return Aggregate mzi As ms2
-                       In allMatched
-                       Into Max(mzi.intensity)
+                Return allMatched.Max
             End If
         End Function
 

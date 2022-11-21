@@ -10,7 +10,7 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-20" />
+    <meta name="last-update" content="2022-11-21" />
     <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
@@ -34,6 +34,31 @@
     <p></p>
     <div id="main-wrapper">
                            <div>
+  <h2 id="msi_metadata">
+    <a href="./MSI/msi_metadata.html">msi_metadata</a>
+  </h2>
+  <hr />
+  <p>
+                      
+                
+                    <pre><p>let <code>msi_metadata</code> as function(<code>raw</code> as <generic> mzPack) -> <code>&lt;generic&gt; Metadata</code> {
+    #
+    # .NET API information
+    #
+    # module: mzkit.MSI
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # library: mzkit.dll
+    # package: "MSI"
+    #
+    return call <code>R&#35;.interop_[MSI::GetMSIMetadata]</code>(...);
+}</p></pre>
+
+                    
+                       
+                    
+
+                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
+</div><br /><div>
   <h2 id="as.layer">
     <a href="./MSI/as.layer.html">as.layer</a>
   </h2>
@@ -50,7 +75,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -75,7 +100,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -113,7 +138,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -133,12 +158,12 @@
   <p>
                     <p>get pixels size from the raw data file</p>  
                 
-                    <pre><p>let <code>pixels</code> as function(<code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+                    <pre><p>let <code>pixels</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
     #
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -170,7 +195,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -195,7 +220,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -223,7 +248,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -265,7 +290,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -297,7 +322,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -335,7 +360,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -363,7 +388,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -401,7 +426,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -430,7 +455,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -465,7 +490,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -503,7 +528,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -532,7 +557,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -576,7 +601,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -608,7 +633,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #
@@ -637,7 +662,7 @@
     # .NET API information
     #
     # module: mzkit.MSI
-    # LibPath: E:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
+    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
     # library: mzkit.dll
     # package: "MSI"
     #

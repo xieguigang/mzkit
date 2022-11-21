@@ -162,8 +162,10 @@ Module MsImaging
     ''' visualization by threshold intensity
     ''' quantization (TrIQ)
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="q"></param>
+    ''' <param name="data">
+    ''' A ms-imaging ion layer data or a numeric vector of the intensity data.
+    ''' </param>
+    ''' <param name="q">cutoff threshold of the intensity numeric vector</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("TrIQ")>
