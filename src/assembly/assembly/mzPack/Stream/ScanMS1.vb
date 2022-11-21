@@ -99,6 +99,11 @@ Namespace mzData.mzWebCache
         ''' get [x, y] pixel point from the scan metadata or scan id data.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the pixel [x,y] will be parsed from the scan id if the <see cref="meta"/> 
+        ''' data is empty, orelse the metadata of tags ``x,y`` or ``X,Y`` will be 
+        ''' used!
+        ''' </remarks>
         Public Function GetMSIPixel() As Point
             If meta.IsNullOrEmpty Then
                 Dim pixel As String = scan_id.Match("\[\d+,\d+\]")

@@ -122,6 +122,10 @@ Namespace Reader
             Next
         End Function
 
+        ''' <summary>
+        ''' build a [x,y] matrix
+        ''' </summary>
+        ''' <param name="pixels"></param>
         Private Sub loadPixelsArray(pixels As IEnumerable(Of mzPackPixel))
             Call RunSlavePipeline.SendMessage("create grid data...")
 
