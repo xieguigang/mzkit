@@ -233,17 +233,17 @@ Module MSI
     <RApiReturn("w", "h")>
     Public Function pixels(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("imzml") Then
-            Return getimzmlMetadata(file)
+            Return getimzmlMetadata(file, env)
         ElseIf TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("mzpack") Then
-            Return getmzpackFileMetadata(file)
+            Return getmzpackFileMetadata(file, env)
         ElseIf TypeOf file Is mzPack Then
-            Return getmzPackMetadata(file)
+            Return getmzPackMetadata(file, env)
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If
     End Function
 
-    Private Function getimzmlMetadata(file As String) As list
+    Private Function getimzmlMetadata(file As String, env As Environment) As list
         Dim allScans = XML.LoadScans(CStr(file)).ToArray
         Dim width As Integer = Aggregate p In allScans Into Max(p.x)
         Dim height As Integer = Aggregate p In allScans Into Max(p.y)
@@ -256,7 +256,7 @@ Module MSI
         }
     End Function
 
-    Private Function getmzpackFileMetadata(file As String) As list
+    Private Function getmzpackFileMetadata(file As String, env As Environment) As Object
         Using buf As Stream = CStr(file).Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Dim ver As Integer = buf.GetFormatVersion
             Dim reader As IMzPackReader
@@ -293,7 +293,7 @@ Module MSI
         End Using
     End Function
 
-    Private Function getmzPackMetadata(file As mzPack) As list
+    Private Function getmzPackMetadata(file As mzPack, env As Environment) As list
         Dim meta = DirectCast(file, mzPack).GetMSIMetadata
 
         Return New list With {
