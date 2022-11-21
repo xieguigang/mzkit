@@ -115,11 +115,25 @@ Module MSI
         Return table
     End Function
 
+    ''' <summary>
+    ''' get ms-imaging metadata
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <ExportAPI("msi_metadata")>
     Public Function GetMSIMetadata(raw As mzPack) As Metadata
         Return raw.GetMSIMetadata
     End Function
 
+    ''' <summary>
+    ''' cast the pixel collection to a ion imaging layer data
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="context"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="strict"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function asMSILayer(pixels As PixelData(),
@@ -175,7 +189,18 @@ Module MSI
         Return packList
     End Function
 
+    ''' <summary>
+    ''' get pixels [x,y] tags collection for a specific ion
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a character vector of the pixel [x,y] tags.
+    ''' </returns>
     <ExportAPI("pixelId")>
+    <RApiReturn(GetType(String))>
     Public Function pixelId(raw As mzPack, mz As Double,
                             Optional tolerance As Object = "da:0.1",
                             Optional env As Environment = Nothing) As Object
@@ -205,6 +230,7 @@ Module MSI
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("pixels")>
+    <RApiReturn("w", "h")>
     Public Function pixels(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("imzml") Then
             Dim allScans = XML.LoadScans(CStr(file)).ToArray
