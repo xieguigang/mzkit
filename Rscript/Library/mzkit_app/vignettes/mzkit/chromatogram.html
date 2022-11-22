@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,319 +31,90 @@
     </table>
     <h1>chromatogram</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "chromatogram"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="as.chromatogram">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="as.chromatogram">
     <a href="./chromatogram/as.chromatogram.html">as.chromatogram</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>convert dataset to chromatography dataset</p>  
-                
-                    <pre><p>let <code>as.chromatogram</code> as function(<code>scans</code> as any, <code>data</code> as any = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Chromatogram|&lt;generic&gt; ChromatogramTick</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::asChromatogram]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: can be a data sequence of ms1 scan object or rt <br />
- scan time vector if the signal data parameter <br />
- is assigned value.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="toChromatogram">
+  </td>
+  <td><p>convert dataset to chromatography dataset</p></td>
+</tr>
+<tr>
+  <td id="toChromatogram">
     <a href="./chromatogram/toChromatogram.html">toChromatogram</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>toChromatogram</code> as function(<code>ticks</code> as <generic> ChromatogramTick[]) -> <code>&lt;generic&gt; Chromatogram</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::toChromatogram]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="add">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="add">
     <a href="./chromatogram/add.html">add</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>add</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>name</code> as string, <code>data</code> as <generic> Chromatogram) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::addOverlaps]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="subset">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="subset">
     <a href="./chromatogram/subset.html">subset</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>subset</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>names</code> as string) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::subset]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="topInto">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="topInto">
     <a href="./chromatogram/topInto.html">topInto</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>topInto</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>n</code> as integer) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::topInto]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="labels">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="labels">
     <a href="./chromatogram/labels.html">labels</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>set new labels to the chromatogram overlap data</p>  
-                
-                    <pre><p>let <code>labels</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>names</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::setLabels]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>overlaps</code>: -
-                </li>
-<li>
-  <code>names</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scale_time">
+  </td>
+  <td><p>set new labels to the chromatogram overlap data</p></td>
+</tr>
+<tr>
+  <td id="scale_time">
     <a href="./chromatogram/scale_time.html">scale_time</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>scale_time</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>unit</code> as string = "minute") -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::scaleScanTime]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="overlapsMatrix">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="overlapsMatrix">
     <a href="./chromatogram/overlapsMatrix.html">overlapsMatrix</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>overlapsMatrix</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>dt</code> as double = 0.3) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::overlapsMatrix]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="overlaps">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="overlaps">
     <a href="./chromatogram/overlaps.html">overlaps</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>overlaps</code> as function(<code>TIC</code> as any = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::overlaps]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.pack">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="write.pack">
     <a href="./chromatogram/write.pack.html">write.pack</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>save the chrome overlaps data as the cdf data file</p>  
-                
-                    <pre><p>let <code>write.pack</code> as function(<code>overlaps</code> as <generic> ChromatogramOverlap, <code>cdf</code> as string) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::PackData]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>overlaps</code>: -
-                </li>
-<li>
-  <code>cdf</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.pack">
+  </td>
+  <td><p>save the chrome overlaps data as the cdf data file</p></td>
+</tr>
+<tr>
+  <td id="read.pack">
     <a href="./chromatogram/read.pack.html">read.pack</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.pack</code> as function(<code>cdf</code> as string) -> <code>&lt;generic&gt; ChromatogramOverlap</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ChromatogramTools
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "chromatogram"
-    #
-    return call <code>R&#35;.interop_[ChromatogramTools::ReadData]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

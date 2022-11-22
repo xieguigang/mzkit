@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,415 +31,99 @@
     </table>
     <h1>mzPack</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "mzPack"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="getSampleTags">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="getSampleTags">
     <a href="./mzPack/getSampleTags.html">getSampleTags</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>getSampleTags</code> as function(<code>mzpack</code> as string) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::getSampleTags]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="split_samples">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="split_samples">
     <a href="./mzPack/split_samples.html">split_samples</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>split_samples</code> as function(<code>mzpack</code> as string) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::SplitSamples]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open.mzwork">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="open.mzwork">
     <a href="./mzPack/open.mzwork.html">open.mzwork</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open mzwork file and then populate all of the mzpack raw data file</p>  
-                
-                    <pre><p>let <code>open.mzwork</code> as function(<code>mzwork</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::populateMzPacks]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzwork</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>a collection of mzpack raw data objects</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mzwork">
+  </td>
+  <td><p>open mzwork file and then populate all of the mzpack raw data file</p></td>
+</tr>
+<tr>
+  <td id="mzwork">
     <a href="./mzPack/mzwork.html">mzwork</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open a mzwork package file</p>  
-                
-                    <pre><p>let <code>mzwork</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; WorkspaceAccess</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::open_mzwork]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="readFileCache">
+  </td>
+  <td><p>open a mzwork package file</p></td>
+</tr>
+<tr>
+  <td id="readFileCache">
     <a href="./mzPack/readFileCache.html">readFileCache</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read mzpack data from the mzwork package by a <br />
- given raw data file name as reference id</p>  
-                
-                    <pre><p>let <code>readFileCache</code> as function(<code>mzwork</code> as <generic> WorkspaceAccess, <code>fileName</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::readFileCache]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzwork</code>: -
-                </li>
-<li>
-  <code>fileName</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mzpack">
+  </td>
+  <td><p>read mzpack data from the mzwork package by a <br />
+ given raw data file name as reference id</p></td>
+</tr>
+<tr>
+  <td id="mzpack">
     <a href="./mzPack/mzpack.html">mzpack</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open a mzpack data object reader, not read all data into memory in one time.</p>  
-                
-                    <pre><p>let <code>mzpack</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPackReader</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::open_mzpack]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>the ms scan data can be load into memory in lazy <br />
- require by a given scan id of the target ms1 scan</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ls">
+  </td>
+  <td><p>open a mzpack data object reader, not read all data into memory in one time.</p></td>
+</tr>
+<tr>
+  <td id="ls">
     <a href="./mzPack/ls.html">ls</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>show all ms1 scan id in a mzpack data object or <br />
+  </td>
+  <td><p>show all ms1 scan id in a mzpack data object or <br />
  show all raw data file names in a mzwork data <br />
- package.</p>  
-                
-                    <pre><p>let <code>ls</code> as function(<code>mzpack</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::index]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="metadata">
+ package.</p></td>
+</tr>
+<tr>
+  <td id="metadata">
     <a href="./mzPack/metadata.html">metadata</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get metadata list from a specific ms1 scan</p>  
-                
-                    <pre><p>let <code>metadata</code> as function(<code>mzpack</code> as <generic> mzPackReader, <code>index</code> as string) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::GetMetaData]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>index</code>: the scan id of the target ms1 scan data
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scaninfo">
+  </td>
+  <td><p>get metadata list from a specific ms1 scan</p></td>
+</tr>
+<tr>
+  <td id="scaninfo">
     <a href="./mzPack/scaninfo.html">scaninfo</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>scaninfo</code> as function(<code>mzpack</code> as <generic> mzPackReader, <code>index</code> as string) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::scanInfo]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="convertTo_mzXML">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="convertTo_mzXML">
     <a href="./mzPack/convertTo_mzXML.html">convertTo_mzXML</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>method for write mzpack data object as a mzML file</p>  
-                
-                    <pre><p>let <code>convertTo_mzXML</code> as function(<code>mzpack</code> as <generic> mzPack, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::convertTo_mzXML]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="packData">
+  </td>
+  <td><p>method for write mzpack data object as a mzML file</p></td>
+</tr>
+<tr>
+  <td id="packData">
     <a href="./mzPack/packData.html">packData</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>pack mzkit ms2 peaks data as a mzpack data object</p>  
-                
-                    <pre><p>let <code>packData</code> as function(<code>data</code> as any, 
-<code>timeWindow</code> as double = 1, 
-<code>pack_singleCells</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::packData]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>data</code>: -
-                </li>
-<li>
-  <code>timeWindow</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="packStream">
+  </td>
+  <td><p>pack mzkit ms2 peaks data as a mzpack data object</p></td>
+</tr>
+<tr>
+  <td id="packStream">
     <a href="./mzPack/packStream.html">packStream</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write mzPack in v2 format</p>  
-                
-                    <pre><p>let <code>packStream</code> as function(<code>data</code> as <generic> mzPack, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzPackAccess
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzPack"
-    #
-    return call <code>R&#35;.interop_[MzPackAccess::writeStream]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>data</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>write mzPack in v2 format</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

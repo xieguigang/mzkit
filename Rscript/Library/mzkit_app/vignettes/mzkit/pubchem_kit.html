@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,400 +31,103 @@
     </table>
     <h1>pubchem_kit</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "pubchem_kit"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="image_fly">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="image_fly">
     <a href="./pubchem_kit/image_fly.html">image_fly</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>image_fly</code> as function(<code>cid</code> as any, 
-<code>size</code> as any = "500,500", 
-<code>ignoresInvalidCid</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::ImageFlyGetImages]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="query.external">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="query.external">
     <a href="./pubchem_kit/query.external.html">query.external</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>query of the pathways, taxonomy and reaction <br />
- data from the pubchem database.</p>  
-                
-                    <pre><p>let <code>query.external</code> as function(<code>cid</code> as string, <code>cache</code> as string = "./pubchem/", <code>interval</code> as integer = -1) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::queryExternalMetadata]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>cid</code>: -
-                </li>
-<li>
-  <code>cache</code>: -
-                </li>
-<li>
-  <code>interval</code>: the sleep time interval in ms
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="CID">
+  </td>
+  <td><p>query of the pathways, taxonomy and reaction <br />
+ data from the pubchem database.</p></td>
+</tr>
+<tr>
+  <td id="CID">
     <a href="./pubchem_kit/CID.html">CID</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>query cid from pubchem database</p>  
-                
-                    <pre><p>let <code>CID</code> as function(<code>name</code> as string, 
-<code>cache</code> as string = "./.pubchem", 
-<code>offline</code> as boolean = FALSE, 
-<code>interval</code> as integer = -1) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::CID]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>name</code>: -
-                </li>
-<li>
-  <code>cache</code>: -
-                </li>
-<li>
-  <code>offline</code>: -
-                </li>
-<li>
-  <code>interval</code>: the time sleep interval in ms
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pubchem_url">
+  </td>
+  <td><p>query cid from pubchem database</p></td>
+</tr>
+<tr>
+  <td id="pubchem_url">
     <a href="./pubchem_kit/pubchem_url.html">pubchem_url</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>pubchem_url</code> as function(<code>cid</code> as string) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::pubchemUrl]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="query.knowlegde_graph">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="query.knowlegde_graph">
     <a href="./pubchem_kit/query.knowlegde_graph.html">query.knowlegde_graph</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>query.knowlegde_graph</code> as function(<code>cid</code> as string, <code>cache</code> as string = "./graph_kb") -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::QueryKnowledgeGraph]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="query">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="query">
     <a href="./pubchem_kit/query.html">query</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>query of the pubchem database</p>  
-                
-                    <pre><p>let <code>query</code> as function(<code>id</code> as any, <code>cache</code> as string = "./", [<code>&lt;Environment&gt;</code>]) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::queryPubChem]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>id</code>: -
-                </li>
-<li>
-  <code>cache$</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pugView">
+  </td>
+  <td><p>query of the pubchem database</p></td>
+</tr>
+<tr>
+  <td id="pugView">
     <a href="./pubchem_kit/pugView.html">pugView</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>pugView</code> as function(<code>cid</code> as any, 
-<code>cacheFolder</code> as string = "./pubchem_cache", 
-<code>offline</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::pugView]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="SID_map">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="SID_map">
     <a href="./pubchem_kit/SID_map.html">SID_map</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>SID_map</code> as function(<code>sidMapText</code> as string, <code>skipNoCID</code> as boolean = TRUE, <code>dbfilter</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; SIDMap[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::ReadSIDMap]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.pugView">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="read.pugView">
     <a href="./pubchem_kit/read.pugView.html">read.pugView</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read xml text and then parse as pugview record data object</p>  
-                
-                    <pre><p>let <code>read.pugView</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; PugViewRecord</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::readPugViewXml]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: the file path or the xml text content
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="metadata.pugView">
+  </td>
+  <td><p>read xml text and then parse as pugview record data object</p></td>
+</tr>
+<tr>
+  <td id="metadata.pugView">
     <a href="./pubchem_kit/metadata.pugView.html">metadata.pugView</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>metadata.pugView</code> as function(<code>pugView</code> as <generic> PugViewRecord) -> <code>&lt;generic&gt; MetaLib</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::GetMetaInfo]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.mesh_tree">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="read.mesh_tree">
     <a href="./pubchem_kit/read.mesh_tree.html">read.mesh_tree</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.mesh_tree</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::ParseMeshTree]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mesh_background">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="mesh_background">
     <a href="./pubchem_kit/mesh_background.html">mesh_background</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create MeSH ontology gsea background based on the mesh tree</p>  
-                
-                    <pre><p>let <code>mesh_background</code> as function(<code>mesh</code> as <generic> Tree`1, <code>clusters</code> as <generic> Background = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; Background</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::MeshBackground]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mesh</code>: -
-                </li>
-<li>
-  <code>clusters</code>: Create the mesh background about another topic
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mesh_level1">
+  </td>
+  <td><p>create MeSH ontology gsea background based on the mesh tree</p></td>
+</tr>
+<tr>
+  <td id="mesh_level1">
     <a href="./pubchem_kit/mesh_level1.html">mesh_level1</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>mesh_level1</code> as function(<code>mesh</code> as <generic> Tree`1) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.PubChemToolKit
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "pubchem_kit"
-    #
-    return call <code>R&#35;.interop_[PubChemToolKit::level1Terms]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

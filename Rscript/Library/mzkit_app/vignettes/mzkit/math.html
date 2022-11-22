@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="the R# math module" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,398 +31,88 @@
     </table>
     <h1>math</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "math"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p>the R# math module</p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="mz">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="mz">
     <a href="./math/mz.html">mz</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>evaluate all m/z for all known precursor type.</p>  
-                
-                    <pre><p>let <code>mz</code> as function(<code>mass</code> as double, <code>mode</code> as any = "+") -> <code>&lt;generic&gt; PrecursorInfo|double</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::mz]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mass</code>: the target exact mass value
-                </li>
-<li>
-  <code>mode</code>: this parameter could be two type of data:
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="exact_mass">
+  </td>
+  <td><p>evaluate all m/z for all known precursor type.</p></td>
+</tr>
+<tr>
+  <td id="exact_mass">
     <a href="./math/exact_mass.html">exact_mass</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>evaluate all exact mass for all known precursor type.</p>  
-                
-                    <pre><p>let <code>exact_mass</code> as function(<code>mz</code> as double, <code>mode</code> as any = "+") -> <code>&lt;generic&gt; PrecursorInfo[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::exact_mass]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mz</code>: -
-                </li>
-<li>
-  <code>mode</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ppm">
+  </td>
+  <td><p>evaluate all exact mass for all known precursor type.</p></td>
+</tr>
+<tr>
+  <td id="ppm">
     <a href="./math/ppm.html">ppm</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>calculate ppm value between two mass vector</p>  
-                
-                    <pre><p>let <code>ppm</code> as function(<code>a</code> as any, <code>b</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>double</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::ppm]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>a</code>: mass a
-                </li>
-<li>
-  <code>b</code>: mass b
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="spectrum.compares">
+  </td>
+  <td><p>calculate ppm value between two mass vector</p></td>
+</tr>
+<tr>
+  <td id="spectrum.compares">
     <a href="./math/spectrum.compares.html">spectrum.compares</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create a delegate function pointer that apply for compares spectrums theirs similarity.</p>  
-                
-                    <pre><p>let <code>spectrum.compares</code> as function(<code>tolerance</code> as any = "da:0.1", 
-<code>equals_score</code> as double = 0.85, 
-<code>gt_score</code> as double = 0.6, 
-<code>score_aggregate</code> as <integer> ScoreAggregates = [min], 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Comparison`1</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::SSMCompares]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>tolerance</code>: -
-                </li>
-<li>
-  <code>equals_score</code>: -
-                </li>
-<li>
-  <code>gt_score</code>: -
-                </li>
-<li>
-  <code>score_aggregate</code>: <code>@</code>T:System.Func`3````
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="jaccard">
+  </td>
+  <td><p>create a delegate function pointer that apply for compares spectrums theirs similarity.</p></td>
+</tr>
+<tr>
+  <td id="jaccard">
     <a href="./math/jaccard.html">jaccard</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>jaccard</code> as function(<code>query</code> as double, 
-<code>ref</code> as double, 
-<code>tolerance</code> as any = "da:0.3", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::jaccard]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="jaccardSet">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="jaccardSet">
     <a href="./math/jaccardSet.html">jaccardSet</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>jaccardSet</code> as function(<code>query</code> as double, 
-<code>ref</code> as double, 
-<code>tolerance</code> as any = "da:0.3", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::jaccardSet]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="cosine">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="cosine">
     <a href="./math/cosine.html">cosine</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>cosine</code> as function(<code>query</code> as <generic> LibraryMatrix, 
-<code>ref</code> as <generic> LibraryMatrix, 
-<code>tolerance</code> as any = "da:0.3", 
-<code>intocutoff</code> as double = 0.05, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; AlignmentOutput</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::cosine]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="spectrum_tree.cluster">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="spectrum_tree.cluster">
     <a href="./math/spectrum_tree.cluster.html">spectrum_tree.cluster</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create spectrum tree cluster based on the spectrum to spectrum similarity comparision.</p>  
-                
-                    <pre><p>let <code>spectrum_tree.cluster</code> as function(<code>ms2list</code> as any, 
-<code>compares</code> as <generic> Comparison`1 = <code>&lt;NULL&gt;</code>, 
-<code>tolerance</code> as any = "da:0.1", 
-<code>intocutoff</code> as double = 0.05, 
-<code>showReport</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SpectrumTreeCluster</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::SpectrumTreeCluster]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ms2list</code>: a vector of spectrum peaks data
-                </li>
-<li>
-  <code>compares</code>: a delegate function pointer that could be generated by <code>spectrum.compares</code> api.
-                </li>
-<li>
-  <code>tolerance</code>: the mz tolerance threshold value
-                </li>
-<li>
-  <code>intocutoff</code>: intensity cutoff of the spectrum matrix its product <code>m/z</code> fragments.
-                </li>
-<li>
-  <code>showReport</code>: show progress report?
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="cluster.nodes">
+  </td>
+  <td><p>create spectrum tree cluster based on the spectrum to spectrum similarity comparision.</p></td>
+</tr>
+<tr>
+  <td id="cluster.nodes">
     <a href="./math/cluster.nodes.html">cluster.nodes</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get all nodes from the spectrum tree cluster result</p>  
-                
-                    <pre><p>let <code>cluster.nodes</code> as function(<code>tree</code> as <generic> SpectrumTreeCluster) -> <code>&lt;generic&gt; SpectrumCluster[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::GetClusters]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>tree</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ions.unique">
+  </td>
+  <td><p>get all nodes from the spectrum tree cluster result</p></td>
+</tr>
+<tr>
+  <td id="ions.unique">
     <a href="./math/ions.unique.html">ions.unique</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>data pre-processing helper</p>  
-                
-                    <pre><p>let <code>ions.unique</code> as function(<code>ions</code> as any, 
-<code>eq</code> as double = 0.85, 
-<code>gt</code> as double = 0.6, 
-<code>mzwidth</code> as string = "da:0.1", 
-<code>tolerance</code> as string = "da:0.3", 
-<code>precursor</code> as string = "ppm:20", 
-<code>rtwidth</code> as double = 5, 
-<code>trim</code> as string = "0.05", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::MzUnique]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ions</code>: -
-                </li>
-<li>
-  <code>eq#</code>: -
-                </li>
-<li>
-  <code>gt#</code>: -
-                </li>
-<li>
-  <code>mzwidth$</code>: -
-                </li>
-<li>
-  <code>tolerance$</code>: -
-                </li>
-<li>
-  <code>precursor$</code>: -
-                </li>
-<li>
-  <code>rtwidth#</code>: -
-                </li>
-<li>
-  <code>trim$</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="centroid">
+  </td>
+  <td><p>data pre-processing helper</p></td>
+</tr>
+<tr>
+  <td id="centroid">
     <a href="./math/centroid.html">centroid</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Converts profiles peak data to peak data in centroid mode.</p>
+  </td>
+  <td><p>Converts profiles peak data to peak data in centroid mode.</p>
 
 <p>profile and centroid in Mass Spectrometry?</p>
 
@@ -438,243 +128,45 @@
 <li>location of the bar Is center of the profile peak.</li>
 <li>height of the bar Is area of the profile peak.</li>
 </ul></li>
-</ol>  
-                
-                    <pre><p>let <code>centroid</code> as function(<code>ions</code> as any, 
-<code>tolerance</code> as any = "da:0.1", 
-<code>intoCutoff</code> as double = 0.05, 
-<code>parallel</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2|&lt;generic&gt; LibraryMatrix|double</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::centroid]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ions</code>: value of this parameter could be 
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>Peaks data in centroid mode or a new m/z vector in centroid.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="tolerance">
+</ol></td>
+</tr>
+<tr>
+  <td id="tolerance">
     <a href="./math/tolerance.html">tolerance</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Create tolerance object</p>  
-                
-                    <pre><p>let <code>tolerance</code> as function(<code>threshold</code> as double, <code>method</code> as any = ["ppm","da"], [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::createTolerance]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>threshold</code>: -
-                </li>
-<li>
-  <code>method</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="sequenceOrder">
+  </td>
+  <td><p>Create tolerance object</p></td>
+</tr>
+<tr>
+  <td id="sequenceOrder">
     <a href="./math/sequenceOrder.html">sequenceOrder</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>reorder scan points into a sequence for downstream data analysis</p>  
-                
-                    <pre><p>let <code>sequenceOrder</code> as function(<code>scans</code> as any, 
-<code>mzwidth</code> as any = "da:0.1", 
-<code>rtwidth</code> as double = 60, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::sequenceOrder]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: -
-                </li>
-<li>
-  <code>mzwidth</code>: -
-                </li>
-<li>
-  <code>rtwidth</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="precursor_types">
+  </td>
+  <td><p>reorder scan points into a sequence for downstream data analysis</p></td>
+</tr>
+<tr>
+  <td id="precursor_types">
     <a href="./math/precursor_types.html">precursor_types</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create precursor type calculator</p>  
-                
-                    <pre><p>let <code>precursor_types</code> as function(<code>types</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::precursorTypes]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>types</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="defaultPrecursors">
+  </td>
+  <td><p>create precursor type calculator</p></td>
+</tr>
+<tr>
+  <td id="defaultPrecursors">
     <a href="./math/defaultPrecursors.html">defaultPrecursors</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>returns all precursor types for a given libtype</p>  
-                
-                    <pre><p>let <code>defaultPrecursors</code> as function(<code>ionMode</code> as string) -> <code>&lt;generic&gt; MzCalculator[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::defaultPrecursors]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ionMode</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="toMS">
+  </td>
+  <td><p>returns all precursor types for a given libtype</p></td>
+</tr>
+<tr>
+  <td id="toMS">
     <a href="./math/toMS.html">toMS</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>toMS</code> as function(<code>isotope</code> as <generic> IsotopeDistribution) -> <code>&lt;generic&gt; LibraryMatrix</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::CreateMSMatrix]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="xcms_id">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="xcms_id">
     <a href="./math/xcms_id.html">xcms_id</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>makes xcms_id format liked ROI unique id</p>  
-                
-                    <pre><p>let <code>xcms_id</code> as function(<code>mz</code> as double, <code>rt</code> as double) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzMath
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "math"
-    #
-    return call <code>R&#35;.interop_[MzMath::xcms_id]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mz</code>: -
-                </li>
-<li>
-  <code>rt</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>makes xcms_id format liked ROI unique id</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

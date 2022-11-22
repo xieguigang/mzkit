@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,172 +31,54 @@
     </table>
     <h1>ProteoWizard</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "ProteoWizard"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="msconvert.ready">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="msconvert.ready">
     <a href="./ProteoWizard/msconvert.ready.html">msconvert.ready</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Is the <code>ProteoWizard</code> program ready to use?</p>  
-                
-                    <pre><p>let <code>msconvert.ready</code> as function([<code>&lt;Environment&gt;</code>]) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ProteoWizard
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "ProteoWizard"
-    #
-    return call <code>R&#35;.interop_[ProteoWizard::Ready]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="MRM.mzML">
+  </td>
+  <td><p>Is the <code>ProteoWizard</code> program ready to use?</p></td>
+</tr>
+<tr>
+  <td id="MRM.mzML">
     <a href="./ProteoWizard/MRM.mzML.html">MRM.mzML</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Convert MRM wiff file to mzMl files</p>  
-                
-                    <pre><p>let <code>MRM.mzML</code> as function(<code>wiff</code> as string, <code>output</code> as string = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ProteoWizard
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "ProteoWizard"
-    #
-    return call <code>R&#35;.interop_[ProteoWizard::wiffMRM]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>wiff</code>: The file path of the wiff file
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>File path collection of the converted mzML files.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="filter.msLevel">
+  </td>
+  <td><p>Convert MRM wiff file to mzMl files</p></td>
+</tr>
+<tr>
+  <td id="filter.msLevel">
     <a href="./ProteoWizard/filter.msLevel.html">filter.msLevel</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>filter.msLevel</code> as function(<code>level</code> as string) -> <code>&lt;generic&gt; Filter</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ProteoWizard
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "ProteoWizard"
-    #
-    return call <code>R&#35;.interop_[ProteoWizard::msLevelFilter]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="filter.scanTime">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="filter.scanTime">
     <a href="./ProteoWizard/filter.scanTime.html">filter.scanTime</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>filter.scanTime</code> as function(<code>start</code> as double, <code>stop</code> as double) -> <code>&lt;generic&gt; Filter</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ProteoWizard
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "ProteoWizard"
-    #
-    return call <code>R&#35;.interop_[ProteoWizard::scanTimeFilter]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>start</code>: Start time in time unit of seconds
-                </li>
-<li>
-  <code>stop</code>: Stop time in time unit of seconds
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="convert.thermo.raw">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="convert.thermo.raw">
     <a href="./ProteoWizard/convert.thermo.raw.html">convert.thermo.raw</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Convert thermo raw files to mzXML files</p>  
-                
-                    <pre><p>let <code>convert.thermo.raw</code> as function(<code>raw</code> as string, 
-<code>output</code> as string, 
-<code>filetype</code> as <integer> OutFileTypes = [mzXML], 
-<code>filters</code> as <generic> Filter[] = <code>&lt;NULL&gt;</code>, 
-<code>parallel</code> as any = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ProteoWizard
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "ProteoWizard"
-    #
-    return call <code>R&#35;.interop_[ProteoWizard::ConvertThermoRawFile]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>output</code>: The output directory
-                </li>
-<li>
-  <code>filetype</code>: the file type of the raw data output.
-                </li>
-<li>
-  <code>filters</code>: data filters
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>Convert thermo raw files to mzXML files</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

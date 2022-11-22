@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-21" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-22" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,443 +31,108 @@
     </table>
     <h1>assembly</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "assembly"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="read.msl">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="read.msl">
     <a href="./assembly/read.msl.html">read.msl</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read MSL data files</p>  
-                
-                    <pre><p>let <code>read.msl</code> as function(<code>file</code> as string, <code>unit</code> as <integer> TimeScales = [Second]) -> <code>&lt;generic&gt; MSLIon[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::ReadMslIons]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file$</code>: -
-                </li>
-<li>
-  <code>unit</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.mgf">
+  </td>
+  <td><p>read MSL data files</p></td>
+</tr>
+<tr>
+  <td id="read.mgf">
     <a href="./assembly/read.mgf.html">read.mgf</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.mgf</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; Ions[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::ReadMgfIons]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.msp">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="read.msp">
     <a href="./assembly/read.msp.html">read.msp</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.msp</code> as function(<code>file</code> as string, <code>parseMs2</code> as boolean = TRUE) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::readMsp]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mgf.ion_peaks">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="mgf.ion_peaks">
     <a href="./assembly/mgf.ion_peaks.html">mgf.ion_peaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>this function ensure that the output result of the any input ion objects is peakms2 data type.</p>  
-                
-                    <pre><p>let <code>mgf.ion_peaks</code> as function(<code>ions</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::IonPeaks]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ions</code>: a vector of mgf @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF.Ions</code> from the <code>read.mgf</code> function or other data source.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open.xml_seek">
+  </td>
+  <td><p>this function ensure that the output result of the any input ion objects is peakms2 data type.</p></td>
+</tr>
+<tr>
+  <td id="open.xml_seek">
     <a href="./assembly/open.xml_seek.html">open.xml_seek</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>open.xml_seek</code> as function(<code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::openXmlSeeks]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="seek">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="seek">
     <a href="./assembly/seek.html">seek</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>seek</code> as function(<code>file</code> as <generic> XmlSeek, <code>key</code> as string) -> <code>&lt;generic&gt; MSScan</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::Seek]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scan_id">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="scan_id">
     <a href="./assembly/scan_id.html">scan_id</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>scan_id</code> as function(<code>file</code> as <generic> XmlSeek) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::ScanIds]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load_index">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load_index">
     <a href="./assembly/load_index.html">load_index</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>load_index</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; FastSeekIndex</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::LoadIndex]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.mgf">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="write.mgf">
     <a href="./assembly/write.mgf.html">write.mgf</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write spectra data in mgf file format.</p>  
-                
-                    <pre><p>let <code>write.mgf</code> as function(<code>ions</code> as any, 
-<code>file</code> as string, 
-<code>relativeInto</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::writeMgfIons]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ions</code>: -
-                </li>
-<li>
-  <code>file</code>: the file path of the mgf file to write spectra data.
-                </li>
-<li>
-  <code>relativeInto</code>: write relative intensity value into the mgf file instead of the raw intensity value.<br />
- no recommended...
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="file.index">
+  </td>
+  <td><p>write spectra data in mgf file format.</p></td>
+</tr>
+<tr>
+  <td id="file.index">
     <a href="./assembly/file.index.html">file.index</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get file index string of the given ms2 peak data.</p>  
-                
-                    <pre><p>let <code>file.index</code> as function(<code>ms2</code> as <generic> PeakMs2) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::PeakMs2FileIndex]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ms2</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mzxml.mgf">
+  </td>
+  <td><p>get file index string of the given ms2 peak data.</p></td>
+</tr>
+<tr>
+  <td id="mzxml.mgf">
     <a href="./assembly/mzxml.mgf.html">mzxml.mgf</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Convert mzxml file as mgf ions.</p>  
-                
-                    <pre><p>let <code>mzxml.mgf</code> as function(<code>file</code> as string, 
-<code>relativeInto</code> as boolean = FALSE, 
-<code>onlyMs2</code> as boolean = TRUE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::mzXML2Mgf]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="raw.scans">
+  </td>
+  <td><p>Convert mzxml file as mgf ions.</p></td>
+</tr>
+<tr>
+  <td id="raw.scans">
     <a href="./assembly/raw.scans.html">raw.scans</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get raw scans data from the <code>mzXML</code> or <code>mzMl</code> data file</p>  
-                
-                    <pre><p>let <code>raw.scans</code> as function(<code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; spectrum|&lt;generic&gt; scan</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::rawScans]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="polarity">
+  </td>
+  <td><p>get raw scans data from the <code>mzXML</code> or <code>mzMl</code> data file</p></td>
+</tr>
+<tr>
+  <td id="polarity">
     <a href="./assembly/polarity.html">polarity</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get polarity data for each ms2 scans</p>  
-                
-                    <pre><p>let <code>polarity</code> as function(<code>scans</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>integer</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::ionMode]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms1.scans">
+  </td>
+  <td><p>get polarity data for each ms2 scans</p></td>
+</tr>
+<tr>
+  <td id="ms1.scans">
     <a href="./assembly/ms1.scans.html">ms1.scans</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get all ms1 raw scans from the raw files</p>  
-                
-                    <pre><p>let <code>ms1.scans</code> as function(<code>raw</code> as any, <code>centroid</code> as any = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ms1_scan</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Assembly
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "assembly"
-    #
-    return call <code>R&#35;.interop_[Assembly::getMs1Scans]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: the file path of the raw data files.
-                </li>
-<li>
-  <code>centroid</code>: the tolerance value of m/z for convert to centroid mode
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>get all ms1 raw scans from the raw files</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>
