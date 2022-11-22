@@ -115,11 +115,25 @@ Module MSI
         Return table
     End Function
 
+    ''' <summary>
+    ''' get ms-imaging metadata
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <ExportAPI("msi_metadata")>
     Public Function GetMSIMetadata(raw As mzPack) As Metadata
         Return raw.GetMSIMetadata
     End Function
 
+    ''' <summary>
+    ''' cast the pixel collection to a ion imaging layer data
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="context"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="strict"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function asMSILayer(pixels As PixelData(),
@@ -175,7 +189,18 @@ Module MSI
         Return packList
     End Function
 
+    ''' <summary>
+    ''' get pixels [x,y] tags collection for a specific ion
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a character vector of the pixel [x,y] tags.
+    ''' </returns>
     <ExportAPI("pixelId")>
+    <RApiReturn(GetType(String))>
     Public Function pixelId(raw As mzPack, mz As Double,
                             Optional tolerance As Object = "da:0.1",
                             Optional env As Environment = Nothing) As Object
@@ -205,65 +230,78 @@ Module MSI
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("pixels")>
+    <RApiReturn("w", "h")>
     Public Function pixels(file As Object, Optional env As Environment = Nothing) As Object
         If TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("imzml") Then
-            Dim allScans = XML.LoadScans(CStr(file)).ToArray
-            Dim width As Integer = Aggregate p In allScans Into Max(p.x)
-            Dim height As Integer = Aggregate p In allScans Into Max(p.y)
-
-            Return New list With {
-                .slots = New Dictionary(Of String, Object) From {
-                    {"w", width},
-                    {"h", height}
-                }
-            }
+            Return getimzmlMetadata(file, env)
         ElseIf TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("mzpack") Then
-            Using buf As Stream = CStr(file).Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Dim ver As Integer = buf.GetFormatVersion
-                Dim reader As IMzPackReader
-
-                If ver = 1 Then
-                    reader = New BinaryStreamReader(buf)
-                ElseIf ver = 2 Then
-                    reader = New mzStream(buf)
-                Else
-                    Return Internal.debug.stop(New NotImplementedException, env)
-                End If
-
-                Dim allMeta = reader.EnumerateIndex _
-                    .Select(AddressOf reader.GetMetadata) _
-                    .IteratesALL _
-                    .ToArray
-                Dim x As Integer() = allMeta _
-                    .Where(Function(p) p.Key.TextEquals("x")) _
-                    .Select(Function(p) p.Value) _
-                    .Select(AddressOf Integer.Parse) _
-                    .ToArray
-                Dim y As Integer() = allMeta _
-                    .Where(Function(p) p.Key.TextEquals("y")) _
-                    .Select(Function(p) p.Value) _
-                    .Select(AddressOf Integer.Parse) _
-                    .ToArray
-
-                Return New list With {
-                    .slots = New Dictionary(Of String, Object) From {
-                        {"w", x.Max},
-                        {"h", y.Max}
-                    }
-                }
-            End Using
+            Return getmzpackFileMetadata(file, env)
         ElseIf TypeOf file Is mzPack Then
-            Dim meta = DirectCast(file, mzPack).GetMSIMetadata
-
-            Return New list With {
-                .slots = New Dictionary(Of String, Object) From {
-                    {"w", meta.scan_x},
-                    {"h", meta.scan_y}
-                }
-            }
+            Return getmzPackMetadata(file, env)
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If
+    End Function
+
+    Private Function getimzmlMetadata(file As String, env As Environment) As list
+        Dim allScans = XML.LoadScans(CStr(file)).ToArray
+        Dim width As Integer = Aggregate p In allScans Into Max(p.x)
+        Dim height As Integer = Aggregate p In allScans Into Max(p.y)
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"w", width},
+                {"h", height}
+            }
+        }
+    End Function
+
+    Private Function getmzpackFileMetadata(file As String, env As Environment) As Object
+        Using buf As Stream = CStr(file).Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim ver As Integer = buf.GetFormatVersion
+            Dim reader As IMzPackReader
+
+            If ver = 1 Then
+                reader = New BinaryStreamReader(buf)
+            ElseIf ver = 2 Then
+                reader = New mzStream(buf)
+            Else
+                Return Internal.debug.stop(New NotImplementedException, env)
+            End If
+
+            Dim allMeta = reader.EnumerateIndex _
+                .Select(AddressOf reader.GetMetadata) _
+                .IteratesALL _
+                .ToArray
+            Dim x As Integer() = allMeta _
+                .Where(Function(p) p.Key.TextEquals("x")) _
+                .Select(Function(p) p.Value) _
+                .Select(AddressOf Integer.Parse) _
+                .ToArray
+            Dim y As Integer() = allMeta _
+                .Where(Function(p) p.Key.TextEquals("y")) _
+                .Select(Function(p) p.Value) _
+                .Select(AddressOf Integer.Parse) _
+                .ToArray
+
+            Return New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"w", x.Max},
+                    {"h", y.Max}
+                }
+            }
+        End Using
+    End Function
+
+    Private Function getmzPackMetadata(file As mzPack, env As Environment) As list
+        Dim meta = DirectCast(file, mzPack).GetMSIMetadata
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"w", meta.scan_x},
+                {"h", meta.scan_y}
+            }
+        }
     End Function
 
     <ExportAPI("open.imzML")>

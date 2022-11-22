@@ -39,7 +39,7 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>get ms-imaging metadata</p>  
                 
                     <pre><p>let <code>msi_metadata</code> as function(<code>raw</code> as <generic> mzPack) -> <code>&lt;generic&gt; Metadata</code> {
     #
@@ -53,7 +53,14 @@
     return call <code>R&#35;.interop_[MSI::GetMSIMetadata]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>raw</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
@@ -64,7 +71,7 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>cast the pixel collection to a ion imaging layer data</p>  
                 
                     <pre><p>let <code>as.layer</code> as function(<code>pixels</code> as <generic> PixelData[], 
 <code>context</code> as string = "MSIlayer", 
@@ -82,7 +89,26 @@
     return call <code>R&#35;.interop_[MSI::asMSILayer]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>pixels</code>: -
+                </li>
+<li>
+  <code>context</code>: -
+                </li>
+<li>
+  <code>dims</code>: -
+                </li>
+<li>
+  <code>strict</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
                        
                     
 
@@ -128,12 +154,12 @@
   </h2>
   <hr />
   <p>
-                      
+                    <p>get pixels [x,y] tags collection for a specific ion</p>  
                 
                     <pre><p>let <code>pixelId</code> as function(<code>raw</code> as <generic> mzPack, 
 <code>mz</code> as double, 
 <code>tolerance</code> as any = "da:0.1", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+[<code>&lt;Environment&gt;</code>]) -> <code>string</code> {
     #
     # .NET API information
     #
@@ -145,9 +171,25 @@
     return call <code>R&#35;.interop_[MSI::pixelId]</code>(...);
 }</p></pre>
 
-                    
+                    <div>
+  <h4>Arguments</h4>
+  <ul>
+                   <li>
+  <code>raw</code>: -
+                </li>
+<li>
+  <code>mz</code>: -
+                </li>
+<li>
+  <code>tolerance</code>: -
+                </li>
+<li>
+  <code>env</code>: -
+                </li>
+                </ul>
+</div>
                        
-                    
+                    <h4>Value</h4><p>a character vector of the pixel [x,y] tags.</p>
 
                     <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
 </div><br /><div>
@@ -158,7 +200,7 @@
   <p>
                     <p>get pixels size from the raw data file</p>  
                 
-                    <pre><p>let <code>pixels</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
+                    <pre><p>let <code>pixels</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>list</code> {
     #
     # .NET API information
     #
