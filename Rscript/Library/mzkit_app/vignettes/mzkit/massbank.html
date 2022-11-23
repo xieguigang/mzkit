@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,444 +31,108 @@
     </table>
     <h1>massbank</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "massbank"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="read.MoNA">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="read.MoNA">
     <a href="./massbank/read.MoNA.html">read.MoNA</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read MoNA database file.</p>  
-                
-                    <pre><p>let <code>read.MoNA</code> as function(<code>rawfile</code> as string, 
-<code>skipSpectraInfo</code> as boolean = FALSE, 
-<code>is_gcms</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SpectraSection</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::readMoNA]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>rawfile</code>: the database reader is switched automatically <br />
- based on this file path its extension name.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>a linq pipeline for populate the spectrum data <br />
- from the MoNA database.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.SDF">
+  </td>
+  <td><p>read MoNA database file.</p></td>
+</tr>
+<tr>
+  <td id="read.SDF">
     <a href="./massbank/read.SDF.html">read.SDF</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read metabolite data in a given sdf data file.</p>  
-                
-                    <pre><p>let <code>read.SDF</code> as function(<code>file</code> as string, <code>parseStruct</code> as boolean = TRUE, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; pipeline</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::readSDF]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.lipidmaps">
+  </td>
+  <td><p>read metabolite data in a given sdf data file.</p></td>
+</tr>
+<tr>
+  <td id="write.lipidmaps">
     <a href="./massbank/write.lipidmaps.html">write.lipidmaps</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>save lipidmaps data repository.</p>  
-                
-                    <pre><p>let <code>write.lipidmaps</code> as function(<code>lipidmaps</code> as any, <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::writeLipidMapsRepo]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>lipidmaps</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.lipidmaps">
+  </td>
+  <td><p>save lipidmaps data repository.</p></td>
+</tr>
+<tr>
+  <td id="read.lipidmaps">
     <a href="./massbank/read.lipidmaps.html">read.lipidmaps</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read messagepack repository file</p>  
-                
-                    <pre><p>let <code>read.lipidmaps</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MetaData</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::readLipidMapsRepo]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.hmdb">
+  </td>
+  <td><p>read messagepack repository file</p></td>
+</tr>
+<tr>
+  <td id="read.hmdb">
     <a href="./massbank/read.hmdb.html">read.hmdb</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open a reader for read hmdb database</p>  
-                
-                    <pre><p>let <code>read.hmdb</code> as function(<code>xml</code> as string) -> <code>&lt;generic&gt; pipeline</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::readHMDB]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>xml</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.lipidmaps">
+  </td>
+  <td><p>open a reader for read hmdb database</p></td>
+</tr>
+<tr>
+  <td id="as.lipidmaps">
     <a href="./massbank/as.lipidmaps.html">as.lipidmaps</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>populate lipidmaps meta data objects from the loaded sdf data stream</p>  
-                
-                    <pre><p>let <code>as.lipidmaps</code> as function(<code>sdf</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::toLipidMaps]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>sdf</code>: a sequence of sdf molecular data which can be read from the <code>read.SDF</code> function. 
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="lipid.nameMaps">
+  </td>
+  <td><p>populate lipidmaps meta data objects from the loaded sdf data stream</p></td>
+</tr>
+<tr>
+  <td id="lipid.nameMaps">
     <a href="./massbank/lipid.nameMaps.html">lipid.nameMaps</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>lipid.nameMaps</code> as function(<code>lipidmaps</code> as <generic> EntityObject[]) -> <code>&lt;generic&gt; EntityObject[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::lipidnameMapping]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="chebi.secondary2main.mapping">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="chebi.secondary2main.mapping">
     <a href="./massbank/chebi.secondary2main.mapping.html">chebi.secondary2main.mapping</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>chebi.secondary2main.mapping</code> as function(<code>repository</code> as string) -> <code>list[string]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::chebiSecondary2Main]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="hmdb.secondary2main.mapping">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="hmdb.secondary2main.mapping">
     <a href="./massbank/hmdb.secondary2main.mapping.html">hmdb.secondary2main.mapping</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>hmdb.secondary2main.mapping</code> as function(<code>repository</code> as string) -> <code>list[string]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::hmdbSecondary2Main]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="secondary2main.mapping">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="secondary2main.mapping">
     <a href="./massbank/secondary2main.mapping.html">secondary2main.mapping</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Create SecondaryIDSolver object from mapping file or mapping dictionary object data.</p>  
-                
-                    <pre><p>let <code>secondary2main.mapping</code> as function(<code>mapping</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; RReturn</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::createIdMapping]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mapping</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="save.mapping">
+  </td>
+  <td><p>Create SecondaryIDSolver object from mapping file or mapping dictionary object data.</p></td>
+</tr>
+<tr>
+  <td id="save.mapping">
     <a href="./massbank/save.mapping.html">save.mapping</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Save id mapping file in json file format</p>  
-                
-                    <pre><p>let <code>save.mapping</code> as function(<code>mapping</code> as list[string], <code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::saveIDMapping]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mapping</code>: -
-                </li>
-<li>
-  <code>file</code>: <code>*.json</code> file name.
-                </li>
-<li>
-  <code>envir</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="glycosyl.tokens">
+  </td>
+  <td><p>Save id mapping file in json file format</p></td>
+</tr>
+<tr>
+  <td id="glycosyl.tokens">
     <a href="./massbank/glycosyl.tokens.html">glycosyl.tokens</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>glycosyl.tokens</code> as function(<code>glycosyl</code> as string, <code>rules</code> as list = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::GlycosylTokens]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="glycosyl.solver">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="glycosyl.solver">
     <a href="./massbank/glycosyl.solver.html">glycosyl.solver</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>glycosyl.solver</code> as function(<code>rules</code> as list = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; GlycosylNameSolver</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::GlycosylNameSolver]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="parseChEBIEntity">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="parseChEBIEntity">
     <a href="./massbank/parseChEBIEntity.html">parseChEBIEntity</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>parseChEBIEntity</code> as function(<code>xml</code> as string) -> <code>&lt;generic&gt; ChEBIEntity</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Massbank
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "massbank"
-    #
-    return call <code>R&#35;.interop_[Massbank::ParseChebiEntity]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

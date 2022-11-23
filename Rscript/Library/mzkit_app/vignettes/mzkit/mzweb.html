@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,664 +31,133 @@
     </table>
     <h1>mzweb</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "mzweb"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="open">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="open">
     <a href="./mzweb/open.html">open</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>open</code> as function(<code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; IMzPackReader</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::openFile]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: the file path to the mzpack data file
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="TIC">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="TIC">
     <a href="./mzweb/TIC.html">TIC</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>TIC</code> as function(<code>mzpack</code> as <generic> IMzPackReader) -> <code>&lt;generic&gt; ChromatogramTick[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::TIC]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load.chromatogram">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load.chromatogram">
     <a href="./mzweb/load.chromatogram.html">load.chromatogram</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>load chromatogram data from the raw file data</p>  
-                
-                    <pre><p>let <code>load.chromatogram</code> as function(<code>scans</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Chromatogram</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::GetChromatogram]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: the scan data object that reads from the mzXML/mzML/mzPack raw data file
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load.stream">
+  </td>
+  <td><p>load chromatogram data from the raw file data</p></td>
+</tr>
+<tr>
+  <td id="load.stream">
     <a href="./mzweb/load.stream.html">load.stream</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.</p>  
-                
-                    <pre><p>let <code>load.stream</code> as function(<code>scans</code> as <generic> pipeline, <code>mzErr</code> as string = "da:0.1", [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ScanMS1</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::loadStream]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: -
-                </li>
-<li>
-  <code>mzErr$</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.text_cache">
+  </td>
+  <td><p>load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.</p></td>
+</tr>
+<tr>
+  <td id="write.text_cache">
     <a href="./mzweb/write.text_cache.html">write.text_cache</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write ASCII text format of mzweb stream</p>  
-                
-                    <pre><p>let <code>write.text_cache</code> as function(<code>scans</code> as <generic> pipeline, <code>file</code> as any = <code>&lt;NULL&gt;</code>, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::writeStream]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>scans</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="packBin">
+  </td>
+  <td><p>write ASCII text format of mzweb stream</p></td>
+</tr>
+<tr>
+  <td id="packBin">
     <a href="./mzweb/packBin.html">packBin</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write binary format of mzweb stream data</p>  
-                
-                    <pre><p>let <code>packBin</code> as function(<code>file</code> as string, <code>cache</code> as string) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::WriteCache]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>cache</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.cache">
+  </td>
+  <td><p>write binary format of mzweb stream data</p></td>
+</tr>
+<tr>
+  <td id="read.cache">
     <a href="./mzweb/read.cache.html">read.cache</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read the mzPack data file liked simple msn cached data</p>  
-                
-                    <pre><p>let <code>read.cache</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; PeakMs2[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::readCache]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.cache">
+  </td>
+  <td><p>read the mzPack data file liked simple msn cached data</p></td>
+</tr>
+<tr>
+  <td id="write.cache">
     <a href="./mzweb/write.cache.html">write.cache</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write binary format of mzweb stream data</p>  
-                
-                    <pre><p>let <code>write.cache</code> as function(<code>ions</code> as <generic> PeakMs2[], <code>file</code> as string) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::WriteCache]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>cache</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.mzPack">
+  </td>
+  <td><p>write binary format of mzweb stream data</p></td>
+</tr>
+<tr>
+  <td id="write.mzPack">
     <a href="./mzweb/write.mzPack.html">write.mzPack</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>write version 2 format of the mzpack by default</p>  
-                
-                    <pre><p>let <code>write.mzPack</code> as function(<code>mzpack</code> as <generic> mzPack, 
-<code>file</code> as any, 
-<code>version</code> as integer = 2, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::writeMzpack]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.cdf">
+  </td>
+  <td><p>write version 2 format of the mzpack by default</p></td>
+</tr>
+<tr>
+  <td id="write.cdf">
     <a href="./mzweb/write.cdf.html">write.cdf</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>write.cdf</code> as function(<code>mzpack</code> as <generic> mzPack, 
-<code>file</code> as any, 
-<code>Ms2Only</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::writeToCDF]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open.mzpack">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="open.mzpack">
     <a href="./mzweb/open.mzpack.html">open.mzpack</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open a raw data files in common raw data format and then returns <br />
- in a unify mzpack data format.</p>  
-                
-                    <pre><p>let <code>open.mzpack</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::Open]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: the <code>*.mzXML</code>/<code>*.mzML</code>/<code>*.mzPack</code>/<code>*.raw</code> raw data file
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open_mzpack.xml">
+  </td>
+  <td><p>open a raw data files in common raw data format and then returns <br />
+ in a unify mzpack data format.</p></td>
+</tr>
+<tr>
+  <td id="open_mzpack.xml">
     <a href="./mzweb/open_mzpack.xml.html">open_mzpack.xml</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open mzpack data from a raw data file in xml file format.</p>  
-                
-                    <pre><p>let <code>open_mzpack.xml</code> as function(<code>file</code> as string, <code>prefer</code> as string = <code>&lt;NULL&gt;</code>) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::openFromFile]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>prefer</code>: the prefer file format used when the given <strong><code>file</code></strong> its extension<br />
- suffix name is <code>XML</code>. value of this parameter could be imzml/mzml/mzxml
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="setThumbnail">
+  </td>
+  <td><p>open mzpack data from a raw data file in xml file format.</p></td>
+</tr>
+<tr>
+  <td id="setThumbnail">
     <a href="./mzweb/setThumbnail.html">setThumbnail</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>set thumbnail image to the raw data file</p>  
-                
-                    <pre><p>let <code>setThumbnail</code> as function(<code>mzpack</code> as <generic> mzPack, <code>thumb</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::setMzpackThumbnail]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>thumb</code>: Thumbnail image object data can be a gdi+ image or <br />
- bitmap or a gdi+ canvas object in type @<code>T:Microsoft.VisualBasic.Imaging.Driver.ImageData</code>.
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>returns a modified mzpack data object with Thumbnail <br />
- property data has been updated.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms1_scans">
+  </td>
+  <td><p>set thumbnail image to the raw data file</p></td>
+</tr>
+<tr>
+  <td id="ms1_scans">
     <a href="./mzweb/ms1_scans.html">ms1_scans</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get all ms1 scan data points</p>  
-                
-                    <pre><p>let <code>ms1_scans</code> as function(<code>mzpack</code> as <generic> mzPack) -> <code>&lt;generic&gt; ms1_scan[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::Ms1ScanPoints]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms1_peaks">
+  </td>
+  <td><p>get all ms1 scan data points</p></td>
+</tr>
+<tr>
+  <td id="ms1_peaks">
     <a href="./mzweb/ms1_peaks.html">ms1_peaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get a overview ms1 spectrum data from the mzpack raw data</p>  
-                
-                    <pre><p>let <code>ms1_peaks</code> as function(<code>mzpack</code> as <generic> mzPack, 
-<code>tolerance</code> as any = "da:0.001", 
-<code>cutoff</code> as double = 0.05, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; LibraryMatrix</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::Ms1Peaks]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>tolerance</code>: -
-                </li>
-<li>
-  <code>cutoff</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms2_peaks">
+  </td>
+  <td><p>get a overview ms1 spectrum data from the mzpack raw data</p></td>
+</tr>
+<tr>
+  <td id="ms2_peaks">
     <a href="./mzweb/ms2_peaks.html">ms2_peaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>extract ms2 peaks data from the mzpack data object</p>  
-                
-                    <pre><p>let <code>ms2_peaks</code> as function(<code>mzpack</code> as <generic> mzPack, 
-<code>precursorMz</code> as double = NAN, 
-<code>tolerance</code> as any = "ppm:30", 
-<code>tag_source</code> as boolean = TRUE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakMs2</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::Ms2ScanPeaks]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mzpack</code>: -
-                </li>
-<li>
-  <code>precursorMz</code>: if the precursor m/z data is assign by this parameter<br />
- value, then this function will extract the ms2 xic data<br />
- only
-                </li>
-<li>
-  <code>tolerance</code>: ppm toleracne error for extract ms2 xic data.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.mzpack">
+  </td>
+  <td><p>extract ms2 peaks data from the mzpack data object</p></td>
+</tr>
+<tr>
+  <td id="as.mzpack">
     <a href="./mzweb/as.mzpack.html">as.mzpack</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>convert assembly file to mzpack format data object</p>  
-                
-                    <pre><p>let <code>as.mzpack</code> as function(<code>assembly</code> as any, 
-<code>modtime</code> as double = -1, 
-<code>sample_rate</code> as double = NAN, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::ToMzPack]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>assembly</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-<li>
-  <code>modtime</code>: [GCxGC]<br />
- the modulation time of the chromatographic run. <br />
- modulation period in time unit 'seconds'.
-                </li>
-<li>
-  <code>sample_rate</code>: [GCxGC]<br />
- the sampling rate of the equipment.<br />
- If sam_rate is missing, the sampling rate is calculated by the dividing 1 by<br />
- the difference of two adjacent scan time.
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mass_calibration">
+  </td>
+  <td><p>convert assembly file to mzpack format data object</p></td>
+</tr>
+<tr>
+  <td id="mass_calibration">
     <a href="./mzweb/mass_calibration.html">mass_calibration</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>do mass calibration</p>  
-                
-                    <pre><p>let <code>mass_calibration</code> as function(<code>data</code> as <generic> mzPack, <code>mzdiff</code> as double = 0.1, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; mzPack</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MzWeb
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "mzweb"
-    #
-    return call <code>R&#35;.interop_[MzWeb::MassCalibration]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>data</code>: -
-                </li>
-<li>
-  <code>mzdiff</code>: mass tolerance in delta dalton
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>do mass calibration</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

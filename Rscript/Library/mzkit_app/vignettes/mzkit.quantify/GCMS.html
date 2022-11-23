@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,299 +31,84 @@
     </table>
     <h1>GCMS</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "GCMS"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit.quantify"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="as.quantify.ion">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="as.quantify.ion">
     <a href="./GCMS/as.quantify.ion.html">as.quantify.ion</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>as.quantify.ion</code> as function(<code>ions</code> as <generic> MSLIon[], <code>rtwin</code> as double = 1) -> <code>&lt;generic&gt; QuantifyIon[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::quantifyIons]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="SIMIonExtractor">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="SIMIonExtractor">
     <a href="./GCMS/SIMIonExtractor.html">SIMIonExtractor</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>SIMIonExtractor</code> as function(<code>ions</code> as <generic> QuantifyIon[], 
-<code>peakwidth</code> as any = [3,5], 
-<code>centroid</code> as any = "da:0.3", 
-<code>rtshift</code> as double = 30, 
-<code>baselineQuantile</code> as double = 0.3, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SIMIonExtract</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::createSIMIonExtract]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ScanIonExtractor">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="ScanIonExtractor">
     <a href="./GCMS/ScanIonExtractor.html">ScanIonExtractor</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>ScanIonExtractor</code> as function(<code>ions</code> as <generic> QuantifyIon[], 
-<code>peakwidth</code> as any = [3,5], 
-<code>centroid</code> as any = "da:0.3", 
-<code>rtshift</code> as double = 30, 
-<code>baselineQuantile</code> as double = 0.3, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ScanIonExtract</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::createScanIonExtract]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="parseContents">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="parseContents">
     <a href="./GCMS/parseContents.html">parseContents</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>parseContents</code> as function(<code>files</code> as any) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::FileNames2Contents]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="contentTable">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="contentTable">
     <a href="./GCMS/contentTable.html">contentTable</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>contentTable</code> as function(<code>ions</code> as any, 
-<code>contentVector</code> as any, 
-<code>IS</code> as any = <code>&lt;NULL&gt;</code>, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ContentTable</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::ContentTable]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.raw">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="read.raw">
     <a href="./GCMS/read.raw.html">read.raw</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.raw</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; Raw</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::readRaw]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="peakRaw">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="peakRaw">
     <a href="./GCMS/peakRaw.html">peakRaw</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read raw peaks data</p>  
-                
-                    <pre><p>let <code>peakRaw</code> as function(<code>extract</code> as <generic> QuantifyIonExtract, <code>sample</code> as <generic> Raw, <code>chromatogramPlot</code> as boolean = FALSE) -> <code>&lt;generic&gt; TargetPeakPoint|&lt;generic&gt; ChromatogramTick</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::extractSampleRaw]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>extract</code>: -
-                </li>
-<li>
-  <code>sample</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="linear_algorithm">
+  </td>
+  <td><p>read raw peaks data</p></td>
+</tr>
+<tr>
+  <td id="linear_algorithm">
     <a href="./GCMS/linear_algorithm.html">linear_algorithm</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create linear model handler</p>  
-                
-                    <pre><p>let <code>linear_algorithm</code> as function(<code>contents</code> as <generic> ContentTable, 
-<code>maxDeletions</code> as integer = 1, 
-<code>baselineQuantile</code> as double = 0, 
-<code>integrator</code> as <integer> PeakAreaMethods = [NetPeakSum]) -> <code>&lt;generic&gt; InternalStandardMethod</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::algorithm]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>contents</code>: -
-                </li>
-<li>
-  <code>maxDeletions</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="linears">
+  </td>
+  <td><p>create linear model handler</p></td>
+</tr>
+<tr>
+  <td id="linears">
     <a href="./GCMS/linears.html">linears</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>linears</code> as function(<code>method</code> as <generic> InternalStandardMethod, <code>reference</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; StandardCurve</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::InternalStandardMethod]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ROIlist">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="ROIlist">
     <a href="./GCMS/ROIlist.html">ROIlist</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>ROIlist</code> as function(<code>raw</code> as <generic> Raw, 
-<code>peakwidth</code> as any = "3,20", 
-<code>baseline</code> as double = 0.65, 
-<code>sn</code> as double = 3, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ROI</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCMSLinear
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "GCMS"
-    #
-    return call <code>R&#35;.interop_[GCMSLinear::GetRawROIlist]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,190 +31,62 @@
     </table>
     <h1>spectrumTree</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "spectrumTree"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="new">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="new">
     <a href="./spectrumTree/new.html">new</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create new reference spectrum database</p>  
-                
-                    <pre><p>let <code>new</code> as function(<code>file</code> as any, <code>binary</code> as boolean = TRUE, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ReferenceTree</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::CreateNew]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open">
+  </td>
+  <td><p>create new reference spectrum database</p></td>
+</tr>
+<tr>
+  <td id="open">
     <a href="./spectrumTree/open.html">open</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>open the reference spectrum database file and <br />
+  </td>
+  <td><p>open the reference spectrum database file and <br />
  then create a host to run spectrum cluster <br />
- search</p>  
-                
-                    <pre><p>let <code>open</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::open]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="dotcutoff">
+ search</p></td>
+</tr>
+<tr>
+  <td id="dotcutoff">
     <a href="./spectrumTree/dotcutoff.html">dotcutoff</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>dotcutoff</code> as function(<code>search</code> as <generic> TreeSearch, <code>cutoff</code> as double) -> <code>&lt;generic&gt; TreeSearch</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::set_dotcutoff]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="jaccardSet">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="jaccardSet">
     <a href="./spectrumTree/jaccardSet.html">jaccardSet</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>jaccardSet</code> as function(<code>libname</code> as string, 
-<code>mz</code> as double, 
-<code>mzset</code> as string, 
-<code>rt</code> as double = <code>&lt;NULL&gt;</code>, 
-<code>cutoff</code> as double = 0.1, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; JaccardSearch</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::createJaccardSet]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="query">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="query">
     <a href="./spectrumTree/query.html">query</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>query</code> as function(<code>tree</code> as <generic> Ms2Search, 
-<code>x</code> as any, 
-<code>maxdepth</code> as integer = 1024, 
-<code>treeSearch</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ClusterHit</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::QueryTree]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="addBucket">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="addBucket">
     <a href="./spectrumTree/addBucket.html">addBucket</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>addBucket</code> as function(<code>tree</code> as <generic> ReferenceTree, <code>x</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ReferenceTreePkg
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "spectrumTree"
-    #
-    return call <code>R&#35;.interop_[ReferenceTreePkg::addBucket]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

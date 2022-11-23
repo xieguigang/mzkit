@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,334 +31,79 @@
     </table>
     <h1>Linears</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "Linears"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit.quantify"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="lines.table">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="lines.table">
     <a href="./Linears/lines.table.html">lines.table</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>export the table data of the reference linears</p>  
-                
-                    <pre><p>let <code>lines.table</code> as function(<code>lines</code> as <generic> StandardCurve[]) -> <code>&lt;generic&gt; EntityObject[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::StandardCurveDataSet]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>lines</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.points">
+  </td>
+  <td><p>export the table data of the reference linears</p></td>
+</tr>
+<tr>
+  <td id="write.points">
     <a href="./Linears/write.points.html">write.points</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>save reference point data into a given table file</p>  
-                
-                    <pre><p>let <code>write.points</code> as function(<code>points</code> as <generic> ReferencePoint[], <code>file</code> as string) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::writeStandardCurve]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>points</code>: -
-                </li>
-<li>
-  <code>file$</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="points">
+  </td>
+  <td><p>save reference point data into a given table file</p></td>
+</tr>
+<tr>
+  <td id="points">
     <a href="./Linears/points.html">points</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Get reference input points</p>  
-                
-                    <pre><p>let <code>points</code> as function(<code>linears</code> as <generic> StandardCurve[], <code>nameRef</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ReferencePoint</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::GetLinearPoints]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>linears</code>: -
-                </li>
-<li>
-  <code>nameRef</code>: The metabolite id
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.ionPeaks">
+  </td>
+  <td><p>Get reference input points</p></td>
+</tr>
+<tr>
+  <td id="write.ionPeaks">
     <a href="./Linears/write.ionPeaks.html">write.ionPeaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Write peak data which is extract from the raw file with <br />
- the given ion pairs or quantify ion data</p>  
-                
-                    <pre><p>let <code>write.ionPeaks</code> as function(<code>ionPeaks</code> as <generic> IonPeakTableRow[], <code>file</code> as string) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::writeMRMpeaktable]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ionPeaks</code>: -
-                </li>
-<li>
-  <code>file</code>: The output csv file path
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ionPeaks">
+  </td>
+  <td><p>Write peak data which is extract from the raw file with <br />
+ the given ion pairs or quantify ion data</p></td>
+</tr>
+<tr>
+  <td id="ionPeaks">
     <a href="./Linears/ionPeaks.html">ionPeaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get ions peaks</p>  
-                
-                    <pre><p>let <code>ionPeaks</code> as function(<code>samples</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; IonPeakTableRow</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::getIonPeakTable]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>samples</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="quantify">
+  </td>
+  <td><p>get ions peaks</p></td>
+</tr>
+<tr>
+  <td id="quantify">
     <a href="./Linears/quantify.html">quantify</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Run sample data quantify</p>  
-                
-                    <pre><p>let <code>quantify</code> as function(<code>models</code> as <generic> StandardCurve[], 
-<code>ions</code> as <generic> TargetPeakPoint[], 
-<code>integrator</code> as <integer> PeakAreaMethods = [NetPeakSum], 
-<code>names</code> as list = <code>&lt;NULL&gt;</code>, 
-<code>baselineQuantile</code> as double = 0.6, 
-<code>fileName</code> as string = "NA", 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; QuantifyScan</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::SampleQuantify]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>models</code>: -
-                </li>
-<li>
-  <code>ions</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="result">
+  </td>
+  <td><p>Run sample data quantify</p></td>
+</tr>
+<tr>
+  <td id="result">
     <a href="./Linears/result.html">result</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Get quantify result</p>  
-                
-                    <pre><p>let <code>result</code> as function(<code>fileScans</code> as <generic> QuantifyScan[]) -> <code>&lt;generic&gt; DataSet[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::GetQuantifyResult]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>fileScans</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scans.X">
+  </td>
+  <td><p>Get quantify result</p></td>
+</tr>
+<tr>
+  <td id="scans.X">
     <a href="./Linears/scans.X.html">scans.X</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Get result of <code>AIS/At</code></p>  
-                
-                    <pre><p>let <code>scans.X</code> as function(<code>fileScans</code> as <generic> QuantifyScan[]) -> <code>&lt;generic&gt; DataSet[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::GetRawX]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>fileScans</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="report.dataset">
+  </td>
+  <td><p>Get result of <code>AIS/At</code></p></td>
+</tr>
+<tr>
+  <td id="report.dataset">
     <a href="./Linears/report.dataset.html">report.dataset</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Create targeted linear dataset object for do linear quantification data report.</p>  
-                
-                    <pre><p>let <code>report.dataset</code> as function(<code>standardCurve</code> as <generic> StandardCurve[], 
-<code>samples</code> as <generic> QuantifyScan[], 
-<code>QC_dataset</code> as string = <code>&lt;NULL&gt;</code>, 
-<code>ionsRaw</code> as list = <code>&lt;NULL&gt;</code>) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Linears
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "Linears"
-    #
-    return call <code>R&#35;.interop_[Linears::CreateMRMDataSet]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>standardCurve</code>: -
-                </li>
-<li>
-  <code>samples</code>: -
-                </li>
-<li>
-  <code>QC_dataset</code>: Regular expression pattern string for match QC sample files
-                </li>
-<li>
-  <code>ionsRaw</code>: A list of ions ChromatogramTick data for run ion data plots.<br />
- the list data structure in format looks like:</p>
-
-<p>
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>Create targeted linear dataset object for do linear quantification data report.</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

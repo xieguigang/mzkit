@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,258 +31,68 @@
     </table>
     <h1>Mummichog</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "Mummichog"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="mzScore">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="mzScore">
     <a href="./Mummichog/mzScore.html">mzScore</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>export of the annotation score result table</p>  
-                
-                    <pre><p>let <code>mzScore</code> as function(<code>result</code> as <generic> ActivityEnrichment[], <code>minHits</code> as integer = -1, <code>ignore_topology</code> as boolean = FALSE) -> <code>&lt;generic&gt; dataframe</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::mzScore]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>result</code>: the annotation result which is generated from the <br />
- <code>peakList_annotation</code> function.
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="peakList_annotation">
+  </td>
+  <td><p>export of the annotation score result table</p></td>
+</tr>
+<tr>
+  <td id="peakList_annotation">
     <a href="./Mummichog/peakList_annotation.html">peakList_annotation</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>do ms1 peaks annotation</p>  
-                
-                    <pre><p>let <code>peakList_annotation</code> as function(<code>background</code> as list, 
-<code>candidates</code> as <generic> MzSet[], 
-<code>minhit</code> as integer = 3, 
-<code>permutation</code> as integer = 100, 
-<code>modelSize</code> as integer = -1, 
-<code>pinned</code> as string = <code>&lt;NULL&gt;</code>, 
-<code>ignore_topology</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ActivityEnrichment</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::PeakListAnnotation]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>background</code>: the enrichment and network topology graph mode list
-                </li>
-<li>
-  <code>candidates</code>: a set of m/z search result list based on the given background model
-                </li>
-<li>
-  <code>minhit</code>: -
-                </li>
-<li>
-  <code>permutation</code>: -
-                </li>
-<li>
-  <code>modelSize</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="queryCandidateSet">
+  </td>
+  <td><p>do ms1 peaks annotation</p></td>
+</tr>
+<tr>
+  <td id="queryCandidateSet">
     <a href="./Mummichog/queryCandidateSet.html">queryCandidateSet</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>queryCandidateSet</code> as function(<code>mz</code> as double, <code>msData</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzSet</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::queryCandidateSet]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>mz</code>: -
-                </li>
-<li>
-  <code>msData</code>: the @<code>T:BioNovoGene.BioDeep.MSEngine.IMzQuery</code> annotation engine
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="createMzset">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="createMzset">
     <a href="./Mummichog/createMzset.html">createMzset</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>createMzset</code> as function(<code>query</code> as <generic> MzQuery[], <code>tolerance</code> as any = "ppm:20", [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzSet</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::createMzSet]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="fromGseaBackground">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="fromGseaBackground">
     <a href="./Mummichog/fromGseaBackground.html">fromGseaBackground</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>cast background models for <code>peakList_annotation</code> analysis based on<br />
+  </td>
+  <td><p>cast background models for <code>peakList_annotation</code> analysis based on<br />
  a given gsea background model object, this conversion will loose<br />
- all of the network topology information</p>  
-                
-                    <pre><p>let <code>fromGseaBackground</code> as function(<code>background</code> as <generic> Background) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::fromGseaBackground]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>background</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="kegg_background">
+ all of the network topology information</p></td>
+</tr>
+<tr>
+  <td id="kegg_background">
     <a href="./Mummichog/kegg_background.html">kegg_background</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create kegg pathway network graph background model</p>  
-                
-                    <pre><p>let <code>kegg_background</code> as function(<code>maps</code> as <generic> Map[], <code>reactions</code> as <generic> Reaction[]) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::CreateKEGGBackground]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>maps</code>: -
-                </li>
-<li>
-  <code>reactions</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="group_peaks">
+  </td>
+  <td><p>create kegg pathway network graph background model</p></td>
+</tr>
+<tr>
+  <td id="group_peaks">
     <a href="./Mummichog/group_peaks.html">group_peaks</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>group_peaks</code> as function(<code>peaktable</code> as any, 
-<code>adducts</code> as any = ["[M]+","[M+H]+","[M+H2O]+","[M+H-H2O]+"], 
-<code>isotopic_max</code> as integer = 5, 
-<code>mzdiff</code> as double = 0.01, 
-<code>delta_rt</code> as double = 3, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Mummichog
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "Mummichog"
-    #
-    return call <code>R&#35;.interop_[Mummichog::GroupPeaks]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

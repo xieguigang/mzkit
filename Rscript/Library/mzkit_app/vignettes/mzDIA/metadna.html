@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,540 +31,120 @@
     </table>
     <h1>metadna</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "metadna"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzDIA"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="read.metadna.infer">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="read.metadna.infer">
     <a href="./metadna/read.metadna.infer.html">read.metadna.infer</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Load network graph model from the kegg metaDNA infer network data.</p>  
-                
-                    <pre><p>let <code>read.metadna.infer</code> as function(<code>debugOutput</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; NetworkGraph</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::loadMetaDNAInferNetwork]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>debugOutput</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="reaction_class.table">
+  </td>
+  <td><p>Load network graph model from the kegg metaDNA infer network data.</p></td>
+</tr>
+<tr>
+  <td id="reaction_class.table">
     <a href="./metadna/reaction_class.table.html">reaction_class.table</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>load kegg reaction class data in table format from given file</p>  
-                
-                    <pre><p>let <code>reaction_class.table</code> as function(<code>file</code> as string, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; ReactionClass[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::readReactionClassTable]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: csv table file or a directory with raw xml model data file in it.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="metadna">
+  </td>
+  <td><p>load kegg reaction class data in table format from given file</p></td>
+</tr>
+<tr>
+  <td id="metadna">
     <a href="./metadna/metadna.html">metadna</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>metadna</code> as function(<code>ms1ppm</code> as any = "ppm:20", 
-<code>mzwidth</code> as any = "da:0.3", 
-<code>dotcutoff</code> as double = 0.5, 
-<code>allowMs1</code> as boolean = TRUE, 
-<code>maxIterations</code> as integer = 1000, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Algorithm</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::MetaDNAAlgorithm]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="range">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="range">
     <a href="./metadna/range.html">range</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>range</code> as function(<code>metadna</code> as <generic> Algorithm, <code>precursorTypes</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Algorithm</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::SetSearchRange]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load.kegg">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load.kegg">
     <a href="./metadna/load.kegg.html">load.kegg</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>load.kegg</code> as function(<code>metadna</code> as <generic> Algorithm, <code>kegg</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Algorithm</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::SetKeggLibrary]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>metadna</code>: -
-                </li>
-<li>
-  <code>kegg</code>: a collection of the kegg compound data.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load.kegg_network">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load.kegg_network">
     <a href="./metadna/load.kegg_network.html">load.kegg_network</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>load.kegg_network</code> as function(<code>metadna</code> as <generic> Algorithm, <code>links</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Algorithm</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::SetInferNetwork]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>metadna</code>: -
-                </li>
-<li>
-  <code>links</code>: a collection of the reaction class data
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load.raw">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load.raw">
     <a href="./metadna/load.raw.html">load.raw</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>load.raw</code> as function(<code>metadna</code> as <generic> Algorithm, <code>sample</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Algorithm</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::handleSample]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>metadna</code>: -
-                </li>
-<li>
-  <code>sample</code>: a collection of the mzkit peak ms2 data objects
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="DIA.infer">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="DIA.infer">
     <a href="./metadna/DIA.infer.html">DIA.infer</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>DIA.infer</code> as function(<code>metaDNA</code> as <generic> Algorithm, 
-<code>sample</code> as any, 
-<code>seeds</code> as any = <code>&lt;NULL&gt;</code>, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; CandidateInfer</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::DIAInfer]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.seeds">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="as.seeds">
     <a href="./metadna/as.seeds.html">as.seeds</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create seeds from mgf file data</p>  
-                
-                    <pre><p>let <code>as.seeds</code> as function(<code>seeds</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; AnnotatedSeed</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::MgfSeeds]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>seeds</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="result.alignment">
+  </td>
+  <td><p>create seeds from mgf file data</p></td>
+</tr>
+<tr>
+  <td id="result.alignment">
     <a href="./metadna/result.alignment.html">result.alignment</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get result alignments raw data for data plots.</p>  
-                
-                    <pre><p>let <code>result.alignment</code> as function(<code>DIAinfer</code> as any, <code>table</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MetaDNARawSet</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::ResultAlignments]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>DIAinfer</code>: -
-                </li>
-<li>
-  <code>table</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.table">
+  </td>
+  <td><p>get result alignments raw data for data plots.</p></td>
+</tr>
+<tr>
+  <td id="as.table">
     <a href="./metadna/as.table.html">as.table</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>as.table</code> as function(<code>metaDNA</code> as <generic> Algorithm, 
-<code>result</code> as any, 
-<code>unique</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MetaDNAResult</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::ResultTable]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.graph">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="as.graph">
     <a href="./metadna/as.graph.html">as.graph</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>as.graph</code> as function(<code>result</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; NetworkGraph</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::ExportNetwork]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.ticks">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="as.ticks">
     <a href="./metadna/as.ticks.html">as.ticks</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>as.ticks</code> as function(<code>metaDNA</code> as <generic> Algorithm) -> <code>&lt;generic&gt; dataframe</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::SaveAlgorithmPerfermance]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="annotationSet">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="annotationSet">
     <a href="./metadna/annotationSet.html">annotationSet</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>create the kegg compound ms1 annotation query engine.</p>  
-                
-                    <pre><p>let <code>annotationSet</code> as function(<code>kegg</code> as any, 
-<code>precursors</code> as any = "[M]+|[M+H]+|[M+H-H2O]+", 
-<code>mzdiff</code> as any = "ppm:20", 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; KEGGHandler</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::CreateKEGGSearch]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>kegg</code>: a set of kegg compound data
-                </li>
-<li>
-  <code>precursors</code>: a character vector of the ms1 precursor ion names or <br />
- a list of the given mzcalculator object models.
-                </li>
-<li>
-  <code>mzdiff</code>: the mass tolerance value to match between the <br />
- experiment m/z value and the reference m/z value<br />
- which is calculated from the compound exact mass<br />
- with a given specific ion precursor type.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>a data query engine model to run ms1 data search <br />
- for the kegg metaolite compounds.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="kegg.library">
+  </td>
+  <td><p>create the kegg compound ms1 annotation query engine.</p></td>
+</tr>
+<tr>
+  <td id="kegg.library">
     <a href="./metadna/kegg.library.html">kegg.library</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>load kegg compounds</p>  
-                
-                    <pre><p>let <code>kegg.library</code> as function(<code>repo</code> as string) -> <code>&lt;generic&gt; Compound</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::loadCompoundLibrary]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>repo</code>: the file path to the messagepack data repository
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="kegg.network">
+  </td>
+  <td><p>load kegg compounds</p></td>
+</tr>
+<tr>
+  <td id="kegg.network">
     <a href="./metadna/kegg.network.html">kegg.network</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>load the kegg reaction class data.</p>  
-                
-                    <pre><p>let <code>kegg.network</code> as function(<code>repo</code> as string) -> <code>&lt;generic&gt; ReactionClass</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.metaDNAInfer
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "metadna"
-    #
-    return call <code>R&#35;.interop_[metaDNAInfer::loadKeggNetwork]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>repo</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>load the kegg reaction class data.</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

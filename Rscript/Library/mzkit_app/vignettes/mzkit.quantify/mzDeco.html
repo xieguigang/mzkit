@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,86 +31,36 @@
     </table>
     <h1>mzDeco</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "mzDeco"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit.quantify"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="mz.deco">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="mz.deco">
     <a href="./mzDeco/mz.deco.html">mz.deco</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Chromatogram data deconvolution</p>  
-                
-                    <pre><p>let <code>mz.deco</code> as function(<code>ms1</code> as any, 
-<code>tolerance</code> as any = "ppm:20", 
-<code>baseline</code> as double = 0.65, 
-<code>peakwidth</code> as any = "3,20", 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; PeakFeature[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.mzDeco
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "mzDeco"
-    #
-    return call <code>R&#35;.interop_[mzDeco::mz_deco]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ms1</code>: -
-                </li>
-<li>
-  <code>tolerance</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mz.groups">
+  </td>
+  <td><p>Chromatogram data deconvolution</p></td>
+</tr>
+<tr>
+  <td id="mz.groups">
     <a href="./mzDeco/mz.groups.html">mz.groups</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>do <code>m/z</code> grouping under the given tolerance</p>  
-                
-                    <pre><p>let <code>mz.groups</code> as function(<code>ms1</code> as any, <code>mzdiff</code> as any = "ppm:20", [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzGroup[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.mzDeco
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.quantify.dll
-    # package: "mzDeco"
-    #
-    return call <code>R&#35;.interop_[mzDeco::mz_groups]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>ms1</code>: -
-                </li>
-<li>
-  <code>mzdiff</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>do <code>m/z</code> grouping under the given tolerance</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

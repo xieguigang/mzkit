@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-23" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,176 +31,54 @@
     </table>
     <h1>GCxGC</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "GCxGC"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="TIC2D">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="TIC2D">
     <a href="./GCxGC/TIC2D.html">TIC2D</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>TIC2D</code> as function(<code>TIC</code> as <generic> ChromatogramTick[], <code>modtime</code> as double) -> <code>&lt;generic&gt; D2Chromatogram[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCxGC
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "GCxGC"
-    #
-    return call <code>R&#35;.interop_[GCxGC::TIC2D]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="TIC1D">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="TIC1D">
     <a href="./GCxGC/TIC1D.html">TIC1D</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>TIC1D</code> as function(<code>matrix</code> as <generic> D2Chromatogram[]) -> <code>&lt;generic&gt; ChromatogramTick[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCxGC
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "GCxGC"
-    #
-    return call <code>R&#35;.interop_[GCxGC::TIC1D]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="extract_2D_peaks">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="extract_2D_peaks">
     <a href="./GCxGC/extract_2D_peaks.html">extract_2D_peaks</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>extract GCxGC 2d peaks from the mzpack raw data file</p>  
-                
-                    <pre><p>let <code>extract_2D_peaks</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>mz</code> as double = NAN, 
-<code>mzdiff</code> as any = "ppm:30", 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; D2Chromatogram</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCxGC
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "GCxGC"
-    #
-    return call <code>R&#35;.interop_[GCxGC::create2DPeaks]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>mz</code>: target mz value for extract XIC data. NA means extract <br />
- TIC data by default.
-                </li>
-<li>
-  <code>mzdiff</code>: the mz tolerance error for match the intensity data for<br />
- extract XIC data if the <strong><code>mz</code></strong> is not <br />
- <code>NA</code> value.
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: block"><h4>Details</h4><blockquote><p>this function will extract the TIC data by default.</p></blockquote></span></p>
-</div><br /><div>
-  <h2 id="save.cdf">
+  </td>
+  <td><p>extract GCxGC 2d peaks from the mzpack raw data file</p></td>
+</tr>
+<tr>
+  <td id="save.cdf">
     <a href="./GCxGC/save.cdf.html">save.cdf</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>save GCxGC 2D Chromatogram data as a new netcdf file.</p>  
-                
-                    <pre><p>let <code>save.cdf</code> as function(<code>TIC</code> as <generic> D2Chromatogram[], <code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCxGC
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "GCxGC"
-    #
-    return call <code>R&#35;.interop_[GCxGC::saveCDF]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>TIC</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="read.cdf">
+  </td>
+  <td><p>save GCxGC 2D Chromatogram data as a new netcdf file.</p></td>
+</tr>
+<tr>
+  <td id="read.cdf">
     <a href="./GCxGC/read.cdf.html">read.cdf</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>read GCxGC 2D Chromatogram data from a given netcdf file.</p>  
-                
-                    <pre><p>let <code>read.cdf</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; D2Chromatogram</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.GCxGC
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "GCxGC"
-    #
-    return call <code>R&#35;.interop_[GCxGC::readCDF]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>read GCxGC 2D Chromatogram data from a given netcdf file.</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>
