@@ -18,7 +18,7 @@ const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack",
     } else {
         # read messagepack repository data file
         #
-        const repo = massbank::read.lipidmaps(repofile);
+        const repo = massbank::read.lipidmaps(repofile, gsea_background = gsea);
         repo;
     }
 }

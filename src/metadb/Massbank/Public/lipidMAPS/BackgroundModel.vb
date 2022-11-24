@@ -39,7 +39,8 @@ Namespace LipidMaps
                 .clusters = clusters.ToArray,
                 .id = "lipidmaps",
                 .name = "lipidmaps structure class",
-                .comments = "fisher background model for enrich lipidmaps structure class"
+                .comments = "fisher background model for enrich lipidmaps structure class",
+                .size = .clusters.BackgroundSize
             }
         End Function
 
