@@ -192,10 +192,11 @@ Module Massbank
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.lipidmaps")>
-    <RApiReturn(GetType(LipidMaps.MetaData), GetType(Background))>
+    <RApiReturn(GetType(LipidMaps.MetaData), GetType(Background), GetType(LipidMapsCategory))>
     Public Function readLipidMapsRepo(<RRawVectorArgument>
                                       file As Object,
                                       Optional gsea_background As Boolean = False,
+                                      Optional category_model As Boolean = False,
                                       Optional env As Environment = Nothing) As Object
 
         Dim buffer = GetFileStream(file, FileAccess.Read, env)
@@ -208,9 +209,16 @@ Module Massbank
 
         If gsea_background Then
             Return lipidmaps.CreateCategoryBackground
+        ElseIf category_model Then
+            Return lipidmaps.CreateCategoryModel
         Else
             Return lipidmaps
         End If
+    End Function
+
+    <ExportAPI("lipid_profiles")>
+    Public Function lipidProfiles(categry As LipidMapsCategory, enrich As EnrichmentResult()) As Object
+        Return categry.CreateEnrichmentProfiles(enrich)
     End Function
 
     ''' <summary>

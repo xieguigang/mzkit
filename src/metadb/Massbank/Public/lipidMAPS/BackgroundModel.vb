@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.ComponentModel.Annotation
@@ -91,8 +93,26 @@ Namespace LipidMaps
             Next
         End Function
 
+        Public Function CreateEnrichmentProfiles(lm_enrich As IEnumerable(Of EnrichmentResult)) As CatalogProfiles
+            Dim profiles As New CatalogProfiles With {
+                .catalogs = New Dictionary(Of String, CatalogProfile)
+            }
+
+            For Each term As EnrichmentResult In lm_enrich
+                Dim catagory = [Class](term.term)
+
+            Next
+
+            Return profiles
+        End Function
+
         Public Function CreateProfiles(lm_id As IEnumerable(Of String)) As CatalogProfiles
-            Dim check As Index(Of String) = lm_id.Indexing
+            Dim check As Dictionary(Of String, Double) = lm_id _
+                .GroupBy(Function(id) id) _
+                .ToDictionary(Function(id) id.Key,
+                              Function(id)
+                                  Return CDbl(id.Count)
+                              End Function)
             Dim profiles As New CatalogProfiles With {
                 .catalogs = New Dictionary(Of String, CatalogProfile)
             }
@@ -106,14 +126,19 @@ Namespace LipidMaps
             Return profiles
         End Function
 
-        Private Shared Function CreateProfile(lm_id As Index(Of String), background As CatalogProfiling) As CatalogProfile
+        Private Shared Function CreateProfile(lm_id As Dictionary(Of String, Double), background As CatalogProfiling) As CatalogProfile
             Dim profile As New CatalogProfile With {
                 .profile = New Dictionary(Of String, Double),
                 .information = New Dictionary(Of String, String)
             }
+            Dim score As Double
 
             For Each subtype In background.SubCategory
-                profile.profile.Add(subtype.Key, subtype.Value.Intersect(lm_id).Count)
+                score = Aggregate hit As NamedValue(Of Double)
+                        In subtype.Value.Intersect(lm_id)
+                        Into Sum(hit.Value) '
+
+                profile.profile.Add(subtype.Key, score)
                 profile.information.Add(subtype.Key, subtype.Value.Description)
             Next
 

@@ -11,15 +11,19 @@ imports "metadna" from "mzDIA";
 #' @return a data seuqnece of lipidmaps metadata
 #' 
 const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit"), 
-                                gsea = FALSE) {
+                                gsea = FALSE,
+								category = FALSE) {
 
     if (!file.exists(repofile)) {
         stop(`no repository data file at location: ${repofile}!`);
     } else {
         # read messagepack repository data file
         #
-        const repo = massbank::read.lipidmaps(repofile, gsea_background = gsea);
-        repo;
+        massbank::read.lipidmaps(
+			file = repofile, 
+			gsea_background = gsea, 
+			category_model = category
+		);
     }
 }
 
