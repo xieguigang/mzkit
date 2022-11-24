@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.WebServices
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
+Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -214,6 +215,13 @@ Module Massbank
         Else
             Return lipidmaps
         End If
+    End Function
+
+    <ExportAPI("lipid_classprofiles")>
+    Public Function castToClassProfiles(lipid_class As LipidMapsCategory) As ClassProfiles
+        Return New ClassProfiles With {
+            .Catalogs = lipid_class.Class
+        }
     End Function
 
     <ExportAPI("lipid_profiles")>
