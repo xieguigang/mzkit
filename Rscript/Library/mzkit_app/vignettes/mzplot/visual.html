@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-24" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,193 +31,60 @@
     </table>
     <h1>visual</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "visual"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzplot"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="gcxgc_heatmap">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="gcxgc_heatmap">
     <a href="./visual/gcxgc_heatmap.html">gcxgc_heatmap</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>gcxgc_heatmap</code> as function(<code>GCxGC</code> as list, 
-<code>metabolites</code> as <generic> dataframe, 
-<code>rt_width</code> as any = "60,0.5", 
-<code>space</code> as any = "5,5", 
-<code>size</code> as any = "3600,2100", 
-<code>padding</code> as any = "padding: 200px 600px 250px 250px;", 
-<code>colorSet</code> as string = "viridis:turbo", 
-<code>mapLevels</code> as integer = 64, 
-<code>labelStyle</code> as string = "font-style: normal; font-size: 16; font-family: Bookman Old Style;", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::PlotGCxGCHeatMap]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="raw_scatter">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="raw_scatter">
     <a href="./visual/raw_scatter.html">raw_scatter</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>raw_scatter</code> as function(<code>ms1_scans</code> as any, 
-<code>colorSet</code> as any = "darkblue,blue,skyblue,green,orange,red,darkred", 
-<code>contour</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::PlotRawScatter]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="raw_snapshot3D">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="raw_snapshot3D">
     <a href="./visual/raw_snapshot3D.html">raw_snapshot3D</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>raw_snapshot3D</code> as function(<code>ms1_scans</code> as any, 
-<code>mzwidth</code> as any = "da:0.3", 
-<code>noise_cutoff</code> as double = 0.5, 
-<code>size</code> as any = "1600,1200", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::Snapshot3D]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="mass_spectrum.plot">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="mass_spectrum.plot">
     <a href="./visual/mass_spectrum.plot.html">mass_spectrum.plot</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>mass_spectrum.plot</code> as function(<code>spectrum</code> as any, 
-<code>alignment</code> as any = <code>&lt;NULL&gt;</code>, 
-<code>title</code> as string = "Mass Spectrum Plot", 
-<code>showLegend</code> as boolean = TRUE, 
-<code>showGrid</code> as boolean = TRUE, 
-<code>tagXFormat</code> as string = "F2", 
-<code>intoCutoff</code> as double = 0.3, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; GraphicsData</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::SpectrumPlot]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="plot.UV_signals">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="plot.UV_signals">
     <a href="./visual/plot.UV_signals.html">plot.UV_signals</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>plot.UV_signals</code> as function(<code>timeSignals</code> as any, 
-<code>is_spectrum</code> as boolean = FALSE, 
-<code>size</code> as any = "1600,1200", 
-<code>padding</code> as any = "padding:100px 100px 100px 100px;", 
-<code>colorSet</code> as string = "Set1:c8", 
-<code>pt_size</code> as double = 8, 
-<code>line_width</code> as double = 5, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; GraphicsData</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::PlotUVSignals]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="plotNetworkClusterHistogram">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="plotNetworkClusterHistogram">
     <a href="./visual/plotNetworkClusterHistogram.html">plotNetworkClusterHistogram</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>plotNetworkClusterHistogram</code> as function(<code>mn</code> as <generic> NetworkGraph, 
-<code>size</code> as any = "2700,2000", 
-<code>padding</code> as any = "padding:100px 300px 200px 200px;", 
-<code>dpi</code> as integer = 300, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Visual
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "visual"
-    #
-    return call <code>R&#35;.interop_[Visual::plotMolecularNetworkingHistogram]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

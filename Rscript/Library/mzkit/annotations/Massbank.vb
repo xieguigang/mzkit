@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.WebServices
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
@@ -182,21 +183,34 @@ Module Massbank
     End Function
 
     ''' <summary>
-    ''' read messagepack repository file
+    ''' read lipidmaps messagepack repository file
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
+    ''' <param name="gsea_background">
+    ''' and also cast the lipidmaps metabolite metadata to the gsea background model?
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.lipidmaps")>
-    <RApiReturn(GetType(LipidMaps.MetaData))>
-    Public Function readLipidMapsRepo(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(LipidMaps.MetaData), GetType(Background))>
+    Public Function readLipidMapsRepo(<RRawVectorArgument>
+                                      file As Object,
+                                      Optional gsea_background As Boolean = False,
+                                      Optional env As Environment = Nothing) As Object
+
         Dim buffer = GetFileStream(file, FileAccess.Read, env)
 
         If buffer Like GetType(Message) Then
             Return buffer.TryCast(Of Message)
         End If
 
-        Return buffer.TryCast(Of Stream).ReadRepository
+        Dim lipidmaps = buffer.TryCast(Of Stream).ReadRepository
+
+        If gsea_background Then
+            Return lipidmaps.CreateCategoryBackground
+        Else
+            Return lipidmaps
+        End If
     End Function
 
     ''' <summary>

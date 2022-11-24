@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-24" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,357 +31,85 @@
     </table>
     <h1>metadb</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "metadb"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="parseLipidName">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="parseLipidName">
     <a href="./metadb/parseLipidName.html">parseLipidName</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>parseLipidName</code> as function(<code>name</code> as any, <code>keepsRaw</code> as boolean = FALSE, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::ParseLipidName]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="annotationStream">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="annotationStream">
     <a href="./metadb/annotationStream.html">annotationStream</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>annotationStream</code> as function(<code>id</code> as string, 
-<code>name</code> as string, 
-<code>formula</code> as string, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MetaboliteAnnotation</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::AnnotationStream]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="precursorIon">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="precursorIon">
     <a href="./metadb/precursorIon.html">precursorIon</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>precursorIon</code> as function(<code>ion</code> as string) -> <code>&lt;generic&gt; MzCalculator</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::ParsePrecursorIon]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms1_handler">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="ms1_handler">
     <a href="./metadb/ms1_handler.html">ms1_handler</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>a generic function for handle ms1 search</p>  
-                
-                    <pre><p>let <code>ms1_handler</code> as function(<code>compounds</code> as any, 
-<code>precursors</code> as any, 
-<code>tolerance</code> as any = "ppm:20", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::CreateMs1Handler]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>compounds</code>: kegg compounds
-                </li>
-<li>
-  <code>precursors</code>: -
-                </li>
-<li>
-  <code>tolerance</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ms1_search">
+  </td>
+  <td><p>a generic function for handle ms1 search</p></td>
+</tr>
+<tr>
+  <td id="ms1_search">
     <a href="./metadb/ms1_search.html">ms1_search</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get duplictaed raw annotation results.</p>  
-                
-                    <pre><p>let <code>ms1_search</code> as function(<code>engine</code> as any, 
-<code>mz</code> as any, 
-<code>unique</code> as boolean = FALSE, 
-<code>uniqueByScore</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzQuery</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::ms1Search]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>engine</code>: -
-                </li>
-<li>
-  <code>mz</code>: a m/z numeric vector or a object list that <br />
- contains the data mapping of unique id to <br />
- m/z value.
-                </li>
-<li>
-  <code>uniqueByScore</code>: only works when <strong><code>unique</code></strong> parameter<br />
- value is set to value TRUE.
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="getMetadata">
+  </td>
+  <td><p>get duplictaed raw annotation results.</p></td>
+</tr>
+<tr>
+  <td id="getMetadata">
     <a href="./metadb/getMetadata.html">getMetadata</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>getMetadata</code> as function(<code>engine</code> as any, <code>uniqueId</code> as list, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::getMetadata]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="excludeFeatures">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="excludeFeatures">
     <a href="./metadb/excludeFeatures.html">excludeFeatures</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>removes all of the annotation result which is not <br />
- hits in the given <code>id</code> set.</p>  
-                
-                    <pre><p>let <code>excludeFeatures</code> as function(<code>query</code> as list, 
-<code>id</code> as string, 
-<code>field</code> as string, 
-<code>metadb</code> as <generic> IMzQuery, 
-<code>includes_metal_ions</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::excludeFeatures]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>query</code>: -
-                </li>
-<li>
-  <code>id</code>: the required compound id set that should be hit!
-                </li>
-<li>
-  <code>field</code>: -
-                </li>
-<li>
-  <code>metadb</code>: -
-                </li>
-<li>
-  <code>includes_metal_ions</code>: removes metabolite annotation result which has metal<br />
- ions inside formula string by default.
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="uniqueFeatures">
+  </td>
+  <td><p>removes all of the annotation result which is not <br />
+ hits in the given <code>id</code> set.</p></td>
+</tr>
+<tr>
+  <td id="uniqueFeatures">
     <a href="./metadb/uniqueFeatures.html">uniqueFeatures</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>unique of the peak annotation features</p>  
-                
-                    <pre><p>let <code>uniqueFeatures</code> as function(<code>query</code> as list, 
-<code>uniqueByScore</code> as boolean = FALSE, 
-<code>scoreFactors</code> as list = <code>&lt;NULL&gt;</code>, 
-<code>format</code> as string = "F4", 
-<code>removesZERO</code> as boolean = FALSE, 
-<code>verbose</code> as boolean = FALSE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; dataframe</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::searchTable]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>query</code>: all query result that comes from the ms1_search function.
-                </li>
-<li>
-  <code>scoreFactors</code>: the reference name this score data must be <br />
- generated via the @<code>M:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery,System.String)</code> <br />
- function.
-                </li>
-<li>
-  <code>format</code>: the numeric format of the mz value for generate the reference key
-                </li>
-<li>
-  <code>removesZERO</code>: removes all metabolites with ZERO score?
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="cbind.metainfo">
+  </td>
+  <td><p>unique of the peak annotation features</p></td>
+</tr>
+<tr>
+  <td id="cbind.metainfo">
     <a href="./metadb/cbind.metainfo.html">cbind.metainfo</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>cbind.metainfo</code> as function(<code>anno</code> as <generic> dataframe, <code>engine</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::cbindMeta]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="load_asQueryHits">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="load_asQueryHits">
     <a href="./metadb/load_asQueryHits.html">load_asQueryHits</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>load_asQueryHits</code> as function(<code>x</code> as <generic> dataframe, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MzQuery[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MetaDbXref
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "metadb"
-    #
-    return call <code>R&#35;.interop_[MetaDbXref::loadQueryHits]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-24" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,187 +31,66 @@
     </table>
     <h1>mzkit.simulator</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "mzkit.simulator"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzDIA"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="read.kcf">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="read.kcf">
     <a href="./mzkit.simulator/read.kcf.html">read.kcf</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>read.kcf</code> as function(<code>file</code> as string) -> <code>&lt;generic&gt; KCF</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::loadKCF]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="molecular.graph">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="molecular.graph">
     <a href="./mzkit.simulator/molecular.graph.html">molecular.graph</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>molecular.graph</code> as function(<code>mol</code> as <generic> KCF, <code>verbose</code> as boolean = FALSE) -> <code>&lt;generic&gt; NetworkGraph</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::MolecularGraph]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="energy.range">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="energy.range">
     <a href="./mzkit.simulator/energy.range.html">energy.range</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>energy.range</code> as function(<code>mol</code> as <generic> NetworkGraph) -> <code>&lt;generic&gt; DoubleRange</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::energyRange]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="fragmentation">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="fragmentation">
     <a href="./mzkit.simulator/fragmentation.html">fragmentation</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>fragmentation</code> as function(<code>mol</code> as <generic> NetworkGraph, 
-<code>energy</code> as <generic> EnergyModel, 
-<code>nIntervals</code> as integer = 1000, 
-<code>precision</code> as integer = 4) -> <code>&lt;generic&gt; LibraryMatrix</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::MolecularFragmentation]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="energy.normal">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="energy.normal">
     <a href="./mzkit.simulator/energy.normal.html">energy.normal</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>energy.normal</code> as function(<code>mu</code> as double, <code>delta</code> as double, <code>max</code> as double = 1000) -> <code>&lt;generic&gt; EnergyModel</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::energyModel_normalDist]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="energy.custom">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="energy.custom">
     <a href="./mzkit.simulator/energy.custom.html">energy.custom</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>energy.custom</code> as function(<code>fun</code> as <generic> DeclareLambdaFunction, <code>max</code> as double, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; EnergyModel</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::energyModel_custom]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.mgf">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="write.mgf">
     <a href="./mzkit.simulator/write.mgf.html">write.mgf</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>write.mgf</code> as function(<code>fragments</code> as <generic> LibraryMatrix, <code>file</code> as string) -> <code>boolean</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.ms2_simulator
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzDIA.dll
-    # package: "mzkit.simulator"
-    #
-    return call <code>R&#35;.interop_[ms2_simulator::writeMgf]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

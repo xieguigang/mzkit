@@ -1,13 +1,14 @@
 .\" man page create by R# package system.
 .TH MASSBANK 1 2000-01-01 "read.lipidmaps" "read.lipidmaps"
 .SH NAME
-read.lipidmaps \- read messagepack repository file
+read.lipidmaps \- read lipidmaps messagepack repository file
 .SH SYNOPSIS
 \fIread.lipidmaps(\fBfile\fR as any, 
+\fBgsea_background\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-read messagepack repository file
+read lipidmaps messagepack repository file
 .PP
 .SH OPTIONS
 .PP
@@ -15,6 +16,11 @@ read messagepack repository file
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.PP
+\fBgsea_background\fB \fR\- 
+ and also cast the lipidmaps metabolite metadata to the gsea background model?
+. 
 .PP
 .SH SEE ALSO
 massbank

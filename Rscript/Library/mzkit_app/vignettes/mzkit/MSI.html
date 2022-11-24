@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-24" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,705 +31,144 @@
     </table>
     <h1>MSI</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "MSI"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzkit"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="msi_metadata">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="msi_metadata">
     <a href="./MSI/msi_metadata.html">msi_metadata</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get ms-imaging metadata</p>  
-                
-                    <pre><p>let <code>msi_metadata</code> as function(<code>raw</code> as <generic> mzPack) -> <code>&lt;generic&gt; Metadata</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::GetMSIMetadata]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="as.layer">
+  </td>
+  <td><p>get ms-imaging metadata</p></td>
+</tr>
+<tr>
+  <td id="as.layer">
     <a href="./MSI/as.layer.html">as.layer</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>cast the pixel collection to a ion imaging layer data</p>  
-                
-                    <pre><p>let <code>as.layer</code> as function(<code>pixels</code> as <generic> PixelData[], 
-<code>context</code> as string = "MSIlayer", 
-<code>dims</code> as any = <code>&lt;NULL&gt;</code>, 
-<code>strict</code> as boolean = TRUE, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; SingleIonLayer</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::asMSILayer]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>pixels</code>: -
-                </li>
-<li>
-  <code>context</code>: -
-                </li>
-<li>
-  <code>dims</code>: -
-                </li>
-<li>
-  <code>strict</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="splice">
+  </td>
+  <td><p>cast the pixel collection to a ion imaging layer data</p></td>
+</tr>
+<tr>
+  <td id="splice">
     <a href="./MSI/splice.html">splice</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>split the raw 2D MSI data into multiple parts with given parts</p>  
-                
-                    <pre><p>let <code>splice</code> as function(<code>raw</code> as <generic> mzPack, <code>partition</code> as integer = 5) -> <code>&lt;generic&gt; mzPack[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::splice]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>partition</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pixelId">
+  </td>
+  <td><p>split the raw 2D MSI data into multiple parts with given parts</p></td>
+</tr>
+<tr>
+  <td id="pixelId">
     <a href="./MSI/pixelId.html">pixelId</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get pixels [x,y] tags collection for a specific ion</p>  
-                
-                    <pre><p>let <code>pixelId</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>mz</code> as double, 
-<code>tolerance</code> as any = "da:0.1", 
-[<code>&lt;Environment&gt;</code>]) -> <code>string</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::pixelId]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>mz</code>: -
-                </li>
-<li>
-  <code>tolerance</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>a character vector of the pixel [x,y] tags.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pixels">
+  </td>
+  <td><p>get pixels [x,y] tags collection for a specific ion</p></td>
+</tr>
+<tr>
+  <td id="pixels">
     <a href="./MSI/pixels.html">pixels</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get pixels size from the raw data file</p>  
-                
-                    <pre><p>let <code>pixels</code> as function(<code>file</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>list</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::pixels]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>file</code>: imML/mzPack
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="open.imzML">
+  </td>
+  <td><p>get pixels size from the raw data file</p></td>
+</tr>
+<tr>
+  <td id="open.imzML">
     <a href="./MSI/open.imzML.html">open.imzML</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>open.imzML</code> as function(<code>file</code> as string) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::open_imzML]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="write.imzML">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="write.imzML">
     <a href="./MSI/write.imzML.html">write.imzML</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>write.imzML</code> as function(<code>mzpack</code> as <generic> mzPack, <code>file</code> as string) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::write_imzML]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="row.scans">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="row.scans">
     <a href="./MSI/row.scans.html">row.scans</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>each raw data file is a row scan data</p>  
-                
-                    <pre><p>let <code>row.scans</code> as function(<code>raw</code> as string, 
-<code>y</code> as integer = 0, 
-<code>correction</code> as <generic> Correction = <code>&lt;NULL&gt;</code>, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::rowScans]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>y</code>: this function will returns the pixel summary data if the <code>y</code> parameter greater than ZERO.
-                </li>
-<li>
-  <code>correction</code>: used for data summary, when the <code>y</code> parameter is greater than ZERO, <br />
- this parameter will works.
-                </li>
-<li>
-  <code>raw</code>: a file list of mzpack data files
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="MSI_summary">
+  </td>
+  <td><p>each raw data file is a row scan data</p></td>
+</tr>
+<tr>
+  <td id="MSI_summary">
     <a href="./MSI/MSI_summary.html">MSI_summary</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>Fetch MSI summary data</p>  
-                
-                    <pre><p>let <code>MSI_summary</code> as function(<code>raw</code> as <generic> mzPack) -> <code>&lt;generic&gt; MSISummary</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::MSI_summary]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="correction">
+  </td>
+  <td><p>Fetch MSI summary data</p></td>
+</tr>
+<tr>
+  <td id="correction">
     <a href="./MSI/correction.html">correction</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>calculate the X scale</p>  
-                
-                    <pre><p>let <code>correction</code> as function(<code>totalTime</code> as double, <code>pixels</code> as integer, <code>hasMs2</code> as boolean = FALSE) -> <code>&lt;generic&gt; Correction</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::Correction]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>totalTime</code>: -
-                </li>
-<li>
-  <code>pixels</code>: -
-                </li>
-<li>
-  <code>hasMs2</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="basePeakMz">
+  </td>
+  <td><p>calculate the X scale</p></td>
+</tr>
+<tr>
+  <td id="basePeakMz">
     <a href="./MSI/basePeakMz.html">basePeakMz</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>basePeakMz</code> as function(<code>summary</code> as <generic> MSISummary) -> <code>&lt;generic&gt; LibraryMatrix</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::basePeakMz]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ionStat">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="ionStat">
     <a href="./MSI/ionStat.html">ionStat</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>count pixels/density/etc for each ions m/z data</p>  
-                
-                    <pre><p>let <code>ionStat</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>grid_size</code> as integer = 5, 
-<code>da</code> as double = 0.01, 
-<code>parallel</code> as boolean = TRUE) -> <code>&lt;generic&gt; IonStat[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::IonStats]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>grid_size</code>: -
-                </li>
-<li>
-  <code>da</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="ions_jointmatrix">
+  </td>
+  <td><p>count pixels/density/etc for each ions m/z data</p></td>
+</tr>
+<tr>
+  <td id="ions_jointmatrix">
     <a href="./MSI/ions_jointmatrix.html">ions_jointmatrix</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>ions_jointmatrix</code> as function(<code>raw</code> as list, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; dataframe</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::GetIonsJointMatrix]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scans2D">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="scans2D">
     <a href="./MSI/scans2D.html">scans2D</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>combine each row scan raw data files as the pixels 2D matrix</p>  
-                
-                    <pre><p>let <code>scans2D</code> as function(<code>rowScans</code> as any, 
-<code>correction</code> as <generic> Correction = <code>&lt;NULL&gt;</code>, 
-<code>intocutoff</code> as double = 0.05, 
-<code>yscale</code> as double = 1, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::pixels2D]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>rowScans</code>: data result comes from the function <code>row.scans</code>.
-                </li>
-<li>
-  <code>yscale</code>: apply for mapping smooth MS1 to ms2 scans
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="scanMatrix">
+  </td>
+  <td><p>combine each row scan raw data files as the pixels 2D matrix</p></td>
+</tr>
+<tr>
+  <td id="scanMatrix">
     <a href="./MSI/scanMatrix.html">scanMatrix</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>combine each row scan summary vector as the pixels 2D matrix</p>  
-                
-                    <pre><p>let <code>scanMatrix</code> as function(<code>rowScans</code> as any, [<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; MSISummary</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::MSIScanMatrix]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>rowScans</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="peakMatrix">
+  </td>
+  <td><p>combine each row scan summary vector as the pixels 2D matrix</p></td>
+</tr>
+<tr>
+  <td id="peakMatrix">
     <a href="./MSI/peakMatrix.html">peakMatrix</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>peakMatrix</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>topN</code> as integer = 3, 
-<code>mzError</code> as any = "da:0.05", 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::PeakMatrix]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="peakSamples">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="peakSamples">
     <a href="./MSI/peakSamples.html">peakSamples</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>split the raw MSI 2D data into multiple parts with given resolution parts</p>  
-                
-                    <pre><p>let <code>peakSamples</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>resolution</code> as integer = 100, 
-<code>mzError</code> as any = "da:0.05", 
-<code>cutoff</code> as double = 0.05, 
-[<code>&lt;Environment&gt;</code>]) -> <code>any</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::peakSamples]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>resolution</code>: -
-                </li>
-<li>
-  <code>mzError</code>: -
-                </li>
-<li>
-  <code>cutoff</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    <h4>Value</h4><p>returns the raw matrix data that contains the peak samples.</p>
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pixelIons">
+  </td>
+  <td><p>split the raw MSI 2D data into multiple parts with given resolution parts</p></td>
+</tr>
+<tr>
+  <td id="pixelIons">
     <a href="./MSI/pixelIons.html">pixelIons</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>get number of ions in each pixel scans</p>  
-                
-                    <pre><p>let <code>pixelIons</code> as function(<code>raw</code> as <generic> mzPack) -> <code>integer</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::PixelIons]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="getMatrixIons">
+  </td>
+  <td><p>get number of ions in each pixel scans</p></td>
+</tr>
+<tr>
+  <td id="getMatrixIons">
     <a href="./MSI/getMatrixIons.html">getMatrixIons</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>getMatrixIons</code> as function(<code>raw</code> as <generic> mzPack, <code>mzdiff</code> as double = 0.001, <code>q</code> as double = 0.001) -> <code>double</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::GetMatrixIons]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="pixelMatrix">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="pixelMatrix">
     <a href="./MSI/pixelMatrix.html">pixelMatrix</a>
-  </h2>
-  <hr />
-  <p>
-                    <p>dumping raw data matrix as text table file.</p>  
-                
-                    <pre><p>let <code>pixelMatrix</code> as function(<code>raw</code> as <generic> mzPack, 
-<code>file</code> as <generic> Stream, 
-<code>mzdiff</code> as double = 0.001, 
-<code>q</code> as double = 0.001, 
-[<code>&lt;Environment&gt;</code>]) -> <code>&lt;generic&gt; Message</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.MSI
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzkit.dll
-    # package: "MSI"
-    #
-    return call <code>R&#35;.interop_[MSI::PixelMatrix]</code>(...);
-}</p></pre>
-
-                    <div>
-  <h4>Arguments</h4>
-  <ul>
-                   <li>
-  <code>raw</code>: -
-                </li>
-<li>
-  <code>file</code>: -
-                </li>
-<li>
-  <code>env</code>: -
-                </li>
-                </ul>
-</div>
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td><p>dumping raw data matrix as text table file.</p></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>

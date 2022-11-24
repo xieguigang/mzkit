@@ -6,10 +6,13 @@ imports "metadna" from "mzDIA";
 #' @param repofile the file path of the messagepack repository
 #'     data file. default file path is the internal data file
 #'     in mzkit package. 
+#' @param gsea the lipidmaps database should be cast to a gsea background? 
 #' 
 #' @return a data seuqnece of lipidmaps metadata
 #' 
-const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit")) {
+const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack", package = "mzkit"), 
+                                gsea = FALSE) {
+
     if (!file.exists(repofile)) {
         stop(`no repository data file at location: ${repofile}!`);
     } else {

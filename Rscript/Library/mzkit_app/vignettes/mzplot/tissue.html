@@ -10,8 +10,8 @@
     <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
     <meta name="generator" content="https://github.com/xieguigang/xDoc" />
     <meta name="theme-color" content="#333" />
-    <meta name="last-update" content="2022-11-22" />
-    <meta name="description" content="A software system aim at Artificial Life system design and analysis." />
+    <meta name="last-update" content="2022-11-24" />
+    <meta name="description" content="" />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -31,88 +31,42 @@
     </table>
     <h1>tissue</h1>
     <hr />
+    <p>
+      <code>
+        <span style="color: blue;">imports</span>
+        <span style="color: brown"> "tissue"</span>
+        <span style="color: blue;"> from</span>
+        <span style="color: brown"> "mzplot"</span>
+      </code>
+    </p>
     <p></p>
     <div id="main-wrapper">
-                           <div>
-  <h2 id="scan_tissue">
+      <table>
+        <thead>
+          <tr>
+            <th>function</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+  <td id="scan_tissue">
     <a href="./tissue/scan_tissue.html">scan_tissue</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>scan_tissue</code> as function(<code>tissue</code> as <generic> Image, 
-<code>colors</code> as string = <code>&lt;NULL&gt;</code>, 
-<code>gridSize</code> as integer = 25, 
-<code>tolerance</code> as integer = 15, 
-<code>densityGrid</code> as integer = 5) -> <code>&lt;generic&gt; Cell[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Tissue
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "tissue"
-    #
-    return call <code>R&#35;.interop_[Tissue::scanTissue]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="heatmap_layer">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="heatmap_layer">
     <a href="./tissue/heatmap_layer.html">heatmap_layer</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>heatmap_layer</code> as function(<code>tissue</code> as <generic> Cell[], <code>heatmap</code> as <integer> Layers = [Density], <code>target</code> as string = "black") -> <code>&lt;generic&gt; PixelData[]</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Tissue
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "tissue"
-    #
-    return call <code>R&#35;.interop_[Tissue::getTargets]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div><br /><div>
-  <h2 id="RSD">
+  </td>
+  <td></td>
+</tr>
+<tr>
+  <td id="RSD">
     <a href="./tissue/RSD.html">RSD</a>
-  </h2>
-  <hr />
-  <p>
-                      
-                
-                    <pre><p>let <code>RSD</code> as function(<code>layer</code> as <generic> PixelData[], <code>nbags</code> as integer = 300, <code>nsamples</code> as integer = 32) -> <code>double</code> {
-    #
-    # .NET API information
-    #
-    # module: mzkit.Tissue
-    # LibPath: D:/mzkit/Rscript/Library/mzkit_app/assembly/net6.0
-    # library: mzplot.dll
-    # package: "tissue"
-    #
-    return call <code>R&#35;.interop_[Tissue::RSD]</code>(...);
-}</p></pre>
-
-                    
-                       
-                    
-
-                    <span style="font-size:0.9em; display: none"><h4>Details</h4><blockquote></blockquote></span></p>
-</div>
-                       </div>
+  </td>
+  <td></td>
+</tr></tbody>
+      </table>
+    </div>
   </body>
 </html>
