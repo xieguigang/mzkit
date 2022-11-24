@@ -108,7 +108,6 @@ Namespace LipidMaps
             Dim profiles As New CatalogProfiles With {
                 .catalogs = New Dictionary(Of String, CatalogProfile)
             }
-            Dim classSet = EnumerateAllCatalogList.ToDictionary()
 
             For Each term As EnrichmentResult In lm_enrich
                 Dim classTag As String = FindClass(term.term)
