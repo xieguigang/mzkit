@@ -2,17 +2,22 @@
 .SH NAME
 lipidmaps_repo \- lipidmaps_repo(
     <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
-    <i>gsea</i> = FALSE)
+    <i>gsea</i> = FALSE,
+    <i>category</i> = FALSE)
 .SH SYNOPSIS
 \fIlipidmaps_repo(
     <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
-    <i>gsea</i> = FALSE)\fR
+    <i>gsea</i> = FALSE,
+    <i>category</i> = FALSE)\fR
 .SH OPTIONS
 .PP
 \fBrepofile\fB \fR\- system.file(data/LIPIDMAPS.msgpack, package = mzkit). the file path of the messagepack repository data file. default file path is the internal data file in mzkit package.
 .PP
 .PP
 \fBgsea\fB \fR\- FALSE. the lipidmaps database should be cast to a gsea background?
+.PP
+.PP
+\fBcategory\fB \fR\- FALSE. 
 .PP
 .SH VALUE
 .PP
