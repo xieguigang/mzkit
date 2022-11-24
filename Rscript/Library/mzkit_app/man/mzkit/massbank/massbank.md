@@ -6,6 +6,7 @@ Metabolite annotation database toolkit
 + [read.SDF](massbank/read.SDF.1) read metabolite data in a given sdf data file.
 + [write.lipidmaps](massbank/write.lipidmaps.1) save lipidmaps data repository.
 + [read.lipidmaps](massbank/read.lipidmaps.1) read lipidmaps messagepack repository file
++ [lipid_classprofiles](massbank/lipid_classprofiles.1) 
 + [lipid_profiles](massbank/lipid_profiles.1) 
 + [read.hmdb](massbank/read.hmdb.1) open a reader for read hmdb database
 + [as.lipidmaps](massbank/as.lipidmaps.1) populate lipidmaps meta data objects from the loaded sdf data stream
