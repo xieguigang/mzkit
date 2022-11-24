@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports stdNum = System.Math
 
 Namespace LipidMaps
 
@@ -93,14 +94,30 @@ Namespace LipidMaps
             Next
         End Function
 
+        Public Function FindClass(term As String) As String
+            For Each id As String In [Class].Keys
+                If [Class](id).SubCategory.ContainsKey(term) Then
+                    Return id
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
         Public Function CreateEnrichmentProfiles(lm_enrich As IEnumerable(Of EnrichmentResult)) As CatalogProfiles
             Dim profiles As New CatalogProfiles With {
                 .catalogs = New Dictionary(Of String, CatalogProfile)
             }
+            Dim classSet = EnumerateAllCatalogList.ToDictionary()
 
             For Each term As EnrichmentResult In lm_enrich
-                Dim catagory = [Class](term.term)
+                Dim classTag As String = FindClass(term.term)
+                Dim score As Double = -stdNum.Log10(term.pvalue)
 
+                If Not classTag.StringEmpty Then
+                    Dim classList = profiles.GetCategory(term:=classTag)
+                    classList.Add(term.term, score)
+                End If
             Next
 
             Return profiles
