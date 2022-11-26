@@ -1,13 +1,23 @@
-﻿.TH LIPIDMAPS_REPO 1 2022-11-23 "" "Load lipidmaps data repository from internal data pack"
+﻿.TH LIPIDMAPS_REPO 1 2022-11-24 "" "Load lipidmaps data repository from internal data pack"
 .SH NAME
 lipidmaps_repo \- lipidmaps_repo(
-    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit))
+    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
+    <i>gsea</i> = FALSE,
+    <i>category</i> = FALSE)
 .SH SYNOPSIS
 \fIlipidmaps_repo(
-    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit))\fR
+    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
+    <i>gsea</i> = FALSE,
+    <i>category</i> = FALSE)\fR
 .SH OPTIONS
 .PP
 \fBrepofile\fB \fR\- system.file(data/LIPIDMAPS.msgpack, package = mzkit). the file path of the messagepack repository data file. default file path is the internal data file in mzkit package.
+.PP
+.PP
+\fBgsea\fB \fR\- FALSE. the lipidmaps database should be cast to a gsea background?
+.PP
+.PP
+\fBcategory\fB \fR\- FALSE. 
 .PP
 .SH VALUE
 .PP
@@ -15,7 +25,7 @@ a data seuqnece of lipidmaps metadata
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.lipidmaps_repo at annotation.R:line 12
+SMRUCC/R#.declare_function.lipidmaps_repo at annotation.R:line 13
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2022
