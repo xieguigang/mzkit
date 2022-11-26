@@ -72,6 +72,13 @@ Namespace MsImaging
     ''' </summary>
     Public Module MsImagingRaw
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <returns>
+        ''' if the metadata is missing from the mzpack, then function will create new
+        ''' </returns>
         <Extension>
         Public Function GetMSIMetadata(raw As mzPack) As Metadata
             Dim src As Dictionary(Of String, String) = raw.metadata
