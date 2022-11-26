@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>read messagepack repository file</title>
+    <title>read lipidmaps messagepack repository file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,7 +148,7 @@
             </tr>
         </table>
 
-        <h2>read messagepack repository file</h2>
+        <h2>read lipidmaps messagepack repository file</h2>
 
         <h3>Description</h3>
 
@@ -157,7 +157,9 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.lipidmaps</strong>(<i>file</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.lipidmaps</strong>(<i>file</i>,
+    <i>gsea.background</i> = FALSE,
+    <i>category.model</i> = FALSE);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -170,6 +172,10 @@
 
 <dt>env</dt>
 <dd><p><p>-</p></p></dd>
+
+
+<dt>gsea.background</dt>
+<dd><p><p>and also cast the lipidmaps metabolite metadata to the gsea background model?</p></p></dd>
 
         </table>
 
