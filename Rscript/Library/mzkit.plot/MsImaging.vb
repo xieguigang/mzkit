@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -236,27 +237,55 @@ Module MsImaging
                                   Optional spares As Double = 0.2,
                                   Optional env As Environment = Nothing) As Object
 
-        Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of PixelScan)(pixels, env)
+
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
-        If pixelData.isError Then
-            Return pixelData.getError
-        ElseIf buffer Like GetType(Message) Then
+        If buffer Like GetType(Message) Then
             Return buffer.TryCast(Of Message)
         End If
 
-        Dim allPixels As PixelScan() = pixelData.populates(Of PixelScan)(env).ToArray
-        Dim width As Integer = Aggregate p In allPixels Into Max(p.X)
-        Dim height As Integer = Aggregate p In allPixels Into Max(p.Y)
-        Dim data As Stream = buffer.TryCast(Of Stream)
+        If TypeOf pixels Is Drawer Then
+            pixels = DirectCast(pixels, Drawer).pixelReader
+        End If
 
-        Call XICPackWriter.IndexRawData(allPixels, New Size(width, height), data, da, spares)
-        ' Call data.Flush()
+        If TypeOf pixels Is PixelReader Then
+            Call XICPackWriter.IndexRawData(
+                raw:=DirectCast(pixels, PixelReader),
+                file:=buffer.TryCast(Of Stream),
+                da:=da,
+                spares:=spares
+            )
+        Else
+            Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of PixelScan)(pixels, env)
+
+            If pixelData.isError Then
+                Return pixelData.getError
+            End If
+
+            Dim allPixels As PixelScan() = pixelData.populates(Of PixelScan)(env).ToArray
+            Dim width As Integer = Aggregate p In allPixels Into Max(p.X)
+            Dim height As Integer = Aggregate p In allPixels Into Max(p.Y)
+            Dim data As Stream = buffer.TryCast(Of Stream)
+
+            Call XICPackWriter.IndexRawData(
+                pixels:=allPixels,
+                dims:=New Size(width, height),
+                file:=data,
+                da:=da,
+                spares:=spares
+            )
+        End If
 
         Return Nothing
     End Function
 
-    <ExportAPI("open.MSI")>
+    ''' <summary>
+    ''' open the existed mzImage cache file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim stream = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env)
