@@ -86,8 +86,7 @@ Namespace IndexedCache
 
                             Return ions
                         End Function) _
-                .IteratesALL _
-                .ToArray
+                .IteratesALL
             Dim mzgroups = ionList _
                 .GroupBy(Function(mzi)
                              Return mzi.ms.mz
