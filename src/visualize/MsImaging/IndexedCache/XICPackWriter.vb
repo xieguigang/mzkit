@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -13,16 +14,21 @@ Imports Microsoft.VisualBasic.Math
 
 Namespace IndexedCache
 
+    ''' <summary>
+    ''' the mzImage file writer
+    ''' </summary>
     Public Class XICPackWriter : Implements IDisposable
 
         ReadOnly stream As StreamPack
 
         Dim disposedValue As Boolean
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(file As Stream)
             stream = New StreamPack(file,, meta_size:=64 * 1024 * 1024)
         End Sub

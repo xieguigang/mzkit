@@ -11,6 +11,9 @@ Imports stdNum = System.Math
 
 Namespace IndexedCache
 
+    ''' <summary>
+    ''' the mzImage file reader
+    ''' </summary>
     Public Class XICReader : Implements IDisposable
 
         ReadOnly stream As StreamPack
