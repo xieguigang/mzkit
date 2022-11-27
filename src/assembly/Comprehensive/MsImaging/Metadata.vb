@@ -25,5 +25,15 @@ Namespace MsImaging
             Return $"[{mass_range.Min.ToString("F4")} - {mass_range.Max.ToString("F4")}] {scan_x}x{scan_y}@{resolution}um"
         End Function
 
+        Public Function GetMetadata() As Dictionary(Of String, String)
+            Return New Dictionary(Of String, String) From {
+                {"width", scan_x},
+                {"height", scan_y},
+                {"resolution", resolution},
+                {"mzmin", mass_range.Min},
+                {"mzmax", mass_range.Max}
+            }
+        End Function
+
     End Class
 End Namespace
