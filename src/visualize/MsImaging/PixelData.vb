@@ -66,7 +66,6 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
-Imports stdNum = System.Math
 
 ''' <summary>
 ''' a pixels point of [x,y,color]
@@ -91,7 +90,7 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
     Sub New(x As Integer, y As Integer, into As Double)
         Me.x = x
         Me.y = y
-        Me.intensity = intensity
+        Me.intensity = into
     End Sub
 
     Public Overrides Function ToString() As String
