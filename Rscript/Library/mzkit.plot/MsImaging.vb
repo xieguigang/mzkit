@@ -220,15 +220,23 @@ Module MsImaging
         Return data
     End Function
 
+    ''' <summary>
+    ''' write mzImage data file
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.mzImage")>
     <RApiReturn(GetType(Boolean))>
     Public Function WriteXICCache(<RRawVectorArgument>
                                   pixels As Object,
-                                  ibd As ibdReader,
                                   file As Object,
+                                  Optional da As Double = 0.01,
+                                  Optional spares As Double = 0.2,
                                   Optional env As Environment = Nothing) As Object
 
-        Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of ScanData)(pixels, env)
+        Dim pixelData As pipeline = pipeline.TryCreatePipeline(Of PixelScan)(pixels, env)
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If pixelData.isError Then
@@ -237,20 +245,15 @@ Module MsImaging
             Return buffer.TryCast(Of Message)
         End If
 
-        'Dim allPixels As ScanData() = pixelData.populates(Of ScanData)(env).ToArray
-        'Dim width As Integer = Aggregate p In allPixels Into Max(p.x)
-        'Dim height As Integer = Aggregate p In allPixels Into Max(p.y)
-        'Dim cache As New XICWriter(width, height, sourceName:=ibd.fileName Or "n/a".AsDefault)
+        Dim allPixels As PixelScan() = pixelData.populates(Of PixelScan)(env).ToArray
+        Dim width As Integer = Aggregate p In allPixels Into Max(p.X)
+        Dim height As Integer = Aggregate p In allPixels Into Max(p.Y)
+        Dim data As Stream = buffer.TryCast(Of Stream)
 
-        'For Each pixel As ScanData In allPixels
-        '    Call cache.WritePixels(New ibdPixel(ibd, pixel))
-        'Next
+        Call XICPackWriter.IndexRawData(allPixels, New Size(width, height), data, da, spares)
+        ' Call data.Flush()
 
-        'Call cache.Flush()
-
-        'Return cache
-
-        Throw New NotImplementedException
+        Return Nothing
     End Function
 
     <ExportAPI("open.MSI")>
