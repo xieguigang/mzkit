@@ -56,10 +56,13 @@ Namespace IndexedCache
             Dim filename As String = $"/msdata/{scan.Y}/{scan.scanId}.ms"
             Dim ms1 = scan.GetMs
 
-            Using buffer As Stream = stream.OpenBlock(filename),
-                bin As New BinaryDataWriter(buffer) With {
+            Using buffer As Stream = stream.OpenBlock(filename)
+                ' binary data writer can not be dispose
+                ' or the entire base stream will be close
+                Dim bin As New BinaryDataWriter(buffer) With {
                     .ByteOrder = ByteOrder.BigEndian
-            }
+                }
+
                 bin.Write(ms1.Length)
                 bin.Write(ms1.Select(Function(a) a.mz).ToArray)
                 bin.Write(ms1.Select(Function(a) a.intensity).ToArray)
