@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -13,18 +14,23 @@ Imports Microsoft.VisualBasic.Math
 
 Namespace IndexedCache
 
+    ''' <summary>
+    ''' the mzImage file writer
+    ''' </summary>
     Public Class XICPackWriter : Implements IDisposable
 
         ReadOnly stream As StreamPack
 
         Dim disposedValue As Boolean
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(file As String)
             Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(file As Stream)
-            stream = New StreamPack(file,, meta_size:=64 * 1024 * 1024)
+            stream = New StreamPack(file,, meta_size:=128 * 1024 * 1024)
         End Sub
 
         Public Sub SetAttribute(dims As Size, mzdiff As Double, spares As Double)
@@ -50,10 +56,13 @@ Namespace IndexedCache
             Dim filename As String = $"/msdata/{scan.Y}/{scan.scanId}.ms"
             Dim ms1 = scan.GetMs
 
-            Using buffer As Stream = stream.OpenBlock(filename),
-                bin As New BinaryDataWriter(buffer) With {
+            Using buffer As Stream = stream.OpenBlock(filename)
+                ' binary data writer can not be dispose
+                ' or the entire base stream will be close
+                Dim bin As New BinaryDataWriter(buffer) With {
                     .ByteOrder = ByteOrder.BigEndian
-            }
+                }
+
                 bin.Write(ms1.Length)
                 bin.Write(ms1.Select(Function(a) a.mz).ToArray)
                 bin.Write(ms1.Select(Function(a) a.intensity).ToArray)
@@ -66,34 +75,31 @@ Namespace IndexedCache
             obj.attributes.Add("y", scan.Y)
         End Sub
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="raw"></param>
-        ''' <param name="file">the target file to write</param>
-        Public Shared Sub IndexRawData(raw As PixelReader, file As Stream,
+        Public Shared Sub IndexRawData(pixels As IEnumerable(Of PixelScan),
+                                       dims As Size,
+                                       file As Stream,
                                        Optional da As Double = 0.01,
                                        Optional spares As Double = 0.2)
-            Dim ionList = raw.AllPixels _
+
+            Dim allPixels As PixelScan() = pixels.ToArray
+            Dim ionList = allPixels _
                 .Select(Function(i)
                             Dim pt As New Point(i.X, i.Y)
                             Dim ions = i.GetMsPipe.Select(Function(ms) (pt, ms))
 
                             Return ions
                         End Function) _
-                .IteratesALL _
-                .ToArray
+                .IteratesALL
             Dim mzgroups = ionList _
                 .GroupBy(Function(mzi)
                              Return mzi.ms.mz
                          End Function, offsets:=da)
-            Dim dims As Size = raw.dimension
             Dim total As Integer = dims.Area
             Dim data As MatrixXIC
 
             Using pack As New XICPackWriter(file)
                 Call pack.SetAttribute(
-                    dims:=raw.dimension,
+                    dims:=dims,
                     mzdiff:=da,
                     spares:=spares
                 )
@@ -103,10 +109,24 @@ Namespace IndexedCache
                     pack.AddLayer(layer:=data)
                 Next
 
-                For Each pixel As PixelScan In raw.AllPixels
+                For Each pixel As PixelScan In allPixels
                     Call pack.AddMsCache(scan:=pixel)
                 Next
             End Using
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="file">the target file to write</param>
+        Public Shared Sub IndexRawData(raw As PixelReader, file As Stream,
+                                       Optional da As Double = 0.01,
+                                       Optional spares As Double = 0.2)
+            Dim dims As Size = raw.dimension
+            Dim pixels As IEnumerable(Of PixelScan) = raw.AllPixels
+
+            Call IndexRawData(pixels, dims, file, da, spares)
         End Sub
 
         Private Shared Function getLayer(layer As NamedCollection(Of (Point, ms2)), total As Integer, spares As Double, dims As Size) As MatrixXIC
@@ -166,6 +186,7 @@ Namespace IndexedCache
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects)
+                    ' Call stream.Flush()
                     Call stream.Dispose()
                 End If
 
