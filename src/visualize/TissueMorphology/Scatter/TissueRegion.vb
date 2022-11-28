@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
+''' <summary>
+''' a tissue polygon region object
+''' </summary>
 Public Class TissueRegion
 
     ''' <summary>
