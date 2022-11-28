@@ -5,7 +5,7 @@
 + [TrIQ](MsImaging/TrIQ.1) 
 + [intensityLimits](MsImaging/intensityLimits.1) 
 + [write.mzImage](MsImaging/write.mzImage.1) 
-+ [open.MSI](MsImaging/open.MSI.1) 
++ [read.mzImage](MsImaging/read.mzImage.1) 
 + [FilterMz](MsImaging/FilterMz.1) 
 + [MS1](MsImaging/MS1.1) 
 + [viewer](MsImaging/viewer.1) 
