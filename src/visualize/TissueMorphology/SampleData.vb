@@ -36,6 +36,7 @@ Public Module SampleData
                                 .Select(Function(pt)
                                             Return matrix.GetData(pt.X, pt.Y)
                                         End Function) _
+                                .Where(Function(p) Not p Is Nothing) _
                                 .ToArray
                             Dim d As Double() = subset _
                                 .Select(Function(i) i.Scale) _
