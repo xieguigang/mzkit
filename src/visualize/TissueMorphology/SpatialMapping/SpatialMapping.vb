@@ -2,6 +2,13 @@
 
 Public Class SpatialMapping
 
+    <XmlAttribute>
+    Public Property barcode As String
+    <XmlAttribute>
+    Public Property flag As Integer
+    <XmlAttribute>
+    Public Property physicalXY As Integer()
+
     ''' <summary>
     ''' pixel x of the spatial transcriptomics spot
     ''' </summary>
