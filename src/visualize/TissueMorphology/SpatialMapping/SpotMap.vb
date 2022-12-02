@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 
-Public Class SpotMapping
+Public Class SpotMap
 
     <XmlAttribute>
     Public Property barcode As String
