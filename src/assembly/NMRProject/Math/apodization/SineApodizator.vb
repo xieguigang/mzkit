@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Applies a Sine Bell window function to the fid.
@@ -54,11 +54,11 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
             Return spectrum
         End Function
 
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
             Return 0 'To change body of implemented methods use File | Settings | File Templates.
         End Function
 
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
             Dim offset = (180.0 - spectrum.Proc.SsbSine) / 180.0
 
             Return 0 'To change body of implemented methods use File | Settings | File Templates.

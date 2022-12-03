@@ -15,77 +15,73 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid
+''' <summary>
+''' Data structure for the fid
+''' 
+''' @author  Luis F. de Figueiredo
+''' 
+''' User: ldpf
+''' Date: 14/01/2013
+''' Time: 14:00
+''' 
+''' </summary>
 
-    ''' <summary>
-    ''' Data structure for the fid
-    ''' 
-    ''' @author  Luis F. de Figueiredo
-    ''' 
-    ''' User: ldpf
-    ''' Date: 14/01/2013
-    ''' Time: 14:00
-    ''' 
-    ''' </summary>
+<Obsolete>
+Public Class Fid
+    Private dataField As Double()
+    Private realField As Double()
+    Private imaginaryField As Double()
 
-    <Obsolete>
-    Public Class Fid
-        Private dataField As Double()
-        Private realField As Double()
-        Private imaginaryField As Double()
+    Public Sub New(ByVal fid As IList(Of Integer?))
+        Me.New(fid.Select(Function(i) CDbl(i)).ToArray())
+    End Sub
 
-        Public Sub New(ByVal fid As IList(Of Integer?))
-            Me.New(fid.Select(Function(i) CDbl(i)).ToArray())
-        End Sub
+    Public Sub New(ByVal fid As Double())
+        dataField = fid
+        splitData()
 
-        Public Sub New(ByVal fid As Double())
-            dataField = fid
-            splitData()
+    End Sub
 
-        End Sub
+    Private Sub splitData()
+        realField = New Double(dataField.Length / 2 - 1) {}
+        imaginaryField = New Double(dataField.Length / 2 - 1) {}
+        For i = 0 To dataField.Length - 1 Step 2
+            realField(i / 2) = dataField(i) ' real are in even positions
+            imaginaryField(i / 2) = dataField(i + 1) ' imaginary are in odd positions
+        Next
+    End Sub
 
-        Private Sub splitData()
-            realField = New Double(dataField.Length / 2 - 1) {}
-            imaginaryField = New Double(dataField.Length / 2 - 1) {}
-            For i = 0 To dataField.Length - 1 Step 2
-                realField(i / 2) = dataField(i) ' real are in even positions
-                imaginaryField(i / 2) = dataField(i + 1) ' imaginary are in odd positions
-            Next
-        End Sub
+    Public Sub New(ByVal fid As Integer())
+        dataField = New Double(fid.Length - 1) {}
+        For i = 0 To fid.Length - 1
+            dataField(i) = fid(i)
+        Next
+        splitData()
+    End Sub
 
-        Public Sub New(ByVal fid As Integer())
-            dataField = New Double(fid.Length - 1) {}
-            For i = 0 To fid.Length - 1
-                dataField(i) = fid(i)
-            Next
-            splitData()
-        End Sub
+    Public Sub New(ByVal fid As Single())
+        dataField = New Double(fid.Length - 1) {}
+        For i = 0 To fid.Length - 1
+            dataField(i) = fid(i)
+        Next
+        splitData()
+    End Sub
 
-        Public Sub New(ByVal fid As Single())
-            dataField = New Double(fid.Length - 1) {}
-            For i = 0 To fid.Length - 1
-                dataField(i) = fid(i)
-            Next
-            splitData()
-        End Sub
+    Public Overridable ReadOnly Property Data As Double()
+        Get
+            Return dataField
+        End Get
+    End Property
 
-        Public Overridable ReadOnly Property Data As Double()
-            Get
-                Return dataField
-            End Get
-        End Property
+    Public Overridable ReadOnly Property Real As Double()
+        Get
+            Return realField
+        End Get
+    End Property
 
-        Public Overridable ReadOnly Property Real As Double()
-            Get
-                Return realField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Imaginary As Double()
-            Get
-                Return imaginaryField
-            End Get
-        End Property
-    End Class
-
-End Namespace
+    Public Overridable ReadOnly Property Imaginary As Double()
+        Get
+            Return imaginaryField
+        End Get
+    End Property
+End Class

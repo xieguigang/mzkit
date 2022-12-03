@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Applies an exponential window function to the fid.
@@ -44,7 +44,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
         ''' </summary>
         ''' <paramname="i">
         ''' @return </param>
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * spectrum.Proc.LineBroadening * Math.PI)
         End Function
 
@@ -53,7 +53,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
         ''' </summary>
         ''' <paramname="lineBroadening"> </param>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * lineBroadening * Math.PI)
         End Function
 

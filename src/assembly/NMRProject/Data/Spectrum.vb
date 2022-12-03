@@ -15,114 +15,111 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid
-    ''' <summary>
-    ''' Spectrum data structure.
-    ''' 
-    ''' @author  Luis F. de Figueiredo
-    ''' 
-    ''' User: ldpf
-    ''' Date: 29/04/2013
-    ''' Time: 12:22
-    ''' 
-    ''' </summary>
-    Public Class Spectrum
+''' <summary>
+''' Spectrum data structure.
+''' 
+''' @author  Luis F. de Figueiredo
+''' 
+''' User: ldpf
+''' Date: 29/04/2013
+''' Time: 12:22
+''' 
+''' </summary>
+Public Class Spectrum
 
 
-        Private acquField As Acqu
-        Private procField As Proc
-        Private fidField As Double()
-        Private realChannelDataField As Double()
-        Private imaginaryChannelDataField As Double()
-        Private baselineModelField As Double()
-        Private baselineField As Boolean()
+    Private acquField As Acqu
+    Private procField As Proc
+    Private fidField As Double()
+    Private realChannelDataField As Double()
+    Private imaginaryChannelDataField As Double()
+    Private baselineModelField As Double()
+    Private baselineField As Boolean()
 
-        Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu, ByVal proc As Proc)
-            fidField = fid
-            acquField = acqu
-            procField = proc
-        End Sub
-        Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu)
-            Me.New(fid, acqu, New Proc(acqu))
-        End Sub
+    Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu, ByVal proc As Proc)
+        fidField = fid
+        acquField = acqu
+        procField = proc
+    End Sub
+    Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu)
+        Me.New(fid, acqu, New Proc(acqu))
+    End Sub
 
-        Public Overridable ReadOnly Property Proc As Proc
-            Get
-                Return procField
-            End Get
-        End Property
+    Public Overridable ReadOnly Property Proc As Proc
+        Get
+            Return procField
+        End Get
+    End Property
 
-        Public Overridable ReadOnly Property Acqu As Acqu
-            Get
-                Return acquField
-            End Get
-        End Property
+    Public Overridable ReadOnly Property Acqu As Acqu
+        Get
+            Return acquField
+        End Get
+    End Property
 
-        Public Overridable ReadOnly Property Fid As Double()
-            Get
-                Return fidField
-            End Get
-        End Property
+    Public Overridable ReadOnly Property Fid As Double()
+        Get
+            Return fidField
+        End Get
+    End Property
 
-        Public Overridable Sub setFid(ByVal i As Integer, ByVal value As Double)
-            fidField(i) = value
-        End Sub
+    Public Overridable Sub setFid(ByVal i As Integer, ByVal value As Double)
+        fidField(i) = value
+    End Sub
 
-        Public Overridable Property RealChannelData As Double()
-            Get
-                Return realChannelDataField
-            End Get
-            Set(ByVal value As Double())
-                realChannelDataField = value
-            End Set
-        End Property
-
-
-        Public Overridable Sub setRealChannelData(ByVal i As Integer, ByVal value As Double)
-            realChannelDataField(i) = value
-        End Sub
-
-        Public Overridable Property ImaginaryChannelData As Double()
-            Get
-                Return imaginaryChannelDataField
-            End Get
-            Set(ByVal value As Double())
-                imaginaryChannelDataField = value
-            End Set
-        End Property
-
-        Public Overridable Sub setImaginaryChannelData(ByVal i As Integer, ByVal value As Double)
-            imaginaryChannelDataField(i) = value
-        End Sub
-
-        Private Sub splitData()
-            realChannelDataField = New Double(fidField.Length / 2 - 1) {}
-            imaginaryChannelDataField = New Double(fidField.Length / 2 - 1) {}
-            For i = 0 To fidField.Length - 1 Step 2
-                realChannelDataField(i / 2) = fidField(i) ' real are in even positions
-                imaginaryChannelDataField(i / 2) = fidField(i + 1) ' imaginary are in odd positions
-            Next
-        End Sub
-
-        Public Overridable Property BaselineModel As Double()
-            Get
-                Return baselineModelField
-            End Get
-            Set(ByVal value As Double())
-                baselineModelField = value
-            End Set
-        End Property
+    Public Overridable Property RealChannelData As Double()
+        Get
+            Return realChannelDataField
+        End Get
+        Set(ByVal value As Double())
+            realChannelDataField = value
+        End Set
+    End Property
 
 
-        Public Overridable Property Baseline As Boolean()
-            Get
-                Return baselineField
-            End Get
-            Set(ByVal value As Boolean())
-                baselineField = value
-            End Set
-        End Property
+    Public Overridable Sub setRealChannelData(ByVal i As Integer, ByVal value As Double)
+        realChannelDataField(i) = value
+    End Sub
 
-    End Class
+    Public Overridable Property ImaginaryChannelData As Double()
+        Get
+            Return imaginaryChannelDataField
+        End Get
+        Set(ByVal value As Double())
+            imaginaryChannelDataField = value
+        End Set
+    End Property
 
-End Namespace
+    Public Overridable Sub setImaginaryChannelData(ByVal i As Integer, ByVal value As Double)
+        imaginaryChannelDataField(i) = value
+    End Sub
+
+    Private Sub splitData()
+        realChannelDataField = New Double(fidField.Length / 2 - 1) {}
+        imaginaryChannelDataField = New Double(fidField.Length / 2 - 1) {}
+        For i = 0 To fidField.Length - 1 Step 2
+            realChannelDataField(i / 2) = fidField(i) ' real are in even positions
+            imaginaryChannelDataField(i / 2) = fidField(i + 1) ' imaginary are in odd positions
+        Next
+    End Sub
+
+    Public Overridable Property BaselineModel As Double()
+        Get
+            Return baselineModelField
+        End Get
+        Set(ByVal value As Double())
+            baselineModelField = value
+        End Set
+    End Property
+
+
+    Public Overridable Property Baseline As Boolean()
+        Get
+            Return baselineField
+        End Get
+        Set(ByVal value As Boolean())
+            baselineField = value
+        End Set
+    End Property
+
+End Class

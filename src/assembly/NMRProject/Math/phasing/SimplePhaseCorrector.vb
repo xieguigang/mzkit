@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.phasing
+Namespace fidMath.Phasing
 
     ''' <summary>
     ''' Method to perform phase correction

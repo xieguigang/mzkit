@@ -16,7 +16,7 @@
 ' 
 
 
-Namespace uk.ac.ebi.nmr.fid.tools.phasing
+Namespace fidMath.Phasing
 
     ''' <summary>
     ''' Method to perform phase correction

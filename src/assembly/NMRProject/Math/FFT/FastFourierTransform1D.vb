@@ -18,7 +18,7 @@ Imports DoubleFFT_1D = edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools
+Namespace fidMath.FFT
 
     ''' 
     ''' <summary>

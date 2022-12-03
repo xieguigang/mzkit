@@ -15,7 +15,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Abstract class that applies a window function to the fid in order to reduce noise or enhance signal.

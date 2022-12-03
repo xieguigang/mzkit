@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace uk.ac.ebi.nmr.fid.tools
+Namespace fidMath.FFT
     ''' <summary>
     ''' Created with IntelliJ IDEA.
     ''' @author: Orlando Selenu

@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Applies a Lorentz to Gauss window function to the fid.

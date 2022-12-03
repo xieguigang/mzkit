@@ -1,6 +1,4 @@
-﻿Imports System
-
-''' 
+﻿
 ''' <summary>
 ''' Copyright (C) 2010  Pascal Fricke
 ''' Copyright (C) 2000-2010  Kirk Marat, The University of Manitoba
@@ -25,7 +23,7 @@
 '''      ftp://davinci.chem.umanitoba.ca/pub/marat/SpinWorks/source_library/
 '''      https://sourceforge.net/projects/cutenmr/
 ''' </summary>
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' The ApodizationTool allows to apply various methods to improve the signal to noise value of an fid.

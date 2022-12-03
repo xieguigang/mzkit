@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Applies a TRAF window function to the fid.
@@ -36,7 +36,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
             MyBase.New(spectrum)
         End Sub
 
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer, ByVal lbTraf As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lbTraf As Double) As Double
             Dim acquisitionTime = spectrum.Proc.DwellTime * spectrum.Proc.TdEffective
             Dim time, e, eps As Double
             time = i * spectrum.Proc.DwellTime
@@ -46,7 +46,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
 
         End Function
 
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
             'this creates imutability issues
             '        spectrum.getProc().setLineBroadening(0.03);
             Return calculateFactor(i, 0.03)

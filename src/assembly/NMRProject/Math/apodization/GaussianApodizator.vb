@@ -17,7 +17,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.apodization
+Namespace fidMath.Apodization
 
     ''' <summary>
     ''' Applies a gaussian window function to the fid.
@@ -45,7 +45,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
         ''' In Wikipedia: W(i)=exp(-1/2*(((n-(N-1)/2))/(sigma * (N-1)/2))^2))
         ''' </summary>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
             spectrum.Proc.LineBroadening = 0.1
             Return calculateFactor(i, 0.1)
         End Function
@@ -54,7 +54,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
         ''' performs the guassian apodization with specified line broadning. </summary>
         ''' <paramname="lbGauss"> </param>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overrides Overloads Function calculateFactor(ByVal i As Integer, ByVal lbGauss As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lbGauss As Double) As Double
 
             If lbGauss = 0 Then
                 Throw New Exception("line broadening cannot be zero")

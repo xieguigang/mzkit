@@ -1,4 +1,4 @@
-﻿Namespace uk.ac.ebi.nmr.fid.tools.phasing
+﻿Namespace fidMath.Phasing
 
     ''' <summary>
     ''' Phase correction due to the DSP filter

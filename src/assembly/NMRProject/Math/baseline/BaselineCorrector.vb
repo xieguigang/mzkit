@@ -15,7 +15,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.tools.baseline
+Namespace fidMath.Baseline
 
     ''' <summary>
     ''' Class for baseline correction
