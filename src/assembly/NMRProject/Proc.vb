@@ -98,7 +98,7 @@ Public Class Proc
         End If
         'set the dwell time (in s) to display the timeline of the fid (dw is distance between points)
         If acquisition.SpectralWidth = 0 Or acquisition.TransmiterFreq = 0 Then
-            Throw New Exception("Some acquisition parameters are null")
+            Console.WriteLine("Some acquisition parameters are null")
         End If
         dwellTimeField = 1.0 / (2 * acquisition.SpectralWidth * acquisition.TransmiterFreq)
         hertzPerPoint = acquisition.SpectralWidth * acquisition.TransmiterFreq / transformSizeField

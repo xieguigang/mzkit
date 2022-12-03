@@ -16,6 +16,7 @@
 ' 
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
+Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' Data structure for the fid
 ''' 
@@ -90,8 +91,12 @@ Public Class Fid
     End Property
 
     Public Shared Function Create(acquisition As acquisition) As Fid
-        Dim cplx128 = acquisition.acquisition1D.fidData.DecodeBytes
-        Dim fidData As New Fid(cplx128)
+        Dim cplx128 = acquisition.ParseMatrix()
+        Dim fid As Double() = cplx128 _
+            .Select(Function(c) {c.real, c.imaging}) _
+            .IteratesALL _
+            .ToArray
+        Dim fidData As New Fid(fid)
 
         Return fidData
     End Function
