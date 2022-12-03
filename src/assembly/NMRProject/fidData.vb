@@ -1,4 +1,7 @@
-﻿''' <summary>
+﻿Imports System.Numerics
+Imports FFT = Microsoft.VisualBasic.Math.SignalProcessing.FourierTransform
+
+''' <summary>
 ''' NMR方法检测到的与时间相关的原子震荡数据
 ''' </summary>
 Public Class fidData
@@ -11,7 +14,19 @@ Public Class fidData
     ''' </summary>
     ''' <returns></returns>
     Public Function FourierTransform() As FrequencyData
+        Dim signal As Complex() = time.Select(Function(t, i) New Complex(t, amplitude(i))).ToArray
+        Dim freq As Double()
+        Dim ampl As Double()
 
+        Call FFT.DFT(signal, FFT.Direction.Forward)
+
+        freq = signal.Select(Function(c) c.Real).ToArray
+        ampl = signal.Select(Function(c) c.Imaginary).ToArray
+
+        Return New FrequencyData With {
+            .frequency = freq,
+            .amplitude = ampl
+        }
     End Function
 
 End Class
