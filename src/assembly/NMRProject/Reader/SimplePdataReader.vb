@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.IO
-Imports System.Text
+﻿Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
 ' 
@@ -22,8 +20,6 @@ Imports Microsoft.VisualBasic.Data.IO
 
 Namespace uk.ac.ebi.nmr.fid.io
 
-
-
     ''' <summary>
     ''' Class that reads the real and imaginary part of Bruker Processed data
     ''' 
@@ -37,13 +33,13 @@ Namespace uk.ac.ebi.nmr.fid.io
     Public Class SimplePdataReader
         Implements FidReader
 
-        Private Shared pdataFolder As String
-        Private Shared pdata1r As FileStream
-        Private Shared pdata1i As FileStream
-        Private Shared processing As Proc
-        Private Shared acquisition As Acqu
+        Dim pdataFolder As String
+        Dim pdata1r As FileStream
+        Dim pdata1i As FileStream
+        Dim processing As Proc
+        Dim acquisition As Acqu
 
-        Public Sub New(ByVal pdataFolder As File, ByVal acquisition As Acqu, ByVal processing As Proc)
+        Public Sub New(ByVal pdataFolder As String, ByVal acquisition As Acqu, ByVal processing As Proc)
             Me.New(New FileStream(pdataFolder & "/1r", FileMode.Open, FileAccess.Read), New FileStream(pdataFolder & "/1i", FileMode.Open, FileAccess.Read), acquisition, processing)
             Me.pdataFolder = pdataFolder
         End Sub
@@ -64,22 +60,13 @@ Namespace uk.ac.ebi.nmr.fid.io
             If pdataFolder IsNot Nothing Then
                 'TODO move to java.nio.file
                 ' check if one has a Unix or Windows based system
-                Dim path As String() = If(System.getProperty("os.name").contains("Win"), pdataFolder.AbsolutePath.Split("\\"), pdataFolder.AbsolutePath.Split("/"))
                 ' put path back...
-                Dim fidPath As StringBuilder = New StringBuilder()
-                If path.Length > 0 Then
-                    fidPath.Append(path(0))
-                    For i = 1 To path.Length - 2 - 1
-                        fidPath.Append(If(System.getProperty(CStr("os.name")).contains("Win"), "\\", "/"))
-                        fidPath.Append(path(i))
-                    Next
-                End If
-                fidPath.Append(If(System.getProperty(CStr("os.name")).contains("Win"), "\\", "/"))
-                fidPath.Append("fid")
-                If Directory.Exists(fidPath.ToString()) OrElse File.Exists(fidPath.ToString()) Then
+                Dim fidPath As String = $"{pdataFolder}/fid"
+
+                If Directory.Exists(fidPath) OrElse File.Exists(fidPath) Then
                     Dim fidReader As FidReader = New Simple1DFidReader(New FileStream(fidPath.ToString(), FileMode.Open, FileAccess.Read), acquisition)
-                    Dim spectrum As Spectrum = fidReader.read()
-                    fid = spectrum.Fid
+                    Dim spectrumAny As Spectrum = fidReader.read()
+                    fid = spectrumAny.Fid
                 End If
             End If
 
@@ -91,35 +78,34 @@ Namespace uk.ac.ebi.nmr.fid.io
 
         Protected Friend Overridable Function getDatapoints(ByVal inputStream As FileStream) As Double()
             Dim datapoints As Double() = Nothing
-            Dim inChannel As FileChannel = inputStream.Channel
-            Dim buffer As ByteBuffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size())
+            Dim buffer As New ByteBuffer(inputStream)
             If processing.is32Bit() Then
-                Dim result As Integer() = New Integer(CInt(inChannel.size()) / 4 - 1) {}
-                Console.WriteLine("Number of points in the processed spectra: " & inChannel.size() / 4)
+                Dim result As Integer() = New Integer(CInt(buffer.byteLength / 4) - 1) {}
+                Console.WriteLine("Number of points in the processed spectra: " & buffer.byteLength / 4)
                 ' this has to do with the order of the bytes
                 buffer.order(processing.ByteOrder)
                 'read the integers
-                Dim intBuffer As IntBuffer = buffer.asIntBuffer()
-                intBuffer.[get](result)
+                ' Dim intBuffer As IntBuffer = buffer.asIntBuffer()
+                buffer.[get](result)
                 ' the number of points in 1r is defined in the procs file
                 datapoints = New Double(processing.TdEffective - 1) {}
                 ' Bruker only uses half of the points, so I will just pick the even positions
-                For i = 0 To result.Length - 1 Step 2
+                For i As Integer = 0 To result.Length - 1 Step 2
                     datapoints(i / 2) = result(i)
                 Next ' its a 64bit file encoding doubles
             Else
-                Dim result As Double() = New Double(CInt(inChannel.size()) / 8 - 1) {}
+                Dim result As Double() = New Double(CInt(buffer.byteLength / 8) - 1) {}
 
-                Console.WriteLine("Number of points in the the processed spectra: " & inChannel.size() / 8)
+                Console.WriteLine("Number of points in the the processed spectra: " & buffer.byteLength / 8)
                 ' this has to do with the order of the bytes
                 buffer.order(processing.ByteOrder)
                 'read the integers
-                Dim doubleBuffer As DoubleBuffer = buffer.asDoubleBuffer()
-                doubleBuffer.[get](result)
+                ' Dim doubleBuffer As DoubleBuffer = buffer.asDoubleBuffer()
+                buffer.[get](result)
                 ' Bruker only uses half of the points, so I will just pick the even positions
                 ' making sure I have only the tdeff
                 datapoints = New Double(processing.TdEffective - 1) {}
-                For i = 0 To processing.TdEffective - 1
+                For i As Integer = 0 To processing.TdEffective - 1
                     datapoints(i) = result(i * 2)
                 Next
                 '            System.arraycopy(result,0,datapoints,0,processing.getTdEffective());
