@@ -94,15 +94,6 @@ Public Class Spectrum
         imaginaryChannelDataField(i) = value
     End Sub
 
-    Private Sub splitData()
-        realChannelDataField = New Double(fidField.Length / 2 - 1) {}
-        imaginaryChannelDataField = New Double(fidField.Length / 2 - 1) {}
-        For i = 0 To fidField.Length - 1 Step 2
-            realChannelDataField(i / 2) = fidField(i) ' real are in even positions
-            imaginaryChannelDataField(i / 2) = fidField(i + 1) ' imaginary are in odd positions
-        Next
-    End Sub
-
     Public Overridable Property BaselineModel As Double()
         Get
             Return baselineModelField

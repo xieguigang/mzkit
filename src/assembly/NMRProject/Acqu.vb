@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Data.IO
+﻿Imports Microsoft.VisualBasic.Data.IO
 
 ' 
 '  Copyright (c) 2013. EMBL, European Bioinformatics Institute

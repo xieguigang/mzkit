@@ -25,9 +25,8 @@
 ''' Time: 14:00
 ''' 
 ''' </summary>
-
-<Obsolete>
 Public Class Fid
+
     Private dataField As Double()
     Private realField As Double()
     Private imaginaryField As Double()
@@ -67,6 +66,10 @@ Public Class Fid
         splitData()
     End Sub
 
+    ''' <summary>
+    ''' the raw input data
+    ''' </summary>
+    ''' <returns></returns>
     Public Overridable ReadOnly Property Data As Double()
         Get
             Return dataField

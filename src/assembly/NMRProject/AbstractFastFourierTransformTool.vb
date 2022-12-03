@@ -1,6 +1,4 @@
-﻿Imports System
-
-' 
+﻿' 
 '  Copyright (c) 2013. EMBL, European Bioinformatics Institute
 ' 
 '  This program is free software: you can redistribute it and/or modify
