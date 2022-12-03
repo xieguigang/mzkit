@@ -122,7 +122,7 @@ Namespace Raw
             Return 0
         End Function
 
-        Private Sub PerformFourierTransform(nn As Integer, ByRef data As Double(), iSign As Integer)
+        Private Sub PerformFourierTransform(nn As Integer, ByRef data As Double(), sign As Integer)
             Dim m As Long
             Dim i As Long
             Dim n As Long = nn << 1
@@ -149,7 +149,7 @@ Namespace Raw
 
             While n > mMax
                 Dim iStep = 2 * mMax
-                Dim theta = 6.28318530717959 / (iSign * mMax)
+                Dim theta = 6.28318530717959 / (sign * mMax)
                 Dim wTemp = stdNum.Sin(0.5 * theta)
                 Dim wpr = -2.0 * wTemp * wTemp
                 Dim wpi = stdNum.Sin(theta)
