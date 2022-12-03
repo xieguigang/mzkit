@@ -79,7 +79,6 @@
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -91,11 +90,11 @@ Namespace MarkupData.nmrML
         Public Property acquisitionMultiD As acquisitionMultiD
         Public Property acquisition1D As acquisitionMultiD
 
-        Public Function ParseMatrix() As fidComplex()
+        Public Function ParseMatrix(Optional raw As Boolean = False) As fidComplex()
             If acquisition1D Is Nothing Then
-                Return acquisitionMultiD.ParseMatrix
+                Return acquisitionMultiD.ParseMatrix(raw)
             Else
-                Return acquisition1D.ParseMatrix
+                Return acquisition1D.ParseMatrix(raw)
             End If
         End Function
 
@@ -130,7 +129,7 @@ Namespace MarkupData.nmrML
             Return SWH / SFO1
         End Function
 
-        Public Function ParseMatrix() As fidComplex()
+        Public Function ParseMatrix(Optional raw As Boolean = False) As fidComplex()
             Dim vec As Double() = fidData.DecodeBytes
             Dim rawR As Double() = New Double(vec.Length / 2 - 1) {}
             Dim rawI As Double() = New Double(vec.Length / 2 - 1) {}
@@ -143,14 +142,16 @@ Namespace MarkupData.nmrML
                 rawI(++j) = vec(i + 1)
             Next
 
-            Dim index As Integer() = seq(from:=3 * rawR.Length / 4, [to]:=rawR.Length, by:=1) _
-                .Select(Function(d) CInt(d) - 1) _
-                .ToArray
-            Dim mediaR = rawR.AsVector()(index).Average
-            Dim mediaI = -rawI.AsVector()(index).Average
+            If Not raw Then
+                Dim index As Integer() = seq(from:=3 * rawR.Length / 4, [to]:=rawR.Length, by:=1) _
+                    .Select(Function(d) CInt(d) - 1) _
+                    .ToArray
+                Dim mediaR = rawR.AsVector()(index).Average
+                Dim mediaI = -rawI.AsVector()(index).Average
 
-            rawR = rawR.AsVector - mediaR
-            rawI = rawI.AsVector - mediaI
+                rawR = rawR.AsVector - mediaR
+                rawI = rawI.AsVector - mediaI
+            End If
 
             Return rawR _
                 .Select(Function(r, i)

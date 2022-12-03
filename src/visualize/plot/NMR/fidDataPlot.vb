@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports BioNovoGene.Analytical.NMR
+Imports BioNovoGene.Analytical.NMRFidTool
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -13,20 +13,20 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Class fidDataPlot : Inherits Plot
 
-    ReadOnly fidData As fidData
+    ReadOnly fid As Fid
 
-    Public Sub New(fidData As fidData, theme As Theme)
+    Public Sub New(fidData As Fid, theme As Theme)
         MyBase.New(theme)
 
-        Me.fidData = fidData
+        Me.fid = fidData
         Me.xlabel = "Time"
         Me.ylabel = "Amplitude"
         Me.main = "NMR fidData Plot"
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim points As PointData() = fidData.time _
-            .Select(Function(t, i) New PointData(t, fidData.amplitude(i))) _
+        Dim points As PointData() = fid.Real _
+            .Select(Function(t, i) New PointData(t, fid.Imaginary(i))) _
             .ToArray
         Dim lineStyle As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
         Dim line As New SerialData With {

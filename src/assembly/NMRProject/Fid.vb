@@ -15,6 +15,7 @@
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
 ''' <summary>
 ''' Data structure for the fid
 ''' 
@@ -87,4 +88,11 @@ Public Class Fid
             Return imaginaryField
         End Get
     End Property
+
+    Public Shared Function Create(acquisition As acquisition) As Fid
+        Dim cplx128 = acquisition.acquisition1D.fidData.DecodeBytes
+        Dim fidData As New Fid(cplx128)
+
+        Return fidData
+    End Function
 End Class

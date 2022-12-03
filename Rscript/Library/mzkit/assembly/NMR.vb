@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.NMR
+Imports BioNovoGene.Analytical.NMRFidTool
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -84,12 +85,12 @@ Module NMRTool
     ''' <param name="data"></param>
     ''' <returns></returns>
     <ExportAPI("FID")>
-    Public Function GetMatrix(data As acquisition) As NMR.fidData
-        Return NMR.fidData.Create(data.acquisition1D)
+    Public Function GetMatrix(data As acquisition) As Fid
+        Return Fid.Create(data)
     End Function
 
     <ExportAPI("nmr_dft")>
-    Public Function FourierTransform(fidData As NMR.fidData) As FrequencyData
+    Public Function FourierTransform(fidData As Fid) As FrequencyData
         Return fidData.FourierTransform
     End Function
 
