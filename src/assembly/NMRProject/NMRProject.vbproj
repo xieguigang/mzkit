@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>NMRProject</RootNamespace>
+    <RootNamespace>BioNovoGene.Analytical.NMR</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>BioNovoGene.Analytical.NMR</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

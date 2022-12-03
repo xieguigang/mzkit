@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("NMR")>
-Module NMR
+Module NMRTool
 
     <ExportAPI("read.nmrML")>
     Public Function readSmall(file As String) As nmrML.XML
@@ -82,7 +82,7 @@ Module NMR
     ''' <param name="data"></param>
     ''' <returns></returns>
     <ExportAPI("FID")>
-    Public Function GetMatrix(data As acquisition) As fidComplex()
+    Public Function GetMatrix(data As acquisition) As nmr.fidData()
         Return data.ParseMatrix
     End Function
 
