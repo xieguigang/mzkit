@@ -20,17 +20,23 @@ Public Module plotNMR
     End Sub
 
     Public Function plotFrequencyData(freq As FrequencyData, args As list, env As Environment) As Object
-        Dim theme As New Theme
+        Dim theme As New Theme With {
+            .padding = InteropArgumentHelper.getPadding(args!padding, [default]:="padding: 200px 400px 300px 100px")
+        }
         Dim app As New FrequencyPlot(freq, theme)
+        Dim sizeVal = InteropArgumentHelper.getSize(args!size, env, "3600,2400")
 
-        Return app.Plot
+        Return app.Plot(sizeVal)
     End Function
 
     Public Function plotFidData(fidData As fidData, args As list, env As Environment) As Object
-        Dim theme As New Theme
+        Dim theme As New Theme With {
+            .padding = InteropArgumentHelper.getPadding(args!padding, [default]:="padding: 200px 400px 300px 100px")
+        }
         Dim app As New fidDataPlot(fidData, theme)
+        Dim sizeVal = InteropArgumentHelper.getSize(args!size, env, "3600,2400")
 
-        Return app.Plot
+        Return app.Plot(sizeVal)
     End Function
 
     <ExportAPI("plot_nmr")>
