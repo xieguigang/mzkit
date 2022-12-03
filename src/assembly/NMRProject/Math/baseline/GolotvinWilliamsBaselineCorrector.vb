@@ -57,7 +57,6 @@ Namespace fidMath.Baseline
             Dim windowSize = 41
             Dim convolutionWindow = New Double(windowSize - 1) {}
             Dim baselineModel = New Double(realChannelData.Length - 1) {}
-            Dim interpolator As org.apache.commons.math3.analysis.interpolation.LinearInterpolator = New org.apache.commons.math3.analysis.interpolation.LinearInterpolator()
             Dim indexes = New Double(1) {}
             indexes(0) = -1
             Dim intesities = New Double(1) {}
@@ -136,7 +135,7 @@ Namespace fidMath.Baseline
                         If Not baselineIndexes(i - 1) AndAlso indexes(0) > 0 Then
                             indexes(1) = i
                             intesities(1) = baselineModel(i)
-                            Dim splineFunction As org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction = interpolator.interpolate(indexes, intesities)
+                            Dim splineFunction = LeastSquares.interpolate(indexes, intesities)
                             For j As Integer = indexes(0) To indexes(1) - 1
                                 baselineModel(j) = splineFunction.value(j)
                             Next
