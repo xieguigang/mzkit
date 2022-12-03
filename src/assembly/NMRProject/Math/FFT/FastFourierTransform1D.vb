@@ -1,5 +1,4 @@
-﻿Imports System
-Imports DoubleFFT_1D = edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D
+﻿
 
 ' 
 '  Copyright (c) 2013 EMBL, European Bioinformatics Institute.
@@ -17,6 +16,8 @@ Imports DoubleFFT_1D = edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D
 '  You should have received a copy of the GNU Lesser General Public License
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
+
+Imports Microsoft.VisualBasic.Math.SignalProcessing.FFT
 
 Namespace fidMath.FFT
 
@@ -40,12 +41,9 @@ Namespace fidMath.FFT
 
         Public Overridable Function computeFFT(offset As Integer) As Spectrum Implements FastFourierTransform.computeFFT
             Dim fid = spectrum.Fid
-            Dim realPart As Double()
-            Dim imaginaryPart As Double()
-
             ' run the FFT
-            Dim fftd As edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D = New edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D(fid.Length / 2 - offset)
-            fftd.complexForward(fid, offset)
+            Dim fftd As New DoubleFFT_1D(fid.Length / 2 - offset)
+            fftd.ComplexForward(fid, offset)
 
             Dim realChannel = New Double(fid.Length / 2 - 1) {}
             Dim imagChannel = New Double(fid.Length / 2 - 1) {}
