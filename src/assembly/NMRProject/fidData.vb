@@ -31,10 +31,7 @@ Public Class fidData
     End Function
 
     Public Shared Function Create(data As acquisitionMultiD) As fidData
-        Dim complex As fidComplex() = data _
-            .ParseMatrix _
-            .OrderBy(Function(c) c.real) _
-            .ToArray
+        Dim complex As fidComplex() = data.ParseMatrix
         Dim real As Double() = complex.Select(Function(c) c.real).ToArray
         Dim image As Double() = complex.Select(Function(c) c.imaging).ToArray
 
