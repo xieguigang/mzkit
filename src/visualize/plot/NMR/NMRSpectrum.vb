@@ -35,6 +35,7 @@ Public Class NMRSpectrum : Inherits Plot
         title = nmr.name
         theme.yAxisLayout = YAxisLayoutStyles.None
         theme.xAxisReverse = True
+        theme.drawLegend = False
         xlabel = "ppm"
         ylabel = "absorb"
         main = "NMR spectrum"
