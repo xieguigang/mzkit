@@ -93,7 +93,11 @@ Module NMR
 
     <ExportAPI("spectrum")>
     Public Function spectrumData(spectrum As spectrumList, nmrML As nmrML.XML) As LibraryMatrix
-        Return spectrum.spectrum1D(Scan0).ParseMatrix(SW:=nmrML.acquisition.First.acquisition1D.SW)
+        Dim data = spectrum.spectrum1D(Scan0)
+        Dim sw = nmrML.acquisition.First.acquisition1D.SW
+        Dim matrix = data.ParseMatrix(SW:=sw)
+
+        Return matrix
     End Function
 
 End Module
