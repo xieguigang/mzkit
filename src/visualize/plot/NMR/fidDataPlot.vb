@@ -21,6 +21,7 @@ Public Class fidDataPlot : Inherits Plot
         Me.fidData = fidData
         Me.xlabel = "Time"
         Me.ylabel = "Amplitude"
+        Me.main = "NMR fidData Plot"
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -34,10 +35,16 @@ Public Class fidDataPlot : Inherits Plot
             .pointSize = theme.pointSize,
             .pts = points,
             .shape = LegendStyles.SolidLine,
-            .title = "NMR fidData Plot",
+            .title = "NMR fidData",
             .width = lineStyle.Width
         }
-        Dim app As New LinePlot2D({line}, theme, fill:=False, fillPie:=False, interplot:=Splines.None)
+        Dim app As New LinePlot2D({line}, theme, fill:=False, fillPie:=False, interplot:=Splines.None) With {
+            .main = main,
+            .ylabel = ylabel,
+            .xlabel = xlabel,
+            .legendTitle = legendTitle,
+            .zlabel = zlabel
+        }
 
         Call app.Plot(g, canvas)
     End Sub

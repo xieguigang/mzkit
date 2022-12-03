@@ -98,7 +98,7 @@ Public Class PeakAssign : Inherits Plot
                    barHighlight As String,
                    labelIntensity As Double,
                    theme As Theme,
-                   images As Dictionary(Of String, Image))
+                   Optional images As Dictionary(Of String, Image) = Nothing)
 
         MyBase.New(theme)
 
