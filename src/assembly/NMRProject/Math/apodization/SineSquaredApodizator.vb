@@ -32,7 +32,7 @@ Namespace fidMath.Apodization
     Public Class SineSquaredApodizator
         Inherits AbstractApodizator
 
-        Protected Friend Sub New(ByVal spectrum As Spectrum)
+        Protected Friend Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
 
@@ -58,11 +58,11 @@ Namespace fidMath.Apodization
             Return spectrum
         End Function
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lineBroadening As Double) As Double
             Return calculateFactor(i)
         End Function
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             Dim offset = (180.0 - spectrum.Proc.SsbSineSquared) / 180.0
             Return Math.Pow(Math.Sin(i / spectrum.Proc.TdEffective * Math.PI * offset), 2)
         End Function

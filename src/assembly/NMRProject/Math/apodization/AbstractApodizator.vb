@@ -33,7 +33,7 @@ Namespace fidMath.Apodization
         Friend spectrum As Spectrum
 
 
-        Public Sub New(ByVal spectrum As Spectrum)
+        Public Sub New(spectrum As Spectrum)
             Me.spectrum = spectrum
         End Sub
 
@@ -59,7 +59,7 @@ Namespace fidMath.Apodization
             Return New Spectrum(fid, spectrum.Acqu, spectrum.Proc)
         End Function
 
-        Public Overridable Function calculate(ByVal lineBroadning As Double) As Spectrum Implements Apodizator.calculate
+        Public Overridable Function calculate(lineBroadning As Double) As Spectrum Implements Apodizator.calculate
             Dim fid = New Double(spectrum.Fid.Length - 1) {}
             ' this creates issues with immutability, need to clone the proc object
             '        spectrum.getProc().setLineBroadening(lineBroadning);
@@ -81,9 +81,9 @@ Namespace fidMath.Apodization
             Return New Spectrum(fid, spectrum.Acqu, spectrum.Proc)
         End Function
 
-        Protected Friend MustOverride Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend MustOverride Function calculateFactor(i As Integer, lineBroadening As Double) As Double
 
-        Protected Friend MustOverride Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend MustOverride Function calculateFactor(i As Integer) As Double
     End Class
 
 End Namespace

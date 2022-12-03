@@ -32,7 +32,7 @@ Namespace fidMath.Apodization
     Public Class GaussianApodizator
         Inherits AbstractApodizator
 
-        Public Sub New(ByVal spectrum As Spectrum)
+        Public Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
 
@@ -45,7 +45,7 @@ Namespace fidMath.Apodization
         ''' In Wikipedia: W(i)=exp(-1/2*(((n-(N-1)/2))/(sigma * (N-1)/2))^2))
         ''' </summary>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             spectrum.Proc.LineBroadening = 0.1
             Return calculateFactor(i, 0.1)
         End Function
@@ -54,7 +54,7 @@ Namespace fidMath.Apodization
         ''' performs the guassian apodization with specified line broadning. </summary>
         ''' <paramname="lbGauss"> </param>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lbGauss As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lbGauss As Double) As Double
 
             If lbGauss = 0 Then
                 Throw New Exception("line broadening cannot be zero")

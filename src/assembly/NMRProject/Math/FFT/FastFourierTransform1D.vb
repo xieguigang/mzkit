@@ -33,12 +33,12 @@ Namespace fidMath.FFT
 
         Friend spectrum As Spectrum
 
-        Public Sub New(ByVal spectrum As Spectrum)
+        Public Sub New(spectrum As Spectrum)
             Me.spectrum = spectrum
 
         End Sub
 
-        Public Overridable Function computeFFT(ByVal offset As Integer) As Spectrum Implements FastFourierTransform.computeFFT
+        Public Overridable Function computeFFT(offset As Integer) As Spectrum Implements FastFourierTransform.computeFFT
             Dim fid = spectrum.Fid
             Dim realPart As Double()
             Dim imaginaryPart As Double()

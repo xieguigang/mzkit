@@ -29,7 +29,7 @@ Namespace fidMath.Baseline
     ''' </summary>
     Public Interface BaselineCorrector
 
-        Function correctBaseline(ByVal spectrum As Spectrum) As Spectrum
+        Function correctBaseline(spectrum As Spectrum) As Spectrum
     End Interface
 
 End Namespace

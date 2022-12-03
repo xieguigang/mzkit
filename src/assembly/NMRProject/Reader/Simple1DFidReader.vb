@@ -36,12 +36,12 @@ Namespace Reader
         Private zeroFrequency As Double = 0
 
 
-        Public Sub New(ByVal fidInputS As FileStream, ByVal acquisition As Acqu)
+        Public Sub New(fidInputS As FileStream, acquisition As Acqu)
             Me.acquisition = acquisition
             fidInput = fidInputS
         End Sub
 
-        Public Sub New(ByVal fidInputS As FileStream, ByVal acquisition As Acqu, ByVal processing As Proc)
+        Public Sub New(fidInputS As FileStream, acquisition As Acqu, processing As Proc)
             Me.acquisition = acquisition
             fidInput = fidInputS
             Me.processing = processing

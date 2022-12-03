@@ -32,7 +32,7 @@ Namespace fidMath.Phasing
     Public Class SimplePhaseCorrector
         Implements PhaseCorrector
 
-        Public Overridable Function phaseCorrection(ByVal spectrum As Spectrum, ByVal zeroPhase As Double, ByVal firstOrderPhase As Double) As Spectrum Implements PhaseCorrector.phaseCorrection
+        Public Overridable Function phaseCorrection(spectrum As Spectrum, zeroPhase As Double, firstOrderPhase As Double) As Spectrum Implements PhaseCorrector.phaseCorrection
             Return phaseCorrection(spectrum, zeroPhase, firstOrderPhase, 0)
         End Function
 
@@ -44,7 +44,7 @@ Namespace fidMath.Phasing
         ''' <paramname="firstOrderPhase"> </param>
         ''' <paramname="pivot">
         ''' @return </param>
-        Public Overridable Function phaseCorrection(ByVal spectrum As Spectrum, ByVal zeroPhase As Double, ByVal firstOrderPhase As Double, ByVal pivot As Integer) As Spectrum Implements PhaseCorrector.phaseCorrection
+        Public Overridable Function phaseCorrection(spectrum As Spectrum, zeroPhase As Double, firstOrderPhase As Double, pivot As Integer) As Spectrum Implements PhaseCorrector.phaseCorrection
             Dim realChannel = New Double(spectrum.Acqu.AquiredPoints / 2 - 1) {}
             Dim imaginaryChannel = New Double(spectrum.Acqu.AquiredPoints / 2 - 1) {}
 

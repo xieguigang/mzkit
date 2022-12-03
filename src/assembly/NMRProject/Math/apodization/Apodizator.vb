@@ -30,7 +30,7 @@ Namespace fidMath.Apodization
     Public Interface Apodizator
 
         Function calculate() As Spectrum
-        Function calculate(ByVal lineBroadning As Double) As Spectrum
+        Function calculate(lineBroadning As Double) As Spectrum
     End Interface
 
 End Namespace

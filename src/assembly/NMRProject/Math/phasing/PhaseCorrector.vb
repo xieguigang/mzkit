@@ -30,9 +30,9 @@ Namespace fidMath.Phasing
     ''' </summary>
     Public Interface PhaseCorrector
 
-        Function phaseCorrection(ByVal spectrum As Spectrum, ByVal zeroPhase As Double, ByVal firstOrderPhase As Double, ByVal pivot As Integer) As Spectrum
+        Function phaseCorrection(spectrum As Spectrum, zeroPhase As Double, firstOrderPhase As Double, pivot As Integer) As Spectrum
 
-        Function phaseCorrection(ByVal spectrum As Spectrum, ByVal zeroPhase As Double, ByVal firstOrderPhase As Double) As Spectrum
+        Function phaseCorrection(spectrum As Spectrum, zeroPhase As Double, firstOrderPhase As Double) As Spectrum
 
     End Interface
 

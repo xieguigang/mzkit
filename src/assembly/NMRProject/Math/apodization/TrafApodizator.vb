@@ -33,11 +33,11 @@ Namespace fidMath.Apodization
     Public Class TrafApodizator
         Inherits AbstractApodizator
 
-        Protected Friend Sub New(ByVal spectrum As Spectrum)
+        Protected Friend Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lbTraf As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lbTraf As Double) As Double
             Dim acquisitionTime = spectrum.Proc.DwellTime * spectrum.Proc.TdEffective
             Dim time, e, eps As Double
             time = i * spectrum.Proc.DwellTime
@@ -46,7 +46,7 @@ Namespace fidMath.Apodization
             Return e / (e * e + eps * eps)
         End Function
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             ' this creates imutability issues
             '        spectrum.getProc().setLineBroadening(0.2);
             Return calculateFactor(i, 0.2)

@@ -64,7 +64,7 @@ Public Class Acqu
         JEOL
     End Enum
 
-    Public Sub New(ByVal spectrometer As Spectrometer)
+    Public Sub New(spectrometer As Spectrometer)
         spectrometerField = spectrometer
     End Sub
 
@@ -72,7 +72,7 @@ Public Class Acqu
         Get
             Return transmiterFreqField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             transmiterFreqField = value
         End Set
     End Property
@@ -82,7 +82,7 @@ Public Class Acqu
         Get
             Return decoupler1FreqField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             decoupler1FreqField = value
         End Set
     End Property
@@ -92,7 +92,7 @@ Public Class Acqu
         Get
             Return decoupler2FeqField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             decoupler2FeqField = value
         End Set
     End Property
@@ -102,7 +102,7 @@ Public Class Acqu
         Get
             Return freqOffsetField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             freqOffsetField = value
         End Set
     End Property
@@ -112,7 +112,7 @@ Public Class Acqu
         Get
             Return spectralWidthField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             spectralWidthField = value
         End Set
     End Property
@@ -122,7 +122,7 @@ Public Class Acqu
         Get
             Return aquiredPointsField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             aquiredPointsField = value
         End Set
     End Property
@@ -132,7 +132,7 @@ Public Class Acqu
         Get
             Return dspDecimationField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             dspDecimationField = value
         End Set
     End Property
@@ -142,7 +142,7 @@ Public Class Acqu
         Get
             Return dspFirmwareField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             dspFirmwareField = value
         End Set
     End Property
@@ -152,7 +152,7 @@ Public Class Acqu
         Get
             Return dspGroupDelayField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             dspGroupDelayField = value
         End Set
     End Property
@@ -162,7 +162,7 @@ Public Class Acqu
         Get
             Return byteOrderField
         End Get
-        Set(ByVal value As ByteOrder)
+        Set(value As ByteOrder)
             byteOrderField = value
         End Set
     End Property
@@ -172,14 +172,14 @@ Public Class Acqu
         Return acquisitionModeField
     End Function
 
-    Public Overridable Sub setAcquisitionMode(ByVal acquisitionMode As Integer)
+    Public Overridable Sub setAcquisitionMode(acquisitionMode As Integer)
         For Each mode In Acqu.AcquisitionMode.values()
             If mode.typeField = acquisitionMode Then
                 acquisitionModeField = mode
             End If
         Next
     End Sub
-    Public Overridable Sub setAcquisitionMode(ByVal mode As AcquisitionMode)
+    Public Overridable Sub setAcquisitionMode(mode As AcquisitionMode)
         acquisitionModeField = mode
 
     End Sub
@@ -188,7 +188,7 @@ Public Class Acqu
         Get
             Return filterTypeField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             filterTypeField = value
         End Set
     End Property
@@ -198,7 +198,7 @@ Public Class Acqu
         Get
             Return numberOfScansField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             numberOfScansField = value
         End Set
     End Property
@@ -208,7 +208,7 @@ Public Class Acqu
         Get
             Return pulseProgramField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             pulseProgramField = value
         End Set
     End Property
@@ -218,7 +218,7 @@ Public Class Acqu
         Get
             Return observedNucleusField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             observedNucleusField = value
         End Set
     End Property
@@ -228,7 +228,7 @@ Public Class Acqu
         Get
             Return instrumentNameField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             instrumentNameField = value
         End Set
     End Property
@@ -238,7 +238,7 @@ Public Class Acqu
         Return integerType
     End Function
 
-    Public Overridable Sub set32Bit(ByVal is32Bit As Boolean)
+    Public Overridable Sub set32Bit(is32Bit As Boolean)
         fidTypeField = If(is32Bit, FidData.INT32, FidData.DOUBLE)
         integerType = is32Bit
     End Sub
@@ -247,7 +247,7 @@ Public Class Acqu
         Get
             Return solventField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             solventField = value
         End Set
     End Property
@@ -257,7 +257,7 @@ Public Class Acqu
         Get
             Return probeheadField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             probeheadField = value
         End Set
     End Property
@@ -267,7 +267,7 @@ Public Class Acqu
         Get
             Return originField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             originField = value
         End Set
     End Property
@@ -277,7 +277,7 @@ Public Class Acqu
         Get
             Return ownerField
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             ownerField = value
         End Set
     End Property
@@ -318,7 +318,7 @@ Public Class Acqu
 
         Friend ReadOnly typeField As Integer
 
-        Friend Sub New(ByVal name As String, ByVal innerEnum As InnerEnum, ByVal type As Integer)
+        Friend Sub New(name As String, innerEnum As InnerEnum, type As Integer)
             typeField = type
 
             nameValue = name
@@ -344,7 +344,7 @@ Public Class Acqu
             Return nameValue
         End Function
 
-        Public Shared Function valueOf(ByVal name As String) As AcquisitionMode
+        Public Shared Function valueOf(name As String) As AcquisitionMode
             For Each enumInstance In valueList
                 If Equals(enumInstance.nameValue, name) Then
                     Return enumInstance
@@ -383,7 +383,7 @@ Public Class Acqu
 
         Friend ReadOnly typeField As Integer
 
-        Friend Sub New(ByVal name As String, ByVal innerEnum As InnerEnum, ByVal type As Integer)
+        Friend Sub New(name As String, innerEnum As InnerEnum, type As Integer)
             typeField = type
 
             nameValue = name
@@ -409,7 +409,7 @@ Public Class Acqu
             Return nameValue
         End Function
 
-        Public Shared Function valueOf(ByVal name As String) As FidData
+        Public Shared Function valueOf(name As String) As FidData
             For Each enumInstance In valueList
                 If Equals(enumInstance.nameValue, name) Then
                     Return enumInstance
@@ -423,7 +423,7 @@ Public Class Acqu
         Get
             Return spectralFrequencyField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             spectralFrequencyField = value
         End Set
     End Property

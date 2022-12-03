@@ -35,20 +35,20 @@ Namespace fidMath.FFT
         Friend processing As Proc
         Friend data As Double()
 
-        Public Sub New(ByVal spectrum As Double(), ByVal processing As Proc)
+        Public Sub New(spectrum As Double(), processing As Proc)
             Me.spectrum = spectrum
             Me.processing = processing
             data = New Double(processing.TdEffective / 2 + 1 - 1) {}
         End Sub
 
-        Public Overridable Function zeroOrderPhasing(ByVal angle As Double) As Double()
+        Public Overridable Function zeroOrderPhasing(angle As Double) As Double()
             For i = 0 To processing.TdEffective - 1 - 1 Step 2
                 data(i / 2) = spectrum(i) * Math.Cos(angle) - spectrum(i + 1) * Math.Sin(angle)
             Next
             Return data
         End Function
 
-        Public Overridable Function firstOrderPhasing(ByVal angle As Double) As Double()
+        Public Overridable Function firstOrderPhasing(angle As Double) As Double()
             For i = 0 To processing.TdEffective - 1 - 1 Step 2
                 data(i / 2) = spectrum(i) * Math.Cos(i / 2 * angle / (processing.TdEffective / 2)) + spectrum(i + 1) * Math.Sin(i / 2 * angle / (processing.TdEffective / 2))
             Next

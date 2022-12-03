@@ -22,7 +22,7 @@ Namespace fidMath.FFT
         ''' <paramname="DIRECT">
         '''            TRUE = direct transform, FALSE = inverse transform </param>
         ''' <returns> a new array of length 2n </returns>
-        Public Shared Function fft(ByVal inputReal As Double(), ByVal inputImag As Double(), ByVal DIRECT As Boolean) As Double()
+        Public Shared Function fft(inputReal As Double(), inputImag As Double(), DIRECT As Boolean) As Double()
             ' - n is the dimension of the problem
             ' - nu is its logarithm in base e
             Dim n = inputReal.Length
@@ -122,7 +122,7 @@ Namespace fidMath.FFT
         ''' <summary>
         ''' The reference bitreverse function.
         ''' </summary>
-        Private Shared Function bitreverseReference(ByVal j As Integer, ByVal nu As Integer) As Integer
+        Private Shared Function bitreverseReference(j As Integer, nu As Integer) As Integer
             Dim j2 As Integer
             Dim j1 = j
             Dim k = 0

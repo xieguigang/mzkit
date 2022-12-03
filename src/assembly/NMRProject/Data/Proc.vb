@@ -71,7 +71,7 @@ Public Class Proc
         TRAFS
     End Enum
 
-    Public Sub New(ByVal acquisition As Acqu)
+    Public Sub New(acquisition As Acqu)
 
         ' set the size for the fourier Transform
         ' perhaps I should check first if I can use the data from the Proc file..??
@@ -125,7 +125,7 @@ Public Class Proc
         Get
             Return transformSizeField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             transformSizeField = value
         End Set
     End Property
@@ -135,7 +135,7 @@ Public Class Proc
         Get
             Return windowFunctionTypeField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             windowFunctionTypeField = value
         End Set
     End Property
@@ -145,7 +145,7 @@ Public Class Proc
         Get
             Return phasingTypeField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             phasingTypeField = value
         End Set
     End Property
@@ -155,7 +155,7 @@ Public Class Proc
         Get
             Return f1DetectionModeField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             f1DetectionModeField = value
         End Set
     End Property
@@ -165,7 +165,7 @@ Public Class Proc
         Get
             Return zeroFrequencyField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             zeroFrequencyField = value
         End Set
     End Property
@@ -175,7 +175,7 @@ Public Class Proc
         Get
             Return lineBroadeningField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             lineBroadeningField = value
         End Set
     End Property
@@ -185,7 +185,7 @@ Public Class Proc
         Get
             Return gbFactorField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             gbFactorField = value
         End Set
     End Property
@@ -195,7 +195,7 @@ Public Class Proc
         Get
             Return zeroOrderPhaseField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             zeroOrderPhaseField = value
         End Set
     End Property
@@ -205,7 +205,7 @@ Public Class Proc
         Get
             Return firstOrderPhaseField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             firstOrderPhaseField = value
         End Set
     End Property
@@ -215,7 +215,7 @@ Public Class Proc
         Get
             Return ssbField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             ssbField = value
             ' if value is given in degrees this converts it to the inverse of coefficient in front to the Pi
             ' 360 = 2 Pi => angle/180 = coefficient (e.g. 360/180 = 2 Pi)
@@ -248,7 +248,7 @@ Public Class Proc
         Get
             Return tdEffectiveField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             tdEffectiveField = value
         End Set
     End Property
@@ -258,7 +258,7 @@ Public Class Proc
         Get
             Return leftShiftField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             leftShiftField = value
         End Set
     End Property
@@ -268,7 +268,7 @@ Public Class Proc
         Get
             Return shiftField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             shiftField = value
         End Set
     End Property
@@ -278,7 +278,7 @@ Public Class Proc
         Get
             Return incrementField
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             incrementField = value
         End Set
     End Property
@@ -294,7 +294,7 @@ Public Class Proc
         Get
             Return dspPhaseField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             dspPhaseField = value
         End Set
     End Property
@@ -304,7 +304,7 @@ Public Class Proc
         Get
             Return windowFunctionField
         End Get
-        Set(ByVal value As WindowFunctions)
+        Set(value As WindowFunctions)
             windowFunctionField = value
         End Set
     End Property
@@ -314,7 +314,7 @@ Public Class Proc
         Get
             Return byteOrderField
         End Get
-        Set(ByVal value As ByteOrder)
+        Set(value As ByteOrder)
             byteOrderField = value
         End Set
     End Property
@@ -324,7 +324,7 @@ Public Class Proc
         Return integerType
     End Function
 
-    Public Overridable Sub set32Bit(ByVal integerType As Boolean)
+    Public Overridable Sub set32Bit(integerType As Boolean)
         Me.integerType = integerType
     End Sub
 End Class

@@ -31,7 +31,7 @@ Namespace fidMath.FFT
 
         Function computeFFT() As Spectrum
 
-        Function computeFFT(ByVal offset As Integer) As Spectrum
+        Function computeFFT(offset As Integer) As Spectrum
 
     End Interface
 

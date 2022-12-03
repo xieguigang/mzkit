@@ -32,7 +32,7 @@ Namespace fidMath.Apodization
 
     Public Class LorentzGausApodizatior
         Inherits AbstractApodizator
-        Protected Friend Sub New(ByVal spectrum As Spectrum)
+        Protected Friend Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
 
@@ -59,7 +59,7 @@ Namespace fidMath.Apodization
         ''' <paramname="lbLorentzToGauss">
         ''' @return </param>
 
-        Protected Friend Overrides Function calculateFactor(ByVal i As Integer, ByVal lbLorentzToGauss As Double) As Double
+        Protected Friend Overrides Function calculateFactor(i As Integer, lbLorentzToGauss As Double) As Double
             'TODO check if the equation to calculate the factor is correct
             If lbLorentzToGauss >= 0 Then
                 Throw New Exception("the Lorentz to Gaussian linebroadening factor has to be negative")
@@ -90,7 +90,7 @@ Namespace fidMath.Apodization
         ''' </summary>
         ''' <paramname="i">
         ''' @return </param>
-        Protected Friend Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overrides Function calculateFactor(i As Integer) As Double
             Return calculateFactor(i, -1)
         End Function
     End Class

@@ -69,7 +69,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
         Return implementedFFT(apodizedData)
     End Function
 
-    Friend Overridable Function getRealPart(ByVal data As Double()) As Double()
+    Friend Overridable Function getRealPart(data As Double()) As Double()
         Dim realPart = New Double(data.Length / 2 - 1) {}
         Dim realIndex = 0
         For i = 0 To data.Length - 1 Step 2
@@ -84,7 +84,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
         Get
             Return dataField
         End Get
-        Set(ByVal value As Double())
+        Set(value As Double())
             dataField = value
         End Set
     End Property
@@ -101,7 +101,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
     ''' This is where the implementation of each fft package go. </summary>
     ''' <paramname="apodizedData">
     ''' @return </param>
-    Friend MustOverride Function implementedFFT(ByVal apodizedData As Double()) As Double()
+    Friend MustOverride Function implementedFFT(apodizedData As Double()) As Double()
 
     Friend Overridable Sub initDataFormat()
         ' instanciating the array where the fourier transformed spectra will be stored....
@@ -118,7 +118,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
     End Sub
 
 
-    Public Overridable Sub setData(ByVal index As Integer, ByVal point As Double)
+    Public Overridable Sub setData(index As Integer, point As Double)
         dataField(index) = point
     End Sub
 

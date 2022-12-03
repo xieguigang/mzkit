@@ -32,11 +32,11 @@ Public Class Fid
     Private realField As Double()
     Private imaginaryField As Double()
 
-    Public Sub New(ByVal fid As IList(Of Integer?))
+    Public Sub New(fid As IList(Of Integer?))
         Me.New(fid.Select(Function(i) CDbl(i)).ToArray())
     End Sub
 
-    Public Sub New(ByVal fid As Double())
+    Public Sub New(fid As Double())
         dataField = fid
         splitData()
 
@@ -51,7 +51,7 @@ Public Class Fid
         Next
     End Sub
 
-    Public Sub New(ByVal fid As Integer())
+    Public Sub New(fid As Integer())
         dataField = New Double(fid.Length - 1) {}
         For i = 0 To fid.Length - 1
             dataField(i) = fid(i)
@@ -59,7 +59,7 @@ Public Class Fid
         splitData()
     End Sub
 
-    Public Sub New(ByVal fid As Single())
+    Public Sub New(fid As Single())
         dataField = New Double(fid.Length - 1) {}
         For i = 0 To fid.Length - 1
             dataField(i) = fid(i)

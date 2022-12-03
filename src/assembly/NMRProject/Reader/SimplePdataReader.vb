@@ -39,12 +39,12 @@ Namespace Reader
         Dim processing As Proc
         Dim acquisition As Acqu
 
-        Public Sub New(ByVal pdataFolder As String, ByVal acquisition As Acqu, ByVal processing As Proc)
+        Public Sub New(pdataFolder As String, acquisition As Acqu, processing As Proc)
             Me.New(New FileStream(pdataFolder & "/1r", FileMode.Open, FileAccess.Read), New FileStream(pdataFolder & "/1i", FileMode.Open, FileAccess.Read), acquisition, processing)
             Me.pdataFolder = pdataFolder
         End Sub
 
-        Public Sub New(ByVal pdata1r As FileStream, ByVal pdata1i As FileStream, ByVal acquisition As Acqu, ByVal processing As Proc)
+        Public Sub New(pdata1r As FileStream, pdata1i As FileStream, acquisition As Acqu, processing As Proc)
             Me.pdata1r = pdata1r
             Me.pdata1i = pdata1i
             Me.acquisition = acquisition
@@ -76,7 +76,7 @@ Namespace Reader
             Return spectrum
         End Function
 
-        Protected Friend Overridable Function getDatapoints(ByVal inputStream As FileStream) As Double()
+        Protected Friend Overridable Function getDatapoints(inputStream As FileStream) As Double()
             Dim datapoints As Double() = Nothing
             Dim buffer As New ByteBuffer(inputStream)
             If processing.is32Bit() Then

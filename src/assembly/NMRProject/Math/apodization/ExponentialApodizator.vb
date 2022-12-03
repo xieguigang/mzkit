@@ -32,7 +32,7 @@ Namespace fidMath.Apodization
     Public Class ExponentialApodizator
         Inherits AbstractApodizator
 
-        Public Sub New(ByVal spectrum As Spectrum)
+        Public Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
 
@@ -44,7 +44,7 @@ Namespace fidMath.Apodization
         ''' </summary>
         ''' <paramname="i">
         ''' @return </param>
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * spectrum.Proc.LineBroadening * Math.PI)
         End Function
 
@@ -53,7 +53,7 @@ Namespace fidMath.Apodization
         ''' </summary>
         ''' <paramname="lineBroadening"> </param>
         ''' <exceptioncref="Exception"> </exception>
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lineBroadening As Double) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * lineBroadening * Math.PI)
         End Function
 

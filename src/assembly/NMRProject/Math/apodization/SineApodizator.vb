@@ -32,7 +32,7 @@ Namespace fidMath.Apodization
     Public Class SineApodizator
         Inherits AbstractApodizator
 
-        Protected Friend Sub New(ByVal spectrum As Spectrum)
+        Protected Friend Sub New(spectrum As Spectrum)
             MyBase.New(spectrum)
         End Sub
         'TODO fix this class
@@ -54,11 +54,11 @@ Namespace fidMath.Apodization
             Return spectrum
         End Function
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer, ByVal lineBroadening As Double) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lineBroadening As Double) As Double
             Return 0 'To change body of implemented methods use File | Settings | File Templates.
         End Function
 
-        Protected Friend Overloads Overrides Function calculateFactor(ByVal i As Integer) As Double
+        Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             Dim offset = (180.0 - spectrum.Proc.SsbSine) / 180.0
 
             Return 0 'To change body of implemented methods use File | Settings | File Templates.

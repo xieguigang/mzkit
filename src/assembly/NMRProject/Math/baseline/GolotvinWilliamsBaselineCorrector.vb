@@ -34,7 +34,7 @@ Namespace fidMath.Baseline
         Implements BaselineCorrector
 
 
-        Public Overridable Function correctBaseline(ByVal spectrum As Spectrum) As Spectrum Implements BaselineCorrector.correctBaseline
+        Public Overridable Function correctBaseline(spectrum As Spectrum) As Spectrum Implements BaselineCorrector.correctBaseline
 
             Dim baselineIndexes = baslineDetection(spectrum.RealChannelData)
 
@@ -53,7 +53,7 @@ Namespace fidMath.Baseline
             Return spectrum 'To change body of implemented methods use File | Settings | File Templates.
         End Function
 
-        Private Function calculateBaselineModel(ByVal baselineIndexes As Boolean(), ByVal realChannelData As Double()) As Double()
+        Private Function calculateBaselineModel(baselineIndexes As Boolean(), realChannelData As Double()) As Double()
             Dim windowSize = 41
             Dim convolutionWindow = New Double(windowSize - 1) {}
             Dim baselineModel = New Double(realChannelData.Length - 1) {}
@@ -177,7 +177,7 @@ Namespace fidMath.Baseline
             Return baselineModel 'To change body of created methods use File | Settings | File Templates.
         End Function
 
-        Private Function baslineDetection(ByVal realChannelData As Double()) As Boolean()
+        Private Function baslineDetection(realChannelData As Double()) As Boolean()
             Dim rectangleWidth = 60
             Dim factor = 4
             Dim noiseStandardDeviation = calculateSpectralNoise(realChannelData)
@@ -204,7 +204,7 @@ Namespace fidMath.Baseline
             Return baseline 'To change body of created methods use File | Settings | File Templates.
         End Function
 
-        Private Function calculateSpectralNoise(ByVal realChannelData As Double()) As Double
+        Private Function calculateSpectralNoise(realChannelData As Double()) As Double
             Dim numberOfRegions = 1
             ' define the window size starting with 32 datapoints
             ' and shrinking it until the exact division is achieved

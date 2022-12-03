@@ -47,12 +47,12 @@ Namespace fidMath.Apodization
         ''' 
         ''' <paramname="spectrum"> </param>
         ''' <paramname="processing"> </param>
-        Public Sub New(ByVal spectrum As Double(), ByVal processing As Proc)
+        Public Sub New(spectrum As Double(), processing As Proc)
             Me.spectrum = spectrum
             Me.processing = processing
         End Sub
         ' TODO perhaps change this to accept an Acqu object, to make aparent that the acquisition mode has to be defined
-        Public Sub New(ByVal spectrum As Double(), ByVal acquisitionMode As Acqu.AcquisitionMode, ByVal processing As Proc)
+        Public Sub New(spectrum As Double(), acquisitionMode As Acqu.AcquisitionMode, processing As Proc)
             Me.spectrum = spectrum
             Me.processing = processing
             Me.acquisitionMode = acquisitionMode
@@ -105,7 +105,7 @@ Namespace fidMath.Apodization
         ''' according to wikipedia. </summary>
         ''' <paramname="lbGauss"> </param>
         ''' <exceptioncref="Exception"> </exception>
-        Public Overridable Function gaussianBramer2001(ByVal lbGauss As Double) As Double()
+        Public Overridable Function gaussianBramer2001(lbGauss As Double) As Double()
             Dim data = New Double(processing.TdEffective - 1) {}
             Dim time As Double
             If lbGauss = 0 Then
@@ -138,7 +138,7 @@ Namespace fidMath.Apodization
         Public Overridable Sub firstPoint()
             firstPoint(1)
         End Sub
-        Public Overridable Sub firstPoint(ByVal fpCorrection As Double)
+        Public Overridable Sub firstPoint(fpCorrection As Double)
             spectrum(0) *= fpCorrection
             If Not acquisitionMode.Equals(Acqu.AcquisitionMode.SEQUENTIAL) Then
                 spectrum(1) *= fpCorrection

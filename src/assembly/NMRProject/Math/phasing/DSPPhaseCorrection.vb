@@ -17,7 +17,7 @@
         ''' Method to calculate the initial phase correction due to the digital filter. This method was based on the
         ''' information available in the dsp_phase of SpinWorks from Prof. Kirk Marat
         ''' </summary>
-        Public Overridable Function dspPhaseCorrection(ByVal spectrum As Spectrum) As Spectrum
+        Public Overridable Function dspPhaseCorrection(spectrum As Spectrum) As Spectrum
             Dim phase As Double = 0
             If spectrum.Acqu.DspFirmware = 10 Then
                 Select Case spectrum.Acqu.DspDecimation

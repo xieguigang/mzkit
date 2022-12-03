@@ -36,12 +36,12 @@ Public Class Spectrum
     Private baselineModelField As Double()
     Private baselineField As Boolean()
 
-    Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu, ByVal proc As Proc)
+    Public Sub New(fid As Double(), acqu As Acqu, proc As Proc)
         fidField = fid
         acquField = acqu
         procField = proc
     End Sub
-    Public Sub New(ByVal fid As Double(), ByVal acqu As Acqu)
+    Public Sub New(fid As Double(), acqu As Acqu)
         Me.New(fid, acqu, New Proc(acqu))
     End Sub
 
@@ -63,7 +63,7 @@ Public Class Spectrum
         End Get
     End Property
 
-    Public Overridable Sub setFid(ByVal i As Integer, ByVal value As Double)
+    Public Overridable Sub setFid(i As Integer, value As Double)
         fidField(i) = value
     End Sub
 
@@ -71,13 +71,13 @@ Public Class Spectrum
         Get
             Return realChannelDataField
         End Get
-        Set(ByVal value As Double())
+        Set(value As Double())
             realChannelDataField = value
         End Set
     End Property
 
 
-    Public Overridable Sub setRealChannelData(ByVal i As Integer, ByVal value As Double)
+    Public Overridable Sub setRealChannelData(i As Integer, value As Double)
         realChannelDataField(i) = value
     End Sub
 
@@ -85,12 +85,12 @@ Public Class Spectrum
         Get
             Return imaginaryChannelDataField
         End Get
-        Set(ByVal value As Double())
+        Set(value As Double())
             imaginaryChannelDataField = value
         End Set
     End Property
 
-    Public Overridable Sub setImaginaryChannelData(ByVal i As Integer, ByVal value As Double)
+    Public Overridable Sub setImaginaryChannelData(i As Integer, value As Double)
         imaginaryChannelDataField(i) = value
     End Sub
 
@@ -107,7 +107,7 @@ Public Class Spectrum
         Get
             Return baselineModelField
         End Get
-        Set(ByVal value As Double())
+        Set(value As Double())
             baselineModelField = value
         End Set
     End Property
@@ -117,7 +117,7 @@ Public Class Spectrum
         Get
             Return baselineField
         End Get
-        Set(ByVal value As Boolean())
+        Set(value As Boolean())
             baselineField = value
         End Set
     End Property

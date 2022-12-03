@@ -28,7 +28,7 @@ Namespace fidMath.Apodization
     ''' </summary>
     Public Class ZeroFillApodizator
         Private spectrum As Spectrum
-        Public Sub New(ByVal spectrum As Spectrum)
+        Public Sub New(spectrum As Spectrum)
             Me.spectrum = spectrum
         End Sub
 
