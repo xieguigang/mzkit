@@ -1,5 +1,4 @@
-﻿Imports System
-Imports BioNovoGene.Analytical.NMR.uk.ac.ebi.nmr.fid.Acqu
+﻿Imports BioNovoGene.Analytical.NMR.uk.ac.ebi.nmr.fid.Acqu
 Imports Microsoft.VisualBasic.Data.IO
 
 ' 

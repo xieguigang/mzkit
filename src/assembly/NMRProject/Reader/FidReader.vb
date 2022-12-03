@@ -28,8 +28,6 @@ Namespace uk.ac.ebi.nmr.fid.io
     ''' </summary>
     Public Interface FidReader
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: uk.ac.ebi.nmr.fid.Spectrum read() throws Exception;
         Function read() As Spectrum
 
     End Interface

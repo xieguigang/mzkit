@@ -42,7 +42,7 @@ Namespace uk.ac.ebi.nmr.fid
 
         Friend Overridable Sub applyRedfieldOnSequentialData()
             ' for sequential data apply Redfield trick: multiply data by 1 -1 -1 1
-            If fidField.Acqu.AcquisitionMode.Equals(Acqu.AcquisitionMode.SEQUENTIAL) Then
+            If fidField.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
                 For i = 0 To fidField.Proc.TdEffective - 1 Step 4
                     dataField(i + 1) = -dataField(i + 1)
                     dataField(i + 2) = -dataField(i + 2)
@@ -107,15 +107,16 @@ Namespace uk.ac.ebi.nmr.fid
 
         Friend Overridable Sub initDataFormat()
             ' instanciating the array where the fourier transformed spectra will be stored....
-            Select Case fidField.Acqu.AcquisitionMode
-                Case DISP, SIMULTANIOUS
-                    ' allocate space for processing
-                    dataField = New Double(2 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
-                Case SEQUENTIAL
-                    ' allocate space for processing
-                    dataField = New Double(4 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
-                Case Else
-            End Select
+            Dim mode = fidField.Acqu.getAcquisitionMode
+
+            If mode Is Acqu.AcquisitionMode.DISP OrElse mode Is Acqu.AcquisitionMode.SIMULTANIOUS Then
+                ' allocate space for processing
+                dataField = New Double(2 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
+            ElseIf mode Is Acqu.AcquisitionMode.SEQUENTIAL Then
+                ' allocate space for processing
+                dataField = New Double(4 * fidField.Proc.TransformSize - 1) {} ' allocate space for processing
+            Else
+            End If
         End Sub
 
 
@@ -126,20 +127,21 @@ Namespace uk.ac.ebi.nmr.fid
         Friend Overridable Sub shiftData()
             ' perform a left or right shift of the data (ignoring the corresponding portion of the data)
             ' the code from cuteNMR was simplified
-            For i = 0 To fidField.Proc.TdEffective - Math.Abs(fidField.Proc.Shift) - 1
+            For i As Integer = 0 To fidField.Proc.TdEffective - Math.Abs(fidField.Proc.Shift) - 1
                 Dim dataIndex = If(fidField.Proc.Shift >= 0, i, i - fidField.Proc.Shift) ' or shift the placement of the data to the right
                 ' or shift the placement of the data to the right
                 Dim fidIndex = If(fidField.Proc.Shift >= 0, i + fidField.Proc.Shift, i) ' start in the correct order
                 ' start in the correct order
-                Select Case fidField.Acqu.FidType
-                    Case INT32
-                        dataField(dataIndex) = fidField.Fid(fidIndex)
-                    Case [DOUBLE]
-                        dataField(dataIndex) = fidField.Fid(fidIndex)
-                    Case FLOAT
-                    Case INT16
-                    Case Else
-                End Select
+                Dim type = fidField.Acqu.FidType
+
+                If type Is Acqu.FidData.INT32 Then
+                    dataField(dataIndex) = fidField.Fid(fidIndex)
+                ElseIf type Is Acqu.FidData.[Double] Then
+                    dataField(dataIndex) = fidField.Fid(fidIndex)
+                ElseIf type Is Acqu.FidData.Float Then
+                ElseIf type Is Acqu.FidData.Int16 Then
+                Else
+                End If
             Next
         End Sub
 
@@ -148,7 +150,7 @@ Namespace uk.ac.ebi.nmr.fid
             'nonsense case if SI is set to be less than TD/2
             Dim td = If(fidField.Proc.TdEffective > 2 * fidField.Proc.TransformSize, 2 * fidField.Proc.TransformSize, fidField.Proc.TdEffective)
             ' move the data from position i to position 2*i, why?
-            If fidField.Acqu.AcquisitionMode.Equals(Acqu.AcquisitionMode.SEQUENTIAL) Then
+            If fidField.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
                 For i = td - 1 To 1 Step -1
                     dataField(2 * i) = dataField(i)
                     dataField(i) = 0

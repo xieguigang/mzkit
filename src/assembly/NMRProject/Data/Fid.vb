@@ -1,8 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports ArrayUtils = org.apache.commons.lang3.ArrayUtils
-
-' 
+﻿' 
 '  Copyright (c) 2013. EMBL, European Bioinformatics Institute
 ' 
 '  This program is free software: you can redistribute it and/or modify
@@ -39,7 +35,7 @@ Namespace uk.ac.ebi.nmr.fid
         Private imaginaryField As Double()
 
         Public Sub New(ByVal fid As IList(Of Integer?))
-            Me.New(org.apache.commons.lang3.ArrayUtils.toPrimitive(fid.ToArray()))
+            Me.New(fid.Select(Function(i) CDbl(i)).ToArray())
         End Sub
 
         Public Sub New(ByVal fid As Double())
