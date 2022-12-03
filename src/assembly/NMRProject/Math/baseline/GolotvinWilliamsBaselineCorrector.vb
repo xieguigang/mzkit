@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math
+﻿Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Math
 
 ' 
 '  Copyright (c) 2013 EMBL, European Bioinformatics Institute.
@@ -135,9 +136,9 @@ Namespace fidMath.Baseline
                         If Not baselineIndexes(i - 1) AndAlso indexes(0) > 0 Then
                             indexes(1) = i
                             intesities(1) = baselineModel(i)
-                            Dim splineFunction = LeastSquares.interpolate(indexes, intesities)
+                            Dim splineFunction As FitResult = LeastSquares.LinearFit(indexes, intesities)
                             For j As Integer = indexes(0) To indexes(1) - 1
-                                baselineModel(j) = splineFunction.value(j)
+                                baselineModel(j) = splineFunction(j)
                             Next
                         End If
                     End If
@@ -163,12 +164,12 @@ Namespace fidMath.Baseline
                         Exit For
                     End If
                 Next
-                Dim splineFunction As org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction = interpolator.interpolate(indexes, intesities)
+                Dim splineFunction As FitResult = LeastSquares.LinearFit(indexes, intesities)
                 For j As Integer = CInt(indexes(0)) + 1 To -1
-                    baselineModel(j + baselineModel.Length) = splineFunction.value(j)
+                    baselineModel(j + baselineModel.Length) = splineFunction(j)
                 Next
                 For j As Integer = 0 To indexes(1) - 1
-                    baselineModel(j) = splineFunction.value(j)
+                    baselineModel(j) = splineFunction(j)
                 Next
 
             End If
