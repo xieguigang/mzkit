@@ -4,7 +4,7 @@
 Public Class fidData
 
     Public Property time As Double()
-    Public Property intensity As Double()
+    Public Property amplitude As Double()
 
     ''' <summary>
     ''' 基于傅里叶变换将时域数据转换为频域数据
@@ -19,6 +19,6 @@ End Class
 Public Class FrequencyData
 
     Public Property frequency As Double()
-    Public Property intensity As Double()
+    Public Property amplitude As Double()
 
 End Class
