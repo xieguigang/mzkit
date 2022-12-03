@@ -35,6 +35,9 @@ Public Class NMRSpectrum : Inherits Plot
         title = nmr.name
         theme.yAxisLayout = YAxisLayoutStyles.None
         theme.xAxisReverse = True
+        xlabel = "ppm"
+        ylabel = "absorb"
+        main = "NMR spectrum"
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
