@@ -37,14 +37,14 @@ Namespace uk.ac.ebi.nmr.fid.io
     Public Class SimplePdataReader
         Implements FidReader
 
-        Private Shared pdataFolder As File
+        Private Shared pdataFolder As String
         Private Shared pdata1r As FileStream
         Private Shared pdata1i As FileStream
         Private Shared processing As Proc
         Private Shared acquisition As Acqu
 
         Public Sub New(ByVal pdataFolder As File, ByVal acquisition As Acqu, ByVal processing As Proc)
-            Me.New(New FileStream(pdataFolder.Path & "/1r", FileMode.Open, FileAccess.Read), New FileStream(pdataFolder.Path & "/1i", FileMode.Open, FileAccess.Read), acquisition, processing)
+            Me.New(New FileStream(pdataFolder & "/1r", FileMode.Open, FileAccess.Read), New FileStream(pdataFolder & "/1i", FileMode.Open, FileAccess.Read), acquisition, processing)
             Me.pdataFolder = pdataFolder
         End Sub
 

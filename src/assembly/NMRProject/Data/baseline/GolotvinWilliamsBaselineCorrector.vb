@@ -227,13 +227,13 @@ Namespace uk.ac.ebi.nmr.fid.tools.baseline
             Dim noiseStandardDeviation As Double = realChannelData.Max
 
             'determine the standard deviation for each window and record the lowest standard deviation
-            Dim i = 0
+            Dim idx = 0
 
-            While i < realChannelData.Length
+            While idx < realChannelData.Length
                 Dim region = New Double(realChannelData.Length / numberOfRegions - 1) {}
-                Array.Copy(realChannelData, i, region, 0, CInt(realChannelData.Length / numberOfRegions))
+                Array.Copy(realChannelData, idx, region, 0, CInt(realChannelData.Length / numberOfRegions))
                 noiseStandardDeviation = If(noiseStandardDeviation < region.SD, noiseStandardDeviation, region.SD)
-                i += realChannelData.Length / numberOfRegions
+                idx += realChannelData.Length / numberOfRegions
             End While
             Return noiseStandardDeviation
         End Function

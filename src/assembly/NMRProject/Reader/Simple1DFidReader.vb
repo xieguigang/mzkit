@@ -50,28 +50,29 @@ Namespace uk.ac.ebi.nmr.fid.io
 
         Public Overridable Function read() As Spectrum Implements FidReader.read
             Dim fid As Double() = Nothing
-            Dim inChannel As FileChannel = fidInput.Channel
-            Dim buffer As ByteBuffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size())
+            '  Dim inChannel As FileChannel = fidInput.Channel
+            Dim buffer As New ByteBuffer(fidInput)
             If acquisition.is32Bit() Then
-                Dim result As Integer() = New Integer(CInt(inChannel.size()) / 4 - 1) {}
-                Console.WriteLine("Number of points in the fid: " & inChannel.size() / 4)
+                Dim result As Integer() = New Integer(CInt(fidInput.Length / 4) - 1) {}
+                Console.WriteLine("Number of points in the fid: " & fidInput.Length / 4)
                 ' this has to do with the order of the bytes
                 buffer.order(acquisition.ByteOrder)
                 'read the integers
-                Dim intBuffer As IntBuffer = buffer.asIntBuffer()
-                intBuffer.[get](result)
+                ' Dim intBuffer As IntBuffer = buffer.asIntBuffer()
+                ' intBuffer.[get](result)
+                buffer.get(result)
                 fid = New Double(acquisition.AquiredPoints - 1) {}
                 For i = 0 To fid.Length - 1
                     fid(i) = result(i)
                 Next ' its a 64bit file encoding doubles
             Else
-                Dim result As Double() = New Double(CInt(inChannel.size()) / 8 - 1) {}
-                Console.WriteLine("Number of points in the fid: " & inChannel.size() / 8)
+                Dim result As Double() = New Double(CInt(fidInput.Length / 8) - 1) {}
+                Console.WriteLine("Number of points in the fid: " & fidInput.Length / 8)
                 ' this has to do with the order of the bytes
                 buffer.order(acquisition.ByteOrder)
                 'read the integers
-                Dim doubleBuffer As DoubleBuffer = buffer.asDoubleBuffer()
-                doubleBuffer.[get](result)
+                ' Dim doubleBuffer As DoubleBuffer = buffer.asDoubleBuffer()
+                buffer.[get](result)
                 Array.Copy(result, 0, fid, 0, acquisition.AquiredPoints)
             End If
 
