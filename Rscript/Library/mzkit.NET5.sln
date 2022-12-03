@@ -211,7 +211,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "sbml-netcore5", "..\..\..\G
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mime", "mime", "{13EDC514-4122-4A70-986F-BA01A4919963}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NMRProject", "..\..\src\assembly\NMRProject\NMRProject.vbproj", "{AD7C51D4-A312-4C76-8552-8D4062368645}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NMRFidTool", "..\..\src\assembly\NMRProject\NMRFidTool.vbproj", "{AD7C51D4-A312-4C76-8552-8D4062368645}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
