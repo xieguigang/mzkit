@@ -18,7 +18,7 @@ Imports Microsoft.VisualBasic.Data.IO
 '  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace uk.ac.ebi.nmr.fid.io
+Namespace Reader
 
     ''' <summary>
     ''' Class that reads the real and imaginary part of Bruker Processed data

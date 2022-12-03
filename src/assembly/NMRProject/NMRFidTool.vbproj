@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.Analytical.NMR</RootNamespace>
+    <RootNamespace>BioNovoGene.Analytical.NMRFidTool</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
-    <AssemblyName>BioNovoGene.Analytical.NMR</AssemblyName>
+    <AssemblyName>BioNovoGene.Analytical.NMRFidTool</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
