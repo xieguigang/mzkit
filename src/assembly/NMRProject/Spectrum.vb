@@ -30,14 +30,14 @@ Public Class Spectrum
 
     Private acquField As Acqu
     Private procField As Proc
-    Private fidField As Double()
+    Private fidField As Fid
     Private realChannelDataField As Double()
     Private imaginaryChannelDataField As Double()
     Private baselineModelField As Double()
     Private baselineField As Boolean()
 
     Public Sub New(fid As Double(), acqu As Acqu, proc As Proc)
-        fidField = fid
+        fidField = New Fid(fid)
         acquField = acqu
         procField = proc
     End Sub
@@ -59,12 +59,12 @@ Public Class Spectrum
 
     Public Overridable ReadOnly Property Fid As Double()
         Get
-            Return fidField
+            Return fidField.Data
         End Get
     End Property
 
     Public Overridable Sub setFid(i As Integer, value As Double)
-        fidField(i) = value
+        fidField.Data(i) = value
     End Sub
 
     Public Overridable Property RealChannelData As Double()
