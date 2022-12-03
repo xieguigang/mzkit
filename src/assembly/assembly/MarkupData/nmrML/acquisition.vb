@@ -131,14 +131,15 @@ Namespace MarkupData.nmrML
         End Function
 
         Public Function ParseMatrix() As fidComplex()
-            Dim rawComplex As New List(Of ms2)
             Dim vec As Double() = fidData.DecodeBytes
             Dim rawR As Double() = New Double(vec.Length / 2 - 1) {}
             Dim rawI As Double() = New Double(vec.Length / 2 - 1) {}
             Dim j As i32 = Scan0
 
             For i As Integer = 0 To vec.Length - 1 Step 2
+                ' real are in even positions
                 rawR(j) = vec(i)
+                ' imaginary are in odd positions
                 rawI(++j) = vec(i + 1)
             Next
 
