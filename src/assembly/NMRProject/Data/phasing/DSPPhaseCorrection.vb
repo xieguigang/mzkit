@@ -1,6 +1,4 @@
-﻿Imports System
-
-Namespace uk.ac.ebi.nmr.fid.tools.phasing
+﻿Namespace uk.ac.ebi.nmr.fid.tools.phasing
 
     ''' <summary>
     ''' Phase correction due to the DSP filter
@@ -165,7 +163,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.phasing
                         phase = 0
 
                 End Select
-            ElseIf spectrum.Acqu.DspFirmware >= 20 AndAlso spectrum.Acqu.DspFirmware <= 23 OrElse spectrum.Acqu.AcquisitionMode.Equals(Acqu.AcquisitionMode.CUSTOM_DISP) Then
+            ElseIf spectrum.Acqu.DspFirmware >= 20 AndAlso spectrum.Acqu.DspFirmware <= 23 OrElse spectrum.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.CUSTOM_DISP) Then
                 phase = spectrum.Acqu.DspGroupDelay * 360
             Else
                 phase = 0
