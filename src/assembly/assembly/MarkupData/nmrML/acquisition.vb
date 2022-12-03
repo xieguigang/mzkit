@@ -168,6 +168,10 @@ Namespace MarkupData.nmrML
         Public Property real As Double
         Public Property imaging As Double
 
+        Public Overrides Function ToString() As String
+            Return $"{real}+{imaging}i"
+        End Function
+
     End Class
 
     ''' <summary>

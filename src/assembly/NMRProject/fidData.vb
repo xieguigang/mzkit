@@ -1,4 +1,5 @@
 ﻿Imports System.Numerics
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
 Imports FFT = Microsoft.VisualBasic.Math.SignalProcessing.FourierTransform
 
 ''' <summary>
@@ -26,6 +27,17 @@ Public Class fidData
         Return New FrequencyData With {
             .frequency = freq,
             .amplitude = ampl
+        }
+    End Function
+
+    Public Shared Function Create(data As acquisitionMultiD) As fidData
+        Dim complex As fidComplex() = data.ParseMatrix
+        Dim real As Double() = complex.Select(Function(c) c.real).ToArray
+        Dim image As Double() = complex.Select(Function(c) c.imaging).ToArray
+
+        Return New fidData With {
+            .time = real,
+            .amplitude = image
         }
     End Function
 
