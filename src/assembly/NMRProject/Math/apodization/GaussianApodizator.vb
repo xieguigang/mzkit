@@ -52,7 +52,7 @@ Namespace fidMath.Apodization
 
         ''' <summary>
         ''' performs the guassian apodization with specified line broadning. </summary>
-        ''' <paramname="lbGauss"> </param>
+        ''' <param name="lbGauss"> </param>
         ''' <exceptioncref="Exception"> </exception>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lbGauss As Double) As Double
 

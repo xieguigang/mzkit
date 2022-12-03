@@ -42,7 +42,7 @@ Namespace fidMath.Apodization
         ''' The cuteNMR implementation is W(i) = exp(-(dw*i) * lb * pi)
         ''' In Vogt 2004: W(i)=exp(-lb*(i*dw)^2))
         ''' </summary>
-        ''' <paramname="i">
+        ''' <param name="i">
         ''' @return </param>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * spectrum.Proc.LineBroadening * Math.PI)
@@ -51,7 +51,7 @@ Namespace fidMath.Apodization
         ''' <summary>
         ''' performs the exponential apodization with specified line broadening.
         ''' </summary>
-        ''' <paramname="lineBroadening"> </param>
+        ''' <param name="lineBroadening"> </param>
         ''' <exceptioncref="Exception"> </exception>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lineBroadening As Double) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * lineBroadening * Math.PI)

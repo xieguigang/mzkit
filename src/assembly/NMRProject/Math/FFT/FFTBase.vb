@@ -15,11 +15,11 @@ Namespace fidMath.FFT
         ''' <summary>
         ''' The Fast Fourier Transform (generic version, with NO optimizations).
         ''' </summary>
-        ''' <paramname="inputReal">
+        ''' <param name="inputReal">
         '''            an array of length n, the real part </param>
-        ''' <paramname="inputImag">
+        ''' <param name="inputImag">
         '''            an array of length n, the imaginary part </param>
-        ''' <paramname="DIRECT">
+        ''' <param name="DIRECT">
         '''            TRUE = direct transform, FALSE = inverse transform </param>
         ''' <returns> a new array of length 2n </returns>
         Public Shared Function fft(inputReal As Double(), inputImag As Double(), DIRECT As Boolean) As Double()

@@ -39,10 +39,10 @@ Namespace fidMath.Phasing
         ''' <summary>
         ''' Implementation based in the definitions from paper {Chen:2012vj}
         ''' </summary>
-        ''' <paramname="spectrum"> </param>
-        ''' <paramname="zeroPhase"> </param>
-        ''' <paramname="firstOrderPhase"> </param>
-        ''' <paramname="pivot">
+        ''' <param name="spectrum"> </param>
+        ''' <param name="zeroPhase"> </param>
+        ''' <param name="firstOrderPhase"> </param>
+        ''' <param name="pivot">
         ''' @return </param>
         Public Overridable Function phaseCorrection(spectrum As Spectrum, zeroPhase As Double, firstOrderPhase As Double, pivot As Integer) As Spectrum Implements PhaseCorrector.phaseCorrection
             Dim realChannel = New Double(spectrum.Acqu.AquiredPoints / 2 - 1) {}

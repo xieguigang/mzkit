@@ -45,8 +45,8 @@ Namespace fidMath.Apodization
         Private processing As Proc
 
         ''' 
-        ''' <paramname="spectrum"> </param>
-        ''' <paramname="processing"> </param>
+        ''' <param name="spectrum"> </param>
+        ''' <param name="processing"> </param>
         Public Sub New(spectrum As Double(), processing As Proc)
             Me.spectrum = spectrum
             Me.processing = processing
@@ -103,7 +103,7 @@ Namespace fidMath.Apodization
         ''' where i*dw gives the time coordinate in (s) and the line broadening (lbGauss) in Hz.
         ''' This also correspondes to one of the alternative ways of defining the standard gaussian distribution,
         ''' according to wikipedia. </summary>
-        ''' <paramname="lbGauss"> </param>
+        ''' <param name="lbGauss"> </param>
         ''' <exceptioncref="Exception"> </exception>
         Public Overridable Function gaussianBramer2001(lbGauss As Double) As Double()
             Dim data = New Double(processing.TdEffective - 1) {}

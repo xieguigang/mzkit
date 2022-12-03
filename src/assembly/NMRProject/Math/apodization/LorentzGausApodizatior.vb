@@ -55,8 +55,8 @@ Namespace fidMath.Apodization
         ''' the linebroadening and lb_LB is the Lorentzian linebroadening], the AQ is the acquisition time N*dw, and in
         ''' Bruker spectrometers GB corresponds to the GB factor in the processing files.
         ''' </summary>
-        ''' <paramname="i"> </param>
-        ''' <paramname="lbLorentzToGauss">
+        ''' <param name="i"> </param>
+        ''' <param name="lbLorentzToGauss">
         ''' @return </param>
 
         Protected Friend Overrides Function calculateFactor(i As Integer, lbLorentzToGauss As Double) As Double
@@ -88,7 +88,7 @@ Namespace fidMath.Apodization
         ''' <summary>
         ''' calculates the Lourentz-Gaussian weight with the default Lorentz to Gauss line broadening conversion.
         ''' </summary>
-        ''' <paramname="i">
+        ''' <param name="i">
         ''' @return </param>
         Protected Friend Overrides Function calculateFactor(i As Integer) As Double
             Return calculateFactor(i, -1)

@@ -99,7 +99,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
     ''' <summary>
     ''' This is where the implementation of each fft package go. </summary>
-    ''' <paramname="apodizedData">
+    ''' <param name="apodizedData">
     ''' @return </param>
     Friend MustOverride Function implementedFFT(apodizedData As Double()) As Double()
 
