@@ -1,9 +1,11 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.Analytical.NMR
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
@@ -11,6 +13,25 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("NMR")>
 Public Module plotNMR
+
+    Friend Sub Main()
+        Call Internal.generic.add("plot", GetType(fidData), AddressOf plotFidData)
+        Call Internal.generic.add("plot", GetType(FrequencyData), AddressOf plotFrequencyData)
+    End Sub
+
+    Public Function plotFrequencyData(freq As FrequencyData, args As list, env As Environment) As Object
+        Dim theme As New Theme
+        Dim app As New FrequencyPlot(freq, theme)
+
+        Return app.Plot
+    End Function
+
+    Public Function plotFidData(fidData As fidData, args As list, env As Environment) As Object
+        Dim theme As New Theme
+        Dim app As New fidDataPlot(fidData, theme)
+
+        Return app.Plot
+    End Function
 
     <ExportAPI("plot_nmr")>
     Public Function plotNMRSpectrum(nmr As LibraryMatrix,
