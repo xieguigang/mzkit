@@ -91,6 +91,14 @@ Module NMR
         Return nmrML.spectrumList
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="spectrum"></param>
+    ''' <param name="nmrML"></param>
+    ''' <returns>
+    ''' a matrix of [ppm => intensity]
+    ''' </returns>
     <ExportAPI("spectrum")>
     Public Function spectrumData(spectrum As spectrumList, nmrML As nmrML.XML) As LibraryMatrix
         Dim data = spectrum.spectrum1D(Scan0)
