@@ -41,7 +41,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
             ' perhaps clone the spectrum otherwise one can have more clashes with the acqu and proc objects
             ' because of imutability issues
             Dim fid = New Double(spectrum.Fid.Length - 1) {}
-            If spectrum.Acqu.AcquisitionMode Is Acqu.AcquisitionMode.SEQUENTIAL Then
+            If spectrum.Acqu.getAcquisitionMode Is Acqu.AcquisitionMode.SEQUENTIAL Then
                 Dim i = 0
 
                 While i < spectrum.Proc.TdEffective AndAlso i < spectrum.Fid.Length
@@ -63,7 +63,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
             Dim fid = New Double(spectrum.Fid.Length - 1) {}
             ' this creates issues with immutability, need to clone the proc object
             '        spectrum.getProc().setLineBroadening(lineBroadning);
-            If spectrum.Acqu.AcquisitionMode.Equals(Acqu.AcquisitionMode.SEQUENTIAL) Then
+            If spectrum.Acqu.getAcquisitionMode Is (Acqu.AcquisitionMode.SEQUENTIAL) Then
                 Dim i = 0
 
                 While i < spectrum.Proc.TdEffective AndAlso i < spectrum.Fid.Length

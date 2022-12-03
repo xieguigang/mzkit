@@ -42,7 +42,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
 
     <Obsolete>
     Public Class ApodizationTool
-        Private Shared spectrum As Double()
+        Private spectrum As Double()
         Private acquisitionMode As Acqu.AcquisitionMode = Acqu.AcquisitionMode.SEQUENTIAL
         Private processing As Proc
 

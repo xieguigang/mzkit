@@ -29,12 +29,7 @@ Namespace uk.ac.ebi.nmr.fid.tools.apodization
     ''' </summary>
     Public Interface Apodizator
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: uk.ac.ebi.nmr.fid.Spectrum calculate() throws Exception;
         Function calculate() As Spectrum
-
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: uk.ac.ebi.nmr.fid.Spectrum calculate(double lineBroadning) throws Exception;
         Function calculate(ByVal lineBroadning As Double) As Spectrum
     End Interface
 

@@ -1,12 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-
-Imports LinearInterpolator = org.apache.commons.math3.analysis.interpolation.LinearInterpolator
-Imports PolynomialSplineFunction = org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
-Imports StandardDeviation = org.apache.commons.math3.stat.descriptive.moment.StandardDeviation
-Imports Max = org.apache.commons.math3.stat.descriptive.rank.Max
-Imports Min = org.apache.commons.math3.stat.descriptive.rank.Min
-Imports Microsoft.VisualBasic.Math
+﻿Imports Microsoft.VisualBasic.Math
 
 ' 
 '  Copyright (c) 2013 EMBL, European Bioinformatics Institute.
