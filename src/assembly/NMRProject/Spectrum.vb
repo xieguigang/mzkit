@@ -45,6 +45,12 @@ Public Class Spectrum
         Me.New(fid, acqu, New Proc(acqu))
     End Sub
 
+    Sub New(fid As Fid)
+        fidField = fid
+        acquField = New Acqu(Acqu.Spectrometer.BRUKER)
+        procField = New Proc(acquField)
+    End Sub
+
     Public Overridable ReadOnly Property Proc As Proc
         Get
             Return procField

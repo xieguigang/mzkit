@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.nmrML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.NMR
 Imports BioNovoGene.Analytical.NMRFidTool
+Imports BioNovoGene.Analytical.NMRFidTool.fidMath.FFT
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -90,8 +91,8 @@ Module NMRTool
     End Function
 
     <ExportAPI("nmr_dft")>
-    Public Function FourierTransform(fidData As Fid) As FrequencyData
-        Return fidData.FourierTransform
+    Public Function FourierTransform(fidData As Fid) As Spectrum
+        Return New FastFourierTransform1D(New Spectrum(fidData)).computeFFT
     End Function
 
     <ExportAPI("spectrumList")>
