@@ -16,14 +16,14 @@ Public Module plotNMR
 
     Friend Sub Main()
         Call Internal.generic.add("plot", GetType(Fid), AddressOf plotFidData)
-        Call Internal.generic.add("plot", GetType(FrequencyData), AddressOf plotFrequencyData)
+        Call Internal.generic.add("plot", GetType(Spectrum), AddressOf plotFrequencyData)
     End Sub
 
-    Public Function plotFrequencyData(freq As FrequencyData, args As list, env As Environment) As Object
+    Public Function plotFrequencyData(freq As Spectrum, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .padding = InteropArgumentHelper.getPadding(args!padding, [default]:="padding: 200px 400px 300px 100px")
         }
-        Dim app As New FrequencyPlot(freq, theme)
+        Dim app As New nmrSpectrumPlot(freq, theme)
         Dim sizeVal = InteropArgumentHelper.getSize(args!size, env, "3600,2400")
 
         Return app.Plot(sizeVal)

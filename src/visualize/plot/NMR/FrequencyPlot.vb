@@ -5,11 +5,11 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
-Public Class FrequencyPlot : Inherits Plot
+Public Class nmrSpectrumPlot : Inherits Plot
 
-    ReadOnly freq As FrequencyData
+    ReadOnly freq As Spectrum
 
-    Public Sub New(freq As FrequencyData, theme As Theme)
+    Public Sub New(freq As Spectrum, theme As Theme)
         MyBase.New(theme)
 
         Me.freq = freq
@@ -20,11 +20,11 @@ Public Class FrequencyPlot : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim freq As ms2() = Me.freq _
-            .frequency _
+            .RealChannelData _
             .Select(Function(f, i)
                         Return New ms2 With {
                             .mz = f,
-                            .intensity = Me.freq.amplitude(i)
+                            .intensity = Me.freq.ImaginaryChannelData(i)
                         }
                     End Function) _
             .ToArray

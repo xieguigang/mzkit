@@ -29,8 +29,7 @@ Namespace fidMath.FFT
     ''' Time: 16:48
     ''' To change this template use File | Settings | File Templates.
     ''' </summary>
-    Public Class FastFourierTransform1D
-        Implements FastFourierTransform
+    Public Class FastFourierTransform1D : Implements FastFourierTransform
 
         Friend spectrum As Spectrum
 
