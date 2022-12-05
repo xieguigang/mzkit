@@ -8,7 +8,6 @@ Metabolite annotation database toolkit
 + [read.lipidmaps](massbank/read.lipidmaps.1) read lipidmaps messagepack repository file
 + [lipid_classprofiles](massbank/lipid_classprofiles.1) 
 + [lipid_profiles](massbank/lipid_profiles.1) 
-+ [read.hmdb](massbank/read.hmdb.1) open a reader for read hmdb database
 + [as.lipidmaps](massbank/as.lipidmaps.1) populate lipidmaps meta data objects from the loaded sdf data stream
 + [lipid.nameMaps](massbank/lipid.nameMaps.1) 
 + [chebi.secondary2main.mapping](massbank/chebi.secondary2main.mapping.1) 
