@@ -140,8 +140,4 @@
     <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Public\TMIC\MarkerDB\" />
-  </ItemGroup>
-
 </Project>

@@ -1,8 +1,8 @@
 Imports System.Xml.Serialization
 
-Namespace TMIC.MarkerDB
+Namespace TMIC.MarkerDB.XML
 
-    Public Class XML
+    Public Class DataSet
 
         Public Property version As String
         Public Property biomarker_type As String
