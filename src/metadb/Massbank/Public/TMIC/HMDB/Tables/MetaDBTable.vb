@@ -123,8 +123,8 @@ Namespace TMIC.HMDB
         <Column("HMDB ID")> Public Property accession As String
         Public Property secondary_accessions As String()
         <Column("Common Name")> Public Property name As String
-        <Column("Chemical Formula")> Public Property chemical_formula As String
-        <Column("Monoisotopic Molecular Weight")> Public Property exact_mass As Double
+        Public Property chemical_formula As String
+        Public Property exact_mass As Double
         Public Property iupac_name As String
         Public Property traditional_iupac As String
         Public Property synonyms As String()
@@ -154,11 +154,11 @@ Namespace TMIC.HMDB
         Public Property description As String
         Public Property pathways As String()
         Public Property proteins As String()
+        Public Property disease As String()
         Public Property Physiological_effects As String()
         Public Property Disposition As String()
         Public Property Process As String()
         Public Property Role As String()
-        Public Property disease As String()
 
         Public Iterator Function GetSynonym() As IEnumerable(Of String) Implements ICompoundNames.GetSynonym
             Yield name
