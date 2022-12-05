@@ -6,17 +6,51 @@ Namespace TMIC.MarkerDB
 
         Public Property version As String
         Public Property biomarker_type As String
+        ''' <summary>
+        ''' all_chemicals.xml
+        ''' </summary>
+        ''' <returns></returns>
         Public Property chemicals As chemical()
         Public Property biomarkers As biomarkers
+        ''' <summary>
+        ''' all_karyotypes.xml
+        ''' </summary>
+        ''' <returns></returns>
         Public Property karyotypes As karyotype()
+        ''' <summary>
+        ''' all_sequence_variants.xml
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property sequence_variants As sequence_variant()
+        ''' <summary>
+        ''' all_proteins.xml
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property proteins As protein()
     End Class
 
     Public Class biomarkers
+        ''' <summary>
+        ''' + all_exposure_chemicals.xml
+        ''' + all_diagnostic_chemicals.xml
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement> Public Property chemical As chemical()
-        <XmlElement> Public Property sequence_variants As sequence_variant()
-        <XmlElement> Public Property proteins As protein()
+        ''' <summary>
+        ''' all_predictive_genetics.xml
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement> Public Property gene As gene()
-
+        ''' <summary>
+        ''' all_diagnostic_proteins.xml
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement> Public Property protein As protein()
+        ''' <summary>
+        ''' all_diagnostic_karyotypes.xml
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement> Public Property karyotype As karyotype()
     End Class
 
     Public Class gene
