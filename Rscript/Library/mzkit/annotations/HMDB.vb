@@ -1,6 +1,8 @@
 ﻿
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
@@ -32,9 +34,33 @@ Module HMDBTools
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
+    ''' <summary>
+    ''' save the hmdb database as a csv table file
+    ''' </summary>
+    ''' <param name="hmdb"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("export.hmdb_table")>
+    Public Function exportTable(hmdb As pipeline, file As String, Optional env As Environment = Nothing) As Object
+        Using buffer As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call TMIC.HMDB.MetaDb.WriteTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env), out:=buffer)
+            Call buffer.Flush()
+        End Using
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' split the hmdb database by biospecimen locations
+    ''' </summary>
+    ''' <param name="hmdb"></param>
+    ''' <param name="locations"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("biospecimen_slicer")>
-    Public Function biospecimen_slicer(hmdb As pipeline, locations As String(), Optional env As Environment = Nothing) As Object
-        Dim locationIndex As Index(Of String) = locations.Indexing
+    Public Function biospecimen_slicer(hmdb As pipeline, locations As BioSamples, Optional env As Environment = Nothing) As Object
+        Dim locationIndex As Index(Of String) = locations.GetSampleLocations.Indexing
 
         Return hmdb _
             .populates(Of TMIC.HMDB.metabolite)(env) _

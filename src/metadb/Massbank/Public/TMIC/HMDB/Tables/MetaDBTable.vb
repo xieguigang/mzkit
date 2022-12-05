@@ -74,7 +74,6 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -116,6 +115,9 @@ Namespace TMIC.HMDB
         End Function
     End Class
 
+    ''' <summary>
+    ''' store the hmdb metabolite information in table format
+    ''' </summary>
     Public Class MetaDb : Implements ICompoundClass, ICompoundNames
 
         Public Property accession As String
