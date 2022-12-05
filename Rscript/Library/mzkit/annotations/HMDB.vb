@@ -51,6 +51,22 @@ Module HMDBTools
         Return True
     End Function
 
+    <ExportAPI("chemical_taxonomy")>
+    Public Function chemical_taxonomy(metabolite As TMIC.HMDB.metabolite) As String()
+        If metabolite.taxonomy Is Nothing Then
+            Return {"noclass"}
+        Else
+            Return {
+                metabolite.taxonomy.kingdom,
+                metabolite.taxonomy.super_class,
+                metabolite.taxonomy.class,
+                metabolite.taxonomy.sub_class,
+                metabolite.taxonomy.molecular_framework,
+                metabolite.taxonomy.direct_parent
+            }
+        End If
+    End Function
+
     ''' <summary>
     ''' split the hmdb database by biospecimen locations
     ''' </summary>
