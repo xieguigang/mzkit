@@ -142,7 +142,7 @@ Namespace TMIC.HMDB
         Public Property level As Integer
         Public Property type As String
         Public Property descendants As descendants
-        Public Property synonyms As String()
+        Public Property synonyms As synonyms
 
     End Class
 
