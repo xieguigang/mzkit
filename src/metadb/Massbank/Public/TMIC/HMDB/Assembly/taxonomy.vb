@@ -112,8 +112,12 @@ Namespace TMIC.HMDB
         Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
         Public Property alternative_parents As alternative_parents
         Public Property substituents As substituents
-
+        Public Property external_descriptors As external_descriptors
     End Class
+
+    Public Structure external_descriptors
+        <XmlElement> Public Property external_descriptor As String()
+    End Structure
 
     Public Structure alternative_parents
         <XmlElement> Public Property alternative_parent As String()
@@ -125,15 +129,27 @@ Namespace TMIC.HMDB
 
     Public Class ontology
 
-        Public Property status As String
-        Public Property origins As origins
-        Public Property biofunctions As biofunctions
-        Public Property applications As applications
+        <XmlElement>
+        Public Property root As ontology_term()
 
-        Public Overrides Function ToString() As String
-            Return status
-        End Function
     End Class
+
+    Public Class ontology_term
+
+        Public Property term As String
+        Public Property definition As String
+        Public Property parent_id As String
+        Public Property level As Integer
+        Public Property type As String
+        Public Property descendants As descendants
+        Public Property synonyms As String()
+
+    End Class
+
+    Public Structure descendants
+        <XmlElement>
+        Public Property descendant As ontology_term()
+    End Structure
 
     Public Structure origins
 

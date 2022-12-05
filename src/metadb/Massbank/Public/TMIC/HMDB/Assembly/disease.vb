@@ -77,4 +77,13 @@ Namespace TMIC.HMDB
             Return reference_text
         End Function
     End Structure
+
+    Public Class protein
+
+        Public Property protein_accession As String
+        Public Property name As String
+        Public Property uniprot_id As String
+        Public Property gene_name As String
+        Public Property protein_type As String
+    End Class
 End Namespace
