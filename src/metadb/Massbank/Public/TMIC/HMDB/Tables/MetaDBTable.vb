@@ -159,6 +159,7 @@ Namespace TMIC.HMDB
         Public Property Disposition As String()
         Public Property Process As String()
         Public Property Role As String()
+        Public Property Biomarker As String()
 
         Public Iterator Function GetSynonym() As IEnumerable(Of String) Implements ICompoundNames.GetSynonym
             Yield name
@@ -247,8 +248,37 @@ Namespace TMIC.HMDB
                 .Physiological_effects = OntologyTreeLines(ontology.TryGetValue("Physiological effect")).ToArray,
                 .Disposition = OntologyTreeLines(ontology.TryGetValue("Disposition")).ToArray,
                 .Process = OntologyTreeLines(ontology.TryGetValue("Process")).ToArray,
-                .Role = OntologyTreeLines(ontology.TryGetValue("Role")).ToArray
+                .Role = OntologyTreeLines(ontology.TryGetValue("Role")).ToArray,
+                .Biomarker = getBioMarkers(ontology.TryGetValue("Role"))
             }
+        End Function
+
+        Private Shared Function getBioMarkers(role As ontology_term) As String()
+            If role Is Nothing Then
+                Return {}
+            Else
+                If role.term = "Biomarker" Then
+                    If role.descendants.descendant.IsNullOrEmpty Then
+                        Return {}
+                    Else
+                        Return role.descendants.descendant.Select(Function(d) d.term).ToArray
+                    End If
+                Else
+                    If role.descendants.descendant.IsNullOrEmpty Then
+                        Return {}
+                    Else
+                        For Each child In role.descendants.descendant
+                            Dim list = getBioMarkers(child)
+
+                            If list.Length > 0 Then
+                                Return list
+                            End If
+                        Next
+                    End If
+                End If
+            End If
+
+            Return {}
         End Function
 
         Private Shared Iterator Function OntologyTreeLines(root As ontology_term) As IEnumerable(Of String)
@@ -266,7 +296,9 @@ Namespace TMIC.HMDB
         Private Shared Function populateTree(term As ontology_term, parent As String) As String()
             Dim term_string As String = term.term
 
-            If term.descendants.descendant.IsNullOrEmpty Then
+            If term_string = "Biomarker" Then
+                Return {}
+            ElseIf term.descendants.descendant.IsNullOrEmpty Then
                 Return {$"{parent}|{term_string}"}
             Else
                 Dim childs As New List(Of String)
