@@ -1,8 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
@@ -27,24 +25,10 @@ Module SingleCells
                                Optional freq As Double = 0.001,
                                Optional env As Environment = Nothing) As Object
 
-        Dim mzSet As Double() = MzMatrix.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
-        Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
-            data:=mzSet.Select(Function(mzi, i) (mzi, i)),
-            eval:=Function(i) i.mz,
-            tolerance:=1,
-            fuzzy:=True
-        )
         Dim singleCells As New List(Of DataFrameRow)
-        Dim len As Integer = mzSet.Length
+        Dim mzSet As Double() = MzMatrix.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
 
-        For Each scan As ScanMS1 In raw.MS
-            Dim cellId As String = scan.scan_id
-            Dim v As Double() = MzMatrix.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
-            Dim cell_scan As New DataFrameRow With {
-                .experiments = v,
-                .geneID = cellId
-            }
-
+        For Each cell_scan As DataFrameRow In MzMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
             Call singleCells.Add(cell_scan)
         Next
 
