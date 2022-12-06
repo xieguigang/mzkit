@@ -123,6 +123,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\GSEA\gsea-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
@@ -140,6 +141,7 @@
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
