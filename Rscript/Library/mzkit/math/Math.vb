@@ -192,21 +192,45 @@ Module MzMath
     ''' 1. character of value ``+`` or ``-``, means evaluate all m/z for all known precursor types in given ion mode
     ''' 2. character of value in precursor type format means calculate mz for the target precursor type
     ''' 3. mzcalculator type means calculate mz for the traget precursor type
+    ''' 4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.
+    ''' 
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mz")>
     <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
-    Public Function mz(mass As Double, Optional mode As Object = "+") As Object
+    Public Function mz(mass As Double,
+                       Optional mode As Object = "+",
+                       Optional env As Environment = Nothing) As Object
+
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
+        ElseIf TypeOf mode Is list Then
+            Dim err As Message = Nothing
+            Dim adducts = DirectCast(mode, list).AsGeneric(Of MzCalculator)(env, err:=err)
+
+            If Not err Is Nothing Then
+                Return err
+            Else
+                Return New list With {
+                    .slots = adducts _
+                        .ToDictionary(Function(c) c.Key,
+                                      Function(c)
+                                          Return CObj(c.Value.CalcMZ(mass))
+                                      End Function)
+                }
+            End If
         Else
             Dim strVal As String = any.ToString(mode, "+")
 
             Static supportedModes As Index(Of String) = {"+", "-", "1", "-1"}
 
             If strVal Like supportedModes Then
-                Return MzCalculator.EvaluateAll(mass, strVal).ToArray
+                Return MzCalculator _
+                    .EvaluateAll(mass, strVal) _
+                    .ToArray
             Else
+                ' the given string is a string value in precursor_type
+                ' format
                 Return Ms1.PrecursorType _
                     .ParseMzCalculator(strVal, strVal.Last) _
                     .CalcMZ(mass)
