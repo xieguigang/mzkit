@@ -1,6 +1,6 @@
 imports "package_utils" from "devkit";
 
-package_utils::attach("D:\mzkit\Rscript\Library\mzkit_app");
+package_utils::attach("\mzkit\Rscript\Library\mzkit_app");
 
 imports "NMR" from "mzplot";
 imports "NMR" from "mzkit";
@@ -24,3 +24,13 @@ for(m in spectrumList(rawdata)) {
 	}
 }
 
+for(a in acquisition(rawdata)) {
+	data = FID(a);
+	
+	bitmap(file = `${@dir}/demo_fidplot.png`) {
+		plot(data);
+	}
+	bitmap(file = `${@dir}/demo_freq.png`) {
+		plot(NMR::nmr_dft(data));
+	}
+}

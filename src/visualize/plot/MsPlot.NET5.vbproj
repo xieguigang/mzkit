@@ -103,6 +103,7 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\..\assembly\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="..\..\assembly\NMRFidTool\NMRFidTool.vbproj" />
     <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\mzmath\mz_deco\deconv.NET5.vbproj" />

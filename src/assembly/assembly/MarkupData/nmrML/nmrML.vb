@@ -95,7 +95,35 @@ Namespace MarkupData.nmrML
         Public Property acquisition As acquisition()
         <XmlElement(NameOf(spectrumList))>
         Public Property spectrumList As spectrumList()
+        Public Property spectrumAnnotationList As spectrumAnnotationList
 
+    End Class
+
+    Public Class spectrumAnnotationList
+
+        <XmlElement>
+        Public Property atomAssignment As atomAssignment()
+    End Class
+
+    Public Class atomAssignment
+        <XmlAttribute> Public Property spectrumRef As String
+        Public Property chemicalCompound As chemicalCompound
+    End Class
+
+    Public Class chemicalCompound
+        Public Property identifierList As identifierList
+    End Class
+
+    Public Class identifierList
+
+        <XmlElement>
+        Public Property identifier As identifier()
+    End Class
+
+    Public Class identifier
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property cvRef As String
+        <XmlAttribute> Public Property accession As String
     End Class
 
     Public Class contactList

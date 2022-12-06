@@ -76,6 +76,9 @@ Namespace MarkupData.nmrML
         Public Property spectrumDataArray As fidData
         Public Property xAxis As xAxis
 
+        <XmlAttribute> Public Property numberOfDataPoints As Integer
+        <XmlAttribute> Public Property id As String
+
         Public Function ParseMatrix(SW As Double) As LibraryMatrix
             Dim spec1r As Double() = spectrumDataArray.DecodeBytes
 
