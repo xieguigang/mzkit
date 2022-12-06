@@ -1,7 +1,10 @@
-# require(mzkit);
+require(mzkit);
+require(GCModeller);
 
 imports "mzweb" from "mzkit";
 imports "mzPack" from "mzkit";
+imports "SingleCells" from "mzkit";
+imports "geneExpression" from "phenotype_kit";
 
 raw_files = list.files("T:\单细胞代谢实验数据\AP-MALDI", pattern = "*.xml");
 
@@ -20,4 +23,12 @@ print(cell_scans);
 
 packData(cell_scans, pack.singleCells = TRUE)
 |> write.mzPack(file = "T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.mzPack")
+;
+
+"T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.mzPack" 
+|> open.mzpack()
+|> SingleCells::cell_matrix(raw)
+|> geneExpression::write.HTS(
+	file = "T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.csv" 
+)
 ;
