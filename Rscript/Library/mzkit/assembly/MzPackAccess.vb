@@ -64,7 +64,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -313,7 +312,12 @@ Module MzPackAccess
                 End If
 
                 Return New mzPack With {
-                    .MS = scanMs1
+                    .MS = scanMs1,
+                    .Application = If(
+                        pack_singleCells,
+                        FileApplicationClass.SingleCellsMetabolomics,
+                        FileApplicationClass.LCMS
+                    )
                 }
             End If
 
