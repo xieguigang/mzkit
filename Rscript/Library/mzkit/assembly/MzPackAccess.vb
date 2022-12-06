@@ -313,7 +313,12 @@ Module MzPackAccess
                 End If
 
                 Return New mzPack With {
-                    .MS = scanMs1
+                    .MS = scanMs1,
+                    .Application = If(
+                        pack_singleCells,
+                        FileApplicationClass.SingleCellsMetabolomics,
+                        FileApplicationClass.LCMS
+                    )
                 }
             End If
 
