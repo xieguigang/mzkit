@@ -29,7 +29,10 @@ Module SingleCells
         Dim mzSet As Double() = MzMatrix.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
 
         For Each cell_scan As DataFrameRow In MzMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
-            Call singleCells.Add(cell_scan)
+            cell_scan.geneID = cell_scan.geneID _
+                .Replace("[MS1]", "") _
+                .Trim
+            singleCells.Add(cell_scan)
         Next
 
         Return New Matrix With {

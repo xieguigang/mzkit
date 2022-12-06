@@ -205,6 +205,7 @@ Namespace IndexedCache
             Dim mzUnique As Double() = mzBins _
                 .Take(n) _
                 .Select(Function(v) v.Average) _
+                .OrderBy(Function(mzi) mzi) _
                 .ToArray
 
             Return mzUnique
@@ -216,7 +217,9 @@ Namespace IndexedCache
         ''' <param name="raw"></param>
         ''' <param name="mzdiff"></param>
         ''' <param name="freq"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' m/z data vector has been re-order ascding
+        ''' </returns>
         Public Shared Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As Double()
             Dim scanMz As New List(Of Double)
 
