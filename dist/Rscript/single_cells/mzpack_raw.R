@@ -15,7 +15,7 @@ cell_scans = [];
 for(path in raw_files) {
 	raw = open_mzpack.xml(path, prefer = "mzxml");
 	cell_scans = cell_scans 
-	|> append([raw]::MS |> centroid("da:0.1",intoCutoff = 0))
+	|> append(.Internal::first([raw]::MS) |> centroid("da:0.1",intoCutoff = 0))
 	;
 	
 	print(basename(path));
