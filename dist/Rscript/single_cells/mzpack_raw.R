@@ -28,7 +28,8 @@ packData(cell_scans, pack.singleCells = TRUE)
 "T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.mzPack" 
 |> open.mzpack()
 |> SingleCells::cell_matrix(raw)
-|> geneExpression::write.HTS(
-	file = "T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.csv" 
+|> geneExpression::write.expr_matrix(
+	file = "T:\单细胞代谢实验数据\AP-MALDI_single_cell_metabolism_SCM_negative.csv",
+	id = "cell_id"
 )
 ;
