@@ -96,8 +96,25 @@ Public Module Converter
         Return New mzPack With {
             .Application = FileApplicationClass.LCMS,
             .MS = ms1,
-            .source = file.FileName
+            .source = solveTagSource(file)
         }
+    End Function
+
+    Private Function solveTagSource(fileName As String) As String
+        fileName = fileName.BaseName
+
+        Do While True
+            If fileName.StringEmpty Then
+                Return ""
+            End If
+            If fileName.ExtensionSuffix("mzml", "mzxml", "t2d", "txt", "mgf", "msp", "csv", "xls") Then
+                fileName = fileName.BaseName
+            Else
+                Return fileName
+            End If
+        Loop
+
+        Return fileName
     End Function
 
     ''' <summary>
@@ -116,7 +133,7 @@ mzXML:      Return New mzPack With {
                 .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff) _
                     .Load(xml, progress) _
                     .ToArray,
-                .source = xml.BaseName
+                .source = solveTagSource(xml)
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
@@ -170,7 +187,7 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
         Return New mzPack With {
             .MS = scans.ToArray,
-            .source = xml.FileName
+            .source = solveTagSource(xml)
         }
     End Function
 
@@ -223,7 +240,7 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Return New mzPack With {
             .MS = MS,
             .Scanners = otherScanner,
-            .source = xml.BaseName
+            .source = solveTagSource(xml)
         }
     End Function
 
