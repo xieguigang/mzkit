@@ -62,5 +62,6 @@ Public Class zzz
     Public Shared Sub onLoad()
         Call Visual.Main()
         Call MSIColorSet.DoRegister()
+        Call plotNMR.Main()
     End Sub
 End Class

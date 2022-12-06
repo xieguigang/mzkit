@@ -67,8 +67,13 @@ Namespace MarkupData.nmrML
         <Extension>
         Public Function DecodeBytes(fidData As fidData) As Double()
             Select Case fidData.byteFormat.ToLower
-                Case "complex128", "complex64"
+                Case "complex64", "complex128"
                     Return fidData.DecodeDouble
+                'Case "complex128"
+                '    Return fidData.DecodeDouble _
+                '        .Split(2) _
+                '        .Select(Function(i) i(1)) _
+                '        .ToArray
                 Case "integer32", "complex32int", "class java.lang.integer"
                     Return fidData.DecodeInteger
                 Case Else

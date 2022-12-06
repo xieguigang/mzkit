@@ -129,6 +129,7 @@
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\src\assembly\NMRProject\NMRFidTool.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />

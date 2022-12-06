@@ -171,9 +171,15 @@ Namespace MarkupData.imzML
             externalArray = stream.ReadBytes(encodedLength)
 
             If sizeof = 4 Then
-                Return externalArray.Split(4).Select(Function(bytes) CDbl(BitConverter.ToSingle(bytes, Scan0))).ToArray
+                Return externalArray _
+                    .Split(4) _
+                    .Select(Function(bytes) CDbl(BitConverter.ToSingle(bytes, Scan0))) _
+                    .ToArray
             Else
-                Return externalArray.Split(8).Select(Function(bytes) BitConverter.ToDouble(bytes, Scan0)).ToArray
+                Return externalArray _
+                    .Split(8) _
+                    .Select(Function(bytes) BitConverter.ToDouble(bytes, Scan0)) _
+                    .ToArray
             End If
         End Function
 
