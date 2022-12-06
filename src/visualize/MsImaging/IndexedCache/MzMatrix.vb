@@ -112,6 +112,16 @@ Namespace IndexedCache
             Next
         End Function
 
+        ''' <summary>
+        ''' make alignment of the scan data to a given set of the mz index data
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="into"></param>
+        ''' <param name="len"></param>
+        ''' <param name="mzIndex"></param>
+        ''' <returns>
+        ''' a vector of the intensity data which is aligned with the mz vector
+        ''' </returns>
         Public Shared Function DeconvoluteScan(mz As Double(),
                                                into As Double(),
                                                len As Integer,
