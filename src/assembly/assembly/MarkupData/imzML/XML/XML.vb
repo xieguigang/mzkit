@@ -1,66 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::97634435c23d8aa1b58431026c730e19, mzkit\src\assembly\assembly\MarkupData\imzML\XML\XML.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 31
-    '    Code Lines: 20
-    ' Comment Lines: 5
-    '   Blank Lines: 6
-    '     File Size: 1.14 KB
+' Summaries:
 
 
-    '     Class XML
-    ' 
-    '         Properties: version
-    ' 
-    '         Function: LoadScanData, LoadScans
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 31
+'    Code Lines: 20
+' Comment Lines: 5
+'   Blank Lines: 6
+'     File Size: 1.14 KB
+
+
+'     Class XML
+' 
+'         Properties: version
+' 
+'         Function: LoadScanData, LoadScans
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.imzML
+
+    Public Class PointF3D : Implements Imaging.PointF3D
+
+        Public Property X As Double Implements Imaging.PointF3D.X
+        Public Property Y As Double Implements Imaging.PointF3D.Y
+        Public Property Z As Double Implements Imaging.PointF3D.Z
+
+    End Class
 
     <XmlType("indexedmzML", [Namespace]:=mzML.indexedmzML.xmlns)>
     Public Class XML
@@ -78,6 +86,46 @@ Namespace MarkupData.imzML
             Return mzML.indexedmzML.LoadScans(file).Select(Function(scan) New ScanData(scan))
         End Function
 
+        Public Shared Sub Get3DPositionXYZ(spectrum As mzML.spectrum, ByRef x As Double, ByRef y As Double, ByRef z As Double)
+            Dim scan As mzML.scan = spectrum.scanList.scans(Scan0)
+            Dim users As userParam() = scan.userParams
+
+            x = Double.Parse(users.KeyItem("3DPositionX").value)
+            y = Double.Parse(users.KeyItem("3DPositionY").value)
+            z = Double.Parse(users.KeyItem("3DPositionZ").value)
+        End Sub
+
+        Public Shared Function Get3DPositionXYZ(spectrum As mzML.spectrum) As PointF3D
+            Dim x, y, z As Double
+
+            Call Get3DPositionXYZ(spectrum, x, y, z)
+
+            Return New PointF3D With {
+                .X = x,
+                .Y = y,
+                .Z = z
+            }
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="imzML"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function Load3DScanData(imzML As String) As IEnumerable(Of Scan3DReader)
+            Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
+            Dim scans = mzML.indexedmzML.LoadScans(imzML).Select(Function(scan) New ScanData3D(scan))
+
+            For Each scan As ScanData3D In scans
+                Yield New Scan3DReader(scan, ibd)
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="imzML"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function LoadScanData(imzML As String) As IEnumerable(Of ScanReader)
             Dim ibd As ibdReader = ibdReader.Open(imzML.ChangeSuffix("ibd"))
 
