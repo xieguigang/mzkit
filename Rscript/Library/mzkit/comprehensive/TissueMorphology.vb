@@ -213,4 +213,10 @@ Module TissueMorphology
             Return buffer.ReadUMAP
         End Using
     End Function
+
+    <ExportAPI("read.spatialMapping")>
+    Public Function loadSpatialMapping(file As String) As SpatialMapping
+        Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
+    End Function
+
 End Module
