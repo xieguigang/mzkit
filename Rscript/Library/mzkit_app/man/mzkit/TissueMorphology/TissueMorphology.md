@@ -8,3 +8,4 @@ tissue morphology data handler for the internal
 + [writeCDF](TissueMorphology/writeCDF.1) 
 + [loadTissue](TissueMorphology/loadTissue.1) 
 + [loadUMAP](TissueMorphology/loadUMAP.1) 
++ [read.spatialMapping](TissueMorphology/read.spatialMapping.1) 

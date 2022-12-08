@@ -96,7 +96,7 @@ Public Module Converter
         Return New mzPack With {
             .Application = FileApplicationClass.LCMS,
             .MS = ms1,
-            .source = file.FileName
+            .source = SolveTagSource(file)
         }
     End Function
 
@@ -116,7 +116,7 @@ mzXML:      Return New mzPack With {
                 .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff) _
                     .Load(xml, progress) _
                     .ToArray,
-                .source = xml.BaseName
+                .source = SolveTagSource(xml)
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
@@ -170,7 +170,7 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
         Return New mzPack With {
             .MS = scans.ToArray,
-            .source = xml.FileName
+            .source = SolveTagSource(xml)
         }
     End Function
 
@@ -223,7 +223,7 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Return New mzPack With {
             .MS = MS,
             .Scanners = otherScanner,
-            .source = xml.BaseName
+            .source = SolveTagSource(xml)
         }
     End Function
 

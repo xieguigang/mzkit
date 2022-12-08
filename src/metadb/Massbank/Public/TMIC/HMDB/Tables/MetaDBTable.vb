@@ -74,7 +74,6 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -116,18 +115,21 @@ Namespace TMIC.HMDB
         End Function
     End Class
 
+    ''' <summary>
+    ''' store the hmdb metabolite information in table format
+    ''' </summary>
     Public Class MetaDb : Implements ICompoundClass, ICompoundNames
 
-        Public Property accession As String
+        <Column("HMDB ID")> Public Property accession As String
         Public Property secondary_accessions As String()
-        Public Property name As String
+        <Column("Common Name")> Public Property name As String
         Public Property chemical_formula As String
         Public Property exact_mass As Double
         Public Property iupac_name As String
         Public Property traditional_iupac As String
         Public Property synonyms As String()
-        Public Property CAS As String
-        Public Property smiles As String
+        <Column("CAS Registry Number")> Public Property CAS As String
+        <Column("SMILES")> Public Property smiles As String
         Public Property inchi As String
         Public Property inchikey As String
         Public Property kingdom As String Implements ICompoundClass.kingdom
@@ -143,8 +145,21 @@ Namespace TMIC.HMDB
         Public Property chebi_id As Long
         Public Property pubchem_cid As Long
         Public Property kegg_id As String
+        Public Property chemspider_id As String
+        Public Property drugbank_id As String
+        Public Property foodb_id As String
+        Public Property biocyc_id As String
+        Public Property metlin_id As String
         Public Property wikipedia_id As String
         Public Property description As String
+        Public Property pathways As String()
+        Public Property proteins As String()
+        Public Property disease As String()
+        Public Property Physiological_effects As String()
+        Public Property Disposition As String()
+        Public Property Process As String()
+        Public Property Role As String()
+        Public Property Biomarker As String()
 
         Public Iterator Function GetSynonym() As IEnumerable(Of String) Implements ICompoundNames.GetSynonym
             Yield name
@@ -156,9 +171,43 @@ Namespace TMIC.HMDB
             Next
         End Function
 
+        Private Shared Function getOntologyIndex(metabolite As metabolite) As Dictionary(Of String, ontology_term)
+            If metabolite.ontology Is Nothing OrElse metabolite.ontology.root.IsNullOrEmpty Then
+                Return New Dictionary(Of String, ontology_term)
+            Else
+                Return metabolite.ontology.root.ToDictionary(Function(a) a.term)
+            End If
+        End Function
+
         Public Shared Function FromMetabolite(metabolite As metabolite) As MetaDb
             Dim metabolite_taxonomy = metabolite.taxonomy
             Dim biosample = metabolite.biological_properties
+            Dim pathways As String() = Nothing
+            Dim proteins As String() = Nothing
+            Dim disease As String() = Nothing
+            Dim ontology = getOntologyIndex(metabolite)
+
+            If Not metabolite.protein_associations.IsNullOrEmpty Then
+                proteins = metabolite.protein_associations _
+                    .Select(Function(p)
+                                Return $"{p.protein_accession}|{p.uniprot_id}|{p.gene_name} {p.name}"
+                            End Function) _
+                    .ToArray
+            End If
+            If Not biosample Is Nothing Then
+                If Not biosample.pathways.IsNullOrEmpty Then
+                    pathways = biosample.pathways _
+                        .Select(Function(p) $"{p.smpdb_id}:{p.name}") _
+                        .ToArray
+                End If
+            End If
+            If Not metabolite.diseases.IsNullOrEmpty Then
+                disease = metabolite.diseases _
+                    .Select(Function(d)
+                                Return $"{d.name}: {d.references.Select(Function(r) r.pubmed_id).JoinBy(", ")}"
+                            End Function) _
+                    .ToArray
+            End If
 
             Return New MetaDb With {
                 .accession = metabolite.accession,
@@ -187,8 +236,79 @@ Namespace TMIC.HMDB
                 .cellular_locations = biosample?.cellular_locations.cellular,
                 .tissue = biosample?.tissue_locations.tissue,
                 .synonyms = metabolite.synonyms.synonym,
-                .description = metabolite.description
+                .description = metabolite.description,
+                .pathways = pathways,
+                .proteins = proteins,
+                .biocyc_id = metabolite.biocyc_id,
+                .chemspider_id = metabolite.chemspider_id,
+                .drugbank_id = metabolite.drugbank_id,
+                .foodb_id = metabolite.foodb_id,
+                .metlin_id = metabolite.metlin_id,
+                .disease = disease,
+                .Physiological_effects = OntologyTreeLines(ontology.TryGetValue("Physiological effect")).ToArray,
+                .Disposition = OntologyTreeLines(ontology.TryGetValue("Disposition")).ToArray,
+                .Process = OntologyTreeLines(ontology.TryGetValue("Process")).ToArray,
+                .Role = OntologyTreeLines(ontology.TryGetValue("Role")).ToArray,
+                .Biomarker = getBioMarkers(ontology.TryGetValue("Role"))
             }
+        End Function
+
+        Private Shared Function getBioMarkers(role As ontology_term) As String()
+            If role Is Nothing Then
+                Return {}
+            Else
+                If role.term = "Biomarker" Then
+                    If role.descendants.descendant.IsNullOrEmpty Then
+                        Return {}
+                    Else
+                        Return role.descendants.descendant.Select(Function(d) d.term).ToArray
+                    End If
+                Else
+                    If role.descendants.descendant.IsNullOrEmpty Then
+                        Return {}
+                    Else
+                        For Each child In role.descendants.descendant
+                            Dim list = getBioMarkers(child)
+
+                            If list.Length > 0 Then
+                                Return list
+                            End If
+                        Next
+                    End If
+                End If
+            End If
+
+            Return {}
+        End Function
+
+        Private Shared Iterator Function OntologyTreeLines(root As ontology_term) As IEnumerable(Of String)
+            If root Is Nothing OrElse root.descendants.descendant Is Nothing Then
+                Return
+            Else
+                For Each term In root.descendants.descendant
+                    For Each line As String In populateTree(term, "")
+                        Yield line
+                    Next
+                Next
+            End If
+        End Function
+
+        Private Shared Function populateTree(term As ontology_term, parent As String) As String()
+            Dim term_string As String = term.term
+
+            If term_string = "Biomarker" Then
+                Return {}
+            ElseIf term.descendants.descendant.IsNullOrEmpty Then
+                Return {$"{parent}|{term_string}"}
+            Else
+                Dim childs As New List(Of String)
+
+                For Each child In term.descendants.descendant
+                    childs.AddRange(populateTree(child, $"{parent}|{term_string}"))
+                Next
+
+                Return childs.ToArray
+            End If
         End Function
 
         Public Shared Sub WriteTable(metabolites As IEnumerable(Of metabolite), out As Stream)

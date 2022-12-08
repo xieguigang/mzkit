@@ -87,6 +87,7 @@ Module data
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
     Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As dataframe
@@ -98,7 +99,8 @@ Module data
         Return table
     End Function
 
-    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
+    <Extension>
+    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
@@ -106,6 +108,11 @@ Module data
         table.columns("info") = matrix.Select(Function(m) m.Annotation).ToArray
 
         Return table
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
+        Return getMSMSTable(matrix.ms2, args, env)
     End Function
 
     Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe

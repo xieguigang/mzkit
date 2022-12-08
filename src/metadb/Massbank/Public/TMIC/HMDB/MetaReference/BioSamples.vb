@@ -76,6 +76,9 @@ Namespace TMIC.HMDB.Repository
 
     Public Module BioSampleExtensions
 
+        ''' <summary>
+        ''' enum integer to factor strings
+        ''' </summary>
         ReadOnly samples As New Dictionary(Of BioSamples, String()) From {
             {BioSamples.Biomass, {"Feces"}},
             {BioSamples.Bloods, {"Blood", "serum", "plasma", "blood plasma"}},
@@ -105,6 +108,11 @@ Namespace TMIC.HMDB.Repository
             Return biosample
         End Function
 
+        ''' <summary>
+        ''' convert the <see cref="BioSamples"/> flag integer to the factor strings
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetSampleLocations(type As BioSamples) As String()
             If type = BioSamples.All Then

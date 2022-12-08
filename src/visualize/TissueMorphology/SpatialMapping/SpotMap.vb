@@ -1,5 +1,9 @@
 ﻿Imports System.Xml.Serialization
 
+''' <summary>
+''' A spot of spatial transcriptomics mapping to a 
+''' collection of spatial metabolism pixels
+''' </summary>
 Public Class SpotMap
 
     <XmlAttribute>

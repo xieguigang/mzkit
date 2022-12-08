@@ -60,6 +60,7 @@
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -192,21 +193,45 @@ Module MzMath
     ''' 1. character of value ``+`` or ``-``, means evaluate all m/z for all known precursor types in given ion mode
     ''' 2. character of value in precursor type format means calculate mz for the target precursor type
     ''' 3. mzcalculator type means calculate mz for the traget precursor type
+    ''' 4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.
+    ''' 
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mz")>
     <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
-    Public Function mz(mass As Double, Optional mode As Object = "+") As Object
+    Public Function mz(mass As Double,
+                       Optional mode As Object = "+",
+                       Optional env As Environment = Nothing) As Object
+
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
+        ElseIf TypeOf mode Is list Then
+            Dim err As Message = Nothing
+            Dim adducts = DirectCast(mode, list).AsGeneric(Of MzCalculator)(env, err:=err)
+
+            If Not err Is Nothing Then
+                Return err
+            Else
+                Return New list With {
+                    .slots = adducts _
+                        .ToDictionary(Function(c) c.Key,
+                                      Function(c)
+                                          Return CObj(c.Value.CalcMZ(mass))
+                                      End Function)
+                }
+            End If
         Else
             Dim strVal As String = any.ToString(mode, "+")
 
             Static supportedModes As Index(Of String) = {"+", "-", "1", "-1"}
 
             If strVal Like supportedModes Then
-                Return MzCalculator.EvaluateAll(mass, strVal).ToArray
+                Return MzCalculator _
+                    .EvaluateAll(mass, strVal) _
+                    .ToArray
             Else
+                ' the given string is a string value in precursor_type
+                ' format
                 Return Ms1.PrecursorType _
                     .ParseMzCalculator(strVal, strVal.Last) _
                     .CalcMZ(mass)
@@ -493,7 +518,11 @@ Module MzMath
         End If
 
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
-            Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2)(env), DirectCast(ions, PeakMs2()))
+            Dim source As IEnumerable(Of PeakMs2) = If(
+                inputType Is GetType(pipeline),
+                DirectCast(ions, pipeline).populates(Of PeakMs2)(env),
+                DirectCast(ions, PeakMs2())
+            )
             Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                                 For Each peak As PeakMs2 In source
                                     peak.mzInto = peak.mzInto _
@@ -560,6 +589,24 @@ Module MzMath
             }
 
             Return ms2.CentroidMode(errors, threshold)
+        ElseIf inputType Is GetType(ScanMS1) Then
+            Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
+            Dim msdata As ms2() = scan1 _
+                .GetMs _
+                .ToArray _
+                .Centroid(errors, threshold) _
+                .ToArray
+
+            Return New ScanMS1 With {
+                .BPC = scan1.BPC,
+                .into = msdata.Select(Function(a) a.intensity).ToArray,
+                .meta = scan1.meta,
+                .mz = msdata.Select(Function(a) a.mz).ToArray,
+                .products = scan1.products,
+                .rt = scan1.rt,
+                .scan_id = scan1.scan_id,
+                .TIC = scan1.TIC
+            }
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If

@@ -230,16 +230,6 @@ Module Massbank
     End Function
 
     ''' <summary>
-    ''' open a reader for read hmdb database
-    ''' </summary>
-    ''' <param name="xml"></param>
-    ''' <returns></returns>
-    <ExportAPI("read.hmdb")>
-    Public Function readHMDB(xml As String) As pipeline
-        Return TMIC.HMDB.LoadXML(xml).DoCall(AddressOf pipeline.CreateFromPopulator)
-    End Function
-
-    ''' <summary>
     ''' populate lipidmaps meta data objects from the loaded sdf data stream
     ''' </summary>
     ''' <param name="sdf">
@@ -372,9 +362,24 @@ Module Massbank
     End Function
 
     <ExportAPI("hmdb.secondary2main.mapping")>
-    Public Function hmdbSecondary2Main(repository As String) As Dictionary(Of String, String())
-        Return HMDB.metabolite _
-            .Load(repository) _
+    Public Function hmdbSecondary2Main(<RRawVectorArgument>
+                                       repository As Object,
+                                       Optional env As Environment = Nothing) As Dictionary(Of String, String())
+
+        Dim metabolites As pipeline
+
+        If TypeOf repository Is pipeline Then
+            metabolites = repository
+        Else
+            metabolites = pipeline.TryCreatePipeline(Of HMDB.metabolite)(repository, env)
+
+            If metabolites.isError Then
+                metabolites = pipeline.CreateFromPopulator(HMDB.metabolite.Load(SMRUCC.Rsharp.Runtime.single(repository)))
+            End If
+        End If
+
+        Return metabolites _
+            .populates(Of HMDB.metabolite)(env) _
             .ToDictionary(Function(a) a.accession,
                           Function(a)
                               If a.secondary_accessions.accession.IsNullOrEmpty Then

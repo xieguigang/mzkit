@@ -176,6 +176,8 @@ Namespace TMIC.HMDB
         <Xref> Public Property wikipedia_id As String
         <Xref> Public Property meta_cyc_id As String
         <Xref> Public Property pdb_id As String
+        <Xref> Public Property vmh_id As String
+        <Xref> Public Property fbonto_id As String
 #End Region
 
         Public Property synthesis_reference As String
@@ -218,6 +220,9 @@ Namespace TMIC.HMDB
         Public Property normal_concentrations As concentration()
         Public Property abnormal_concentrations As concentration()
         Public Property ontology As ontology
+
+        Public Property general_references As reference()
+        Public Property protein_associations As protein()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String

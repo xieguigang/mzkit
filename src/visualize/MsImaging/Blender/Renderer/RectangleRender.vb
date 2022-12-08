@@ -151,7 +151,9 @@ Namespace Blender
         ''' 
         ''' </summary>
         ''' <param name="pixels"></param>
-        ''' <param name="dimension"></param>
+        ''' <param name="dimension">
+        ''' the ms-imaging canvas size
+        ''' </param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
         ''' <param name="scale"></param>

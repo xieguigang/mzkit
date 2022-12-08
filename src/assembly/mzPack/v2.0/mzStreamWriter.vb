@@ -84,14 +84,21 @@ Public Module mzStreamWriter
     Public Const SampleMetaName As String = "sample"
 
     <Extension>
-    Private Sub WriteStream(mzpack As mzPack, pack As StreamPack, ByRef index As Dictionary(Of String, Double))
+    Public Sub WriteStream(mzpack As IEnumerable(Of ScanMS1),
+                           pack As StreamPack,
+                           ByRef index As Dictionary(Of String, Double),
+                           Optional ByRef samples As List(Of String) = Nothing)
+
         Dim rtmin As Double = 99999
         Dim rtmax As Double = -9999
         Dim mzmin As Double = 99999
         Dim mzmax As Double = -9999
-        Dim samples As New List(Of String)
 
-        For Each ms1 As ScanMS1 In mzpack.MS
+        If samples Is Nothing Then
+            samples = New List(Of String)
+        End If
+
+        For Each ms1 As ScanMS1 In mzpack
             Dim sampleTag As String
 
             If ms1.hasMetaKeys(SampleMetaName) Then
@@ -145,6 +152,18 @@ Public Module mzStreamWriter
             Call pack.SetAttribute(dir, dirMetadata)
         Next
 
+        Call index.Add(NameOf(mzmin), mzmin)
+        Call index.Add(NameOf(mzmax), mzmax)
+        Call index.Add(NameOf(rtmin), rtmin)
+        Call index.Add(NameOf(rtmax), rtmax)
+    End Sub
+
+    <Extension>
+    Private Sub WriteStream(mzpack As mzPack, pack As StreamPack, ByRef index As Dictionary(Of String, Double))
+        Dim samples As New List(Of String)
+
+        Call mzpack.MS.WriteStream(pack, index, samples)
+
         If Not mzpack.Scanners.IsNullOrEmpty Then
             For Each name As String In mzpack.Scanners.Keys
                 Dim scanner As ChromatogramOverlap = mzpack.Scanners(name)
@@ -166,14 +185,10 @@ Public Module mzStreamWriter
             End Using
         End If
 
-        Call index.Add(NameOf(mzmin), mzmin)
-        Call index.Add(NameOf(mzmax), mzmax)
-        Call index.Add(NameOf(rtmin), rtmin)
-        Call index.Add(NameOf(rtmax), rtmax)
         Call index.Add("totalIons", mzpack.totalIons)
         Call index.Add("maxIntensity", mzpack.maxIntensity)
 
-        Call pack.WriteText(mzpack.Application.ToString, ".etc/app.cls")
+        Call pack.WriteText(mzpack.Application.ToString, applicationClassFile)
         Call pack.WriteText(index.GetJson, ".etc/ms_scans.json")
         Call pack.WriteText(samples.Distinct.GetJson, ".etc/sample_tags.json")
 
@@ -182,5 +197,12 @@ Public Module mzStreamWriter
                 Call mzpack.Thumbnail.Save(snapshot, ImageFormats.Png.GetFormat)
             End Using
         End If
+    End Sub
+
+    Private Const applicationClassFile As String = ".etc/app.cls"
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub WriteApplicationClass(app As FileApplicationClass, pack As StreamPack)
+        Call pack.WriteText(app.ToString, applicationClassFile)
     End Sub
 End Module
