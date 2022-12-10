@@ -6,7 +6,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 
-Namespace MsImaging
+Namespace MsImaging.MALDI_3D
 
     Public Module Imports3DMSI
 
