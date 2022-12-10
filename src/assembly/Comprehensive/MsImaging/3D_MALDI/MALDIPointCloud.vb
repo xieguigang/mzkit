@@ -2,10 +2,16 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.IonTargeted
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 
 Namespace MsImaging.MALDI_3D
 
@@ -42,13 +48,62 @@ Namespace MsImaging.MALDI_3D
             Dim cachefile As String = ply.ChangeSuffix("pointcloud_cache")
 
             Using file As Stream = cachefile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                Call pointcloud.cache(New BinaryDataWriter(file))
+                Call pointcloud.cache(New BinaryDataWriter(file) With {.ByteOrder = ByteOrder.BigEndian})
             End Using
 
             Using file As Stream = ply.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 ' Return SimplePlyWriter.WriteAsciiText(pointcloud, file, colors)
             End Using
         End Function
+
+        Public Sub ExportHeatMapModel(cachefile As String, model As String,
+                                      Optional colors As ScalerPalette = ScalerPalette.turbo,
+                                      Optional levels As Integer = 255)
+
+            Dim points As New List(Of PointCloud)
+
+            Using file As Stream = cachefile.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Dim bin As New NetworkByteOrderBuffer
+                Dim buffer As Byte() = New Byte(4 * 8 - 1) {}
+                Dim dbls As Double()
+
+                Do While file.Position < file.Length
+                    file.Read(buffer, Scan0, buffer.Length)
+                    dbls = bin.decode(buffer)
+                    points.Add(New PointCloud With {
+                        .x = dbls(0),
+                        .y = dbls(1),
+                        .z = dbls(2),
+                        .intensity = dbls(3)
+                    })
+                Loop
+            End Using
+
+            Dim colorSet As String() = Designer _
+                .GetColors(colors.Description, levels) _
+                .Select(Function(c) c.ToHtmlColor) _
+                .ToArray
+            Dim value As New DoubleRange(From p As PointCloud In points Select p.intensity)
+            Dim index As New DoubleRange(0, levels)
+
+            Using file As Stream = model.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Dim buf As New BinaryDataWriter(file) With {.ByteOrder = ByteOrder.BigEndian}
+
+                Call buf.Write(points.Count)
+                Call buf.Write(colorSet.Length)
+
+                For Each color As String In colorSet
+                    Call buf.Write(color, BinaryStringFormat.NoPrefixOrTermination)
+                Next
+
+                For Each p As PointCloud In points
+                    Call buf.Write({p.x, p.y, p.z, p.intensity})
+                    Call buf.Write(CInt(value.ScaleMapping(p.intensity, index)))
+                Next
+
+                Call buf.Flush()
+            End Using
+        End Sub
     End Module
 
 End Namespace
