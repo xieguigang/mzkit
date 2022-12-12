@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
@@ -29,11 +30,13 @@ Public Class TissueRegion
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property nsize As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return points.Length
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Iterator Function GetPolygons() As IEnumerable(Of Polygon2D)
         Yield New Polygon2D(
             x:=points.Select(Function(i) CDbl(i.X)).ToArray,
@@ -41,10 +44,12 @@ Public Class TissueRegion
         )
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function IsInside(px As Integer, py As Integer) As Boolean
         Return points.Any(Function(p) p.X = px AndAlso p.Y = py)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{label} ({color.ToHtmlColor}) has {nsize} pixels."
     End Function
