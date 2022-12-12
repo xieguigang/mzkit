@@ -186,9 +186,26 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' load tissue region polygon data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="id">
+    ''' the region id, which could be used for load specific 
+    ''' region polygon data. default nothing means load all
+    ''' tissue region polygon data
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of tissue polygon region objects.
+    ''' </returns>
     <ExportAPI("loadTissue")>
     <RApiReturn(GetType(TissueRegion))>
-    Public Function loadTissue(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    Public Function loadTissue(<RRawVectorArgument>
+                               file As Object,
+                               Optional id As String = "*",
+                               Optional env As Environment = Nothing) As Object
+
         Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
         If readBuf Like GetType(Message) Then
@@ -196,10 +213,25 @@ Module TissueMorphology
         End If
 
         Using buffer As Stream = readBuf.TryCast(Of Stream)
-            Return buffer.ReadTissueMorphology.ToArray
+            If id.StringEmpty OrElse id = "*" Then
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .ToArray
+            Else
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .Where(Function(r) r.label = id) _
+                    .ToArray
+            End If
         End Using
     End Function
 
+    ''' <summary>
+    ''' load UMAP data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("loadUMAP")>
     <RApiReturn(GetType(UMAPPoint))>
     Public Function loadUMAP(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -214,6 +246,13 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' read spatial mapping data of STdata mapping to SMdata
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path of the spatial mapping xml dataset file 
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.spatialMapping")>
     Public Function loadSpatialMapping(file As String) As SpatialMapping
         Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
