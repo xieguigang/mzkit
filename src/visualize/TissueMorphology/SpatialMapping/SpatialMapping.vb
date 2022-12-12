@@ -6,6 +6,11 @@ Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
     <XmlElement> Public Property label As String
     <XmlElement("spot")>
     Public Property spots As SpotMap()
+    ''' <summary>
+    ''' the transform operation that generates
+    ''' the current spot location in STdata.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property transform As Transform()
 
     Protected Overrides Function getSize() As Integer
