@@ -72,6 +72,10 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' a unify reader interface for <see cref="BinaryStreamReader"/> read 
+    ''' data from file or read data from ``mzPack`` in-memory data object.
+    ''' </summary>
     Public Interface IMzPackReader
 
         ReadOnly Property EnumerateIndex As IEnumerable(Of String)
