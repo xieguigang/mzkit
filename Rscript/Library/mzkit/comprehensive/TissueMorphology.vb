@@ -2,6 +2,9 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
@@ -256,6 +259,27 @@ Module TissueMorphology
     <ExportAPI("read.spatialMapping")>
     Public Function loadSpatialMapping(file As String) As SpatialMapping
         Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
+    End Function
+
+    ''' <summary>
+    ''' create a spatial grid for the spatial spot data
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <param name="gridSize"></param>
+    ''' <returns></returns>
+    <ExportAPI("gridding")>
+    Public Function gridding(mapping As SpatialMapping, Optional gridSize As Integer = 6) As Object
+        Dim spotGrid As Grid(Of SpotMap) = Grid(Of SpotMap).Create(mapping.spots)
+        Dim blocks = spotGrid.WindowSize(gridSize, gridSize).Gridding.ToArray
+        Dim grids As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For i As Integer = 0 To blocks.Length - 1
+            If blocks(i).Length > 0 Then
+                Call grids.add($"block_{i + 1}", blocks(i))
+            End If
+        Next
+
+        Return grids
     End Function
 
 End Module

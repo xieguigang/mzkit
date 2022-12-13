@@ -1,10 +1,11 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Data.GraphTheory
 
 ''' <summary>
 ''' A spot of spatial transcriptomics mapping to a 
 ''' collection of spatial metabolism pixels
 ''' </summary>
-Public Class SpotMap
+Public Class SpotMap : Implements IPoint2D
 
     ''' <summary>
     ''' the spot barcode
@@ -47,5 +48,17 @@ Public Class SpotMap
 
     <XmlAttribute> Public Property SMX As Integer()
     <XmlAttribute> Public Property SMY As Integer()
+
+    Private ReadOnly Property X As Integer Implements IPoint2D.X
+        Get
+            Return STX
+        End Get
+    End Property
+
+    Private ReadOnly Property Y As Integer Implements IPoint2D.Y
+        Get
+            Return STY
+        End Get
+    End Property
 
 End Class
