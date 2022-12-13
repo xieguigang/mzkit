@@ -18,7 +18,7 @@ Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 Imports stdNum = System.Math
 
 ''' <summary>
-''' mzPack format in HDS stream file
+''' v2 mzPack format in HDS stream file
 ''' </summary>
 Public Class mzStream : Implements IMzPackReader
     Implements IDisposable

@@ -65,6 +65,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Net.Http
 
+''' <summary>
+''' v1 mzpack stream reader
+''' </summary>
 Public Class mzPackReader : Inherits BinaryStreamReader
 
     Dim otherScanners As Dictionary(Of String, Long)

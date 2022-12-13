@@ -12,6 +12,7 @@ Public Class MemoryReader : Implements IMzPackReader
     ReadOnly scan_index As Index(Of String)
 
     Public ReadOnly Property EnumerateIndex As IEnumerable(Of String) Implements IMzPackReader.EnumerateIndex
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return scan_index.Objects
         End Get
