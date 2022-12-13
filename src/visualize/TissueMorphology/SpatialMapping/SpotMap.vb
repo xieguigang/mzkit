@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Drawing
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Data.GraphTheory
 
 ''' <summary>
@@ -60,5 +61,11 @@ Public Class SpotMap : Implements IPoint2D
             Return STY
         End Get
     End Property
+
+    Public Iterator Function GetSMDataPoints() As IEnumerable(Of Point)
+        For i As Integer = 0 To SMX.Length - 1
+            Yield New Point(SMX(i), SMY(i))
+        Next
+    End Function
 
 End Class
