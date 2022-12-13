@@ -30,6 +30,10 @@ Public Class Transform
     End Enum
 
     <XmlAttribute> Public Property op As Operation
+    ''' <summary>
+    ''' rotate angle in degree if the <see cref="op"/> code is <see cref="Transform.Operation.Rotate"/>
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property argument As Double
 
     Public Overrides Function ToString() As String
