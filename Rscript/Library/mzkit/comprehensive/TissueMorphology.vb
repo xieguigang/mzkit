@@ -2,6 +2,9 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
@@ -186,9 +189,26 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' load tissue region polygon data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="id">
+    ''' the region id, which could be used for load specific 
+    ''' region polygon data. default nothing means load all
+    ''' tissue region polygon data
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of tissue polygon region objects.
+    ''' </returns>
     <ExportAPI("loadTissue")>
     <RApiReturn(GetType(TissueRegion))>
-    Public Function loadTissue(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    Public Function loadTissue(<RRawVectorArgument>
+                               file As Object,
+                               Optional id As String = "*",
+                               Optional env As Environment = Nothing) As Object
+
         Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
         If readBuf Like GetType(Message) Then
@@ -196,10 +216,25 @@ Module TissueMorphology
         End If
 
         Using buffer As Stream = readBuf.TryCast(Of Stream)
-            Return buffer.ReadTissueMorphology.ToArray
+            If id.StringEmpty OrElse id = "*" Then
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .ToArray
+            Else
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .Where(Function(r) r.label = id) _
+                    .ToArray
+            End If
         End Using
     End Function
 
+    ''' <summary>
+    ''' load UMAP data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("loadUMAP")>
     <RApiReturn(GetType(UMAPPoint))>
     Public Function loadUMAP(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -214,9 +249,56 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' read spatial mapping data of STdata mapping to SMdata
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path of the spatial mapping xml dataset file 
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.spatialMapping")>
     Public Function loadSpatialMapping(file As String) As SpatialMapping
         Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
+    End Function
+
+    ''' <summary>
+    ''' create a spatial grid for the spatial spot data
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="label">
+    ''' the parameter value will overrides the internal
+    ''' label of the mapping if this parameter string 
+    ''' value is not an empty string.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("gridding")>
+    Public Function gridding(mapping As SpatialMapping,
+                             Optional gridSize As Integer = 6,
+                             Optional label As String = Nothing) As Object
+
+        Dim spotGrid As Grid(Of SpotMap) = Grid(Of SpotMap).Create(mapping.spots)
+        Dim blocks = spotGrid.WindowSize(gridSize, gridSize).Gridding.ToArray
+        Dim grids As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim tag As String = mapping.label
+
+        If Not label.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = "block"
+        End If
+
+        For i As Integer = 0 To blocks.Length - 1
+            If blocks(i).Length > 0 Then
+                Call grids.add($"{tag}_{i + 1}", blocks(i))
+            End If
+        Next
+
+        Return grids
     End Function
 
 End Module
