@@ -102,7 +102,7 @@
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	
+		<OutputPath>../\mzkit_app\assembly\</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
