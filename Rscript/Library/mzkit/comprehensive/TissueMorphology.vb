@@ -266,16 +266,35 @@ Module TissueMorphology
     ''' </summary>
     ''' <param name="mapping"></param>
     ''' <param name="gridSize"></param>
+    ''' <param name="label">
+    ''' the parameter value will overrides the internal
+    ''' label of the mapping if this parameter string 
+    ''' value is not an empty string.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("gridding")>
-    Public Function gridding(mapping As SpatialMapping, Optional gridSize As Integer = 6) As Object
+    Public Function gridding(mapping As SpatialMapping,
+                             Optional gridSize As Integer = 6,
+                             Optional label As String = Nothing) As Object
+
         Dim spotGrid As Grid(Of SpotMap) = Grid(Of SpotMap).Create(mapping.spots)
         Dim blocks = spotGrid.WindowSize(gridSize, gridSize).Gridding.ToArray
         Dim grids As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim tag As String = mapping.label
+
+        If Not label.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = "block"
+        End If
 
         For i As Integer = 0 To blocks.Length - 1
             If blocks(i).Length > 0 Then
-                Call grids.add($"block_{i + 1}", blocks(i))
+                Call grids.add($"{tag}_{i + 1}", blocks(i))
             End If
         Next
 
