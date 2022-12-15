@@ -54,7 +54,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Plots.xml</DocumentationFile>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

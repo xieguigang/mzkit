@@ -3,7 +3,9 @@
 .SH NAME
 read.spatialMapping \- read spatial mapping data of STdata mapping to SMdata
 .SH SYNOPSIS
-\fIread.spatialMapping(\fBfile\fR as string);\fR
+\fIread.spatialMapping(\fBfile\fR as string, 
+\fBremove_suffix\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 read spatial mapping data of STdata mapping to SMdata
@@ -12,6 +14,11 @@ read spatial mapping data of STdata mapping to SMdata
 .PP
 \fBfile\fB \fR\- 
  the file path of the spatial mapping xml dataset file 
+. 
+.PP
+.PP
+\fBremove_suffix\fB \fR\- 
+ removes of the numeric suffix of the STdata barcode?
 . 
 .PP
 .SH SEE ALSO
