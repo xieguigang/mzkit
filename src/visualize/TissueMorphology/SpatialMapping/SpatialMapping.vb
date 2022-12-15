@@ -1,4 +1,7 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Drawing
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
@@ -19,6 +22,19 @@ Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
 
     Protected Overrides Function getCollection() As IEnumerable(Of SpotMap)
         Return spots
+    End Function
+
+    Public Function GetSpatialMetabolismRectangle() As RectangleF
+        Dim path = spots _
+            .Select(Function(p)
+                        Return p.SMX.Select(Function(xi, i) New PointF(xi, p.SMY(i)))
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+        Dim poly As New Polygon2D(path)
+        Dim rect As RectangleF = poly.GetRectangle
+
+        Return rect
     End Function
 End Class
 
