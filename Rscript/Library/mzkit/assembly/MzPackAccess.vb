@@ -173,19 +173,30 @@ Module MzPackAccess
     ''' <summary>
     ''' open a mzpack data object reader, not read all data into memory in one time.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">
+    ''' the file path for the mzpack file or the mzpack data object it self
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' the ms scan data can be load into memory in lazy 
     ''' require by a given scan id of the target ms1 scan
     ''' </returns>
+    ''' <remarks>
+    ''' a in-memory reader wrapper will be created if the given file object 
+    ''' is a in-memory mzpack object itself
+    ''' </remarks>
     <ExportAPI("mzpack")>
-    <RApiReturn(GetType(mzPackReader))>
+    <RApiReturn(GetType(IMzPackReader))>
     Public Function open_mzpack(file As Object, Optional env As Environment = Nothing) As Object
-        Dim buffer = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env)
+        Dim buffer = ApiArgumentHelpers.GetFileStream(file, FileAccess.Read, env, suppress:=True)
 
         If buffer Like GetType(Message) Then
-            Return buffer.TryCast(Of Message)
+            If TypeOf file Is mzPack Then
+                ' wrap the in-memory data
+                Return New MemoryReader(DirectCast(file, mzPack))
+            Else
+                Return buffer.TryCast(Of Message)
+            End If
         End If
 
         Dim ver As Integer = buffer.TryCast(Of Stream).GetFormatVersion

@@ -2,6 +2,9 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
+Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
@@ -14,6 +17,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
+''' spatial tissue region handler
+''' 
 ''' tissue morphology data handler for the internal 
 ''' bionovogene MS-imaging analysis pipeline.
 ''' </summary>
@@ -77,6 +82,16 @@ Module TissueMorphology
         }
     End Function
 
+    ''' <summary>
+    ''' create a collection of the umap sample data
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="z"></param>
+    ''' <param name="cluster"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("UMAPsample")>
     Public Function createUMAPsample(<RRawVectorArgument>
                                      points As Object,
@@ -106,7 +121,7 @@ Module TissueMorphology
     End Function
 
     ''' <summary>
-    ''' 
+    ''' create a collection of the tissue region dataset
     ''' </summary>
     ''' <param name="x"></param>
     ''' <param name="y"></param>
@@ -164,6 +179,15 @@ Module TissueMorphology
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' export the tissue data as cdf file
+    ''' </summary>
+    ''' <param name="tissueMorphology"></param>
+    ''' <param name="file"></param>
+    ''' <param name="umap"></param>
+    ''' <param name="dimension"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("writeCDF")>
     Public Function createCDF(tissueMorphology As TissueRegion(),
                               file As Object,
@@ -186,9 +210,26 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' load tissue region polygon data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="id">
+    ''' the region id, which could be used for load specific 
+    ''' region polygon data. default nothing means load all
+    ''' tissue region polygon data
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of tissue polygon region objects.
+    ''' </returns>
     <ExportAPI("loadTissue")>
     <RApiReturn(GetType(TissueRegion))>
-    Public Function loadTissue(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    Public Function loadTissue(<RRawVectorArgument>
+                               file As Object,
+                               Optional id As String = "*",
+                               Optional env As Environment = Nothing) As Object
+
         Dim readBuf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
         If readBuf Like GetType(Message) Then
@@ -196,10 +237,25 @@ Module TissueMorphology
         End If
 
         Using buffer As Stream = readBuf.TryCast(Of Stream)
-            Return buffer.ReadTissueMorphology.ToArray
+            If id.StringEmpty OrElse id = "*" Then
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .ToArray
+            Else
+                Return buffer _
+                    .ReadTissueMorphology _
+                    .Where(Function(r) r.label = id) _
+                    .ToArray
+            End If
         End Using
     End Function
 
+    ''' <summary>
+    ''' load UMAP data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("loadUMAP")>
     <RApiReturn(GetType(UMAPPoint))>
     Public Function loadUMAP(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -214,9 +270,89 @@ Module TissueMorphology
         End Using
     End Function
 
+    ''' <summary>
+    ''' read spatial mapping data of STdata mapping to SMdata
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file path of the spatial mapping xml dataset file 
+    ''' </param>
+    ''' <param name="remove_suffix">
+    ''' removes of the numeric suffix of the STdata barcode?
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.spatialMapping")>
-    Public Function loadSpatialMapping(file As String) As SpatialMapping
-        Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
+    <RApiReturn(GetType(SpatialMapping))>
+    Public Function loadSpatialMapping(file As String, Optional remove_suffix As Boolean = False, Optional env As Environment = Nothing) As Object
+        Dim mapping = file.LoadXml(Of SpatialMapping)(throwEx:=False)
+
+        If mapping Is Nothing Then
+            Return Internal.debug.stop({
+                $"the required spatial mapping data which is loaded from the file location ({file}) is nothing, this could be some reasons:",
+                $"file is exists on location: {file}",
+                $"or invalid xml file format"
+            }, env)
+        ElseIf remove_suffix Then
+            mapping = New SpatialMapping With {
+                .label = mapping.label,
+                .transform = mapping.transform,
+                .spots = mapping.spots _
+                    .Select(Function(f)
+                                Return New SpotMap With {
+                                    .barcode = f.barcode.StringReplace("[-]\d+", ""),
+                                    .flag = f.flag,
+                                    .physicalXY = f.physicalXY,
+                                    .SMX = f.SMX,
+                                    .SMY = f.SMY,
+                                    .spotXY = f.spotXY,
+                                    .STX = f.STX,
+                                    .STY = f.STY
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End If
+
+        Return mapping
+    End Function
+
+    ''' <summary>
+    ''' create a spatial grid for the spatial spot data
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="label">
+    ''' the parameter value will overrides the internal
+    ''' label of the mapping if this parameter string 
+    ''' value is not an empty string.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("gridding")>
+    Public Function gridding(mapping As SpatialMapping,
+                             Optional gridSize As Integer = 6,
+                             Optional label As String = Nothing) As Object
+
+        Dim spotGrid As Grid(Of SpotMap) = Grid(Of SpotMap).Create(mapping.spots)
+        Dim blocks = spotGrid.WindowSize(gridSize, gridSize).Gridding.ToArray
+        Dim grids As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim tag As String = mapping.label
+
+        If Not label.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = label
+        End If
+        If tag.StringEmpty Then
+            tag = "block"
+        End If
+
+        For i As Integer = 0 To blocks.Length - 1
+            If blocks(i).Length > 0 Then
+                Call grids.add($"{tag}_{i + 1}", blocks(i))
+            End If
+        Next
+
+        Return grids
     End Function
 
 End Module

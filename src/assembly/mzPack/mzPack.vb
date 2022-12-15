@@ -135,6 +135,21 @@ Public Class mzPack
         End Get
     End Property
 
+    ''' <summary>
+    ''' get size of the ms1 scan data
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property size As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return MS.TryCount
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' get number of total ms2 scan data
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property CountMs2 As Integer
         Get
             Return Aggregate scan As ScanMS1

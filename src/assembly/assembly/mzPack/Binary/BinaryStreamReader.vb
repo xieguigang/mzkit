@@ -72,8 +72,16 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' a unify reader interface for <see cref="BinaryStreamReader"/> read 
+    ''' data from file or read data from ``mzPack`` in-memory data object.
+    ''' </summary>
     Public Interface IMzPackReader
 
+        ''' <summary>
+        ''' get all scan ms1 data its scan id collection
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property EnumerateIndex As IEnumerable(Of String)
         ''' <summary>
         ''' the source file name of current raw data file
@@ -99,6 +107,9 @@ Namespace mzData.mzWebCache
         Implements IDisposable
 
         Dim disposedValue As Boolean
+        ''' <summary>
+        ''' stream offset index of the scan id
+        ''' </summary>
         Dim index As New Dictionary(Of String, Long)
         Dim metadata As New Dictionary(Of String, Dictionary(Of String, String))
 
