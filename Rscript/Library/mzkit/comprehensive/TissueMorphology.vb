@@ -17,6 +17,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
+''' spatial tissue region handler
+''' 
 ''' tissue morphology data handler for the internal 
 ''' bionovogene MS-imaging analysis pipeline.
 ''' </summary>
@@ -80,6 +82,16 @@ Module TissueMorphology
         }
     End Function
 
+    ''' <summary>
+    ''' create a collection of the umap sample data
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="z"></param>
+    ''' <param name="cluster"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("UMAPsample")>
     Public Function createUMAPsample(<RRawVectorArgument>
                                      points As Object,
@@ -109,7 +121,7 @@ Module TissueMorphology
     End Function
 
     ''' <summary>
-    ''' 
+    ''' create a collection of the tissue region dataset
     ''' </summary>
     ''' <param name="x"></param>
     ''' <param name="y"></param>
@@ -167,6 +179,15 @@ Module TissueMorphology
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' export the tissue data as cdf file
+    ''' </summary>
+    ''' <param name="tissueMorphology"></param>
+    ''' <param name="file"></param>
+    ''' <param name="umap"></param>
+    ''' <param name="dimension"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("writeCDF")>
     Public Function createCDF(tissueMorphology As TissueRegion(),
                               file As Object,
@@ -255,10 +276,43 @@ Module TissueMorphology
     ''' <param name="file">
     ''' the file path of the spatial mapping xml dataset file 
     ''' </param>
+    ''' <param name="remove_suffix">
+    ''' removes of the numeric suffix of the STdata barcode?
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.spatialMapping")>
-    Public Function loadSpatialMapping(file As String) As SpatialMapping
-        Return file.LoadXml(Of SpatialMapping)(throwEx:=False)
+    <RApiReturn(GetType(SpatialMapping))>
+    Public Function loadSpatialMapping(file As String, Optional remove_suffix As Boolean = False, Optional env As Environment = Nothing) As Object
+        Dim mapping = file.LoadXml(Of SpatialMapping)(throwEx:=False)
+
+        If mapping Is Nothing Then
+            Return Internal.debug.stop({
+                $"the required spatial mapping data which is loaded from the file location ({file}) is nothing, this could be some reasons:",
+                $"file is exists on location: {file}",
+                $"or invalid xml file format"
+            }, env)
+        ElseIf remove_suffix Then
+            mapping = New SpatialMapping With {
+                .label = mapping.label,
+                .transform = mapping.transform,
+                .spots = mapping.spots _
+                    .Select(Function(f)
+                                Return New SpotMap With {
+                                    .barcode = f.barcode.StringReplace("[-]\d+", ""),
+                                    .flag = f.flag,
+                                    .physicalXY = f.physicalXY,
+                                    .SMX = f.SMX,
+                                    .SMY = f.SMY,
+                                    .spotXY = f.spotXY,
+                                    .STX = f.STX,
+                                    .STY = f.STY
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End If
+
+        Return mapping
     End Function
 
     ''' <summary>
