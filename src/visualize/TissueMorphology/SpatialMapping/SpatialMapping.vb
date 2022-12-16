@@ -15,6 +15,11 @@ Public Class SpatialMapping : Inherits ListOf(Of SpotMap)
     ''' </summary>
     ''' <returns></returns>
     Public Property transform As Transform()
+    ''' <summary>
+    ''' html color code
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlElement> Public Property color As String
 
     Protected Overrides Function getSize() As Integer
         Return spots.TryCount
