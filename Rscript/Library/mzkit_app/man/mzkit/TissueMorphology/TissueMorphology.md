@@ -1,11 +1,13 @@
 # TissueMorphology
 
-tissue morphology data handler for the internal 
+spatial tissue region handler
+ 
+ tissue morphology data handler for the internal 
  bionovogene MS-imaging analysis pipeline.
 
-+ [UMAPsample](TissueMorphology/UMAPsample.1) 
-+ [TissueData](TissueMorphology/TissueData.1) 
-+ [writeCDF](TissueMorphology/writeCDF.1) 
++ [UMAPsample](TissueMorphology/UMAPsample.1) create a collection of the umap sample data
++ [TissueData](TissueMorphology/TissueData.1) create a collection of the tissue region dataset
++ [writeCDF](TissueMorphology/writeCDF.1) export the tissue data as cdf file
 + [loadTissue](TissueMorphology/loadTissue.1) load tissue region polygon data
 + [loadUMAP](TissueMorphology/loadUMAP.1) load UMAP data
 + [read.spatialMapping](TissueMorphology/read.spatialMapping.1) read spatial mapping data of STdata mapping to SMdata
