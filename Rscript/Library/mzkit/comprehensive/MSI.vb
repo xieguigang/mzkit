@@ -441,7 +441,14 @@ Module MSI
                 .Select(Function(xi, i) $"{xi},{y(i)}") _
                 .Indexing
 
-            ' pixel also re-order by xy
+            If as_vector Then
+                ' removes the duplicated pixels
+                pixelFilter = pixelFilter _
+                    .GroupBy(Function(p) $"{p.x},{p.y}") _
+                    .Select(Function(p) p.First)
+            End If
+
+            ' pixel and also re-order by xy
             pixelFilter = From p As iPixelIntensity
                           In pixelFilter
                           Order By pixels.IndexOf($"{p.x},{p.y}")
