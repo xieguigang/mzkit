@@ -426,6 +426,7 @@ Module MSI
             In raw.MS
             Let xi As Long = Long.Parse(p.meta("x"))
             Let yi As Long = Long.Parse(p.meta("y"))
+            Where Not p.into.IsNullOrEmpty
             Where filter(xi, yi)
             Select New iPixelIntensity With {
                 .x = xi,
