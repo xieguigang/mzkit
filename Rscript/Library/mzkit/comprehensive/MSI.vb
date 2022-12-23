@@ -59,6 +59,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
@@ -84,6 +85,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
+Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 
 ''' <summary>
 ''' MS-Imaging data handler
@@ -137,7 +140,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function asMSILayer(pixels As PixelData(),
+    Public Function asMSILayer(pixels As MsImaging.PixelData(),
                                Optional context As String = "MSIlayer",
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
@@ -675,7 +678,7 @@ Module MSI
                                   Optional mzdiff As Double = 0.001,
                                   Optional q As Double = 0.001) As Double()
 
-        Return MzMatrix.GetMzIndex(raw, mzdiff, q)
+        Return SingleCellMath.GetMzIndex(raw, mzdiff, q)
     End Function
 
     ''' <summary>
@@ -691,7 +694,7 @@ Module MSI
                                 Optional q As Double = 0.001,
                                 Optional env As Environment = Nothing) As Message
 
-        Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
 
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
