@@ -43,4 +43,9 @@ Module SingleCells
             .tag = raw.source
         }
     End Function
+
+    <ExportAPI("SCMionStat")>
+    Public Function singleCellsIons(raw As mzPack) As Object
+
+    End Function
 End Module

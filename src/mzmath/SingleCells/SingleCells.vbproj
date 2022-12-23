@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.SingleCells</RootNamespace>
+	  <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SingleCells</AssemblyName>
+	  <Platforms>AnyCPU;x64</Platforms>
+	  <Configurations>Debug;Release;LipidSearch;mzkit;Rsharp_app_release</Configurations>
+	
+
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+  </PropertyGroup>
+
+</Project>
