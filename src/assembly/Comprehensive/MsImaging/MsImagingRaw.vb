@@ -100,7 +100,8 @@ Namespace MsImaging
                 .scan_x = Val(src.TryGetValue("width", [default]:=dims.Width)),
                 .scan_y = Val(src.TryGetValue("height", [default]:=dims.Height)),
                 .resolution = Val(src.TryGetValue("resolution", [default]:=17)),
-                .mass_range = New DoubleRange(mass)
+                .mass_range = New DoubleRange(mass),
+                .[class] = raw.Application.ToString
             }
 
             Return metadata
