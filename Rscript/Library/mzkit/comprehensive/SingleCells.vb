@@ -1,8 +1,10 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 
@@ -45,8 +47,9 @@ Module SingleCells
         }
     End Function
 
-    <ExportAPI("SCMionStat")>
+    <ExportAPI("SCM_ionStat")>
+    <RApiReturn(GetType(SingleCellIonStat))>
     Public Function singleCellsIons(raw As mzPack) As Object
-
+        Return SingleCellIonStat.DoIonStats(raw).ToArray
     End Function
 End Module
