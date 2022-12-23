@@ -8909,8 +8909,8 @@ Global
 		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|ARM32.ActiveCfg = Release|Any CPU
 		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|ARM32.Build.0 = Release|Any CPU
-		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
-		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
+		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x86.ActiveCfg = Release|Any CPU
 		{8937F057-C063-4477-8AE1-9A8C2B890235}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
