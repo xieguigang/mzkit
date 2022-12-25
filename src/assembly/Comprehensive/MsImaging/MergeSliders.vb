@@ -35,13 +35,26 @@ Public Module MergeSliders
                         Return (ms, New Polygon2D(ms.MS.Select(Function(a) a.GetMSIPixel)))
                     End Function) _
             .ToArray
-        Dim maxHeight As Integer = polygons.Select(Function(a) a.Item2.ypoints).IteratesALL.Max
+        Dim maxHeight As Integer = polygons _
+            .Select(Function(a) a.Item2.ypoints) _
+            .IteratesALL _
+            .Max
         Dim left As Integer = polygons.First.Item2.xpoints.Min
         Dim union As New List(Of ScanMS1)
 
         For Each sample As (Ms As mzPack, shape As Polygon2D) In polygons
-            union.JoinOneSample(shape:=sample.shape, sample:=sample.Ms, left, relativePos, norm, println)
-            left += padding * 2 + (sample.shape.xpoints.Max - sample.shape.xpoints.Min)
+            Call union.JoinOneSample(
+                shape:=sample.shape,
+                sample:=sample.Ms,
+                left:=left,
+                top:=0,
+                relativePos:=relativePos,
+                norm:=norm,
+                println:=println
+            )
+            left += padding * 2 + (
+                sample.shape.xpoints.Max - sample.shape.xpoints.Min
+            )
         Next
 
         Return New mzPack With {
@@ -54,22 +67,25 @@ Public Module MergeSliders
     End Function
 
     <Extension>
-    Private Sub JoinOneSample(union As List(Of ScanMS1),
-                              shape As Polygon2D,
-                              sample As mzPack,
-                              left As Integer,
-                              relativePos As Boolean,
-                              norm As Boolean,
-                              println As Action(Of String))
+    Public Sub JoinOneSample(union As List(Of ScanMS1),
+                             shape As Polygon2D,
+                             sample As mzPack,
+                             left As Integer,
+                             top As Integer,
+                             relativePos As Boolean,
+                             norm As Boolean,
+                             println As Action(Of String))
 
         Dim minX As Integer = shape.xpoints.Min
         Dim height As Integer = shape.height
-        Dim deltaY As Integer = shape.ypoints.Min * -1
+        Dim deltaY As Integer = shape.ypoints.Min * -1 + top
         Dim sampleid As String = sample.source
 
         Call println(" >>> " & sampleid)
 
-        For Each scan As ScanMS1 In sample.MS.Where(Function(s) Not s.into.IsNullOrEmpty)
+        For Each scan As ScanMS1 In From s As ScanMS1
+                                    In sample.MS
+                                    Where Not s.into.IsNullOrEmpty
             If relativePos Then
                 union.Add(scan.generateNormScan(minX, left, deltaY, sampleid, norm))
             Else

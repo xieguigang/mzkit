@@ -1,9 +1,12 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
+Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 
 ''' <summary>
 ''' Single cells metabolomics data processor
@@ -26,9 +29,9 @@ Module SingleCells
                                Optional env As Environment = Nothing) As Object
 
         Dim singleCells As New List(Of DataFrameRow)
-        Dim mzSet As Double() = MzMatrix.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+        Dim mzSet As Double() = SingleCellMath.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
 
-        For Each cell_scan As DataFrameRow In MzMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
+        For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
             cell_scan.geneID = cell_scan.geneID _
                 .Replace("[MS1]", "") _
                 .Trim
@@ -42,5 +45,11 @@ Module SingleCells
                 .ToArray,
             .tag = raw.source
         }
+    End Function
+
+    <ExportAPI("SCM_ionStat")>
+    <RApiReturn(GetType(SingleCellIonStat))>
+    Public Function singleCellsIons(raw As mzPack) As Object
+        Return SingleCellIonStat.DoIonStats(raw).ToArray
     End Function
 End Module
