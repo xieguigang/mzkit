@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace MsImaging
 
@@ -8,6 +9,13 @@ Namespace MsImaging
         Public Property scan_y As Integer
         Public Property resolution As Double
         Public Property mass_range As DoubleRange
+
+        ''' <summary>
+        ''' the string name of <see cref="FileApplicationClass"/>, 
+        ''' not the description id value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property [class] As String
 
         Public ReadOnly Property physical_width As Double
             Get

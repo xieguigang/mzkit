@@ -59,6 +59,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
@@ -66,10 +67,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
@@ -83,6 +85,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
+Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 
 ''' <summary>
 ''' MS-Imaging data handler
@@ -136,7 +140,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function asMSILayer(pixels As PixelData(),
+    Public Function asMSILayer(pixels As MsImaging.PixelData(),
                                Optional context As String = "MSIlayer",
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
@@ -393,19 +397,72 @@ Module MSI
     ''' <param name="raw"></param>
     ''' <returns></returns>
     <ExportAPI("MSI_summary")>
-    Public Function MSI_summary(raw As mzPack) As MSISummary
-        Return raw.MS _
-            .Select(Function(p)
-                        Return New iPixelIntensity With {
-                            .x = Integer.Parse(p.meta("x")),
-                            .y = Integer.Parse(p.meta("y")),
-                            .average = p.into.Average,
-                            .basePeakIntensity = p.into.Max,
-                            .totalIon = p.into.Sum,
-                            .basePeakMz = p.mz(which.Max(p.into))
-                        }
-                    End Function) _
-            .DoCall(AddressOf MSISummary.FromPixels)
+    <RApiReturn(GetType(MSISummary), GetType(iPixelIntensity))>
+    Public Function MSI_summary(raw As mzPack,
+                                Optional x As Long() = Nothing,
+                                Optional y As Long() = Nothing,
+                                Optional as_vector As Boolean = False) As Object
+
+        Dim filter As Func(Of Long, Long, Boolean)
+
+        If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
+            filter = Function(xi, yi) True
+        ElseIf x.IsNullOrEmpty Then
+            Dim yindex As Index(Of Long) = y.Indexing
+            ' filter y
+            filter = Function(xi, yi) yi Like yindex
+        ElseIf y.IsNullOrEmpty Then
+            Dim xindex As Index(Of Long) = x.Indexing
+            ' filter x
+            filter = Function(xi, yi) xi Like xindex
+        Else
+            ' filter xy
+            Dim pixels As Index(Of String) = x _
+                .Select(Function(xi, i) $"{xi},{y(i)}") _
+                .Indexing
+
+            filter = Function(xi, yi) $"{xi},{yi}" Like pixels
+        End If
+
+        Dim pixelFilter As IEnumerable(Of iPixelIntensity) =
+            From p As ScanMS1
+            In raw.MS
+            Let xi As Long = Long.Parse(p.meta("x"))
+            Let yi As Long = Long.Parse(p.meta("y"))
+            Where Not p.into.IsNullOrEmpty
+            Where filter(xi, yi)
+            Select New iPixelIntensity With {
+                .x = xi,
+                .y = yi,
+                .average = p.into.Average,
+                .basePeakIntensity = p.into.Max,
+                .totalIon = p.into.Sum,
+                .basePeakMz = p.mz(which.Max(p.into))
+            }
+
+        If Not (x.IsNullOrEmpty OrElse y.IsNullOrEmpty) Then
+            Dim pixels As Index(Of String) = x _
+                .Select(Function(xi, i) $"{xi},{y(i)}") _
+                .Indexing
+
+            If as_vector Then
+                ' removes the duplicated pixels
+                pixelFilter = pixelFilter _
+                    .GroupBy(Function(p) $"{p.x},{p.y}") _
+                    .Select(Function(p) p.First)
+            End If
+
+            ' pixel and also re-order by xy
+            pixelFilter = From p As iPixelIntensity
+                          In pixelFilter
+                          Order By pixels.IndexOf($"{p.x},{p.y}")
+        End If
+
+        If as_vector Then
+            Return pixelFilter.ToArray
+        Else
+            Return MSISummary.FromPixels(pixelFilter)
+        End If
     End Function
 
     ''' <summary>
@@ -621,7 +678,7 @@ Module MSI
                                   Optional mzdiff As Double = 0.001,
                                   Optional q As Double = 0.001) As Double()
 
-        Return MzMatrix.GetMzIndex(raw, mzdiff, q)
+        Return SingleCellMath.GetMzIndex(raw, mzdiff, q)
     End Function
 
     ''' <summary>
@@ -637,7 +694,7 @@ Module MSI
                                 Optional q As Double = 0.001,
                                 Optional env As Environment = Nothing) As Message
 
-        Dim matrix As MzMatrix = MzMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
 
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
