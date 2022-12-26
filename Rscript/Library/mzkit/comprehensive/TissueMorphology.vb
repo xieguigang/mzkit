@@ -315,6 +315,28 @@ Module TissueMorphology
         Return mapping
     End Function
 
+    <ExportAPI("splitMapping")>
+    <RApiReturn(GetType(list))>
+    Public Function SplitMapping(mapping As SpatialMapping) As Object
+        Dim list As New Dictionary(Of String, Object)
+        Dim groups = mapping.spots _
+            .GroupBy(Function(r) Strings.Trim(r.TissueMorphology)) _
+            .ToArray
+
+        For Each group In groups
+            list(group.Key) = New SpatialMapping With {
+                .color = mapping.color,
+                .label = group.Key,
+                .transform = mapping.transform,
+                .spots = group.ToArray
+            }
+        Next
+
+        Return New list With {
+            .slots = list
+        }
+    End Function
+
     ''' <summary>
     ''' create a spatial grid for the spatial spot data
     ''' </summary>
