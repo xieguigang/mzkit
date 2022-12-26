@@ -55,12 +55,11 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
@@ -177,7 +176,7 @@ Public Class IonStat
             .Q2Intensity = Q.Q2,
             .Q3Intensity = Q.Q3,
             .density = counts.Average,
-            .RSD = fillVector(intensity).RSD * 100
+            .RSD = SingleCellIonStat.fillVector(intensity).RSD * 100
         }
     End Function
 
@@ -202,20 +201,6 @@ Public Class IonStat
             For Each ion As NamedCollection(Of (pixel As Point, ms As ms2)) In ions
                 Yield DoStatSingleIon(ion, nsize)
             Next
-        End If
-    End Function
-
-    Private Shared Function fillVector(v As Double()) As Vector
-        If v.Any(Function(vi) vi > 0) Then
-            Dim fill As Vector = {v.Where(Function(i) i > 0).Min}
-            Dim peakfill As Vector = v.AsVector
-
-            peakfill(peakfill <= 0) = fill
-
-            Return peakfill
-        Else
-            ' all is zero!
-            Return v
         End If
     End Function
 End Class

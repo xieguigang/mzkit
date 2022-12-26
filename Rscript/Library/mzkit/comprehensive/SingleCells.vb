@@ -47,9 +47,19 @@ Module SingleCells
         }
     End Function
 
+    ''' <summary>
+    ''' do stats of the single cell metabolomics ions
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="da"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
     <ExportAPI("SCM_ionStat")>
     <RApiReturn(GetType(SingleCellIonStat))>
-    Public Function singleCellsIons(raw As mzPack) As Object
-        Return SingleCellIonStat.DoIonStats(raw).ToArray
+    Public Function singleCellsIons(raw As mzPack,
+                                    Optional da As Double = 0.01,
+                                    Optional parallel As Boolean = True) As Object
+
+        Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
     End Function
 End Module
