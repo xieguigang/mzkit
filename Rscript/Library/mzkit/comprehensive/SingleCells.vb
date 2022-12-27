@@ -19,7 +19,7 @@ Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.D
 Module SingleCells
 
     Sub New()
-
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
     End Sub
 
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe

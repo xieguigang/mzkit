@@ -99,19 +99,36 @@ Module TissueMorphology
                                      y As Double(),
                                      z As Double(),
                                      cluster As Integer(),
+                                     Optional is_singlecells As Boolean = False,
                                      Optional env As Environment = Nothing) As UMAPPoint()
 
         Dim pixels As String() = REnv.asVector(Of String)(points)
         Dim umap As UMAPPoint() = pixels _
             .Select(Function(pi, i)
-                        Dim xy As Integer() = pi.Split(","c).Select(AddressOf Integer.Parse).ToArray
-                        Dim sample As New UMAPPoint With {
-                            .[class] = cluster(i),
-                            .Pixel = New Point(xy(0), xy(1)),
-                            .x = x(i),
-                            .y = y(i),
-                            .z = z(i)
-                        }
+                        Dim sample As UMAPPoint
+
+                        If is_singlecells Then
+                            sample = New UMAPPoint With {
+                                .[class] = cluster(i),
+                                .label = pi,
+                                .x = x(i),
+                                .y = y(i),
+                                .z = z(i)
+                            }
+                        Else
+                            Dim xy As Integer() = pi.Split(","c) _
+                                .Select(AddressOf Integer.Parse) _
+                                .ToArray
+
+                            sample = New UMAPPoint With {
+                                .[class] = cluster(i),
+                                .Pixel = New Point(xy(0), xy(1)),
+                                .label = pi,
+                                .x = x(i),
+                                .y = y(i),
+                                .z = z(i)
+                            }
+                        End If
 
                         Return sample
                     End Function) _
