@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
+Imports CDFDimension = Microsoft.VisualBasic.DataStorage.netCDF.Components.Dimension
 
 ''' <summary>
 ''' the cdf file data handler
@@ -110,6 +111,7 @@ Public Module CDF
             Dim umapZ As Double() = umap.Select(Function(p) p.z).ToArray
             Dim clusters As Integer() = umap.Select(Function(p) p.class).ToArray
             Dim umapsize As New Dimension With {.name = "umap_size", .size = umap.Length}
+            Dim labels As String() = umap.Select(Function(p) Strings.Trim(p.label)).ToArray
 
             Call cdf.AddVariable("sampleX", New integers(sampleX), umapsize)
             Call cdf.AddVariable("sampleY", New integers(sampleY), umapsize)
@@ -118,6 +120,14 @@ Public Module CDF
             Call cdf.AddVariable("umapX", New doubles(umapX), umapsize)
             Call cdf.AddVariable("umapY", New doubles(umapY), umapsize)
             Call cdf.AddVariable("umapZ", New doubles(umapZ), umapsize)
+
+            ' cells labels is optional
+            If Not labels.All(Function(s) s = "") Then
+                Dim chrs As New chars(labels)
+                Dim chrSize As Dimension = CDFDimension.FromVector(chrs)
+
+                Call cdf.AddVariable("spot_labels", chrs, [dim]:=chrSize)
+            End If
         End Using
 
         Return True
@@ -132,6 +142,12 @@ Public Module CDF
             Dim umapY As doubles = cdf.getDataVariable("umapY")
             Dim umapZ As doubles = cdf.getDataVariable("umapZ")
             Dim clusters As integers = cdf.getDataVariable("cluster")
+            Dim labels As String() = {}
+
+            ' label is optional for make data compatibability
+            If cdf.dataVariableExists("spot_labels") Then
+                labels = DirectCast(cdf.getDataVariable("spot_labels"), chars).LoadJSON(Of String())
+            End If
 
             Return clusters _
                 .Select(Function(cl, i)
@@ -140,7 +156,8 @@ Public Module CDF
                                 .Pixel = New Point(sampleX(i), sampleY(i)),
                                 .x = umapX(i),
                                 .y = umapY(i),
-                                .z = umapZ(i)
+                                .z = umapZ(i),
+                                .label = labels.ElementAtOrDefault(i)
                             }
                         End Function) _
                 .ToArray

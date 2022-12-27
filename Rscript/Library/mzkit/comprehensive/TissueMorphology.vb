@@ -99,19 +99,36 @@ Module TissueMorphology
                                      y As Double(),
                                      z As Double(),
                                      cluster As Integer(),
+                                     Optional is_singlecells As Boolean = False,
                                      Optional env As Environment = Nothing) As UMAPPoint()
 
         Dim pixels As String() = REnv.asVector(Of String)(points)
         Dim umap As UMAPPoint() = pixels _
             .Select(Function(pi, i)
-                        Dim xy As Integer() = pi.Split(","c).Select(AddressOf Integer.Parse).ToArray
-                        Dim sample As New UMAPPoint With {
-                            .[class] = cluster(i),
-                            .Pixel = New Point(xy(0), xy(1)),
-                            .x = x(i),
-                            .y = y(i),
-                            .z = z(i)
-                        }
+                        Dim sample As UMAPPoint
+
+                        If is_singlecells Then
+                            sample = New UMAPPoint With {
+                                .[class] = cluster(i),
+                                .label = pi,
+                                .x = x(i),
+                                .y = y(i),
+                                .z = z(i)
+                            }
+                        Else
+                            Dim xy As Integer() = pi.Split(","c) _
+                                .Select(AddressOf Integer.Parse) _
+                                .ToArray
+
+                            sample = New UMAPPoint With {
+                                .[class] = cluster(i),
+                                .Pixel = New Point(xy(0), xy(1)),
+                                .label = pi,
+                                .x = x(i),
+                                .y = y(i),
+                                .z = z(i)
+                            }
+                        End If
 
                         Return sample
                     End Function) _
@@ -313,6 +330,28 @@ Module TissueMorphology
         End If
 
         Return mapping
+    End Function
+
+    <ExportAPI("splitMapping")>
+    <RApiReturn(GetType(list))>
+    Public Function SplitMapping(mapping As SpatialMapping) As Object
+        Dim list As New Dictionary(Of String, Object)
+        Dim groups = mapping.spots _
+            .GroupBy(Function(r) Strings.Trim(r.TissueMorphology)) _
+            .ToArray
+
+        For Each group In groups
+            list(group.Key) = New SpatialMapping With {
+                .color = mapping.color,
+                .label = group.Key,
+                .transform = mapping.transform,
+                .spots = group.ToArray
+            }
+        Next
+
+        Return New list With {
+            .slots = list
+        }
     End Function
 
     ''' <summary>
