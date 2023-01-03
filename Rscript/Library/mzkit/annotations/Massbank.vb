@@ -261,9 +261,19 @@ Module Massbank
                                       Dim list As New list With {
                                          .slots = New Dictionary(Of String, Object)
                                       }
-                                      Dim lipidName As LipidName = LipidName.ParseLipidName(l.ABBREVIATION)
 
-                                      list.add(NameOf(l.ABBREVIATION), {l.ABBREVIATION, lipidName.ToSystematicName, lipidName.ToOverviewName})
+                                      If l.ABBREVIATION.StringEmpty Then
+                                          list.add(NameOf(l.ABBREVIATION), l.ABBREVIATION)
+                                      Else
+                                          Dim lipidName As LipidName = LipidName.ParseLipidName(l.ABBREVIATION)
+
+                                          list.add(NameOf(l.ABBREVIATION), {
+                                              l.ABBREVIATION,
+                                              lipidName.ToSystematicName,
+                                              lipidName.ToOverviewName
+                                          })
+                                      End If
+
                                       list.add(NameOf(l.CATEGORY), l.CATEGORY)
                                       list.add(NameOf(l.CHEBI_ID), l.CHEBI_ID)
                                       list.add(NameOf(l.CLASS_LEVEL4), l.CLASS_LEVEL4)
