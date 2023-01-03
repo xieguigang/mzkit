@@ -133,8 +133,9 @@ Public Module SDFExtensions
                 Else
                     valueStr = table(key).JoinBy(ASCII.LF)
                     value = any.CTypeDynamic(valueStr, type)
-                    properties(key).SetValue(meta, value)
                 End If
+
+                properties(key).SetValue(meta, value)
             Else
                 Throw New KeyNotFoundException(key)
             End If
