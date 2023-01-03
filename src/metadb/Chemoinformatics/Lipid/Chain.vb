@@ -119,7 +119,7 @@ Public Class BondPosition
                 Dim t As String = token.StringReplace("\d+", "")
 
                 Yield New BondPosition With {
-                    .index = Integer.Parse(index),
+                    .index = If(index.StringEmpty, 1, Integer.Parse(index)),
                     .[structure] = t
                 }
             Next
