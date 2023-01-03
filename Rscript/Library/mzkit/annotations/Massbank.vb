@@ -272,6 +272,8 @@ Module Massbank
                                               lipidName.ToSystematicName,
                                               lipidName.ToOverviewName
                                           })
+
+                                          list.add("lipid", lipidName.ToOverviewName)
                                       End If
 
                                       list.add(NameOf(l.CATEGORY), l.CATEGORY)
