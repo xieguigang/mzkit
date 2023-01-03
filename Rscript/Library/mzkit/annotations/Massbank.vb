@@ -101,7 +101,11 @@ Module Massbank
         }
 
         For Each col As NamedValue(Of Array) In lipidmap.ProjectVectors
-            Call table.columns.Add(col.Name, col.Value)
+            If col.Name = "SYNONYMS" Then
+                Call table.add(col.Name, From str As String() In DirectCast(col.Value, String()()) Select str.JoinBy("; "))
+            Else
+                Call table.columns.Add(col.Name, col.Value)
+            End If
         Next
 
         Return table

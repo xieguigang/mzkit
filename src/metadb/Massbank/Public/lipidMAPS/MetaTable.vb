@@ -65,6 +65,11 @@ Namespace LipidMaps
 
         Friend ReadOnly properties As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
 
+        ''' <summary>
+        ''' cast object set to dataframe columns
+        ''' </summary>
+        ''' <param name="lipidmaps"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function ProjectVectors(lipidmaps As MetaData()) As IEnumerable(Of NamedValue(Of Array))
             For Each [property] As PropertyInfo In properties.Values
