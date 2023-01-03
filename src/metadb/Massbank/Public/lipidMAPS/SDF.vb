@@ -114,7 +114,9 @@ Namespace LipidMaps
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Data(sdf As SDF) As MetaData
-            Return sdf.Data(Of MetaData)(properties)
+            Dim obj As MetaData = sdf.Data(Of MetaData)(properties)
+            obj.SYNONYMS = obj.SYNONYMS.ElementAtOrDefault(Scan0).StringSplit(";\s+")
+            Return obj
         End Function
 
         ''' <summary>
