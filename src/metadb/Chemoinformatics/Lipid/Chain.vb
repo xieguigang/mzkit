@@ -34,17 +34,20 @@
         Dim overview As String() = components.Match(".+[:]\d+").Split(":"c)
         Dim carbons As Integer
         Dim tag As String = Nothing
+        Dim is_empty As Boolean = overview.Length = 1 AndAlso overview(Scan0).StringEmpty
 
-        components = components.Replace(overview.JoinBy(":"), "")
+        If Not is_empty Then
+            components = components.Replace(overview.JoinBy(":"), "")
+        End If
 
         If overview(Scan0).IsInteger Then
             carbons = Integer.Parse(overview(Scan0))
-        Else
+        ElseIf Not is_empty Then
             tag = overview(Scan0).StringReplace("\d+", "")
             carbons = Integer.Parse(overview(Scan0).Match("\d+"))
         End If
 
-        Dim DBes As Integer = Integer.Parse(overview(1))
+        Dim DBes As Integer = If(is_empty, 0, Integer.Parse(overview(1)))
         Dim bonds As BondPosition() = BondPosition.ParseStructure(components).ToArray
 
         Return New Chain With {
@@ -92,10 +95,11 @@ Public Class BondPosition
 
         Dim groupInfo As String = components.GetTagValue("-", failureNoName:=False).Value
         Dim tokens As String() = groupInfo.Split("-"c)
+        Dim is_empty As Boolean = tokens.Length = 1 AndAlso tokens(Scan0) = ""
 
         components = components.Replace($"-{groupInfo}", "")
 
-        If Not (tokens.Length = 1 AndAlso tokens(Scan0) = "") Then
+        If Not is_empty Then
             For Each token As String In tokens
                 Dim index = token.Match("\(\d+[a-zA-Z]\)")
                 Dim t As String = index.StringReplace("\d+", "").Trim("("c, ")"c)
