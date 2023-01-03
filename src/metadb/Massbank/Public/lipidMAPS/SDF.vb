@@ -81,7 +81,7 @@ Namespace LipidMaps
         <MessagePackMember(4, NilImplication:=NilImplication.MemberDefault)> Public Property PLANTFA_ID As String
         <MessagePackMember(5, NilImplication:=NilImplication.MemberDefault)> Public Property COMMON_NAME As String
         <MessagePackMember(6, NilImplication:=NilImplication.MemberDefault)> Public Property SYSTEMATIC_NAME As String
-        <MessagePackMember(7, NilImplication:=NilImplication.MemberDefault)> Public Property SYNONYMS As String
+        <MessagePackMember(7, NilImplication:=NilImplication.MemberDefault)> Public Property SYNONYMS As String()
         <MessagePackMember(8, NilImplication:=NilImplication.MemberDefault)> Public Property ABBREVIATION As String
         <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String
         <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
@@ -114,20 +114,22 @@ Namespace LipidMaps
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Data(sdf As SDF) As MetaData
-            Return sdf.Data(Of MetaData)(properties)
+            Dim obj As MetaData = sdf.Data(Of MetaData)(properties)
+            obj.SYNONYMS = obj.SYNONYMS.ElementAtOrDefault(Scan0).StringSplit(";\s+")
+            Return obj
         End Function
 
         ''' <summary>
         ''' 只要任意一个编号对象相等，就认为两个对象是同一种物质？
         ''' </summary>
-        ''' <param name="name$"></param>
-        ''' <param name="systematicName$"></param>
-        ''' <param name="kegg$"></param>
-        ''' <param name="chebi$"></param>
-        ''' <param name="hmdb$"></param>
-        ''' <param name="inchiKey$"></param>
-        ''' <param name="inchi$"></param>
-        ''' <param name="metabolomicsID$"></param>
+        ''' <param name="name"></param>
+        ''' <param name="systematicName"></param>
+        ''' <param name="kegg"></param>
+        ''' <param name="chebi"></param>
+        ''' <param name="hmdb"></param>
+        ''' <param name="inchiKey"></param>
+        ''' <param name="inchi"></param>
+        ''' <param name="metabolomicsID"></param>
         ''' <returns></returns>
         Public Function EqualsAny(Optional name$ = Nothing,
                                   Optional systematicName$ = Nothing,
