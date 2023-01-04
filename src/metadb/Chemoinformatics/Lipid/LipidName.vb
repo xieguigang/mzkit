@@ -27,6 +27,10 @@ Public Class LipidName
                                Select str).JoinBy("_")})"
     End Function
 
+    ''' <summary>
+    ''' $"{className}({totalCarbons}:{totalDBes})"
+    ''' </summary>
+    ''' <returns></returns>
     Public Function ToOverviewName() As String
         Dim totalCarbons As Integer = Aggregate c As Chain In chains Into Sum(c.carbons)
         Dim totalDBes As Integer = Aggregate c As Chain In chains Into Sum(c.doubleBonds)
