@@ -170,7 +170,8 @@ Public Module Extensions
             .Chromatogram = raw.Chromatogram,
             .Scanners = raw.Scanners,
             .source = raw.source,
-            .Thumbnail = raw.Thumbnail
+            .Thumbnail = raw.Thumbnail,
+            .metadata = raw.metadata
         }
     End Function
 
