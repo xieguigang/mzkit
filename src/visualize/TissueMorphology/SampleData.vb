@@ -15,7 +15,9 @@ Public Module SampleData
     ''' the layer data of target ion m/z in the ms-imaging raw data file
     ''' </param>
     ''' <param name="regions"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' [region_label => [color => expression_vector]]
+    ''' </returns>
     <Extension>
     Public Function ExtractSample(Of T As Pixel)(layer As T(),
                                                  regions As IEnumerable(Of TissueRegion),
