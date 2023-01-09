@@ -778,6 +778,9 @@ Module MsImaging
         Dim scaleSize As New Size(image.Width * pointSize.Width, image.Height * pointSize.Height)
 
         If Not size Is Nothing Then
+            ' 20230109 some raw data its size aspect ratio may be very different with
+            ' the size ratio 1:1
+            ' this size overrides may solve this problem
             Dim sizeVal = InteropArgumentHelper.getSize(size, env, [default]:="0,0").SizeParser
 
             If Not sizeVal.IsEmpty Then
