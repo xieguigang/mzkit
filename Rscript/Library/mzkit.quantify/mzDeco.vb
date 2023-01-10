@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -104,6 +105,7 @@ Module mzDeco
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(samples As list,
                                   Optional mzdiff As Object = "da:0.001",
+                                  Optional norm As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
@@ -135,6 +137,17 @@ Module mzDeco
                 End If
             Next
         Next
+
+        If norm Then
+            For Each name As String In sampleNames
+                Dim v = peaktable.Select(Function(i) i(name)).AsVector
+                v = v / v.Sum * (10 ^ 8)
+
+                For i As Integer = 0 To peaktable.Length - 1
+                    peaktable(i)(name) = v(i)
+                Next
+            Next
+        End If
 
         Return peaktable
     End Function
