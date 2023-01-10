@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
@@ -87,7 +88,30 @@ Public Module PeakAlignment
             .ToArray
 
         For Each row In rt_groups.IteratesALL
-            Yield New xcms2
+            Dim mzRange As Double() = row.Select(Function(i) i.peak.mz).ToArray
+            Dim rtRange As Double() = row _
+                .Select(Function(i) {i.peak.rt, i.peak.rtmax, i.peak.rtmin}) _
+                .IteratesALL _
+                .ToArray
+            Dim peakAreas As New Dictionary(Of String, Double)
+
+            For Each sample In row
+                peakAreas(sample.sample) += sample.peak.area
+            Next
+
+            Dim peak As New xcms2 With {
+                .mz = mzRange.Average,
+                .mzmin = mzRange.Min,
+                .mzmax = mzRange.Max,
+                .rt = rtRange.Average,
+                .rtmin = rtRange.Min,
+                .rtmax = rtRange.Max,
+                .npeaks = row.Length,
+                .Properties = peakAreas,
+                .ID = $"M{stdNum.Round(.mz)}T{stdNum.Round(.rt)}"
+            }
+
+            Yield peak
         Next
     End Function
 End Module
