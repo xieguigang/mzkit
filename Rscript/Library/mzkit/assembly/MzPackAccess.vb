@@ -163,11 +163,19 @@ Module MzPackAccess
     ''' <returns></returns>
     <ExportAPI("readFileCache")>
     <RApiReturn(GetType(mzPack))>
-    Public Function readFileCache(mzwork As WorkspaceAccess, fileName As String, Optional env As Environment = Nothing) As Object
+    Public Function readFileCache(mzwork As WorkspaceAccess,
+                                  fileName As String,
+                                  Optional [single] As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
+
         Dim verbose As Boolean = env.globalEnvironment.options.verbose
         Dim cache = mzwork.GetByFileName(fileName, verbose).ToArray
 
-        Return cache
+        If [single] Then
+            Return cache.FirstOrDefault
+        Else
+            Return cache
+        End If
     End Function
 
     ''' <summary>
