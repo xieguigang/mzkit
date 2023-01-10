@@ -12,7 +12,7 @@
 #' @return A data collection of ion pairs dataset for run
 #'    MRM data quantification.
 #'
-const ionPairsFromMsl as function(ions, unit = "Minute") {
+const ionPairsFromMsl = function(ions, unit = "Minute") {
     if (typeof(ions) == "string") {
         ions = ions 
         # the time unit is minute by default
