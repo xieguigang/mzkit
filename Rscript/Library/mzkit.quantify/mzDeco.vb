@@ -97,7 +97,7 @@ Module mzDeco
 
     <ExportAPI("read.peakFeatures")>
     Public Function readPeakData(file As String) As PeakFeature()
-        Return file.LoadCsv(Of PeakFeature)().ToArray
+        Return file.LoadCsv(Of PeakFeature)(mute:=True).ToArray
     End Function
 
     <ExportAPI("peak_alignment")>
