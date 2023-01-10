@@ -102,14 +102,25 @@ Module mzDeco
 
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
-    Public Function peakAlignment(samples As list, Optional env As Environment = Nothing) As Object
+    Public Function peakAlignment(samples As list,
+                                  Optional mzdiff As Object = "da:0.01",
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.01")
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
         Dim samplePeaks As Dictionary(Of String, PeakFeature()) = samples.AsGeneric(Of PeakFeature())(env)
         Dim sampleData As NamedCollection(Of PeakFeature)() = samplePeaks _
             .Select(Function(i)
                         Return New NamedCollection(Of PeakFeature)(i.Key, i.Value)
                     End Function) _
             .ToArray
-        Dim peaktable As xcms2() = sampleData.CreateMatrix.ToArray
+        Dim peaktable As xcms2() = sampleData _
+            .CreateMatrix(mzErr.TryCast(Of Tolerance)) _
+            .ToArray
 
         Return peaktable
     End Function
