@@ -47,12 +47,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("mzDeco")>
@@ -90,6 +93,25 @@ Module mzDeco
             .GetMzGroups(mzdiff:=errors) _
             .DecoMzGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline) _
             .ToArray
+    End Function
+
+    <ExportAPI("read.peakFeatures")>
+    Public Function readPeakData(file As String) As PeakFeature()
+        Return file.LoadCsv(Of PeakFeature)().ToArray
+    End Function
+
+    <ExportAPI("peak_alignment")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function peakAlignment(samples As list, Optional env As Environment = Nothing) As Object
+        Dim samplePeaks As Dictionary(Of String, PeakFeature()) = samples.AsGeneric(Of PeakFeature())(env)
+        Dim sampleData As NamedCollection(Of PeakFeature)() = samplePeaks _
+            .Select(Function(i)
+                        Return New NamedCollection(Of PeakFeature)(i.Key, i.Value)
+                    End Function) _
+            .ToArray
+        Dim peaktable As xcms2() = sampleData.CreateMatrix.ToArray
+
+        Return peaktable
     End Function
 
     ''' <summary>
