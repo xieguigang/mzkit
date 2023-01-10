@@ -103,10 +103,10 @@ Module mzDeco
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(samples As list,
-                                  Optional mzdiff As Object = "da:0.01",
+                                  Optional mzdiff As Object = "da:0.001",
                                   Optional env As Environment = Nothing) As Object
 
-        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.01")
+        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)

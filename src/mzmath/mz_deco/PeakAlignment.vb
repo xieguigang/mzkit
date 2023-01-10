@@ -99,17 +99,17 @@ Public Module PeakAlignment
                 If peakAreas.ContainsKey(sample.sample) Then
                     peakAreas(sample.sample) += sample.peak.area
                 Else
-                    peakAreas.Add(sample.sample, sample.peak.area)
+                    peakAreas(sample.sample) = sample.peak.area
                 End If
             Next
 
             Dim peak As New xcms2 With {
-                .mz = mzRange.Average,
+                .mz = stdNum.Round(mzRange.Average, 4),
                 .mzmin = mzRange.Min,
                 .mzmax = mzRange.Max,
-                .rt = rtRange.Average,
-                .rtmin = rtRange.Min,
-                .rtmax = rtRange.Max,
+                .rt = stdNum.Round(rtRange.Average),
+                .rtmin = stdNum.Round(rtRange.Min),
+                .rtmax = stdNum.Round(rtRange.Max),
                 .npeaks = row.Length,
                 .Properties = peakAreas,
                 .ID = $"M{stdNum.Round(.mz)}T{stdNum.Round(.rt)}"
