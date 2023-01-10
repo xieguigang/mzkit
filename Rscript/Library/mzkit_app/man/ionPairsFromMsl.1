@@ -1,0 +1,28 @@
+﻿.TH IONPAIRSFROMMSL 1 2023-01-10 "" "Read ion pairs data from MSL dataset"
+.SH NAME
+ionPairsFromMsl \- ionPairsFromMsl(ions,
+    <i>unit</i> = Minute)
+.SH SYNOPSIS
+\fIionPairsFromMsl(ions,
+    <i>unit</i> = Minute)\fR
+.SH OPTIONS
+.PP
+\fBions\fB \fR\- . the MSL ions dataset or a file path for read MSL ions data.
+.PP
+.PP
+\fBunit\fB \fR\- Minute. the data unit of the time values that stored in the MSL ions data, default is in unit of minute.
+.PP
+.SH VALUE
+.PP
+A data collection of ion pairs dataset for run MRM data quantification.
+.PP
+.SH DETAILS
+.PP
+this function will auto handling of the MSL ions data source of the raw dataset or raw file path of the ions data in MSL file format.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.ionPairsFromMsl at MRM.R:line 15
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2023

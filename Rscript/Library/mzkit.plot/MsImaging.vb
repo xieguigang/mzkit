@@ -690,6 +690,11 @@ Module MsImaging
     ''' be treated as background pixels and removed from the MSI 
     ''' rendering.
     ''' </param>
+    ''' <param name="size">
+    ''' do size overrides, default parameter value nothing means the
+    ''' size is evaluated based on the dimension <paramref name="dims"/> 
+    ''' of the ms-imaging raw data and the <paramref name="pixelSize"/>
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("render")>
@@ -702,6 +707,8 @@ Module MsImaging
                                    Optional pixelSize As Object = "6,6",
                                    Optional filter As RasterPipeline = Nothing,
                                    Optional background As String() = Nothing,
+                                   <RRawVectorArgument>
+                                   Optional size As Object = Nothing,
                                    Optional colorLevels As Integer = 255,
                                    <RRawVectorArgument>
                                    Optional dims As Object = Nothing,
@@ -768,8 +775,20 @@ Module MsImaging
             defaultFill:=defaultFill,
             mapLevels:=colorLevels
         ).AsGDIImage
+        Dim scaleSize As New Size(image.Width * pointSize.Width, image.Height * pointSize.Height)
 
-        Return New RasterScaler(image).Scale(image.Width * pointSize.Width, image.Height * pointSize.Height)
+        If Not size Is Nothing Then
+            ' 20230109 some raw data its size aspect ratio may be very different with
+            ' the size ratio 1:1
+            ' this size overrides may solve this problem
+            Dim sizeVal = InteropArgumentHelper.getSize(size, env, [default]:="0,0").SizeParser
+
+            If Not sizeVal.IsEmpty Then
+                scaleSize = sizeVal
+            End If
+        End If
+
+        Return New RasterScaler(image).Scale(scaleSize.Width, scaleSize.Height)
     End Function
 
     ''' <summary>
