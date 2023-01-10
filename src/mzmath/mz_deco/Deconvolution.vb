@@ -91,7 +91,7 @@ Public Module Deconvolution
             snThreshold:=sn_threshold
         )
             Yield New PeakFeature With {
-                .mz = mzpoints.mz,
+                .mz = stdNum.Round(mzpoints.mz, 4),
                 .baseline = ROI.baseline,
                 .integration = ROI.integration,
                 .maxInto = ROI.maxInto,
@@ -183,7 +183,8 @@ Public Module Deconvolution
                                           Optional sn As Double = 3,
                                           Optional nticks As Integer = 6) As IEnumerable(Of PeakFeature)
 
-        Dim features As IGrouping(Of String, PeakFeature)() = mzgroups.ToArray _
+        Dim groupData As MzGroup() = mzgroups.ToArray
+        Dim features As IGrouping(Of String, PeakFeature)() = groupData _
             .AsParallel _
             .Select(Function(mz)
                         Return mz.GetPeakGroups(peakwidth, quantile, sn)
@@ -208,14 +209,14 @@ Public Module Deconvolution
                 uid = $"M{mId}T{rtgroup.Key}"
                 guid(uid) = 0
 
-                For Each feature In rtgroup
+                For Each feature As PeakFeature In rtgroup
                     If guid(uid).Value = 0 Then
                         feature.xcms_id = uid
                     Else
                         feature.xcms_id = uid & "_" & guid(uid).ToString
                     End If
 
-                    guid(uid).Hit()
+                    Call guid(uid).Hit()
 
                     Yield feature
                 Next
