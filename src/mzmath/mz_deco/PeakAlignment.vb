@@ -53,7 +53,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
@@ -64,7 +67,16 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Public Module PeakAlignment
 
     <Extension>
-    Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
-
+    Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                          mzdiff As Tolerance) As IEnumerable(Of xcms2)
+        Dim tag_peaks = samples _
+            .Select(Iterator Function(peaks) As IEnumerable(Of (sample As String, peak As PeakFeature))
+                        For Each peak As PeakFeature In peaks
+                            Yield (peaks.name, peak)
+                        Next
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(x) x.peak.mz, mzdiff) _
+            .ToArray
     End Function
 End Module
