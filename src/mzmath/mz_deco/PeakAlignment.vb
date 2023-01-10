@@ -96,7 +96,11 @@ Public Module PeakAlignment
             Dim peakAreas As New Dictionary(Of String, Double)
 
             For Each sample In row
-                peakAreas(sample.sample) += sample.peak.area
+                If peakAreas.ContainsKey(sample.sample) Then
+                    peakAreas(sample.sample) += sample.peak.area
+                Else
+                    peakAreas.Add(sample.sample, sample.peak.area)
+                End If
             Next
 
             Dim peak As New xcms2 With {
