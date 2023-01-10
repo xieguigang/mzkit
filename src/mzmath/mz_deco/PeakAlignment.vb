@@ -68,7 +68,8 @@ Public Module PeakAlignment
 
     <Extension>
     Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
-                                          mzdiff As Tolerance) As IEnumerable(Of xcms2)
+                                          mzdiff As Tolerance,
+                                          Optional rt_win As Double = 15) As IEnumerable(Of xcms2)
         Dim tag_peaks = samples _
             .Select(Iterator Function(peaks) As IEnumerable(Of (sample As String, peak As PeakFeature))
                         For Each peak As PeakFeature In peaks
@@ -78,5 +79,15 @@ Public Module PeakAlignment
             .IteratesALL _
             .GroupBy(Function(x) x.peak.mz, mzdiff) _
             .ToArray
+        Dim rt_groups = tag_peaks _
+            .AsParallel _
+            .Select(Function(mz_group)
+                        Return mz_group.GroupBy(Function(i) i.peak.rt, offsets:=rt_win).ToArray
+                    End Function) _
+            .ToArray
+
+        For Each row In rt_groups.IteratesALL
+            Yield New xcms2
+        Next
     End Function
 End Module
