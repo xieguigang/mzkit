@@ -121,6 +121,20 @@ Module mzDeco
         Dim peaktable As xcms2() = sampleData _
             .CreateMatrix(mzErr.TryCast(Of Tolerance)) _
             .ToArray
+        Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
+        Dim sampleNames As String() = samples.getNames
+
+        For i As Integer = 0 To id.Length - 1
+            Dim peak As xcms2 = peaktable(i)
+
+            peak.ID = id(i)
+
+            For Each sample_id As String In sampleNames
+                If Not peak.Properties.ContainsKey(sample_id) Then
+                    peak(sample_id) = 0.0
+                End If
+            Next
+        Next
 
         Return peaktable
     End Function
