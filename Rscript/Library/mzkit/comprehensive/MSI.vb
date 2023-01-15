@@ -411,8 +411,10 @@ Module MSI
         Dim dimSize = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
         Dim dimsVal As Size? = Nothing
 
-        If dimSize = "0,0" Then
+        If dimSize <> "0,0" Then
             dimsVal = dimSize.SizeParser
+        Else
+            dimsVal = raw.GetMSIMetadata.GetDimension
         End If
 
         If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
