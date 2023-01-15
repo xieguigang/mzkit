@@ -143,9 +143,12 @@ Namespace Blender
                         .y = y
                     }
                 End Function
-            Dim pixels As iPixelIntensity() = summary.ToArray.KnnFill(dx, dy, q, aggregate).ToArray
+            Dim pixels As iPixelIntensity() = summary _
+                .ToArray _
+                .KnnFill(dx, dy, q, aggregate) _
+                .ToArray
 
-            Return MSISummary.FromPixels(pixels)
+            Return MSISummary.FromPixels(pixels, dims:=summary.size)
         End Function
 
         <Extension>
