@@ -583,9 +583,10 @@ Module MSI
                              Optional env As Environment = Nothing) As Object
 
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
+        Dim println = env.WriteLineHandler
 
         If yscale <> 1.0 Then
-            Call base.print($"yscale is {yscale}", , env)
+            Call println($"yscale is {yscale}")
         End If
 
         If pipeline.isError Then
@@ -598,7 +599,7 @@ Module MSI
                     intocutoff:=intocutoff,
                     yscale:=yscale,
                     progress:=Sub(msg)
-                                  Call base.print(msg, , env)
+                                  Call println(msg)
                               End Sub
                 )
         End If
