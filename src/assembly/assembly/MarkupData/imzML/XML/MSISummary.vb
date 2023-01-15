@@ -66,6 +66,7 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.imzML
@@ -76,9 +77,13 @@ Namespace MarkupData.imzML
     Public Class MSISummary
 
         Public Property rowScans As iPixelIntensity()()
+        ''' <summary>
+        ''' the MALDI scan dimension size
+        ''' </summary>
+        ''' <returns></returns>
         Public Property size As Size
 
-        Public Shared Function FromPixels(pixels As IEnumerable(Of iPixelIntensity)) As MSISummary
+        Public Shared Function FromPixels(pixels As IEnumerable(Of iPixelIntensity), Optional dims As Size? = Nothing) As MSISummary
             Dim matrix2D As iPixelIntensity()() = pixels _
                 .GroupBy(Function(p) p.y) _
                 .OrderBy(Function(p) p.Key) _
@@ -89,9 +94,20 @@ Namespace MarkupData.imzML
             Dim width As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.x).Max).Max
             Dim height As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.y).Max).Max
 
+            If dims Is Nothing Then
+                Dim points = matrix2D _
+                    .Select(Function(p)
+                                Return p.Select(Function(pi) pi.GetPoint)
+                            End Function) _
+                    .IteratesALL
+                Dim poly As New Polygon2D(points)
+
+                dims = New Size(poly.xpoints.Max, poly.ypoints.Max)
+            End If
+
             Return New MSISummary With {
                 .rowScans = matrix2D,
-                .size = New Size(width, height)
+                .size = dims
             }
         End Function
 

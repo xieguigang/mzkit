@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -401,9 +402,18 @@ Module MSI
     Public Function MSI_summary(raw As mzPack,
                                 Optional x As Long() = Nothing,
                                 Optional y As Long() = Nothing,
-                                Optional as_vector As Boolean = False) As Object
+                                Optional as_vector As Boolean = False,
+                                <RRawVectorArgument>
+                                Optional dims As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
 
         Dim filter As Func(Of Long, Long, Boolean)
+        Dim dimSize = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
+        Dim dimsVal As Size? = Nothing
+
+        If dimSize = "0,0" Then
+            dimsVal = dimSize.SizeParser
+        End If
 
         If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
             filter = Function(xi, yi) True
@@ -461,7 +471,10 @@ Module MSI
         If as_vector Then
             Return pixelFilter.ToArray
         Else
-            Return MSISummary.FromPixels(pixelFilter)
+            Return MSISummary.FromPixels(
+                pixels:=pixelFilter,
+                dims:=dimsVal
+            )
         End If
     End Function
 
