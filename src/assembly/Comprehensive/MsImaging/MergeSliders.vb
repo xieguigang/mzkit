@@ -42,6 +42,8 @@ Public Module MergeSliders
         Dim left As Integer = polygons.First.Item2.xpoints.Min
         Dim union As New List(Of ScanMS1)
 
+        ' for each sample mzpack object
+        ' do sample join
         For Each sample As (Ms As mzPack, shape As Polygon2D) In polygons
             Call union.JoinOneSample(
                 shape:=sample.shape,
@@ -81,11 +83,26 @@ Public Module MergeSliders
         Dim deltaY As Integer = shape.ypoints.Min * -1 + top
         Dim sampleid As String = sample.source
 
+        ' 20230119 the previous spot normalize is not working as expected
+        ' so do sample normalized based on the TIC of the entire sample data
+        ' at here
+        Dim totalIons As Double = Aggregate a As ScanMS1
+                                  In sample.MS
+                                  Let spot_TIC As Double = a.into.Sum
+                                  Into Sum(spot_TIC)
+
+        Const level As Double = 10.0 ^ 8
         Call println(" >>> " & sampleid)
 
         For Each scan As ScanMS1 In From s As ScanMS1
                                     In sample.MS
                                     Where Not s.into.IsNullOrEmpty
+
+            If norm Then
+                ' do normalized of current spot sample
+                scan.into = New Vector(scan.into) / totalIons * level
+            End If
+
             If relativePos Then
                 union.Add(scan.generateNormScan(minX, left, deltaY, sampleid, norm))
             Else
@@ -95,6 +112,16 @@ Public Module MergeSliders
         Next
     End Sub
 
+    ''' <summary>
+    ''' adjust of the sample spot location
+    ''' </summary>
+    ''' <param name="scan"></param>
+    ''' <param name="minX"></param>
+    ''' <param name="left"></param>
+    ''' <param name="deltaY"></param>
+    ''' <param name="sampleid"></param>
+    ''' <param name="norm"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function generateNormScan(scan As ScanMS1,
                                       minX As Integer,
@@ -111,11 +138,11 @@ Public Module MergeSliders
         ' confliction in data merge by adding a prefix
         ' of the source tag
         Dim scan_id As String = $"{sampleid} - {scan.scan_id}"
-        Dim normInto As New Vector(scan.into)
+        'Dim normInto As New Vector(scan.into)
 
-        If norm Then
-            normInto = (normInto / normInto.Sum) * (10 ^ 8)
-        End If
+        'If norm Then
+        '    normInto = (normInto / normInto.Sum) * (10 ^ 8)
+        'End If
 
         meta!x = x
         meta!y = y
@@ -131,7 +158,7 @@ Public Module MergeSliders
         Return New ScanMS1 With {
             .meta = meta,
             .BPC = scan.BPC,
-            .into = normInto.ToArray,
+            .into = scan.into, ' normInto.ToArray,
             .mz = scan.mz,
             .products = scan.products,
             .rt = scan.rt,
