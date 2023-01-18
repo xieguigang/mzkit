@@ -1,5 +1,8 @@
 ﻿Imports System.Drawing
 
+''' <summary>
+''' 3d scatter data point, a spatial spot or a single cell data
+''' </summary>
 Public Class UMAPPoint
 
     ''' <summary>
@@ -12,6 +15,11 @@ Public Class UMAPPoint
     ''' the cell label of current spot
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this property value may be nothing for the sptial data, 
+    ''' label value should not be nothing if the data is single 
+    ''' cell data.
+    ''' </remarks>
     Public Property label As String
     Public Property x As Double
     Public Property y As Double
