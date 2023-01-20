@@ -45,13 +45,18 @@ Namespace MsImaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMetadata() As Dictionary(Of String, String)
-            Return New Dictionary(Of String, String) From {
+            Dim datalist As New Dictionary(Of String, String) From {
                 {"width", scan_x},
                 {"height", scan_y},
-                {"resolution", resolution},
-                {"mzmin", mass_range.Min},
-                {"mzmax", mass_range.Max}
+                {"resolution", resolution}
             }
+
+            If Not mass_range Is Nothing Then
+                datalist!mzmin = mass_range.Min
+                datalist!mzmax = mass_range.Max
+            End If
+
+            Return datalist
         End Function
 
     End Class

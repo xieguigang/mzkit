@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -131,6 +132,9 @@ Namespace MsImaging
             Dim pixels As New List(Of ScanMS1)
             Dim cutoff As New RelativeIntensityCutoff(intocutoff)
             Dim metadata As New Metadata
+            Dim mzmin As New List(Of Double)
+            Dim mzmax As New List(Of Double)
+            Dim mzvals As Double()
 
             If progress Is Nothing Then
                 progress = Sub(msg)
@@ -141,12 +145,19 @@ Namespace MsImaging
             ' each row is a small sample in current sample batch
             For Each row As mzPack In src
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
+                mzvals = row.MS.Select(Function(a) a.mz).IteratesALL.ToArray
+
+                If mzvals.Length > 0 Then
+                    mzmin.Add(mzvals.Min)
+                    mzmax.Add(mzvals.Max)
+                End If
             Next
 
             Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
 
             metadata.scan_x = polygon.xpoints.Max
             metadata.scan_y = polygon.ypoints.Max
+            metadata.mass_range = New DoubleRange(mzmin.Min, mzmax.Max)
 
             Return New mzPack With {
                 .MS = pixels.ToArray,
