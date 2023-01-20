@@ -130,7 +130,7 @@ Namespace MsImaging
 
             Dim pixels As New List(Of ScanMS1)
             Dim cutoff As New RelativeIntensityCutoff(intocutoff)
-            Dim metadata As New Dictionary(Of String, String)
+            Dim metadata As New Metadata
 
             If progress Is Nothing Then
                 progress = Sub(msg)
@@ -138,14 +138,15 @@ Namespace MsImaging
                            End Sub
             End If
 
+            ' each row is a small sample in current sample batch
             For Each row As mzPack In src
                 pixels += row.MeasureRow(yscale, correction, cutoff, sumNorm, labelPrefix, progress)
             Next
 
             Dim polygon As New Polygon2D(pixels.Select(Function(scan) scan.GetMSIPixel))
 
-            metadata.Add("width", polygon.xpoints.Max)
-            metadata.Add("height", polygon.ypoints.Max)
+            metadata.scan_x = polygon.xpoints.Max
+            metadata.scan_y = polygon.ypoints.Max
 
             Return New mzPack With {
                 .MS = pixels.ToArray,
@@ -153,7 +154,7 @@ Namespace MsImaging
                 .source = Strings _
                     .Trim(labelPrefix) _
                     .Trim("-"c, " "c, CChar(vbTab), "_"c),
-                .metadata = metadata
+                .metadata = metadata.GetMetadata
             }
         End Function
 
@@ -185,6 +186,10 @@ Namespace MsImaging
 
             Dim i As i32 = 1
             Dim y As Integer = ParseRowNumber(row.source, labelPrefix) * yscale
+            Dim TIC As Double = Aggregate scan As ScanMS1
+                                In row.MS
+                                Let total As Double = scan.into.Sum
+                                Into Sum(total)
 
             Call progress($"append_row_data: {row.source} [y={y}]...")
 
@@ -200,7 +205,7 @@ Namespace MsImaging
 
                 If sumNorm Then
                     ' normalized intensity data for each pixel
-                    into = New Vector(into) / into.Sum
+                    into = New Vector(into) / TIC * 10 ^ 8
                 End If
 
                 Yield New ScanMS1 With {
