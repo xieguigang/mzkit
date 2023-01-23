@@ -56,6 +56,9 @@
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
+''' <summary>
+''' the chemical atom element
+''' </summary>
 Public Class ChemicalElement : Inherits Node
 
     Public Property elementName As String
@@ -75,6 +78,11 @@ Public Class ChemicalElement : Inherits Node
     ''' </summary>
     ''' <returns></returns>
     Public Property coordinate As Double()
+    ''' <summary>
+    ''' the atom group name
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property group As String
 
     Sub New()
     End Sub
