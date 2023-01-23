@@ -92,4 +92,45 @@ Public Class ChemicalElement : Inherits Node
         Me.elementName = element
     End Sub
 
+    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
+        Dim connected As New List(Of ChemicalElement)
+
+        ' build connection edges
+        For Each atom In formula.vertex
+            For Each partner In formula.vertex.Where(Function(v) v IsNot atom)
+                If formula.QueryEdge(atom.label, partner.label) IsNot Nothing Then
+                    Call connected.Add(partner)
+                End If
+            Next
+
+            Select Case atom.elementName
+                Case "C"
+                    Select Case connected.Count
+                        Case 1 : atom.group = "-CH3"
+                        Case 2 : atom.group = "-CH2-"
+                        Case 3 : atom.group = "-CH="
+                        Case Else
+                            atom.group = "C???"
+                    End Select
+                Case "O"
+                    Select Case connected.Count
+                        Case 1 : atom.group = "-OH"
+                        Case Else
+                            atom.group = "O"
+                    End Select
+                Case "N"
+                    Select Case connected.Count
+                        Case 1 : atom.group = "-NH3"
+                        Case 2 : atom.group = "-NH2-"
+                        Case 3 : atom.group = "-NH--"
+                        Case Else
+                            atom.group = "N???"
+                    End Select
+                Case Else
+                    atom.group = atom.elementName
+            End Select
+
+            Call connected.Clear()
+        Next
+    End Sub
 End Class
