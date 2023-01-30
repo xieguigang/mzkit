@@ -249,7 +249,7 @@ Public Class MSJointConnection : Implements IMzQuery
                                     .name = c.text,
                                     .[alias] = {c.name},
                                     .locus_tag = c,
-                                    .term_id = {c.name}
+                                    .term_id = BackgroundGene.UnknownTerms(c.name).ToArray
                                 }
                             End Function) _
                     .ToArray
@@ -278,7 +278,7 @@ Public Class MSJointConnection : Implements IMzQuery
                                         .text = id
                                     },
                                     .name = id,
-                                    .term_id = {id}
+                                    .term_id = BackgroundGene.UnknownTerms(id).ToArray
                                 }
                             End Function) _
                     .ToArray

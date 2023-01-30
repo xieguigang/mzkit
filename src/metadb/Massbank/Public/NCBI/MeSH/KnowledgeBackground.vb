@@ -20,7 +20,7 @@ Namespace NCBI.MeSH
                                         .text = term.term
                                     },
                                     .name = term.term,
-                                    .term_id = {term.term}
+                                    .term_id = BackgroundGene.UnknownTerms(term.term).ToArray
                                  }
                              End Function)
         End Function

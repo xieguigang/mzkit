@@ -1,7 +1,7 @@
-imports ["GCMS", "Linears"] from "mzkit.quantify";
-imports "visualPlots" from "mzkit.quantify";
+imports ["GCMS", "Linears"] from "mz_quantify";
+imports "visualPlots" from "mz_quantify";
 
-let plotLinears as function(linears, mslIons = NULL, output_dir = "./linears") {
+const plotLinears = function(linears, mslIons = NULL, output_dir = "./linears") {
     print("create linear plot output of your reference samples:");
     
     for (line in linears) {
@@ -36,7 +36,7 @@ let plotLinears as function(linears, mslIons = NULL, output_dir = "./linears") {
 #'    + ``ionPeaks.csv`` all ions peak ROI in all samples files, data in this table contains 
 #'                       ``rt`` range and peak area, etc.
 #' 
-let output_datatables as function(quantify, linears, output_dir = "./") {
+const output_datatables = function(quantify, linears, output_dir = "./") {
     print("dumping sample quantification result data:");
 
     result(quantify)     :> write.csv(file = `${output_dir}/quantify.csv`);

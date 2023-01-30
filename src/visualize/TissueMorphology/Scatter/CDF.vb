@@ -134,33 +134,36 @@ Public Module CDF
     End Function
 
     <Extension>
+    Public Iterator Function ReadUMAP(cdf As netCDFReader) As IEnumerable(Of UMAPPoint)
+        Dim sampleX As integers = cdf.getDataVariable("sampleX")
+        Dim sampleY As integers = cdf.getDataVariable("sampleY")
+        Dim umapX As doubles = cdf.getDataVariable("umapX")
+        Dim umapY As doubles = cdf.getDataVariable("umapY")
+        Dim umapZ As doubles = cdf.getDataVariable("umapZ")
+        Dim clusters As integers = cdf.getDataVariable("cluster")
+        Dim labels As String() = {}
+
+        ' label is optional for make data compatibability
+        If cdf.dataVariableExists("spot_labels") Then
+            labels = DirectCast(cdf.getDataVariable("spot_labels"), chars).LoadJSON(Of String())
+        End If
+
+        For i As Integer = 0 To clusters.Length - 1
+            Yield New UMAPPoint With {
+                .[class] = clusters(i),
+                .Pixel = New Point(sampleX(i), sampleY(i)),
+                .x = umapX(i),
+                .y = umapY(i),
+                .z = umapZ(i),
+                .label = labels.ElementAtOrDefault(i)
+            }
+        Next
+    End Function
+
+    <Extension>
     Public Function ReadUMAP(file As Stream) As UMAPPoint()
         Using cdf As New netCDFReader(file)
-            Dim sampleX As integers = cdf.getDataVariable("sampleX")
-            Dim sampleY As integers = cdf.getDataVariable("sampleY")
-            Dim umapX As doubles = cdf.getDataVariable("umapX")
-            Dim umapY As doubles = cdf.getDataVariable("umapY")
-            Dim umapZ As doubles = cdf.getDataVariable("umapZ")
-            Dim clusters As integers = cdf.getDataVariable("cluster")
-            Dim labels As String() = {}
-
-            ' label is optional for make data compatibability
-            If cdf.dataVariableExists("spot_labels") Then
-                labels = DirectCast(cdf.getDataVariable("spot_labels"), chars).LoadJSON(Of String())
-            End If
-
-            Return clusters _
-                .Select(Function(cl, i)
-                            Return New UMAPPoint With {
-                                .[class] = cl,
-                                .Pixel = New Point(sampleX(i), sampleY(i)),
-                                .x = umapX(i),
-                                .y = umapY(i),
-                                .z = umapZ(i),
-                                .label = labels.ElementAtOrDefault(i)
-                            }
-                        End Function) _
-                .ToArray
+            Return cdf.ReadUMAP.ToArray
         End Using
     End Function
 

@@ -401,9 +401,20 @@ Module MSI
     Public Function MSI_summary(raw As mzPack,
                                 Optional x As Long() = Nothing,
                                 Optional y As Long() = Nothing,
-                                Optional as_vector As Boolean = False) As Object
+                                Optional as_vector As Boolean = False,
+                                <RRawVectorArgument>
+                                Optional dims As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
 
         Dim filter As Func(Of Long, Long, Boolean)
+        Dim dimSize = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
+        Dim dimsVal As Size? = Nothing
+
+        If dimSize <> "0,0" Then
+            dimsVal = dimSize.SizeParser
+        Else
+            dimsVal = raw.GetMSIMetadata.GetDimension
+        End If
 
         If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
             filter = Function(xi, yi) True
@@ -461,7 +472,10 @@ Module MSI
         If as_vector Then
             Return pixelFilter.ToArray
         Else
-            Return MSISummary.FromPixels(pixelFilter)
+            Return MSISummary.FromPixels(
+                pixels:=pixelFilter,
+                dims:=dimsVal
+            )
         End If
     End Function
 
@@ -568,9 +582,10 @@ Module MSI
                              Optional env As Environment = Nothing) As Object
 
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rowScans, env)
+        Dim println = env.WriteLineHandler
 
         If yscale <> 1.0 Then
-            Call base.print($"yscale is {yscale}", , env)
+            Call println($"yscale is {yscale}")
         End If
 
         If pipeline.isError Then
@@ -583,7 +598,7 @@ Module MSI
                     intocutoff:=intocutoff,
                     yscale:=yscale,
                     progress:=Sub(msg)
-                                  Call base.print(msg, , env)
+                                  Call println(msg)
                               End Sub
                 )
         End If

@@ -91,7 +91,7 @@ Public Module Deconvolution
             snThreshold:=sn_threshold
         )
             Yield New PeakFeature With {
-                .mz = mzpoints.mz,
+                .mz = stdNum.Round(mzpoints.mz, 4),
                 .baseline = ROI.baseline,
                 .integration = ROI.integration,
                 .maxInto = ROI.maxInto,
@@ -128,38 +128,47 @@ Public Module Deconvolution
                                                        Optional rtwin As Double = 0.05,
                                                        Optional mzdiff As Tolerance = Nothing) As IEnumerable(Of MzGroup)
 
-        For Each group As NamedCollection(Of T) In scans.GroupBy(Function(ti) ti.mz, mzdiff Or Tolerance.DefaultTolerance)
-            Dim rawGroup As T() = group.ToArray
-            Dim timePoints As NamedCollection(Of T)() = rawGroup _
-                .GroupBy(Function(ti) ti.rt,
-                         Function(a, b)
-                             Return stdNum.Abs(a - b) <= rtwin
-                         End Function) _
-                .ToArray
-            Dim xic As ChromatogramTick() = timePoints _
-                .Select(Function(ti)
-                            Dim rt As Double = Aggregate p As scan In ti Into Average(p.rt)
-                            Dim into As Double = Aggregate p As scan
-                                                 In ti
-                                                 Into Max(p.intensity)
+        For Each group As NamedCollection(Of T) In scans _
+            .GroupBy(
+                evaluate:=Function(ti) ti.mz,
+                equals:=mzdiff Or Tolerance.DefaultTolerance
+             )
 
-                            Return New ChromatogramTick With {
-                                .Time = rt,
-                                .Intensity = into
-                            }
-                        End Function) _
-                .OrderBy(Function(ti) ti.Time) _
-                .ToArray
-            Dim mz As Double = rawGroup _
-                .OrderByDescending(Function(d) d.intensity) _
-                .First _
-                .mz
-
-            Yield New MzGroup With {
-                .mz = mz,
-                .XIC = xic
-            }
+            Yield group.GetMzGroups(rtwin)
         Next
+    End Function
+
+    <Extension>
+    Private Function GetMzGroups(Of T As scan)(group As NamedCollection(Of T), rtwin As Double) As MzGroup
+        Dim rawGroup As T() = group.ToArray
+        Dim timePoints As NamedCollection(Of T)() = rawGroup _
+            .GroupBy(Function(ti) ti.rt,
+                     Function(a, b)
+                         Return stdNum.Abs(a - b) <= rtwin
+                     End Function) _
+            .ToArray
+        Dim xic As ChromatogramTick() = timePoints _
+            .Select(Function(ti)
+                        Dim rt As Double = Aggregate p As scan In ti Into Average(p.rt)
+                        Dim into As Double = Aggregate p As scan
+                                             In ti
+                                             Into Max(p.intensity)
+
+                        Return New ChromatogramTick With {
+                            .Time = rt,
+                            .Intensity = into
+                        }
+                    End Function) _
+            .OrderBy(Function(ti) ti.Time) _
+            .ToArray
+        Dim mzPoint As T = rawGroup _
+            .OrderByDescending(Function(d) d.intensity) _
+            .First
+
+        Return New MzGroup With {
+            .mz = mzPoint.mz,
+            .XIC = xic
+        }
     End Function
 
     ''' <summary>
@@ -174,7 +183,8 @@ Public Module Deconvolution
                                           Optional sn As Double = 3,
                                           Optional nticks As Integer = 6) As IEnumerable(Of PeakFeature)
 
-        Dim features As IGrouping(Of String, PeakFeature)() = mzgroups _
+        Dim groupData As MzGroup() = mzgroups.ToArray
+        Dim features As IGrouping(Of String, PeakFeature)() = groupData _
             .AsParallel _
             .Select(Function(mz)
                         Return mz.GetPeakGroups(peakwidth, quantile, sn)
@@ -199,14 +209,14 @@ Public Module Deconvolution
                 uid = $"M{mId}T{rtgroup.Key}"
                 guid(uid) = 0
 
-                For Each feature In rtgroup
+                For Each feature As PeakFeature In rtgroup
                     If guid(uid).Value = 0 Then
                         feature.xcms_id = uid
                     Else
                         feature.xcms_id = uid & "_" & guid(uid).ToString
                     End If
 
-                    guid(uid).Hit()
+                    Call guid(uid).Hit()
 
                     Yield feature
                 Next

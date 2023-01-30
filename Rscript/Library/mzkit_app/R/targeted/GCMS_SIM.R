@@ -1,5 +1,5 @@
-imports ["GCMS", "Linears"] from "mzkit.quantify";
-imports "visualPlots" from "mzkit.quantify";
+imports ["GCMS", "Linears"] from "mz_quantify";
+imports "visualPlots" from "mz_quantify";
 imports "assembly" from "mzkit";
 
 #' Create reference linears for GCMS sim data
@@ -11,7 +11,7 @@ imports "assembly" from "mzkit";
 #' 
 #' @return a collection of data linears
 #' 
-let GCMS_linears as function(contentTable, mslIons, calfiles as string, peakwidth = [5, 13], rtshift = 30, maxDeletions = 2) {
+const GCMS_linears = function(contentTable, mslIons, calfiles as string, peakwidth = [5, 13], rtshift = 30, maxDeletions = 2) {
 	const ions = as.quantify.ion(mslIons);
 	const sim  = ScanIonExtractor(ions, peakwidth = peakwidth, rtshift = rtshift);
 
@@ -39,7 +39,7 @@ let GCMS_linears as function(contentTable, mslIons, calfiles as string, peakwidt
 #'     This method will parse the contents value from the ``calfiles`` 
 #'     file name. 
 #'
-let GCMS_contentTable as function(mslIons, calfiles as string) {
+const GCMS_contentTable = function(mslIons, calfiles as string) {
 	const contents = parseContents(calfiles);
 
 	print("contents of reference samples in ppb unit:");
@@ -48,7 +48,7 @@ let GCMS_contentTable as function(mslIons, calfiles as string) {
 	contentTable(read.msl(MSLIons, "Minute"), contents, IS = "IS");
 }
 
-let GCMS_quantify as function(linears, sim, sampleData) {
+const GCMS_quantify = function(linears, sim, sampleData) {
 	sampleData :> sapply(function(file) {
 		print("Run quantification of sample data file:");
 		print(file);
@@ -62,7 +62,7 @@ let GCMS_quantify as function(linears, sim, sampleData) {
 	});
 }
 
-let GCMS_linearReport as function(sim, ions, quantify, calfiles as string, output_dir as string = "./") {
+const GCMS_linearReport = function(sim, ions, quantify, calfiles as string, output_dir as string = "./") {
 	print("create linear report:");
 
 	const plotRaw  = lapply(calfiles, function(path) peakRaw(sim, read.raw(path), chromatogramPlot = TRUE), names = basename);
