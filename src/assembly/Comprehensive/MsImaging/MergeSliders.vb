@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -41,6 +43,9 @@ Public Module MergeSliders
             .Max
         Dim left As Integer = polygons.First.Item2.xpoints.Min
         Dim union As New List(Of ScanMS1)
+        Dim mzmin As New List(Of Double)
+        Dim mzmax As New List(Of Double)
+        Dim res As New List(Of Double)
 
         ' for each sample mzpack object
         ' do sample join
@@ -57,14 +62,39 @@ Public Module MergeSliders
             left += padding * 2 + (
                 sample.shape.xpoints.Max - sample.shape.xpoints.Min
             )
+
+            With sample.Ms.MS _
+                .Select(Function(i) i.mz) _
+                .IteratesALL _
+                .ToArray
+
+                If .Length > 0 Then
+                    Call mzmin.Add(.Min)
+                    Call mzmax.Add(.Max)
+                End If
+            End With
+
+            If Not sample.Ms.metadata.IsNullOrEmpty Then
+                res.Add(sample.Ms.metadata.TryGetValue("resolution", [default]:=17))
+            End If
         Next
 
+        Dim poly As New Polygon2D(union.Select(Function(i) i.GetMSIPixel))
+        Dim metadata As New Metadata With {
+            .[class] = FileApplicationClass.MSImaging,
+            .mass_range = New DoubleRange(mzmin.Min, mzmax.Max),
+            .resolution = If(res.IsNullOrEmpty, 17, res.Average),
+            .scan_x = poly.width + padding,
+            .scan_y = poly.height + padding
+        }
+
         Return New mzPack With {
-            .Application = FileApplicationClass.MSImaging,
+            .Application = FileApplicationClass.MSImaging.ToString,
             .source = polygons _
                 .Select(Function(i) i.ms.source) _
                 .JoinBy("+"),
-            .MS = union.ToArray
+            .MS = union.ToArray,
+            .metadata = metadata.GetMetadata
         }
     End Function
 
