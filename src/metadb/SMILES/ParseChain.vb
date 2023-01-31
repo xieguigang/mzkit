@@ -56,6 +56,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
@@ -103,6 +104,8 @@ Public Class ParseChain
             Call WalkToken(t)
         Next
 
+        Call ChemicalElement.SetAtomGroups(formula:=graph)
+
         Return graph.AutoLayout
     End Function
 
@@ -120,6 +123,7 @@ Public Class ParseChain
         End Select
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub WalkKey(t As Token)
         lastKey = CType(CByte(ChemicalBonds.IndexOf(t.text)), Bonds)
     End Sub
