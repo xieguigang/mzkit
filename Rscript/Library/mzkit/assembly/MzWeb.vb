@@ -469,6 +469,9 @@ Module MzWeb
     ''' <param name="tolerance">
     ''' ppm toleracne error for extract ms2 xic data.
     ''' </param>
+    ''' <param name="centroid">
+    ''' and also convert the data to centroid mode? 
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms2_peaks")>
@@ -477,6 +480,7 @@ Module MzWeb
                                  Optional precursorMz As Double = Double.NaN,
                                  Optional tolerance As Object = "ppm:30",
                                  Optional tag_source As Boolean = True,
+                                 Optional centroid As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -503,6 +507,17 @@ Module MzWeb
                 .ToArray
 
             ms2peaks = ms2_xic
+        End If
+
+        If centroid Then
+            Dim ms2diff As Tolerance = Math.getTolerance("da:0.3", env)
+            Dim cutoff As New RelativeIntensityCutoff(0.01)
+
+            For Each peak As PeakMs2 In ms2peaks
+                peak.mzInto = peak.mzInto _
+                    .Centroid(ms2diff, cutoff) _
+                    .ToArray
+            Next
         End If
 
         Return ms2peaks.uniqueReference(tag_source)
