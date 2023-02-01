@@ -85,9 +85,37 @@ Public Class PeakAnnotation
         products = MeasureIsotopePeaks(parentMz, products)
         products = MatchElementGroups(parentMz, products)
         products = MeasureProductIsotopePeaks(products)
-        products = (From i In products Order By i.mz).ToArray
+        products = (From mzi As ms2
+                    In products
+                    Group By mzi.Annotation Into Group
+                    Let peak = UnionPeak(Annotation, Group.ToArray)
+                    Select peak
+                    Order By peak.mz).ToArray
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
+    End Function
+
+    ''' <summary>
+    ''' union the duplicated peak fragments
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="group"></param>
+    ''' <returns></returns>
+    Private Shared Function UnionPeak(name As String, group As ms2()) As ms2
+        If group.Length = 1 Then
+            Return group(Scan0)
+        Else
+            Return New ms2 With {
+                .Annotation = name,
+                .mz = group _
+                    .OrderByDescending(Function(i) i.intensity) _
+                    .First _
+                    .mz,
+                .intensity = group _
+                    .Select(Function(i) i.intensity) _
+                    .Average
+            }
+        End If
     End Function
 
     Private Function MeasureProductIsotopePeaks(products As ms2()) As ms2()
