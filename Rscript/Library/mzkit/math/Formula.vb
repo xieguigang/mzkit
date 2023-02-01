@@ -57,7 +57,6 @@
 
 #End Region
 
-Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -78,7 +77,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -172,20 +170,55 @@ Module FormulaTools
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' do peak annotation for the ms2 fragments
+    ''' </summary>
+    ''' <param name="library">
+    ''' A ms2 matrix object
+    ''' </param>
+    ''' <param name="massDiff"></param>
+    ''' <param name="isotopeFirst"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns></returns>
     <ExportAPI("peakAnnotations")>
-    Public Function PeakAnnotation(library As LibraryMatrix,
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function PeakAnnotation(library As Object,
                                    Optional massDiff As Double = 0.1,
                                    Optional isotopeFirst As Boolean = True,
-                                   Optional adducts As MzCalculator() = Nothing) As LibraryMatrix
+                                   Optional adducts As MzCalculator() = Nothing,
+                                   Optional env As Environment = Nothing) As Object
 
         Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
-        Dim result As Annotation = anno.RunAnnotation(library.parentMz, library.ms2)
+        Dim result As Annotation
+        Dim parentMz As Double
+        Dim centroid As Boolean
+        Dim name As String
+
+        If library Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf library Is LibraryMatrix Then
+            Dim mat As LibraryMatrix = DirectCast(library, LibraryMatrix)
+
+            parentMz = mat.parentMz
+            centroid = mat.centroid
+            name = mat.name
+            result = anno.RunAnnotation(mat.parentMz, mat.ms2)
+        ElseIf TypeOf library Is PeakMs2 Then
+            Dim peak As PeakMs2 = DirectCast(library, PeakMs2)
+
+            parentMz = peak.mz
+            centroid = True
+            name = peak.lib_guid
+            result = anno.RunAnnotation(parentMz, peak.mzInto)
+        Else
+            Return Message.InCompatibleType(GetType(LibraryMatrix), library.GetType, env)
+        End If
 
         Return New LibraryMatrix With {
-            .centroid = library.centroid,
+            .centroid = centroid,
             .ms2 = result.products,
-            .parentMz = library.parentMz,
-            .name = library.name
+            .parentMz = parentMz,
+            .name = name
         }
     End Function
 
