@@ -56,6 +56,9 @@
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
+''' <summary>
+''' the edge connection between the atoms
+''' </summary>
 Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
 
     ''' <summary>
