@@ -69,7 +69,7 @@ Public Module Extensions
             Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
 
             UnZip.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
-            path.SetValue(zipFolder)
+            path.InlineCopy(zipFolder)
         End If
 
         Return path
