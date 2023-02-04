@@ -483,6 +483,7 @@ Module MzWeb
                                  Optional centroid As Boolean = False,
                                  Optional norm As Boolean = False,
                                  Optional filter_empty As Boolean = True,
+                                 Optional into_cutoff As Object = 0,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -509,6 +510,14 @@ Module MzWeb
                 .ToArray
 
             ms2peaks = ms2_xic
+        End If
+
+        If into_cutoff > 0 Then
+            Dim cutoff As New RelativeIntensityCutoff(into_cutoff)
+
+            For Each peak As PeakMs2 In ms2peaks
+                peak.mzInto = cutoff.Trim(peak.mzInto)
+            Next
         End If
 
         If centroid Then
