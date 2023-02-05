@@ -86,6 +86,12 @@ Namespace LipidMaps
             Next
         End Function
 
+        ''' <summary>
+        ''' write the lipidmaps database in messagepack format
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function WriteRepository(data As IEnumerable(Of MetaData), file As Stream) As Boolean
             Call MsgPackSerializer.SerializeObject(data.ToArray, file)
