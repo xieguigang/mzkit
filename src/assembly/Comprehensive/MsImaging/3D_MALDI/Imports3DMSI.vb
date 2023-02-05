@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 
@@ -45,7 +46,7 @@ Namespace MsImaging.MALDI_3D
 
                 Call ms1.WriteStream(pack, metadata, samples)
                 Call WriteApplicationClass(FileApplicationClass.MSImaging3D, pack)
-                Call pack.Flush()
+                Call DirectCast(pack, IFileSystemEnvironment).Flush()
             End Using
 
             Return 0

@@ -56,6 +56,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class Others
 
+    Public Shared ReadOnly Property H As Formula = FormulaScanner.ScanFormula("H")
     Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
     Public Shared ReadOnly Property NLH2O As Formula = FormulaScanner.ScanFormula("H2O")
     Public Shared ReadOnly Property NL2H2O As Formula = FormulaScanner.ScanFormula("(H2O)2")
