@@ -292,7 +292,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Dim args$ = cli(input, output, type, filters.SafeQuery.ToArray, verbose)
 
         Call input.__INFO_ECHO
-        Call args.SetValue(args.TrimNewLine(" "))
+        Call args.InlineCopy(args.TrimNewLine(" "))
 
         std = CommandLine.Call(ProteoWizardCLI.BIN, args)
 

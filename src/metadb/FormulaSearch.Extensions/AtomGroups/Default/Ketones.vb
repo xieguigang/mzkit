@@ -72,9 +72,9 @@ Public Class Ketones
     Public Shared ReadOnly Property ketenes As Formula = FormulaScanner.ScanFormula("CHCO")
     Public Shared ReadOnly Property isocyanate As Formula = FormulaScanner.ScanFormula("NCO")
 
-    Public Shared ReadOnly Property acyl_halideF As Formula = FormulaScanner.ScanFormula("COF")
-    Public Shared ReadOnly Property acyl_halideCl As Formula = FormulaScanner.ScanFormula("COCl")
-    Public Shared ReadOnly Property acyl_halideBr As Formula = FormulaScanner.ScanFormula("COBr")
-    Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
+    ' Public Shared ReadOnly Property acyl_halideF As Formula = FormulaScanner.ScanFormula("COF")
+    ' Public Shared ReadOnly Property acyl_halideCl As Formula = FormulaScanner.ScanFormula("COCl")
+    ' Public Shared ReadOnly Property acyl_halideBr As Formula = FormulaScanner.ScanFormula("COBr")
+    ' Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
 
 End Class

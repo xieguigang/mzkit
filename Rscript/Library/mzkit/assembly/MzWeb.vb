@@ -469,6 +469,9 @@ Module MzWeb
     ''' <param name="tolerance">
     ''' ppm toleracne error for extract ms2 xic data.
     ''' </param>
+    ''' <param name="centroid">
+    ''' and also convert the data to centroid mode? 
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms2_peaks")>
@@ -477,6 +480,10 @@ Module MzWeb
                                  Optional precursorMz As Double = Double.NaN,
                                  Optional tolerance As Object = "ppm:30",
                                  Optional tag_source As Boolean = True,
+                                 Optional centroid As Boolean = False,
+                                 Optional norm As Boolean = False,
+                                 Optional filter_empty As Boolean = True,
+                                 Optional into_cutoff As Object = 0,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -503,6 +510,52 @@ Module MzWeb
                 .ToArray
 
             ms2peaks = ms2_xic
+        End If
+
+        If into_cutoff > 0 Then
+            Dim cutoff As New RelativeIntensityCutoff(into_cutoff)
+
+            For Each peak As PeakMs2 In ms2peaks
+                peak.mzInto = cutoff.Trim(peak.mzInto)
+            Next
+        End If
+
+        If centroid Then
+            Dim ms2diff As Tolerance = Math.getTolerance("da:0.3", env)
+            Dim cutoff As New RelativeIntensityCutoff(0.01)
+
+            For Each peak As PeakMs2 In ms2peaks
+                peak.mzInto = peak.mzInto _
+                    .Centroid(ms2diff, cutoff) _
+                    .ToArray
+            Next
+        End If
+
+        If norm Then
+            For Each peak As PeakMs2 In ms2peaks
+                If peak.mzInto.Length = 0 Then
+                    Continue For
+                End If
+
+                Dim max As Double = peak.mzInto.Select(Function(i) i.intensity).Max
+                Dim ms2 As ms2() = peak.mzInto _
+                    .Select(Function(i)
+                                Return New ms2 With {
+                                    .mz = i.mz,
+                                    .Annotation = i.Annotation,
+                                    .intensity = i.intensity / max
+                                }
+                            End Function) _
+                    .ToArray
+
+                peak.mzInto = ms2
+            Next
+        End If
+
+        If filter_empty Then
+            ms2peaks = ms2peaks _
+                .Where(Function(a) Not a.mzInto.IsNullOrEmpty) _
+                .ToArray
         End If
 
         Return ms2peaks.uniqueReference(tag_source)
