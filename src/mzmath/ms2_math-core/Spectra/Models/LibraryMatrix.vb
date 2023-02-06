@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -123,6 +124,15 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property entropy As Double
+            Get
+                Dim i As Vector = Me.intensity
+                Dim shannon = (i / i.Max).ShannonEntropy
+
+                Return shannon
+            End Get
+        End Property
+
         <ScriptIgnore>
         Public ReadOnly Property mz As Double()
             Get
@@ -133,6 +143,11 @@ Namespace Spectra
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})
+        End Sub
+
+        <DebuggerStepThrough>
+        Sub New(data As IEnumerable(Of ms2))
+            Call MyBase.New(data)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
