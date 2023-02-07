@@ -1,10 +1,16 @@
-﻿Friend Structure IonIndex
+﻿Imports System.Runtime.CompilerServices
 
-    Public mz As Double
-    Public node As Integer
+Namespace Query
 
-    Public Overrides Function ToString() As String
-        Return $"[{mz.ToString("F4")}] -> {node}"
-    End Function
+    Friend Structure IonIndex
 
-End Structure
+        Public mz As Double
+        Public node As Integer
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return $"[{mz.ToString("F4")}] -> {node}"
+        End Function
+
+    End Structure
+End Namespace
