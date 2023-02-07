@@ -24,7 +24,7 @@ Namespace Spectra
         ''' <param name="q"></param>
         ''' <returns></returns>
         Public Function unweighted_entropy_distance(p As Vector, q As Vector) As Double
-            Dim merged As Vector = p.Join(q).AsVector
+            Dim merged As Vector = p + q
             Dim entropy_increase = 2 * merged.ShannonEntropy - p.ShannonEntropy - q.ShannonEntropy
 
             Return entropy_increase
@@ -85,6 +85,17 @@ Namespace Spectra
             Return _entropy_similarity(p, q)
         End Function
 
+        Public Function calculate_entropy_similarity(spectrum_a As ms2(), spectrum_b As ms2(), tolerance As Tolerance) As Double
+            Return GlobalAlignment _
+                .CreateAlignment(
+                    query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
+                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    tolerance:=tolerance
+                ) _
+                .ToArray _
+                .calculate_entropy_similarity
+        End Function
+
         Public Function calculate_entropy_similarity(spectrum_a As ms2(), spectrum_b As ms2(), Optional ms2_da As Double = 0.3) As Double
             Return GlobalAlignment _
                 .CreateAlignment(
@@ -99,7 +110,7 @@ Namespace Spectra
         Private Function _entropy_similarity(a As Vector, b As Vector) As Double
             Dim ia = _get_entropy_and_weighted_intensity(a)
             Dim ib = _get_entropy_and_weighted_intensity(b)
-            Dim entropy_merged = ia.intensity.Join(ib.intensity).ShannonEntropy
+            Dim entropy_merged = (ia.intensity + ib.intensity).ShannonEntropy
 
             Return 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / stdNum.Log(4)
         End Function
