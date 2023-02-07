@@ -60,23 +60,25 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Pixel
 
     Public Class mzPackPixel : Inherits PixelScan
 
         Public Overrides ReadOnly Property X As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return pixel.X
             End Get
         End Property
 
         Public Overrides ReadOnly Property Y As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return pixel.Y
             End Get
@@ -87,12 +89,14 @@ Namespace Pixel
         ReadOnly pixel As Point
 
         Public Overrides ReadOnly Property scanId As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return scan.scan_id
             End Get
         End Property
 
         Public ReadOnly Property mz As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return scan.mz
             End Get
@@ -125,18 +129,28 @@ Namespace Pixel
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function HasAnyMzIon() As Boolean
             Return scan.size > 0
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Friend Overrides Function GetMsPipe() As IEnumerable(Of ms2)
             Return scan.GetMs
         End Function
 
         Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
+            If mz Is Nothing OrElse mz.Length = 0 Then
+                Return False
+            End If
+
             Return mz _
                 .Any(Function(mzi)
-                         Return scan.mz.Any(Function(zzz) tolerance(zzz, mzi))
+                         If scan.mz Is Nothing OrElse scan.mz.Length = 0 Then
+                             Return False
+                         Else
+                             Return scan.mz.Any(Function(zzz) tolerance(zzz, mzi))
+                         End If
                      End Function)
         End Function
 
@@ -165,6 +179,7 @@ Namespace Pixel
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetMzIonIntensity() As Double()
             Return scan.into
         End Function
