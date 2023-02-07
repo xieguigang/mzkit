@@ -11,7 +11,7 @@ Namespace Spectra
     ''' <summary>
     ''' https://github.com/YuanyueLi/SpectralEntropy/blob/master/spectral_entropy/math_distance.py
     ''' </summary>
-    Public Module MathDistance
+    Public Module SpectralEntropy
 
         ''' <summary>
         ''' Unweighted entropy distance:
@@ -41,15 +41,15 @@ Namespace Spectra
         ''' <param name="q"></param>
         ''' <returns></returns>
         Public Function entropy_distance(p As Vector, q As Vector) As Double
-            p = _weight_intensity_by_entropy(p)
-            q = _weight_intensity_by_entropy(q)
+            p = WeightIntensityByEntropy(p)
+            q = WeightIntensityByEntropy(q)
 
             Return unweighted_entropy_distance(p, q)
         End Function
 
-        Private Function _weight_intensity_by_entropy(x As Vector,
-                                                  Optional WEIGHT_START As Double = 0.25,
-                                                  Optional ENTROPY_CUTOFF As Double = 3) As Vector
+        Public Function WeightIntensityByEntropy(x As Vector,
+                                                 Optional WEIGHT_START As Double = 0.25,
+                                                 Optional ENTROPY_CUTOFF As Double = 3) As Vector
 
             Dim weight_slope = (1 - WEIGHT_START) / ENTROPY_CUTOFF
 
@@ -67,8 +67,13 @@ Namespace Spectra
             Return x
         End Function
 
+        ''' <summary>
+        ''' 因为计算熵需要概率向量总合为1，所以在这里应该是使用总离子做归一化，而非使用最大值做归一化
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function standardize_spectrum(ms As LibraryMatrix) As LibraryMatrix
+        Public Function StandardizeSpectrum(ms As LibraryMatrix) As LibraryMatrix
             Return ms / ms.intensity.Sum
         End Function
 
@@ -83,8 +88,8 @@ Namespace Spectra
         Public Function calculate_entropy_similarity(spectrum_a As ms2(), spectrum_b As ms2(), Optional ms2_da As Double = 0.3) As Double
             Return GlobalAlignment _
                 .CreateAlignment(
-                    query:=standardize_spectrum(New LibraryMatrix(spectrum_a)).ms2,
-                    ref:=standardize_spectrum(New LibraryMatrix(spectrum_b)).ms2,
+                    query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
+                    ref:=StandardizeSpectrum(New LibraryMatrix(spectrum_b)).ms2,
                     tolerance:=Tolerance.DeltaMass(ms2_da)
                 ) _
                 .ToArray _
