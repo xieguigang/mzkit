@@ -10,6 +10,9 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' the spectrum tree reference library tools
+''' </summary>
 <Package("spectrumTree")>
 Module ReferenceTreePkg
 
@@ -60,12 +63,28 @@ Module ReferenceTreePkg
         Return New TreeSearch(buffer.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' set dot cutoff parameter for the cos score similarity algorithm
+    ''' </summary>
+    ''' <param name="search"></param>
+    ''' <param name="cutoff"></param>
+    ''' <returns></returns>
     <ExportAPI("dotcutoff")>
     Public Function set_dotcutoff(search As TreeSearch, cutoff As Double) As TreeSearch
         Call search.SetCutoff(cutoff)
         Return search
     End Function
 
+    ''' <summary>
+    ''' construct a fragment set library for run spectrum search in jaccard matches
+    ''' </summary>
+    ''' <param name="libname"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="mzset"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("jaccardSet")>
     Public Function createJaccardSet(libname As String(),
                                      mz As Double(),
@@ -97,6 +116,15 @@ Module ReferenceTreePkg
         Return New JaccardSearch(dataset, cutoff)
     End Function
 
+    ''' <summary>
+    ''' do spectrum family alignment via cos similarity
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="x"></param>
+    ''' <param name="maxdepth"></param>
+    ''' <param name="treeSearch"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("query")>
     <RApiReturn(GetType(ClusterHit))>
     Public Function QueryTree(tree As Ms2Search, x As Object,
@@ -198,6 +226,13 @@ Module ReferenceTreePkg
         Return output
     End Function
 
+    ''' <summary>
+    ''' push the reference spectrum data into the spectrum reference tree library
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("addBucket")>
     Public Function addBucket(tree As ReferenceTree, <RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim list As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
