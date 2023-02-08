@@ -28,7 +28,7 @@ Module Layout2D
         Return chemical
     End Function
 
-    ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
+    Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
         .ToDictionary(Function(a)
                           Return a.label
@@ -40,7 +40,7 @@ Module Layout2D
         n = Aggregate b In bonds Into Sum(b.bond)
 
         If bonds.Length > maxN OrElse (n > maxN) Then
-            Throw New InvalidConstraintException
+            Throw New InvalidConstraintException($"The atom element '{atom.elementName}' its max key is {maxN}, but {n} bounds is connected with this atom element!")
         End If
 
         ' fix for the missing H element

@@ -260,10 +260,6 @@ Public Class Scanner
         End If
 
         Select Case str
-            Case "B", "C", "N", "O", "P", "S", "F", "Cl", "Br", "I", "Au", "H"
-                Return New Token(ElementTypes.Element, str) With {
-                    .ring = ring
-                }
             Case "("
                 Return New Token(ElementTypes.Open, str)
             Case ")"
@@ -272,7 +268,11 @@ Public Class Scanner
                 Return New Token(ElementTypes.Disconnected, str)
             Case Else
 
-                If str.IsPattern("\d+") Then
+                If Layout2D.atomMaxCharges.ContainsKey(str) Then
+                    Return New Token(ElementTypes.Element, str) With {
+                        .ring = ring
+                    }
+                ElseIf str.IsPattern("\d+") Then
                     Return New Token(ElementTypes.None, str)
                 Else
                     Throw New NotImplementedException(str)

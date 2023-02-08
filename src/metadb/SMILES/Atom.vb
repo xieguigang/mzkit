@@ -109,6 +109,8 @@ Public Class Atom
 
         Yield New Atom("Mn", 7)
         Yield New Atom("Fe", 6)
+        Yield New Atom("Br", 7)
+        Yield New Atom("Se", 6)
     End Function
 
 End Class
