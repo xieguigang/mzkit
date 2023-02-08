@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter

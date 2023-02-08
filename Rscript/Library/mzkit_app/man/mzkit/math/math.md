@@ -7,6 +7,7 @@ mass spectrometry data math toolkit
 + [ppm](math/ppm.1) calculate ppm value between two mass vector
 + [spectrum.compares](math/spectrum.compares.1) create a delegate function pointer that apply for compares spectrums theirs similarity.
 + [jaccard](math/jaccard.1) 
++ [spectral_entropy](math/spectral_entropy.1) 
 + [jaccardSet](math/jaccardSet.1) 
 + [cosine](math/cosine.1) 
 + [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparision.

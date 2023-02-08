@@ -59,6 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Public Class ParseChain
@@ -93,15 +94,20 @@ Public Class ParseChain
             .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
         For Each element As ChemicalElement In graph.AllElements
-            element.degree = (degree.in.TryGetValue(element.label), degree.out.TryGetValue(element.label))
+            element.degree = (
+                degree.in.TryGetValue(element.label),
+                degree.out.TryGetValue(element.label)
+            )
         Next
 
         Return graph
     End Function
 
     Public Function CreateGraph() As ChemicalFormula
+        Dim i As i32 = 1
+
         For Each t As Token In tokens
-            Call WalkToken(t)
+            Call WalkToken(t, ++i)
         Next
 
         Call ChemicalElement.SetAtomGroups(formula:=graph)
@@ -109,9 +115,9 @@ Public Class ParseChain
         Return graph.AutoLayout
     End Function
 
-    Private Sub WalkToken(t As Token)
+    Private Sub WalkToken(t As Token, i As Integer)
         Select Case t.name
-            Case ElementTypes.Element : Call WalkElement(t)
+            Case ElementTypes.Element : Call WalkElement(t, i)
             Case ElementTypes.Key : Call WalkKey(t)
             Case ElementTypes.Open
                 ' do nothing
@@ -128,8 +134,8 @@ Public Class ParseChain
         lastKey = CType(CByte(ChemicalBonds.IndexOf(t.text)), Bonds)
     End Sub
 
-    Private Sub WalkElement(t As Token)
-        Dim element As New ChemicalElement(t.text)
+    Private Sub WalkElement(t As Token, i As Integer)
+        Dim element As New ChemicalElement(t.text, index:=i)
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
         element.ID = graph.vertex.Count + 1

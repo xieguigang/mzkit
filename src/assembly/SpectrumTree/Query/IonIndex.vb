@@ -2,6 +2,9 @@
 
 Namespace Query
 
+    ''' <summary>
+    ''' m/z query index for the binary search algorithm
+    ''' </summary>
     Friend Structure IonIndex
 
         Public mz As Double

@@ -1,16 +1,35 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
+''' <summary>
+''' A spectrum tree node object
+''' </summary>
 Public Class BlockNode
 
+    ''' <summary>
+    ''' the unique id of current reference spectrum
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Id As String
+    ''' <summary>
+    ''' the file stream buffer pointer
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Block As BufferRegion
     ''' <summary>
     ''' 得分0.9以上的都算作为当前节点的等价谱图
     ''' </summary>
     ''' <returns></returns>
     Public Property Members As List(Of Integer)
+    ''' <summary>
+    ''' A set of the precursor m/z of the member spectrum in current cluster
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As List(Of Double)
+    ''' <summary>
+    ''' the average RT
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
@@ -18,6 +37,10 @@ Public Class BlockNode
     ''' </summary>
     ''' <returns></returns>
     Public Property childs As Integer()
+    ''' <summary>
+    ''' the reference spectrum of current spectrum cluster family
+    ''' </summary>
+    ''' <returns></returns>
     Public Property centroid As ms2()
 
     Public ReadOnly Property isLeaf As Boolean
