@@ -184,6 +184,21 @@ Public Class Scanner
                 buf += c
 
                 Dim tmpStr = New String(buf.PopAllChars)
+                Dim isIon As Boolean = tmpStr.First = "["c AndAlso tmpStr.Last = "]"c
+                Dim charge As String = tmpStr.Match("\d?[+-]")
+                Dim chargeVal As Integer? = Nothing
+
+                If Not charge.StringEmpty Then
+                    If charge = "+" Then
+                        chargeVal = 1
+                    ElseIf charge = "-" Then
+                        chargeVal = -1
+                    ElseIf charge.Last = "-" Then
+                        chargeVal = CInt(-Val(charge))
+                    Else
+                        chargeVal = CInt(Val(charge))
+                    End If
+                End If
 
                 tmpStr = tmpStr.GetStackValue("[", "]")
                 tmpStr = tmpStr.StringReplace("[+-]$", "", RegexOptions.Multiline)
@@ -193,7 +208,9 @@ Public Class Scanner
                 For Each c In tmpStr
                     If Char.IsUpper(c) Then
                         If tmp.Length > 0 Then
-                            Yield MeasureElement(tmp)
+                            Dim ion = MeasureElement(tmp)
+                            ion.charge = chargeVal
+                            Yield ion
                         End If
 
                         tmp = c
@@ -203,10 +220,16 @@ Public Class Scanner
                 Next
 
                 If tmp.Length > 0 Then
-                    Yield MeasureElement(tmp)
+                    Dim ion = MeasureElement(tmp)
+                    ion.charge = chargeVal
+                    Yield ion
                 End If
 
                 Return
+            ElseIf c = "["c Then
+                If buf > 0 Then
+                    Yield MeasureElement(New String(buf.PopAllChars))
+                End If
             End If
 
             buf += c

@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports stdNum = System.Math
 
 Public Class Token : Inherits CodeToken(Of ElementTypes)
 
@@ -64,4 +65,12 @@ Public Class Token : Inherits CodeToken(Of ElementTypes)
     Sub New(name As ElementTypes, text As String)
         Call MyBase.New(name, text)
     End Sub
+
+    Public Overrides Function ToString() As String
+        If charge Is Nothing Then
+            Return MyBase.ToString
+        Else
+            Return $"[{text}{stdNum.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
+        End If
+    End Function
 End Class
