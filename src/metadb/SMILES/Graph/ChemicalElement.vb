@@ -119,36 +119,36 @@ Public Class ChemicalElement : Inherits Node
         For Each atom As ChemicalElement In formula.vertex
             Call SetAtomGroups(
                 atom:=atom,
-                connected:=GetConnection(formula, atom) _
-                    .Select(Function(a) a.Item2) _
-                    .ToArray
+                keys:=Aggregate link
+                      In GetConnection(formula, atom)
+                      Into Sum(link.keys)
             )
         Next
     End Sub
 
-    Private Shared Sub SetAtomGroups(atom As ChemicalElement, connected As ChemicalElement())
+    Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
             Case "C"
-                Select Case connected.Count
+                Select Case keys
                     Case 1 : atom.group = "-CH3"
                     Case 2 : atom.group = "-CH2-"
                     Case 3 : atom.group = "-CH="
                     Case Else
-                        atom.group = "C???"
+                        atom.group = "C"
                 End Select
             Case "O"
-                Select Case connected.Count
+                Select Case keys
                     Case 1 : atom.group = "-OH"
                     Case Else
-                        atom.group = "O"
+                        atom.group = "-O-"
                 End Select
             Case "N"
-                Select Case connected.Count
+                Select Case keys
                     Case 1 : atom.group = "-NH3"
                     Case 2 : atom.group = "-NH2-"
-                    Case 3 : atom.group = "-NH--"
+                    Case 3 : atom.group = "-NH="
                     Case Else
-                        atom.group = "N???"
+                        atom.group = "N"
                 End Select
             Case Else
                 atom.group = atom.elementName

@@ -104,7 +104,7 @@ Public Class ParseChain
     End Function
 
     Public Function CreateGraph() As ChemicalFormula
-        Dim i As i32 = Scan0
+        Dim i As i32 = 1
 
         For Each t As Token In tokens
             Call WalkToken(t, ++i)
