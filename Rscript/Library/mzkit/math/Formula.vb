@@ -547,9 +547,24 @@ Module FormulaTools
         Return matrix.ToArray
     End Function
 
+    ''' <summary>
+    ''' Parse the SMILES molecule structre string
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <param name="strict"></param>
+    ''' <returns>
+    ''' A chemical graph object that could be used for build formula or structure analysis
+    ''' </returns>
+    ''' <remarks>
+    ''' SMILES denotes a molecular structure as a graph with optional chiral 
+    ''' indications. This is essentially the two-dimensional picture chemists
+    ''' draw to describe a molecule. SMILES describing only the labeled
+    ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
+    ''' information) are known as generic SMILES.
+    ''' </remarks>
     <ExportAPI("parseSMILES")>
-    Public Function parseSMILES(SMILES As String) As ChemicalFormula
-        Return ParseChain.ParseGraph(SMILES)
+    Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
+        Return ParseChain.ParseGraph(SMILES, strict)
     End Function
 
     <ExportAPI("as.formula")>
