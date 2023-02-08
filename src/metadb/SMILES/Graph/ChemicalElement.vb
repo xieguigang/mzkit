@@ -87,8 +87,12 @@ Public Class ChemicalElement : Inherits Node
     Sub New()
     End Sub
 
-    Sub New(element As String)
-        Me.label = App.GetNextUniqueName($"{element}_")
+    Sub New(element As String, Optional index As Integer? = Nothing)
+        Me.label = If(
+            index Is Nothing,
+            App.GetNextUniqueName($"{element}_"),
+            $"{element}_{CInt(index)}"
+        )
         Me.elementName = element
     End Sub
 
