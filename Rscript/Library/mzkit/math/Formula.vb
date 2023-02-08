@@ -564,7 +564,9 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("atoms")>
     Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
-        Dim elements As ChemicalElement() = SMILES.AllElements.ToArray
+        Dim elements As ChemicalElement() = SMILES.AllElements _
+            .OrderBy(Function(a) a.label.Match("\d+").ParseInteger) _
+            .ToArray
         Dim atoms As String() = elements.Select(Function(e) e.elementName).ToArray
         Dim groups As String() = elements.Select(Function(e) e.group).ToArray
         Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray

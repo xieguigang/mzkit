@@ -73,6 +73,10 @@ Module Layout2D
             End If
         End If
 
+        If atom.coordinate.IsNullOrEmpty Then
+            atom.coordinate = {0, 0}
+        End If
+
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
 
         For Each bond As ChemicalKey In From b In bonds Where b.U Is atom

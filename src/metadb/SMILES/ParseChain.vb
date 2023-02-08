@@ -124,7 +124,7 @@ Public Class ParseChain
                 stackSize.Push(0)
             Case ElementTypes.Close
                 Call chainStack.Pop(stackSize.Pop())
-            Case ElementTypes.Disconnected
+            Case ElementTypes.Disconnected, ElementTypes.None
                 ' unsure how to break the graph, do nothing?
             Case Else
                 Throw New NotImplementedException(t.ToString)
@@ -137,7 +137,9 @@ Public Class ParseChain
     End Sub
 
     Private Sub WalkElement(t As Token, i As Integer)
-        Dim element As New ChemicalElement(t.text, index:=i)
+        Dim element As New ChemicalElement(t.text, index:=i) With {
+            .charge = Val(t.charge)
+        }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
         element.ID = graph.vertex.Count + 1

@@ -84,6 +84,12 @@ Public Class ChemicalElement : Inherits Node
     ''' <returns></returns>
     Public Property group As String
 
+    ''' <summary>
+    ''' the ion charge value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property charge As Integer
+
     Sub New()
     End Sub
 
