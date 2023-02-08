@@ -60,6 +60,7 @@ Public Class Scanner
 
     Dim SMILES As CharPtr
     Dim buf As New CharBuffer
+    Dim openIonStack As Boolean = False
 
     ' structure information
     '
@@ -165,7 +166,11 @@ Public Class Scanner
             End If
 
             Yield MeasureElement(c)
-        ElseIf c Like ChemicalBonds Then
+        ElseIf (Not openIonStack) AndAlso c Like ChemicalBonds Then
+            ' negative charge symbol - 
+            ' also means a kind of chemical bound
+            ' so use a flag openIonStack to distingush
+            ' such different
             If buf > 0 Then
                 Yield MeasureElement(New String(buf.PopAllChars))
             End If
@@ -174,14 +179,17 @@ Public Class Scanner
         Else
             If Char.IsLetter(c) AndAlso Char.IsUpper(c) AndAlso buf > 0 Then
                 If buf = 1 AndAlso buf(Scan0) = "["c Then
+                    openIonStack = True
                     Call Debug.WriteLine("[")
                 ElseIf buf(0) = "["c Then
+                    openIonStack = True
                     Call Debug.WriteLine("-")
                 Else
                     Yield MeasureElement(New String(buf.PopAllChars))
                 End If
             ElseIf c = "]"c Then
                 buf += c
+                openIonStack = False
 
                 Dim tmpStr = New String(buf.PopAllChars)
                 Dim isIon As Boolean = tmpStr.First = "["c AndAlso tmpStr.Last = "]"c
@@ -227,6 +235,8 @@ Public Class Scanner
 
                 Return
             ElseIf c = "["c Then
+                openIonStack = True
+
                 If buf > 0 Then
                     Yield MeasureElement(New String(buf.PopAllChars))
                 End If
@@ -261,7 +271,12 @@ Public Class Scanner
             Case "."
                 Return New Token(ElementTypes.Disconnected, str)
             Case Else
-                Throw New NotImplementedException(str)
+
+                If str.IsPattern("\d+") Then
+                    Return New Token(ElementTypes.None, str)
+                Else
+                    Throw New NotImplementedException(str)
+                End If
         End Select
     End Function
 End Class

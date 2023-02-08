@@ -57,6 +57,7 @@
 #End Region
 
 Public Enum ElementTypes
+    None
     ''' <summary>
     ''' alphabet
     ''' </summary>
