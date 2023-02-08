@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
+''' <summary>
+''' the spectrum tree library data structure 
+''' </summary>
 Public Class ReferenceTree : Implements IDisposable
 
     Protected ReadOnly tree As New List(Of BlockNode)

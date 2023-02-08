@@ -1,6 +1,9 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
+''' <summary>
+''' read/writer filesystem api for the spectrum tree reference library
+''' </summary>
 Public Module NodeBuffer
 
     Friend Sub Write(node As BlockNode, file As BinaryDataWriter)

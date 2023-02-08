@@ -19,6 +19,9 @@ Namespace Query
         ReadOnly is_binary As Boolean
         ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
 
+        ''' <summary>
+        ''' cutoff of the cos similarity
+        ''' </summary>
         Dim dotcutoff As Double = 0.6
         Dim disposedValue As Boolean
 
@@ -78,10 +81,16 @@ Namespace Query
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Sub SetCutoff(cutoff As Double)
             dotcutoff = cutoff
         End Sub
 
+        ''' <summary>
+        ''' query the spectrum reference tree nodes via parent m/z matched
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <returns></returns>
         Public Function QueryByMz(mz As Double) As BlockNode()
             Dim query As New IonIndex With {.mz = mz}
             Dim result As BlockNode() = mzIndex _
@@ -108,8 +117,8 @@ Namespace Query
         ''' <summary>
         ''' populate the top cluster
         ''' </summary>
-        ''' <param name="centroid"></param>
-        ''' <param name="mz1"></param>
+        ''' <param name="centroid">the query spectrum matrix data should be processed in centroid mode</param>
+        ''' <param name="mz1">the parent m/z of the target unknown metabolite</param>
         ''' <returns></returns>
         Public Overrides Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
             Dim candidates As BlockNode() = QueryByMz(mz1)
@@ -208,7 +217,13 @@ Namespace Query
                 .ClusterForward = {score.forward}.JoinIterates(forward).ToArray,
                 .ClusterReverse = {score.reverse}.JoinIterates(reverse).ToArray,
                 .ClusterRt = {hit.rt}.JoinIterates(rt).ToArray,
-                .ClusterJaccard = { .jaccard}.JoinIterates(jaccard).ToArray
+                .ClusterJaccard = { .jaccard}.JoinIterates(jaccard).ToArray,
+                .entropy = SpectralEntropy.calculate_entropy_similarity(centroid, hit.centroid, da),
+                .ClusterEntropy = cluster _
+                    .Select(Function(c)
+                                Return SpectralEntropy.calculate_entropy_similarity(centroid, c.centroid, da)
+                            End Function) _
+                    .ToArray
             }
         End Function
 
