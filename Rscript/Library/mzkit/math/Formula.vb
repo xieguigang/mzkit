@@ -571,6 +571,7 @@ Module FormulaTools
         Dim groups As String() = elements.Select(Function(e) e.group).ToArray
         Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray
         Dim rowKeys As String() = elements.Select(Function(e) e.label).ToArray
+        Dim ionCharge As Integer() = elements.Select(Function(e) e.charge).ToArray
         Dim partners As String() = elements _
             .Select(Function(e)
                         Return ChemicalElement _
@@ -587,6 +588,7 @@ Module FormulaTools
             .columns = New Dictionary(Of String, Array) From {
                 {"atom", atoms},
                 {"group", groups},
+                {"ion_charge", ionCharge},
                 {"links", links},
                 {"connected", partners}
             }
