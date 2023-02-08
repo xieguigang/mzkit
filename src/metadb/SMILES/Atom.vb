@@ -96,6 +96,8 @@ Public Class Atom
         Yield New Atom("Ag", 1)
         Yield New Atom("Au", 3)
 
+        Yield New Atom("H", 1)
+
         Yield New Atom("C", 4)
         Yield New Atom("Si", 4)
         Yield New Atom("Pb", 4)
