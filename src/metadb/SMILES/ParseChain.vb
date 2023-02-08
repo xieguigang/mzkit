@@ -124,6 +124,8 @@ Public Class ParseChain
                 stackSize.Push(0)
             Case ElementTypes.Close
                 Call chainStack.Pop(stackSize.Pop())
+            Case ElementTypes.Disconnected
+                ' unsure how to break the graph, do nothing?
             Case Else
                 Throw New NotImplementedException(t.ToString)
         End Select
