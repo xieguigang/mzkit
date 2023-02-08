@@ -33,6 +33,9 @@ Namespace Query
                 .Where(Function(j) j.itr.Length / j.uni.Length > cutoff) _
                 .ToArray
 
+            ' 20221001 the algorithm has been tested success
+            ' do not modify the score at here
+
             ' get a cluster of the hit result
             If jaccard.Length > 0 Then
                 ' get alignment score vector and the alignment details 

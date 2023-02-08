@@ -205,7 +205,9 @@ Namespace Query
             Dim forward = alignments.Select(Function(a) a.forward).ToArray
             Dim reverse = alignments.Select(Function(a) a.reverse).ToArray
             Dim rt As Double() = cluster.Select(Function(c) c.rt).ToArray
-            Dim jaccard As Double() = cluster.Select(Function(c) GlobalAlignment.JaccardIndex(c.centroid, centroid, da)).ToArray
+            Dim jaccard As Double() = cluster _
+                .Select(Function(c) GlobalAlignment.JaccardIndex(c.centroid, centroid, da)) _
+                .ToArray
 
             Return New ClusterHit With {
                 .Id = hit.Id,
