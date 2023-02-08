@@ -557,6 +557,40 @@ Module FormulaTools
         Return SMILES.GetFormula
     End Function
 
+    ''' <summary>
+    ''' get atoms table from the SMILES structure data
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <returns></returns>
+    <ExportAPI("atoms")>
+    Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
+        Dim elements As ChemicalElement() = SMILES.AllElements.ToArray
+        Dim atoms As String() = elements.Select(Function(e) e.elementName).ToArray
+        Dim groups As String() = elements.Select(Function(e) e.group).ToArray
+        Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray
+        Dim rowKeys As String() = elements.Select(Function(e) e.label).ToArray
+        Dim partners As String() = elements _
+            .Select(Function(e)
+                        Return ChemicalElement _
+                            .GetConnection(SMILES, e) _
+                            .Select(Function(atom)
+                                        Return $"{CInt(atom.keys)}({atom.Item2.group})"
+                                    End Function) _
+                            .JoinBy("; ")
+                    End Function) _
+            .ToArray
+
+        Return New RDataframe With {
+            .rownames = rowKeys,
+            .columns = New Dictionary(Of String, Array) From {
+                {"atom", atoms},
+                {"group", groups},
+                {"links", links},
+                {"connected", partners}
+            }
+        }
+    End Function
+
     <ExportAPI("isotope_distribution")>
     Public Function IsotopeDistributionSearch(formula As Object,
                                               Optional prob_threshold As Double = 0.001,

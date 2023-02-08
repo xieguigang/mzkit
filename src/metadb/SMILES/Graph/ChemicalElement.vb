@@ -92,45 +92,56 @@ Public Class ChemicalElement : Inherits Node
         Me.elementName = element
     End Sub
 
-    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
-        Dim connected As New List(Of ChemicalElement)
+    Public Shared Iterator Function GetConnection(formula As ChemicalFormula, atom As ChemicalElement) As IEnumerable(Of (keys As Bonds, ChemicalElement))
+        Dim key As ChemicalKey = Nothing
 
-        ' build connection edges
-        For Each atom In formula.vertex
-            For Each partner In formula.vertex.Where(Function(v) v IsNot atom)
-                If formula.QueryEdge(atom.label, partner.label) IsNot Nothing Then
-                    Call connected.Add(partner)
-                End If
-            Next
+        For Each partner As ChemicalElement In formula.vertex.Where(Function(v) v IsNot atom)
+            key = formula.QueryEdge(atom.label, partner.label)
 
-            Select Case atom.elementName
-                Case "C"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-CH3"
-                        Case 2 : atom.group = "-CH2-"
-                        Case 3 : atom.group = "-CH="
-                        Case Else
-                            atom.group = "C???"
-                    End Select
-                Case "O"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-OH"
-                        Case Else
-                            atom.group = "O"
-                    End Select
-                Case "N"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-NH3"
-                        Case 2 : atom.group = "-NH2-"
-                        Case 3 : atom.group = "-NH--"
-                        Case Else
-                            atom.group = "N???"
-                    End Select
-                Case Else
-                    atom.group = atom.elementName
-            End Select
-
-            Call connected.Clear()
+            If key IsNot Nothing Then
+                Yield (key.bond, partner)
+            End If
         Next
+    End Function
+
+    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
+        ' build connection edges
+        For Each atom As ChemicalElement In formula.vertex
+            Call SetAtomGroups(
+                atom:=atom,
+                connected:=GetConnection(formula, atom) _
+                    .Select(Function(a) a.Item2) _
+                    .ToArray
+            )
+        Next
+    End Sub
+
+    Private Shared Sub SetAtomGroups(atom As ChemicalElement, connected As ChemicalElement())
+        Select Case atom.elementName
+            Case "C"
+                Select Case connected.Count
+                    Case 1 : atom.group = "-CH3"
+                    Case 2 : atom.group = "-CH2-"
+                    Case 3 : atom.group = "-CH="
+                    Case Else
+                        atom.group = "C???"
+                End Select
+            Case "O"
+                Select Case connected.Count
+                    Case 1 : atom.group = "-OH"
+                    Case Else
+                        atom.group = "O"
+                End Select
+            Case "N"
+                Select Case connected.Count
+                    Case 1 : atom.group = "-NH3"
+                    Case 2 : atom.group = "-NH2-"
+                    Case 3 : atom.group = "-NH--"
+                    Case Else
+                        atom.group = "N???"
+                End Select
+            Case Else
+                atom.group = atom.elementName
+        End Select
     End Sub
 End Class
