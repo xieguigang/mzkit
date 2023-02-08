@@ -55,6 +55,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Public Class Atom
 
     Public Property label As String
@@ -63,7 +65,7 @@ Public Class Atom
     ''' Possible net charge value of current element atom
     ''' </summary>
     ''' <returns></returns>
-    Public Property Valence As Integer()
+    Public Property valence As Integer()
 
     ''' <summary>
     ''' the max number of the chemical keys
@@ -71,19 +73,20 @@ Public Class Atom
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property maxKeys As Integer
-        Get
-            If Valence.IsNullOrEmpty Then
-                Return 0
-            Else
-                Return Valence.Max
-            End If
-        End Get
-    End Property
 
     Sub New(label As String, ParamArray valence As Integer())
         Me.label = label
-        Me.Valence = valence
+        Me.valence = valence
+        Me.maxKeys = GetMaxKeys()
     End Sub
+
+    Private Function GetMaxKeys() As Integer
+        If valence.IsNullOrEmpty Then
+            Return 0
+        Else
+            Return valence.Select(AddressOf stdNum.Abs).Max
+        End If
+    End Function
 
     Public Overrides Function ToString() As String
         Return $"{label} ~ H{maxKeys}"
@@ -100,40 +103,96 @@ Public Class Atom
         Yield New Atom("Be", 2)
         Yield New Atom("Mg", 2)
         Yield New Atom("Ca", 2)
+        Yield New Atom("Zn", 2)
         Yield New Atom("Sr", 2)
+        Yield New Atom("Cd", 2)
         Yield New Atom("Ba", 2)
         Yield New Atom("Ra", 2)
 
+        Yield New Atom("Hg", 1, 2)
+
         Yield New Atom("Sc", 3)
+        Yield New Atom("Ac", 3)
+        Yield New Atom("Ga", 3)
+        Yield New Atom("La", 3)
         Yield New Atom("Y", 3)
         Yield New Atom("B", 3)
 
-        Yield New Atom("Cu", 2)
-        Yield New Atom("Ag", 1)
-        Yield New Atom("Au", 3)
+        Yield New Atom("Bi", 3, 5)
+
+        Yield New Atom("V", 2, 3, 4, 5)
+        Yield New Atom("Nb", 2, 3, 4, 5)
+        Yield New Atom("Ta", 2, 3, 4, 5)
+
+        Yield New Atom("Pa", 3, 4, 5)
+
+        Yield New Atom("Ti", 2, 3, 4)
+        Yield New Atom("Zr", 2, 3, 4)
+
+        Yield New Atom("In", 1, 3)
+        Yield New Atom("Tl", 1, 3)
+
+        Yield New Atom("Cu", 1, 2, 3)
+        Yield New Atom("Ag", 1, 2, 3)
+        Yield New Atom("Au", 1, 3)
 
         Yield New Atom("H", 1, -1)
 
-        Yield New Atom("Co", 4)
-        Yield New Atom("C", 4)
-        Yield New Atom("Si", 4)
-        Yield New Atom("Pb", 4)
-        Yield New Atom("F", 1)
-        Yield New Atom("Cl", 7)
+        Yield New Atom("Ce", 3, 4)
+        Yield New Atom("Hf", 3, 4)
+        Yield New Atom("Th", 3, 4)
+
+        Yield New Atom("Co", 2, 3, 4)
+        Yield New Atom("Ni", 2, 3, 4)
+        Yield New Atom("Pd", 2, 3, 4)
+
+        Yield New Atom("C", 2, 4)
+        Yield New Atom("Si", 2, 4)
+        Yield New Atom("Pb", 2, 4)
+        Yield New Atom("Sn", 2, 4)
+
+        Yield New Atom("Rh", 2, 3, 4, 5, 6)
+        Yield New Atom("Ir", 2, 3, 4, 5, 6)
+        Yield New Atom("Pt", 2, 3, 4, 5, 6)
+
+        Yield New Atom("F", -1)
+
         Yield New Atom("Al", 3)
-        Yield New Atom("O", 2)
-        Yield New Atom("S", 6)
-        Yield New Atom("N", 5)
-        Yield New Atom("P", 5)
 
-        Yield New Atom("As", 5)
-        Yield New Atom("Sb", 5)
+        Yield New Atom("Tc", 4, 5, 6, 7)
+        Yield New Atom("Re", 4, 5, 6, 7)
 
-        Yield New Atom("Mn", 7)
-        Yield New Atom("Fe", 6)
-        Yield New Atom("Br", 7)
-        Yield New Atom("Se", 6)
-        Yield New Atom("I", 7)
+        Yield New Atom("Np", 3, 4, 5, 6, 7)
+        Yield New Atom("Pu", 3, 4, 5, 6, 7)
+
+        Yield New Atom("O", -2, -1, 2)
+
+        Yield New Atom("S", -2, 2, 4, 6)
+        Yield New Atom("Se", -2, 2, 4, 6)
+        Yield New Atom("Te", -2, 2, 4, 6)
+
+        Yield New Atom("N", -3, 1, 2, 3, 4, 5)
+        Yield New Atom("P", -3, 1, 3, 4, 5)
+
+        Yield New Atom("As", -3, 3, 5)
+        Yield New Atom("Sb", -3, 3, 5)
+
+        Yield New Atom("U", 3, 4, 5, 6)
+
+        Yield New Atom("W", 2, 3, 4, 5, 6)
+        Yield New Atom("Mo", 2, 3, 4, 5, 6)
+
+        Yield New Atom("Mn", 2, 3, 4, 6, 7)
+
+        Yield New Atom("Ru", 2, 3, 4, 5, 6, 7, 8)
+        Yield New Atom("Xe", 1, 4, 6, 8)
+
+        Yield New Atom("Br", -1, 1, 3, 5, 7)
+        Yield New Atom("I", -1, 1, 3, 5, 7)
+        Yield New Atom("Cl", -1, 1, 3, 4, 5, 6, 7)
+
+        Yield New Atom("Fe", 2, 3, 4, 5, 6, 8)
+        Yield New Atom("Os", 2, 3, 4, 5, 6, 8)
     End Function
 
 End Class
