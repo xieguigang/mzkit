@@ -73,8 +73,15 @@ Public Class Atom
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property maxKeys As Integer
+    Public ReadOnly Property isAtomGroup As Boolean
 
     Sub New(label As String, ParamArray valence As Integer())
+        Dim countAtomGroup = Aggregate c As Char
+                             In label
+                             Where Char.IsLetter(c) AndAlso Char.IsUpper(c)
+                             Into Count
+
+        Me.isAtomGroup = countAtomGroup > 1
         Me.label = label
         Me.valence = valence
         Me.maxKeys = GetMaxKeys()
@@ -88,8 +95,47 @@ Public Class Atom
         End If
     End Function
 
+    Public Shared Function ChargeLabel(charge As Integer) As String
+        If charge = 1 Then
+            Return "+"
+        ElseIf charge = -1 Then
+            Return "-"
+        ElseIf charge > 0 Then
+            Return $"+{charge}"
+        Else
+            Return charge.ToString
+        End If
+    End Function
+
+    Public Function GetIonLabel() As String
+        If isAtomGroup Then
+            Dim chargeLabel As String = Atom.ChargeLabel(valence(Scan0))
+            Dim label As String = $"{Me.label}{chargeLabel}"
+
+            Return label
+        Else
+            Return label
+        End If
+    End Function
+
     Public Overrides Function ToString() As String
-        Return $"{label} ~ H{maxKeys}"
+        If isAtomGroup Then
+            Return $"[{label}]{stdNum.Abs(valence(Scan0))}{If(valence(Scan0) > 0, "+", "-")}"
+        Else
+            Return $"{label} ~ H{maxKeys}"
+        End If
+    End Function
+
+    Public Shared Iterator Function DefaultAtomGroups() As IEnumerable(Of Atom)
+        Yield New Atom("OH", -1)
+        Yield New Atom("NO3", -1)
+        Yield New Atom("SO4", -2)
+        Yield New Atom("CO3", -2)
+        Yield New Atom("NH4", 1)
+        Yield New Atom("SO3", -2)
+        Yield New Atom("MnO4", -1)
+        Yield New Atom("HCO3", -1)
+        Yield New Atom("PO4", -3)
     End Function
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)

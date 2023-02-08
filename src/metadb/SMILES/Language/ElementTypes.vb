@@ -62,6 +62,12 @@ Public Enum ElementTypes
     ''' alphabet
     ''' </summary>
     Element
+
+    ''' <summary>
+    ''' contains multiple atom label inside, example as: NH4+/PO3-
+    ''' </summary>
+    AtomGroup
+
     ''' <summary>
     ''' <see cref="Bonds"/>
     ''' </summary>

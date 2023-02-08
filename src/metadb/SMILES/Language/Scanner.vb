@@ -62,6 +62,8 @@ Public Class Scanner
     Dim buf As New CharBuffer
     Dim openIonStack As Boolean = False
 
+    ReadOnly atomGroups As Dictionary(Of String, Atom) = Atom.DefaultAtomGroups.ToDictionary(Function(a) a.GetIonLabel)
+
     ' structure information
     '
     ' 1. Configuration Around Double Bonds
@@ -213,7 +215,13 @@ Public Class Scanner
                 tmpStr = tmpStr.GetStackValue("[", "]")
 
                 If Not charge.StringEmpty Then
-                    tmpStr = tmpStr.Replace(charge, "")
+                    ' handling some special ion group
+                    If atomGroups.ContainsKey(tmpStr) Then
+                        Yield New Token(ElementTypes.AtomGroup, tmpStr) With {.charge = chargeVal}
+                        Return
+                    Else
+                        tmpStr = tmpStr.Replace(charge, "")
+                    End If
                 End If
 
                 Dim tmp As String = ""
