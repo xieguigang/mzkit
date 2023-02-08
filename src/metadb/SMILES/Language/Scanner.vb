@@ -159,7 +159,7 @@ Public Class Scanner
     End Function
 
     Private Iterator Function WalkChar(c As Char) As IEnumerable(Of Token)
-        If c = "("c OrElse c = ")"c Then
+        If c = "("c OrElse c = ")"c OrElse c = "."c Then
             If buf > 0 Then
                 Yield MeasureElement(New String(buf.PopAllChars))
             End If
