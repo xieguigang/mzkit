@@ -18,4 +18,5 @@ The chemical formulae toolkit
 + [descriptor.matrix](formula/descriptor.matrix.1) 
 + [parseSMILES](formula/parseSMILES.1) 
 + [as.formula](formula/as.formula.1) 
++ [atoms](formula/atoms.1) get atoms table from the SMILES structure data
 + [isotope_distribution](formula/isotope_distribution.1) 

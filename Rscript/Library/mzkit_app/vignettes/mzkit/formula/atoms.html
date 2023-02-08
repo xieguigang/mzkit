@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>do spectrum family alignment via cos similarity</title>
+    <title>get atoms table from the SMILES structure data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>query {spectrumTree}</td>
+                <td>atoms {formula}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>do spectrum family alignment via cos similarity</h2>
+        <h2>get atoms table from the SMILES structure data</h2>
 
         <h3>Description</h3>
 
@@ -157,32 +157,14 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>query</strong>(<i>tree</i>, <i>x</i>,
-    <i>maxdepth</i> = 1024,
-    <i>treeSearch</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>atoms</strong>(<i>SMILES</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>tree</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>x</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>maxdepth</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>treeSearch</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>env</dt>
+<dt>SMILES</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
@@ -195,11 +177,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a>.
+        this function returns data object of type <a href="/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.
 
         <hr />
-        <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a
-                href="../spectrumTree.html">Index</a>]
+        <div style="text-align: center;">[Package <em>formula</em> version 1.0.0.0 <a
+                href="../formula.html">Index</a>]
         </div>
     </div>
 </body>
