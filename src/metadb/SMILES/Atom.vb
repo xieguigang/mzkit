@@ -58,16 +58,31 @@
 Public Class Atom
 
     Public Property label As String
+
+    ''' <summary>
+    ''' Possible net charge value of current element atom
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Valence As Integer()
+
     ''' <summary>
     ''' the max number of the chemical keys
     ''' (max charge number)
     ''' </summary>
     ''' <returns></returns>
-    Public Property maxKeys As Integer
+    Public ReadOnly Property maxKeys As Integer
+        Get
+            If Valence.IsNullOrEmpty Then
+                Return 0
+            Else
+                Return Valence.Max
+            End If
+        End Get
+    End Property
 
-    Sub New(label As String, max As Integer)
+    Sub New(label As String, ParamArray valence As Integer())
         Me.label = label
-        Me.maxKeys = max
+        Me.Valence = valence
     End Sub
 
     Public Overrides Function ToString() As String
@@ -97,8 +112,9 @@ Public Class Atom
         Yield New Atom("Ag", 1)
         Yield New Atom("Au", 3)
 
-        Yield New Atom("H", 1)
+        Yield New Atom("H", 1, -1)
 
+        Yield New Atom("Co", 4)
         Yield New Atom("C", 4)
         Yield New Atom("Si", 4)
         Yield New Atom("Pb", 4)
@@ -109,6 +125,9 @@ Public Class Atom
         Yield New Atom("S", 6)
         Yield New Atom("N", 5)
         Yield New Atom("P", 5)
+
+        Yield New Atom("As", 5)
+        Yield New Atom("Sb", 5)
 
         Yield New Atom("Mn", 7)
         Yield New Atom("Fe", 6)
