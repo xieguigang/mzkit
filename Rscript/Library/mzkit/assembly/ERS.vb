@@ -56,11 +56,8 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Data.Signal
+Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -135,7 +132,11 @@ Module ERS
     ''' <returns></returns>
     <ExportAPI("write.UVsignals")>
     <RApiReturn(GetType(Boolean))>
-    Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional enable_CDFextension As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function WriteSignal(<RRawVectorArgument>
+                                signals As Object, file$,
+                                Optional enable_CDFextension As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(signals, env)
 
         If raw.isError Then

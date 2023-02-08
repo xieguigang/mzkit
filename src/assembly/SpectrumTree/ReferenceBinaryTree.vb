@@ -2,6 +2,9 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports stdNum = System.Math
 
+''' <summary>
+''' the spectrum tree library data structure that organized in binary tree format
+''' </summary>
 Public Class ReferenceBinaryTree : Inherits ReferenceTree
 
     Public Sub New(file As Stream)

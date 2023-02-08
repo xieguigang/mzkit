@@ -313,6 +313,28 @@ Module MzMath
         Return GlobalAlignment.JaccardIndex(query, ref, mzErr)
     End Function
 
+    <ExportAPI("spectral_entropy")>
+    Public Function spectrumEntropy(query As LibraryMatrix, ref As LibraryMatrix,
+                                    Optional tolerance As Object = "da:0.3",
+                                    Optional intocutoff As Double = 0.05,
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        query = query.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+        ref = ref.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+
+        Return SpectralEntropy.calculate_entropy_similarity(
+            spectrum_a:=query.ms2,
+            spectrum_b:=ref.ms2,
+            tolerance:=mzErr.TryCast(Of Tolerance)
+        )
+    End Function
+
     <ExportAPI("jaccardSet")>
     Public Function jaccardSet(query As Double(), ref As Double(),
                                Optional tolerance As Object = "da:0.3",

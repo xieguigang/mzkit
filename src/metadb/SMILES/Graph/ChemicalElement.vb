@@ -87,50 +87,71 @@ Public Class ChemicalElement : Inherits Node
     Sub New()
     End Sub
 
-    Sub New(element As String)
-        Me.label = App.GetNextUniqueName($"{element}_")
+    Sub New(element As String, Optional index As Integer? = Nothing)
+        Me.label = If(
+            index Is Nothing,
+            App.GetNextUniqueName($"{element}_"),
+            $"{element}_{CInt(index)}"
+        )
         Me.elementName = element
     End Sub
 
-    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
-        Dim connected As New List(Of ChemicalElement)
+    Public Shared Iterator Function GetConnection(formula As ChemicalFormula, atom As ChemicalElement) As IEnumerable(Of (keys As Bonds, ChemicalElement))
+        Dim key1, key2 As ChemicalKey
 
-        ' build connection edges
-        For Each atom In formula.vertex
-            For Each partner In formula.vertex.Where(Function(v) v IsNot atom)
-                If formula.QueryEdge(atom.label, partner.label) IsNot Nothing Then
-                    Call connected.Add(partner)
-                End If
-            Next
+        For Each partner As ChemicalElement In formula.vertex.Where(Function(v) v IsNot atom)
+            key1 = formula.QueryEdge(atom.label, partner.label)
 
-            Select Case atom.elementName
-                Case "C"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-CH3"
-                        Case 2 : atom.group = "-CH2-"
-                        Case 3 : atom.group = "-CH="
-                        Case Else
-                            atom.group = "C???"
-                    End Select
-                Case "O"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-OH"
-                        Case Else
-                            atom.group = "O"
-                    End Select
-                Case "N"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-NH3"
-                        Case 2 : atom.group = "-NH2-"
-                        Case 3 : atom.group = "-NH--"
-                        Case Else
-                            atom.group = "N???"
-                    End Select
-                Case Else
-                    atom.group = atom.elementName
-            End Select
+            If key1 IsNot Nothing Then
+                Yield (key1.bond, partner)
+            End If
 
-            Call connected.Clear()
+            key2 = formula.QueryEdge(partner.label, atom.label)
+
+            If key2 IsNot Nothing AndAlso Not key1 Is key2 Then
+                Yield (key2.bond, partner)
+            End If
         Next
+    End Function
+
+    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
+        ' build connection edges
+        For Each atom As ChemicalElement In formula.vertex
+            Call SetAtomGroups(
+                atom:=atom,
+                keys:=Aggregate link
+                      In GetConnection(formula, atom)
+                      Into Sum(link.keys)
+            )
+        Next
+    End Sub
+
+    Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
+        Select Case atom.elementName
+            Case "C"
+                Select Case keys
+                    Case 1 : atom.group = "-CH3"
+                    Case 2 : atom.group = "-CH2-"
+                    Case 3 : atom.group = "-CH="
+                    Case Else
+                        atom.group = "C"
+                End Select
+            Case "O"
+                Select Case keys
+                    Case 1 : atom.group = "-OH"
+                    Case Else
+                        atom.group = "-O-"
+                End Select
+            Case "N"
+                Select Case keys
+                    Case 1 : atom.group = "-NH3"
+                    Case 2 : atom.group = "-NH2-"
+                    Case 3 : atom.group = "-NH="
+                    Case Else
+                        atom.group = "N"
+                End Select
+            Case Else
+                atom.group = atom.elementName
+        End Select
     End Sub
 End Class
