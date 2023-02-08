@@ -193,7 +193,7 @@ Public Class Scanner
 
                 Dim tmpStr = New String(buf.PopAllChars)
                 Dim isIon As Boolean = tmpStr.First = "["c AndAlso tmpStr.Last = "]"c
-                Dim charge As String = tmpStr.Match("\d?[+-]")
+                Dim charge As String = tmpStr.Match("(\d?[+-])|([+-]\d?)")
                 Dim chargeVal As Integer? = Nothing
 
                 If Not charge.StringEmpty Then
@@ -201,15 +201,20 @@ Public Class Scanner
                         chargeVal = 1
                     ElseIf charge = "-" Then
                         chargeVal = -1
-                    ElseIf charge.Last = "-" Then
+                    ElseIf charge.Last = "-"c Then
                         chargeVal = CInt(-Val(charge))
-                    Else
+                    ElseIf charge.First = "-"c Then
                         chargeVal = CInt(Val(charge))
+                    Else
+                        chargeVal = CInt(Val(charge.Replace("+", "")))
                     End If
                 End If
 
                 tmpStr = tmpStr.GetStackValue("[", "]")
-                tmpStr = tmpStr.StringReplace("[+-]$", "", RegexOptions.Multiline)
+
+                If Not charge.StringEmpty Then
+                    tmpStr = tmpStr.Replace(charge, "")
+                End If
 
                 Dim tmp As String = ""
 

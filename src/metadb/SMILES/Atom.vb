@@ -91,6 +91,7 @@ Public Class Atom
 
         Yield New Atom("Sc", 3)
         Yield New Atom("Y", 3)
+        Yield New Atom("B", 3)
 
         Yield New Atom("Cu", 2)
         Yield New Atom("Ag", 1)
@@ -113,6 +114,7 @@ Public Class Atom
         Yield New Atom("Fe", 6)
         Yield New Atom("Br", 7)
         Yield New Atom("Se", 6)
+        Yield New Atom("I", 7)
     End Function
 
 End Class
