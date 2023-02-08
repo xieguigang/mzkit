@@ -67,6 +67,7 @@ Namespace Spectra.Xml
         <XmlAttribute> Public Property forward As Double
         <XmlAttribute> Public Property reverse As Double
         <XmlAttribute> Public Property jaccard As Double
+        <XmlAttribute> Public Property entropy As Double
 
         Public ReadOnly Property mirror As Double
             Get
