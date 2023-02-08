@@ -97,13 +97,19 @@ Public Class ChemicalElement : Inherits Node
     End Sub
 
     Public Shared Iterator Function GetConnection(formula As ChemicalFormula, atom As ChemicalElement) As IEnumerable(Of (keys As Bonds, ChemicalElement))
-        Dim key As ChemicalKey = Nothing
+        Dim key1, key2 As ChemicalKey
 
         For Each partner As ChemicalElement In formula.vertex.Where(Function(v) v IsNot atom)
-            key = formula.QueryEdge(atom.label, partner.label)
+            key1 = formula.QueryEdge(atom.label, partner.label)
 
-            If key IsNot Nothing Then
-                Yield (key.bond, partner)
+            If key1 IsNot Nothing Then
+                Yield (key1.bond, partner)
+            End If
+
+            key2 = formula.QueryEdge(partner.label, atom.label)
+
+            If key2 IsNot Nothing AndAlso Not key1 Is key2 Then
+                Yield (key2.bond, partner)
             End If
         Next
     End Function
