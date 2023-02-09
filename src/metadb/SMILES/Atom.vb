@@ -181,6 +181,9 @@ Public Class Atom
 
         Yield New Atom("Pa", 3, 4, 5)
 
+        Yield New Atom("Cr", 2, 3, 6)
+        Yield New Atom("Po", 2, 4, 6)
+
         Yield New Atom("Ti", 2, 3, 4)
         Yield New Atom("Zr", 2, 3, 4)
 
