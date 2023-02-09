@@ -43,7 +43,13 @@ Module Layout2D
                                         ByRef n As Integer,
                                         strict As Boolean) As Double
 
-        Dim maxN As Integer = atomMaxCharges(atom.elementName).maxKeys
+        Dim maxN As Integer
+
+        If atomMaxCharges.ContainsKey(atom.elementName) Then
+            maxN = atomMaxCharges(atom.elementName).maxKeys
+        Else
+            maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+        End If
 
         n = Aggregate b As ChemicalKey
             In bonds
