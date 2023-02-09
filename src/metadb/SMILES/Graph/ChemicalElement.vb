@@ -167,10 +167,11 @@ Public Class ChemicalElement : Inherits Node
                         atom.group = "-O-"
                 End Select
             Case "N"
+                ' N -3
                 Select Case keys
-                    Case 1 : If atom.charge = 0 Then atom.group = "-NH3" Else atom.group = $"[-NH{3 - atom.charge}]{atom.charge}+"
-                    Case 2 : If atom.charge = 0 Then atom.group = "-NH2-" Else atom.group = $"[-NH{2 - atom.charge}-]{atom.charge}+"
-                    Case 3 : If atom.charge = 0 Then atom.group = "-NH=" Else atom.group = $"[-N=]{atom.charge}+"
+                    Case 1 : If atom.charge = 0 Then atom.group = "-NH2" Else atom.group = $"[-NH{3 - atom.charge}]{atom.charge}+"
+                    Case 2 : If atom.charge = 0 Then atom.group = "-NH-" Else atom.group = $"[-NH{2 - atom.charge}-]{atom.charge}+"
+                    Case 3 : If atom.charge = 0 Then atom.group = "-N=" Else atom.group = $"[-N=]{atom.charge}+"
                     Case Else
                         atom.group = "N"
                 End Select
