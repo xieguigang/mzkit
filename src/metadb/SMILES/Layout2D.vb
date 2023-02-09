@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -33,6 +34,7 @@ Module Layout2D
 
     Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
+        .JoinIterates(Atom.DefaultAtomGroups) _
         .ToDictionary(Function(a)
                           Return a.label
                       End Function)

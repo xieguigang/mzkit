@@ -61,6 +61,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 ''' </summary>
 Public Class ChemicalElement : Inherits Node
 
+    ''' <summary>
+    ''' the atom or atom group element label text
+    ''' </summary>
+    ''' <returns></returns>
     Public Property elementName As String
 
     ''' <summary>
@@ -93,6 +97,13 @@ Public Class ChemicalElement : Inherits Node
     Sub New()
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="element">
+    ''' the atom or atom group element label text
+    ''' </param>
+    ''' <param name="index"></param>
     Sub New(element As String, Optional index As Integer? = Nothing)
         Me.label = If(
             index Is Nothing,
@@ -164,7 +175,7 @@ Public Class ChemicalElement : Inherits Node
                         atom.group = "N"
                 End Select
             Case Else
-                If atom.charge = 0 Then
+                If atom.charge = 0 OrElse SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
                     atom.group = atom.elementName
                 ElseIf atom.charge > 0 Then
                     atom.group = $"[{atom.elementName}]{atom.charge}+"

@@ -117,7 +117,7 @@ Public Class ParseChain
 
     Private Sub WalkToken(t As Token, i As Integer)
         Select Case t.name
-            Case ElementTypes.Element : Call WalkElement(t, i)
+            Case ElementTypes.Element, ElementTypes.AtomGroup : Call WalkElement(t, i)
             Case ElementTypes.Key : Call WalkKey(t)
             Case ElementTypes.Open
                 ' do nothing

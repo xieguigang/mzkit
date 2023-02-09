@@ -75,13 +75,14 @@ Public Class Atom
     Public ReadOnly Property maxKeys As Integer
     Public ReadOnly Property isAtomGroup As Boolean
 
-    Sub New(label As String, ParamArray valence As Integer())
-        Dim countAtomGroup = Aggregate c As Char
-                             In label
-                             Where Char.IsLetter(c) AndAlso Char.IsUpper(c)
-                             Into Count
+    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, Atom) = Atom _
+        .DefaultAtomGroups _
+        .ToDictionary(Function(a)
+                          Return a.GetIonLabel
+                      End Function)
 
-        Me.isAtomGroup = countAtomGroup > 1
+    Sub New(label As String, ParamArray valence As Integer())
+        Me.isAtomGroup = EvaluateIsAtomGroup(label)
         Me.label = label
         Me.valence = valence
         Me.maxKeys = GetMaxKeys()
@@ -93,6 +94,14 @@ Public Class Atom
         Else
             Return valence.Select(AddressOf stdNum.Abs).Max
         End If
+    End Function
+
+    Public Shared Function EvaluateIsAtomGroup(label As String) As Boolean
+        Dim countAtomGroup = Aggregate c As Char
+                             In label
+                             Where Char.IsLetter(c) AndAlso Char.IsUpper(c)
+                             Into Count
+        Return countAtomGroup > 1
     End Function
 
     Public Shared Function ChargeLabel(charge As Integer) As String
