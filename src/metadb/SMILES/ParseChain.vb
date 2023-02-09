@@ -86,9 +86,9 @@ Public Class ParseChain
             .JoinBy("")
     End Sub
 
-    Public Shared Function ParseGraph(SMILES As String) As ChemicalFormula
+    Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
-        Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph
+        Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph(strict)
         Dim degree = graph _
             .AllBonds _
             .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
@@ -103,7 +103,7 @@ Public Class ParseChain
         Return graph
     End Function
 
-    Public Function CreateGraph() As ChemicalFormula
+    Public Function CreateGraph(Optional strict As Boolean = True) As ChemicalFormula
         Dim i As i32 = 1
 
         For Each t As Token In tokens
@@ -112,18 +112,20 @@ Public Class ParseChain
 
         Call ChemicalElement.SetAtomGroups(formula:=graph)
 
-        Return graph.AutoLayout
+        Return graph.AutoLayout(strict:=strict)
     End Function
 
     Private Sub WalkToken(t As Token, i As Integer)
         Select Case t.name
-            Case ElementTypes.Element : Call WalkElement(t, i)
+            Case ElementTypes.Element, ElementTypes.AtomGroup : Call WalkElement(t, i)
             Case ElementTypes.Key : Call WalkKey(t)
             Case ElementTypes.Open
                 ' do nothing
                 stackSize.Push(0)
             Case ElementTypes.Close
                 Call chainStack.Pop(stackSize.Pop())
+            Case ElementTypes.Disconnected, ElementTypes.None
+                ' unsure how to break the graph, do nothing?
             Case Else
                 Throw New NotImplementedException(t.ToString)
         End Select
@@ -135,7 +137,9 @@ Public Class ParseChain
     End Sub
 
     Private Sub WalkElement(t As Token, i As Integer)
-        Dim element As New ChemicalElement(t.text, index:=i)
+        Dim element As New ChemicalElement(t.text, index:=i) With {
+            .charge = Val(t.charge)
+        }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
         element.ID = graph.vertex.Count + 1

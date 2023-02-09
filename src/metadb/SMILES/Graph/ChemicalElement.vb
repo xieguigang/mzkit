@@ -61,6 +61,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 ''' </summary>
 Public Class ChemicalElement : Inherits Node
 
+    ''' <summary>
+    ''' the atom or atom group element label text
+    ''' </summary>
+    ''' <returns></returns>
     Public Property elementName As String
 
     ''' <summary>
@@ -84,9 +88,22 @@ Public Class ChemicalElement : Inherits Node
     ''' <returns></returns>
     Public Property group As String
 
+    ''' <summary>
+    ''' the ion charge value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property charge As Integer
+
     Sub New()
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="element">
+    ''' the atom or atom group element label text
+    ''' </param>
+    ''' <param name="index"></param>
     Sub New(element As String, Optional index As Integer? = Nothing)
         Me.label = If(
             index Is Nothing,
@@ -138,20 +155,33 @@ Public Class ChemicalElement : Inherits Node
                 End Select
             Case "O"
                 Select Case keys
-                    Case 1 : atom.group = "-OH"
+                    Case 1
+                        If atom.charge = 0 Then
+                            atom.group = "-OH"
+                        Else
+                            ' an ion with negative charge value
+                            ' [O-]
+                            atom.group = "[O-]-"
+                        End If
                     Case Else
                         atom.group = "-O-"
                 End Select
             Case "N"
                 Select Case keys
-                    Case 1 : atom.group = "-NH3"
-                    Case 2 : atom.group = "-NH2-"
-                    Case 3 : atom.group = "-NH="
+                    Case 1 : If atom.charge = 0 Then atom.group = "-NH3" Else atom.group = $"[-NH{3 - atom.charge}]{atom.charge}+"
+                    Case 2 : If atom.charge = 0 Then atom.group = "-NH2-" Else atom.group = $"[-NH{2 - atom.charge}-]{atom.charge}+"
+                    Case 3 : If atom.charge = 0 Then atom.group = "-NH=" Else atom.group = $"[-N=]{atom.charge}+"
                     Case Else
                         atom.group = "N"
                 End Select
             Case Else
-                atom.group = atom.elementName
+                If atom.charge = 0 OrElse SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
+                    atom.group = atom.elementName
+                ElseIf atom.charge > 0 Then
+                    atom.group = $"[{atom.elementName}]{atom.charge}+"
+                Else
+                    atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                End If
         End Select
     End Sub
 End Class

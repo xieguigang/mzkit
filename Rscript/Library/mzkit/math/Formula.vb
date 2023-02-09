@@ -547,9 +547,24 @@ Module FormulaTools
         Return matrix.ToArray
     End Function
 
+    ''' <summary>
+    ''' Parse the SMILES molecule structre string
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <param name="strict"></param>
+    ''' <returns>
+    ''' A chemical graph object that could be used for build formula or structure analysis
+    ''' </returns>
+    ''' <remarks>
+    ''' SMILES denotes a molecular structure as a graph with optional chiral 
+    ''' indications. This is essentially the two-dimensional picture chemists
+    ''' draw to describe a molecule. SMILES describing only the labeled
+    ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
+    ''' information) are known as generic SMILES.
+    ''' </remarks>
     <ExportAPI("parseSMILES")>
-    Public Function parseSMILES(SMILES As String) As ChemicalFormula
-        Return ParseChain.ParseGraph(SMILES)
+    Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
+        Return ParseChain.ParseGraph(SMILES, strict)
     End Function
 
     <ExportAPI("as.formula")>
@@ -564,11 +579,14 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("atoms")>
     Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
-        Dim elements As ChemicalElement() = SMILES.AllElements.ToArray
+        Dim elements As ChemicalElement() = SMILES.AllElements _
+            .OrderBy(Function(a) a.label.Match("\d+").ParseInteger) _
+            .ToArray
         Dim atoms As String() = elements.Select(Function(e) e.elementName).ToArray
         Dim groups As String() = elements.Select(Function(e) e.group).ToArray
         Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray
         Dim rowKeys As String() = elements.Select(Function(e) e.label).ToArray
+        Dim ionCharge As Integer() = elements.Select(Function(e) e.charge).ToArray
         Dim partners As String() = elements _
             .Select(Function(e)
                         Return ChemicalElement _
@@ -585,6 +603,7 @@ Module FormulaTools
             .columns = New Dictionary(Of String, Array) From {
                 {"atom", atoms},
                 {"group", groups},
+                {"ion_charge", ionCharge},
                 {"links", links},
                 {"connected", partners}
             }

@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -8,13 +9,16 @@ Imports stdNum = System.Math
 Module Layout2D
 
     <Extension>
-    Public Function AutoLayout(chemical As ChemicalFormula, Optional radius As Double = 10) As ChemicalFormula
+    Public Function AutoLayout(chemical As ChemicalFormula,
+                               Optional radius As Double = 10,
+                               Optional strict As Boolean = True) As ChemicalFormula
+
         Dim atom As ChemicalElement = chemical.AllElements.First
 
         atom.coordinate = New Double() {0, 0}
 
         Do While True
-            chemical.LayoutTarget(atom, radius, 0)
+            chemical.LayoutTarget(atom, radius, 0, strict)
             atom = chemical _
                 .AllElements _
                 .Where(Function(a) a.coordinate.IsNullOrEmpty) _
@@ -28,19 +32,38 @@ Module Layout2D
         Return chemical
     End Function
 
-    ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
+    Friend ReadOnly atomMaxCharges As Dictionary(Of String, Atom) = Atom _
         .DefaultElements _
+        .JoinIterates(Atom.DefaultAtomGroups) _
         .ToDictionary(Function(a)
                           Return a.label
                       End Function)
 
-    Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey(), ByRef n As Integer) As Double
-        Dim maxN As Integer = atomMaxCharges(atom.elementName).maxKeys
+    Private Function EvaluateAngleDelta(atom As ChemicalElement, bonds As ChemicalKey(),
+                                        ByRef n As Integer,
+                                        strict As Boolean) As Double
 
-        n = Aggregate b In bonds Into Sum(b.bond)
+        Dim maxN As Integer
+
+        If atomMaxCharges.ContainsKey(atom.elementName) Then
+            maxN = atomMaxCharges(atom.elementName).maxKeys
+        Else
+            maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+        End If
+
+        n = Aggregate b As ChemicalKey
+            In bonds
+            Into Sum(b.bond)
 
         If bonds.Length > maxN OrElse (n > maxN) Then
-            Throw New InvalidConstraintException
+            Dim msg As String = $"The atom element '{atom.elementName}' its max key is {maxN}, but {n} bounds is connected with this atom element!"
+
+            If strict Then
+                Throw New InvalidConstraintException(msg)
+            Else
+                Call Console.WriteLine(msg)
+                Return 2 * stdNum.PI / n
+            End If
         End If
 
         ' fix for the missing H element
@@ -52,7 +75,9 @@ Module Layout2D
     End Function
 
     <Extension>
-    Public Sub LayoutTarget(chemical As ChemicalFormula, atom As ChemicalElement, radius As Double, alpha As Double)
+    Public Sub LayoutTarget(chemical As ChemicalFormula, atom As ChemicalElement, radius As Double, alpha As Double,
+                            Optional strict As Boolean = True)
+
         ' get number of bounds (n) of
         ' the current atom links,
         ' then we can evaluate the angle
@@ -63,7 +88,7 @@ Module Layout2D
                    End Function) _
             .ToArray
         Dim n As Integer = 0
-        Dim angleDelta As Double = EvaluateAngleDelta(atom, bonds, n)
+        Dim angleDelta As Double = EvaluateAngleDelta(atom, bonds, n, strict)
 
         If alpha = 0 Then
             If atom.elementName = "C" AndAlso bonds.Length = 1 Then
@@ -71,6 +96,10 @@ Module Layout2D
             Else
                 alpha = angleDelta
             End If
+        End If
+
+        If atom.coordinate.IsNullOrEmpty Then
+            atom.coordinate = {0, 0}
         End If
 
         Dim center As New PointF(atom.coordinate(0), atom.coordinate(1))
@@ -85,7 +114,7 @@ Module Layout2D
             [next].coordinate = {layout.X, layout.Y}
             alpha += angleDelta
 
-            Call chemical.LayoutTarget([next], radius, alpha)
+            Call chemical.LayoutTarget([next], radius, alpha, strict)
         Next
     End Sub
 End Module
