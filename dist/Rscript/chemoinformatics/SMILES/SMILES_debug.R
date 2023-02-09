@@ -12,3 +12,14 @@ struct = Trigonelline
 print(Trigonelline);
 print(as.formula(struct)); 
 print(formula::atoms(struct));
+
+cat("\n\n\n");
+
+Lysine = "C(CCN)CC(C(=O)O)N";
+
+struct = Lysine
+|> formula::parseSMILES() 
+;
+
+print(Lysine);
+print(formula::atoms(struct));
