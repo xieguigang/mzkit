@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Friend Class ParentValue
 
