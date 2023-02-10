@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -184,10 +185,22 @@ Public Module mzStreamWriter
             Next
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {
-                    .ByteOrder = ByteOrder.LittleEndian
-                }
-                    Call product.WriteBuffer(scan2)
+                Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")
+                    Dim scan2 As New BinaryDataWriter(blockStream) With {
+                        .ByteOrder = ByteOrder.LittleEndian
+                    }
+
+                    If TypeOf blockStream Is SubStream Then
+                        ' 20230210
+                        '
+                        ' has duplicated scan id will cause the
+                        ' open block function returns a stream
+                        ' in readonly!
+
+                        Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
+                    Else
+                        Call product.WriteBuffer(scan2)
+                    End If
                 End Using
 
                 If product.rt > rtmax Then
