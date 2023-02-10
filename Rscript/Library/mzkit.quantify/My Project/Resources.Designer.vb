@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e92851a3361262a12db0657220ba0837, Rscript\Library\mzkit.quantify\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::f9a2e3a66eb93c9f3e1eec7bb28c9fe4, Rscript\Library\mzkit.quantify\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

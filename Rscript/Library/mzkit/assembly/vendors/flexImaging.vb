@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::504d6bf311196153560fd24c5a0d68cb, Rscript\Library\mzkit\assembly\vendors\flexImaging.vb"
+﻿#Region "Microsoft.VisualBasic::16d124606a46f9cf9e5cea546a1a80c0, Rscript\Library\mzkit\assembly\vendors\flexImaging.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
+    '   Total Lines: 62
     '    Code Lines: 50
     ' Comment Lines: 0
-    '   Blank Lines: 13
+    '   Blank Lines: 12
     '     File Size: 2.36 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
@@ -115,4 +114,3 @@ Module flexImaging
         Return data
     End Function
 End Module
-

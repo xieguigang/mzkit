@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::309d05989d58806f96daee53ee64beb9, Rscript\Library\mzkit.plot\Tissue.vb"
+﻿#Region "Microsoft.VisualBasic::6222f9fcfb1d8c635db20894cd59a09f, Rscript\Library\mzkit.plot\Tissue.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
+    '   Total Lines: 41
     '    Code Lines: 34
     ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 1.50 KB
+    '   Blank Lines: 7
+    '     File Size: 1.49 KB
 
 
     ' Module Tissue
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
@@ -94,4 +93,3 @@ Module Tissue
         Return layer.RSD(nbags, nsamples)
     End Function
 End Module
-

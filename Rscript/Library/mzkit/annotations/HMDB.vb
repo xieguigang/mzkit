@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c0b47b4acb823600533e3fba1ba02c, Rscript\Library\mzkit\annotations\HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::716473ea2ff8400bc315a27c7955c012, Rscript\Library\mzkit\annotations\HMDB.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
+    '   Total Lines: 108
     '    Code Lines: 69
     ' Comment Lines: 27
-    '   Blank Lines: 13
+    '   Blank Lines: 12
     '     File Size: 3.94 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -162,4 +161,3 @@ Module HMDBTools
 
     End Function
 End Module
-

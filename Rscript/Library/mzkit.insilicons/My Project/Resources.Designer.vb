@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c98be69a353785512d24e33602d5d392, Rscript\Library\mzkit.insilicons\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::850244c6937b1fc62bd9159edd650e8d, Rscript\Library\mzkit.insilicons\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

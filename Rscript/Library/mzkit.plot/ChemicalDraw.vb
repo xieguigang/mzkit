@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4b946bf1efdb428cece0a22f3caf83, Rscript\Library\mzkit.plot\ChemicalDraw.vb"
+﻿#Region "Microsoft.VisualBasic::85fad33928e52b05991f7d16ee02bf7f, Rscript\Library\mzkit.plot\ChemicalDraw.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
+    '   Total Lines: 30
     '    Code Lines: 27
     ' Comment Lines: 0
-    '   Blank Lines: 4
+    '   Blank Lines: 3
     '     File Size: 1.17 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Drawing
@@ -83,4 +82,3 @@ Module ChemicalDraw
         End If
     End Function
 End Module
-

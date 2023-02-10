@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d8c479ee9174fa640f9c53c380d9be, Rscript\Library\mzkit\annotations\library.vb"
+﻿#Region "Microsoft.VisualBasic::f33f9eae48f381a95f137203ec79dd95, Rscript\Library\mzkit\annotations\library.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 236
+    '   Total Lines: 235
     '    Code Lines: 192
     ' Comment Lines: 5
-    '   Blank Lines: 39
+    '   Blank Lines: 38
     '     File Size: 8.72 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -289,4 +288,3 @@ Module library
     End Function
 
 End Module
-

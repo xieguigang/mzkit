@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9b1a52fa7bfdf26cac55d3b098f645c, Rscript\Library\mzkit\annotations\Mummichog.vb"
+﻿#Region "Microsoft.VisualBasic::f94471f9c1cc5012920cea85718421e0, Rscript\Library\mzkit\annotations\Mummichog.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 218
     ' Comment Lines: 47
     '   Blank Lines: 39
-    '     File Size: 12.19 KB
+    '     File Size: 12.18 KB
 
 
     ' Module Mummichog
@@ -358,4 +358,3 @@ Module Mummichog
         Return groups
     End Function
 End Module
-

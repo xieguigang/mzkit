@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1ddd40dd7fc3fb7a1eeeda484fb73ca, Rscript\Library\mzkit\comprehensive\SingleCells.vb"
+﻿#Region "Microsoft.VisualBasic::2aaf4a362c848f1a8f55f9159784352e, Rscript\Library\mzkit\comprehensive\SingleCells.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Module SingleCells
         Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
     End Function
 End Module
-
