@@ -62,6 +62,29 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports stdNum = System.Math
 
+Friend Class ParentValue
+
+    Friend ReadOnly parentMz As Double
+    Friend ReadOnly formula As Formula
+
+    Sub New(parentMz As Double, formula As String)
+        Me.parentMz = parentMz
+        Me.formula = FormulaScanner.ScanFormula(formula)
+    End Sub
+
+    Public Function TestFragments(frag As String) As Boolean
+        If formula Is Nothing Then
+            Return True
+        End If
+
+        Return True
+    End Function
+
+    Public Function GetFragment(candidates As IEnumerable(Of FragmentAnnotationHolder)) As FragmentAnnotationHolder
+
+    End Function
+End Class
+
 Public Class PeakAnnotation
 
     ReadOnly massDelta As Double
@@ -85,10 +108,15 @@ Public Class PeakAnnotation
     ''' </summary>
     ''' <param name="parentMz"></param>
     ''' <param name="products"></param>
+    ''' <param name="formula">
+    ''' Apply for atom group validation, used for create machine learning dataset
+    ''' </param>
     ''' <returns></returns>
-    Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
+    Public Function RunAnnotation(parentMz#, products As ms2(), Optional formula As String = Nothing) As Annotation
+        Dim parent As New ParentValue(parentMz, formula)
+
         products = MeasureIsotopePeaks(parentMz, products)
-        products = MatchElementGroups(parentMz, products)
+        products = MatchElementGroups(parent, products)
         products = MeasureProductIsotopePeaks(products)
         products = (From mzi As ms2
                     In products
@@ -213,17 +241,23 @@ Public Class PeakAnnotation
         Return Nothing
     End Function
 
-    Private Function MatchElementGroups(parentMz#, products As ms2()) As ms2()
+    Private Function MatchElementGroups(parent As ParentValue, products As ms2()) As ms2()
         For Each element As ms2 In products
-            Call FragmentAnnotation(element, parentMz)
+            Call FragmentAnnotation(element, parent)
         Next
 
         Return products
     End Function
 
-    Private Sub FragmentAnnotation(element As ms2, parentMz#)
-        Dim group As FragmentAnnotationHolder = AtomGroupHandler.GetByMass(element.mz, massDelta, adducts)
+    Private Sub FragmentAnnotation(element As ms2, parent As ParentValue)
+        Dim group As FragmentAnnotationHolder
         Dim delta As Integer = 0
+
+        If parent.formula Is Nothing Then
+            group = AtomGroupHandler.GetByMass(element.mz, massDelta, adducts)
+        Else
+            group = parent.GetFragment(AtomGroupHandler.FilterByMass(element.mz, massDelta, adducts))
+        End If
 
         If Not group Is Nothing Then
             If element.Annotation.StringEmpty Then
@@ -233,7 +267,7 @@ Public Class PeakAnnotation
             End If
         Else
             group = AtomGroupHandler.FindDelta(
-                mz1:=parentMz,
+                mz1:=parent.parentMz,
                 mz2:=element.mz,
                 delta:=delta,
                 da:=massDelta,

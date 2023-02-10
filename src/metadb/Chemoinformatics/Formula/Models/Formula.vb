@@ -64,6 +64,14 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Formula
 
+    ''' <summary>
+    ''' A chemical formula is a notation used by scientists to show the 
+    ''' number and type of atoms present in a molecule, using the atomic 
+    ''' symbols and numerical subscripts. A chemical formula is a simple 
+    ''' representation, in writing, of a three dimensional molecule 
+    ''' that exists. A chemical formula describes a substance, down to 
+    ''' the exact atoms which make it up.
+    ''' </summary>
     <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
     Public Class Formula : Implements IExactMassProvider
 
@@ -91,6 +99,10 @@ Namespace Formula
 
         Friend m_formula As String
 
+        ''' <summary>
+        ''' get all elements label that parse from current formula object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Elements As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -100,6 +112,11 @@ Namespace Formula
 
         Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
+        ''' <summary>
+        ''' get element count by the given specific atom label
+        ''' </summary>
+        ''' <param name="atom"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

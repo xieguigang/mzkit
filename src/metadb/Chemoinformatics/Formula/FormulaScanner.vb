@@ -73,6 +73,8 @@ Namespace Formula
         ''' </summary>
         Dim n As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Private Sub New(n As Integer)
             Me.n = n
         End Sub
@@ -105,19 +107,34 @@ Namespace Formula
         ' (CH3)4C
 
         ''' <summary>
-        ''' 
+        ''' Parse the given formula string value as the <see cref="Chemoinformatics.Formula.Formula"/> object
         ''' </summary>
-        ''' <param name="formula$"></param>
+        ''' <param name="formula">
+        ''' The formula string, A chemical formula is a notation used by scientists 
+        ''' to show the number and type of atoms present in a molecule, using the 
+        ''' atomic symbols and numerical subscripts. A chemical formula is a simple 
+        ''' representation, in writing, of a three dimensional molecule that exists.
+        ''' A chemical formula describes a substance, down to the exact atoms which 
+        ''' make it up.
+        ''' </param>
         ''' <param name="n">for counting polymers atoms</param>
         ''' <returns>
-        ''' the formula string keeps the same order with the input <paramref name="formula"/>
+        ''' the formula string keeps the same order with the input 
+        ''' <paramref name="formula"/>; and also this function will
+        ''' returns nothing if the given <paramref name="formula"/>
+        ''' string is empty or null
         ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
+            Dim key As String, formula2 As Formula
+
             Static cache As New Dictionary(Of String, Formula)
 
-            Dim key As String = $"{formula} ~ {n}"
-            Dim formula2 As Formula
+            If formula.StringEmpty Then
+                Return Nothing
+            Else
+                key = $"{formula} ~ {n}"
+            End If
 
             If cache.ContainsKey(key) Then
                 formula2 = cache(key)

@@ -64,6 +64,7 @@ Namespace Formula
 
     ''' <summary>
     ''' Data Load Statements
+    ''' 
     ''' Uncertainties from CRC Handbook of Chemistry and Physics
     ''' For Radioactive elements, the most stable isotope is NOT used;
     ''' instead, an average Mol. Weight is used, just like with other elements.
@@ -72,6 +73,7 @@ Namespace Formula
     ''' Radioactive elements, where uncertainty was estimated to be .n5 where
     ''' intSpecificElementProperty represents the number digits after the decimal point but before the last
     ''' number of the molecular weight.
+    ''' 
     ''' For example, for No, MW = 259.1009 (?.0005)
     ''' </summary>
     Public Class Element
