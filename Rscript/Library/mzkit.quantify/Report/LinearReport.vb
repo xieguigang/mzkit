@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66ae6cf53f78f6533e680d356ca0ec31, mzkit\Rscript\Library\mzkit.quantify\Report\LinearReport.vb"
+﻿#Region "Microsoft.VisualBasic::66ae6cf53f78f6533e680d356ca0ec31, Rscript\Library\mzkit.quantify\Report\LinearReport.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 171
     ' Comment Lines: 22
     '   Blank Lines: 29
-    '     File Size: 9.64 KB
+    '     File Size: 9.63 KB
 
 
     ' Module LinearReport

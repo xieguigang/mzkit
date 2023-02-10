@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
     ' Author:
     ' 

@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::5db75a4056d3ed3a5240803fcfe23103, mzkit\Rscript\Library\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, Rscript\Library\mzkit\math\Formula.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 402
-'    Code Lines: 287
-' Comment Lines: 52
-'   Blank Lines: 63
-'     File Size: 15.77 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module FormulaTools
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
-'               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
-'               getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase
-'               parseSMILES, printFormulas, readKCF, readSDF, removeElement
-'               (+2 Overloads) repeats, ScanFormula, SDF2KCF
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 575
+    '    Code Lines: 390
+    ' Comment Lines: 102
+    '   Blank Lines: 83
+    '     File Size: 22.15 KB
+
+
+    ' Module FormulaTools
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+5 Overloads) add, asFormula, atomGroups, canonicalFormula, CreateGraph
+    '               divide, EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString
+    '               getElementCount, getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus
+    '               openChemicalDescriptorDatabase, parseSMILES, PeakAnnotation, printFormulas, readKCF
+    '               readSDF, registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula
+    '               SDF2KCF
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

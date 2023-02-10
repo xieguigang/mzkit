@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, mzkit\Rscript\Library\mzkit\math\TestFormulaSymbolLang.vb"
+﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, Rscript\Library\mzkit\math\TestFormulaSymbolLang.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 571.00 B
+    '     File Size: 571 B
 
 
     ' Class TestFormulaSymbolLang
