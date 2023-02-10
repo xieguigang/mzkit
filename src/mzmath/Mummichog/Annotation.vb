@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::491ad41dd052f2e4556edd829371dd48, mzkit\src\mzmath\Mummichog\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::bccdea2dc76081e0ecfbec18b19c38e4, mzkit\src\mzmath\Mummichog\Annotation.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
+    '   Total Lines: 104
     '    Code Lines: 90
     ' Comment Lines: 1
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 4.02 KB
 
 
     ' Module Annotation
     ' 
     '     Function: GetCandidateSet, PeakListAnnotation
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -157,5 +156,3 @@ Public Module Annotation
     End Function
 
 End Module
-
-

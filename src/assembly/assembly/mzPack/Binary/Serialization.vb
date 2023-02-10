@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f2d3a0dd3169f420789ef42120aaab8, mzkit\src\assembly\assembly\mzPack\Binary\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::69fbfc63d2409093a4aa8572ede27807, mzkit\src\assembly\assembly\mzPack\Binary\Serialization.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
+    '   Total Lines: 100
     '    Code Lines: 65
     ' Comment Lines: 24
-    '   Blank Lines: 12
+    '   Blank Lines: 11
     '     File Size: 3.64 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO

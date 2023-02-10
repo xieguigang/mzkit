@@ -34,7 +34,7 @@ mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\data.vb,589,81,85,4
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\ERS.vb,122,21,20,81,1,0,1,5,0,4847,4.85 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\MzPackAccess.vb,327,75,38,214,1,0,0,13,0,12142,12.14 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\MzWeb.vb,574,133,67,374,1,0,1,18,0,21551,21.55 KB
-mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\NMR.vb,66,18,9,39,1,0,0,6,0,2100,2.10 KB
+mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\NMR.vb,64,18,9,37,1,0,0,6,0,2034,2.03 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\vendors\flexImaging.vb,62,0,12,50,1,0,0,3,0,2362,2.36 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\vendors\ProteoWizard.vb,143,31,20,92,1,0,0,6,0,4965,4.96 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\assembly\vendors\ThermoRaw.vb,80,6,13,61,1,0,0,6,0,2844,2.84 KB
@@ -50,7 +50,7 @@ mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\My Project\Application.Desig
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1275,1.27 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2708,2.71 KB
 mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,mzkit\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2912,2.91 KB
-mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,<project>,8039,1293,1064,5682,29,4,17,304,0,314352,314.35 KB
+mzkit\Rscript\Library\mzkit\mzkit.NET5.vbproj,<project>,8037,1293,1064,5680,29,4,17,304,0,314286,314.29 KB
 mzkit\Rscript\Library\mzkit.insilicons\mzDIA.NET5.vbproj,mzkit.insilicons\metaDNA.vb,538,88,73,377,1,0,1,18,0,22832,22.83 KB
 mzkit\Rscript\Library\mzkit.insilicons\mzDIA.NET5.vbproj,mzkit.insilicons\MoleculeNetworking.vb,120,16,19,85,1,0,0,5,0,4408,4.41 KB
 mzkit\Rscript\Library\mzkit.insilicons\mzDIA.NET5.vbproj,mzkit.insilicons\ms2_simulator.vb,78,0,13,65,1,0,0,7,0,3030,3.03 KB
@@ -88,7 +88,7 @@ mzkit\Rscript\Library\mzkit.quantify\quantify.NET5.vbproj,mzkit.quantify\Report\
 mzkit\Rscript\Library\mzkit.quantify\quantify.NET5.vbproj,<project>,2309,381,270,1658,14,7,5,63,0,97437,97.44 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\NamespaceDoc.vb,7,3,0,4,1,0,1,0,0,252,252 B
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\SpectrumTree.vb,40,9,5,26,1,0,1,2,0,1556,1.56 KB
-mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\Utils.vb,19,0,3,16,1,0,0,1,0,525,525 B
+mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\Utils.vb,19,0,3,16,1,0,0,1,0,524,524 B
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\ASCII\MGF\Ions.vb,83,37,9,37,1,12,0,3,0,2506,2.51 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\ASCII\MGF\MetaData.vb,144,0,23,121,1,12,2,1,0,3940,3.94 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\ASCII\MGF\MgfReader.vb,157,6,20,131,1,0,0,7,0,6325,6.33 KB
@@ -157,7 +157,7 @@ mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\Bina
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\BinaryStreamWriter.vb,217,37,48,132,1,1,9,0,0,7204,7.20 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,179,179 B
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\ScanModel.vb,47,0,5,42,1,0,0,2,0,1624,1.62 KB
-mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\Serialization.vb,101,24,12,65,1,0,3,1,0,3640,3.64 KB
+mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\Serialization.vb,100,24,11,65,1,0,3,1,0,3639,3.64 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Binary\Version.vb,40,10,8,22,2,0,0,2,0,1283,1.28 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\mzWebCache\Cache.vb,84,20,13,51,1,0,1,3,0,3304,3.30 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\mzWebCache\mzMLScans.vb,33,0,6,27,1,0,1,3,0,1381,1.38 KB
@@ -167,7 +167,7 @@ mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Stream\MSSc
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Stream\ScanMS1.vb,97,27,11,59,1,5,0,3,0,3311,3.31 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\mzPack\Stream\ScanMS2.vb,34,7,5,22,1,8,0,1,0,1106,1.11 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\test\Module1.vb,64,27,21,16,1,0,2,0,0,2445,2.44 KB
-mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\test\Program.vb,8,0,1,7,1,0,1,0,0,167,167 B
+mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\test\Program.vb,8,0,1,7,1,0,1,0,0,165,165 B
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\test\read_imzML.vb,28,0,8,20,1,0,3,0,0,958,958 B
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\test\read_mzXML.vb,42,2,10,30,1,0,3,0,0,1406,1.41 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\Chromatogram.vb,93,21,12,60,1,5,0,4,0,3310,3.31 KB
@@ -178,19 +178,19 @@ mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\Provid
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\imzMLScan.vb,61,0,15,46,1,0,0,13,0,2137,2.14 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\mzMLScan.vb,109,0,19,90,1,0,0,13,0,4479,4.48 KB
 mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\mzXMLScan.vb,95,11,15,69,1,0,0,13,0,3793,3.79 KB
-mzkit\src\assembly\assembly\assembly-netcore5.vbproj,<project>,7610,1053,1279,5278,149,354,78,302,0,284997,285.00 KB
+mzkit\src\assembly\assembly\assembly-netcore5.vbproj,<project>,7609,1053,1278,5278,149,354,78,302,0,284993,284.99 KB
 mzkit\src\assembly\assembly\test\test.vbproj,test\Module1.vb,64,27,21,16,1,0,2,0,0,2445,2.44 KB
 mzkit\src\assembly\assembly\test\test.vbproj,test\Program.vb,8,0,1,7,1,0,1,0,0,165,165 B
 mzkit\src\assembly\assembly\test\test.vbproj,test\read_imzML.vb,28,0,8,20,1,0,3,0,0,958,958 B
 mzkit\src\assembly\assembly\test\test.vbproj,test\read_mzXML.vb,42,2,10,30,1,0,3,0,0,1406,1.41 KB
 mzkit\src\assembly\assembly\test\test.vbproj,<project>,142,29,40,73,4,0,9,0,0,4974,4.97 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\Storage.vb,60,3,7,50,1,0,0,2,0,2278,2.28 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\mcfParser.vb,46,10,10,26,1,0,3,1,0,1536,1.54 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb,9,0,2,7,1,5,0,0,0,226,226 B
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\index_sqlite\IndexParser.vb,76,10,13,53,1,0,3,2,0,3028,3.03 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb,106,15,14,77,1,0,3,2,0,4026,4.03 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\Properties.vb,9,0,2,7,1,2,0,1,0,208,208 B
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\Spectra.vb,40,26,3,11,1,9,0,0,0,1135,1.14 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\Storage.vb,60,3,7,50,1,0,0,2,0,2277,2.28 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\mcfParser.vb,46,10,10,26,1,0,3,1,0,1535,1.53 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb,9,0,2,7,1,5,0,0,0,225,225 B
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\mcf\index_sqlite\IndexParser.vb,76,10,13,53,1,0,3,2,0,3027,3.03 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb,105,15,13,77,1,0,3,2,0,4024,4.02 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\Properties.vb,9,0,2,7,1,2,0,1,0,207,207 B
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\flexImaging\spectrum_sqlite\Spectra.vb,40,26,3,11,1,9,0,0,0,1134,1.13 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Properties\AssemblyInfo.vb,34,14,5,15,0,0,0,0,0,1220,1.22 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\BrukerSettingsFileReader.vb,207,22,46,139,3,0,0,6,0,8979,8.98 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Check.vb,157,44,16,97,1,2,12,0,0,5540,5.54 KB
@@ -199,115 +199,115 @@ mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReade
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\FourierTransform.vb,127,13,22,92,1,0,1,1,0,3812,3.81 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\GlobalParameters.vb,85,31,12,42,1,8,4,0,0,2975,2.98 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\AssertionException.vb,33,12,4,17,1,0,3,0,0,808,808 B
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\DesignByContractException.vb,27,6,5,16,1,0,3,0,0,703,703 B
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\DesignByContractException.vb,26,6,4,16,1,0,3,0,0,701,701 B
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\InvariantException.vb,30,12,2,16,1,0,3,0,0,776,776 B
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\PostconditionException.vb,33,12,5,16,1,0,3,0,0,801,801 B
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\PreconditionException.vb,34,12,6,16,1,0,3,0,0,798,798 B
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\PostconditionException.vb,32,12,4,16,1,0,3,0,0,799,799 B
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\Raw\Exceptions\PreconditionException.vb,33,12,5,16,1,0,3,0,0,796,796 B
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\SCiLSLab\ImportsUtils.vb,102,20,17,65,1,0,0,5,0,3845,3.85 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\SCiLSLab\PackFile.vb,104,10,16,78,3,8,2,4,0,4475,4.47 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\SCiLSLab\SpotMs.vb,53,1,13,39,2,4,0,2,0,1647,1.65 KB
 mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\SCiLSLab\SpotSite.vb,64,2,14,48,2,4,0,5,0,1992,1.99 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\test\Program.vb,42,2,9,31,1,0,3,0,0,1302,1.30 KB
-mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,<project>,1810,338,302,1170,29,44,57,34,0,68118,68.12 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\test\Program.vb,42,2,9,31,1,0,3,0,0,1301,1.30 KB
+mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,<project>,1806,338,298,1170,29,44,57,34,0,68103,68.10 KB
 mzkit\src\assembly\BrukerDataReader\test\test.vbproj,test\Program.vb,42,2,9,31,1,0,3,0,0,1301,1.30 KB
 mzkit\src\assembly\BrukerDataReader\test\test.vbproj,<project>,42,2,9,31,1,0,3,0,0,1301,1.30 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\D2Chromatogram.vb,110,4,15,91,1,4,0,4,0,4643,4.64 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\GC2Dimensional.vb,249,77,30,142,1,0,0,8,0,9597,9.60 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Correction.vb,10,0,4,6,1,0,0,0,0,256,256 B
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders.vb,199,43,21,135,1,0,1,2,0,7556,7.56 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders.vb,199,43,21,135,1,0,1,2,0,7554,7.55 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Metadata.vb,63,5,12,46,1,7,0,3,0,2102,2.10 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MsImagingRaw.vb,180,25,22,133,1,0,0,4,0,7517,7.52 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MSIMeasurement.vb,97,3,19,75,1,0,1,4,0,3262,3.26 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\PeakMatrix.vb,68,0,9,59,1,0,0,2,0,2985,2.98 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\ScanMs2Correction.vb,70,3,13,54,1,0,2,4,0,2511,2.51 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\ScanTimeCorrection.vb,56,19,8,29,1,3,1,3,0,2006,2.01 KB
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Shimadzu.vb,91,0,10,81,1,0,0,3,0,3318,3.32 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Shimadzu.vb,91,0,10,81,1,0,0,3,0,3316,3.32 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\3D_MALDI\Imports3DMSI.vb,55,0,10,45,1,0,0,2,0,2384,2.38 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\3D_MALDI\MALDIPointCloud.vb,113,0,22,91,1,0,3,3,0,4846,4.85 KB
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1280,1.28 KB
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2766,2.77 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2765,2.77 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3029,3.03 KB
 mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\Module1.vb,21,0,5,16,1,0,1,0,0,672,672 B
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1010,1010 B
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,<project>,1751,291,258,1202,20,22,11,42,0,68191,68.19 KB
-mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\LoadR.vb,72,2,12,58,1,0,0,2,0,2589,2.59 KB
-mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\test\Program.vb,23,0,4,19,1,0,1,0,0,828,828 B
-mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,<project>,95,2,16,77,2,0,1,2,0,3417,3.42 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1009,1009 B
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,<project>,1749,291,256,1202,20,22,11,42,0,68179,68.18 KB
+mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\LoadR.vb,72,2,12,58,1,0,0,2,0,2588,2.59 KB
+mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\test\Program.vb,23,0,4,19,1,0,1,0,0,827,827 B
+mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,<project>,95,2,16,77,2,0,1,2,0,3415,3.42 KB
 mzkit\src\assembly\LoadR.NET5\test\test.vbproj,test\Program.vb,23,0,4,19,1,0,1,0,0,827,827 B
 mzkit\src\assembly\LoadR.NET5\test\test.vbproj,<project>,23,0,4,19,1,0,1,0,0,827,827 B
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\Converter.vb,201,5,26,170,1,0,0,5,0,8159,8.16 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\Extensions.vb,104,15,14,75,1,0,0,3,0,3902,3.90 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\GCMSConvertor.vb,125,2,22,101,1,0,0,5,0,5061,5.06 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\GCMSConvertor.vb,125,2,22,101,1,0,0,5,0,5059,5.06 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\MemoryReader.vb,65,3,11,51,1,3,2,3,0,2423,2.42 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\mzPack.vb,281,61,29,191,1,13,0,11,0,9771,9.77 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\AssemblyInfo.vb,39,15,9,15,0,0,0,0,0,1019,1019 B
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2779,2.78 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Settings.Designer.vb,76,9,14,53,2,2,1,0,0,3016,3.02 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2778,2.78 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\My Project\Settings.Designer.vb,76,9,14,53,2,2,1,0,0,3015,3.02 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\Stream\ChromatogramOverlap.vb,104,10,17,77,1,2,0,9,0,3598,3.60 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\Stream\PackCDF.vb,120,17,13,90,1,0,1,2,0,4516,4.52 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v1.0\mzPackReader.vb,150,9,31,110,1,2,5,2,0,4243,4.24 KB
 mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v1.0\mzPackWriter.vb,138,19,26,93,1,0,10,0,0,4381,4.38 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v1.0\v1MemoryLoader.vb,87,5,16,66,1,0,0,3,0,3247,3.25 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStream.vb,350,38,58,254,1,5,6,9,0,12269,12.27 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStreamWriter.vb,208,14,38,156,1,0,3,3,0,8104,8.10 KB
-mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,<project>,2124,254,334,1536,15,29,28,55,0,76930,76.93 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v1.0\v1MemoryLoader.vb,87,5,16,66,1,0,0,3,0,3245,3.25 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStream.vb,350,38,58,254,1,5,6,9,0,12268,12.27 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStreamWriter.vb,208,14,38,156,1,0,3,3,0,8102,8.10 KB
+mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,<project>,2123,254,333,1536,15,29,28,55,0,76919,76.92 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\RawStream.vb,44,0,7,37,1,0,0,3,0,1549,1.55 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\ToCDFWriter.vb,74,5,9,60,1,0,1,1,0,4061,4.06 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MSImaging\Extensions.vb,40,0,7,33,1,0,0,1,0,1496,1.50 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MSImaging\imzXMLWriter.vb,42,7,7,28,1,0,0,1,0,1345,1.34 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MSImaging\imzXMLWriter.vb,42,7,7,28,1,0,0,1,0,1343,1.34 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MSImaging\MSIRawPack.vb,259,26,44,189,1,0,0,9,0,9798,9.80 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1160,1.16 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2752,2.75 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2751,2.75 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,3002,3.00 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MZWork\ParseArchive.vb,40,8,6,26,1,0,0,2,0,1476,1.48 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MZWork\Raw.vb,193,20,37,136,1,9,5,10,0,6216,6.22 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MZWork\SaveArchive.vb,78,7,13,58,1,0,3,1,0,2988,2.99 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MZWork\WorkspaceAccess.vb,146,11,27,108,1,0,6,5,0,5894,5.89 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\Module1.vb,17,0,4,13,1,0,1,0,0,491,491 B
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1110,1.11 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\VendorStreamLoader.vb,66,0,14,52,1,0,1,1,0,2485,2.48 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1109,1.11 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\VendorStreamLoader.vb,66,0,14,52,1,0,1,1,0,2483,2.48 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\WiffRawStream.vb,115,3,20,92,1,1,3,2,0,3963,3.96 KB
 mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\XRawStream.vb,92,3,14,75,1,1,2,2,0,3322,3.32 KB
-mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,<project>,1576,202,268,1106,19,19,24,38,0,59559,59.56 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\AbstractFastFourierTransformTool.vb,169,47,25,97,1,4,6,2,0,6482,6.48 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Acqu.vb,434,27,80,327,6,23,8,11,0,12806,12.81 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Fid.vb,103,30,13,60,1,3,5,1,0,2988,2.99 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Proc.vb,330,38,51,241,2,20,2,1,0,11032,11.03 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Spectrum.vb,122,26,18,78,1,7,6,0,0,3321,3.32 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\AbstractApodizator.vb,89,34,12,43,1,0,1,2,0,3799,3.80 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ApodizationTool.vb,151,74,26,51,1,0,4,1,0,6073,6.07 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\Apodizator.vb,36,26,4,6,1,0,0,2,0,1215,1.22 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ExponentialApodizator.vb,65,39,11,15,1,0,1,2,0,2317,2.32 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\GaussianApodizator.vb,71,40,11,20,1,0,1,2,0,2665,2.67 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\LorentzGausApodizatior.vb,98,63,10,25,1,0,1,2,0,4470,4.47 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\SineApodizator.vb,68,30,10,28,1,0,1,3,0,2704,2.70 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\SineSquaredApodizator.vb,71,27,13,31,1,0,1,3,0,2679,2.68 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\TrafApodizator.vb,57,28,9,20,1,0,1,2,0,1949,1.95 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\TrafsApodizator.vb,57,28,9,20,1,0,1,2,0,1967,1.97 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ZeroFillApodizator.vb,39,26,5,8,1,0,1,0,0,1216,1.22 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\baseline\BaselineCorrector.vb,35,26,4,5,1,0,0,1,0,1174,1.17 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\baseline\GolotvinWilliamsBaselineCorrector.vb,236,48,26,162,1,0,0,4,0,11938,11.94 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FastFourierTransform.vb,38,26,6,6,1,0,0,2,0,1216,1.22 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FastFourierTransform1D.vb,82,28,14,40,1,0,1,2,0,3193,3.19 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FFTBase.vb,138,41,12,85,1,0,0,2,0,5031,5.03 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\PhaseCorrectionTool.vb,63,26,12,25,1,0,1,2,0,2092,2.09 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\DSPPhaseCorrection.vb,186,15,10,161,1,0,0,1,0,6663,6.66 KB
+mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,<project>,1574,202,266,1106,19,19,24,38,0,59547,59.55 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\AbstractFastFourierTransformTool.vb,169,47,25,97,1,4,6,2,0,6481,6.48 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Acqu.vb,434,27,80,327,6,23,8,11,0,12805,12.80 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Fid.vb,103,30,13,60,1,3,5,1,0,2987,2.99 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Proc.vb,330,38,51,241,2,20,2,1,0,11031,11.03 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Spectrum.vb,122,26,18,78,1,7,6,0,0,3320,3.32 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\AbstractApodizator.vb,89,34,12,43,1,0,1,2,0,3798,3.80 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ApodizationTool.vb,150,74,25,51,1,0,4,1,0,6071,6.07 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\Apodizator.vb,36,26,4,6,1,0,0,2,0,1214,1.21 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ExponentialApodizator.vb,65,39,11,15,1,0,1,2,0,2316,2.32 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\GaussianApodizator.vb,71,40,11,20,1,0,1,2,0,2664,2.66 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\LorentzGausApodizatior.vb,98,63,10,25,1,0,1,2,0,4469,4.47 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\SineApodizator.vb,68,30,10,28,1,0,1,3,0,2703,2.70 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\SineSquaredApodizator.vb,71,27,13,31,1,0,1,3,0,2678,2.68 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\TrafApodizator.vb,57,28,9,20,1,0,1,2,0,1948,1.95 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\TrafsApodizator.vb,57,28,9,20,1,0,1,2,0,1966,1.97 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\apodization\ZeroFillApodizator.vb,39,26,5,8,1,0,1,0,0,1215,1.22 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\baseline\BaselineCorrector.vb,35,26,4,5,1,0,0,1,0,1173,1.17 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\baseline\GolotvinWilliamsBaselineCorrector.vb,236,48,26,162,1,0,0,4,0,11937,11.94 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FastFourierTransform.vb,38,26,6,6,1,0,0,2,0,1215,1.22 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FastFourierTransform1D.vb,80,28,12,40,1,0,1,2,0,3190,3.19 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\FFTBase.vb,138,41,12,85,1,0,0,2,0,5030,5.03 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\FFT\PhaseCorrectionTool.vb,63,26,12,25,1,0,1,2,0,2091,2.09 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\DSPPhaseCorrection.vb,186,15,10,161,1,0,0,1,0,6662,6.66 KB
 mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\Export.vb,14,0,2,12,1,0,0,1,0,657,657 B
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\PhaseCorrector.vb,39,26,7,6,1,0,0,2,0,1358,1.36 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\SimplePhaseCorrector.vb,71,34,8,29,1,0,0,2,0,3131,3.13 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\FidReader.vb,35,25,5,5,1,0,0,1,0,1036,1.04 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\Simple1DFidReader.vb,83,30,12,41,1,0,2,1,0,3151,3.15 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\SimplePdataReader.vb,117,41,13,63,1,0,2,2,0,5322,5.32 KB
-mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,<project>,3097,949,438,1710,35,57,46,59,0,113645,113.64 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\PhaseCorrector.vb,39,26,7,6,1,0,0,2,0,1357,1.36 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Math\phasing\SimplePhaseCorrector.vb,71,34,8,29,1,0,0,2,0,3130,3.13 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\FidReader.vb,35,25,5,5,1,0,0,1,0,1035,1.03 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\Simple1DFidReader.vb,83,30,12,41,1,0,2,1,0,3150,3.15 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Reader\SimplePdataReader.vb,117,41,13,63,1,0,2,2,0,5321,5.32 KB
+mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,<project>,3094,949,435,1710,35,57,46,59,0,113614,113.61 KB
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\Extensions.vb,51,11,7,33,1,0,0,2,0,1936,1.94 KB
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\OutFileTypes.vb,40,27,1,12,1,0,0,0,0,1001,1001 B
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\ProteoWizardCLI.vb,284,177,27,80,1,1,3,5,0,13390,13.39 KB
@@ -315,30 +315,30 @@ mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoW
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\Filters\Filter.vb,19,2,5,12,1,0,0,2,0,709,709 B
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\Filters\msLevel.vb,19,0,5,14,1,1,1,2,0,471,471 B
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\Filters\scanTime.vb,23,0,6,17,1,1,2,2,0,590,590 B
-mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1170,1.17 KB
-mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2724,2.72 KB
+mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2723,2.72 KB
 mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,ProteoWizard.Interop\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,2942,2.94 KB
-mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,<project>,651,273,88,290,10,7,7,14,0,26218,26.22 KB
+mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,<project>,650,273,87,290,10,7,7,14,0,26215,26.21 KB
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\Extensions.vb,16,0,2,14,1,0,0,1,0,467,467 B
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\FullScanReader.vb,3,0,1,2,1,0,0,0,0,40,40 B
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\LicenseFile.vb,79,13,14,52,1,5,0,2,0,2261,2.26 KB
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\MRMReader.vb,3,0,1,2,1,0,0,0,0,35,35 B
-mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,438,438 B
+mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1097,1.10 KB
-mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2831,2.83 KB
+mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2829,2.83 KB
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3107,3.11 KB
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\WiffFileReader\Flags.vb,17,0,3,14,3,0,0,0,0,298,298 B
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\WiffFileReader\ScanInfo.vb,68,0,26,42,1,23,0,1,0,2001,2.00 KB
 mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,sciexWiffReader\WiffFileReader\WiffScanFileReader.vb,295,10,54,231,1,6,7,5,0,11617,11.62 KB
-mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,<project>,667,79,129,459,12,38,8,9,0,24192,24.19 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\BlockNode.vb,107,46,6,55,1,9,0,2,0,3066,3.07 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\NodeBuffer.vb,67,3,8,56,1,0,1,1,0,2497,2.50 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ReferenceBinaryTree.vb,39,6,5,28,1,0,2,0,0,1210,1.21 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ReferenceTree.vb,166,18,29,119,1,0,7,3,0,5400,5.40 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
+mzkit\src\assembly\sciexWiffReader\sciexWiffReader.NET5.vbproj,<project>,666,79,128,459,12,38,8,9,0,24186,24.19 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\BlockNode.vb,107,46,6,55,1,9,0,2,0,3065,3.06 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\NodeBuffer.vb,67,3,8,56,1,0,1,1,0,2496,2.50 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ReferenceBinaryTree.vb,39,6,5,28,1,0,2,0,0,1209,1.21 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ReferenceTree.vb,166,18,29,119,1,0,7,3,0,5399,5.40 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1028,1.03 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2783,2.78 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2782,2.78 KB
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3019,3.02 KB
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\ClusterHit.vb,41,8,7,26,1,16,0,1,0,1355,1.35 KB
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\IonIndex.vb,19,3,5,11,1,0,0,1,0,463,463 B
@@ -346,7 +346,7 @@ mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\JaccardSet.vb,22,4,6,12,1,4,0,1,0,598,598 B
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\Ms2Search.vb,24,0,7,17,1,0,1,1,0,782,782 B
 mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Query\TreeSearch.vb,258,42,37,179,1,0,4,5,0,9798,9.80 KB
-mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,<project>,1041,216,152,673,13,33,17,17,0,37303,37.30 KB
+mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,<project>,1040,216,151,673,13,33,17,17,0,37296,37.30 KB
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\DeviceInfo.vb,144,49,22,73,1,11,1,2,0,4587,4.59 KB
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\LabelParser.vb,69,14,11,44,1,0,0,0,0,4997,5.00 KB
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\MSFileReader.vb,209,31,35,143,1,6,2,7,0,7412,7.41 KB
@@ -367,32 +367,32 @@ mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileRea
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\Enums\InstFlags.vb,25,15,3,7,1,0,0,0,0,603,603 B
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb,21,13,2,6,1,0,0,0,0,600,600 B
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\Enums\MRMScanTypeConstants.vb,30,18,4,8,1,0,0,0,0,626,626 B
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1168,1.17 KB
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2772,2.77 KB
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2771,2.77 KB
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,3042,3.04 KB
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\Module1.vb,16,0,5,11,1,0,1,0,0,458,458 B
 mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\Module2.vb,13,1,3,9,1,0,1,0,0,474,474 B
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1110,1.11 KB
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,<project>,4404,1292,742,2370,30,82,31,63,0,175755,175.75 KB
-mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\Data\MassIndex.vb,23,11,4,8,1,2,0,1,0,637,637 B
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1109,1.11 KB
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,<project>,4402,1292,740,2370,30,82,31,63,0,175747,175.75 KB
+mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\Data\MassIndex.vb,23,11,4,8,1,2,0,1,0,635,635 B
 mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\Data\Metabolite.vb,94,15,16,63,3,18,0,1,0,2975,2.98 KB
-mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\LibraryFile.vb,73,5,15,53,3,0,1,3,0,2722,2.72 KB
-mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\Reader.vb,96,10,17,69,1,0,5,2,0,3644,3.64 KB
-mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\Writer.vb,226,17,35,174,3,0,8,3,0,8507,8.51 KB
-mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,<project>,512,58,87,367,11,20,14,10,0,18485,18.48 KB
+mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\LibraryFile.vb,73,5,15,53,3,0,1,3,0,2720,2.72 KB
+mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\Reader.vb,96,10,17,69,1,0,5,2,0,3642,3.64 KB
+mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,AnnotationLibrary\File\Writer.vb,226,17,35,174,3,0,8,3,0,8505,8.51 KB
+mzkit\src\metadb\AnnotationLibrary\AnnotationLibrary.vbproj,<project>,512,58,87,367,11,20,14,10,0,18477,18.48 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\ChemicalDescriptor.vb,191,22,33,136,3,27,3,8,0,6623,6.62 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Extensions.vb,17,0,3,14,1,0,0,1,0,456,456 B
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\MetaboliteAnnotation.vb,16,0,4,12,1,4,0,1,0,691,691 B
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\MetaboliteAnnotation.vb,16,0,4,12,1,4,0,1,0,690,690 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\AbbrevStatsType.vb,65,45,5,15,1,8,0,1,0,2719,2.72 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\DNPOrWileyType.vb,7,0,1,6,1,0,0,0,0,108,108 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\ElementNumType.vb,48,0,6,42,1,0,1,0,0,1381,1.38 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\ElementSearchCandiate.vb,14,0,4,10,1,3,0,1,0,374,374 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormalCharge.vb,76,13,15,48,1,0,0,2,0,3299,3.30 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaScanner.vb,194,23,37,134,1,0,2,4,0,6328,6.33 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaScanner.vb,211,33,38,140,1,0,2,4,0,7241,7.24 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaSearch.vb,232,36,42,154,1,0,1,6,0,9851,9.85 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\HeteroatomRatioCheck.vb,89,21,10,58,1,0,0,3,0,3852,3.85 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\SearchOption.vb,130,0,20,110,1,3,1,7,0,5026,5.03 KB
@@ -401,8 +401,8 @@ mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformat
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeCount.vb,88,15,14,59,1,1,0,2,0,3148,3.15 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeDistribution.vb,94,9,17,68,1,6,0,3,0,4401,4.40 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Canonical.vb,45,3,9,33,1,0,0,2,0,1790,1.79 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Element.vb,296,24,9,263,1,7,0,4,0,27981,27.98 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Formula.vb,186,35,27,124,1,6,1,1,9,6924,6.92 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Element.vb,298,26,9,263,1,7,0,4,0,28001,28.00 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Formula.vb,203,52,27,124,1,6,1,1,9,7710,7.71 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\FormulaComposition.vb,70,13,10,47,1,4,1,3,0,2383,2.38 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Components.vb,229,124,23,82,6,8,0,1,0,9617,9.62 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Extensions.vb,7,0,2,5,1,0,0,0,0,95,95 B
@@ -410,10 +410,10 @@ mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformat
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\InChIKey.vb,54,3,12,39,1,5,1,1,0,1394,1.39 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Layers.vb,129,45,19,65,2,0,0,7,0,4719,4.72 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Lipid\Chain.vb,132,4,27,101,3,9,0,5,0,4251,4.25 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Lipid\LipidName.vb,79,9,15,55,1,3,0,5,0,2539,2.54 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Lipid\LipidName.vb,79,9,15,55,1,3,0,5,0,2538,2.54 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1160,1.16 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2740,2.74 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2739,2.74 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Settings.Designer.vb,76,9,14,53,2,2,1,0,0,2977,2.98 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\Extensions.vb,14,0,2,12,1,0,0,1,0,363,363 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb,285,6,42,237,1,0,1,9,0,10564,10.56 KB
@@ -431,11 +431,11 @@ mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformat
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\IsotopicTest.vb,28,12,5,11,1,0,1,0,0,772,772 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\nameTest.vb,53,3,14,36,1,0,3,0,0,2268,2.27 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\PeakAnnotations.vb,81,67,14,0,0,0,0,0,0,2870,2.87 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1136,1.14 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2708,2.71 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2707,2.71 KB
 mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2909,2.91 KB
-mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,<project>,4238,845,639,2754,61,131,22,112,9,173106,173.11 KB
+mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,<project>,4272,874,638,2760,61,131,22,112,9,174817,174.82 KB
 mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\inchiTest.vb,28,8,9,11,1,0,1,0,0,671,671 B
 mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\IsotopicTest.vb,28,12,5,11,1,0,1,0,0,772,772 B
 mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\nameTest.vb,53,3,14,36,1,0,3,0,0,2268,2.27 KB
@@ -473,57 +473,59 @@ mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\FooDB\mysql\health_effects.vb,181
 mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\FooDB\mysql\nutrients.vb,220,79,22,119,1,23,0,8,0,17130,17.13 KB
 mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\FooDB\mysql\pathways.vb,163,59,22,82,1,6,0,8,0,7628,7.63 KB
 mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\FooDB\mysql\references.vb,200,83,22,95,1,12,0,8,0,11223,11.22 KB
-mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
+mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
 mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1139,1.14 KB
-mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2775,2.77 KB
+mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2774,2.77 KB
 mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3002,3.00 KB
-mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\test\Program.vb,156,4,29,123,1,0,5,0,0,8311,8.31 KB
-mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,<project>,4698,1633,532,2533,34,424,8,166,0,348159,348.16 KB
+mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,FooDB\test\Program.vb,156,4,29,123,1,0,5,0,0,8310,8.31 KB
+mzkit\src\metadb\FooDB\FooDB.NET5.vbproj,<project>,4697,1633,531,2533,34,424,8,166,0,348155,348.15 KB
 mzkit\src\metadb\FooDB\test\test.vbproj,test\Program.vb,156,4,29,123,1,0,5,0,0,8310,8.31 KB
 mzkit\src\metadb\FooDB\test\test.vbproj,<project>,156,4,29,123,1,0,5,0,0,8310,8.31 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\Annotation.vb,25,0,4,21,1,2,1,1,0,841,841 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\Annotation.vb,27,0,4,23,1,2,1,1,0,938,938 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\IsotopicAlignment.vb,56,5,6,45,1,0,0,2,0,2204,2.20 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PeakAnnotation.vb,201,31,30,140,1,0,2,7,0,6581,6.58 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PrecursorIonComposition.vb,12,0,3,9,1,3,1,0,0,407,407 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PrecursorIonComposition.vb,14,0,3,11,1,3,1,0,0,504,504 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PrecursorIonSearch.vb,81,8,14,59,1,1,1,2,0,3187,3.19 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb,145,6,26,113,1,1,5,5,0,5877,5.88 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\FragmentAnnotationHolder.vb,97,0,19,78,1,3,2,2,5,3545,3.54 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\MassGroup.vb,23,0,6,17,1,2,0,2,0,796,796 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb,7,0,3,4,1,1,0,0,0,183,183 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Alkyl.vb,59,43,3,13,1,10,0,0,0,2190,2.19 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Amines.vb,7,0,3,4,1,1,0,0,0,189,189 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Glycosides.vb,3,0,1,2,1,0,0,0,0,38,38 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Ketones.vb,24,8,4,12,1,9,0,0,0,1678,1.68 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Lipids.vb,3,0,1,2,1,0,0,0,0,34,34 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Others.vb,11,0,3,8,1,5,0,0,0,534,534 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb,136,14,24,98,1,1,5,4,0,5741,5.74 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\AtomGroupQuery.vb,68,12,10,46,1,0,1,2,0,2650,2.65 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\FragmentAnnotationHolder.vb,111,7,21,83,1,3,2,2,5,4407,4.41 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\MassGroup.vb,31,3,7,21,1,2,0,2,0,1173,1.17 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb,10,0,4,6,1,1,0,0,0,234,234 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Alkyl.vb,62,43,4,15,1,10,0,0,0,2449,2.45 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Amines.vb,10,0,4,6,1,1,0,0,0,240,240 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Glycosides.vb,6,0,2,4,1,0,0,0,0,83,83 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Ketones.vb,27,8,5,14,1,9,0,0,0,1814,1.81 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Lipids.vb,6,0,2,4,1,0,0,0,0,79,79 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\AtomGroups\Default\Others.vb,14,0,4,10,1,5,0,0,0,609,609 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1088,1.09 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2754,2.75 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2753,2.75 KB
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3075,3.08 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PeakAnnotation\ParentValue.vb,25,0,7,18,1,0,1,2,0,716,716 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PeakAnnotation\PeakAnnotation.vb,214,34,32,148,1,0,2,7,0,7076,7.08 KB
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb,3,0,1,2,1,0,0,0,0,48,48 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\Scores\MoleculeIonStable.vb,3,0,1,2,1,0,0,0,0,43,43 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\Scores\NitrogenRule.vb,22,8,3,11,1,0,0,1,0,809,809 B
 mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\Module1.vb,55,2,13,40,1,0,2,0,0,2252,2.25 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,986,986 B
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,<project>,1206,223,202,781,25,46,16,22,5,45807,45.81 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,985,985 B
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,<project>,1348,256,227,865,27,46,18,25,5,51619,51.62 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Extensions.vb,33,0,4,29,1,0,0,1,0,1144,1.14 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\KNApSAcKRef.vb,36,4,6,26,1,10,0,2,0,1192,1.19 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\Information.vb,37,8,5,24,2,15,0,1,0,1094,1.09 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\InformationTable.vb,71,4,9,58,1,12,0,1,0,2717,2.72 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\QueryInput.vb,12,0,3,9,1,0,0,1,0,279,279 B
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\ResultEntry.vb,12,0,3,9,1,5,0,0,0,291,291 B
-mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1147,1.15 KB
-mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Resources.Designer.vb,90,32,11,47,1,5,0,0,0,3831,3.83 KB
+mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Resources.Designer.vb,90,32,11,47,1,5,0,0,0,3830,3.83 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,2999,3.00 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\InformationQuery.vb,85,0,12,73,1,0,1,4,0,3409,3.41 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\Search.vb,41,0,9,32,1,0,0,2,0,1497,1.50 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\SearchQuery.vb,60,0,9,51,1,0,1,4,0,2111,2.11 KB
 mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\Types.vb,11,0,0,11,1,0,0,0,0,141,141 B
-mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,<project>,614,81,94,439,14,49,3,16,0,22277,22.28 KB
+mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,<project>,613,81,93,439,14,49,3,16,0,22274,22.27 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\SDFExtensions.vb,176,14,16,146,1,0,0,6,0,6520,6.52 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Statistics.vb,114,14,17,83,1,0,0,2,0,3952,3.95 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Concentration\Concentration.vb,100,2,6,92,1,0,0,1,0,6012,6.01 KB
@@ -543,9 +545,9 @@ mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\MetaInfo.
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\MetaLib.vb,58,13,12,33,1,9,0,2,0,2361,2.36 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\Xref.vb,184,26,18,140,1,15,3,8,0,6889,6.89 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\XrefExtensions.vb,34,0,6,28,1,0,0,2,0,889,889 B
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1164,1.16 KB
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2733,2.73 KB
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2732,2.73 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2961,2.96 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\BackgroundModel.vb,165,0,28,137,2,1,0,7,0,6535,6.54 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\MapsHelper.vb,106,5,14,87,1,0,0,4,0,4402,4.40 KB
@@ -571,7 +573,7 @@ mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\PCXm
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\PCXml\PC-Compound.vb,30,0,8,22,3,4,0,1,0,820,820 B
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Extensions.vb,201,28,23,150,1,0,0,10,0,8356,8.36 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb,335,18,35,282,1,0,0,10,0,14970,14.97 KB
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb,94,3,17,74,5,35,0,1,0,3006,3.01 KB
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb,93,3,16,74,5,35,0,1,0,3005,3.00 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Graph\WebGraph.vb,79,0,16,63,4,2,1,3,0,2959,2.96 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Models\Information.vb,200,11,32,157,7,37,0,5,0,6991,6.99 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Models\InformationSection.vb,68,3,11,54,4,14,0,1,0,2328,2.33 KB
@@ -611,11 +613,11 @@ mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\Module1.vb,38,1,12,
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\nameTest.vb,15,0,4,11,1,0,1,0,0,398,398 B
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\oboTest.vb,71,56,15,0,0,0,0,0,0,2704,2.70 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\pubchemTest.vb,63,0,22,41,1,0,5,0,0,1517,1.52 KB
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1155,1.16 KB
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
 mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2922,2.92 KB
-mzkit\src\metadb\Massbank\massbank.NET5.vbproj,<project>,7028,910,1122,4996,171,626,46,209,0,271005,271.00 KB
+mzkit\src\metadb\Massbank\massbank.NET5.vbproj,<project>,7025,910,1119,4996,171,626,46,209,0,270998,271.00 KB
 mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\ChemOntTest.vb,39,8,9,22,1,0,2,0,0,1432,1.43 KB
 mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\foodbQuery.vb,113,92,21,0,0,0,0,0,0,4015,4.01 KB
 mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\HMDBqueryTest.vb,10,0,3,7,1,0,1,0,0,199,199 B
@@ -634,22 +636,22 @@ mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\NamespaceDoc.vb,7,3,0,4,1,0,1,0,0,25
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\ReaderViews.vb,94,6,15,73,1,0,0,6,0,2860,2.86 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\SpectraSection.vb,83,10,13,60,2,21,2,1,0,2641,2.64 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\UnionReader.vb,176,8,28,140,1,13,2,2,0,4776,4.78 KB
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\DataReader.vb,42,5,7,30,1,0,0,2,0,1516,1.52 KB
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\DataReader.vb,42,5,7,30,1,0,0,2,0,1515,1.51 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\MetaData.vb,209,7,28,174,1,100,0,1,0,7593,7.59 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\SchemaMapper.vb,100,12,15,73,1,0,1,3,0,3576,3.58 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\MSP\MspReader.vb,35,0,5,30,1,0,0,3,0,1404,1.40 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\SDF\SDFReader.vb,320,45,38,237,1,0,0,7,0,12770,12.77 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\Module1.vb,15,0,4,11,1,0,2,0,0,462,462 B
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1110,1.11 KB
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1109,1.11 KB
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
 mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Web\WebJSON.vb,101,0,17,84,2,2,1,6,0,3805,3.81 KB
-mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,<project>,1365,152,200,1013,16,140,10,31,0,48789,48.79 KB
+mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,<project>,1364,152,199,1013,16,140,10,31,0,48783,48.78 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Atom.vb,199,9,44,146,1,5,1,7,0,5686,5.69 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Bonds.vb,16,8,1,7,1,0,0,0,0,537,537 B
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\FormulaBuilder.vb,74,0,15,59,1,0,4,1,0,2282,2.28 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Layout2D.vb,120,9,24,87,1,0,1,2,0,3914,3.91 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Layout2D.vb,120,9,24,87,1,0,1,2,0,3913,3.91 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\ParseChain.vb,131,3,22,106,1,0,4,3,0,4300,4.30 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\ChemicalElement.vb,132,34,14,84,1,5,4,1,0,4415,4.42 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\ChemicalFormula.vb,39,3,7,29,1,2,0,3,0,1314,1.31 KB
@@ -658,25 +660,25 @@ mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\ElementTypes.vb,45,34
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Scanner.vb,238,82,26,130,1,0,1,3,0,9786,9.79 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Token.vb,20,0,4,16,1,2,1,1,0,571,571 B
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Utils.vb,13,0,3,10,1,0,0,0,0,300,300 B
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1250,1.25 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2747,2.75 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2746,2.75 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2988,2.99 KB
 mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\Module1.vb,47,4,12,31,1,0,4,0,0,1698,1.70 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1110,1.11 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,<project>,1463,305,238,920,19,23,22,22,0,51386,51.39 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1109,1.11 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,<project>,1461,305,236,920,19,23,22,22,0,51377,51.38 KB
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ChemOntClassify.vb,117,31,13,73,1,5,1,3,0,3518,3.52 KB
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ClassyfireAnnotation.vb,22,11,2,9,1,4,0,1,0,689,689 B
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ClassyfireInfoTable.vb,94,6,12,76,1,6,0,2,0,4744,4.74 KB
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\FillClass.vb,66,11,11,44,1,0,0,3,0,3015,3.02 KB
-mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1149,1.15 KB
-mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2736,2.74 KB
+mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2735,2.73 KB
 mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2966,2.97 KB
-mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,<project>,485,115,66,304,7,19,2,9,0,19242,19.24 KB
+mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,<project>,484,115,65,304,7,19,2,9,0,19239,19.24 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Algorithm.vb,366,46,53,267,1,1,1,18,0,13485,13.48 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Extensions.vb,66,2,9,55,1,0,0,4,0,2449,2.45 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\KEGGHandler.vb,31,3,6,22,1,0,1,3,0,1470,1.47 KB
@@ -690,84 +692,84 @@ mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Infer\SeedsProvider.vb,150
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\AnnotatedSeed.vb,34,14,6,14,1,6,0,1,0,1022,1022 B
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\KEGGCompound.vb,64,3,14,47,1,4,0,1,0,1799,1.80 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\UnknownSet.vb,196,33,27,136,1,0,2,8,0,7124,7.12 KB
-mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1342,1.34 KB
-mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2731,2.73 KB
+mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2730,2.73 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2955,2.96 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\MetaDNARawSet.vb,32,3,6,23,1,2,0,2,0,977,977 B
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\MetaDNAResult.vb,51,19,2,30,1,28,0,0,0,1770,1.77 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\NetworkHandler.vb,36,0,6,30,1,0,0,1,0,1386,1.39 KB
 mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\ResultHandler.vb,100,7,12,81,1,0,0,3,0,5037,5.04 KB
-mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,<project>,1741,237,249,1255,20,59,8,66,0,66287,66.29 KB
+mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,<project>,1740,237,248,1255,20,59,8,66,0,66284,66.28 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\Extensions.vb,29,5,4,20,1,0,0,2,0,1171,1.17 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\GraphAlgorithm.vb,117,5,13,99,1,0,0,1,0,5182,5.18 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\ReactionClass.vb,11,0,3,8,1,5,0,0,0,346,346 B
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\viz.vb,22,7,2,13,1,0,0,1,0,1128,1.13 KB
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1150,1.15 KB
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2738,2.74 KB
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2737,2.74 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2970,2.97 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\Module1.vb,35,0,11,24,1,0,3,0,0,1151,1.15 KB
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1010,1010 B
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1009,1009 B
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\compound.vb,19,0,5,14,1,3,0,1,0,625,625 B
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\node.vb,19,4,5,10,1,3,0,1,0,432,432 B
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\unknown.vb,22,5,4,13,1,6,0,1,0,809,809 B
 mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\XML.vb,26,4,4,18,1,1,0,2,0,757,757 B
-mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,<project>,671,142,111,418,15,26,5,9,0,25920,25.92 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\ApplicationEvents.vb,102,27,13,62,1,0,1,3,0,5323,5.32 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\FormMain.Designer.vb,232,71,5,156,1,0,2,0,0,9674,9.67 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\FormMain.vb,161,15,33,113,1,4,13,3,0,5892,5.89 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\TaskProgress.Designer.vb,72,17,5,50,1,0,2,0,0,2598,2.60 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\TaskProgress.vb,14,0,5,9,1,0,3,0,0,349,349 B
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\My Project\Application.Designer.vb,37,14,5,18,1,0,2,0,0,1468,1.47 KB
-mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,<project>,618,144,66,408,6,4,23,6,0,25304,25.30 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\Blender.vb,17,10,3,4,1,0,0,0,0,440,440 B
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\ChromatogramPlot\ChromatogramBlender.vb,34,0,4,30,1,0,1,1,0,1318,1.32 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\ChromatogramPlot\XIC3DBlender.vb,34,0,5,29,1,0,1,1,0,1382,1.38 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\HeatMapBlender.vb,27,0,7,20,1,0,1,1,0,976,976 B
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\MSImagingBlender.vb,40,5,6,29,1,3,1,2,0,1212,1.21 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\RGBIonMSIBlender.vb,80,12,14,54,1,1,1,1,0,3444,3.44 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\SingleIonMSIBlender.vb,86,13,13,60,1,2,1,1,0,3374,3.37 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\SummaryMSIBlender.vb,79,0,15,64,1,1,1,2,0,3085,3.08 KB
-mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,455,455 B
-mzkit\src\mzkit\mzblender\mzblender.vbproj,<project>,410,49,69,292,8,7,7,9,0,15686,15.69 KB
+mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,<project>,669,142,109,418,15,26,5,9,0,25912,25.91 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\ApplicationEvents.vb,102,27,13,62,1,0,1,3,0,5321,5.32 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\FormMain.Designer.vb,232,71,5,156,1,0,2,0,0,9672,9.67 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\FormMain.vb,161,15,33,113,1,4,13,3,0,5890,5.89 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\TaskProgress.Designer.vb,72,17,5,50,1,0,2,0,0,2596,2.60 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\TaskProgress.vb,14,0,5,9,1,0,3,0,0,347,347 B
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,msconvertGUI\My Project\Application.Designer.vb,37,14,5,18,1,0,2,0,0,1466,1.47 KB
+mzkit\src\mzkit\msconvertGUI\msconvertGUI.vbproj,<project>,618,144,66,408,6,4,23,6,0,25292,25.29 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\Blender.vb,17,10,3,4,1,0,0,0,0,438,438 B
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\ChromatogramPlot\ChromatogramBlender.vb,34,0,4,30,1,0,1,1,0,1316,1.32 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\ChromatogramPlot\XIC3DBlender.vb,34,0,5,29,1,0,1,1,0,1380,1.38 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\HeatMapBlender.vb,27,0,7,20,1,0,1,1,0,975,975 B
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\MSImagingBlender.vb,40,5,6,29,1,3,1,2,0,1210,1.21 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\RGBIonMSIBlender.vb,80,12,14,54,1,1,1,1,0,3443,3.44 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\SingleIonMSIBlender.vb,86,13,13,60,1,2,1,1,0,3373,3.37 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\MSImaging\SummaryMSIBlender.vb,79,0,15,64,1,1,1,2,0,3084,3.08 KB
+mzkit\src\mzkit\mzblender\mzblender.vbproj,mzblender\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,451,451 B
+mzkit\src\mzkit\mzblender\mzblender.vbproj,<project>,409,49,68,292,8,7,7,9,0,15670,15.67 KB
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,BioDeep\BioDeepSession.vb,112,9,23,80,1,2,0,6,0,4065,4.07 KB
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,BioDeep\MessageParser.vb,28,0,4,24,1,0,0,3,0,853,853 B
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,BioDeep\SessionInfo.vb,15,0,5,10,2,6,0,0,0,311,311 B
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,BioDeep\query.biodeep.cn\KEGG.vb,3,0,1,2,1,0,0,0,0,30,30 B
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,BioDeep\query.biodeep.cn\Query.vb,3,0,1,2,1,0,0,0,0,24,24 B
 mzkit\src\mzkit\services\BioDeep\BioDeep.vbproj,<project>,161,9,34,118,6,8,0,9,0,5283,5.28 KB
-mzkit\src\mzkit\services\CFM-ID\CFM-ID.vbproj,CFM-ID\Prediction.vb,125,53,24,48,1,0,1,3,0,6014,6.01 KB
-mzkit\src\mzkit\services\CFM-ID\CFM-ID.vbproj,<project>,125,53,24,48,1,0,1,3,0,6014,6.01 KB
+mzkit\src\mzkit\services\CFM-ID\CFM-ID.vbproj,CFM-ID\Prediction.vb,125,53,24,48,1,0,1,3,0,6013,6.01 KB
+mzkit\src\mzkit\services\CFM-ID\CFM-ID.vbproj,<project>,125,53,24,48,1,0,1,3,0,6013,6.01 KB
 mzkit\src\mzkit\services\MZWork\MZWork.vbproj,MZWork\MZWork.vb,71,8,14,49,1,0,0,2,0,2585,2.58 KB
 mzkit\src\mzkit\services\MZWork\MZWork.vbproj,MZWork\WorkspaceFile.vb,35,14,6,15,1,4,0,1,0,1088,1.09 KB
 mzkit\src\mzkit\services\MZWork\MZWork.vbproj,<project>,106,22,20,64,2,4,0,3,0,3673,3.67 KB
-mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\App.vb,75,8,10,57,1,0,0,5,0,2504,2.50 KB
-mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\Protocols.vb,7,0,0,7,1,0,0,0,0,111,111 B
-mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\RedisScan1.vb,37,9,5,23,1,5,0,1,0,1293,1.29 KB
-mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\Services.vb,138,13,29,96,1,2,3,4,0,5023,5.02 KB
+mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\App.vb,75,8,10,57,1,0,0,5,0,2502,2.50 KB
+mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\Protocols.vb,7,0,0,7,1,0,0,0,0,109,109 B
+mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\RedisScan1.vb,37,9,5,23,1,5,0,1,0,1291,1.29 KB
+mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\Services.vb,138,13,29,96,1,2,3,4,0,5021,5.02 KB
 mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,MZWorkRedis\zzz.vb,3,0,1,2,0,0,0,0,0,67,67 B
-mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,<project>,260,30,45,185,4,7,3,10,0,8998,9.00 KB
-mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,PipelineHost\BackgroundTask.vb,353,12,52,289,1,0,8,7,0,14083,14.08 KB
-mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,PipelineHost\Utils.vb,90,0,10,80,1,0,0,2,0,3263,3.26 KB
+mzkit\src\mzkit\services\MZWorkRedis\MZWorkRedis.vbproj,<project>,260,30,45,185,4,7,3,10,0,8990,8.99 KB
+mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,PipelineHost\BackgroundTask.vb,353,12,52,289,1,0,8,7,0,14082,14.08 KB
+mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,PipelineHost\Utils.vb,90,0,10,80,1,0,0,2,0,3261,3.26 KB
 mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,PipelineHost\BioDeep\KEGGRepo.vb,187,0,30,157,1,0,0,11,0,7730,7.73 KB
-mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,<project>,630,12,92,526,3,0,8,20,0,25076,25.08 KB
-mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\HeartBeat.vb,37,0,9,28,1,0,3,0,0,901,901 B
+mzkit\src\mzkit\services\PipelineHost\PipelineHost.vbproj,<project>,630,12,92,526,3,0,8,20,0,25073,25.07 KB
+mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\HeartBeat.vb,37,0,9,28,1,0,3,0,0,900,900 B
 mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\Program.vb,69,21,10,38,1,0,1,1,0,2314,2.31 KB
 mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\Protocols.vb,79,12,16,51,1,0,1,2,0,2617,2.62 KB
 mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\ServiceProtocols\MSI.vb,553,63,88,402,1,2,3,18,0,23062,23.06 KB
 mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\ServiceProtocols\ServiceProtocol.vb,84,8,8,68,2,0,0,2,0,2894,2.89 KB
 mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\ServiceProtocols\Payloads\LayerLoader.vb,32,0,7,25,3,4,1,2,0,1201,1.20 KB
-mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\ServiceProtocols\Payloads\RegionLoader.vb,54,5,8,41,1,6,0,3,0,1793,1.79 KB
-mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,<project>,908,109,146,653,10,12,9,28,0,34782,34.78 KB
+mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,ServiceHub\ServiceProtocols\Payloads\RegionLoader.vb,54,5,8,41,1,6,0,3,0,1791,1.79 KB
+mzkit\src\mzkit\services\ServiceHub\ServiceHub.vbproj,<project>,908,109,146,653,10,12,9,28,0,34779,34.78 KB
 mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\GraphTree.vb,70,0,8,62,1,0,0,2,0,2578,2.58 KB
-mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\MSScore.vb,25,0,6,19,1,1,1,1,0,828,828 B
-mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\Networking.vb,91,0,9,82,1,0,0,2,0,3499,3.50 KB
-mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\PlotMNHist.vb,76,4,9,63,1,0,2,2,0,3062,3.06 KB
-mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,<project>,262,4,32,226,4,1,3,7,0,9967,9.97 KB
+mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\MSScore.vb,25,0,6,19,1,1,1,1,0,826,826 B
+mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\Networking.vb,91,0,9,82,1,0,0,2,0,3497,3.50 KB
+mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,MoleculeNetworking\PlotMNHist.vb,76,4,9,63,1,0,2,2,0,3060,3.06 KB
+mzkit\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj,<project>,262,4,32,226,4,1,3,7,0,9961,9.96 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Extensions.vb,109,30,11,68,1,0,0,6,0,4071,4.07 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Chromatogram\AccumulateROI.vb,96,32,7,57,1,0,0,2,0,4539,4.54 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Chromatogram\Chromatogram.vb,65,16,9,40,1,0,0,5,0,2624,2.62 KB
@@ -783,7 +785,7 @@ mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Ms1Featu
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\ms1_scan.vb,55,14,6,35,1,3,0,2,0,2306,2.31 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Peaktable.vb,71,22,6,43,1,18,0,1,0,2067,2.07 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PolarityData.vb,35,0,5,30,1,2,0,1,0,1015,1015 B
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Annotation\ExactMassProvider.vb,20,0,9,11,3,3,0,0,0,360,360 B
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Annotation\ExactMassProvider.vb,223,203,9,11,3,3,0,0,0,11926,11.93 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PrecursorType\ExactMass.vb,145,14,19,112,1,0,0,3,0,4798,4.80 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PrecursorType\Extensions.vb,198,21,33,144,2,0,1,5,0,7544,7.54 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PrecursorType\IonModes.vb,23,12,3,8,1,0,0,0,0,471,471 B
@@ -797,9 +799,9 @@ mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Precurso
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\DeltaMass.vb,45,3,9,33,1,0,1,6,0,1622,1.62 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\PPM.vb,65,12,13,40,1,0,2,7,0,2208,2.21 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\Tolerance.vb,180,56,25,99,1,2,1,8,2,6451,6.45 KB
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1270,1.27 KB
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2748,2.75 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1269,1.27 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2747,2.75 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\My Project\Settings.Designer.vb,77,9,15,53,2,2,1,0,0,2994,2.99 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\GlobalAlignment.vb,229,83,28,118,1,1,0,11,0,9912,9.91 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\LibraryMatrixExtensions.vb,124,39,14,71,1,0,0,5,0,4715,4.71 KB
@@ -832,13 +834,13 @@ mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Spec
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb,167,43,23,101,1,1,2,5,0,6879,6.88 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\Module1.vb,39,0,13,26,1,0,2,0,0,965,965 B
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\Module2.vb,24,0,6,18,1,0,1,0,0,1063,1.06 KB
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1110,1.11 KB
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2714,2.71 KB
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1109,1.11 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2713,2.71 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\UV\PDAPoint.vb,22,0,5,17,1,2,0,1,0,744,744 B
 mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\UV\UVScanPoint.vb,23,0,6,17,1,2,0,1,0,669,669 B
-mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,<project>,5110,1129,770,3211,83,162,37,175,6,200053,200.05 KB
+mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,<project>,5311,1332,768,3211,83,162,37,175,6,211610,211.61 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\FragmentSamples.vb,94,14,11,69,1,0,0,3,0,3304,3.30 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\PeakAnnotation.vb,3,0,1,2,1,0,0,0,0,40,40 B
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\RTPrediction.vb,107,24,12,71,1,0,1,3,0,4293,4.29 KB
@@ -848,67 +850,67 @@ mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\Emulator\
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\Emulator\EnergyModel.vb,51,15,7,29,1,2,1,2,0,1389,1.39 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\GA\EnergyDistribution.vb,6,3,1,2,1,0,0,0,0,167,167 B
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\GA\GA.vb,7,3,2,2,1,0,0,0,0,114,114 B
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1045,1.04 KB
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Resources.Designer.vb,101,55,9,37,1,3,0,0,0,3921,3.92 KB
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Resources.Designer.vb,101,55,9,37,1,3,0,0,0,3920,3.92 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,3011,3.01 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\Module1.vb,87,2,16,69,1,0,2,0,0,4060,4.06 KB
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\NWAlignTest.vb,16,3,4,9,1,0,1,0,0,522,522 B
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\rt_test.vb,24,0,9,15,1,0,3,0,0,427,427 B
 mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\simulatorTest.vb,26,0,5,21,1,0,1,0,0,1045,1.04 KB
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1000,1000 B
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2733,2.73 KB
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2878,2.88 KB
-mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,<project>,1182,298,178,706,19,18,12,18,0,44168,44.17 KB
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,999,999 B
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2732,2.73 KB
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2877,2.88 KB
+mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,<project>,1180,298,176,706,19,18,12,18,0,44160,44.16 KB
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\DBPool.vb,53,3,10,40,1,0,1,3,0,1803,1.80 KB
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\IMzQuery.vb,49,5,9,35,2,0,0,7,0,1517,1.52 KB
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\MassIndexKey.vb,31,7,5,19,1,0,0,2,0,898,898 B
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\MSSearch.vb,227,64,30,133,3,2,1,8,0,8610,8.61 KB
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\MzQuery.vb,95,30,13,52,1,8,0,4,0,2826,2.83 KB
-mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1157,1.16 KB
-mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2732,2.73 KB
+mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2731,2.73 KB
 mzkit\src\mzmath\MSEngine\MSEngine.vbproj,MSEngine\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,2961,2.96 KB
-mzkit\src\mzmath\MSEngine\MSEngine.vbproj,<project>,642,165,96,381,11,14,3,24,0,22929,22.93 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\ActivityEnrichment.vb,151,43,17,91,1,8,0,3,0,5112,5.11 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Annotation.vb,105,1,14,90,1,0,0,2,0,4022,4.02 KB
+mzkit\src\mzmath\MSEngine\MSEngine.vbproj,<project>,641,165,95,381,11,14,3,24,0,22926,22.93 KB
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\ActivityEnrichment.vb,151,43,17,91,1,8,0,3,0,5111,5.11 KB
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Annotation.vb,104,1,13,90,1,0,0,2,0,4020,4.02 KB
 mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\PeakCorrelation.vb,196,13,25,158,3,0,3,7,0,7432,7.43 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Permutation.vb,58,0,11,47,1,0,0,2,0,1938,1.94 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\BioCyc.vb,6,3,1,2,1,0,0,0,0,134,134 B
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\GSEA.vb,23,6,4,13,1,0,0,1,0,707,707 B
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\KEGG.vb,95,18,10,67,1,0,0,2,0,3651,3.65 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\PeakSets\MzSet.vb,22,0,5,17,1,3,0,1,0,545,545 B
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Permutation.vb,58,0,11,47,1,0,0,2,0,1936,1.94 KB
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\BioCyc.vb,6,3,1,2,1,0,0,0,0,132,132 B
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\GSEA.vb,23,6,4,13,1,0,0,1,0,706,706 B
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Models\KEGG.vb,95,18,10,67,1,0,0,2,0,3650,3.65 KB
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\PeakSets\MzSet.vb,22,0,5,17,1,3,0,1,0,543,543 B
 mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\PeakSets\PeakQuery.vb,50,4,8,38,1,6,0,1,0,1390,1.39 KB
-mzkit\src\mzmath\Mummichog\Mummichog.vbproj,<project>,706,88,95,523,11,17,3,19,0,24931,24.93 KB
+mzkit\src\mzmath\Mummichog\Mummichog.vbproj,<project>,705,88,94,523,11,17,3,19,0,24920,24.92 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\Deconvolution.vb,172,28,19,125,1,0,0,6,0,6752,6.75 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\PeakAlignment.vb,67,6,6,55,1,0,0,1,0,2780,2.78 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\xcms2.vb,88,3,12,73,2,9,0,4,0,2854,2.85 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\Models\MzGroup.vb,8,0,3,5,1,2,0,0,0,185,185 B
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\Models\PeakFeature.vb,71,35,11,25,1,12,0,1,0,2074,2.07 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\Models\PeakROI.vb,8,0,3,5,1,2,0,0,0,192,192 B
-mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1143,1.14 KB
-mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2748,2.75 KB
+mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2747,2.75 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2990,2.99 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\Module1.vb,28,0,7,21,1,0,1,0,0,976,976 B
-mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1137,1.14 KB
-mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
+mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
 mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,mz_deco\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2922,2.92 KB
-mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,<project>,813,184,117,512,14,33,3,12,0,30309,30.31 KB
+mzkit\src\mzmath\mz_deco\deconv.NET5.vbproj,<project>,811,184,115,512,14,33,3,12,0,30303,30.30 KB
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,test\Module1.vb,28,0,7,21,1,0,1,0,0,976,976 B
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1137,1.14 KB
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2922,2.92 KB
 mzkit\src\mzmath\mz_deco\test\unitTest.vbproj,<project>,212,56,34,122,4,4,2,0,0,8163,8.16 KB
-mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\SingleCellIonStat.vb,87,1,12,74,1,8,0,4,0,3246,3.25 KB
+mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\SingleCellIonStat.vb,86,1,11,74,1,8,0,4,0,3245,3.25 KB
 mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\Math.vb,104,31,13,60,1,0,0,4,0,3998,4.00 KB
 mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\MzMatrix.vb,54,18,10,26,1,3,0,1,0,1670,1.67 KB
 mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\PeakMatrix.vb,85,13,10,62,1,0,0,3,0,3265,3.27 KB
 mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\PixelData.vb,29,11,5,13,1,4,0,1,0,818,818 B
-mzkit\src\mzmath\SingleCells\SingleCells.vbproj,<project>,359,74,50,235,5,15,0,13,0,12997,13.00 KB
+mzkit\src\mzmath\SingleCells\SingleCells.vbproj,<project>,358,74,49,235,5,15,0,13,0,12996,13.00 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\RawFile.vb,170,25,20,125,1,7,1,8,0,6040,6.04 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\TPAExtensions.vb,313,66,28,219,1,0,0,7,0,12463,12.46 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\Contents\ContentTable.vb,122,33,15,74,1,0,1,5,0,4623,4.62 KB
@@ -973,20 +975,20 @@ mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb,73,12,13,48,1,0,0,2,0,3025,3.02 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb,331,59,41,231,1,0,0,6,0,15676,15.68 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb,126,10,19,97,1,0,0,3,0,5596,5.60 KB
-mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1214,1.21 KB
-mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2748,2.75 KB
+mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2747,2.75 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2991,2.99 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\Peaks\FeatureExtract.vb,39,10,6,23,1,0,1,1,0,1362,1.36 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\test.vb,116,94,22,0,0,0,0,0,0,5028,5.03 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\testGCMS.vb,53,0,16,37,1,0,3,0,0,1712,1.71 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\testLinearPack.vb,10,0,3,7,1,0,1,0,0,275,275 B
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\testLinearScanner.vb,37,0,6,31,1,0,1,0,0,1525,1.52 KB
-mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,442,442 B
+mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,440,440 B
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1154,1.15 KB
-mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2735,2.73 KB
+mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2734,2.73 KB
 mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2921,2.92 KB
-mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,<project>,6196,1144,832,4220,76,165,37,160,0,255934,255.93 KB
+mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,<project>,6194,1144,830,4220,76,165,37,160,0,255928,255.93 KB
 mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\test.vb,116,94,22,0,0,0,0,0,0,5028,5.03 KB
 mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\testGCMS.vb,53,0,16,37,1,0,3,0,0,1712,1.71 KB
 mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\testLinearPack.vb,10,0,3,7,1,0,1,0,0,275,275 B
@@ -999,16 +1001,16 @@ mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,<project>,401,150,74,177
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\Cluster.vb,75,8,12,55,1,0,0,3,0,2730,2.73 KB
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\Extensions.vb,8,0,3,5,1,0,0,0,0,154,154 B
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\KCF.vb,135,18,18,99,1,0,0,3,0,4472,4.47 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1061,1.06 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2745,2.75 KB
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2744,2.74 KB
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2985,2.98 KB
 mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\Module1.vb,37,0,11,26,1,0,2,0,0,1083,1.08 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1128,1.13 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2706,2.71 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2895,2.90 KB
-mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,<project>,624,138,102,384,10,8,4,6,0,22809,22.81 KB
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1127,1.13 KB
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2705,2.71 KB
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,KCF.Graph\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2894,2.89 KB
+mzkit\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj,<project>,622,138,100,384,10,8,4,6,0,22801,22.80 KB
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\AtomicWeight.vb,53,0,8,45,1,5,0,3,0,1715,1.72 KB
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\Extensions.vb,58,15,8,35,1,1,0,2,0,1839,1.84 KB
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\IO.vb,115,8,11,96,1,0,0,4,0,3710,3.71 KB
@@ -1016,19 +1018,19 @@ mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\KegAtomType.vb,118,27,1
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\KCF\Entry.vb,27,0,6,21,1,2,2,2,0,840,840 B
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\KCF\KCF.vb,18,8,2,8,1,3,0,1,0,443,443 B
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\KCF\Models.vb,36,9,8,19,2,8,0,2,0,1083,1.08 KB
-mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1054,1.05 KB
-mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Resources.Designer.vb,112,60,10,42,1,4,0,0,0,4819,4.82 KB
+mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Resources.Designer.vb,112,60,10,42,1,4,0,0,0,4818,4.82 KB
 mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,KCF.IO\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,2974,2.97 KB
-mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,<project>,661,160,88,413,12,26,5,18,0,22444,22.44 KB
+mzkit\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj,<project>,660,160,87,413,12,26,5,18,0,22441,22.44 KB
 mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\Canvas.vb,422,83,53,286,1,0,3,7,0,15601,15.60 KB
 mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\KCFBrush.vb,55,8,6,41,1,6,0,3,0,1876,1.88 KB
 mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\LabelHtml.vb,174,24,19,131,1,0,1,3,0,6269,6.27 KB
-mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1145,1.15 KB
-mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2747,2.75 KB
+mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2746,2.75 KB
 mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,KCFDraw\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2990,2.99 KB
-mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,<project>,837,171,106,560,6,10,5,13,0,31053,31.05 KB
+mzkit\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj,<project>,836,171,105,560,6,10,5,13,0,31050,31.05 KB
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\CLI.vb,79,1,11,67,1,0,0,2,0,2995,3.00 KB
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\Groups.vb,6,0,2,4,1,0,0,0,0,144,144 B
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\Program.vb,6,0,1,5,1,0,0,1,0,133,133 B
@@ -1047,11 +1049,11 @@ mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\kegDraw\Reaction.
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\kegDraw\ReactionArrow.vb,247,4,42,201,1,3,6,6,0,7581,7.58 KB
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\kegDraw\Text.vb,143,4,27,112,1,9,5,1,0,2815,2.81 KB
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\kegDraw\UndoUnit.vb,21,4,6,11,1,0,0,0,0,552,552 B
-mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1177,1.18 KB
-mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Resources.Designer.vb,73,26,9,38,1,3,0,0,0,3073,3.07 KB
+mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Resources.Designer.vb,73,26,9,38,1,3,0,0,0,3072,3.07 KB
 mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,KEGGdraw\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2918,2.92 KB
-mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,<project>,15307,100,1230,13977,23,121,209,149,0,585163,585.16 KB
+mzkit\src\visualize\KCF\KEGGdraw\KEGGdraw.NET5.vbproj,<project>,15306,100,1229,13977,23,121,209,149,0,585160,585.16 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Drawer.vb,286,62,43,181,1,2,5,10,0,11672,11.67 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Extensions.vb,236,30,28,178,1,0,0,7,0,8249,8.25 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\FeatureRegions.vb,95,5,11,79,1,0,0,4,0,3993,3.99 KB
@@ -1060,7 +1062,7 @@ mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\PixelData.vb,165,2
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\PixelsCDF.vb,202,19,28,155,1,0,1,7,0,7706,7.71 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\PixelsSampler.vb,126,9,21,96,1,0,1,6,0,4784,4.78 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\SingleIonLayer.vb,185,30,25,130,1,6,0,11,0,6317,6.32 KB
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Analysis\GridScanner.vb,262,31,39,192,3,0,1,6,0,10677,10.68 KB
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Analysis\GridScanner.vb,262,31,39,192,3,0,1,6,0,10675,10.68 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Analysis\IonStat.vb,149,10,15,124,1,10,0,4,0,6049,6.05 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\KnnInterpolation.vb,205,18,34,153,1,0,0,7,0,7970,7.97 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\MSIColorSet.vb,46,0,6,40,1,0,2,1,0,1279,1.28 KB
@@ -1072,8 +1074,8 @@ mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\R
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\Renderer.vb,151,40,20,91,2,0,3,2,0,6436,6.44 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderingModes.vb,10,0,3,7,1,0,0,0,0,148,148 B
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Renderer\RenderRGB.vb,76,3,12,61,1,4,2,0,0,3426,3.43 KB
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\DenoiseScaler.vb,28,0,7,21,1,0,1,2,0,778,778 B
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\KNNScaler.vb,25,0,7,18,1,0,1,2,0,697,697 B
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\DenoiseScaler.vb,27,0,6,21,1,0,1,2,0,776,776 B
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\KNNScaler.vb,24,0,6,18,1,0,1,2,0,695,695 B
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\LogScaler.vb,24,0,6,18,1,0,1,2,0,717,717 B
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\QuantileScaler.vb,28,0,8,20,1,0,1,2,0,794,794 B
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\RasterPipeline.vb,57,0,13,44,1,0,1,7,0,2052,2.05 KB
@@ -1083,9 +1085,9 @@ mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Blender\Scaler\TrI
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\IndexedCache\XIC.vb,133,22,19,92,2,5,2,3,0,4430,4.43 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\IndexedCache\XICPackWriter.vb,212,23,34,155,1,0,9,1,0,8211,8.21 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\IndexedCache\XICReader.vb,203,24,35,144,5,7,5,4,0,6834,6.83 KB
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1149,1.15 KB
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2753,2.75 KB
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2752,2.75 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3002,3.00 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Plot\DualRegionUnionPlot.vb,138,1,19,118,1,0,2,2,0,5963,5.96 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Plot\MSIPlot.vb,111,1,16,94,1,0,2,2,0,4896,4.90 KB
@@ -1101,7 +1103,7 @@ mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\I
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\InMemoryVectorPixel.vb,173,4,36,133,1,6,6,8,0,6205,6.21 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\mzPackPixel.vb,126,6,21,99,1,6,2,5,0,4192,4.19 KB
 mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,MsImaging\Reader\PixelScan\PixelScan.vb,76,17,14,45,1,0,2,3,0,3093,3.09 KB
-mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,<project>,5539,624,859,4056,66,80,89,178,0,211717,211.72 KB
+mzkit\src\visualize\MsImaging\MsImaging.NET5.vbproj,<project>,5536,624,856,4056,66,80,89,178,0,211708,211.71 KB
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\MassSpectraMirrorPlot.vb,107,9,8,90,1,0,0,2,0,4758,4.76 KB
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\MsContourPlot.vb,15,0,3,12,1,0,0,1,0,534,534 B
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\PeakAssign.vb,348,13,50,285,1,0,2,3,0,14735,14.73 KB
@@ -1117,33 +1119,33 @@ mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\ChromatogramPlot\TICplot.vb,336
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCHeatMap.vb,138,3,21,114,1,0,2,1,0,5747,5.75 KB
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCTIC2DPlot.vb,164,5,17,142,1,0,3,1,0,7121,7.12 KB
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\GCxGC\GCxGCTIC3DPeaks.vb,129,6,17,106,1,0,2,1,0,6321,6.32 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1145,1.15 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2757,2.76 KB
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2756,2.76 KB
 mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3009,3.01 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\fidDataPlot.vb,51,0,6,45,1,0,2,0,0,1785,1.78 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\FrequencyPlot.vb,41,0,6,35,1,0,2,0,0,1337,1.34 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\NMRSpectrum.vb,74,9,6,59,1,0,2,0,0,2414,2.41 KB
-mzkit\src\visualize\plot\MsPlot.NET5.vbproj,<project>,2765,221,340,2204,21,4,30,26,0,116819,116.82 KB
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\fidDataPlot.vb,51,0,6,45,1,0,2,0,0,1784,1.78 KB
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\FrequencyPlot.vb,41,0,6,35,1,0,2,0,0,1336,1.34 KB
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,plot\NMR\NMRSpectrum.vb,74,9,6,59,1,0,2,0,0,2413,2.41 KB
+mzkit\src\visualize\plot\MsPlot.NET5.vbproj,<project>,2764,221,339,2204,21,4,30,26,0,116813,116.81 KB
 mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\SDF2KCF.vb,62,5,5,52,1,0,0,3,0,2073,2.07 KB
 mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\SMILES2KCF.vb,46,0,5,41,1,0,0,1,0,1493,1.49 KB
-mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Application.Designer.vb,13,9,2,2,0,0,0,0,0,425,425 B
+mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,423,423 B
 mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1052,1.05 KB
-mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2744,2.74 KB
+mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2743,2.74 KB
 mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,SDF.Extensions\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2981,2.98 KB
-mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,<project>,294,61,38,195,5,4,1,4,0,10768,10.77 KB
+mzkit\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj,<project>,293,61,37,195,5,4,1,4,0,10765,10.77 KB
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SampleData.vb,61,10,8,43,1,0,0,1,0,2518,2.52 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\HEMap\Cell.vb,52,24,7,21,1,10,0,0,0,1336,1.34 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\HEMap\Cell.vb,52,24,7,21,1,10,0,0,0,1334,1.33 KB
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\HEMap\HeatMapLayer.vb,73,0,10,63,2,0,0,2,0,2716,2.72 KB
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\HEMap\HistologicalImage.vb,108,19,13,76,1,0,0,3,0,4122,4.12 KB
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\HEMap\[Object].vb,45,3,8,34,1,3,0,1,0,1496,1.50 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\CDF.vb,217,18,31,168,1,0,0,8,0,8923,8.92 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\Extensions.vb,86,9,11,66,1,0,0,3,0,3117,3.12 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\LayerRender.vb,63,4,11,48,1,3,1,1,0,2278,2.28 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\CDF.vb,217,18,31,168,1,0,0,8,0,8922,8.92 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\Extensions.vb,86,9,11,66,1,0,0,3,0,3115,3.12 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\LayerRender.vb,63,4,11,48,1,3,1,1,0,2276,2.28 KB
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\PhenographSpot.vb,36,4,8,24,1,2,0,3,0,1253,1.25 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\TissueRegion.vb,57,19,8,30,1,4,0,3,0,1715,1.72 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\UMAPPoint.vb,33,21,3,9,1,6,0,0,0,943,943 B
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\TissueRegion.vb,57,19,8,30,1,4,0,3,0,1714,1.71 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\Scatter\UMAPPoint.vb,33,21,3,9,1,6,0,0,0,942,942 B
 mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SpatialMapping\SpatialMapping.vb,64,13,11,40,3,6,0,4,0,1866,1.87 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SpatialMapping\SpotMap.vb,79,34,9,36,1,11,0,1,0,2169,2.17 KB
-mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,<project>,974,178,138,658,16,45,1,30,0,34452,34.45 KB
-D:\mzkit,<root>,221926,35448,30842,155636,2530,6166,2082,5494,40,8.89659E+06,8.90 MB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,TissueMorphology\SpatialMapping\SpotMap.vb,79,34,9,36,1,11,0,1,0,2168,2.17 KB
+mzkit\src\visualize\TissueMorphology\TissueMorphology.vbproj,<project>,974,178,138,658,16,45,1,30,0,34442,34.44 KB
+D:\mzkit,<root>,222576,35978,30786,155812,2534,6166,2086,5500,40,8.93403E+06,8.93 MB

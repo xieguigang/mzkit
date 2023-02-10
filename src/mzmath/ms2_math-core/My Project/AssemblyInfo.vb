@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::965986bb99fa9791f609ecdf77fd3ae4, mzkit\src\mzmath\ms2_math-core\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cf43c58fe9f9aaa3153bf6624bcbffcb, mzkit\src\mzmath\ms2_math-core\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyVersion("1.231.*")>
 <Assembly: AssemblyFileVersion("1.10.*")>
 #end if
-

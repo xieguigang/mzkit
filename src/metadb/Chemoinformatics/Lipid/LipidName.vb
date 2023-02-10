@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e39002659f62343230c002d24e36af6f, mzkit\src\metadb\Chemoinformatics\Lipid\LipidName.vb"
+﻿#Region "Microsoft.VisualBasic::45ea2585ecad38bd32437f8da638b085, mzkit\src\metadb\Chemoinformatics\Lipid\LipidName.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Public Class LipidName
         Next
     End Function
 End Class
-

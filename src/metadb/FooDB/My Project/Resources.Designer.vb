@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::653bb1ac30ce3407ee038011bc4785f5, mzkit\src\metadb\FooDB\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::475e96e2b70bb0d8343595783bbb2247, mzkit\src\metadb\FooDB\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

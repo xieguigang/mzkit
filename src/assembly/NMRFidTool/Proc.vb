@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83be6a5e908db76c9353d044dc36a30a, mzkit\src\assembly\NMRFidTool\Proc.vb"
+﻿#Region "Microsoft.VisualBasic::948a50e03b484e23aa144233d76e9049, mzkit\src\assembly\NMRFidTool\Proc.vb"
 
     ' Author:
     ' 
@@ -401,4 +401,3 @@ Public Class Proc
         Me.integerType = integerType
     End Sub
 End Class
-

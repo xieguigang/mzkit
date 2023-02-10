@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7694ecb00f92e78f47b5d522ed2710d9, mzkit\src\assembly\NMRFidTool\Math\FFT\FastFourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::7bc2a172443749ead4dfd4fd0dc73800, mzkit\src\assembly\NMRFidTool\Math\FFT\FastFourierTransform.vb"
 
     ' Author:
     ' 
@@ -91,4 +91,3 @@ Namespace fidMath.FFT
     End Interface
 
 End Namespace
-

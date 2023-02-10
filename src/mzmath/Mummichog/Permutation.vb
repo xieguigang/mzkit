@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d952d0b5685dfea5c34d7677cb28a7ac, mzkit\src\mzmath\Mummichog\Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::419fafa7f9f297b00dae4763680eae16, mzkit\src\mzmath\Mummichog\Permutation.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Module Permutation
         End If
     End Function
 End Module
-

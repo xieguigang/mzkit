@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cf1ec1f451bf16a903bf9711ac101ca, mzkit\src\metadb\FormulaSearch.Extensions\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3514b498fcc846333f69b6ff8641e486, mzkit\src\metadb\FormulaSearch.Extensions\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50613fc66f9cf8711562466314b8c92a, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\IndexParser.vb"
+﻿#Region "Microsoft.VisualBasic::89a002cabf4933bafbad60a04c815f7a, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\IndexParser.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Public Class IndexParser : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

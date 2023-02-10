@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::137a4366d19f58b7807cd40ce5541b02, mzkit\src\assembly\NMRFidTool\Math\apodization\TrafApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::baa378320d6f578dd4f5a1e4275930f7, mzkit\src\assembly\NMRFidTool\Math\apodization\TrafApodizator.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Namespace fidMath.Apodization
     End Class
 
 End Namespace
-

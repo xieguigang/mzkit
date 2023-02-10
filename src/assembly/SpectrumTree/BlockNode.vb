@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcb51a67409cdaede8708611ee220971, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::de2b694f3b7baf864bcbc139f1622216, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 55
     ' Comment Lines: 46
     '   Blank Lines: 6
-    '     File Size: 3.07 KB
+    '     File Size: 3.06 KB
 
 
     ' Class BlockNode
@@ -162,4 +162,3 @@ Public Class BlockNode
         End If
     End Function
 End Class
-

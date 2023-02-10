@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89251500a6752e66fc13745d36a2c96e, mzkit\src\metadna\MetaDNA_visual\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b3572c0a0e418c58d0f10cc19d3bb962, mzkit\src\metadna\MetaDNA_visual\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

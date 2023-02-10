@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::399ed067f3a238dcff4e7f1e6720e413, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Properties.vb"
+﻿#Region "Microsoft.VisualBasic::8dd0fc341097084cc30f79fe84df65ab, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Properties.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 208 B
+    '     File Size: 207 B
 
 
     ' Class Properties
@@ -63,4 +63,3 @@ Public Class Properties
         Return $"[{Key}] {Value}"
     End Function
 End Class
-

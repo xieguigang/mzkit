@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45b7c256723d4da5cc679fccd2955386, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Spectra.vb"
+﻿#Region "Microsoft.VisualBasic::f7d024f8d170d2b9f37b08b15b18ec20, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Spectra.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 26
     '   Blank Lines: 3
-    '     File Size: 1.14 KB
+    '     File Size: 1.13 KB
 
 
     ' Class Spectra
@@ -93,4 +93,3 @@ Public Class Spectra
     Public Property PeakIntensityValues As Double()
 
 End Class
-

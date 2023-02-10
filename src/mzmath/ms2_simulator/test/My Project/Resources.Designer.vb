@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e5c87b401f2beb6d2ad0084a567b2f, mzkit\src\mzmath\ms2_simulator\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0f033ca32dc344ac4c6062bdbc372d3b, mzkit\src\mzmath\ms2_simulator\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

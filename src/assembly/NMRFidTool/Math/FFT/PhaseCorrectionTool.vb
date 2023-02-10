@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8681b9d9485ea78e18ca06fd9379f23, mzkit\src\assembly\NMRFidTool\Math\FFT\PhaseCorrectionTool.vb"
+﻿#Region "Microsoft.VisualBasic::3e84e36b605a78fb53c8fd365fee2e50, mzkit\src\assembly\NMRFidTool\Math\FFT\PhaseCorrectionTool.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace fidMath.FFT
     End Class
 
 End Namespace
-

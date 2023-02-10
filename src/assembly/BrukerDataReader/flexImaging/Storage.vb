@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585a2e3cfa11f4c39ca8574d7b99a9a2, mzkit\src\assembly\BrukerDataReader\flexImaging\Storage.vb"
+﻿#Region "Microsoft.VisualBasic::dac7abd2e2467ddbc2b9d8a7f2e2d93f, mzkit\src\assembly\BrukerDataReader\flexImaging\Storage.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Module Storage
                           End Function)
     End Function
 End Module
-

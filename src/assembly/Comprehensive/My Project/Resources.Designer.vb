@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79bfd924df35fc6b2ef0cec5119722d5, mzkit\src\assembly\Comprehensive\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::728c9cd55090109abaff7f0a57ba433d, mzkit\src\assembly\Comprehensive\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

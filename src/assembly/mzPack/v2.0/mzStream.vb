@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d7b18fb001e723435ad2772d802cb59, mzkit\src\assembly\mzPack\v2.0\mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::0e25e4296f47527875c1da779619a2e8, mzkit\src\assembly\mzPack\v2.0\mzStream.vb"
 
     ' Author:
     ' 
@@ -409,4 +409,3 @@ Public Class mzStream : Implements IMzPackReader
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

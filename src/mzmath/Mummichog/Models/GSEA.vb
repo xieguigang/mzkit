@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bf011498d6dee6c2b8575feaa85fb32, mzkit\src\mzmath\Mummichog\Models\GSEA.vb"
+﻿#Region "Microsoft.VisualBasic::c8c5f2b037cc8b904983687ff132f640, mzkit\src\mzmath\Mummichog\Models\GSEA.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 6
     '   Blank Lines: 4
-    '     File Size: 707 B
+    '     File Size: 706 B
 
 
     ' Module GSEA
@@ -75,4 +75,3 @@ Public Module GSEA
         Return g
     End Function
 End Module
-

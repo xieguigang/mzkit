@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc5d4558da386484f1f18c340b0da57f, mzkit\src\assembly\NMRFidTool\Math\apodization\Apodizator.vb"
+﻿#Region "Microsoft.VisualBasic::314799ba1d4b1a4d138e7d0498fb28d1, mzkit\src\assembly\NMRFidTool\Math\apodization\Apodizator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 26
     '   Blank Lines: 4
-    '     File Size: 1.22 KB
+    '     File Size: 1.21 KB
 
 
     '     Interface Apodizator
@@ -89,4 +89,3 @@ Namespace fidMath.Apodization
     End Interface
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b010c6df04d98daa8f23d654260d2a, mzkit\src\assembly\NMRFidTool\Fid.vb"
+﻿#Region "Microsoft.VisualBasic::5d9080c932296d492fce48c5a22a289b, mzkit\src\assembly\NMRFidTool\Fid.vb"
 
     ' Author:
     ' 
@@ -161,4 +161,3 @@ Public Class Fid
         Return fidData
     End Function
 End Class
-

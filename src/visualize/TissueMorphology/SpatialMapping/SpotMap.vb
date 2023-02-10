@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3512bad2df3cb238af5b15becd65f786, mzkit\src\visualize\TissueMorphology\SpatialMapping\SpotMap.vb"
+﻿#Region "Microsoft.VisualBasic::60e722d52bef6bc37fdb20a6d08ebb48, mzkit\src\visualize\TissueMorphology\SpatialMapping\SpotMap.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@ Public Class SpotMap : Implements IPoint2D
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0255d3a94c8b0640e2fb8bee7715589, mzkit\src\mzmath\TargetedMetabolomics\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b62b28b5d2d35139320ea15c0650fd90, mzkit\src\mzmath\TargetedMetabolomics\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d31613732fe4dfc71c4a93bade0a02, mzkit\src\assembly\assembly\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::ede660d5d8e215d9a42806b1dc6158d1, mzkit\src\assembly\assembly\Utils.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 525 B
+    '     File Size: 524 B
 
 
     ' Module Utils
@@ -71,4 +71,3 @@ Public Module Utils
         Return fileName
     End Function
 End Module
-

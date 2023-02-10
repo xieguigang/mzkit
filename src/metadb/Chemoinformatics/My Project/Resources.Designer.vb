@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3fd7e9b1556f0ab336a6bb7edfb7672, mzkit\src\metadb\Chemoinformatics\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::eb4c1627799eba8569ac028bee8c8c3f, mzkit\src\metadb\Chemoinformatics\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

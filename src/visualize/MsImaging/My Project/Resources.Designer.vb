@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::208a7a42eefd945830fbc4d611a40822, mzkit\src\visualize\MsImaging\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::09a83c1ad3dd1e80558d4773755288a1, mzkit\src\visualize\MsImaging\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

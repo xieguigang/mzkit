@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65f3c79958151cc54b9306cd0e2da645, mzkit\src\visualize\TissueMorphology\Scatter\LayerRender.vb"
+﻿#Region "Microsoft.VisualBasic::c158b580b492c18d33cd399cbf481553, mzkit\src\visualize\TissueMorphology\Scatter\LayerRender.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Public Class LayerRender
         Return layer
     End Function
 End Class
-

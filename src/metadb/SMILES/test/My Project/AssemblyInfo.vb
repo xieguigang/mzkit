@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcbf3ca56030c3d98065b93d6726c865, mzkit\src\metadb\SMILES\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::be20315e908c3251db08e57a5c3fd3e6, mzkit\src\metadb\SMILES\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91bfd61685e7e51b8d6bba3249265ae8, mzkit\src\visualize\plot\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fd7796af5e904aba467889f311d0304a, mzkit\src\visualize\plot\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

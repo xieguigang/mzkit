@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56681d7d600b6259ddbb426fecc55061, mzkit\src\metadb\SMILES\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3ca68245b2dafe47c5cd97922b466966, mzkit\src\metadb\SMILES\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8fbcedf80460fc6e0b2e6c94ebbc658, mzkit\src\assembly\mzPackExtensions\VendorStream\VendorStreamLoader.vb"
+﻿#Region "Microsoft.VisualBasic::f0eb7ef7e51d602d362f5896d8a241a9, mzkit\src\assembly\mzPackExtensions\VendorStream\VendorStreamLoader.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
         }
     End Function
 End Class
-

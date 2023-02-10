@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff777715858277dc1db7379fd7bd8e2b, mzkit\src\mzmath\MoleculeNetworking\MSScore.vb"
+﻿#Region "Microsoft.VisualBasic::7626a5f6112a364c6f87082775ca58a4, mzkit\src\mzmath\MoleculeNetworking\MSScore.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 828 B
+    '     File Size: 826 B
 
 
     ' Class MSScore
@@ -80,4 +80,3 @@ Public Class MSScore : Inherits ComparisonProvider
         Return align.GetScore(ms2(x).mzInto, ms2(y).mzInto)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e620b01c6ad928f01ed55916b0c29f5b, mzkit\src\assembly\NMRFidTool\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::297e7caab767de7a44b1bb9e76a652ca, mzkit\src\assembly\NMRFidTool\Spectrum.vb"
 
     ' Author:
     ' 
@@ -178,4 +178,3 @@ Public Class Spectrum
     End Property
 
 End Class
-

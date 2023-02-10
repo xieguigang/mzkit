@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::963d8d07e1ac45852b1167e823492ffa, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
+﻿#Region "Microsoft.VisualBasic::c5c6a6b5a50c86122ae20c8afd573753, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
-    '    Code Lines: 8
+    '   Total Lines: 14
+    '    Code Lines: 10
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 534 B
+    '   Blank Lines: 4
+    '     File Size: 609 B
 
 
-    ' Class Others
+    '     Class Others
     ' 
-    '     Properties: CH2O, H, nitro_group, NL2H2O, NLH2O
+    '         Properties: CH2O, H, nitro_group, NL2H2O, NLH2O
+    ' 
     ' 
     ' /********************************************************************************/
 

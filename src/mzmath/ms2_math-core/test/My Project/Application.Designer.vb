@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24f12c172d24fdcc63e9cca7b96da7d5, mzkit\src\mzmath\ms2_math-core\test\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2be9b3ef216c9b7a8f9ab57dadd4773d, mzkit\src\mzmath\ms2_math-core\test\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 12
     '    Code Lines: 2
     ' Comment Lines: 9
-    '   Blank Lines: 2
-    '     File Size: 442 B
+    '   Blank Lines: 1
+    '     File Size: 440 B
 
 
     ' 
@@ -61,5 +61,3 @@
 
 Option Strict On
 Option Explicit On
-
-

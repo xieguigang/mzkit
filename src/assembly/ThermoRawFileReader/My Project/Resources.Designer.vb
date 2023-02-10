@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::425b47a28d80a37273e2310368eaf632, mzkit\src\assembly\ThermoRawFileReader\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8b1f2bde5862efb5670a9f0a26217aa6, mzkit\src\assembly\ThermoRawFileReader\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

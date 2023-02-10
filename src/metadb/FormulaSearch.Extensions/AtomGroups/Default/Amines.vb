@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c1061e1743cddda6134c3c0fefdd98, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Amines.vb"
+﻿#Region "Microsoft.VisualBasic::9741818f1b10d572065109ce0a93903d, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Amines.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
+    '   Total Lines: 10
+    '    Code Lines: 6
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 189 B
+    '   Blank Lines: 4
+    '     File Size: 240 B
 
 
-    ' Class Amines
+    '     Class Amines
     ' 
-    '     Properties: methylamine
+    '         Properties: methylamine
+    ' 
     ' 
     ' /********************************************************************************/
 

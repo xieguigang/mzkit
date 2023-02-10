@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3879dfe369a0115e78b6ec0b8b5480, mzkit\src\metadb\AnnotationLibrary\Data\MassIndex.vb"
+﻿#Region "Microsoft.VisualBasic::3e7f35bddede327a1c6d1da489e4f759, mzkit\src\metadb\AnnotationLibrary\Data\MassIndex.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 11
     '   Blank Lines: 4
-    '     File Size: 637 B
+    '     File Size: 635 B
 
 
     ' Class MassIndex
@@ -77,4 +77,3 @@ Public Class MassIndex
     End Function
 
 End Class
-

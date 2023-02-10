@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca91248cbf212af841565d1ec10daf00, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a0e38ad12f630a8597a3631cf52d9ae4, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
+    '   Total Lines: 93
     '    Code Lines: 74
     ' Comment Lines: 3
-    '   Blank Lines: 17
-    '     File Size: 3.01 KB
+    '   Blank Lines: 16
+    '     File Size: 3.00 KB
 
 
     '     Class GraphId
@@ -73,7 +73,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace NCBI.PubChem.Graph
 

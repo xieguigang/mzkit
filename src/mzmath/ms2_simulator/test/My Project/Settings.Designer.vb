@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc51de609e820ab4a9f6f5fa8f0e0dfc, mzkit\src\mzmath\ms2_simulator\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::71e5e4ad4fc7424d3ee657ff883842e5, mzkit\src\mzmath\ms2_simulator\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

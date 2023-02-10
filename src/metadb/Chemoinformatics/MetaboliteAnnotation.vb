@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bde96065e49990a0cb1579b248d85763, mzkit\src\metadb\Chemoinformatics\MetaboliteAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::9304093281114eca65544b5a11a034a3, mzkit\src\metadb\Chemoinformatics\MetaboliteAnnotation.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 691 B
+    '     File Size: 690 B
 
 
     ' Class MetaboliteAnnotation
@@ -70,4 +70,3 @@ Public Class MetaboliteAnnotation
     End Function
 
 End Class
-

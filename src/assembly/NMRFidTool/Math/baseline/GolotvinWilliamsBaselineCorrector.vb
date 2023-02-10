@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4755d6e0937e7a6dd63f8d781fc95ab, mzkit\src\assembly\NMRFidTool\Math\baseline\GolotvinWilliamsBaselineCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::10cba8e7f7406e0aeefcaec7373dcedb, mzkit\src\assembly\NMRFidTool\Math\baseline\GolotvinWilliamsBaselineCorrector.vb"
 
     ' Author:
     ' 
@@ -289,4 +289,3 @@ Namespace fidMath.Baseline
     End Class
 
 End Namespace
-

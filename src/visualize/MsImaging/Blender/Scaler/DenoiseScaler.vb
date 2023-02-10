@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e221464574b5a02b8dfc032ba93cb75, mzkit\src\visualize\MsImaging\Blender\Scaler\DenoiseScaler.vb"
+﻿#Region "Microsoft.VisualBasic::9d608782b73a0a68adb7e5b71bdfb3d3, mzkit\src\visualize\MsImaging\Blender\Scaler\DenoiseScaler.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
+    '   Total Lines: 27
     '    Code Lines: 21
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 778 B
+    '   Blank Lines: 6
+    '     File Size: 776 B
 
 
     '     Class DenoiseScaler
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Blender.Scaler
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a969f3d5e9ea4ea2e06e6d413e342534, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb"
+﻿#Region "Microsoft.VisualBasic::6e8beb9e180efadc0c4194390c6af86e, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\ContainerIndex.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 226 B
+    '     File Size: 225 B
 
 
     ' Class ContainerIndex
@@ -61,4 +61,3 @@ Public Class ContainerIndex
     Public Property BlobSize As Integer
 
 End Class
-

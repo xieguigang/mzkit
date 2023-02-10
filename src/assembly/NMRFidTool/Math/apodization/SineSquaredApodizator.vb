@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6acee9ac792535038834e861729c916e, mzkit\src\assembly\NMRFidTool\Math\apodization\SineSquaredApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::5fe66be694d0d6171cb0ceb65d5962f9, mzkit\src\assembly\NMRFidTool\Math\apodization\SineSquaredApodizator.vb"
 
     ' Author:
     ' 
@@ -125,4 +125,3 @@ Namespace fidMath.Apodization
     End Class
 
 End Namespace
-

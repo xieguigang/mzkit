@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ec7da2715728422de82faf26c44b614, mzkit\src\metadb\MoNA\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0d96468d55c4583d05ed1c2eee26eb57, mzkit\src\metadb\MoNA\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

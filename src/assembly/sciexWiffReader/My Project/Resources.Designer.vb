@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6bbcfda4d52c1cd7c6e778d9c8e6437, mzkit\src\assembly\sciexWiffReader\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3607e2e7128a136e1099986dc15dc817, mzkit\src\assembly\sciexWiffReader\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

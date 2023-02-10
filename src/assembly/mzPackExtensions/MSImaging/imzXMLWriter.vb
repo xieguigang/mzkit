@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4fab4532d9ee5f7a2e279cb9ef78ee, mzkit\src\assembly\mzPackExtensions\MSImaging\imzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::06e67a0a2ee9045148505b92aaaf7e70, mzkit\src\assembly\mzPackExtensions\MSImaging\imzXMLWriter.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Module imzXMLWriter
         Return True
     End Function
 End Module
-

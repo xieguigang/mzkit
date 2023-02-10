@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bf3618b012c1d83602b089abfc87091, mzkit\src\assembly\NMRFidTool\Reader\Simple1DFidReader.vb"
+﻿#Region "Microsoft.VisualBasic::1680beeb599535cd869e84eea18f1d93, mzkit\src\assembly\NMRFidTool\Reader\Simple1DFidReader.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Namespace Reader
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1770733d3f69015d3dbae62f35451ee1, mzkit\src\visualize\plot\NMR\fidDataPlot.vb"
+﻿#Region "Microsoft.VisualBasic::51f30316862d3af89adacf0f93da22f6, mzkit\src\visualize\plot\NMR\fidDataPlot.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Public Class fidDataPlot : Inherits Plot
         Call app.Plot(g, canvas)
     End Sub
 End Class
-

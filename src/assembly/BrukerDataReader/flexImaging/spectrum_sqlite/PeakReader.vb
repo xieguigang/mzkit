@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dee3264c56650f7618767c94f0158ac, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
+﻿#Region "Microsoft.VisualBasic::044ac8df237972425fbf5e152ffce067, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
+    '   Total Lines: 105
     '    Code Lines: 77
     ' Comment Lines: 15
-    '   Blank Lines: 14
-    '     File Size: 4.03 KB
+    '   Blank Lines: 13
+    '     File Size: 4.02 KB
 
 
     ' Class PeakReader
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
@@ -162,4 +161,3 @@ Public Class PeakReader : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

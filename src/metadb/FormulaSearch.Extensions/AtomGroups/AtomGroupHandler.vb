@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4945883b892660c0835efd95d742299c, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
+﻿#Region "Microsoft.VisualBasic::ecafd73a2f8910ec39f1c5c3dcdfca77, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 113
-    ' Comment Lines: 6
-    '   Blank Lines: 26
-    '     File Size: 5.88 KB
+    '   Total Lines: 136
+    '    Code Lines: 98
+    ' Comment Lines: 14
+    '   Blank Lines: 24
+    '     File Size: 5.74 KB
 
 
-    ' Class AtomGroupHandler
+    '     Class AtomGroupHandler
     ' 
-    '     Properties: AllAnnotations
+    '         Properties: AllAnnotations
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+2 Overloads) CreateModel, FindDelta, GetByMass, loadGroup
+    '         Function: (+2 Overloads) CreateModel, FindDelta, loadGroup
     ' 
-    '     Sub: Clear, MixAll, Multiple, Register
+    '         Sub: Clear, MixAll, Multiple, Register
+    ' 
     ' 
     ' /********************************************************************************/
 

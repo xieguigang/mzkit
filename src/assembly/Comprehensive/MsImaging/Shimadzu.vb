@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d137879bb98fe43e5070c4a3a6127879, mzkit\src\assembly\Comprehensive\MsImaging\Shimadzu.vb"
+﻿#Region "Microsoft.VisualBasic::45f069b3e1582a62104f06fb5d2e47b0, mzkit\src\assembly\Comprehensive\MsImaging\Shimadzu.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Public Module Shimadzu
         End Using
     End Function
 End Module
-

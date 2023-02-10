@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb8d4df496a0eff4d51db2476cf0772a, mzkit\src\visualize\SDF.Extensions\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c09d423474dc8ccd133ce2537b925b77, mzkit\src\visualize\SDF.Extensions\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

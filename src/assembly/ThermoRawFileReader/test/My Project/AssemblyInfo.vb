@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bb96977bd06cdbb89b2966adb8c1b52, mzkit\src\assembly\ThermoRawFileReader\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6e130513385413172d14d1d1c913820d, mzkit\src\assembly\ThermoRawFileReader\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

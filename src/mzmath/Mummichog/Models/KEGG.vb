@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8c9c85015f206960c78ce913d86b1b8, mzkit\src\mzmath\Mummichog\Models\KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::cf3a7ab6ecb1fdb45c147346ad9089e0, mzkit\src\mzmath\Mummichog\Models\KEGG.vb"
 
     ' Author:
     ' 
@@ -147,4 +147,3 @@ Public Module KEGG
         Return model
     End Function
 End Module
-

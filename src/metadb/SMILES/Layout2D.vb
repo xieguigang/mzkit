@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::736c4fc43009103523695f1481c0bd28, mzkit\src\metadb\SMILES\Layout2D.vb"
+﻿#Region "Microsoft.VisualBasic::a129dc6362ebc9002a03bee2072254dd, mzkit\src\metadb\SMILES\Layout2D.vb"
 
     ' Author:
     ' 
@@ -174,4 +174,3 @@ Module Layout2D
         Next
     End Sub
 End Module
-

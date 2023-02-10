@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a087dfbca634c402152dac19e0159220, mzkit\src\assembly\SpectrumTree\ReferenceBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::5a77ee0dc02d66332cb5b6911c498980, mzkit\src\assembly\SpectrumTree\ReferenceBinaryTree.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Public Class ReferenceBinaryTree : Inherits ReferenceTree
         End If
     End Sub
 End Class
-

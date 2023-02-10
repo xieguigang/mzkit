@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e631a797579aa3a6aee0db335e81d19d, mzkit\src\assembly\NMRFidTool\Math\FFT\FFTBase.vb"
+﻿#Region "Microsoft.VisualBasic::993d646c788e845cccfd526e4267517c, mzkit\src\assembly\NMRFidTool\Math\FFT\FFTBase.vb"
 
     ' Author:
     ' 
@@ -191,4 +191,3 @@ Namespace fidMath.FFT
     End Class
 
 End Namespace
-

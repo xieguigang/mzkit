@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9738ce8f8f62ca15c8c0147c9cb25e8, mzkit\src\mzmath\SingleCells\SingleCellIonStat.vb"
+﻿#Region "Microsoft.VisualBasic::1e6fa5f7f3cf92ba5639293809865672, mzkit\src\mzmath\SingleCells\SingleCellIonStat.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
+    '   Total Lines: 86
     '    Code Lines: 74
     ' Comment Lines: 1
-    '   Blank Lines: 12
+    '   Blank Lines: 11
     '     File Size: 3.25 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1

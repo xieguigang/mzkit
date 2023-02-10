@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b99c801378a9b695808906ecd65d166, mzkit\src\metadb\KNApSAcK\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3db851d2843a244779eab616084f3bfa, mzkit\src\metadb\KNApSAcK\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

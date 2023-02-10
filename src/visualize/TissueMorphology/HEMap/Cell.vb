@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c49bfda21d1eb2e0c1096f68ca238d, mzkit\src\visualize\TissueMorphology\HEMap\Cell.vb"
+﻿#Region "Microsoft.VisualBasic::021b9dc0adf1db588e2f8a3c06bf29c5, mzkit\src\visualize\TissueMorphology\HEMap\Cell.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 21
     ' Comment Lines: 24
     '   Blank Lines: 7
-    '     File Size: 1.34 KB
+    '     File Size: 1.33 KB
 
 
     ' Class Cell
@@ -105,4 +105,3 @@ Public Class Cell
     End Property
 
 End Class
-

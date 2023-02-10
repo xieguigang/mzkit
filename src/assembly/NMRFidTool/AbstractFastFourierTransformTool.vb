@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03b4a4f0cad98ee8a8e9da475af82710, mzkit\src\assembly\NMRFidTool\AbstractFastFourierTransformTool.vb"
+﻿#Region "Microsoft.VisualBasic::66c28ed87ef11d52865ddc97e6e544bb, mzkit\src\assembly\NMRFidTool\AbstractFastFourierTransformTool.vb"
 
     ' Author:
     ' 
@@ -227,4 +227,3 @@ Public MustInherit Class AbstractFastFourierTransformTool
         End Get
     End Property
 End Class
-

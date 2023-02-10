@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0eacf595e882edfff0476cc64e4b70c, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkyl.vb"
+﻿#Region "Microsoft.VisualBasic::36a75c371ae3c8cadf83aca7f409fa7d, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkyl.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 13
+    '   Total Lines: 62
+    '    Code Lines: 15
     ' Comment Lines: 43
-    '   Blank Lines: 3
-    '     File Size: 2.19 KB
+    '   Blank Lines: 4
+    '     File Size: 2.45 KB
 
 
-    ' Class Alkyl
+    '     Class Alkyl
     ' 
-    '     Properties: amyl_group, butyl_group, ethyl_group, hexyl_group, isobutyl_group
-    '                 isopropyl_group, methyl_group, propyl_group, secbutyl_group, tertbutyl_group
+    '         Properties: amyl_group, butyl_group, ethyl_group, hexyl_group, isobutyl_group
+    '                     isopropyl_group, methyl_group, propyl_group, secbutyl_group, tertbutyl_group
+    ' 
     ' 
     ' /********************************************************************************/
 

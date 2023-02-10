@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80e9bdcbf661963ace5724d8ad1d5bf2, mzkit\src\visualize\TissueMorphology\Scatter\TissueRegion.vb"
+﻿#Region "Microsoft.VisualBasic::c2b555d63d7827d323866bf8be262d47, mzkit\src\visualize\TissueMorphology\Scatter\TissueRegion.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 30
     ' Comment Lines: 19
     '   Blank Lines: 8
-    '     File Size: 1.72 KB
+    '     File Size: 1.71 KB
 
 
     ' Class TissueRegion
@@ -111,4 +111,3 @@ Public Class TissueRegion
     End Function
 
 End Class
-

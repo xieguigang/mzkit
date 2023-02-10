@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aa664f6b974edd04ceec58bf29da024, mzkit\src\visualize\plot\NMR\NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::88f48497c9f9f2b46d69d9858fd67f20, mzkit\src\visualize\plot\NMR\NMRSpectrum.vb"
 
     ' Author:
     ' 
@@ -127,4 +127,3 @@ Public Class NMRSpectrum : Inherits Plot
         Call app.Plot(g, canvas)
     End Sub
 End Class
-

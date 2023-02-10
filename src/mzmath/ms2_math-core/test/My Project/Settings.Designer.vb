@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f69bf79312d4f4f15550154fab950c0c, mzkit\src\mzmath\ms2_math-core\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3e29f69bbe2905195c493a2b5fba58dd, mzkit\src\mzmath\ms2_math-core\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.90 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings
@@ -132,4 +132,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

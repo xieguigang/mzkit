@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4307a32b00b3d605d1208f8e788e0a1b, mzkit\src\metadb\AnnotationLibrary\File\LibraryFile.vb"
+﻿#Region "Microsoft.VisualBasic::8535441c1dbf580b1fe8841c9e7c123f, mzkit\src\metadb\AnnotationLibrary\File\LibraryFile.vb"
 
     ' Author:
     ' 
@@ -131,4 +131,3 @@ Public MustInherit Class LibraryFile
     End Function
 
 End Class
-

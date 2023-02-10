@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6073049ab1df85622abe6ec14e901ee, mzkit\src\assembly\mzPack\v2.0\mzStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4db1cba5cd2d980fe6f46abefcb4a09a, mzkit\src\assembly\mzPack\v2.0\mzStreamWriter.vb"
 
     ' Author:
     ' 
@@ -262,4 +262,3 @@ Public Module mzStreamWriter
         Call pack.WriteText(app.ToString, applicationClassFile)
     End Sub
 End Module
-

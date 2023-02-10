@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db8502651461eef185a07b6c92dea9e8, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\mcfParser.vb"
+﻿#Region "Microsoft.VisualBasic::323feb211fb8b636bd8e3d3cb2a25519, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\mcfParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 26
     ' Comment Lines: 10
     '   Blank Lines: 10
-    '     File Size: 1.54 KB
+    '     File Size: 1.53 KB
 
 
     ' Class mcfParser
@@ -102,4 +102,3 @@ Public Class mcfParser : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

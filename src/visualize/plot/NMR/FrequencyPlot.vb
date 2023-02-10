@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05da5641b30d0c5149c792151cd65499, mzkit\src\visualize\plot\NMR\FrequencyPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a898d3326b96449c6ca1ccce9757fb5f, mzkit\src\visualize\plot\NMR\FrequencyPlot.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Class nmrSpectrumPlot : Inherits Plot
         Call peaks.Plot(g, canvas)
     End Sub
 End Class
-

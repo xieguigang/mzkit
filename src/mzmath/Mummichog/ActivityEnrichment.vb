@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58a0f2a98edc6a030ca048fbf5dc9bb9, mzkit\src\mzmath\Mummichog\ActivityEnrichment.vb"
+﻿#Region "Microsoft.VisualBasic::c6d87abe9a92cfd7039207f3d0d7eb51, mzkit\src\mzmath\Mummichog\ActivityEnrichment.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Public Class ActivityEnrichment
         Return subgraph
     End Function
 End Class
-

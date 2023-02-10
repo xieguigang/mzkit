@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e6f8a09c0f7e01c1eea68adc45bae50, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::c9a8db01ba679e5315f45d5d7db0c3af, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
+    '   Total Lines: 10
+    '    Code Lines: 6
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 183 B
+    '   Blank Lines: 4
+    '     File Size: 234 B
 
 
-    ' Class Alkenyl
+    '     Class Alkenyl
     ' 
-    '     Properties: vinyl
+    '         Properties: vinyl
+    ' 
     ' 
     ' /********************************************************************************/
 

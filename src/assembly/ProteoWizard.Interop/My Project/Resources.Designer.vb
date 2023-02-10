@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f9e1f1fa506137da868c883d0695fc4, mzkit\src\assembly\ProteoWizard.Interop\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1e96e464d8c66f08881a9e42378050dd, mzkit\src\assembly\ProteoWizard.Interop\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

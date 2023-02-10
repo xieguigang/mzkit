@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c2a6776450d4695645eedcc9e0d9f8, mzkit\src\mzmath\Mummichog\PeakSets\MzSet.vb"
+﻿#Region "Microsoft.VisualBasic::58ec9ecb656a523c38a3c4e8e75ea70e, mzkit\src\mzmath\Mummichog\PeakSets\MzSet.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 545 B
+    '     File Size: 543 B
 
 
     ' Class MzSet
@@ -76,4 +76,3 @@ Public Class MzSet
     End Function
 
 End Class
-

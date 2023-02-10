@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad53013233ed10c14bf00ec1b6aa87f4, mzkit\src\assembly\NMRFidTool\Math\FFT\FastFourierTransform1D.vb"
+﻿#Region "Microsoft.VisualBasic::8a4fdf2c7bb39bdb349ecc8ecf417e8f, mzkit\src\assembly\NMRFidTool\Math\FFT\FastFourierTransform1D.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
+    '   Total Lines: 80
     '    Code Lines: 40
     ' Comment Lines: 28
-    '   Blank Lines: 14
+    '   Blank Lines: 12
     '     File Size: 3.19 KB
 
 
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ' 
 '  Copyright (c) 2013 EMBL, European Bioinformatics Institute.
@@ -136,4 +134,3 @@ Namespace fidMath.FFT
     End Class
 
 End Namespace
-

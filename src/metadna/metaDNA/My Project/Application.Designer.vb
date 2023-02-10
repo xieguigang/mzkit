@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc6cf25b46af614e755f8dc548e4f066, mzkit\src\metadna\metaDNA\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::780f623cc70d2cb933036ffb4a6f622c, mzkit\src\metadna\metaDNA\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 12
     '    Code Lines: 2
     ' Comment Lines: 9
-    '   Blank Lines: 2
-    '     File Size: 425 B
+    '   Blank Lines: 1
+    '     File Size: 423 B
 
 
     ' 
@@ -61,5 +61,3 @@
 
 Option Strict On
 Option Explicit On
-
-

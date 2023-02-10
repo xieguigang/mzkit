@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b848d7cf23318cf63e4b34d24eba096, mzkit\src\metadna\MetaDNA_visual\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::9d1f2e9c69dd5c00c1a3f611499a6430, mzkit\src\metadna\MetaDNA_visual\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1010 B
+    '     File Size: 1009 B
 
 
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

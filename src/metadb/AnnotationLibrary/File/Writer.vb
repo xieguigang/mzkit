@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a63b2e27939b7498593bd7e23b5d55, mzkit\src\metadb\AnnotationLibrary\File\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::deadf5110be21c974d84952ffd24f531, mzkit\src\metadb\AnnotationLibrary\File\Writer.vb"
 
     ' Author:
     ' 
@@ -287,4 +287,3 @@ Public Class Writer : Inherits LibraryFile
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

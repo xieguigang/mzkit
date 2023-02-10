@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b358465b5cecf64b0dba1caafac811d0, mzkit\src\assembly\NMRFidTool\Acqu.vb"
+﻿#Region "Microsoft.VisualBasic::3e46595f9b51faf4d80aeba2dd7a625c, mzkit\src\assembly\NMRFidTool\Acqu.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 327
     ' Comment Lines: 27
     '   Blank Lines: 80
-    '     File Size: 12.81 KB
+    '     File Size: 12.80 KB
 
 
     ' Class Acqu
@@ -538,4 +538,3 @@ Public Class Acqu
         Return spectrometerField
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4475c0fc890ccba2252d1d1ad4bec20, mzkit\src\assembly\mzPackExtensions\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b5818eb0f00edec054c6a8f2f607eabe, mzkit\src\assembly\mzPackExtensions\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

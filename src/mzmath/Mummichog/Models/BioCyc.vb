@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e4e3afcecfff3c5c1f89453273dbc8b, mzkit\src\mzmath\Mummichog\Models\BioCyc.vb"
+﻿#Region "Microsoft.VisualBasic::5aa972d89c326e3c9382e8598b4f09ae, mzkit\src\mzmath\Mummichog\Models\BioCyc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 134 B
+    '     File Size: 132 B
 
 
     ' Module BioCyc
@@ -58,4 +58,3 @@
 Public Module BioCyc
 
 End Module
-

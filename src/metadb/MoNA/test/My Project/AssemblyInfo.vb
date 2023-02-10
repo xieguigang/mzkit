@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3900e870c66561137df87f728f8aa73, mzkit\src\metadb\MoNA\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d0ded3822a3db0d50eb86c2160c6c364, mzkit\src\metadb\MoNA\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

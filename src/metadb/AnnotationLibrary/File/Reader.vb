@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c42e6cefeba6f6ec6e3de8e97382f38e, mzkit\src\metadb\AnnotationLibrary\File\Reader.vb"
+﻿#Region "Microsoft.VisualBasic::70abd780c4f21657291362f01d14b806, mzkit\src\metadb\AnnotationLibrary\File\Reader.vb"
 
     ' Author:
     ' 
@@ -152,4 +152,3 @@ Public Class Reader : Inherits LibraryFile
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

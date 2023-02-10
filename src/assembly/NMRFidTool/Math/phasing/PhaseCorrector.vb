@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0aeedcef4be1d292fc731381f9b34b4, mzkit\src\assembly\NMRFidTool\Math\phasing\PhaseCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::524bfe2dc2ca543710b898428355e330, mzkit\src\assembly\NMRFidTool\Math\phasing\PhaseCorrector.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Namespace fidMath.Phasing
     End Interface
 
 End Namespace
-

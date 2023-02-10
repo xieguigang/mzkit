@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91108733b1655abace329a0b04621862, mzkit\src\visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::62dc0fc4a780867f5a92bda5c69af3da, mzkit\src\visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 9
     ' Comment Lines: 21
     '   Blank Lines: 3
-    '     File Size: 943 B
+    '     File Size: 942 B
 
 
     ' Class UMAPPoint
@@ -86,4 +86,3 @@ Public Class UMAPPoint
     Public Property [class] As Integer
 
 End Class
-

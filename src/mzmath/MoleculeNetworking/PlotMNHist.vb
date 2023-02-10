@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4600b11d11a2653812ff9134cc0adbf, mzkit\src\mzmath\MoleculeNetworking\PlotMNHist.vb"
+﻿#Region "Microsoft.VisualBasic::6afd9cee35c1580f5df9e408951a444e, mzkit\src\mzmath\MoleculeNetworking\PlotMNHist.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Public Class PlotMNHist : Inherits Plot
         Call transform.Plot(g, canvas)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35d20fb7339450c003ac95a4365c833b, mzkit\src\mzmath\ms2_simulator\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::09b7c62eb787ed2c70c47d9f9d396923, mzkit\src\mzmath\ms2_simulator\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1000 B
+    '     File Size: 999 B
 
 
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

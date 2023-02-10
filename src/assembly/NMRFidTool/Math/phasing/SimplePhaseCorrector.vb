@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de5555c98ff186626f774e8bf1e4cd46, mzkit\src\assembly\NMRFidTool\Math\phasing\SimplePhaseCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::3b11394a137edde63f3c6681e898092d, mzkit\src\assembly\NMRFidTool\Math\phasing\SimplePhaseCorrector.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Namespace fidMath.Phasing
         End Function
     End Class
 End Namespace
-

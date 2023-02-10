@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::394ed188a9c1b4bf5fe200204c51a4ab, mzkit\src\assembly\mzPack\v1.0\v1MemoryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0bf840b580b2636b85b1a45b253748c5, mzkit\src\assembly\mzPack\v1.0\v1MemoryLoader.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Public Class v1MemoryLoader
         Return True
     End Function
 End Class
-

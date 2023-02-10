@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::a1eb5507f8b0b0579b6648b25be9e7ea, mzkit\src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::ab0e3d8cde21b6c93e45e6fa1814a53b, mzkit\src\metadb\FormulaSearch.Extensions\PeakAnnotation\PeakAnnotation.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 201
-'    Code Lines: 140
-' Comment Lines: 31
-'   Blank Lines: 30
-'     File Size: 6.58 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class PeakAnnotation
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: MatchElementGroups, MeasureFormula, (+2 Overloads) MeasureIsotopePeaks, MeasureProductIsotopePeaks, RunAnnotation
-'               UnionPeak
-' 
-'     Sub: FragmentAnnotation
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 214
+    '    Code Lines: 148
+    ' Comment Lines: 34
+    '   Blank Lines: 32
+    '     File Size: 7.08 KB
+
+
+    ' Class PeakAnnotation
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MatchElementGroups, MeasureFormula, (+2 Overloads) MeasureIsotopePeaks, MeasureProductIsotopePeaks, RunAnnotation
+    '               UnionPeak
+    ' 
+    '     Sub: FragmentAnnotation
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

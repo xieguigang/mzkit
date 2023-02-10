@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70a221596ba744f6e9cdbb972cd603d8, mzkit\src\assembly\SpectrumTree\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d0e7c2f151d68d62d7db78baefd62245, mzkit\src\assembly\SpectrumTree\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

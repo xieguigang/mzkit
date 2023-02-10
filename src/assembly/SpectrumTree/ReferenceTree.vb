@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10a3e07e23ec4d3cad52cffb386dd619, mzkit\src\assembly\SpectrumTree\ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::068e2d3a9b5225e328264ba3498e159f, mzkit\src\assembly\SpectrumTree\ReferenceTree.vb"
 
     ' Author:
     ' 
@@ -222,4 +222,3 @@ Public Class ReferenceTree : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

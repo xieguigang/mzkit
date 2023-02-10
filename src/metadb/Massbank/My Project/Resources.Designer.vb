@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9383a88ea94007a7d58a2094a11e7825, mzkit\src\metadb\Massbank\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::bc85ef4b0c03818f258b29d4d2c9c4aa, mzkit\src\metadb\Massbank\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

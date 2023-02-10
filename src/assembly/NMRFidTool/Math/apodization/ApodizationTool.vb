@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10992e6d9161de00badba9cbf4010114, mzkit\src\assembly\NMRFidTool\Math\apodization\ApodizationTool.vb"
+﻿#Region "Microsoft.VisualBasic::be71a5d908ad43092ac1ae1fba1c5eab, mzkit\src\assembly\NMRFidTool\Math\apodization\ApodizationTool.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
+    '   Total Lines: 150
     '    Code Lines: 51
     ' Comment Lines: 74
-    '   Blank Lines: 26
+    '   Blank Lines: 25
     '     File Size: 6.07 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Copyright (C) 2010  Pascal Fricke
@@ -208,4 +207,3 @@ Namespace fidMath.Apodization
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36e0f2e47969c7208876462a18107cbe, mzkit\src\metadb\MoNA\Metadata\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::a33567ab4c3c5680b0747273660b5ecc, mzkit\src\metadb\MoNA\Metadata\DataReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 30
     ' Comment Lines: 5
     '   Blank Lines: 7
-    '     File Size: 1.52 KB
+    '     File Size: 1.51 KB
 
 
     ' Module DataReader
@@ -94,4 +94,3 @@ Public Module DataReader
         Return meta
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef7da4ea2370419e30227459b6a6d299, mzkit\src\visualize\MsImaging\Blender\Scaler\KNNScaler.vb"
+﻿#Region "Microsoft.VisualBasic::b74e81d050aac3ad37b0e33e3670616b, mzkit\src\visualize\MsImaging\Blender\Scaler\KNNScaler.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
+    '   Total Lines: 24
     '    Code Lines: 18
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 697 B
+    '   Blank Lines: 6
+    '     File Size: 695 B
 
 
     '     Class KNNScaler
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

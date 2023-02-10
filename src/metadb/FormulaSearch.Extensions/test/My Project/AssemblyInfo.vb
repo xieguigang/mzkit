@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::135a4b8ffd22b87bd0f120c1df4c1b50, mzkit\src\metadb\FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d97fe33669acecfe4abc288e6a20a3c4, mzkit\src\metadb\FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 986 B
+    '     File Size: 985 B
 
 
     ' 
@@ -84,4 +84,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

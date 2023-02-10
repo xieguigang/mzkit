@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33a563bfff50c8f51f3ce1b9c4fa07a7, mzkit\src\assembly\SpectrumTree\NodeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::7383557ab94437fd42fa5cb7042ec53b, mzkit\src\assembly\SpectrumTree\NodeBuffer.vb"
 
     ' Author:
     ' 
@@ -121,4 +121,3 @@ Public Module NodeBuffer
         }
     End Function
 End Module
-

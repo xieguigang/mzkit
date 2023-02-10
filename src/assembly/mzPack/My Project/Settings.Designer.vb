@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60c97b9800d1267d5557c760679970fb, mzkit\src\assembly\mzPack\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::4ef7a209860c81f778c6d9da0e7ab1e2, mzkit\src\assembly\mzPack\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@ Namespace My
 End Namespace
 
 #end if
-
