@@ -61,107 +61,109 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-''' <summary>
-''' A cache for the <see cref="exactMass"/> value
-''' </summary>
-Public Class FragmentAnnotationHolder
-
-    Public ReadOnly Property name As String
+Namespace AtomGroups
 
     ''' <summary>
-    ''' a cache value of the exact mass value which is evaluated from <see cref="base"/> object
+    ''' A cache for the <see cref="exactMass"/> value
     ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property exactMass As Double
-    Public ReadOnly Property base As IExactMassProvider
+    Public Class FragmentAnnotationHolder
 
-    Sub New(anno As IExactMassProvider, Optional name As String = Nothing)
-        exactMass = anno.ExactMass
-        base = anno
+        Public ReadOnly Property name As String
 
-        If TypeOf anno Is MassGroup Then
-            Me.name = If(name.StringEmpty, DirectCast(anno, MassGroup).name, name)
-        ElseIf TypeOf anno Is Formula Then
-            Me.name = If(name.StringEmpty, DirectCast(anno, Formula).EmpiricalFormula, name)
-        Else
-            Throw New NotImplementedException(anno.GetType.FullName)
-        End If
-    End Sub
+        ''' <summary>
+        ''' a cache value of the exact mass value which is evaluated from <see cref="base"/> object
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property exactMass As Double
+        Public ReadOnly Property base As IExactMassProvider
 
-    Private Sub New(name As String, exactMass As Double, base As IExactMassProvider)
-        Me.name = name
-        Me.exactMass = exactMass
-        Me.base = base
-    End Sub
+        Sub New(anno As IExactMassProvider, Optional name As String = Nothing)
+            exactMass = anno.ExactMass
+            base = anno
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return name
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Operator Like(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As Boolean
-        If a.base.GetType Is b.base.GetType Then
-            Return True
-        Else
-            Return False
-        End If
-    End Operator
-
-    Public Shared Operator *(formula As FragmentAnnotationHolder, n As Integer) As FragmentAnnotationHolder
-        Dim name As String = $"({formula.name}){n}"
-        Dim mass As Double = formula.exactMass * n
-
-        Return New FragmentAnnotationHolder(name, mass, formula.base)
-    End Operator
-
-    Private Shared Function getReferMathName(name As String) As String
-        If name.Contains("+"c) OrElse name.Contains("-"c) Then
-            If name.First = "("c AndAlso name.Last = ")"c Then
-                Return name
+            If TypeOf anno Is MassGroup Then
+                Me.name = If(name.StringEmpty, DirectCast(anno, MassGroup).name, name)
+            ElseIf TypeOf anno Is Formula Then
+                Me.name = If(name.StringEmpty, DirectCast(anno, Formula).EmpiricalFormula, name)
             Else
-                Return $"({name})"
+                Throw New NotImplementedException(anno.GetType.FullName)
             End If
-        Else
+        End Sub
+
+        Private Sub New(name As String, exactMass As Double, base As IExactMassProvider)
+            Me.name = name
+            Me.exactMass = exactMass
+            Me.base = base
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
             Return name
-        End If
-    End Function
+        End Function
 
-    Public Shared Operator +(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As FragmentAnnotationHolder
-        Dim newName As String = $"{getReferMathName(a.name)}+{getReferMathName(b.name)}"
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As Boolean
+            If a.base.GetType Is b.base.GetType Then
+                Return True
+            Else
+                Return False
+            End If
+        End Operator
 
-        If TypeOf a.base Is Formula AndAlso a Like b Then
-            Dim newBase As Formula = DirectCast(a.base, Formula) + DirectCast(b.base, Formula)
-            Dim newMass As Double = newBase.ExactMass
+        Public Shared Operator *(formula As FragmentAnnotationHolder, n As Integer) As FragmentAnnotationHolder
+            Dim name As String = $"({formula.name}){n}"
+            Dim mass As Double = formula.exactMass * n
 
-            Return New FragmentAnnotationHolder(newName, newMass, newBase)
-        Else
-            Dim newGroup As New MassGroup With {
-                .name = newName,
-                .exactMass = a.exactMass + b.exactMass
-            }
+            Return New FragmentAnnotationHolder(name, mass, formula.base)
+        End Operator
 
-            Return New FragmentAnnotationHolder(newGroup)
-        End If
-    End Operator
+        Private Shared Function getReferMathName(name As String) As String
+            If name.Contains("+"c) OrElse name.Contains("-"c) Then
+                If name.First = "("c AndAlso name.Last = ")"c Then
+                    Return name
+                Else
+                    Return $"({name})"
+                End If
+            Else
+                Return name
+            End If
+        End Function
 
-    Public Shared Operator -(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As FragmentAnnotationHolder
-        Dim newName As String = $"{getReferMathName(a.name)}-{getReferMathName(b.name)}"
+        Public Shared Operator +(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As FragmentAnnotationHolder
+            Dim newName As String = $"{getReferMathName(a.name)}+{getReferMathName(b.name)}"
 
-        If TypeOf a.base Is Formula AndAlso a Like b Then
-            Dim newBase As Formula = DirectCast(a.base, Formula) - DirectCast(b.base, Formula)
-            Dim newMass As Double = newBase.ExactMass
+            If TypeOf a.base Is Formula AndAlso a Like b Then
+                Dim newBase As Formula = DirectCast(a.base, Formula) + DirectCast(b.base, Formula)
+                Dim newMass As Double = newBase.ExactMass
 
-            Return New FragmentAnnotationHolder(newName, newMass, newBase)
-        Else
-            Dim newGroup As New MassGroup With {
-                .name = newName,
-                .exactMass = a.exactMass - b.exactMass
-            }
+                Return New FragmentAnnotationHolder(newName, newMass, newBase)
+            Else
+                Dim newGroup As New MassGroup With {
+                    .name = newName,
+                    .exactMass = a.exactMass + b.exactMass
+                }
 
-            Return New FragmentAnnotationHolder(newGroup)
-        End If
-    End Operator
+                Return New FragmentAnnotationHolder(newGroup)
+            End If
+        End Operator
 
-End Class
+        Public Shared Operator -(a As FragmentAnnotationHolder, b As FragmentAnnotationHolder) As FragmentAnnotationHolder
+            Dim newName As String = $"{getReferMathName(a.name)}-{getReferMathName(b.name)}"
 
+            If TypeOf a.base Is Formula AndAlso a Like b Then
+                Dim newBase As Formula = DirectCast(a.base, Formula) - DirectCast(b.base, Formula)
+                Dim newMass As Double = newBase.ExactMass
+
+                Return New FragmentAnnotationHolder(newName, newMass, newBase)
+            Else
+                Dim newGroup As New MassGroup With {
+                    .name = newName,
+                    .exactMass = a.exactMass - b.exactMass
+                }
+
+                Return New FragmentAnnotationHolder(newGroup)
+            End If
+        End Operator
+
+    End Class
+End Namespace

@@ -58,28 +58,30 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
-''' <summary>
-''' A wrapper for an atom group, molecule fragment
-''' </summary>
-Public Class MassGroup : Implements IExactMassProvider, ICompoundNameProvider
+Namespace AtomGroups
 
-    Public Property exactMass As Double Implements IExactMassProvider.ExactMass
-    Public Property name As String Implements ICompoundNameProvider.CommonName
+    ''' <summary>
+    ''' A wrapper for an atom group, molecule fragment
+    ''' </summary>
+    Public Class MassGroup : Implements IExactMassProvider, ICompoundNameProvider
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return name
-    End Function
+        Public Property exactMass As Double Implements IExactMassProvider.ExactMass
+        Public Property name As String Implements ICompoundNameProvider.CommonName
 
-    Public Shared Function CreateAdducts(anno As FragmentAnnotationHolder, adducts As MzCalculator) As MassGroup
-        Dim name As String = $"[{anno.name}{adducts.name}]{adducts.charge}{adducts.mode}"
-        Dim mass As Double = adducts.CalcMZ(anno.exactMass)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
 
-        Return New MassGroup With {
-            .exactMass = mass,
-            .name = name
-        }
-    End Function
+        Public Shared Function CreateAdducts(anno As FragmentAnnotationHolder, adducts As MzCalculator) As MassGroup
+            Dim name As String = $"[{anno.name}{adducts.name}]{adducts.charge}{adducts.mode}"
+            Dim mass As Double = adducts.CalcMZ(anno.exactMass)
 
-End Class
+            Return New MassGroup With {
+                .exactMass = mass,
+                .name = name
+            }
+        End Function
 
+    End Class
+End Namespace

@@ -54,8 +54,11 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class Alkenyl
+Namespace AtomGroups
 
-    Public Shared ReadOnly Property vinyl As Formula = FormulaScanner.ScanFormula("CH2CH")
+    Public Class Alkenyl
 
-End Class
+        Public Shared ReadOnly Property vinyl As Formula = FormulaScanner.ScanFormula("CH2CH")
+
+    End Class
+End Namespace
