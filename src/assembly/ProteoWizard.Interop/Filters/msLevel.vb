@@ -41,7 +41,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 471.00 B
+    '     File Size: 471 B
 
 
     '     Class msLevel

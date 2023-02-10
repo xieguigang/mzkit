@@ -41,7 +41,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 582.00 B
+    '     File Size: 582 B
 
 
     ' Module mz_deco

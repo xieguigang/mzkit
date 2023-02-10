@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9543833a20205f542b97d4763b6d21f3, mzkit\src\metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::6deab45f067fbc5889793b920313721a, mzkit\src\metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -37,30 +37,41 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7
+    '   Total Lines: 20
+    '    Code Lines: 16
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 263.00 B
+    '   Blank Lines: 4
+    '     File Size: 571 B
 
 
     ' Class Token
     ' 
-    '     Properties: ring
+    '     Properties: charge, ring
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports stdNum = System.Math
 
 Public Class Token : Inherits CodeToken(Of ElementTypes)
 
     Public Property ring As Integer?
+    Public Property charge As Integer?
 
     Sub New(name As ElementTypes, text As String)
         Call MyBase.New(name, text)
     End Sub
+
+    Public Overrides Function ToString() As String
+        If charge Is Nothing Then
+            Return MyBase.ToString
+        Else
+            Return $"[{text}{stdNum.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
+        End If
+    End Function
 End Class

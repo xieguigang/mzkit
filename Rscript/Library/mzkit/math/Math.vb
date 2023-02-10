@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9903a67969948741e303ab76d0ae8fcf, mzkit\Rscript\Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::d9b25d3eed3358524d383e2fdb072054, mzkit\Rscript\Library\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 579
-    '    Code Lines: 388
-    ' Comment Lines: 115
-    '   Blank Lines: 76
-    '     File Size: 24.06 KB
+    '   Total Lines: 695
+    '    Code Lines: 477
+    ' Comment Lines: 124
+    '   Blank Lines: 94
+    '     File Size: 27.74 KB
 
 
     ' Module MzMath
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: centroid, cosine, CreateMSMatrix, createTolerance, defaultPrecursors
-    '               exact_mass, getAlignmentTable, GetClusters, getPrecursorTable, mz
-    '               MzUnique, peaktable, ppm, precursorTypes, printCalculator
-    '               printMzTable, sequenceOrder, SpectrumTreeCluster, SSMCompares, xcms_id
-    '               XICTable
+    '               exact_mass, getAlignmentTable, GetClusters, getPrecursorTable, jaccard
+    '               jaccardSet, mz, MzUnique, peaktable, ppm
+    '               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
+    '               SpectrumTreeCluster, SSMCompares, xcms_id, XICTable
     ' 
     ' /********************************************************************************/
 
@@ -311,6 +311,28 @@ Module MzMath
         End If
 
         Return GlobalAlignment.JaccardIndex(query, ref, mzErr)
+    End Function
+
+    <ExportAPI("spectral_entropy")>
+    Public Function spectrumEntropy(query As LibraryMatrix, ref As LibraryMatrix,
+                                    Optional tolerance As Object = "da:0.3",
+                                    Optional intocutoff As Double = 0.05,
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        query = query.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+        ref = ref.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+
+        Return SpectralEntropy.calculate_entropy_similarity(
+            spectrum_a:=query.ms2,
+            spectrum_b:=ref.ms2,
+            tolerance:=mzErr.TryCast(Of Tolerance)
+        )
     End Function
 
     <ExportAPI("jaccardSet")>

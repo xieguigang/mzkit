@@ -1,64 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::69b66f0f4166871e04f2b2bb9bbdd698, mzkit\src\metadb\SMILES\ParseChain.vb"
+﻿#Region "Microsoft.VisualBasic::3a1334a5518e2b5e9c70d5fe1566aa2a, mzkit\src\metadb\SMILES\ParseChain.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 117
-'    Code Lines: 95
-' Comment Lines: 2
-'   Blank Lines: 20
-'     File Size: 3.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ParseChain
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: CreateGraph, ParseGraph, ToString
-' 
-'     Sub: WalkElement, WalkKey, WalkToken
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 106
+    ' Comment Lines: 3
+    '   Blank Lines: 22
+    '     File Size: 4.30 KB
+
+
+    ' Class ParseChain
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CreateGraph, ParseGraph, ToString
+    ' 
+    '     Sub: WalkElement, WalkKey, WalkToken
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Public Class ParseChain
@@ -85,39 +86,46 @@ Public Class ParseChain
             .JoinBy("")
     End Sub
 
-    Public Shared Function ParseGraph(SMILES As String) As ChemicalFormula
+    Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
-        Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph
+        Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph(strict)
         Dim degree = graph _
             .AllBonds _
             .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
         For Each element As ChemicalElement In graph.AllElements
-            element.degree = (degree.in.TryGetValue(element.label), degree.out.TryGetValue(element.label))
+            element.degree = (
+                degree.in.TryGetValue(element.label),
+                degree.out.TryGetValue(element.label)
+            )
         Next
 
         Return graph
     End Function
 
-    Public Function CreateGraph() As ChemicalFormula
+    Public Function CreateGraph(Optional strict As Boolean = True) As ChemicalFormula
+        Dim i As i32 = 1
+
         For Each t As Token In tokens
-            Call WalkToken(t)
+            Call WalkToken(t, ++i)
         Next
 
         Call ChemicalElement.SetAtomGroups(formula:=graph)
 
-        Return graph.AutoLayout
+        Return graph.AutoLayout(strict:=strict)
     End Function
 
-    Private Sub WalkToken(t As Token)
+    Private Sub WalkToken(t As Token, i As Integer)
         Select Case t.name
-            Case ElementTypes.Element : Call WalkElement(t)
+            Case ElementTypes.Element, ElementTypes.AtomGroup : Call WalkElement(t, i)
             Case ElementTypes.Key : Call WalkKey(t)
             Case ElementTypes.Open
                 ' do nothing
                 stackSize.Push(0)
             Case ElementTypes.Close
                 Call chainStack.Pop(stackSize.Pop())
+            Case ElementTypes.Disconnected, ElementTypes.None
+                ' unsure how to break the graph, do nothing?
             Case Else
                 Throw New NotImplementedException(t.ToString)
         End Select
@@ -128,8 +136,10 @@ Public Class ParseChain
         lastKey = CType(CByte(ChemicalBonds.IndexOf(t.text)), Bonds)
     End Sub
 
-    Private Sub WalkElement(t As Token)
-        Dim element As New ChemicalElement(t.text)
+    Private Sub WalkElement(t As Token, i As Integer)
+        Dim element As New ChemicalElement(t.text, index:=i) With {
+            .charge = Val(t.charge)
+        }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
         element.ID = graph.vertex.Count + 1

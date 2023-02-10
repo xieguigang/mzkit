@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7240aa070752816b24da20a0da0b623, mzkit\src\assembly\assembly\MarkupData\imzML\XML\ScanReader.vb"
+﻿#Region "Microsoft.VisualBasic::431e615ec025b92a623af8c0432be2dc, mzkit\src\assembly\assembly\MarkupData\imzML\XML\ScanReader.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 16
+    '   Total Lines: 74
+    '    Code Lines: 56
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 582.00 B
+    '   Blank Lines: 18
+    '     File Size: 1.96 KB
 
 
     '     Class ScanReader
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: LoadMsData, ToString
+    ' 
+    '     Class Scan3DReader
+    ' 
+    '         Properties: x, y, z
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: LoadMsData, ToString

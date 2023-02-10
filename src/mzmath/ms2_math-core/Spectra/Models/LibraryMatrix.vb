@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65a9898b3fd62420ca2f85d23759def0, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::25dfbe4736e54790dda9916c13735daf, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 108
+    '   Total Lines: 189
+    '    Code Lines: 124
     ' Comment Lines: 43
-    '   Blank Lines: 19
-    '     File Size: 5.82 KB
+    '   Blank Lines: 22
+    '     File Size: 6.58 KB
 
 
     '     Class LibraryMatrix
     ' 
-    '         Properties: centroid, intensity, ms2, mz, name
-    '                     totalIon
+    '         Properties: centroid, entropy, intensity, ms2, mz
+    '                     name, parentMz, totalIon
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: AlignMatrix, GetMaxInto
     '         Operators: *, /
     ' 
@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -123,6 +124,15 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property entropy As Double
+            Get
+                Dim i As Vector = Me.intensity
+                Dim shannon = (i / i.Max).ShannonEntropy
+
+                Return shannon
+            End Get
+        End Property
+
         <ScriptIgnore>
         Public ReadOnly Property mz As Double()
             Get
@@ -133,6 +143,11 @@ Namespace Spectra
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})
+        End Sub
+
+        <DebuggerStepThrough>
+        Sub New(data As IEnumerable(Of ms2))
+            Call MyBase.New(data)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c84414d21b7792d2f87c60c625d804, mzkit\src\mzmath\ms2_math-core\Chromatogram\IROI.vb"
+﻿#Region "Microsoft.VisualBasic::fdc4bdb527db89a260793b3192a65836, mzkit\src\mzmath\ms2_math-core\Chromatogram\IROI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 11
     '   Blank Lines: 3
-    '     File Size: 525.00 B
+    '     File Size: 544 B
 
 
     '     Interface IROI

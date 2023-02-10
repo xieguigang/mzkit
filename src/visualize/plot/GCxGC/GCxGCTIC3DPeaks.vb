@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0262cf705d9605ec7fa48a854e5f62cf, mzkit\src\visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
+﻿#Region "Microsoft.VisualBasic::8f44c0726344ac7bf316c2dafd0afaa6, mzkit\src\visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 106
     ' Comment Lines: 6
     '   Blank Lines: 17
-    '     File Size: 6.19 KB
+    '     File Size: 6.32 KB
 
 
     ' Class GCxGCTIC3DPeaks

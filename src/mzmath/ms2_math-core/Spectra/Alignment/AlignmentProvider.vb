@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::682b47616065fa2bf349553abc91dd5b, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9271f21379201257d8cab1580516ef5c, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 46
+    '   Total Lines: 61
+    '    Code Lines: 48
     ' Comment Lines: 0
     '   Blank Lines: 13
-    '     File Size: 2.05 KB
+    '     File Size: 2.11 KB
 
 
     '     Class AlignmentProvider
@@ -104,12 +104,14 @@ Namespace Spectra
                 .ToArray
             Dim scores As (forward#, reverse#) = GetScore(align)
             Dim jIdx As Double = GlobalAlignment.JaccardIndex(a, b, mzwidth)
+            Dim entropy As Double = SpectralEntropy.calculate_entropy_similarity(align)
 
             Return New AlignmentOutput With {
                 .alignments = align,
                 .forward = scores.forward,
                 .reverse = scores.reverse,
-                .jaccard = jIdx
+                .jaccard = jIdx,
+                .entropy = entropy
             }
         End Function
 

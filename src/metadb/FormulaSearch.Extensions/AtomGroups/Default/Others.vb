@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25245b632a1796e85e90814b702064f3, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Others.vb"
+﻿#Region "Microsoft.VisualBasic::c5c6a6b5a50c86122ae20c8afd573753, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
+    '   Total Lines: 14
+    '    Code Lines: 10
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 180.00 B
+    '   Blank Lines: 4
+    '     File Size: 609 B
 
 
-    ' Class Others
+    '     Class Others
     ' 
-    '     Properties: nitro_group
+    '         Properties: CH2O, H, nitro_group, NL2H2O, NLH2O
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -54,11 +55,15 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class Others
+Namespace AtomGroups
 
-    Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
-    Public Shared ReadOnly Property NLH2O As Formula = FormulaScanner.ScanFormula("H2O")
-    Public Shared ReadOnly Property NL2H2O As Formula = FormulaScanner.ScanFormula("(H2O)2")
-    Public Shared ReadOnly Property CH2O As Formula = FormulaScanner.ScanFormula("CH2O")
+    Public Class Others
 
-End Class
+        Public Shared ReadOnly Property H As Formula = FormulaScanner.ScanFormula("H")
+        Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
+        Public Shared ReadOnly Property NLH2O As Formula = FormulaScanner.ScanFormula("H2O")
+        Public Shared ReadOnly Property NL2H2O As Formula = FormulaScanner.ScanFormula("(H2O)2")
+        Public Shared ReadOnly Property CH2O As Formula = FormulaScanner.ScanFormula("CH2O")
+
+    End Class
+End Namespace

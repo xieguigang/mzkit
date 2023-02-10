@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36bdd38dbe33e13404821fab960301d7, mzkit\src\assembly\BrukerDataReader\BrukerSettingsFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::9267d2594fd2fad917ce8340091b3adc, mzkit\src\assembly\BrukerDataReader\Raw\BrukerSettingsFileReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
+    '   Total Lines: 207
     '    Code Lines: 139
     ' Comment Lines: 22
-    '   Blank Lines: 45
-    '     File Size: 8.99 KB
+    '   Blank Lines: 46
+    '     File Size: 8.98 KB
 
 
     '     Class BrukerSettingsFileReader

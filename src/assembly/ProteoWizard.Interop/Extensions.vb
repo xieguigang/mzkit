@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e1fd2fff076341cf44e181e6b07c52, mzkit\src\assembly\ProteoWizard.Interop\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4743eebc16e983885f434b34a0a5c6e1, mzkit\src\assembly\ProteoWizard.Interop\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 33
     ' Comment Lines: 11
     '   Blank Lines: 7
-    '     File Size: 1.98 KB
+    '     File Size: 1.94 KB
 
 
     ' Module Extensions
@@ -69,7 +69,7 @@ Public Module Extensions
             Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
 
             UnZip.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
-            path.SetValue(zipFolder)
+            path.InlineCopy(zipFolder)
         End If
 
         Return path

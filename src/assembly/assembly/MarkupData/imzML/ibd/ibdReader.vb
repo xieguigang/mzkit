@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b612b08b6f29f4575f16350cef0d4ada, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
+﻿#Region "Microsoft.VisualBasic::cbb91f6795524757ab04ae4ab2681900, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 101
+    '   Total Lines: 163
+    '    Code Lines: 107
     ' Comment Lines: 31
     '   Blank Lines: 25
-    '     File Size: 5.76 KB
+    '     File Size: 5.91 KB
 
 
     '     Class ibdReader

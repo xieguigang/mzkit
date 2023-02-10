@@ -1,8 +1,65 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::4db1cba5cd2d980fe6f46abefcb4a09a, mzkit\src\assembly\mzPack\v2.0\mzStreamWriter.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 208
+    '    Code Lines: 156
+    ' Comment Lines: 14
+    '   Blank Lines: 38
+    '     File Size: 8.10 KB
+
+
+    ' Module mzStreamWriter
+    ' 
+    '     Function: getScan1DirName, readme, WriteStream
+    ' 
+    '     Sub: WriteApplicationClass, (+2 Overloads) WriteStream
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -128,10 +185,29 @@ Public Module mzStreamWriter
             Next
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
-                Using scan2 As New BinaryDataWriter(pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")) With {
-                    .ByteOrder = ByteOrder.LittleEndian
-                }
-                    Call product.WriteBuffer(scan2)
+                Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")
+                    If TypeOf blockStream Is SubStream Then
+                        ' 20230210
+                        '
+                        ' has duplicated scan id will cause the
+                        ' open block function returns a stream
+                        ' in readonly!
+
+                        Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
+                    Else
+                        Dim scan2 As New BinaryDataWriter(blockStream) With {
+                            .ByteOrder = ByteOrder.LittleEndian
+                        }
+
+                        Call product.WriteBuffer(scan2)
+                        Call scan2.Flush()
+
+                        ' do not close the writer at here
+                        ' or the exception of can not access to
+                        ' a closed stream will be happended
+                        '
+                        ' Call scan2.Close()
+                    End If
                 End Using
 
                 If product.rt > rtmax Then

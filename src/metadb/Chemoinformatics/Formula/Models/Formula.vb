@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::742167e208781834500034f2049bfd2b, mzkit\src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::ff5d4a850732b77a2c993116b5ab991b, mzkit\src\metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 173
-'    Code Lines: 121
-' Comment Lines: 25
-'   Blank Lines: 27
-'     File Size: 6.41 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Formula
-' 
-'         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
-'                     ExactMass
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: BuildFormula, ToString
-'         Operators: (+3 Overloads) -, (+2 Overloads) *, /, (+3 Overloads) +
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 124
+    ' Comment Lines: 52
+    '   Blank Lines: 27
+    '     File Size: 7.71 KB
+
+
+    '     Class Formula
+    ' 
+    '         Properties: AllAtomElements, Counts, CountsByElement, Elements, EmpiricalFormula
+    '                     ExactMass
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    '         Operators: (+3 Overloads) -, (+2 Overloads) *, /, (+3 Overloads) +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,14 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Formula
 
+    ''' <summary>
+    ''' A chemical formula is a notation used by scientists to show the 
+    ''' number and type of atoms present in a molecule, using the atomic 
+    ''' symbols and numerical subscripts. A chemical formula is a simple 
+    ''' representation, in writing, of a three dimensional molecule 
+    ''' that exists. A chemical formula describes a substance, down to 
+    ''' the exact atoms which make it up.
+    ''' </summary>
     <DebuggerDisplay("{EmpiricalFormula} ({ExactMass} = {Counts})")>
     Public Class Formula : Implements IExactMassProvider
 
@@ -91,6 +99,10 @@ Namespace Formula
 
         Friend m_formula As String
 
+        ''' <summary>
+        ''' get all elements label that parse from current formula object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Elements As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -100,6 +112,11 @@ Namespace Formula
 
         Public Shared ReadOnly Property AllAtomElements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
+        ''' <summary>
+        ''' get element count by the given specific atom label
+        ''' </summary>
+        ''' <param name="atom"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

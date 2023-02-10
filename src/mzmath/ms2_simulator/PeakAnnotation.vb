@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66c31cac3360262fa7828f1a68c10b2b, mzkit\src\mzmath\ms2_simulator\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::6e15d375950f181c154d67378a991392, mzkit\src\mzmath\ms2_simulator\PeakAnnotation.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 38.00 B
+    '     File Size: 40 B
 
 
     ' Class PeakAnnotation

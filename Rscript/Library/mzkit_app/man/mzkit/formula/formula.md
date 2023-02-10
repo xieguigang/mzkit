@@ -3,7 +3,7 @@
 The chemical formulae toolkit
 
 + [registerAnnotations](formula/registerAnnotations.1) 
-+ [peakAnnotations](formula/peakAnnotations.1) 
++ [peakAnnotations](formula/peakAnnotations.1) do peak annotation for the ms2 fragments
 + [candidates](formula/candidates.1) find all of the candidate chemical formulas by a 
 + [eval](formula/eval.1) evaluate exact mass for the given formula strings.
 + [scan](formula/scan.1) Get atom composition from a formula string
@@ -16,6 +16,7 @@ The chemical formulae toolkit
 + [SDF.convertKCF](formula/SDF.convertKCF.1) 
 + [open.descriptor.db](formula/open.descriptor.db.1) open the file handles of the chemical descriptor database.
 + [descriptor.matrix](formula/descriptor.matrix.1) 
-+ [parseSMILES](formula/parseSMILES.1) 
++ [parseSMILES](formula/parseSMILES.1) Parse the SMILES molecule structre string
 + [as.formula](formula/as.formula.1) 
++ [atoms](formula/atoms.1) get atoms table from the SMILES structure data
 + [isotope_distribution](formula/isotope_distribution.1) 

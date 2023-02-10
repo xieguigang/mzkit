@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e19a68f08b47ecaea03553d4ba90eb33, mzkit\src\metadb\FormulaSearch.Extensions\Scores\NitrogenRule.vb"
+﻿#Region "Microsoft.VisualBasic::7b2c5afbf5d06fcffe60c037a3b3324d, mzkit\src\metadb\FormulaSearch.Extensions\Scores\NitrogenRule.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 8
     '   Blank Lines: 3
-    '     File Size: 788.00 B
+    '     File Size: 809 B
 
 
     ' Class NitrogenRule

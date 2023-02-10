@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6af61b49959a10f31dc7d77faf6bc41, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
+﻿#Region "Microsoft.VisualBasic::04d37f42d8f0f2b5637329062a6b0531, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 64
-    ' Comment Lines: 24
+    '   Total Lines: 108
+    '    Code Lines: 65
+    ' Comment Lines: 26
     '   Blank Lines: 17
-    '     File Size: 4.48 KB
+    '     File Size: 4.59 KB
 
 
     '     Module Query

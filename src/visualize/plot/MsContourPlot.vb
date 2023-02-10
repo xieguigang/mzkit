@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 534.00 B
+    '     File Size: 534 B
 
 
     ' Module MsContourPlot

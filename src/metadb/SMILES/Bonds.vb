@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 8
     '   Blank Lines: 1
-    '     File Size: 537.00 B
+    '     File Size: 537 B
 
 
     ' Enum Bonds

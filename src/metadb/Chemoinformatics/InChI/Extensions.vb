@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c476133167d90e7360f28e71146e6223, mzkit\src\metadb\Chemoinformatics\InChI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e89deb4ce3689e1bbfb46791bf8c1687, mzkit\src\metadb\Chemoinformatics\InChI\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 89.00 B
+    '     File Size: 95 B
 
 
     '     Module Extensions

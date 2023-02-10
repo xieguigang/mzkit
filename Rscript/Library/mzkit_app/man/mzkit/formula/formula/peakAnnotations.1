@@ -1,12 +1,32 @@
 .\" man page create by R# package system.
 .TH FORMULA 4 2000-Jan "peakAnnotations" "peakAnnotations"
 .SH NAME
-peakAnnotations \- 
+peakAnnotations \- do peak annotation for the ms2 fragments
 .SH SYNOPSIS
-\fIpeakAnnotations(\fBlibrary\fR as <generic> LibraryMatrix, 
+\fIpeakAnnotations(\fBlibrary\fR as any, 
 \fBmassDiff\fR as double = 0.1, 
 \fBisotopeFirst\fR as boolean = TRUE, 
-\fBadducts\fR as <generic> MzCalculator[] = \fB<NULL>\fR);\fR
+\fBadducts\fR as <generic> MzCalculator[] = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+do peak annotation for the ms2 fragments
+.PP
+.SH OPTIONS
+.PP
+\fBlibrary\fB \fR\- 
+ A ms2 matrix object
+. 
+.PP
+.PP
+\fBmassDiff\fB \fR\- -. 
+.PP
+.PP
+\fBisotopeFirst\fB \fR\- -. 
+.PP
+.PP
+\fBadducts\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 formula
 .SH FILES

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::801efec10dbcc4e33384e3cb233105de, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
+﻿#Region "Microsoft.VisualBasic::356920f6088c323fe2a7222b8cbf81aa, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS1.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 58
-    ' Comment Lines: 22
+    '   Total Lines: 97
+    '    Code Lines: 59
+    ' Comment Lines: 27
     '   Blank Lines: 11
-    '     File Size: 3.03 KB
+    '     File Size: 3.31 KB
 
 
     '     Class ScanMS1

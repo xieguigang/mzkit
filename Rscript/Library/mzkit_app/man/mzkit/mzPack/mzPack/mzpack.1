@@ -11,7 +11,9 @@ open a mzpack data object reader, not read all data into memory in one time.
 .PP
 .SH OPTIONS
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- 
+ the file path for the mzpack file or the mzpack data object it self
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
@@ -20,6 +22,11 @@ open a mzpack data object reader, not read all data into memory in one time.
 .PP
 the ms scan data can be load into memory in lazy 
  require by a given scan id of the target ms1 scan
+.PP
+.SH DETAILS
+.PP
+a in-memory reader wrapper will be created if the given file object 
+ is a in-memory mzpack object itself
 .PP
 .SH SEE ALSO
 mzPack

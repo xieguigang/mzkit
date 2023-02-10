@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5631ed19fcc9f716ce232258f2ac765, mzkit\src\metadb\MoNA\SpectraSection.vb"
+﻿#Region "Microsoft.VisualBasic::41ef46ae57cf6439acea6b55ae740cc7, mzkit\src\metadb\MoNA\SpectraSection.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 39
-    ' Comment Lines: 6
-    '   Blank Lines: 7
-    '     File Size: 1.79 KB
+    '   Total Lines: 83
+    '    Code Lines: 60
+    ' Comment Lines: 10
+    '   Blank Lines: 13
+    '     File Size: 2.64 KB
 
 
     ' Class SpectraSection
     ' 
     '     Properties: Comment, MetaDB, MetaReader, SpectraInfo
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     ' Class SpectraInfo
     ' 
@@ -54,6 +56,8 @@
     '                 instrument, instrument_type, ion_mode, ionization, MassPeaks
     '                 MsLevel, mz, precursor_type, resolution, retention_time
     '                 solvent_a, solvent_b
+    ' 
+    '     Function: ToPeaksMs2
     ' 
     ' /********************************************************************************/
 

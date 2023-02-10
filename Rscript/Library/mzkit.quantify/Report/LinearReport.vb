@@ -41,7 +41,7 @@
     '    Code Lines: 171
     ' Comment Lines: 22
     '   Blank Lines: 29
-    '     File Size: 9.64 KB
+    '     File Size: 9.63 KB
 
 
     ' Module LinearReport

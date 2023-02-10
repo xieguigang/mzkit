@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b687cc1d86364cf506b9248963824bb, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
+﻿#Region "Microsoft.VisualBasic::a0ab6cd8e055d69e56c2e319afecc101, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 78
+    '   Total Lines: 122
+    '    Code Lines: 81
     ' Comment Lines: 21
-    '   Blank Lines: 19
-    '     File Size: 4.75 KB
+    '   Blank Lines: 20
+    '     File Size: 4.85 KB
 
 
     ' Module ERS
@@ -56,11 +56,8 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.DataStorage.netCDF
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Data.Signal
+Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -135,7 +132,11 @@ Module ERS
     ''' <returns></returns>
     <ExportAPI("write.UVsignals")>
     <RApiReturn(GetType(Boolean))>
-    Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional enable_CDFextension As Boolean = False, Optional env As Environment = Nothing) As Object
+    Public Function WriteSignal(<RRawVectorArgument>
+                                signals As Object, file$,
+                                Optional enable_CDFextension As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(signals, env)
 
         If raw.isError Then

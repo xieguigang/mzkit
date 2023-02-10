@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c7e16cadb8d78ea8ca3bcd69943c2f1, mzkit\src\assembly\assembly\mzPack\Binary\BinaryStreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::961bbdec7d5fac423c29ac50ccfee724, mzkit\src\assembly\assembly\mzPack\Binary\BinaryStreamReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 296
-    '    Code Lines: 203
-    ' Comment Lines: 37
-    '   Blank Lines: 56
-    '     File Size: 10.22 KB
+    '   Total Lines: 321
+    '    Code Lines: 194
+    ' Comment Lines: 73
+    '   Blank Lines: 54
+    '     File Size: 11.31 KB
 
 
+    '     Interface IMzPackReader
+    ' 
+    '         Properties: EnumerateIndex, rtmax, source
+    ' 
+    '         Function: GetMetadata, hasMs2, ReadScan
+    ' 
+    '         Sub: ReadChromatogramTick
+    ' 
     '     Class BinaryStreamReader
     ' 
     '         Properties: EnumerateIndex, filepath, magic, mzmax, mzmin

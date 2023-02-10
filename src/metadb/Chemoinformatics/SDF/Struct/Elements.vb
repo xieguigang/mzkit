@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fac6a95e916044733f61892128e70b71, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Elements.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 115
     ' Comment Lines: 12
     '   Blank Lines: 26
-    '     File Size: 4.82 KB
+    '     File Size: 4.97 KB
 
 
     '     Class Atom

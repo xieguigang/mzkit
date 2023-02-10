@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e171128c53298d13f6c81ca09e8dc8da, mzkit\src\visualize\MsImaging\SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::6612dd33694017c31daca40b58a73922, mzkit\src\visualize\MsImaging\SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 104
-    ' Comment Lines: 23
-    '   Blank Lines: 23
-    '     File Size: 5.13 KB
+    '   Total Lines: 185
+    '    Code Lines: 130
+    ' Comment Lines: 30
+    '   Blank Lines: 25
+    '     File Size: 6.32 KB
 
 
     ' Class SingleIonLayer
     ' 
-    '     Properties: DimensionSize, hasZeroPixels, IonMz, maxinto, MSILayer
+    '     Properties: DimensionSize, hasZeroPixels, IonMz, Item, maxinto
+    '                 MSILayer
     ' 
     '     Function: GetIntensity, (+3 Overloads) GetLayer, GetQuartile, IntensityCutoff, MeasureUninSize
     '               Take, (+2 Overloads) ToString, Trim
@@ -56,6 +57,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -75,14 +77,18 @@ Public Class SingleIonLayer
     Public Property DimensionSize As Size
 
     Public ReadOnly Property hasZeroPixels As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return DimensionSize.Width * DimensionSize.Height > MSILayer.Length
         End Get
     End Property
 
     Public ReadOnly Property maxinto As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Aggregate p As PixelData In MSILayer Into Max(p.intensity)
+            Return Aggregate p As PixelData
+                   In MSILayer
+                   Into Max(p.intensity)
         End Get
     End Property
 
@@ -131,14 +137,17 @@ Public Class SingleIonLayer
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"({MSILayer.Length} pixels) {ToString(Me)}"
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Function ToString(ion As SingleIonLayer) As String
         Return If(ion.IonMz.IsNumeric, $"m/z {Double.Parse(ion.IonMz).ToString("F4")}", ion.IonMz)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function MeasureUninSize(sampling As Integer) As Size
         Return New Size(DimensionSize.Width / sampling, DimensionSize.Height / sampling)
     End Function
@@ -181,10 +190,12 @@ Public Class SingleIonLayer
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetIntensity() As Double()
         Return MSILayer.Select(Function(p) p.intensity).ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetQuartile() As DataQuartile
         Return GetIntensity.Quartile
     End Function
@@ -225,6 +236,7 @@ Public Class SingleIonLayer
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(ion As SingleIonLayer) As PixelData()
         Return If(ion Is Nothing, Nothing, ion.MSILayer)
     End Operator

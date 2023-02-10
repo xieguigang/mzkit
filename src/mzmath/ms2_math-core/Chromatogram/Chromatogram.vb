@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c80c39d618f83d5b4a46e88e21eedf9d, mzkit\src\mzmath\ms2_math-core\Chromatogram\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::78af973eada1d1b7a274e0d275da0e6e, mzkit\src\mzmath\ms2_math-core\Chromatogram\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 40
     ' Comment Lines: 16
     '   Blank Lines: 9
-    '     File Size: 2.56 KB
+    '     File Size: 2.62 KB
 
 
     '     Module ChromatogramMath

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d8d926ce80e4462f75265573efe8c14, mzkit\src\assembly\assembly\test\read_imzML.vb"
+﻿#Region "Microsoft.VisualBasic::6b7c4291c28bca82ad5084acc68303a5, mzkit\src\assembly\assembly\test\read_imzML.vb"
 
     ' Author:
     ' 
@@ -41,12 +41,12 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 882.00 B
+    '     File Size: 958 B
 
 
     ' Module read_imzML
     ' 
-    '     Sub: Main, readmzML, testReadIbd
+    '     Sub: Main1, readmzML, testReadIbd
     ' 
     ' /********************************************************************************/
 

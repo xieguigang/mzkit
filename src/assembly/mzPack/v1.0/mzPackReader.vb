@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::effa31505ec59b3d0a7b3ba1f20bd8f4, mzkit\src\assembly\mzPack\mzPackReader.vb"
+﻿#Region "Microsoft.VisualBasic::eba7b68f9d2d602681d9f25daa6fc964, mzkit\src\assembly\mzPack\v1.0\mzPackReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
+    '   Total Lines: 150
     '    Code Lines: 110
-    ' Comment Lines: 2
+    ' Comment Lines: 9
     '   Blank Lines: 31
-    '     File Size: 4.20 KB
+    '     File Size: 4.24 KB
 
 
     ' Class mzPackReader

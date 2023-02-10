@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::026b1df609b73eeaa32163ff5c809883, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::c9a8db01ba679e5315f45d5d7db0c3af, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
+    '   Total Lines: 10
+    '    Code Lines: 6
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 177.00 B
+    '   Blank Lines: 4
+    '     File Size: 234 B
 
 
-    ' Class Alkenyl
+    '     Class Alkenyl
     ' 
-    '     Properties: vinyl
+    '         Properties: vinyl
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -54,8 +55,11 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class Alkenyl
+Namespace AtomGroups
 
-    Public Shared ReadOnly Property vinyl As Formula = FormulaScanner.ScanFormula("CH2CH")
+    Public Class Alkenyl
 
-End Class
+        Public Shared ReadOnly Property vinyl As Formula = FormulaScanner.ScanFormula("CH2CH")
+
+    End Class
+End Namespace

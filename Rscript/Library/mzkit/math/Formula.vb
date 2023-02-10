@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5db75a4056d3ed3a5240803fcfe23103, mzkit\Rscript\Library\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, mzkit\Rscript\Library\mzkit\math\Formula.vb"
 
 ' Author:
 ' 
@@ -37,28 +37,29 @@
 
 ' Code Statistics:
 
-'   Total Lines: 402
-'    Code Lines: 287
-' Comment Lines: 52
-'   Blank Lines: 63
-'     File Size: 15.77 KB
+'   Total Lines: 575
+'    Code Lines: 390
+' Comment Lines: 102
+'   Blank Lines: 83
+'     File Size: 22.15 KB
 
 
 ' Module FormulaTools
 ' 
 '     Constructor: (+1 Overloads) Sub New
-'     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
-'               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
-'               getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase
-'               parseSMILES, printFormulas, readKCF, readSDF, removeElement
-'               (+2 Overloads) repeats, ScanFormula, SDF2KCF
+'     Function: (+5 Overloads) add, asFormula, atomGroups, canonicalFormula, CreateGraph
+'               divide, EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString
+'               getElementCount, getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus
+'               openChemicalDescriptorDatabase, parseSMILES, PeakAnnotation, printFormulas, readKCF
+'               readSDF, registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula
+'               SDF2KCF
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
@@ -78,7 +79,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -172,20 +172,55 @@ Module FormulaTools
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' do peak annotation for the ms2 fragments
+    ''' </summary>
+    ''' <param name="library">
+    ''' A ms2 matrix object
+    ''' </param>
+    ''' <param name="massDiff"></param>
+    ''' <param name="isotopeFirst"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns></returns>
     <ExportAPI("peakAnnotations")>
-    Public Function PeakAnnotation(library As LibraryMatrix,
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function PeakAnnotation(library As Object,
                                    Optional massDiff As Double = 0.1,
                                    Optional isotopeFirst As Boolean = True,
-                                   Optional adducts As MzCalculator() = Nothing) As LibraryMatrix
+                                   Optional adducts As MzCalculator() = Nothing,
+                                   Optional env As Environment = Nothing) As Object
 
         Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
-        Dim result As Annotation = anno.RunAnnotation(library.parentMz, library.ms2)
+        Dim result As Annotation
+        Dim parentMz As Double
+        Dim centroid As Boolean
+        Dim name As String
+
+        If library Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf library Is LibraryMatrix Then
+            Dim mat As LibraryMatrix = DirectCast(library, LibraryMatrix)
+
+            parentMz = mat.parentMz
+            centroid = mat.centroid
+            name = mat.name
+            result = anno.RunAnnotation(mat.parentMz, mat.ms2)
+        ElseIf TypeOf library Is PeakMs2 Then
+            Dim peak As PeakMs2 = DirectCast(library, PeakMs2)
+
+            parentMz = peak.mz
+            centroid = True
+            name = peak.lib_guid
+            result = anno.RunAnnotation(parentMz, peak.mzInto)
+        Else
+            Return Message.InCompatibleType(GetType(LibraryMatrix), library.GetType, env)
+        End If
 
         Return New LibraryMatrix With {
-            .centroid = library.centroid,
+            .centroid = centroid,
             .ms2 = result.products,
-            .parentMz = library.parentMz,
-            .name = library.name
+            .parentMz = parentMz,
+            .name = name
         }
     End Function
 
@@ -514,14 +549,67 @@ Module FormulaTools
         Return matrix.ToArray
     End Function
 
+    ''' <summary>
+    ''' Parse the SMILES molecule structre string
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <param name="strict"></param>
+    ''' <returns>
+    ''' A chemical graph object that could be used for build formula or structure analysis
+    ''' </returns>
+    ''' <remarks>
+    ''' SMILES denotes a molecular structure as a graph with optional chiral 
+    ''' indications. This is essentially the two-dimensional picture chemists
+    ''' draw to describe a molecule. SMILES describing only the labeled
+    ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
+    ''' information) are known as generic SMILES.
+    ''' </remarks>
     <ExportAPI("parseSMILES")>
-    Public Function parseSMILES(SMILES As String) As ChemicalFormula
-        Return ParseChain.ParseGraph(SMILES)
+    Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
+        Return ParseChain.ParseGraph(SMILES, strict)
     End Function
 
     <ExportAPI("as.formula")>
     Public Function asFormula(SMILES As ChemicalFormula) As Formula
         Return SMILES.GetFormula
+    End Function
+
+    ''' <summary>
+    ''' get atoms table from the SMILES structure data
+    ''' </summary>
+    ''' <param name="SMILES"></param>
+    ''' <returns></returns>
+    <ExportAPI("atoms")>
+    Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
+        Dim elements As ChemicalElement() = SMILES.AllElements _
+            .OrderBy(Function(a) a.label.Match("\d+").ParseInteger) _
+            .ToArray
+        Dim atoms As String() = elements.Select(Function(e) e.elementName).ToArray
+        Dim groups As String() = elements.Select(Function(e) e.group).ToArray
+        Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray
+        Dim rowKeys As String() = elements.Select(Function(e) e.label).ToArray
+        Dim ionCharge As Integer() = elements.Select(Function(e) e.charge).ToArray
+        Dim partners As String() = elements _
+            .Select(Function(e)
+                        Return ChemicalElement _
+                            .GetConnection(SMILES, e) _
+                            .Select(Function(atom)
+                                        Return $"{CInt(atom.keys)}({atom.Item2.group})"
+                                    End Function) _
+                            .JoinBy("; ")
+                    End Function) _
+            .ToArray
+
+        Return New RDataframe With {
+            .rownames = rowKeys,
+            .columns = New Dictionary(Of String, Array) From {
+                {"atom", atoms},
+                {"group", groups},
+                {"ion_charge", ionCharge},
+                {"links", links},
+                {"connected", partners}
+            }
+        }
     End Function
 
     <ExportAPI("isotope_distribution")>

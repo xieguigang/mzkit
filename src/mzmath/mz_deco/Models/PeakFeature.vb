@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bd8aea5c778c4e96b5dfd69d6987d37, mzkit\src\mzmath\mz_deco\Models\PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::fb6350ceb9235236b7ab430b6adb1e20, mzkit\src\mzmath\mz_deco\Models\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
+    '   Total Lines: 71
     '    Code Lines: 25
-    ' Comment Lines: 32
+    ' Comment Lines: 35
     '   Blank Lines: 11
-    '     File Size: 1.95 KB
+    '     File Size: 2.07 KB
 
 
     ' Class PeakFeature

@@ -157,7 +157,11 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>MSI_summary</strong>(<i>raw</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>MSI_summary</strong>(<i>raw</i>,
+    <i>x</i> = <span style='color: blue;'>NULL</span>,
+    <i>y</i> = <span style='color: blue;'>NULL</span>,
+    <i>as.vector</i> = <span style='color: blue;'>FALSE</span>,
+    <i>dims</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -177,7 +181,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>.
+        this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>, <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a>.
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

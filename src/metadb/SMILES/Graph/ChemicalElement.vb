@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e0d87ce3e8d7fea0419c68a19d7e06, mzkit\src\metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::076876942d03a612aac707b99a11419e, mzkit\src\metadb\SMILES\Graph\ChemicalElement.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 16
-    ' Comment Lines: 8
-    '   Blank Lines: 7
-    '     File Size: 743.00 B
+    '   Total Lines: 132
+    '    Code Lines: 84
+    ' Comment Lines: 34
+    '   Blank Lines: 14
+    '     File Size: 4.42 KB
 
 
     ' Class ChemicalElement
     ' 
-    '     Properties: coordinate, elementName, Keys
+    '     Properties: charge, coordinate, elementName, group, Keys
     ' 
     '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: GetConnection
+    ' 
+    '     Sub: (+2 Overloads) SetAtomGroups
     ' 
     ' /********************************************************************************/
 
@@ -61,6 +65,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 ''' </summary>
 Public Class ChemicalElement : Inherits Node
 
+    ''' <summary>
+    ''' the atom or atom group element label text
+    ''' </summary>
+    ''' <returns></returns>
     Public Property elementName As String
 
     ''' <summary>
@@ -84,53 +92,101 @@ Public Class ChemicalElement : Inherits Node
     ''' <returns></returns>
     Public Property group As String
 
+    ''' <summary>
+    ''' the ion charge value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property charge As Integer
+
     Sub New()
     End Sub
 
-    Sub New(element As String)
-        Me.label = App.GetNextUniqueName($"{element}_")
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="element">
+    ''' the atom or atom group element label text
+    ''' </param>
+    ''' <param name="index"></param>
+    Sub New(element As String, Optional index As Integer? = Nothing)
+        Me.label = If(
+            index Is Nothing,
+            App.GetNextUniqueName($"{element}_"),
+            $"{element}_{CInt(index)}"
+        )
         Me.elementName = element
     End Sub
 
-    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
-        Dim connected As New List(Of ChemicalElement)
+    Public Shared Iterator Function GetConnection(formula As ChemicalFormula, atom As ChemicalElement) As IEnumerable(Of (keys As Bonds, ChemicalElement))
+        Dim key1, key2 As ChemicalKey
 
-        ' build connection edges
-        For Each atom In formula.vertex
-            For Each partner In formula.vertex.Where(Function(v) v IsNot atom)
-                If formula.QueryEdge(atom.label, partner.label) IsNot Nothing Then
-                    Call connected.Add(partner)
-                End If
-            Next
+        For Each partner As ChemicalElement In formula.vertex.Where(Function(v) v IsNot atom)
+            key1 = formula.QueryEdge(atom.label, partner.label)
 
-            Select Case atom.elementName
-                Case "C"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-CH3"
-                        Case 2 : atom.group = "-CH2-"
-                        Case 3 : atom.group = "-CH="
-                        Case Else
-                            atom.group = "C???"
-                    End Select
-                Case "O"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-OH"
-                        Case Else
-                            atom.group = "O"
-                    End Select
-                Case "N"
-                    Select Case connected.Count
-                        Case 1 : atom.group = "-NH3"
-                        Case 2 : atom.group = "-NH2-"
-                        Case 3 : atom.group = "-NH--"
-                        Case Else
-                            atom.group = "N???"
-                    End Select
-                Case Else
-                    atom.group = atom.elementName
-            End Select
+            If key1 IsNot Nothing Then
+                Yield (key1.bond, partner)
+            End If
 
-            Call connected.Clear()
+            key2 = formula.QueryEdge(partner.label, atom.label)
+
+            If key2 IsNot Nothing AndAlso Not key1 Is key2 Then
+                Yield (key2.bond, partner)
+            End If
         Next
+    End Function
+
+    Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
+        ' build connection edges
+        For Each atom As ChemicalElement In formula.vertex
+            Call SetAtomGroups(
+                atom:=atom,
+                keys:=Aggregate link
+                      In GetConnection(formula, atom)
+                      Into Sum(link.keys)
+            )
+        Next
+    End Sub
+
+    Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
+        Select Case atom.elementName
+            Case "C"
+                Select Case keys
+                    Case 1 : atom.group = "-CH3"
+                    Case 2 : atom.group = "-CH2-"
+                    Case 3 : atom.group = "-CH="
+                    Case Else
+                        atom.group = "C"
+                End Select
+            Case "O"
+                Select Case keys
+                    Case 1
+                        If atom.charge = 0 Then
+                            atom.group = "-OH"
+                        Else
+                            ' an ion with negative charge value
+                            ' [O-]
+                            atom.group = "[O-]-"
+                        End If
+                    Case Else
+                        atom.group = "-O-"
+                End Select
+            Case "N"
+                ' N -3
+                Select Case keys
+                    Case 1 : If atom.charge = 0 Then atom.group = "-NH2" Else atom.group = $"[-NH{3 - atom.charge}]{atom.charge}+"
+                    Case 2 : If atom.charge = 0 Then atom.group = "-NH-" Else atom.group = $"[-NH{2 - atom.charge}-]{atom.charge}+"
+                    Case 3 : If atom.charge = 0 Then atom.group = "-N=" Else atom.group = $"[-N=]{atom.charge}+"
+                    Case Else
+                        atom.group = "N"
+                End Select
+            Case Else
+                If atom.charge = 0 OrElse SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
+                    atom.group = atom.elementName
+                ElseIf atom.charge > 0 Then
+                    atom.group = $"[{atom.elementName}]{atom.charge}+"
+                Else
+                    atom.group = $"[{atom.elementName}]{-atom.charge}-"
+                End If
+        End Select
     End Sub
 End Class

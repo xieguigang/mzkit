@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c0ab4502e9fef67dc5db6faf0f794e, mzkit\src\metadb\Massbank\test\pubchemTest.vb"
+﻿#Region "Microsoft.VisualBasic::fc3c888d2369eb44529dac69fa475979, mzkit\src\metadb\Massbank\test\pubchemTest.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 41
     ' Comment Lines: 0
     '   Blank Lines: 22
-    '     File Size: 1.46 KB
+    '     File Size: 1.52 KB
 
 
     ' Module pubchemTest

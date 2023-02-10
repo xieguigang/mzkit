@@ -7,10 +7,10 @@
     <title>formula</title>
     <meta name="author" content="xie.guigang@gcmodeller.org" />
     <meta name="copyright" content="SMRUCC genomics Copyright (c) 2022" />
-    <meta name="keywords" content="GCModeller; Xanthomonas; Artificial Life" />
+    <meta name="keywords" content="R#; formula; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="" />
+    <meta name="description" content="The chemical formulae toolkit..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -18,6 +18,36 @@
     <meta class="foundation-mq-medium" />
     <meta class="foundation-mq-small" />
     <meta class="foundation-mq-topbar" />
+    <style>
+
+.table-three-line {
+border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+border:solid #000000; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+border-width:2px 0 2px 0px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 0 0 1px */
+}
+.left-1{
+    border:solid #000000;border-width:1px 1px 2px 0px;padding:2px;
+    font-weight:bolder;
+}
+.right-1{
+    border:solid #000000;border-width:1px 0px 2px 1px;padding:2px;
+    font-weight:bolder;
+}
+.mid-1{
+    border:solid #000000;border-width:1px 1px 2px 1px;padding:2px;
+    font-weight:bolder;
+}
+.left{
+    border:solid #000000;border-width:1px 1px 1px 0px;padding:2px;
+}
+.right{
+    border:solid #000000;border-width:1px 0px 1px 1px;padding:2px;
+}
+.mid{
+    border:solid #000000;border-width:1px 1px 1px 1px;padding:2px;
+}
+table caption {font-size:14px;font-weight:bolder;}
+</style>
   </head>
   <body>
     <table width="100%" summary="page for {formula}">
@@ -30,17 +60,20 @@
     </table>
     <h1>formula</h1>
     <hr />
-    <p>
+    <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
-        <span style="color: blue;">imports</span>
-        <span style="color: brown"> "formula"</span>
-        <span style="color: blue;"> from</span>
-        <span style="color: brown"> "mzkit"</span>;
+        <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
+                               <br /><br /><span style="color: green;">#' The chemical formulae toolkit</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "formula"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>The chemical formulae toolkit</p></p>
+    <blockquote>
+      <p style="font-style: italic; font-size: 0.9em;">
+                           
+                           </p>
+    </blockquote>
     <div id="main-wrapper">
-      <table>
+      <table class="table-three-line">
         <tbody><tr>
   <td id="registerAnnotations">
     <a href="./formula/registerAnnotations.html">registerAnnotations</a>
@@ -51,7 +84,7 @@
   <td id="peakAnnotations">
     <a href="./formula/peakAnnotations.html">peakAnnotations</a>
   </td>
-  <td></td>
+  <td><p>do peak annotation for the ms2 fragments</p></td>
 </tr>
 <tr>
   <td id="candidates">
@@ -131,13 +164,19 @@
   <td id="parseSMILES">
     <a href="./formula/parseSMILES.html">parseSMILES</a>
   </td>
-  <td></td>
+  <td><p>Parse the SMILES molecule structre string</p></td>
 </tr>
 <tr>
   <td id="as.formula">
     <a href="./formula/as.formula.html">as.formula</a>
   </td>
   <td></td>
+</tr>
+<tr>
+  <td id="atoms">
+    <a href="./formula/atoms.html">atoms</a>
+  </td>
+  <td><p>get atoms table from the SMILES structure data</p></td>
 </tr>
 <tr>
   <td id="isotope_distribution">

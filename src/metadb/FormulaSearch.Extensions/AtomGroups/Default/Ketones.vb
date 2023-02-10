@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0caa3ee629c1e1778de9b6fd9d4af2c6, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::f1949c2fad8ded7ddf4d277493783d4c, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Ketones.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 16
-    ' Comment Lines: 4
-    '   Blank Lines: 4
-    '     File Size: 1.67 KB
+    '   Total Lines: 27
+    '    Code Lines: 14
+    ' Comment Lines: 8
+    '   Blank Lines: 5
+    '     File Size: 1.81 KB
 
 
-    ' Class Ketones
+    '     Class Ketones
     ' 
-    '     Properties: acid_amides, acid_anhydride, acyl_halideBr, acyl_halideCl, acyl_halideF
-    '                 acyl_halideI, acyl_peroxide, aldehyde, carboxylic_acid, carboxylic_ester
-    '                 isocyanate, ketenes, ketone
+    '         Properties: acid_amides, acid_anhydride, acyl_peroxide, aldehyde, carboxylic_acid
+    '                     carboxylic_ester, isocyanate, ketenes, ketone
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -56,25 +56,28 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-''' <summary>
-''' 酮基是一个碳原子和氧原子形成双键，同时这个碳原子还和另外两个碳原子形成共价键结构式，可以用R1-(C=O)-R2。
-''' 酮基是羰基的一种。酮基能够强烈吸收300nm左右光波的基团，含酮基的高分子容易吸收紫外线而导致光降解。
-''' </summary>
-Public Class Ketones
+Namespace AtomGroups
 
-    Public Shared ReadOnly Property aldehyde As Formula = FormulaScanner.ScanFormula("COH")
-    Public Shared ReadOnly Property ketone As Formula = FormulaScanner.ScanFormula("CO")
-    Public Shared ReadOnly Property carboxylic_acid As Formula = FormulaScanner.ScanFormula("COOH")
-    Public Shared ReadOnly Property carboxylic_ester As Formula = FormulaScanner.ScanFormula("COO")
-    Public Shared ReadOnly Property acid_anhydride As Formula = FormulaScanner.ScanFormula("COOCO")
-    Public Shared ReadOnly Property acyl_peroxide As Formula = FormulaScanner.ScanFormula("COOOCO")
-    Public Shared ReadOnly Property acid_amides As Formula = FormulaScanner.ScanFormula("CONH2")
-    Public Shared ReadOnly Property ketenes As Formula = FormulaScanner.ScanFormula("CHCO")
-    Public Shared ReadOnly Property isocyanate As Formula = FormulaScanner.ScanFormula("NCO")
+    ''' <summary>
+    ''' 酮基是一个碳原子和氧原子形成双键，同时这个碳原子还和另外两个碳原子形成共价键结构式，可以用R1-(C=O)-R2。
+    ''' 酮基是羰基的一种。酮基能够强烈吸收300nm左右光波的基团，含酮基的高分子容易吸收紫外线而导致光降解。
+    ''' </summary>
+    Public Class Ketones
 
-    Public Shared ReadOnly Property acyl_halideF As Formula = FormulaScanner.ScanFormula("COF")
-    Public Shared ReadOnly Property acyl_halideCl As Formula = FormulaScanner.ScanFormula("COCl")
-    Public Shared ReadOnly Property acyl_halideBr As Formula = FormulaScanner.ScanFormula("COBr")
-    Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
+        Public Shared ReadOnly Property aldehyde As Formula = FormulaScanner.ScanFormula("COH")
+        Public Shared ReadOnly Property ketone As Formula = FormulaScanner.ScanFormula("CO")
+        Public Shared ReadOnly Property carboxylic_acid As Formula = FormulaScanner.ScanFormula("COOH")
+        Public Shared ReadOnly Property carboxylic_ester As Formula = FormulaScanner.ScanFormula("COO")
+        Public Shared ReadOnly Property acid_anhydride As Formula = FormulaScanner.ScanFormula("COOCO")
+        Public Shared ReadOnly Property acyl_peroxide As Formula = FormulaScanner.ScanFormula("COOOCO")
+        Public Shared ReadOnly Property acid_amides As Formula = FormulaScanner.ScanFormula("CONH2")
+        Public Shared ReadOnly Property ketenes As Formula = FormulaScanner.ScanFormula("CHCO")
+        Public Shared ReadOnly Property isocyanate As Formula = FormulaScanner.ScanFormula("NCO")
 
-End Class
+        ' Public Shared ReadOnly Property acyl_halideF As Formula = FormulaScanner.ScanFormula("COF")
+        ' Public Shared ReadOnly Property acyl_halideCl As Formula = FormulaScanner.ScanFormula("COCl")
+        ' Public Shared ReadOnly Property acyl_halideBr As Formula = FormulaScanner.ScanFormula("COBr")
+        ' Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
+
+    End Class
+End Namespace

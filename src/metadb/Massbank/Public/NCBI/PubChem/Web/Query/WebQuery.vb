@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2746169fd821ea07031bab64559102b, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::99fb5899f25f936c6d68c4db02c76609, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 82
     ' Comment Lines: 18
     '   Blank Lines: 23
-    '     File Size: 4.34 KB
+    '     File Size: 4.17 KB
 
 
     '     Class CIDQuery

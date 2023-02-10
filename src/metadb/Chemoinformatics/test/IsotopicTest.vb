@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb1552e9de7dc46f205fd53f0f47b263, src\metadb\Chemoinformatics\test\IsotopicTest.vb"
+﻿#Region "Microsoft.VisualBasic::57c3aad748b63a21af887632d9cd2b81, mzkit\src\metadb\Chemoinformatics\test\IsotopicTest.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 11
+    ' Comment Lines: 12
+    '   Blank Lines: 5
+    '     File Size: 772 B
+
 
     ' Module IsotopicTest
     ' 

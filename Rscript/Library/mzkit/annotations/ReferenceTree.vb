@@ -1,7 +1,63 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::08d28b45e9fc277ea57b94d74ef4807a, mzkit\Rscript\Library\mzkit\annotations\ReferenceTree.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 251
+    '    Code Lines: 167
+    ' Comment Lines: 49
+    '   Blank Lines: 35
+    '     File Size: 9.18 KB
+
+
+    ' Module ReferenceTreePkg
+    ' 
+    '     Function: addBucket, createJaccardSet, CreateNew, open, (+2 Overloads) QuerySingle
+    '               (+2 Overloads) QueryTree, set_dotcutoff
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter
@@ -10,6 +66,9 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' the spectrum tree reference library tools
+''' </summary>
 <Package("spectrumTree")>
 Module ReferenceTreePkg
 
@@ -60,12 +119,28 @@ Module ReferenceTreePkg
         Return New TreeSearch(buffer.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' set dot cutoff parameter for the cos score similarity algorithm
+    ''' </summary>
+    ''' <param name="search"></param>
+    ''' <param name="cutoff"></param>
+    ''' <returns></returns>
     <ExportAPI("dotcutoff")>
     Public Function set_dotcutoff(search As TreeSearch, cutoff As Double) As TreeSearch
         Call search.SetCutoff(cutoff)
         Return search
     End Function
 
+    ''' <summary>
+    ''' construct a fragment set library for run spectrum search in jaccard matches
+    ''' </summary>
+    ''' <param name="libname"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="mzset"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("jaccardSet")>
     Public Function createJaccardSet(libname As String(),
                                      mz As Double(),
@@ -97,6 +172,15 @@ Module ReferenceTreePkg
         Return New JaccardSearch(dataset, cutoff)
     End Function
 
+    ''' <summary>
+    ''' do spectrum family alignment via cos similarity
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="x"></param>
+    ''' <param name="maxdepth"></param>
+    ''' <param name="treeSearch"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("query")>
     <RApiReturn(GetType(ClusterHit))>
     Public Function QueryTree(tree As Ms2Search, x As Object,
@@ -198,6 +282,13 @@ Module ReferenceTreePkg
         Return output
     End Function
 
+    ''' <summary>
+    ''' push the reference spectrum data into the spectrum reference tree library
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("addBucket")>
     Public Function addBucket(tree As ReferenceTree, <RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim list As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)

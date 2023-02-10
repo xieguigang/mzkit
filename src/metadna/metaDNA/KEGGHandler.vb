@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb59792f581a5e6361be808c079706b1, mzkit\src\metadna\metaDNA\KEGGHandler.vb"
+﻿#Region "Microsoft.VisualBasic::b69b44d6722026225fd702b14fa6850a, mzkit\src\metadna\metaDNA\KEGGHandler.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
+    '   Total Lines: 31
     '    Code Lines: 22
-    ' Comment Lines: 0
+    ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 1.40 KB
+    '     File Size: 1.47 KB
 
 
     ' Class KEGGHandler

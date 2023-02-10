@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778e167757c05deeb73e75cfa61b31e9, mzkit\src\mzmath\ms2_math-core\Chromatogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c1e3e1e9bc4c65329e7633a41183b48e, mzkit\src\mzmath\ms2_math-core\Chromatogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 1.24 KB
+    '     File Size: 1.28 KB
 
 
     '     Module Extensions

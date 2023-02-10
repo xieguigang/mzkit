@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f656418ff3349fba3c92671985909d, mzkit\src\metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
+﻿#Region "Microsoft.VisualBasic::c5db68384beac8033192c651d52a6e72, mzkit\src\metadb\Massbank\Public\lipidMAPS\MetaTable.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
+    '   Total Lines: 53
     '    Code Lines: 33
-    ' Comment Lines: 0
+    ' Comment Lines: 11
     '   Blank Lines: 9
-    '     File Size: 1.52 KB
+    '     File Size: 1.91 KB
 
 
     '     Module MetaTable
@@ -86,6 +86,12 @@ Namespace LipidMaps
             Next
         End Function
 
+        ''' <summary>
+        ''' write the lipidmaps database in messagepack format
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function WriteRepository(data As IEnumerable(Of MetaData), file As Stream) As Boolean
             Call MsgPackSerializer.SerializeObject(data.ToArray, file)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::117adb6b20195175dc954d04f88e249d, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Configurations.vb"
+﻿#Region "Microsoft.VisualBasic::d2f7887e1a7a81f3673bac7419e3c973, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Configurations.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 695.00 B
+    '     File Size: 724 B
 
 
     '     Class instrumentConfiguration

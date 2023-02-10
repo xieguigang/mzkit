@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb746a5c8f3f4f8493c8810f5a07afbc, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\ExactMass.vb"
+﻿#Region "Microsoft.VisualBasic::ad183c7f7cf2fb1e5bb121bd306c8ee8, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\ExactMass.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 112
     ' Comment Lines: 14
     '   Blank Lines: 19
-    '     File Size: 4.65 KB
+    '     File Size: 4.80 KB
 
 
     '     Module ExactMass

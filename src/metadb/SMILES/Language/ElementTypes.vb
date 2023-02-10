@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a73b0e76be8e497a549d3918193c4bbe, mzkit\src\metadb\SMILES\Language\ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::6f494726a42f74e9f800070f71481217, mzkit\src\metadb\SMILES\Language\ElementTypes.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 6
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 0
-    '     File Size: 77.00 B
+    '   Total Lines: 45
+    '    Code Lines: 9
+    ' Comment Lines: 34
+    '   Blank Lines: 2
+    '     File Size: 1.54 KB
 
 
     ' Enum ElementTypes
     ' 
-    '     Close, Element, Key, Open
+    '     AtomGroup, Close, Disconnected, Element, Key
+    '     None, Open
     ' 
     '  
     ' 
@@ -57,8 +58,47 @@
 #End Region
 
 Public Enum ElementTypes
+    None
+    ''' <summary>
+    ''' alphabet
+    ''' </summary>
     Element
+
+    ''' <summary>
+    ''' contains multiple atom label inside, example as: NH4+/PO3-
+    ''' </summary>
+    AtomGroup
+
+    ''' <summary>
+    ''' <see cref="Bonds"/>
+    ''' </summary>
     Key
+    ''' <summary>
+    ''' (
+    ''' </summary>
     Open
+    ''' <summary>
+    ''' )
+    ''' </summary>
     Close
+    ''' <summary>
+    ''' ##### Disconnected Structures
+    ''' 
+    ''' Disconnected compounds are written as individual structures separated by a "." (period). 
+    ''' The order in which ions or ligands are listed is arbitrary. There is no implied pairing 
+    ''' of one charge with another, nor is it necessary to have a net zero charge. If desired, 
+    ''' the SMILES of one ion may be imbedded within another as shown in the example of sodium 
+    ''' phenoxide.
+    ''' 
+    ''' Matching pairs of digits following atom specifications imply that the atoms are bonded 
+    ''' to each other. The bond may be explicit (bond symbol and/or direction preceding the ring 
+    ''' closure digit) or implicit (a nondirectional single or aromatic bond). This is true 
+    ''' whether or not the bond ends up as part of a ring.
+    ''' 
+    ''' Adjacent atoms separated by dot (.) implies that the atoms are Not bonded To Each other. 
+    ''' This Is True whether Or Not the atoms are In the same connected component.
+    ''' 
+    ''' For example, C1.C1 specifies the same molecule as CC(ethane)
+    ''' </summary>
+    Disconnected
 End Enum

@@ -1,16 +1,92 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿#Region "Microsoft.VisualBasic::de2b694f3b7baf864bcbc139f1622216, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 55
+    ' Comment Lines: 46
+    '   Blank Lines: 6
+    '     File Size: 3.06 KB
+
+
+    ' Class BlockNode
+    ' 
+    '     Properties: Block, centroid, childs, Id, isBlank
+    '                 isLeaf, Members, mz, rt
+    ' 
+    '     Function: GetBinaryIndex, GetIndex
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
+''' <summary>
+''' A spectrum tree node object
+''' </summary>
 Public Class BlockNode
 
+    ''' <summary>
+    ''' the unique id of current reference spectrum
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Id As String
+    ''' <summary>
+    ''' the file stream buffer pointer
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Block As BufferRegion
     ''' <summary>
     ''' 得分0.9以上的都算作为当前节点的等价谱图
     ''' </summary>
     ''' <returns></returns>
     Public Property Members As List(Of Integer)
+    ''' <summary>
+    ''' A set of the precursor m/z of the member spectrum in current cluster
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As List(Of Double)
+    ''' <summary>
+    ''' the average RT
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double
     ''' <summary>
     ''' 总共10个元素，分别表示[0,1]区间内的10个阈值等级
@@ -18,6 +94,10 @@ Public Class BlockNode
     ''' </summary>
     ''' <returns></returns>
     Public Property childs As Integer()
+    ''' <summary>
+    ''' the reference spectrum of current spectrum cluster family
+    ''' </summary>
+    ''' <returns></returns>
     Public Property centroid As ms2()
 
     Public ReadOnly Property isLeaf As Boolean

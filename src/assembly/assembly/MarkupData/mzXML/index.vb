@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52a04dc8a3e6fa8322c0b17f458de09b, mzkit\src\assembly\assembly\MarkupData\mzXML\index.vb"
+﻿#Region "Microsoft.VisualBasic::e6385e76fa46f42851ae6ae5c432577b, mzkit\src\assembly\assembly\MarkupData\mzXML\index.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 45
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 1.76 KB
+    '     File Size: 1.82 KB
 
 
     '     Class index

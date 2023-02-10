@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c79c05a1279b0fb9a8f4136d1cb915c, mzkit\src\assembly\assembly\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::9e3f7379715f9b5f5faddafd3a95ab19, mzkit\src\assembly\assembly\test\Module1.vb"
 
     ' Author:
     ' 
@@ -41,12 +41,12 @@
     '    Code Lines: 16
     ' Comment Lines: 27
     '   Blank Lines: 21
-    '     File Size: 2.38 KB
+    '     File Size: 2.44 KB
 
 
     ' Module Module1
     ' 
-    '     Sub: Main, populateMS2
+    '     Sub: Main1, populateMS2
     ' 
     ' /********************************************************************************/
 
