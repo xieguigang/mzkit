@@ -284,13 +284,41 @@ Public Class mzPack
         End Using
     End Function
 
+    Private Shared Function checkVer1DuplicatedId(scan1 As ScanMS1) As ScanMS1
+        If scan1.products Is Nothing Then
+            scan1.products = {}
+        Else
+            Dim products = scan1.products _
+                .GroupBy(Function(m2) m2.scan_id) _
+                .ToArray
+
+            For Each ms2 In products
+                If ms2.Count > 1 Then
+                    Dim i As Integer = 2
+
+                    For Each scan2 As ScanMS2 In ms2.Skip(1)
+                        scan2.scan_id = $"{scan2.scan_id}_{i}"
+                        i += 1
+                    Next
+                End If
+            Next
+        End If
+
+        Return scan1
+    End Function
+
     ''' <summary>
-    ''' load all content data in mzpack object into memory at one time.
+    ''' load all content data in <see cref="mzPack"/> object into memory at one time.
     ''' the file format version is test from the magic number.
     ''' (一次性加载所有原始数据)
     ''' </summary>
     ''' <param name="file">
     ''' the file version will be automatically detected
+    ''' </param>
+    ''' <param name="checkVer1DuplicatedId">
+    ''' apply to the mzpack data file in version 1, the duplicated scan id
+    ''' of ms2 data may happends in v1 format. Enable this option will try
+    ''' to make such possible duplicated id unique by adding suffix id
     ''' </param>
     ''' <returns>
     ''' a unify mzpack in-memory data model
@@ -298,16 +326,27 @@ Public Class mzPack
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
-                                   Optional verbose As Boolean = True) As mzPack
+                                   Optional verbose As Boolean = True,
+                                   Optional checkVer1DuplicatedId As Boolean = True) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
         Dim pack As mzPack
+        Dim isStreamWithLength As Boolean = TypeOf file Is MemoryStream OrElse
+            TypeOf file Is FileStream
 
         If ver = 1 Then
             pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
+
+            If checkVer1DuplicatedId Then
+                pack.MS = pack.MS _
+                    .Select(Function(scan1)
+                                Return mzPack.checkVer1DuplicatedId(scan1)
+                            End Function) _
+                    .ToArray
+            End If
         ElseIf ver = 2 Then
             pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
-        ElseIf (TypeOf file Is MemoryStream OrElse TypeOf file Is FileStream) AndAlso file.Length = 0 Then
+        ElseIf isStreamWithLength AndAlso file.Length = 0 Then
             ' is empty data
             Return New mzPack With {
                 .MS = {}

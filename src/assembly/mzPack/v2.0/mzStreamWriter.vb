@@ -201,7 +201,12 @@ Public Module mzStreamWriter
 
                         Call product.WriteBuffer(scan2)
                         Call scan2.Flush()
-                        Call scan2.Close()
+
+                        ' do not close the writer at here
+                        ' or the exception of can not access to
+                        ' a closed stream will be happended
+                        '
+                        ' Call scan2.Close()
                     End If
                 End Using
 
