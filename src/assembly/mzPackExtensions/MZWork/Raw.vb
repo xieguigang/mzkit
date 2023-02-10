@@ -173,7 +173,7 @@ Namespace MZWork
 
             If strict Then
                 Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    Call loadMemory(mzPack.ReadAll(file, verbose:=verbose))
+                    Call loadMemory(mzPack.ReadAll(file, verbose:=verbose, checkVer1DuplicatedId:=True))
                 End Using
             Else
 mzPackReader:
