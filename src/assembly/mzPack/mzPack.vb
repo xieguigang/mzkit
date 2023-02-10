@@ -321,7 +321,7 @@ Public Class mzPack
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
                                    Optional verbose As Boolean = True,
-                                   Optional checkVer1DuplicatedId As Boolean = True) As mzPack
+                                   Optional checkVer1DuplicatedId As Boolean = False) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
         Dim pack As mzPack
@@ -330,13 +330,6 @@ Public Class mzPack
 
         If ver = 1 Then
             pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
-
-            If checkVer1DuplicatedId Then
-                Call pack.MS _
-                    .Select(Function(scan1) scan1.products) _
-                    .IteratesALL _
-                    .DoCall(AddressOf mzPack.checkVer1DuplicatedId)
-            End If
         ElseIf ver = 2 Then
             pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
         ElseIf isStreamWithLength AndAlso file.Length = 0 Then
@@ -346,6 +339,13 @@ Public Class mzPack
             }
         Else
             Throw New InvalidProgramException("unknow file format!")
+        End If
+
+        If checkVer1DuplicatedId Then
+            Call pack.MS _
+                .Select(Function(scan1) scan1.products) _
+                .IteratesALL _
+                .DoCall(AddressOf mzPack.checkVer1DuplicatedId)
         End If
 
         If pack.source.StringEmpty Then
