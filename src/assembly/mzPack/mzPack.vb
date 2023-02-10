@@ -284,28 +284,22 @@ Public Class mzPack
         End Using
     End Function
 
-    Private Shared Function checkVer1DuplicatedId(scan1 As ScanMS1) As ScanMS1
-        If scan1.products Is Nothing Then
-            scan1.products = {}
-        Else
-            Dim products = scan1.products _
-                .GroupBy(Function(m2) m2.scan_id) _
-                .ToArray
+    Private Shared Sub checkVer1DuplicatedId(productMs2 As IEnumerable(Of ScanMS2))
+        Dim products = productMs2 _
+            .GroupBy(Function(m2) m2.scan_id) _
+            .ToArray
 
-            For Each ms2 In products
-                If ms2.Count > 1 Then
-                    Dim i As Integer = 2
+        For Each ms2 In products
+            If ms2.Count > 1 Then
+                Dim i As Integer = 2
 
-                    For Each scan2 As ScanMS2 In ms2.Skip(1)
-                        scan2.scan_id = $"{scan2.scan_id}_{i}"
-                        i += 1
-                    Next
-                End If
-            Next
-        End If
-
-        Return scan1
-    End Function
+                For Each scan2 As ScanMS2 In ms2.Skip(1)
+                    scan2.scan_id = $"{scan2.scan_id}_{i}"
+                    i += 1
+                Next
+            End If
+        Next
+    End Sub
 
     ''' <summary>
     ''' load all content data in <see cref="mzPack"/> object into memory at one time.
@@ -338,11 +332,10 @@ Public Class mzPack
             pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
 
             If checkVer1DuplicatedId Then
-                pack.MS = pack.MS _
-                    .Select(Function(scan1)
-                                Return mzPack.checkVer1DuplicatedId(scan1)
-                            End Function) _
-                    .ToArray
+                Call pack.MS _
+                    .Select(Function(scan1) scan1.products) _
+                    .IteratesALL _
+                    .DoCall(AddressOf mzPack.checkVer1DuplicatedId)
             End If
         ElseIf ver = 2 Then
             pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
