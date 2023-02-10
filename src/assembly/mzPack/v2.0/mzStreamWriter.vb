@@ -186,10 +186,6 @@ Public Module mzStreamWriter
 
             For Each product As ScanMS2 In ms1.products.SafeQuery
                 Using blockStream As Stream = pack.OpenBlock($"{dir}/{product.scan_id.MD5}.mz")
-                    Dim scan2 As New BinaryDataWriter(blockStream) With {
-                        .ByteOrder = ByteOrder.LittleEndian
-                    }
-
                     If TypeOf blockStream Is SubStream Then
                         ' 20230210
                         '
@@ -199,7 +195,13 @@ Public Module mzStreamWriter
 
                         Throw New InvalidDataException($"A duplicated scan id({product.scan_id}) was found!")
                     Else
+                        Dim scan2 As New BinaryDataWriter(blockStream) With {
+                            .ByteOrder = ByteOrder.LittleEndian
+                        }
+
                         Call product.WriteBuffer(scan2)
+                        Call scan2.Flush()
+                        Call scan2.Close()
                     End If
                 End Using
 
