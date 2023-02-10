@@ -167,64 +167,6 @@ Namespace AtomGroups
         End Function
 
         ''' <summary>
-        ''' populate all candidate hits list by a specific mass tolerance hits
-        ''' </summary>
-        ''' <param name="mass"></param>
-        ''' <param name="da"></param>
-        ''' <param name="adducts"></param>
-        ''' <returns></returns>
-        Public Shared Iterator Function FilterByMass(mass As Double,
-                                                 Optional da As Double = 0.1,
-                                                 Optional adducts As MzCalculator() = Nothing) As IEnumerable(Of FragmentAnnotationHolder)
-
-            For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach
-                ' returns the first value if matched with mass delta
-                If stdNum.Abs(group.exactMass - mass) <= da Then
-                    Yield group
-                ElseIf Not adducts Is Nothing Then
-                    ' test on adducts
-                    For Each type As MzCalculator In adducts
-                        Dim mz As Double = type.CalcMZ(group.exactMass)
-
-                        If stdNum.Abs(mz - mass) <= da Then
-                            Yield New FragmentAnnotationHolder(MassGroup.CreateAdducts(group, adducts:=type))
-                        End If
-                    Next
-                End If
-            Next
-        End Function
-
-        ''' <summary>
-        ''' match on first hit
-        ''' </summary>
-        ''' <param name="mass"></param>
-        ''' <param name="da"></param>
-        ''' <param name="adducts"></param>
-        ''' <returns></returns>
-        Public Shared Function GetByMass(mass As Double,
-                                     Optional da As Double = 0.1,
-                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
-
-            For Each group As FragmentAnnotationHolder In SingletonList(Of FragmentAnnotationHolder).ForEach
-                ' returns the first value if matched with mass delta
-                If stdNum.Abs(group.exactMass - mass) <= da Then
-                    Return group
-                ElseIf Not adducts Is Nothing Then
-                    ' test on adducts
-                    For Each type As MzCalculator In adducts
-                        Dim mz As Double = type.CalcMZ(group.exactMass)
-
-                        If stdNum.Abs(mz - mass) <= da Then
-                            Return New FragmentAnnotationHolder(MassGroup.CreateAdducts(group, adducts:=type))
-                        End If
-                    Next
-                End If
-            Next
-
-            Return Nothing
-        End Function
-
-        ''' <summary>
         ''' Found atom groups by the mass delta between two fragment mz value
         ''' </summary>
         ''' <param name="mz1"></param>
@@ -234,9 +176,10 @@ Namespace AtomGroups
         ''' <param name="adducts"></param>
         ''' <returns></returns>
         Public Shared Function FindDelta(mz1 As Double, mz2 As Double,
-                                     Optional ByRef delta As Integer = 0,
-                                     Optional da As Double = 0.1,
-                                     Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
+                                         Optional ByRef delta As Integer = 0,
+                                         Optional da As Double = 0.1,
+                                         Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
+
             Dim d As Double = mz1 - mz2
             Dim dmass As Double = stdNum.Abs(d)
 
@@ -246,7 +189,7 @@ Namespace AtomGroups
                 delta = stdNum.Sign(d)
             End If
 
-            Dim group As FragmentAnnotationHolder = GetByMass(dmass, da, adducts)
+            Dim group As FragmentAnnotationHolder = New AtomGroupQuery(dmass, da, adducts).GetByMass
             Return group
         End Function
     End Class
