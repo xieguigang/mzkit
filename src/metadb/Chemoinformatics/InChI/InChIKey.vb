@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::095a654b2b079ce9c291ca98571f63a0, mzkit\src\metadb\Chemoinformatics\InChI\InChIKey.vb"
+﻿#Region "Microsoft.VisualBasic::d5f6f7d55a1234b24b3080d548b92e27, mzkit\src\metadb\Chemoinformatics\InChI\InChIKey.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 39
     ' Comment Lines: 3
     '   Blank Lines: 12
-    '     File Size: 1.34 KB
+    '     File Size: 1.39 KB
 
 
     '     Class InChIKey

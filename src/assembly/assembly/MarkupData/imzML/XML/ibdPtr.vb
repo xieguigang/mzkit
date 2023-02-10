@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e2236a2c928ef08901bc9c6825d6176, mzkit\src\assembly\assembly\MarkupData\imzML\XML\ibdPtr.vb"
+﻿#Region "Microsoft.VisualBasic::ff88c58385476cb00fe4429b93956687, mzkit\src\assembly\assembly\MarkupData\imzML\XML\ibdPtr.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 1.52 KB
+    '     File Size: 1.56 KB
 
 
     '     Class ibdPtr

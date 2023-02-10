@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d8ca8cedceec61fb59b662f68f0f711, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
+﻿#Region "Microsoft.VisualBasic::9ae7e6d2abc54c8b4231219b1148475d, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 14
+    '   Total Lines: 28
+    '    Code Lines: 21
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 460.00 B
+    '   Blank Lines: 7
+    '     File Size: 728 B
 
 
     '     Class disease
@@ -53,6 +53,10 @@
     '         Properties: pubmed_id, reference_text
     ' 
     '         Function: ToString
+    ' 
+    '     Class protein
+    ' 
+    '         Properties: gene_name, name, protein_accession, protein_type, uniprot_id
     ' 
     ' 
     ' /********************************************************************************/

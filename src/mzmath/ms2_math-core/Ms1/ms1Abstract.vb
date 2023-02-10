@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffebecb6558a7e6d141530fc7ae8330e, mzkit\src\mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::c565b4c40a5559c6a5fdee00bc76f2c3, mzkit\src\mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 9
+    '   Total Lines: 31
+    '    Code Lines: 13
     ' Comment Lines: 7
-    '   Blank Lines: 8
-    '     File Size: 396.00 B
+    '   Blank Lines: 11
+    '     File Size: 529 B
 
 
     ' Interface IMs1
@@ -55,6 +55,10 @@
     ' Interface IMs1Scan
     ' 
     '     Properties: intensity
+    ' 
+    ' Interface IMS1Annotation
+    ' 
+    '     Properties: id, precursor_type
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, Rscript\Library\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, mzkit\Rscript\Library\mzkit\math\Formula.vb"
 
     ' Author:
     ' 

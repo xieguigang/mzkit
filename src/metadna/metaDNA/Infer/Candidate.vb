@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 8
     '   Blank Lines: 6
-    '     File Size: 838.00 B
+    '     File Size: 838 B
 
 
     '     Class Candidate

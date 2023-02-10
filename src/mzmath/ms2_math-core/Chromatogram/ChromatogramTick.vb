@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2c467640f431785d97552e4cf86e0b2, mzkit\src\mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
+﻿#Region "Microsoft.VisualBasic::56d523fbae356833ab64a665d8201b0b, mzkit\src\mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 44
     ' Comment Lines: 11
     '   Blank Lines: 15
-    '     File Size: 1.98 KB
+    '     File Size: 2.05 KB
 
 
     '     Class ChromatogramTick

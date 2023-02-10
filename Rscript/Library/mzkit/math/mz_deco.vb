@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd99d93e3efe2c98f031218311128058, Rscript\Library\mzkit\math\mz_deco.vb"
+﻿#Region "Microsoft.VisualBasic::fd99d93e3efe2c98f031218311128058, mzkit\Rscript\Library\mzkit\math\mz_deco.vb"
 
     ' Author:
     ' 

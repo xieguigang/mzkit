@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::004723ce01e902944f8402f423b1710e, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 969.00 B
+    '     File Size: 997 B
 
 
     '     Class MSData

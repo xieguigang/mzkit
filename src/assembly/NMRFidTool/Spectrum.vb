@@ -1,4 +1,62 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::e620b01c6ad928f01ed55916b0c29f5b, mzkit\src\assembly\NMRFidTool\Spectrum.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 78
+    ' Comment Lines: 26
+    '   Blank Lines: 18
+    '     File Size: 3.32 KB
+
+
+    ' Class Spectrum
+    ' 
+    '     Properties: Acqu, Baseline, BaselineModel, Fid, ImaginaryChannelData
+    '                 Proc, RealChannelData
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Sub: setFid, setImaginaryChannelData, setRealChannelData
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  Copyright (c) 2013. EMBL, European Bioinformatics Institute
 ' 
 '  This program is free software: you can redistribute it and/or modify
@@ -120,3 +178,4 @@ Public Class Spectrum
     End Property
 
 End Class
+

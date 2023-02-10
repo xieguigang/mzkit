@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85fad33928e52b05991f7d16ee02bf7f, Rscript\Library\mzkit.plot\ChemicalDraw.vb"
+﻿#Region "Microsoft.VisualBasic::85fad33928e52b05991f7d16ee02bf7f, mzkit\Rscript\Library\mzkit.plot\ChemicalDraw.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c5d682ab11a4a729e778282611bbbe4, mzkit\src\assembly\assembly\MarkupData\nmrML\nmrML.vb"
+﻿#Region "Microsoft.VisualBasic::75152b15b6d2e115780a251c41d57e86, mzkit\src\assembly\assembly\MarkupData\nmrML\nmrML.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,38 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 40
+    '   Total Lines: 87
+    '    Code Lines: 61
     ' Comment Lines: 0
-    '   Blank Lines: 19
-    '     File Size: 1.87 KB
+    '   Blank Lines: 26
+    '     File Size: 2.62 KB
 
 
     '     Class XML
     ' 
     '         Properties: accession, accession_url, acquisition, contactList, cvList
-    '                     fileDescription, id, sourceFileList, spectrumList, version
+    '                     fileDescription, id, sourceFileList, spectrumAnnotationList, spectrumList
+    '                     version
+    ' 
+    '     Class spectrumAnnotationList
+    ' 
+    '         Properties: atomAssignment
+    ' 
+    '     Class atomAssignment
+    ' 
+    '         Properties: chemicalCompound, spectrumRef
+    ' 
+    '     Class chemicalCompound
+    ' 
+    '         Properties: identifierList
+    ' 
+    '     Class identifierList
+    ' 
+    '         Properties: identifier
+    ' 
+    '     Class identifier
+    ' 
+    '         Properties: accession, cvRef, name
     ' 
     '     Class contactList
     ' 

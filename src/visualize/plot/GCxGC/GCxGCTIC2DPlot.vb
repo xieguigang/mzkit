@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17764423695e4065d9a2702fa3f5ee0f, mzkit\src\visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9a73fc179e98243c119643fde4fe96f1, mzkit\src\visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 142
     ' Comment Lines: 5
     '   Blank Lines: 17
-    '     File Size: 6.96 KB
+    '     File Size: 7.12 KB
 
 
     ' Class GCxGCTIC2DPlot

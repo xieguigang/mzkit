@@ -41,7 +41,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 264.00 B
+    '     File Size: 264 B
 
 
     '     Enum QuantityPrefix

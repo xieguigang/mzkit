@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41e7c55e66183df57e224a7edb79f0d8, mzkit\src\metadb\Massbank\MetaLib\Match\TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::e28da0efd53a1da305026dd02b834abc, mzkit\src\metadb\Massbank\MetaLib\Match\TreeSearch.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 37
     ' Comment Lines: 7
     '   Blank Lines: 11
-    '     File Size: 1.69 KB
+    '     File Size: 1.75 KB
 
 
     '     Class TreeSearch

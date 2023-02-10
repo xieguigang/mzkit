@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fecbbf4919d0172ed272426aaa082a3, Rscript\Library\mzkit.plot\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::2fecbbf4919d0172ed272426aaa082a3, mzkit\Rscript\Library\mzkit.plot\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

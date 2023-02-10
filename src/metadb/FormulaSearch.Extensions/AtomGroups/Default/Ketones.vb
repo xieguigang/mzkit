@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0caa3ee629c1e1778de9b6fd9d4af2c6, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::225f476f93cfb8fbb7c6338ed3d7173f, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Ketones.vb"
 
     ' Author:
     ' 
@@ -38,17 +38,16 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 16
-    ' Comment Lines: 4
+    '    Code Lines: 12
+    ' Comment Lines: 8
     '   Blank Lines: 4
-    '     File Size: 1.67 KB
+    '     File Size: 1.68 KB
 
 
     ' Class Ketones
     ' 
-    '     Properties: acid_amides, acid_anhydride, acyl_halideBr, acyl_halideCl, acyl_halideF
-    '                 acyl_halideI, acyl_peroxide, aldehyde, carboxylic_acid, carboxylic_ester
-    '                 isocyanate, ketenes, ketone
+    '     Properties: acid_amides, acid_anhydride, acyl_peroxide, aldehyde, carboxylic_acid
+    '                 carboxylic_ester, isocyanate, ketenes, ketone
     ' 
     ' /********************************************************************************/
 

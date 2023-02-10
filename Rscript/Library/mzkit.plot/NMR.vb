@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7020fca5b93170beacac0ae8cb3da4, Rscript\Library\mzkit.plot\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::5c7020fca5b93170beacac0ae8cb3da4, mzkit\Rscript\Library\mzkit.plot\NMR.vb"
 
     ' Author:
     ' 

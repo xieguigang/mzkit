@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9283a94ac8cff3ae9ffe69d155074c7b, Rscript\Library\mzkit.insilicons\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9283a94ac8cff3ae9ffe69d155074c7b, mzkit\Rscript\Library\mzkit.insilicons\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

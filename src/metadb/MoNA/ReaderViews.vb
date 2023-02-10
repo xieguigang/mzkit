@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a1d3bb09e1004f6169ae230e11fe764, mzkit\src\metadb\MoNA\ReaderViews.vb"
+﻿#Region "Microsoft.VisualBasic::53c53be0fd6d7ba48e56f9b823bbfe0a, mzkit\src\metadb\MoNA\ReaderViews.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 139
-    ' Comment Lines: 11
-    '   Blank Lines: 24
-    '     File Size: 5.42 KB
+    '   Total Lines: 94
+    '    Code Lines: 73
+    ' Comment Lines: 6
+    '   Blank Lines: 15
+    '     File Size: 2.86 KB
 
 
     ' Module ReaderViews
     ' 
-    '     Function: Read_CAS, Read_collision_energy, Read_compound_source, Read_exact_mass, Read_instrument_type
-    '               Read_precursor_type, Read_pubchemID, Read_retention_time, Read_source_file, ReadDoubleMultiple
-    '               ReadDoublesMultiple, ReadMultiple, ReadStringMultiple, ReadStringsMultiple
+    '     Function: Read_retention_time, ReadDoubleMultiple, ReadDoublesMultiple, ReadMultiple, ReadStringMultiple
+    '               ReadStringsMultiple
     ' 
     ' /********************************************************************************/
 

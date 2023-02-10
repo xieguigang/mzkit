@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d15ddce5f03c0482b73ba5233e403b8e, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\peaks.vb"
+﻿#Region "Microsoft.VisualBasic::89f6f771e4e2a78bdfd8a1df13ba31e2, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\peaks.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 26
+    '   Total Lines: 43
+    '    Code Lines: 29
     ' Comment Lines: 6
-    '   Blank Lines: 7
-    '     File Size: 1.33 KB
+    '   Blank Lines: 8
+    '     File Size: 1.45 KB
 
 
     '     Class peaks

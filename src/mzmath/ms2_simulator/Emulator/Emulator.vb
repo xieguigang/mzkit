@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::088363c3c4286c7c705e4555d8ea8535, mzkit\src\mzmath\ms2_simulator\Emulator\Emulator.vb"
+﻿#Region "Microsoft.VisualBasic::2f85bafe47811b11f29090fca70051bc, mzkit\src\mzmath\ms2_simulator\Emulator\Emulator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 116
     ' Comment Lines: 70
     '   Blank Lines: 32
-    '     File Size: 8.58 KB
+    '     File Size: 8.80 KB
 
 
     ' Module Emulator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246f40bfa886746dfca4c336896b71d0, mzkit\src\assembly\BrukerDataReader\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::ec8cb8d768dff5d78c86ed714b41f400, mzkit\src\assembly\BrukerDataReader\Raw\DataReader.vb"
 
     ' Author:
     ' 

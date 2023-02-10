@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0d12dd52c47a3a9e2dcb67c83bfc9ae, Rscript\Library\mzkit\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::e0d12dd52c47a3a9e2dcb67c83bfc9ae, mzkit\Rscript\Library\mzkit\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

@@ -41,7 +41,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 860.00 B
+    '     File Size: 860 B
 
 
     ' Class PWConvertProcessor

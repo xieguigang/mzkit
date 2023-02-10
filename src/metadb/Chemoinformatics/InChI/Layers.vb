@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0afd6b61539b4e7ca5b67a6ea67120b0, mzkit\src\metadb\Chemoinformatics\InChI\Layers.vb"
+﻿#Region "Microsoft.VisualBasic::2a79a82e0473f78c9958fabb0ed52864, mzkit\src\metadb\Chemoinformatics\InChI\Layers.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 65
     ' Comment Lines: 45
     '   Blank Lines: 19
-    '     File Size: 4.59 KB
+    '     File Size: 4.72 KB
 
 
     '     Class Layer

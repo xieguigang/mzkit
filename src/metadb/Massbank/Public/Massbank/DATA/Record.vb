@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::788c314035edfabcd3f63e4abc7f147d, mzkit\src\metadb\Massbank\Public\Massbank\DATA\Record.vb"
+﻿#Region "Microsoft.VisualBasic::18b6b4b9c911fbe96bbdb839efe5b66b, mzkit\src\metadb\Massbank\Public\Massbank\DATA\Record.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 75
     ' Comment Lines: 15
     '   Blank Lines: 29
-    '     File Size: 3.27 KB
+    '     File Size: 3.39 KB
 
 
     '     Class Record

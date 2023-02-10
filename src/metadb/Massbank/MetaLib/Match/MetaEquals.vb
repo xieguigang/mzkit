@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9d558396e63c65d6f1e3d06fd241443, mzkit\src\metadb\Massbank\MetaLib\Match\MetaEquals.vb"
+﻿#Region "Microsoft.VisualBasic::fa9ace7dd7eb4137bca0287979a50add, mzkit\src\metadb\Massbank\MetaLib\Match\MetaEquals.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 60
     ' Comment Lines: 3
     '   Blank Lines: 17
-    '     File Size: 2.69 KB
+    '     File Size: 2.77 KB
 
 
     '     Class MetaEquals

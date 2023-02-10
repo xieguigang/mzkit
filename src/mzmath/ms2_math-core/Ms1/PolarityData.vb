@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9cec9ddb05c459b1761d3eba75cea79, mzkit\src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, mzkit\src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 30
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 981.00 B
+    '     File Size: 1015 B
 
 
     ' Class PolarityData

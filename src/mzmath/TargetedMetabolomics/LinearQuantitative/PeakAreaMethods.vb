@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8948a8fc585863d89815aa0487e6229f, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakAreaMethods.vb"
+﻿#Region "Microsoft.VisualBasic::af84cd48b8aea6bf935184af1bc0637c, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakAreaMethods.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 10
     ' Comment Lines: 17
     '   Blank Lines: 2
-    '     File Size: 956.00 B
+    '     File Size: 984 B
 
 
     '     Enum PeakAreaMethods

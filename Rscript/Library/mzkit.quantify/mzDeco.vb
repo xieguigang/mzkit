@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb17be81195d2e5c3ded08472c9430e, Rscript\Library\mzkit.quantify\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::0cb17be81195d2e5c3ded08472c9430e, mzkit\Rscript\Library\mzkit.quantify\mzDeco.vb"
 
     ' Author:
     ' 

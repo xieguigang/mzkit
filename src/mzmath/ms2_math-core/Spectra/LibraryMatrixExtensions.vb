@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43a7f4d995b953a082ae2964ed7f2de4, mzkit\src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2f147acb55797cf37e4c754a952c47ce, mzkit\src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 63
+    '   Total Lines: 124
+    '    Code Lines: 71
     ' Comment Lines: 39
-    '   Blank Lines: 13
-    '     File Size: 4.20 KB
+    '   Blank Lines: 14
+    '     File Size: 4.71 KB
 
 
     '     Module LibraryMatrixExtensions
     ' 
-    '         Function: AsMatrix, Centroid, CentroidMode, Max
+    '         Function: AbSciexBaselineHandling, AsMatrix, Centroid, CentroidMode, Max
     ' 
     ' 
     ' /********************************************************************************/

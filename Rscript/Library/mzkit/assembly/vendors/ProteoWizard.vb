@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b253c02e9660f250e6e43a46a14768c, Rscript\Library\mzkit\assembly\vendors\ProteoWizard.vb"
+﻿#Region "Microsoft.VisualBasic::2b253c02e9660f250e6e43a46a14768c, mzkit\Rscript\Library\mzkit\assembly\vendors\ProteoWizard.vb"
 
     ' Author:
     ' 

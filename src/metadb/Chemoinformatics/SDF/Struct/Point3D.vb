@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::222bd8cb1de966a7bee7c3ba6f00267b, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 184.00 B
+    '     File Size: 193 B
 
 
     '     Class Point3D

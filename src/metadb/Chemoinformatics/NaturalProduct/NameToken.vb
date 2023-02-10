@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 4
-    '     File Size: 780.00 B
+    '     File Size: 780 B
 
 
     '     Class Token

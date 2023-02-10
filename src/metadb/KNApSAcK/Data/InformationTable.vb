@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a3b0dc6c96cc69929d1e4ed2c218aa9, src\metadb\KNApSAcK\Data\InformationTable.vb"
+﻿#Region "Microsoft.VisualBasic::c4862a13fcdac13200ff3b81bfeb229f, mzkit\src\metadb\KNApSAcK\Data\InformationTable.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 58
+    ' Comment Lines: 4
+    '   Blank Lines: 9
+    '     File Size: 2.72 KB
+
 
     '     Class InformationTable
     ' 

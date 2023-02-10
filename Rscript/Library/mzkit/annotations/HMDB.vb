@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::716473ea2ff8400bc315a27c7955c012, Rscript\Library\mzkit\annotations\HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::716473ea2ff8400bc315a27c7955c012, mzkit\Rscript\Library\mzkit\annotations\HMDB.vb"
 
     ' Author:
     ' 

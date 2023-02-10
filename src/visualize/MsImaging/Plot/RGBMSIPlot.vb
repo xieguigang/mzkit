@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c4cbc76b136a524f6a34d7694a5b6d7, mzkit\src\visualize\MsImaging\Plot\RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8bfaca5b5afa6584ccb3a41541f6d188, mzkit\src\visualize\MsImaging\Plot\RGBMSIPlot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 88
+    '   Total Lines: 98
+    '    Code Lines: 85
     ' Comment Lines: 1
     '   Blank Lines: 12
-    '     File Size: 4.48 KB
+    '     File Size: 4.14 KB
 
 
     ' Class RGBMSIPlot

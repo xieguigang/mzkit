@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4e0ccf253ae264cf3f9def982afe714, Rscript\Library\mzkit\comprehensive\TissueMorphology.vb"
+﻿#Region "Microsoft.VisualBasic::c4e0ccf253ae264cf3f9def982afe714, mzkit\Rscript\Library\mzkit\comprehensive\TissueMorphology.vb"
 
     ' Author:
     ' 

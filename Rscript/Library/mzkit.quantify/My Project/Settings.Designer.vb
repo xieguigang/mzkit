@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d144d91c308ea2d0fa0dcbd40a6670c3, Rscript\Library\mzkit.quantify\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d144d91c308ea2d0fa0dcbd40a6670c3, mzkit\Rscript\Library\mzkit.quantify\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

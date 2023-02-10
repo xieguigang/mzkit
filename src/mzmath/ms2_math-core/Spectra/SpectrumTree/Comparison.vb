@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7ddf1105ff26bbc37fa07f6f0de07b, mzkit\src\mzmath\ms2_math-core\Spectra\SpectrumTree\Comparison.vb"
+﻿#Region "Microsoft.VisualBasic::6f5983e2981e0470534b39ccb843bf52, mzkit\src\mzmath\ms2_math-core\Spectra\SpectrumTree\Comparison.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.30 KB
+    '     File Size: 1.33 KB
 
 
     '     Class Comparison

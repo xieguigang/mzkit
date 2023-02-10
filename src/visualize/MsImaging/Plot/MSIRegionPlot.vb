@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::729e2febf61fe561aa78da0d259a4751, mzkit\src\visualize\MsImaging\Plot\MSIRegionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::d45bc976323645d096500bcc1e74dabf, mzkit\src\visualize\MsImaging\Plot\MSIRegionPlot.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 474.00 B
+    '     File Size: 488 B
 
 
     ' Class MSIRegionPlot

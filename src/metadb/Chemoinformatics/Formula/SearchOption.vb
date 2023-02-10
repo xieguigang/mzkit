@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce01261cf326298c4d2fd37f27f5c844, mzkit\src\metadb\Chemoinformatics\Formula\SearchOption.vb"
+﻿#Region "Microsoft.VisualBasic::7c5d6a383eb3b149e3a55dabd2400869, mzkit\src\metadb\Chemoinformatics\Formula\SearchOption.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 110
     ' Comment Lines: 0
     '   Blank Lines: 20
-    '     File Size: 4.90 KB
+    '     File Size: 5.03 KB
 
 
     '     Class SearchOption

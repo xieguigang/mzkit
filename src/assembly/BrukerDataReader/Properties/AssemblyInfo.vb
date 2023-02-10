@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb25bf9d19bbc078728ad79db6937bc9, mzkit\src\assembly\BrukerDataReader\Properties\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8895491ec903515b43f293048359ece3, mzkit\src\assembly\BrukerDataReader\Properties\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 13
+    '   Total Lines: 34
+    '    Code Lines: 15
     ' Comment Lines: 14
-    '   Blank Lines: 4
-    '     File Size: 1.19 KB
+    '   Blank Lines: 5
+    '     File Size: 1.22 KB
 
 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b147052bf870f8979a68070c50f25fb, mzkit\src\assembly\BrukerDataReader\GlobalParameters.vb"
+﻿#Region "Microsoft.VisualBasic::1cc82a1fa4b530ff922cf66482e2534c, mzkit\src\assembly\BrukerDataReader\Raw\GlobalParameters.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 42
     ' Comment Lines: 31
     '   Blank Lines: 12
-    '     File Size: 2.99 KB
+    '     File Size: 2.98 KB
 
 
     '     Class GlobalParameters

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc3cf27d98838f8ac00d8eb0dc8ef2e, mzkit\src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::a367d8edb09dcf03104d8f6441c640ac, mzkit\src\metadb\Chemoinformatics\Formula\Models\FormulaComposition.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 47
     ' Comment Lines: 13
     '   Blank Lines: 10
-    '     File Size: 2.44 KB
+    '     File Size: 2.38 KB
 
 
     '     Class FormulaComposition

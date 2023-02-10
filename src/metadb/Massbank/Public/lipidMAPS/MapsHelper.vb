@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82af6883817035dfb5037245bd94d38e, mzkit\src\metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f7f473c9808c0343c40aa975993c8571, mzkit\src\metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 124
-    ' Comment Lines: 10
-    '   Blank Lines: 18
-    '     File Size: 6.21 KB
+    '   Total Lines: 106
+    '    Code Lines: 87
+    ' Comment Lines: 5
+    '   Blank Lines: 14
+    '     File Size: 4.40 KB
 
 
     '     Module MapsHelper
     ' 
-    '         Function: AssertMap, CreateMaps, CreateMeta, LipidName, Tuple
+    '         Function: AssertMap, CreateMaps, CreateMeta, Tuple
     ' 
     ' 
     ' /********************************************************************************/

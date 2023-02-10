@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c27949042de186c73ff8f56d6a00efe, Rscript\Library\mzkit.quantify\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::2c27949042de186c73ff8f56d6a00efe, mzkit\Rscript\Library\mzkit.quantify\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6496b019dd20d508ded9adb83026b50, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
+﻿#Region "Microsoft.VisualBasic::167ae7e6928ed8851515e3a90f53d739, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 30
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 3.58 KB
+    '     File Size: 3.61 KB
 
 
     '     Module NegativeFormula

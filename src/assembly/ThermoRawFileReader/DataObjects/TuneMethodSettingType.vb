@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 15
     '   Blank Lines: 4
-    '     File Size: 858.00 B
+    '     File Size: 858 B
 
 
     '     Structure TuneMethodSettingType

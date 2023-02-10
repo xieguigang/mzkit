@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::a273e214adaf08d4a2f3cf4302f747ae, mzkit\src\assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::f706985f66d876c52f0a97d4b52ff660, mzkit\src\assembly\mzPack\mzPack.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 242
-'    Code Lines: 182
-' Comment Lines: 28
-'   Blank Lines: 32
-'     File Size: 8.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class mzPack
-' 
-'     Properties: Application, Chromatogram, CountMs2, maxIntensity, MS
-'                 rtmax, rtmin, Scanners, source, Thumbnail
-'                 totalIons
-' 
-'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-'               GetXIC, hasMs2, PopulateAllScans, Read, ReadAll
-'               ToString, Write
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 281
+    '    Code Lines: 191
+    ' Comment Lines: 61
+    '   Blank Lines: 29
+    '     File Size: 9.77 KB
+
+
+    ' Class mzPack
+    ' 
+    '     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
+    '                 MS, rtmax, rtmin, Scanners, size
+    '                 source, Thumbnail, totalIons
+    ' 
+    '     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
+    '               GetXIC, hasMs2, Read, ReadAll, ToString
+    '               Write
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

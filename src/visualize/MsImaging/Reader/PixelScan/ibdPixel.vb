@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd7794616a13a9e2d0f68e823386acaa, mzkit\src\visualize\MsImaging\PixelScan\ibdPixel.vb"
+﻿#Region "Microsoft.VisualBasic::fabd1bff217abc546ac246b377f07934, mzkit\src\visualize\MsImaging\Reader\PixelScan\ibdPixel.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 68
-    ' Comment Lines: 4
-    '   Blank Lines: 16
-    '     File Size: 2.97 KB
+    '   Total Lines: 101
+    '    Code Lines: 76
+    ' Comment Lines: 7
+    '   Blank Lines: 18
+    '     File Size: 3.33 KB
 
 
     '     Class ibdPixel
     ' 
-    '         Properties: scanId, X, Y
+    '         Properties: sampleTag, scanId, X, Y
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetMs, GetMsPipe, GetMzIonIntensity, HasAnyMzIon, ReadMz
+    '         Function: GetMs, GetMsPipe, GetMzIonIntensity, (+2 Overloads) HasAnyMzIon, ReadMz
     ' 
     '         Sub: release
     ' 

@@ -41,7 +41,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 695.00 B
+    '     File Size: 695 B
 
 
     ' Class Food

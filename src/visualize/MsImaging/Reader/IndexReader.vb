@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6bbe3d66cfc99aa4253904c0c37788c, mzkit\src\visualize\MsImaging\Reader\IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::d53b019ded8f4a481e6804b6d5d8ccee, mzkit\src\visualize\MsImaging\Reader\IndexReader.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 32
-    ' Comment Lines: 5
-    '   Blank Lines: 9
-    '     File Size: 1.42 KB
+    '   Total Lines: 57
+    '    Code Lines: 38
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 1.65 KB
 
 
     '     Class IndexReader
     ' 
-    '         Properties: dimension
+    '         Properties: dimension, resolution
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
