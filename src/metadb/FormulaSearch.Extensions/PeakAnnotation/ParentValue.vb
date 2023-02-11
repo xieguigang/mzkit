@@ -74,13 +74,23 @@ Friend Class ParentValue
         ElseIf formula Is Nothing Then
             ' should be a score evaluation?
             Return candidates _
-                .Where(Function(a) AnnotationQueryResult.TestValid(a)) _
+                .Where(Function(a) AnnotationQueryResult.TestValid(a) AndAlso TestMsFragment(a)) _
                 .FirstOrDefault
         Else
             ' should be a score evaluation?
             Return candidates _
-                .Where(Function(a) AnnotationQueryResult.TestValid(a, formula)) _
+                .Where(Function(a) AnnotationQueryResult.TestValid(a, formula) AndAlso TestMsFragment(a)) _
                 .FirstOrDefault
+        End If
+    End Function
+
+    Private Function TestMsFragment(ionFrag As FragmentAnnotationHolder) As Boolean
+        Dim exactMass As Double = ionFrag.exactMass + Element.H
+
+        If TypeOf ionFrag.base Is Formula Then
+            Return NitrogenRule.TestRule(exactMass, ionFrag.base)
+        Else
+            Return True
         End If
     End Function
 End Class

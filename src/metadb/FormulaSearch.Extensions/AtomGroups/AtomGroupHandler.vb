@@ -92,7 +92,9 @@ Namespace AtomGroups
             End Get
         End Property
 
-        Shared Sub New()
+        Public Shared Sub Init()
+            Call Clear()
+
             Call SingletonList(Of FragmentAnnotationHolder).Add(From i In alkyl Select New FragmentAnnotationHolder(i.Value))
             Call SingletonList(Of FragmentAnnotationHolder).Add(From i In ketones Select New FragmentAnnotationHolder(i.Value))
             Call SingletonList(Of FragmentAnnotationHolder).Add(From i In amines Select New FragmentAnnotationHolder(i.Value))

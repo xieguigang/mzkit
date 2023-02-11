@@ -49,13 +49,31 @@ m/z	intensity	relative	annotation
         Dim anno As New PeakAnnotation(0.1, True)
         Dim result = anno.RunAnnotation(90.0555, loadMs2, formula)
 
-        Call Console.WriteLine(result.GetJson)
+        Call Console.WriteLine("With formula test")
+        Call Console.WriteLine()
+
+        For Each row In result.products
+            Call Console.WriteLine(row.ToString)
+        Next
+
+        Call Console.WriteLine(New String("-"c, 32))
+        Call Console.WriteLine()
+        Call Console.WriteLine()
     End Sub
 
     Sub peakAnnoNoFormula()
         Dim anno As New PeakAnnotation(0.1, True)
         Dim result = anno.RunAnnotation(90.0555, loadMs2)
 
-        Call Console.WriteLine(result.GetJson)
+        Call Console.WriteLine("No formula test")
+        Call Console.WriteLine()
+
+        For Each row In result.products
+            Call Console.WriteLine(row.ToString)
+        Next
+
+        Call Console.WriteLine(New String("-"c, 32))
+        Call Console.WriteLine()
+        Call Console.WriteLine()
     End Sub
 End Module

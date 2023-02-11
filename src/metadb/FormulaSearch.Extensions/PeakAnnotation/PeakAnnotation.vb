@@ -81,6 +81,10 @@ Public Class PeakAnnotation
         Me.adducts = adducts
     End Sub
 
+    Shared Sub New()
+        Call AtomGroupHandler.Init()
+    End Sub
+
     ''' <summary>
     ''' Run annotation of the ms2 product ions
     ''' </summary>
