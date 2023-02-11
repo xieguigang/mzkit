@@ -153,9 +153,14 @@ Namespace AtomGroups
 
             If TypeOf a.base Is Formula AndAlso a Like b Then
                 Dim newBase As Formula = DirectCast(a.base, Formula) - DirectCast(b.base, Formula)
-                Dim newMass As Double = newBase.ExactMass
 
-                Return New FragmentAnnotationHolder(newName, newMass, newBase)
+                For Each atom As String In newBase.Elements
+                    If newBase(atom) < 0 Then
+                        newBase.CountsByElement.Remove(atom)
+                    End If
+                Next
+
+                Return New FragmentAnnotationHolder(newName, newBase.ExactMass, newBase)
             Else
                 Dim newGroup As New MassGroup With {
                     .name = newName,

@@ -75,6 +75,13 @@ Friend Class ParentValue
     End Function
 
     Public Function GetFragment(candidates As IEnumerable(Of FragmentAnnotationHolder)) As FragmentAnnotationHolder
+        Dim all = candidates.ToArray
+
+        If all.Length = 0 Then
+            Return Nothing
+        Else
+            all = all.Where(Function() )
+        End If
 
     End Function
 End Class

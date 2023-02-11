@@ -60,11 +60,9 @@
 #End Region
 
 Imports System.Reflection
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.My
-Imports stdNum = System.Math
 
 Namespace AtomGroups
 
@@ -165,33 +163,6 @@ Namespace AtomGroups
             }
 
             Return New FragmentAnnotationHolder(group)
-        End Function
-
-        ''' <summary>
-        ''' Found atom groups by the mass delta between two fragment mz value
-        ''' </summary>
-        ''' <param name="mz1"></param>
-        ''' <param name="mz2"></param>
-        ''' <param name="delta"></param>
-        ''' <param name="da"></param>
-        ''' <param name="adducts"></param>
-        ''' <returns></returns>
-        Public Shared Function FindDelta(mz1 As Double, mz2 As Double,
-                                         Optional ByRef delta As Integer = 0,
-                                         Optional da As Double = 0.1,
-                                         Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
-
-            Dim d As Double = mz1 - mz2
-            Dim dmass As Double = stdNum.Abs(d)
-
-            If dmass <= 0.1 Then
-                Return Nothing
-            Else
-                delta = stdNum.Sign(d)
-            End If
-
-            Dim group As FragmentAnnotationHolder = New AtomGroupQuery(dmass, da, adducts).GetByMass
-            Return group
         End Function
     End Class
 End Namespace
