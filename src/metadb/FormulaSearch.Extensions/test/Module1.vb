@@ -88,7 +88,7 @@ Module Module1
         Call Console.WriteLine(FormulaScanner.ScanFormula("COH").CountsByElement.GetJson)
 
 
-        Dim anno As New PeakAnnotation(0.1)
+        Dim anno As New PeakAnnotation(0.1, True)
         Dim result = anno.RunAnnotation(101 + Element.H, istoTest)
 
         Pause()
