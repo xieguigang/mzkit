@@ -199,7 +199,14 @@ Namespace AtomGroups
                                          Optional da As Double = 0.1,
                                          Optional adducts As MzCalculator() = Nothing) As FragmentAnnotationHolder
 
-            Dim all = CreateQuery(mz1, mz2, delta, da, adducts).FilterByMass.ToArray
+            Dim q = CreateQuery(mz1, mz2, delta, da, adducts)
+            Dim all As AnnotationQueryResult()
+
+            If q Is Nothing Then
+                Return Nothing
+            Else
+                all = q.FilterByMass.ToArray
+            End If
 
             If all.Length = 0 Then
                 Return Nothing
@@ -229,7 +236,13 @@ Namespace AtomGroups
                                          Optional da As Double = 0.1,
                                          Optional adducts As MzCalculator() = Nothing) As IEnumerable(Of AnnotationQueryResult)
 
-            Return CreateQuery(mz1, mz2, delta, da, adducts).FilterByMass
+            Dim q = CreateQuery(mz1, mz2, delta, da, adducts)
+
+            If q Is Nothing Then
+                Return {}
+            Else
+                Return q.FilterByMass
+            End If
         End Function
     End Class
 End Namespace
