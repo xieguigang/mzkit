@@ -235,7 +235,7 @@ Public Class PeakAnnotation
         If parent.formula Is Nothing Then
             group = q.GetByMass
         Else
-            group = parent.GetFragment(q.FilterByMass)
+            group = parent.GetFragment(q.FilterByMass.Select(Function(a) a.Annotation))
         End If
 
         If Not group Is Nothing Then
@@ -245,13 +245,13 @@ Public Class PeakAnnotation
                 element.Annotation = $"{element.Annotation} ({group.name})"
             End If
         Else
-            group = AtomGroupHandler.FindDelta(
+            group = parent.GetFragment(AtomGroupQuery.ListDelta(
                 mz1:=parent.parentMz,
                 mz2:=element.mz,
                 delta:=delta,
                 da:=massDelta,
                 adducts:=adducts
-            )
+            ).Select(Function(a) a.Annotation))
 
             If Not group Is Nothing Then
                 Dim deltaStr As String

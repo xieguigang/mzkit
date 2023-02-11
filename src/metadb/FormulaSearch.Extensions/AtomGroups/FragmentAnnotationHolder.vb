@@ -76,6 +76,12 @@ Namespace AtomGroups
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property exactMass As Double
+
+        ''' <summary>
+        ''' 1. exact mass wrapper: <see cref="MassGroup"/>
+        ''' 2. formula object: <see cref="Formula"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property base As IExactMassProvider
 
         Sub New(anno As IExactMassProvider, Optional name As String = Nothing)
