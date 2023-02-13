@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5db75a4056d3ed3a5240803fcfe23103, mzkit\Rscript\Library\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7c327cdaa390e3c7b1c771a388566034, mzkit\Rscript\Library\mzkit\math\Formula.vb"
 
 ' Author:
 ' 
@@ -37,27 +37,29 @@
 
 ' Code Statistics:
 
-'   Total Lines: 402
-'    Code Lines: 287
-' Comment Lines: 52
-'   Blank Lines: 63
-'     File Size: 15.77 KB
+'   Total Lines: 575
+'    Code Lines: 390
+' Comment Lines: 102
+'   Blank Lines: 83
+'     File Size: 22.15 KB
 
 
 ' Module FormulaTools
 ' 
 '     Constructor: (+1 Overloads) Sub New
-'     Function: (+5 Overloads) add, asFormula, CreateGraph, divide, DownloadKCF
-'               EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString, getElementCount
-'               getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+5 Overloads) minus, openChemicalDescriptorDatabase
-'               parseSMILES, printFormulas, readKCF, readSDF, removeElement
-'               (+2 Overloads) repeats, ScanFormula, SDF2KCF
+'     Function: (+5 Overloads) add, asFormula, atomGroups, canonicalFormula, CreateGraph
+'               divide, EvalFormula, FormulaCompositionString, FormulaFinder, FormulaString
+'               getElementCount, getFormulaResult, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus
+'               openChemicalDescriptorDatabase, parseSMILES, PeakAnnotation, printFormulas, readKCF
+'               readSDF, registerAnnotations, removeElement, (+2 Overloads) repeats, ScanFormula
+'               SDF2KCF
 ' 
 ' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry

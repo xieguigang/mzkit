@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b419b96c22e930bb9357707e1cb17c4, mzkit\src\mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::61d7e5c9279ec680837911dabd56c2b4, mzkit\src\mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 46
     ' Comment Lines: 15
     '   Blank Lines: 8
-    '     File Size: 2.59 KB
+    '     File Size: 2.66 KB
 
 
     '     Module SpectraEncoder

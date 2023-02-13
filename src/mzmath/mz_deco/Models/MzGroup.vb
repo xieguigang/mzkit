@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 185.00 B
+    '     File Size: 185 B
 
 
     ' Class MzGroup

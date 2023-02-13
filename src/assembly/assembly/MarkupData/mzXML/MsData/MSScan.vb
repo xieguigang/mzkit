@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a82959c1a035abe44681697629d8419, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::5ca3b6fcdba080ea12632c0d8f274145, mzkit\src\assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 71
-    ' Comment Lines: 28
-    '   Blank Lines: 13
-    '     File Size: 4.43 KB
+    '   Total Lines: 131
+    '    Code Lines: 82
+    ' Comment Lines: 32
+    '   Blank Lines: 17
+    '     File Size: 5.29 KB
 
 
+    '     Interface IMsScanData
+    ' 
+    '         Properties: BasePeakIntensity, MSLevel, ScanTime, TotalIonCurrent
+    ' 
     '     Class scan
     ' 
     '         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
     '                     lowMz, msInstrumentID, msLevel, num, peaks
-    '                     peaksCount, polarity, precursorMz, retentionTime, scanType
-    '                     totIonCurrent
+    '                     peaksCount, polarity, precursorMz, retentionTime, ScanTime
+    '                     scanType, totIonCurrent
     ' 
     '         Function: ScanData, ToString
     ' 

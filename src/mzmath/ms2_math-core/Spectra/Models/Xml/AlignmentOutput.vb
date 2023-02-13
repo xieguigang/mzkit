@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e38f644fe4ee15e5c89ddbfcb8451176, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::fbab5e4c92d3d0bb9c92e18cf2af605d, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 49
+    '   Total Lines: 67
+    '    Code Lines: 54
     ' Comment Lines: 0
     '   Blank Lines: 13
-    '     File Size: 2.23 KB
+    '     File Size: 2.40 KB
 
 
     '     Class AlignmentOutput
     ' 
-    '         Properties: alignments, forward, jaccard, mirror, nhits
-    '                     query, reference, reverse
+    '         Properties: alignments, entropy, forward, jaccard, mirror
+    '                     nhits, query, reference, reverse
     ' 
     '         Function: CreateLinearMatrix, GetAlignmentMirror, ToString
     ' 

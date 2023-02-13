@@ -41,7 +41,7 @@
     '    Code Lines: 48
     ' Comment Lines: 12
     '   Blank Lines: 13
-    '     File Size: 3.03 KB
+    '     File Size: 3.02 KB
 
 
     '     Module ScanOfTPA

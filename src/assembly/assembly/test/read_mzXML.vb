@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12213cbaf43855bcc8a18b798c5d4cb1, mzkit\src\assembly\assembly\test\read_mzXML.vb"
+﻿#Region "Microsoft.VisualBasic::80a3876c21389d4b990e735794824883, mzkit\src\assembly\assembly\test\read_mzXML.vb"
 
     ' Author:
     ' 
@@ -41,12 +41,12 @@
     '    Code Lines: 30
     ' Comment Lines: 2
     '   Blank Lines: 10
-    '     File Size: 1.36 KB
+    '     File Size: 1.41 KB
 
 
     ' Module read_mzXML
     ' 
-    '     Sub: exportMs1, exportMs2, Main
+    '     Sub: exportMs1, exportMs2, Main1
     ' 
     ' /********************************************************************************/
 

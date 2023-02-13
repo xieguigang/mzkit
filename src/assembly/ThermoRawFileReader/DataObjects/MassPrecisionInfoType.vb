@@ -41,7 +41,7 @@
     '    Code Lines: 10
     ' Comment Lines: 18
     '   Blank Lines: 5
-    '     File Size: 786.00 B
+    '     File Size: 786 B
 
 
     '     Structure MassPrecisionInfoType

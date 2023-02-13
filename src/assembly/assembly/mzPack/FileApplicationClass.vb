@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9d118fb8db53e02745768116208f81, mzkit\src\assembly\assembly\mzPack\FileApplicationClass.vb"
+﻿#Region "Microsoft.VisualBasic::6a1e7db0966abaa26ce6d8694e6be697, mzkit\src\assembly\assembly\mzPack\FileApplicationClass.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 10
-    ' Comment Lines: 18
-    '   Blank Lines: 2
-    '     File Size: 952.00 B
+    '   Total Lines: 45
+    '    Code Lines: 14
+    ' Comment Lines: 24
+    '   Blank Lines: 7
+    '     File Size: 1.32 KB
 
 
     '     Enum FileApplicationClass

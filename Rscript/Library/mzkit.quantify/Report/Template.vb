@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::598a95c2a1bd0bca84adfe53b74a11ad, mzkit\Rscript\Library\mzkit.quantify\Report\Template.vb"
+﻿#Region "Microsoft.VisualBasic::a8f73cf5b9e4a8fb38bc680d380689b0, mzkit\Rscript\Library\mzkit.quantify\Report\Template.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 47
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 2.31 KB
+    '     File Size: 2.37 KB
 
 
     ' Module Template

@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 15
     '   Blank Lines: 3
-    '     File Size: 603.00 B
+    '     File Size: 603 B
 
 
     ' Module InstFlags

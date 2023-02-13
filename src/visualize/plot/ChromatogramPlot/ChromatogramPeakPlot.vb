@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9eb69508460788d03ef94e118857778, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a7cb6779754808366d1f91786395ed66, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 158
     ' Comment Lines: 25
     '   Blank Lines: 26
-    '     File Size: 9.66 KB
+    '     File Size: 9.87 KB
 
 
     ' Module ChromatogramPeakPlot

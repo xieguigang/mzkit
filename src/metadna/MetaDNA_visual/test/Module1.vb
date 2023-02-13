@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a6ed5aec4a19637914a4c25a3194780, mzkit\src\metadna\MetaDNA_visual\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::96f4b5fef1c46357b675131b45f77550, mzkit\src\metadna\MetaDNA_visual\test\Module1.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 1.12 KB
+    '     File Size: 1.15 KB
 
 
     ' Module Module1

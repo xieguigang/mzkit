@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7404ef47a681fc4a242563b80686027, mzkit\src\assembly\Comprehensive\D2Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::cfc3a21dbe699dacb04992b6852f475b, mzkit\src\assembly\Comprehensive\GCxGC\D2Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 89
+    '   Total Lines: 110
+    '    Code Lines: 91
     ' Comment Lines: 4
     '   Blank Lines: 15
-    '     File Size: 4.43 KB
+    '     File Size: 4.64 KB
 
 
     ' Class D2Chromatogram

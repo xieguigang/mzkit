@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d2adb2a858c0a27fdb0d783e214c6bf, mzkit\src\assembly\BrukerDataReader\DesignByContract.vb"
+﻿#Region "Microsoft.VisualBasic::c9ea8550e24291fe74a9c34facd81e81, mzkit\src\assembly\BrukerDataReader\Raw\Exceptions\AssertionException.vb"
 
     ' Author:
     ' 
@@ -37,39 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 294
-    '    Code Lines: 166
-    ' Comment Lines: 99
-    '   Blank Lines: 29
-    '     File Size: 9.34 KB
+    '   Total Lines: 33
+    '    Code Lines: 17
+    ' Comment Lines: 12
+    '   Blank Lines: 4
+    '     File Size: 808 B
 
 
-    '     Class CoverageExcludeAttribute
-    ' 
-    ' 
-    ' 
-    '     Module Check
-    ' 
-    '         Properties: UseAssertions, UseExceptions
-    ' 
-    '         Sub: (+3 Overloads) Assert, (+3 Overloads) Ensure, (+3 Overloads) Invariant, (+3 Overloads) Require
-    ' 
-    '     Class DesignByContractException
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Class PreconditionException
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Class PostconditionException
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Class InvariantException
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
     '     Class AssertionException
     ' 
     '         Constructor: (+3 Overloads) Sub New

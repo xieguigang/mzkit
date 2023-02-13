@@ -41,7 +41,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 296.00 B
+    '     File Size: 296 B
 
 
     '     Class Meta

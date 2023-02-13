@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::576d3d91276e191e02a5ef33fff669fc, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::13168afaf814aa0624854d8d15828ea6, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 72
     ' Comment Lines: 4
     '   Blank Lines: 20
-    '     File Size: 3.93 KB
+    '     File Size: 4.03 KB
 
 
     '     Structure NullableValue

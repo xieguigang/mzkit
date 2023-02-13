@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::153f637798c8083eb1135379bfdfb2e0, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::c40d3574d7e6f01f23d7718f634fc544, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 51
     ' Comment Lines: 27
     '   Blank Lines: 11
-    '     File Size: 3.16 KB
+    '     File Size: 3.24 KB
 
 
     '     Class [Structure]

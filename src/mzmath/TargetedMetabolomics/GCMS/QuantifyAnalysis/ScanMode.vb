@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3036a1f0b11105708812145650ae3222, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
+﻿#Region "Microsoft.VisualBasic::b54dc94547f5dd69acfe56f93461c3e4, mzkit\src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 229
-    '    Code Lines: 165
+    '   Total Lines: 232
+    '    Code Lines: 168
     ' Comment Lines: 39
     '   Blank Lines: 25
-    '     File Size: 10.34 KB
+    '     File Size: 10.75 KB
 
 
     '     Module ScanModeWorker

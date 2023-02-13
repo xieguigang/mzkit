@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 18
     '   Blank Lines: 5
-    '     File Size: 875.00 B
+    '     File Size: 875 B
 
 
     '     Structure MRMMassRangeType

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::318bd15e95ec9aa001ebcb32daf348c5, mzkit\src\assembly\assembly\MarkupData\mzXML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::5b40616aace9901783c19a68846c4710, mzkit\src\assembly\assembly\MarkupData\mzXML\XML.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
+    '   Total Lines: 130
     '    Code Lines: 77
-    ' Comment Lines: 25
+    ' Comment Lines: 36
     '   Blank Lines: 17
-    '     File Size: 4.59 KB
+    '     File Size: 5.50 KB
 
 
     '     Class XML

@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 12
     '   Blank Lines: 3
-    '     File Size: 471.00 B
+    '     File Size: 471 B
 
 
     '     Enum IonModes

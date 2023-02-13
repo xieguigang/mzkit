@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5668271c934ea813f238418e5b2168e, mzkit\src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
+﻿#Region "Microsoft.VisualBasic::a8a52fbbde46c6494d6f13ac39199f4d, mzkit\src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
-    '    Code Lines: 9
+    '   Total Lines: 14
+    '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 396.00 B
+    '     File Size: 504 B
 
 
     ' Class PrecursorIonComposition
@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class PrecursorIonComposition : Inherits FormulaComposition
@@ -62,6 +63,7 @@ Public Class PrecursorIonComposition : Inherits FormulaComposition
     Public Property adducts As Double
     Public Property M As Integer
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(counts As IDictionary(Of String, Integer), Optional formula As String = Nothing)
         MyBase.New(counts, formula)
     End Sub

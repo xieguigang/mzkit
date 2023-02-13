@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::6713e890b7a8f0f957e2467b88a3129c, mzkit\src\assembly\assembly\MarkupData\nmrML\spectrum1D.vb"
+﻿#Region "Microsoft.VisualBasic::aa3b3a6ddaf36a4535a0b134897cce1f, mzkit\src\assembly\assembly\MarkupData\nmrML\spectrum1D.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 60
-'    Code Lines: 41
-' Comment Lines: 5
-'   Blank Lines: 14
-'     File Size: 1.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class spectrum1D
-' 
-'         Properties: spectrumDataArray, xAxis
-' 
-'         Function: ParseMatrix
-' 
-'     Class xAxis
-' 
-'         Properties: endValue, startValue, unitAccession, unitCvRef, unitName
-' 
-'         Function: GetPPM
-' 
-'     Class spectrumList
-' 
-'         Properties: spectrum1D
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 49
+    ' Comment Lines: 5
+    '   Blank Lines: 17
+    '     File Size: 2.24 KB
+
+
+    '     Class spectrum1D
+    ' 
+    '         Properties: id, numberOfDataPoints, spectrumDataArray, xAxis
+    ' 
+    '         Function: ParseMatrix
+    ' 
+    '     Class xAxis
+    ' 
+    '         Properties: endValue, startValue, unitAccession, unitCvRef, unitName
+    ' 
+    '         Function: GetPPM
+    ' 
+    '     Class spectrumList
+    ' 
+    '         Properties: spectrum1D
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

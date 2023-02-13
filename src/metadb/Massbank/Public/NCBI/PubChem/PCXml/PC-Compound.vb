@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e1cedd77c82e2c1f6eaac8ab356ee13, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\PCXml\PC-Compound.vb"
+﻿#Region "Microsoft.VisualBasic::58b3d4127bdc9e6c187c844693343f09, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\PCXml\PC-Compound.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 791.00 B
+    '     File Size: 820 B
 
 
     '     Class Compound

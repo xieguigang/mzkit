@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8108ccd671e55500193aa77e618ce1b1, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\ScoreAggregates.vb"
+﻿#Region "Microsoft.VisualBasic::86757e157c6e7f02bfb16fe3302a7df0, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\ScoreAggregates.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 113.00 B
+    '     File Size: 120 B
 
 
     '     Enum ScoreAggregates

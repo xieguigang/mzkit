@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 256.00 B
+    '     File Size: 256 B
 
 
     '     Class Correction

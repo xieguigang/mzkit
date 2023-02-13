@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 6
     '   Blank Lines: 3
-    '     File Size: 347.00 B
+    '     File Size: 347 B
 
 
     '     Class TuneMethod

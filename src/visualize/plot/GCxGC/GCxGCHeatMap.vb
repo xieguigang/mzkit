@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e05102b7a2838babc1cc173a48b77611, mzkit\src\visualize\plot\GCxGC\GCxGCHeatMap.vb"
+﻿#Region "Microsoft.VisualBasic::a4bac188a59ffddede5d6e66dee5741b, mzkit\src\visualize\plot\GCxGC\GCxGCHeatMap.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 114
     ' Comment Lines: 3
     '   Blank Lines: 21
-    '     File Size: 5.61 KB
+    '     File Size: 5.75 KB
 
 
     ' Class GCxGCHeatMap

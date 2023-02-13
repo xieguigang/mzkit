@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f082ad534b8ddc4eb75dc252a900a4cb, mzkit\src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::747c9d75361d901c1b661ff31b0012e2, mzkit\src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,32 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 115
+    '   Total Lines: 191
+    '    Code Lines: 136
     ' Comment Lines: 22
-    '   Blank Lines: 24
-    '     File Size: 5.96 KB
+    '   Blank Lines: 33
+    '     File Size: 6.62 KB
 
 
+    ' Class UnitValue
+    ' 
+    '     Properties: unit, value
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
+    ' 
+    ' Class CCS
+    ' 
+    '     Properties: reference, value
+    ' 
+    '     Function: ToString
+    ' 
     ' Class ChemicalDescriptor
     ' 
-    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BondDefStereoCount, BondUdefStereoCount, Complexity
-    '                 ComponentCount, ExactMass, FormalCharge, HeavyAtoms, HydrogenAcceptor
-    '                 HydrogenDonors, IsotopicAtomCount, RotatableBonds, schema, TautoCount
+    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BondDefStereoCount, BondUdefStereoCount, CCS
+    '                 Complexity, ComponentCount, CovalentlyBonded, ExactMass, FormalCharge
+    '                 HeavyAtoms, HydrogenAcceptor, HydrogenDonors, IsotopicAtomCount, LogP
+    '                 MeltingPoint, RotatableBonds, schema, Solubility, TautoCount
     '                 TopologicalPolarSurfaceArea, XLogP3, XLogP3_AA
     ' 
     '     Constructor: (+2 Overloads) Sub New

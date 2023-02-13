@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee68f65b05708946e02ffab5b12136fb, mzkit\src\assembly\assembly\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::d5832809f4265bed313daf5858b124e0, mzkit\src\assembly\assembly\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 26
     ' Comment Lines: 9
     '   Blank Lines: 5
-    '     File Size: 1.52 KB
+    '     File Size: 1.56 KB
 
 
     ' Class SpectrumTree

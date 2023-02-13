@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18a34a6a468d6399045f6deb4560883f, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
+﻿#Region "Microsoft.VisualBasic::0f545a8ff90373f0d6aced0f6de705ae, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 112
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 5.71 KB
+    '   Total Lines: 247
+    '    Code Lines: 219
+    ' Comment Lines: 3
+    '   Blank Lines: 25
+    '     File Size: 11.06 KB
 
 
     '     Class MetaInfo
@@ -57,14 +57,17 @@
     ' 
     '     Class MetaDb
     ' 
-    '         Properties: [class], accession, biospecimen, CAS, cellular_locations
-    '                     chebi_id, chemical_formula, description, direct_parent, exact_mass
-    '                     inchi, inchikey, iupac_name, kegg_id, kingdom
-    '                     molecular_framework, name, pubchem_cid, secondary_accessions, smiles
-    '                     state, sub_class, super_class, synonyms, tissue
-    '                     traditional_iupac, wikipedia_id
+    '         Properties: [class], accession, biocyc_id, Biomarker, biospecimen
+    '                     CAS, cellular_locations, chebi_id, chemical_formula, chemspider_id
+    '                     description, direct_parent, disease, Disposition, drugbank_id
+    '                     exact_mass, foodb_id, inchi, inchikey, iupac_name
+    '                     kegg_id, kingdom, metlin_id, molecular_framework, name
+    '                     pathways, Physiological_effects, Process, proteins, pubchem_cid
+    '                     Role, secondary_accessions, smiles, state, sub_class
+    '                     super_class, synonyms, tissue, traditional_iupac, wikipedia_id
     ' 
-    '         Function: FromMetabolite, GetSynonym
+    '         Function: FromMetabolite, getBioMarkers, getOntologyIndex, GetSynonym, OntologyTreeLines
+    '                   populateTree
     ' 
     '         Sub: WriteTable
     ' 

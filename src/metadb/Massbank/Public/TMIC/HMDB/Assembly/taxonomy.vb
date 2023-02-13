@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b4694ff264606d2d9cfd3318e5daaf5, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
+﻿#Region "Microsoft.VisualBasic::77c40c99104a074720a1bf24ac0a56aa, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 58
+    '   Total Lines: 98
+    '    Code Lines: 70
     ' Comment Lines: 3
-    '   Blank Lines: 21
-    '     File Size: 2.55 KB
+    '   Blank Lines: 25
+    '     File Size: 3.01 KB
 
 
     '     Class taxonomy
     ' 
-    '         Properties: [class], alternative_parents, description, direct_parent, kingdom
-    '                     molecular_framework, sub_class, substituents, super_class
+    '         Properties: [class], alternative_parents, description, direct_parent, external_descriptors
+    '                     kingdom, molecular_framework, sub_class, substituents, super_class
+    ' 
+    '     Structure external_descriptors
+    ' 
+    '         Properties: external_descriptor
     ' 
     '     Structure alternative_parents
     ' 
@@ -59,9 +63,16 @@
     ' 
     '     Class ontology
     ' 
-    '         Properties: applications, biofunctions, origins, status
+    '         Properties: root
     ' 
-    '         Function: ToString
+    '     Class ontology_term
+    ' 
+    '         Properties: definition, descendants, level, parent_id, synonyms
+    '                     term, type
+    ' 
+    '     Structure descendants
+    ' 
+    '         Properties: descendant
     ' 
     '     Structure origins
     ' 

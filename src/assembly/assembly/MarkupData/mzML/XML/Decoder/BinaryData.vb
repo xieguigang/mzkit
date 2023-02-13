@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0b70d2066e75ce93874b1304b57d94, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::c4e48306f930085e9ff024bfbdbafc52, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 697.00 B
+    '     File Size: 715 B
 
 
     '     Class BinaryData

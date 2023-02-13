@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03ef6a89d69bf45e9ea4541ff421e73e, mzkit\src\assembly\sciexWiffReader\MRMReader.vb"
+﻿#Region "Microsoft.VisualBasic::904f171c4c1947caf536105306e219fa, mzkit\src\assembly\sciexWiffReader\MRMReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 33.00 B
+    '     File Size: 35 B
 
 
     ' Class MRMReader

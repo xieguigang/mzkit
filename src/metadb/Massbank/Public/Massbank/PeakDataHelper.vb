@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3889aedb7fbdbd579f725ac00b5ff508, mzkit\src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
+﻿#Region "Microsoft.VisualBasic::6090b4399058fd9badf1f8af8b4162fd, mzkit\src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 40
     ' Comment Lines: 21
     '   Blank Lines: 7
-    '     File Size: 2.66 KB
+    '     File Size: 2.72 KB
 
 
     '     Module PeakDataHelper

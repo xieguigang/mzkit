@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d0c32e0d3543aa8a3024ee9fc9a7100, mzkit\src\metadna\metaDNA\MSJointConnection.vb"
+﻿#Region "Microsoft.VisualBasic::7ca9da3c7ae15ed3d28327e251d93ffa, mzkit\src\metadna\metaDNA\MSJointConnection.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
-    '    Code Lines: 193
-    ' Comment Lines: 16
-    '   Blank Lines: 22
-    '     File Size: 9.46 KB
+    '   Total Lines: 257
+    '    Code Lines: 206
+    ' Comment Lines: 26
+    '   Blank Lines: 25
+    '     File Size: 10.11 KB
 
 
     ' Class MSJointConnection
@@ -49,8 +49,9 @@
     '     Properties: allClusters
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetAnnotation, GetCompound, getEnrichedMzSet, (+2 Overloads) GetEnrichment, GetGSEABackground
-    '               (+2 Overloads) ImportsBackground, QueryByMz, SetAnnotation, (+2 Overloads) toClusters
+    '     Function: GetAnnotation, GetCompound, GetDbXref, getEnrichedMzSet, (+2 Overloads) GetEnrichment
+    '               GetGSEABackground, GetMetadata, (+2 Overloads) ImportsBackground, QueryByMz, SetAnnotation
+    '               (+2 Overloads) toClusters
     ' 
     ' /********************************************************************************/
 

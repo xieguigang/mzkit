@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0d90b02a081610b33b2174ef400dc5c, mzkit\src\assembly\Comprehensive\GC2Dimensional.vb"
+﻿#Region "Microsoft.VisualBasic::63d3aa95872be663e82b0c9015e3636c, mzkit\src\assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 329
-    '    Code Lines: 208
-    ' Comment Lines: 79
-    '   Blank Lines: 42
-    '     File Size: 12.47 KB
+    '   Total Lines: 249
+    '    Code Lines: 142
+    ' Comment Lines: 77
+    '   Blank Lines: 30
+    '     File Size: 9.60 KB
 
 
     ' Module GC2Dimensional
     ' 
-    '     Function: Convert2dRT, CreateMSScans, (+2 Overloads) Demodulate2D, Demodulate2DShape, readIntoMatrix
-    '               readMzMatrix, (+2 Overloads) scan1, tickInternal, ToMzPack
+    '     Function: Convert2dRT, (+2 Overloads) Demodulate2D, Demodulate2DShape, (+2 Overloads) scan1, tickInternal
+    '               ToMzPack
     ' 
     ' /********************************************************************************/
 

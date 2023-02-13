@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc031a6a9b35ef99a3ae6c24745889b6, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\TargettedData.vb"
+﻿#Region "Microsoft.VisualBasic::bf50663ad35a3c15c9ec37392a2adb0a, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\TargettedData.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 6
     '   Blank Lines: 1
-    '     File Size: 254.00 B
+    '     File Size: 266 B
 
 
     '     Enum TargettedData

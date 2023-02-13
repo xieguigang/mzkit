@@ -1,76 +1,75 @@
-﻿#Region "Microsoft.VisualBasic::9441b744362afcfc85bcbc047c0ffe4a, mzkit\src\metadb\MoNA\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::b5459e9a36cc0e77fd6b3ce73cdcec7c, mzkit\src\metadb\MoNA\Metadata\MetaData.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 213
-'    Code Lines: 182
-' Comment Lines: 11
-'   Blank Lines: 20
-'     File Size: 7.93 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MetaData
-' 
-'     Properties: accession, activation_parameter, activation_time, adduct, author
-'                 automatic_gain_control, capillary_temperature, capillary_voltage, cas, cas_number
-'                 cdl_temperature, charge_state, chebi, chemspider, collision_energy
-'                 collision_energy_voltage, collision_gas, column, column_pressure, column_temperature
-'                 compound_class, compound_source, copyright, data_format, derivative_formula
-'                 derivative_mass, derivatization_type, desolvation_gas_flow, desolvation_temperature, exact_mass
-'                 exactmass, flow_gradient, flow_rate, fragmentation_method, fragmentation_mode
-'                 hmdb, InChI, InChIKey, instrument, instrument_type
-'                 ion_guide_peak_voltage, ion_guide_voltage, ion_source, ion_spray_voltage, ion_type
-'                 ionization, ionization_energy, ionization_mode, kegg, knapsack
-'                 Last_AutoCuration, lens_voltage, license, lineage, link
-'                 lipidbank, lipidmaps, mass_accuracy, mass_error, mass_range_mz
-'                 molecular_formula, ms_level, Mz_exact, name, nebulizer
-'                 nebulizing_gas, needle_voltage, orifice_temp, orifice_temperature, orifice_voltage
-'                 origin, Parent, precursor_mz, precursor_type, pubchem
-'                 pubchem_cid, pubchem_sid, publication, pubmed_id, raw_data_file
-'                 resolution, resolution_setting, retention_time, ring_voltage, sample
-'                 sample_introduction, sampling_cone, scanning, scanning_range, scientific_name
-'                 SMILES, solvent, solvent_a, solvent_acetonitrile, solvent_b
-'                 source_file, source_temperature, source_voltage, spectrum_type, spray_voltage
-'                 total_exact_mass, tube_lens_voltage
-' 
-'     Function: ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 174
+    ' Comment Lines: 7
+    '   Blank Lines: 28
+    '     File Size: 7.59 KB
+
+
+    ' Class MetaData
+    ' 
+    '     Properties: [date], accession, activation_parameter, activation_time, author
+    '                 automatic_gain_control, capillary_temperature, capillary_voltage, cas_number, cdl_temperature
+    '                 charge_state, chebi, chembl, ChemIDplus, chemspider
+    '                 collision_energy_level, collision_energy_voltage, collision_gas, column, column_pressure
+    '                 column_temperature, comment, compound_class, copyright, data_format
+    '                 derivative_formula, derivative_mass, derivatization_type, desolvation_gas_flow, desolvation_temperature
+    '                 drugbank, exact_mass, flow_gradient, flow_rate, fragmentation_method
+    '                 fragmentation_mode, hmdb, InChI, InChIKey, instrument
+    '                 instrument_type, ion_guide_peak_voltage, ion_guide_voltage, ion_spray_voltage, ionization
+    '                 ionization_mode, kegg, knapsack, Last_AutoCuration, lens_voltage
+    '                 license, lineage, link, lipidbank, lipidmaps
+    '                 mass_accuracy, mass_error, mass_range_mz, Mesh, molecular_formula
+    '                 ms_level, name, nebulizer, nebulizing_gas, needle_voltage
+    '                 orifice_temp, orifice_temperature, orifice_voltage, origin, precursor_intensity
+    '                 precursor_mz, precursor_type, pubchem_cid, pubchem_sid, publication
+    '                 pubmed_id, raw_data_file, reanalyze, resolution, resolution_setting
+    '                 retention_time, ring_voltage, sample, sample_introduction, sampling_cone
+    '                 scanning, scanning_range, scientific_name, SMILES, solvent
+    '                 solvent_a, solvent_acetonitrile, solvent_b, source_temperature, spectrum_type
+    '                 SPLASH, spray_voltage, tube_lens_voltage, whole, wikipedia
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

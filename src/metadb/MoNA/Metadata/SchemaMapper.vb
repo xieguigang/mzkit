@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dff0461ea3edbf051d32e9e889095bc, mzkit\src\metadb\MoNA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9e9c6bf55afe3bbec1505611f2674bfe, mzkit\src\metadb\MoNA\Metadata\SchemaMapper.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 70
-    ' Comment Lines: 15
-    '   Blank Lines: 22
-    '     File Size: 3.73 KB
+    '   Total Lines: 100
+    '    Code Lines: 73
+    ' Comment Lines: 12
+    '   Blank Lines: 15
+    '     File Size: 3.58 KB
 
 
-    ' Module Extensions
+    ' Module SchemaMapper
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: AsDataFrame, FillData, LipidBlastParser
+    '     Function: fillArrays, FillData, fillScalar
     ' 
     ' /********************************************************************************/
 

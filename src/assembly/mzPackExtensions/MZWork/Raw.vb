@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d5c7ca67eacf2a005f0bf083b124472, mzkit\src\mzkit\Task\Imports\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::4c84a160e6255e28f9934a7c3a49ab9a, mzkit\src\assembly\mzPackExtensions\MZWork\Raw.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 98
-    ' Comment Lines: 16
-    '   Blank Lines: 29
-    '     File Size: 4.11 KB
+    '   Total Lines: 193
+    '    Code Lines: 136
+    ' Comment Lines: 20
+    '   Blank Lines: 37
+    '     File Size: 6.22 KB
 
 
-    ' Class Raw
+    '     Class Raw
     ' 
-    '     Properties: cache, cacheFileExists, isLoaded, numOfScan1, numOfScan2
-    '                 rtmax, rtmin, source
+    '         Properties: cache, cacheFileExists, isInMemory, isLoaded, numOfScan1
+    '                     numOfScan2, rtmax, rtmin, source
     ' 
-    '     Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetMs1Scans, GetMs2Scans
-    '               GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '     Sub: SaveAs
+    '         Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetLoadedMzpack, GetMs1Scans
+    '                   GetMs2Scans, GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+    ' 
+    '         Sub: loadMemory, SaveAs
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -170,7 +173,7 @@ Namespace MZWork
 
             If strict Then
                 Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    Call loadMemory(mzPack.ReadAll(file, verbose:=verbose))
+                    Call loadMemory(mzPack.ReadAll(file, verbose:=verbose, checkVer1DuplicatedId:=True))
                 End Using
             Else
 mzPackReader:

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ee9b3fd7c71b4fadf6ae75775d4d531, mzkit\src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::795244b540e8a325713919df79b518a2, mzkit\src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 223
-    '    Code Lines: 114
+    '   Total Lines: 229
+    '    Code Lines: 118
     ' Comment Lines: 83
-    '   Blank Lines: 26
-    '     File Size: 9.44 KB
+    '   Blank Lines: 28
+    '     File Size: 9.91 KB
 
 
     '     Module GlobalAlignment
@@ -49,7 +49,7 @@
     '         Properties: ppm20
     ' 
     '         Function: Align, AlignMatrix, CreateAlignment, findMatch, (+2 Overloads) JaccardIndex
-    '                   MzUnion, SharedPeakCount, TopPeaks, TwoDirectionSSM
+    '                   MzIntersect, MzUnion, SharedPeakCount, TopPeaks, TwoDirectionSSM
     ' 
     ' 
     ' /********************************************************************************/

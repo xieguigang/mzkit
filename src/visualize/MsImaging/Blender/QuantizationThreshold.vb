@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85ee3062d70599fdf6d9d1ca555a9466, mzkit\src\visualize\MsImaging\Blender\QuantizationThreshold.vb"
+﻿#Region "Microsoft.VisualBasic::10b83477b304e5ad587c81df2401f791, mzkit\src\visualize\MsImaging\Blender\QuantizationThreshold.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 72
-    ' Comment Lines: 17
+    '   Total Lines: 127
+    '    Code Lines: 73
+    ' Comment Lines: 33
     '   Blank Lines: 21
-    '     File Size: 3.66 KB
+    '     File Size: 4.16 KB
 
 
     '     Delegate Function

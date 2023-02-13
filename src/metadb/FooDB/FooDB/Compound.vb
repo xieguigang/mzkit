@@ -41,7 +41,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 808.00 B
+    '     File Size: 808 B
 
 
     ' Class Compound

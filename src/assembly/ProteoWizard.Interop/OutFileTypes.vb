@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea4b19ae7b81ed284aa6a043150166bf, mzkit\src\assembly\ProteoWizard.Interop\OutFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, mzkit\src\assembly\ProteoWizard.Interop\OutFileTypes.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 27
     '   Blank Lines: 1
-    '     File Size: 962.00 B
+    '     File Size: 1001 B
 
 
     ' Enum OutFileTypes

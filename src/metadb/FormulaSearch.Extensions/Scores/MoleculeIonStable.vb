@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d72051b2fe2a6f92499687fb6a995774, mzkit\src\metadb\FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
+﻿#Region "Microsoft.VisualBasic::f66aa211a87313b2da1397c81f412ef7, mzkit\src\metadb\FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 41.00 B
+    '     File Size: 43 B
 
 
     ' Class MoleculeIonStable

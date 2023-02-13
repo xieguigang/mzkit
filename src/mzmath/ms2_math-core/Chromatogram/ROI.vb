@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa381c17d0766b01d1ad0c033ee5cce6, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::eb4bb6e3966188ca370b922da5ecb410, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 49
+    '   Total Lines: 109
+    '    Code Lines: 57
     ' Comment Lines: 39
-    '   Blank Lines: 11
-    '     File Size: 3.57 KB
+    '   Blank Lines: 13
+    '     File Size: 4.00 KB
 
 
     '     Class ROI
@@ -49,7 +49,7 @@
     '         Properties: baseline, integration, maxInto, noise, peakWidth
     '                     rt, snRatio, ticks, time
     ' 
-    '         Function: GetChromatogramData, ToString
+    '         Function: (+2 Overloads) GetChromatogramData, ToString
     ' 
     ' 
     ' /********************************************************************************/
