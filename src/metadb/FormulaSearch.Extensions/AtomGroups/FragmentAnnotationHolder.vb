@@ -76,6 +76,12 @@ Namespace AtomGroups
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property exactMass As Double
+
+        ''' <summary>
+        ''' 1. exact mass wrapper: <see cref="MassGroup"/>
+        ''' 2. formula object: <see cref="Formula"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property base As IExactMassProvider
 
         Sub New(anno As IExactMassProvider, Optional name As String = Nothing)
@@ -153,9 +159,14 @@ Namespace AtomGroups
 
             If TypeOf a.base Is Formula AndAlso a Like b Then
                 Dim newBase As Formula = DirectCast(a.base, Formula) - DirectCast(b.base, Formula)
-                Dim newMass As Double = newBase.ExactMass
 
-                Return New FragmentAnnotationHolder(newName, newMass, newBase)
+                For Each atom As String In newBase.Elements
+                    If newBase(atom) < 0 Then
+                        newBase.CountsByElement.Remove(atom)
+                    End If
+                Next
+
+                Return New FragmentAnnotationHolder(newName, newBase.ExactMass, newBase)
             Else
                 Dim newGroup As New MassGroup With {
                     .name = newName,

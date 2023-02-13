@@ -66,15 +66,31 @@ Friend Class ParentValue
         Me.formula = FormulaScanner.ScanFormula(formula)
     End Sub
 
-    Public Function TestFragments(frag As String) As Boolean
-        If formula Is Nothing Then
-            Return True
-        End If
+    Public Function GetFragment(candidates As IEnumerable(Of FragmentAnnotationHolder)) As FragmentAnnotationHolder
+        Dim all = candidates.ToArray
 
-        Return True
+        If all.Length = 0 Then
+            Return Nothing
+        ElseIf formula Is Nothing Then
+            ' should be a score evaluation?
+            Return candidates _
+                .Where(Function(a) AnnotationQueryResult.TestValid(a) AndAlso TestMsFragment(a)) _
+                .FirstOrDefault
+        Else
+            ' should be a score evaluation?
+            Return candidates _
+                .Where(Function(a) AnnotationQueryResult.TestValid(a, formula) AndAlso TestMsFragment(a)) _
+                .FirstOrDefault
+        End If
     End Function
 
-    Public Function GetFragment(candidates As IEnumerable(Of FragmentAnnotationHolder)) As FragmentAnnotationHolder
+    Private Function TestMsFragment(ionFrag As FragmentAnnotationHolder) As Boolean
+        Dim exactMass As Double = ionFrag.exactMass + Element.H
 
+        If TypeOf ionFrag.base Is Formula Then
+            Return NitrogenRule.TestRule(exactMass, ionFrag.base)
+        Else
+            Return True
+        End If
     End Function
 End Class

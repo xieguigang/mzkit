@@ -61,7 +61,7 @@ Public Class NitrogenRule
     ''' 含奇数个N原子，其质量数是奇数。质谱中最高质量峰不符合氮律就不是
     ''' 分子离子峰。
     ''' </summary>
-    ''' <param name="exact_mass#"></param>
+    ''' <param name="exact_mass"></param>
     ''' <param name="formula"></param>
     ''' <returns></returns>
     Public Shared Function TestRule(exact_mass#, formula As Formula) As Boolean
