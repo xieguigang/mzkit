@@ -61,6 +61,10 @@ Namespace Ms1.PrecursorType
     ''' <summary>
     ''' Ion Modes
     ''' </summary>
+    ''' <remarks>
+    ''' integer value is matched with the thermo fisher ms raw file reader
+    ''' do not modify the constant value at here
+    ''' </remarks>
     <CLSCompliant(True)>
     Public Enum IonModes
         ''' <summary>
