@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::074b2e68c6d40dd4983a798aed42e23c, mzkit\src\assembly\assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::a6405e8c7cc2dd242d06442cb27b0a4c, mzkit\src\assembly\assembly\mzPack\mzWebCache\mzXMLScans.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 18
+    '   Total Lines: 24
+    '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 877.00 B
+    '     File Size: 901 B
 
 
     '     Class mzXMLScans

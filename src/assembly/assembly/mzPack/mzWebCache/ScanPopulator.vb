@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02e0a495e46e32d67df35c6bbbe9c195, mzkit\src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
+﻿#Region "Microsoft.VisualBasic::c5d9380bd3e258e329642d52b59bfd97, mzkit\src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 97
+    '   Total Lines: 153
+    '    Code Lines: 123
     ' Comment Lines: 5
-    '   Blank Lines: 22
-    '     File Size: 5.16 KB
+    '   Blank Lines: 25
+    '     File Size: 6.12 KB
 
 
     '     Interface IScanReader
@@ -51,7 +51,7 @@
     '     Class ScanPopulator
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateScan, CreateScanGeneral, (+2 Overloads) Load, PopulateValidScans
+    '         Function: CreateScan, CreateScanGeneral, (+2 Overloads) Load, PopulateValidScans, yieldFakeMs1
     ' 
     ' 
     ' /********************************************************************************/

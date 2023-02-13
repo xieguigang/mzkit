@@ -1,4 +1,77 @@
-﻿Imports BioNovoGene.Analytical.NMRFidTool.Acqu
+﻿#Region "Microsoft.VisualBasic::948a50e03b484e23aa144233d76e9049, mzkit\src\assembly\NMRFidTool\Proc.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 330
+    '    Code Lines: 241
+    ' Comment Lines: 38
+    '   Blank Lines: 51
+    '     File Size: 11.03 KB
+
+
+    ' Class Proc
+    ' 
+    ' 
+    '     Enum WindowFunctions
+    ' 
+    '         EXPONENTIAL, GAUSSIAN, LORENTZGAUS, SINE, SINESQUARED
+    '         TRAF, TRAFS
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: ByteOrder, DspPhase, DwellTime, F1DetectionMode, FirstOrderPhase
+    '                 GbFactor, Increment, LeftShift, LineBroadening, PhasingType
+    '                 Shift, Ssb, SsbSine, SsbSineSquared, TdEffective
+    '                 TransformSize, WindowFunction, WindowFunctionType, ZeroFrequency, ZeroOrderPhase
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: is32Bit
+    ' 
+    '     Sub: set32Bit
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.NMRFidTool.Acqu
 Imports Microsoft.VisualBasic.Data.IO
 
 ' 

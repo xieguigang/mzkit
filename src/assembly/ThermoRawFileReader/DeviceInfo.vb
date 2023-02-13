@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::d2aea20c6105b184bfce093374c18774, mzkit\src\assembly\ThermoRawFileReader\DeviceInfo.vb"
+﻿#Region "Microsoft.VisualBasic::7d0a23b1903dd26c94b8d0a5ab522573, mzkit\src\assembly\ThermoRawFileReader\DeviceInfo.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 137
-'    Code Lines: 65
-' Comment Lines: 50
-'   Blank Lines: 22
-'     File Size: 4.53 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class DeviceInfo
-' 
-'     Properties: AxisLabelX, AxisLabelY, DeviceDescription, DeviceNumber, DeviceType
-'                 InstrumentName, Model, SerialNumber, SoftwareVersion, Units
-'                 YAxisLabelWithUnits
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 73
+    ' Comment Lines: 49
+    '   Blank Lines: 22
+    '     File Size: 4.59 KB
+
+
+    ' Class DeviceInfo
+    ' 
+    '     Properties: AxisLabelX, AxisLabelY, DeviceDescription, DeviceNumber, DeviceType
+    '                 InstrumentName, Model, SerialNumber, SoftwareVersion, Units
+    '                 YAxisLabelWithUnits
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: GetYAxisLabelWithUnits, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

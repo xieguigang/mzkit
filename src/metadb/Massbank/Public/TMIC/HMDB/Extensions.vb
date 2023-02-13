@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171356d0c708a7eff26070c7844a64a1, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f5a76eeef2c5aca3d5f83059b6fdd19b, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 232
     ' Comment Lines: 34
     '   Blank Lines: 38
-    '     File Size: 13.08 KB
+    '     File Size: 13.38 KB
 
 
     '     Module HMDBExtensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d323e4d7c9d3f509002cf33e26b63ab, mzkit\src\metadb\FormulaSearch.Extensions\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::1b68fa6ed45653c62bbdca37b2ecca09, mzkit\src\metadb\FormulaSearch.Extensions\test\Module1.vb"
 
     ' Author:
     ' 
@@ -88,7 +88,7 @@ Module Module1
         Call Console.WriteLine(FormulaScanner.ScanFormula("COH").CountsByElement.GetJson)
 
 
-        Dim anno As New PeakAnnotation(0.1)
+        Dim anno As New PeakAnnotation(0.1, True)
         Dim result = anno.RunAnnotation(101 + Element.H, istoTest)
 
         Pause()

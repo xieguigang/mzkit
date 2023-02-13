@@ -41,7 +41,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 291.00 B
+    '     File Size: 291 B
 
 
     '     Class ResultEntry

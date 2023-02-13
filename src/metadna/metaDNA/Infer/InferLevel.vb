@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86e692828fdc7539f59948c3b1aa790c, mzkit\src\metadna\metaDNA\Infer\InferLevel.vb"
+﻿#Region "Microsoft.VisualBasic::371076265ac1d687eb7337aec2bdb3c0, mzkit\src\metadna\metaDNA\Infer\InferLevel.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 94.00 B
+    '     File Size: 100 B
 
 
     '     Enum InferLevel

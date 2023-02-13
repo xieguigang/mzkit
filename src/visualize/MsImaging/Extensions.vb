@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a59441dd3db1873b6969bb7a79409b, mzkit\src\visualize\MsImaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a723b944a08b7a9fd966ed34a293bd6a, mzkit\src\visualize\MsImaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 214
-    '    Code Lines: 168
-    ' Comment Lines: 21
-    '   Blank Lines: 25
-    '     File Size: 7.78 KB
+    '   Total Lines: 236
+    '    Code Lines: 178
+    ' Comment Lines: 30
+    '   Blank Lines: 28
+    '     File Size: 8.25 KB
 
 
     ' Module Extensions

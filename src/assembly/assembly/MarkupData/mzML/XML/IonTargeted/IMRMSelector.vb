@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::446d52c13f9e73d1fe9d3d658f959121, mzkit\src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb"
+﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, mzkit\src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 241.00 B
+    '     File Size: 250 B
 
 
     '     Interface IMRMSelector

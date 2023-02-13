@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c8ff69b2c8f91ef6b2c7e1a2c406c32, mzkit\src\assembly\assembly\ASCII\MSN\FileReader.vb"
+﻿#Region "Microsoft.VisualBasic::a557dbdf3dbadacaa85c1e7503c0b9fd, mzkit\src\assembly\assembly\ASCII\MSN\FileReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 22
     ' Comment Lines: 5
     '   Blank Lines: 6
-    '     File Size: 1.14 KB
+    '     File Size: 1.17 KB
 
 
     '     Module FileReader

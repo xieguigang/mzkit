@@ -1,3 +1,96 @@
+﻿#Region "Microsoft.VisualBasic::41a0fdf0c9d9877a4595893129b6a4f8, mzkit\src\metadb\Massbank\Public\TMIC\MarkerDB\DataSet.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 73
+    ' Comment Lines: 33
+    '   Blank Lines: 18
+    '     File Size: 4.08 KB
+
+
+    '     Class DataSet
+    ' 
+    '         Properties: biomarker_type, biomarkers, chemicals, karyotypes, proteins
+    '                     sequence_variants, version
+    ' 
+    '     Class biomarkers
+    ' 
+    '         Properties: chemical, gene, karyotype, protein
+    ' 
+    '     Class gene
+    ' 
+    '         Properties: biomarker_type, conditions, entrez_gene_id, external_link, gene_symbol
+    '                     id, indication_types, position, variation
+    ' 
+    '     Class protein
+    ' 
+    '         Properties: conditions, creation_date, gene_name, id, name
+    '                     uniprot_id, update_date
+    ' 
+    '     Class sequence_variant
+    ' 
+    '         Properties: external_link, id, position, reference, sequence_variant_measurements
+    '                     variation
+    ' 
+    '     Class sequence_variant_measurement
+    ' 
+    '         Properties: reference
+    ' 
+    '     Class karyotype
+    ' 
+    '         Properties: biomarker_type, description, id, karyotype
+    ' 
+    '     Class chemical
+    ' 
+    '         Properties: biomarker_type, conditions, creation_date, hmdb_id, id
+    '                     name, update_date
+    ' 
+    '     Class condition
+    ' 
+    '         Properties: age, biofluid, citation, concentration, condition
+    '                     indication_type, sex
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Xml.Serialization
 
 Namespace TMIC.MarkerDB.XML

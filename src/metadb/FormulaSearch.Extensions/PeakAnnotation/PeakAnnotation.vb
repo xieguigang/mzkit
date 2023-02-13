@@ -1,57 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::86ed08d5dad570cf4e0a28562e7ed268, mzkit\src\metadb\FormulaSearch.Extensions\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::ab0e3d8cde21b6c93e45e6fa1814a53b, mzkit\src\metadb\FormulaSearch.Extensions\PeakAnnotation\PeakAnnotation.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 93
-'    Code Lines: 69
-' Comment Lines: 6
-'   Blank Lines: 18
-'     File Size: 3.26 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class PeakAnnotation
-' 
-'     Function: MatchElementGroups, MeasureFormula, MeasureIsotopePeaks, RunAnnotation
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 214
+    '    Code Lines: 148
+    ' Comment Lines: 34
+    '   Blank Lines: 32
+    '     File Size: 7.08 KB
+
+
+    ' Class PeakAnnotation
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MatchElementGroups, MeasureFormula, (+2 Overloads) MeasureIsotopePeaks, MeasureProductIsotopePeaks, RunAnnotation
+    '               UnionPeak
+    ' 
+    '     Sub: FragmentAnnotation
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -75,15 +81,24 @@ Public Class PeakAnnotation
         Me.adducts = adducts
     End Sub
 
+    Shared Sub New()
+        Call AtomGroupHandler.Init()
+    End Sub
+
     ''' <summary>
     ''' Run annotation of the ms2 product ions
     ''' </summary>
     ''' <param name="parentMz"></param>
     ''' <param name="products"></param>
+    ''' <param name="formula">
+    ''' Apply for atom group validation, used for create machine learning dataset
+    ''' </param>
     ''' <returns></returns>
-    Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
+    Public Function RunAnnotation(parentMz#, products As ms2(), Optional formula As String = Nothing) As Annotation
+        Dim parent As New ParentValue(parentMz, formula)
+
         products = MeasureIsotopePeaks(parentMz, products)
-        products = MatchElementGroups(parentMz, products)
+        products = MatchElementGroups(parent, products)
         products = MeasureProductIsotopePeaks(products)
         products = (From mzi As ms2
                     In products
@@ -208,17 +223,24 @@ Public Class PeakAnnotation
         Return Nothing
     End Function
 
-    Private Function MatchElementGroups(parentMz#, products As ms2()) As ms2()
+    Private Function MatchElementGroups(parent As ParentValue, products As ms2()) As ms2()
         For Each element As ms2 In products
-            Call FragmentAnnotation(element, parentMz)
+            Call FragmentAnnotation(element, parent)
         Next
 
         Return products
     End Function
 
-    Private Sub FragmentAnnotation(element As ms2, parentMz#)
-        Dim group As FragmentAnnotationHolder = AtomGroupHandler.GetByMass(element.mz, massDelta, adducts)
+    Private Sub FragmentAnnotation(element As ms2, parent As ParentValue)
+        Dim group As FragmentAnnotationHolder
         Dim delta As Integer = 0
+        Dim q As New AtomGroupQuery(element.mz, massDelta, adducts)
+
+        If parent.formula Is Nothing Then
+            group = q.GetByMass
+        Else
+            group = parent.GetFragment(q.FilterByMass.Select(Function(a) a.Annotation))
+        End If
 
         If Not group Is Nothing Then
             If element.Annotation.StringEmpty Then
@@ -227,13 +249,13 @@ Public Class PeakAnnotation
                 element.Annotation = $"{element.Annotation} ({group.name})"
             End If
         Else
-            group = AtomGroupHandler.FindDelta(
-                mz1:=parentMz,
+            group = parent.GetFragment(AtomGroupQuery.ListDelta(
+                mz1:=parent.parentMz,
                 mz2:=element.mz,
                 delta:=delta,
                 da:=massDelta,
                 adducts:=adducts
-            )
+            ).Select(Function(a) a.Annotation))
 
             If Not group Is Nothing Then
                 Dim deltaStr As String

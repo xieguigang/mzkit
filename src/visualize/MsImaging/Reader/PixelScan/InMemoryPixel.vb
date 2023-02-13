@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7c49eddc0be6a41a66a15a8525ff1ec, mzkit\src\visualize\MsImaging\PixelScan\InMemoryPixel.vb"
+﻿#Region "Microsoft.VisualBasic::21626e7a17285a2c9070b683deda2e64, mzkit\src\visualize\MsImaging\Reader\PixelScan\InMemoryPixel.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 41
+    '   Total Lines: 67
+    '    Code Lines: 52
     ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 1.65 KB
+    '   Blank Lines: 15
+    '     File Size: 2.10 KB
 
 
     '     Class InMemoryPixel
     ' 
-    '         Properties: scanId, X, Y
+    '         Properties: sampleTag, scanId, X, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetMs, GetMsPipe, GetMzIonIntensity, HasAnyMzIon
+    '         Function: GetMs, GetMsPipe, (+2 Overloads) GetMzIonIntensity, (+2 Overloads) HasAnyMzIon
     ' 
     '         Sub: release
     ' 

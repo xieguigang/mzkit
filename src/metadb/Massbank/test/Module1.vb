@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5add198587224893dbc6de73c564577, mzkit\src\metadb\Massbank\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::bae93fb002cabc30eef786a17e726a76, mzkit\src\metadb\Massbank\test\Module1.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 25
     ' Comment Lines: 1
     '   Blank Lines: 12
-    '     File Size: 889.00 B
+    '     File Size: 926 B
 
 
     ' Module Module1

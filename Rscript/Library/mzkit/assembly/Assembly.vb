@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::796f80b7a523ae87269d07985c7b8be6, mzkit\Rscript\Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::892d0e2f3344f73e04a28ffd0f53a770, mzkit\Rscript\Library\mzkit\assembly\Assembly.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 541
-'    Code Lines: 408
-' Comment Lines: 70
-'   Blank Lines: 63
-'     File Size: 23.30 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Assembly
-' 
-'     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, LoadIndex
-'               MatrixDataFrame, (+2 Overloads) mzMLMs1, mzXML2Mgf, (+2 Overloads) mzXMLMs1, openXmlSeeks
-'               PeakMs2FileIndex, printPeak, rawScans, ReadMgfIons, ReadMslIons
-'               ScanIds, Seek, summaryIons, writeMgfIons
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 554
+    '    Code Lines: 420
+    ' Comment Lines: 70
+    '   Blank Lines: 64
+    '     File Size: 23.31 KB
+
+
+    ' Module Assembly
+    ' 
+    '     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, LoadIndex
+    '               MatrixDataFrame, (+2 Overloads) mzMLMs1, mzXML2Mgf, (+2 Overloads) mzXMLMs1, openXmlSeeks
+    '               PeakMs2FileIndex, printPeak, rawScans, ReadMgfIons, ReadMslIons
+    '               readMsp, ScanIds, Seek, summaryIons, writeMgfIons
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

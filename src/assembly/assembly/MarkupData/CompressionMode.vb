@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0593c5ab2e694efbe7f4614d629ac6ec, mzkit\src\assembly\assembly\MarkupData\CompressionMode.vb"
+﻿#Region "Microsoft.VisualBasic::c89c9753b1f731bcab06d2de4d6e08ec, mzkit\src\assembly\assembly\MarkupData\CompressionMode.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 611.00 B
+    '     File Size: 633 B
 
 
     '     Enum CompressionMode

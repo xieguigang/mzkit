@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::ee4bf54bc8bb39efd4b4fc57a758877e, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::bdb34306931fb9ddfb1bbab62656f05d, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 338
-'    Code Lines: 233
-' Comment Lines: 68
-'   Blank Lines: 37
-'     File Size: 13.10 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzWeb
-' 
-'     Function: GetChromatogram, loadStream, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks
-'               Open, openFile, setMzpackThumbnail, TIC, ToMzPack
-'               writeMzpack, writeStream, writeToCDF
-' 
-'     Sub: WriteCache
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 574
+    '    Code Lines: 374
+    ' Comment Lines: 133
+    '   Blank Lines: 67
+    '     File Size: 21.55 KB
+
+
+    ' Module MzWeb
+    ' 
+    '     Function: GetChromatogram, loadStream, MassCalibration, Ms1Peaks, Ms1ScanPoints
+    '               Ms2ScanPeaks, Open, openFile, openFromFile, readCache
+    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+    '               writeMzpack, writeStream, writeToCDF
+    ' 
+    '     Sub: WriteCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

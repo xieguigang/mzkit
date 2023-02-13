@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44fb320c501bdef526c69f00cc0792b5, mzkit\src\mzmath\MSEngine\DBPool.vb"
+﻿#Region "Microsoft.VisualBasic::bc4f7d7d4fe4170576db3bd6824a4745, mzkit\src\mzmath\MSEngine\DBPool.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 37
+    '   Total Lines: 53
+    '    Code Lines: 40
     ' Comment Lines: 3
-    '   Blank Lines: 9
-    '     File Size: 1.61 KB
+    '   Blank Lines: 10
+    '     File Size: 1.80 KB
 
 
     ' Class DBPool

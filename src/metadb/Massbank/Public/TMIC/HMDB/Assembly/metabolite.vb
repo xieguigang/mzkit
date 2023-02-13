@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35a41c7216df9d8c31fcc62b4bdcff5d, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
+﻿#Region "Microsoft.VisualBasic::fd0ffae0ba62bdd052117d61bc915902, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 124
+    '   Total Lines: 189
+    '    Code Lines: 128
     ' Comment Lines: 29
-    '   Blank Lines: 31
-    '     File Size: 6.73 KB
+    '   Blank Lines: 32
+    '     File Size: 6.94 KB
 
 
     '     Class MetaReference
     ' 
     '         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biological_properties
     '                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
-    '                     drugbank_id, drugbank_metabolite_id, foodb_id, het_id, inchi
-    '                     inchikey, iupac_name, kegg_id, knapsack_id, Mass
-    '                     meta_cyc_id, metagene, metlin_id, monisotopic_molecular_weight, name
-    '                     nugowiki, pdb_id, phenol_explorer_compound_id, phenol_explorer_metabolite_id, pubchem_compound_id
-    '                     secondary_accessions, smiles, synonyms, synthesis_reference, taxonomy
-    '                     traditional_iupac, wikipedia_id, wikipidia
+    '                     drugbank_id, drugbank_metabolite_id, fbonto_id, foodb_id, het_id
+    '                     inchi, inchikey, iupac_name, kegg_id, knapsack_id
+    '                     Mass, meta_cyc_id, metagene, metlin_id, monisotopic_molecular_weight
+    '                     name, nugowiki, pdb_id, phenol_explorer_compound_id, phenol_explorer_metabolite_id
+    '                     pubchem_compound_id, secondary_accessions, smiles, synonyms, synthesis_reference
+    '                     taxonomy, traditional_iupac, vmh_id, wikipedia_id, wikipidia
     ' 
     '     Class biological_properties
     ' 
@@ -65,8 +65,9 @@
     ' 
     '     Class metabolite
     ' 
-    '         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, normal_concentrations
-    '                     ontology, predicted_properties, state, update_date, version
+    '         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, general_references
+    '                     normal_concentrations, ontology, predicted_properties, protein_associations, state
+    '                     update_date, version
     ' 
     '         Function: Load, ToString
     ' 

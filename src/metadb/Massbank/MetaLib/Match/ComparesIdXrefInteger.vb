@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7174a04c39eb7a10f5b9a72f082d2201, mzkit\src\metadb\Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
+﻿#Region "Microsoft.VisualBasic::014171f8d99980ad7e5d3d4fbdf7433c, mzkit\src\metadb\Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 49
     ' Comment Lines: 3
     '   Blank Lines: 9
-    '     File Size: 1.71 KB
+    '     File Size: 1.77 KB
 
 
     '     Class ComparesIdXrefInteger

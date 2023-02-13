@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::666b2a44b6cae69dac5f275e33b4d3d4, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\Format.vb"
+﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\Format.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 16
     '   Blank Lines: 1
-    '     File Size: 857.00 B
+    '     File Size: 879 B
 
 
     '     Enum Format

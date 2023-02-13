@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::a273e214adaf08d4a2f3cf4302f747ae, mzkit\src\assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::f706985f66d876c52f0a97d4b52ff660, mzkit\src\assembly\mzPack\mzPack.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 242
-'    Code Lines: 182
-' Comment Lines: 28
-'   Blank Lines: 32
-'     File Size: 8.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class mzPack
-' 
-'     Properties: Application, Chromatogram, CountMs2, maxIntensity, MS
-'                 rtmax, rtmin, Scanners, source, Thumbnail
-'                 totalIons
-' 
-'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-'               GetXIC, hasMs2, PopulateAllScans, Read, ReadAll
-'               ToString, Write
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 281
+    '    Code Lines: 191
+    ' Comment Lines: 61
+    '   Blank Lines: 29
+    '     File Size: 9.77 KB
+
+
+    ' Class mzPack
+    ' 
+    '     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
+    '                 MS, rtmax, rtmin, Scanners, size
+    '                 source, Thumbnail, totalIons
+    ' 
+    '     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
+    '               GetXIC, hasMs2, Read, ReadAll, ToString
+    '               Write
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -284,13 +284,35 @@ Public Class mzPack
         End Using
     End Function
 
+    Private Shared Sub checkVer1DuplicatedId(productMs2 As IEnumerable(Of ScanMS2))
+        Dim products = productMs2 _
+            .GroupBy(Function(m2) m2.scan_id) _
+            .ToArray
+
+        For Each ms2 In products
+            If ms2.Count > 1 Then
+                Dim i As Integer = 2
+
+                For Each scan2 As ScanMS2 In ms2.Skip(1)
+                    scan2.scan_id = $"{scan2.scan_id}_{i}"
+                    i += 1
+                Next
+            End If
+        Next
+    End Sub
+
     ''' <summary>
-    ''' load all content data in mzpack object into memory at one time.
+    ''' load all content data in <see cref="mzPack"/> object into memory at one time.
     ''' the file format version is test from the magic number.
     ''' (一次性加载所有原始数据)
     ''' </summary>
     ''' <param name="file">
     ''' the file version will be automatically detected
+    ''' </param>
+    ''' <param name="checkVer1DuplicatedId">
+    ''' apply to the mzpack data file in version 1, the duplicated scan id
+    ''' of ms2 data may happends in v1 format. Enable this option will try
+    ''' to make such possible duplicated id unique by adding suffix id
     ''' </param>
     ''' <returns>
     ''' a unify mzpack in-memory data model
@@ -298,22 +320,32 @@ Public Class mzPack
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
-                                   Optional verbose As Boolean = True) As mzPack
+                                   Optional verbose As Boolean = True,
+                                   Optional checkVer1DuplicatedId As Boolean = False) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
         Dim pack As mzPack
+        Dim isStreamWithLength As Boolean = TypeOf file Is MemoryStream OrElse
+            TypeOf file Is FileStream
 
         If ver = 1 Then
             pack = v1MemoryLoader.ReadAll(file, ignoreThumbnail, skipMsn, verbose)
         ElseIf ver = 2 Then
             pack = New mzStream(file).ReadModel(ignoreThumbnail, skipMsn, verbose)
-        ElseIf (TypeOf file Is MemoryStream OrElse TypeOf file Is FileStream) AndAlso file.Length = 0 Then
+        ElseIf isStreamWithLength AndAlso file.Length = 0 Then
             ' is empty data
             Return New mzPack With {
                 .MS = {}
             }
         Else
             Throw New InvalidProgramException("unknow file format!")
+        End If
+
+        If checkVer1DuplicatedId Then
+            Call pack.MS _
+                .Select(Function(scan1) scan1.products) _
+                .IteratesALL _
+                .DoCall(AddressOf mzPack.checkVer1DuplicatedId)
         End If
 
         If pack.source.StringEmpty Then

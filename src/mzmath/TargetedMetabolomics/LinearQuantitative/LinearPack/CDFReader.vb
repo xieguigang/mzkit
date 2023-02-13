@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b85d85283622f39885d78bf4b60dc2e8, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::b87b53256d417404559abcfc025b3153, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 198
+    '   Total Lines: 226
+    '    Code Lines: 200
     ' Comment Lines: 0
     '   Blank Lines: 26
-    '     File Size: 10.53 KB
+    '     File Size: 10.65 KB
 
 
     '     Module CDFReader

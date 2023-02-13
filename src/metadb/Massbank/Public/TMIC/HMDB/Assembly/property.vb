@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::765e8001c72ff70cd9672f07ea15d20f, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\property.vb"
+﻿#Region "Microsoft.VisualBasic::76e65deca35a7b569425c91d0cc5f12f, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\property.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 63
     ' Comment Lines: 0
     '   Blank Lines: 13
-    '     File Size: 2.46 KB
+    '     File Size: 2.53 KB
 
 
     '     Structure [property]

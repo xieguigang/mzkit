@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9dea2c9bb652ae0b809291a4f73129e, mzkit\src\mzmath\TargetedMetabolomics\RawFile.vb"
+﻿#Region "Microsoft.VisualBasic::4b289c7769d28c4804caadd18504206d, mzkit\src\mzmath\TargetedMetabolomics\RawFile.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 125
     ' Comment Lines: 25
     '   Blank Lines: 20
-    '     File Size: 5.87 KB
+    '     File Size: 6.04 KB
 
 
     ' Class RawFile

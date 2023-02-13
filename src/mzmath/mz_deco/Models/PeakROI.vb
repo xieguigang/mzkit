@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a3bef326838f6f14ad470bd5b1a8439, mzkit\src\mzmath\mz_deco\Models\PeakROI.vb"
+﻿#Region "Microsoft.VisualBasic::12e5ae80d06bffe82878d4dc7bbdd8c1, mzkit\src\mzmath\mz_deco\Models\PeakROI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 185.00 B
+    '     File Size: 192 B
 
 
     ' Class PeakROI

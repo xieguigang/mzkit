@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::816bf162dc42e4828bdc03c5deef0b21, mzkit\Rscript\Library\mzkit.quantify\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::959cfd9b418f2ae97cfa033953c3b96a, mzkit\Rscript\Library\mzkit.quantify\zzz.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 165.00 B
+    '     File Size: 174 B
 
 
     ' Class zzz

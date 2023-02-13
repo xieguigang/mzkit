@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c4e228f8a8d4d4f33f6c7e3bb937911, mzkit\src\mzmath\ms2_simulator\GA\EnergyDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::84b833f549a7616bffd701175985bfda, mzkit\src\mzmath\ms2_simulator\GA\EnergyDistribution.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 162.00 B
+    '     File Size: 167 B
 
 
     ' Class EnergyDistribution

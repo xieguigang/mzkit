@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 571.00 B
+    '     File Size: 571 B
 
 
     ' Class TestFormulaSymbolLang

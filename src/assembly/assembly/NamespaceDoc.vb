@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf54b357c5e45e845c93cc7972a70f5, mzkit\src\assembly\assembly\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, mzkit\src\assembly\assembly\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 4
     ' Comment Lines: 3
     '   Blank Lines: 0
-    '     File Size: 246.00 B
+    '     File Size: 252 B
 
 
     ' Class NamespaceDoc

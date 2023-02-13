@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa3964a5a813e00b16f280fbd547d049, mzkit\src\metadb\Chemoinformatics\SDF\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7b952797062c171d332197f7fdb70597, mzkit\src\metadb\Chemoinformatics\SDF\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 4
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 167.00 B
+    '     File Size: 174 B
 
 
     '     Module NamespaceDoc

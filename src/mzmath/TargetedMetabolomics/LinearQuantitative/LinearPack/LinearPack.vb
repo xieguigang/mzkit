@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6df6e89192b889f103829cb04aad4557, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::6fadc357702b7336a0281fabce1397e8, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 38
     ' Comment Lines: 7
     '   Blank Lines: 8
-    '     File Size: 1.92 KB
+    '     File Size: 1.97 KB
 
 
     '     Class LinearPack

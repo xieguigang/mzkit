@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8815c5b64ff166acf2ca29490e3c113, mzkit\src\assembly\assembly\UnifyReader\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::3c587485db416817b58f3cf3f3ef9ece, mzkit\src\assembly\assembly\UnifyReader\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 51
+    '   Total Lines: 93
+    '    Code Lines: 60
     ' Comment Lines: 21
-    '   Blank Lines: 11
-    '     File Size: 3.05 KB
+    '   Blank Lines: 12
+    '     File Size: 3.31 KB
 
 
     '     Class Chromatogram
     ' 
-    '         Properties: BPC, length, scan_time, TIC
+    '         Properties: BPC, length, maxInto, scan_time, TIC
     ' 
     '         Function: GetChromatogram, GetSignal, GetTicks, ToString
     ' 

@@ -41,7 +41,7 @@
     '    Code Lines: 86
     ' Comment Lines: 4
     '   Blank Lines: 16
-    '     File Size: 3.89 KB
+    '     File Size: 3.88 KB
 
 
     ' Class ScanContour

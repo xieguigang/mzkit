@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 11
     '   Blank Lines: 2
-    '     File Size: 956.00 B
+    '     File Size: 956 B
 
 
     ' Class Content

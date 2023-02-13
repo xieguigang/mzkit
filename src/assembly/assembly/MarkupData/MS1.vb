@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b82c3c271d5a11df279e06526d97532, mzkit\src\assembly\assembly\MarkupData\MS1.vb"
+﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, mzkit\src\assembly\assembly\MarkupData\MS1.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 52
     ' Comment Lines: 5
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.88 KB
 
 
     '     Module MS1Extensions

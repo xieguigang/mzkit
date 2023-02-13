@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::1123296c5f4287cc50cf1e85060d5757, mzkit\Rscript\Library\mzkit\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::4e8e3aed3e1241d8361086ce5b2ba8c5, mzkit\Rscript\Library\mzkit\annotations\Massbank.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 362
-'    Code Lines: 254
-' Comment Lines: 56
-'   Blank Lines: 52
-'     File Size: 13.74 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Massbank
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver, GlycosylTokens
-'               hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, name2, readHMDB
-'               readLipidMapsRepo, readMoNA, readSDF, saveIDMapping, toLipidMaps
-'               writeLipidMapsRepo
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 484
+    '    Code Lines: 353
+    ' Comment Lines: 65
+    '   Blank Lines: 66
+    '     File Size: 19.98 KB
+
+
+    ' Module Massbank
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver
+    '               GlycosylTokens, hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, lipidProfiles
+    '               name2, ParseChebiEntity, readLipidMapsRepo, readMoNA, readSDF
+    '               saveIDMapping, toLipidMaps, writeLipidMapsRepo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

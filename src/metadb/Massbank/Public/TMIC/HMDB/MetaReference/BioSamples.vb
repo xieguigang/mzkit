@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ddab080a29a7b5842abb9f6afa8919d, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\BioSamples.vb"
+﻿#Region "Microsoft.VisualBasic::ffe170285224efecb64f1809c8ca4091, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\BioSamples.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
+    '   Total Lines: 76
     '    Code Lines: 53
-    ' Comment Lines: 5
+    ' Comment Lines: 13
     '   Blank Lines: 10
-    '     File Size: 2.53 KB
+    '     File Size: 2.82 KB
 
 
     '     Enum BioSamples

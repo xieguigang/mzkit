@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b687cc1d86364cf506b9248963824bb, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
+﻿#Region "Microsoft.VisualBasic::a0ab6cd8e055d69e56c2e319afecc101, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 78
+    '   Total Lines: 122
+    '    Code Lines: 81
     ' Comment Lines: 21
-    '   Blank Lines: 19
-    '     File Size: 4.75 KB
+    '   Blank Lines: 20
+    '     File Size: 4.85 KB
 
 
     ' Module ERS

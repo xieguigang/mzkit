@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7466b3d30c611dfc2704ee65539c1a, mzkit\src\visualize\MsImaging\Blender\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::cf5663f578641da677db290724e63f7c, mzkit\src\visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 79
-    ' Comment Lines: 55
-    '   Blank Lines: 19
-    '     File Size: 7.35 KB
+    '   Total Lines: 151
+    '    Code Lines: 91
+    ' Comment Lines: 40
+    '   Blank Lines: 20
+    '     File Size: 6.44 KB
 
 
     '     Class Renderer
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetPixelChannelReader
+    ' 
+    '     Class PixelChannelRaster
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetPixelChannelReader
+    ' 
+    '         Sub: setRange
     ' 
     ' 
     ' /********************************************************************************/

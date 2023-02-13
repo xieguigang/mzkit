@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 11
     '   Blank Lines: 6
-    '     File Size: 861.00 B
+    '     File Size: 861 B
 
 
     '     Class MRMInfo

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5e09cb5cbdb4d50c372b1c856f324ed, mzkit\src\assembly\assembly\MarkupData\mzML\ExtractUVData.vb"
+﻿#Region "Microsoft.VisualBasic::c52321d548ac15c061a2b7969587c28b, mzkit\src\assembly\assembly\MarkupData\mzML\ExtractUVData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 88
-    ' Comment Lines: 26
-    '   Blank Lines: 15
-    '     File Size: 5.72 KB
+    '   Total Lines: 149
+    '    Code Lines: 100
+    ' Comment Lines: 31
+    '   Blank Lines: 18
+    '     File Size: 6.47 KB
 
 
     '     Module ExtractUVData

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57fa2df1d9c814e8ad38b41ff6560481, mzkit\src\assembly\assembly\MarkupData\XmlFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::b3b4df2d6ebd02c97403753f3211f294, mzkit\src\assembly\assembly\MarkupData\XmlFileTypes.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 141.00 B
+    '     File Size: 149 B
 
 
     '     Enum XmlFileTypes

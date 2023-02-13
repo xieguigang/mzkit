@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6842d1c13cad4e6a80254aacd009d59, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ChromatographyPeaktable.vb"
+﻿#Region "Microsoft.VisualBasic::de12f05dd1a5f81d95be3059638ef5d4, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ChromatographyPeaktable.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 4
     '   Blank Lines: 3
-    '     File Size: 371.00 B
+    '     File Size: 384 B
 
 
     '     Class ChromatographyPeaktable

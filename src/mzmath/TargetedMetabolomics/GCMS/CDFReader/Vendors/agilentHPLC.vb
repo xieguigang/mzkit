@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f281e0be38e99c6306c418ca292b74, mzkit\src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentHPLC.vb"
+﻿#Region "Microsoft.VisualBasic::2c878083dddb015cbba3d7062a201c7e, mzkit\src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentHPLC.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 81.00 B
+    '     File Size: 86 B
 
 
     '     Class agilentHPLC

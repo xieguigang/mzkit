@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a19b3cb15d00e57419af12d77cda10e3, mzkit\src\assembly\sciexWiffReader\FullScanReader.vb"
+﻿#Region "Microsoft.VisualBasic::5ad58db5fd49d6acf89af6be98b64b3a, mzkit\src\assembly\sciexWiffReader\FullScanReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 38.00 B
+    '     File Size: 40 B
 
 
     ' Class FullScanReader

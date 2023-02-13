@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae51688ac7e8b0e06722a88a0730c5f, mzkit\src\metadb\FormulaSearch.Extensions\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::f968df9679d923de026cc265dbccc067, mzkit\src\metadb\FormulaSearch.Extensions\Annotation.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 21
+    '   Total Lines: 27
+    '    Code Lines: 23
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 841.00 B
+    '     File Size: 938 B
 
 
     ' Class Annotation
@@ -55,6 +55,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
@@ -76,6 +77,7 @@ Public Class Annotation
             .ToArray
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return formula.ToString
     End Function
