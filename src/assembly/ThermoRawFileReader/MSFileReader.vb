@@ -122,7 +122,7 @@ Public Class MSFileReader : Implements IDisposable
         mRawFileReader?.CloseRawFile()
     End Sub
 
-    Private Function InitReader() As ThermoReaderOptions
+    Public Function InitReader() As ThermoReaderOptions
         Dim currentTask = "Initializing"
         Dim options As ThermoReaderOptions = mRawFileReader.Options
 
