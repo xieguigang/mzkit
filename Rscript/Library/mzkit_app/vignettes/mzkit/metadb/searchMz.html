@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>get metabolite annotation metadata by a set of given unique reference id</title>
+    <title>Found the best matched mz value with the target **`exactMass`**</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>getMetadata {metadb}</td>
+                <td>searchMz {metadb}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>get metabolite annotation metadata by a set of given unique reference id</h2>
+        <h2>Found the best matched mz value with the target **`exactMass`**</h2>
 
         <h3>Description</h3>
 
@@ -157,22 +157,27 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>getMetadata</strong>(<i>engine</i>, <i>uniqueId</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>searchMz</strong>(<i>mz</i>, <i>exactMass</i>, <i>adducts</i>,
+    <i>mzdiff</i> = <span style='color: brown;'><strong>"da:0.005"</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>engine</dt>
+<dt>mz</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>uniqueId</dt>
+<dt>exactMass</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>env</dt>
+<dt>adducts</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzdiff</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
@@ -185,7 +190,9 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        <p>function returns a evaluated mz under the specific <strong><code>adducts</code></strong> value<br />
+ and it also the min mass tolerance, if no result has mass tolerance less then the <br />
+ given threshold value, then this function returns nothing</p>
 
         <hr />
         <div style="text-align: center;">[Package <em>metadb</em> version 1.0.0.0 <a
