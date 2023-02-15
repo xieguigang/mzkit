@@ -327,7 +327,7 @@ Module MetaDbXref
 
         Dim minPpm As Double = Double.MaxValue
         Dim matchMz As Double = -1
-        Dim matchType As MzCalculator
+        Dim matchType As MzCalculator = Nothing
         Dim evalMz As Double = -1
 
         For i As Integer = 0 To mz.Length - 1
