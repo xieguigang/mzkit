@@ -298,6 +298,13 @@ Module MetaDbXref
         End If
     End Function
 
+    ''' <summary>
+    ''' get metabolite annotation metadata by a set of given unique reference id
+    ''' </summary>
+    ''' <param name="engine"></param>
+    ''' <param name="uniqueId"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("getMetadata")>
     Public Function getMetadata(engine As Object, uniqueId As list, Optional env As Environment = Nothing) As Object
         Dim queryEngine As IMzQuery
@@ -528,6 +535,8 @@ Module MetaDbXref
                                    Dim test1 As Boolean = MetalIons.IsOrganic(formula)
                                    Dim test2 As Boolean = Not MetalIons.HasMetalIon(formula)
 
+                                   ' should be organic andalso not
+                                   ' contains some special metal ion
                                    Return test1 AndAlso test2
                                End Function) _
                         .ToArray
