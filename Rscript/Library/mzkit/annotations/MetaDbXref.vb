@@ -78,6 +78,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -311,7 +312,8 @@ Module MetaDbXref
     ''' given threshold value, then this function returns nothing
     ''' </returns>
     <ExportAPI("searchMz")>
-    Public Function searchMz(mz As Double(), exactMass As Double, adducts As Object(),
+    <RApiReturn(GetType(MzQuery))>
+    Public Function searchMz(<RRawVectorArgument> mz As Object, exactMass As Double, adducts As Object(),
                              Optional mzdiff As Object = "da:0.005",
                              Optional env As Environment = Nothing) As Object
 
@@ -329,19 +331,48 @@ Module MetaDbXref
         Dim matchMz As Double = -1
         Dim matchType As MzCalculator = Nothing
         Dim evalMz As Double = -1
+        Dim matchId As String = Nothing
 
-        For i As Integer = 0 To mz.Length - 1
-            For j As Integer = 0 To precursors.Length - 1
-                Dim ppm As Double = PPMmethod.PPM(mz(i), mzlist(j))
+        If TypeOf mz Is list Then
+            Dim err As Message = Nothing
+            Dim mzSet As Dictionary(Of String, Double) = DirectCast(mz, list).AsGeneric(Of Double)(env, err:=err)
 
-                If ppm < minPpm Then
-                    minPpm = ppm
-                    matchMz = mz(i)
-                    matchType = precursors(j)
-                    evalMz = mzlist(j)
-                End If
+            If Not err Is Nothing Then
+                Return err
+            End If
+
+            Dim uniqueKeys As String() = mzSet.Keys.ToArray
+            Dim candidateMz As Double() = uniqueKeys.Select(Function(key) mzSet(key)).ToArray
+
+            For i As Integer = 0 To candidateMz.Length - 1
+                For j As Integer = 0 To precursors.Length - 1
+                    Dim ppm As Double = PPMmethod.PPM(candidateMz(i), mzlist(j))
+
+                    If ppm < minPpm Then
+                        minPpm = ppm
+                        matchMz = candidateMz(i)
+                        matchType = precursors(j)
+                        evalMz = mzlist(j)
+                        matchId = uniqueKeys(i)
+                    End If
+                Next
             Next
-        Next
+        Else
+            Dim candidateMz As Double() = CLRVector.asNumeric(mz)
+
+            For i As Integer = 0 To candidateMz.Length - 1
+                For j As Integer = 0 To precursors.Length - 1
+                    Dim ppm As Double = PPMmethod.PPM(candidateMz(i), mzlist(j))
+
+                    If ppm < minPpm Then
+                        minPpm = ppm
+                        matchMz = candidateMz(i)
+                        matchType = precursors(j)
+                        evalMz = mzlist(j)
+                    End If
+                Next
+            Next
+        End If
 
         If matchMz > 0 AndAlso mzErr.TryCast(Of Tolerance).IsEquals(matchMz, evalMz) Then
             Return New MzQuery With {
@@ -351,7 +382,7 @@ Module MetaDbXref
                 .ppm = minPpm,
                 .precursorType = matchType.ToString,
                 .score = 1,
-                .unique_id = .name
+                .unique_id = If(matchId, .name)
             }
         Else
             Return Nothing
