@@ -299,6 +299,66 @@ Module MetaDbXref
     End Function
 
     ''' <summary>
+    ''' Found the best matched mz value with the target <paramref name="exactMass"/>
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="exactMass"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns>
+    ''' function returns a evaluated mz under the specific <paramref name="adducts"/> value
+    ''' and it also the min mass tolerance, if no result has mass tolerance less then the 
+    ''' given threshold value, then this function returns nothing
+    ''' </returns>
+    <ExportAPI("searchMz")>
+    Public Function searchMz(mz As Double(), exactMass As Double, adducts As Object(),
+                             Optional mzdiff As Object = "da:0.005",
+                             Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.005")
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+        Dim mzlist As Double() = precursors _
+            .Select(Function(a) a.CalcMZ(exactMass)) _
+            .ToArray
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim minPpm As Double = Double.MaxValue
+        Dim matchMz As Double = -1
+        Dim matchType As MzCalculator
+        Dim evalMz As Double = -1
+
+        For i As Integer = 0 To mz.Length - 1
+            For j As Integer = 0 To precursors.Length - 1
+                Dim ppm As Double = PPMmethod.PPM(mz(i), mzlist(j))
+
+                If ppm < minPpm Then
+                    minPpm = ppm
+                    matchMz = mz(i)
+                    matchType = precursors(j)
+                    evalMz = mzlist(j)
+                End If
+            Next
+        Next
+
+        If matchMz > 0 AndAlso mzErr.TryCast(Of Tolerance).IsEquals(matchMz, evalMz) Then
+            Return New MzQuery With {
+                .mz = matchMz,
+                .mz_ref = evalMz,
+                .name = exactMass.ToString("F4"),
+                .ppm = minPpm,
+                .precursorType = matchType.ToString,
+                .score = 1,
+                .unique_id = .name
+            }
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
     ''' get metabolite annotation metadata by a set of given unique reference id
     ''' </summary>
     ''' <param name="engine"></param>

@@ -83,6 +83,16 @@ Module Math
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="val">
+    ''' should be a collection of <see cref="MzCalculator"/> or 
+    ''' a collection of <see cref="String"/> literal of the 
+    ''' adducts
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Public Function GetPrecursorTypes(val As Object, env As Environment) As MzCalculator()
         Dim data As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(val, env, suppress:=True)
 
