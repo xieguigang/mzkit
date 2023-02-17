@@ -1,5 +1,7 @@
 require(biodeepdb_v3);
 
+options(memory.load = "max");
+
 setwd(@dir);
 
 id = readLines("./kegg_ids.txt");
@@ -7,9 +9,10 @@ db = readBiodeepDb();
 biodeepid = mapping(db, id, type = "kegg");
 kegg_meta = getByBiodeepID(db, biodeepid);
 
-class = [kegg_meta]::class;
+print(length(kegg_meta));
 
-summary = table(class);
+let class = [kegg_meta]::class;
+let summary = table(class);
 
 print(summary);
 
