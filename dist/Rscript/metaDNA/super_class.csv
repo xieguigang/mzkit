@@ -1,20 +1,13 @@
 ,factors,size
-"[1, ]",,3664
-"[2, ]","Nucleosides, nucleotides, and analogues",112
-"[3, ]",Lipids and lipid-like molecules,422
-"[4, ]",Organic oxygen compounds,224
-"[5, ]",Benzenoids,174
-"[6, ]",Phenylpropanoids and polyketides,94
-"[7, ]",Organoheterocyclic compounds,217
-"[8, ]",Organohalogen compounds,11
-"[9, ]",Organic acids and derivatives,360
-"[10, ]",Organic nitrogen compounds,45
-"[11, ]",Organosulfur compounds,4
-"[12, ]",Acetylides,1
-"[13, ]",Alkaloids and derivatives,14
-"[14, ]",Homogeneous non-metal compounds,20
-"[15, ]",Hydrocarbons,6
-"[16, ]",Organometallic compounds,6
-"[17, ]",Mixed metal/non-metal compounds,2
-"[18, ]","Lignans, neolignans and related compounds",1
-"[19, ]","Organic 1,3-dipolar compounds",1
+"[1, ]",Lipids and lipid-like molecules,349
+"[2, ]",,2999
+"[3, ]",Organic oxygen compounds,176
+"[4, ]",Organoheterocyclic compounds,200
+"[5, ]",Organic acids and derivatives,293
+"[6, ]",Benzenoids,155
+"[7, ]","Nucleosides, nucleotides, and analogues",88
+"[8, ]",Phenylpropanoids and polyketides,90
+"[9, ]",Organic nitrogen compounds,28
+"[10, ]",Alkaloids and derivatives,13
+"[11, ]",Organometallic compounds,2
+"[12, ]","Lignans, neolignans and related compounds",1

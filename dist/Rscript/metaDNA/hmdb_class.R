@@ -4,7 +4,7 @@ options(memory.load = "max");
 
 setwd(@dir);
 
-id = readLines("./kegg_ids.txt");
+id = readLines("./list20230217.txt");
 db = readBiodeepDb();
 biodeepid = mapping(db, id, type = "kegg");
 kegg_meta = getByBiodeepID(db, biodeepid);

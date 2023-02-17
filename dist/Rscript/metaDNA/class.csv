@@ -1,114 +1,93 @@
 ,factors,size
-"[1, ]",,3669
-"[2, ]",Pyrimidine nucleotides,24
-"[3, ]",Steroids and steroid derivatives,115
-"[4, ]",Organooxygen compounds,220
-"[5, ]",Prenol lipids,133
-"[6, ]",Benzene and substituted derivatives,109
-"[7, ]",Coumarins and derivatives,16
-"[8, ]",Purine nucleotides,44
-"[9, ]",Tetrapyrroles and derivatives,11
-"[10, ]",Halohydrins,2
-"[11, ]",Biotin and derivatives,1
-"[12, ]",Carboxylic acids and derivatives,240
-"[13, ]",Organonitrogen compounds,45
-"[14, ]",Fatty Acyls,162
-"[15, ]",Diazines,16
-"[16, ]",Indoles and derivatives,38
-"[17, ]",Oxazinanes,1
-"[18, ]",Naphthalenes,6
-"[19, ]",Thiols,2
-"[20, ]",Glycerophospholipids,6
-"[21, ]",Keto acids and derivatives,48
-"[22, ]",Pyridines and derivatives,30
-"[23, ]",Phenols,42
-"[24, ]",Piperidines,4
-"[25, ]",Flavonoids,34
-"[26, ]",Indanes,2
-"[27, ]",Benzazepines,4
-"[28, ]",Purine nucleosides,9
-"[29, ]",Pteridines and derivatives,22
-"[30, ]",Cinnamaldehydes,2
-"[31, ]",Cinnamyl alcohols,2
-"[32, ]",Vinyl halides,5
-"[33, ]",Lactones,9
-"[34, ]",Hydroxy acids and derivatives,20
-"[35, ]",Anthracyclines,1
-"[36, ]",Imidazopyrimidines,13
-"[37, ]",Morphinans,4
-"[38, ]",Fluorenes,1
-"[39, ]",(5'->5')-dinucleotides,8
-"[40, ]",Organic sulfonic acids and derivatives,4
-"[41, ]",Cinnamic acids and derivatives,15
-"[42, ]",Other non-metal organides,8
-"[43, ]",Isoquinolines and derivatives,8
-"[44, ]",Azoles,11
-"[45, ]",Organochlorides,3
-"[46, ]",Dihydrofurans,5
-"[47, ]",Furans,3
-"[48, ]",Pyrimidine nucleosides,6
-"[49, ]",Organic phosphonic acids and derivatives,4
-"[50, ]",Isoflavonoids,8
-"[51, ]",Phenylpropanoic acids,5
-"[52, ]",Quinolines and derivatives,9
-"[53, ]",Stilbenes,5
-"[54, ]",Benzoxazines,3
-"[55, ]",Homogeneous halogens,2
-"[56, ]",Pyrenes,4
-"[57, ]",Non-metal oxoanionic compounds,4
-"[58, ]",Sulfinic acids and derivatives,1
-"[59, ]",Flavin nucleotides,4
-"[60, ]",Phenanthrenes and derivatives,8
-"[61, ]",Benzimidazoles,5
-"[62, ]",Organic phosphoric acids and derivatives,16
-"[63, ]","Linear 1,3-diarylpropanoids",4
-"[64, ]",Carboximidic acids and derivatives,9
-"[65, ]",Protopine alkaloids,1
-"[66, ]",Oxazaphosphinanes,1
-"[67, ]",Organic thiophosphoric acids and derivatives,3
-"[68, ]",Pyrroles,1
-"[69, ]",Lactams,2
-"[70, ]",Thioethers,1
-"[71, ]",Unsaturated hydrocarbons,2
-"[72, ]",Triazines,5
-"[73, ]",Protoberberine alkaloids and derivatives,1
-"[74, ]",Homogeneous other non-metal compounds,6
-"[75, ]",Dithiolanes,2
-"[76, ]",Glycinamide ribonucleotides,2
-"[77, ]",Organometalloid compounds,6
-"[78, ]",Harmala alkaloids,2
-"[79, ]",Saccharolipids,1
-"[80, ]",Peptidomimetics,8
-"[81, ]",Amaryllidaceae alkaloids,1
-"[82, ]",Imidazole ribonucleosides and ribonucleotides,5
-"[83, ]",Organic carbonic acids and derivatives,4
-"[84, ]",Bi- and oligothiophenes,2
-"[85, ]",5'-deoxyribonucleosides,3
-"[86, ]",Isocoumarans,1
-"[87, ]",Benzimidazole ribonucleosides and ribonucleotides,1
-"[88, ]",Pyridine nucleotides,1
-"[89, ]",Organic sulfuric acids and derivatives,1
-"[90, ]",Sphingolipids,5
-"[91, ]",Saturated hydrocarbons,4
-"[92, ]",Other mixed metal/non-metal oxoanionic compounds,2
-"[93, ]",Ribonucleoside 3'-phosphates,3
-"[94, ]",Benzoxepines,1
-"[95, ]",Azolidines,1
-"[96, ]",Benzopyrans,1
-"[97, ]",Organic oxoanionic compounds,4
-"[98, ]",Pyrrolines,3
-"[99, ]",Azolines,2
-"[100, ]",Heteroaromatic compounds,2
-"[101, ]",Dibenzylbutane lignans,1
-"[102, ]",Depsides and depsidones,1
-"[103, ]",Phenol ethers,1
-"[104, ]","3,4-dihydrocoumarins",1
-"[105, ]",Molybdopterin dinucleotides,1
-"[106, ]",Benzophenanthridine alkaloids,1
-"[107, ]","Allyl-type 1,3-dipolar organic compounds",1
-"[108, ]",Seleninic acids and derivatives,1
-"[109, ]",Camptothecins,1
-"[110, ]",Nucleoside and nucleotide analogues,1
-"[111, ]",Sulfamic acid derivatives,1
-"[112, ]",Phenol esters,1
-"[113, ]",Alkyl halides,1
+"[1, ]",Steroids and steroid derivatives,114
+"[2, ]",,3001
+"[3, ]",Prenol lipids,96
+"[4, ]",Organooxygen compounds,173
+"[5, ]",Isocoumarans,1
+"[6, ]",Heteroaromatic compounds,1
+"[7, ]",Furans,3
+"[8, ]",Carboxylic acids and derivatives,202
+"[9, ]",Indoles and derivatives,38
+"[10, ]",Benzene and substituted derivatives,92
+"[11, ]",Purine nucleosides,9
+"[12, ]",Dihydrofurans,5
+"[13, ]",Fatty Acyls,131
+"[14, ]",Lactones,9
+"[15, ]",Cinnamic acids and derivatives,14
+"[16, ]",Hydroxy acids and derivatives,15
+"[17, ]","Linear 1,3-diarylpropanoids",4
+"[18, ]",Phenanthrenes and derivatives,8
+"[19, ]",Benzimidazoles,4
+"[20, ]",(5'->5')-dinucleotides,6
+"[21, ]",Purine nucleotides,27
+"[22, ]",Pyrimidine nucleotides,20
+"[23, ]",Flavin nucleotides,4
+"[24, ]",Pyridines and derivatives,28
+"[25, ]",Keto acids and derivatives,44
+"[26, ]",Diazines,12
+"[27, ]",Organic phosphoric acids and derivatives,11
+"[28, ]",Phenols,41
+"[29, ]",Glycerophospholipids,3
+"[30, ]",Quinolines and derivatives,9
+"[31, ]",Organonitrogen compounds,28
+"[32, ]",Biotin and derivatives,1
+"[33, ]",Pteridines and derivatives,21
+"[34, ]",Imidazopyrimidines,11
+"[35, ]",5'-deoxyribonucleosides,3
+"[36, ]",Pyrimidine nucleosides,6
+"[37, ]",Organic sulfonic acids and derivatives,2
+"[38, ]",Dithiolanes,2
+"[39, ]",Piperidines,4
+"[40, ]",Peptidomimetics,7
+"[41, ]",Flavonoids,33
+"[42, ]",Carboximidic acids and derivatives,5
+"[43, ]",Tetrapyrroles and derivatives,11
+"[44, ]",Phenol esters,1
+"[45, ]",Organic oxoanionic compounds,3
+"[46, ]",Protoberberine alkaloids and derivatives,1
+"[47, ]",Coumarins and derivatives,16
+"[48, ]",Azoles,8
+"[49, ]",Isoflavonoids,8
+"[50, ]",Naphthalenes,6
+"[51, ]",Cinnamaldehydes,2
+"[52, ]",Sphingolipids,4
+"[53, ]",Pyridine nucleotides,1
+"[54, ]",Phenylpropanoic acids,4
+"[55, ]",Ribonucleoside 3'-phosphates,3
+"[56, ]",Stilbenes,5
+"[57, ]",Indanes,2
+"[58, ]",Morphinans,4
+"[59, ]",Anthracyclines,1
+"[60, ]",Nucleoside and nucleotide analogues,1
+"[61, ]",Isoquinolines and derivatives,7
+"[62, ]",Benzoxazines,3
+"[63, ]","3,4-dihydrocoumarins",1
+"[64, ]",Cinnamyl alcohols,2
+"[65, ]",Azolines,1
+"[66, ]",Organic carbonic acids and derivatives,1
+"[67, ]",Organic phosphonic acids and derivatives,3
+"[68, ]",Pyrrolines,3
+"[69, ]",Glycinamide ribonucleotides,2
+"[70, ]",Bi- and oligothiophenes,2
+"[71, ]",Imidazole ribonucleosides and ribonucleotides,5
+"[72, ]",Benzimidazole ribonucleosides and ribonucleotides,1
+"[73, ]",Protopine alkaloids,1
+"[74, ]",Oxazinanes,1
+"[75, ]",Azolidines,1
+"[76, ]",Pyrroles,1
+"[77, ]",Saccharolipids,1
+"[78, ]",Benzophenanthridine alkaloids,1
+"[79, ]",Harmala alkaloids,2
+"[80, ]",Triazines,5
+"[81, ]",Lactams,1
+"[82, ]",Organic thiophosphoric acids and derivatives,3
+"[83, ]",Fluorenes,1
+"[84, ]",Benzazepines,4
+"[85, ]",Benzopyrans,1
+"[86, ]",Oxazaphosphinanes,1
+"[87, ]",Organometalloid compounds,2
+"[88, ]",Pyrenes,4
+"[89, ]",Amaryllidaceae alkaloids,1
+"[90, ]",Camptothecins,1
+"[91, ]",Dibenzylbutane lignans,1
+"[92, ]",Benzoxepines,1
