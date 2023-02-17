@@ -17,3 +17,9 @@ let summary = table(class);
 print(summary);
 
 write.csv(summary, file = "./class.csv");
+
+summary = table([kegg_meta]::super_class);
+
+print(summary);
+
+write.csv(summary, file = "./super_class.csv");
