@@ -197,7 +197,7 @@ Module MetaDbXref
             Return id _
                 .Select(Function(ref, i)
                             Return New MetaboliteAnnotation With {
-                                .UniqueId = ref,
+                                .Id = ref,
                                 .CommonName = name(i),
                                 .Formula = formula(i),
                                 .ExactMass = FormulaScanner.EvaluateExactMass(.Formula)
