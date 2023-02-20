@@ -1,6 +1,7 @@
 @echo off
 
 REM git remote add local http://git.biodeep.cn/xieguigang/mzkit.git
+REM git remote add local http://192.168.0.232:8848/xieguigang/mzkit.git
 
 git pull gitlink HEAD
 git pull gitee HEAD
