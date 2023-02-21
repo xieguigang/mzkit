@@ -1,8 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.Base64Decoder
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.Extensions
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram
 Imports RawChromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Public Module ChromatogramReader
@@ -12,7 +16,7 @@ Public Module ChromatogramReader
     End Function
 
     <Extension>
-    Public Function GetIonsChromatogram(channels As IEnumerable(Of Chromatogram)) As Chromatogram
+    Public Function GetIonsChromatogram(channels As IEnumerable(Of RawChromatogram)) As Chromatogram
         Dim allTicks As ChromatogramTick() = channels _
             .Where(Function(chr) chr.id <> "TIC" AndAlso chr.id <> "BPC") _
             .Select(AddressOf Ticks) _
@@ -64,14 +68,14 @@ Public Module ChromatogramReader
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function GetChromatogram(raw As RawChromatogram) As Chromatogram
-        Return New Chromatogram(ToString) With {.Chromatogram = raw.Ticks()}
+    Public Function GetChromatogram(raw As RawChromatogram) As ChromatogramSerial
+        Return New ChromatogramSerial(raw.ToString) With {.Chromatogram = raw.Ticks()}
     End Function
 
     Public Iterator Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
         Dim scan_time = chromatogram.scan_time
-        Dim bpc = chromatogram.bpc
-        Dim tic = chromatogram.tic
+        Dim bpc = chromatogram.BPC
+        Dim tic = chromatogram.TIC
 
         For i As Integer = 0 To scan_time.Length - 1
             If isbpc Then

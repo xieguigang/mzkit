@@ -103,7 +103,7 @@ Namespace Chromatogram
         End Operator
     End Class
 
-    Public Class Chromatogram
+    Public Class ChromatogramSerial
 
         Public Property Name As String
         Public Property Chromatogram As ChromatogramTick()
