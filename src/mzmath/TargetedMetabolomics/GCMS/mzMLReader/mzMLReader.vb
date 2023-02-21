@@ -54,10 +54,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
+Imports RawChromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace GCMS
 
@@ -101,7 +102,7 @@ Namespace GCMS
             Return time_scans.ToArray
         End Function
 
-        Private Function readMs(chromatogram As MarkupData.mzML.chromatogram) As ms1_scan()
+        Private Function readMs(chromatogram As RawChromatogram) As ms1_scan()
             Dim mz As Double = chromatogram _
                 .precursor _
                 .isolationWindow _

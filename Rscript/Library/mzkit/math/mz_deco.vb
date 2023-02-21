@@ -54,6 +54,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("mz_deco")>
@@ -61,7 +62,7 @@ Public Module mz_deco
 
     <ExportAPI("read.xcms_peaks")>
     Public Function readXcmsPeaks(file As String) As PeakSet
-        Return New PeakSet With {.peaks = xcms2.Load(file)}
+        Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
     End Function
 
     <ExportAPI("peak_subset")>

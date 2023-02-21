@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1fac21ff6f7c4e0508edd687059ded, mzkit\src\assembly\assembly\MarkupData\mzML\UVScan.vb"
+﻿#Region "Microsoft.VisualBasic::775fd7ce5d7ce32331eb1730421898eb, mzkit\src\mzmath\ms2_math-core\UV\PDAPoint.vb"
 
 ' Author:
 ' 
@@ -37,35 +37,44 @@
 
 ' Code Statistics:
 
-'   Total Lines: 30
-'    Code Lines: 24
+'   Total Lines: 22
+'    Code Lines: 17
 ' Comment Lines: 0
-'   Blank Lines: 6
-'     File Size: 992 B
+'   Blank Lines: 5
+'     File Size: 744 B
 
 
-'     Class UVScan
+'     Class PDAPoint
 ' 
-'         Properties: intensity, scan_time, total_ion_current, wavelength
+'         Properties: scan_time, total_ion
 ' 
-'         Function: GetSignalModel, ToString
+'         Function: FromSignal
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Namespace MarkupData.mzML
+Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
-    Public Class UVScan
+Namespace UV
 
-        Public Property wavelength As Double()
-        Public Property intensity As Double()
-        Public Property total_ion_current As Double
-        Public Property scan_time As Double
+    Public Class PDAPoint : Implements ITimeSignal
 
-        Public Overrides Function ToString() As String
-            Return $"total_ions:{total_ion_current.ToString("G3")} at {CInt(scan_time)} sec"
+        Public Property scan_time As Double Implements ITimeSignal.time
+        Public Property total_ion As Double Implements ITimeSignal.intensity
+
+        Public Shared Iterator Function FromSignal(PDA As GeneralSignal) As IEnumerable(Of PDAPoint)
+            Dim x As Double() = PDA.Measures
+            Dim y As Double() = PDA.Strength
+
+            For i As Integer = 0 To PDA.Measures.Length - 1
+                Yield New PDAPoint With {
+                    .scan_time = x(i),
+                    .total_ion = y(i)
+                }
+            Next
         End Function
     End Class
 End Namespace

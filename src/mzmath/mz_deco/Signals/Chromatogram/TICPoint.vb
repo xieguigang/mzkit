@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1fac21ff6f7c4e0508edd687059ded, mzkit\src\assembly\assembly\MarkupData\mzML\UVScan.vb"
+﻿#Region "Microsoft.VisualBasic::325ada35cacf2e0921047c02a31fc6c0, mzkit\src\mzmath\ms2_math-core\Chromatogram\TICPoint.vb"
 
 ' Author:
 ' 
@@ -37,35 +37,38 @@
 
 ' Code Statistics:
 
-'   Total Lines: 30
-'    Code Lines: 24
+'   Total Lines: 17
+'    Code Lines: 12
 ' Comment Lines: 0
-'   Blank Lines: 6
-'     File Size: 992 B
+'   Blank Lines: 5
+'     File Size: 562 B
 
 
-'     Class UVScan
+'     Class TICPoint
 ' 
-'         Properties: intensity, scan_time, total_ion_current, wavelength
+'         Properties: intensity, mz, time
 ' 
-'         Function: GetSignalModel, ToString
+'         Function: ToString
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Namespace MarkupData.mzML
+Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports stdNum = System.Math
 
-    Public Class UVScan
+Namespace Chromatogram
 
-        Public Property wavelength As Double()
-        Public Property intensity As Double()
-        Public Property total_ion_current As Double
-        Public Property scan_time As Double
+    Public Class TICPoint : Implements ITimeSignal
+
+        Public Property mz As Double
+        Public Property time As Double Implements ITimeSignal.time
+        Public Property intensity As Double Implements ITimeSignal.intensity
 
         Public Overrides Function ToString() As String
-            Return $"total_ions:{total_ion_current.ToString("G3")} at {CInt(scan_time)} sec"
+            Return $"Dim [{mz.ToString("F3")}, {stdNum.Round(time, 1)}] = {intensity.ToString("G4")}"
         End Function
+
     End Class
 End Namespace

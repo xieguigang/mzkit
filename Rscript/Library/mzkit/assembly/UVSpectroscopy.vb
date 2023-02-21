@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::a0ab6cd8e055d69e56c2e319afecc101, mzkit\Rscript\Library\mzkit\assembly\ERS.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 122
-    '    Code Lines: 81
-    ' Comment Lines: 21
-    '   Blank Lines: 20
-    '     File Size: 4.85 KB
+' Summaries:
 
 
-    ' Module ERS
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ExtractERSUVData, GetPhotodiodeArrayDetectorInstrumentConfigurationId, ReadSignals, translateToTimeSignals, WriteSignal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 122
+'    Code Lines: 81
+' Comment Lines: 21
+'   Blank Lines: 20
+'     File Size: 4.85 KB
+
+
+' Module ERS
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ExtractERSUVData, GetPhotodiodeArrayDetectorInstrumentConfigurationId, ReadSignals, translateToTimeSignals, WriteSignal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Signal
 Imports Microsoft.VisualBasic.DataStorage.netCDF
@@ -73,8 +74,8 @@ Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 ''' helper package module for read ``electromagnetic radiation spectrum`` data
 ''' </summary>
 ''' 
-<Package("mzML.ERS", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
-Module ERS
+<Package("UVSpectroscopy", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
+Module UVSpectroscopy
 
     Sub New()
 
