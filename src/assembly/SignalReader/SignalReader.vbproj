@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.SignalReader</RootNamespace>
+	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SignalReader</AssemblyName>
+	  <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+	  <Platforms>AnyCPU;x64</Platforms>
+	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32</Configurations>
+	  <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
+	  <Company>BioNovoGene</Company>
+	  <Product>BioDeep</Product>
+	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
+	  <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
+	  <PackageIcon>Flask.png</PackageIcon>
+	  <PackageIconUrl />
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mzmath\mz_deco\deconv.NET5.vbproj" />
+    <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>
