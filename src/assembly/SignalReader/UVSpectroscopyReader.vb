@@ -12,6 +12,20 @@ Imports Microsoft.VisualBasic.Text.Xml
 Public Module UVSpectroscopyReader
 
     <Extension>
+    Public Function GetSignalModel(UVSpectroscopy As UVScan) As GeneralSignal
+        Return New GeneralSignal With {
+            .description = UVSpectroscopy.ToString(),
+            .Measures = UVSpectroscopy.wavelength,
+            .measureUnit = "wavelength",
+            .reference = UVSpectroscopy.ToString(),
+            .Strength = UVSpectroscopy.intensity,
+            .meta = New Dictionary(Of String, String) From {
+                {"title", .reference}
+            }
+        }
+    End Function
+
+    <Extension>
     Public Iterator Function GetUVScans(mzml As mzMLScans, instrumentConfigurationId As String) As IEnumerable(Of GeneralSignal)
         For Each scan As spectrum In mzml.GetNoneSpectrumScans
             If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
