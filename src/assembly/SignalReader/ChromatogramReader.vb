@@ -72,6 +72,7 @@ Public Module ChromatogramReader
         Return New ChromatogramSerial(raw.ToString) With {.Chromatogram = raw.Ticks()}
     End Function
 
+    <Extension>
     Public Iterator Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
         Dim scan_time = chromatogram.scan_time
         Dim bpc = chromatogram.BPC
@@ -86,6 +87,8 @@ Public Module ChromatogramReader
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function GetSignal(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As GeneralSignal
         Return New GeneralSignal With {
             .description = If(isbpc, "BPC", "TIC"),
