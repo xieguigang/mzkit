@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -9,6 +10,15 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml
 
 Public Module UVSpectroscopyReader
+
+    <Extension>
+    Public Iterator Function GetUVScans(mzml As mzMLScans, instrumentConfigurationId As String) As IEnumerable(Of GeneralSignal)
+        For Each scan As spectrum In mzml.GetNoneSpectrumScans
+            If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
+                Yield scan.CreateGeneralSignal(instrumentConfigurationId)
+            End If
+        Next
+    End Function
 
     ''' <summary>
     ''' electromagnetic radiation spectrum
