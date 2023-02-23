@@ -75,6 +75,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -129,6 +130,11 @@ Module ChromatogramTools
     ''' scan time vector if the signal data parameter 
     ''' is assigned value.
     ''' </param>
+    ''' <param name="data">
+    ''' this optinal parameter value could be a numeric vector
+    ''' for represents the intensity value if the scans parameter
+    ''' is a numeric vector for represents the RT value
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.chromatogram")>
@@ -154,8 +160,8 @@ Module ChromatogramTools
                 End If
             End If
 
-            Dim scan_time As Double() = REnv.asVector(Of Double)(scans)
-            Dim intensity As Double() = REnv.asVector(Of Double)(data)
+            Dim scan_time As Double() = CLRVector.asNumeric(scans)
+            Dim intensity As Double() = CLRVector.asNumeric(data)
 
             Return scan_time _
                 .Select(Function(t, i)
