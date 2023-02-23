@@ -130,7 +130,7 @@ Module ChromatogramTools
     ''' scan time vector if the signal data parameter 
     ''' is assigned value.
     ''' </param>
-    ''' <param name="data">
+    ''' <param name="args">
     ''' this optinal parameter value could be a numeric vector
     ''' for represents the intensity value if the scans parameter
     ''' is a numeric vector for represents the RT value
@@ -141,14 +141,16 @@ Module ChromatogramTools
     <RApiReturn(GetType(Chromatogram), GetType(ChromatogramTick))>
     Public Function asChromatogram(<RRawVectorArgument>
                                    scans As Object,
-                                   <RRawVectorArgument>
-                                   Optional data As Object = Nothing,
+                                   <RListObjectArgument>
+                                   Optional args As list = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
         Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(scans, env, suppress:=True)
 
         If ms1.isError Then
-            If data Is Nothing Then
+            Dim intensity As Double() = args.getValue(Of Double())({"into", "intensity", "TIC", "BPC", "tic", "bpc", "totalIons", "basePeak", ""}, env)
+
+            If intensity.IsNullOrEmpty Then
                 ms1 = pipeline.TryCreatePipeline(Of ChromatogramTick)(scans, env, suppress:=True)
 
                 If ms1.isError Then
@@ -161,7 +163,6 @@ Module ChromatogramTools
             End If
 
             Dim scan_time As Double() = CLRVector.asNumeric(scans)
-            Dim intensity As Double() = CLRVector.asNumeric(data)
 
             Return scan_time _
                 .Select(Function(t, i)
