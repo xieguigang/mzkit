@@ -59,7 +59,6 @@ Imports Microsoft.VisualBasic.Net.Http
 
 Namespace MarkupData
 
-    <HideModuleName>
     Public Module Base64Decoder
 
         ''' <summary>

@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::9142e7df40420e443591c249015032d4, mzkit\Rscript\Library\mzkit\assembly\Chromatogram.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 285
-    '    Code Lines: 215
-    ' Comment Lines: 29
-    '   Blank Lines: 41
-    '     File Size: 10.80 KB
+' Summaries:
 
 
-    ' Module ChromatogramTools
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: addOverlaps, asChromatogram, overlaps, overlapsMatrix, overlapsSummary
-    '               overlapsTable, ReadData, scaleScanTime, setLabels, subset
-    '               toChromatogram, topInto
-    ' 
-    '     Sub: PackData
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 285
+'    Code Lines: 215
+' Comment Lines: 29
+'   Blank Lines: 41
+'     File Size: 10.80 KB
+
+
+' Module ChromatogramTools
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: addOverlaps, asChromatogram, overlaps, overlapsMatrix, overlapsSummary
+'               overlapsTable, ReadData, scaleScanTime, setLabels, subset
+'               toChromatogram, topInto
+' 
+'     Sub: PackData
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -179,21 +180,97 @@ Module ChromatogramTools
         Return chr
     End Function
 
+    ''' <summary>
+    ''' Convert chromatogram tick point data to a chromatogram object
+    ''' </summary>
+    ''' <param name="ticks">
+    ''' A vector of the <see cref="ChromatogramTick"/> object or a dataframe object.
+    ''' 
+    ''' If the data input is a dataframe object, then the data fields is
+    ''' required for create the chromatogram object:
+    ''' 
+    ''' 1. rt,RT,retention_time: used for represents the retention time data, data should be in time data unit seconds
+    ''' 2. basePeak,BPC: used for represents the base peak ion intensity value
+    ''' 3. totalIon,TIC: used for represents the total ions intensity value
+    ''' 4. into,intensity: used for represents the ion intensity value if the basePeak or total ion data is not specific
+    ''' </param>
+    ''' <returns>
+    ''' A chromatogram data object, which could be used for do 
+    ''' chromatogram overlaps or data plot visualization.
+    ''' </returns>
     <ExportAPI("toChromatogram")>
-    Public Function toChromatogram(ticks As ChromatogramTick()) As Chromatogram
+    <RApiReturn(GetType(Chromatogram))>
+    Public Function toChromatogram(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+        Dim totalIons As Double()
+        Dim basePeaks As Double()
+        Dim scan_time As Double()
+
+        If TypeOf ticks Is dataframe Then
+            Dim df As dataframe = DirectCast(ticks, dataframe)
+
+            totalIons = df.getVector(Of Double)("totalIon", "TIC", "into", "intensity")
+            basePeaks = df.getVector(Of Double)("basePeak", "BPC", "into", "intensity")
+            scan_time = df.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
+
+            If basePeaks.IsNullOrEmpty Then
+                basePeaks = totalIons
+            End If
+            If totalIons.IsNullOrEmpty Then
+                totalIons = basePeaks
+            End If
+
+            ' check data fields
+            If totalIons.IsNullOrEmpty OrElse basePeaks.IsNullOrEmpty Then
+                Return Internal.debug.stop("missing intensity value for create the chromatogram object!", env)
+            ElseIf scan_time.IsNullOrEmpty Then
+                Return Internal.debug.stop("the retention time is not provided!", env)
+            End If
+        Else
+            Dim ticksBuf = pipeline.TryCreatePipeline(Of ChromatogramTick)(ticks, env, suppress:=True)
+
+            If ticksBuf.isError Then
+                Return ticksBuf.getError
+            End If
+
+            Dim chromatogramTicks As ChromatogramTick() = ticksBuf _
+                .populates(Of ChromatogramTick)(env) _
+                .ToArray
+
+            scan_time = chromatogramTicks _
+                .Select(Function(t) t.Time) _
+                .ToArray
+            totalIons = chromatogramTicks _
+                .Select(Function(t) t.Intensity) _
+                .ToArray
+            basePeaks = totalIons
+        End If
+
         Return New Chromatogram With {
-            .scan_time = ticks.Select(Function(t) t.Time).ToArray,
-            .TIC = ticks.Select(Function(t) t.Intensity).ToArray,
-            .BPC = .TIC
+            .BPC = basePeaks,
+            .scan_time = scan_time,
+            .TIC = totalIons
         }
     End Function
 
+    ''' <summary>
+    ''' Add a chromatogram data in the chromatogram overlap collection
+    ''' </summary>
+    ''' <param name="overlaps">A chromatogram overlap collection object to be add new layer to it</param>
+    ''' <param name="name"></param>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <ExportAPI("add")>
     Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
         Call overlaps.overlaps.Add(name, data)
         Return overlaps
     End Function
 
+    ''' <summary>
+    ''' get subset of the chromatogram data by names
+    ''' </summary>
+    ''' <param name="overlaps"></param>
+    ''' <param name="names"></param>
+    ''' <returns></returns>
     <ExportAPI("subset")>
     Public Function subset(overlaps As ChromatogramOverlap, names As String()) As ChromatogramOverlap
         Return overlaps(names)
@@ -227,37 +304,45 @@ Module ChromatogramTools
         Return overlaps
     End Function
 
+    ''' <summary>
+    ''' scale the RT into different time data unit
+    ''' </summary>
+    ''' <param name="overlaps"></param>
+    ''' <param name="unit">
+    ''' the time data unit could be ``minute`` or ``hour``.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("scale_time")>
     Public Function scaleScanTime(overlaps As ChromatogramOverlap, Optional unit As String = "minute") As ChromatogramOverlap
+        Dim scaler As Double = 1
+
         If LCase(unit) = "minute" Then
-            Return New ChromatogramOverlap With {
-                .overlaps = overlaps.overlaps _
-                    .ToDictionary(Function(a) a.Key,
-                                  Function(a)
-                                      Return New Chromatogram With {
-                                          .BPC = a.Value.BPC,
-                                          .TIC = a.Value.TIC,
-                                          .scan_time = a.Value.scan_time.AsVector / 60
-                                      }
-                                  End Function)
-            }
+            scaler = 60
         ElseIf LCase(unit) = "hour" Then
-            Return New ChromatogramOverlap With {
-                .overlaps = overlaps.overlaps _
-                    .ToDictionary(Function(a) a.Key,
-                                  Function(a)
-                                      Return New Chromatogram With {
-                                          .BPC = a.Value.BPC,
-                                          .TIC = a.Value.TIC,
-                                          .scan_time = a.Value.scan_time.AsVector / 60 / 60
-                                      }
-                                  End Function)
-            }
+            scaler = 60 * 60
         Else
-            Return overlaps
+            scaler = 1
         End If
+
+        Return New ChromatogramOverlap With {
+            .overlaps = overlaps.overlaps _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return New Chromatogram With {
+                                      .BPC = a.Value.BPC,
+                                      .TIC = a.Value.TIC,
+                                      .scan_time = a.Value.scan_time.AsVector / scaler
+                                  }
+                              End Function)
+        }
     End Function
 
+    ''' <summary>
+    ''' Convert the overlap list to the matrix
+    ''' </summary>
+    ''' <param name="overlaps"></param>
+    ''' <param name="dt"></param>
+    ''' <returns></returns>
     <ExportAPI("overlapsMatrix")>
     Public Function overlapsMatrix(overlaps As ChromatogramOverlap, Optional dt As Double = 0.3) As Object
         Dim rulerRT As Double() = overlaps.UnionTimeSeq(dt)
@@ -277,51 +362,71 @@ Module ChromatogramTools
         Return matrix
     End Function
 
+    ''' <summary>
+    ''' Create chromatogram overlaps from a set of chromatogram objects
+    ''' </summary>
+    ''' <param name="TIC">
+    ''' A set of the chromatogram data objects, it chould be a vector of the
+    ''' chromatogram data object or a list of the chromatogram objects.
+    ''' The chromatogram data object in this input collection source could be
+    ''' created via the ``toChromatogram`` function.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("overlaps")>
     <RApiReturn(GetType(ChromatogramOverlap))>
-    Public Function overlaps(<RRawVectorArgument> Optional TIC As Object = Nothing, Optional env As Environment = Nothing) As Object
+    Public Function overlaps(<RRawVectorArgument>
+                             Optional TIC As Object = Nothing,
+                             Optional env As Environment = Nothing) As Object
+
         If TIC Is Nothing Then
             Return New ChromatogramOverlap
-        End If
-
-        If TypeOf TIC Is ChromatogramOverlap Then
+        ElseIf TypeOf TIC Is ChromatogramOverlap Then
             Return TIC
         End If
 
         If TypeOf TIC Is list Then
-            Dim result As New ChromatogramOverlap
-
-            For Each item In DirectCast(TIC, list).namedValues
-                If Not TypeOf item.Value Is Chromatogram Then
-                    Return Message.InCompatibleType(
-                        require:=GetType(Chromatogram),
-                        given:=item.Value.GetType,
-                        envir:=env,
-                        message:=$"item '{item.Name}' is not a chromatogram value."
-                    )
-                Else
-                    result(item.Name) = item.Value
-                End If
-            Next
-
-            Return result
+            Return overlapFromList(TIC, env)
         Else
-            Dim overlapsData As pipeline = pipeline.TryCreatePipeline(Of Chromatogram)(TIC, env)
-            Dim result As New ChromatogramOverlap
-
-            If overlapsData.isError Then
-                Return overlapsData.getError
-            Else
-                For Each item As SeqValue(Of Chromatogram) In overlapsData _
-                    .populates(Of Chromatogram)(env) _
-                    .SeqIterator
-
-                    result(item.i) = item
-                Next
-            End If
-
-            Return result
+            Return overlapFromVector(TIC, env)
         End If
+    End Function
+
+    Private Function overlapFromList(tic As Object, env As Environment) As Object
+        Dim result As New ChromatogramOverlap
+
+        For Each item In DirectCast(tic, list).namedValues
+            If Not TypeOf item.Value Is Chromatogram Then
+                Return Message.InCompatibleType(
+                    require:=GetType(Chromatogram),
+                    given:=item.Value.GetType,
+                    envir:=env,
+                    message:=$"item '{item.Name}' is not a chromatogram value."
+                )
+            Else
+                result(item.Name) = item.Value
+            End If
+        Next
+
+        Return result
+    End Function
+
+    Private Function overlapFromVector(tic As Object, env As Environment) As Object
+        Dim overlapsData As pipeline = pipeline.TryCreatePipeline(Of Chromatogram)(tic, env)
+        Dim result As New ChromatogramOverlap
+
+        If overlapsData.isError Then
+            Return overlapsData.getError
+        Else
+            For Each item As SeqValue(Of Chromatogram) In overlapsData _
+                .populates(Of Chromatogram)(env) _
+                .SeqIterator
+
+                result(item.i) = item
+            Next
+        End If
+
+        Return result
     End Function
 
     ''' <summary>

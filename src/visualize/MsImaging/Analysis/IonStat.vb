@@ -170,7 +170,7 @@ Public Class IonStat
             .mz = Val(ion.name),
             .basePixelX = basePixel.pixel.X,
             .basePixelY = basePixel.pixel.Y,
-            .maxIntensity = basePixel.ms.intensity,
+            .maxIntensity = intensity.Average,
             .pixels = pixels.size,
             .Q1Intensity = Q.Q1,
             .Q2Intensity = Q.Q2,

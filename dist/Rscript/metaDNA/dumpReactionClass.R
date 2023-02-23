@@ -1,4 +1,6 @@
-imports "mzkit.metadna" from "mzkit.insilicons.dll";
+require(mzkit);
+
+imports "metadna" from "mzDIA";
 
 ["D:\biodeep\biodeepdb_v3\KEGG\reaction_class"]
 :> reaction_class.table

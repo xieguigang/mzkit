@@ -57,16 +57,35 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
+''' <summary>
+''' A basic metabolite annotation data model
+''' </summary>
 Public Class MetaboliteAnnotation
     Implements IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider
 
-    Public Property UniqueId As String Implements IReadOnlyId.Identity
+    ''' <summary>
+    ''' the unique reference id of current metabolite
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Id As String Implements IReadOnlyId.Identity
+    ''' <summary>
+    ''' common name of the current metabolite
+    ''' </summary>
+    ''' <returns></returns>
     Public Property CommonName As String Implements ICompoundNameProvider.CommonName
+    ''' <summary>
+    ''' exact mass value of current metabolite, which it could be evaluated from the <see cref="Formula"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ExactMass As Double Implements IExactMassProvider.ExactMass
+    ''' <summary>
+    ''' atom compositions of current metabolite
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Formula As String Implements IFormulaProvider.Formula
 
     Public Overrides Function ToString() As String
-        Return $"[{UniqueId}] {CommonName}"
+        Return $"[{Id}] {CommonName}"
     End Function
 
 End Class

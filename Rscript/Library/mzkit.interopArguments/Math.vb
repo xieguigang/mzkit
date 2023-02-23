@@ -83,14 +83,24 @@ Module Math
         End If
     End Function
 
-    Public Function GetPrecursorTypes(val As Object, env As Environment) As MzCalculator()
-        Dim data As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(val, env, suppress:=True)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="adducts">
+    ''' should be a collection of <see cref="MzCalculator"/> or 
+    ''' a collection of <see cref="String"/> literal of the 
+    ''' adducts
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    Public Function GetPrecursorTypes(adducts As Object, env As Environment) As MzCalculator()
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(adducts, env, suppress:=True)
 
         If Not data.isError Then
             Return data.populates(Of MzCalculator)(env).ToArray
         End If
 
-        data = pipeline.TryCreatePipeline(Of String)(val, env, suppress:=True)
+        data = pipeline.TryCreatePipeline(Of String)(adducts, env, suppress:=True)
 
         If Not data.isError Then
             Return data.populates(Of String)(env) _

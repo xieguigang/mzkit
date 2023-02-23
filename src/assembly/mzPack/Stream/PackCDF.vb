@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
 
 ''' <summary>
 ''' 主要是为了减少对原始数据文件的频繁读取操作而创建的色谱数据缓存模块

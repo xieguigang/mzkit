@@ -78,6 +78,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -196,7 +197,7 @@ Module MetaDbXref
             Return id _
                 .Select(Function(ref, i)
                             Return New MetaboliteAnnotation With {
-                                .UniqueId = ref,
+                                .Id = ref,
                                 .CommonName = name(i),
                                 .Formula = formula(i),
                                 .ExactMass = FormulaScanner.EvaluateExactMass(.Formula)
@@ -298,6 +299,103 @@ Module MetaDbXref
         End If
     End Function
 
+    ''' <summary>
+    ''' Found the best matched mz value with the target <paramref name="exactMass"/>
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="exactMass"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns>
+    ''' function returns a evaluated mz under the specific <paramref name="adducts"/> value
+    ''' and it also the min mass tolerance, if no result has mass tolerance less then the 
+    ''' given threshold value, then this function returns nothing
+    ''' </returns>
+    <ExportAPI("searchMz")>
+    <RApiReturn(GetType(MzQuery))>
+    Public Function searchMz(<RRawVectorArgument> mz As Object, exactMass As Double, adducts As Object(),
+                             Optional mzdiff As Object = "da:0.005",
+                             Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.005")
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+        Dim mzlist As Double() = precursors _
+            .Select(Function(a) a.CalcMZ(exactMass)) _
+            .ToArray
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim minPpm As Double = Double.MaxValue
+        Dim matchMz As Double = -1
+        Dim matchType As MzCalculator = Nothing
+        Dim evalMz As Double = -1
+        Dim matchId As String = Nothing
+
+        If TypeOf mz Is list Then
+            Dim err As Message = Nothing
+            Dim mzSet As Dictionary(Of String, Double) = DirectCast(mz, list).AsGeneric(Of Double)(env, err:=err)
+
+            If Not err Is Nothing Then
+                Return err
+            End If
+
+            Dim uniqueKeys As String() = mzSet.Keys.ToArray
+            Dim candidateMz As Double() = uniqueKeys.Select(Function(key) mzSet(key)).ToArray
+
+            For i As Integer = 0 To candidateMz.Length - 1
+                For j As Integer = 0 To precursors.Length - 1
+                    Dim ppm As Double = PPMmethod.PPM(candidateMz(i), mzlist(j))
+
+                    If ppm < minPpm Then
+                        minPpm = ppm
+                        matchMz = candidateMz(i)
+                        matchType = precursors(j)
+                        evalMz = mzlist(j)
+                        matchId = uniqueKeys(i)
+                    End If
+                Next
+            Next
+        Else
+            Dim candidateMz As Double() = CLRVector.asNumeric(mz)
+
+            For i As Integer = 0 To candidateMz.Length - 1
+                For j As Integer = 0 To precursors.Length - 1
+                    Dim ppm As Double = PPMmethod.PPM(candidateMz(i), mzlist(j))
+
+                    If ppm < minPpm Then
+                        minPpm = ppm
+                        matchMz = candidateMz(i)
+                        matchType = precursors(j)
+                        evalMz = mzlist(j)
+                    End If
+                Next
+            Next
+        End If
+
+        If matchMz > 0 AndAlso mzErr.TryCast(Of Tolerance).IsEquals(matchMz, evalMz) Then
+            Return New MzQuery With {
+                .mz = matchMz,
+                .mz_ref = evalMz,
+                .name = exactMass.ToString("F4"),
+                .ppm = minPpm,
+                .precursorType = matchType.ToString,
+                .score = 1,
+                .unique_id = If(matchId, .name)
+            }
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' get metabolite annotation metadata by a set of given unique reference id
+    ''' </summary>
+    ''' <param name="engine"></param>
+    ''' <param name="uniqueId"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("getMetadata")>
     Public Function getMetadata(engine As Object, uniqueId As list, Optional env As Environment = Nothing) As Object
         Dim queryEngine As IMzQuery
@@ -528,6 +626,8 @@ Module MetaDbXref
                                    Dim test1 As Boolean = MetalIons.IsOrganic(formula)
                                    Dim test2 As Boolean = Not MetalIons.HasMetalIon(formula)
 
+                                   ' should be organic andalso not
+                                   ' contains some special metal ion
                                    Return test1 AndAlso test2
                                End Function) _
                         .ToArray

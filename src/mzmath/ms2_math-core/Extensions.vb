@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
@@ -62,19 +61,6 @@ Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 <HideModuleName> Public Module Extensions
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function Ticks(peaks As IEnumerable(Of PeakMs2)) As IEnumerable(Of ChromatogramTick)
-        Return peaks _
-            .Select(Function(p)
-                        Return New ChromatogramTick With {
-                            .Intensity = p.Ms2Intensity,
-                            .Time = p.rt
-                        }
-                    End Function) _
-            .OrderBy(Function(t) t.Time)
-    End Function
 
     ''' <summary>
     ''' 将响应强度低于一定值的碎片进行删除
