@@ -256,8 +256,8 @@ Module ChromatogramTools
     ''' Add a chromatogram data in the chromatogram overlap collection
     ''' </summary>
     ''' <param name="overlaps">A chromatogram overlap collection object to be add new layer to it</param>
-    ''' <param name="name"></param>
-    ''' <param name="data"></param>
+    ''' <param name="name">usually be a sample name</param>
+    ''' <param name="data">usually be a chromatogram data that extract from a sample data</param>
     ''' <returns></returns>
     <ExportAPI("add")>
     Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
