@@ -131,7 +131,7 @@ Module ChromatogramTools
     ''' is assigned value.
     ''' </param>
     ''' <param name="args">
-    ''' this optinal parameter value could be a numeric vector
+    ''' this optional parameter value could be a numeric vector
     ''' for represents the intensity value if the scans parameter
     ''' is a numeric vector for represents the RT value
     ''' </param>
@@ -148,7 +148,10 @@ Module ChromatogramTools
         Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(scans, env, suppress:=True)
 
         If ms1.isError Then
-            Dim intensity As Double() = args.getValue(Of Double())({"into", "intensity", "TIC", "BPC", "tic", "bpc", "totalIons", "basePeak", ""}, env)
+            ' $2 means the args is the second
+            ' parameter of this function
+            Dim intensity As Double() = args.getValue(Of Double())(
+                {"into", "intensity", "TIC", "BPC", "tic", "bpc", "totalIons", "basePeak", "$2"}, env)
 
             If intensity.IsNullOrEmpty Then
                 ms1 = pipeline.TryCreatePipeline(Of ChromatogramTick)(scans, env, suppress:=True)
