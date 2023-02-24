@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Add a chromatogram data in the chromatogram overlap collection</title>
+    <title>Get photodiode array detector instrument configuration id</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>add {chromatogram}</td>
+                <td>get_instrument {UVSpectroscopy}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Add a chromatogram data in the chromatogram overlap collection</h2>
+        <h2>Get photodiode array detector instrument configuration id</h2>
 
         <h3>Description</h3>
 
@@ -157,23 +157,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>add</strong>(<i>overlaps</i>, <i>name</i>, <i>data</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>get_instrument</strong>(<i>mzml</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>overlaps</dt>
-<dd><p><p>A chromatogram overlap collection object to be add new layer to it</p></p></dd>
-
-
-<dt>name</dt>
-<dd><p><p>usually be a sample name</p></p></dd>
-
-
-<dt>data</dt>
-<dd><p><p>usually be a chromatogram data that extract from a sample data</p></p></dd>
+<dt>mzml</dt>
+<dd><p><p>-</p></p></dd>
 
         </table>
 
@@ -185,11 +177,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ChromatogramOverlap.html">ChromatogramOverlap</a>.
+        this function returns data object of type string.
 
         <hr />
-        <div style="text-align: center;">[Package <em>chromatogram</em> version 1.0.0.0 <a
-                href="../chromatogram.html">Index</a>]
+        <div style="text-align: center;">[Package <em>UVSpectroscopy</em> version 1.0.0.0 <a
+                href="../UVSpectroscopy.html">Index</a>]
         </div>
     </div>
 </body>

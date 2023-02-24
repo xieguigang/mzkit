@@ -75,6 +75,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -129,20 +130,30 @@ Module ChromatogramTools
     ''' scan time vector if the signal data parameter 
     ''' is assigned value.
     ''' </param>
+    ''' <param name="args">
+    ''' this optional parameter value could be a numeric vector
+    ''' for represents the intensity value if the scans parameter
+    ''' is a numeric vector for represents the RT value
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.chromatogram")>
     <RApiReturn(GetType(Chromatogram), GetType(ChromatogramTick))>
     Public Function asChromatogram(<RRawVectorArgument>
                                    scans As Object,
-                                   <RRawVectorArgument>
-                                   Optional data As Object = Nothing,
+                                   <RListObjectArgument>
+                                   Optional args As list = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
         Dim ms1 As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(scans, env, suppress:=True)
 
         If ms1.isError Then
-            If data Is Nothing Then
+            ' $2 means the args is the second
+            ' parameter of this function
+            Dim intensity As Double() = args.getValue(Of Double())(
+                {"into", "intensity", "TIC", "BPC", "tic", "bpc", "totalIons", "basePeak", "$2"}, env)
+
+            If intensity.IsNullOrEmpty Then
                 ms1 = pipeline.TryCreatePipeline(Of ChromatogramTick)(scans, env, suppress:=True)
 
                 If ms1.isError Then
@@ -154,8 +165,7 @@ Module ChromatogramTools
                 End If
             End If
 
-            Dim scan_time As Double() = REnv.asVector(Of Double)(scans)
-            Dim intensity As Double() = REnv.asVector(Of Double)(data)
+            Dim scan_time As Double() = CLRVector.asNumeric(scans)
 
             Return scan_time _
                 .Select(Function(t, i)
@@ -256,8 +266,8 @@ Module ChromatogramTools
     ''' Add a chromatogram data in the chromatogram overlap collection
     ''' </summary>
     ''' <param name="overlaps">A chromatogram overlap collection object to be add new layer to it</param>
-    ''' <param name="name"></param>
-    ''' <param name="data"></param>
+    ''' <param name="name">usually be a sample name</param>
+    ''' <param name="data">usually be a chromatogram data that extract from a sample data</param>
     ''' <returns></returns>
     <ExportAPI("add")>
     Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
