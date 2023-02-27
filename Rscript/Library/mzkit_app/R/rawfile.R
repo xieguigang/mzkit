@@ -5,7 +5,7 @@ imports "visual" from "mzplot";
 #' 
 #' @param files the file path collection of the raw data files. 
 #' 
-let loadTree as function(files as string) {
+let loadTree = function(files as string) {
 
 }
 
@@ -14,13 +14,14 @@ let loadTree as function(files as string) {
 #' @description this function is a unify method for Convert 
 #'    ``*.mzXML``/``*.mzML``/``*.raw`` to mzpack data object
 #' 
-let convertToMzPack as function(file as string) {
-    const mzpack = open.mzpack(file);
-
+#' @param file a single character string for the source raw data
+#' 
+let convertToMzPack = function(file as string) {
+    file 
+    |> open.mzpack(file)
     # and then set thumbnail
     # setThumbnail function returns the mzpack data object
     # itself
-    mzpack 
-    |> setThumbnail(raw_scatter(mzpack))
+    |> setThumbnail(mzpack -> raw_scatter(mzpack))
     ;
 }
