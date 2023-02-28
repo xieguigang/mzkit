@@ -259,5 +259,20 @@ Namespace Formula
 
             Return New Formula(newComposition)
         End Operator
+
+        ''' <summary>
+        ''' safe get the extract mass from the formula object
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <returns>
+        ''' this function may returns -1 if the given formula is nothing
+        ''' </returns>
+        Public Shared Narrowing Operator CType(f As Formula) As Double
+            If f Is Nothing Then
+                Return -1
+            Else
+                Return f.ExactMass
+            End If
+        End Operator
     End Class
 End Namespace

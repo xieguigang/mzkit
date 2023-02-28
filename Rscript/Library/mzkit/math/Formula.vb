@@ -278,13 +278,13 @@ Module FormulaTools
     <RApiReturn(GetType(Double))>
     Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
         If TypeOf formula Is Formula Then
-            Return DirectCast(formula, Formula).ExactMass
+            Return CDbl(DirectCast(formula, Formula))
         End If
 
         Return env.EvaluateFramework(Of String, Double)(
             x:=formula,
             eval:=Function(str)
-                      Return FormulaScanner.ScanFormula(str).ExactMass
+                      Return CDbl(FormulaScanner.ScanFormula(str))
                   End Function)
     End Function
 

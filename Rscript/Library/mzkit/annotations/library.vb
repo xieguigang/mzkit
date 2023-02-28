@@ -195,7 +195,7 @@ Module library
             .ID = id,
             .name = name,
             .synonym = synonym,
-            .exact_mass = FormulaScanner.ScanFormula(formula).ExactMass
+            .exact_mass = CDbl(FormulaScanner.ScanFormula(formula))
         }
     End Function
 
