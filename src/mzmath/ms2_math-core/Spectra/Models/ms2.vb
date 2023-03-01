@@ -91,6 +91,14 @@ Namespace Spectra
         <XmlText>
         Public Property Annotation As String Implements IMzAnnotation.annotation
 
+        Sub New()
+        End Sub
+
+        Sub New(mz As Double, intensity As Double)
+            Me.mz = mz
+            Me.intensity = intensity
+        End Sub
+
         Public Overrides Function ToString() As String
             Dim mzinto As String
 
