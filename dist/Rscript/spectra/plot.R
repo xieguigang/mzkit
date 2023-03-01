@@ -11,6 +11,6 @@ data = data.frame(
 |> libraryMatrix(title = name)
 ;
 
-svg(file = `${@dir}/plotMs.svg`) {
-	plot(data, mirror = TRUE);
+bitmap(file = `${@dir}/plotMs.png`) {
+	plot(data, mirror = TRUE, bar.width = 3, legend.layout = "title");
 }

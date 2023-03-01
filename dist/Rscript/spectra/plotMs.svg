@@ -11,8 +11,8 @@
            assembly:  Microsoft.VisualBasic.Imaging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
            version:   1.0.0.0
            built:     1/1/2000 12:00:00 AM
-           md5:       a2e0e782099928821a7061b4faa495df
-           timestamp: 4/21/2022 4:47:54 PM
+           md5:       1549fdfac8b6637f6d77f952c0fa16b9
+           timestamp: 3/1/2023 2:05:24 PM
         
       
   -->
@@ -23,7 +23,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="425" x2="1170" y1="425" x1="100" />
    </g>
    <g z-index="2">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="425.5" x="67.5">0%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="425.5" x="67.5">
+         <!--DrawString(0%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=55, y:=413, angle:=)-->0%</text>
    </g>
    <g z-index="3">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="360" x2="85" y1="360" x1="100" />
@@ -32,7 +33,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="360" x2="1170" y1="360" x1="100" />
    </g>
    <g z-index="5">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="360.5" x="58.5">20%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="360.5" x="58.5">
+         <!--DrawString(20%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=348, angle:=)-->20%</text>
    </g>
    <g z-index="6">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="490" x2="85" y1="490" x1="100" />
@@ -41,7 +43,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="490" x2="1170" y1="490" x1="100" />
    </g>
    <g z-index="8">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="490.5" x="58.5">20%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="490.5" x="58.5">
+         <!--DrawString(20%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=478, angle:=)-->20%</text>
    </g>
    <g z-index="9">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="295" x2="85" y1="295" x1="100" />
@@ -50,7 +53,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="295" x2="1170" y1="295" x1="100" />
    </g>
    <g z-index="11">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="295.5" x="58.5">40%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="295.5" x="58.5">
+         <!--DrawString(40%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=283, angle:=)-->40%</text>
    </g>
    <g z-index="12">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="555" x2="85" y1="555" x1="100" />
@@ -59,7 +63,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="555" x2="1170" y1="555" x1="100" />
    </g>
    <g z-index="14">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="555.5" x="58.5">40%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="555.5" x="58.5">
+         <!--DrawString(40%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=543, angle:=)-->40%</text>
    </g>
    <g z-index="15">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="230" x2="85" y1="230" x1="100" />
@@ -68,7 +73,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="230" x2="1170" y1="230" x1="100" />
    </g>
    <g z-index="17">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="230.5" x="58.5">60%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="230.5" x="58.5">
+         <!--DrawString(60%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=218, angle:=)-->60%</text>
    </g>
    <g z-index="18">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="620" x2="85" y1="620" x1="100" />
@@ -77,7 +83,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="620" x2="1170" y1="620" x1="100" />
    </g>
    <g z-index="20">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="620.5" x="58.5">60%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="620.5" x="58.5">
+         <!--DrawString(60%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=608, angle:=)-->60%</text>
    </g>
    <g z-index="21">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="165" x2="85" y1="165" x1="100" />
@@ -86,7 +93,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="165" x2="1170" y1="165" x1="100" />
    </g>
    <g z-index="23">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="165.5" x="58.5">80%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="165.5" x="58.5">
+         <!--DrawString(80%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=153, angle:=)-->80%</text>
    </g>
    <g z-index="24">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="685" x2="85" y1="685" x1="100" />
@@ -95,7 +103,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="685" x2="1170" y1="685" x1="100" />
    </g>
    <g z-index="26">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="685.5" x="58.5">80%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="685.5" x="58.5">
+         <!--DrawString(80%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=46, y:=673, angle:=)-->80%</text>
    </g>
    <g z-index="27">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="100" x2="85" y1="100" x1="100" />
@@ -104,7 +113,8 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="100" x2="1170" y1="100" x1="100" />
    </g>
    <g z-index="29">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="100.5" x="48.5">100%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="100.5" x="48.5">
+         <!--DrawString(100%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=36, y:=88, angle:=)-->100%</text>
    </g>
    <g z-index="30">
       <line style="stroke: #000000; stroke-width: 1px; stroke-dash: solid;" z-index="0" y2="750" x2="85" y1="750" x1="100" />
@@ -113,93 +123,93 @@
       <line style="stroke: #E6E6E6; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="750" x2="1170" y1="750" x1="100" />
    </g>
    <g z-index="32">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="750.5" x="48.5">100%</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="750.5" x="48.5">
+         <!--DrawString(100%, font:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=36, y:=738, angle:=)-->100%</text>
    </g>
    <g z-index="33">
       <line style="stroke: #000000; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="750" x2="100" y1="100" x1="100" />
    </g>
    <g z-index="34">
-      <text style="font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" transform="rotate(-90 19.220703 492.23178)" y="504.73178" x="31.720703">Relative Intensity(%)</text>
+      <text style="font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" transform="rotate(-90 19.220703 492.23178)" y="504.73178" x="31.720703">
+         <!--DrawString(Relative Intensity(%), font:=font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=19.220703, y:=492.23178, angle:=rotate(-90 19.220703 492.23178))-->Relative Intensity(%)</text>
    </g>
    <g z-index="35">
       <line style="stroke: #000000; stroke-width: 2px; stroke-dash: solid;" z-index="0" y2="425" x2="1170" y1="425" x1="100" />
    </g>
    <g z-index="36">
-      <text style="font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="439.5" x="1102.5">M/Z ratio</text>
+      <text style="font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="439.5" x="1102.5">
+         <!--DrawString(M/Z ratio, font:=font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;, brush:=font-style: strong;font-weight:bold;font-size: 12.5px;font-family: Microsoft YaHei;color: black;fill: #000000, x:=1090, y:=427, angle:=)-->M/Z ratio</text>
    </g>
    <g z-index="37">
-      <rect style="fill: #4682B4" z-index="0" height="325" width="8" y="100" x="147" />
+      <rect style="fill: #4682B4" z-index="0" height="325" width="5" y="100" x="147" />
    </g>
    <g z-index="38">
-      <rect style="fill: #4682B4" z-index="0" height="17" width="8" y="408" x="159" />
+      <rect style="fill: #4682B4" z-index="0" height="17" width="5" y="408" x="159" />
    </g>
    <g z-index="39">
-      <rect style="fill: #4682B4" z-index="0" height="222" width="8" y="203" x="204" />
+      <rect style="fill: #4682B4" z-index="0" height="222" width="5" y="203" x="204" />
    </g>
    <g z-index="40">
-      <rect style="fill: #4682B4" z-index="0" height="28" width="8" y="397" x="598" />
+      <rect style="fill: #4682B4" z-index="0" height="28" width="5" y="397" x="598" />
    </g>
    <g z-index="41">
-      <rect style="fill: #4682B4" z-index="0" height="17" width="8" y="408" x="642" />
+      <rect style="fill: #4682B4" z-index="0" height="17" width="5" y="408" x="642" />
    </g>
    <g z-index="42">
-      <rect style="fill: #4682B4" z-index="0" height="17" width="8" y="408" x="646" />
+      <rect style="fill: #4682B4" z-index="0" height="17" width="5" y="408" x="646" />
    </g>
    <g z-index="43">
-      <rect style="fill: #4682B4" z-index="0" height="20" width="8" y="405" x="1015" />
+      <rect style="fill: #4682B4" z-index="0" height="20" width="5" y="405" x="1015" />
    </g>
    <g z-index="44">
-      <rect style="fill: #A52A2A" z-index="0" height="325" width="8" y="425" x="147" />
+      <rect style="fill: #A52A2A" z-index="0" height="325" width="5" y="425" x="147" />
    </g>
    <g z-index="45">
-      <rect style="fill: #A52A2A" z-index="0" height="17" width="8" y="425" x="159" />
+      <rect style="fill: #A52A2A" z-index="0" height="17" width="5" y="425" x="159" />
    </g>
    <g z-index="46">
-      <rect style="fill: #A52A2A" z-index="0" height="222" width="8" y="425" x="204" />
+      <rect style="fill: #A52A2A" z-index="0" height="222" width="5" y="425" x="204" />
    </g>
    <g z-index="47">
-      <rect style="fill: #A52A2A" z-index="0" height="28" width="8" y="425" x="598" />
+      <rect style="fill: #A52A2A" z-index="0" height="28" width="5" y="425" x="598" />
    </g>
    <g z-index="48">
-      <rect style="fill: #A52A2A" z-index="0" height="17" width="8" y="425" x="642" />
+      <rect style="fill: #A52A2A" z-index="0" height="17" width="5" y="425" x="642" />
    </g>
    <g z-index="49">
-      <rect style="fill: #A52A2A" z-index="0" height="17" width="8" y="425" x="646" />
+      <rect style="fill: #A52A2A" z-index="0" height="17" width="5" y="425" x="646" />
    </g>
    <g z-index="50">
-      <rect style="fill: #A52A2A" z-index="0" height="20" width="8" y="425" x="1015" />
+      <rect style="fill: #A52A2A" z-index="0" height="20" width="5" y="425" x="1015" />
    </g>
    <g z-index="51">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="89.21875" x="141.28256">97.03</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="89.21875" x="139.78256">
+         <!--DrawString(97.03, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=127.282555, y:=76.71875, angle:=)-->97.03</text>
    </g>
    <g z-index="52">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="192.21875" x="193.84116">112.05</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="192.21875" x="192.34116">
+         <!--DrawString(112.05, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=179.84116, y:=179.71875, angle:=)-->112.05</text>
    </g>
    <g z-index="53">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="765.5" x="141.28256">97.03</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="765.5" x="139.78256">
+         <!--DrawString(97.03, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=127.282555, y:=753, angle:=)-->97.03</text>
    </g>
    <g z-index="54">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="662.5" x="193.84116">112.05</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="662.5" x="192.34116">
+         <!--DrawString(112.05, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=179.84116, y:=650, angle:=)-->112.05</text>
    </g>
    <g z-index="55">
-      <path fill="#FFFFFF" z-index="0" d="M808.99994 108.5 L808.99994 106.567 L810.56696 105 L812.49994 104.99999 L1154.4999 105 L1156.433 104.99999 L1157.9999 106.56699 L1157.9999 108.49999 L1157.9999 108.49999 L1157.9999 108.5 L1157.9999 108.5 L1157.9999 180.49998 L1157.9999 182.43298 L1156.433 183.99998 L1154.5 183.99998 L812.5 183.99998 L810.56696 184 L809 182.43298 L809 180.5 Z" />
+      <rect style="fill: #4682B4" z-index="0" height="20" width="20" y="30" x="100" />
    </g>
    <g z-index="56">
-      <path style="fill: transparent; stroke: #000000; stroke-width: 2px; stroke-dash: solid;" z-index="0" d="M808.99994 108.5 L808.99994 106.567 L810.56696 105 L812.49994 104.99999 L1154.4999 105 L1156.433 104.99999 L1157.9999 106.56699 L1157.9999 108.49999 L1157.9999 108.49999 L1157.9999 108.5 L1157.9999 108.5 L1157.9999 180.49998 L1157.9999 182.43298 L1156.433 183.99998 L1154.5 183.99998 L812.5 183.99998 L810.56696 184 L809 182.43298 L809 180.5 Z" />
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="39.5" x="137.5">
+         <!--DrawString([MSn][Scan_3843] FTMS + p ESI d Full ms2 563.1486@hcd30.00 [50.0000-595.0000] M563T290, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=125, y:=27, angle:=)-->[MSn][Scan_3843] FTMS + p ESI d Full ms2 563.1486@hcd30.00 [50.0000-595.0000] M563T290</text>
    </g>
    <g z-index="57">
-      <rect style="fill: #4682B4" z-index="0" height="20" width="20" y="120" x="820" />
+      <rect style="fill: #A52A2A" z-index="0" height="20" width="20" y="60" x="100" />
    </g>
    <g z-index="58">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="129.5" x="857.5">[MSn][Scan_3843] FTMS + p ESI d Full ms2 563.1486@hcd30.00 [50.0000-595.0000] M563T290</text>
-   </g>
-   <g z-index="59">
-      <rect style="fill: #A52A2A" z-index="0" height="20" width="20" y="150" x="820" />
-   </g>
-   <g z-index="60">
-      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="159.5" x="857.5">7 @ BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2</text>
-   </g>
-   <g z-index="61">
-      <text style="font-style: normal;font-size: 25px;font-family: Microsoft YaHei;color: black;fill: #000000" z-index="0" y="55.64845" x="497.69012">Mass Spectrum Plot</text>
+      <text style="font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000" z-index="0" y="69.5" x="137.5">
+         <!--DrawString(7 @ BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2, font:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;, brush:=font-style: normal;font-size: 12.5px;font-family: Segoe UI;color: black;fill: #000000, x:=125, y:=57, angle:=)-->7 @ BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2</text>
    </g>
 </svg>

@@ -89,6 +89,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -321,12 +322,14 @@ Module Visual
         Dim alignment As Object = args.getByName("alignment")
 
         If mirror OrElse Not alignment Is Nothing Then
-            ' plot ms alignment
+            ' plot ms alignment mirror plot
             Return Visual.SpectrumPlot(
                 spectrum:=spectrum,
                 alignment:=alignment,
                 title:=If(title, "Mass Spectrum Plot"),
-                env:=env
+                env:=env,
+                bar_width:=args.getValue(Of Single)({"bar_width", "bar.width", "bw"}, env, [default]:=8.0),
+                legend_layout:=args.getValue({"legend_layout", "legend.layout"}, env, [default]:="top-right")
             )
         Else
             Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -545,9 +548,13 @@ Module Visual
                                  Optional showGrid As Boolean = True,
                                  Optional tagXFormat$ = "F2",
                                  Optional intoCutoff# = 0.3,
+                                 Optional bar_width As Single = 8,
+                                 <RRawVectorArgument(GetType(String))>
+                                 Optional legend_layout As Object = "top-right|title|bottom",
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
+        Dim layouts As String() = CLRVector.asCharacter(legend_layout)
 
         If ms Like GetType(Message) Then
             Return ms.TryCast(Of Message)
@@ -565,7 +572,9 @@ Module Visual
                         ms.TryCast(Of LibraryMatrix).name,
                         spectrum.ToString
                     },
-                    driver:=env.getDriver
+                    driver:=env.getDriver,
+                    bw:=bar_width,
+                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
@@ -581,7 +590,9 @@ Module Visual
                 drawLegend:=showLegend,
                 drawGrid:=showGrid,
                 tagXFormat:=tagXFormat,
-                labelDisplayIntensity:=intoCutoff
+                labelDisplayIntensity:=intoCutoff,
+                bw:=bar_width,
+                legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
             )
         End If
     End Function
