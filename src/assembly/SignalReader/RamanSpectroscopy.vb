@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
@@ -18,5 +19,13 @@ Public Module RamanSpectroscopy
                 .JoinIterates(raman.MeasurementInformation) _
                 .ToDictionary
         }
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToChromatogram(raman As Raman.Spectroscopy) As ChromatogramTick()
+        Return raman.xyData _
+            .Select(Function(c) New ChromatogramTick With {.Time = c.X, .Intensity = c.Y}) _
+            .ToArray
     End Function
 End Module

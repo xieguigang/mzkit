@@ -29,6 +29,12 @@ Namespace ASCII.Raman
                               End Function)
         End Sub
 
+        Public Function ParseTextFile(file As String) As Spectroscopy
+            Using buf = file.OpenReader
+                Return ParseTextFile(buf)
+            End Using
+        End Function
+
         Public Function ParseTextFile(txt As StreamReader) As Spectroscopy
             Dim line As Value(Of String) = ""
             Dim data As NamedValue(Of String)
