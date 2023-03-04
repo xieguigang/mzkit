@@ -380,11 +380,18 @@ Module MzWeb
     ''' <param name="thumb">
     ''' Thumbnail image object data can be a gdi+ image or 
     ''' bitmap or a gdi+ canvas object in type <see cref="ImageData"/>.
+    ''' And also this parameter could be a lambda function that
+    ''' could be used for invoke and generates the image data.
     ''' </param>
     ''' <returns>
     ''' returns a modified mzpack data object with Thumbnail 
     ''' property data has been updated.
     ''' </returns>
+    ''' <remarks>
+    ''' the parameter value of the <paramref name="thumb"/> lambda
+    ''' function will be <paramref name="mzpack"/> parameter value
+    ''' input
+    ''' </remarks>
     <ExportAPI("setThumbnail")>
     <RApiReturn(GetType(mzPack))>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object, Optional env As Environment = Nothing) As Object

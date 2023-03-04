@@ -88,7 +88,7 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 Return cache(key)
             Else
-                mass = ScanFormula(formula, n).ExactMass
+                mass = CDbl(ScanFormula(formula, n))
 
                 SyncLock cache
                     If Not cache.ContainsKey(key) Then
@@ -124,6 +124,12 @@ Namespace Formula
         ''' returns nothing if the given <paramref name="formula"/>
         ''' string is empty or null
         ''' </returns>
+        ''' <remarks>
+        ''' The ``CType/CDbl`` convertor operator could be used for get extract mass value
+        ''' from the generated formula object, due to the reason of this function may 
+        ''' returns nothing if the formula input string is empty or incorrect. the CType
+        ''' and CDbl operator will handling such null reference error safely
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
             Dim key As String, formula2 As Formula

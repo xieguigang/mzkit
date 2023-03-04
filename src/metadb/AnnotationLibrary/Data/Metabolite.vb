@@ -85,7 +85,7 @@ Public Class Metabolite
     Public ReadOnly Property exactMass As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return FormulaScanner.ScanFormula(annotation.formula).ExactMass
+            Return CDbl(FormulaScanner.ScanFormula(annotation.formula))
         End Get
     End Property
 

@@ -87,6 +87,8 @@ Public Module MassSpectra
                                Optional ylab$ = "Relative Intensity(%)",
                                Optional drawGrid As Boolean = True,
                                Optional tagXFormat$ = "F2",
+                               Optional bw As Single = 8,
+                               Optional legendLayout As String = "top-right",
                                Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
@@ -105,7 +107,9 @@ Public Module MassSpectra
             ylab:=ylab,
             drawGrid:=drawGrid,
             tagXFormat:=tagXFormat,
-            driver:=driver
+            driver:=driver,
+            bw:=bw,
+            legendLayout:=legendLayout
         )
     End Function
 
@@ -121,6 +125,8 @@ Public Module MassSpectra
                                     Optional ylab$ = "Relative Intensity(%)",
                                     Optional tagXFormat$ = "F2",
                                     Optional drawGrid As Boolean = True,
+                                    Optional bw As Single = 8,
+                                    Optional legendLayout As String = "top-right",
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -155,7 +161,9 @@ Public Module MassSpectra
             bg:=bg,
             drawGrid:=drawGrid,
             tagXFormat:=tagXFormat,
-            driver:=driver
+            driver:=driver,
+            bw:=bw,
+            legendLayout:=legendLayout
         )
     End Function
 End Module

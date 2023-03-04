@@ -16,7 +16,7 @@ imports "math" from "mzkit";
 #'   Check Package:             'Ctrl + Shift + E'
 #'   Test Package:              'Ctrl + Shift + T'
 #' 
-let .onLoad as function() {
+let .onLoad = function() {
   cat("\n");
 
   print(description(package = "mzkit")$title);
@@ -27,5 +27,14 @@ let .onLoad as function() {
   print("Visit of mzkit HOME:");
   print("https://mzkit.org/");
   
+  cat("\n\n");
+  cat("MZKit is an open source raw data file toolkit for mass spectrometry\n");
+  cat("data analysis, provides by the BioNovoGene corporation.\n");
+  cat("The features of mzkit inlcudes: raw data file content viewer\n");
+  cat("(XIC/TIC/Mass spectral plot/MS-Imaging), build molecule network,\n");
+  cat("formula de-novo search, de-novo annotation of the unknown\n");
+  cat("metabolite features, MALDI single cell metabolomics data analysis,\n");
+  cat("pathological slide viewer and targeted data quantification.\n");
+
   cat("\n");
 }
