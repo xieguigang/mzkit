@@ -53,6 +53,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports Microsoft.VisualBasic.Linq
 
 Module Program
     Sub Main(args As String())
@@ -64,6 +65,7 @@ Module Program
     Sub readRaman()
         Using file = "E:\mzkit\src\mzkit\extdata\raman_spectroscopy\LS4.txt".OpenReader
             Dim data = Raman.FileReader.ParseTextFile(file)
+            Dim obj = DynamicType.Create(data.Comments.JoinIterates(data.DetailedInformation).JoinIterates(data.MeasurementInformation).ToDictionary(Function(a) a.Key, Function(a) CObj(a.Value)))
 
             Pause()
         End Using
