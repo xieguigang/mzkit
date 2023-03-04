@@ -37,9 +37,9 @@ Namespace ASCII.Raman
             Dim type As Type
 
             Do While Not (line = txt.ReadLine).StringEmpty
-                data = line.GetTagValue(vbTab, trim:=True)
+                data = line.GetTagValue(vbTab, trim:=True, failureNoName:=False)
 
-                If data.Name.TextEquals("xydata") Then
+                If line.Value.TextEquals("xydata") Then
                     Exit Do
                 End If
 
@@ -71,15 +71,15 @@ Namespace ASCII.Raman
 
             raman.xyData = spectroscopy.ToArray
 
-            Do While Not (line = txt.ReadLine).StringEmpty
-                If line.First = "#"c Then
+            Do While Not (line = txt.ReadLine) Is Nothing
+                If line.Value.StringEmpty OrElse line.First = "#"c Then
                     Continue Do
                 End If
                 If line.Value.IsPattern("\[.+\]") Then
                     information = New Dictionary(Of String, String)
                     metadata.Add(line, information)
                 Else
-                    data = line.GetTagValue(vbTab, trim:=True)
+                    data = line.GetTagValue(vbTab, trim:=True, failureNoName:=False)
                     information.Add(data.Name, data.Value)
                 End If
             Loop
