@@ -89,7 +89,7 @@ Public Module Permutation
                 .ToArray
 
             If i Mod delta = 0 Then
-                Call Console.WriteLine($" -- {(i / permutations * 100).ToString("F2")}% [{i}/{permutations}]")
+                Call VBDebugger.EchoLine($" -- {(i / permutations * 100).ToString("F2")}% [{i}/{permutations}]")
             End If
         Next
     End Function
