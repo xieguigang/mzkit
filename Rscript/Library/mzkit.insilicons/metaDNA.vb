@@ -66,6 +66,7 @@ Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MetaDNA.Visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -79,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
@@ -509,6 +511,8 @@ Module metaDNAInfer
                                      <RRawVectorArgument()>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
                                      Optional mzdiff As Object = "ppm:20",
+                                     <RRawVectorArgument(TypeCodes.string)>
+                                     Optional excludes As Object = Nothing,
                                      Optional env As Environment = Nothing) As Object
 
         Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
@@ -522,6 +526,7 @@ Module metaDNAInfer
 
         Dim typeList As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(precursors, env, suppress:=True)
         Dim calculators As MzCalculator()
+        Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
 
         If typeList.isError Then
             typeList = pipeline.TryCreatePipeline(Of String)(precursors, env, suppress:=True)
@@ -545,7 +550,11 @@ Module metaDNAInfer
         End If
 
         Return KEGGHandler.CreateIndex(
-            compounds:=keggSet.populates(Of KeggCompound)(env),
+            compounds:=keggSet _
+                .populates(Of KeggCompound)(env) _
+                .Where(Function(c)
+                           Return Not c.entry Like excludesEntry
+                       End Function),
             types:=calculators,
             tolerance:=mzErr.TryCast(Of Tolerance)
         )
