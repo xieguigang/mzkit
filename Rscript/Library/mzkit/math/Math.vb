@@ -81,6 +81,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -261,8 +262,8 @@ Module MzMath
                         <RRawVectorArgument> b As Object,
                         Optional env As Environment = Nothing) As Double()
 
-        Dim x As Double() = REnv.asVector(Of Double)(a)
-        Dim y As Double() = REnv.asVector(Of Double)(b)
+        Dim x As Double() = CLRVector.asNumeric(a)
+        Dim y As Double() = CLRVector.asNumeric(b)
 
         Return Vectorization.BinaryCoreInternal(Of Double, Double, Double)(
             x:=x,
@@ -582,17 +583,17 @@ Module MzMath
             Dim data As dataframe = DirectCast(ions, dataframe)
 
             If data.hasName("mz") Then
-                mz = REnv.asVector(Of Double)(data!mz)
+                mz = CLRVector.asNumeric(data!mz)
             ElseIf data.hasName("m/z") Then
-                mz = REnv.asVector(Of Double)(data("m/z"))
+                mz = CLRVector.asNumeric(data("m/z"))
             Else
                 Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
             End If
 
             If data.hasName("into") Then
-                into = REnv.asVector(Of Double)(data!into)
+                into = CLRVector.asNumeric(data!into)
             ElseIf data.hasName("intensity") Then
-                into = REnv.asVector(Of Double)(data!intensity)
+                into = CLRVector.asNumeric(data!intensity)
             Else
                 Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
             End If
@@ -646,7 +647,7 @@ Module MzMath
                                     Optional method As Object = "ppm|da",
                                     Optional env As Environment = Nothing) As Object
 
-        Dim methodVec As String() = REnv.asVector(Of String)(method)
+        Dim methodVec As String() = CLRVector.asCharacter(method)
 
         Select Case methodVec(Scan0).ToLower
             Case "da" : Return Tolerance.DeltaMass(threshold)

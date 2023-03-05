@@ -69,6 +69,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -157,7 +158,7 @@ Module TissueMorphology
                                      Optional is_singlecells As Boolean = False,
                                      Optional env As Environment = Nothing) As UMAPPoint()
 
-        Dim pixels As String() = REnv.asVector(Of String)(points)
+        Dim pixels As String() = CLRVector.asCharacter(points)
         Dim umap As UMAPPoint() = pixels _
             .Select(Function(pi, i)
                         Dim sample As UMAPPoint

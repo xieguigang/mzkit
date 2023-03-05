@@ -61,15 +61,34 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
 Imports SMRUCC.genomics.ComponentModel.EquaionModel.DefaultTypes
 
+Public MustInherit Class MapGraphPopulator
+
+    Public MustOverride Function CreateGraphModel(map As Map) As NetworkGraph
+
+End Class
+
+Friend Class DefaultMapGraphPopulator : Inherits MapGraphPopulator
+
+    ReadOnly reactions As Dictionary(Of String, Reaction)
+
+    Sub New(reactions As Dictionary(Of String, Reaction))
+        Me.reactions = reactions
+    End Sub
+
+    Public Overrides Function CreateGraphModel(map As Map) As NetworkGraph
+        Return map.graphModel(reactions)
+    End Function
+End Class
+
 ''' <summary>
 ''' create background network graph model for kegg data
 ''' </summary>
 Public Module KEGG
 
     <Extension>
-    Public Iterator Function CreateBackground(pathways As IEnumerable(Of Map), reactions As Dictionary(Of String, Reaction)) As IEnumerable(Of NamedValue(Of NetworkGraph))
+    Public Iterator Function CreateBackground(pathways As IEnumerable(Of Map), populator As MapGraphPopulator) As IEnumerable(Of NamedValue(Of NetworkGraph))
         For Each map As Map In pathways
-            Dim model As NetworkGraph = map.graphModel(reactions)
+            Dim model As NetworkGraph = populator.CreateGraphModel(map)
             Dim referId As String = If(map.id.IsPattern("\d+"), $"map{map.id}", map.id)
             Dim name As String = map.Name _
                 .Replace("Reference pathway", "") _
@@ -81,6 +100,12 @@ Public Module KEGG
                 .Value = model
             }
         Next
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CreateBackground(pathways As IEnumerable(Of Map), reactions As Dictionary(Of String, Reaction)) As IEnumerable(Of NamedValue(Of NetworkGraph))
+        Return pathways.CreateBackground(New DefaultMapGraphPopulator(reactions))
     End Function
 
     ''' <summary>
@@ -95,7 +120,7 @@ Public Module KEGG
     ''' partner connections in this graph model.
     ''' </returns>
     <Extension>
-    Private Function graphModel(map As Map, reactions As Dictionary(Of String, Reaction)) As NetworkGraph
+    Friend Function graphModel(map As Map, reactions As Dictionary(Of String, Reaction)) As NetworkGraph
         Dim allShapes As String() = map.shapes _
             .Select(Function(a) a.IDVector) _
             .IteratesALL _
