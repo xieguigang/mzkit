@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>create the kegg compound ms1 annotation query engine.</title>
+    <title>readFile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,49 +143,27 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>annotationSet {metadna}</td>
+                <td>readFile {RamanSpectroscopy}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>create the kegg compound ms1 annotation query engine.</h2>
+        <h2>readFile</h2>
 
         <h3>Description</h3>
 
-        
+        readFile
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>annotationSet</strong>(<i>kegg</i>,
-    <i>precursors</i> = <span style='color: brown;'><strong>"[M]+|[M+H]+|[M+H-H2O]+"</strong></span>,
-    <i>mzdiff</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>excludes</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>readFile</strong>(<i>file</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>kegg</dt>
-<dd><p><p>a set of kegg compound data</p></p></dd>
-
-
-<dt>precursors</dt>
-<dd><p><p>a character vector of the ms1 precursor ion names or <br />
- a list of the given mzcalculator object models.</p></p></dd>
-
-
-<dt>mzdiff</dt>
-<dd><p><p>the mass tolerance value to match between the <br />
- experiment m/z value and the reference m/z value<br />
- which is calculated from the compound exact mass<br />
- with a given specific ion precursor type.</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -196,12 +174,11 @@
 
         <h3>Value</h3>
 
-        <p>a data query engine model to run ms1 data search <br />
- for the kegg metaolite compounds.</p>
+        this function returns data object of type <i>any</i> kind.
 
         <hr />
-        <div style="text-align: center;">[Package <em>metadna</em> version 1.0.0.0 <a
-                href="../metadna.html">Index</a>]
+        <div style="text-align: center;">[Package <em>RamanSpectroscopy</em> version 1.0.0.0 <a
+                href="../RamanSpectroscopy.html">Index</a>]
         </div>
     </div>
 </body>

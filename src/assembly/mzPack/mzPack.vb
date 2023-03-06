@@ -258,7 +258,7 @@ Public Class mzPack
     End Function
 
     ''' <summary>
-    ''' a wrapper of <see cref="ReadAll(Stream, Boolean, Boolean, Boolean)"/>
+    ''' a wrapper of <see cref="ReadAll(Stream, Boolean, Boolean, Boolean, Boolean)"/>
     ''' </summary>
     ''' <param name="filepath"></param>
     ''' <param name="ignoreThumbnail"></param>
