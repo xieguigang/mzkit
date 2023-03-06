@@ -61,7 +61,6 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -76,7 +75,7 @@ Namespace Query
         ReadOnly bin As BinaryDataReader
         ReadOnly tree As BlockNode()
         ReadOnly is_binary As Boolean
-        ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
+        ReadOnly mzIndex As MzIonSearch
 
         ''' <summary>
         ''' cutoff of the cos similarity
@@ -131,12 +130,7 @@ Namespace Query
             is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
             ' see dev notes about the mass tolerance in 
             ' MSSearch module
-            mzIndex = New BlockSearchFunction(Of IonIndex)(
-                data:=mzset,
-                eval:=Function(m) m.mz,
-                tolerance:=1,
-                factor:=3
-            )
+            mzIndex = New MzIonSearch(mzset, da)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -151,10 +145,8 @@ Namespace Query
         ''' <param name="mz"></param>
         ''' <returns></returns>
         Public Function QueryByMz(mz As Double) As BlockNode()
-            Dim query As New IonIndex With {.mz = mz}
-            Dim result As BlockNode() = mzIndex _
-                .Search(query) _
-                .Where(Function(d) da(d.mz, mz)) _
+            Dim ions As IonIndex() = mzIndex.QueryByMz(mz)
+            Dim result = ions _
                 .Select(Function(d) tree(d.node)) _
                 .GroupBy(Function(d) d.Id) _
                 .Select(Function(g)
