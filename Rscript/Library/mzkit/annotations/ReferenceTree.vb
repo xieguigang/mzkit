@@ -128,6 +128,8 @@ Module ReferenceTreePkg
     Public Function open(<RRawVectorArgument>
                          file As Object,
                          Optional dotcutoff As Double = 0.6,
+                         <RRawVectorArgument(TypeCodes.string)>
+                         Optional adducts As Object = "[M]+|[M+H]+",
                          Optional env As Environment = Nothing) As Object
 
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
@@ -142,7 +144,10 @@ Module ReferenceTreePkg
         Call buf.Seek(Scan0, SeekOrigin.Begin)
 
         If isHDS Then
-            Return New PackAlignment(New SpectrumReader(buf), dotcutoff)
+            Dim precursor_types = Math.GetPrecursorTypes(adducts, env)
+            Dim referenceSpectrum = New SpectrumReader(buf).BuildSearchIndex(precursor_types)
+
+            Return New PackAlignment(referenceSpectrum, dotcutoff)
         Else
             Return New TreeSearch(buffer.TryCast(Of Stream)).SetCutoff(dotcutoff)
         End If
@@ -305,7 +310,7 @@ Module ReferenceTreePkg
         If treeSearch Then
             result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
         Else
-            result = tree.Search(centroid, mz1:=x.mz)
+            result = tree.Search(centroid, mz1:=x.mz).ToArray
         End If
 
         Dim basePeakMz As Double = x.mzInto _
