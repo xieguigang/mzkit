@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.Bencoding
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class SpectrumReader : Implements IDisposable
 
@@ -14,10 +15,21 @@ Public Class SpectrumReader : Implements IDisposable
     Dim file As StreamPack
     Dim mzIndex As MzIonSearch
 
+    ''' <summary>
+    ''' mapping of <see cref="BlockNode.Id"/> to the mass index <see cref="MassIndex.name"/>
+    ''' </summary>
+    ReadOnly map As Dictionary(Of String, String)
     ReadOnly spectrum As New Dictionary(Of String, BlockNode)
+
+    Default Public ReadOnly Property GetIdMap(libname As String) As String
+        Get
+            Return map(libname)
+        End Get
+    End Property
 
     Sub New(file As Stream)
         Me.file = New StreamPack(file, [readonly]:=True)
+        Me.map = Me.file.ReadText("/map.json").LoadJSON(Of Dictionary(Of String, String))
     End Sub
 
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of BlockNode)
@@ -62,7 +74,7 @@ Public Class SpectrumReader : Implements IDisposable
     End Function
 
     Public Function BuildSearchIndex(adducts As MzCalculator()) As SpectrumReader
-        Dim exactMass As MassIndex() = LoadMass().ToArray
+        Dim exactMass As MassIndex() = LoadMass(file).ToArray
         Dim mz As IonIndex() = exactMass _
             .Select(Function(mass)
                         Return evalMz(mass, adducts)
@@ -75,14 +87,14 @@ Public Class SpectrumReader : Implements IDisposable
         Return Me
     End Function
 
-    Private Iterator Function LoadMass() As IEnumerable(Of MassIndex)
+    Private Shared Iterator Function LoadMass(file As StreamPack) As IEnumerable(Of MassIndex)
         Dim files = DirectCast(file.GetObject("/massSet/"), StreamGroup) _
             .ListFiles _
             .Select(Function(f) DirectCast(f, StreamBlock)) _
             .ToArray
 
-        For Each file As StreamBlock In files
-            Dim bcode As String = Me.file.ReadText(file)
+        For Each ref As StreamBlock In files
+            Dim bcode As String = file.ReadText(ref)
             Dim mass As BDictionary = BencodeDecoder.Decode(bcode).First
             Dim index As New MassIndex
 

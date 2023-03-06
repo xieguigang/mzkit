@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.Bencoding
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -41,13 +42,20 @@ Public Class SpectrumPack : Implements IDisposable
 
     Private Sub Save()
         Dim i As Integer = 0
+        Dim map As New Dictionary(Of String, String)
 
         For Each mass As MassIndex In massSet.Values
             Dim path As String = $"/massSet/{mass.name}.bcode"
             Dim bcode As String = mass.ToBEncodeString
 
             Call file.WriteText(bcode, path)
+
+            For Each p As Integer In mass.spectrum
+                Call map.Add(treePack(p).Id, mass.name)
+            Next
         Next
+
+        Call file.WriteText(map.GetJson, "/map.json")
 
         For Each spectrum As BlockNode In treePack
             Dim path As String = $"/spectrum/{i.ToString.Last}/{i}.dat"

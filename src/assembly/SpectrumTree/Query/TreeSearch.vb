@@ -171,7 +171,7 @@ Namespace Query
         ''' <param name="centroid">the query spectrum matrix data should be processed in centroid mode</param>
         ''' <param name="mz1">the parent m/z of the target unknown metabolite</param>
         ''' <returns></returns>
-        Public Overrides Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+        Public Overrides Iterator Function Search(centroid As ms2(), mz1 As Double) As IEnumerable(Of ClusterHit)
             Dim candidates As BlockNode() = QueryByMz(mz1)
             Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates.ElementAtOrNull(Scan0))
 
@@ -185,9 +185,7 @@ Namespace Query
             Next
 
             If max.score > dotcutoff Then
-                Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
-            Else
-                Return Nothing
+                Yield reportClusterHit(centroid, hit:=max.node, score:=max.raw)
             End If
         End Function
 
