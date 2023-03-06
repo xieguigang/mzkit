@@ -60,20 +60,23 @@ Public Class SpectrumReader : Implements IDisposable
         Return adducts _
             .Select(Function(type)
                         Dim mzi As Double = type.CalcMZ(mass.exactMass)
-                        Dim getIndex = mass.spectrum _
-                            .Select(Function(i)
-                                        Return New IonIndex With {
-                                            .mz = mzi,
-                                            .node = i
-                                        }
-                                    End Function)
 
-                        Return getIndex
+                        If mzi <= 0 Then
+                            Return New IonIndex() {}
+                        Else
+                            Return mass.spectrum _
+                                .Select(Function(i)
+                                            Return New IonIndex With {
+                                                .mz = mzi,
+                                                .node = i
+                                            }
+                                        End Function)
+                        End If
                     End Function) _
             .IteratesALL
     End Function
 
-    Public Function BuildSearchIndex(adducts As MzCalculator()) As SpectrumReader
+    Public Function BuildSearchIndex(ParamArray adducts As MzCalculator()) As SpectrumReader
         Dim exactMass As MassIndex() = LoadMass(file).ToArray
         Dim mz As IonIndex() = exactMass _
             .Select(Function(mass)
