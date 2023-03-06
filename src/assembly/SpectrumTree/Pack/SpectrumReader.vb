@@ -37,10 +37,10 @@ Public Class SpectrumReader : Implements IDisposable
         Dim index As IEnumerable(Of String) = From i As IonIndex
                                               In ions
                                               Let i32 As Integer = i.node
+                                              Select i32
                                               Distinct
-                                              Let tag As String = i.ToString
+                                              Let tag As String = i32.ToString
                                               Select tag
-
         For Each key As String In index
             If Not spectrum.ContainsKey(key) Then
                 Dim path As String = $"/spectrum/{key.Last}/{key}.dat"
