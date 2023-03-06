@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -86,9 +87,9 @@ Module ReferenceTreePkg
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("new")>
-    <RApiReturn(GetType(ReferenceTree))>
+    <RApiReturn(GetType(ReferenceTree), GetType(ReferenceBinaryTree), GetType(SpectrumPack))>
     Public Function CreateNew(file As Object,
-                              Optional binary As Boolean = True,
+                              Optional type As ClusterTypes = ClusterTypes.Default,
                               Optional env As Environment = Nothing) As Object
 
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
@@ -100,11 +101,13 @@ Module ReferenceTreePkg
         Dim stream As Stream = buffer.TryCast(Of Stream)
         Call stream.Seek(Scan0, SeekOrigin.Begin)
 
-        If binary Then
-            Return New ReferenceBinaryTree(stream)
-        Else
-            Return New ReferenceTree(stream)
-        End If
+        Select Case type
+            Case ClusterTypes.Binary : Return New ReferenceBinaryTree(stream)
+            Case ClusterTypes.Tree, ClusterTypes.Default : Return New ReferenceTree(stream)
+            Case ClusterTypes.Pack : Return New SpectrumPack(stream)
+            Case Else
+                Return Internal.debug.stop(New NotImplementedException(type.Description), env)
+        End Select
     End Function
 
     ''' <summary>
@@ -117,15 +120,32 @@ Module ReferenceTreePkg
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the data format is test via the magic header
+    ''' </remarks>
     <ExportAPI("open")>
-    Public Function open(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(PackAlignment), GetType(TreeSearch))>
+    Public Function open(<RRawVectorArgument>
+                         file As Object,
+                         Optional dotcutoff As Double = 0.6,
+                         Optional env As Environment = Nothing) As Object
+
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
         If buffer Like GetType(Message) Then
             Return buffer.TryCast(Of Message)
         End If
 
-        Return New TreeSearch(buffer.TryCast(Of Stream))
+        Dim buf As Stream = buffer.TryCast(Of Stream)
+        Dim isHDS = StreamPack.TestMagic(buf)
+
+        Call buf.Seek(Scan0, SeekOrigin.Begin)
+
+        If isHDS Then
+            Return New PackAlignment(New SpectrumReader(buf), dotcutoff)
+        Else
+            Return New TreeSearch(buffer.TryCast(Of Stream)).SetCutoff(dotcutoff)
+        End If
     End Function
 
     ''' <summary>
@@ -236,27 +256,38 @@ Module ReferenceTreePkg
                                  Optional env As Environment = Nothing) As Object
 
         Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
-        Dim result As ClusterHit
+        Dim result As ClusterHit()
 
         If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
         End If
         If treeSearch Then
-            result = DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)
+            result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
         Else
-            result = tree.Search(centroid, mz1:=x.parentMz)
+            result = tree.Search(centroid, mz1:=x.parentMz).ToArray
         End If
 
-        If Not result Is Nothing Then
-            result.queryId = x.name
-            result.queryMz = x.parentMz
-            result.basePeak = x.ms2 _
-                .OrderByDescending(Function(a) a.intensity) _
-                .FirstOrDefault _
-               ?.mz
-        End If
+        Dim basePeakMz As Double = x.ms2 _
+            .OrderByDescending(Function(a) a.intensity) _
+            .FirstOrDefault _
+            ?.mz
+        Dim output As New List(Of ClusterHit)
 
-        Return result
+        For Each hit As ClusterHit In result
+            If Not hit Is Nothing Then
+                hit.queryId = x.name
+                hit.queryMz = x.parentMz
+                hit.basePeak = basePeakMz
+
+                Call output.Add(hit)
+            End If
+        Next
+
+        If output.Count = 0 Then
+            Return Nothing
+        Else
+            Return output.ToArray
+        End If
     End Function
 
     <Extension>
@@ -266,28 +297,39 @@ Module ReferenceTreePkg
                                  Optional env As Environment = Nothing) As Object
 
         Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
-        Dim result As ClusterHit
+        Dim result As ClusterHit()
 
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
         End If
         If treeSearch Then
-            result = DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)
+            result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
         Else
             result = tree.Search(centroid, mz1:=x.mz)
         End If
 
-        If Not result Is Nothing Then
-            result.queryId = x.lib_guid
-            result.queryMz = x.mz
-            result.queryRt = x.rt
-            result.basePeak = x.mzInto _
-                .OrderByDescending(Function(a) a.intensity) _
-                .FirstOrDefault _
-               ?.mz
-        End If
+        Dim basePeakMz As Double = x.mzInto _
+            .OrderByDescending(Function(a) a.intensity) _
+            .FirstOrDefault _
+            ?.mz
+        Dim output As New List(Of ClusterHit)
 
-        Return result
+        For Each hit As ClusterHit In result
+            If Not hit Is Nothing Then
+                hit.queryId = x.lib_guid
+                hit.queryMz = x.mz
+                hit.queryRt = x.rt
+                hit.basePeak = basePeakMz
+
+                Call output.Add(hit)
+            End If
+        Next
+
+        If output.Count = 0 Then
+            Return Nothing
+        Else
+            Return output.ToArray
+        End If
     End Function
 
     <Extension>
@@ -322,19 +364,53 @@ Module ReferenceTreePkg
     ''' <param name="x">
     ''' A new spectrum data to push into the reference database
     ''' </param>
+    ''' <param name="args">
+    ''' additional parameters for create the spectrum library in spectrum pack format:
+    ''' 
+    ''' 1. uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id
+    ''' 2. exactMass, exact_mass, mass is used for the metabolite exact mass value
+    ''' 
+    ''' and the spectrum input of x should be the same metabolite if save data as 
+    ''' the spectrum pack data.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("addBucket")>
-    Public Function addBucket(tree As ReferenceTree, <RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+    Public Function addBucket(tree As Object,
+                              <RRawVectorArgument> x As Object,
+                              <RListObjectArgument>
+                              Optional args As list = Nothing,
+                              Optional env As Environment = Nothing) As Object
+
         Dim list As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
 
         If list.isError Then
             Return list.getError
+        ElseIf tree Is Nothing Then
+            Return Internal.debug.stop("The required reference library object can not be nothing!", env)
         End If
 
-        For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
-            Call tree.Push(spectrum)
-        Next
+        If TypeOf tree Is ReferenceTree Then
+            For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
+                Call DirectCast(tree, ReferenceTree).Push(spectrum)
+            Next
+        ElseIf TypeOf tree Is SpectrumPack Then
+            Dim uuid As String = args.getValue(Of String)({"uuid", "BioDeepID", "biodeep_id"}, env)
+            Dim mass As Double = args.getValue(Of Double)({"exactMass", "exact_mass", "mass"}, env, [default]:=-1.0)
+
+            If uuid.StringEmpty Then
+                Return Internal.debug.stop("No metabolite uuid or biodeep id was provided!", env)
+            End If
+            If mass <= 0 Then
+                Return Internal.debug.stop("A positive exact mass value of the target metabolite must be provided!", env)
+            End If
+
+            For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
+                Call DirectCast(tree, SpectrumPack).Push(uuid, mass, spectrum)
+            Next
+        Else
+            Return Message.InCompatibleType(GetType(ReferenceTree), tree.GetType, env)
+        End If
 
         Return tree
     End Function

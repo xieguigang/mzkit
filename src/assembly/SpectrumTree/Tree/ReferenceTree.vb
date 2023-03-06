@@ -57,11 +57,10 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -70,12 +69,13 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class ReferenceTree : Implements IDisposable
 
-    Protected ReadOnly tree As New List(Of BlockNode)
+    ''' <summary>
+    ''' the mass tolerance for do parent matched
+    ''' </summary>
     Protected ReadOnly da As Tolerance
-
-    ReadOnly spectrum As BinaryDataWriter
-    ReadOnly intocutoff As RelativeIntensityCutoff
-    ReadOnly nbranch As Integer = 10
+    Protected ReadOnly tree As InternalFileSystem
+    Protected ReadOnly spectrum As BinaryDataWriter
+    Protected ReadOnly intocutoff As RelativeIntensityCutoff
 
     Private disposedValue As Boolean
 
@@ -91,58 +91,28 @@ Public Class ReferenceTree : Implements IDisposable
 
         da = Tolerance.DeltaMass(0.3)
         intocutoff = 0.05
-        nbranch = nbranchs
+        tree = New InternalFileSystem(nbranch:=nbranchs)
     End Sub
 
+    ''' <summary>
+    ''' Create a new reference family tree and which is 
+    ''' indexed via the reference spectrum seed
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(file As Stream)
         Call Me.New(file, nbranchs:=10)
     End Sub
-
-    Private Shared Iterator Function getMz(data As PeakMs2) As IEnumerable(Of Double)
-        If data.mz > 0 Then
-            Yield data.mz
-        Else
-            If Not data.meta.IsNullOrEmpty Then
-                If data.meta.ContainsKey("mz1") Then
-                    For Each mzi As Double In data.meta("mz1").LoadJSON(Of Double())
-                        Yield mzi
-                    Next
-                End If
-            End If
-        End If
-    End Function
-
-    Protected Overridable Function Append(data As PeakMs2, centroid As ms2(), isMember As Boolean) As Integer
-        Dim n As Integer = tree.Count
-        Dim childs As Integer()
-
-        If isMember Then
-            childs = {}
-        Else
-            childs = New Integer(nbranch - 1) {}
-        End If
-
-        Call tree.Add(New BlockNode With {
-            .Block = WriteSpectrum(data),
-            .childs = childs,
-            .Id = data.lib_guid,
-            .Members = If(isMember, Nothing, New List(Of Integer)),
-            .centroid = centroid,
-            .rt = data.rt,
-            .mz = New List(Of Double)(getMz(data))
-        })
-
-        Return n
-    End Function
 
     Public Sub Push(data As PeakMs2)
         Dim centroid As ms2() = data.mzInto _
             .Centroid(da, intocutoff) _
             .ToArray
 
-        If tree.Count = 0 Then
+        If tree.size = 0 Then
             ' add root node
-            Call Append(data, centroid, isMember:=False)
+            Call tree.Append(data, centroid, isMember:=False, spectrum)
         Else
             Call Push(centroid, node:=tree(Scan0), raw:=data)
         End If
@@ -155,34 +125,22 @@ Public Class ReferenceTree : Implements IDisposable
 
         If i = -1 Then
             ' add to current cluster members
-            i = Append(raw, centroid, isMember:=True)
+            i = tree.Append(raw, centroid, isMember:=True, spectrum)
 
-            Call node.mz.AddRange(getMz(raw))
+            Call node.mz.AddRange(InternalFileSystem.getMz(raw))
             Call node.Members.Add(i)
         ElseIf node.childs(i) > 0 Then
             ' align to next node
             Call Push(centroid, tree(node.childs(i)), raw)
         Else
             ' create new node
-            node.childs(i) = Append(raw, centroid, isMember:=False)
+            node.childs(i) = tree.Append(raw, centroid, isMember:=False, spectrum)
         End If
     End Sub
 
-    Private Function WriteSpectrum(data As PeakMs2) As BufferRegion
-        Dim start As Long = spectrum.Position
-        Dim scan As ScanMS2 = data.Scan2
-
-        Call Serialization.WriteBuffer(scan, file:=spectrum)
-
-        Return New BufferRegion With {
-            .position = start,
-            .size = spectrum.Position - start
-        }
-    End Function
-
     Private Sub WriteTree()
         Dim jump As Long = spectrum.Position
-        Dim nsize = tree.Count
+        Dim nsize As Integer = tree.size
 
         Call spectrum.Write(nsize)
 

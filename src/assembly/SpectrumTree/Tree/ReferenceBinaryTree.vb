@@ -62,6 +62,10 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class ReferenceBinaryTree : Inherits ReferenceTree
 
+    ''' <summary>
+    ''' construct a reference tree library that save reference data in binary tree cluster structure
+    ''' </summary>
+    ''' <param name="file"></param>
     Public Sub New(file As Stream)
         MyBase.New(file, nbranchs:=2)
     End Sub
@@ -73,7 +77,7 @@ Public Class ReferenceBinaryTree : Inherits ReferenceTree
 
         If i = 0 Then
             ' add to current cluster members
-            node.Members.Add(Append(raw, centroid, isMember:=True))
+            node.Members.Add(tree.Append(raw, centroid, isMember:=True, spectrum))
             Return
         Else
             If i = -1 Then
@@ -88,7 +92,7 @@ Public Class ReferenceBinaryTree : Inherits ReferenceTree
             Push(centroid, tree(node.childs(i)), raw)
         Else
             ' create new node
-            node.childs(i) = Append(raw, centroid, isMember:=False)
+            node.childs(i) = tree.Append(raw, centroid, isMember:=False, spectrum)
         End If
     End Sub
 End Class
