@@ -135,9 +135,10 @@ Namespace Query
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Sub SetCutoff(cutoff As Double)
+        Public Function SetCutoff(cutoff As Double) As TreeSearch
             dotcutoff = cutoff
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' query the spectrum reference tree nodes via parent m/z matched
