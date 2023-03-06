@@ -157,7 +157,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>addBucket</strong>(<i>tree</i>, <i>x</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>addBucket</strong>(<i>tree</i>, <i>x</i>,
+    <i>...</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -171,6 +172,18 @@
 
 <dt>x</dt>
 <dd><p><p>A new spectrum data to push into the reference database</p></p></dd>
+
+
+<dt>args</dt>
+<dd><p><p>additional parameters for create the spectrum library in spectrum pack format:</p>
+
+<ol>
+<li>uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id</li>
+<li><p>exactMass, exact_mass, mass is used for the metabolite exact mass value</p>
+
+<p>and the spectrum input of x should be the same metabolite if save data as <br />
+the spectrum pack data.</p></li>
+</ol></p></dd>
 
 
 <dt>env</dt>
