@@ -22,7 +22,7 @@ Public Class PackAlignment : Inherits Ms2Search
 
     Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
         Dim candidates = spectrum.QueryByMz(mz1).ToArray
-        Dim hits As New List(Of (BlockNode, align As SSM2MatrixFragment(), cos_forward As Double, cos_reverse As Double))
+        Dim hits As New List(Of tmp)
 
         For Each hit As BlockNode In candidates
             Dim align = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray
@@ -30,7 +30,13 @@ Public Class PackAlignment : Inherits Ms2Search
             Dim min = stdNum.Min(score.forward, score.reverse)
 
             If min > dotcutoff Then
-                Call hits.Add((hit, align, score.forward, score.reverse))
+                Call hits.Add(New tmp With {
+                   .id = spectrum(hit.Id),
+                   .hit = hit,
+                   .align = align,
+                   .forward = score.forward,
+                   .reverse = score.reverse
+                })
             End If
         Next
 
@@ -38,13 +44,47 @@ Public Class PackAlignment : Inherits Ms2Search
         ' multiple cluster object should be populates from
         ' this function?
         If hits.Count > 0 Then
-            Yield reportClusterHit(centroid, hits:=hits)
+            For Each metabolite In hits.GroupBy(Function(i) i.id)
+                Yield reportClusterHit(centroid, hit_group:=metabolite)
+            Next
         End If
     End Function
 
-    Private Function reportClusterHit(centroid() As ms2, hits As List(Of (BlockNode, align As SSM2MatrixFragment(), cos_forward As Double, cos_reverse As Double))) As ClusterHit
-        Dim max = hits.OrderByDescending(Function(n) stdNum.Min(n.cos_forward, n.cos_reverse)).First
+    Private Structure tmp
 
+        Dim id As String
+        Dim hit As BlockNode
+        Dim align As SSM2MatrixFragment()
+        Dim forward As Double
+        Dim reverse As Double
 
+    End Structure
+
+    Private Function reportClusterHit(centroid() As ms2, hit_group As IGrouping(Of String, tmp)) As ClusterHit
+        Dim desc = hit_group.OrderByDescending(Function(n) stdNum.Min(n.forward, n.reverse)).ToArray
+        Dim max = desc.First
+        Dim forward = desc.Select(Function(n) n.forward).ToArray
+        Dim reverse = desc.Select(Function(n) n.reverse).ToArray
+        Dim jaccard = desc.Select(Function(n) JaccardAlignment.GetJaccardScore(n.align)).ToArray
+        Dim entropy = desc _
+            .Select(Function(c)
+                        Return SpectralEntropy.calculate_entropy_similarity(centroid, c.hit.centroid, da)
+                    End Function) _
+            .ToArray
+
+        Return New ClusterHit With {
+            .Id = hit_group.Key,
+            .forward = forward.Average,
+            .reverse = reverse.Average,
+            .ClusterEntropy = entropy,
+            .entropy = entropy.Average,
+            .ClusterForward = forward,
+            .ClusterReverse = reverse,
+            .ClusterJaccard = jaccard,
+            .jaccard = jaccard.Average,
+            .ClusterId = desc.Select(Function(i) i.hit.Id).ToArray,
+            .ClusterRt = desc.Select(Function(i) i.hit.rt).ToArray,
+            .representive = max.align
+        }
     End Function
 End Class
