@@ -8,7 +8,7 @@ Public Class MassIndex
     ''' <returns></returns>
     Public Property name As String
     Public Property exactMass As Double
-    Public Property spectrum As Integer()
+    Public Property spectrum As New List(Of Integer)
 
     Public Overrides Function ToString() As String
         Return Me.GetJson

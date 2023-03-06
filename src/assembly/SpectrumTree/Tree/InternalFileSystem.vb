@@ -44,17 +44,21 @@ Public Class InternalFileSystem : Implements IEnumerable(Of BlockNode)
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="data"></param>
+    ''' <param name="data">
+    ''' the reference spectrum data
+    ''' </param>
     ''' <param name="centroid"></param>
     ''' <param name="isMember"></param>
     ''' <param name="spectrum">
-    ''' used for save the raw spectrum data
+    ''' used for save the raw spectrum data, if this parameter
+    ''' value just set to NULL, then it means just create object
+    ''' in memory
     ''' </param>
     ''' <returns></returns>
     Public Function Append(data As PeakMs2,
-                           centroid As ms2(),
-                           isMember As Boolean,
-                           spectrum As BinaryDataWriter) As Integer
+                           Optional centroid As ms2() = Nothing,
+                           Optional isMember As Boolean = False,
+                           Optional spectrum As BinaryDataWriter = Nothing) As Integer
 
         Dim n As Integer = tree.Count
         Dim childs As Integer()
@@ -63,6 +67,10 @@ Public Class InternalFileSystem : Implements IEnumerable(Of BlockNode)
             childs = {}
         Else
             childs = New Integer(nbranch - 1) {}
+        End If
+
+        If centroid Is Nothing Then
+            centroid = data.mzInto.ToArray
         End If
 
         Call tree.Add(New BlockNode With {
@@ -83,19 +91,23 @@ Public Class InternalFileSystem : Implements IEnumerable(Of BlockNode)
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="spectrum">
-    ''' 
+    ''' nothing means do not save the raw spectrum data
     ''' </param>
     ''' <returns></returns>
     Private Shared Function WriteSpectrum(data As PeakMs2, spectrum As BinaryDataWriter) As BufferRegion
-        Dim start As Long = spectrum.Position
-        Dim scan As ScanMS2 = data.Scan2
+        If spectrum Is Nothing Then
+            Return BufferRegion.Zero
+        Else
+            Dim start As Long = spectrum.Position
+            Dim scan As ScanMS2 = data.Scan2
 
-        Call Serialization.WriteBuffer(scan, file:=spectrum)
+            Call Serialization.WriteBuffer(scan, file:=spectrum)
 
-        Return New BufferRegion With {
-            .position = start,
-            .size = spectrum.Position - start
-        }
+            Return New BufferRegion With {
+                .position = start,
+                .size = spectrum.Position - start
+            }
+        End If
     End Function
 
     Public Iterator Function GetEnumerator() As IEnumerator(Of BlockNode) Implements IEnumerable(Of BlockNode).GetEnumerator
