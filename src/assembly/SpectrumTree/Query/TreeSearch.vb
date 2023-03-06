@@ -146,7 +146,7 @@ Namespace Query
         ''' <param name="mz"></param>
         ''' <returns></returns>
         Public Function QueryByMz(mz As Double) As BlockNode()
-            Dim ions As IonIndex() = mzIndex.QueryByMz(mz)
+            Dim ions As IonIndex() = mzIndex.QueryByMz(mz).ToArray
             Dim result = ions _
                 .Select(Function(d) tree(d.node)) _
                 .GroupBy(Function(d) d.Id) _
