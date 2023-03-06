@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -70,7 +71,13 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class ReferenceTree : Implements IDisposable
 
+    ''' <summary>
+    ''' A collection of the metabolite reference spectrum data
+    ''' </summary>
     Protected ReadOnly tree As New List(Of BlockNode)
+    ''' <summary>
+    ''' the mass tolerance for do parent matched
+    ''' </summary>
     Protected ReadOnly da As Tolerance
 
     ReadOnly spectrum As BinaryDataWriter
@@ -94,6 +101,13 @@ Public Class ReferenceTree : Implements IDisposable
         nbranch = nbranchs
     End Sub
 
+    ''' <summary>
+    ''' Create a new reference family tree and which is 
+    ''' indexed via the reference spectrum seed
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(file As Stream)
         Call Me.New(file, nbranchs:=10)
     End Sub

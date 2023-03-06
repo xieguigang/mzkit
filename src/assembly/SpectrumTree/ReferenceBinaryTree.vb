@@ -62,6 +62,10 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class ReferenceBinaryTree : Inherits ReferenceTree
 
+    ''' <summary>
+    ''' construct a reference tree library that save reference data in binary tree cluster structrue
+    ''' </summary>
+    ''' <param name="file"></param>
     Public Sub New(file As Stream)
         MyBase.New(file, nbranchs:=2)
     End Sub
