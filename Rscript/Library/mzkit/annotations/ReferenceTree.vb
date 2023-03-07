@@ -151,8 +151,14 @@ Module ReferenceTreePkg
         Dim buf As Stream = buffer.TryCast(Of Stream)
         Dim isHDS = StreamPack.TestMagic(buf)
         Dim targets As String() = CLRVector.asCharacter(target_uuid)
+        Dim println = env.WriteLineHandler
 
         Call buf.Seek(Scan0, SeekOrigin.Begin)
+
+        If Not targets.IsNullOrEmpty Then
+            Call println("[spectrumTree::open] only a subset of the metabolite reference spectrum will be run annotation query:")
+            Call println(targets)
+        End If
 
         If isHDS Then
             Dim precursor_types = Math.GetPrecursorTypes(adducts, env)
