@@ -44,6 +44,12 @@ Public Class SpectrumReader : Implements IDisposable
         Me.targetSet = target_uuid.Indexing
     End Sub
 
+    ''' <summary>
+    ''' populate all spectrum which the exact mass+adducts matched 
+    ''' the m/z query input.
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of BlockNode)
         Dim ions = mzIndex.QueryByMz(mz).ToArray
         Dim index As IEnumerable(Of String) = From i As IonIndex
@@ -68,6 +74,13 @@ Public Class SpectrumReader : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' evaluate the theoretically m/z value based on the 
+    ''' exact mass and the given adducts type
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns></returns>
     Private Shared Function evalMz(mass As MassIndex, adducts As MzCalculator()) As IEnumerable(Of IonIndex)
         Return adducts _
             .Select(Function(type)
