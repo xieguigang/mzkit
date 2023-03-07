@@ -92,6 +92,15 @@ Public Class TissueRegion
         End Get
     End Property
 
+    Public Function GetRectangle() As Rectangle
+        Dim x = points.Select(Function(p) p.X).ToArray
+        Dim y = points.Select(Function(p) p.Y).ToArray
+        Dim pos As New Point(x.Min, y.Min)
+        Dim size As New Size(x.Max - x.Min, y.Max - y.Min)
+
+        Return New Rectangle(pos, size)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Iterator Function GetPolygons() As IEnumerable(Of Polygon2D)
         Yield New Polygon2D(
@@ -107,7 +116,8 @@ Public Class TissueRegion
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return $"{label} ({color.ToHtmlColor}) has {nsize} pixels."
+        Dim rect = GetRectangle()
+        Return $"{label} ({color.ToHtmlColor}) has {nsize} pixels. #({rect.X},{rect.Y}) size={rect.Width}x{rect.Height}"
     End Function
 
 End Class
