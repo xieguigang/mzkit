@@ -67,6 +67,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' the spectrum tree reference library tools
@@ -119,6 +120,13 @@ Module ReferenceTreePkg
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
+    ''' <param name="target_uuid">
+    ''' a character vector of the target metabolite biodeepid, default value
+    ''' is NULL means load all reference spectrum from the required reference 
+    ''' database file. this function will just load a subset of the reference 
+    ''' spectrum data from the database file is this parameter value is not 
+    ''' NULL.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' the data format is test via the magic header
@@ -130,6 +138,8 @@ Module ReferenceTreePkg
                          Optional dotcutoff As Double = 0.6,
                          <RRawVectorArgument(TypeCodes.string)>
                          Optional adducts As Object = "[M]+|[M+H]+",
+                         <RRawVectorArgument(TypeCodes.string)>
+                         Optional target_uuid As Object = Nothing,
                          Optional env As Environment = Nothing) As Object
 
         Dim buffer = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
@@ -140,12 +150,13 @@ Module ReferenceTreePkg
 
         Dim buf As Stream = buffer.TryCast(Of Stream)
         Dim isHDS = StreamPack.TestMagic(buf)
+        Dim targets As String() = CLRVector.asCharacter(target_uuid)
 
         Call buf.Seek(Scan0, SeekOrigin.Begin)
 
         If isHDS Then
             Dim precursor_types = Math.GetPrecursorTypes(adducts, env)
-            Dim referenceSpectrum = New SpectrumReader(buf).BuildSearchIndex(precursor_types)
+            Dim referenceSpectrum = New SpectrumReader(buf, targets).BuildSearchIndex(precursor_types)
 
             Return New PackAlignment(referenceSpectrum, dotcutoff)
         Else
