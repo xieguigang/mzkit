@@ -159,7 +159,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>open</strong>(<i>file</i>,
     <i>dotcutoff</i> = 0.6,
-    <i>adducts</i> = ["[M]+","[M+H]+"]);</code></pre>
+    <i>adducts</i> = ["[M]+","[M+H]+"],
+    <i>target.uuid</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -172,6 +173,14 @@
 
 <dt>env</dt>
 <dd><p><p>-</p></p></dd>
+
+
+<dt>target.uuid</dt>
+<dd><p><p>a character vector of the target metabolite biodeepid, default value<br />
+ is NULL means load all reference spectrum from the required reference <br />
+ database file. this function will just load a subset of the reference <br />
+ spectrum data from the database file is this parameter value is not <br />
+ NULL.</p></p></dd>
 
         </table>
 

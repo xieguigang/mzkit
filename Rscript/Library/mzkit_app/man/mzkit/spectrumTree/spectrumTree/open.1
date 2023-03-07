@@ -6,6 +6,7 @@ open \- open the spectrum reference database
 \fIopen(\fBfile\fR as any, 
 \fBdotcutoff\fR as double = 0.6, 
 \fBadducts\fR as any = ["[M]+","[M+H]+"], 
+\fBtarget_uuid\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -21,6 +22,15 @@ open the spectrum reference database
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.PP
+\fBtarget_uuid\fB \fR\- 
+ a character vector of the target metabolite biodeepid, default value
+ is NULL means load all reference spectrum from the required reference 
+ database file. this function will just load a subset of the reference 
+ spectrum data from the database file is this parameter value is not 
+ NULL.
+. 
 .PP
 .SH DETAILS
 .PP
