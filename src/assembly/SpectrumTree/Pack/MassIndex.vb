@@ -2,6 +2,9 @@
 
 Namespace PackLib
 
+    ''' <summary>
+    ''' A metabolite its spectrum data index
+    ''' </summary>
     Public Class MassIndex
 
         ''' <summary>
@@ -10,6 +13,10 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property name As String
         Public Property exactMass As Double
+        ''' <summary>
+        ''' the pointer to the spectrum data in the library file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property spectrum As New List(Of Integer)
 
         Public Overrides Function ToString() As String

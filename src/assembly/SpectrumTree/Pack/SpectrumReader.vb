@@ -1,6 +1,8 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -13,6 +15,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PackLib
 
+    ''' <summary>
+    ''' object tools for read the reference spectrum data from the library file
+    ''' </summary>
     Public Class SpectrumReader : Implements IDisposable
 
         Dim disposedValue As Boolean
@@ -27,6 +32,7 @@ Namespace PackLib
         ReadOnly targetSet As Index(Of String)
 
         Default Public ReadOnly Property GetIdMap(libname As String) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return map(libname)
             End Get
@@ -63,17 +69,43 @@ Namespace PackLib
                                                   Let tag As String = i32.ToString
                                                   Select tag
             For Each key As String In index
-                If Not spectrum.ContainsKey(key) Then
-                    Dim path As String = $"/spectrum/{key.Last}/{key}.dat"
-                    Dim file As Stream = Me.file.OpenBlock(path)
-                    Dim spectrumNode = NodeBuffer.Read(New BinaryDataReader(file))
+                Yield GetSpectrum(key)
+            Next
+        End Function
 
-                    SyncLock spectrum
-                        Call spectrum.Add(key, spectrumNode)
-                    End SyncLock
-                End If
+        Private Function GetSpectrum(key As String) As BlockNode
+            If Not spectrum.ContainsKey(key) Then
+                Dim path As String = $"/spectrum/{key.Last}/{key}.dat"
+                Dim file As Stream = Me.file.OpenBlock(path)
+                Dim spectrumNode = NodeBuffer.Read(New BinaryDataReader(file))
 
-                Yield spectrum(key)
+                SyncLock spectrum
+                    Call spectrum.Add(key, spectrumNode)
+                End SyncLock
+            End If
+
+            Return spectrum(key)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSpectrum(pointer As Integer) As BlockNode
+            Return GetSpectrum(key:=pointer.ToString)
+        End Function
+
+        Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
+            For Each i As Integer In mass.spectrum
+                Dim node As BlockNode = GetSpectrum(key:=i.ToString)
+                Dim spectrum As New PeakMs2 With {
+                    .mzInto = node.centroid,
+                    .lib_guid = node.Id,
+                    .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
+                    .mz = node.mz.First,
+                    .rt = node.rt,
+                    .scan = node.Id,
+                    .file = mass.name
+                }
+
+                Yield spectrum
             Next
         End Function
 
@@ -118,7 +150,11 @@ Namespace PackLib
             Return Me
         End Function
 
-        Private Iterator Function LoadMass() As IEnumerable(Of MassIndex)
+        ''' <summary>
+        ''' load all of the metabolite index from the library file 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function LoadMass() As IEnumerable(Of MassIndex)
             Dim files = DirectCast(file.GetObject("/massSet/"), StreamGroup) _
                 .ListFiles _
                 .Select(Function(f) DirectCast(f, StreamBlock)) _
