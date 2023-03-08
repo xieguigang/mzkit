@@ -64,119 +64,122 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
-''' <summary>
-''' the spectrum tree library data structure 
-''' </summary>
-Public Class ReferenceTree : Implements IDisposable
+Namespace Tree
 
     ''' <summary>
-    ''' the mass tolerance for do parent matched
+    ''' the spectrum tree library data structure 
     ''' </summary>
-    Protected ReadOnly da As Tolerance
-    Protected ReadOnly tree As InternalFileSystem
-    Protected ReadOnly spectrum As BinaryDataWriter
-    Protected ReadOnly intocutoff As RelativeIntensityCutoff
+    Public Class ReferenceTree : Implements IDisposable
 
-    Private disposedValue As Boolean
+        ''' <summary>
+        ''' the mass tolerance for do parent matched
+        ''' </summary>
+        Protected ReadOnly da As Tolerance
+        Protected ReadOnly tree As InternalFileSystem
+        Protected ReadOnly spectrum As BinaryDataWriter
+        Protected ReadOnly intocutoff As RelativeIntensityCutoff
 
-    Public Const Magic As String = "BioDeep/ReferenceTree"
+        Private disposedValue As Boolean
 
-    Protected Sub New(file As Stream, nbranchs As Integer)
-        spectrum = New BinaryDataWriter(file, Encodings.ASCII) With {
-            .ByteOrder = ByteOrder.LittleEndian
-        }
-        spectrum.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
-        ' jump point to tree
-        spectrum.Write(0&)
+        Public Const Magic As String = "BioDeep/ReferenceTree"
 
-        da = Tolerance.DeltaMass(0.3)
-        intocutoff = 0.05
-        tree = New InternalFileSystem(nbranch:=nbranchs)
-    End Sub
+        Protected Sub New(file As Stream, nbranchs As Integer)
+            spectrum = New BinaryDataWriter(file, Encodings.ASCII) With {
+                .ByteOrder = ByteOrder.LittleEndian
+            }
+            spectrum.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
+            ' jump point to tree
+            spectrum.Write(0&)
 
-    ''' <summary>
-    ''' Create a new reference family tree and which is 
-    ''' indexed via the reference spectrum seed
-    ''' </summary>
-    ''' <param name="file"></param>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub New(file As Stream)
-        Call Me.New(file, nbranchs:=10)
-    End Sub
+            da = Tolerance.DeltaMass(0.3)
+            intocutoff = 0.05
+            tree = New InternalFileSystem(nbranch:=nbranchs)
+        End Sub
 
-    Public Sub Push(data As PeakMs2)
-        Dim centroid As ms2() = data.mzInto _
+        ''' <summary>
+        ''' Create a new reference family tree and which is 
+        ''' indexed via the reference spectrum seed
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(file As Stream)
+            Call Me.New(file, nbranchs:=10)
+        End Sub
+
+        Public Sub Push(data As PeakMs2)
+            Dim centroid As ms2() = data.mzInto _
             .Centroid(da, intocutoff) _
             .ToArray
 
-        If tree.size = 0 Then
-            ' add root node
-            Call tree.Append(data, centroid, isMember:=False, spectrum)
-        Else
-            Call Push(centroid, node:=tree(Scan0), raw:=data)
-        End If
-    End Sub
-
-    Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
-        Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-        Dim min As Double = stdNum.Min(score.forward, score.reverse)
-        Dim i As Integer = BlockNode.GetIndex(min)
-
-        If i = -1 Then
-            ' add to current cluster members
-            i = tree.Append(raw, centroid, isMember:=True, spectrum)
-
-            Call node.mz.AddRange(InternalFileSystem.getMz(raw))
-            Call node.Members.Add(i)
-        ElseIf node.childs(i) > 0 Then
-            ' align to next node
-            Call Push(centroid, tree(node.childs(i)), raw)
-        Else
-            ' create new node
-            node.childs(i) = tree.Append(raw, centroid, isMember:=False, spectrum)
-        End If
-    End Sub
-
-    Private Sub WriteTree()
-        Dim jump As Long = spectrum.Position
-        Dim nsize As Integer = tree.size
-
-        Call spectrum.Write(nsize)
-
-        For Each node As BlockNode In tree
-            Call NodeBuffer.Write(node, file:=spectrum)
-        Next
-
-        Call spectrum.Seek(Magic.Length, SeekOrigin.Begin)
-        Call spectrum.Write(jump)
-    End Sub
-
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not disposedValue Then
-            If disposing Then
-                ' TODO: dispose managed state (managed objects)
-                Call WriteTree()
-                Call spectrum.Flush()
-                Call spectrum.Dispose()
+            If tree.size = 0 Then
+                ' add root node
+                Call tree.Append(data, centroid, isMember:=False, spectrum)
+            Else
+                Call Push(centroid, node:=tree(Scan0), raw:=data)
             End If
+        End Sub
 
-            ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
-            ' TODO: set large fields to null
-            disposedValue = True
-        End If
-    End Sub
+        Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
+            Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
+            Dim min As Double = stdNum.Min(score.forward, score.reverse)
+            Dim i As Integer = BlockNode.GetIndex(min)
 
-    ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
-    ' Protected Overrides Sub Finalize()
-    '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-    '     Dispose(disposing:=False)
-    '     MyBase.Finalize()
-    ' End Sub
+            If i = -1 Then
+                ' add to current cluster members
+                i = tree.Append(raw, centroid, isMember:=True, spectrum)
 
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-        Dispose(disposing:=True)
-        GC.SuppressFinalize(Me)
-    End Sub
-End Class
+                Call node.mz.AddRange(InternalFileSystem.getMz(raw))
+                Call node.Members.Add(i)
+            ElseIf node.childs(i) > 0 Then
+                ' align to next node
+                Call Push(centroid, tree(node.childs(i)), raw)
+            Else
+                ' create new node
+                node.childs(i) = tree.Append(raw, centroid, isMember:=False, spectrum)
+            End If
+        End Sub
+
+        Private Sub WriteTree()
+            Dim jump As Long = spectrum.Position
+            Dim nsize As Integer = tree.size
+
+            Call spectrum.Write(nsize)
+
+            For Each node As BlockNode In tree
+                Call NodeBuffer.Write(node, file:=spectrum)
+            Next
+
+            Call spectrum.Seek(Magic.Length, SeekOrigin.Begin)
+            Call spectrum.Write(jump)
+        End Sub
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    Call WriteTree()
+                    Call spectrum.Flush()
+                    Call spectrum.Dispose()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
+    End Class
+End Namespace
