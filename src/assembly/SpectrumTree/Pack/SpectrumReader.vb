@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -20,6 +21,7 @@ Public Class SpectrumReader : Implements IDisposable
     ''' </summary>
     ReadOnly map As Dictionary(Of String, String)
     ReadOnly spectrum As New Dictionary(Of String, BlockNode)
+    ReadOnly targetSet As Index(Of String)
 
     Default Public ReadOnly Property GetIdMap(libname As String) As String
         Get
@@ -27,11 +29,27 @@ Public Class SpectrumReader : Implements IDisposable
         End Get
     End Property
 
-    Sub New(file As Stream)
+    ''' <summary>
+    ''' open the database file in readonly mode
+    ''' </summary>
+    ''' <param name="target_uuid">
+    ''' only a subset of the spectrum will be
+    ''' queried if the target idset has been 
+    ''' specificed
+    ''' </param>
+    ''' <param name="file"></param>
+    Sub New(file As Stream, Optional target_uuid As String() = Nothing)
         Me.file = New StreamPack(file, [readonly]:=True)
         Me.map = Me.file.ReadText("/map.json").LoadJSON(Of Dictionary(Of String, String))
+        Me.targetSet = target_uuid.Indexing
     End Sub
 
+    ''' <summary>
+    ''' populate all spectrum which the exact mass+adducts matched 
+    ''' the m/z query input.
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of BlockNode)
         Dim ions = mzIndex.QueryByMz(mz).ToArray
         Dim index As IEnumerable(Of String) = From i As IonIndex
@@ -56,6 +74,13 @@ Public Class SpectrumReader : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' evaluate the theoretically m/z value based on the 
+    ''' exact mass and the given adducts type
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns></returns>
     Private Shared Function evalMz(mass As MassIndex, adducts As MzCalculator()) As IEnumerable(Of IonIndex)
         Return adducts _
             .Select(Function(type)
@@ -77,7 +102,7 @@ Public Class SpectrumReader : Implements IDisposable
     End Function
 
     Public Function BuildSearchIndex(ParamArray adducts As MzCalculator()) As SpectrumReader
-        Dim exactMass As MassIndex() = LoadMass(file).ToArray
+        Dim exactMass As MassIndex() = LoadMass().ToArray
         Dim mz As IonIndex() = exactMass _
             .Select(Function(mass)
                         Return evalMz(mass, adducts)
@@ -90,13 +115,23 @@ Public Class SpectrumReader : Implements IDisposable
         Return Me
     End Function
 
-    Private Shared Iterator Function LoadMass(file As StreamPack) As IEnumerable(Of MassIndex)
+    Private Iterator Function LoadMass() As IEnumerable(Of MassIndex)
         Dim files = DirectCast(file.GetObject("/massSet/"), StreamGroup) _
             .ListFiles _
             .Select(Function(f) DirectCast(f, StreamBlock)) _
             .ToArray
+        Dim hasIdTargets As Boolean = targetSet.Count > 0
 
         For Each ref As StreamBlock In files
+            If hasIdTargets Then
+                ' only a subset of the spectrum will be
+                ' queried if the target idset has been 
+                ' specificed
+                If Not ref.fileName.BaseName Like targetSet Then
+                    Continue For
+                End If
+            End If
+
             Dim bcode As String = file.ReadText(ref)
             Dim mass As BDictionary = BencodeDecoder.Decode(bcode).First
             Dim index As New MassIndex
