@@ -79,9 +79,11 @@ Public Module Utils
         For Each sample As MassIndex In test
             Dim data As PeakMs2() = libpack.GetSpectrum(sample).ToArray
             Dim rt1 As Double = data.Select(Function(d) d.rt).Average
-            Dim mz_groups As NamedCollection(Of PeakMs2)() = data.GroupBy(Function(a) a.mz, groupErr).ToArray
             Dim totalIons = data.Select(Function(a) a.intensity).Sum
             Dim scan2 As ScanMS2() = data.PopulateScan2Products(rt1).ToArray
+            Dim mz_groups As NamedCollection(Of PeakMs2)() = data _
+                .GroupBy(Function(a) a.mz, groupErr) _
+                .ToArray
 
             Call peaks.AddRange(mz_groups.PopulatePeaks(rt1, i, totalIons, sample))
             Call spectrum.Add(New ScanMS1 With {
