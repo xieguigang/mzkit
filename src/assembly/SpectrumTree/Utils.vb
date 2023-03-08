@@ -22,8 +22,8 @@ Public Module Utils
             Yield New Peaktable With {
                 .annotation = mzi.Select(Function(a) a.lib_guid).JoinBy("+"),
                 .rt = rt1,
-                .rtmax = rt1,
-                .rtmin = rt1,
+                .rtmax = rt1 + 5,
+                .rtmin = rt1 - 5,
                 .index = i,
                 .into = mzi.Select(Function(p) p.intensity).Sum,
                 .intb = totalIons,
@@ -69,7 +69,10 @@ Public Module Utils
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetTestSample(libpack As SpectrumReader, Optional N As Integer = 100) As (peaks As Peaktable(), Ms As ScanMS1())
+    Public Function GetTestSample(libpack As SpectrumReader,
+                                  Optional N As Integer = 100,
+                                  Optional rtmax As Double = 840) As (peaks As Peaktable(), Ms As ScanMS1())
+
         Dim test As MassIndex() = libpack.LoadMass.Sample(N, replace:=False)
         Dim peaks As New List(Of Peaktable)
         Dim spectrum As New List(Of ScanMS1)
@@ -79,6 +82,11 @@ Public Module Utils
         For Each sample As MassIndex In test
             Dim data As PeakMs2() = libpack.GetSpectrum(sample).ToArray
             Dim rt1 As Double = data.Select(Function(d) d.rt).Average
+
+            If rt1 = 0.0 Then
+                rt1 = randf(30, rtmax)
+            End If
+
             Dim totalIons = data.Select(Function(a) a.intensity).Sum
             Dim scan2 As ScanMS2() = data.PopulateScan2Products(rt1).ToArray
             Dim mz_groups As NamedCollection(Of PeakMs2)() = data _
@@ -97,6 +105,6 @@ Public Module Utils
             })
         Next
 
-        Return (peaks.ToArray, spectrum.ToArray)
+        Return (peaks.ToArray, spectrum.OrderBy(Function(s) s.rt).ToArray)
     End Function
 End Module

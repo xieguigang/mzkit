@@ -126,9 +126,10 @@ Module ReferenceTreePkg
     <RApiReturn("peaktable", "rawdata")>
     Public Function GetTestSample(packlib As SpectrumReader,
                                   Optional n As Integer = 30,
+                                  Optional rtmax As Double = 840,
                                   Optional source_name As String = "get_testSample") As Object
 
-        Dim testData = packlib.GetTestSample(n)
+        Dim testData = packlib.GetTestSample(n, rtmax:=rtmax)
         Dim peaktable As Peaktable() = testData.peaks
         Dim raw As New mzPack With {
             .MS = testData.Ms,

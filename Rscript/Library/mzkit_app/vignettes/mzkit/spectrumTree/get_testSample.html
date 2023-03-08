@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>open the spectrum reference database</title>
+    <title>Extract the test sample data for run evaluation of the annotation workflow</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,56 +143,51 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>open {spectrumTree}</td>
+                <td>get_testSample {spectrumTree}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>open the spectrum reference database</h2>
+        <h2>Extract the test sample data for run evaluation of the annotation workflow</h2>
 
         <h3>Description</h3>
 
-        <p><br /> open the reference spectrum database file and <br /> then create a host to run spectrum cluster <br /> search</p>
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>open</strong>(<i>file</i>,
-    <i>dotcutoff</i> = 0.6,
-    <i>adducts</i> = ["[M]+","[M+H]+"],
-    <i>target.uuid</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>get_testSample</strong>(<i>packlib</i>,
+    <i>n</i> = 30,
+    <i>source.name</i> = <span style='color: brown;'><strong>"get_testSample"</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>file</dt>
+<dt>packlib</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>env</dt>
+<dt>n</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>target.uuid</dt>
-<dd><p><p>a character vector of the target metabolite biodeep_id, default value<br />
- is NULL means load all reference spectrum from the required reference <br />
- database file. this function will just load a subset of the reference <br />
- spectrum data from the database file is this parameter value is not <br />
- NULL.</p></p></dd>
+<dt>source.name</dt>
+<dd><p><p>-</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: block;">Details</h3>
+        <h3 style="display: none;">Details</h3>
 
-        <p>the data format is test via the magic header</p>
+        
 
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>, <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/TreeSearch.html">TreeSearch</a>.
+        this function returns data object of type list.
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a

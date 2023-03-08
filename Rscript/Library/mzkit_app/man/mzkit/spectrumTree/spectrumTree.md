@@ -5,6 +5,8 @@ the spectrum tree reference library tools
 >  tree data structure.
 
 + [new](spectrumTree/new.1) create new reference spectrum database
++ [get_testSample](spectrumTree/get_testSample.1) Extract the test sample data for run evaluation of the annotation workflow
++ [readpack](spectrumTree/readpack.1) open the spectrum pack reference database file
 + [open](spectrumTree/open.1) ### open the spectrum reference database
 + [dotcutoff](spectrumTree/dotcutoff.1) set dot cutoff parameter for the cos score similarity algorithm
 + [jaccardSet](spectrumTree/jaccardSet.1) construct a fragment set library for run spectrum search in jaccard matches
