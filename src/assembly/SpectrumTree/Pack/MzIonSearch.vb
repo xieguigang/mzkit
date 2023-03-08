@@ -2,35 +2,38 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
-Friend Class MzIonSearch
+Namespace PackLib
 
-    ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
-    ReadOnly da As Tolerance
+    Friend Class MzIonSearch
 
-    Sub New(mz As IEnumerable(Of IonIndex), da As Tolerance)
-        Me.da = da
+        ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
+        ReadOnly da As Tolerance
 
-        ' see dev notes about the mass tolerance in 
-        ' MSSearch module
-        mzIndex = New BlockSearchFunction(Of IonIndex)(
-            data:=mz,
-            eval:=Function(m) m.mz,
-            tolerance:=1,
-            factor:=3
-        )
-    End Sub
+        Sub New(mz As IEnumerable(Of IonIndex), da As Tolerance)
+            Me.da = da
 
-    ''' <summary>
-    ''' query the spectrum reference tree nodes via parent m/z matched
-    ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <returns></returns>
-    Public Function QueryByMz(mz As Double) As IEnumerable(Of IonIndex)
-        Dim query As New IonIndex With {.mz = mz}
-        Dim result As IEnumerable(Of IonIndex) = mzIndex _
-            .Search(query) _
-            .Where(Function(d) da(d.mz, mz))
+            ' see dev notes about the mass tolerance in 
+            ' MSSearch module
+            mzIndex = New BlockSearchFunction(Of IonIndex)(
+                data:=mz,
+                eval:=Function(m) m.mz,
+                tolerance:=1,
+                factor:=3
+            )
+        End Sub
 
-        Return result
-    End Function
-End Class
+        ''' <summary>
+        ''' query the spectrum reference tree nodes via parent m/z matched
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <returns></returns>
+        Public Function QueryByMz(mz As Double) As IEnumerable(Of IonIndex)
+            Dim query As New IonIndex With {.mz = mz}
+            Dim result As IEnumerable(Of IonIndex) = mzIndex _
+                .Search(query) _
+                .Where(Function(d) da(d.mz, mz))
+
+            Return result
+        End Function
+    End Class
+End Namespace

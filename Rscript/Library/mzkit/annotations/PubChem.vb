@@ -76,6 +76,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -107,13 +108,13 @@ Module PubChemToolKit
                                       Optional ignoresInvalidCid As Boolean = False,
                                       Optional env As Environment = Nothing) As Object
 
-        Dim ids As String() = REnv.asVector(Of String)(cid)
+        Dim ids As String() = CLRVector.asCharacter(cid)
         Dim invalids = ids.Where(Function(id) Not id.IsPattern("\d+")).ToArray
         Dim images As New list
         Dim sizeVector As Double()
 
         If TypeOf size Is String OrElse TypeOf size Is String() Then
-            With DirectCast(REnv.asVector(Of String)(size), String()).First.SizeParser
+            With CLRVector.asCharacter(size).First.SizeParser
                 sizeVector = { .Width, .Height}
             End With
         ElseIf TypeOf size Is Double() Then
@@ -214,7 +215,7 @@ Module PubChemToolKit
     ''' <returns></returns>
     <ExportAPI("query")>
     Public Function queryPubChem(<RRawVectorArgument> id As Object, Optional cache$ = "./", Optional env As Environment = Nothing) As list
-        Dim ids As String() = REnv.asVector(Of String)(id)
+        Dim ids As String() = CLRVector.asCharacter(id)
         Dim cid As String()
         Dim query As New Dictionary(Of String, PugViewRecord)
         Dim result As New list With {

@@ -80,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChEBIRepo = SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.DATA
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
@@ -500,7 +501,7 @@ Module Massbank
             custom = rules.slots _
                 .ToDictionary(Function(a) a.Key,
                               Function(a)
-                                  Return DirectCast(asVector(Of String)(a.Value), String())
+                                  Return CLRVector.asCharacter(a.Value)
                               End Function)
         Else
             custom = New Dictionary(Of String, String())
@@ -519,7 +520,7 @@ Module Massbank
             custom = rules.slots _
                 .ToDictionary(Function(a) a.Key,
                               Function(a)
-                                  Return DirectCast(asVector(Of String)(a.Value), String())
+                                  Return CLRVector.asCharacter(a.Value)
                               End Function)
         Else
             custom = New Dictionary(Of String, String())

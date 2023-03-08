@@ -55,9 +55,13 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -112,6 +116,52 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
+    ''' Extract the test sample data for run evaluation of the annotation workflow
+    ''' </summary>
+    ''' <param name="packlib"></param>
+    ''' <param name="n"></param>
+    ''' <param name="source_name"></param>
+    ''' <returns></returns>
+    <ExportAPI("get_testSample")>
+    <RApiReturn("peaktable", "rawdata")>
+    Public Function GetTestSample(packlib As SpectrumReader,
+                                  Optional n As Integer = 30,
+                                  Optional source_name As String = "get_testSample") As Object
+
+        Dim testData = packlib.GetTestSample(n)
+        Dim peaktable As Peaktable() = testData.peaks
+        Dim raw As New mzPack With {
+            .MS = testData.Ms,
+            .source = source_name
+        }
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"peaktable", peaktable},
+                {"rawdata", raw}
+            }
+        }
+    End Function
+
+    ''' <summary>
+    ''' open the spectrum pack reference database file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("readpack")>
+    <RApiReturn(GetType(SpectrumReader))>
+    Public Function ReadPack(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Return New SpectrumReader(buf.TryCast(Of Stream))
+    End Function
+
+    ''' <summary>
     ''' ### open the spectrum reference database
     ''' 
     ''' open the reference spectrum database file and 
@@ -121,7 +171,7 @@ Module ReferenceTreePkg
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <param name="target_uuid">
-    ''' a character vector of the target metabolite biodeepid, default value
+    ''' a character vector of the target metabolite biodeep_id, default value
     ''' is NULL means load all reference spectrum from the required reference 
     ''' database file. this function will just load a subset of the reference 
     ''' spectrum data from the database file is this parameter value is not 
