@@ -107,18 +107,22 @@ Namespace PackLib
             Return GetSpectrum(key:=pointer.ToString)
         End Function
 
+        Public Shared Function GetSpectrum(node As BlockNode, Optional file As String = Nothing) As PeakMs2
+            Return New PeakMs2 With {
+                .mzInto = node.centroid,
+                .lib_guid = node.Id,
+                .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
+                .mz = node.mz.First,
+                .rt = node.rt,
+                .scan = node.Id,
+                .file = file
+            }
+        End Function
+
         Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
-                Dim spectrum As New PeakMs2 With {
-                    .mzInto = node.centroid,
-                    .lib_guid = node.Id,
-                    .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
-                    .mz = node.mz.First,
-                    .rt = node.rt,
-                    .scan = node.Id,
-                    .file = mass.name
-                }
+                Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
 
                 Yield spectrum
             Next
@@ -201,9 +205,9 @@ Namespace PackLib
         End Function
 
         Public Overrides Function ToString() As String
-            Dim name As String = metadata.TryGetValue("name", "Spectrum Reference Library")
-            Dim n_mass As Integer
-            Dim n_spectrum As Integer
+            Dim name As String = metadata.TryGetValue("name", [default]:="Spectrum Reference Library")
+            Dim n_mass As Integer = DirectCast(file.GetObject("/massSet/"), StreamGroup).files.Length
+            Dim n_spectrum As Integer = DirectCast(file.GetObject("/spectrum/"), StreamGroup).ListFiles.Count
 
             Return $"[{name}] {n_mass} metabolites, {n_spectrum} spectrum"
         End Function
