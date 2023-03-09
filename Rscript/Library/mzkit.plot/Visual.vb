@@ -382,9 +382,9 @@ Module Visual
                     End Function) _
             .Where(Function(d) Not d.value.IsNullOrEmpty) _
             .ToArray
-        Dim names As String() = REnv.asVector(Of String)(metabolites("name"))
-        Dim rt1 As Double() = REnv.asVector(Of Double)(metabolites("rt1"))
-        Dim rt2 As Double() = REnv.asVector(Of Double)(metabolites("rt2"))
+        Dim names As String() = CLRVector.asCharacter(metabolites("name"))
+        Dim rt1 As Double() = CLRVector.asNumeric(metabolites("rt1"))
+        Dim rt2 As Double() = CLRVector.asNumeric(metabolites("rt2"))
         Dim points = names _
             .Select(Function(name, i)
                         Return New NamedValue(Of PointF)(name, New PointF(rt1(i), rt2(i)))
@@ -538,6 +538,12 @@ Module Visual
     ''' </param>
     ''' <param name="alignment"></param>
     ''' <param name="title">the main title that display on the chart plot</param>
+    ''' <param name="bar_width">
+    ''' the column width of the bar plot
+    ''' </param>
+    ''' <param name="legend_layout">
+    ''' the layout of the legend plot, this parameter value could affects the plot style
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mass_spectrum.plot")>
     <RApiReturn(GetType(GraphicsData))>
@@ -628,8 +634,8 @@ Module Visual
                     Return Message.SymbolNotFound(env, "into", TypeCodes.double)
                 End If
 
-                Dim mz As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("mz"))
-                Dim into As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("into"))
+                Dim mz As Double() = CLRVector.asNumeric(matrix.getColumnVector("mz"))
+                Dim into As Double() = CLRVector.asNumeric(matrix.getColumnVector("into"))
                 Dim ms2 As ms2() = mz _
                     .Select(Function(m, i)
                                 Return New ms2 With {
@@ -656,6 +662,18 @@ Module Visual
         End Select
     End Function
 
+    ''' <summary>
+    ''' visual of the UV spectrum
+    ''' </summary>
+    ''' <param name="timeSignals"></param>
+    ''' <param name="is_spectrum"></param>
+    ''' <param name="size"></param>
+    ''' <param name="padding"></param>
+    ''' <param name="colorSet"></param>
+    ''' <param name="pt_size"></param>
+    ''' <param name="line_width"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("plot.UV_signals")>
     <RApiReturn(GetType(GraphicsData))>
     Public Function PlotUVSignals(<RRawVectorArgument>
@@ -693,6 +711,15 @@ Module Visual
         )
     End Function
 
+    ''' <summary>
+    ''' Plot cluster size histogram on RT dimension
+    ''' </summary>
+    ''' <param name="mn">the molecular networking graph result</param>
+    ''' <param name="size"></param>
+    ''' <param name="padding"></param>
+    ''' <param name="dpi"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("plotNetworkClusterHistogram")>
     Public Function plotMolecularNetworkingHistogram(mn As NetworkGraph,
                                                      <RRawVectorArgument> Optional size As Object = "2700,2000",

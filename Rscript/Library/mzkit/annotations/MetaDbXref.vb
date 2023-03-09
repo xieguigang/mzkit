@@ -295,7 +295,7 @@ Module MetaDbXref
         If TypeOf mz Is list Then
             Return DirectCast(mz, list).searchMzList(queryEngine, unique, uniqueByScore, env)
         Else
-            Return DirectCast(REnv.asVector(Of Double)(mz), Double()).searchMzVector(queryEngine, unique, uniqueByScore)
+            Return CLRVector.asNumeric(mz).searchMzVector(queryEngine, unique, uniqueByScore)
         End If
     End Function
 
@@ -871,12 +871,12 @@ Module MetaDbXref
     <ExportAPI("load_asQueryHits")>
     Public Function loadQueryHits(x As dataframe, Optional env As Environment = Nothing) As MzQuery()
         'unique_id,name,mz,ppm,precursorType,score
-        Dim unique_id As String() = REnv.asVector(Of String)(x.getColumnVector("unique_id"))
-        Dim name As String() = REnv.asVector(Of String)(x.getColumnVector("name"))
-        Dim mz As Double() = REnv.asVector(Of Double)(x.getColumnVector("mz"))
-        Dim ppm As Double() = REnv.asVector(Of Double)(x.getColumnVector("ppm"))
-        Dim precursorType As String() = REnv.asVector(Of String)(x.getColumnVector("precursorType"))
-        Dim score As Double() = REnv.asVector(Of Double)(x.getColumnVector("score"))
+        Dim unique_id As String() = CLRVector.asCharacter(x.getColumnVector("unique_id"))
+        Dim name As String() = CLRVector.asCharacter(x.getColumnVector("name"))
+        Dim mz As Double() = CLRVector.asNumeric(x.getColumnVector("mz"))
+        Dim ppm As Double() = CLRVector.asNumeric(x.getColumnVector("ppm"))
+        Dim precursorType As String() = CLRVector.asCharacter(x.getColumnVector("precursorType"))
+        Dim score As Double() = CLRVector.asNumeric(x.getColumnVector("score"))
 
         Return unique_id _
             .Select(Function(id, i)

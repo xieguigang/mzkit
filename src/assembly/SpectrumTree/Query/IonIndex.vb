@@ -63,6 +63,9 @@ Namespace Query
     Friend Structure IonIndex
 
         Public mz As Double
+        ''' <summary>
+        ''' the pointer to the spectrum data node 
+        ''' </summary>
         Public node As Integer
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

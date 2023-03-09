@@ -108,10 +108,13 @@ Public Module Extensions
 
         Dim x As New List(Of Integer)
         Dim y As New List(Of Integer)
-        Dim regions As Polygon2D() = polygons.SafeQuery.ToArray
+        Dim regions As Polygon2D() = polygons _
+            .SafeQuery _
+            .Where(Function(p) p.length > 0) _
+            .ToArray
 
         If regions.Length = 1 AndAlso regions(Scan0).length > 512 Then
-            ' is a pack of density pixels
+            ' is already a pack of density pixels
             Call x.AddRange(regions(Scan0).xpoints.Select(Function(xi) CInt(xi)))
             Call y.AddRange(regions(Scan0).ypoints.Select(Function(yi) CInt(yi)))
         Else

@@ -55,7 +55,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -67,13 +66,12 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports any = Microsoft.VisualBasic.Scripting
-Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("annotation")>
 Module library
@@ -220,10 +218,10 @@ Module library
     ''' <returns></returns>
     <ExportAPI("precursorIons")>
     Public Function createPrecursorIons(data As dataframe) As PrecursorData()
-        Dim mz As Double() = REnv.asVector(Of Double)(data("mz"))
-        Dim rt As Double() = REnv.asVector(Of Double)(data("rt"))
-        Dim charge As Integer() = REnv.asVector(Of Integer)(data("charge"))
-        Dim ion As String() = REnv.asVector(Of String)(data("ion"))
+        Dim mz As Double() = CLRVector.asNumeric(data("mz"))
+        Dim rt As Double() = CLRVector.asNumeric(data("rt"))
+        Dim charge As Integer() = CLRVector.asInteger(data("charge"))
+        Dim ion As String() = CLRVector.asCharacter(data("ion"))
 
         Return mz _
             .Select(Function(mzi, i)
@@ -250,9 +248,9 @@ Module library
         If TypeOf data Is dataframe Then
             Dim df As dataframe = DirectCast(data, dataframe)
 
-            mz = REnv.asVector(Of Double)(df("mz"))
-            intensity = REnv.asVector(Of Double)(df("intensity"))
-            annotations = REnv.asVector(Of String)(df("annotation"))
+            mz = CLRVector.asNumeric(df("mz"))
+            intensity = CLRVector.asNumeric(df("intensity"))
+            annotations = CLRVector.asCharacter(df("annotation"))
             ionMode = ParseIonMode(any.ToString(ionMode))
         ElseIf TypeOf data Is LibraryMatrix Then
             Dim mat As LibraryMatrix = DirectCast(data, LibraryMatrix)

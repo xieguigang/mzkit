@@ -1,12 +1,35 @@
 .\" man page create by R# package system.
 .TH MOLECULENETWORKING 1 2000-Jan "tree" "tree"
 .SH NAME
-tree \- 
+tree \- do spectrum data clustering
 .SH SYNOPSIS
 \fItree(\fBions\fR as <generic> PeakMs2[], 
 \fBmzdiff\fR as double = 0.3, 
 \fBintocutoff\fR as double = 0.05, 
 \fBequals\fR as double = 0.85);\fR
+.SH DESCRIPTION
+.PP
+do spectrum data clustering
+.PP
+.SH OPTIONS
+.PP
+\fBions\fB \fR\- A set of the spectrum data. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 
+ the ms2 fragment mass tolerance when used for compares 
+ ms2 spectrum data
+. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- 
+ intensity cutoff value that used for make the spectrum 
+ centroid and noise cleanup
+. 
+.PP
+.PP
+\fBequals\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MoleculeNetworking
 .SH FILES

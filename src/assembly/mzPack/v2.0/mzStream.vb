@@ -223,9 +223,6 @@ Public Class mzStream : Implements IMzPackReader
 
         ' required of read the metadata
         Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
-#If UNIX = 0 Then
-        Call DoEvents()
-#End If
 
         If metadata.hasAttributes Then
             For Each tag As String In metadata.attributes

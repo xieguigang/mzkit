@@ -61,7 +61,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -76,7 +77,7 @@ Namespace Query
         ReadOnly bin As BinaryDataReader
         ReadOnly tree As BlockNode()
         ReadOnly is_binary As Boolean
-        ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
+        ReadOnly mzIndex As MzIonSearch
 
         ''' <summary>
         ''' cutoff of the cos similarity
@@ -131,19 +132,15 @@ Namespace Query
             is_binary = tree.All(Function(i) i.childs.TryCount <= 2)
             ' see dev notes about the mass tolerance in 
             ' MSSearch module
-            mzIndex = New BlockSearchFunction(Of IonIndex)(
-                data:=mzset,
-                eval:=Function(m) m.mz,
-                tolerance:=1,
-                factor:=3
-            )
+            mzIndex = New MzIonSearch(mzset, da)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Sub SetCutoff(cutoff As Double)
+        Public Function SetCutoff(cutoff As Double) As TreeSearch
             dotcutoff = cutoff
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' query the spectrum reference tree nodes via parent m/z matched
@@ -151,10 +148,8 @@ Namespace Query
         ''' <param name="mz"></param>
         ''' <returns></returns>
         Public Function QueryByMz(mz As Double) As BlockNode()
-            Dim query As New IonIndex With {.mz = mz}
-            Dim result As BlockNode() = mzIndex _
-                .Search(query) _
-                .Where(Function(d) da(d.mz, mz)) _
+            Dim ions As IonIndex() = mzIndex.QueryByMz(mz).ToArray
+            Dim result = ions _
                 .Select(Function(d) tree(d.node)) _
                 .GroupBy(Function(d) d.Id) _
                 .Select(Function(g)
@@ -179,7 +174,7 @@ Namespace Query
         ''' <param name="centroid">the query spectrum matrix data should be processed in centroid mode</param>
         ''' <param name="mz1">the parent m/z of the target unknown metabolite</param>
         ''' <returns></returns>
-        Public Overrides Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+        Public Overrides Iterator Function Search(centroid As ms2(), mz1 As Double) As IEnumerable(Of ClusterHit)
             Dim candidates As BlockNode() = QueryByMz(mz1)
             Dim max = (score:=0.0, raw:=(0.0, 0.0), node:=candidates.ElementAtOrNull(Scan0))
 
@@ -193,9 +188,7 @@ Namespace Query
             Next
 
             If max.score > dotcutoff Then
-                Return reportClusterHit(centroid, hit:=max.node, score:=max.raw)
-            Else
-                Return Nothing
+                Yield reportClusterHit(centroid, hit:=max.node, score:=max.raw)
             End If
         End Function
 

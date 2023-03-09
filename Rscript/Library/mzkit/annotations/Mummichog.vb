@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::f94471f9c1cc5012920cea85718421e0, mzkit\Rscript\Library\mzkit\annotations\Mummichog.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 304
-    '    Code Lines: 218
-    ' Comment Lines: 47
-    '   Blank Lines: 39
-    '     File Size: 12.18 KB
+' Summaries:
 
 
-    ' Module Mummichog
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateKEGGBackground, createMzSet, fromGseaBackground, getResultTable, GroupPeaks
-    '               mzScore, PeakListAnnotation, queryCandidateSet
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 304
+'    Code Lines: 218
+' Comment Lines: 47
+'   Blank Lines: 39
+'     File Size: 12.18 KB
+
+
+' Module Mummichog
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateKEGGBackground, createMzSet, fromGseaBackground, getResultTable, GroupPeaks
+'               mzScore, PeakListAnnotation, queryCandidateSet
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.MSEngine.Mummichog
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -70,6 +71,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices
+Imports SMRUCC.genomics.Model.Network.KEGG.ReactionNetwork
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -297,6 +299,35 @@ Module Mummichog
         }
     End Function
 
+    Friend Class MetabolicNetworkGraph : Inherits MapGraphPopulator
+
+        ReadOnly reactions As ReactionTable()
+
+        Sub New(reactions As IEnumerable(Of Reaction))
+            Me.reactions = ReactionTable.Load(reactions).ToArray
+        End Sub
+
+        Public Overrides Function CreateGraphModel(map As Map) As NetworkGraph
+            Dim allIdSet = map.shapes _
+                .Select(Function(a) a.IDVector) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+            Dim compounds As NamedValue(Of String)() = allIdSet _
+                .Where(Function(id) id.IsPattern("C\d+")) _
+                .Select(Function(cid) New NamedValue(Of String)(cid, cid, cid)) _
+                .ToArray
+            Dim currentReactionIdSet As Index(Of String) = allIdSet _
+                .Where(Function(id) id.IsPattern("R\d+")) _
+                .Indexing
+            Dim reactions = Me.reactions _
+                .Where(Function(r) r.entry Like currentReactionIdSet) _
+                .ToArray
+
+            Return reactions.BuildModel(compounds, enzymaticRelated:=False, ignoresCommonList:=False, enzymeBridged:=True)
+        End Function
+    End Class
+
     ''' <summary>
     ''' create kegg pathway network graph background model
     ''' </summary>
@@ -304,14 +335,21 @@ Module Mummichog
     ''' <param name="reactions"></param>
     ''' <returns></returns>
     <ExportAPI("kegg_background")>
-    Public Function CreateKEGGBackground(maps As Map(), reactions As Reaction()) As list
+    Public Function CreateKEGGBackground(maps As Map(), reactions As Reaction(), Optional alternative As Boolean = False) As list
+        Dim subgraphs As NamedValue(Of NetworkGraph)()
         Dim networkIndex = reactions _
             .GroupBy(Function(r) r.ID) _
             .ToDictionary(Function(r) r.Key,
                           Function(r)
                               Return r.First
                           End Function)
-        Dim subgraphs = maps.CreateBackground(networkIndex).ToArray
+
+        If alternative Then
+            subgraphs = maps.CreateBackground(New MetabolicNetworkGraph(networkIndex.Values)).ToArray
+        Else
+            subgraphs = maps.CreateBackground(networkIndex).ToArray
+        End If
+
         Dim graphSet As New list With {
             .slots = New Dictionary(Of String, Object)
         }

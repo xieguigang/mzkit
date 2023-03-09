@@ -74,7 +74,7 @@ Namespace Query
             Return matrix.Centroid(da, intocutoff).ToArray
         End Function
 
-        Public MustOverride Function Search(centroid As ms2(), mz1 As Double) As ClusterHit
+        Public MustOverride Function Search(centroid As ms2(), mz1 As Double) As IEnumerable(Of ClusterHit)
 
     End Class
 End Namespace

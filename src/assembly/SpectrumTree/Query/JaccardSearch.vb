@@ -76,7 +76,7 @@ Namespace Query
             Me.cutoff = cutoff
         End Sub
 
-        Public Overrides Function Search(centroid() As ms2, mz1 As Double) As ClusterHit
+        Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
             Dim query As Double() = centroid.Select(Function(i) i.mz).ToArray
             Dim subset = mzSet.Where(Function(i) da(mz1, i.mz1)).ToArray
             Dim jaccard = subset _
@@ -119,7 +119,7 @@ Namespace Query
                 Dim best_align = scores(i)
                 Dim best_hit = jaccard(i)
 
-                Return New ClusterHit With {
+                Yield New ClusterHit With {
                     .jaccard = best_align.jaccard,
                     .ClusterForward = {best_align.forward},
                     .ClusterReverse = {best_align.reverse},
@@ -132,8 +132,6 @@ Namespace Query
                     .reverse = .ClusterReverse.Average,
                     .representive = best_align.alignment
                 }
-            Else
-                Return Nothing
             End If
         End Function
 

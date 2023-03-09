@@ -61,6 +61,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' the spectrum similarity score provider
+    ''' </summary>
     Public MustInherit Class AlignmentProvider
 
         Protected intocutoff As LowAbundanceTrimming

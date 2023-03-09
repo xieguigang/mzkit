@@ -82,6 +82,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -505,7 +506,7 @@ Module Assembly
         If TypeOf raw Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
             ms1.AddRange(DirectCast(raw, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).GetAllScanMs1(tolerance))
         ElseIf TypeOf raw Is vector OrElse TypeOf raw Is String() Then
-            Dim files As String() = REnv.asVector(Of String)(raw)
+            Dim files As String() = CLRVector.asCharacter(raw)
 
             For Each file As String In files
                 Select Case file.ExtensionSuffix.ToLower

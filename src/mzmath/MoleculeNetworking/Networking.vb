@@ -60,8 +60,31 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' Molecular networks are visual displays of the chemical space present 
+''' in tandem mass spectrometry (MS/MS) experiments. This visualization 
+''' approach can detect sets of spectra from related molecules (molecular
+''' networks), even when the spectra themselves are not matched to any 
+''' known compounds.
+'''
+''' The visualization Of molecular networks In GNPS represents Each spectrum 
+''' As a node, And spectrum-To-spectrum alignments As edges (connections)
+''' between nodes. Nodes can be supplemented With metadata, including 
+''' dereplication matches Or information that Is provided by the user, e.g.
+''' As abundance, origin Of product, biochemical activity, Or hydrophobicity,
+''' which can be reflected In a node's size or color. This map of all 
+''' related molecules is visualized as a global molecular network.
+''' </summary>
 Public Module Networking
 
+    ''' <summary>
+    ''' implements the molecule networking
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="intocutoff"></param>
+    ''' <param name="equals"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Tree(ions As IEnumerable(Of PeakMs2),
                          Optional mzdiff As Double = 0.3,
