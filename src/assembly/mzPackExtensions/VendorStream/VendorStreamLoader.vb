@@ -91,8 +91,6 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
                 TIC += scaninfo.TotalIonCurrent
                 BPC += scaninfo.BasePeakIntensity
 
-                Call Application.DoEvents()
-
                 If Not println Is Nothing Then
                     Call println($"Load " & scaninfo.ToString)
                 End If
