@@ -23,6 +23,7 @@ Namespace PackLib
         Dim disposedValue As Boolean
         Dim file As StreamPack
         Dim mzIndex As MzIonSearch
+        Dim metadata As Dictionary(Of String, String)
 
         ''' <summary>
         ''' mapping of <see cref="BlockNode.Id"/> to the mass index <see cref="MassIndex.name"/>
@@ -50,7 +51,12 @@ Namespace PackLib
         Sub New(file As Stream, Optional target_uuid As String() = Nothing)
             Me.file = New StreamPack(file, [readonly]:=True)
             Me.map = Me.file.ReadText("/map.json").LoadJSON(Of Dictionary(Of String, String))
+            Me.metadata = Me.file.ReadText("/metadata.json").LoadJSON(Of Dictionary(Of String, String))
             Me.targetSet = target_uuid.Indexing
+
+            If metadata Is Nothing Then
+                metadata = New Dictionary(Of String, String)
+            End If
         End Sub
 
         ''' <summary>
@@ -185,6 +191,14 @@ Namespace PackLib
             Next
         End Function
 
+        Public Overrides Function ToString() As String
+            Dim name As String = metadata.TryGetValue("name", "Spectrum Reference Library")
+            Dim n_mass As Integer
+            Dim n_spectrum As Integer
+
+            Return $"[{name}] {n_mass} metabolites, {n_spectrum} spectrum"
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
@@ -205,6 +219,9 @@ Namespace PackLib
         '     MyBase.Finalize()
         ' End Sub
 
+        ''' <summary>
+        ''' close the input file
+        ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
             ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
             Dispose(disposing:=True)

@@ -19,6 +19,12 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property spectrum As New List(Of Integer)
 
+        Public ReadOnly Property size As Integer
+            Get
+                Return spectrum.Count
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
