@@ -31,6 +31,14 @@ Namespace PackLib
         ReadOnly map As Dictionary(Of String, String)
         ReadOnly spectrum As New Dictionary(Of String, BlockNode)
         ReadOnly targetSet As Index(Of String)
+        ReadOnly libnames As String()
+
+        Public ReadOnly Property Libname(i As Integer) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return libnames.ElementAtOrDefault(i, [default]:=$"#{i}")
+            End Get
+        End Property
 
         Default Public ReadOnly Property GetIdMap(libname As String) As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -53,6 +61,7 @@ Namespace PackLib
             Me.map = Me.file.ReadText("/map.json").LoadJSON(Of Dictionary(Of String, String))
             Me.metadata = Me.file.ReadText("/metadata.json").LoadJSON(Of Dictionary(Of String, String))
             Me.targetSet = target_uuid.Indexing
+            Me.libnames = Me.file.ReadText("/spectrum/libnames.txt").LineTokens
 
             If metadata Is Nothing Then
                 metadata = New Dictionary(Of String, String)

@@ -19,6 +19,11 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property spectrum As New List(Of Integer)
 
+        ''' <summary>
+        ''' the number of the spectrum that associated with current
+        ''' metabolite <see cref="name"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property size As Integer
             Get
                 Return spectrum.Count
