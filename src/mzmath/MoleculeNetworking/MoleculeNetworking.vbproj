@@ -7,6 +7,10 @@
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <Platforms>AnyCPU;ARM32;x64</Platforms>
 	  <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>Molecular Networking Generator</Title>
+	  <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
+	  <Company>PANOMIX</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
