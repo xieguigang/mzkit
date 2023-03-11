@@ -84,4 +84,8 @@
     <ProjectReference Include="..\ms2_math-core\mzmath-netcore5.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

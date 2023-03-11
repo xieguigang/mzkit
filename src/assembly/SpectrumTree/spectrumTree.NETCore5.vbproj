@@ -6,6 +6,15 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;mzkit_win32;Rsharp_app_release</Configurations>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SpectrumTree</AssemblyName>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Spectrum Tree Reference Library</Title>
+    <Product>MZKit</Product>
+    <Company>PANOMIX</Company>
+    <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>Flask.png</PackageIcon>
+    <PackageProjectUrl>https://mzkit.org</PackageProjectUrl>
+    <Copyright>Copyright (c) PANOMIX 2023, All Rights Reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -196,6 +205,17 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
     <DebugType>full</DebugType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
