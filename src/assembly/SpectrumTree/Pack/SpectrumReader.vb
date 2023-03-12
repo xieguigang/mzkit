@@ -23,6 +23,7 @@ Namespace PackLib
         Dim disposedValue As Boolean
         Dim file As StreamPack
         Dim mzIndex As MzIonSearch
+        Dim metadata As Dictionary(Of String, String)
 
         ''' <summary>
         ''' mapping of <see cref="BlockNode.Id"/> to the mass index <see cref="MassIndex.name"/>
@@ -30,6 +31,14 @@ Namespace PackLib
         ReadOnly map As Dictionary(Of String, String)
         ReadOnly spectrum As New Dictionary(Of String, BlockNode)
         ReadOnly targetSet As Index(Of String)
+        ReadOnly libnames As String()
+
+        Public ReadOnly Property Libname(i As Integer) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return libnames.ElementAtOrDefault(i, [default]:=$"#{i}")
+            End Get
+        End Property
 
         Default Public ReadOnly Property GetIdMap(libname As String) As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -50,7 +59,13 @@ Namespace PackLib
         Sub New(file As Stream, Optional target_uuid As String() = Nothing)
             Me.file = New StreamPack(file, [readonly]:=True)
             Me.map = Me.file.ReadText("/map.json").LoadJSON(Of Dictionary(Of String, String))
+            Me.metadata = Me.file.ReadText("/metadata.json").LoadJSON(Of Dictionary(Of String, String))
             Me.targetSet = target_uuid.Indexing
+            Me.libnames = Me.file.ReadText("/spectrum/libnames.txt").LineTokens
+
+            If metadata Is Nothing Then
+                metadata = New Dictionary(Of String, String)
+            End If
         End Sub
 
         ''' <summary>
@@ -92,18 +107,22 @@ Namespace PackLib
             Return GetSpectrum(key:=pointer.ToString)
         End Function
 
+        Public Shared Function GetSpectrum(node As BlockNode, Optional file As String = Nothing) As PeakMs2
+            Return New PeakMs2 With {
+                .mzInto = node.centroid,
+                .lib_guid = node.Id,
+                .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
+                .mz = node.mz.First,
+                .rt = node.rt,
+                .scan = node.Id,
+                .file = file
+            }
+        End Function
+
         Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
-                Dim spectrum As New PeakMs2 With {
-                    .mzInto = node.centroid,
-                    .lib_guid = node.Id,
-                    .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
-                    .mz = node.mz.First,
-                    .rt = node.rt,
-                    .scan = node.Id,
-                    .file = mass.name
-                }
+                Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
 
                 Yield spectrum
             Next
@@ -185,6 +204,14 @@ Namespace PackLib
             Next
         End Function
 
+        Public Overrides Function ToString() As String
+            Dim name As String = metadata.TryGetValue("name", [default]:="Spectrum Reference Library")
+            Dim n_mass As Integer = DirectCast(file.GetObject("/massSet/"), StreamGroup).files.Length
+            Dim n_spectrum As Integer = DirectCast(file.GetObject("/spectrum/"), StreamGroup).ListFiles.Count
+
+            Return $"[{name}] {n_mass} metabolites, {n_spectrum} spectrum"
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
@@ -205,6 +232,9 @@ Namespace PackLib
         '     MyBase.Finalize()
         ' End Sub
 
+        ''' <summary>
+        ''' close the input file
+        ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
             ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
             Dispose(disposing:=True)
