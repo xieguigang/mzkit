@@ -141,7 +141,9 @@ Namespace Spectra
             Return _entropy_similarity(p, q)
         End Function
 
-        Public Function calculate_entropy_similarity(spectrum_a As ms2(), spectrum_b As ms2(), tolerance As Tolerance) As Double
+        Public Function calculate_entropy_similarity(spectrum_a As ms2(),
+                                                     spectrum_b As ms2(),
+                                                     tolerance As Tolerance) As Double
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
@@ -152,7 +154,9 @@ Namespace Spectra
                 .calculate_entropy_similarity
         End Function
 
-        Public Function calculate_entropy_similarity(spectrum_a As ms2(), spectrum_b As ms2(), Optional ms2_da As Double = 0.3) As Double
+        Public Function calculate_entropy_similarity(spectrum_a As ms2(),
+                                                     spectrum_b As ms2(),
+                                                     Optional ms2_da As Double = 0.3) As Double
             Return GlobalAlignment _
                 .CreateAlignment(
                     query:=StandardizeSpectrum(New LibraryMatrix(spectrum_a)).ms2,
@@ -166,9 +170,13 @@ Namespace Spectra
         Private Function _entropy_similarity(a As Vector, b As Vector) As Double
             Dim ia = _get_entropy_and_weighted_intensity(a)
             Dim ib = _get_entropy_and_weighted_intensity(b)
-            Dim entropy_merged = (ia.intensity + ib.intensity).ShannonEntropy
+            Dim merged As Vector = ia.intensity + ib.intensity
+            Dim entropy_merged = (merged / merged.Sum).ShannonEntropy
 
-            Return 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / stdNum.Log(4)
+            Static log4 As Double = stdNum.Log(4)
+
+            Dim similarity As Double = 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / log4
+            Return similarity
         End Function
 
         Private Function _get_entropy_and_weighted_intensity(intensity As Vector) As (spectral_entropy As Double, intensity As Vector)

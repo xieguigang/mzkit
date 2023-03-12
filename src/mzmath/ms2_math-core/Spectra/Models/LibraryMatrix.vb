@@ -150,6 +150,10 @@ Namespace Spectra
             Call MyBase.New(data)
         End Sub
 
+        ''' <summary>
+        ''' get basepeak ion
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMaxInto() As ms2
             Return buffer(WhichIndex.Symbol.Max(buffer.Select(Function(mz) mz.intensity)))
@@ -158,6 +162,10 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(data As ms2(), tolerance As Tolerance) As ms2()
             Return ms2.AlignMatrix(data, tolerance)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"[{name}, {Length} ions] {ms2.JoinBy("; ")}"
         End Function
 
         ''' <summary>

@@ -85,6 +85,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
@@ -339,7 +340,10 @@ Module MzMath
                 tolerance:=mzErr.TryCast(Of Tolerance)
             )
         Else
-            Return x.intensity.ShannonEntropy
+            Dim into As stdVector = x.intensity
+            Dim ent As Double = (into / into.Sum).ShannonEntropy
+
+            Return ent
         End If
     End Function
 

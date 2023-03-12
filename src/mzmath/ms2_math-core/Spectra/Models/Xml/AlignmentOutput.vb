@@ -82,6 +82,12 @@ Namespace Spectra.Xml
             End Get
         End Property
 
+        Public ReadOnly Property cosine As Double
+            Get
+                Return stdNum.Min(forward, reverse)
+            End Get
+        End Property
+
         Public Property query As Meta
         Public Property reference As Meta
 
