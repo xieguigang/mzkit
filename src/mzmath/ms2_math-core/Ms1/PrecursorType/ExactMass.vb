@@ -76,6 +76,7 @@ Namespace Ms1.PrecursorType
         ReadOnly weights As New Dictionary(Of String, Double) From {
             {"H", H},
             {"HCOO", H + C + O * 2},
+            {"COOH", C + O * 2 + H},
             {"CH3COO", CH3COO},
             {"CH3COOH", CH3COO + H},
             {"C3H7O2", C * 3 + H * 7 + O * 2},
