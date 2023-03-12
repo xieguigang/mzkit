@@ -309,6 +309,8 @@ Module ReferenceTreePkg
         If x Is Nothing Then
             Call env.AddMessage("The given spectrum input data is nothing!", MSG_TYPES.WRN)
             Return Nothing
+        ElseIf tree Is Nothing Then
+            Return Internal.debug.stop("the required spectrum reference library could not be nothing!", env)
         End If
 
         If TypeOf x Is LibraryMatrix Then
@@ -415,7 +417,11 @@ Module ReferenceTreePkg
         Dim result As Object
 
         For Each name As String In input.getNames
-            result = QueryTree(tree, input(name), maxdepth, treeSearch, env)
+            result = input(name)
+
+            If Not result Is Nothing Then
+                result = QueryTree(tree, result, maxdepth, treeSearch, env)
+            End If
 
             If Program.isException(result) Then
                 Return result
