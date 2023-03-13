@@ -55,11 +55,13 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class PrecursorAdductsAssignRuler
 
     ReadOnly ionMode As IonModes
     ReadOnly adductFormula As New Dictionary(Of String, (op%, formula$)())
+    ReadOnly no_test As Index(Of String) = {"[M]+", "[M]-", "[M+H]+", "[M-H]-"}
 
     Sub New(ionMode As IonModes)
         Me.ionMode = ionMode
@@ -73,6 +75,12 @@ Public Class PrecursorAdductsAssignRuler
         Dim composition As Formula = FormulaScanner.ScanFormula(formula)
 
         For Each adduct As MzCalculator In adducts
+            Dim name As String = adduct.ToString
+
+            If name Like no_test Then
+                Yield adduct
+            End If
+
             Dim adductParts = GetAdductFormula(precursor_type:=adduct.ToString)
 
             Yield adduct
