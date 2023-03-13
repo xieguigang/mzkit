@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Public Class PrecursorAdductsAssignRuler
 
     ReadOnly ionMode As IonModes
-    ReadOnly adductFormula As New Dictionary(Of String, (op%, formula$)())
+    ReadOnly adductFormula As New Dictionary(Of String, (op%, Formula)())
     ReadOnly no_test As Index(Of String) = {"[M]+", "[M]-", "[M+H]+", "[M-H]-"}
 
     Sub New(ionMode As IonModes)
@@ -79,18 +79,32 @@ Public Class PrecursorAdductsAssignRuler
 
             If name Like no_test Then
                 Yield adduct
+                Continue For
             End If
 
             Dim adductParts = GetAdductFormula(precursor_type:=adduct.ToString)
+
+            For Each part In adductParts
+                If part.op < 0 Then
+                    For Each c As String In part.Item2.Elements
+                        If composition(c) <= 0 Then
+                            Continue For
+                        End If
+                    Next
+                End If
+            Next
 
             Yield adduct
         Next
     End Function
 
-    Private Function GetAdductFormula(precursor_type As String) As (op%, formula$)()
+    Private Function GetAdductFormula(precursor_type As String) As (op%, Formula)()
         If Not adductFormula.ContainsKey(precursor_type) Then
             adductFormula(precursor_type) = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
                 .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
+                .Select(Function(t)
+                            Return (t.sign, FormulaScanner.ScanFormula(t.expression))
+                        End Function) _
                 .ToArray
         End If
 
