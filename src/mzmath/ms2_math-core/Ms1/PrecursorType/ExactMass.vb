@@ -169,7 +169,12 @@ Namespace Ms1.PrecursorType
         Const x0 As Integer = Asc("0"c)
         Const x9 As Integer = Asc("9"c)
 
-        Private Function Mul(token As String) As NamedValue(Of Integer)
+        ''' <summary>
+        ''' parse the element group multiply
+        ''' </summary>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        Public Function Mul(token As String) As NamedValue(Of Integer)
             Dim n$ = ""
             Dim len% = Strings.Len(token)
 
