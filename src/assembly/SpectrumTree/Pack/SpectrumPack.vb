@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -29,13 +30,16 @@ Namespace PackLib
             Me.file = New StreamPack(file, meta_size:=64 * 1024 * 1024)
         End Sub
 
-        Public Sub Push(uuid As String, mass As Double, spectrum As PeakMs2)
+        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
             Dim index As MassIndex
 
             If Not massSet.ContainsKey(uuid) Then
+                Dim f As Formula = FormulaScanner.ScanFormula(formula)
+
                 Call massSet.Add(uuid, New MassIndex With {
-                   .exactMass = mass,
-                   .name = uuid
+                   .exactMass = f.ExactMass,
+                   .name = uuid,
+                   .formula = formula
                 })
             End If
 
