@@ -88,7 +88,7 @@ Public Class PrecursorAdductsAssignRuler
 
             For Each element In adductParts.CountsByElement
                 If element.Value < 0 Then
-                    If composition(element.Key) <= 0 Then
+                    If composition(element.Key) + element.Value <= 0 Then
                         invalid = True
                         Exit For
                     End If
