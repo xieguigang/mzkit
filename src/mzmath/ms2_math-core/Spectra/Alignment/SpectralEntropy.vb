@@ -65,6 +65,8 @@ Imports stdNum = System.Math
 Namespace Spectra
 
     ''' <summary>
+    ''' The similarity score for spectral comparison
+    ''' 
     ''' https://github.com/YuanyueLi/SpectralEntropy/blob/master/spectral_entropy/math_distance.py
     ''' </summary>
     Public Module SpectralEntropy
@@ -176,6 +178,10 @@ Namespace Spectra
             Static log4 As Double = stdNum.Log(4)
 
             Dim similarity As Double = 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / log4
+
+            similarity = If(similarity < 0.0, 0.0, similarity)
+            similarity = If(similarity > 1.0, 1.0, similarity)
+
             Return similarity
         End Function
 
