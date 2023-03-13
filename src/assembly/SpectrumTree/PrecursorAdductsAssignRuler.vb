@@ -1,103 +1,95 @@
 ﻿#Region "Microsoft.VisualBasic::2b9a0698c090a67096e93bdc837de426, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\PrecursorAdductsAssignRuler.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 48
-    '    Code Lines: 30
-    ' Comment Lines: 11
-    '   Blank Lines: 7
-    '     File Size: 1.52 KB
+' Summaries:
 
 
-    '     Class PrecursorAdductsAssignRuler
-    ' 
-    '         Function: IonNegativeTypes, IonPositiveTypes, PossibleTypes
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 48
+'    Code Lines: 30
+' Comment Lines: 11
+'   Blank Lines: 7
+'     File Size: 1.52 KB
+
+
+'     Class PrecursorAdductsAssignRuler
+' 
+'         Function: IonNegativeTypes, IonPositiveTypes, PossibleTypes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Namespace Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-    Public Class PrecursorAdductsAssignRuler
+Public Class PrecursorAdductsAssignRuler
 
-        ''' <summary>
-        ''' 制定一些加和物离子规则，例如：
-        ''' 
-        ''' 化学式中含有活泼离子，例如
-        ''' 
-        ''' 1. Na+，负离子下很可能为[M-Na]-
-        ''' 2. Cl-, 正离子下很可能为[M-Cl]+
-        ''' </summary>
-        ''' <param name="formula"></param>
-        ''' <param name="ionMode"></param>
-        ''' <returns></returns>
-        Public Function PossibleTypes(formula As String, ionMode As Integer) As String
-            If formula.StringEmpty Then
-                Return Nothing
-            End If
+    ReadOnly ionMode As IonModes
+    ReadOnly adductFormula As New Dictionary(Of String, (op%, formula$)())
 
-            If ionMode = 1 Then
-                Return IonPositiveTypes(formula)
-            Else
-                Return IonNegativeTypes(formula)
-            End If
-        End Function
+    Sub New(ionMode As IonModes)
+        Me.ionMode = ionMode
+    End Sub
 
-        Private Function IonNegativeTypes(formula As String) As String
-            For Each metal As String In {"Na", "Li", "H"}
-                If formula.Contains(metal) Then
-                    Return $"[M-{metal}]-"
-                End If
-            Next
+    Public Function AssertAdducts(formula As String, ParamArray adducts As String()) As MzCalculator()
+        Return AssertAdducts(formula, adducts.Select(Function(t) ParseMzCalculator(t, ionMode))).ToArray
+    End Function
 
-            Return Nothing
-        End Function
+    Public Iterator Function AssertAdducts(formula As String, adducts As IEnumerable(Of MzCalculator)) As IEnumerable(Of MzCalculator)
+        Dim composition As Formula = FormulaScanner.ScanFormula(formula)
 
-        Private Function IonPositiveTypes(formula As String) As String
-            For Each ion As String In {"Cl"}
-                If formula.Contains(ion) Then
-                    Return $"[M-{ion}]+"
-                End If
-            Next
+        For Each adduct As MzCalculator In adducts
+            Dim adductParts = GetAdductFormula(precursor_type:=adduct.ToString)
 
-            Return Nothing
-        End Function
-    End Class
-End Namespace
+            Yield adduct
+        Next
+    End Function
+
+    Private Function GetAdductFormula(precursor_type As String) As (op%, formula$)()
+        If Not adductFormula.ContainsKey(precursor_type) Then
+            adductFormula(precursor_type) = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
+                .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
+                .ToArray
+        End If
+
+        Return adductFormula(precursor_type)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return ionMode.Description
+    End Function
+End Class

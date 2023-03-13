@@ -56,7 +56,9 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -66,9 +68,39 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' the metabolite annotation toolkit
+''' </summary>
 <Package("annotation")>
+<RTypeExport("xref", GetType(xref))>
 Module library
 
+    <ExportAPI("assert.adducts")>
+    Public Function assertAdducts(formula As String,
+                                  <RRawVectorArgument>
+                                  adducts As Object,
+                                  Optional ion_mode As Object = "+",
+                                  Optional env As Environment = Nothing) As Object
+
+        Static asserts As New Dictionary(Of IonModes, PrecursorAdductsAssignRuler) From {
+            {IonModes.Positive, New PrecursorAdductsAssignRuler(IonModes.Positive)},
+            {IonModes.Negative, New PrecursorAdductsAssignRuler(IonModes.Negative)}
+        }
+
+        Dim ionVal = Math.GetIonMode(ion_mode, env)
+        Dim ruler = asserts(ionVal)
+        Dim precursors As MzCalculator() = Math.GetPrecursorTypes(adducts, env)
+
+        Return ruler.AssertAdducts(formula, precursors).ToArray
+    End Function
+
+    ''' <summary>
+    ''' a shortcut method for populate the peak ms2 data from a mzpack raw data file
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("populateIonData")>
     <Extension>
     <RApiReturn(GetType(PeakMs2))>
@@ -107,6 +139,15 @@ Module library
         Return ions.ToArray
     End Function
 
+    ''' <summary>
+    ''' create a new metabolite annotation information
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <param name="formula"></param>
+    ''' <param name="name"></param>
+    ''' <param name="synonym"></param>
+    ''' <param name="xref"></param>
+    ''' <returns></returns>
     <ExportAPI("annotation")>
     Public Function createAnnotation(id As String,
                                      formula As String,

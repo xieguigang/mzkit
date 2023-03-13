@@ -241,5 +241,21 @@ Namespace MetaLib.Models
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
+
+        ''' <summary>
+        ''' fill of the corss reference id content in <paramref name="b"/> into <paramref name="a"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Shared Operator &(a As xref, b As xref) As xref
+            If a Is Nothing Then
+                Return b
+            ElseIf b Is Nothing Then
+                Return a
+            Else
+                Return a.Join(b)
+            End If
+        End Operator
     End Class
 End Namespace
