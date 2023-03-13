@@ -225,7 +225,8 @@ Module metaDNAInfer
                                    <RRawVectorArgument>
                                    precursorTypes As Object,
                                    Optional env As Environment = Nothing) As Object
-        Dim types As String() = REnv.asVector(Of String)(precursorTypes)
+
+        Dim types As String() = CLRVector.asCharacter(precursorTypes)
 
         If env.globalEnvironment.options.verbose Then
             Call base.print("Set precursor types:", , env)
