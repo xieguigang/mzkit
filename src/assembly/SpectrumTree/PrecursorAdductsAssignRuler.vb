@@ -105,7 +105,10 @@ Public Class PrecursorAdductsAssignRuler
             Dim tokens = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
                 .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
                 .Select(Function(t)
-                            Return (t.sign, FormulaScanner.ScanFormula(t.expression))
+                            Dim multiply = ExactMass.Mul(t.expression)
+                            Dim f = FormulaScanner.ScanFormula(multiply.Name)
+
+                            Return (t.sign * multiply.Value, f)
                         End Function) _
                 .ToArray
             Dim composition As Formula = Formula.Empty
