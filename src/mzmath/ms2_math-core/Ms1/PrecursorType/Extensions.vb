@@ -114,6 +114,12 @@ Namespace Ms1.PrecursorType
                 {"-", New Dictionary(Of String, MzCalculator)}
             }
 
+            If ParseIonMode(ionMode) > 0 Then
+                ionMode = "+"
+            Else
+                ionMode = "-"
+            End If
+
             SyncLock cache
                 If Not cache.ContainsKey(ionMode) Then
                     Throw New InvalidExpressionException($"invalid ion mode value '{ionMode}', please check the precursor type '{precursor_type}' is valid or not?")
@@ -134,10 +140,7 @@ Namespace Ms1.PrecursorType
         End Function
 
         <Extension>
-        Private Function ParseMzCalculatorInternal(precursor_type$,
-                                                   Optional ionMode$ = "+",
-                                                   Optional skipEvalAdducts As Boolean = False) As MzCalculator
-
+        Private Function ParseMzCalculatorInternal(precursor_type$, ionMode$, skipEvalAdducts As Boolean) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge

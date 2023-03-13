@@ -223,19 +223,19 @@ Namespace Ms1.PrecursorType
         ''' <returns>
         ''' function returns 1(positive) or -1(negative)
         ''' </returns>
-        Public Function ParseIonMode(mode$, Optional allowsUnknown As Boolean = False) As Integer
+        Public Function ParseIonMode(mode$, Optional allowsUnknown As Boolean = False) As IonModes
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
-                    Return 1
+                    Return IonModes.Positive
                 Case "-", "-1", "n", "neg", "negative"
-                    Return -1
+                    Return IonModes.Negative
                 Case Else
-                    Call Console.WriteLine($"InvalidExpressionException: '{mode}'!")
-
+                    Dim msg As String = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
                     If allowsUnknown Then
-                        Return 0
+                        Return IonModes.Unknown
                     Else
-                        Throw New InvalidExpressionException(mode)
+                        Throw New InvalidExpressionException(msg)
                     End If
             End Select
         End Function

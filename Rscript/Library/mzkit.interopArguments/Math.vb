@@ -45,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
@@ -54,6 +55,22 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports PeakMs1 = BioNovoGene.Analytical.MassSpectrometry.Math.Peaktable
 
 Module Math
+
+    Public Function GetIonMode(x As Object, env As Environment) As IonModes
+        If x Is Nothing Then
+            Return IonModes.Unknown
+        End If
+
+        If TypeOf x Is IonModes Then
+            Return DirectCast(x, IonModes)
+        ElseIf DataFramework.IsNumericType(x.GetType) Then
+            Return If(CDbl(x) > 0, IonModes.Positive, IonModes.Negative)
+        ElseIf TypeOf x Is String OrElse TypeOf x Is Char Then
+            Return Provider.ParseIonMode(CStr(x), allowsUnknown:=True)
+        Else
+            Return IonModes.Unknown
+        End If
+    End Function
 
     ''' <summary>
     ''' this helper function will always returns a <see cref="Tolerance"/> 
