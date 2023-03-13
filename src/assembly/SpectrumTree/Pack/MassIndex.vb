@@ -13,6 +13,7 @@ Namespace PackLib
         ''' <returns></returns>
         Public Property name As String
         Public Property exactMass As Double
+        Public Property formula As String
         ''' <summary>
         ''' the pointer to the spectrum data in the library file
         ''' </summary>
