@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Public Class PrecursorAdductsAssignRuler
 
     ReadOnly ionMode As IonModes
-    ReadOnly adductFormula As New Dictionary(Of String, (op%, Formula)())
+    ReadOnly adductFormula As New Dictionary(Of String, Formula)
     ReadOnly no_test As Index(Of String) = {"[M]+", "[M]-", "[M+H]+", "[M-H]-"}
 
     Sub New(ionMode As IonModes)
@@ -83,29 +83,38 @@ Public Class PrecursorAdductsAssignRuler
             End If
 
             Dim adductParts = GetAdductFormula(precursor_type:=adduct.ToString)
+            Dim invalid As Boolean = False
 
-            For Each part In adductParts
-                If part.op < 0 Then
-                    For Each c As String In part.Item2.Elements
-                        If composition(c) <= 0 Then
-                            Continue For
-                        End If
-                    Next
+            For Each element In adductParts.CountsByElement
+                If element.Value < 0 Then
+                    If composition(element.Key) <= 0 Then
+                        invalid = True
+                        Exit For
+                    End If
                 End If
             Next
 
-            Yield adduct
+            If Not invalid Then
+                Yield adduct
+            End If
         Next
     End Function
 
-    Private Function GetAdductFormula(precursor_type As String) As (op%, Formula)()
+    Private Function GetAdductFormula(precursor_type As String) As Formula
         If Not adductFormula.ContainsKey(precursor_type) Then
-            adductFormula(precursor_type) = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
+            Dim tokens = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
                 .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
                 .Select(Function(t)
                             Return (t.sign, FormulaScanner.ScanFormula(t.expression))
                         End Function) _
                 .ToArray
+            Dim composition As Formula = Formula.Empty
+
+            For Each part In tokens
+
+            Next
+
+            adductFormula(precursor_type) = composition
         End If
 
         Return adductFormula(precursor_type)
