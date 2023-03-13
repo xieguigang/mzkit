@@ -316,6 +316,34 @@ Module MzMath
         Return GlobalAlignment.JaccardIndex(query, ref, mzErr)
     End Function
 
+    ''' <summary>
+    ''' Search spectra with entropy similarity
+    ''' </summary>
+    ''' <param name="x">target spectral data that used for calculate the entropy value</param>
+    ''' <param name="ref">
+    ''' if this parameter is not nothing, then the spectral similarity score will
+    ''' be evaluated from this function.
+    ''' </param>
+    ''' <param name="tolerance">
+    ''' the mass tolerance error to make the spectrum data centroid
+    ''' 
+    ''' To calculate spectral entropy, the spectrum need to be centroid first. When you are
+    ''' focusing on fragment ion's information, the precursor ion may need to be removed 
+    ''' from the spectrum before calculating spectral entropy. If isotope peak exitsted on
+    ''' the MS/MS spectrum, the isotope peak should be removed fist as the isotope peak does
+    ''' not contain useful information for identifing molecule.
+    ''' </param>
+    ''' <param name="intocutoff">
+    ''' the percentage relative intensity value that used for removes the noise ion fragment peaks
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' Li, Y., Kind, T., Folz, J. et al. Spectral entropy outperforms MS/MS dot product
+    ''' similarity for small-molecule compound identification. Nat Methods 18, 1524–1531
+    ''' (2021). https://doi.org/10.1038/s41592-021-01331-z
+    ''' 
+    ''' </remarks>
     <ExportAPI("spectral_entropy")>
     Public Function spectrumEntropy(x As LibraryMatrix,
                                     Optional ref As LibraryMatrix = Nothing,
