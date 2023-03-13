@@ -76,6 +76,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Module library
 
     <ExportAPI("assert.adducts")>
+    <RApiReturn(GetType(MzCalculator))>
     Public Function assertAdducts(formula As String,
                                   <RRawVectorArgument>
                                   adducts As Object,
