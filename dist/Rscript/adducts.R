@@ -4,7 +4,7 @@ imports "annotation" from "mzkit";
 
 adducts = [
 	"[M]+",
-	"[M+2H2O]+",
+	"[M+3H2O+Na]+",
 	"[M-Cl]+",
 	"[M+Na]+",
 	"[M+2Na-K]+",

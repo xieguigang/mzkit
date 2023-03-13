@@ -56,6 +56,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports stdNum = System.Math
 
 Public Class PrecursorAdductsAssignRuler
 
@@ -102,25 +103,33 @@ Public Class PrecursorAdductsAssignRuler
 
     Private Function GetAdductFormula(precursor_type As String) As Formula
         If Not adductFormula.ContainsKey(precursor_type) Then
-            Dim tokens = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
-                .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
-                .Select(Function(t)
-                            Dim multiply = ExactMass.Mul(t.expression)
-                            Dim f = FormulaScanner.ScanFormula(multiply.Name)
-
-                            Return (t.sign * multiply.Value, f)
-                        End Function) _
-                .ToArray
-            Dim composition As Formula = Formula.Empty
-
-            For Each part In tokens
-
-            Next
-
-            adductFormula(precursor_type) = composition
+            adductFormula(precursor_type) = ParseAdductFormulaInternal(precursor_type)
         End If
 
         Return adductFormula(precursor_type)
+    End Function
+
+    Private Shared Function ParseAdductFormulaInternal(precursor_type As String) As Formula
+        Dim tokens = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
+            .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
+            .Select(Function(t)
+                        Dim multiply = ExactMass.Mul(t.expression)
+                        Dim f = FormulaScanner.ScanFormula(multiply.Name)
+
+                        Return (op:=t.sign * multiply.Value, f)
+                    End Function) _
+            .ToArray
+        Dim composition As Formula = Formula.Empty
+
+        For Each part In tokens
+            If part.op > 0 Then
+                composition += part.f * part.op
+            Else
+                composition -= part.f * stdNum.Abs(part.op)
+            End If
+        Next
+
+        Return composition
     End Function
 
     Public Overrides Function ToString() As String
