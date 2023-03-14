@@ -32,6 +32,8 @@ Namespace PackLib
         ReadOnly spectrum As New Dictionary(Of String, BlockNode)
         ReadOnly targetSet As Index(Of String)
         ReadOnly libnames As String()
+        ReadOnly da As Tolerance = Tolerance.DeltaMass(0.3)
+        ReadOnly intocutoff As New RelativeIntensityCutoff(0.05)
 
         Public ReadOnly Property Libname(i As Integer) As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -94,6 +96,12 @@ Namespace PackLib
                 Dim file As Stream = Me.file.OpenBlock(path)
                 Dim spectrumNode = NodeBuffer.Read(New BinaryDataReader(file))
 
+                ' the reference spectrum data needs to be centroid
+                spectrumNode.centroid = spectrumNode.centroid _
+                    .Centroid(da, intocutoff) _
+                    .ToArray
+
+                ' add to in-memory cache
                 SyncLock spectrum
                     Call spectrum.Add(key, spectrumNode)
                 End SyncLock
