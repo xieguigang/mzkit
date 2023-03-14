@@ -35,7 +35,7 @@ Namespace PackLib
         ''' threshold condition.
         ''' </returns>
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
-            Dim candidates = spectrum.QueryByMz(mz1).ToArray
+            Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
             Dim hits As New List(Of ___tmp)
 
             ' do spectrum alignment for all matched

@@ -57,6 +57,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Tree
 
@@ -116,6 +117,10 @@ Namespace Tree
                 Return childs.All(Function(c) c <= 0)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"{Id}: {mz.GetJson}@{rt}; MS/MS {centroid.Select(Function(m) $"{m.mz.ToString("F3")}:{m.intensity.ToString("G4")}").JoinBy("_")}"
+        End Function
 
         ''' <summary>
         ''' the entire reference database must be rebuild after the
