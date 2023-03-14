@@ -22,6 +22,10 @@ Namespace PackLib
             )
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{mzIndex.Keys.Length} ions m/z index key information, mzdiff: {da.ToString}"
+        End Function
+
         ''' <summary>
         ''' query the spectrum reference tree nodes via parent m/z matched
         ''' </summary>

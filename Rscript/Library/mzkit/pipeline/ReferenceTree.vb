@@ -377,7 +377,7 @@ Module ReferenceTreePkg
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
         End If
-        If treeSearch Then
+        If treeSearch AndAlso TypeOf tree Is TreeSearch Then
             result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
         Else
             result = tree.Search(centroid, mz1:=x.mz).ToArray
