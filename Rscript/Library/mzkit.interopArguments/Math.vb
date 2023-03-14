@@ -76,7 +76,12 @@ Module Math
     ''' this helper function will always returns a <see cref="Tolerance"/> 
     ''' value or message if the type cast failure.
     ''' </summary>
-    ''' <param name="val"></param>
+    ''' <param name="val">
+    ''' value of this parameter value usually be two kind of default value:
+    ''' 
+    ''' + da:0.3
+    ''' + ppm:20
+    ''' </param>
     ''' <param name="env">
     ''' apply for throw exception message
     ''' </param>

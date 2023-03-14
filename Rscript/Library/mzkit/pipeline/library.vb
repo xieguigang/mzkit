@@ -105,7 +105,10 @@ Module library
     <ExportAPI("populateIonData")>
     <Extension>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function PopulateIonData(raw As mzPack, mzdiff As Object, Optional env As Environment = Nothing) As Object
+    Public Function PopulateIonData(raw As mzPack,
+                                    Optional mzdiff As Object = "da:0.3",
+                                    Optional env As Environment = Nothing) As Object
+
         Dim tolerance = Math.getTolerance(mzdiff, env)
 
         If tolerance Like GetType(Message) Then
