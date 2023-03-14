@@ -112,7 +112,7 @@ Namespace PackLib
                 .mzInto = node.centroid,
                 .lib_guid = node.Id,
                 .intensity = node.centroid.Select(Function(m) m.intensity).Sum,
-                .mz = node.mz.First,
+                .mz = node.mz.FirstOrDefault,
                 .rt = node.rt,
                 .scan = node.Id,
                 .file = file
