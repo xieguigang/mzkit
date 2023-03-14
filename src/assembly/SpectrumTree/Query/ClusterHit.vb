@@ -110,7 +110,7 @@ Namespace Query
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Id
+            Return $"{Id}, {size} candidate hits[total_score: {totalScore.ToString("F2")}]"
         End Function
 
     End Class
