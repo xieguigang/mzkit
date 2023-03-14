@@ -58,6 +58,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Spectra
 
@@ -77,17 +78,22 @@ Namespace Spectra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetScore(alignment() As SSM2MatrixFragment) As (forward As Double, reverse As Double)
-            Dim j = GetJaccardScore(alignment)
+            Dim j = GetJaccardScore(alignment, topSet)
             Return (j, j)
         End Function
 
-        Public Shared Function GetJaccardScore(alignment() As SSM2MatrixFragment) As Double
+        Public Shared Function GetJaccardScore(alignment() As SSM2MatrixFragment, Optional topSet As Integer = 5) As Double
+            Dim q = alignment.OrderByDescending(Function(t) t.query).Take(topSet).Where(Function(t) t.query > 0).ToArray
+            Dim r = alignment.OrderByDescending(Function(t) t.ref).Take(topSet).Where(Function(t) t.ref > 0).ToArray
+
             Static NA As Index(Of String) = {"NA", "n/a", "NaN"}
+
+            alignment = q.JoinIterates(r).Distinct.ToArray
 
             Dim intersect As Integer = Aggregate a As SSM2MatrixFragment
                                        In alignment
                                        Where Not a.da Like NA
-                                       Into Sum(1)
+                                       Into Count
             Dim union As Integer = alignment.Length
             Dim J As Double = intersect / union
 
