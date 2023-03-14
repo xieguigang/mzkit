@@ -333,6 +333,7 @@ Module ReferenceTreePkg
 
         Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
         Dim result As ClusterHit()
+        Dim top_n As Integer = 5
 
         If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
@@ -361,8 +362,13 @@ Module ReferenceTreePkg
 
         If output.Count = 0 Then
             Return Nothing
-        Else
+        ElseIf output.Count <= top_n Then
             Return output.ToArray
+        Else
+            Return output _
+                .OrderByDescending(Function(d) d.totalScore) _
+                .Take(top_n) _
+                .ToArray
         End If
     End Function
 
@@ -374,6 +380,7 @@ Module ReferenceTreePkg
 
         Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
         Dim result As ClusterHit()
+        Dim top_n As Integer = 5
 
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
@@ -403,8 +410,13 @@ Module ReferenceTreePkg
 
         If output.Count = 0 Then
             Return Nothing
-        Else
+        ElseIf output.Count <= top_n Then
             Return output.ToArray
+        Else
+            Return output _
+                .OrderByDescending(Function(d) d.totalScore) _
+                .Take(top_n) _
+                .ToArray
         End If
     End Function
 

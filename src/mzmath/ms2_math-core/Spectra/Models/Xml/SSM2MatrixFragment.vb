@@ -60,6 +60,9 @@ Imports System.Xml.Serialization
 
 Namespace Spectra.Xml
 
+    ''' <summary>
+    ''' tuple data of [mz, query_intensity, reference_intensity]
+    ''' </summary>
     Public Class SSM2MatrixFragment
 
         ''' <summary>
