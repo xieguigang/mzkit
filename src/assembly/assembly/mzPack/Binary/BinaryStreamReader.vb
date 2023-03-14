@@ -336,10 +336,6 @@ Namespace mzData.mzWebCache
             Call pointTo(scanId)
             Call Serialization.ReadScan1(ms1, file, readmeta:=False)
 
-#If UNIX = 0 Then
-            Call Application.DoEvents()
-#End If
-
             If Not skipProducts Then
                 Dim nsize2 As Integer = file.ReadInt32
 
