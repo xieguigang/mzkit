@@ -83,8 +83,18 @@ Namespace Spectra
         End Function
 
         Public Shared Function GetJaccardScore(alignment() As SSM2MatrixFragment, Optional topSet As Integer = 5) As Double
-            Dim q = alignment.OrderByDescending(Function(t) t.query).Take(topSet).Where(Function(t) t.query > 0).ToArray
-            Dim r = alignment.OrderByDescending(Function(t) t.ref).Take(topSet).Where(Function(t) t.ref > 0).ToArray
+            Dim q = (From t As SSM2MatrixFragment
+                     In alignment
+                     Order By t.query Descending
+                     Take topSet
+                     Where t.query > 0
+                     Select t).ToArray
+            Dim r = (From t As SSM2MatrixFragment
+                     In alignment
+                     Order By t.ref Descending
+                     Take topSet
+                     Where t.ref > 0
+                     Select t).ToArray
 
             Static NA As Index(Of String) = {"NA", "n/a", "NaN"}
 
