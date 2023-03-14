@@ -420,6 +420,7 @@ Module ReferenceTreePkg
         Dim i As i32 = 1
         Dim n As Integer = input.length
         Dim d As Integer = input.length * 0.01 + 1
+        Dim t0 = Now
 
         For Each name As String In input.getNames
             result = input(name)
@@ -435,7 +436,7 @@ Module ReferenceTreePkg
             End If
 
             If ++i Mod d = 0 Then
-                Call println($"[query_tree] {(i / n * 100).ToString("F2")}% {name}...")
+                Call println($"[query_tree, {(Now - t0).FormatTime}] {(i / n * 100).ToString("F2")}% {name}...")
             End If
         Next
 
