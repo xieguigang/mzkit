@@ -65,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -415,6 +416,9 @@ Module ReferenceTreePkg
 
         Dim output As New list With {.slots = New Dictionary(Of String, Object)}
         Dim result As Object
+        Dim println = env.WriteLineHandler
+        Dim i As i32 = Scan0
+        Dim n As Integer = input.length
 
         For Each name As String In input.getNames
             result = input(name)
@@ -427,6 +431,10 @@ Module ReferenceTreePkg
                 Return result
             Else
                 Call output.add(name, result)
+            End If
+
+            If n Mod ++i = 0 Then
+                Call println($"[query_tree] {(i / n * 100).ToString("F2")}% {name}...")
             End If
         Next
 
