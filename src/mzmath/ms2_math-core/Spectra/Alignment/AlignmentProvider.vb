@@ -89,6 +89,10 @@ Namespace Spectra
         Public MustOverride Function GetScore(a As ms2(), b As ms2()) As Double
         Public MustOverride Function GetScore(alignment As SSM2MatrixFragment()) As (forward#, reverse#)
 
+        Public Overrides Function ToString() As String
+            Return $"{mzwidth} && {intocutoff}"
+        End Function
+
         Public Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
             Dim align As AlignmentOutput = CreateAlignment(a.mzInto, b.mzInto)
 

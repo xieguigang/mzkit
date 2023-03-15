@@ -46,4 +46,8 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
     Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Return align.GetScore(GetSpectral(x).mzInto, GetSpectral(y).mzInto)
     End Function
+
+    Public Overrides Function ToString() As String
+        Return $"[{Me.GetHashCode.ToHexString}] {align.ToString}, has {cache.Count} spectrum data cached."
+    End Function
 End Class
