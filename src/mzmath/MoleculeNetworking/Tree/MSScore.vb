@@ -57,17 +57,19 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.DataMining.BinaryTree
 
 ''' <summary>
 ''' Do spectrum tuple similarity evaluation via the cosine score
 ''' </summary>
-Public Class MSScore : Inherits ComparisonProvider
+''' <remarks>
+''' just works for a given certain collection of the spectrum data
+''' </remarks>
+Public Class MSScore : Inherits MSScoreGenerator
 
-    ReadOnly align As AlignmentProvider
     ReadOnly ms2 As Dictionary(Of String, PeakMs2)
 
     Public ReadOnly Property Ions As IEnumerable(Of PeakMs2)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return ms2.Values
         End Get
@@ -82,11 +84,10 @@ Public Class MSScore : Inherits ComparisonProvider
     ''' </param>
     ''' <param name="equals"></param>
     ''' <param name="gt"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(align As AlignmentProvider, ions As IEnumerable(Of PeakMs2), equals As Double, gt As Double)
-        MyBase.New(equals, gt)
-
-        Me.align = align
-        Me.ms2 = ions.ToDictionary(Function(i) i.lib_guid)
+        MyBase.New(align, AddressOf ions.ToDictionary(Function(i) i.lib_guid).GetValueOrNull, equals, gt)
     End Sub
 
     ''' <summary>
@@ -104,6 +105,7 @@ Public Class MSScore : Inherits ComparisonProvider
         Return align.GetScore(ms2(x).mzInto, ms2(y).mzInto)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return align.ToString
     End Function
