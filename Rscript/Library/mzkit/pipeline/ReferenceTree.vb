@@ -447,7 +447,7 @@ Module ReferenceTreePkg
                 Call output.add(name, result)
             End If
 
-            If ++i Mod d = 0 Then
+            If n > 8 AndAlso ++i Mod d = 0 Then
                 Call println($"[query_tree, {(Now - t0).FormatTime}] {(i / n * 100).ToString("F2")}% {name}...")
             End If
         Next
