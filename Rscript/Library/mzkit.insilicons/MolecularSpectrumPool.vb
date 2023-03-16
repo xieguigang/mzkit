@@ -10,7 +10,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("spectrumPool")>
-Public Class MolecularSpectrumPool
+Public Module MolecularSpectrumPool
 
     Const unknown As String = NameOf(unknown)
 
@@ -94,4 +94,4 @@ Public Class MolecularSpectrumPool
         Call pool.Commit()
         Return pool
     End Function
-End Class
+End Module
