@@ -78,7 +78,7 @@ Public Class MSScore : Inherits ComparisonProvider
     ''' </summary>
     ''' <param name="align"></param>
     ''' <param name="ions">
-    ''' theee source spectrum data collection for run the similarity evaluation
+    ''' these source spectrum data collection for run the similarity evaluation
     ''' </param>
     ''' <param name="equals"></param>
     ''' <param name="gt"></param>
