@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -96,7 +97,7 @@ Namespace Tree
         ''' nothing means do not save the raw spectrum data
         ''' </param>
         ''' <returns></returns>
-        Private Shared Function WriteSpectrum(data As PeakMs2, spectrum As BinaryDataWriter) As BufferRegion
+        Public Shared Function WriteSpectrum(data As PeakMs2, spectrum As BinaryDataWriter) As BufferRegion
             If spectrum Is Nothing Then
                 Return BufferRegion.Zero
             Else
@@ -110,6 +111,23 @@ Namespace Tree
                     .size = spectrum.Position - start
                 }
             End If
+        End Function
+
+        Public Shared Function ReadSpectrum(pool As BinaryDataReader, block As BufferRegion) As PeakMs2
+            Dim scan2 As ScanMS2
+
+            pool.Seek(block.position, SeekOrigin.Begin)
+            scan2 = pool.ReadScanMs2
+
+            Return New PeakMs2 With {
+                .mz = scan2.parentMz,
+                .intensity = scan2.intensity,
+                .lib_guid = scan2.scan_id.GetTagValue("#").Value,
+                .mzInto = scan2.GetMs.ToArray,
+                .rt = scan2.rt,
+                .collisionEnergy = scan2.collisionEnergy,
+                .activation = scan2.activationMethod.ToString
+            }
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of BlockNode) Implements IEnumerable(Of BlockNode).GetEnumerator
