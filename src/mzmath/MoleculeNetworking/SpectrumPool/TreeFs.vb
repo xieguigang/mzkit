@@ -81,6 +81,7 @@ Namespace PoolData
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteText(text As String, path As String)
+            Call fs.Delete(path)
             Call fs.WriteText(text, path)
         End Sub
 
