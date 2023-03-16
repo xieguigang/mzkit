@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>do spectrum family alignment via cos similarity</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>query {spectrumTree}</td>
+                <td>addPool {spectrumPool}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>do spectrum family alignment via cos similarity</h2>
+        <h2></h2>
 
         <h3>Description</h3>
 
@@ -157,35 +157,29 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>query</strong>(<i>tree</i>, <i>x</i>,
-    <i>maxdepth</i> = 1024,
-    <i>treeSearch</i> = <span style='color: blue;'>FALSE</span>,
-    <i>top.hits</i> = 3);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>addPool</strong>(<i>pool</i>, <i>x</i>,
+    <i>biosample</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
+    <i>organism</i> = <span style='color: brown;'><strong>"unkown"</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>tree</dt>
-<dd><p><p>The reference spectrum tree object to search </p></p></dd>
+<dt>pool</dt>
+<dd><p><p>-</p></p></dd>
 
 
 <dt>x</dt>
-<dd><p><p>The query spectrum data from the sample raw data files</p></p></dd>
+<dd><p><p>the spectrum data collection</p></p></dd>
 
 
-<dt>maxdepth</dt>
-<dd><p><p>The max depth of the tree search</p></p></dd>
+<dt>biosample</dt>
+<dd><p><p>-</p></p></dd>
 
 
-<dt>treeSearch</dt>
-<dd><p><p>Do alignment in family tree search mode?</p></p></dd>
-
-
-<dt>top.hits</dt>
-<dd><p><p>the top n hits of the candidate result populated for the each query input,<br />
- set this parameter value to zero or negative value means no limits.</p></p></dd>
+<dt>organism</dt>
+<dd><p><p>-</p></p></dd>
 
 
 <dt>env</dt>
@@ -194,19 +188,19 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>the spectrum data for run clustering should be <br />
+ processed into centroid mode at first!</p>
 
 
         <h3>Value</h3>
 
-        <p>function returns nothing means no query hits or the <br />
- given input query sample data <strong><code>x</code></strong></p>
+        this function returns data object of type <i>any</i> kind.
 
         <hr />
-        <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a
-                href="../spectrumTree.html">Index</a>]
+        <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a
+                href="../spectrumPool.html">Index</a>]
         </div>
     </div>
 </body>

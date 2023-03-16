@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>do spectrum family alignment via cos similarity</title>
+    <title>openPool</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,54 +143,28 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>query {spectrumTree}</td>
+                <td>openPool {spectrumPool}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>do spectrum family alignment via cos similarity</h2>
+        <h2>openPool</h2>
 
         <h3>Description</h3>
 
-        
+        openPool
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>query</strong>(<i>tree</i>, <i>x</i>,
-    <i>maxdepth</i> = 1024,
-    <i>treeSearch</i> = <span style='color: blue;'>FALSE</span>,
-    <i>top.hits</i> = 3);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>openPool</strong>(<i>dir</i>,
+    <i>level</i> = 0.8);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>tree</dt>
-<dd><p><p>The reference spectrum tree object to search </p></p></dd>
-
-
-<dt>x</dt>
-<dd><p><p>The query spectrum data from the sample raw data files</p></p></dd>
-
-
-<dt>maxdepth</dt>
-<dd><p><p>The max depth of the tree search</p></p></dd>
-
-
-<dt>treeSearch</dt>
-<dd><p><p>Do alignment in family tree search mode?</p></p></dd>
-
-
-<dt>top.hits</dt>
-<dd><p><p>the top n hits of the candidate result populated for the each query input,<br />
- set this parameter value to zero or negative value means no limits.</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -201,12 +175,11 @@
 
         <h3>Value</h3>
 
-        <p>function returns nothing means no query hits or the <br />
- given input query sample data <strong><code>x</code></strong></p>
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MoleculeNetworking/PoolData/SpectrumPool.html">SpectrumPool</a>.
 
         <hr />
-        <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a
-                href="../spectrumTree.html">Index</a>]
+        <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a
+                href="../spectrumPool.html">Index</a>]
         </div>
     </div>
 </body>
