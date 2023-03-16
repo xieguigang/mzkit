@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace PoolData
 
@@ -62,7 +63,7 @@ Namespace PoolData
 
             metadata = fs.ReadText($"{path}/node_data/metadata.json").LoadJSON(Of Dictionary(Of String, Metadata))
             metadata = If(metadata, New Dictionary(Of String, Metadata))
-            rootId = fs.ReadText($"{path}/node_data/root.txt")
+            rootId = Strings.Trim(fs.ReadText($"{path}/node_data/root.txt")).Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c)
 
             For Each dir As StreamGroup In fs.OpenFolder(path).dirs
                 If dir.fileName Like not_branch Then
