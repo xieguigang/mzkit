@@ -72,6 +72,8 @@ Namespace TMIC.HMDB.Repository
         MetabolicSystems = 4
         OtherFluids = 8
         Biomass = 16
+        Feces
+        Urine
     End Enum
 
     Public Module BioSampleExtensions
@@ -81,8 +83,10 @@ Namespace TMIC.HMDB.Repository
         ''' </summary>
         ReadOnly samples As New Dictionary(Of BioSamples, String()) From {
             {BioSamples.Biomass, {"Feces"}},
+            {BioSamples.Feces, {"Feces"}},
             {BioSamples.Bloods, {"Blood", "serum", "plasma", "blood plasma"}},
             {BioSamples.MetabolicSystems, {"Saliva", "Urine", "Sweat"}},
+            {BioSamples.Urine, {"Urine"}},
             {BioSamples.OtherFluids, {"Cerebrospinal Fluid (CSF)", "Breast Milk"}}
         }
 

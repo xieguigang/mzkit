@@ -294,17 +294,22 @@ Module ReferenceTreePkg
     ''' <param name="treeSearch">
     ''' Do alignment in family tree search mode?
     ''' </param>
+    ''' <param name="top_hits">
+    ''' the top n hits of the candidate result populated for the each query input,
+    ''' set this parameter value to zero or negative value means no limits.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' function returns nothing means no query hits or the 
     ''' given input query sample data <paramref name="x"/>
-    ''' is nothing
     ''' </returns>
     <ExportAPI("query")>
     <RApiReturn(GetType(ClusterHit))>
+    <Extension>
     Public Function QueryTree(tree As Ms2Search, x As Object,
                               Optional maxdepth As Integer = 1024,
                               Optional treeSearch As Boolean = False,
+                              Optional top_hits As Integer = 3,
                               Optional env As Environment = Nothing) As Object
 
         If x Is Nothing Then
@@ -315,11 +320,11 @@ Module ReferenceTreePkg
         End If
 
         If TypeOf x Is LibraryMatrix Then
-            Return DirectCast(x, LibraryMatrix).QuerySingle(tree, maxdepth, treeSearch, env)
+            Return DirectCast(x, LibraryMatrix).QuerySingle(tree, maxdepth, treeSearch, top_n:=top_hits, env)
         ElseIf TypeOf x Is PeakMs2 Then
-            Return DirectCast(x, PeakMs2).QuerySingle(tree, maxdepth, treeSearch, env)
+            Return DirectCast(x, PeakMs2).QuerySingle(tree, maxdepth, treeSearch, top_n:=top_hits, env)
         ElseIf TypeOf x Is list Then
-            Return DirectCast(x, list).QueryTree(tree, maxdepth, treeSearch, env)
+            Return DirectCast(x, list).QueryTree(tree, maxdepth, treeSearch, top_n:=top_hits, env)
         Else
             Throw New NotImplementedException("Not supported input spectrum data type: " & x.GetType.FullName)
         End If
@@ -329,11 +334,11 @@ Module ReferenceTreePkg
     Private Function QuerySingle(x As LibraryMatrix, tree As Ms2Search,
                                  Optional maxdepth As Integer = 1024,
                                  Optional treeSearch As Boolean = False,
+                                 Optional top_n As Integer = 3,
                                  Optional env As Environment = Nothing) As Object
 
         Dim centroid = tree.Centroid(DirectCast(x, LibraryMatrix).ms2)
         Dim result As ClusterHit()
-        Dim top_n As Integer = 5
 
         If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
@@ -362,7 +367,8 @@ Module ReferenceTreePkg
 
         If output.Count = 0 Then
             Return Nothing
-        ElseIf output.Count <= top_n Then
+        ElseIf top_n <= 0 OrElse output.Count <= top_n Then
+            ' populate all
             Return output.ToArray
         Else
             Return output _
@@ -376,11 +382,11 @@ Module ReferenceTreePkg
     Private Function QuerySingle(x As PeakMs2, tree As Ms2Search,
                                  Optional maxdepth As Integer = 1024,
                                  Optional treeSearch As Boolean = False,
+                                 Optional top_n As Integer = 3,
                                  Optional env As Environment = Nothing) As Object
 
         Dim centroid = tree.Centroid(DirectCast(x, PeakMs2).mzInto)
         Dim result As ClusterHit()
-        Dim top_n As Integer = 5
 
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
@@ -410,7 +416,8 @@ Module ReferenceTreePkg
 
         If output.Count = 0 Then
             Return Nothing
-        ElseIf output.Count <= top_n Then
+        ElseIf top_n <= 0 OrElse output.Count <= top_n Then
+            ' populate all hits
             Return output.ToArray
         Else
             Return output _
@@ -424,6 +431,7 @@ Module ReferenceTreePkg
     Private Function QueryTree(input As list, tree As Ms2Search,
                                Optional maxdepth As Integer = 1024,
                                Optional treeSearch As Boolean = False,
+                               Optional top_n As Integer = 3,
                                Optional env As Environment = Nothing) As Object
 
         Dim output As New list With {.slots = New Dictionary(Of String, Object)}
@@ -438,7 +446,7 @@ Module ReferenceTreePkg
             result = input(name)
 
             If Not result Is Nothing Then
-                result = QueryTree(tree, result, maxdepth, treeSearch, env)
+                result = tree.QueryTree(result, maxdepth, treeSearch, top_hits:=top_n, env:=env)
             End If
 
             If Program.isException(result) Then
