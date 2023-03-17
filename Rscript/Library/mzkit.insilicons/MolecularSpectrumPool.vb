@@ -25,6 +25,38 @@ Public Module MolecularSpectrumPool
         Return Nothing
     End Function
 
+    <ExportAPI("getClusterInfo")>
+    Public Function getClusterInfo(pool As SpectrumPool, path As String) As Object
+        Dim tokens = path.Trim("\"c, "/"c).StringSplit("[\\/]+")
+
+        For Each t As String In tokens
+            pool = pool(t)
+
+            If pool Is Nothing Then
+                Return Nothing
+            End If
+        Next
+
+        Dim info As Metadata() = pool.ClusterInfo.ToArray
+        Dim data As New dataframe With {
+            .rownames = info.Select(Function(a) a.guid).ToArray,
+            .columns = New Dictionary(Of String, Array) From {
+                {"biodeep_id", info.Select(Function(a) a.biodeep_id).ToArray},
+                {"name", info.Select(Function(a) a.name).ToArray},
+                {"formula", info.Select(Function(a) a.formula).ToArray},
+                {"adducts", info.Select(Function(a) a.adducts).ToArray},
+                {"mz", info.Select(Function(a) a.mz).ToArray},
+                {"rt", info.Select(Function(a) a.rt).ToArray},
+                {"intensity", info.Select(Function(a) a.intensity).ToArray},
+                {"source", info.Select(Function(a) a.source_file).ToArray},
+                {"biosample", info.Select(Function(a) a.sample_source).ToArray},
+                {"organism", info.Select(Function(a) a.organism).ToArray}
+            }
+        }
+
+        Return data
+    End Function
+
     ''' <summary>
     ''' generates the guid for the spectrum with unknown annotation
     ''' </summary>
