@@ -74,13 +74,13 @@ Public Module MolecularSpectrumPool
             spectral.meta.TryGetValue("biosample", unknown),
             spectral.meta.TryGetValue("organism", unknown)
         }
-        Dim hashcode As Integer = FNV1a.GetHashCode(peaks.JoinIterates(mz1).JoinIterates(meta))
+        Dim hashcode As String = peaks _
+            .JoinIterates(mz1) _
+            .JoinIterates(meta) _
+            .JoinBy(spectral.mzInto.Length) _
+            .MD5
 
-        If hashcode < 0 Then
-            hashcode = -hashcode + 7
-        End If
-
-        Return $"MSMS_{hashcode.ToString.FormatZero("00000000000")}"
+        Return hashcode
     End Function
 
     ''' <summary>
