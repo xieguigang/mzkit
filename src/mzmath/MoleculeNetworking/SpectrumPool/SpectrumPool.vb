@@ -36,11 +36,35 @@ Namespace PoolData
         ReadOnly fs As TreeFs
         ReadOnly handle As String
 
-        Const tags As String = "123456789abcdef"
+        Public Const tags As String = "123456789abcdef"
 
-        Private ReadOnly Property nextTag As String
+        ''' <summary>
+        ''' Get child node by a given key name
+        ''' </summary>
+        ''' <param name="key">
+        ''' + 0, z, zero means z tree
+        ''' + other chars in hex <see cref="tags"/> means corresponding child
+        ''' </param>
+        ''' <returns>
+        ''' returns null if not found
+        ''' </returns>
+        Default Public ReadOnly Property NextChild(key As String) As SpectrumPool
             Get
-                Return tags(classTree.Count)
+                If key = "0" OrElse key = "z" OrElse key = "zero" Then
+                    Return zeroBlock
+                Else
+                    If classTree.ContainsKey(key) Then
+                        Return classTree(key)
+                    Else
+                        Return Nothing
+                    End If
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property ClusterInfo As IEnumerable(Of Metadata)
+            Get
+                Return metadata.Values
             End Get
         End Property
 
