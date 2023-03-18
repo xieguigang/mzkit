@@ -87,6 +87,7 @@ Module mzDeco
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
                             Optional peakwidth As Object = "3,20",
+                            Optional parallel As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
         Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
@@ -101,7 +102,11 @@ Module mzDeco
 
         Return ms1_scans _
             .GetMzGroups(mzdiff:=errors) _
-            .DecoMzGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline) _
+            .DecoMzGroups(
+                peakwidth:=rtRange.TryCast(Of DoubleRange),
+                quantile:=baseline,
+                parallel:=parallel
+            ) _
             .ToArray
     End Function
 
