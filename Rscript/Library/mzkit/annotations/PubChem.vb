@@ -214,7 +214,11 @@ Module PubChemToolKit
     ''' <param name="cache$"></param>
     ''' <returns></returns>
     <ExportAPI("query")>
-    Public Function queryPubChem(<RRawVectorArgument> id As Object, Optional cache$ = "./", Optional env As Environment = Nothing) As list
+    Public Function queryPubChem(<RRawVectorArgument>
+                                 id As Object,
+                                 Optional cache$ = "./",
+                                 Optional env As Environment = Nothing) As list
+
         Dim ids As String() = CLRVector.asCharacter(id)
         Dim cid As String()
         Dim query As New Dictionary(Of String, PugViewRecord)
@@ -259,7 +263,10 @@ Module PubChemToolKit
     End Function
 
     <ExportAPI("SID_map")>
-    Public Function ReadSIDMap(sidMapText As String, Optional skipNoCID As Boolean = True, Optional dbfilter$ = Nothing) As SIDMap()
+    Public Function ReadSIDMap(sidMapText As String,
+                               Optional skipNoCID As Boolean = True,
+                               Optional dbfilter$ = Nothing) As SIDMap()
+
         Dim ls As SIDMap() = SIDMap _
             .GetMaps(handle:=sidMapText, skipNoCID:=skipNoCID) _
             .ToArray
