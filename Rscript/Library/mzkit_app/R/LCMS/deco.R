@@ -41,11 +41,12 @@ const run.Deconvolution = function(data_dir = "./",
         peakdata = rbind(peakdata, read.csv(file, row.names = NULL));
     }
 
-    peakdata[, "xcms_id"] = make.ROI_names(list(
+    rownames(peakdata) = make.ROI_names(list(
         mz = peakdata$mz, 
         rt = peakdata$rt
     ));
-    peakdata;
+    
+	write.csv(peakdata, file = `${normalizePath(outputdir)}/peakdata.csv`, row.names = FALSE);
 }
 
 #' a single thread task for extract peaktable from a single raw data file
