@@ -1,6 +1,7 @@
 imports "mzDeco" from "mz_quantify";
 imports "mzweb" from "mzkit";
 imports "Parallel" from "snowFall";
+imports ["data","math"] from "mzkit";
 
 #' extract peak ms1 from a set of raw data files
 #' 
@@ -36,9 +37,12 @@ const run.Deconvolution = function(data_dir = "./",
     };
 
     let peakdata = NULL;
+    let peakfile = NULL;
 
     for(file in list.files(peakcache, pattern = "*.csv")) {
-        peakdata = rbind(peakdata, read.csv(file, row.names = NULL));
+        peakfile = read.csv(file, row.names = NULL);
+        peakfile[, "source"] = basename(file);
+        peakdata = rbind(peakdata, peakfile);
     }
 
     peakdata[, "xcms_id"] = make.ROI_names(list(
