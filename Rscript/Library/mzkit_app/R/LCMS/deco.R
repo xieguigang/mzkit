@@ -40,10 +40,12 @@ const run.Deconvolution = function(data_dir = "./",
     let peakfile = NULL;
 
     for(file in list.files(peakcache, pattern = "*.csv")) {
-        peakfile = read.csv(file, row.names = NULL);
-        peakfile[, "source"] = basename(file);
-        peakdata = rbind(peakdata, peakfile);
+        peakfile = load.csv(file, type = "peak_feature");
+        peakdata = append(peakdata, peakfile);
     }
+
+    peakdata = peak_alignment(peakdata, mzdiff, norm = TRUE);
+    peakdata = as.data.frame(peakdata);
 
     rownames(peakdata) = make.ROI_names(list(
         mz = peakdata$mz, 
@@ -72,7 +74,9 @@ const .MS1deconv = function(rawfile, args = list(cache_dir = "./.cache/")) {
         tolerance = args$mzdiff, 
         baseline = args$baseline, 
         peakwidth = args$peakwidth
-    );
+    ) |> as.data.frame()
+    ;
 
-    write.csv(peaks, file = peakCache);
+    peaks[, "rawfile"] = basename(rawfile);
+    write.csv(peaks, file = peakCache, row.names = TRUE);
 } 
