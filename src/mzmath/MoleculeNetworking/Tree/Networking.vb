@@ -91,7 +91,7 @@ Public Module Networking
                          Optional intocutoff As Double = 0.05,
                          Optional equals As Double = 0.85) As ClusterTree
 
-        Dim align As New MSScore(New CosAlignment(Tolerance.DeltaMass(mzdiff), New RelativeIntensityCutoff(intocutoff)), ions, equals, equals)
+        Dim align As New MSScore(New CosAlignment(Tolerance.DeltaMass(mzdiff), New RelativeIntensityCutoff(intocutoff)), ions.ToArray, equals, equals)
         Dim clustering As New ClusterTree
 
         For Each ion As PeakMs2 In align.Ions
