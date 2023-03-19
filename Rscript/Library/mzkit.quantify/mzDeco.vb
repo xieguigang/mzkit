@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -75,7 +75,38 @@ Module mzDeco
 
     Sub Main()
         Call Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
+        Call Internal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
     End Sub
+
+    Private Function peaksetMatrix(peakset As xcms2(), args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {
+           .columns = New Dictionary(Of String, Array)
+        }
+        Dim allsampleNames = peakset _
+            .Select(Function(i) i.Properties.Keys) _
+            .IteratesALL _
+            .Distinct _
+            .OrderBy(Function(a) a) _
+            .ToArray
+
+        table.rownames = peakset _
+            .Select(Function(p) p.ID) _
+            .ToArray
+
+        table.add(NameOf(xcms2.mz), peakset.Select(Function(a) a.mz))
+        table.add(NameOf(xcms2.mzmin), peakset.Select(Function(a) a.mzmin))
+        table.add(NameOf(xcms2.mzmax), peakset.Select(Function(a) a.mzmax))
+        table.add(NameOf(xcms2.rt), peakset.Select(Function(a) a.rt))
+        table.add(NameOf(xcms2.rtmin), peakset.Select(Function(a) a.rtmin))
+        table.add(NameOf(xcms2.rtmax), peakset.Select(Function(a) a.rtmax))
+        table.add(NameOf(xcms2.npeaks), peakset.Select(Function(a) a.npeaks))
+
+        For Each name As String In allsampleNames
+            Call table.add(name, peakset.Select(Function(i) i(name)))
+        Next
+
+        Return table
+    End Function
 
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
@@ -153,15 +184,19 @@ Module mzDeco
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
+        Dim samplePeaks = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        ElseIf samplePeaks.isError Then
+            Return samplePeaks.getError
         End If
 
-        Dim samplePeaks As Dictionary(Of String, PeakFeature()) = samples.AsGeneric(Of PeakFeature())(env)
         Dim sampleData As NamedCollection(Of PeakFeature)() = samplePeaks _
+            .populates(Of PeakFeature)(env) _
+            .GroupBy(Function(a) a.rawfile) _
             .Select(Function(i)
-                        Return New NamedCollection(Of PeakFeature)(i.Key, i.Value)
+                        Return New NamedCollection(Of PeakFeature)(i.Key, i.ToArray)
                     End Function) _
             .ToArray
         Dim peaktable As xcms2() = sampleData _
