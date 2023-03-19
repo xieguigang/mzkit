@@ -78,9 +78,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
-Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("pubchem_kit")>
+<RTypeExport("pubmed", GetType(PubMed))>
 Module PubChemToolKit
 
     Sub New()
