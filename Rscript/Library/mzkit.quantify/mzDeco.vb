@@ -56,6 +56,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
@@ -126,7 +127,7 @@ Module mzDeco
         table.add(NameOf(PeakFeature.snRatio), x.Select(Function(a) a.snRatio))
         table.add(NameOf(PeakFeature.rawfile), x.Select(Function(a) a.rawfile))
 
-        table.rownames = table.columns(NameOf(PeakFeature.xcms_id))
+        table.rownames = x.Select(Function(a) a.xcms_id).ToArray
 
         Return table
     End Function
@@ -203,7 +204,7 @@ Module mzDeco
             .CreateMatrix(mzErr.TryCast(Of Tolerance)) _
             .ToArray
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
-        Dim sampleNames As String() = samples.getNames
+        Dim sampleNames As String() = sampleData.Keys.ToArray
 
         For i As Integer = 0 To id.Length - 1
             Dim peak As xcms2 = peaktable(i)
