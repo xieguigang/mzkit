@@ -52,7 +52,7 @@ const run.Deconvolution = function(data_dir = "./",
         rt = peakdata$rt
     ));
     
-    write.csv(peakdata, file = `${normalizePath(outputdir)}/peakdata.csv`, row.names = FALSE);
+    write.csv(peakdata, file = `${normalizePath(outputdir)}/peakdata.csv`, row.names = TRUE);
 }
 
 #' a single thread task for extract peaktable from a single raw data file

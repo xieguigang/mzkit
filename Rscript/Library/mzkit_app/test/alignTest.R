@@ -20,4 +20,4 @@ const mzdiff = "da:0.001";
         rt = peakdata$rt
     ));
     
-    write.csv(peakdata, file = `${@dir}/peakdata.csv`, row.names = FALSE);
+    write.csv(peakdata, file = `${@dir}/peakdata.csv`, row.names = TRUE);
