@@ -1,24 +1,9 @@
 require(mzkit);
 
-export_dir = function(peakcache ) {
-    let peakdata = NULL;
-    let peakfile = NULL;
-   
-
-    for(file in list.files(peakcache, pattern = "*.csv")) {
-        peakfile = load.csv(file, type = "peak_feature");
-        peakdata = append(peakdata, peakfile);
-    }
-
 const mzdiff = "da:0.001";
 
-    peakdata = peak_alignment(peakdata, mzdiff, norm = TRUE);
-    peakdata = as.data.frame(peakdata);
-
-    rownames(peakdata) = make.ROI_names(list(
-        mz = peakdata$mz, 
-        rt = peakdata$rt
-    ));
+export_dir = function(peakcache ) {
+const peakdata = alignment_peaksdata(peakcache, mzdiff);
     
     write.csv(peakdata, file = `${dirname(peakcache )}/peakdata.csv`, row.names = TRUE);
 }

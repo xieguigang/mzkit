@@ -34,8 +34,19 @@ const run.Deconvolution = function(data_dir = "./",
 
         require(mzkit);
         mzkit::.MS1deconv(rawfile, args);
-    };
+    };    
+    
+    peakcache
+    |> alignment_peaksdata(mzdiff = mzdiff)
+    |> write.csv(
+        file = `${normalizePath(outputdir)}/peakdata.csv`, 
+        row.names = TRUE
+    );
+}
 
+#' Do sample matrix merge
+#' 
+const alignment_peaksdata = function(peakcache, mzdiff = "da:0.001") {
     let peakdata = NULL;
     let peakfile = NULL;
 
@@ -51,8 +62,8 @@ const run.Deconvolution = function(data_dir = "./",
         mz = peakdata$mz, 
         rt = peakdata$rt
     ));
-    
-    write.csv(peakdata, file = `${normalizePath(outputdir)}/peakdata.csv`, row.names = TRUE);
+
+    return(peakdata);    
 }
 
 #' a single thread task for extract peaktable from a single raw data file
