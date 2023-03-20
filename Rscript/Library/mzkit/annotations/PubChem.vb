@@ -104,13 +104,13 @@ Module PubChemToolKit
 
     <ExportAPI("read.pubmed")>
     <RApiReturn(GetType(PubMed))>
-    Public Function readPubmed(file As String, Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
+    Public Function readPubmed(file As String(), Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
         If lazy Then
-            Return DataStream.OpenHandle(file) _
-                .AsLinq(Of PubMed)(silent:=True) _
+            Return file.Select(Function(path) DataStream.OpenHandle(path) _
+                .AsLinq(Of PubMed)(silent:=True)).IteratesALL _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
-            Return file.LoadCsv(Of PubMed)(mute:=True).ToArray
+            Return file.Select(Function(path) path.LoadCsv(Of PubMed)(mute:=True)).IteratesALL.ToArray
         End If
     End Function
 
