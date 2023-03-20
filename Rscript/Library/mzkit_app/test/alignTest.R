@@ -1,6 +1,6 @@
 require(mzkit);
 
-const mzdiff = "da:0.001";
+const mzdiff = "da:0.005";
 
 export_dir = function(peakcache ) {
 const peakdata = alignment_peaksdata(peakcache, mzdiff);
