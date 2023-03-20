@@ -97,7 +97,6 @@ Module MzMath
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
-        Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
@@ -150,21 +149,6 @@ Module MzMath
         Call summary.AppendLine($"ion_mode: {type.mode}")
 
         Return summary.ToString
-    End Function
-
-    Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
-        Dim dataset = x.ToCsvDoc
-        Dim table As New dataframe With {
-            .columns = New Dictionary(Of String, Array)
-        }
-
-        For Each col As String() In dataset.Columns
-            table.columns.Add(col(Scan0), col.Skip(1).ToArray)
-        Next
-
-        table.rownames = table.columns(NameOf(PeakFeature.xcms_id))
-
-        Return table
     End Function
 
     Private Function XICTable(x As MzGroup, args As list, env As Environment) As dataframe

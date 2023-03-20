@@ -181,11 +181,12 @@ Public Module Deconvolution
     Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
                                           Optional quantile# = 0.65,
                                           Optional sn As Double = 3,
-                                          Optional nticks As Integer = 6) As IEnumerable(Of PeakFeature)
+                                          Optional nticks As Integer = 6,
+                                          Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
 
         Dim groupData As MzGroup() = mzgroups.ToArray
         Dim features As IGrouping(Of String, PeakFeature)() = groupData _
-            .AsParallel _
+            .Populate(parallel) _
             .Select(Function(mz)
                         Return mz.GetPeakGroups(peakwidth, quantile, sn)
                     End Function) _
