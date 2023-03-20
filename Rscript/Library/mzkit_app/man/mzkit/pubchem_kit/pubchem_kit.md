@@ -2,6 +2,7 @@
 
 
 
++ [read.pubmed](pubchem_kit/read.pubmed.1) 
 + [image_fly](pubchem_kit/image_fly.1) 
 + [query.external](pubchem_kit/query.external.1) query of the pathways, taxonomy and reaction 
 + [CID](pubchem_kit/CID.1) query cid from pubchem database
