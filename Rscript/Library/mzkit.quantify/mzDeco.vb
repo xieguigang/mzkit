@@ -181,6 +181,7 @@ Module mzDeco
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
                                   Optional mzdiff As Object = "da:0.001",
+                                  Optional rt_win As Double = 30,
                                   Optional norm As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
@@ -201,7 +202,7 @@ Module mzDeco
                     End Function) _
             .ToArray
         Dim peaktable As xcms2() = sampleData _
-            .CreateMatrix(mzErr.TryCast(Of Tolerance)) _
+            .CreateMatrix(mzErr.TryCast(Of Tolerance), rt_win:=rt_win) _
             .ToArray
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray

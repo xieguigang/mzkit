@@ -46,6 +46,9 @@ const run.Deconvolution = function(data_dir = "./",
 
 #' Do sample matrix merge
 #' 
+#' @param peakcache a directory path that contains multiple single raw
+#'   sample peakdata matrix files inside.
+#' 
 const alignment_peaksdata = function(peakcache, mzdiff = "da:0.001") {
     let peakdata = NULL;
     let peakfile = NULL;
@@ -53,6 +56,8 @@ const alignment_peaksdata = function(peakcache, mzdiff = "da:0.001") {
     for(file in list.files(peakcache, pattern = "*.csv")) {
         peakfile = load.csv(file, type = "peak_feature");
         peakdata = append(peakdata, peakfile);
+
+        print(`[load_single_file] ${basename(file)}...`);
     }
 
     peakdata = peak_alignment(peakdata, mzdiff, norm = TRUE);

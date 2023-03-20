@@ -70,7 +70,7 @@ Public Module PeakAlignment
     <Extension>
     Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
                                           mzdiff As Tolerance,
-                                          Optional rt_win As Double = 15) As IEnumerable(Of xcms2)
+                                          Optional rt_win As Double = 30) As IEnumerable(Of xcms2)
         Dim tag_peaks = samples _
             .Select(Iterator Function(peaks) As IEnumerable(Of (sample As String, peak As PeakFeature))
                         For Each peak As PeakFeature In peaks
