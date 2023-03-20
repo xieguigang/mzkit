@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::dc5b611767d8b7944bed1e76b6330a4d, mzkit\Rscript\Library\mzkit\annotations\PubChem.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 271
-    '    Code Lines: 192
-    ' Comment Lines: 41
-    '   Blank Lines: 38
-    '     File Size: 10.36 KB
+' Summaries:
 
 
-    ' Module PubChemToolKit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CID, GetMetaInfo, ImageFlyGetImages, level1Terms, MeshBackground
-    '               ParseMeshTree, pubchemUrl, pugView, queryExternalMetadata, QueryKnowledgeGraph
-    '               queryPubChem, readPugViewXml, ReadSIDMap, SIDMapTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 271
+'    Code Lines: 192
+' Comment Lines: 41
+'   Blank Lines: 38
+'     File Size: 10.36 KB
+
+
+' Module PubChemToolKit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CID, GetMetaInfo, ImageFlyGetImages, level1Terms, MeshBackground
+'               ParseMeshTree, pubchemUrl, pugView, queryExternalMetadata, QueryKnowledgeGraph
+'               queryPubChem, readPugViewXml, ReadSIDMap, SIDMapTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,8 @@ Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -98,6 +100,18 @@ Module PubChemToolKit
         data.columns(NameOf(SIDMap.CID)) = maps.Select(Function(m) m.CID).ToArray
 
         Return data
+    End Function
+
+    <ExportAPI("read.pubmed")>
+    <RApiReturn(GetType(PubMed))>
+    Public Function readPubmed(file As String, Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
+        If lazy Then
+            Return DataStream.OpenHandle(file) _
+                .AsLinq(Of PubMed)(silent:=True) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return file.LoadCsv(Of PubMed)(mute:=True).ToArray
+        End If
     End Function
 
     <ExportAPI("image_fly")>
