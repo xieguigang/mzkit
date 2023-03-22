@@ -26,8 +26,14 @@ Namespace NCBI.PubChem
         Public Property annotation As String
 
         Public Function GetPublishDate() As Date
-            Dim str As String = articlepubdate.ToString
+            Try
+                Return TryParseInternal(articlepubdate.ToString)
+            Catch ex As Exception
+                Return New Date(2010, 1, 1)
+            End Try
+        End Function
 
+        Private Shared Function TryParseInternal(str As String) As Date
             If str.Length <> 8 Then
                 str = str.PadEnd(8, "0"c)
             End If
