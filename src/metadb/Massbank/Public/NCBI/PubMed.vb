@@ -24,5 +24,27 @@ Namespace NCBI.PubChem
         Public Property citation As String
         Public Property doi As String
         Public Property annotation As String
+
+        Public Function GetPublishDate() As Date
+            Dim str As String = articlepubdate.ToString
+
+            If str.Length <> 8 Then
+                str = str.PadEnd(8, "0"c)
+            End If
+
+            Dim yyyy = str.Substring(0, 4)
+            Dim mm = str.Substring(4, 2)
+            Dim dd = str.Substring(6, 2)
+
+            If mm = "00" Then mm = "01"
+            If dd = "00" Then dd = "01"
+
+            Return New Date(Integer.Parse(yyyy), Integer.Parse(mm), Integer.Parse(dd))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return articletitle
+        End Function
+
     End Class
 End Namespace
