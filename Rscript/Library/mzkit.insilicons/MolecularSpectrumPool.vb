@@ -2,7 +2,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -14,17 +13,34 @@ Public Module MolecularSpectrumPool
 
     Const unknown As String = NameOf(unknown)
 
+    ''' <summary>
+    ''' open the spectrum pool from a given resource link
+    ''' </summary>
+    ''' <param name="dir"></param>
+    ''' <param name="level"></param>
+    ''' <returns></returns>
     <ExportAPI("openPool")>
     Public Function openPool(dir As String, Optional level As Double = 0.8) As SpectrumPool
         Return SpectrumPool.OpenDirectory(dir, level, split:=6)
     End Function
 
+    ''' <summary>
+    ''' close the connection to the spectrum pool
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns></returns>
     <ExportAPI("closePool")>
     Public Function closePool(pool As SpectrumPool) As Object
         Call pool.Dispose()
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' get metadata dataframe in a given cluster tree
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <ExportAPI("getClusterInfo")>
     Public Function getClusterInfo(pool As SpectrumPool, path As String) As Object
         Dim tokens = path.Trim("\"c, "/"c).StringSplit("[\\/]+")
@@ -84,7 +100,7 @@ Public Module MolecularSpectrumPool
     End Function
 
     ''' <summary>
-    ''' 
+    ''' add sample peaks data to spectrum pool
     ''' </summary>
     ''' <param name="pool"></param>
     ''' <param name="x">
@@ -121,6 +137,11 @@ Public Module MolecularSpectrumPool
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' commit data to the spectrum pool database
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns></returns>
     <ExportAPI("commit")>
     Public Function commit(pool As SpectrumPool) As Object
         Call pool.Commit()
