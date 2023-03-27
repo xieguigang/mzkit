@@ -8,7 +8,6 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 
-
 Namespace PoolData
 
     Public Class TreeFs : Implements IDisposable

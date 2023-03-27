@@ -25,7 +25,7 @@ Namespace PoolData
         ''' <summary>
         ''' index of the spectrum data in current cluster node
         ''' </summary>
-        Dim metadata As New Dictionary(Of String, Metadata)
+        Dim metadata As MetadataProxy
         ''' <summary>
         ''' the first element in the hash list
         ''' </summary>
@@ -64,7 +64,7 @@ Namespace PoolData
 
         Public ReadOnly Property ClusterInfo As IEnumerable(Of Metadata)
             Get
-                Return metadata.Values
+                Return metadata.AllClusterMembers
             End Get
         End Property
 
@@ -124,7 +124,7 @@ Namespace PoolData
 
             If score > fs.level Then
                 ' in current class node
-                metadata(spectrum.lib_guid) = WriteSpectrum(spectrum)
+                metadata.Add(spectrum.lib_guid, WriteSpectrum(spectrum))
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
             ElseIf score <= 0 Then
                 If zeroBlock Is Nothing Then
