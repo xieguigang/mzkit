@@ -9,6 +9,7 @@ Namespace PoolData
         Dim local_cache As New Dictionary(Of String, Metadata)
         Dim url_get As String
         Dim url_put As String
+        Dim path As String
 
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
             Get
@@ -31,6 +32,12 @@ Namespace PoolData
                 Return data
             End Get
         End Property
+
+        Sub New(http As HttpTreeFs, path As String)
+            Me.path = path
+            Me.url_get = $"{http.base}/get/metadata"
+            Me.url_put = $"{http.base}/set/metadata"
+        End Sub
 
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Dim payload As New NameValueCollection

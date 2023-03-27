@@ -17,13 +17,6 @@ Namespace PoolData
         Implements IDisposable
 
         ''' <summary>
-        ''' due to the reason of contains in-memory cache system
-        ''' inside this module, so we should share this object between
-        ''' multiple pool object
-        ''' </summary>
-        Dim score As MSScoreGenerator
-
-        ''' <summary>
         ''' A sequence spectrum data pool in current level 
         ''' </summary>
         ''' <remarks>
@@ -72,25 +65,6 @@ Namespace PoolData
 
         Public Overrides Function FindRootId(path As String) As String
             Return Strings.Trim(fs.ReadText($"{path}/node_data/root.txt")).Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c)
-        End Function
-
-        Friend Sub SetScore(da As Double, intocutoff As Double, getSpectral As Func(Of String, PeakMs2))
-            score = New MSScoreGenerator(
-                align:=AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff)),
-                getSpectrum:=getSpectral,
-                equals:=0,
-                gt:=0
-            )
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub Add(data As PeakMs2)
-            Call score.Add(data)
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function GetScore(x As String, y As String) As Double
-            Return score.GetSimilarity(x, y)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

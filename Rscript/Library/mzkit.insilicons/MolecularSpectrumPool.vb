@@ -16,12 +16,12 @@ Public Module MolecularSpectrumPool
     ''' <summary>
     ''' open the spectrum pool from a given resource link
     ''' </summary>
-    ''' <param name="dir"></param>
+    ''' <param name="link"></param>
     ''' <param name="level"></param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(dir As String, Optional level As Double = 0.8) As SpectrumPool
-        Return SpectrumPool.OpenDirectory(dir, level, split:=6)
+    Public Function openPool(link As String, Optional level As Double = 0.8) As SpectrumPool
+        Return SpectrumPool.Open(link, level, split:=6)
     End Function
 
     ''' <summary>

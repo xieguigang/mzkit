@@ -1,11 +1,19 @@
 ﻿
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace PoolData
 
     Public MustInherit Class PoolFs : Implements IDisposable
 
-        Private disposedValue As Boolean
+        Dim disposedValue As Boolean
+        ''' <summary>
+        ''' due to the reason of contains in-memory cache system
+        ''' inside this module, so we should share this object between
+        ''' multiple pool object
+        ''' </summary>
+        Dim score As MSScoreGenerator
 
         ''' <summary>
         ''' the score threshold for assign the given spectrum as current cluster member
@@ -20,10 +28,31 @@ Namespace PoolData
         Public MustOverride Sub CommitMetadata(path As String, data As MetadataProxy)
         Public MustOverride Function FindRootId(path As String) As String
         Public MustOverride Sub SetRootId(path As String, id As String)
-        Public MustOverride Sub Add(spectrum As PeakMs2)
-        Public MustOverride Function GetScore(x As String, y As String) As Double
         Public MustOverride Function ReadSpectrum(p As Metadata) As PeakMs2
         Public MustOverride Function WriteSpectrum(spectral As PeakMs2) As Metadata
+
+        ''' <summary>
+        ''' add spectrum to the score cache 
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Add(data As PeakMs2)
+            Call score.Add(data)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetScore(x As String, y As String) As Double
+            Return score.GetSimilarity(x, y)
+        End Function
+
+        Friend Sub SetScore(da As Double, intocutoff As Double, getSpectral As Func(Of String, PeakMs2))
+            score = New MSScoreGenerator(
+                align:=AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff)),
+                getSpectrum:=getSpectral,
+                equals:=0,
+                gt:=0
+            )
+        End Sub
 
         ''' <summary>
         ''' 
@@ -37,6 +66,17 @@ Namespace PoolData
             _split = split
             _splitDelta = level / split
         End Sub
+
+        Public Shared Function CreateAuto(link As String) As PoolFs
+            Dim linkStr As String = link.ToLower
+
+            If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
+                ' web services based
+                Return New HttpTreeFs(link)
+            Else
+                Return New TreeFs(link)
+            End If
+        End Function
 
         Protected MustOverride Sub Close()
 

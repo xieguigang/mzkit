@@ -165,23 +165,26 @@ Namespace PoolData
         ''' <summary>
         ''' open root folder
         ''' </summary>
-        ''' <param name="dir">
+        ''' <param name="link">
+        ''' ### for local filesystem
+        ''' 
         ''' contains multiple files:
         ''' 
         ''' 1. cluster.pack  contains the metadata and structure information of the cluster tree
         ''' 2. spectrum.dat  contains the spectrum data
+        ''' 
+        ''' ### for web filesystem
+        ''' 
         ''' </param>
         ''' <param name="level"></param>
         ''' <param name="split"></param>
         ''' <returns></returns>
-        Public Shared Function OpenDirectory(dir As String,
-                                             Optional level As Double = 0.85,
-                                             Optional split As Integer = 3) As SpectrumPool
-            Dim fs = New TreeFs(dir)
+        Public Shared Function Open(link As String, Optional level As Double = 0.85, Optional split As Integer = 3) As SpectrumPool
+            Dim fs As PoolFs = PoolFs.CreateAuto(link)
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)
-            Call fs.SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
+            Call DirectCast(fs, TreeFs).SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
 
             Return pool
         End Function

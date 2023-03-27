@@ -1,37 +1,44 @@
-﻿Namespace PoolData
+﻿Imports System.Collections.Specialized
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace PoolData
 
     Public Class HttpTreeFs : Inherits PoolFs
 
+        ''' <summary>
+        ''' the web services base url
+        ''' </summary>
+        Friend ReadOnly base As String
+
+        Sub New(url As String)
+            base = url
+        End Sub
+
         Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
-            Throw New NotImplementedException()
+            ' do nothing
         End Sub
 
         Public Overrides Sub SetRootId(path As String, id As String)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Add(spectrum As Spectra.PeakMs2)
-            Throw New NotImplementedException()
+            Dim args As New NameValueCollection
+            args.Add("path", path)
+            args.Add("id", id)
+            Call $"{base}/set/root".POST(args)
         End Sub
 
         Protected Overrides Sub Close()
-            Throw New NotImplementedException()
+            ' do nothing
         End Sub
 
         Public Overrides Function GetTreeChilds(path As String) As IEnumerable(Of String)
-            Throw New NotImplementedException()
+            Return $"{base}/get/childs/?q={path.UrlEncode}".LoadJSON(Of String())
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
-            Throw New NotImplementedException()
+            Return New HttpRESTMetadataPool(Me, path)
         End Function
 
         Public Overrides Function FindRootId(path As String) As String
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function GetScore(x As String, y As String) As Double
-            Throw New NotImplementedException()
+            Return $"{base}/get/root".GET
         End Function
 
         Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
