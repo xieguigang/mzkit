@@ -195,7 +195,7 @@ Namespace PoolData
                 Return representative
             End If
 
-            If metadata.ContainsKey(guid) Then
+            If metadata.HasGuid(guid) Then
                 Dim p As Metadata = metadata(guid)
                 Dim data As PeakMs2 = fs.ReadSpectrum(p)
 
