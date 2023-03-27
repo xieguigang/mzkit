@@ -32,6 +32,10 @@ Namespace PoolData
             End Get
         End Property
 
+        Sub New(data As Dictionary(Of String, Metadata))
+            Me.data = data
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Call data.Add(id, metadata)

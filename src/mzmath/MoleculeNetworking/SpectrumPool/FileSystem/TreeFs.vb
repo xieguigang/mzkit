@@ -7,6 +7,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace PoolData
 
@@ -48,6 +50,16 @@ Namespace PoolData
             spectrumPool.ByteOrder = ByteOrder.LittleEndian
             spectrumPool.Encoding = Encoding.ASCII
         End Sub
+
+        Public Overrides Function LoadMetadata(path As String) As MetadataProxy
+            Dim inMemory = fs.ReadText($"{path}/node_data/metadata.json").LoadJSON(Of Dictionary(Of String, Metadata))
+            inMemory = If(inMemory, New Dictionary(Of String, Metadata))
+            Return New InMemoryKeyValueMetadataPool(inMemory)
+        End Function
+
+        Public Overrides Function FindRootId(path As String) As String
+            Return Strings.Trim(fs.ReadText($"{path}/node_data/root.txt")).Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c)
+        End Function
 
         Friend Sub SetLevel(level As Double, split As Integer)
             _level = level
