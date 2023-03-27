@@ -10,7 +10,8 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 
 Namespace PoolData
 
-    Public Class TreeFs : Implements IDisposable
+    Public Class TreeFs : Inherits PoolFs
+        Implements IDisposable
 
         ''' <summary>
         ''' due to the reason of contains in-memory cache system

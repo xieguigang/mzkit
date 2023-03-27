@@ -1,6 +1,6 @@
 ﻿Namespace PoolData
 
-    Public Class FileName
+    Public Class HttpTreeFs : Inherits PoolFs
 
     End Class
 End Namespace
