@@ -66,11 +66,6 @@ Namespace PoolData
         ''' <param name="fs">
         ''' the pool filesystem storage
         ''' </param>
-        ''' <param name="tag"></param>
-        ''' <param name="level"></param>
-        ''' <param name="split">
-        ''' split into n parts
-        ''' </param>
         Private Sub New(fs As PoolFs, path As String)
             Me.fs = fs
             Me.handle = path.StringReplace("/{2,}", "/")

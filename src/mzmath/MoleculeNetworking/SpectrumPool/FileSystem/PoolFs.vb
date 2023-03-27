@@ -7,6 +7,10 @@ Namespace PoolData
 
         Private disposedValue As Boolean
 
+        ''' <summary>
+        ''' the score threshold for assign the given spectrum as current cluster member
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property level As Double
         Public ReadOnly Property split As Integer
         Public ReadOnly Property splitDelta As Double
@@ -21,6 +25,13 @@ Namespace PoolData
         Public MustOverride Function ReadSpectrum(p As Metadata) As PeakMs2
         Public MustOverride Function WriteSpectrum(spectral As PeakMs2) As Metadata
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="level">
+        ''' the score threshold for assign the given spectrum as current cluster member
+        ''' </param>
+        ''' <param name="split">split into n parts</param>
         Friend Sub SetLevel(level As Double, split As Integer)
             _level = level
             _split = split
