@@ -4,6 +4,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -31,12 +32,6 @@ Namespace PoolData
         Dim spectrumPool As BinaryDataReader
         Dim fs As StreamPack
 
-        Public ReadOnly Property level As Double
-        Public ReadOnly Property split As Integer
-        Public ReadOnly Property splitDelta As Double
-
-        Private disposedValue As Boolean
-
         Public ReadOnly Property baseStream As Stream
             Get
                 Return spectrumPool.BaseStream
@@ -46,10 +41,28 @@ Namespace PoolData
         Sub New(dir As String)
             Me.fs = New StreamPack(dir & "/cluster.pack", meta_size:=1024 * 1024 * 256)
 
-            spectrumPool = New BinaryDataReader($"{dir}/spectrum.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
+            spectrumPool = New BinaryDataReader(
+                input:=$"{dir}/spectrum.dat".Open(
+                    mode:=FileMode.OpenOrCreate,
+                    doClear:=False,
+                    [readOnly]:=False
+                )
+            )
             spectrumPool.ByteOrder = ByteOrder.LittleEndian
             spectrumPool.Encoding = Encoding.ASCII
         End Sub
+
+        Shared ReadOnly not_branch As Index(Of String) = {"z", "node_data"}
+
+        Public Overrides Iterator Function GetTreeChilds(path As String) As IEnumerable(Of String)
+            For Each dir As StreamGroup In OpenFolder(path).dirs
+                If dir.fileName Like not_branch Then
+                    Continue For
+                End If
+
+                Yield dir.referencePath.ToString
+            Next
+        End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
             Dim inMemory = fs.ReadText($"{path}/node_data/metadata.json").LoadJSON(Of Dictionary(Of String, Metadata))
@@ -61,12 +74,6 @@ Namespace PoolData
             Return Strings.Trim(fs.ReadText($"{path}/node_data/root.txt")).Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c)
         End Function
 
-        Friend Sub SetLevel(level As Double, split As Integer)
-            _level = level
-            _split = split
-            _splitDelta = level / split
-        End Sub
-
         Friend Sub SetScore(da As Double, intocutoff As Double, getSpectral As Func(Of String, PeakMs2))
             score = New MSScoreGenerator(
                 align:=AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff)),
@@ -77,12 +84,12 @@ Namespace PoolData
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(data As PeakMs2)
+        Public Overrides Sub Add(data As PeakMs2)
             Call score.Add(data)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetScore(x As String, y As String) As Double
+        Public Overrides Function GetScore(x As String, y As String) As Double
             Return score.GetSimilarity(x, y)
         End Function
 
@@ -109,35 +116,54 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ReadSpectrum(metadata As Metadata) As PeakMs2
+        Public Overrides Function ReadSpectrum(metadata As Metadata) As PeakMs2
             Return InternalFileSystem.ReadSpectrum(spectrumPool, block:=metadata.block)
         End Function
 
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If Not disposedValue Then
-                If disposing Then
-                    ' TODO: 释放托管状态(托管对象)
-                    Call spectrumPool.Dispose()
-                    Call fs.Dispose()
-                End If
+        Public Overrides Function WriteSpectrum(spectral As PeakMs2) As Metadata
+            Dim writer As New BinaryDataWriter(baseStream) With {
+                .ByteOrder = ByteOrder.LittleEndian,
+                .Encoding = Encoding.ASCII
+            }
 
-                ' TODO: 释放未托管的资源(未托管的对象)并重写终结器
-                ' TODO: 将大型字段设置为 null
-                disposedValue = True
-            End If
+            Call writer.Seek(writer.BaseStream.Length, SeekOrigin.Begin)
+            ' Call writer.Align(8)
+
+            Dim p As BufferRegion = InternalFileSystem.WriteSpectrum(spectral, writer)
+            Dim meta As New Metadata With {
+                .block = p,
+                .guid = spectral.lib_guid,
+                .intensity = spectral.intensity,
+                .mz = spectral.mz,
+                .organism = spectral.meta("organism"),
+                .rt = spectral.rt,
+                .sample_source = spectral.meta("biosample"),
+                .source_file = spectral.file,
+                .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
+                .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
+                .name = spectral.meta.TryGetValue("name", [default]:="unknown conserved"),
+                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
+            }
+
+            Call writer.Flush()
+
+            Return meta
+        End Function
+
+        Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
+            Call fs.WriteText(
+                text:=data.AllClusterMembers.ToDictionary(Function(m) m.guid).GetJson,
+                fileName:=$"{path}/node_data/metadata.json"
+            )
         End Sub
 
-        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
-        ' Protected Overrides Sub Finalize()
-        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
-        '     Dispose(disposing:=False)
-        '     MyBase.Finalize()
-        ' End Sub
+        Public Overrides Sub SetRootId(path As String, id As String)
+            Call fs.WriteText(id, $"{path}/node_data/root.txt")
+        End Sub
 
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
-            Dispose(disposing:=True)
-            GC.SuppressFinalize(Me)
+        Protected Overrides Sub Close()
+            Call spectrumPool.Dispose()
+            Call fs.Dispose()
         End Sub
     End Class
 End Namespace

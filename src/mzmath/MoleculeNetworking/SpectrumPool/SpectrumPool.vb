@@ -1,11 +1,4 @@
-﻿Imports System.IO
-Imports System.Text
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
-Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace PoolData
 
@@ -78,21 +71,14 @@ Namespace PoolData
         ''' <param name="split">
         ''' split into n parts
         ''' </param>
-        Private Sub New(fs As TreeFs, path As String)
-            Static not_branch As Index(Of String) = {"z", "node_data"}
-
+        Private Sub New(fs As PoolFs, path As String)
             Me.fs = fs
             Me.handle = path.StringReplace("/{2,}", "/")
+            Me.metadata = fs.LoadMetadata(path)
+            Me.rootId = fs.FindRootId(path)
 
-            metadata = fs.LoadMetadata(path)
-            rootId = fs.FindRootId(path)
-
-            For Each dir As StreamGroup In fs.OpenFolder(path).dirs
-                If dir.fileName Like not_branch Then
-                    Continue For
-                End If
-
-                classTree.Add(dir.fileName, New SpectrumPool(fs, dir.referencePath))
+            For Each dir As String In fs.GetTreeChilds(path)
+                classTree.Add(dir.BaseName, New SpectrumPool(fs, dir))
             Next
 
             If Not rootId.StringEmpty Then
@@ -122,7 +108,7 @@ Namespace PoolData
 
             If score > fs.level Then
                 ' in current class node
-                metadata.Add(spectrum.lib_guid, WriteSpectrum(spectrum))
+                metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
             ElseIf score <= 0 Then
                 If zeroBlock Is Nothing Then
@@ -152,36 +138,6 @@ Namespace PoolData
                 Loop
             End If
         End Sub
-
-        Private Function WriteSpectrum(spectral As PeakMs2) As Metadata
-            Dim writer As New BinaryDataWriter(fs.baseStream) With {
-                .ByteOrder = ByteOrder.LittleEndian,
-                .Encoding = Encoding.ASCII
-            }
-
-            Call writer.Seek(writer.BaseStream.Length, SeekOrigin.Begin)
-            ' Call writer.Align(8)
-
-            Dim p As BufferRegion = InternalFileSystem.WriteSpectrum(spectral, writer)
-            Dim meta As New Metadata With {
-                .block = p,
-                .guid = spectral.lib_guid,
-                .intensity = spectral.intensity,
-                .mz = spectral.mz,
-                .organism = spectral.meta("organism"),
-                .rt = spectral.rt,
-                .sample_source = spectral.meta("biosample"),
-                .source_file = spectral.file,
-                .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
-                .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
-                .name = spectral.meta.TryGetValue("name", [default]:="unknown conserved"),
-                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
-            }
-
-            Call writer.Flush()
-
-            Return meta
-        End Function
 
         ''' <summary>
         ''' Find the spectra object from this function if the cache is not hit
@@ -223,7 +179,9 @@ Namespace PoolData
         ''' <param name="level"></param>
         ''' <param name="split"></param>
         ''' <returns></returns>
-        Public Shared Function OpenDirectory(dir As String, Optional level As Double = 0.85, Optional split As Integer = 3) As SpectrumPool
+        Public Shared Function OpenDirectory(dir As String,
+                                             Optional level As Double = 0.85,
+                                             Optional split As Integer = 3) As SpectrumPool
             Dim fs = New TreeFs(dir)
             Dim pool As New SpectrumPool(fs, "/")
 
@@ -238,8 +196,8 @@ Namespace PoolData
         End Function
 
         Public Sub Commit()
-            Call fs.WriteText(rootId, $"{handle}/node_data/root.txt")
-            Call fs.WriteText(metadata.GetJson, $"{handle}/node_data/metadata.json")
+            Call fs.SetRootId(handle, rootId)
+            Call fs.CommitMetadata(handle, metadata)
 
             For Each label As String In classTree.Keys
                 Call classTree(label).Commit()
