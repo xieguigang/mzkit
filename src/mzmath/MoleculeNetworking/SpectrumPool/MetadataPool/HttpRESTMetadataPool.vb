@@ -58,7 +58,7 @@ Namespace PoolData
             Dim json As String = url.GET
             Dim obj As JsonObject = JsonParser.Parse(json)
 
-            Me.cluster_data = CType(obj, JavaScriptObject)
+            Me.cluster_data = CType(obj, JavaScriptObject)!info
         End Sub
 
         ''' <summary>
