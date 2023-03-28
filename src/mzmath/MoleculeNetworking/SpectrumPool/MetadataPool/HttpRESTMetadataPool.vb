@@ -39,6 +39,11 @@ Namespace PoolData
             Me.url_put = $"{http.base}/set/metadata"
         End Sub
 
+        ''' <summary>
+        ''' write metadata to database at here
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="metadata"></param>
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Dim payload As New NameValueCollection
 

@@ -104,8 +104,16 @@ Namespace PoolData
             ' Call writer.Align(8)
 
             Dim p As BufferRegion = InternalFileSystem.WriteSpectrum(spectral, writer)
-            Dim meta As New Metadata With {
-                .block = p,
+            Dim meta As Metadata = GetMetadata(spectral)
+
+            meta.block = p
+            writer.Flush()
+
+            Return meta
+        End Function
+
+        Public Shared Function GetMetadata(spectral As PeakMs2) As Metadata
+            Return New Metadata With {
                 .guid = spectral.lib_guid,
                 .intensity = spectral.intensity,
                 .mz = spectral.mz,
@@ -118,10 +126,6 @@ Namespace PoolData
                 .name = spectral.meta.TryGetValue("name", [default]:="unknown conserved"),
                 .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
             }
-
-            Call writer.Flush()
-
-            Return meta
         End Function
 
         Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
