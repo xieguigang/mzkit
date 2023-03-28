@@ -29,7 +29,7 @@ Namespace PoolData
 
         Public Overrides Sub SetRootId(path As String, id As String)
             Dim args As New NameValueCollection
-            args.Add("path", path)
+            args.Add("path_hash", ClusterHashIndex(path))
             args.Add("id", id)
             Call $"{base}/set/root".POST(args)
         End Sub
