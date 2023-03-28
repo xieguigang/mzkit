@@ -24,3 +24,13 @@ str(data);
 enrich = metpa_enrich(cid, data);
 
 print(enrich, max.print = 13);
+
+write.csv(enrich, file = "./enrich.csv");
+
+enrich[, "KEGG"] = rownames(enrich);
+
+# rendering of the kegg pathway maps
+KEGG_MapRender(enrich, 
+        map_id = "KEGG",
+        pathway_links = "links",
+        outputdir = `${@dir}/KEGG_maps/`);
