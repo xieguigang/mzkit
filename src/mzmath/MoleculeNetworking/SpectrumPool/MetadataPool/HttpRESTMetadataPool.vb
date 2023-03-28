@@ -1,5 +1,8 @@
 ﻿
 Imports System.Collections.Specialized
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
@@ -9,7 +12,20 @@ Namespace PoolData
         Dim local_cache As New Dictionary(Of String, Metadata)
         Dim url_get As String
         Dim url_put As String
-        Dim path As String
+        Dim hash_index As String
+        Dim cluster_data As JavaScriptObject
+
+        Public ReadOnly Property RootSpectrumId As String
+            Get
+                Dim root = cluster_data!root
+
+                If root Is Nothing Then
+                    Return Nothing
+                End If
+
+                Return root
+            End Get
+        End Property
 
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
             Get
@@ -34,9 +50,15 @@ Namespace PoolData
         End Property
 
         Sub New(http As HttpTreeFs, path As String)
-            Me.path = path
+            Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
             Me.url_get = $"{http.base}/get/metadata"
             Me.url_put = $"{http.base}/set/metadata"
+
+            Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
+            Dim json As String = url.GET
+            Dim obj As JsonObject = JsonParser.Parse(json)
+
+            Me.cluster_data = CType(obj, JavaScriptObject)
         End Sub
 
         ''' <summary>
@@ -47,7 +69,7 @@ Namespace PoolData
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Dim payload As New NameValueCollection
 
-            Call payload.Add("metadata", metadata.GetJson)
+            Call payload.Add("metadata", metadata.GetJson(simpleDict:=True))
             Call url_put.POST(payload)
             Call local_cache.Add(id, metadata)
         End Sub

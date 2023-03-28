@@ -13,6 +13,7 @@ Namespace PoolData
         ''' the web services base url
         ''' </summary>
         Friend ReadOnly base As String
+        Friend ReadOnly metadata_pool As New Dictionary(Of String, HttpRESTMetadataPool)
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
 
@@ -52,11 +53,20 @@ Namespace PoolData
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
-            Return New HttpRESTMetadataPool(Me, path)
+            Dim meta As New HttpRESTMetadataPool(Me, path)
+            Dim key As String = ClusterHashIndex(path)
+            metadata_pool.Add(key, meta)
+            Return meta
         End Function
 
         Public Overrides Function FindRootId(path As String) As String
-            Return $"{base}/get/root/?q={path.UrlEncode}".GET
+            Dim key As String = ClusterHashIndex(path)
+
+            If Not metadata_pool.ContainsKey(key) Then
+                Return Nothing
+            End If
+
+            Return metadata_pool(key).RootSpectrumId
         End Function
 
         ''' <summary>

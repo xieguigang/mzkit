@@ -84,6 +84,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
