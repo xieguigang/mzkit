@@ -39,7 +39,7 @@ Namespace PoolData
         End Sub
 
         Public Overrides Function GetTreeChilds(path As String) As IEnumerable(Of String)
-            Return $"{base}/get/childs/?q={path.UrlEncode}".LoadJSON(Of String())
+            Return $"{base}/get/childs/?q={ClusterHashIndex(path)}".LoadJSON(Of String())
         End Function
 
         Public Shared Function ClusterHashIndex(path As String) As String
