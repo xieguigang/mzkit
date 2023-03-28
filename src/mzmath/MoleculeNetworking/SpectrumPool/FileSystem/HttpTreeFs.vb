@@ -3,7 +3,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
@@ -15,8 +14,12 @@ Namespace PoolData
         ''' </summary>
         Friend ReadOnly base As String
 
+        Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
+
         Sub New(url As String)
             base = url
+            ' do system init
+            Call VBDebugger.EchoLine($"{base}/init/".GET)
         End Sub
 
         Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
@@ -36,6 +39,16 @@ Namespace PoolData
 
         Public Overrides Function GetTreeChilds(path As String) As IEnumerable(Of String)
             Return $"{base}/get/childs/?q={path.UrlEncode}".LoadJSON(Of String())
+        End Function
+
+        Public Shared Function ClusterHashIndex(path As String) As String
+            path = path.StringReplace("/{2,}", "/")
+
+            If path.Length > 1 Then
+                path = path.TrimEnd("/"c)
+            End If
+
+            Return path.MD5.ToLower
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
