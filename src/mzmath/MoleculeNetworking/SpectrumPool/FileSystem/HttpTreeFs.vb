@@ -56,10 +56,10 @@ Namespace PoolData
         End Sub
 
         Public Overrides Sub SetRootId(path As String, id As String)
-            Dim args As New NameValueCollection
-            args.Add("path_hash", ClusterHashIndex(path))
-            args.Add("id", id)
-            Call $"{base}/set/root".POST(args)
+            Dim key As String = ClusterHashIndex(path)
+            Dim meta As MetadataProxy = metadata_pool(key)
+
+            Call meta.SetRootId(id)
         End Sub
 
         Protected Overrides Sub Close()

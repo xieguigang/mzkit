@@ -2,6 +2,9 @@
 
 Namespace PoolData
 
+    ''' <summary>
+    ''' a spectrum cluster node collection proxy
+    ''' </summary>
     Public MustInherit Class MetadataProxy
 
         Default Public MustOverride ReadOnly Property GetById(id As String) As Metadata
@@ -9,12 +12,14 @@ Namespace PoolData
 
         Public MustOverride Sub Add(id As String, metadata As Metadata)
         Public MustOverride Function HasGuid(id As String) As Boolean
+        Public MustOverride Sub SetRootId(hashcode As String)
 
     End Class
 
     Public Class InMemoryKeyValueMetadataPool : Inherits MetadataProxy
 
-        ReadOnly data As Dictionary(Of String, Metadata)
+        Dim data As Dictionary(Of String, Metadata)
+        Dim rootId As String
 
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -41,5 +46,9 @@ Namespace PoolData
         Public Overrides Function HasGuid(id As String) As Boolean
             Return data.ContainsKey(id)
         End Function
+
+        Public Overrides Sub SetRootId(hashcode As String)
+            rootId = hashcode
+        End Sub
     End Class
 End Namespace

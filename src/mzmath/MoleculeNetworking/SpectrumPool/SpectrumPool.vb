@@ -91,6 +91,7 @@ Namespace PoolData
             If representative Is Nothing Then
                 representative = spectrum
                 rootId = spectrum.lib_guid
+                metadata.SetRootId(rootId)
                 score = 1
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else

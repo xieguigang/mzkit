@@ -1,7 +1,6 @@
 ﻿
 Imports System.Collections.Specialized
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -12,8 +11,10 @@ Namespace PoolData
         Dim local_cache As New Dictionary(Of String, Metadata)
         Dim url_get As String
         Dim url_put As String
+        Dim url_setRoot As String
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
+        Dim rootId As String
 
         Public ReadOnly Property guid As Long
             Get
@@ -23,13 +24,17 @@ Namespace PoolData
 
         Public ReadOnly Property RootSpectrumId As String
             Get
-                Dim root = cluster_data!root
+                If rootId.StringEmpty Then
+                    Dim root = cluster_data!root
 
-                If root Is Nothing Then
-                    Return Nothing
+                    If root Is Nothing Then
+                        Return Nothing
+                    Else
+                        rootId = CStr(root)
+                    End If
                 End If
 
-                Return root
+                Return rootId
             End Get
         End Property
 
@@ -59,6 +64,7 @@ Namespace PoolData
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
             Me.url_get = $"{http.base}/get/metadata/"
             Me.url_put = $"{http.base}/set/metadata/"
+            Me.url_setRoot = $"{http.base}/set/root/"
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
             Dim json As String = url.GET
@@ -88,6 +94,7 @@ Namespace PoolData
 
             Call payload.Add("spectrum_id", metadata.block.position)
             Call payload.Add("metadata", metadata.GetJson(simpleDict:=True))
+            Call payload.Add("cluster_id", Me.guid)
 
             Dim result = Restful.ParseJSON(url_put.POST(payload))
 
@@ -99,5 +106,20 @@ Namespace PoolData
         Public Overrides Function HasGuid(id As String) As Boolean
             Return Me(id) IsNot Nothing
         End Function
+
+        Public Overrides Sub SetRootId(hashcode As String)
+            rootId = hashcode
+
+            Dim args As New NameValueCollection
+
+            args.Add("path_hash", hash_index)
+            args.Add("id", hashcode)
+
+            Dim result = Restful.ParseJSON(url_setRoot.POST(args))
+
+            If result.code <> 0 Then
+                Call VBDebugger.EchoLine(result.debug)
+            End If
+        End Sub
     End Class
 End Namespace
