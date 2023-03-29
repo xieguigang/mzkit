@@ -86,9 +86,14 @@ Namespace PoolData
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Dim payload As New NameValueCollection
 
+            Call payload.Add("spectrum_id", metadata.block.position)
             Call payload.Add("metadata", metadata.GetJson(simpleDict:=True))
-            Call url_put.POST(payload)
-            Call local_cache.Add(id, metadata)
+
+            Dim result = Restful.ParseJSON(url_put.POST(payload))
+
+            If result.code = 0 Then
+                Call local_cache.Add(id, metadata)
+            End If
         End Sub
 
         Public Overrides Function HasGuid(id As String) As Boolean
