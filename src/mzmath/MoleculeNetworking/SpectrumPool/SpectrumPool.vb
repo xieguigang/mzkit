@@ -73,7 +73,11 @@ Namespace PoolData
             Me.rootId = fs.FindRootId(path)
 
             For Each dir As String In fs.GetTreeChilds(path)
-                classTree.Add(dir.BaseName, New SpectrumPool(fs, dir))
+                If dir.BaseName = "z" Then
+                    zeroBlock = New SpectrumPool(fs, dir)
+                Else
+                    classTree.Add(dir.BaseName, New SpectrumPool(fs, dir))
+                End If
             Next
 
             If Not rootId.StringEmpty Then
