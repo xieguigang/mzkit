@@ -56,10 +56,12 @@ Namespace PoolData
         End Sub
 
         Public Overrides Sub SetRootId(path As String, id As String)
-            Dim key As String = ClusterHashIndex(path)
-            Dim meta As MetadataProxy = metadata_pool(key)
+            'Dim key As String = ClusterHashIndex(path)
+            'Dim meta As MetadataProxy = metadata_pool(key)
 
-            Call meta.SetRootId(id)
+            'Call meta.SetRootId(id)
+
+            ' do nothing
         End Sub
 
         Protected Overrides Sub Close()
