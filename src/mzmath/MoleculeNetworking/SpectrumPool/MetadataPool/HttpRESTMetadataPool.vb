@@ -15,6 +15,12 @@ Namespace PoolData
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
 
+        Public ReadOnly Property guid As Long
+            Get
+                Return Val(cluster_data!id)
+            End Get
+        End Property
+
         Public ReadOnly Property RootSpectrumId As String
             Get
                 Dim root = cluster_data!root
@@ -49,7 +55,7 @@ Namespace PoolData
             End Get
         End Property
 
-        Sub New(http As HttpTreeFs, path As String)
+        Sub New(http As HttpTreeFs, path As String, parentId As Long)
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
             Me.url_get = $"{http.base}/get/metadata"
             Me.url_put = $"{http.base}/set/metadata"
@@ -60,7 +66,13 @@ Namespace PoolData
 
             If obj.code = 404 Then
                 ' create new
-
+                Dim payload As New NameValueCollection
+                payload.Add("parent", parentId)
+                payload.Add("key", path.BaseName)
+                payload.Add("hashcode", hash_index)
+                url = $"{http.base}/new/cluster/"
+                obj = Restful.ParseJSON(url.POST(payload))
+                Me.cluster_data = obj.info
             Else
                 Me.cluster_data = obj.info
             End If

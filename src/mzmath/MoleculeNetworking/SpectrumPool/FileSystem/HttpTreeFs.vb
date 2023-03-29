@@ -95,8 +95,20 @@ Namespace PoolData
             Return path.MD5.ToLower
         End Function
 
+        Private Function getParentId(path As String) As Long
+            If path = "/" Then
+                Return -1
+            Else
+                Dim parent As String = path.ParentPath(full:=False)
+                Dim parentHashKey As String = ClusterHashIndex(parent)
+                Dim meta = metadata_pool(parentHashKey)
+
+                Return meta.guid
+            End If
+        End Function
+
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
-            Dim meta As New HttpRESTMetadataPool(Me, path)
+            Dim meta As New HttpRESTMetadataPool(Me, path, getParentId(path))
             Dim key As String = ClusterHashIndex(path)
             metadata_pool.Add(key, meta)
             Return meta
