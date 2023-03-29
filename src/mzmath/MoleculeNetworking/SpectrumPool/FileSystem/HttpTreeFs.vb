@@ -13,8 +13,8 @@ Namespace PoolData
     Public Class Restful
 
         Public Property code As Integer
-        Public Property debug As JavaScriptObject
-        Public Property info As JavaScriptObject
+        Public Property debug As Object
+        Public Property info As Object
 
         Public Shared Function ParseJSON(json As String) As Restful
             Dim obj As JavaScriptObject = DirectCast(JsonParser.Parse(json), JsonObject)
@@ -60,12 +60,23 @@ Namespace PoolData
             ' do nothing
         End Sub
 
-        Public Overrides Function GetTreeChilds(path As String) As IEnumerable(Of String)
+        ''' <summary>
+        ''' get tree path of the childs
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Public Overrides Iterator Function GetTreeChilds(path As String) As IEnumerable(Of String)
             Dim url As String = $"{base}/get/childs/?q={ClusterHashIndex(path)}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
+            Dim childs_data As Array = data.info
 
-            Return data.info
+            For i As Integer = 0 To childs_data.Length - 1
+                Dim obj As JavaScriptObject = childs_data.GetValue(i)
+                Dim key As String = obj!key
+
+                Yield $"{path}/{key}"
+            Next
         End Function
 
         Public Shared Function ClusterHashIndex(path As String) As String
