@@ -82,6 +82,7 @@ Namespace PoolData
                 payload.Add("parent", parentId)
                 payload.Add("key", path.BaseName)
                 payload.Add("hashcode", hash_index)
+                payload.Add("depth", path.Split("/"c).Length)
                 url = $"{http.base}/new/cluster/"
                 obj = Restful.ParseJSON(url.POST(payload))
                 Me.cluster_data = obj.info

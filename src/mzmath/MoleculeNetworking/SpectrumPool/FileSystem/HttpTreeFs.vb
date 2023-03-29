@@ -93,7 +93,7 @@ Namespace PoolData
             Next
         End Function
 
-        Public Shared Function ClusterHashIndex(path As String) As String
+        Public Shared Function ClusterHashIndex(ByRef path As String) As String
             path = path.StringReplace("/{2,}", "/")
 
             If path.Length > 1 Then
