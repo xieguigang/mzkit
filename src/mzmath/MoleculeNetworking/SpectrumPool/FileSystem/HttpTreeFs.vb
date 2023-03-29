@@ -151,7 +151,18 @@ Namespace PoolData
             Dim hashcode As String = data.info!hashcode
             Dim mz As Double() = CStr(data.info!mz).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
             Dim into As Double() = CStr(data.info!into).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
-            Dim spectral As ms2() = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray
+
+            If npeaks <> mz.Length Then
+                Throw New InvalidDataException
+            ElseIf npeaks <> into.Length Then
+                Throw New InvalidDataException
+            End If
+
+            Dim spectral As ms2() = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
+                        End Function) _
+                .ToArray
 
             Return New PeakMs2 With {
                 .lib_guid = hashcode,

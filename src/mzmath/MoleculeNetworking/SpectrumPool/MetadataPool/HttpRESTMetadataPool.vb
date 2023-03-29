@@ -1,5 +1,7 @@
 ﻿
 Imports System.Collections.Specialized
+Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -38,13 +40,17 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="id">
+        ''' the spectrum md5 hashcode used as guid
+        ''' </param>
+        ''' <returns></returns>
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
             Get
                 If Not local_cache.ContainsKey(id) Then
-                    Dim json As String = $"{url_get}&guid={id}".GET
-                    Dim data As Metadata = json.LoadJSON(Of Metadata)
-
-                    Call local_cache.Add(data.guid, data)
+                    Call local_cache.Add(id, GetMetadataByHashKey(id))
                 End If
 
                 Return local_cache.TryGetValue(id)
@@ -83,6 +89,35 @@ Namespace PoolData
                 Me.cluster_data = obj.info
             End If
         End Sub
+
+        Public Function GetMetadataByHashKey(hash As String) As Metadata
+            Dim url As String = $"{url_get}?id={hash}"
+            Dim json As String = url.GET
+            Dim obj As Restful = Restful.ParseJSON(json)
+
+            If obj.code <> 0 Then
+                Call VBDebugger.EchoLine(obj.debug)
+                Return Nothing
+            End If
+
+            Dim fetch As JavaScriptObject = obj.info
+            Dim data As New Metadata With {
+                .adducts = fetch!adducts,
+                .biodeep_id = fetch!biodeep_id,
+                .block = New BufferRegion With {.position = Long.Parse(CStr(fetch!spectral_id))},
+                .formula = fetch!formula,
+                .guid = fetch!hashcode,
+                .intensity = Val(fetch!intensity),
+                .mz = Val(fetch!mz),
+                .name = fetch!name,
+                .organism = fetch!organism,
+                .rt = Val(fetch!rt),
+                .sample_source = fetch!biosample,
+                .source_file = fetch!filename
+            }
+
+            Return data
+        End Function
 
         ''' <summary>
         ''' write metadata to database at here
