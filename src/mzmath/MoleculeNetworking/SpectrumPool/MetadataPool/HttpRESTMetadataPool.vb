@@ -56,9 +56,14 @@ Namespace PoolData
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
             Dim json As String = url.GET
-            Dim obj As JsonObject = JsonParser.Parse(json)
+            Dim obj As Restful = Restful.ParseJSON(json)
 
-            Me.cluster_data = CType(obj, JavaScriptObject)!info
+            If obj.code = 404 Then
+                ' create new
+
+            Else
+                Me.cluster_data = obj.info
+            End If
         End Sub
 
         ''' <summary>
