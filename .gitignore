@@ -9,6 +9,7 @@
 .RData
 mzkit_old
 
+Rscript/Library/mzkit_app/test/KEGG_maps
 Rscript/Library/mzkit_app/assembly
 
 src/mzkit/setup/installer/
