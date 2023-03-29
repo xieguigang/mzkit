@@ -2,10 +2,32 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
+
+    Public Class Restful
+
+        Public Property code As Integer
+        Public Property debug As JavaScriptObject
+        Public Property info As JavaScriptObject
+
+        Public Shared Function ParseJSON(json As String) As Restful
+            Dim obj As JavaScriptObject = DirectCast(JsonParser.Parse(json), JsonObject)
+            Dim code As String = obj!code
+
+            Return New Restful With {
+                .code = Integer.Parse(code),
+                .debug = obj!debug,
+                .info = obj!info
+            }
+        End Function
+
+    End Class
 
     Public Class HttpTreeFs : Inherits PoolFs
 
@@ -39,7 +61,11 @@ Namespace PoolData
         End Sub
 
         Public Overrides Function GetTreeChilds(path As String) As IEnumerable(Of String)
-            Return $"{base}/get/childs/?q={ClusterHashIndex(path)}".LoadJSON(Of String())
+            Dim url As String = $"{base}/get/childs/?q={ClusterHashIndex(path)}"
+            Dim json As String = url.GET
+            Dim data = Restful.ParseJSON(json)
+
+            Return data.info
         End Function
 
         Public Shared Function ClusterHashIndex(path As String) As String
