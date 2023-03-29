@@ -107,7 +107,6 @@ Namespace PoolData
             Return New Metadata With {
                 .adducts = fetch!adducts,
                 .biodeep_id = fetch!biodeep_id,
-                .block = New BufferRegion With {.position = Long.Parse(CStr(fetch!spectral_id))},
                 .formula = fetch!formula,
                 .guid = fetch!hashcode,
                 .intensity = Val(fetch!intensity),
@@ -132,6 +131,10 @@ Namespace PoolData
 
             Dim fetch As JavaScriptObject = obj.info
             Dim data As Metadata = castMetaData(fetch)
+
+            data.block = New BufferRegion With {
+                .position = Long.Parse(CStr(fetch!spectral_id))
+            }
 
             Return data
         End Function
