@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
@@ -55,6 +56,11 @@ Namespace PoolData
             ' do nothing
         End Sub
 
+        ''' <summary>
+        ''' do nothing at here
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="id"></param>
         Public Overrides Sub SetRootId(path As String, id As String)
             'Dim key As String = ClusterHashIndex(path)
             'Dim meta As MetadataProxy = metadata_pool(key)
@@ -133,7 +139,24 @@ Namespace PoolData
         ''' <param name="p"></param>
         ''' <returns></returns>
         Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
-            Return $"{base}/get/spectrum/?hashcode={p.guid}&q={p.block.position}".GET.LoadJSON(Of PeakMs2)
+            Dim url As String = $"{base}/get/spectrum/?id={p.block.position}"
+            Dim json As String = url.GET
+            Dim data = Restful.ParseJSON(json)
+
+            If data.code <> 0 Then
+                Throw New InvalidDataException
+            End If
+
+            Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
+            Dim hashcode As String = data.info!hashcode
+            Dim mz As Double() = CStr(data.info!mz).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
+            Dim into As Double() = CStr(data.info!into).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
+            Dim spectral As ms2() = mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}).ToArray
+
+            Return New PeakMs2 With {
+                .lib_guid = hashcode,
+                .mzInto = spectral
+            }
         End Function
 
         Public Overrides Function WriteSpectrum(spectral As Spectra.PeakMs2) As Metadata
