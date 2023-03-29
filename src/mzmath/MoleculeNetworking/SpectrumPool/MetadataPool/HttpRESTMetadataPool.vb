@@ -57,8 +57,8 @@ Namespace PoolData
 
         Sub New(http As HttpTreeFs, path As String, parentId As Long)
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
-            Me.url_get = $"{http.base}/get/metadata"
-            Me.url_put = $"{http.base}/set/metadata"
+            Me.url_get = $"{http.base}/get/metadata/"
+            Me.url_put = $"{http.base}/set/metadata/"
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
             Dim json As String = url.GET
