@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
@@ -15,6 +16,11 @@ Namespace PoolData
         Public Property code As Integer
         Public Property debug As Object
         Public Property info As Object
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ParseJSON(json As WebResponseResult) As Restful
+            Return ParseJSON(json.html)
+        End Function
 
         Public Shared Function ParseJSON(json As String) As Restful
             Dim obj As JavaScriptObject = DirectCast(JsonParser.Parse(json), JsonObject)
@@ -121,12 +127,13 @@ Namespace PoolData
             Dim mz As String = spectral.mzInto.Select(Function(m) m.mz).Select(AddressOf NetworkByteOrderBitConvertor.GetBytes).IteratesALL.ToBase64String
             Dim into As String = spectral.mzInto.Select(Function(m) m.intensity).Select(AddressOf NetworkByteOrderBitConvertor.GetBytes).IteratesALL.ToBase64String
             Dim payload As New NameValueCollection
+            Dim url As String = $"{base}/put/spectral/"
             payload.Add("mz", mz)
             payload.Add("into", into)
             payload.Add("npeaks", spectral.mzInto.Length)
             payload.Add("hashcode", spectral.lib_guid)
-            Dim spectral_id As String = $"{base}/put/spectral/".POST(payload).html
-            metadata.block = New BufferRegion With {.position = spectral_id}
+            Dim spectral_id As Restful = Restful.ParseJSON(url.POST(payload))
+            metadata.block = New BufferRegion With {.position = Val(spectral_id.info)}
             Return metadata
         End Function
     End Class

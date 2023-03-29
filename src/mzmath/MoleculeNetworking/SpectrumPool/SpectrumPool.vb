@@ -184,7 +184,7 @@ Namespace PoolData
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)
-            Call DirectCast(fs, TreeFs).SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
+            Call fs.SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
 
             Return pool
         End Function
