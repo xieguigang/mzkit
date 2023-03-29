@@ -149,12 +149,22 @@ Namespace PoolData
         ''' <param name="p"></param>
         ''' <returns></returns>
         Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
-            Dim url As String = $"{base}/get/spectrum/?id={p.block.position}"
+            Return ReadSpectrum(p.block.position)
+        End Function
+
+        ''' <summary>
+        ''' the block location of the metadata is the database id of 
+        ''' the target spectral data actually 
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns></returns>
+        Public Overloads Function ReadSpectrum(p As String) As Spectra.PeakMs2
+            Dim url As String = $"{base}/get/spectrum/?id={p}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
 
             If data.code <> 0 Then
-                Throw New InvalidDataException
+                Return Nothing
             End If
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
@@ -163,9 +173,9 @@ Namespace PoolData
             Dim into As Double() = CStr(data.info!into).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
 
             If npeaks <> mz.Length Then
-                Throw New InvalidDataException
+                Return Nothing
             ElseIf npeaks <> into.Length Then
-                Throw New InvalidDataException
+                Return Nothing
             End If
 
             Dim spectral As ms2() = mz _
