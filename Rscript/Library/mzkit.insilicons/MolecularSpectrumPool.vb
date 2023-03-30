@@ -83,10 +83,9 @@ Public Module MolecularSpectrumPool
     ''' <returns></returns>
     <ExportAPI("conservedGuid")>
     Public Function conservedGuid(spectral As PeakMs2) As String
-        Dim peaks As String() = spectral.mzInto _
-            .OrderByDescending(Function(mzi) mzi.intensity) _
-            .Take(6) _
-            .Select(Function(m) m.mz.ToString("F1")) _
+        Dim desc = spectral.mzInto.OrderByDescending(Function(mzi) mzi.intensity).ToArray
+        Dim peaks As String() = desc _
+            .Select(Function(m) m.mz.ToString("F1") & ":" & m.intensity.ToString("G3")) _
             .ToArray
         Dim mz1 As String = spectral.mz.ToString("F1")
         Dim meta As String() = {
