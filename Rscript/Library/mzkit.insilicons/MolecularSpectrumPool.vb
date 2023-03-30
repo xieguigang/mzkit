@@ -18,10 +18,13 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="link"></param>
     ''' <param name="level"></param>
+    ''' <param name="split">
+    ''' hex, max=15
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String, Optional level As Double = 0.8) As SpectrumPool
-        Return SpectrumPool.Open(link, level, split:=6)
+    Public Function openPool(link As String, Optional level As Double = 0.9, Optional split As Integer = 9) As SpectrumPool
+        Return SpectrumPool.Open(link, level, split:=split)
     End Function
 
     ''' <summary>
