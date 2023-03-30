@@ -45,7 +45,7 @@ Public Module MolecularSpectrumPool
     ''' <param name="path"></param>
     ''' <returns></returns>
     <ExportAPI("getClusterInfo")>
-    Public Function getClusterInfo(pool As SpectrumPool, path As String) As Object
+    Public Function getClusterInfo(pool As SpectrumPool, Optional path As String = Nothing) As Object
         Dim tokens = path.Trim("\"c, "/"c).StringSplit("[\\/]+")
 
         For Each t As String In tokens
