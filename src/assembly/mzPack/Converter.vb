@@ -72,6 +72,16 @@ Imports stdNum = System.Math
 
 Public Module Converter
 
+    Public Function LoadAsciiFileAuto(file As String) As mzPack
+        If file.ExtensionSuffix("mgf") Then
+            Return LoadMgf(file)
+        ElseIf file.ExtensionSuffix("msp") Then
+            Return LoadMsp(file)
+        Else
+            Throw New NotImplementedException(file.FileName)
+        End If
+    End Function
+
     Public Function LoadMgf(file As String) As mzPack
         Dim data = MgfReader.ReadIons(file).IonPeaks.ToArray
         Dim rt_scans = data _
