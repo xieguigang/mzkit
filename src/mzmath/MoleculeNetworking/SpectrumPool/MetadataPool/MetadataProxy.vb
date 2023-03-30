@@ -40,7 +40,9 @@ Namespace PoolData
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Add(id As String, metadata As Metadata)
-            Call data.Add(id, metadata)
+            If Not data.ContainsKey(id) Then
+                Call data.Add(id, metadata)
+            End If
         End Sub
 
         Public Overrides Function HasGuid(id As String) As Boolean
