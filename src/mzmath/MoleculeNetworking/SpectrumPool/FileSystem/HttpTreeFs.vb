@@ -43,6 +43,7 @@ Namespace PoolData
         ''' </summary>
         Friend ReadOnly base As String
         Friend ReadOnly metadata_pool As New Dictionary(Of String, HttpRESTMetadataPool)
+        Friend ReadOnly cluster_data As New Dictionary(Of String, JavaScriptObject)
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
         Public ReadOnly Property HttpServices As String
@@ -80,6 +81,17 @@ Namespace PoolData
         End Sub
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="key">
+        ''' hashcode of the cluster tree path
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetCluster(key As String) As JavaScriptObject
+            Return cluster_data.TryGetValue(key)
+        End Function
+
+        ''' <summary>
         ''' get tree path of the childs
         ''' </summary>
         ''' <param name="path"></param>
@@ -92,9 +104,16 @@ Namespace PoolData
 
             For i As Integer = 0 To childs_data.Length - 1
                 Dim obj As JavaScriptObject = childs_data.GetValue(i)
-                Dim key As String = obj!key
+                Dim key As String = Strings.Trim(CStr(obj!key))
+                Dim dir As String = $"{path}/{key}"
 
-                Yield $"{path}/{key}"
+                key = ClusterHashIndex(dir)
+
+                If Not cluster_data.ContainsKey(key) Then
+                    cluster_data.Add(key, obj)
+                End If
+
+                Yield dir
             Next
         End Function
 
