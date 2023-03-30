@@ -570,7 +570,7 @@ Module MzWeb
     End Function
 
     <Extension>
-    Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As String) As PeakMs2()
+    Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As Boolean) As PeakMs2()
         Dim unique As String() = ms2peaks _
           .Select(Function(p)
                       If tag_source Then
@@ -583,6 +583,18 @@ Module MzWeb
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)
+            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace("ms2.mzPack#", "").Replace("queryMs2.mzPack#", "")
+
+            Dim src As String = ms2peaks(i).lib_guid.Match(".+?\.mzPack[# ]")
+
+            If Not src.StringEmpty Then
+                ms2peaks(i).file = src.Trim("#"c, " "c)
+                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace(ms2peaks(i).lib_guid.Match(".+\.mzPack[# ]"), "")
+
+                If tag_source Then
+                    ms2peaks(i).lib_guid = $"{ms2peaks(i).file} {ms2peaks(i).lib_guid}".Trim
+                End If
+            End If
         Next
 
         Return ms2peaks
