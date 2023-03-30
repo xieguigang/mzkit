@@ -54,6 +54,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
@@ -70,6 +71,36 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports stdNum = System.Math
 
 Public Module Converter
+
+    Public Function LoadMgf(file As String) As mzPack
+        Dim data = MgfReader.ReadIons(file).IonPeaks.ToArray
+        Dim rt_scans = data _
+            .GroupBy(Function(t) Val(t.rt), Function(a, b) stdNum.Abs(a - b) <= 2) _
+            .OrderBy(Function(d) Val(d.name)) _
+            .ToArray
+        Dim ms1 = rt_scans _
+            .Select(Function(group, i)
+                        Dim ms2 = group.Select(Function(a) a.Scan2).ToArray
+                        Dim bpc = ms2.OrderByDescending(Function(a) a.intensity).First
+
+                        Return New ScanMS1 With {
+                            .products = ms2,
+                            .BPC = bpc.intensity,
+                            .into = ms2.Select(Function(a) a.intensity).ToArray,
+                            .mz = ms2.Select(Function(a) a.parentMz).ToArray,
+                            .rt = Val(group.name),
+                            .TIC = .into.Sum,
+                            .scan_id = $"[MS1] scan_{i + 1}, {ms2.Length} ions, basePeak_m/z={bpc.parentMz}, total_ions={ .TIC}"
+                        }
+                    End Function) _
+            .ToArray
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.LCMS,
+            .MS = ms1,
+            .source = SolveTagSource(file)
+        }
+    End Function
 
     Public Function LoadMsp(file As String) As mzPack
         Dim msp As MspData() = MspData.Load(file).ToArray
