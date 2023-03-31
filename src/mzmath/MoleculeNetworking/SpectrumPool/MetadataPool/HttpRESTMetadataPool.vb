@@ -1,8 +1,11 @@
 ﻿
 Imports System.Collections.Specialized
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
@@ -13,6 +16,7 @@ Namespace PoolData
         Dim url_get As String
         Dim url_put As String
         Dim url_setRoot As String
+        Dim url_setScore As String
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
         Dim rootId As String
@@ -70,6 +74,7 @@ Namespace PoolData
             Me.url_get = $"{http.base}/get/metadata/"
             Me.url_put = $"{http.base}/set/metadata/"
             Me.url_setRoot = $"{http.base}/set/root/"
+            Me.url_setScore = $"{http.base}/set/score/"
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
             Dim json As String = url.GET
@@ -155,6 +160,42 @@ Namespace PoolData
             If result.code <> 0 Then
                 Call VBDebugger.EchoLine(result.debug)
             End If
+        End Sub
+
+        Public Overrides Sub Add(id As String, score As Double, align As AlignmentOutput, pval As Double)
+            Dim payload As New NameValueCollection
+            Dim metadata = local_cache(id)
+
+            If align Is Nothing Then
+                ' config for root
+                Call payload.Add("n_hits", 0)
+                Call payload.Add("consensus", "*")
+                Call payload.Add("forward", 1)
+                Call payload.Add("reverse", 1)
+                Call payload.Add("jaccard", 1)
+                Call payload.Add("entropy", 1)
+            Else
+                ' member spectrum align with root spectrum 
+                ' of current cluster
+                Dim consensus As Double() = align.alignments _
+                    .Where(Function(a) a.query > 0 AndAlso a.ref > 0) _
+                    .Select(Function(a) a.mz) _
+                    .ToArray
+
+                Call payload.Add("n_hits", consensus.Length)
+                Call payload.Add("consensus", consensus.Select(AddressOf NetworkByteOrderBitConvertor.GetBytes).IteratesALL.ToBase64String)
+                Call payload.Add("forward", align.forward)
+                Call payload.Add("reverse", align.reverse)
+                Call payload.Add("jaccard", align.jaccard)
+                Call payload.Add("entropy", align.entropy)
+            End If
+
+            Call payload.Add("p_value", pval)
+            Call payload.Add("score", score)
+            Call payload.Add("spectrum_id", metadata.block.position)
+            Call payload.Add("cluster_id", Me.guid)
+
+            Call url_setScore.POST(payload)
         End Sub
     End Class
 End Namespace

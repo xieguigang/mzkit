@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
 Namespace PoolData
 
@@ -91,6 +92,7 @@ Namespace PoolData
         Public Sub Add(spectrum As PeakMs2)
             Dim score As AlignmentOutput
             Dim PIScore As Double
+            Dim pval As Double
 
             Call fs.Add(spectrum)
 
@@ -100,24 +102,32 @@ Namespace PoolData
                 metadata.SetRootId(rootId)
                 score = Nothing
                 PIScore = 1
+                pval = 0
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else
                 If Not representative Is Nothing Then
                     Call fs.Add(representative)
                 End If
 
+                Static zero As Double() = New Double() {.0, .0, .0, .0}
+
                 score = fs.GetScore(spectrum.lib_guid, representative.lib_guid)
                 PIScore = score.forward *
                     score.reverse *
                     score.jaccard *
                     score.entropy
+                pval = t.Test({
+                    score.forward, score.reverse, score.jaccard, score.entropy
+                }, zero, Hypothesis.Greater).Pvalue
             End If
 
             If score Is Nothing OrElse PIScore > fs.level Then
                 ' in current class node
                 metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
+                metadata.Add(spectrum.lib_guid, PIScore, score, pval)
+
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
-            ElseIf score <= 0 Then
+            ElseIf PIScore <= 0 Then
                 If zeroBlock Is Nothing Then
                     zeroBlock = New SpectrumPool(fs, handle & $"/z/")
                 End If
@@ -128,7 +138,7 @@ Namespace PoolData
                 Dim i As Integer = 0
 
                 Do While t <= fs.level
-                    If score <= t Then
+                    If PIScore <= t Then
                         Dim key As String = tags(i)
 
                         If Not classTree.ContainsKey(key) Then
