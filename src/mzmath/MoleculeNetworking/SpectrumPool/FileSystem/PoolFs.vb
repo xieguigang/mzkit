@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace PoolData
 
@@ -41,10 +42,11 @@ Namespace PoolData
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetScore(x As String, y As String) As Double
-            Return score.GetSimilarity(x, y)
+        Public Function GetScore(x As String, y As String) As AlignmentOutput
+            Return score.GetAlignment(x, y)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub SetScore(da As Double, intocutoff As Double, getSpectral As Func(Of String, PeakMs2))
             score = New MSScoreGenerator(
                 align:=AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff)),

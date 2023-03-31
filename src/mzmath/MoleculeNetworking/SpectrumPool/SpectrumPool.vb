@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace PoolData
 
@@ -88,7 +89,8 @@ Namespace PoolData
         End Sub
 
         Public Sub Add(spectrum As PeakMs2)
-            Dim score As Double
+            Dim score As AlignmentOutput
+            Dim PIScore As Double
 
             Call fs.Add(spectrum)
 
@@ -96,7 +98,8 @@ Namespace PoolData
                 representative = spectrum
                 rootId = spectrum.lib_guid
                 metadata.SetRootId(rootId)
-                score = 1
+                score = Nothing
+                PIScore = 1
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else
                 If Not representative Is Nothing Then
@@ -104,9 +107,13 @@ Namespace PoolData
                 End If
 
                 score = fs.GetScore(spectrum.lib_guid, representative.lib_guid)
+                PIScore = score.forward *
+                    score.reverse *
+                    score.jaccard *
+                    score.entropy
             End If
 
-            If score > fs.level Then
+            If score Is Nothing OrElse PIScore > fs.level Then
                 ' in current class node
                 metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
