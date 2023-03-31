@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 
 ''' <summary>
@@ -21,7 +22,11 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
     ''' </param>
     ''' <param name="equals"></param>
     ''' <param name="gt"></param>
-    Sub New(align As AlignmentProvider, getSpectrum As Func(Of String, PeakMs2), Optional equals As Double = 1, Optional gt As Double = 0)
+    Sub New(align As AlignmentProvider,
+            getSpectrum As Func(Of String, PeakMs2),
+            Optional equals As Double = 1,
+            Optional gt As Double = 0)
+
         Call MyBase.New(equals, gt)
 
         Me.align = align
@@ -43,10 +48,16 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetAlignment(x As String, y As String) As AlignmentOutput
+        Return align.CreateAlignment(GetSpectral(x).mzInto, GetSpectral(y).mzInto)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Return align.GetScore(GetSpectral(x).mzInto, GetSpectral(y).mzInto)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"[{Me.GetHashCode.ToHexString}] {align.ToString}, has {cache.Count} spectrum data cached."
     End Function

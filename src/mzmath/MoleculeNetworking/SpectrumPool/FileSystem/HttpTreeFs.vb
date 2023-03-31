@@ -171,8 +171,8 @@ Namespace PoolData
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
             Dim hashcode As String = data.info!hashcode
-            Dim mz As Double() = CStr(data.info!mz).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
-            Dim into As Double() = CStr(data.info!into).Base64RawBytes.Split(8).Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b)).ToArray
+            Dim mz As Double() = decode(CStr(data.info!mz))
+            Dim into As Double() = decode(CStr(data.info!into))
 
             If npeaks <> mz.Length Then
                 Return Nothing
@@ -192,10 +192,26 @@ Namespace PoolData
             }
         End Function
 
-        Public Overrides Function WriteSpectrum(spectral As Spectra.PeakMs2) As Metadata
+        Private Shared Function decode(base64 As String) As Double()
+            Return base64.Base64RawBytes _
+                .AddGzipMagic _
+                .UnGzipStream _
+                .ToArray _
+                .Split(8) _
+                .Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b, Scan0)) _
+                .ToArray
+        End Function
+
+        Private Shared Function encode(x As IEnumerable(Of Double)) As String
+            Return x.Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
+                .IteratesALL _
+                .GZipAsBase64(noMagic:=True)
+        End Function
+
+        Public Overrides Function WriteSpectrum(spectral As PeakMs2) As Metadata
             Dim metadata As Metadata = TreeFs.GetMetadata(spectral)
-            Dim mz As String = spectral.mzInto.Select(Function(m) m.mz).Select(AddressOf NetworkByteOrderBitConvertor.GetBytes).IteratesALL.ToBase64String
-            Dim into As String = spectral.mzInto.Select(Function(m) m.intensity).Select(AddressOf NetworkByteOrderBitConvertor.GetBytes).IteratesALL.ToBase64String
+            Dim mz As String = encode(spectral.mzInto.Select(Function(m) m.mz))
+            Dim into As String = encode(spectral.mzInto.Select(Function(m) m.intensity))
             Dim payload As New NameValueCollection
             Dim url As String = $"{base}/put/spectral/"
             payload.Add("mz", mz)
