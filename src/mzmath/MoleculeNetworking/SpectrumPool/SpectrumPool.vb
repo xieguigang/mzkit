@@ -118,7 +118,7 @@ Namespace PoolData
                     score.entropy
                 pval = t.Test({
                     score.forward, score.reverse, score.jaccard, score.entropy
-                }, zero, Hypothesis.Greater).Pvalue
+                }, zero, Hypothesis.TwoSided).Pvalue
             End If
 
             If score Is Nothing OrElse PIScore > fs.level Then
