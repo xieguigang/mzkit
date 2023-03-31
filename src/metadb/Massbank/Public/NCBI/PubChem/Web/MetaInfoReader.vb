@@ -360,7 +360,7 @@ Namespace NCBI.PubChem
                                        Return Not a.UnitValue Is Nothing
                                    End Function) _
                             .Select(Function(a) a.UnitValue) _
-                            .FirstOrDefault
+                            .ToArray
                      End Function)
                 desc.MeltingPoint = experiments.safeProject(
                     key:="Melting Point",
@@ -370,7 +370,7 @@ Namespace NCBI.PubChem
                                        Return Not a.UnitValue Is Nothing
                                    End Function) _
                             .Select(Function(a) a.UnitValue) _
-                            .FirstOrDefault
+                            .ToArray
                      End Function)
             End If
 
