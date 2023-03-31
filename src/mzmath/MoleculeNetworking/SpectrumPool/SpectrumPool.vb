@@ -120,7 +120,7 @@ Namespace PoolData
                 Dim t As Double = fs.splitDelta
                 Dim i As Integer = 0
 
-                Do While t < fs.level
+                Do While t <= fs.level
                     If score <= t Then
                         Dim key As String = tags(i)
 
