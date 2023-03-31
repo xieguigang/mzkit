@@ -15,8 +15,14 @@ Namespace PoolData
         ''' </summary>
         Friend ReadOnly base As String
         Friend ReadOnly metadata_pool As New Dictionary(Of String, HttpRESTMetadataPool)
+        Friend ReadOnly cluster_data As New Dictionary(Of String, JavaScriptObject)
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
+        Public ReadOnly Property HttpServices As String
+            Get
+                Return base
+            End Get
+        End Property
 
         Sub New(url As String)
             base = url
@@ -47,6 +53,17 @@ Namespace PoolData
         End Sub
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="key">
+        ''' hashcode of the cluster tree path
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetCluster(key As String) As JavaScriptObject
+            Return cluster_data.TryGetValue(key)
+        End Function
+
+        ''' <summary>
         ''' get tree path of the childs
         ''' </summary>
         ''' <param name="path"></param>
@@ -59,9 +76,16 @@ Namespace PoolData
 
             For i As Integer = 0 To childs_data.Length - 1
                 Dim obj As JavaScriptObject = childs_data.GetValue(i)
-                Dim key As String = obj!key
+                Dim key As String = Strings.Trim(CStr(obj!key))
+                Dim dir As String = $"{path}/{key}"
 
-                Yield $"{path}/{key}"
+                key = ClusterHashIndex(dir)
+
+                If Not cluster_data.ContainsKey(key) Then
+                    cluster_data.Add(key, obj)
+                End If
+
+                Yield dir
             Next
         End Function
 
@@ -88,10 +112,15 @@ Namespace PoolData
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
-            Dim meta As New HttpRESTMetadataPool(Me, path, getParentId(path))
             Dim key As String = ClusterHashIndex(path)
-            metadata_pool.Add(key, meta)
-            Return meta
+
+            If Not metadata_pool.ContainsKey(key) Then
+                Dim meta As New HttpRESTMetadataPool(Me, path, getParentId(path))
+                metadata_pool.Add(key, meta)
+                Return meta
+            Else
+                Return metadata_pool(key)
+            End If
         End Function
 
         Public Overrides Function FindRootId(path As String) As String
@@ -111,12 +140,22 @@ Namespace PoolData
         ''' <param name="p"></param>
         ''' <returns></returns>
         Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
-            Dim url As String = $"{base}/get/spectrum/?id={p.block.position}"
+            Return ReadSpectrum(p.block.position)
+        End Function
+
+        ''' <summary>
+        ''' the block location of the metadata is the database id of 
+        ''' the target spectral data actually 
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns></returns>
+        Public Overloads Function ReadSpectrum(p As String) As Spectra.PeakMs2
+            Dim url As String = $"{base}/get/spectrum/?id={p}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
 
             If data.code <> 0 Then
-                Throw New InvalidDataException
+                Return Nothing
             End If
 
             Dim npeaks As Integer = Integer.Parse(CStr(data.info!npeaks))
@@ -125,9 +164,9 @@ Namespace PoolData
             Dim into As Double() = decode(CStr(data.info!into))
 
             If npeaks <> mz.Length Then
-                Throw New InvalidDataException
+                Return Nothing
             ElseIf npeaks <> into.Length Then
-                Throw New InvalidDataException
+                Return Nothing
             End If
 
             Dim spectral As ms2() = mz _

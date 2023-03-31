@@ -66,10 +66,7 @@ Namespace PoolData
 
         Public Overrides ReadOnly Property AllClusterMembers As IEnumerable(Of Metadata)
             Get
-                Dim json As String = url_get.GET
-                Dim data As Dictionary(Of String, Metadata) = json.LoadJSON(Of Dictionary(Of String, Metadata))
-                local_cache = data
-                Return data
+                Return FetchClusterData(url_get, hash_index)
             End Get
         End Property
 
@@ -99,6 +96,38 @@ Namespace PoolData
             End If
         End Sub
 
+        Public Shared Iterator Function FetchClusterData(url_get As String, hash_index As String) As IEnumerable(Of Metadata)
+            Dim json As String = $"{url_get}?id={hash_index}&is_cluster=true".GET
+            Dim list As Restful = Restful.ParseJSON(json)
+
+            If list.code <> 0 Then
+                Return
+            End If
+
+            Dim info As JavaScriptObject = list.info
+            Dim array As Array = info!metabolites
+
+            For i As Integer = 0 To array.Length - 1
+                Yield castMetaData(array(i))
+            Next
+        End Function
+
+        Private Shared Function castMetaData(fetch As JavaScriptObject) As Metadata
+            Return New Metadata With {
+                .adducts = fetch!adducts,
+                .biodeep_id = fetch!biodeep_id,
+                .formula = fetch!formula,
+                .guid = fetch!hashcode,
+                .intensity = Val(fetch!intensity),
+                .mz = Val(fetch!mz),
+                .name = fetch!name,
+                .organism = fetch!organism,
+                .rt = Val(fetch!rt),
+                .sample_source = fetch!biosample,
+                .source_file = fetch!filename
+            }
+        End Function
+
         Public Function GetMetadataByHashKey(hash As String) As Metadata
             Dim url As String = $"{url_get}?id={hash}"
             Dim json As String = url.GET
@@ -110,19 +139,10 @@ Namespace PoolData
             End If
 
             Dim fetch As JavaScriptObject = obj.info
-            Dim data As New Metadata With {
-                .adducts = fetch!adducts,
-                .biodeep_id = fetch!biodeep_id,
-                .block = New BufferRegion With {.position = Long.Parse(CStr(fetch!spectral_id))},
-                .formula = fetch!formula,
-                .guid = fetch!hashcode,
-                .intensity = Val(fetch!intensity),
-                .mz = Val(fetch!mz),
-                .name = fetch!name,
-                .organism = fetch!organism,
-                .rt = Val(fetch!rt),
-                .sample_source = fetch!biosample,
-                .source_file = fetch!filename
+            Dim data As Metadata = castMetaData(fetch)
+
+            data.block = New BufferRegion With {
+                .position = Long.Parse(CStr(fetch!spectral_id))
             }
 
             Return data
