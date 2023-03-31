@@ -21,6 +21,10 @@ Namespace PoolData
         Dim cluster_data As JavaScriptObject
         Dim rootId As String
 
+        ''' <summary>
+        ''' the cluster id in the database
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property guid As Long
             Get
                 Return Val(cluster_data!id)
