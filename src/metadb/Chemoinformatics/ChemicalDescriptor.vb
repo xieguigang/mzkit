@@ -77,9 +77,15 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
-Public Class UnitValue
+Public Class Value
 
     Public Property value As Double
+    Public Property reference As String
+
+End Class
+
+Public Class UnitValue : Inherits Value
+
     Public Property unit As String
 
     Sub New()
@@ -94,6 +100,7 @@ End Class
 Public Class CCS
 
     Public Property value As String
+    Public Property ion As String
     Public Property reference As String
 
     Public Overrides Function ToString() As String
@@ -143,8 +150,13 @@ Public Class ChemicalDescriptor
     Public Property ComponentCount As Integer
     Public Property TautoCount As Integer
     Public Property CovalentlyBonded As Integer
-    Public Property MeltingPoint As UnitValue
-    Public Property Solubility As UnitValue
+    Public Property MeltingPoint As UnitValue()
+    Public Property Solubility As UnitValue()
+    Public Property BoilingPoint As UnitValue()
+    Public Property FlashPoint As UnitValue()
+    Public Property Density As UnitValue()
+    Public Property VaporPressure As UnitValue()
+
     Public Property LogP As Double
     Public Property CCS As CCS()
 
