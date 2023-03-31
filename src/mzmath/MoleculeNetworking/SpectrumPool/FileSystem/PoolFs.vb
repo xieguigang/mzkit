@@ -36,8 +36,8 @@ Namespace PoolData
         ''' </summary>
         ''' <param name="spectrum"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(data As PeakMs2)
-            Call score.Add(data)
+        Public Sub Add(spectrum As PeakMs2)
+            Call score.Add(spectrum)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
