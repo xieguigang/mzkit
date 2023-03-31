@@ -94,8 +94,6 @@ Namespace PoolData
             Dim PIScore As Double
             Dim pval As Double
 
-            Call fs.Add(spectrum)
-
             If representative Is Nothing Then
                 representative = spectrum
                 rootId = spectrum.lib_guid
@@ -105,13 +103,9 @@ Namespace PoolData
                 pval = 0
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else
-                If Not representative Is Nothing Then
-                    Call fs.Add(representative)
-                End If
-
                 Static zero As Double() = New Double() {.0, .0, .0, .0}
 
-                score = fs.GetScore(spectrum.lib_guid, representative.lib_guid)
+                score = fs.GetScore(spectrum, representative)
                 PIScore = score.forward *
                     score.reverse *
                     score.jaccard *
@@ -206,7 +200,7 @@ Namespace PoolData
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)
-            Call fs.SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
+            Call fs.SetScore(0.3, 0.05)
 
             Return pool
         End Function
