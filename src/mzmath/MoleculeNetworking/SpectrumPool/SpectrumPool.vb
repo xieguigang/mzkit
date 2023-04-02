@@ -1,4 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
 Namespace PoolData
 
@@ -88,29 +90,38 @@ Namespace PoolData
         End Sub
 
         Public Sub Add(spectrum As PeakMs2)
-            Dim score As Double
-
-            Call fs.Add(spectrum)
+            Dim score As AlignmentOutput
+            Dim PIScore As Double
+            Dim pval As Double
 
             If representative Is Nothing Then
                 representative = spectrum
                 rootId = spectrum.lib_guid
                 metadata.SetRootId(rootId)
-                score = 1
+                score = Nothing
+                PIScore = 1
+                pval = 0
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else
-                If Not representative Is Nothing Then
-                    Call fs.Add(representative)
-                End If
+                Static zero As Double() = New Double() {.0, .0, .0, .0}
 
-                score = fs.GetScore(spectrum.lib_guid, representative.lib_guid)
+                score = fs.GetScore(spectrum, representative)
+                PIScore = score.forward *
+                    score.reverse *
+                    score.jaccard *
+                    score.entropy
+                pval = t.Test({
+                    score.forward, score.reverse, score.jaccard, score.entropy
+                }, zero, Hypothesis.TwoSided).Pvalue
             End If
 
-            If score > fs.level Then
+            If score Is Nothing OrElse PIScore > fs.level Then
                 ' in current class node
                 metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
+                metadata.Add(spectrum.lib_guid, PIScore, score, pval)
+
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
-            ElseIf score <= 0 Then
+            ElseIf PIScore <= 0 Then
                 If zeroBlock Is Nothing Then
                     zeroBlock = New SpectrumPool(fs, handle & $"/z/")
                 End If
@@ -120,8 +131,8 @@ Namespace PoolData
                 Dim t As Double = fs.splitDelta
                 Dim i As Integer = 0
 
-                Do While t < fs.level
-                    If score <= t Then
+                Do While t <= fs.level
+                    If PIScore <= t Then
                         Dim key As String = tags(i)
 
                         If Not classTree.ContainsKey(key) Then
@@ -189,7 +200,7 @@ Namespace PoolData
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)
-            Call fs.SetScore(0.3, 0.05, AddressOf pool.GetSpectral)
+            Call fs.SetScore(0.3, 0.05)
 
             Return pool
         End Function

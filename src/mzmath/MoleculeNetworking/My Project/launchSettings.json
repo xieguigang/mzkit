@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "MoleculeNetworking": {
+      "commandName": "Project",
+      "commandLineArgs": "\"E:\\spectrum-taxonomy\\test\\blood_pool\\http_human_blood.R\""
+    },
+    "run": {
+      "commandName": "Executable",
+      "executablePath": "E:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "\"E:\\spectrum-taxonomy\\test\\blood_pool\\http_human_blood.R\""
+    }
+  }
+}
