@@ -61,6 +61,14 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace MetaLib.Models
 
+    Public Class BiosampleSource
+
+        Public Property biosample As String
+        Public Property source As String
+        Public Property reference As String
+
+    End Class
+
     ''' <summary>
     ''' 对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
     ''' </summary>
@@ -88,7 +96,7 @@ Namespace MetaLib.Models
         ''' </summary>
         ''' <returns></returns>
         <MessagePackMember(15)> Public Property pathways As String()
-        <MessagePackMember(16)> Public Property samples As String()
+        <MessagePackMember(16)> Public Property samples As BiosampleSource()
 
         Public Overrides Function ToString() As String
             Return name

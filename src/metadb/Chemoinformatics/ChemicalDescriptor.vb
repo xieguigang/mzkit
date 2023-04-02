@@ -87,6 +87,7 @@ End Class
 Public Class UnitValue : Inherits Value
 
     Public Property unit As String
+    Public Property condition As String
 
     Sub New()
     End Sub
@@ -159,6 +160,7 @@ Public Class ChemicalDescriptor
 
     Public Property LogP As Value()
     Public Property CCS As CCS()
+    Public Property Odor As UnitValue()
 
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
