@@ -80,12 +80,18 @@ Namespace NCBI.PubChem
             ElseIf Not info.Value.Number Is Nothing Then
                 Return info.Value.Number
             ElseIf Not info.Value.StringWithMarkup Is Nothing Then
-                Dim str As String = info.InfoValue
+                Dim str As String = CStr(info.InfoValue)
 
                 If str.IsSimpleNumber Then
                     Return Double.Parse(str)
                 Else
-                    Return 0
+                    str = str.Match(SimpleNumberPattern)
+
+                    If Not str.StringEmpty Then
+                        Return Double.Parse(str)
+                    Else
+                        Return 0.0
+                    End If
                 End If
             Else
                 Return 0

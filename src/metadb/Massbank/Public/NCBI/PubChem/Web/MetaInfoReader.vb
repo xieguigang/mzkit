@@ -323,7 +323,7 @@ Namespace NCBI.PubChem
                                                         Return info.Select(Function(c)
                                                                                Return New Chemoinformatics.Value With {
                                                                                   .value = c.GetInformationNumber,
-                                                                                  .reference = ""
+                                                                                  .reference = c.Reference
                                                                                }
                                                                            End Function).ToArray
                                                     End Function)
