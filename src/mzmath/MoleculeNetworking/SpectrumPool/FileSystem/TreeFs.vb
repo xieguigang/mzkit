@@ -113,6 +113,16 @@ Namespace PoolData
         End Function
 
         Public Shared Function GetMetadata(spectral As PeakMs2) As Metadata
+            Dim name As String = spectral.meta.TryGetValue("name")
+
+            If name.StringEmpty Then
+                name = "unknown conserved[" & spectral.mzInto _
+                    .OrderByDescending(Function(m) m.intensity) _
+                    .Take(5) _
+                    .Select(Function(mzi) mzi.mz.ToString("F2")) _
+                    .JoinBy("/") & "]"
+            End If
+
             Return New Metadata With {
                 .guid = spectral.lib_guid,
                 .intensity = spectral.intensity,
@@ -123,7 +133,7 @@ Namespace PoolData
                 .source_file = spectral.file,
                 .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
-                .name = spectral.meta.TryGetValue("name", [default]:="unknown conserved"),
+                .name = name,
                 .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
             }
         End Function

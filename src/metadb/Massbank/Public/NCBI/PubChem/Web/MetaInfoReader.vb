@@ -180,6 +180,13 @@ Namespace NCBI.PubChem
                         End Function) _
                 .ToArray
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0").stripMarkupString
+
+            If InChIKey.StringEmpty Then
+                InChIKey = descriptors("InChIKey") _
+                    .GetInformationString("#0") _
+                    .stripMarkupString
+            End If
+
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms") _
@@ -194,13 +201,7 @@ Namespace NCBI.PubChem
                 .GetInformList("/Names and Identifiers/Synonyms/Depositor-Supplied Synonyms/*") _
                 .Select(Function(a) any.ToString(a.InfoValue).stripMarkupString) _
                 .ToArray
-            Dim tissues = view _
-                 .GetInform("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*") _
-                ?.Value _
-                ?.StringWithMarkup _
-                 .SafeQuery _
-                 .Select(Function(a) a.String.stripMarkupString) _
-                 .ToArray
+            Dim sources = view.GetBiosampleList.ToArray
             Dim taxon = view("Taxonomy") _
                 .GetInformation("*", multipleInfo:=True) _
                 .TryCast(Of Information()) _
@@ -233,7 +234,7 @@ Namespace NCBI.PubChem
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
             Dim xref As New xref With {
                 .InChI = InChI,
-                .CAS = CASNumber,
+                .CAS = CASNumber.Distinct.ToArray,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
@@ -275,11 +276,30 @@ Namespace NCBI.PubChem
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray,
                 .organism = taxon,
-                .chemical = computedProperties.parseChemical(experimentProperties),
-                .samples = tissues,
+                .chemical = computedProperties.parseChemical().parseExperimentals(experimentProperties),
+                .samples = sources,
                 .IUPACName = IUPAC,
                 .description = desc.JoinBy(vbCrLf)
             }
+        End Function
+
+        <Extension>
+        Private Iterator Function GetBiosampleList(view As PugViewRecord) As IEnumerable(Of BiosampleSource)
+            For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*")
+                Yield New BiosampleSource With {
+                    .biosample = "Tissue",
+                    .reference = c.Reference,
+                    .source = CStr(c.InfoValue)
+                }
+            Next
+
+            For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Cellular Locations/*")
+                Yield New BiosampleSource With {
+                    .biosample = "SubCellular Location",
+                    .reference = c.Reference,
+                    .source = CStr(c.InfoValue)
+                }
+            Next
         End Function
 
         <Extension>
@@ -316,7 +336,58 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Private Function parseChemical(computedProperties As Section, experiments As Section) As ChemicalDescriptor
+        Private Iterator Function logPValues(info As IEnumerable(Of Information)) As IEnumerable(Of Chemoinformatics.Value)
+            For Each c As Information In info
+                Yield New Chemoinformatics.Value With {
+                    .value = c.GetInformationNumber,
+                    .reference = c.Reference
+                }
+            Next
+        End Function
+
+        <Extension>
+        Private Iterator Function CCSValues(info As IEnumerable(Of Information)) As IEnumerable(Of CCS)
+            For Each c As Information In info
+                Dim valStr = any.ToString(c.InfoValue).stripMarkupString
+                Dim val As String = valStr.Match(SimpleNumberPattern)
+                Dim ionTag As String = valStr.Replace(val, "").Trim.GetTagValue(" ", trim:=True).Value
+
+                Yield New CCS With {
+                    .value = Double.Parse(val),
+                    .reference = c.Reference.stripMarkupString,
+                    .ion = ionTag
+                }
+            Next
+        End Function
+
+        Private Function getValues(info As IEnumerable(Of Information)) As UnitValue()
+            Return info _
+                .Where(Function(a)
+                           Return Not a.UnitValue Is Nothing
+                       End Function) _
+                .Select(Function(a) a.UnitValue) _
+                .ToArray
+        End Function
+
+        <Extension>
+        Private Function parseExperimentals(desc As ChemicalDescriptor, experiments As Section)
+            If Not experiments Is Nothing Then
+                desc.LogP = experiments.safeProject(key:="LogP", Function(info) info.logPValues.ToArray)
+                desc.CCS = experiments.safeProject(key:="Collision Cross Section", Function(info) info.CCSValues.ToArray)
+                desc.Solubility = experiments.safeProject(key:="Solubility", AddressOf getValues)
+                desc.MeltingPoint = experiments.safeProject(key:="Melting Point", AddressOf getValues)
+                desc.BoilingPoint = experiments.safeProject(key:="Boiling Point", AddressOf getValues)
+                desc.FlashPoint = experiments.safeProject(key:="Flash Point", AddressOf getValues)
+                desc.Density = experiments.safeProject(key:="Density", AddressOf getValues)
+                desc.VaporPressure = experiments.safeProject(key:="Vapor Pressure", AddressOf getValues)
+                desc.Odor = experiments.safeProject(key:="Odor", AddressOf getValues)
+            End If
+
+            Return desc
+        End Function
+
+        <Extension>
+        Private Function parseChemical(computedProperties As Section) As ChemicalDescriptor
             Dim desc As New ChemicalDescriptor With {
                 .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
                 .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
@@ -337,42 +408,6 @@ Namespace NCBI.PubChem
                 .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
                 .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
             }
-
-            If Not experiments Is Nothing Then
-                desc.LogP = experiments("LogP").GetInformationNumber("*")
-                desc.CCS = experiments.safeProject(
-                    key:="Collision Cross Section",
-                     Function(info)
-                         Return info _
-                            .Select(Function(c)
-                                        Return New CCS With {
-                                            .value = any.ToString(c.InfoValue).stripMarkupString,
-                                            .reference = c.Reference.stripMarkupString
-                                        }
-                                    End Function) _
-                            .ToArray
-                     End Function)
-                desc.Solubility = experiments.safeProject(
-                    key:="Solubility",
-                     Function(info)
-                         Return info _
-                            .Where(Function(a)
-                                       Return Not a.UnitValue Is Nothing
-                                   End Function) _
-                            .Select(Function(a) a.UnitValue) _
-                            .FirstOrDefault
-                     End Function)
-                desc.MeltingPoint = experiments.safeProject(
-                    key:="Melting Point",
-                     Function(info)
-                         Return info _
-                            .Where(Function(a)
-                                       Return Not a.UnitValue Is Nothing
-                                   End Function) _
-                            .Select(Function(a) a.UnitValue) _
-                            .FirstOrDefault
-                     End Function)
-            End If
 
             Return desc
         End Function

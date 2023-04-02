@@ -60,7 +60,18 @@ Namespace PoolData
         ''' </param>
         ''' <returns></returns>
         Public Function GetCluster(key As String) As JavaScriptObject
-            Return cluster_data.TryGetValue(key)
+            If Not cluster_data.ContainsKey(key) Then
+                Dim url As String = $"{base}/get/cluster/?path_hash={key}"
+                Dim json = Restful.ParseJSON(url.GET)
+
+                If json.code <> 0 Then
+                    Return Nothing
+                Else
+                    cluster_data.Add(key, json.info)
+                End If
+            End If
+
+            Return cluster_data(key)
         End Function
 
         ''' <summary>

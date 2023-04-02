@@ -225,7 +225,9 @@ Module PubChemToolKit
     ''' query of the pubchem database
     ''' </summary>
     ''' <param name="id"></param>
-    ''' <param name="cache$"></param>
+    ''' <param name="cache">
+    ''' A directory path that used for cache the pubchem data
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("query")>
     Public Function queryPubChem(<RRawVectorArgument>
@@ -260,6 +262,16 @@ Module PubChemToolKit
         Return result
     End Function
 
+    ''' <summary>
+    ''' query pubchem data via a given cid value
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <param name="cacheFolder">
+    ''' A cache directory path to the pubchem xml files
+    ''' </param>
+    ''' <param name="offline"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("pugView")>
     Public Function pugView(<RRawVectorArgument> cid As Object,
                             Optional cacheFolder$ = "./pubchem_cache",
@@ -276,6 +288,17 @@ Module PubChemToolKit
         Return result
     End Function
 
+    ''' <summary>
+    ''' parse the pubchem sid map data file
+    ''' </summary>
+    ''' <param name="sidMapText"></param>
+    ''' <param name="skipNoCID">
+    ''' skip of the sid map item which has no cid assigned yet?
+    ''' </param>
+    ''' <param name="dbfilter">
+    ''' filter out the sid map data with a specific given db name
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("SID_map")>
     Public Function ReadSIDMap(sidMapText As String,
                                Optional skipNoCID As Boolean = True,
@@ -310,6 +333,11 @@ Module PubChemToolKit
         End If
     End Function
 
+    ''' <summary>
+    ''' extract the compound annotation data
+    ''' </summary>
+    ''' <param name="pugView"></param>
+    ''' <returns></returns>
     <ExportAPI("metadata.pugView")>
     Public Function GetMetaInfo(pugView As PugViewRecord) As MetaLib
         Return pugView.GetMetaInfo
