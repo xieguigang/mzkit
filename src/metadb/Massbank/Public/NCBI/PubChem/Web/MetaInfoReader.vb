@@ -318,7 +318,15 @@ Namespace NCBI.PubChem
         <Extension>
         Private Function parseExperimentals(desc As ChemicalDescriptor, experiments As Section)
             If Not experiments Is Nothing Then
-                desc.LogP = experiments("LogP").GetInformationNumber("*")
+                desc.LogP = experiments.safeProject(key:="LogP",
+                                                    Function(info)
+                                                        Return info.Select(Function(c)
+                                                                               Return New Chemoinformatics.Value With {
+                                                                                  .value = c.GetInformationNumber,
+                                                                                  .reference = ""
+                                                                               }
+                                                                           End Function).ToArray
+                                                    End Function)
                 desc.CCS = experiments.safeProject(
                     key:="Collision Cross Section",
                      Function(info)

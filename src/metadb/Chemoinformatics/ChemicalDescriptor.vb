@@ -157,7 +157,7 @@ Public Class ChemicalDescriptor
     Public Property Density As UnitValue()
     Public Property VaporPressure As UnitValue()
 
-    Public Property LogP As Double
+    Public Property LogP As Value()
     Public Property CCS As CCS()
 
     ''' <summary>
