@@ -233,7 +233,7 @@ Namespace NCBI.PubChem
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
             Dim xref As New xref With {
                 .InChI = InChI,
-                .CAS = CASNumber,
+                .CAS = CASNumber.Distinct.ToArray,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
@@ -275,7 +275,7 @@ Namespace NCBI.PubChem
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray,
                 .organism = taxon,
-                .chemical = computedProperties.parseChemical(experimentProperties),
+                .chemical = computedProperties.parseChemical().parseExperimentals(experimentProperties),
                 .samples = tissues,
                 .IUPACName = IUPAC,
                 .description = desc.JoinBy(vbCrLf)
@@ -316,28 +316,7 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Private Function parseChemical(computedProperties As Section, experiments As Section) As ChemicalDescriptor
-            Dim desc As New ChemicalDescriptor With {
-                .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
-                .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
-                .AtomUdefStereoCount = computedProperties("Undefined Atom Stereocenter Count").GetInformationNumber("*"),
-                .BondDefStereoCount = computedProperties("Defined Bond Stereocenter Count").GetInformationNumber("*"),
-                .BondUdefStereoCount = computedProperties("Undefined Bond Stereocenter Count").GetInformationNumber("*"),
-                .Complexity = computedProperties("Complexity").GetInformationNumber("*"),
-                .ComponentCount = computedProperties("").GetInformationNumber("*"),
-                .ExactMass = computedProperties("Exact Mass").GetInformationNumber("*"),
-                .FormalCharge = computedProperties("Formal Charge").GetInformationNumber("*"),
-                .HeavyAtoms = computedProperties("Heavy Atom Count").GetInformationNumber("*"),
-                .HydrogenAcceptor = computedProperties("Hydrogen Bond Acceptor Count").GetInformationNumber("*"),
-                .HydrogenDonors = computedProperties("Hydrogen Bond Donor Count").GetInformationNumber("*"),
-                .IsotopicAtomCount = computedProperties("Isotope Atom Count").GetInformationNumber("*"),
-                .RotatableBonds = computedProperties("Rotatable Bond Count").GetInformationNumber("*"),
-                .TautoCount = computedProperties("").GetInformationNumber("*"),
-                .TopologicalPolarSurfaceArea = computedProperties("Topological Polar Surface Area").GetInformationNumber("*"),
-                .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
-                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
-            }
-
+        Private Function parseExperimentals(desc As ChemicalDescriptor, experiments As Section)
             If Not experiments Is Nothing Then
                 desc.LogP = experiments("LogP").GetInformationNumber("*")
                 desc.CCS = experiments.safeProject(
@@ -373,6 +352,32 @@ Namespace NCBI.PubChem
                             .ToArray
                      End Function)
             End If
+
+            Return desc
+        End Function
+
+        <Extension>
+        Private Function parseChemical(computedProperties As Section) As ChemicalDescriptor
+            Dim desc As New ChemicalDescriptor With {
+                .XLogP3 = computedProperties("XLogP3").GetInformationNumber("*"),
+                .AtomDefStereoCount = computedProperties("Defined Atom Stereocenter Count").GetInformationNumber("*"),
+                .AtomUdefStereoCount = computedProperties("Undefined Atom Stereocenter Count").GetInformationNumber("*"),
+                .BondDefStereoCount = computedProperties("Defined Bond Stereocenter Count").GetInformationNumber("*"),
+                .BondUdefStereoCount = computedProperties("Undefined Bond Stereocenter Count").GetInformationNumber("*"),
+                .Complexity = computedProperties("Complexity").GetInformationNumber("*"),
+                .ComponentCount = computedProperties("").GetInformationNumber("*"),
+                .ExactMass = computedProperties("Exact Mass").GetInformationNumber("*"),
+                .FormalCharge = computedProperties("Formal Charge").GetInformationNumber("*"),
+                .HeavyAtoms = computedProperties("Heavy Atom Count").GetInformationNumber("*"),
+                .HydrogenAcceptor = computedProperties("Hydrogen Bond Acceptor Count").GetInformationNumber("*"),
+                .HydrogenDonors = computedProperties("Hydrogen Bond Donor Count").GetInformationNumber("*"),
+                .IsotopicAtomCount = computedProperties("Isotope Atom Count").GetInformationNumber("*"),
+                .RotatableBonds = computedProperties("Rotatable Bond Count").GetInformationNumber("*"),
+                .TautoCount = computedProperties("").GetInformationNumber("*"),
+                .TopologicalPolarSurfaceArea = computedProperties("Topological Polar Surface Area").GetInformationNumber("*"),
+                .XLogP3_AA = computedProperties("").GetInformationNumber("*"),
+                .CovalentlyBonded = computedProperties("Covalently-Bonded Unit Count").GetInformationNumber("*")
+            }
 
             Return desc
         End Function
