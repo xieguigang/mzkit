@@ -59,6 +59,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public Class zzz
 
     Public Shared Sub onLoad()
+        Call mzDeco.Main()
         Call Linears.Main()
     End Sub
 End Class

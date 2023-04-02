@@ -9,6 +9,7 @@
 .RData
 mzkit_old
 
+Rscript/Library/mzkit_app/test/KEGG_maps
 Rscript/Library/mzkit_app/assembly
 
 src/mzkit/setup/installer/
@@ -279,3 +280,6 @@ DATA/test/a.png
 /dist/workbench/ms_imaging/HR2MSI mouse urinary bladder S096 - Figure1.imzML
 /dist/workbench/ms_imaging/demo.mzImage
 dist/workbench/ms_imaging/HR2MSI_mouse_urinary_bladder-S096.mzImage
+Rscript/Library/mzkit_app/test/peakdata.csv
+Rscript/Library/mzkit_app/test/cluster_1/cluster.pack
+Rscript/Library/mzkit_app/test/cluster_1/spectrum.dat

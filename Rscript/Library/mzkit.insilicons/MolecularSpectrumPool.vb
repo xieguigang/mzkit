@@ -2,7 +2,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.Repository
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -14,15 +13,67 @@ Public Module MolecularSpectrumPool
 
     Const unknown As String = NameOf(unknown)
 
+    ''' <summary>
+    ''' open the spectrum pool from a given resource link
+    ''' </summary>
+    ''' <param name="link"></param>
+    ''' <param name="level"></param>
+    ''' <param name="split">
+    ''' hex, max=15
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(dir As String, Optional level As Double = 0.8) As SpectrumPool
-        Return SpectrumPool.OpenDirectory(dir, level, split:=6)
+    Public Function openPool(link As String, Optional level As Double = 0.9, Optional split As Integer = 9) As SpectrumPool
+        Return SpectrumPool.Open(link, level, split:=split)
     End Function
 
+    ''' <summary>
+    ''' close the connection to the spectrum pool
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns></returns>
     <ExportAPI("closePool")>
     Public Function closePool(pool As SpectrumPool) As Object
         Call pool.Dispose()
         Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' get metadata dataframe in a given cluster tree
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    <ExportAPI("getClusterInfo")>
+    Public Function getClusterInfo(pool As SpectrumPool, Optional path As String = Nothing) As Object
+        Dim tokens = path.Trim("\"c, "/"c).StringSplit("[\\/]+")
+
+        For Each t As String In tokens
+            pool = pool(t)
+
+            If pool Is Nothing Then
+                Return Nothing
+            End If
+        Next
+
+        Dim info As Metadata() = pool.ClusterInfo.ToArray
+        Dim data As New dataframe With {
+            .rownames = info.Select(Function(a) a.guid).ToArray,
+            .columns = New Dictionary(Of String, Array) From {
+                {"biodeep_id", info.Select(Function(a) a.biodeep_id).ToArray},
+                {"name", info.Select(Function(a) a.name).ToArray},
+                {"formula", info.Select(Function(a) a.formula).ToArray},
+                {"adducts", info.Select(Function(a) a.adducts).ToArray},
+                {"mz", info.Select(Function(a) a.mz).ToArray},
+                {"rt", info.Select(Function(a) a.rt).ToArray},
+                {"intensity", info.Select(Function(a) a.intensity).ToArray},
+                {"source", info.Select(Function(a) a.source_file).ToArray},
+                {"biosample", info.Select(Function(a) a.sample_source).ToArray},
+                {"organism", info.Select(Function(a) a.organism).ToArray}
+            }
+        }
+
+        Return data
     End Function
 
     ''' <summary>
@@ -32,27 +83,26 @@ Public Module MolecularSpectrumPool
     ''' <returns></returns>
     <ExportAPI("conservedGuid")>
     Public Function conservedGuid(spectral As PeakMs2) As String
-        Dim peaks As String() = spectral.mzInto _
-            .OrderByDescending(Function(mzi) mzi.intensity) _
-            .Take(6) _
-            .Select(Function(m) m.mz.ToString("F1")) _
+        Dim desc = spectral.mzInto.OrderByDescending(Function(mzi) mzi.intensity).ToArray
+        Dim peaks As String() = desc _
+            .Select(Function(m) m.mz.ToString("F1") & ":" & m.intensity.ToString("G3")) _
             .ToArray
         Dim mz1 As String = spectral.mz.ToString("F1")
         Dim meta As String() = {
             spectral.meta.TryGetValue("biosample", unknown),
             spectral.meta.TryGetValue("organism", unknown)
         }
-        Dim hashcode As Integer = FNV1a.GetHashCode(peaks.JoinIterates(mz1).JoinIterates(meta))
+        Dim hashcode As String = peaks _
+            .JoinIterates(mz1) _
+            .JoinIterates(meta) _
+            .JoinBy(spectral.mzInto.Length) _
+            .MD5
 
-        If hashcode < 0 Then
-            hashcode = -hashcode + 7
-        End If
-
-        Return $"MSMS_{hashcode.ToString.FormatZero("00000000000")}"
+        Return hashcode
     End Function
 
     ''' <summary>
-    ''' 
+    ''' add sample peaks data to spectrum pool
     ''' </summary>
     ''' <param name="pool"></param>
     ''' <param name="x">
@@ -89,6 +139,11 @@ Public Module MolecularSpectrumPool
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' commit data to the spectrum pool database
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns></returns>
     <ExportAPI("commit")>
     Public Function commit(pool As SpectrumPool) As Object
         Call pool.Commit()

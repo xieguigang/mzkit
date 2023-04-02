@@ -1,6 +1,7 @@
 imports "mzDeco" from "mz_quantify";
 imports "mzweb" from "mzkit";
 imports "Parallel" from "snowFall";
+imports ["data","math"] from "mzkit";
 
 #' extract peak ms1 from a set of raw data files
 #' 
@@ -33,19 +34,41 @@ const run.Deconvolution = function(data_dir = "./",
 
         require(mzkit);
         mzkit::.MS1deconv(rawfile, args);
-    };
+    };    
+    
+    peakcache
+    |> alignment_peaksdata(mzdiff = mzdiff)
+    |> write.csv(
+        file = `${normalizePath(outputdir)}/peakdata.csv`, 
+        row.names = TRUE
+    );
+}
 
+#' Do sample matrix merge
+#' 
+#' @param peakcache a directory path that contains multiple single raw
+#'   sample peakdata matrix files inside.
+#' 
+const alignment_peaksdata = function(peakcache, mzdiff = "da:0.001") {
     let peakdata = NULL;
+    let peakfile = NULL;
 
     for(file in list.files(peakcache, pattern = "*.csv")) {
-        peakdata = rbind(peakdata, read.csv(file, row.names = NULL));
+        peakfile = load.csv(file, type = "peak_feature");
+        peakdata = append(peakdata, peakfile);
+
+        print(`[load_single_file] ${basename(file)}...`);
     }
 
-    peakdata[, "xcms_id"] = make.ROI_names(list(
+    peakdata = peak_alignment(peakdata, mzdiff, norm = TRUE);
+    peakdata = as.data.frame(peakdata);
+
+    rownames(peakdata) = make.ROI_names(list(
         mz = peakdata$mz, 
         rt = peakdata$rt
     ));
-    peakdata;
+
+    return(peakdata);    
 }
 
 #' a single thread task for extract peaktable from a single raw data file
@@ -67,7 +90,9 @@ const .MS1deconv = function(rawfile, args = list(cache_dir = "./.cache/")) {
         tolerance = args$mzdiff, 
         baseline = args$baseline, 
         peakwidth = args$peakwidth
-    );
+    ) |> as.data.frame()
+    ;
 
-    write.csv(peaks, file = peakCache);
+    peaks[, "rawfile"] = basename(rawfile);
+    write.csv(peaks, file = peakCache, row.names = TRUE);
 } 

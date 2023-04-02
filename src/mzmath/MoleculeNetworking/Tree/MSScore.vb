@@ -86,8 +86,9 @@ Public Class MSScore : Inherits MSScoreGenerator
     ''' <param name="gt"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub New(align As AlignmentProvider, ions As IEnumerable(Of PeakMs2), equals As Double, gt As Double)
+    Sub New(align As AlignmentProvider, ions As PeakMs2(), equals As Double, gt As Double)
         MyBase.New(align, AddressOf ions.ToDictionary(Function(i) i.lib_guid).GetValueOrNull, equals, gt)
+        ms2 = ions.ToDictionary(Function(i) i.lib_guid)
     End Sub
 
     ''' <summary>

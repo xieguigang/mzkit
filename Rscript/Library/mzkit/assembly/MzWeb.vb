@@ -1,65 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::bdb34306931fb9ddfb1bbab62656f05d, mzkit\Rscript\Library\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 574
-    '    Code Lines: 374
-    ' Comment Lines: 133
-    '   Blank Lines: 67
-    '     File Size: 21.55 KB
+' Summaries:
 
 
-    ' Module MzWeb
-    ' 
-    '     Function: GetChromatogram, loadStream, MassCalibration, Ms1Peaks, Ms1ScanPoints
-    '               Ms2ScanPeaks, Open, openFile, openFromFile, readCache
-    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
-    '               writeMzpack, writeStream, writeToCDF
-    ' 
-    '     Sub: WriteCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 574
+'    Code Lines: 374
+' Comment Lines: 133
+'   Blank Lines: 67
+'     File Size: 21.55 KB
+
+
+' Module MzWeb
+' 
+'     Function: GetChromatogram, loadStream, MassCalibration, Ms1Peaks, Ms1ScanPoints
+'               Ms2ScanPeaks, Open, openFile, openFromFile, readCache
+'               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+'               writeMzpack, writeStream, writeToCDF
+' 
+'     Sub: WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
-
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-#End If
 
 Imports System.Drawing
 Imports System.IO
@@ -90,6 +86,10 @@ Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+
+#If NET48 Then
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+#End If
 
 ''' <summary>
 ''' biodeep mzweb data viewer raw data file helper
@@ -348,6 +348,8 @@ Module MzWeb
     Public Function openFromFile(file As String, Optional prefer As String = Nothing) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(xml:=file, prefer:=prefer)
+        ElseIf file.ExtensionSuffix("mgf", "msp") Then
+            Return Converter.LoadAsciiFileAuto(file)
 #If NET48 Then
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
@@ -570,7 +572,7 @@ Module MzWeb
     End Function
 
     <Extension>
-    Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As String) As PeakMs2()
+    Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As Boolean) As PeakMs2()
         Dim unique As String() = ms2peaks _
           .Select(Function(p)
                       If tag_source Then
@@ -583,6 +585,18 @@ Module MzWeb
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)
+            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace("ms2.mzPack#", "").Replace("queryMs2.mzPack#", "")
+
+            Dim src As String = ms2peaks(i).lib_guid.Match(".+?\.mzPack[# ]")
+
+            If Not src.StringEmpty Then
+                ms2peaks(i).file = src.Trim("#"c, " "c)
+                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace(ms2peaks(i).lib_guid.Match(".+\.mzPack[# ]"), "")
+
+                If tag_source Then
+                    ms2peaks(i).lib_guid = $"{ms2peaks(i).file} {ms2peaks(i).lib_guid}".Trim
+                End If
+            End If
         Next
 
         Return ms2peaks

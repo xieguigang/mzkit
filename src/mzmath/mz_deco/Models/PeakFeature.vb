@@ -111,6 +111,7 @@ Public Class PeakFeature
     Public Property noise As Double
 
     Public Property nticks As Integer
+    Public Property rawfile As String
 
     ''' <summary>
     ''' 信噪比
