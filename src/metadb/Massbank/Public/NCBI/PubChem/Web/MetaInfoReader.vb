@@ -286,19 +286,53 @@ Namespace NCBI.PubChem
         <Extension>
         Private Iterator Function GetBiosampleList(view As PugViewRecord) As IEnumerable(Of BiosampleSource)
             For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*")
-                Yield New BiosampleSource With {
-                    .biosample = "Tissue",
-                    .reference = c.Reference,
-                    .source = CStr(c.InfoValue)
-                }
+                Dim val As Object = c.InfoValue
+
+                If val Is Nothing Then
+                    Continue For
+                End If
+                If val.GetType.IsArray Then
+                    Dim arr As Array = DirectCast(val, Array)
+
+                    For i As Integer = 0 To arr.Length - 1
+                        Yield New BiosampleSource With {
+                            .biosample = "Tissue",
+                            .reference = c.Reference,
+                            .source = CStr(arr.GetValue(i))
+                        }
+                    Next
+                Else
+                    Yield New BiosampleSource With {
+                        .biosample = "Tissue",
+                        .reference = c.Reference,
+                        .source = CStr(val)
+                    }
+                End If
             Next
 
             For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Cellular Locations/*")
-                Yield New BiosampleSource With {
-                    .biosample = "SubCellular Location",
-                    .reference = c.Reference,
-                    .source = CStr(c.InfoValue)
-                }
+                Dim val As Object = c.InfoValue
+
+                If val Is Nothing Then
+                    Continue For
+                End If
+                If val.GetType.IsArray Then
+                    Dim arr As Array = DirectCast(val, Array)
+
+                    For i As Integer = 0 To arr.Length - 1
+                        Yield New BiosampleSource With {
+                            .biosample = "SubCellular Location",
+                            .reference = c.Reference,
+                            .source = CStr(arr.GetValue(i))
+                        }
+                    Next
+                Else
+                    Yield New BiosampleSource With {
+                        .biosample = "SubCellular Location",
+                        .reference = c.Reference,
+                        .source = CStr(val)
+                    }
+                End If
             Next
         End Function
 
