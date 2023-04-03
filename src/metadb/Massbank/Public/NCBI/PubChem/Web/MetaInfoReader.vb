@@ -234,7 +234,7 @@ Namespace NCBI.PubChem
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
             Dim xref As New xref With {
                 .InChI = InChI,
-                .CAS = CASNumber.Distinct.ToArray,
+                .CAS = CASNumber.SafeQuery.Distinct.ToArray,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
