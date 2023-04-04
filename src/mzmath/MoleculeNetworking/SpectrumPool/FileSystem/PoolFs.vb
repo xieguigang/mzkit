@@ -14,7 +14,7 @@ Namespace PoolData
         ''' inside this module, so we should share this object between
         ''' multiple pool object
         ''' </summary>
-        Dim score As MSScoreGenerator
+        Dim score As AlignmentProvider
 
         ''' <summary>
         ''' the score threshold for assign the given spectrum as current cluster member
@@ -32,28 +32,14 @@ Namespace PoolData
         Public MustOverride Function ReadSpectrum(p As Metadata) As PeakMs2
         Public MustOverride Function WriteSpectrum(spectral As PeakMs2) As Metadata
 
-        ''' <summary>
-        ''' add spectrum to the score cache 
-        ''' </summary>
-        ''' <param name="spectrum"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(spectrum As PeakMs2)
-            Call score.Add(spectrum)
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetScore(x As String, y As String) As AlignmentOutput
-            Return score.GetAlignment(x, y)
+        Public Function GetScore(x As PeakMs2, y As PeakMs2) As AlignmentOutput
+            Return score.CreateAlignment(x.mzInto, y.mzInto)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Sub SetScore(da As Double, intocutoff As Double, getSpectral As Func(Of String, PeakMs2))
-            score = New MSScoreGenerator(
-                align:=AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff)),
-                getSpectrum:=getSpectral,
-                equals:=0,
-                gt:=0
-            )
+        Friend Sub SetScore(da As Double, intocutoff As Double)
+            score = AlignmentProvider.Cosine(Tolerance.DeltaMass(da), New RelativeIntensityCutoff(intocutoff))
         End Sub
 
         ''' <summary>
