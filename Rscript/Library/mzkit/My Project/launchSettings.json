@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "mzkit.NET5": {
+      "commandName": "Project"
+    },
+    "run_exe": {
+      "commandName": "Executable",
+      "executablePath": "D:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "\"C:\\Users\\lipidsearch\\Source\\Repos\\pubchem_graph\\blood\\query.R\" --attach E:\\mzkit\\Rscript\\Library\\mzkit_app"
+    }
+  }
+}

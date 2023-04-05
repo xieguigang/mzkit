@@ -146,11 +146,17 @@ Namespace NCBI.PubChem
         Public ReadOnly Property UnitValue As UnitValue
             Get
                 If Value.Unit.StringEmpty Then
-                    Return Nothing
+                    Return New UnitValue With {
+                        .value = Me.GetInformationNumber,
+                        .unit = Value.Unit,
+                        .reference = Reference,
+                        .condition = CStr(InfoValue)
+                    }
                 Else
                     Return New UnitValue With {
                         .value = Me.GetInformationNumber,
-                        .unit = Value.Unit
+                        .unit = Value.Unit,
+                        .reference = Reference
                     }
                 End If
             End Get
