@@ -69,6 +69,7 @@ Namespace mzData.mzWebCache
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
             rawName = SolveTagSource(rawfile)
+            VBDebugger.EchoLine($"[open_xmlfile] {rawName}")
             Return XML.LoadScans(rawfile)
         End Function
 

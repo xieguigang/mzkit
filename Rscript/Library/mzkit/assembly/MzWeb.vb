@@ -347,7 +347,11 @@ Module MzWeb
     <ExportAPI("open_mzpack.xml")>
     Public Function openFromFile(file As String, Optional prefer As String = Nothing) As mzPack
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
-            Return Converter.LoadRawFileAuto(xml:=file, prefer:=prefer)
+            Return Converter.LoadRawFileAuto(
+                xml:=file,
+                prefer:=prefer,
+                progress:=AddressOf VBDebugger.EchoLine
+            )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
 #If NET48 Then
