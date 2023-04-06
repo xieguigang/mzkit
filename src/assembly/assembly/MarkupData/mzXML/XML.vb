@@ -106,6 +106,16 @@ Namespace MarkupData.mzXML
             Next
         End Function
 
+        Public Shared Function GetMSInstrumentManufacturer(file As String) As String
+            Dim cfg = file.LoadXmlDataSet(Of msInstrument)(, xmlns:=mzXMLSchema).FirstOrDefault
+
+            If cfg Is Nothing Then
+                Return Nothing
+            Else
+                Return cfg.msManufacturer.value
+            End If
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>

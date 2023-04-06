@@ -95,9 +95,15 @@ Namespace mzData.mzWebCache
             trim = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
+        Protected MustOverride Function msManufacturer(rawfile As String) As String
         Protected MustOverride Function dataReader() As MsDataReader(Of Scan)
         Protected MustOverride Function loadScans(rawfile As String) As IEnumerable(Of Scan)
 
+        ''' <summary>
+        ''' populate of the valids ms scans data
+        ''' </summary>
+        ''' <param name="scans"></param>
+        ''' <returns></returns>
         Private Iterator Function PopulateValidScans(scans As IEnumerable(Of Scan)) As IEnumerable(Of Scan)
             For Each scan As Scan In scans
                 If reader.IsEmpty(scan) Then
