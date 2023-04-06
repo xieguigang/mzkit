@@ -195,6 +195,10 @@ Namespace mzData.mzWebCache
                     Yield fake
                 Next
             End If
+
+            If progress IsNot Nothing Then
+                Call progress("* read finished!")
+            End If
         End Function
 
         Private Iterator Function yieldFakeMs1(products As IEnumerable(Of ScanMS2)) As IEnumerable(Of ScanMS1)
