@@ -8,6 +8,9 @@ imports "mzPack" from "mzkit";
 const rawfile as string = ?"--raw";
 const savefile = `${dirname(rawfile)}/${basename(rawfile)}.mzPack`;
 
+print(rawfile);
+print(savefile);
+
 rawfile
 |> mzweb::open.mzpack()
 |> mzPack::removeSciexNoise()
