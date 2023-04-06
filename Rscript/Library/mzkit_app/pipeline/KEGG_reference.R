@@ -25,12 +25,12 @@ for(dir in list.dirs(rawdir,recursive = FALSE)) {
     print(kegg_id);
 
     # do spectrum clustering and then get the max cluster
-
+    metabo = kegg_list[[kegg_id]];
     stdlib |> spectrumTree::addBucket(
         x = raw,
         ignore_error = TRUE,
         uuid = kegg_id,
-        formula = 
+        formula = metabo$formula
     );
 }
 
