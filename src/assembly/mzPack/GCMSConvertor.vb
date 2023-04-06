@@ -101,7 +101,11 @@ Public Module GCMSConvertor
     End Function
 
     <Extension>
-    Private Iterator Function CreateMSScans(scan_time As Double(), totalIons As Double(), mz As Double()(), into As Double()()) As IEnumerable(Of ScanMS1)
+    Private Iterator Function CreateMSScans(scan_time As Double(),
+                                            totalIons As Double(),
+                                            mz As Double()(),
+                                            into As Double()()) As IEnumerable(Of ScanMS1)
+
         For i As Integer = 0 To scan_time.Length - 1
             Dim mzi As Double() = mz(i)
             Dim inti As Double() = into(i)

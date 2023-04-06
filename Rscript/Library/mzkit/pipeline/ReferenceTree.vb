@@ -463,6 +463,9 @@ Module ReferenceTreePkg
         Return output
     End Function
 
+    Const no_biodeep_id As String = "No metabolite uuid or biodeep id was provided!"
+    Const no_formula As String = "A valid formula string text for evaluate the positive exact mass value of the target metabolite must be provided!"
+
     ''' <summary>
     ''' push the reference spectrum data into the spectrum reference tree library
     ''' </summary>
@@ -477,7 +480,7 @@ Module ReferenceTreePkg
     ''' additional parameters for create the spectrum library in spectrum pack format:
     ''' 
     ''' 1. uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id
-    ''' 2. exactMass, exact_mass, mass is used for the metabolite exact mass value
+    ''' 2. chemical_formula, formula is used for the metabolite exact mass value
     ''' 
     ''' and the spectrum input of x should be the same metabolite if save data as 
     ''' the spectrum pack data.
@@ -487,6 +490,7 @@ Module ReferenceTreePkg
     <ExportAPI("addBucket")>
     Public Function addBucket(tree As Object,
                               <RRawVectorArgument> x As Object,
+                              Optional ignore_error As Boolean = False,
                               <RListObjectArgument>
                               Optional args As list = Nothing,
                               Optional env As Environment = Nothing) As Object
@@ -505,17 +509,27 @@ Module ReferenceTreePkg
             Next
         ElseIf TypeOf tree Is SpectrumPack Then
             Dim uuid As String = args.getValue(Of String)({"uuid", "BioDeepID", "biodeep_id"}, env)
-            Dim mass As Double = args.getValue(Of Double)({"exactMass", "exact_mass", "mass"}, env, [default]:=-1.0)
+            Dim formula As String = args.getValue(Of String)({"formula", "chemical_formula"}, env)
 
             If uuid.StringEmpty Then
-                Return Internal.debug.stop("No metabolite uuid or biodeep id was provided!", env)
+                If ignore_error Then
+                    Call env.AddMessage(no_biodeep_id)
+                    Return tree
+                Else
+                    Return Internal.debug.stop(no_biodeep_id, env)
+                End If
             End If
-            If mass <= 0 Then
-                Return Internal.debug.stop("A positive exact mass value of the target metabolite must be provided!", env)
+            If formula.StringEmpty Then
+                If ignore_error Then
+                    Call env.AddMessage(no_formula)
+                    Return tree
+                Else
+                    Return Internal.debug.stop(no_formula, env)
+                End If
             End If
 
             For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
-                Call DirectCast(tree, SpectrumPack).Push(uuid, mass, spectrum)
+                Call DirectCast(tree, SpectrumPack).Push(uuid, formula, spectrum)
             Next
         Else
             Return Message.InCompatibleType(GetType(ReferenceTree), tree.GetType, env)

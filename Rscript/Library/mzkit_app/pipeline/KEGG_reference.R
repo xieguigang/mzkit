@@ -1,0 +1,37 @@
+require(mzkit);
+require(GCModeller);
+
+# controls of the server memory usage in the data analysis workflow.
+options(memory.load = "max");
+
+#' the spectrum tree reference library tools
+imports "spectrumTree" from "mzkit";
+
+rawdir = "E:\reference_ms\DIA\pos";
+graph_pack = `${dirname(rawdir)}/lib.${basename(rawdir)}`;
+kegg_list = GCModeller::kegg_compounds(rawList = TRUE); 
+kegg_list = lapply(kegg_list, x -> as.list(x), names = x -> [x]::entry);
+
+print(names(kegg_list));
+print(kegg_list@formula);
+
+const stdlib = spectrumTree::new(graph_pack, type = "Pack");
+
+for(dir in list.dirs(rawdir,recursive = FALSE)) {
+    kegg_id = basename(dir);
+    raw = open.mzpack(`${dir}/reference.mzPack`) |> ms2_peaks(tag.source = FALSE);
+
+    print(dir);
+    print(kegg_id);
+
+    # do spectrum clustering and then get the max cluster
+    metabo = kegg_list[[kegg_id]];
+    stdlib |> spectrumTree::addBucket(
+        x = raw,
+        ignore_error = TRUE,
+        uuid = kegg_id,
+        formula = metabo$formula
+    );
+}
+
+close(stdlib );

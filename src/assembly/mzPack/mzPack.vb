@@ -212,18 +212,22 @@ Public Class mzPack
             Return MS.GetAllCentroidScanMs1(centroid)
         Else
             Return MS _
-                .Select(Function(scan)
-                            Return scan.mz _
-                                .Select(Function(mzi, i)
-                                            Return New ms1_scan With {
-                                                .mz = mzi,
-                                                .intensity = scan.into(i),
-                                                .scan_time = scan.rt
-                                            }
-                                        End Function)
-                        End Function) _
+                .Select(AddressOf get_ms1) _
                 .IteratesALL
         End If
+    End Function
+
+    Private Shared Iterator Function get_ms1(scan As ScanMS1) As IEnumerable(Of ms1_scan)
+        Dim mz As Double() = scan.mz
+        Dim into As Double() = scan.into
+
+        For i As Integer = 0 To scan.size - 1
+            Yield New ms1_scan With {
+                .mz = mz(i),
+                .intensity = into(i),
+                .scan_time = scan.rt
+            }
+        Next
     End Function
 
     Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)

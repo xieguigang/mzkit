@@ -382,16 +382,25 @@ Namespace NCBI.PubChem
         <Extension>
         Private Iterator Function CCSValues(info As IEnumerable(Of Information)) As IEnumerable(Of CCS)
             For Each c As Information In info
-                Dim valStr = any.ToString(c.InfoValue).stripMarkupString
-                Dim val As String = valStr.Match(SimpleNumberPattern)
-                Dim ionTag As String = valStr.Replace(val, "").Trim.GetTagValue(" ", trim:=True).Value
-
-                Yield New CCS With {
-                    .value = Double.Parse(val),
-                    .reference = c.Reference.stripMarkupString,
-                    .ion = ionTag
-                }
+                If c.InfoType Is GetType(String()) Then
+                    For Each str As String In CType(c.InfoValue, String())
+                        Yield CCSValue(str, c)
+                    Next
+                Else
+                    Yield CCSValue(any.ToString(c.InfoValue).stripMarkupString, c)
+                End If
             Next
+        End Function
+
+        Private Function CCSValue(valStr As String, c As Information) As CCS
+            Dim val As String = valStr.Match(SimpleNumberPattern)
+            Dim ionTag As String = valStr.Replace(val, "").Trim.GetTagValue(" ", trim:=True).Value
+
+            Return New CCS With {
+                .value = Double.Parse(val),
+                .reference = c.Reference.stripMarkupString,
+                .ion = ionTag
+            }
         End Function
 
         Private Function getValues(info As IEnumerable(Of Information)) As UnitValue()

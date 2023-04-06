@@ -89,7 +89,11 @@ Public Class MemoryReader : Implements IMzPackReader
         source = raw.source
     End Sub
 
-    Public Sub ReadChromatogramTick(scanId As String, <Out> ByRef scan_time As Double, <Out> ByRef BPC As Double, <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
+    Public Sub ReadChromatogramTick(scanId As String,
+                                    <Out> ByRef scan_time As Double,
+                                    <Out> ByRef BPC As Double,
+                                    <Out> ByRef TIC As Double) Implements IMzPackReader.ReadChromatogramTick
+
         Dim scan As ScanMS1 = ReadScan(scanId)
 
         If scan Is Nothing Then

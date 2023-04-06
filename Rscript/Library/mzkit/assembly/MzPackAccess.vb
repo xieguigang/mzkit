@@ -381,4 +381,27 @@ Module MzPackAccess
             Return data.WriteStream(buffer)
         End If
     End Function
+
+    <ExportAPI("removeSciexNoise")>
+    Public Function removeSciexNoise(raw As mzPack) As mzPack
+        raw.MS = raw.MS _
+            .AsParallel _
+            .Select(Function(ms1)
+                        ms1.products = ms1.products _
+                            .Select(Function(ms2)
+                                        Dim peaks = ms2.GetMs.AbSciexBaselineHandling.ToArray
+                                        Dim mz As Double() = peaks.Select(Function(a) a.mz).ToArray
+                                        Dim into As Double() = peaks.Select(Function(a) a.intensity).ToArray
+                                        ms2.mz = mz
+                                        ms2.into = into
+                                        Return ms2
+                                    End Function) _
+                            .ToArray
+
+                        Return ms1
+                    End Function) _
+            .ToArray
+
+        Return raw
+    End Function
 End Module

@@ -76,5 +76,10 @@ Namespace mzData.mzWebCache
         Protected Overrides Function dataReader() As MsDataReader(Of scan)
             Return New mzXMLScan()
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Overrides Function msManufacturer(rawfile As String) As String
+            Return XML.GetMSInstrumentManufacturer(rawfile)
+        End Function
     End Class
 End Namespace
