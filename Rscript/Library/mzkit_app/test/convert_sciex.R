@@ -5,11 +5,11 @@ imports "mzweb" from "mzkit";
 #' raw data accessor for the mzpack data object
 imports "mzPack" from "mzkit";
 
-const rawfile = ?"--raw";
+const rawfile as string = ?"--raw";
 const savefile = `${dirname(rawfile)}/${basename(rawfile)}.mzPack`;
 
 rawfile
-|> open.mzpack()
-|> removeSciexNoise()
-|> write.mzPack(file = savefile, version = 1)
+|> mzweb::open.mzpack()
+|> mzPack::removeSciexNoise()
+|> mzweb::write.mzPack(file = savefile, version = 1)
 ;
