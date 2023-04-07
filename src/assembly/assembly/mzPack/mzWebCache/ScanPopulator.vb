@@ -180,7 +180,7 @@ Namespace mzData.mzWebCache
                     Call products.Add(scanVal)
                 End If
 
-                If Not progress Is Nothing Then
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 3 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next
@@ -194,6 +194,10 @@ Namespace mzData.mzWebCache
                 For Each fake As ScanMS1 In yieldFakeMs1(products)
                     Yield fake
                 Next
+            End If
+
+            If progress IsNot Nothing Then
+                Call progress("* read finished!")
             End If
         End Function
 
