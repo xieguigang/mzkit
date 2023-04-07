@@ -16,6 +16,6 @@ print(savefile);
 
 rawfile
 |> mzweb::open.mzpack()
-|> mzPack::removeSciexNoise()
+# |> mzPack::removeSciexNoise()
 |> mzweb::write.mzPack(file = savefile, version = 1)
 ;
