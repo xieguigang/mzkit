@@ -5,8 +5,8 @@
     },
     "run_exe": {
       "commandName": "Executable",
-      "executablePath": "E:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "E:\\mzkit\\Rscript\\Library\\mzkit_app\\pipeline\\KEGG_reference.R --attach E:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
+      "executablePath": "D:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "\"F:\\20230407\\export_table.R\" --attach D:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
     }
   }
 }
