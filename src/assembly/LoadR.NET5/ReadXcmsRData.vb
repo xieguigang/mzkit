@@ -30,6 +30,8 @@ Public Class XcmsRData
         Dim matrix As New Dictionary(Of String, ms2())
         Dim raw As list = ConvertToR.ToRObject(root.LinkVisitor("ms2"))
 
+        raw = raw!ms2
+
         For Each name As String In raw.getNames
             Dim vec As Double() = CLRVector.asNumeric(raw(name))
             Dim msms As ms2() = New ms2(CInt(vec.Length / 2) - 1) {}
