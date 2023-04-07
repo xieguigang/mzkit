@@ -17,3 +17,9 @@ load_ms2 = function(file) {
 	
 	invisible(NULL);
 }
+
+files = list.files("./raw", pattern = ".+.mzXML");
+
+for(file in files) {
+	load_ms2(file);
+}
