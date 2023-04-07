@@ -22,6 +22,7 @@ Public Class XcmsRData
     End Function
 
     Public Shared Function ReadRData(buffer As Stream) As XcmsRData
+        ' mz1, rt2, into, ms2
         Dim root = Reader.ParseData(buffer).object
         Dim mz = readNumeric(root, "mz1")
         Dim rt = readNumeric(root, "rt2")

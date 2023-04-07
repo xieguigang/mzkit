@@ -78,6 +78,12 @@ Module Program
     End Sub
 
     Sub readtest2()
+        Using buffer As Stream = "D:\mzkit\src\assembly\LoadR.NET5\003_Ex2_Orbitrap_CID.mzXML.RData".Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim xcms = XcmsRData.ReadRData(buffer)
+
+            Pause()
+        End Using
+
         ' mz1, rt2, into, ms2
         Using buffer As Stream = "D:\mzkit\src\assembly\LoadR.NET5\003_Ex2_Orbitrap_CID.mzXML.RData".Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Dim root = Reader.ParseData(buffer).object
