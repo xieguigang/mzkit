@@ -143,8 +143,7 @@ Namespace TMIC.HMDB
         Public Property direct_parent As String
         Public Property state As String
         Public Property cellular_locations As String()
-        Public Property normals As Dictionary(Of String, String)
-        Public Property abnormals As Dictionary(Of String, String)
+        Public Property contents As Dictionary(Of String, String)
         Public Property tissue As String()
         Public Property chebi_id As Long
         Public Property pubchem_cid As Long
@@ -190,26 +189,30 @@ Namespace TMIC.HMDB
             Dim proteins As String() = Nothing
             Dim disease As String() = Nothing
             Dim ontology = getOntologyIndex(metabolite)
-            Dim normal_contents As New Dictionary(Of String, List(Of String))
-            Dim abnormal_contents As New Dictionary(Of String, List(Of String))
+            Dim contents As New Dictionary(Of String, List(Of String))
+            Dim key As String
 
             For Each norm In metabolite.normal_concentrations.SafeQuery
-                If Not normal_contents.ContainsKey(norm.biospecimen) Then
-                    normal_contents.Add(norm.biospecimen, New List(Of String))
+                key = "normal: " & norm.biospecimen
+
+                If Not contents.ContainsKey(key) Then
+                    contents.Add(key, New List(Of String))
                 End If
 
                 If Not norm.concentration_value.StringEmpty Then
-                    Call normal_contents(norm.biospecimen).Add(norm.ToString & $" {norm.AgeType}, {norm.subject_sex}")
+                    Call contents(key).Add(norm.ToString & $" {norm.AgeType}, {norm.subject_sex}")
                 End If
             Next
 
             For Each abnorm In metabolite.abnormal_concentrations.SafeQuery
-                If Not abnormal_contents.ContainsKey(abnorm.biospecimen) Then
-                    abnormal_contents.Add(abnorm.biospecimen, New List(Of String))
+                key = "abnormal: " & abnorm.biospecimen
+
+                If Not contents.ContainsKey(key) Then
+                    contents.Add(key, New List(Of String))
                 End If
 
                 If Not abnorm.concentration_value.StringEmpty Then
-                    Call abnormal_contents(abnorm.biospecimen).Add(abnorm.ToString & $" {abnorm.AgeType}, {abnorm.subject_sex}")
+                    Call contents(key).Add(abnorm.ToString & $" {abnorm.AgeType}, {abnorm.subject_sex}")
                 End If
             Next
 
@@ -258,8 +261,7 @@ Namespace TMIC.HMDB
                 .sub_class = metabolite_taxonomy?.sub_class,
                 .molecular_framework = metabolite_taxonomy?.molecular_framework,
                 .[class] = metabolite_taxonomy?.class,
-                .normals = normal_contents.ToDictionary(Function(a) a.Key, Function(a) a.Value.JoinBy("; ")),
-                .abnormals = abnormal_contents.ToDictionary(Function(a) a.Key, Function(a) a.Value.JoinBy("; ")),
+                .contents = contents.ToDictionary(Function(a) a.Key, Function(a) a.Value.JoinBy("; ")),
                 .cellular_locations = biosample?.cellular_locations.cellular,
                 .tissue = biosample?.tissue_locations.tissue,
                 .synonyms = metabolite.synonyms.synonym,
