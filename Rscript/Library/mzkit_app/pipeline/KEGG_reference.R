@@ -6,6 +6,7 @@ options(memory.load = "max");
 
 #' the spectrum tree reference library tools
 imports "spectrumTree" from "mzkit";
+imports "spectrumPool" from "mzDIA";
 
 rawdir = "E:\reference_ms\DIA\neg";
 graph_pack = `${dirname(rawdir)}/lib.${basename(rawdir)}`;
@@ -27,12 +28,15 @@ for(dir in list.dirs(rawdir,recursive = FALSE)) {
 
     # do spectrum clustering and then get the max cluster
     metabo = kegg_list[[kegg_id]];
-    stdlib |> spectrumTree::addBucket(
-        x = raw,
-        ignore_error = TRUE,
-        uuid = kegg_id,
-        formula = [metabo]::formula
-    );
+
+    if (!is.null(metabo)) {
+        stdlib |> spectrumTree::addBucket(
+            x = spectrumPool::set_conservedGuid(raw),
+            ignore_error = TRUE,
+            uuid = kegg_id,
+            formula = [metabo]::formula
+        );
+    }
 }
 
-close(stdlib );
+close(stdlib);
