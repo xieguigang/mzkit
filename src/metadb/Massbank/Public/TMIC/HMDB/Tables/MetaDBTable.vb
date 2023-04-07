@@ -1,78 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::0f545a8ff90373f0d6aced0f6de705ae, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 247
-    '    Code Lines: 219
-    ' Comment Lines: 3
-    '   Blank Lines: 25
-    '     File Size: 11.06 KB
+' Summaries:
 
 
-    '     Class MetaInfo
-    ' 
-    '         Properties: CAS, chebi, HMDB, KEGG
-    ' 
-    '     Class BriefTable
-    ' 
-    '         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
-    '                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
-    ' 
-    '         Function: Clone
-    ' 
-    '     Class MetaDb
-    ' 
-    '         Properties: [class], accession, biocyc_id, Biomarker, biospecimen
-    '                     CAS, cellular_locations, chebi_id, chemical_formula, chemspider_id
-    '                     description, direct_parent, disease, Disposition, drugbank_id
-    '                     exact_mass, foodb_id, inchi, inchikey, iupac_name
-    '                     kegg_id, kingdom, metlin_id, molecular_framework, name
-    '                     pathways, Physiological_effects, Process, proteins, pubchem_cid
-    '                     Role, secondary_accessions, smiles, state, sub_class
-    '                     super_class, synonyms, tissue, traditional_iupac, wikipedia_id
-    ' 
-    '         Function: FromMetabolite, getBioMarkers, getOntologyIndex, GetSynonym, OntologyTreeLines
-    '                   populateTree
-    ' 
-    '         Sub: WriteTable
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 247
+'    Code Lines: 219
+' Comment Lines: 3
+'   Blank Lines: 25
+'     File Size: 11.06 KB
+
+
+'     Class MetaInfo
+' 
+'         Properties: CAS, chebi, HMDB, KEGG
+' 
+'     Class BriefTable
+' 
+'         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
+'                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
+' 
+'         Function: Clone
+' 
+'     Class MetaDb
+' 
+'         Properties: [class], accession, biocyc_id, Biomarker, biospecimen
+'                     CAS, cellular_locations, chebi_id, chemical_formula, chemspider_id
+'                     description, direct_parent, disease, Disposition, drugbank_id
+'                     exact_mass, foodb_id, inchi, inchikey, iupac_name
+'                     kegg_id, kingdom, metlin_id, molecular_framework, name
+'                     pathways, Physiological_effects, Process, proteins, pubchem_cid
+'                     Role, secondary_accessions, smiles, state, sub_class
+'                     super_class, synonyms, tissue, traditional_iupac, wikipedia_id
+' 
+'         Function: FromMetabolite, getBioMarkers, getOntologyIndex, GetSynonym, OntologyTreeLines
+'                   populateTree
+' 
+'         Sub: WriteTable
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -143,7 +143,8 @@ Namespace TMIC.HMDB
         Public Property direct_parent As String
         Public Property state As String
         Public Property cellular_locations As String()
-        Public Property biospecimen As String()
+        Public Property normals As Dictionary(Of String, String)
+        Public Property abnormals As Dictionary(Of String, String)
         Public Property tissue As String()
         Public Property chebi_id As Long
         Public Property pubchem_cid As Long
@@ -189,6 +190,28 @@ Namespace TMIC.HMDB
             Dim proteins As String() = Nothing
             Dim disease As String() = Nothing
             Dim ontology = getOntologyIndex(metabolite)
+            Dim normal_contents As New Dictionary(Of String, List(Of String))
+            Dim abnormal_contents As New Dictionary(Of String, List(Of String))
+
+            For Each norm In metabolite.normal_concentrations.SafeQuery
+                If Not normal_contents.ContainsKey(norm.biospecimen) Then
+                    normal_contents.Add(norm.biospecimen, New List(Of String))
+                End If
+
+                If Not norm.concentration_value.StringEmpty Then
+                    Call normal_contents(norm.biospecimen).Add(norm.ToString & $" {norm.AgeType}, {norm.subject_sex}")
+                End If
+            Next
+
+            For Each abnorm In metabolite.abnormal_concentrations.SafeQuery
+                If Not abnormal_contents.ContainsKey(abnorm.biospecimen) Then
+                    abnormal_contents.Add(abnorm.biospecimen, New List(Of String))
+                End If
+
+                If Not abnorm.concentration_value.StringEmpty Then
+                    Call abnormal_contents(abnorm.biospecimen).Add(abnorm.ToString & $" {abnorm.AgeType}, {abnorm.subject_sex}")
+                End If
+            Next
 
             If Not metabolite.protein_associations.IsNullOrEmpty Then
                 proteins = metabolite.protein_associations _
@@ -235,7 +258,8 @@ Namespace TMIC.HMDB
                 .sub_class = metabolite_taxonomy?.sub_class,
                 .molecular_framework = metabolite_taxonomy?.molecular_framework,
                 .[class] = metabolite_taxonomy?.class,
-                .biospecimen = biosample?.biospecimen_locations.biospecimen,
+                .normals = normal_contents.ToDictionary(Function(a) a.Key, Function(a) a.Value.JoinBy("; ")),
+                .abnormals = abnormal_contents.ToDictionary(Function(a) a.Key, Function(a) a.Value.JoinBy("; ")),
                 .cellular_locations = biosample?.cellular_locations.cellular,
                 .tissue = biosample?.tissue_locations.tissue,
                 .synonyms = metabolite.synonyms.synonym,
@@ -312,6 +336,12 @@ Namespace TMIC.HMDB
 
                 Return childs.ToArray
             End If
+        End Function
+
+        Public Shared Iterator Function PopulateTable(metabolites As IEnumerable(Of metabolite)) As IEnumerable(Of MetaDb)
+            For Each metabolite As metabolite In metabolites
+                Yield FromMetabolite(metabolite)
+            Next
         End Function
 
         Public Shared Sub WriteTable(metabolites As IEnumerable(Of metabolite), out As Stream)

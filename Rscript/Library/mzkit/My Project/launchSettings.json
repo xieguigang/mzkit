@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "D:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\"C:\\Users\\lipidsearch\\Source\\Repos\\pubchem_graph\\blood\\cid_test.R\" --attach D:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
+      "commandLineArgs": "\"F:\\20230407\\export_table.R\" --attach D:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
     }
   }
 }
