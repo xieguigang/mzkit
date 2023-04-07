@@ -95,14 +95,14 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
     Private Shared Sub RemoveAbNoise(ByRef mz As Double(), ByRef into As Double())
         Dim intensity As Double() = into
         Dim clean As ms2() = mz _
-                .Select(Function(mzi, i)
-                            Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = intensity(i)
-                            }
-                        End Function) _
-                .AbSciexBaselineHandling _
-                .ToArray
+            .Select(Function(mzi, i)
+                        Return New ms2 With {
+                            .mz = mzi,
+                            .intensity = intensity(i)
+                        }
+                    End Function) _
+            .AbSciexBaselineHandling _
+            .ToArray
 
         mz = clean.Select(Function(i) i.mz).ToArray
         into = clean.Select(Function(i) i.intensity).ToArray

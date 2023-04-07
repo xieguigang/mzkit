@@ -1,17 +1,17 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("spectrumPool")>
 Public Module MolecularSpectrumPool
-
-    Const unknown As String = NameOf(unknown)
 
     ''' <summary>
     ''' open the spectrum pool from a given resource link
@@ -23,7 +23,10 @@ Public Module MolecularSpectrumPool
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String, Optional level As Double = 0.9, Optional split As Integer = 9) As SpectrumPool
+    Public Function openPool(link As String,
+                             Optional level As Double = 0.9,
+                             Optional split As Integer = 9) As SpectrumPool
+
         Return SpectrumPool.Open(link, level, split:=split)
     End Function
 
@@ -81,24 +84,29 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="spectral"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("conservedGuid")>
-    Public Function conservedGuid(spectral As PeakMs2) As String
-        Dim desc = spectral.mzInto.OrderByDescending(Function(mzi) mzi.intensity).ToArray
-        Dim peaks As String() = desc _
-            .Select(Function(m) m.mz.ToString("F1") & ":" & m.intensity.ToString("G3")) _
-            .ToArray
-        Dim mz1 As String = spectral.mz.ToString("F1")
-        Dim meta As String() = {
-            spectral.meta.TryGetValue("biosample", unknown),
-            spectral.meta.TryGetValue("organism", unknown)
-        }
-        Dim hashcode As String = peaks _
-            .JoinIterates(mz1) _
-            .JoinIterates(meta) _
-            .JoinBy(spectral.mzInto.Length) _
-            .MD5
+    <RApiReturn(GetType(String))>
+    Public Function conservedGuid(<RRawVectorArgument> spectral As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of PeakMs2, String)(spectral, AddressOf Utils.ConservedGuid)
+    End Function
 
-        Return hashcode
+    <ExportAPI("set_conservedGuid")>
+    Public Function SetConservedGuid(<RRawVectorArgument> spectral As Object, Optional env As Environment = Nothing) As Object
+        Dim msms = pipeline.TryCreatePipeline(Of PeakMs2)(spectral, env)
+
+        If msms.isError Then
+            Return msms.getError
+        End If
+
+        Dim allData = msms.populates(Of PeakMs2)(env).ToArray
+
+        For i As Integer = 0 To allData.Length - 1
+            allData(i).lib_guid = Utils.ConservedGuid(allData(i))
+        Next
+
+        Return allData
     End Function
 
     ''' <summary>

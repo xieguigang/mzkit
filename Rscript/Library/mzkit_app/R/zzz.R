@@ -30,6 +30,7 @@ let .onLoad = function() {
   cat("\n\n");
   cat("MZKit is an open source raw data file toolkit for mass spectrometry\n");
   cat("data analysis, provides by the BioNovoGene corporation.\n");
+  cat("\n");
   cat("The features of mzkit inlcudes: raw data file content viewer\n");
   cat("(XIC/TIC/Mass spectral plot/MS-Imaging), build molecule network,\n");
   cat("formula de-novo search, de-novo annotation of the unknown\n");

@@ -79,5 +79,9 @@ Namespace mzData.mzWebCache
         Protected Overrides Function dataReader() As MsDataReader(Of spectrum)
             Return New mzMLScan()
         End Function
+
+        Protected Overrides Function msManufacturer(rawfile As String) As String
+            Return Nothing
+        End Function
     End Class
 End Namespace

@@ -121,7 +121,10 @@ Namespace Spectra
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CentroidMode([lib] As LibraryMatrix, tolerance As Tolerance, Optional cutoff As LowAbundanceTrimming = Nothing) As LibraryMatrix
+        Public Function CentroidMode([lib] As LibraryMatrix,
+                                     tolerance As Tolerance,
+                                     Optional cutoff As LowAbundanceTrimming = Nothing) As LibraryMatrix
+
             [lib].ms2 = [lib].ms2.Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default).ToArray
             [lib].centroid = True
 
@@ -167,6 +170,12 @@ Namespace Spectra
             End If
         End Function
 
+        ''' <summary>
+        ''' removes noise peak of the ab5600 raw data file
+        ''' </summary>
+        ''' <param name="msData"></param>
+        ''' <param name="cut"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AbSciexBaselineHandling(msData As IEnumerable(Of ms2), Optional cut As Integer = 2) As IEnumerable(Of ms2)
             Return msData _

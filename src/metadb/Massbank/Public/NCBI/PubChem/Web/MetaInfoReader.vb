@@ -234,7 +234,7 @@ Namespace NCBI.PubChem
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
             Dim xref As New xref With {
                 .InChI = InChI,
-                .CAS = CASNumber.Distinct.ToArray,
+                .CAS = CASNumber.SafeQuery.Distinct.ToArray,
                 .InChIkey = InChIKey,
                 .pubchem = view.RecordNumber,
                 .chebi = getXrefId(synonyms, otherId, Function(id) id.IsPattern("CHEBI[:]\d+")),
@@ -286,19 +286,53 @@ Namespace NCBI.PubChem
         <Extension>
         Private Iterator Function GetBiosampleList(view As PugViewRecord) As IEnumerable(Of BiosampleSource)
             For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Tissue Locations/*")
-                Yield New BiosampleSource With {
-                    .biosample = "Tissue",
-                    .reference = c.Reference,
-                    .source = CStr(c.InfoValue)
-                }
+                Dim val As Object = c.InfoValue
+
+                If val Is Nothing Then
+                    Continue For
+                End If
+                If val.GetType.IsArray Then
+                    Dim arr As Array = DirectCast(val, Array)
+
+                    For i As Integer = 0 To arr.Length - 1
+                        Yield New BiosampleSource With {
+                            .biosample = "Tissue",
+                            .reference = c.Reference,
+                            .source = CStr(arr.GetValue(i))
+                        }
+                    Next
+                Else
+                    Yield New BiosampleSource With {
+                        .biosample = "Tissue",
+                        .reference = c.Reference,
+                        .source = CStr(val)
+                    }
+                End If
             Next
 
             For Each c As Information In view.GetInformList("/Pharmacology and Biochemistry/Human Metabolite Information/Cellular Locations/*")
-                Yield New BiosampleSource With {
-                    .biosample = "SubCellular Location",
-                    .reference = c.Reference,
-                    .source = CStr(c.InfoValue)
-                }
+                Dim val As Object = c.InfoValue
+
+                If val Is Nothing Then
+                    Continue For
+                End If
+                If val.GetType.IsArray Then
+                    Dim arr As Array = DirectCast(val, Array)
+
+                    For i As Integer = 0 To arr.Length - 1
+                        Yield New BiosampleSource With {
+                            .biosample = "SubCellular Location",
+                            .reference = c.Reference,
+                            .source = CStr(arr.GetValue(i))
+                        }
+                    Next
+                Else
+                    Yield New BiosampleSource With {
+                        .biosample = "SubCellular Location",
+                        .reference = c.Reference,
+                        .source = CStr(val)
+                    }
+                End If
             Next
         End Function
 
@@ -348,16 +382,25 @@ Namespace NCBI.PubChem
         <Extension>
         Private Iterator Function CCSValues(info As IEnumerable(Of Information)) As IEnumerable(Of CCS)
             For Each c As Information In info
-                Dim valStr = any.ToString(c.InfoValue).stripMarkupString
-                Dim val As String = valStr.Match(SimpleNumberPattern)
-                Dim ionTag As String = valStr.Replace(val, "").Trim.GetTagValue(" ", trim:=True).Value
-
-                Yield New CCS With {
-                    .value = Double.Parse(val),
-                    .reference = c.Reference.stripMarkupString,
-                    .ion = ionTag
-                }
+                If c.InfoType Is GetType(String()) Then
+                    For Each str As String In CType(c.InfoValue, String())
+                        Yield CCSValue(str, c)
+                    Next
+                Else
+                    Yield CCSValue(any.ToString(c.InfoValue).stripMarkupString, c)
+                End If
             Next
+        End Function
+
+        Private Function CCSValue(valStr As String, c As Information) As CCS
+            Dim val As String = valStr.Match(SimpleNumberPattern)
+            Dim ionTag As String = valStr.Replace(val, "").Trim.GetTagValue(" ", trim:=True).Value
+
+            Return New CCS With {
+                .value = Double.Parse(val),
+                .reference = c.Reference.stripMarkupString,
+                .ion = ionTag
+            }
         End Function
 
         Private Function getValues(info As IEnumerable(Of Information)) As UnitValue()

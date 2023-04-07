@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
 ''' <summary>
@@ -92,12 +93,25 @@ Module HMDBTools
     ''' save the hmdb database as a csv table file
     ''' </summary>
     ''' <param name="hmdb"></param>
-    ''' <param name="file"></param>
+    ''' <param name="file">
+    ''' this function will returns a huge metabolite table
+    ''' if this parameter value default null
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("export.hmdb_table")>
-    Public Function exportTable(hmdb As pipeline, file As String, Optional env As Environment = Nothing) As Object
-        Using buffer As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+    Public Function exportTable(hmdb As pipeline, Optional file As Object = Nothing, Optional env As Environment = Nothing) As Object
+        If file Is Nothing Then
+            Return TMIC.HMDB.MetaDb.PopulateTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env)).ToArray
+        End If
+
+        Dim con = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If con Like GetType(Message) Then
+            Return con.TryCast(Of Message)
+        End If
+
+        Using buffer As Stream = con.TryCast(Of Stream)
             Call TMIC.HMDB.MetaDb.WriteTable(hmdb.populates(Of TMIC.HMDB.metabolite)(env), out:=buffer)
             Call buffer.Flush()
         End Using

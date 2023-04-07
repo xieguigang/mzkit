@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Language
 
 Public Module RawStream
 
-#If netcore5 = 0 Or NET48 Then
+#If NET48 Then
     <Extension>
     Public Function LoadFromWiffRaw(raw As sciexWiffReader.WiffScanFileReader,
                                     Optional checkNoise As Boolean = True,

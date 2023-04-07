@@ -1,11 +1,29 @@
 .\" man page create by R# package system.
 .TH PUBCHEM_KIT 1 2000-Jan "SID_map" "SID_map"
 .SH NAME
-SID_map \- 
+SID_map \- parse the pubchem sid map data file
 .SH SYNOPSIS
 \fISID_map(\fBsidMapText\fR as string, 
 \fBskipNoCID\fR as boolean = TRUE, 
 \fBdbfilter\fR as string = \fB<NULL>\fR);\fR
+.SH DESCRIPTION
+.PP
+parse the pubchem sid map data file
+.PP
+.SH OPTIONS
+.PP
+\fBsidMapText\fB \fR\- -. 
+.PP
+.PP
+\fBskipNoCID\fB \fR\- 
+ skip of the sid map item which has no cid assigned yet?
+. 
+.PP
+.PP
+\fBdbfilter\fB \fR\- 
+ filter out the sid map data with a specific given db name
+. 
+.PP
 .SH SEE ALSO
 pubchem_kit
 .SH FILES

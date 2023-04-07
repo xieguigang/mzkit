@@ -95,9 +95,15 @@ Namespace mzData.mzWebCache
             trim = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
+        Protected MustOverride Function msManufacturer(rawfile As String) As String
         Protected MustOverride Function dataReader() As MsDataReader(Of Scan)
         Protected MustOverride Function loadScans(rawfile As String) As IEnumerable(Of Scan)
 
+        ''' <summary>
+        ''' populate of the valids ms scans data
+        ''' </summary>
+        ''' <param name="scans"></param>
+        ''' <returns></returns>
         Private Iterator Function PopulateValidScans(scans As IEnumerable(Of Scan)) As IEnumerable(Of Scan)
             For Each scan As Scan In scans
                 If reader.IsEmpty(scan) Then
@@ -174,7 +180,7 @@ Namespace mzData.mzWebCache
                     Call products.Add(scanVal)
                 End If
 
-                If Not progress Is Nothing Then
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 3 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next
@@ -188,6 +194,10 @@ Namespace mzData.mzWebCache
                 For Each fake As ScanMS1 In yieldFakeMs1(products)
                     Yield fake
                 Next
+            End If
+
+            If progress IsNot Nothing Then
+                Call progress("* read finished!")
             End If
         End Function
 
