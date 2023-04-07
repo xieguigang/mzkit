@@ -58,7 +58,12 @@ Namespace PackLib
                 Call file.WriteText(bcode, path)
 
                 For Each p As Integer In mass.spectrum
-                    Call map.Add(treePack(p).Id, mass.name)
+                    ' 20230407
+                    ' this may cause the possible data missing
+                    ' problem at here
+                    If Not map.ContainsKey(treePack(p).Id) Then
+                        Call map.Add(treePack(p).Id, mass.name)
+                    End If
                 Next
             Next
 
