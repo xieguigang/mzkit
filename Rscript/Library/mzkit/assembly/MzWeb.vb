@@ -60,6 +60,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
@@ -80,6 +81,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.ProteinModel.ChouFasmanRules.Rules
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
@@ -96,6 +98,21 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 ''' </summary>
 <Package("mzweb")>
 Module MzWeb
+
+    <ExportAPI("loadXcmsRData")>
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function loadXcmsRData(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim dataset = XcmsRData.ReadRData(buf.TryCast(Of Stream))
+        Dim peaks As PeakMs2() = dataset.GetMsMs.ToArray
+
+        Return peaks
+    End Function
 
     ''' <summary>
     ''' 

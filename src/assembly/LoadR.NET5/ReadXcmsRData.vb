@@ -11,7 +11,21 @@ Public Class XcmsRData
     Public Property mz As Double()
     Public Property rt As Double()
     Public Property into As Double()
-    Public Property ms2 As Dictionary(Of String, ms2())
+    Public Property ms2 As ms2()()
+    Public Property names As String()
+
+    Public Iterator Function GetMsMs() As IEnumerable(Of PeakMs2)
+        For i As Integer = 0 To names.Length - 1
+            Yield New PeakMs2 With {
+                .mz = mz(i),
+                .rt = rt(i),
+                .intensity = into(i),
+                .lib_guid = names(i),
+                .scan = names(i),
+                .mzInto = ms2(i)
+            }
+        Next
+    End Function
 
     Private Shared Function readNumeric(root As RObject, node As String) As Double()
         Dim query = root.LinkVisitor(node)
@@ -27,8 +41,9 @@ Public Class XcmsRData
         Dim mz = readNumeric(root, "mz1")
         Dim rt = readNumeric(root, "rt2")
         Dim into = readNumeric(root, "into")
-        Dim matrix As New Dictionary(Of String, ms2())
+        Dim matrix As New List(Of ms2())
         Dim raw As list = ConvertToR.ToRObject(root.LinkVisitor("ms2"))
+        Dim names As New List(Of String)
 
         raw = raw!ms2
 
@@ -44,12 +59,14 @@ Public Class XcmsRData
                 }
             Next
 
-            Call matrix.Add(name, msms)
+            Call names.Add(name)
+            Call matrix.Add(msms)
         Next
 
         Return New XcmsRData With {
             .mz = mz, .rt = rt, .into = into,
-            .ms2 = matrix
+            .ms2 = matrix.ToArray,
+            .names = names.ToArray
         }
     End Function
 

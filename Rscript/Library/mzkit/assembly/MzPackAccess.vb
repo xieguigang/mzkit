@@ -382,46 +382,54 @@ Module MzPackAccess
         End If
     End Function
 
+    Private Function denoiseMzpack(mzPack As mzPack) As Object
+        mzPack.MS = mzPack.MS _
+            .AsParallel _
+            .Select(Function(ms1)
+                        ms1.products = ms1.products _
+                            .Select(Function(ms2)
+                                        Dim peaks = ms2.GetMs _
+                                            .AbSciexBaselineHandling _
+                                            .ToArray
+                                        Dim mz As Double() = peaks.Select(Function(a) a.mz).ToArray
+                                        Dim into As Double() = peaks.Select(Function(a) a.intensity).ToArray
+                                        ms2.mz = mz
+                                        ms2.into = into
+                                        Return ms2
+                                    End Function) _
+                            .ToArray
+
+                        Return ms1
+                    End Function) _
+            .ToArray
+
+        Return mzPack
+    End Function
+
+    Private Function denoiseMsMs(raw As Object, env As Environment) As Object
+        Dim msms As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(raw, env)
+
+        If msms.isError Then
+            Return msms.getError
+        End If
+
+        Return msms.populates(Of PeakMs2)(env) _
+            .AsParallel _
+            .Select(Function(ms2)
+                        ms2.mzInto = ms2.mzInto _
+                            .AbSciexBaselineHandling _
+                            .ToArray
+                        Return ms2
+                    End Function) _
+            .ToArray
+    End Function
+
     <ExportAPI("removeSciexNoise")>
     Public Function removeSciexNoise(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         If TypeOf raw Is mzPack Then
-            Dim mzPack As mzPack = DirectCast(raw, mzPack)
-            mzPack.MS = mzPack.MS _
-                .AsParallel _
-                .Select(Function(ms1)
-                            ms1.products = ms1.products _
-                                .Select(Function(ms2)
-                                            Dim peaks = ms2.GetMs _
-                                                .AbSciexBaselineHandling _
-                                                .ToArray
-                                            Dim mz As Double() = peaks.Select(Function(a) a.mz).ToArray
-                                            Dim into As Double() = peaks.Select(Function(a) a.intensity).ToArray
-                                            ms2.mz = mz
-                                            ms2.into = into
-                                            Return ms2
-                                        End Function) _
-                                .ToArray
-
-                            Return ms1
-                        End Function) _
-                .ToArray
-            Return mzPack
+            Return denoiseMzpack(DirectCast(raw, mzPack))
         Else
-            Dim msms As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(raw, env)
-
-            If msms.isError Then
-                Return msms.getError
-            End If
-
-            Return msms.populates(Of PeakMs2)(env) _
-                .AsParallel _
-                .Select(Function(ms2)
-                            ms2.mzInto = ms2.mzInto _
-                                .AbSciexBaselineHandling _
-                                .ToArray
-                            Return ms2
-                        End Function) _
-                .ToArray
+            Return denoiseMsMs(raw, env)
         End If
     End Function
 End Module
