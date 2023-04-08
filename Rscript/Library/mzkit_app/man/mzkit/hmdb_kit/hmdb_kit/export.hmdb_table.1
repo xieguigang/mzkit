@@ -4,7 +4,7 @@
 export.hmdb_table \- save the hmdb database as a csv table file
 .SH SYNOPSIS
 \fIexport.hmdb_table(\fBhmdb\fR as <generic> pipeline, 
-\fBfile\fR as string, 
+\fBfile\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -15,7 +15,10 @@ save the hmdb database as a csv table file
 \fBhmdb\fB \fR\- -. 
 .PP
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- 
+ this function will returns a huge metabolite table
+ if this parameter value default null
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

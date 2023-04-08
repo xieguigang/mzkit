@@ -2,6 +2,7 @@
 
 biodeep mzweb data viewer raw data file helper
 
++ [loadXcmsRData](mzweb/loadXcmsRData.1) 
 + [open](mzweb/open.1) 
 + [TIC](mzweb/TIC.1) 
 + [load.chromatogram](mzweb/load.chromatogram.1) load chromatogram data from the raw file data
