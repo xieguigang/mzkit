@@ -342,6 +342,8 @@ Module ReferenceTreePkg
 
         If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+        ElseIf x.Length = 0 Then
+            Return Nothing
         End If
         If treeSearch Then
             result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
@@ -349,17 +351,16 @@ Module ReferenceTreePkg
             result = tree.Search(centroid, mz1:=x.parentMz).ToArray
         End If
 
-        Dim basePeakMz As Double = x.ms2 _
+        Dim basePeak As ms2 = x.ms2 _
             .OrderByDescending(Function(a) a.intensity) _
-            .FirstOrDefault _
-            ?.mz
+            .First
         Dim output As New List(Of ClusterHit)
 
         For Each hit As ClusterHit In result
             If Not hit Is Nothing Then
                 hit.queryId = x.name
                 hit.queryMz = x.parentMz
-                hit.basePeak = basePeakMz
+                hit.basePeak = basePeak.mz
 
                 Call output.Add(hit)
             End If
@@ -390,6 +391,8 @@ Module ReferenceTreePkg
 
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
             Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+        ElseIf x.mzInto.Length = 0 Then
+            Return Nothing
         End If
         If treeSearch AndAlso TypeOf tree Is TreeSearch Then
             result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
@@ -397,10 +400,9 @@ Module ReferenceTreePkg
             result = tree.Search(centroid, mz1:=x.mz).ToArray
         End If
 
-        Dim basePeakMz As Double = x.mzInto _
+        Dim basePeak As ms2 = x.mzInto _
             .OrderByDescending(Function(a) a.intensity) _
-            .FirstOrDefault _
-            ?.mz
+            .First
         Dim output As New List(Of ClusterHit)
 
         For Each hit As ClusterHit In result
@@ -408,7 +410,7 @@ Module ReferenceTreePkg
                 hit.queryId = x.lib_guid
                 hit.queryMz = x.mz
                 hit.queryRt = x.rt
-                hit.basePeak = basePeakMz
+                hit.basePeak = basePeak.mz
 
                 Call output.Add(hit)
             End If
