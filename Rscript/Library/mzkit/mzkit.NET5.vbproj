@@ -146,6 +146,7 @@
 		<ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
+		<ProjectReference Include="..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj" />
