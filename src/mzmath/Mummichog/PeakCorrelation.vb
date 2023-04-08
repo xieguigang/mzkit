@@ -117,13 +117,53 @@ Public Class PeakCorrelation
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function PeakMs2Activator(peak As PeakMs2, Optional anno As String = Nothing) As PeakMs2
+        Dim metadata As New Dictionary(Of String, String)
+
+        ' Error in <globalEnvironment> -> snowfall_prallel_RPC_slave_node%&H00000000@http://172.17.0.7:46425/ -> "slaveTask"(&argv...)(&argv...)(&argv...) -> R_invoke$slaveTask -> ".summaryTaskResult"(...)(Call ".annoReport"(Call ".protoc...) -> ".annoReport"(..l_workflow"(Call "...) -> ".protocol_workflow"(...)(Call ".raw_preprocessor"(Call "....) -> ".raw_preprocessor"(...)(Call ".set_slave"(Call .Internal...) -> R_invoke$.raw_preprocessor -> "findProducts"(&peaksMs1, &rawdata, &args...)(&peaksMs1, &rawdata,nvoke$findProducts -> "findPrecursors"("peaktable" <- &peaksMs1["peakin...)("peaktable" <- &peaksMs1["peakin...) -> findPrecursors
+        ' 1. ArgumentNullException: Value cannot be null. (Parameter 'dictionary')
+        ' 2. stackFrames: 
+        ' at System.Collections.Generic.Dictionary`2..ctor(IDictionary`2 dictionary)
+        ' at BioNovoGene.BioDeep.MSEngine.Mummichog.IsotopicAnnotation`1.IsotopicAnnotation(T peak)+MoveNext()
+        ' at Microsoft.VisualBasic.Linq.JoinExtensions.IteratesALL[T](IEnumerable`1 source)+MoveNext()
+        ' at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+        ' at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+        ' at Microsoft.VisualBasic.Language.List`1..ctor(IEnumerable`1 source)
+        ' at Microsoft.VisualBasic.ListExtensions.AsList[T](IEnumerable`1 source)
+        ' at BioNovoGene.BioDeep.MSEngine.Mummichog.PeakCorrelation.FindExactMass[T](T[] PeakList, IsotopicAnnotation`1 isotopic, AdductsAnnotation`1 adductAnno, Double deltaRt, Double mzdiff)+MoveNext()
+        ' at MsAnnotationKit.Rscript.exactMs2PeakSet(Dictionary`2 ms2Set, PeakCorrelation cor)+MoveNext()
+        ' at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+        ' at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+        ' at MsAnnotationKit.Rscript.findPrecursors(dataframe peaktable, list ms2data, Double rtwin, Double da, Object precursors, Environment env)
+
+        ' Call annotationKit::"findPrecursors"("peaktable" <- &peaksMs1["peakinput"], "ms2data" <- &cluster_rt, "rtwin" <- Call "as.numeric"((&args["rt_winsize"] || 30)), "da" <- 0.5, "precursors" <- &adducts)
+        ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        ' annotationKit.R#_interop::.findPrecursors at MsAnnotationKit.dll:line <unknown>
+        ' biodeepMSMS.call_function."findPrecursors"("peaktable" <- &peaksMs1["peakin...)("peaktable" <- &peaksMs1["peakin...) at findProducts.R:line 46
+        ' biodeepMSMS.declare_function.R_invoke$findProducts at findProducts.R:line 12
+        ' biodeepMSMS.call_function."findProducts"(&peaksMs1, &rawdata, &args...)(&peaksMs1, &rawdata, &args...) at raw_preprocessor.R:line 31
+        ' biodeepMSMS.declare_function.R_invoke$.raw_preprocessor at raw_preprocessor.R:line 11
+        ' biodeepMSMS.call_function.".raw_preprocessor"(...)(Call ".set_slave"(Call .Internal...) at slaveTask.R:line 11
+        ' biodeepMSMS.call_function.".protocol_workflow"(...)(Call ".raw_preprocessor"(Call "....) at slaveTask.R:line 12
+        ' biodeepMSMS.call_function.".annoReport"(...)(Call ".protocol_workflow"(Call "...) at slaveTask.R:line 13
+        ' biodeepMSMS.call_function.".summaryTaskResult"(...)(Call ".annoReport"(Call ".protoc...) at slaveTask.R:line 14
+        ' biodeepMSMS.declare_function.R_invoke$slaveTask at slaveTask.R:line 6
+        ' runSlaveNode.call_function."slaveTask"(&argv...)(&argv...)(&argv...) at slave.R:line 60
+        ' unknown.unknown.snowfall_prallel_RPC_slave_node%&H00000000@http://172.17.0.7:46425/ at n/a:line n/a
+        ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
+
+        If Not peak.meta Is Nothing Then
+            ' 20230408 handling of the possible null reference value
+            metadata = New Dictionary(Of String, String)(peak.meta)
+        End If
+
         Return New PeakMs2 With {
             .activation = peak.activation,
             .collisionEnergy = peak.collisionEnergy,
             .file = peak.file,
             .intensity = peak.intensity,
             .lib_guid = peak.lib_guid,
-            .meta = New Dictionary(Of String, String)(peak.meta),
+            .meta = metadata,
             .mz = peak.mz,
             .mzInto = peak.mzInto.ToArray,
             .precursor_type = anno,
