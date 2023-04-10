@@ -356,11 +356,13 @@ Module ReferenceTreePkg
             .First
         Dim output As New List(Of ClusterHit)
 
+        ' assign the query ion information
         For Each hit As ClusterHit In result
             If Not hit Is Nothing Then
                 hit.queryId = x.name
                 hit.queryMz = x.parentMz
                 hit.basePeak = basePeak.mz
+                hit.queryIntensity = x.totalIon
 
                 Call output.Add(hit)
             End If
@@ -405,12 +407,14 @@ Module ReferenceTreePkg
             .First
         Dim output As New List(Of ClusterHit)
 
+        ' assign the query ion information
         For Each hit As ClusterHit In result
             If Not hit Is Nothing Then
                 hit.queryId = x.lib_guid
                 hit.queryMz = x.mz
                 hit.queryRt = x.rt
                 hit.basePeak = basePeak.mz
+                hit.queryIntensity = If(x.intensity <= 0.0, x.Ms2Intensity, x.intensity)
 
                 Call output.Add(hit)
             End If

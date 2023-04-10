@@ -110,6 +110,10 @@ Namespace Spectra
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the numeric vector of the <see cref="ms2.intensity"/> value
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public ReadOnly Property intensity As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -118,21 +122,33 @@ Namespace Spectra
             End Get
         End Property
 
+        ''' <summary>
+        ''' sum of <see cref="intensity"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property totalIon As Double
             Get
                 Return intensity.Sum
             End Get
         End Property
 
+        ''' <summary>
+        ''' evaluates the spectrum peaks' shannon entropy value based on the <see cref="intensity"/> 
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property entropy As Double
             Get
-                Dim i As Vector = Me.intensity
-                Dim shannon = (i / i.Max).ShannonEntropy
+                Dim i As Vector = intensity
+                Dim shannon As Double = (i / i.Sum).ShannonEntropy
 
                 Return shannon
             End Get
         End Property
 
+        ''' <summary>
+        ''' get all ms2 fragment peaks m/z values
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public ReadOnly Property mz As Double()
             Get
@@ -159,6 +175,18 @@ Namespace Spectra
             Return buffer(WhichIndex.Symbol.Max(buffer.Select(Function(mz) mz.intensity)))
         End Function
 
+        ''' <summary>
+        ''' Create ms2 fragment peaks alignment with a given mass tolerance value
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="tolerance">
+        ''' the mass tolerance value
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function could be used for generates the peak matrix for the spectrum 
+        ''' alignment purpose.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(data As ms2(), tolerance As Tolerance) As ms2()
             Return ms2.AlignMatrix(data, tolerance)
