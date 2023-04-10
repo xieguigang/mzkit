@@ -55,6 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -65,7 +66,6 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports SMRUCC.genomics.Assembly.Uniprot.XML
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
@@ -122,7 +122,7 @@ Module library
         Dim mzErr As Tolerance = tolerance.TryCast(Of Tolerance)
         Dim ions As New List(Of PeakMs2)
 
-        For Each Ms1 In raw.MS
+        For Each Ms1 As ScanMS1 In raw.MS
             For Each ms2 In Ms1.products.SafeQuery
                 For Each mzi As Double In Ms1.mz
                     If mzErr(mzi, ms2.parentMz) Then
