@@ -55,6 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -64,9 +65,12 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.Assembly.Uniprot.XML
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' the metabolite annotation toolkit
@@ -118,13 +122,13 @@ Module library
         Dim mzErr As Tolerance = tolerance.TryCast(Of Tolerance)
         Dim ions As New List(Of PeakMs2)
 
-        For Each ms1 In raw.MS
-            For Each ms2 In ms1.products.SafeQuery
-                For Each mzi As Double In ms1.mz
+        For Each Ms1 In raw.MS
+            For Each ms2 In Ms1.products.SafeQuery
+                For Each mzi As Double In Ms1.mz
                     If mzErr(mzi, ms2.parentMz) Then
                         Dim ion2 As New PeakMs2 With {
                             .mz = mzi,
-                            .rt = ms1.rt,
+                            .rt = Ms1.rt,
                             .file = raw.source,
                             .lib_guid = ms2.scan_id,
                             .activation = ms2.activationMethod.Description,
@@ -162,10 +166,94 @@ Module library
         Return New MetaInfo With {
             .xref = If(xref, New xref),
             .formula = formula,
-            .ID = id,
+            .id = id,
             .name = name,
             .synonym = synonym,
             .exact_mass = CDbl(FormulaScanner.ScanFormula(formula))
         }
+    End Function
+
+    ''' <summary>
+    ''' Check the ms1 parent ion is generated via the in-source fragment or not
+    ''' </summary>
+    ''' <param name="ms1">the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, a collection of ms1 scan with unique id tagged.</param>
+    ''' <param name="ms2">
+    ''' the ms2 products list
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a tuple key-value pair list object that contains the flags for each ms1 ion
+    ''' corresponding slot value TRUE means the key ion is a possible in-source
+    ''' fragment ion data, otherwise slot value FALSE means not. 
+    ''' </returns>
+    ''' 
+    <ExportAPI("checkInSourceFragments")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function checkInSourceFragments(<RRawVectorArgument> ms1 As Object,
+                                           <RRawVectorArgument> ms2 As Object,
+                                           Optional da As Double = 0.1,
+                                           Optional rt_win As Double = 5,
+                                           Optional env As Environment = Nothing) As Object
+
+        Dim xcmsPeaks As xcms2()
+
+        If TypeOf ms1 Is dataframe Then
+            Dim id As String()
+            Dim df As dataframe = DirectCast(ms1, dataframe)
+
+            If Not df.rownames Is Nothing Then
+                id = df.rownames
+            ElseIf df.hasName("xcms_id") Then
+                id = CLRVector.asCharacter(df("xcms_id"))
+            ElseIf df.hasName("ID") Then
+                id = CLRVector.asCharacter(df("ID"))
+            Else
+                Return Internal.debug.stop({
+                    "missing the unique id of the ms1 ions in your dataframe!",
+                    "required_one_of_field: xcms_id, ID"
+                }, env)
+            End If
+
+            Dim mz As Double() = CLRVector.asNumeric(df("mz"))
+            Dim rt As Double() = CLRVector.asNumeric(df("rt"))
+
+            xcmsPeaks = id _
+                .Select(Function(xcms_id, i)
+                            Return New xcms2 With {
+                                .ID = xcms_id,
+                                .mz = mz(i),
+                                .rt = rt(i)
+                            }
+                        End Function) _
+                .ToArray
+        Else
+            Dim ms1data = pipeline.TryCreatePipeline(Of xcms2)(ms1, env)
+
+            If ms1data.isError Then
+                Return ms1data.getError
+            End If
+
+            xcmsPeaks = ms1data _
+                .populates(Of xcms2)(env) _
+                .ToArray
+        End If
+
+        Dim ms2Products As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2, env)
+
+        If ms2Products.isError Then
+            Return ms2Products.getError
+        End If
+
+        Dim check As New CheckInSourceFragments(ms2Products.populates(Of PeakMs2)(env), da)
+        Dim flags As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each ms1_ion As xcms2 In xcmsPeaks
+            Call flags.add(
+                name:=ms1_ion.ID,
+                value:=check.CheckOfFragments(ms1_ion.mz, ms1_ion.rt, rt_win)
+            )
+        Next
+
+        Return flags
     End Function
 End Module
