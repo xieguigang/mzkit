@@ -97,14 +97,16 @@ Public Module Networking
         )
         Dim align As New MSScore(cosine, ions.ToArray, equals, equals)
         Dim clustering As New ClusterTree
+        Dim ionsList As New List(Of PeakMs2)
 
         For Each ion As PeakMs2 In align.Ions
+            Call ionsList.Add(ion)
             Call ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals)
         Next
 
         Return New TreeCluster With {
             .tree = clustering,
-            .spectrum = align.Ions
+            .spectrum = ionsList.ToArray
         }
     End Function
 
