@@ -71,6 +71,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 
 ''' <summary>
 ''' the metabolite annotation toolkit
@@ -156,17 +157,17 @@ Module library
     ''' <param name="synonym"></param>
     ''' <param name="xref"></param>
     ''' <returns></returns>
-    <ExportAPI("annotation")>
+    <ExportAPI("make.annotation")>
     Public Function createAnnotation(id As String,
                                      formula As String,
                                      name As String,
                                      Optional synonym As String() = Nothing,
-                                     Optional xref As xref = Nothing) As MetaInfo
+                                     Optional xref As xref = Nothing) As MetaData
 
-        Return New MetaInfo With {
+        Return New MetaData With {
             .xref = If(xref, New xref),
             .formula = formula,
-            .id = id,
+            .ID = id,
             .name = name,
             .synonym = synonym,
             .exact_mass = CDbl(FormulaScanner.ScanFormula(formula))

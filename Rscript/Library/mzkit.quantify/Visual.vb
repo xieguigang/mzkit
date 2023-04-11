@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
@@ -87,8 +88,8 @@ Module Visual
         If data Is Nothing Then
             Return Nothing
         ElseIf TypeOf data Is Rdataframe Then
-            timeVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).getColumnVector(time))
-            intoVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).getColumnVector(into))
+            timeVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(time))
+            intoVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(into))
         ElseIf TypeOf data Is DataSet() Then
             timeVec = DirectCast(data, DataSet()).Vector(time)
             intoVec = DirectCast(data, DataSet()).Vector(into)
@@ -178,7 +179,7 @@ Module Visual
         If relativeTimeScale Is Nothing Then
             relativeTimeScale = New Double() {}
         Else
-            relativeTimeScale = DirectCast(REnv.asVector(Of Double)(relativeTimeScale), Double())
+            relativeTimeScale = CLRVector.asNumeric(relativeTimeScale)
         End If
 
         If TypeOf chromatogram Is ChromatogramTick() Then
