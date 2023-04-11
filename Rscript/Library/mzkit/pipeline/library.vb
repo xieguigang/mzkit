@@ -196,10 +196,14 @@ Module library
                                            Optional env As Environment = Nothing) As Object
 
         Dim xcmsPeaks As xcms2()
+        Dim println = env.WriteLineHandler
 
         If TypeOf ms1 Is dataframe Then
             Dim id As String()
             Dim df As dataframe = DirectCast(ms1, dataframe)
+
+            Call println("get data frame object for the ms1 ions features(with data fields):")
+            Call println(df.colnames)
 
             If Not df.rownames Is Nothing Then
                 id = df.rownames
@@ -216,6 +220,9 @@ Module library
 
             Dim mz As Double() = CLRVector.asNumeric(df("mz"))
             Dim rt As Double() = CLRVector.asNumeric(df("rt"))
+
+            Call println("get ms1 features unique id collection:")
+            Call println(id)
 
             xcmsPeaks = id _
                 .Select(Function(xcms_id, i)
