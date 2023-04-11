@@ -6,7 +6,7 @@
     "run_dll": {
       "commandName": "Executable",
       "executablePath": "E:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "E:\\mzkit\\Rscript\\Library\\mzkit_app\\pipeline\\KEGG_reference.R --attach E:\\mzkit\\Rscript\\Library\\mzkit_app"
+      "commandLineArgs": "E:\\mzkit\\Rscript\\Library\\mzkit_app\\pipeline\\KEGG_reference.R --attach E:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
     }
   }
 }
