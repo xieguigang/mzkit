@@ -89,47 +89,41 @@ Public Module Networking
     Public Function Tree(ions As IEnumerable(Of PeakMs2),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
-                         Optional equals As Double = 0.85) As ClusterTree
+                         Optional equals As Double = 0.85) As TreeCluster
 
-        Dim align As New MSScore(New CosAlignment(Tolerance.DeltaMass(mzdiff), New RelativeIntensityCutoff(intocutoff)), ions.ToArray, equals, equals)
+        Dim cosine As New CosAlignment(
+            mzwidth:=Tolerance.DeltaMass(mzdiff),
+            intocutoff:=New RelativeIntensityCutoff(intocutoff)
+        )
+        Dim align As New MSScore(cosine, ions.ToArray, equals, equals)
         Dim clustering As New ClusterTree
 
         For Each ion As PeakMs2 In align.Ions
             Call ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals)
         Next
 
-        Return clustering
+        Return New TreeCluster With {
+            .tree = clustering,
+            .spectrum = align.Ions
+        }
+    End Function
+
+    Private Iterator Function normPeaki(i As PeakMs2) As IEnumerable(Of ms2)
+        Dim maxinto As Double = i.mzInto _
+            .Select(Function(mzi) mzi.intensity) _
+            .Max
+
+        For Each mzi As ms2 In i.mzInto
+            Yield New ms2 With {
+                .mz = mzi.mz,
+                .intensity = mzi.intensity / maxinto
+            }
+        Next
     End Function
 
     <Extension>
-    Public Function RepresentativeSpectrum(cluster As PeakMs2(),
-                                           tolerance As Tolerance,
-                                           zero As RelativeIntensityCutoff,
-                                           Optional key As String = Nothing) As PeakMs2
-        Dim union As ms2() = cluster _
-            .Select(Function(i)
-                        Dim maxinto As Double = i.mzInto _
-                            .Select(Function(mzi) mzi.intensity) _
-                            .Max
-
-                        Return i.mzInto _
-                            .Select(Function(mzi)
-                                        Return New ms2 With {
-                                            .mz = mzi.mz,
-                                            .intensity = mzi.intensity / maxinto
-                                        }
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .ToArray _
-            .Centroid(tolerance, cutoff:=zero) _
-            .ToArray
-        Dim rt As Double = cluster _
-            .Select(Function(c) c.rt) _
-            .TabulateBin _
-            .Average
-        Dim mz1 As Double
-        Dim metadata = cluster _
+    Private Function unionMetadata(cluster As IEnumerable(Of PeakMs2)) As Dictionary(Of String, String)
+        Return cluster _
             .Select(Function(c) c.meta) _
             .IteratesALL _
             .GroupBy(Function(t) t.Key) _
@@ -140,6 +134,36 @@ Public Module Networking
                                     .Distinct _
                                     .JoinBy("; ")
                             End Function)
+    End Function
+
+    ''' <summary>
+    ''' merge the given collection of the ms2 spectrum data as an union spectrum data
+    ''' </summary>
+    ''' <param name="cluster"></param>
+    ''' <param name="mzdiff">
+    ''' the mzdiff tolerance value for grouping the union ms2 peaks based 
+    ''' on the centroid function
+    ''' </param>
+    ''' <param name="zero"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function RepresentativeSpectrum(cluster As PeakMs2(),
+                                           mzdiff As Tolerance,
+                                           zero As RelativeIntensityCutoff,
+                                           Optional key As String = Nothing) As PeakMs2
+        Dim union As ms2() = cluster _
+            .Select(AddressOf normPeaki) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(mzdiff, cutoff:=zero) _
+            .ToArray
+        Dim rt As Double = cluster _
+            .Select(Function(c) c.rt) _
+            .TabulateBin _
+            .Average
+        Dim mz1 As Double
+        Dim metadata = cluster.unionMetadata
 
         If cluster.Length = 1 Then
             mz1 = cluster(Scan0).mz
