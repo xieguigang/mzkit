@@ -101,6 +101,17 @@ Public Module Networking
         Return clustering
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="cluster"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="zero"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
+    ''' </remarks>
     <Extension>
     Public Function RepresentativeSpectrum(cluster As PeakMs2(),
                                            tolerance As Tolerance,
@@ -154,7 +165,7 @@ Public Module Networking
         Return New PeakMs2 With {
             .rt = rt,
             .activation = "NA",
-            .collisionEnergy = 0,
+            .collisionEnergy = cluster.Length,
             .file = key,
             .intensity = cluster.Sum(Function(c) c.intensity),
             .lib_guid = key,

@@ -202,6 +202,9 @@ Module MoleculeNetworking
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
+    ''' </remarks>
     <ExportAPI("representative")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function RepresentativeSpectrum(tree As ClusterTree,
@@ -222,8 +225,9 @@ Module MoleculeNetworking
 
         For Each key As String In pack.getNames
             Dim cluster As PeakMs2() = pack.getValue(Of PeakMs2())(key, env, [default]:={})
-            Dim ref = cluster.RepresentativeSpectrum(tolerance, zero, key)
+            Dim ref = cluster.RepresentativeSpectrum(tolerance, zero, key:=key)
 
+            ' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
             Call output.Add(ref)
         Next
 
