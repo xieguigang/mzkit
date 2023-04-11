@@ -21,7 +21,12 @@ const stdlib = spectrumTree::new(graph_pack, type = "Pack");
 
 for(dir in list.dirs(rawdir,recursive = FALSE)) {
     kegg_id = basename(dir);
-    raw = open.mzpack(`${dir}/reference.mzPack`) |> ms2_peaks(tag.source = FALSE);
+    raw = open.mzpack(`${dir}/reference.mzPack`) 
+    |> ms2_peaks(tag.source = FALSE) 
+    |> mzkit::get_representives(top_n = 5, 
+                                   mzdiff = 0.3,
+                                   intocutoff = 0.05,
+                                   equals = 0.9);
 
     print(dir);
     print(kegg_id);
