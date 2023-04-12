@@ -24,11 +24,17 @@ const get_representives = function(ions, top_n = 5,
         tree, ions, 
         mzdiff = `da:${mzdiff}`
     );
+    
     # and then we can order the spectrum collection via 
     # the cluster size
     ions = unlist(union_spectrums);
-    ions = ions[order([ions]::collisionEnergy, decreasing = TRUE)];
-
-    # get top n spectrum from the union spectrum result
-    ions[1:top_n] |> which(x -> !is.null(x));
+    
+    if (!is.null(ions)) {
+        ions = ions[order([ions]::collisionEnergy, decreasing = TRUE)];
+        # get top n spectrum from the union 
+        # spectrum result
+        ions[1:top_n] |> which(x -> !is.null(x));
+    } else {
+        NULL;
+    }
 }
