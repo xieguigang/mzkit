@@ -8,7 +8,8 @@ options(memory.load = "max");
 imports "spectrumTree" from "mzkit";
 imports "spectrumPool" from "mzDIA";
 
-rawdir = "E:\reference_ms\DIA\neg";
+# "E:\reference_ms\DIA\neg"
+rawdir = ?"--rawdir" || stop("no raw data source was provided!");
 graph_pack = `${dirname(rawdir)}/lib.${basename(rawdir)}`;
 kegg_list = GCModeller::kegg_compounds(rawList = TRUE); 
 kegg_id = [kegg_list]::entry;
