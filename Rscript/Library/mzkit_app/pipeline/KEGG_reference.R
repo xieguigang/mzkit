@@ -37,7 +37,7 @@ for(dir in list.dirs(rawdir,recursive = FALSE)) {
 
     if (![is.null(metabo) || is.null(raw)]) {
         stdlib |> spectrumTree::addBucket(
-            x = spectrumPool::set_conservedGuid(raw),
+            x = spectrumPool::set_conservedGuid(raw, prefix = kegg_id),
             ignore_error = TRUE,
             uuid = kegg_id,
             formula = [metabo]::formula
