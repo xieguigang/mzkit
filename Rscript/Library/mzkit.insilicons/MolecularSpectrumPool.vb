@@ -93,7 +93,11 @@ Public Module MolecularSpectrumPool
     End Function
 
     <ExportAPI("set_conservedGuid")>
-    Public Function SetConservedGuid(<RRawVectorArgument> spectral As Object, Optional env As Environment = Nothing) As Object
+    Public Function SetConservedGuid(<RRawVectorArgument>
+                                     spectral As Object,
+                                     Optional prefix As String = Nothing,
+                                     Optional env As Environment = Nothing) As Object
+
         Dim msms = pipeline.TryCreatePipeline(Of PeakMs2)(spectral, env)
 
         If msms.isError Then
@@ -102,9 +106,17 @@ Public Module MolecularSpectrumPool
 
         Dim allData = msms.populates(Of PeakMs2)(env).ToArray
 
-        For i As Integer = 0 To allData.Length - 1
-            allData(i).lib_guid = Utils.ConservedGuid(allData(i))
-        Next
+        If prefix.StringEmpty Then
+            For i As Integer = 0 To allData.Length - 1
+                allData(i).lib_guid = Utils.ConservedGuid(allData(i))
+            Next
+        Else
+            ' 20230412 handling of the invalid id reference for biodeepMSMS
+            ' script package
+            For i As Integer = 0 To allData.Length - 1
+                allData(i).lib_guid = $"{prefix}|{Utils.ConservedGuid(allData(i))}"
+            Next
+        End If
 
         Return allData
     End Function
