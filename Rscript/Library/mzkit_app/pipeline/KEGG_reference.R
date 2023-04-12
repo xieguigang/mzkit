@@ -34,7 +34,7 @@ for(dir in list.dirs(rawdir,recursive = FALSE)) {
     # do spectrum clustering and then get the max cluster
     metabo = kegg_list[[kegg_id]];
 
-    if (!is.null(metabo)) {
+    if (![is.null(metabo) || is.null(raw)]) {
         stdlib |> spectrumTree::addBucket(
             x = spectrumPool::set_conservedGuid(raw),
             ignore_error = TRUE,
