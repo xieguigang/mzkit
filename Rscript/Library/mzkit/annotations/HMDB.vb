@@ -1,64 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::716473ea2ff8400bc315a27c7955c012, mzkit\Rscript\Library\mzkit\annotations\HMDB.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 69
-    ' Comment Lines: 27
-    '   Blank Lines: 12
-    '     File Size: 3.94 KB
+' Summaries:
 
 
-    ' Module HMDBTools
-    ' 
-    '     Function: biospecimen_slicer, chemical_taxonomy, exportTable, readHMDB, subCellular_slicer
-    '               tissue_slicer
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 69
+' Comment Lines: 27
+'   Blank Lines: 12
+'     File Size: 3.94 KB
+
+
+' Module HMDBTools
+' 
+'     Function: biospecimen_slicer, chemical_taxonomy, exportTable, readHMDB, subCellular_slicer
+'               tissue_slicer
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
+Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -70,6 +74,59 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 ''' </summary>
 <Package("hmdb_kit")>
 Module HMDBTools
+
+    <ExportAPI("read.hmdb_spectrals")>
+    Public Function readHMDBSpectrals(repo As String, Optional hmdbRaw As Boolean = False, Optional lazy As Boolean = True) As Object
+        Dim scan = TMIC.HMDB.Spectra.PopulateSpectras(repo)
+
+        If hmdbRaw Then
+            If lazy Then
+                Return pipeline.CreateFromPopulator(scan)
+            Else
+                Return New list With {
+                    .slots = scan _
+                        .ToDictionary(Function(s) s.Name,
+                                      Function(s)
+                                          Return CObj(s.Value)
+                                      End Function)
+                }
+            End If
+        Else
+            ' converts to peakms2 object
+            Dim converts As IEnumerable(Of PeakMs2) = scan.Select(AddressOf Convert)
+
+            If lazy Then
+                Return pipeline.CreateFromPopulator(converts)
+            Else
+                Return converts.ToArray
+            End If
+        End If
+    End Function
+
+    Private Function Convert(msms As NamedValue(Of SpectraFile)) As PeakMs2
+        Dim file As MSMS = msms.Value
+        Dim libname As String = file.database_id.value
+        Dim mode As IonModes = ParseIonMode(file.ionization_mode.value)
+
+        If Not file.references.IsNullOrEmpty Then
+            libname = $"[{file.references(Scan0).database}]{file.references(Scan0).database_id}"
+        End If
+
+        Return New PeakMs2 With {
+            .mzInto = file.peakList _
+                .Select(Function(p)
+                            Return New ms2 With {
+                                .mz = p.mass_charge,
+                                .intensity = p.intensity
+                            }
+                        End Function) _
+                .ToArray,
+            .lib_guid = libname,
+            .file = msms.Name,
+            .scan = file.database_id.value,
+            .precursor_type = If(mode = IonModes.Positive, "[M]+", "[M]-")
+        }
+    End Function
 
     ''' <summary>
     ''' open a reader for read hmdb database

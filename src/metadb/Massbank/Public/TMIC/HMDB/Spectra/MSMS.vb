@@ -61,6 +61,9 @@ Imports System.Xml.Serialization
 
 Namespace TMIC.HMDB.Spectra
 
+    ''' <summary>
+    ''' the MS/MS data file
+    ''' </summary>
     <XmlType("ms-ms")> Public Class MSMS : Inherits SpectraFile
         Implements IPeakList(Of MSMSPeak)
 

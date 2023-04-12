@@ -67,6 +67,13 @@ Namespace TMIC.HMDB.Spectra
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="repository"></param>
+        ''' <returns>
+        ''' populate a collection of the tuple data for: [file name, spectral]
+        ''' </returns>
         <Extension>
         Public Iterator Function PopulateSpectras(repository As String) As IEnumerable(Of NamedValue(Of SpectraFile))
             For Each file As String In repository.EnumerateFiles("*.xml")
