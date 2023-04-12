@@ -184,6 +184,10 @@ Module MoleculeNetworking
         }
         Dim members As New List(Of PeakMs2)
 
+        If ions.IsNullOrEmpty Then
+            Return payload
+        End If
+
         For Each cluster As ClusterTree In clusters
             Call members.Clear()
             Call members.Add(list(cluster.Data))
