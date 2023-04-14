@@ -78,8 +78,8 @@ Namespace TMIC.HMDB.Spectra
         Public Iterator Function PopulateSpectras(repository As String) As IEnumerable(Of NamedValue(Of SpectraFile))
             For Each file As String In repository.EnumerateFiles("*.xml")
                 Dim header = file.IterateAllLines _
-                                 .Take(2) _
-                                 .Last
+                    .Take(2) _
+                    .Last
                 Dim rootNodeName$ = header _
                     .Match("[<]\S+") _
                     .Trim("<"c) _
