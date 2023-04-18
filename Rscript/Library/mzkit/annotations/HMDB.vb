@@ -139,12 +139,19 @@ Module HMDBTools
     ''' <returns></returns>
     ''' 
     <ExportAPI("get_hmdb")>
-    <RApiReturn(GetType(HMDB.metabolite))>
+    <RApiReturn(GetType(HMDB.metabolite), GetType(HMDB.MetaDb))>
     Public Function getHMDB(id As String,
                             Optional cache_dir As String = "./hmdb/",
+                            Optional tabular As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
-        Return HMDB.Repository.GetMetabolite(id, cache_dir)
+        Dim q = HMDB.Repository.GetMetabolite(id, cache_dir)
+
+        If tabular Then
+            Return HMDB.MetaDb.FromMetabolite(q)
+        Else
+            Return q
+        End If
     End Function
 
     ''' <summary>
