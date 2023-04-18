@@ -516,6 +516,7 @@ Module ReferenceTreePkg
         ElseIf TypeOf tree Is SpectrumPack Then
             Dim uuid As String = args.getValue(Of String)({"uuid", "BioDeepID", "biodeep_id"}, env)
             Dim formula As String = args.getValue(Of String)({"formula", "chemical_formula"}, env)
+            Dim name As String = args.getValue({"name", "Name"}, env, [default]:="")
 
             If uuid.StringEmpty Then
                 If ignore_error Then
@@ -532,6 +533,10 @@ Module ReferenceTreePkg
                 Else
                     Return Internal.debug.stop(no_formula, env)
                 End If
+            End If
+
+            If Not name.StringEmpty Then
+                uuid = $"{uuid}|{name}"
             End If
 
             For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
