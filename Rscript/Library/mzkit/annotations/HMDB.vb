@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -68,6 +69,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
 ''' toolkit for handling of the hmdb database
@@ -126,6 +128,23 @@ Module HMDBTools
             .scan = file.database_id.value,
             .precursor_type = If(mode = IonModes.Positive, "[M]+", "[M]-")
         }
+    End Function
+
+    ''' <summary>
+    ''' get metabolite via a given hmdb id from the hmdb.ca online web services
+    ''' </summary>
+    ''' <param name="id">
+    ''' the given hmdb id 
+    ''' </param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("get_hmdb")>
+    <RApiReturn(GetType(HMDB.metabolite))>
+    Public Function getHMDB(id As String,
+                            Optional cache_dir As String = "./hmdb/",
+                            Optional env As Environment = Nothing) As Object
+
+        Return HMDB.Repository.GetMetabolite(id, cache_dir)
     End Function
 
     ''' <summary>
