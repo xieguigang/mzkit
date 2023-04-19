@@ -536,6 +536,13 @@ Module ReferenceTreePkg
             End If
 
             If Not name.StringEmpty Then
+                ' 20220419
+                '
+                ' due to the reason of the data file inside the stream pack
+                ' is indexed used the uuid string as the reference path
+                ' symbol \ or / in the metabolite name will generates an
+                ' incorrect reference path, so these two symbol needs to be 
+                ' removed from the name
                 uuid = $"{uuid}|{name.Replace("\", "_").Replace("/", "_")}"
             End If
 
