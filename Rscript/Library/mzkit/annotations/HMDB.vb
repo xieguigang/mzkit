@@ -58,9 +58,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.TMIC
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -77,8 +78,22 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("hmdb_kit")>
 Module HMDBTools
 
+    ''' <summary>
+    ''' read hmdb spectral data collection
+    ''' </summary>
+    ''' <param name="repo">
+    ''' A directory path to the hmdb spectral data files
+    ''' </param>
+    ''' <param name="hmdbRaw"></param>
+    ''' <param name="lazy"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("read.hmdb_spectrals")>
-    Public Function readHMDBSpectrals(repo As String, Optional hmdbRaw As Boolean = False, Optional lazy As Boolean = True) As Object
+    Public Function readHMDBSpectrals(repo As String,
+                                      Optional hmdbRaw As Boolean = False,
+                                      Optional lazy As Boolean = True,
+                                      Optional env As Environment = Nothing) As Object
+
         Dim scan = TMIC.HMDB.Spectra.PopulateSpectras(repo)
 
         If hmdbRaw Then
@@ -94,8 +109,20 @@ Module HMDBTools
                 }
             End If
         Else
-            ' converts to peakms2 object
-            Dim converts As IEnumerable(Of PeakMs2) = scan.Select(AddressOf Convert)
+            ' converts to peak_ms2 object
+            Dim println = env.WriteLineHandler
+            Dim converts As IEnumerable(Of PeakMs2) = scan _
+                .Select(Function(si)
+                            Try
+                                Return Convert(si)
+                            Catch ex As Exception
+                                Call println(ex.Message)
+                                Call env.AddMessage(ex.Message, MSG_TYPES.WRN)
+
+                                Return Nothing
+                            End Try
+                        End Function) _
+                .Where(Function(si) Not si Is Nothing)
 
             If lazy Then
                 Return pipeline.CreateFromPopulator(converts)
