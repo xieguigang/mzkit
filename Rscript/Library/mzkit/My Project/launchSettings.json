@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "D:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\"F:\\20230407\\export_table.R\" --attach D:\\mzkit\\Rscript\\Library\\mzkit_app --debug=none"
+      "commandLineArgs": "\"D:\\mzkit\\Rscript\\Library\\mzkit_app\\pipeline\\hmdb_reference.R\" --attach D:\\mzkit\\Rscript\\Library\\mzkit_app --debug --repo \"F:\\Downloads\\hmdb_experimental_msms_spectra\" --outputdir \"F:\\Downloads\\hmdb_libpack\" --hmdb.local_cache \"F:\\Downloads\\hmdb_libpack/.hmdb/\""
     }
   }
 }

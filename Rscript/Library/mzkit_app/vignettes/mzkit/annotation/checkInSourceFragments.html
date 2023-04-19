@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>do spectrum data clustering</title>
+    <title>Check the ms1 parent ion is generated via the in-source fragment or not</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>tree {MoleculeNetworking}</td>
+                <td>checkInSourceFragments {annotation}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>do spectrum data clustering</h2>
+        <h2>Check the ms1 parent ion is generated via the in-source fragment or not</h2>
 
         <h3>Description</h3>
 
@@ -157,31 +157,24 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>tree</strong>(<i>ions</i>,
-    <i>mzdiff</i> = 0.3,
-    <i>intocutoff</i> = 0.05,
-    <i>equals</i> = 0.85);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>checkInSourceFragments</strong>(<i>ms1</i>, <i>ms2</i>,
+    <i>da</i> = 0.1,
+    <i>rt.win</i> = 5);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ions</dt>
-<dd><p><p>A set of the spectrum data</p></p></dd>
+<dt>ms1</dt>
+<dd><p><p>the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, a collection of ms1 scan with unique id tagged.</p></p></dd>
 
 
-<dt>mzdiff</dt>
-<dd><p><p>the ms2 fragment mass tolerance when used for compares <br />
- ms2 spectrum data</p></p></dd>
+<dt>ms2</dt>
+<dd><p><p>the ms2 products list</p></p></dd>
 
 
-<dt>intocutoff</dt>
-<dd><p><p>intensity cutoff value that used for make the spectrum <br />
- centroid and noise cleanup</p></p></dd>
-
-
-<dt>equals</dt>
+<dt>env</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
@@ -194,11 +187,13 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MoleculeNetworking/TreeCluster.html">TreeCluster</a>.
+        <p>a tuple key-value pair list object that contains the flags for each ms1 ion<br />
+ corresponding slot value TRUE means the key ion is a possible in-source<br />
+ fragment ion data, otherwise slot value FALSE means not.</p>
 
         <hr />
-        <div style="text-align: center;">[Package <em>MoleculeNetworking</em> version 1.0.0.0 <a
-                href="../MoleculeNetworking.html">Index</a>]
+        <div style="text-align: center;">[Package <em>annotation</em> version 1.0.0.0 <a
+                href="../annotation.html">Index</a>]
         </div>
     </div>
 </body>

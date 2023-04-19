@@ -184,7 +184,7 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Dim ms As ms2()
         Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
         Dim i As Integer = 0
-        Dim d As Integer = allscans.Length / 100
+        Dim d As Integer = allscans.Length / 100 * 8
         Dim j As i32 = 0
 
         For Each scan As ScanData In allscans

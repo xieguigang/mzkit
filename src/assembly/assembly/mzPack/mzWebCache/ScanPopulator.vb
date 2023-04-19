@@ -180,7 +180,7 @@ Namespace mzData.mzWebCache
                     Call products.Add(scanVal)
                 End If
 
-                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 3 = 0 Then
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 7 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next

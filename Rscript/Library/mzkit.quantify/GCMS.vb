@@ -72,6 +72,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
@@ -133,7 +134,7 @@ Module GCMSLinear
 
     <ExportAPI("parseContents")>
     Public Function FileNames2Contents(<RRawVectorArgument> files As Object) As Rlist
-        Dim names As String() = REnv.asVector(Of String)(files)
+        Dim names As String() = CLRVector.asCharacter(files)
         Dim vec As Dictionary(Of String, Object) = names _
             .ContentVector _
             .ToDictionary(Function(L) L.Key,
@@ -165,7 +166,7 @@ Module GCMSLinear
         If TypeOf [IS] Is list Then
             ISMap = DirectCast([IS], list).AsGeneric(Of String)(env)
         ElseIf TypeOf [IS] Is String() OrElse TypeOf [IS] Is vector OrElse TypeOf [IS] Is String Then
-            Dim ISnames As String() = REnv.asVector(Of String)([IS])
+            Dim ISnames As String() = CLRVector.asCharacter([IS])
 
             If ISnames.Length = 1 AndAlso ISnames(Scan0) = "IS" Then
                 ISMap = New Dictionary(Of String, String)
