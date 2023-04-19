@@ -64,7 +64,8 @@ Namespace TMIC.HMDB.Spectra
     ''' <summary>
     ''' the MS/MS data file
     ''' </summary>
-    <XmlType("ms-ms")> Public Class MSMS : Inherits SpectraFile
+    <XmlType("ms-ms"), XmlRoot("ms-ms")>
+    Public Class MSMS : Inherits SpectraFile
         Implements IPeakList(Of MSMSPeak)
 
         <XmlElement("energy-field")> Public Property energyField As NullableValue
