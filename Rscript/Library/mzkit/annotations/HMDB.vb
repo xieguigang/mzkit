@@ -136,9 +136,21 @@ Module HMDBTools
         Dim file As MSMS = msms.Value
         Dim libname As String = file.database_id.value
         Dim mode As IonModes = ParseIonMode(file.ionization_mode.value)
+        Dim hmdbId As String = file.database_id.value
 
         If Not file.references.IsNullOrEmpty Then
-            libname = $"[{file.references(Scan0).database}]{file.references(Scan0).database_id}"
+            Dim ref0 As reference = file.references(Scan0)
+            Dim xref_id As String = ref0.database_id
+
+            ' biodeepMSMS package use the delimiter | symbol
+            ' to seperate the reference id
+            If xref_id.StringEmpty Then
+                libname = hmdbId & "|spectrum_" & file.GetHashCode.ToHexString
+            ElseIf Not ref0.database.StringEmpty Then
+                libname = $"{xref_id}|{ref0.database}"
+            Else
+                libname = xref_id
+            End If
         End If
 
         Return New PeakMs2 With {
@@ -152,7 +164,7 @@ Module HMDBTools
                 .ToArray,
             .lib_guid = libname,
             .file = msms.Name,
-            .scan = file.database_id.value,
+            .scan = hmdbId,
             .precursor_type = If(mode = IonModes.Positive, "[M]+", "[M]-")
         }
     End Function
