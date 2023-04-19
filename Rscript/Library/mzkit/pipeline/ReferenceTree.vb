@@ -536,7 +536,7 @@ Module ReferenceTreePkg
             End If
 
             If Not name.StringEmpty Then
-                uuid = $"{uuid}|{name}"
+                uuid = $"{uuid}|{name.Replace("\", "_").Replace("/", "_")}"
             End If
 
             For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
