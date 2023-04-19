@@ -123,6 +123,17 @@ Public Module Networking
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="cluster"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="zero"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
+    ''' </remarks>
     <Extension>
     Private Function unionMetadata(cluster As IEnumerable(Of PeakMs2)) As Dictionary(Of String, String)
         Return cluster _
@@ -180,7 +191,7 @@ Public Module Networking
         Return New PeakMs2 With {
             .rt = rt,
             .activation = "NA",
-            .collisionEnergy = 0,
+            .collisionEnergy = cluster.Length,
             .file = key,
             .intensity = cluster.Sum(Function(c) c.intensity),
             .lib_guid = key,
