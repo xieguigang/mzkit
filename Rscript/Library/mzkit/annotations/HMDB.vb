@@ -174,7 +174,7 @@ Module HMDBTools
 
         Dim q = HMDB.Repository.GetMetabolite(id, cache_dir)
 
-        If tabular Then
+        If tabular AndAlso q IsNot Nothing Then
             Return HMDB.MetaDb.FromMetabolite(q)
         Else
             Return q

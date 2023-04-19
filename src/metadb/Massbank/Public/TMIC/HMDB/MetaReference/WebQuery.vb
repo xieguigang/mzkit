@@ -79,7 +79,7 @@ Namespace TMIC.HMDB.Repository
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function ParseXml(xml$, null As Type) As metabolite
-            Return xml.LoadFromXml(Of metabolite)
+            Return xml.LoadFromXml(Of metabolite)(throwEx:=False)
         End Function
     End Class
 End Namespace

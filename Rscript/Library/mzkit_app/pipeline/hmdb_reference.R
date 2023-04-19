@@ -19,13 +19,17 @@ const raw_stream = repo
 for(spectral in raw_stream) {
     const hmdb_id = [spectral]::scan;
     const metabolite = hmdb_kit::get_hmdb(hmdb_id, cache.dir = cachedir, tabular = TRUE);
-    const formula = [metabolite]::chemical_formula;
-    const name = [metabolite]::name;
 
-    if ([spectral]::precursor_type == "[M]+") {
-        libpos |> spectrumTree::addBucket(spectral, uuid = hmdb_id, formula = formula, name = name);
-    } else {
-        libneg |> spectrumTree::addBucket(spectral, uuid = hmdb_id, formula = formula, name = name);
+    # skip of the missing data
+    if (!is.null(metabolite)) {
+        const formula = [metabolite]::chemical_formula;
+        const name    = [metabolite]::name;
+
+        if ([spectral]::precursor_type == "[M]+") {
+            libpos |> spectrumTree::addBucket(spectral, uuid = hmdb_id, formula = formula, name = name);
+        } else {
+            libneg |> spectrumTree::addBucket(spectral, uuid = hmdb_id, formula = formula, name = name);
+        }
     }
 	
 	NULL;
