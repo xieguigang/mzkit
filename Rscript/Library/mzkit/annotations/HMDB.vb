@@ -145,12 +145,14 @@ Module HMDBTools
             ' biodeepMSMS package use the delimiter | symbol
             ' to seperate the reference id
             If xref_id.StringEmpty Then
-                libname = hmdbId & "|spectrum_" & file.GetHashCode.ToHexString
+                libname = "spectrum_" & file.GetHashCode.ToHexString
             ElseIf Not ref0.database.StringEmpty Then
                 libname = $"{xref_id}|{ref0.database}"
             Else
                 libname = xref_id
             End If
+
+            libname = hmdbId & "|" & libname
         End If
 
         Return New PeakMs2 With {
