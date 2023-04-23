@@ -15,7 +15,8 @@ Namespace PoolData
             Dim mz1 As String = spectral.mz.ToString("F1")
             Dim meta As String() = {
                 spectral.meta.TryGetValue("biosample", unknown),
-                spectral.meta.TryGetValue("organism", unknown)
+                spectral.meta.TryGetValue("organism", unknown),
+                spectral.meta.TryGetValue("instrument", unknown)
             }
             Dim hashcode As String = peaks _
                 .JoinIterates(mz1) _

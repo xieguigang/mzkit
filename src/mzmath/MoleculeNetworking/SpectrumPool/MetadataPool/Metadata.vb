@@ -31,6 +31,7 @@ Namespace PoolData
         ''' </summary>
         ''' <returns></returns>
         Public Property organism As String
+        Public Property instrument As String = "Thermo Scientific Q Exactive"
         Public Property name As String
         Public Property biodeep_id As String
         Public Property formula As String

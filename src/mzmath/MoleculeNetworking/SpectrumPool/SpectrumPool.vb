@@ -89,6 +89,10 @@ Namespace PoolData
             End If
         End Sub
 
+        ''' <summary>
+        ''' add spectrum into current molecular networking cluster tree data
+        ''' </summary>
+        ''' <param name="spectrum"></param>
         Public Sub Add(spectrum As PeakMs2)
             Dim score As AlignmentOutput
             Dim PIScore As Double

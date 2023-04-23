@@ -139,7 +139,8 @@ Public Module MolecularSpectrumPool
     <ExportAPI("addPool")>
     Public Function add(pool As SpectrumPool, <RRawVectorArgument> x As Object,
                         Optional biosample As String = "unknown",
-                        Optional organism As String = "unkown",
+                        Optional organism As String = "unknown",
+                        Optional instrument As String = "unknown",
                         Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
@@ -151,6 +152,7 @@ Public Module MolecularSpectrumPool
         For Each peak As PeakMs2 In data.populates(Of PeakMs2)(env)
             peak.meta.Add("biosample", biosample)
             peak.meta.Add("organism", organism)
+            peak.meta.Add("instrument", instrument)
             peak.lib_guid = conservedGuid(peak)
 
             Call pool.Add(peak)
