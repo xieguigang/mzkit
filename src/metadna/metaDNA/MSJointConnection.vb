@@ -262,8 +262,8 @@ Public Class MSJointConnection : Implements IMzQuery
         For Each map As Map In maps
             Yield New Cluster With {
                 .description = map.description,
-                .ID = map.id,
-                .names = map.Name,
+                .ID = map.EntryId,
+                .names = map.name,
                 .members = map _
                     .GetMembers _
                     .Where(Function(id)
@@ -287,6 +287,7 @@ Public Class MSJointConnection : Implements IMzQuery
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation
         Return kegg.GetAnnotation(uniqueId)
     End Function

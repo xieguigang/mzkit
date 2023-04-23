@@ -127,9 +127,6 @@ Public Module Networking
     ''' 
     ''' </summary>
     ''' <param name="cluster"></param>
-    ''' <param name="tolerance"></param>
-    ''' <param name="zero"></param>
-    ''' <param name="key"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
