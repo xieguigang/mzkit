@@ -2,6 +2,7 @@
 
 
 
++ [createPool](spectrumPool/createPool.1) create a new spectrum clustering data pool
 + [openPool](spectrumPool/openPool.1) open the spectrum pool from a given resource link
 + [closePool](spectrumPool/closePool.1) close the connection to the spectrum pool
 + [getClusterInfo](spectrumPool/getClusterInfo.1) get metadata dataframe in a given cluster tree
