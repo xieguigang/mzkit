@@ -167,12 +167,21 @@ Public Module MolecularSpectrumPool
                         Optional organism As String = "unknown",
                         Optional project As String = "unknown",
                         Optional instrument As String = "unknown",
+                        Optional file As String = "unknown",
                         Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
 
         If data.isError Then
             Return data.getError
+        Else
+            file = file _
+                .Replace(".mzPack", "") _
+                .Replace(".mzXML", "") _
+                .Replace(".mzML", "") _
+                .Replace(".txt", "") _
+                .Replace(".csv", "") _
+                .Replace(".mgf", "")
         End If
 
         For Each peak As PeakMs2 In data.populates(Of PeakMs2)(env)
@@ -181,6 +190,11 @@ Public Module MolecularSpectrumPool
             peak.meta.Add("project", project)
             peak.meta.Add("instrument", instrument)
             peak.lib_guid = conservedGuid(peak)
+
+            If peak.file.StringEmpty Then
+                peak.file = file
+                peak.meta.Add("file", file)
+            End If
 
             Call pool.Add(peak)
         Next

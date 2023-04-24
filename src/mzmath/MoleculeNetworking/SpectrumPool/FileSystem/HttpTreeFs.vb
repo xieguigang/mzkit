@@ -67,6 +67,8 @@ Namespace PoolData
             Dim result = url.POST(payload)
             Dim json = Restful.ParseJSON(result.html)
 
+            Call VBDebugger.EchoLine(result.html)
+
             If json.code <> 0 Then
                 Throw New Exception(json.info)
             Else

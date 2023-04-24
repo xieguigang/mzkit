@@ -137,7 +137,9 @@ Namespace PoolData
                 .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
                 .name = name,
-                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
+                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type),
+                .project = spectral.meta.TryGetValue("project", [default]:="unknown project"),
+                .instrument = spectral.meta.TryGetValue("instrument", [default]:="unk")
             }
         End Function
 
