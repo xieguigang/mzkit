@@ -75,6 +75,11 @@ Namespace PoolData
             Me.metadata = fs.LoadMetadata(path)
             Me.rootId = fs.FindRootId(path)
 
+            ' the mysql id is started from 1
+            ' so zero means nothing at here, set the
+            ' rootid string to nothing for avoid spectrum
+            ' data loading process in current constructor
+            ' function
             If rootId = "0" Then
                 rootId = Nothing
             End If
