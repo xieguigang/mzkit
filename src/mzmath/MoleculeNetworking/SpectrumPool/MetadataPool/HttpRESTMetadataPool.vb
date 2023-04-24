@@ -12,7 +12,10 @@ Namespace PoolData
 
     Public Class HttpRESTMetadataPool : Inherits MetadataProxy
 
-        Dim local_cache As New Dictionary(Of String, Metadata)
+        ''' <summary>
+        ''' metadata cache of current cluster node
+        ''' </summary>
+        Dim local_cache As Dictionary(Of String, Metadata)
         Dim url_get As String
         Dim url_put As String
         Dim url_setRoot As String
@@ -78,6 +81,7 @@ Namespace PoolData
             Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
             Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
             Me.model_id = http.model_id
+            Me.local_cache = New Dictionary(Of String, Metadata)
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}&model_id={http.model_id}"
             Dim json As String = url.GET
@@ -168,7 +172,7 @@ Namespace PoolData
             Dim result = Restful.ParseJSON(url_put.POST(payload))
 
             If result.code = 0 Then
-                Call local_cache.Add(id, metadata)
+                local_cache(id) = metadata
             End If
         End Sub
 
