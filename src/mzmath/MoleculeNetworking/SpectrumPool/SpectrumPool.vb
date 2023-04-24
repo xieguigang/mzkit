@@ -108,11 +108,12 @@ Namespace PoolData
             Dim score As AlignmentOutput
             Dim PIScore As Double
             Dim pval As Double
+            Dim is_root As Boolean = False
 
             If representative Is Nothing Then
                 representative = spectrum
+                is_root = True
                 rootId = spectrum.lib_guid
-                metadata.SetRootId(rootId)
                 score = Nothing
                 PIScore = 1
                 pval = 0
@@ -134,6 +135,10 @@ Namespace PoolData
                 ' in current class node
                 metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
                 metadata.Add(spectrum.lib_guid, PIScore, score, pval)
+
+                If is_root Then
+                    metadata.SetRootId(metadata(spectrum.lib_guid).block.position)
+                End If
 
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
             ElseIf PIScore <= 0 Then
