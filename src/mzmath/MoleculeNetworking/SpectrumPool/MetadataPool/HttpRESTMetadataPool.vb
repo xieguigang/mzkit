@@ -156,7 +156,7 @@ Namespace PoolData
         ''' <summary>
         ''' write metadata to database at here
         ''' </summary>
-        ''' <param name="id"></param>
+        ''' <param name="id">the spectrum hashcode</param>
         ''' <param name="metadata"></param>
         Public Overrides Sub Add(id As String, metadata As Metadata)
             Dim payload As New NameValueCollection
