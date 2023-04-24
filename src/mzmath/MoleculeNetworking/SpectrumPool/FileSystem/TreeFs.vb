@@ -31,6 +31,10 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' open a local fs directory for the data storage
+        ''' </summary>
+        ''' <param name="dir"></param>
         Sub New(dir As String)
             Me.fs = New StreamPack(dir & "/cluster.pack", meta_size:=1024 * 1024 * 256)
 

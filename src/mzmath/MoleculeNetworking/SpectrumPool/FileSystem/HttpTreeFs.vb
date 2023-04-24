@@ -50,7 +50,7 @@ Namespace PoolData
             End If
         End Sub
 
-        Public Shared Function CreateModel(base As String,
+        Public Shared Function CreateModel(base As String, name As String, desc As String,
                                            Optional level As Double = 0.85,
                                            Optional split As Integer = 3) As (model_id$, root_id$)
 
@@ -60,7 +60,8 @@ Namespace PoolData
             }
             Dim payload As New NameValueCollection
             Call payload.Add("params", params.GetJson)
-            Dim url As String = $"{base}/create_model/?name=new+Model"
+            Call payload.Add("description", desc)
+            Dim url As String = $"{base}/create_model/?name={name.UrlEncode}"
             Dim result = url.POST(payload)
             Dim json = Restful.ParseJSON(result.html)
 

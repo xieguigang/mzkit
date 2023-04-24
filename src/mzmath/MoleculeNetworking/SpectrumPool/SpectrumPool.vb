@@ -201,8 +201,13 @@ Namespace PoolData
         ''' <param name="level"></param>
         ''' <param name="split"></param>
         ''' <returns></returns>
-        Public Shared Function Create(link As String, Optional level As Double = 0.85, Optional split As Integer = 3) As SpectrumPool
-            Dim fs As PoolFs = PoolFs.CreateAuto(link, level, split)
+        Public Shared Function Create(link As String,
+                                      Optional level As Double = 0.85,
+                                      Optional split As Integer = 3,
+                                      Optional name As String = "no_named",
+                                      Optional desc As String = "no_information") As SpectrumPool
+
+            Dim fs As PoolFs = PoolFs.CreateAuto(link, level, split, name, desc)
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)

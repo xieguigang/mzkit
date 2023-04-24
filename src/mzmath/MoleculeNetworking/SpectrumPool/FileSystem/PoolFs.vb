@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
 
@@ -81,17 +82,27 @@ Namespace PoolData
             End If
         End Function
 
-        Public Shared Function CreateAuto(link As String, level As Double, split As Integer) As PoolFs
+        Public Shared Function CreateAuto(link As String, level As Double, split As Integer, name As String, desc As String) As PoolFs
             Dim linkStr As String = link.ToLower
 
             If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
                 ' web services based
-                Dim info = HttpTreeFs.CreateModel(link, level, split)
+                Dim info = HttpTreeFs.CreateModel(link, name, desc, level, split)
                 Dim pool As New HttpTreeFs(link, info.model_id)
 
                 Return pool
             Else
-                Return New TreeFs(link)
+                Dim local As New TreeFs(link)
+                Dim params As New Dictionary(Of String, String) From {
+                    {"level", level},
+                    {"split", split}
+                }
+
+                local.WriteText(name, "/.metadata/name.txt")
+                local.WriteText(desc, "/.metadata/note.txt")
+                local.WriteText(params.GetJson, "/.metadata/params.json")
+
+                Return local
             End If
         End Function
 

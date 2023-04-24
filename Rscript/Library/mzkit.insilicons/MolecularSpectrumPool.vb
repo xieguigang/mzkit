@@ -21,8 +21,13 @@ Public Module MolecularSpectrumPool
     ''' <param name="split">hex, max=15</param>
     ''' <returns></returns>
     <ExportAPI("createPool")>
-    Public Function createPool(link As String, Optional level As Double = 0.9, Optional split As Integer = 9) As SpectrumPool
-        Return SpectrumPool.Create(link, level, split:=split)
+    Public Function createPool(link As String,
+                               Optional level As Double = 0.9,
+                               Optional split As Integer = 9,
+                               Optional name As String = "no_named",
+                               Optional desc As String = "no_information") As SpectrumPool
+
+        Return SpectrumPool.Create(link, level, split:=split, name:=name, desc:=desc)
     End Function
 
     <ExportAPI("model_id")>
