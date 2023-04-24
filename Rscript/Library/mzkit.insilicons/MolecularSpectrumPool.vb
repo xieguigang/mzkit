@@ -14,20 +14,27 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public Module MolecularSpectrumPool
 
     ''' <summary>
-    ''' open the spectrum pool from a given resource link
+    ''' create a new spectrum clustering data pool
     ''' </summary>
     ''' <param name="link"></param>
     ''' <param name="level"></param>
-    ''' <param name="split">
-    ''' hex, max=15
+    ''' <param name="split">hex, max=15</param>
+    ''' <returns></returns>
+    <ExportAPI("createPool")>
+    Public Function createPool(link As String, Optional level As Double = 0.9, Optional split As Integer = 9) As SpectrumPool
+        Return SpectrumPool.Create(link, level, split:=split)
+    End Function
+
+    ''' <summary>
+    ''' open the spectrum pool from a given resource link
+    ''' </summary>
+    ''' <param name="link">
+    ''' the resource string to the spectrum pool
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String,
-                             Optional level As Double = 0.9,
-                             Optional split As Integer = 9) As SpectrumPool
-
-        Return SpectrumPool.Open(link, level, split:=split)
+    Public Function openPool(link As String, Optional model_id As String = Nothing) As SpectrumPool
+        Return SpectrumPool.Open(link, model_id:=model_id)
     End Function
 
     ''' <summary>

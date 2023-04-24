@@ -16,12 +16,23 @@ Namespace PoolData
         ''' </summary>
         Dim score As AlignmentProvider
 
+        Protected m_level As Double
+        Protected m_split As Integer
+
         ''' <summary>
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property level As Double
+            Get
+                Return m_level
+            End Get
+        End Property
         Public ReadOnly Property split As Integer
+            Get
+                Return m_split
+            End Get
+        End Property
         Public ReadOnly Property splitDelta As Double
 
         Public MustOverride Function GetTreeChilds(path As String) As IEnumerable(Of String)
@@ -49,18 +60,33 @@ Namespace PoolData
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </param>
         ''' <param name="split">split into n parts</param>
-        Friend Sub SetLevel(level As Double, split As Integer)
-            _level = level
-            _split = split
+        Friend Overridable Sub SetLevel(level As Double, split As Integer)
+            m_level = level
+            m_split = split
             _splitDelta = level / split
         End Sub
 
-        Public Shared Function CreateAuto(link As String) As PoolFs
+        Public Shared Function OpenAuto(link As String, model_id As String) As PoolFs
             Dim linkStr As String = link.ToLower
 
             If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
                 ' web services based
-                Return New HttpTreeFs(link)
+                Dim pool As New HttpTreeFs(link, model_id)
+                Return pool
+            Else
+                Return New TreeFs(link)
+            End If
+        End Function
+
+        Public Shared Function CreateAuto(link As String, level As Double, split As Integer) As PoolFs
+            Dim linkStr As String = link.ToLower
+
+            If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
+                ' web services based
+                Dim info = HttpTreeFs.CreateModel(link, level, split)
+                Dim pool As New HttpTreeFs(link, info.model_id)
+
+                Return pool
             Else
                 Return New TreeFs(link)
             End If

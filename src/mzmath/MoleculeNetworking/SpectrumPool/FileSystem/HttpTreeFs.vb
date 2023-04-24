@@ -1,10 +1,10 @@
 ﻿Imports System.Collections.Specialized
-Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
 
@@ -14,6 +14,8 @@ Namespace PoolData
         ''' the web services base url
         ''' </summary>
         Friend ReadOnly base As String
+        Friend ReadOnly model_id As String
+        Friend ReadOnly root_id As String
         Friend ReadOnly metadata_pool As New Dictionary(Of String, HttpRESTMetadataPool)
         Friend ReadOnly cluster_data As New Dictionary(Of String, JavaScriptObject)
 
@@ -24,11 +26,49 @@ Namespace PoolData
             End Get
         End Property
 
-        Sub New(url As String)
-            base = url
-            ' do system init
-            Call VBDebugger.EchoLine($"{base}/init/".GET)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="url"></param>
+        Sub New(url As String, modelId As String)
+            ' do system init, get model information and parameters
+            Dim json = Restful.ParseJSON($"{url}/openModel/?id={modelId}")
+
+            If json.code <> 0 Then
+                Throw New Exception(json.info)
+            Else
+                Dim args As Dictionary(Of String, String) = CStr(json.info!parameters) _
+                    .LoadJSON(Of Dictionary(Of String, String))
+
+                ' load parameters
+                base = url
+                model_id = json.info!model_id
+                root_id = json.info!root_id
+                m_level = Val(args!level)
+                m_split = Val(args!split)
+            End If
         End Sub
+
+        Public Shared Function CreateModel(base As String,
+                                           Optional level As Double = 0.85,
+                                           Optional split As Integer = 3) As (model_id$, root_id$)
+
+            Dim params As New Dictionary(Of String, String) From {
+                {"level", level},
+                {"split", split}
+            }
+            Dim payload As New NameValueCollection
+            Call payload.Add("params", params.GetJson)
+            Dim url As String = $"{base}/create_model/?name=new+Model"
+            Dim result = url.POST(payload)
+            Dim json = Restful.ParseJSON(result.html)
+
+            If json.code <> 0 Then
+                Throw New Exception(json.info)
+            Else
+                Return (json.info!model_id, json.info!root_id)
+            End If
+        End Function
 
         Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
             ' do nothing
