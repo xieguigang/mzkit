@@ -134,7 +134,7 @@ Namespace PoolData
         End Function
 
         Public Function GetMetadataByHashKey(hash As String) As Metadata
-            Dim url As String = $"{url_get}?id={hash}&model_id={model_id}"
+            Dim url As String = $"{url_get}?id={hash}&model_id={model_id}&cluster_id={guid}"
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 
