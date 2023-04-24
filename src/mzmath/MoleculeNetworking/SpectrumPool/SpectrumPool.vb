@@ -75,6 +75,10 @@ Namespace PoolData
             Me.metadata = fs.LoadMetadata(path)
             Me.rootId = fs.FindRootId(path)
 
+            If rootId = "0" Then
+                rootId = Nothing
+            End If
+
             For Each dir As String In fs.GetTreeChilds(path)
                 If dir.BaseName = "z" Then
                     zeroBlock = New SpectrumPool(fs, dir)
