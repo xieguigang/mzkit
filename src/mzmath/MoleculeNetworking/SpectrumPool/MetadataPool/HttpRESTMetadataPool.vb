@@ -20,6 +20,7 @@ Namespace PoolData
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
         Dim rootId As String
+        Dim model_id As String
 
         ''' <summary>
         ''' the cluster id in the database
@@ -66,18 +67,19 @@ Namespace PoolData
 
         Public Overrides ReadOnly Property AllClusterMembers As IEnumerable(Of Metadata)
             Get
-                Return FetchClusterData(url_get, hash_index)
+                Return FetchClusterData(url_get, hash_index, model_id)
             End Get
         End Property
 
         Sub New(http As HttpTreeFs, path As String, parentId As Long)
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
             Me.url_get = $"{http.base}/get/metadata/"
-            Me.url_put = $"{http.base}/set/metadata/"
-            Me.url_setRoot = $"{http.base}/set/root/"
-            Me.url_setScore = $"{http.base}/set/score/"
+            Me.url_put = $"{http.base}/set/metadata/?model_id={http.model_id}"
+            Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
+            Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
+            Me.model_id = http.model_id
 
-            Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}"
+            Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}&model_id={http.model_id}"
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 
@@ -88,7 +90,7 @@ Namespace PoolData
                 payload.Add("key", path.BaseName)
                 payload.Add("hashcode", hash_index)
                 payload.Add("depth", path.Split("/"c).Length)
-                url = $"{http.base}/new/cluster/"
+                url = $"{http.base}/new/cluster/?model_id={http.model_id}"
                 obj = Restful.ParseJSON(url.POST(payload))
                 Me.cluster_data = obj.info
             Else
@@ -96,8 +98,11 @@ Namespace PoolData
             End If
         End Sub
 
-        Public Shared Iterator Function FetchClusterData(url_get As String, hash_index As String) As IEnumerable(Of Metadata)
-            Dim json As String = $"{url_get}?id={hash_index}&is_cluster=true".GET
+        Public Shared Iterator Function FetchClusterData(url_get As String,
+                                                         hash_index As String,
+                                                         model_id As String) As IEnumerable(Of Metadata)
+
+            Dim json As String = $"{url_get}?id={hash_index}&is_cluster=true&model_id={model_id}".GET
             Dim list As Restful = Restful.ParseJSON(json)
 
             If list.code <> 0 Then
@@ -129,7 +134,7 @@ Namespace PoolData
         End Function
 
         Public Function GetMetadataByHashKey(hash As String) As Metadata
-            Dim url As String = $"{url_get}?id={hash}"
+            Dim url As String = $"{url_get}?id={hash}&model_id={model_id}"
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 

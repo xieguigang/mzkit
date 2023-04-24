@@ -82,7 +82,12 @@ Namespace PoolData
             End If
         End Function
 
-        Public Shared Function CreateAuto(link As String, level As Double, split As Integer, name As String, desc As String) As PoolFs
+        Public Shared Function CreateAuto(link As String,
+                                          level As Double,
+                                          split As Integer,
+                                          name As String,
+                                          desc As String) As PoolFs
+
             Dim linkStr As String = link.ToLower
 
             If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then

@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Specialized
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
@@ -22,6 +23,7 @@ Namespace PoolData
 
         Public ReadOnly Property model_id As String
         Public ReadOnly Property HttpServices As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return base
             End Get
@@ -103,7 +105,7 @@ Namespace PoolData
         ''' <returns></returns>
         Public Function GetCluster(key As String) As JavaScriptObject
             If Not cluster_data.ContainsKey(key) Then
-                Dim url As String = $"{base}/get/cluster/?path_hash={key}"
+                Dim url As String = $"{base}/get/cluster/?path_hash={key}&model_id={model_id}"
                 Dim json = Restful.ParseJSON(url.GET)
 
                 If json.code <> 0 Then
@@ -122,7 +124,7 @@ Namespace PoolData
         ''' <param name="path"></param>
         ''' <returns></returns>
         Public Overrides Iterator Function GetTreeChilds(path As String) As IEnumerable(Of String)
-            Dim url As String = $"{base}/get/childs/?q={ClusterHashIndex(path)}"
+            Dim url As String = $"{base}/get/childs/?q={ClusterHashIndex(path)}&model_id={model_id}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
             Dim childs_data As Array = data.info
@@ -192,6 +194,8 @@ Namespace PoolData
         ''' </summary>
         ''' <param name="p"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
             Return ReadSpectrum(p.block.position)
         End Function
@@ -234,6 +238,7 @@ Namespace PoolData
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function decode(base64 As String) As Double()
             Return base64.Base64RawBytes _
                 .AddGzipMagic _
@@ -244,8 +249,10 @@ Namespace PoolData
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function encode(x As IEnumerable(Of Double)) As String
-            Return x.Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
+            Return x _
+                .Select(AddressOf NetworkByteOrderBitConvertor.GetBytes) _
                 .IteratesALL _
                 .GZipAsBase64(noMagic:=True)
         End Function
@@ -255,7 +262,7 @@ Namespace PoolData
             Dim mz As String = encode(spectral.mzInto.Select(Function(m) m.mz))
             Dim into As String = encode(spectral.mzInto.Select(Function(m) m.intensity))
             Dim payload As New NameValueCollection
-            Dim url As String = $"{base}/put/spectral/"
+            Dim url As String = $"{base}/put/spectral/?model_id={model_id}"
             payload.Add("mz", mz)
             payload.Add("into", into)
             payload.Add("npeaks", spectral.mzInto.Length)
