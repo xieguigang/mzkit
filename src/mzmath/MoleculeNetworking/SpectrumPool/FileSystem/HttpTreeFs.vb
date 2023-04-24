@@ -33,7 +33,7 @@ Namespace PoolData
         ''' <param name="url"></param>
         Sub New(url As String, modelId As String)
             ' do system init, get model information and parameters
-            Dim json = Restful.ParseJSON($"{url}/openModel/?id={modelId}")
+            Dim json = Restful.ParseJSON($"{url}/openModel/?id={modelId}".GET)
 
             If json.code <> 0 Then
                 Throw New Exception(json.info)
