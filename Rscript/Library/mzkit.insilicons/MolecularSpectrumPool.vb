@@ -25,6 +25,17 @@ Public Module MolecularSpectrumPool
         Return SpectrumPool.Create(link, level, split:=split)
     End Function
 
+    <ExportAPI("model_id")>
+    Public Function GetModelId(pool As SpectrumPool) As String
+        Dim fs = pool.GetFileSystem
+
+        If TypeOf fs Is HttpTreeFs Then
+            Return DirectCast(fs, HttpTreeFs).model_id
+        Else
+            Return Nothing
+        End If
+    End Function
+
     ''' <summary>
     ''' open the spectrum pool from a given resource link
     ''' </summary>

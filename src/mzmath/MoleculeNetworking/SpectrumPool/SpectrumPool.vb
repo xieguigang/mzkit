@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
@@ -88,6 +89,11 @@ Namespace PoolData
                 representative = fs.ReadSpectrum(metadata(rootId))
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFileSystem() As PoolFs
+            Return fs
+        End Function
 
         Public Sub Add(spectrum As PeakMs2)
             Dim score As AlignmentOutput

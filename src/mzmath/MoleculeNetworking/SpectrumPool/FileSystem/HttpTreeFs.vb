@@ -14,12 +14,13 @@ Namespace PoolData
         ''' the web services base url
         ''' </summary>
         Friend ReadOnly base As String
-        Friend ReadOnly model_id As String
         Friend ReadOnly root_id As String
         Friend ReadOnly metadata_pool As New Dictionary(Of String, HttpRESTMetadataPool)
         Friend ReadOnly cluster_data As New Dictionary(Of String, JavaScriptObject)
 
         Public Shared ReadOnly Property RootHashIndex As String = "/".MD5.ToLower
+
+        Public ReadOnly Property model_id As String
         Public ReadOnly Property HttpServices As String
             Get
                 Return base

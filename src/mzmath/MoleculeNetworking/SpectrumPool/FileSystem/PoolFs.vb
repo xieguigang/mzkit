@@ -6,6 +6,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace PoolData
 
+    ''' <summary>
+    ''' the cluster tree flesystem
+    ''' </summary>
     Public MustInherit Class PoolFs : Implements IDisposable
 
         Dim disposedValue As Boolean
