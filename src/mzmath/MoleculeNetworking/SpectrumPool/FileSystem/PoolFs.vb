@@ -39,6 +39,7 @@ Namespace PoolData
         End Property
         Public ReadOnly Property splitDelta As Double
 
+        Public MustOverride Function CheckExists(spectral As PeakMs2) As Boolean
         Public MustOverride Function GetTreeChilds(path As String) As IEnumerable(Of String)
         Public MustOverride Function LoadMetadata(path As String) As MetadataProxy
         Public MustOverride Sub CommitMetadata(path As String, data As MetadataProxy)

@@ -76,6 +76,32 @@ Namespace PoolData
             End If
         End Function
 
+        ''' <summary>
+        ''' check the given spectrum object is already exists inside the database or not?
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="TreeFs.GetMetadata(PeakMs2)"/>
+        ''' </remarks>
+        Public Overrides Function CheckExists(spectral As PeakMs2) As Boolean
+            ' $hashcode, $filename, $model_id, $project, $biodeep_id
+            Dim hashcode As String = spectral.lib_guid
+            Dim filename As String = spectral.file.UrlEncode
+            Dim model_id As String = Me.model_id
+            Dim project As String = spectral.meta.TryGetValue("project", [default]:="unknown project").UrlEncode
+            Dim biodeep_id As String = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved").UrlEncode
+            Dim url As String = $"{base}/check_exists/?hashcode={hashcode}&filename={filename}&model_id={model_id}&project={project}&biodeep_id={biodeep_id}"
+            Dim check = Restful.ParseJSON(url.GET)
+
+            If check.code = 0 Then
+                Return CStr(check.info) = "1"
+            Else
+                ' unknown
+                Return True
+            End If
+        End Function
+
         Public Overrides Sub CommitMetadata(path As String, data As MetadataProxy)
             ' do nothing
         End Sub

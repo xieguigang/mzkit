@@ -60,6 +60,10 @@ Namespace PoolData
             Next
         End Function
 
+        Public Overrides Function CheckExists(spectral As PeakMs2) As Boolean
+            Return False
+        End Function
+
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
             Dim inMemory = fs.ReadText($"{path}/node_data/metadata.json").LoadJSON(Of Dictionary(Of String, Metadata))
             inMemory = If(inMemory, New Dictionary(Of String, Metadata))

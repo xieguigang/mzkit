@@ -105,6 +105,14 @@ Namespace PoolData
         End Function
 
         Public Sub Add(spectrum As PeakMs2)
+            If Not fs.CheckExists(spectrum) Then
+                Call AddInternal(spectrum)
+            Else
+                Call VBDebugger.EchoLine($"spectrum_exists: {spectrum.ToString}")
+            End If
+        End Sub
+
+        Private Sub AddInternal(spectrum As PeakMs2)
             Dim score As AlignmentOutput
             Dim PIScore As Double
             Dim pval As Double
