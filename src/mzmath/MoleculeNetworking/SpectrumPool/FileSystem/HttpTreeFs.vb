@@ -235,7 +235,7 @@ Namespace PoolData
         ''' <param name="p"></param>
         ''' <returns></returns>
         Public Overloads Function ReadSpectrum(p As String) As Spectra.PeakMs2
-            Dim url As String = $"{base}/get/spectrum/?id={p}"
+            Dim url As String = $"{base}/get/spectrum/?id={p}&model_id={model_id}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
 
