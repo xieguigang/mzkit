@@ -134,8 +134,8 @@ Namespace PoolData
                     score.reverse *
                     score.jaccard *
                     score.entropy
-                pval = t.Test({
-                    score.forward, score.reverse, score.jaccard, score.entropy
+                pval = t.Test(New Double() {
+                    score.forward, score.reverse, score.jaccard, score.entropy + 0.000000000000001
                 }, zero, Hypothesis.TwoSided).Pvalue
             End If
 
@@ -154,7 +154,7 @@ Namespace PoolData
                     zeroBlock = New SpectrumPool(fs, handle & $"/z/")
                 End If
 
-                Call zeroBlock.Add(spectrum)
+                Call zeroBlock.AddInternal(spectrum)
             Else
                 Dim t As Double = fs.splitDelta
                 Dim i As Integer = 0
@@ -167,7 +167,7 @@ Namespace PoolData
                             Call classTree.Add(key, New SpectrumPool(fs, handle & $"/{key}/"))
                         End If
 
-                        Call classTree(key).Add(spectrum)
+                        Call classTree(key).AddInternal(spectrum)
 
                         Return
                     Else
