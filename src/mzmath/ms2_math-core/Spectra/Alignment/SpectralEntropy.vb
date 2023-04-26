@@ -136,6 +136,13 @@ Namespace Spectra
         End Function
 
         <Extension>
+        Public Function Entropy(ms As PeakMs2) As Double
+            Dim msms As New LibraryMatrix With {.ms2 = ms.mzInto}
+            Dim ent As Double = StandardizeSpectrum(msms).intensity.ShannonEntropy
+            Return ent
+        End Function
+
+        <Extension>
         Public Function calculate_entropy_similarity(alignment As SSM2MatrixFragment()) As Double
             Dim p As New Vector(From mzi In alignment Select mzi.query)
             Dim q As New Vector(From mzi In alignment Select mzi.ref)

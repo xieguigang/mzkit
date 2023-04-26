@@ -295,6 +295,8 @@ Namespace PoolData
             payload.Add("into", into)
             payload.Add("npeaks", spectral.mzInto.Length)
             payload.Add("hashcode", spectral.lib_guid)
+            payload.Add("model_id", model_id)
+            payload.Add("entropy", SpectralEntropy.Entropy(spectral))
             Dim spectral_id As Restful = Restful.ParseJSON(url.POST(payload))
             metadata.block = New BufferRegion With {.position = Val(spectral_id.info)}
             Return metadata
