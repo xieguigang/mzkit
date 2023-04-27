@@ -104,9 +104,17 @@ Namespace PoolData
             Return fs
         End Function
 
-        Public Sub Add(spectrum As PeakMs2)
+        Public Sub Add(spectrum As PeakMs2, Optional debug As Boolean = False)
             If Not fs.CheckExists(spectrum) Then
-                Call AddInternal(spectrum)
+                If debug Then
+                    Call AddInternal(spectrum)
+                Else
+                    Try
+                        Call AddInternal(spectrum)
+                    Catch ex As Exception
+                        Call App.LogException(ex)
+                    End Try
+                End If
             Else
                 Call VBDebugger.EchoLine($"spectrum_exists: {spectrum.ToString}")
             End If
