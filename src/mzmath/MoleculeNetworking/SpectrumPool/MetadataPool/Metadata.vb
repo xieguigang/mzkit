@@ -36,6 +36,8 @@ Namespace PoolData
         Public Property biodeep_id As String
         Public Property formula As String
         Public Property adducts As String
+        Public Property instrument As String
+        Public Property project As String
 
         Public Overrides Function ToString() As String
             Return $"[{guid}] {name}"

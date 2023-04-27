@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 
@@ -74,6 +75,15 @@ Namespace PoolData
             Me.metadata = fs.LoadMetadata(path)
             Me.rootId = fs.FindRootId(path)
 
+            ' the mysql id is started from 1
+            ' so zero means nothing at here, set the
+            ' rootid string to nothing for avoid spectrum
+            ' data loading process in current constructor
+            ' function
+            If rootId = "0" Then
+                rootId = Nothing
+            End If
+
             For Each dir As String In fs.GetTreeChilds(path)
                 If dir.BaseName = "z" Then
                     zeroBlock = New SpectrumPool(fs, dir)
@@ -89,19 +99,41 @@ Namespace PoolData
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFileSystem() As PoolFs
+            Return fs
+        End Function
+
         ''' <summary>
         ''' add spectrum into current molecular networking cluster tree data
         ''' </summary>
         ''' <param name="spectrum"></param>
-        Public Sub Add(spectrum As PeakMs2)
+        Public Sub Add(spectrum As PeakMs2, Optional debug As Boolean = False)
+            If Not fs.CheckExists(spectrum) Then
+                If debug Then
+                    Call AddInternal(spectrum)
+                Else
+                    Try
+                        Call AddInternal(spectrum)
+                    Catch ex As Exception
+                        Call App.LogException(ex)
+                    End Try
+                End If
+            Else
+                Call VBDebugger.EchoLine($"spectrum_exists: {spectrum.ToString}")
+            End If
+        End Sub
+
+        Private Sub AddInternal(spectrum As PeakMs2)
             Dim score As AlignmentOutput
             Dim PIScore As Double
             Dim pval As Double
+            Dim is_root As Boolean = False
 
             If representative Is Nothing Then
                 representative = spectrum
+                is_root = True
                 rootId = spectrum.lib_guid
-                metadata.SetRootId(rootId)
                 score = Nothing
                 PIScore = 1
                 pval = 0
@@ -114,8 +146,8 @@ Namespace PoolData
                     score.reverse *
                     score.jaccard *
                     score.entropy
-                pval = t.Test({
-                    score.forward, score.reverse, score.jaccard, score.entropy
+                pval = t.Test(New Double() {
+                    score.forward, score.reverse, score.jaccard, score.entropy + 0.000000000000001
                 }, zero, Hypothesis.TwoSided).Pvalue
             End If
 
@@ -124,13 +156,17 @@ Namespace PoolData
                 metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
                 metadata.Add(spectrum.lib_guid, PIScore, score, pval)
 
+                If is_root Then
+                    metadata.SetRootId(metadata(spectrum.lib_guid).block.position)
+                End If
+
                 VBDebugger.EchoLine($"join_pool@{ToString()}: {spectrum.lib_guid}")
             ElseIf PIScore <= 0 Then
                 If zeroBlock Is Nothing Then
                     zeroBlock = New SpectrumPool(fs, handle & $"/z/")
                 End If
 
-                Call zeroBlock.Add(spectrum)
+                Call zeroBlock.AddInternal(spectrum)
             Else
                 Dim t As Double = fs.splitDelta
                 Dim i As Integer = 0
@@ -143,7 +179,7 @@ Namespace PoolData
                             Call classTree.Add(key, New SpectrumPool(fs, handle & $"/{key}/"))
                         End If
 
-                        Call classTree(key).Add(spectrum)
+                        Call classTree(key).AddInternal(spectrum)
 
                         Return
                     Else
@@ -199,11 +235,26 @@ Namespace PoolData
         ''' <param name="level"></param>
         ''' <param name="split"></param>
         ''' <returns></returns>
-        Public Shared Function Open(link As String, Optional level As Double = 0.85, Optional split As Integer = 3) As SpectrumPool
-            Dim fs As PoolFs = PoolFs.CreateAuto(link)
+        Public Shared Function Create(link As String,
+                                      Optional level As Double = 0.85,
+                                      Optional split As Integer = 3,
+                                      Optional name As String = "no_named",
+                                      Optional desc As String = "no_information") As SpectrumPool
+
+            Dim fs As PoolFs = PoolFs.CreateAuto(link, level, split, name, desc)
             Dim pool As New SpectrumPool(fs, "/")
 
             Call fs.SetLevel(level, split)
+            Call fs.SetScore(0.3, 0.05)
+
+            Return pool
+        End Function
+
+        Public Shared Function Open(link As String, Optional model_id As String = Nothing) As SpectrumPool
+            Dim fs As PoolFs = PoolFs.OpenAuto(link, model_id)
+            Dim pool As New SpectrumPool(fs, "/")
+
+            Call fs.SetLevel(fs.level, fs.split)
             Call fs.SetScore(0.3, 0.05)
 
             Return pool
