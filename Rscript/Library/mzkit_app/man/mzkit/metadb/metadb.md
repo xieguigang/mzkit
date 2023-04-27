@@ -2,6 +2,7 @@
 
 Metabolite annotation database search engine
 
++ [verify_cas_number](metadb/verify_cas_number.1) 
 + [parseLipidName](metadb/parseLipidName.1) 
 + [annotationStream](metadb/annotationStream.1) 
 + [precursorIon](metadb/precursorIon.1) 
