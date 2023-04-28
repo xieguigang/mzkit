@@ -161,6 +161,13 @@ Namespace Spectra
             Call MyBase.New({})
         End Sub
 
+        Sub New(name As String, mz As Double(), into As Double(), Optional centroid As Boolean = True)
+            Call MyBase.New(mz.Select(Function(mzi, i) New ms2 With {.mz = mzi, .intensity = into(i)}))
+
+            Me.name = name
+            Me.centroid = centroid
+        End Sub
+
         <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of ms2))
             Call MyBase.New(data)
