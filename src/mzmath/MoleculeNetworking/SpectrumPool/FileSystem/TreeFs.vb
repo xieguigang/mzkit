@@ -142,7 +142,7 @@ Namespace PoolData
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
                 .name = name,
                 .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type),
-                .instrument = spectral.meta.TryGetValue("instrument", [default]:="unknown instrument")
+                .instrument = spectral.meta.TryGetValue("instrument", [default]:="unknown instrument"),
                 .project = spectral.meta.TryGetValue("project", [default]:="unknown project")
             }
         End Function
