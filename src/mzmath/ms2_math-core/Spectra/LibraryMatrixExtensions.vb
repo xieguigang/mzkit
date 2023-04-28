@@ -188,6 +188,12 @@ Namespace Spectra
                 .IteratesALL
         End Function
 
+        Public Function ParseStream(data As Byte()) As LibraryMatrix
+            Using buf As New MemoryStream(data)
+                Return ParseStream(buf)
+            End Using
+        End Function
+
         Public Function ParseStream(data As Stream) As LibraryMatrix
             Dim file As New BinaryReader(data)
             Dim size As Integer

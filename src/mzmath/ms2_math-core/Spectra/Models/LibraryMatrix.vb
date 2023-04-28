@@ -203,6 +203,10 @@ Namespace Spectra
             Return $"[{name}, {Length} ions] {ms2.JoinBy("; ")}"
         End Function
 
+        Public Shared Function ParseStream(data As Byte()) As LibraryMatrix
+            Return LibraryMatrixExtensions.ParseStream(data)
+        End Function
+
         ''' <summary>
         ''' normalized to [0, 1]
         ''' </summary>
