@@ -227,11 +227,11 @@ Namespace Spectra
                 Dim encoder As New NetworkByteOrderBuffer
                 Dim mz As Byte() = encoder.encode(mat.mz)
                 Dim into As Byte() = encoder.encode(mat.intensity)
-                Dim sizeof As Integer = mz.Length
+                Dim sizeOf As Integer = mz.Length
 
                 buf.Write(BitConverter.GetBytes(mat.Array.Length), Scan0, 4)
-                buf.Write(mz, Scan0, sizeof)
-                buf.Write(into, Scan0, sizeof)
+                buf.Write(mz, Scan0, sizeOf)
+                buf.Write(into, Scan0, sizeOf)
 
                 Return buf.ToArray
             End Using
