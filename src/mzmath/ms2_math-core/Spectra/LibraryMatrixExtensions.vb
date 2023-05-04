@@ -59,6 +59,7 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace Spectra
@@ -206,7 +207,7 @@ Namespace Spectra
             buf = file.ReadBytes(size)
             name = Encoding.UTF8.GetString(buf)
 
-            size = file.ReadInt32
+            size = file.ReadInt32 * RawStream.DblFloat
             buf = file.ReadBytes(size)
             mz = decoder.decode(buf)
             buf = file.ReadBytes(size)
