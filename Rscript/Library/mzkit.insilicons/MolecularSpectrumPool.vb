@@ -14,20 +14,43 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public Module MolecularSpectrumPool
 
     ''' <summary>
-    ''' open the spectrum pool from a given resource link
+    ''' create a new spectrum clustering data pool
     ''' </summary>
     ''' <param name="link"></param>
     ''' <param name="level"></param>
-    ''' <param name="split">
-    ''' hex, max=15
+    ''' <param name="split">hex, max=15</param>
+    ''' <returns></returns>
+    <ExportAPI("createPool")>
+    Public Function createPool(link As String,
+                               Optional level As Double = 0.9,
+                               Optional split As Integer = 9,
+                               Optional name As String = "no_named",
+                               Optional desc As String = "no_information") As SpectrumPool
+
+        Return SpectrumPool.Create(link, level, split:=split, name:=name, desc:=desc)
+    End Function
+
+    <ExportAPI("model_id")>
+    Public Function GetModelId(pool As SpectrumPool) As String
+        Dim fs = pool.GetFileSystem
+
+        If TypeOf fs Is HttpTreeFs Then
+            Return DirectCast(fs, HttpTreeFs).model_id
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' open the spectrum pool from a given resource link
+    ''' </summary>
+    ''' <param name="link">
+    ''' the resource string to the spectrum pool
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String,
-                             Optional level As Double = 0.9,
-                             Optional split As Integer = 9) As SpectrumPool
-
-        Return SpectrumPool.Open(link, level, split:=split)
+    Public Function openPool(link As String, Optional model_id As String = Nothing) As SpectrumPool
+        Return SpectrumPool.Open(link, model_id:=model_id)
     End Function
 
     ''' <summary>
@@ -72,7 +95,9 @@ Public Module MolecularSpectrumPool
                 {"intensity", info.Select(Function(a) a.intensity).ToArray},
                 {"source", info.Select(Function(a) a.source_file).ToArray},
                 {"biosample", info.Select(Function(a) a.sample_source).ToArray},
-                {"organism", info.Select(Function(a) a.organism).ToArray}
+                {"organism", info.Select(Function(a) a.organism).ToArray},
+                {"project", info.Select(Function(a) a.project).ToArray},
+                {"instrument", info.Select(Function(a) a.instrument).ToArray}
             }
         }
 
@@ -93,7 +118,11 @@ Public Module MolecularSpectrumPool
     End Function
 
     <ExportAPI("set_conservedGuid")>
-    Public Function SetConservedGuid(<RRawVectorArgument> spectral As Object, Optional env As Environment = Nothing) As Object
+    Public Function SetConservedGuid(<RRawVectorArgument>
+                                     spectral As Object,
+                                     Optional prefix As String = Nothing,
+                                     Optional env As Environment = Nothing) As Object
+
         Dim msms = pipeline.TryCreatePipeline(Of PeakMs2)(spectral, env)
 
         If msms.isError Then
@@ -102,9 +131,17 @@ Public Module MolecularSpectrumPool
 
         Dim allData = msms.populates(Of PeakMs2)(env).ToArray
 
-        For i As Integer = 0 To allData.Length - 1
-            allData(i).lib_guid = Utils.ConservedGuid(allData(i))
-        Next
+        If prefix.StringEmpty Then
+            For i As Integer = 0 To allData.Length - 1
+                allData(i).lib_guid = Utils.ConservedGuid(allData(i))
+            Next
+        Else
+            ' 20230412 handling of the invalid id reference for biodeepMSMS
+            ' script package
+            For i As Integer = 0 To allData.Length - 1
+                allData(i).lib_guid = $"{prefix}|{Utils.ConservedGuid(allData(i))}"
+            Next
+        End If
 
         Return allData
     End Function
@@ -127,19 +164,38 @@ Public Module MolecularSpectrumPool
     <ExportAPI("addPool")>
     Public Function add(pool As SpectrumPool, <RRawVectorArgument> x As Object,
                         Optional biosample As String = "unknown",
-                        Optional organism As String = "unkown",
+                        Optional organism As String = "unknown",
+                        Optional project As String = "unknown",
+                        Optional instrument As String = "unknown",
+                        Optional file As String = "unknown",
                         Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
 
         If data.isError Then
             Return data.getError
+        Else
+            file = file _
+                .Replace(".mzPack", "") _
+                .Replace(".mzXML", "") _
+                .Replace(".mzML", "") _
+                .Replace(".txt", "") _
+                .Replace(".csv", "") _
+                .Replace(".mgf", "")
         End If
 
         For Each peak As PeakMs2 In data.populates(Of PeakMs2)(env)
             peak.meta.Add("biosample", biosample)
             peak.meta.Add("organism", organism)
+            peak.meta.Add("project", project)
+            peak.meta.Add("instrument", instrument)
+            
             peak.lib_guid = conservedGuid(peak)
+
+            If peak.file.StringEmpty Then
+                peak.file = file
+                peak.meta.Add("file", file)
+            End If
 
             Call pool.Add(peak)
         Next

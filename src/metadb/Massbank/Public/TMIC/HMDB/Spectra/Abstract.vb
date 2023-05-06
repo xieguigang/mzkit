@@ -121,7 +121,14 @@ Namespace TMIC.HMDB.Spectra
 
     End Class
 
-    Public MustInherit Class SpectraFile : Inherits XmlDataModel
+    ' 20230420 there is a bug about xml de-serialization in clr library
+    ' due to the reason of spectrafile has no xml comment, so that the
+    ' spectralfile object inhertis of the xmldatamodel class will cause
+    ' a xml element convert to xml comment node type cast error!
+    '
+    ' so, removes the base class Inherits XmlDataModel at here!
+
+    Public MustInherit Class SpectraFile
 
         Public Property id As String
         Public Property notes As NullableValue

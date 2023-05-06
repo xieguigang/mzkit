@@ -10,7 +10,7 @@ mass spectrometry data math toolkit
 + [spectral_entropy](math/spectral_entropy.1) Search spectra with entropy similarity
 + [jaccardSet](math/jaccardSet.1) 
 + [cosine](math/cosine.1) 
-+ [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparision.
++ [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
 + [cluster.nodes](math/cluster.nodes.1) get all nodes from the spectrum tree cluster result
 + [ions.unique](math/ions.unique.1) data pre-processing helper
 + [centroid](math/centroid.1) Converts profiles peak data to peak data in centroid mode.

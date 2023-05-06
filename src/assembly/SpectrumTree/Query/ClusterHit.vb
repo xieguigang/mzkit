@@ -63,21 +63,53 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace Query
 
+    ''' <summary>
+    ''' the reference spectrum library search result
+    ''' </summary>
     Public Class ClusterHit
 
         ''' <summary>
         ''' the reference id in library
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this property value usually be the metabolite id from the metabolite annotation database
+        ''' </remarks>
         Public Property Id As String
         Public Property representive As SSM2MatrixFragment()
         Public Property forward As Double
         Public Property reverse As Double
         Public Property jaccard As Double
         Public Property entropy As Double
+
+#Region "the query ms1 data"
+        ''' <summary>
+        ''' the query id from the sample source data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property queryId As String
+        ''' <summary>
+        ''' the query ms1 m/z
+        ''' </summary>
+        ''' <returns></returns>
         Public Property queryMz As Double
+        ''' <summary>
+        ''' the query ms1 rt
+        ''' </summary>
+        ''' <returns></returns>
         Public Property queryRt As Double
+        ''' <summary>
+        ''' the query ms1 intensity value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property queryIntensity As Double
+
+        ''' <summary>
+        ''' the basepeak m/z of the sample spectrum
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property basePeak As Double
+#End Region
 
         Public Property ClusterRt As Double()
         Public Property ClusterForward As Double()
@@ -85,12 +117,6 @@ Namespace Query
         Public Property ClusterJaccard As Double()
         Public Property ClusterEntropy As Double()
         Public Property ClusterId As String()
-
-        ''' <summary>
-        ''' the basepeak m/z of the sample spectrum
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property basePeak As Double
 
         ''' <summary>
         ''' hit size

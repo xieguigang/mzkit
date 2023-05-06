@@ -78,7 +78,8 @@ Namespace TMIC.HMDB
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        <Extension> Public Function LoadHMDBTaxonomy(path$) As Dictionary(Of String, taxonomy)
+        <Extension>
+        Public Function LoadHMDBTaxonomy(path$) As Dictionary(Of String, taxonomy)
             Return metabolite.Load(path) _
                 .Where(Function(x) Not x.taxonomy Is Nothing) _
                 .Select(Function(metabolite)
@@ -104,7 +105,8 @@ Namespace TMIC.HMDB
         ''' </summary>
         ''' <param name="names$"></param>
         ''' <returns></returns>
-        <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, (match$, type$))
+        <Extension>
+        Public Function NameMatch(names$()) As Func(Of metabolite, (match$, type$))
             If names.IsNullOrEmpty Then
                 Return Function(metabolite)
                            Return (metabolite.name, NameOf(names))

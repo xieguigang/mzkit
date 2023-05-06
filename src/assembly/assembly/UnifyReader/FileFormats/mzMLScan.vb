@@ -77,9 +77,9 @@ Namespace DataReader
             Dim polarity As String = GetPolarity(scan)
 
             If scan.ms_level = 1 Then
-                Return $"[MS1] {scanType}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
+                Return $"[MS1] {scanType}, ({polarity}) scan_time={(scan.scan_time / 60).ToString("F2")}min,basepeak={GetBPC(scan)},totalIons={GetTIC(scan)}"
             Else
-                Return $"[MS/MS] {scanType}, ({polarity}) M{CInt(scan.selectedIon.mz)}T{CInt(scan.scan_time)}"
+                Return $"[MS/MS] {scanType}, ({polarity}) M{CInt(scan.selectedIon.mz)}T{CInt(scan.scan_time)}, {scan.selectedIon.mz.ToString("F4")}@{(scan.scan_time / 60).ToString("F2")}min"
             End If
         End Function
 

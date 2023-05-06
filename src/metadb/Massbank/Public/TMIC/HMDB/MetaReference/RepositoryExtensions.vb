@@ -64,7 +64,23 @@ Namespace TMIC.HMDB.Repository
 
         ReadOnly web As New Dictionary(Of String, WebQuery)
 
-        Public Function GetMetabolite(id As String, Optional cache$ = "./hmdb/", Optional offline As Boolean = False) As metabolite
+        ''' <summary>
+        ''' get hmdb metabolite data from online web services
+        ''' </summary>
+        ''' <param name="id">
+        ''' get data via this given hmdb metabolite id
+        ''' </param>
+        ''' <param name="cache">
+        ''' the local cache dir
+        ''' </param>
+        ''' <param name="offline">
+        ''' running the data query in offline mode?
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetMetabolite(id As String,
+                                      Optional cache$ = "./hmdb/",
+                                      Optional offline As Boolean = False) As metabolite
+
             Dim engine As WebQuery = web.ComputeIfAbsent(cache, lazyValue:=Function() New WebQuery(cache,, offline))
             engine.offlineMode = offline
             Return engine.Query(Of metabolite)(id)

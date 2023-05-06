@@ -161,7 +161,7 @@ Module MoleculeNetworking
     Public Function Tree(ions As PeakMs2(),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
-                         Optional equals As Double = 0.85) As ClusterTree
+                         Optional equals As Double = 0.85) As TreeCluster
 
         Return ions.Tree(mzdiff, intocutoff, equals)
     End Function
@@ -184,6 +184,10 @@ Module MoleculeNetworking
         }
         Dim members As New List(Of PeakMs2)
 
+        If ions.IsNullOrEmpty Then
+            Return payload
+        End If
+
         For Each cluster As ClusterTree In clusters
             Call members.Clear()
             Call members.Add(list(cluster.Data))
@@ -197,19 +201,19 @@ Module MoleculeNetworking
     ''' <summary>
     ''' create representative spectrum data
     ''' </summary>
-    ''' <param name="tree"></param>
-    ''' <param name="ions"></param>
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
+    ''' </remarks>
     <ExportAPI("representative")>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function RepresentativeSpectrum(tree As ClusterTree,
-                                           ions As PeakMs2(),
+    Public Function RepresentativeSpectrum(tree As TreeCluster,
                                            Optional mzdiff As Object = "da:0.3",
                                            Optional env As Environment = Nothing) As Object
 
-        Dim pack As list = tree.MsBin(ions)
+        Dim pack As list = tree.tree.MsBin(tree.spectrum)
         Dim output As New List(Of PeakMs2)
         Dim zero As RelativeIntensityCutoff = 0.0
         Dim mzerr = Math.getTolerance(mzdiff, env, [default]:="da:0.3")
@@ -222,8 +226,9 @@ Module MoleculeNetworking
 
         For Each key As String In pack.getNames
             Dim cluster As PeakMs2() = pack.getValue(Of PeakMs2())(key, env, [default]:={})
-            Dim ref = cluster.RepresentativeSpectrum(tolerance, zero, key)
+            Dim ref = cluster.RepresentativeSpectrum(tolerance, zero, key:=key)
 
+            ' <see cref="PeakMs2.collisionEnergy"/> is tagged as the cluster size
             Call output.Add(ref)
         Next
 

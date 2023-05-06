@@ -82,6 +82,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -249,8 +250,13 @@ Module MRMkit
     End Function
 
     <ExportAPI("MRM.rt_alignments")>
-    Public Function GetRTAlignments(<RRawVectorArgument> cal As Object, <RRawVectorArgument> ions As Object, Optional args As MRMArguments = Nothing) As RTAlignment()
-        Dim references As IEnumerable(Of String) = DirectCast(REnv.asVector(Of String)(cal), String())
+    Public Function GetRTAlignments(<RRawVectorArgument>
+                                    cal As Object,
+                                    <RRawVectorArgument>
+                                    ions As Object,
+                                    Optional args As MRMArguments = Nothing) As RTAlignment()
+
+        Dim references As IEnumerable(Of String) = CLRVector.asCharacter(cal)
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then

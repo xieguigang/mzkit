@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -31,6 +30,10 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' open a local fs directory for the data storage
+        ''' </summary>
+        ''' <param name="dir"></param>
         Sub New(dir As String)
             Me.fs = New StreamPack(dir & "/cluster.pack", meta_size:=1024 * 1024 * 256)
 
@@ -55,6 +58,10 @@ Namespace PoolData
 
                 Yield dir.referencePath.ToString
             Next
+        End Function
+
+        Public Overrides Function CheckExists(spectral As PeakMs2) As Boolean
+            Return False
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
@@ -134,7 +141,9 @@ Namespace PoolData
                 .biodeep_id = spectral.meta.TryGetValue("biodeep_id", [default]:="unknown conserved"),
                 .formula = spectral.meta.TryGetValue("formula", [default]:="NA"),
                 .name = name,
-                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type)
+                .adducts = If(spectral.precursor_type.StringEmpty, "NA", spectral.precursor_type),
+                .instrument = spectral.meta.TryGetValue("instrument", [default]:="unknown instrument"),
+                .project = spectral.meta.TryGetValue("project", [default]:="unknown project")
             }
         End Function
 

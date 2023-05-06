@@ -107,6 +107,11 @@ Module MetaDbXref
         }
     End Function
 
+    <ExportAPI("verify_cas_number")>
+    Public Function VerifyCASNumber(<RRawVectorArgument> num As Object, Optional env As Environment = Nothing) As Object
+        Return SMRUCC.Rsharp.EvaluateFramework(Of String, Boolean)(env, num, AddressOf CASNumber.Verify)
+    End Function
+
     <ExportAPI("parseLipidName")>
     Public Function ParseLipidName(<RRawVectorArgument>
                                    name As Object,
@@ -119,33 +124,35 @@ Module MetaDbXref
             Return SMRUCC.Rsharp.EvaluateFramework(Of String, list)(
                 env:=env,
                 x:=name,
-                eval:=Function(nameStr As String)
-                          Dim lipid As LipidName = LipidName.ParseLipidName(nameStr)
-                          Dim rlist As New list
-                          Dim chains As New list
-                          Dim i As i32 = 1
-
-                          For Each chain As Chain In lipid.chains
-                              Dim chainList As New list
-
-                              chainList.add("carbons", chain.carbons)
-                              chainList.add("doubleBonds", chain.doubleBonds)
-                              chainList.add("tag", chain.tag)
-                              chainList.add("groups", boundList(chain.groups))
-                              chainList.add("index", boundList(chain.position))
-
-                              chains.add($"#{++i}", chainList)
-                          Next
-
-                          rlist.add("class", lipid.className)
-                          rlist.add("chains", chains)
-                          rlist.add("name", lipid.ToString)
-                          rlist.add("overview_name", lipid.ToOverviewName)
-                          rlist.add("systematic_name", lipid.ToSystematicName)
-
-                          Return rlist
-                      End Function)
+                eval:=AddressOf ParseLipidNameList)
         End If
+    End Function
+
+    Private Function ParseLipidNameList(nameStr As String) As list
+        Dim lipid As LipidName = LipidName.ParseLipidName(nameStr)
+        Dim rlist As New list
+        Dim chains As New list
+        Dim i As i32 = 1
+
+        For Each chain As Chain In lipid.chains
+            Dim chainList As New list
+
+            chainList.add("carbons", chain.carbons)
+            chainList.add("doubleBonds", chain.doubleBonds)
+            chainList.add("tag", chain.tag)
+            chainList.add("groups", boundList(chain.groups))
+            chainList.add("index", boundList(chain.position))
+
+            chains.add($"#{++i}", chainList)
+        Next
+
+        rlist.add("class", lipid.className)
+        rlist.add("chains", chains)
+        rlist.add("name", lipid.ToString)
+        rlist.add("overview_name", lipid.ToOverviewName)
+        rlist.add("systematic_name", lipid.ToSystematicName)
+
+        Return rlist
     End Function
 
     Private Function boundList(g As Group()) As dataframe

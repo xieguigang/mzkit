@@ -1,0 +1,39 @@
+﻿.TH GET_REPRESENTIVES 1 2023-May "" "Get n representive spectrums via molecular networking"
+.SH NAME
+get_representives \- get_representives(ions,
+    <i>top.n</i> = 5,
+    <i>mzdiff</i> = 0.3,
+    <i>intocutoff</i> = 0.05,
+    <i>equals</i> = 0.85)
+.SH SYNOPSIS
+\fIget_representives(ions,
+    <i>top.n</i> = 5,
+    <i>mzdiff</i> = 0.3,
+    <i>intocutoff</i> = 0.05,
+    <i>equals</i> = 0.85)\fR
+.SH OPTIONS
+.PP
+\fBions\fB \fR\- . a collection of the peakms2 dataset
+.PP
+.PP
+\fBtop.n\fB \fR\- 5. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 0.3. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- 0.05. 
+.PP
+.PP
+\fBequals\fB \fR\- 0.85. 
+.PP
+.SH VALUE
+.PP
+a collection of peakms2 data object, number of the spectrum is specificed via the ``top_n`` parameter.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.get_representives at spectrum_cluster.R:line 11
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2023

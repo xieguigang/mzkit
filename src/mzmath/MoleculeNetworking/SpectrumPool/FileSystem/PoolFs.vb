@@ -3,9 +3,13 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PoolData
 
+    ''' <summary>
+    ''' the cluster tree flesystem
+    ''' </summary>
     Public MustInherit Class PoolFs : Implements IDisposable
 
         Dim disposedValue As Boolean
@@ -16,14 +20,26 @@ Namespace PoolData
         ''' </summary>
         Dim score As AlignmentProvider
 
+        Protected m_level As Double
+        Protected m_split As Integer
+
         ''' <summary>
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property level As Double
+            Get
+                Return m_level
+            End Get
+        End Property
         Public ReadOnly Property split As Integer
+            Get
+                Return m_split
+            End Get
+        End Property
         Public ReadOnly Property splitDelta As Double
 
+        Public MustOverride Function CheckExists(spectral As PeakMs2) As Boolean
         Public MustOverride Function GetTreeChilds(path As String) As IEnumerable(Of String)
         Public MustOverride Function LoadMetadata(path As String) As MetadataProxy
         Public MustOverride Sub CommitMetadata(path As String, data As MetadataProxy)
@@ -49,20 +65,50 @@ Namespace PoolData
         ''' the score threshold for assign the given spectrum as current cluster member
         ''' </param>
         ''' <param name="split">split into n parts</param>
-        Friend Sub SetLevel(level As Double, split As Integer)
-            _level = level
-            _split = split
+        Friend Overridable Sub SetLevel(level As Double, split As Integer)
+            m_level = level
+            m_split = split
             _splitDelta = level / split
         End Sub
 
-        Public Shared Function CreateAuto(link As String) As PoolFs
+        Public Shared Function OpenAuto(link As String, model_id As String) As PoolFs
             Dim linkStr As String = link.ToLower
 
             If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
                 ' web services based
-                Return New HttpTreeFs(link)
+                Dim pool As New HttpTreeFs(link, model_id)
+                Return pool
             Else
                 Return New TreeFs(link)
+            End If
+        End Function
+
+        Public Shared Function CreateAuto(link As String,
+                                          level As Double,
+                                          split As Integer,
+                                          name As String,
+                                          desc As String) As PoolFs
+
+            Dim linkStr As String = link.ToLower
+
+            If linkStr.StartsWith("http://") OrElse linkStr.StartsWith("https://") Then
+                ' web services based
+                Dim info = HttpTreeFs.CreateModel(link, name, desc, level, split)
+                Dim pool As New HttpTreeFs(link, info.model_id)
+
+                Return pool
+            Else
+                Dim local As New TreeFs(link)
+                Dim params As New Dictionary(Of String, String) From {
+                    {"level", level},
+                    {"split", split}
+                }
+
+                local.WriteText(name, "/.metadata/name.txt")
+                local.WriteText(desc, "/.metadata/note.txt")
+                local.WriteText(params.GetJson, "/.metadata/params.json")
+
+                Return local
             End If
         End Function
 
