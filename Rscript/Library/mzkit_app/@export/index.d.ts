@@ -22,7 +22,7 @@ declare namespace mzkit {
      * @param factor default value Is ``NULL``.
    */
    function normData(mat:any, factor:any): object;
-   module  {
+   module _ {
       /**
       */
       function minPos(mat:any): object;
