@@ -1,0 +1,230 @@
+﻿// export R# package module type define for javascript/typescript language
+//
+// ref=mzkit.MSI@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+
+/**
+ * MS-Imaging data handler
+ * 
+*/
+declare namespace MSI {
+   /**
+    * get ms-imaging metadata
+    * 
+    * 
+     * @param raw -
+   */
+   function msi_metadata(raw:object): object;
+   module as {
+      /**
+       * cast the pixel collection to a ion imaging layer data
+       * 
+       * 
+        * @param pixels -
+        * @param context -
+        * 
+        * + default value Is ``'MSIlayer'``.
+        * @param dims -
+        * 
+        * + default value Is ``null``.
+        * @param strict -
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function layer(pixels:object, context?:string, dims?:any, strict?:boolean, env?:object): object;
+   }
+   /**
+    * split the raw 2D MSI data into multiple parts with given parts
+    * 
+    * 
+     * @param raw -
+     * @param partition -
+     * 
+     * + default value Is ``5``.
+   */
+   function splice(raw:object, partition?:object): object;
+   /**
+    * get pixels [x,y] tags collection for a specific ion
+    * 
+    * 
+     * @param raw -
+     * @param mz -
+     * @param tolerance -
+     * 
+     * + default value Is ``'da:0.1'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a character vector of the pixel [x,y] tags.
+   */
+   function pixelId(raw:object, mz:number, tolerance?:any, env?:object): string;
+   /**
+    * get pixels size from the raw data file
+    * 
+    * 
+     * @param file imML/mzPack
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function pixels(file:any, env?:object): object;
+   module open {
+      /**
+      */
+      function imzML(file:string): any;
+   }
+   module write {
+      /**
+      */
+      function imzML(mzpack:object, file:string): any;
+   }
+   module row {
+      /**
+       * each raw data file is a row scan data
+       * 
+       * 
+        * @param raw a file list of mzpack data files
+        * @param y this function will returns the pixel summary data if the ``y`` parameter greater than ZERO.
+        * 
+        * + default value Is ``0``.
+        * @param correction used for data summary, when the ``y`` parameter is greater than ZERO, 
+        *  this parameter will works.
+        * 
+        * + default value Is ``null``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function scans(raw:string, y?:object, correction?:object, env?:object): any;
+   }
+   /**
+    * Fetch MSI summary data
+    * 
+    * 
+     * @param raw -
+     * @param x 
+     * + default value Is ``null``.
+     * @param y 
+     * + default value Is ``null``.
+     * @param as_vector 
+     * + default value Is ``false``.
+     * @param dims 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function MSI_summary(raw:object, x?:object, y?:object, as_vector?:boolean, dims?:any, env?:object): object|object;
+   /**
+    * calculate the X scale
+    * 
+    * 
+     * @param totalTime -
+     * @param pixels -
+     * @param hasMs2 -
+     * 
+     * + default value Is ``false``.
+   */
+   function correction(totalTime:number, pixels:object, hasMs2?:boolean): object;
+   /**
+   */
+   function basePeakMz(summary:object): object;
+   /**
+    * count pixels/density/etc for each ions m/z data
+    * 
+    * 
+     * @param raw -
+     * @param grid_size -
+     * 
+     * + default value Is ``5``.
+     * @param da -
+     * 
+     * + default value Is ``0.01``.
+     * @param parallel 
+     * + default value Is ``true``.
+   */
+   function ionStat(raw:object, grid_size?:object, da?:number, parallel?:boolean): object;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function ions_jointmatrix(raw:object, env?:object): object;
+   /**
+    * combine each row scan raw data files as the pixels 2D matrix
+    * 
+    * 
+     * @param rowScans data result comes from the function ``row.scans``.
+     * @param correction 
+     * + default value Is ``null``.
+     * @param intocutoff 
+     * + default value Is ``0.05``.
+     * @param yscale apply for mapping smooth MS1 to ms2 scans
+     * 
+     * + default value Is ``1``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function scans2D(rowScans:any, correction?:object, intocutoff?:number, yscale?:number, env?:object): any;
+   /**
+    * combine each row scan summary vector as the pixels 2D matrix
+    * 
+    * 
+     * @param rowScans -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function scanMatrix(rowScans:any, env?:object): object;
+   /**
+     * @param topN default value Is ``3``.
+     * @param mzError default value Is ``'da:0.05'``.
+     * @param env default value Is ``null``.
+   */
+   function peakMatrix(raw:object, topN?:object, mzError?:any, env?:object): any;
+   /**
+    * split the raw MSI 2D data into multiple parts with given resolution parts
+    * 
+    * 
+     * @param raw -
+     * @param resolution -
+     * 
+     * + default value Is ``100``.
+     * @param mzError -
+     * 
+     * + default value Is ``'da:0.05'``.
+     * @param cutoff -
+     * 
+     * + default value Is ``0.05``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return returns the raw matrix data that contains the peak samples.
+   */
+   function peakSamples(raw:object, resolution?:object, mzError?:any, cutoff?:number, env?:object): any;
+   /**
+    * get number of ions in each pixel scans
+    * 
+    * 
+     * @param raw -
+   */
+   function pixelIons(raw:object): object;
+   /**
+     * @param mzdiff default value Is ``0.001``.
+     * @param q default value Is ``0.001``.
+   */
+   function getMatrixIons(raw:object, mzdiff?:number, q?:number): number;
+   /**
+    * dumping raw data matrix as text table file.
+    * 
+    * 
+     * @param raw -
+     * @param file -
+     * @param mzdiff 
+     * + default value Is ``0.001``.
+     * @param q 
+     * + default value Is ``0.001``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function pixelMatrix(raw:object, file:object, mzdiff?:number, q?:number, env?:object): object;
+}
