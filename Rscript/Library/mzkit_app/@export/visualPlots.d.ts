@@ -13,17 +13,6 @@ declare namespace visualPlots {
       */
       function chromatogram(data:any, time?:string, into?:string, env?:object): object;
    }
-   /**
-     * @param title default value Is ``''``.
-     * @param samples default value Is ``null``.
-     * @param size default value Is ``'1600,1200'``.
-     * @param margin default value Is ``'padding: 200px 100px 150px 150px'``.
-     * @param factorFormat default value Is ``'G4'``.
-     * @param sampleLabelFont default value Is ``'font-style: normal; font-size: 16; font-family: Segoe UI;'``.
-     * @param labelerIterations default value Is ``1000``.
-     * @param gridFill default value Is ``'LightGray'``.
-   */
-   function standard_curve(model:object, title?:string, samples?:object, size?:string, margin?:string, factorFormat?:string, sampleLabelFont?:string, labelerIterations?:object, gridFill?:string): object;
    module chromatogram {
       /**
         * @param labelLayoutTicks default value Is ``2000``.
@@ -46,4 +35,15 @@ declare namespace visualPlots {
          function plot(chromatogram:any, title?:string, size?:any, padding?:any, fill?:boolean, gridFill?:string, lineStyle?:string, relativeTimeScale?:any, parallel?:boolean, env?:object): object;
       }
    }
+   /**
+     * @param title default value Is ``''``.
+     * @param samples default value Is ``null``.
+     * @param size default value Is ``'1600,1200'``.
+     * @param margin default value Is ``'padding: 200px 100px 150px 150px'``.
+     * @param factorFormat default value Is ``'G4'``.
+     * @param sampleLabelFont default value Is ``'font-style: normal; font-size: 16; font-family: Segoe UI;'``.
+     * @param labelerIterations default value Is ``1000``.
+     * @param gridFill default value Is ``'LightGray'``.
+   */
+   function standard_curve(model:object, title?:string, samples?:object, size?:string, margin?:string, factorFormat?:string, sampleLabelFont?:string, labelerIterations?:object, gridFill?:string): object;
 }

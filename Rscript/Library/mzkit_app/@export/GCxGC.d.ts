@@ -8,12 +8,6 @@
 */
 declare namespace GCxGC {
    /**
-   */
-   function TIC2D(TIC:object, modtime:number): object;
-   /**
-   */
-   function TIC1D(matrix:object): object;
-   /**
     * extract GCxGC 2d peaks from the mzpack raw data file
     * 
     * > this function will extract the TIC data by default.
@@ -32,6 +26,18 @@ declare namespace GCxGC {
      * + default value Is ``null``.
    */
    function extract_2D_peaks(raw:object, mz?:number, mzdiff?:any, env?:object): object;
+   module read {
+      /**
+       * read GCxGC 2D Chromatogram data from a given netcdf file.
+       * 
+       * 
+        * @param file -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function cdf(file:any, env?:object): object;
+   }
    module save {
       /**
        * save GCxGC 2D Chromatogram data as a new netcdf file.
@@ -45,16 +51,10 @@ declare namespace GCxGC {
       */
       function cdf(TIC:object, file:any, env?:object): any;
    }
-   module read {
-      /**
-       * read GCxGC 2D Chromatogram data from a given netcdf file.
-       * 
-       * 
-        * @param file -
-        * @param env -
-        * 
-        * + default value Is ``null``.
-      */
-      function cdf(file:any, env?:object): object;
-   }
+   /**
+   */
+   function TIC1D(matrix:object): object;
+   /**
+   */
+   function TIC2D(TIC:object, modtime:number): object;
 }

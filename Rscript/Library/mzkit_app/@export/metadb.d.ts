@@ -10,19 +10,50 @@ declare namespace metadb {
    /**
      * @param env default value Is ``null``.
    */
-   function verify_cas_number(num:any, env?:object): any;
-   /**
-     * @param keepsRaw default value Is ``false``.
-     * @param env default value Is ``null``.
-   */
-   function parseLipidName(name:any, keepsRaw?:boolean, env?:object): any;
-   /**
-     * @param env default value Is ``null``.
-   */
    function annotationStream(id:string, name:string, formula:string, env?:object): object;
+   module cbind {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function metainfo(anno:object, engine:any, env?:object): any;
+   }
    /**
+    * removes all of the annotation result which is not 
+    *  hits in the given ``id`` set.
+    * 
+    * 
+     * @param query -
+     * @param id the required compound id set that should be hit!
+     * @param field -
+     * @param metadb -
+     * @param includes_metal_ions removes metabolite annotation result which has metal
+     *  ions inside formula string by default.
+     * 
+     * + default value Is ``false``.
+     * @param excludes reverse the logical of select the annotation result 
+     *  based on the given **`id`** set.
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function precursorIon(ion:string): object;
+   function excludeFeatures(query:object, id:string, field:string, metadb:object, includes_metal_ions?:boolean, excludes?:boolean, env?:object): object;
+   /**
+    * get metabolite annotation metadata by a set of given unique reference id
+    * 
+    * 
+     * @param engine -
+     * @param uniqueId -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function getMetadata(engine:any, uniqueId:object, env?:object): any;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function load_asQueryHits(x:object, env?:object): object;
    /**
     * a generic function for handle ms1 search
     * 
@@ -56,6 +87,14 @@ declare namespace metadb {
    */
    function ms1_search(engine:any, mz:any, unique?:boolean, uniqueByScore?:boolean, env?:object): object;
    /**
+     * @param keepsRaw default value Is ``false``.
+     * @param env default value Is ``null``.
+   */
+   function parseLipidName(name:any, keepsRaw?:boolean, env?:object): any;
+   /**
+   */
+   function precursorIon(ion:string): object;
+   /**
     * Found the best matched mz value with the target **`exactMass`**
     * 
     * 
@@ -72,39 +111,6 @@ declare namespace metadb {
      *  given threshold value, then this function returns nothing
    */
    function searchMz(mz:any, exactMass:number, adducts:object, mzdiff?:any, env?:object): object;
-   /**
-    * get metabolite annotation metadata by a set of given unique reference id
-    * 
-    * 
-     * @param engine -
-     * @param uniqueId -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function getMetadata(engine:any, uniqueId:object, env?:object): any;
-   /**
-    * removes all of the annotation result which is not 
-    *  hits in the given ``id`` set.
-    * 
-    * 
-     * @param query -
-     * @param id the required compound id set that should be hit!
-     * @param field -
-     * @param metadb -
-     * @param includes_metal_ions removes metabolite annotation result which has metal
-     *  ions inside formula string by default.
-     * 
-     * + default value Is ``false``.
-     * @param excludes reverse the logical of select the annotation result 
-     *  based on the given **`id`** set.
-     * 
-     * + default value Is ``false``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function excludeFeatures(query:object, id:string, field:string, metadb:object, includes_metal_ions?:boolean, excludes?:boolean, env?:object): object;
    /**
     * unique of the peak annotation features
     * 
@@ -130,14 +136,8 @@ declare namespace metadb {
      * + default value Is ``null``.
    */
    function uniqueFeatures(query:object, uniqueByScore?:boolean, scoreFactors?:object, format?:string, removesZERO?:boolean, verbose?:boolean, env?:object): object;
-   module cbind {
-      /**
-        * @param env default value Is ``null``.
-      */
-      function metainfo(anno:object, engine:any, env?:object): any;
-   }
    /**
      * @param env default value Is ``null``.
    */
-   function load_asQueryHits(x:object, env?:object): object;
+   function verify_cas_number(num:any, env?:object): any;
 }

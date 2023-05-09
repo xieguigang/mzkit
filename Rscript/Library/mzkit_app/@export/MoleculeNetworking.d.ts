@@ -33,13 +33,6 @@
  * >  cannabinoids has been demonstrated.
 */
 declare namespace MoleculeNetworking {
-   /**
-    * makes the spectrum data its unique id reference uniqued!
-    * 
-    * 
-     * @param ions -
-   */
-   function uniqueNames(ions:object): object;
    module as {
       /**
        * convert the cluster tree into the graph model
@@ -50,24 +43,6 @@ declare namespace MoleculeNetworking {
       */
       function graph(tree:object, ions:object): object;
    }
-   /**
-    * do spectrum data clustering
-    * 
-    * 
-     * @param ions A set of the spectrum data
-     * @param mzdiff the ms2 fragment mass tolerance when used for compares 
-     *  ms2 spectrum data
-     * 
-     * + default value Is ``0.3``.
-     * @param intocutoff intensity cutoff value that used for make the spectrum 
-     *  centroid and noise cleanup
-     * 
-     * + default value Is ``0.05``.
-     * @param equals -
-     * 
-     * + default value Is ``0.85``.
-   */
-   function tree(ions:object, mzdiff?:number, intocutoff?:number, equals?:number): object;
    /**
     * populate a list of peak ms2 cluster data
     * 
@@ -90,4 +65,29 @@ declare namespace MoleculeNetworking {
      * + default value Is ``null``.
    */
    function representative(tree:object, mzdiff?:any, env?:object): object;
+   /**
+    * do spectrum data clustering
+    * 
+    * 
+     * @param ions A set of the spectrum data
+     * @param mzdiff the ms2 fragment mass tolerance when used for compares 
+     *  ms2 spectrum data
+     * 
+     * + default value Is ``0.3``.
+     * @param intocutoff intensity cutoff value that used for make the spectrum 
+     *  centroid and noise cleanup
+     * 
+     * + default value Is ``0.05``.
+     * @param equals -
+     * 
+     * + default value Is ``0.85``.
+   */
+   function tree(ions:object, mzdiff?:number, intocutoff?:number, equals?:number): object;
+   /**
+    * makes the spectrum data its unique id reference uniqued!
+    * 
+    * 
+     * @param ions -
+   */
+   function uniqueNames(ions:object): object;
 }

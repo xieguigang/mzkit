@@ -10,17 +10,36 @@
 */
 declare namespace spectrumTree {
    /**
-    * create new reference spectrum database
+    * push the reference spectrum data into the spectrum reference tree library
     * 
     * 
-     * @param file A file path to save the spectrum reference database
-     * @param type 
+     * @param tree The reference spectrum database, which the spectrum data 
+     *  is store in family tree style
+     * @param x A new spectrum data to push into the reference database
+     * @param ignore_error 
+     * + default value Is ``false``.
+     * @param args additional parameters for create the spectrum library in spectrum pack format:
+     *  
+     *  1. uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id
+     *  2. chemical_formula, formula is used for the metabolite exact mass value
+     *  
+     *  and the spectrum input of x should be the same metabolite if save data as 
+     *  the spectrum pack data.
+     * 
      * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function new(file:any, type?:object, env?:object): object|object|object;
+   function addBucket(tree:any, x:any, ignore_error?:boolean, args?:object, env?:object): any;
+   /**
+    * set dot cutoff parameter for the cos score similarity algorithm
+    * 
+    * 
+     * @param search The spectrum library stream engine
+     * @param cutoff cutoff threshold value of the cos score
+   */
+   function dotcutoff(search:object, cutoff:number): object;
    /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 
@@ -37,15 +56,35 @@ declare namespace spectrumTree {
    */
    function get_testSample(packlib:object, n?:object, rtmax?:number, source_name?:string): object;
    /**
-    * open the spectrum pack reference database file
+    * construct a fragment set library for run spectrum search in jaccard matches
     * 
     * 
-     * @param file -
+     * @param libname -
+     * @param mz -
+     * @param mzset -
+     * @param rt -
+     * 
+     * + default value Is ``null``.
+     * @param cutoff -
+     * 
+     * + default value Is ``0.1``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function readpack(file:any, env?:object): object;
+   function jaccardSet(libname:string, mz:number, mzset:string, rt?:number, cutoff?:number, env?:object): object;
+   /**
+    * create new reference spectrum database
+    * 
+    * 
+     * @param file A file path to save the spectrum reference database
+     * @param type 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function new(file:any, type?:object, env?:object): object|object|object;
    /**
     * ### open the spectrum reference database
     *  
@@ -73,32 +112,6 @@ declare namespace spectrumTree {
    */
    function open(file:any, dotcutoff?:number, adducts?:any, target_uuid?:any, env?:object): object|object;
    /**
-    * set dot cutoff parameter for the cos score similarity algorithm
-    * 
-    * 
-     * @param search The spectrum library stream engine
-     * @param cutoff cutoff threshold value of the cos score
-   */
-   function dotcutoff(search:object, cutoff:number): object;
-   /**
-    * construct a fragment set library for run spectrum search in jaccard matches
-    * 
-    * 
-     * @param libname -
-     * @param mz -
-     * @param mzset -
-     * @param rt -
-     * 
-     * + default value Is ``null``.
-     * @param cutoff -
-     * 
-     * + default value Is ``0.1``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function jaccardSet(libname:string, mz:number, mzset:string, rt?:number, cutoff?:number, env?:object): object;
-   /**
     * do spectrum family alignment via cos similarity
     * 
     * 
@@ -122,26 +135,13 @@ declare namespace spectrumTree {
    */
    function query(tree:object, x:any, maxdepth?:object, treeSearch?:boolean, top_hits?:object, env?:object): object;
    /**
-    * push the reference spectrum data into the spectrum reference tree library
+    * open the spectrum pack reference database file
     * 
     * 
-     * @param tree The reference spectrum database, which the spectrum data 
-     *  is store in family tree style
-     * @param x A new spectrum data to push into the reference database
-     * @param ignore_error 
-     * + default value Is ``false``.
-     * @param args additional parameters for create the spectrum library in spectrum pack format:
-     *  
-     *  1. uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id
-     *  2. chemical_formula, formula is used for the metabolite exact mass value
-     *  
-     *  and the spectrum input of x should be the same metabolite if save data as 
-     *  the spectrum pack data.
-     * 
-     * + default value Is ``null``.
+     * @param file -
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function addBucket(tree:any, x:any, ignore_error?:boolean, args?:object, env?:object): any;
+   function readpack(file:any, env?:object): object;
 }

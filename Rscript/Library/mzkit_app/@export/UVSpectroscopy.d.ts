@@ -7,6 +7,17 @@
  * 
 */
 declare namespace UVSpectroscopy {
+   module as {
+      /**
+        * @param rawfile default value Is ``'UVraw'``.
+        * @param env default value Is ``null``.
+      */
+      function UVtime_signals(rawscans:any, rawfile?:string, env?:object): any;
+   }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function extract_UVsignals(rawscans:any, instrumentId:string, env?:object): object;
    /**
     * Get photodiode array detector instrument configuration id
     * 
@@ -14,16 +25,11 @@ declare namespace UVSpectroscopy {
      * @param mzml -
    */
    function get_instrument(mzml:string): string;
-   /**
-     * @param env default value Is ``null``.
-   */
-   function extract_UVsignals(rawscans:any, instrumentId:string, env?:object): object;
-   module as {
+   module read {
       /**
-        * @param rawfile default value Is ``'UVraw'``.
         * @param env default value Is ``null``.
       */
-      function UVtime_signals(rawscans:any, rawfile?:string, env?:object): any;
+      function UVsignals(file:any, env?:object): any;
    }
    module write {
       /**
@@ -41,11 +47,5 @@ declare namespace UVSpectroscopy {
         * + default value Is ``null``.
       */
       function UVsignals(signals:any, file:string, enable_CDFextension?:boolean, env?:object): boolean;
-   }
-   module read {
-      /**
-        * @param env default value Is ``null``.
-      */
-      function UVsignals(file:any, env?:object): any;
    }
 }

@@ -5,13 +5,13 @@
 /**
 */
 declare namespace ChemicalDraw {
-   /**
-   */
-   function KCFDraw(molecule:object): object;
    module as {
       /**
         * @param env default value Is ``null``.
       */
       function kcf(chemical:any, env?:object): object;
    }
+   /**
+   */
+   function KCFDraw(molecule:object): object;
 }

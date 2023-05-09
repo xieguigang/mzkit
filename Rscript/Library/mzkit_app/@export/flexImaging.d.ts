@@ -5,18 +5,18 @@
 /**
 */
 declare namespace flexImaging {
-   module read {
-      /**
-      */
-      function metadata(mcf:string): any;
-   }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function importsExperiment(scans:object, env?:object): object;
    /**
      * @param scale default value Is ``true``.
      * @param env default value Is ``null``.
    */
    function importSpotList(spots:string, spectrum:string, scale?:boolean, env?:object): object;
-   /**
-     * @param env default value Is ``null``.
-   */
-   function importsExperiment(scans:object, env?:object): object;
+   module read {
+      /**
+      */
+      function metadata(mcf:string): any;
+   }
 }

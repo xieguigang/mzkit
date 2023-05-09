@@ -3,12 +3,73 @@
 // package_source=mzkit
 
 declare namespace mzkit {
+   module _ {
+      /**
+        * @param type default value Is ``["genes", "disease", "compounds"]``.
+      */
+      function extract_pubmed_evidence(evidence:any, u:any, v:any, type:string): object;
+      /**
+        * @param type default value Is ``["genes", "disease", "compounds"]``.
+      */
+      function graph_table(nodes:any, type:string): object;
+      /**
+      */
+      function minPos(mat:any): object;
+      /**
+        * @param args default value Is ``Call "list"("cache_dir" <- "./.cache/")``.
+      */
+      function MS1deconv(rawfile:any, args:any): object;
+      /**
+      */
+      function onLoad(): object;
+      /**
+        * @param type default value Is ``["genes", "disease", "compounds"]``.
+      */
+      function term_maps(type:string, x:any): object;
+   }
    /**
-     * @param repofile default value Is ``Call "system.file"("data/LIPIDMAPS.msgpack", "package" <- "mzkit")``.
-     * @param gsea default value Is ``False``.
-     * @param category default value Is ``False``.
+     * @param mzdiff default value Is ``"da:0.001"``.
    */
-   function lipidmaps_repo(repofile:any, gsea:boolean, category:boolean): object;
+   function alignment_peaksdata(peakcache:any, mzdiff:string): object;
+   /**
+   */
+   function ANOVAGroup(data:any, sampleinfo:any): object;
+   /**
+   */
+   function convertToMzPack(file:string): object;
+   /**
+   */
+   function GCMS_contentTable(mslIons:any, calfiles:string): object;
+   /**
+     * @param output_dir default value Is ``"./"``.
+   */
+   function GCMS_linearReport(sim:any, ions:any, quantify:any, calfiles:string, output_dir:string): object;
+   /**
+     * @param peakwidth default value Is ``[5, 13]``.
+     * @param rtshift default value Is ``30``.
+     * @param maxDeletions default value Is ``2``.
+   */
+   function GCMS_linears(contentTable:any, mslIons:any, calfiles:string, peakwidth:object, rtshift:object, maxDeletions:object): object;
+   /**
+   */
+   function GCMS_quantify(linears:any, sim:any, sampleData:any): object;
+   /**
+     * @param top_n default value Is ``5``.
+     * @param mzdiff default value Is ``0.3``.
+     * @param intocutoff default value Is ``0.05``.
+     * @param equals default value Is ``0.85``.
+   */
+   function get_representives(ions:any, top_n:object, mzdiff:number, intocutoff:number, equals:number): object;
+   /**
+   */
+   function getDataValues(section:any): object;
+   /**
+   */
+   function getQuery(fileName:any): object;
+   /**
+     * @param unit default value Is ``"Minute"``.
+   */
+   function ionPairsFromMsl(ions:any, unit:string): object;
    /**
      * @param precursors default value Is ``["[M]+", "[M+H]+", "[M+H-H2O]+"]``.
      * @param mzdiff default value Is ``"ppm:20"``.
@@ -16,45 +77,55 @@ declare namespace mzkit {
    */
    function kegg_compounds(precursors:string, mzdiff:string, repofile:any): object;
    /**
+     * @param cache default value Is ``"./graph_kb"``.
    */
-   function tolerance(kind:string, mzdiff:number): object;
+   function knowledge_graph(cid:any, cache:string): object;
    /**
-     * @param factor default value Is ``NULL``.
+     * @param repofile default value Is ``Call "system.file"("data/LIPIDMAPS.msgpack", "package" <- "mzkit")``.
+     * @param gsea default value Is ``False``.
+     * @param category default value Is ``False``.
    */
-   function normData(mat:any, factor:any): object;
-   module _ {
-      /**
-      */
-      function minPos(mat:any): object;
-      /**
-      */
-      function onLoad(): object;
-      /**
-        * @param args default value Is ``Call "list"("cache_dir" <- "./.cache/")``.
-      */
-      function MS1deconv(rawfile:any, args:any): object;
-      /**
-        * @param type default value Is ``["genes", "disease", "compounds"]``.
-      */
-      function graph_table(nodes:any, type:string): object;
-      /**
-        * @param type default value Is ``["genes", "disease", "compounds"]``.
-      */
-      function term_maps(type:string, x:any): object;
-      /**
-        * @param type default value Is ``["genes", "disease", "compounds"]``.
-      */
-      function extract_pubmed_evidence(evidence:any, u:any, v:any, type:string): object;
-   }
-   /**
-   */
-   function ANOVAGroup(data:any, sampleinfo:any): object;
+   function lipidmaps_repo(repofile:any, gsea:boolean, category:boolean): object;
    /**
    */
    function loadTree(files:string): object;
    /**
+     * @param topics default value Is ``NULL``.
    */
-   function convertToMzPack(file:string): object;
+   function mesh_model(topics:any): object;
+   /**
+     * @param factor default value Is ``NULL``.
+   */
+   function normData(mat:any, factor:any): object;
+   /**
+     * @param output_dir default value Is ``"./"``.
+   */
+   function output_datatables(quantify:any, linears:any, output_dir:string): object;
+   /**
+   */
+   function parseDescriptors(descriptors:any): object;
+   /**
+   */
+   function parseNames(names:any): object;
+   /**
+   */
+   function parsePubchemMeta(document:any): object;
+   /**
+   */
+   function parseXref(refs:any): object;
+   /**
+     * @param mslIons default value Is ``NULL``.
+     * @param output_dir default value Is ``"./linears"``.
+   */
+   function plotLinears(linears:any, mslIons:any, output_dir:string): object;
+   /**
+     * @param process default value Is ``NULL``.
+     * @param extensionCache default value Is ``"./.cache/extdata/"``.
+   */
+   function pubchem_graphjson(dataXml:any, process:any, extensionCache:string): object;
+   /**
+   */
+   function pubchem_meta(term:any): object;
    module run {
       /**
         * @param data_dir default value Is ``"./"``.
@@ -67,77 +138,6 @@ declare namespace mzkit {
       function Deconvolution(data_dir:string, mzdiff:string, baseline:number, peakwidth:object, outputdir:string, n_threads:object): object;
    }
    /**
-     * @param mzdiff default value Is ``"da:0.001"``.
    */
-   function alignment_peaksdata(peakcache:any, mzdiff:string): object;
-   /**
-     * @param top_n default value Is ``5``.
-     * @param mzdiff default value Is ``0.3``.
-     * @param intocutoff default value Is ``0.05``.
-     * @param equals default value Is ``0.85``.
-   */
-   function get_representives(ions:any, top_n:object, mzdiff:number, intocutoff:number, equals:number): object;
-   /**
-     * @param process default value Is ``NULL``.
-     * @param extensionCache default value Is ``"./.cache/extdata/"``.
-   */
-   function pubchem_graphjson(dataXml:any, process:any, extensionCache:string): object;
-   /**
-     * @param topics default value Is ``NULL``.
-   */
-   function mesh_model(topics:any): object;
-   /**
-     * @param cache default value Is ``"./graph_kb"``.
-   */
-   function knowledge_graph(cid:any, cache:string): object;
-   /**
-   */
-   function pubchem_meta(term:any): object;
-   /**
-   */
-   function parsePubchemMeta(document:any): object;
-   /**
-   */
-   function parseXref(refs:any): object;
-   /**
-   */
-   function parseDescriptors(descriptors:any): object;
-   /**
-   */
-   function getDataValues(section:any): object;
-   /**
-   */
-   function parseNames(names:any): object;
-   /**
-   */
-   function getQuery(fileName:any): object;
-   /**
-     * @param peakwidth default value Is ``[5, 13]``.
-     * @param rtshift default value Is ``30``.
-     * @param maxDeletions default value Is ``2``.
-   */
-   function GCMS_linears(contentTable:any, mslIons:any, calfiles:string, peakwidth:object, rtshift:object, maxDeletions:object): object;
-   /**
-   */
-   function GCMS_contentTable(mslIons:any, calfiles:string): object;
-   /**
-   */
-   function GCMS_quantify(linears:any, sim:any, sampleData:any): object;
-   /**
-     * @param output_dir default value Is ``"./"``.
-   */
-   function GCMS_linearReport(sim:any, ions:any, quantify:any, calfiles:string, output_dir:string): object;
-   /**
-     * @param mslIons default value Is ``NULL``.
-     * @param output_dir default value Is ``"./linears"``.
-   */
-   function plotLinears(linears:any, mslIons:any, output_dir:string): object;
-   /**
-     * @param output_dir default value Is ``"./"``.
-   */
-   function output_datatables(quantify:any, linears:any, output_dir:string): object;
-   /**
-     * @param unit default value Is ``"Minute"``.
-   */
-   function ionPairsFromMsl(ions:any, unit:string): object;
+   function tolerance(kind:string, mzdiff:number): object;
 }

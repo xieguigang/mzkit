@@ -11,55 +11,20 @@
 */
 declare namespace TissueMorphology {
    /**
-    * create a collection of the umap sample data
+    * create a spatial grid for the spatial spot data
     * 
     * 
-     * @param points -
-     * @param x -
-     * @param y -
-     * @param z -
-     * @param cluster -
-     * @param is_singlecells 
-     * + default value Is ``false``.
-     * @param env -
+     * @param mapping -
+     * @param gridSize -
+     * 
+     * + default value Is ``6``.
+     * @param label the parameter value will overrides the internal
+     *  label of the mapping if this parameter string 
+     *  value is not an empty string.
      * 
      * + default value Is ``null``.
    */
-   function UMAPsample(points:any, x:number, y:number, z:number, cluster:object, is_singlecells?:boolean, env?:object): object;
-   /**
-    * create a collection of the tissue region dataset
-    * 
-    * 
-     * @param x -
-     * @param y -
-     * @param labels -
-     * @param colorSet the color set schema name or a list of color data 
-     *  which can be mapping to the given **`labels`** 
-     *  list.
-     * 
-     * + default value Is ``'Paper'``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function TissueData(x:object, y:object, labels:string, colorSet?:any, env?:object): object;
-   /**
-    * export the tissue data as cdf file
-    * 
-    * 
-     * @param tissueMorphology -
-     * @param file -
-     * @param umap -
-     * 
-     * + default value Is ``null``.
-     * @param dimension -
-     * 
-     * + default value Is ``null``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function writeCDF(tissueMorphology:object, file:any, umap?:object, dimension?:object, env?:object): any;
+   function gridding(mapping:object, gridSize?:object, label?:string): any;
    /**
     * load tissue region polygon data
     * 
@@ -104,18 +69,53 @@ declare namespace TissueMorphology {
    */
    function splitMapping(mapping:object): object;
    /**
-    * create a spatial grid for the spatial spot data
+    * create a collection of the tissue region dataset
     * 
     * 
-     * @param mapping -
-     * @param gridSize -
+     * @param x -
+     * @param y -
+     * @param labels -
+     * @param colorSet the color set schema name or a list of color data 
+     *  which can be mapping to the given **`labels`** 
+     *  list.
      * 
-     * + default value Is ``6``.
-     * @param label the parameter value will overrides the internal
-     *  label of the mapping if this parameter string 
-     *  value is not an empty string.
+     * + default value Is ``'Paper'``.
+     * @param env -
      * 
      * + default value Is ``null``.
    */
-   function gridding(mapping:object, gridSize?:object, label?:string): any;
+   function TissueData(x:object, y:object, labels:string, colorSet?:any, env?:object): object;
+   /**
+    * create a collection of the umap sample data
+    * 
+    * 
+     * @param points -
+     * @param x -
+     * @param y -
+     * @param z -
+     * @param cluster -
+     * @param is_singlecells 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function UMAPsample(points:any, x:number, y:number, z:number, cluster:object, is_singlecells?:boolean, env?:object): object;
+   /**
+    * export the tissue data as cdf file
+    * 
+    * 
+     * @param tissueMorphology -
+     * @param file -
+     * @param umap -
+     * 
+     * + default value Is ``null``.
+     * @param dimension -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function writeCDF(tissueMorphology:object, file:any, umap?:object, dimension?:object, env?:object): any;
 }

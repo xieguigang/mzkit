@@ -7,24 +7,18 @@
  * 
 */
 declare namespace assembly {
-   module read {
+   module file {
       /**
-       * read MSL data files
+       * get file index string of the given ms2 peak data.
        * 
        * 
-        * @param unit -
-        * 
-        * + default value Is ``null``.
+        * @param ms2 -
       */
-      function msl(file:string, unit?:object): object;
-      /**
-      */
-      function mgf(file:string): object;
-      /**
-        * @param parseMs2 default value Is ``true``.
-      */
-      function msp(file:string, parseMs2?:boolean): any;
+      function index(ms2:object): string;
    }
+   /**
+   */
+   function load_index(file:string): object;
    module mgf {
       /**
        * this function ensure that the output result of the any input ion objects is peakms2 data type.
@@ -37,45 +31,19 @@ declare namespace assembly {
       */
       function ion_peaks(ions:any, env?:object): object;
    }
-   module open {
+   module ms1 {
       /**
-        * @param env default value Is ``null``.
-      */
-      function xml_seek(file:string, env?:object): any;
-   }
-   /**
-   */
-   function seek(file:object, key:string): object;
-   /**
-   */
-   function scan_id(file:object): string;
-   /**
-   */
-   function load_index(file:string): object;
-   module write {
-      /**
-       * write spectra data in mgf file format.
+       * get all ms1 raw scans from the raw files
        * 
        * 
-        * @param ions -
-        * @param file the file path of the mgf file to write spectra data.
-        * @param relativeInto write relative intensity value into the mgf file instead of the raw intensity value.
-        *  no recommended...
+        * @param raw the file path of the raw data files.
+        * @param centroid the tolerance value of m/z for convert to centroid mode
         * 
-        * + default value Is ``false``.
+        * + default value Is ``null``.
         * @param env 
         * + default value Is ``null``.
       */
-      function mgf(ions:any, file:string, relativeInto?:boolean, env?:object): boolean;
-   }
-   module file {
-      /**
-       * get file index string of the given ms2 peak data.
-       * 
-       * 
-        * @param ms2 -
-      */
-      function index(ms2:object): string;
+      function scans(raw:any, centroid?:any, env?:object): object;
    }
    module mzxml {
       /**
@@ -92,6 +60,22 @@ declare namespace assembly {
       */
       function mgf(file:string, relativeInto?:boolean, onlyMs2?:boolean, env?:object): object;
    }
+   module open {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function xml_seek(file:string, env?:object): any;
+   }
+   /**
+    * get polarity data for each ms2 scans
+    * 
+    * 
+     * @param scans -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function polarity(scans:any, env?:object): object;
    module raw {
       /**
        * get raw scans data from the ``mzXML`` or ``mzMl`` data file
@@ -104,28 +88,44 @@ declare namespace assembly {
       */
       function scans(file:string, env?:object): object|object;
    }
-   /**
-    * get polarity data for each ms2 scans
-    * 
-    * 
-     * @param scans -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function polarity(scans:any, env?:object): object;
-   module ms1 {
+   module read {
       /**
-       * get all ms1 raw scans from the raw files
+      */
+      function mgf(file:string): object;
+      /**
+       * read MSL data files
        * 
        * 
-        * @param raw the file path of the raw data files.
-        * @param centroid the tolerance value of m/z for convert to centroid mode
+        * @param unit -
         * 
         * + default value Is ``null``.
+      */
+      function msl(file:string, unit?:object): object;
+      /**
+        * @param parseMs2 default value Is ``true``.
+      */
+      function msp(file:string, parseMs2?:boolean): any;
+   }
+   /**
+   */
+   function scan_id(file:object): string;
+   /**
+   */
+   function seek(file:object, key:string): object;
+   module write {
+      /**
+       * write spectra data in mgf file format.
+       * 
+       * 
+        * @param ions -
+        * @param file the file path of the mgf file to write spectra data.
+        * @param relativeInto write relative intensity value into the mgf file instead of the raw intensity value.
+        *  no recommended...
+        * 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
       */
-      function scans(raw:any, centroid?:any, env?:object): object;
+      function mgf(ions:any, file:string, relativeInto?:boolean, env?:object): boolean;
    }
 }

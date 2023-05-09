@@ -20,11 +20,6 @@ declare namespace mzDeco {
       */
       function groups(ms1:any, mzdiff?:any, env?:object): object;
    }
-   module read {
-      /**
-      */
-      function peakFeatures(file:string): object;
-   }
    /**
      * @param mzdiff default value Is ``'da:0.001'``.
      * @param rt_win default value Is ``30``.
@@ -32,4 +27,9 @@ declare namespace mzDeco {
      * @param env default value Is ``null``.
    */
    function peak_alignment(samples:any, mzdiff?:any, rt_win?:number, norm?:boolean, env?:object): object;
+   module read {
+      /**
+      */
+      function peakFeatures(file:string): object;
+   }
 }

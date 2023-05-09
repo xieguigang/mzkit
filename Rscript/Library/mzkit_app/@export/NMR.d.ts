@@ -7,11 +7,6 @@
  * 
 */
 declare namespace NMR {
-   module read {
-      /**
-      */
-      function nmrML(file:string): object;
-   }
    /**
     * get all acquisition data in the raw data file
     * 
@@ -30,8 +25,16 @@ declare namespace NMR {
    */
    function nmr_dft(fidData:object): object;
    /**
+     * @param size default value Is ``'3600,2400'``.
+     * @param padding default value Is ``'padding: 200px 400px 300px 100px'``.
+     * @param env default value Is ``null``.
    */
-   function spectrumList(nmrML:object): object;
+   function plot_nmr(nmr:object, size?:any, padding?:any, env?:object): any;
+   module read {
+      /**
+      */
+      function nmrML(file:string): object;
+   }
    /**
     * 
     * 
@@ -41,9 +44,6 @@ declare namespace NMR {
    */
    function spectrum(spectrum:object, nmrML:object): object;
    /**
-     * @param size default value Is ``'3600,2400'``.
-     * @param padding default value Is ``'padding: 200px 400px 300px 100px'``.
-     * @param env default value Is ``null``.
    */
-   function plot_nmr(nmr:object, size?:any, padding?:any, env?:object): any;
+   function spectrumList(nmrML:object): object;
 }

@@ -7,45 +7,20 @@
  * 
 */
 declare namespace hmdb_kit {
-   module read {
-      /**
-       * read hmdb spectral data collection
-       * 
-       * 
-        * @param repo A directory path to the hmdb spectral data files
-        * @param hmdbRaw -
-        * 
-        * + default value Is ``false``.
-        * @param lazy -
-        * 
-        * + default value Is ``true``.
-        * @param env -
-        * 
-        * + default value Is ``null``.
-      */
-      function hmdb_spectrals(repo:string, hmdbRaw?:boolean, lazy?:boolean, env?:object): any;
-      /**
-       * open a reader for read hmdb database
-       * 
-       * 
-        * @param xml the file path of the hmdb metabolite database xml file
-        * @return this function populate a collection of the hmdb metabolites data
-      */
-      function hmdb(xml:string): object;
-   }
    /**
-    * get metabolite via a given hmdb id from the hmdb.ca online web services
+    * split the hmdb database by biospecimen locations
     * 
     * 
-     * @param id the given hmdb id
-     * @param cache_dir 
-     * + default value Is ``'./hmdb/'``.
-     * @param tabular 
-     * + default value Is ``false``.
-     * @param env 
+     * @param hmdb -
+     * @param locations -
+     * @param env -
+     * 
      * + default value Is ``null``.
    */
-   function get_hmdb(id:string, cache_dir?:string, tabular?:boolean, env?:object): object|object;
+   function biospecimen_slicer(hmdb:object, locations:object, env?:object): any;
+   /**
+   */
+   function chemical_taxonomy(metabolite:object): string;
    module export {
       /**
        * save the hmdb database as a csv table file
@@ -63,17 +38,42 @@ declare namespace hmdb_kit {
       function hmdb_table(hmdb:object, file?:any, env?:object): any;
    }
    /**
-   */
-   function chemical_taxonomy(metabolite:object): string;
-   /**
-    * split the hmdb database by biospecimen locations
+    * get metabolite via a given hmdb id from the hmdb.ca online web services
     * 
     * 
-     * @param hmdb -
-     * @param locations -
-     * @param env -
-     * 
+     * @param id the given hmdb id
+     * @param cache_dir 
+     * + default value Is ``'./hmdb/'``.
+     * @param tabular 
+     * + default value Is ``false``.
+     * @param env 
      * + default value Is ``null``.
    */
-   function biospecimen_slicer(hmdb:object, locations:object, env?:object): any;
+   function get_hmdb(id:string, cache_dir?:string, tabular?:boolean, env?:object): object|object;
+   module read {
+      /**
+       * open a reader for read hmdb database
+       * 
+       * 
+        * @param xml the file path of the hmdb metabolite database xml file
+        * @return this function populate a collection of the hmdb metabolites data
+      */
+      function hmdb(xml:string): object;
+      /**
+       * read hmdb spectral data collection
+       * 
+       * 
+        * @param repo A directory path to the hmdb spectral data files
+        * @param hmdbRaw -
+        * 
+        * + default value Is ``false``.
+        * @param lazy -
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function hmdb_spectrals(repo:string, hmdbRaw?:boolean, lazy?:boolean, env?:object): any;
+   }
 }
