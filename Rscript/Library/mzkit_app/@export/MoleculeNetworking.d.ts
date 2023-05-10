@@ -39,7 +39,7 @@ declare namespace MoleculeNetworking {
     * 
      * @param ions -
    */
-   function uniqueNames(ions:object): object;
+   function uniqueNames(ions: object): object;
    module as {
       /**
        * convert the cluster tree into the graph model
@@ -48,7 +48,7 @@ declare namespace MoleculeNetworking {
         * @param tree A cluster tree which is created via the ``tree`` function.
         * @param ions the source data for create the cluster tree
       */
-      function graph(tree:object, ions:object): object;
+      function graph(tree: object, ions: object): object;
    }
    /**
     * do spectrum data clustering
@@ -67,7 +67,7 @@ declare namespace MoleculeNetworking {
      * 
      * + default value Is ``0.85``.
    */
-   function tree(ions:object, mzdiff?:number, intocutoff?:number, equals?:number): object;
+   function tree(ions: object, mzdiff?: number, intocutoff?: number, equals?: number): object;
    /**
     * populate a list of peak ms2 cluster data
     * 
@@ -76,7 +76,7 @@ declare namespace MoleculeNetworking {
      * @param ions -
      * @return a set of ms2 data groups, in format of ``[guid => peakms2]`` vector tuples
    */
-   function msBin(tree:object, ions:object): object;
+   function msBin(tree: object, ions: object): object;
    /**
     * create representative spectrum data
     * 
@@ -89,5 +89,5 @@ declare namespace MoleculeNetworking {
      * 
      * + default value Is ``null``.
    */
-   function representative(tree:object, mzdiff?:any, env?:object): object;
+   function representative(tree: object, mzdiff?: any, env?: object): object;
 }

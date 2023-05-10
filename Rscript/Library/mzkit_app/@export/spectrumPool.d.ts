@@ -22,10 +22,10 @@ declare namespace spectrumPool {
      * @param desc 
      * + default value Is ``'no_information'``.
    */
-   function createPool(link:string, level?:number, split?:object, name?:string, desc?:string): object;
+   function createPool(link: string, level?: number, split?: object, name?: string, desc?: string): object;
    /**
    */
-   function model_id(pool:object): string;
+   function model_id(pool: object): string;
    /**
     * open the spectrum pool from a given resource link
     * 
@@ -34,14 +34,14 @@ declare namespace spectrumPool {
      * @param model_id 
      * + default value Is ``null``.
    */
-   function openPool(link:string, model_id?:string): object;
+   function openPool(link: string, model_id?: string): object;
    /**
     * close the connection to the spectrum pool
     * 
     * 
      * @param pool -
    */
-   function closePool(pool:object): any;
+   function closePool(pool: object): any;
    /**
     * get metadata dataframe in a given cluster tree
     * 
@@ -51,7 +51,7 @@ declare namespace spectrumPool {
      * 
      * + default value Is ``null``.
    */
-   function getClusterInfo(pool:object, path?:string): any;
+   function getClusterInfo(pool: object, path?: string): any;
    /**
     * generates the guid for the spectrum with unknown annotation
     * 
@@ -60,12 +60,12 @@ declare namespace spectrumPool {
      * @param env 
      * + default value Is ``null``.
    */
-   function conservedGuid(spectral:any, env?:object): string;
+   function conservedGuid(spectral: any, env?: object): string;
    /**
      * @param prefix default value Is ``null``.
      * @param env default value Is ``null``.
    */
-   function set_conservedGuid(spectral:any, prefix?:string, env?:object): any;
+   function set_conservedGuid(spectral: any, prefix?: string, env?: object): any;
    /**
     * add sample peaks data to spectrum pool
     * 
@@ -90,12 +90,12 @@ declare namespace spectrumPool {
      * 
      * + default value Is ``null``.
    */
-   function addPool(pool:object, x:any, biosample?:string, organism?:string, project?:string, instrument?:string, file?:string, env?:object): any;
+   function addPool(pool: object, x: any, biosample?: string, organism?: string, project?: string, instrument?: string, file?: string, env?: object): any;
    /**
     * commit data to the spectrum pool database
     * 
     * 
      * @param pool -
    */
-   function commit(pool:object): any;
+   function commit(pool: object): any;
 }

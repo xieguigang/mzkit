@@ -11,7 +11,7 @@ declare namespace visualPlots {
         * @param into default value Is ``'Intensity'``.
         * @param env default value Is ``null``.
       */
-      function chromatogram(data:any, time?:string, into?:string, env?:object): object;
+      function chromatogram(data: any, time?: string, into?: string, env?: object): object;
    }
    /**
      * @param title default value Is ``''``.
@@ -23,12 +23,12 @@ declare namespace visualPlots {
      * @param labelerIterations default value Is ``1000``.
      * @param gridFill default value Is ``'LightGray'``.
    */
-   function standard_curve(model:object, title?:string, samples?:object, size?:string, margin?:string, factorFormat?:string, sampleLabelFont?:string, labelerIterations?:object, gridFill?:string): object;
+   function standard_curve(model: object, title?: string, samples?: object, size?: string, margin?: string, factorFormat?: string, sampleLabelFont?: string, labelerIterations?: object, gridFill?: string): object;
    module chromatogram {
       /**
         * @param labelLayoutTicks default value Is ``2000``.
       */
-      function plot(mzML:string, ions:object, labelLayoutTicks?:object): object;
+      function plot(mzML: string, ions: object, labelLayoutTicks?: object): object;
    }
    module MRM {
       module chromatogramPeaks {
@@ -43,7 +43,7 @@ declare namespace visualPlots {
            * @param parallel default value Is ``false``.
            * @param env default value Is ``null``.
          */
-         function plot(chromatogram:any, title?:string, size?:any, padding?:any, fill?:boolean, gridFill?:string, lineStyle?:string, relativeTimeScale?:any, parallel?:boolean, env?:object): object;
+         function plot(chromatogram: any, title?: string, size?: any, padding?: any, fill?: boolean, gridFill?: string, lineStyle?: string, relativeTimeScale?: any, parallel?: boolean, env?: object): object;
       }
    }
 }

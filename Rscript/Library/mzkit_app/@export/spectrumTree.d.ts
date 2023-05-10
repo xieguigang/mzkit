@@ -20,7 +20,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
    */
-   function new(file:any, type?:object, env?:object): object|object|object;
+   function new(file: any, type?: object, env?: object): object|object|object;
    /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 
@@ -35,7 +35,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``'get_testSample'``.
    */
-   function get_testSample(packlib:object, n?:object, rtmax?:number, source_name?:string): object;
+   function get_testSample(packlib: object, n?: object, rtmax?: number, source_name?: string): object;
    /**
     * open the spectrum pack reference database file
     * 
@@ -45,7 +45,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
    */
-   function readpack(file:any, env?:object): object;
+   function readpack(file: any, env?: object): object;
    /**
     * ### open the spectrum reference database
     *  
@@ -71,7 +71,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
    */
-   function open(file:any, dotcutoff?:number, adducts?:any, target_uuid?:any, env?:object): object|object;
+   function open(file: any, dotcutoff?: number, adducts?: any, target_uuid?: any, env?: object): object|object;
    /**
     * set dot cutoff parameter for the cos score similarity algorithm
     * 
@@ -79,7 +79,7 @@ declare namespace spectrumTree {
      * @param search The spectrum library stream engine
      * @param cutoff cutoff threshold value of the cos score
    */
-   function dotcutoff(search:object, cutoff:number): object;
+   function dotcutoff(search: object, cutoff: number): object;
    /**
     * construct a fragment set library for run spectrum search in jaccard matches
     * 
@@ -97,7 +97,7 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
    */
-   function jaccardSet(libname:string, mz:number, mzset:string, rt?:number, cutoff?:number, env?:object): object;
+   function jaccardSet(libname: string, mz: number, mzset: string, rt?: number, cutoff?: number, env?: object): object;
    /**
     * do spectrum family alignment via cos similarity
     * 
@@ -120,7 +120,7 @@ declare namespace spectrumTree {
      * @return function returns nothing means no query hits or the 
      *  given input query sample data **`x`**
    */
-   function query(tree:object, x:any, maxdepth?:object, treeSearch?:boolean, top_hits?:object, env?:object): object;
+   function query(tree: object, x: any, maxdepth?: object, treeSearch?: boolean, top_hits?: object, env?: object): object;
    /**
     * push the reference spectrum data into the spectrum reference tree library
     * 
@@ -143,5 +143,5 @@ declare namespace spectrumTree {
      * 
      * + default value Is ``null``.
    */
-   function addBucket(tree:any, x:any, ignore_error?:boolean, args?:object, env?:object): any;
+   function addBucket(tree: any, x: any, ignore_error?: boolean, args?: object, env?: object): any;
 }

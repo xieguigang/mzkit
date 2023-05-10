@@ -25,7 +25,7 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function UMAPsample(points:any, x:number, y:number, z:number, cluster:object, is_singlecells?:boolean, env?:object): object;
+   function UMAPsample(points: any, x: number, y: number, z: number, cluster: object, is_singlecells?: boolean, env?: object): object;
    /**
     * create a collection of the tissue region dataset
     * 
@@ -42,7 +42,7 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function TissueData(x:object, y:object, labels:string, colorSet?:any, env?:object): object;
+   function TissueData(x: object, y: object, labels: string, colorSet?: any, env?: object): object;
    /**
     * export the tissue data as cdf file
     * 
@@ -59,7 +59,7 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function writeCDF(tissueMorphology:object, file:any, umap?:object, dimension?:object, env?:object): any;
+   function writeCDF(tissueMorphology: object, file: any, umap?: object, dimension?: object, env?: object): any;
    /**
     * load tissue region polygon data
     * 
@@ -75,7 +75,7 @@ declare namespace TissueMorphology {
      * + default value Is ``null``.
      * @return a collection of tissue polygon region objects.
    */
-   function loadTissue(file:any, id?:string, env?:object): object;
+   function loadTissue(file: any, id?: string, env?: object): object;
    /**
     * load UMAP data
     * 
@@ -85,7 +85,7 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function loadUMAP(file:any, env?:object): object;
+   function loadUMAP(file: any, env?: object): object;
    module read {
       /**
        * read spatial mapping data of STdata mapping to SMdata
@@ -98,11 +98,11 @@ declare namespace TissueMorphology {
         * @param env 
         * + default value Is ``null``.
       */
-      function spatialMapping(file:string, remove_suffix?:boolean, env?:object): object;
+      function spatialMapping(file: string, remove_suffix?: boolean, env?: object): object;
    }
    /**
    */
-   function splitMapping(mapping:object): object;
+   function splitMapping(mapping: object): object;
    /**
     * create a spatial grid for the spatial spot data
     * 
@@ -117,5 +117,5 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function gridding(mapping:object, gridSize?:object, label?:string): any;
+   function gridding(mapping: object, gridSize?: object, label?: string): any;
 }

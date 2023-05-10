@@ -23,7 +23,7 @@ declare namespace math {
      * @param env 
      * + default value Is ``null``.
    */
-   function mz(mass:number, mode?:any, env?:object): object|number;
+   function mz(mass: number, mode?: any, env?: object): object|number;
    /**
     * evaluate all exact mass for all known precursor type.
     * 
@@ -33,7 +33,7 @@ declare namespace math {
      * 
      * + default value Is ``'+'``.
    */
-   function exact_mass(mz:number, mode?:any): object;
+   function exact_mass(mz: number, mode?: any): object;
    /**
     * calculate ppm value between two mass vector
     * 
@@ -43,7 +43,7 @@ declare namespace math {
      * @param env 
      * + default value Is ``null``.
    */
-   function ppm(a:any, b:any, env?:object): number;
+   function ppm(a: any, b: any, env?: object): number;
    module spectrum {
       /**
        * create a delegate function pointer that apply for compares spectrums theirs similarity.
@@ -64,13 +64,13 @@ declare namespace math {
         * @param env 
         * + default value Is ``null``.
       */
-      function compares(tolerance?:any, equals_score?:number, gt_score?:number, score_aggregate?:object, env?:object): object;
+      function compares(tolerance?: any, equals_score?: number, gt_score?: number, score_aggregate?: object, env?: object): object;
    }
    /**
      * @param tolerance default value Is ``'da:0.3'``.
      * @param env default value Is ``null``.
    */
-   function jaccard(query:number, ref:number, tolerance?:any, env?:object): any;
+   function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
    /**
     * Search spectra with entropy similarity
     * 
@@ -99,18 +99,18 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function spectral_entropy(x:object, ref?:object, tolerance?:any, intocutoff?:number, env?:object): any;
+   function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): any;
    /**
      * @param tolerance default value Is ``'da:0.3'``.
      * @param env default value Is ``null``.
    */
-   function jaccardSet(query:number, ref:number, tolerance?:any, env?:object): any;
+   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
    /**
      * @param tolerance default value Is ``'da:0.3'``.
      * @param intocutoff default value Is ``0.05``.
      * @param env default value Is ``null``.
    */
-   function cosine(query:object, ref:object, tolerance?:any, intocutoff?:number, env?:object): object;
+   function cosine(query: object, ref: object, tolerance?: any, intocutoff?: number, env?: object): object;
    module spectrum_tree {
       /**
        * create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
@@ -133,7 +133,7 @@ declare namespace math {
         * 
         * + default value Is ``null``.
       */
-      function cluster(ms2list:any, compares?:object, tolerance?:any, intocutoff?:number, showReport?:boolean, env?:object): object;
+      function cluster(ms2list: any, compares?: object, tolerance?: any, intocutoff?: number, showReport?: boolean, env?: object): object;
    }
    module cluster {
       /**
@@ -142,7 +142,7 @@ declare namespace math {
        * 
         * @param tree -
       */
-      function nodes(tree:object): object;
+      function nodes(tree: object): object;
    }
    module ions {
       /**
@@ -168,7 +168,7 @@ declare namespace math {
         * 
         * + default value Is ``null``.
       */
-      function unique(ions:any, eq?:number, gt?:number, mzwidth?:string, tolerance?:string, precursor?:string, rtwidth?:number, trim?:string, env?:object): any;
+      function unique(ions: any, eq?: number, gt?: number, mzwidth?: string, tolerance?: string, precursor?: string, rtwidth?: number, trim?: string, env?: object): any;
    }
    /**
     * Converts profiles peak data to peak data in centroid mode.
@@ -198,7 +198,7 @@ declare namespace math {
      * + default value Is ``null``.
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
-   function centroid(ions:any, tolerance?:any, intoCutoff?:number, parallel?:boolean, env?:object): object|object|number;
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
    /**
     * Create tolerance object
     * 
@@ -210,7 +210,7 @@ declare namespace math {
      * @param env 
      * + default value Is ``null``.
    */
-   function tolerance(threshold:number, method?:any, env?:object): any;
+   function tolerance(threshold: number, method?: any, env?: object): any;
    /**
     * reorder scan points into a sequence for downstream data analysis
     * 
@@ -226,7 +226,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function sequenceOrder(scans:any, mzwidth?:any, rtwidth?:number, env?:object): any;
+   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): any;
    /**
     * create precursor type calculator
     * 
@@ -236,17 +236,17 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function precursor_types(types:any, env?:object): any;
+   function precursor_types(types: any, env?: object): any;
    /**
     * returns all precursor types for a given libtype
     * 
     * 
      * @param ionMode -
    */
-   function defaultPrecursors(ionMode:string): object;
+   function defaultPrecursors(ionMode: string): object;
    /**
    */
-   function toMS(isotope:object): object;
+   function toMS(isotope: object): object;
    /**
     * makes xcms_id format liked ROI unique id
     * 
@@ -254,5 +254,5 @@ declare namespace math {
      * @param mz -
      * @param rt -
    */
-   function xcms_id(mz:number, rt:number): string;
+   function xcms_id(mz: number, rt: number): string;
 }

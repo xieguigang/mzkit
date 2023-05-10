@@ -10,7 +10,7 @@ declare namespace mzweb {
    /**
      * @param env default value Is ``null``.
    */
-   function loadXcmsRData(file:any, env?:object): object;
+   function loadXcmsRData(file: any, env?: object): object;
    module open {
       /**
        * open a raw data files in common raw data format and then returns 
@@ -21,11 +21,11 @@ declare namespace mzweb {
         * @param env 
         * + default value Is ``null``.
       */
-      function mzpack(file:any, env?:object): object;
+      function mzpack(file: any, env?: object): object;
    }
    /**
    */
-   function TIC(mzpack:object): object;
+   function TIC(mzpack: object): object;
    module load {
       /**
        * load chromatogram data from the raw file data
@@ -36,7 +36,7 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function chromatogram(scans:any, env?:object): object;
+      function chromatogram(scans: any, env?: object): object;
       /**
        * load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.
        * 
@@ -48,7 +48,7 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function stream(scans:object, mzErr?:string, env?:object): object;
+      function stream(scans: object, mzErr?: string, env?: object): object;
    }
    module write {
       /**
@@ -63,14 +63,14 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function text_cache(scans:object, file?:any, env?:object): any;
+      function text_cache(scans: object, file?: any, env?: object): any;
       /**
        * write binary format of mzweb stream data
        * 
        * 
         * @param file -
       */
-      function cache(ions:object, file:string): boolean;
+      function cache(ions: object, file: string): boolean;
       /**
        * write version 2 format of the mzpack by default
        * 
@@ -83,12 +83,12 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function mzPack(mzpack:object, file:any, version?:object, env?:object): any;
+      function mzPack(mzpack: object, file: any, version?: object, env?: object): any;
       /**
         * @param Ms2Only default value Is ``false``.
         * @param env default value Is ``null``.
       */
-      function cdf(mzpack:object, file:any, Ms2Only?:boolean, env?:object): any;
+      function cdf(mzpack: object, file: any, Ms2Only?: boolean, env?: object): any;
    }
    /**
     * write binary format of mzweb stream data
@@ -97,7 +97,7 @@ declare namespace mzweb {
      * @param file -
      * @param cache -
    */
-   function packBin(file:string, cache:string): ;
+   function packBin(file: string, cache: string): ;
    module read {
       /**
        * read the mzPack data file liked simple msn cached data
@@ -105,7 +105,7 @@ declare namespace mzweb {
        * 
         * @param file -
       */
-      function cache(file:string): object;
+      function cache(file: string): object;
    }
    module open_mzpack {
       /**
@@ -118,7 +118,7 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function xml(file:string, prefer?:string): object;
+      function xml(file: string, prefer?: string): object;
    }
    /**
     * set thumbnail image to the raw data file
@@ -137,14 +137,14 @@ declare namespace mzweb {
      * @return returns a modified mzpack data object with Thumbnail 
      *  property data has been updated.
    */
-   function setThumbnail(mzpack:object, thumb:any, env?:object): object;
+   function setThumbnail(mzpack: object, thumb: any, env?: object): object;
    /**
     * get all ms1 scan data points
     * 
     * 
      * @param mzpack -
    */
-   function ms1_scans(mzpack:object): object;
+   function ms1_scans(mzpack: object): object;
    /**
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
@@ -160,7 +160,7 @@ declare namespace mzweb {
      * 
      * + default value Is ``null``.
    */
-   function ms1_peaks(mzpack:object, tolerance?:any, cutoff?:number, env?:object): object;
+   function ms1_peaks(mzpack: object, tolerance?: any, cutoff?: number, env?: object): object;
    /**
     * extract ms2 peaks data from the mzpack data object
     * 
@@ -189,7 +189,7 @@ declare namespace mzweb {
      * 
      * + default value Is ``null``.
    */
-   function ms2_peaks(mzpack:object, precursorMz?:number, tolerance?:any, tag_source?:boolean, centroid?:boolean, norm?:boolean, filter_empty?:boolean, into_cutoff?:any, env?:object): object;
+   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, env?: object): object;
    module as {
       /**
        * convert assembly file to mzpack format data object
@@ -211,7 +211,7 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function mzpack(assembly:any, modtime?:number, sample_rate?:number, env?:object): object;
+      function mzpack(assembly: any, modtime?: number, sample_rate?: number, env?: object): object;
    }
    /**
     * do mass calibration
@@ -225,5 +225,5 @@ declare namespace mzweb {
      * 
      * + default value Is ``null``.
    */
-   function mass_calibration(data:object, mzdiff?:number, env?:object): object;
+   function mass_calibration(data: object, mzdiff?: number, env?: object): object;
 }

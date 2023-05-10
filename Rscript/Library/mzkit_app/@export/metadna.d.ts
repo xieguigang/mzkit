@@ -18,7 +18,7 @@ declare namespace metadna {
            * 
            * + default value Is ``null``.
          */
-         function infer(debugOutput:any, env?:object): object;
+         function infer(debugOutput: any, env?: object): object;
       }
    }
    module reaction_class {
@@ -31,7 +31,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function table(file:string, env?:object): object;
+      function table(file: string, env?: object): object;
    }
    /**
      * @param ms1ppm default value Is ``'ppm:20'``.
@@ -41,11 +41,11 @@ declare namespace metadna {
      * @param maxIterations default value Is ``1000``.
      * @param env default value Is ``null``.
    */
-   function metadna(ms1ppm?:any, mzwidth?:any, dotcutoff?:number, allowMs1?:boolean, maxIterations?:object, env?:object): object;
+   function metadna(ms1ppm?: any, mzwidth?: any, dotcutoff?: number, allowMs1?: boolean, maxIterations?: object, env?: object): object;
    /**
      * @param env default value Is ``null``.
    */
-   function range(metadna:object, precursorTypes:any, env?:object): object;
+   function range(metadna: object, precursorTypes: any, env?: object): object;
    module load {
       /**
        * 
@@ -56,7 +56,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function kegg(metadna:object, kegg:any, env?:object): object;
+      function kegg(metadna: object, kegg: any, env?: object): object;
       /**
        * 
        * 
@@ -66,7 +66,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function kegg_network(metadna:object, links:any, env?:object): object;
+      function kegg_network(metadna: object, links: any, env?: object): object;
       /**
        * 
        * 
@@ -76,14 +76,14 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function raw(metadna:object, sample:any, env?:object): object;
+      function raw(metadna: object, sample: any, env?: object): object;
    }
    module DIA {
       /**
         * @param seeds default value Is ``null``.
         * @param env default value Is ``null``.
       */
-      function infer(metaDNA:object, sample:any, seeds?:any, env?:object): object;
+      function infer(metaDNA: object, sample: any, seeds?: any, env?: object): object;
    }
    module as {
       /**
@@ -95,19 +95,19 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function seeds(seeds:any, env?:object): object;
+      function seeds(seeds: any, env?: object): object;
       /**
         * @param unique default value Is ``false``.
         * @param env default value Is ``null``.
       */
-      function table(metaDNA:object, result:any, unique?:boolean, env?:object): object;
+      function table(metaDNA: object, result: any, unique?: boolean, env?: object): object;
       /**
         * @param env default value Is ``null``.
       */
-      function graph(result:any, env?:object): object;
+      function graph(result: any, env?: object): object;
       /**
       */
-      function ticks(metaDNA:object): object;
+      function ticks(metaDNA: object): object;
    }
    module result {
       /**
@@ -120,7 +120,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function alignment(DIAinfer:any, table:any, env?:object): object;
+      function alignment(DIAinfer: any, table: any, env?: object): object;
    }
    /**
     * create the kegg compound ms1 annotation query engine.
@@ -145,7 +145,7 @@ declare namespace metadna {
      * @return a data query engine model to run ms1 data search 
      *  for the kegg metaolite compounds.
    */
-   function annotationSet(kegg:any, precursors?:any, mzdiff?:any, excludes?:any, env?:object): object;
+   function annotationSet(kegg: any, precursors?: any, mzdiff?: any, excludes?: any, env?: object): object;
    module kegg {
       /**
        * load kegg compounds
@@ -153,13 +153,13 @@ declare namespace metadna {
        * 
         * @param repo the file path to the messagepack data repository
       */
-      function library(repo:string): object;
+      function library(repo: string): object;
       /**
        * load the kegg reaction class data.
        * 
        * 
         * @param repo -
       */
-      function network(repo:string): object;
+      function network(repo: string): object;
    }
 }

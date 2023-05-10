@@ -23,7 +23,7 @@ declare namespace hmdb_kit {
         * 
         * + default value Is ``null``.
       */
-      function hmdb_spectrals(repo:string, hmdbRaw?:boolean, lazy?:boolean, env?:object): any;
+      function hmdb_spectrals(repo: string, hmdbRaw?: boolean, lazy?: boolean, env?: object): any;
       /**
        * open a reader for read hmdb database
        * 
@@ -31,7 +31,7 @@ declare namespace hmdb_kit {
         * @param xml the file path of the hmdb metabolite database xml file
         * @return this function populate a collection of the hmdb metabolites data
       */
-      function hmdb(xml:string): object;
+      function hmdb(xml: string): object;
    }
    /**
     * get metabolite via a given hmdb id from the hmdb.ca online web services
@@ -45,7 +45,7 @@ declare namespace hmdb_kit {
      * @param env 
      * + default value Is ``null``.
    */
-   function get_hmdb(id:string, cache_dir?:string, tabular?:boolean, env?:object): object|object;
+   function get_hmdb(id: string, cache_dir?: string, tabular?: boolean, env?: object): object|object;
    module export {
       /**
        * save the hmdb database as a csv table file
@@ -60,11 +60,11 @@ declare namespace hmdb_kit {
         * 
         * + default value Is ``null``.
       */
-      function hmdb_table(hmdb:object, file?:any, env?:object): any;
+      function hmdb_table(hmdb: object, file?: any, env?: object): any;
    }
    /**
    */
-   function chemical_taxonomy(metabolite:object): string;
+   function chemical_taxonomy(metabolite: object): string;
    /**
     * split the hmdb database by biospecimen locations
     * 
@@ -75,5 +75,5 @@ declare namespace hmdb_kit {
      * 
      * + default value Is ``null``.
    */
-   function biospecimen_slicer(hmdb:object, locations:object, env?:object): any;
+   function biospecimen_slicer(hmdb: object, locations: object, env?: object): any;
 }

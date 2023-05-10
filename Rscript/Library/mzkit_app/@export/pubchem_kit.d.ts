@@ -11,25 +11,25 @@ declare namespace pubchem_kit {
         * @param lazy default value Is ``true``.
         * @param env default value Is ``null``.
       */
-      function pubmed(file:string, lazy?:boolean, env?:object): object;
+      function pubmed(file: string, lazy?: boolean, env?: object): object;
       /**
        * read xml text and then parse as pugview record data object
        * 
        * 
         * @param file the file path or the xml text content
       */
-      function pugView(file:string): object;
+      function pugView(file: string): object;
       /**
         * @param env default value Is ``null``.
       */
-      function mesh_tree(file:any, env?:object): any;
+      function mesh_tree(file: any, env?: object): any;
    }
    /**
      * @param size default value Is ``'500,500'``.
      * @param ignoresInvalidCid default value Is ``false``.
      * @param env default value Is ``null``.
    */
-   function image_fly(cid:any, size?:any, ignoresInvalidCid?:boolean, env?:object): any;
+   function image_fly(cid: any, size?: any, ignoresInvalidCid?: boolean, env?: object): any;
    module query {
       /**
        * query of the pathways, taxonomy and reaction 
@@ -44,11 +44,11 @@ declare namespace pubchem_kit {
         * 
         * + default value Is ``-1``.
       */
-      function external(cid:string, cache?:string, interval?:object): object;
+      function external(cid: string, cache?: string, interval?: object): object;
       /**
         * @param cache default value Is ``'./graph_kb'``.
       */
-      function knowlegde_graph(cid:string, cache?:string): object;
+      function knowlegde_graph(cid: string, cache?: string): object;
    }
    /**
     * query cid from pubchem database
@@ -65,10 +65,10 @@ declare namespace pubchem_kit {
      * 
      * + default value Is ``-1``.
    */
-   function CID(name:string, cache?:string, offline?:boolean, interval?:object): string;
+   function CID(name: string, cache?: string, offline?: boolean, interval?: object): string;
    /**
    */
-   function pubchem_url(cid:string): string;
+   function pubchem_url(cid: string): string;
    /**
     * query pubchem data via a given cid value
     * 
@@ -84,7 +84,7 @@ declare namespace pubchem_kit {
      * 
      * + default value Is ``null``.
    */
-   function pugView(cid:any, cacheFolder?:string, offline?:boolean, env?:object): any;
+   function pugView(cid: any, cacheFolder?: string, offline?: boolean, env?: object): any;
    /**
     * parse the pubchem sid map data file
     * 
@@ -97,7 +97,7 @@ declare namespace pubchem_kit {
      * 
      * + default value Is ``null``.
    */
-   function SID_map(sidMapText:string, skipNoCID?:boolean, dbfilter?:string): object;
+   function SID_map(sidMapText: string, skipNoCID?: boolean, dbfilter?: string): object;
    module metadata {
       /**
        * extract the compound annotation data
@@ -105,7 +105,7 @@ declare namespace pubchem_kit {
        * 
         * @param pugView -
       */
-      function pugView(pugView:object): object;
+      function pugView(pugView: object): object;
    }
    /**
     * create MeSH ontology gsea background based on the mesh tree
@@ -116,8 +116,8 @@ declare namespace pubchem_kit {
      * 
      * + default value Is ``null``.
    */
-   function mesh_background(mesh:object, clusters?:object): object;
+   function mesh_background(mesh: object, clusters?: object): object;
    /**
    */
-   function mesh_level1(mesh:object): string;
+   function mesh_level1(mesh: object): string;
 }

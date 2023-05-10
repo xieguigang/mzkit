@@ -18,7 +18,7 @@ declare namespace ProteoWizard {
         * @param env 
         * + default value Is ``null``.
       */
-      function ready(env?:object): boolean;
+      function ready(env?: object): boolean;
    }
    module MRM {
       /**
@@ -32,19 +32,19 @@ declare namespace ProteoWizard {
         * + default value Is ``null``.
         * @return File path collection of the converted mzML files.
       */
-      function mzML(wiff:string, output?:string, env?:object): any;
+      function mzML(wiff: string, output?: string, env?: object): any;
    }
    module filter {
       /**
       */
-      function msLevel(level:string): object;
+      function msLevel(level: string): object;
       /**
        * 
        * 
         * @param start Start time in time unit of seconds
         * @param stop Stop time in time unit of seconds
       */
-      function scanTime(start:number, stop:number): object;
+      function scanTime(start: number, stop: number): object;
    }
    module convert {
       module thermo {
@@ -65,7 +65,7 @@ declare namespace ProteoWizard {
            * @param env 
            * + default value Is ``null``.
          */
-         function raw(raw:string, output:string, filetype?:object, filters?:object, parallel?:any, env?:object): any;
+         function raw(raw: string, output: string, filetype?: object, filters?: object, parallel?: any, env?: object): any;
       }
    }
 }

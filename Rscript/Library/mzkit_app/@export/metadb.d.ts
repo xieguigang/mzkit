@@ -10,19 +10,19 @@ declare namespace metadb {
    /**
      * @param env default value Is ``null``.
    */
-   function verify_cas_number(num:any, env?:object): any;
+   function verify_cas_number(num: any, env?: object): any;
    /**
      * @param keepsRaw default value Is ``false``.
      * @param env default value Is ``null``.
    */
-   function parseLipidName(name:any, keepsRaw?:boolean, env?:object): any;
+   function parseLipidName(name: any, keepsRaw?: boolean, env?: object): any;
    /**
      * @param env default value Is ``null``.
    */
-   function annotationStream(id:string, name:string, formula:string, env?:object): object;
+   function annotationStream(id: string, name: string, formula: string, env?: object): object;
    /**
    */
-   function precursorIon(ion:string): object;
+   function precursorIon(ion: string): object;
    /**
     * a generic function for handle ms1 search
     * 
@@ -36,7 +36,7 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function ms1_handler(compounds:any, precursors:any, tolerance?:any, env?:object): any;
+   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): any;
    /**
     * get duplictaed raw annotation results.
     * 
@@ -54,7 +54,7 @@ declare namespace metadb {
      * @param env 
      * + default value Is ``null``.
    */
-   function ms1_search(engine:any, mz:any, unique?:boolean, uniqueByScore?:boolean, env?:object): object;
+   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, env?: object): object;
    /**
     * Found the best matched mz value with the target **`exactMass`**
     * 
@@ -71,7 +71,7 @@ declare namespace metadb {
      *  and it also the min mass tolerance, if no result has mass tolerance less then the 
      *  given threshold value, then this function returns nothing
    */
-   function searchMz(mz:any, exactMass:number, adducts:object, mzdiff?:any, env?:object): object;
+   function searchMz(mz: any, exactMass: number, adducts: object, mzdiff?: any, env?: object): object;
    /**
     * get metabolite annotation metadata by a set of given unique reference id
     * 
@@ -82,7 +82,7 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function getMetadata(engine:any, uniqueId:object, env?:object): any;
+   function getMetadata(engine: any, uniqueId: object, env?: object): any;
    /**
     * removes all of the annotation result which is not 
     *  hits in the given ``id`` set.
@@ -104,7 +104,7 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function excludeFeatures(query:object, id:string, field:string, metadb:object, includes_metal_ions?:boolean, excludes?:boolean, env?:object): object;
+   function excludeFeatures(query: object, id: string, field: string, metadb: object, includes_metal_ions?: boolean, excludes?: boolean, env?: object): object;
    /**
     * unique of the peak annotation features
     * 
@@ -129,15 +129,15 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function uniqueFeatures(query:object, uniqueByScore?:boolean, scoreFactors?:object, format?:string, removesZERO?:boolean, verbose?:boolean, env?:object): object;
+   function uniqueFeatures(query: object, uniqueByScore?: boolean, scoreFactors?: object, format?: string, removesZERO?: boolean, verbose?: boolean, env?: object): object;
    module cbind {
       /**
         * @param env default value Is ``null``.
       */
-      function metainfo(anno:object, engine:any, env?:object): any;
+      function metainfo(anno: object, engine: any, env?: object): any;
    }
    /**
      * @param env default value Is ``null``.
    */
-   function load_asQueryHits(x:object, env?:object): object;
+   function load_asQueryHits(x: object, env?: object): object;
 }

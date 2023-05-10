@@ -8,9 +8,9 @@ declare namespace mz_deco {
    module read {
       /**
       */
-      function xcms_peaks(file:string): object;
+      function xcms_peaks(file: string): object;
    }
    /**
    */
-   function peak_subset(peaktable:object, sampleNames:string): object;
+   function peak_subset(peaktable: object, sampleNames: string): object;
 }

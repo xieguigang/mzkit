@@ -10,7 +10,7 @@ declare namespace GCMS {
          /**
            * @param rtwin default value Is ``1``.
          */
-         function ion(ions:object, rtwin?:number): object;
+         function ion(ions: object, rtwin?: number): object;
       }
    }
    /**
@@ -20,7 +20,7 @@ declare namespace GCMS {
      * @param baselineQuantile default value Is ``0.3``.
      * @param env default value Is ``null``.
    */
-   function SIMIonExtractor(ions:object, peakwidth?:any, centroid?:any, rtshift?:number, baselineQuantile?:number, env?:object): object;
+   function SIMIonExtractor(ions: object, peakwidth?: any, centroid?: any, rtshift?: number, baselineQuantile?: number, env?: object): object;
    /**
      * @param peakwidth default value Is ``[3,5]``.
      * @param centroid default value Is ``'da:0.3'``.
@@ -28,39 +28,39 @@ declare namespace GCMS {
      * @param baselineQuantile default value Is ``0.3``.
      * @param env default value Is ``null``.
    */
-   function ScanIonExtractor(ions:object, peakwidth?:any, centroid?:any, rtshift?:number, baselineQuantile?:number, env?:object): object;
+   function ScanIonExtractor(ions: object, peakwidth?: any, centroid?: any, rtshift?: number, baselineQuantile?: number, env?: object): object;
    /**
    */
-   function parseContents(files:any): object;
+   function parseContents(files: any): object;
    /**
      * @param IS default value Is ``null``.
      * @param env default value Is ``null``.
    */
-   function contentTable(ions:any, contentVector:any, IS?:any, env?:object): object;
+   function contentTable(ions: any, contentVector: any, IS?: any, env?: object): object;
    module read {
       /**
       */
-      function raw(file:string): object;
+      function raw(file: string): object;
    }
    /**
      * @param chromatogramPlot default value Is ``false``.
    */
-   function peakRaw(extract:object, sample:object, chromatogramPlot?:boolean): object|object;
+   function peakRaw(extract: object, sample: object, chromatogramPlot?: boolean): object|object;
    /**
      * @param maxDeletions default value Is ``1``.
      * @param baselineQuantile default value Is ``0``.
      * @param integrator default value Is ``null``.
    */
-   function linear_algorithm(contents:object, maxDeletions?:object, baselineQuantile?:number, integrator?:object): object;
+   function linear_algorithm(contents: object, maxDeletions?: object, baselineQuantile?: number, integrator?: object): object;
    /**
      * @param env default value Is ``null``.
    */
-   function linears(method:object, reference:any, env?:object): object;
+   function linears(method: object, reference: any, env?: object): object;
    /**
      * @param peakwidth default value Is ``'3,20'``.
      * @param baseline default value Is ``0.65``.
      * @param sn default value Is ``3``.
      * @param env default value Is ``null``.
    */
-   function ROIlist(raw:object, peakwidth?:any, baseline?:number, sn?:number, env?:object): object;
+   function ROIlist(raw: object, peakwidth?: any, baseline?: number, sn?: number, env?: object): object;
 }

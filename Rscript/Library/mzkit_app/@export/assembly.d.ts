@@ -16,14 +16,14 @@ declare namespace assembly {
         * 
         * + default value Is ``null``.
       */
-      function msl(file:string, unit?:object): object;
+      function msl(file: string, unit?: object): object;
       /**
       */
-      function mgf(file:string): object;
+      function mgf(file: string): object;
       /**
         * @param parseMs2 default value Is ``true``.
       */
-      function msp(file:string, parseMs2?:boolean): any;
+      function msp(file: string, parseMs2?: boolean): any;
    }
    module mgf {
       /**
@@ -35,23 +35,23 @@ declare namespace assembly {
         * 
         * + default value Is ``null``.
       */
-      function ion_peaks(ions:any, env?:object): object;
+      function ion_peaks(ions: any, env?: object): object;
    }
    module open {
       /**
         * @param env default value Is ``null``.
       */
-      function xml_seek(file:string, env?:object): any;
+      function xml_seek(file: string, env?: object): any;
    }
    /**
    */
-   function seek(file:object, key:string): object;
+   function seek(file: object, key: string): object;
    /**
    */
-   function scan_id(file:object): string;
+   function scan_id(file: object): string;
    /**
    */
-   function load_index(file:string): object;
+   function load_index(file: string): object;
    module write {
       /**
        * write spectra data in mgf file format.
@@ -66,7 +66,7 @@ declare namespace assembly {
         * @param env 
         * + default value Is ``null``.
       */
-      function mgf(ions:any, file:string, relativeInto?:boolean, env?:object): boolean;
+      function mgf(ions: any, file: string, relativeInto?: boolean, env?: object): boolean;
    }
    module file {
       /**
@@ -75,7 +75,7 @@ declare namespace assembly {
        * 
         * @param ms2 -
       */
-      function index(ms2:object): string;
+      function index(ms2: object): string;
    }
    module mzxml {
       /**
@@ -90,7 +90,7 @@ declare namespace assembly {
         * @param env 
         * + default value Is ``null``.
       */
-      function mgf(file:string, relativeInto?:boolean, onlyMs2?:boolean, env?:object): object;
+      function mgf(file: string, relativeInto?: boolean, onlyMs2?: boolean, env?: object): object;
    }
    module raw {
       /**
@@ -102,7 +102,7 @@ declare namespace assembly {
         * 
         * + default value Is ``null``.
       */
-      function scans(file:string, env?:object): object|object;
+      function scans(file: string, env?: object): object|object;
    }
    /**
     * get polarity data for each ms2 scans
@@ -113,7 +113,7 @@ declare namespace assembly {
      * 
      * + default value Is ``null``.
    */
-   function polarity(scans:any, env?:object): object;
+   function polarity(scans: any, env?: object): object;
    module ms1 {
       /**
        * get all ms1 raw scans from the raw files
@@ -126,6 +126,6 @@ declare namespace assembly {
         * @param env 
         * + default value Is ``null``.
       */
-      function scans(raw:any, centroid?:any, env?:object): object;
+      function scans(raw: any, centroid?: any, env?: object): object;
    }
 }
