@@ -13,12 +13,12 @@ declare namespace mzDeco {
         * @param parallel default value Is ``false``.
         * @param env default value Is ``null``.
       */
-      function deco(ms1:any, tolerance?:any, baseline?:number, peakwidth?:any, parallel?:boolean, env?:object): object;
+      function deco(ms1: any, tolerance?: any, baseline?: number, peakwidth?: any, parallel?: boolean, env?: object): object;
       /**
         * @param mzdiff default value Is ``'ppm:20'``.
         * @param env default value Is ``null``.
       */
-      function groups(ms1:any, mzdiff?:any, env?:object): object;
+      function groups(ms1: any, mzdiff?: any, env?: object): object;
    }
    /**
      * @param mzdiff default value Is ``'da:0.001'``.
@@ -26,10 +26,10 @@ declare namespace mzDeco {
      * @param norm default value Is ``false``.
      * @param env default value Is ``null``.
    */
-   function peak_alignment(samples:any, mzdiff?:any, rt_win?:number, norm?:boolean, env?:object): object;
+   function peak_alignment(samples: any, mzdiff?: any, rt_win?: number, norm?: boolean, env?: object): object;
    module read {
       /**
       */
-      function peakFeatures(file:string): object;
+      function peakFeatures(file: string): object;
    }
 }

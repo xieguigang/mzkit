@@ -10,7 +10,7 @@ declare namespace formula {
    module as {
       /**
       */
-      function formula(SMILES:object): object;
+      function formula(SMILES: object): object;
    }
    /**
     * get atoms table from the SMILES structure data
@@ -18,7 +18,7 @@ declare namespace formula {
     * 
      * @param SMILES -
    */
-   function atoms(SMILES:object): object;
+   function atoms(SMILES: object): object;
    /**
     * find all of the candidate chemical formulas by a 
     *  specific exact mass value and a specific mass 
@@ -35,15 +35,15 @@ declare namespace formula {
      * @param env 
      * + default value Is ``null``.
    */
-   function candidates(mass:number, ppm?:number, candidateElements?:object, env?:object): object;
+   function candidates(mass: number, ppm?: number, candidateElements?: object, env?: object): object;
    /**
    */
-   function canonical_formula(formula:object): string;
+   function canonical_formula(formula: object): string;
    module descriptor {
       /**
         * @param env default value Is ``null``.
       */
-      function matrix(repo:object, cid:object, env?:object): object;
+      function matrix(repo: object, cid: object, env?: object): object;
    }
    /**
     * evaluate exact mass for the given formula strings.
@@ -53,10 +53,10 @@ declare namespace formula {
      * @param env 
      * + default value Is ``null``.
    */
-   function eval(formula:any, env?:object): number;
+   function eval(formula: any, env?: object): number;
    /**
    */
-   function getElementCount(formula:object, element:string): object;
+   function getElementCount(formula: object, element: string): object;
    /**
      * @param prob_threshold default value Is ``0.001``.
      * @param fwhm default value Is ``0.1``.
@@ -64,7 +64,7 @@ declare namespace formula {
      * @param pad_right default value Is ``3``.
      * @param interpolate_grid default value Is ``0.005``.
    */
-   function isotope_distribution(formula:any, prob_threshold?:number, fwhm?:number, pad_left?:number, pad_right?:number, interpolate_grid?:number): object;
+   function isotope_distribution(formula: any, prob_threshold?: number, fwhm?: number, pad_left?: number, pad_right?: number, interpolate_grid?: number): object;
    module KCF {
       /**
        * Create molecular network graph model
@@ -72,7 +72,7 @@ declare namespace formula {
        * 
         * @param kcf The KCF molecule model
       */
-      function graph(kcf:object): object;
+      function graph(kcf: object): object;
    }
    module open {
       module descriptor {
@@ -83,7 +83,7 @@ declare namespace formula {
            * @param dbFile A directory path which contains the multiple database file of the 
            *  chemical descriptors.
          */
-         function db(dbFile:string): object;
+         function db(dbFile: string): object;
       }
    }
    module parse {
@@ -96,7 +96,7 @@ declare namespace formula {
         * 
         * + default value Is ``true``.
       */
-      function SDF(data:string, parseStruct?:boolean): object;
+      function SDF(data: string, parseStruct?: boolean): object;
    }
    /**
     * Parse the SMILES molecule structre string
@@ -113,7 +113,7 @@ declare namespace formula {
      * + default value Is ``true``.
      * @return A chemical graph object that could be used for build formula or structure analysis
    */
-   function parseSMILES(SMILES:string, strict?:boolean): object;
+   function parseSMILES(SMILES: string, strict?: boolean): object;
    /**
     * do peak annotation for the ms2 fragments
     * 
@@ -131,7 +131,7 @@ declare namespace formula {
      * @param env 
      * + default value Is ``null``.
    */
-   function peakAnnotations(library:any, massDiff?:number, isotopeFirst?:boolean, adducts?:object, env?:object): object;
+   function peakAnnotations(library: any, massDiff?: number, isotopeFirst?: boolean, adducts?: object, env?: object): object;
    module read {
       /**
        * Read KCF model data
@@ -139,16 +139,16 @@ declare namespace formula {
        * 
         * @param data The text data or file path
       */
-      function KCF(data:string): object;
+      function KCF(data: string): object;
    }
    /**
      * @param debug default value Is ``true``.
      * @param env default value Is ``null``.
    */
-   function registerAnnotations(annotation:object, debug?:boolean, env?:object): any;
+   function registerAnnotations(annotation: object, debug?: boolean, env?: object): any;
    /**
    */
-   function removeElement(formula:object, element:string): object;
+   function removeElement(formula: object, element: string): object;
    /**
     * Get atom composition from a formula string
     * 
@@ -157,10 +157,10 @@ declare namespace formula {
      * @param env 
      * + default value Is ``null``.
    */
-   function scan(formula:string, env?:object): object;
+   function scan(formula: string, env?: object): object;
    module SDF {
       /**
       */
-      function convertKCF(sdfModel:object): object;
+      function convertKCF(sdfModel: object): object;
    }
 }

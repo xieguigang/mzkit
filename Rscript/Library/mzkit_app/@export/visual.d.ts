@@ -16,19 +16,6 @@ declare namespace visual {
      * @param env default value Is ``null``.
    */
    function gcxgc_heatmap(GCxGC: object, metabolites: object, rt_width?: any, space?: any, size?: any, padding?: any, colorSet?: string, mapLevels?: object, labelStyle?: string, env?: object): any;
-   /**
-     * @param colorSet default value Is ``'darkblue,blue,skyblue,green,orange,red,darkred'``.
-     * @param contour default value Is ``false``.
-     * @param env default value Is ``null``.
-   */
-   function raw_scatter(ms1_scans: any, colorSet?: any, contour?: boolean, env?: object): any;
-   /**
-     * @param mzwidth default value Is ``'da:0.3'``.
-     * @param noise_cutoff default value Is ``0.5``.
-     * @param size default value Is ``'1600,1200'``.
-     * @param env default value Is ``null``.
-   */
-   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, env?: object): any;
    module mass_spectrum {
       /**
         * @param alignment default value Is ``null``.
@@ -62,4 +49,17 @@ declare namespace visual {
      * @param env default value Is ``null``.
    */
    function plotNetworkClusterHistogram(mn: object, size?: any, padding?: any, dpi?: object, env?: object): any;
+   /**
+     * @param colorSet default value Is ``'darkblue,blue,skyblue,green,orange,red,darkred'``.
+     * @param contour default value Is ``false``.
+     * @param env default value Is ``null``.
+   */
+   function raw_scatter(ms1_scans: any, colorSet?: any, contour?: boolean, env?: object): any;
+   /**
+     * @param mzwidth default value Is ``'da:0.3'``.
+     * @param noise_cutoff default value Is ``0.5``.
+     * @param size default value Is ``'1600,1200'``.
+     * @param env default value Is ``null``.
+   */
+   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, env?: object): any;
 }

@@ -19,7 +19,7 @@ declare namespace chromatogram {
      * @param name usually be a sample name
      * @param data usually be a chromatogram data that extract from a sample data
    */
-   function add(overlaps:object, name:string, data:object): object;
+   function add(overlaps: object, name: string, data: object): object;
    module as {
       /**
        * convert dataset to chromatography dataset
@@ -37,7 +37,7 @@ declare namespace chromatogram {
         * 
         * + default value Is ``null``.
       */
-      function chromatogram(scans:any, args?:object, env?:object): object|object;
+      function chromatogram(scans: any, args?: object, env?: object): object|object;
    }
    /**
     * set new labels to the chromatogram overlap data
@@ -49,7 +49,7 @@ declare namespace chromatogram {
      * 
      * + default value Is ``null``.
    */
-   function labels(overlaps:object, names:string, env?:object): object;
+   function labels(overlaps: object, names: string, env?: object): object;
    /**
     * Create chromatogram overlaps from a set of chromatogram objects
     * 
@@ -64,7 +64,7 @@ declare namespace chromatogram {
      * 
      * + default value Is ``null``.
    */
-   function overlaps(TIC?:any, env?:object): object;
+   function overlaps(TIC?: any, env?: object): object;
    /**
     * Convert the overlap list to the matrix
     * 
@@ -74,11 +74,11 @@ declare namespace chromatogram {
      * 
      * + default value Is ``0.3``.
    */
-   function overlapsMatrix(overlaps:object, dt?:number): any;
+   function overlapsMatrix(overlaps: object, dt?: number): any;
    module read {
       /**
       */
-      function pack(cdf:string): object;
+      function pack(cdf: string): object;
    }
    /**
     * scale the RT into different time data unit
@@ -89,7 +89,7 @@ declare namespace chromatogram {
      * 
      * + default value Is ``'minute'``.
    */
-   function scale_time(overlaps:object, unit?:string): object;
+   function scale_time(overlaps: object, unit?: string): object;
    /**
     * get subset of the chromatogram data by names
     * 
@@ -97,7 +97,7 @@ declare namespace chromatogram {
      * @param overlaps -
      * @param names -
    */
-   function subset(overlaps:object, names:string): object;
+   function subset(overlaps: object, names: string): object;
    /**
     * Convert chromatogram tick point data to a chromatogram object
     * 
@@ -116,10 +116,10 @@ declare namespace chromatogram {
      * @return A chromatogram data object, which could be used for do 
      *  chromatogram overlaps or data plot visualization.
    */
-   function toChromatogram(ticks:any, env?:object): object;
+   function toChromatogram(ticks: any, env?: object): object;
    /**
    */
-   function topInto(overlaps:object, n:object): object;
+   function topInto(overlaps: object, n: object): object;
    module write {
       /**
        * save the chrome overlaps data as the cdf data file
@@ -128,6 +128,6 @@ declare namespace chromatogram {
         * @param overlaps -
         * @param cdf -
       */
-      function pack(overlaps:object, cdf:string): ;
+      function pack(overlaps: object, cdf: string): ;
    }
 }

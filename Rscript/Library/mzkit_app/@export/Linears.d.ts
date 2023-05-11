@@ -5,27 +5,19 @@
 /**
 */
 declare namespace Linears {
+   /**
+     * @param env default value Is ``null``.
+   */
+   function ionPeaks(samples: any, env?: object): object;
    module lines {
       /**
       */
       function table(lines: object): object;
    }
-   module write {
-      /**
-      */
-      function points(points: object, file: string): boolean;
-      /**
-      */
-      function ionPeaks(ionPeaks: object, file: string): boolean;
-   }
    /**
      * @param env default value Is ``null``.
    */
    function points(linears: object, nameRef: any, env?: object): object;
-   /**
-     * @param env default value Is ``null``.
-   */
-   function ionPeaks(samples: any, env?: object): object;
    /**
      * @param integrator default value Is ``null``.
      * @param names default value Is ``null``.
@@ -34,6 +26,13 @@ declare namespace Linears {
      * @param env default value Is ``null``.
    */
    function quantify(models: object, ions: object, integrator?: object, names?: object, baselineQuantile?: number, fileName?: string, env?: object): object;
+   module report {
+      /**
+        * @param QC_dataset default value Is ``null``.
+        * @param ionsRaw default value Is ``null``.
+      */
+      function dataset(standardCurve: object, samples: object, QC_dataset?: string, ionsRaw?: object): any;
+   }
    /**
    */
    function result(fileScans: object): object;
@@ -42,11 +41,12 @@ declare namespace Linears {
       */
       function X(fileScans: object): object;
    }
-   module report {
+   module write {
       /**
-        * @param QC_dataset default value Is ``null``.
-        * @param ionsRaw default value Is ``null``.
       */
-      function dataset(standardCurve: object, samples: object, QC_dataset?: string, ionsRaw?: object): any;
+      function ionPeaks(ionPeaks: object, file: string): boolean;
+      /**
+      */
+      function points(points: object, file: string): boolean;
    }
 }

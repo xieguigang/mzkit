@@ -8,6 +8,103 @@
 */
 declare namespace math {
    /**
+    * Converts profiles peak data to peak data in centroid mode.
+    *  
+    *  profile and centroid in Mass Spectrometry?
+    *  
+    *  1. Profile means the continuous wave form in a mass spectrum.
+    *    + Number of data points Is large.
+    *  2. Centroid means the peaks in a profile data Is changed to bars.
+    *    + location of the bar Is center of the profile peak.
+    *    + height of the bar Is area of the profile peak.
+    * 
+    * 
+     * @param ions value of this parameter could be 
+     *  
+     *  + a collection of peakMs2 data 
+     *  + a library matrix data 
+     *  + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
+     *  + or just a m/z vector
+     * @param tolerance 
+     * + default value Is ``'da:0.1'``.
+     * @param intoCutoff 
+     * + default value Is ``0.05``.
+     * @param parallel 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return Peaks data in centroid mode or a new m/z vector in centroid.
+   */
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
+   module cluster {
+      /**
+       * get all nodes from the spectrum tree cluster result
+       * 
+       * 
+        * @param tree -
+      */
+      function nodes(tree: object): object;
+   }
+   /**
+     * @param tolerance default value Is ``'da:0.3'``.
+     * @param intocutoff default value Is ``0.05``.
+     * @param env default value Is ``null``.
+   */
+   function cosine(query: object, ref: object, tolerance?: any, intocutoff?: number, env?: object): object;
+   /**
+    * returns all precursor types for a given libtype
+    * 
+    * 
+     * @param ionMode -
+   */
+   function defaultPrecursors(ionMode: string): object;
+   /**
+    * evaluate all exact mass for all known precursor type.
+    * 
+    * 
+     * @param mz -
+     * @param mode -
+     * 
+     * + default value Is ``'+'``.
+   */
+   function exact_mass(mz: number, mode?: any): object;
+   module ions {
+      /**
+       * data pre-processing helper
+       * 
+       * 
+        * @param ions -
+        * @param eq 
+        * + default value Is ``0.85``.
+        * @param gt 
+        * + default value Is ``0.6``.
+        * @param mzwidth 
+        * + default value Is ``'da:0.1'``.
+        * @param tolerance 
+        * + default value Is ``'da:0.3'``.
+        * @param precursor 
+        * + default value Is ``'ppm:20'``.
+        * @param rtwidth 
+        * + default value Is ``5``.
+        * @param trim 
+        * + default value Is ``'0.05'``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function unique(ions: any, eq?: number, gt?: number, mzwidth?: string, tolerance?: string, precursor?: string, rtwidth?: number, trim?: string, env?: object): any;
+   }
+   /**
+     * @param tolerance default value Is ``'da:0.3'``.
+     * @param env default value Is ``null``.
+   */
+   function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
+   /**
+     * @param tolerance default value Is ``'da:0.3'``.
+     * @param env default value Is ``null``.
+   */
+   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
+   /**
     * evaluate all m/z for all known precursor type.
     * 
     * 
@@ -25,16 +122,6 @@ declare namespace math {
    */
    function mz(mass: number, mode?: any, env?: object): object|number;
    /**
-    * evaluate all exact mass for all known precursor type.
-    * 
-    * 
-     * @param mz -
-     * @param mode -
-     * 
-     * + default value Is ``'+'``.
-   */
-   function exact_mass(mz: number, mode?: any): object;
-   /**
     * calculate ppm value between two mass vector
     * 
     * 
@@ -44,33 +131,32 @@ declare namespace math {
      * + default value Is ``null``.
    */
    function ppm(a: any, b: any, env?: object): number;
-   module spectrum {
-      /**
-       * create a delegate function pointer that apply for compares spectrums theirs similarity.
-       * 
-       * 
-        * @param tolerance -
-        * 
-        * + default value Is ``'da:0.1'``.
-        * @param equals_score -
-        * 
-        * + default value Is ``0.85``.
-        * @param gt_score -
-        * 
-        * + default value Is ``0.6``.
-        * @param score_aggregate ``@``T:System.Func`3````
-        * 
-        * + default value Is ``null``.
-        * @param env 
-        * + default value Is ``null``.
-      */
-      function compares(tolerance?: any, equals_score?: number, gt_score?: number, score_aggregate?: object, env?: object): object;
-   }
    /**
-     * @param tolerance default value Is ``'da:0.3'``.
-     * @param env default value Is ``null``.
+    * create precursor type calculator
+    * 
+    * 
+     * @param types -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
+   function precursor_types(types: any, env?: object): any;
+   /**
+    * reorder scan points into a sequence for downstream data analysis
+    * 
+    * 
+     * @param scans -
+     * @param mzwidth -
+     * 
+     * + default value Is ``'da:0.1'``.
+     * @param rtwidth -
+     * 
+     * + default value Is ``60``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): any;
    /**
     * Search spectra with entropy similarity
     * 
@@ -100,17 +186,28 @@ declare namespace math {
      * + default value Is ``null``.
    */
    function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): any;
-   /**
-     * @param tolerance default value Is ``'da:0.3'``.
-     * @param env default value Is ``null``.
-   */
-   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
-   /**
-     * @param tolerance default value Is ``'da:0.3'``.
-     * @param intocutoff default value Is ``0.05``.
-     * @param env default value Is ``null``.
-   */
-   function cosine(query: object, ref: object, tolerance?: any, intocutoff?: number, env?: object): object;
+   module spectrum {
+      /**
+       * create a delegate function pointer that apply for compares spectrums theirs similarity.
+       * 
+       * 
+        * @param tolerance -
+        * 
+        * + default value Is ``'da:0.1'``.
+        * @param equals_score -
+        * 
+        * + default value Is ``0.85``.
+        * @param gt_score -
+        * 
+        * + default value Is ``0.6``.
+        * @param score_aggregate ``@``T:System.Func`3````
+        * 
+        * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
+      */
+      function compares(tolerance?: any, equals_score?: number, gt_score?: number, score_aggregate?: object, env?: object): object;
+   }
    module spectrum_tree {
       /**
        * create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
@@ -135,70 +232,6 @@ declare namespace math {
       */
       function cluster(ms2list: any, compares?: object, tolerance?: any, intocutoff?: number, showReport?: boolean, env?: object): object;
    }
-   module cluster {
-      /**
-       * get all nodes from the spectrum tree cluster result
-       * 
-       * 
-        * @param tree -
-      */
-      function nodes(tree: object): object;
-   }
-   module ions {
-      /**
-       * data pre-processing helper
-       * 
-       * 
-        * @param ions -
-        * @param eq 
-        * + default value Is ``0.85``.
-        * @param gt 
-        * + default value Is ``0.6``.
-        * @param mzwidth 
-        * + default value Is ``'da:0.1'``.
-        * @param tolerance 
-        * + default value Is ``'da:0.3'``.
-        * @param precursor 
-        * + default value Is ``'ppm:20'``.
-        * @param rtwidth 
-        * + default value Is ``5``.
-        * @param trim 
-        * + default value Is ``'0.05'``.
-        * @param env -
-        * 
-        * + default value Is ``null``.
-      */
-      function unique(ions: any, eq?: number, gt?: number, mzwidth?: string, tolerance?: string, precursor?: string, rtwidth?: number, trim?: string, env?: object): any;
-   }
-   /**
-    * Converts profiles peak data to peak data in centroid mode.
-    *  
-    *  profile and centroid in Mass Spectrometry?
-    *  
-    *  1. Profile means the continuous wave form in a mass spectrum.
-    *    + Number of data points Is large.
-    *  2. Centroid means the peaks in a profile data Is changed to bars.
-    *    + location of the bar Is center of the profile peak.
-    *    + height of the bar Is area of the profile peak.
-    * 
-    * 
-     * @param ions value of this parameter could be 
-     *  
-     *  + a collection of peakMs2 data 
-     *  + a library matrix data 
-     *  + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
-     *  + or just a m/z vector
-     * @param tolerance 
-     * + default value Is ``'da:0.1'``.
-     * @param intoCutoff 
-     * + default value Is ``0.05``.
-     * @param parallel 
-     * + default value Is ``false``.
-     * @param env 
-     * + default value Is ``null``.
-     * @return Peaks data in centroid mode or a new m/z vector in centroid.
-   */
-   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
    /**
     * Create tolerance object
     * 
@@ -211,39 +244,6 @@ declare namespace math {
      * + default value Is ``null``.
    */
    function tolerance(threshold: number, method?: any, env?: object): any;
-   /**
-    * reorder scan points into a sequence for downstream data analysis
-    * 
-    * 
-     * @param scans -
-     * @param mzwidth -
-     * 
-     * + default value Is ``'da:0.1'``.
-     * @param rtwidth -
-     * 
-     * + default value Is ``60``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): any;
-   /**
-    * create precursor type calculator
-    * 
-    * 
-     * @param types -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function precursor_types(types: any, env?: object): any;
-   /**
-    * returns all precursor types for a given libtype
-    * 
-    * 
-     * @param ionMode -
-   */
-   function defaultPrecursors(ionMode: string): object;
    /**
    */
    function toMS(isotope: object): object;

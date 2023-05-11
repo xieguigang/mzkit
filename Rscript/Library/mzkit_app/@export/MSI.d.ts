@@ -26,11 +26,11 @@ declare namespace MSI {
         * 
         * + default value Is ``null``.
       */
-      function layer(pixels:object, context?:string, dims?:any, strict?:boolean, env?:object): object;
+      function layer(pixels: object, context?: string, dims?: any, strict?: boolean, env?: object): object;
    }
    /**
    */
-   function basePeakMz(summary:object): object;
+   function basePeakMz(summary: object): object;
    /**
     * calculate the X scale
     * 
@@ -41,16 +41,16 @@ declare namespace MSI {
      * 
      * + default value Is ``false``.
    */
-   function correction(totalTime:number, pixels:object, hasMs2?:boolean): object;
+   function correction(totalTime: number, pixels: object, hasMs2?: boolean): object;
    /**
      * @param mzdiff default value Is ``0.001``.
      * @param q default value Is ``0.001``.
    */
-   function getMatrixIons(raw:object, mzdiff?:number, q?:number): number;
+   function getMatrixIons(raw: object, mzdiff?: number, q?: number): number;
    /**
      * @param env default value Is ``null``.
    */
-   function ions_jointmatrix(raw:object, env?:object): object;
+   function ions_jointmatrix(raw: object, env?: object): object;
    /**
     * count pixels/density/etc for each ions m/z data
     * 
@@ -65,14 +65,14 @@ declare namespace MSI {
      * @param parallel 
      * + default value Is ``true``.
    */
-   function ionStat(raw:object, grid_size?:object, da?:number, parallel?:boolean): object;
+   function ionStat(raw: object, grid_size?: object, da?: number, parallel?: boolean): object;
    /**
     * get ms-imaging metadata
     * 
     * 
      * @param raw -
    */
-   function msi_metadata(raw:object): object;
+   function msi_metadata(raw: object): object;
    /**
     * Fetch MSI summary data
     * 
@@ -89,18 +89,18 @@ declare namespace MSI {
      * @param env 
      * + default value Is ``null``.
    */
-   function MSI_summary(raw:object, x?:object, y?:object, as_vector?:boolean, dims?:any, env?:object): object|object;
+   function MSI_summary(raw: object, x?: object, y?: object, as_vector?: boolean, dims?: any, env?: object): object|object;
    module open {
       /**
       */
-      function imzML(file:string): any;
+      function imzML(file: string): any;
    }
    /**
      * @param topN default value Is ``3``.
      * @param mzError default value Is ``'da:0.05'``.
      * @param env default value Is ``null``.
    */
-   function peakMatrix(raw:object, topN?:object, mzError?:any, env?:object): any;
+   function peakMatrix(raw: object, topN?: object, mzError?: any, env?: object): any;
    /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 
@@ -120,7 +120,7 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @return returns the raw matrix data that contains the peak samples.
    */
-   function peakSamples(raw:object, resolution?:object, mzError?:any, cutoff?:number, env?:object): any;
+   function peakSamples(raw: object, resolution?: object, mzError?: any, cutoff?: number, env?: object): any;
    /**
     * get pixels [x,y] tags collection for a specific ion
     * 
@@ -135,14 +135,14 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @return a character vector of the pixel [x,y] tags.
    */
-   function pixelId(raw:object, mz:number, tolerance?:any, env?:object): string;
+   function pixelId(raw: object, mz: number, tolerance?: any, env?: object): string;
    /**
     * get number of ions in each pixel scans
     * 
     * 
      * @param raw -
    */
-   function pixelIons(raw:object): object;
+   function pixelIons(raw: object): object;
    /**
     * dumping raw data matrix as text table file.
     * 
@@ -157,7 +157,7 @@ declare namespace MSI {
      * 
      * + default value Is ``null``.
    */
-   function pixelMatrix(raw:object, file:object, mzdiff?:number, q?:number, env?:object): object;
+   function pixelMatrix(raw: object, file: object, mzdiff?: number, q?: number, env?: object): object;
    /**
     * get pixels size from the raw data file
     * 
@@ -166,7 +166,7 @@ declare namespace MSI {
      * @param env 
      * + default value Is ``null``.
    */
-   function pixels(file:any, env?:object): object;
+   function pixels(file: any, env?: object): object;
    module row {
       /**
        * each raw data file is a row scan data
@@ -184,7 +184,7 @@ declare namespace MSI {
         * 
         * + default value Is ``null``.
       */
-      function scans(raw:string, y?:object, correction?:object, env?:object): any;
+      function scans(raw: string, y?: object, correction?: object, env?: object): any;
    }
    /**
     * combine each row scan summary vector as the pixels 2D matrix
@@ -195,7 +195,7 @@ declare namespace MSI {
      * 
      * + default value Is ``null``.
    */
-   function scanMatrix(rowScans:any, env?:object): object;
+   function scanMatrix(rowScans: any, env?: object): object;
    /**
     * combine each row scan raw data files as the pixels 2D matrix
     * 
@@ -211,7 +211,7 @@ declare namespace MSI {
      * @param env 
      * + default value Is ``null``.
    */
-   function scans2D(rowScans:any, correction?:object, intocutoff?:number, yscale?:number, env?:object): any;
+   function scans2D(rowScans: any, correction?: object, intocutoff?: number, yscale?: number, env?: object): any;
    /**
     * split the raw 2D MSI data into multiple parts with given parts
     * 
@@ -221,10 +221,10 @@ declare namespace MSI {
      * 
      * + default value Is ``5``.
    */
-   function splice(raw:object, partition?:object): object;
+   function splice(raw: object, partition?: object): object;
    module write {
       /**
       */
-      function imzML(mzpack:object, file:string): any;
+      function imzML(mzpack: object, file: string): any;
    }
 }

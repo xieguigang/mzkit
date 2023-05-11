@@ -25,7 +25,7 @@ declare namespace GCxGC {
      * @param env 
      * + default value Is ``null``.
    */
-   function extract_2D_peaks(raw:object, mz?:number, mzdiff?:any, env?:object): object;
+   function extract_2D_peaks(raw: object, mz?: number, mzdiff?: any, env?: object): object;
    module read {
       /**
        * read GCxGC 2D Chromatogram data from a given netcdf file.
@@ -36,7 +36,7 @@ declare namespace GCxGC {
         * 
         * + default value Is ``null``.
       */
-      function cdf(file:any, env?:object): object;
+      function cdf(file: any, env?: object): object;
    }
    module save {
       /**
@@ -49,12 +49,12 @@ declare namespace GCxGC {
         * 
         * + default value Is ``null``.
       */
-      function cdf(TIC:object, file:any, env?:object): any;
+      function cdf(TIC: object, file: any, env?: object): any;
    }
    /**
    */
-   function TIC1D(matrix:object): object;
+   function TIC1D(matrix: object): object;
    /**
    */
-   function TIC2D(TIC:object, modtime:number): object;
+   function TIC2D(TIC: object, modtime: number): object;
 }

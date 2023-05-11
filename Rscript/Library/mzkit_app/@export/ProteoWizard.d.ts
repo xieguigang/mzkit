@@ -10,42 +10,6 @@
  * 
 */
 declare namespace ProteoWizard {
-   module msconvert {
-      /**
-       * Is the ``ProteoWizard`` program ready to use?
-       * 
-       * 
-        * @param env 
-        * + default value Is ``null``.
-      */
-      function ready(env?: object): boolean;
-   }
-   module MRM {
-      /**
-       * Convert MRM wiff file to mzMl files
-       * 
-       * 
-        * @param wiff The file path of the wiff file
-        * @param output 
-        * + default value Is ``null``.
-        * @param env 
-        * + default value Is ``null``.
-        * @return File path collection of the converted mzML files.
-      */
-      function mzML(wiff: string, output?: string, env?: object): any;
-   }
-   module filter {
-      /**
-      */
-      function msLevel(level: string): object;
-      /**
-       * 
-       * 
-        * @param start Start time in time unit of seconds
-        * @param stop Stop time in time unit of seconds
-      */
-      function scanTime(start: number, stop: number): object;
-   }
    module convert {
       module thermo {
          /**
@@ -67,5 +31,41 @@ declare namespace ProteoWizard {
          */
          function raw(raw: string, output: string, filetype?: object, filters?: object, parallel?: any, env?: object): any;
       }
+   }
+   module filter {
+      /**
+      */
+      function msLevel(level: string): object;
+      /**
+       * 
+       * 
+        * @param start Start time in time unit of seconds
+        * @param stop Stop time in time unit of seconds
+      */
+      function scanTime(start: number, stop: number): object;
+   }
+   module MRM {
+      /**
+       * Convert MRM wiff file to mzMl files
+       * 
+       * 
+        * @param wiff The file path of the wiff file
+        * @param output 
+        * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
+        * @return File path collection of the converted mzML files.
+      */
+      function mzML(wiff: string, output?: string, env?: object): any;
+   }
+   module msconvert {
+      /**
+       * Is the ``ProteoWizard`` program ready to use?
+       * 
+       * 
+        * @param env 
+        * + default value Is ``null``.
+      */
+      function ready(env?: object): boolean;
    }
 }

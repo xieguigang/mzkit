@@ -15,18 +15,23 @@ declare namespace annotation {
       function adducts(formula: string, adducts: any, ion_mode?: any, env?: object): object;
    }
    /**
-    * a shortcut method for populate the peak ms2 data from a mzpack raw data file
+    * Check the ms1 parent ion is generated via the in-source fragment or not
     * 
     * 
-     * @param raw -
-     * @param mzdiff -
-     * 
-     * + default value Is ``'da:0.3'``.
+     * @param ms1 the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, a collection of ms1 scan with unique id tagged.
+     * @param ms2 the ms2 products list
+     * @param da 
+     * + default value Is ``0.1``.
+     * @param rt_win 
+     * + default value Is ``5``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return a tuple key-value pair list object that contains the flags for each ms1 ion
+     *  corresponding slot value TRUE means the key ion is a possible in-source
+     *  fragment ion data, otherwise slot value FALSE means not.
    */
-   function populateIonData(raw: object, mzdiff?: any, env?: object): object;
+   function checkInSourceFragments(ms1: any, ms2: any, da?: number, rt_win?: number, env?: object): boolean;
    module make {
       /**
        * create a new metabolite annotation information
@@ -45,21 +50,16 @@ declare namespace annotation {
       function annotation(id: string, formula: string, name: string, synonym?: string, xref?: object): object;
    }
    /**
-    * Check the ms1 parent ion is generated via the in-source fragment or not
+    * a shortcut method for populate the peak ms2 data from a mzpack raw data file
     * 
     * 
-     * @param ms1 the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, a collection of ms1 scan with unique id tagged.
-     * @param ms2 the ms2 products list
-     * @param da 
-     * + default value Is ``0.1``.
-     * @param rt_win 
-     * + default value Is ``5``.
+     * @param raw -
+     * @param mzdiff -
+     * 
+     * + default value Is ``'da:0.3'``.
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return a tuple key-value pair list object that contains the flags for each ms1 ion
-     *  corresponding slot value TRUE means the key ion is a possible in-source
-     *  fragment ion data, otherwise slot value FALSE means not.
    */
-   function checkInSourceFragments(ms1: any, ms2: any, da?: number, rt_win?: number, env?: object): boolean;
+   function populateIonData(raw: object, mzdiff?: any, env?: object): object;
 }
