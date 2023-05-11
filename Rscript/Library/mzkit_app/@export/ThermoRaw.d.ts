@@ -7,5 +7,5 @@
 declare namespace ThermoRaw {
    /**
    */
-   function MSI_pixels(mzpack:object): object;
+   function MSI_pixels(mzpack: object): object;
 }

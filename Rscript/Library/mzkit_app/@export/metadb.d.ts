@@ -10,13 +10,79 @@ declare namespace metadb {
    /**
      * @param env default value Is ``null``.
    */
-   function annotationStream(id:string, name:string, formula:string, env?:object): object;
-   module cbind {
-      /**
-        * @param env default value Is ``null``.
-      */
-      function metainfo(anno:object, engine:any, env?:object): any;
-   }
+   function verify_cas_number(num: any, env?: object): any;
+   /**
+     * @param keepsRaw default value Is ``false``.
+     * @param env default value Is ``null``.
+   */
+   function parseLipidName(name: any, keepsRaw?: boolean, env?: object): any;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function annotationStream(id: string, name: string, formula: string, env?: object): object;
+   /**
+   */
+   function precursorIon(ion: string): object;
+   /**
+    * a generic function for handle ms1 search
+    * 
+    * 
+     * @param compounds kegg compounds
+     * @param precursors -
+     * @param tolerance -
+     * 
+     * + default value Is ``'ppm:20'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function ms1_handler(compounds: any, precursors: any, tolerance?: any, env?: object): any;
+   /**
+    * get duplictaed raw annotation results.
+    * 
+    * 
+     * @param engine -
+     * @param mz a m/z numeric vector or a object list that 
+     *  contains the data mapping of unique id to 
+     *  m/z value.
+     * @param unique 
+     * + default value Is ``false``.
+     * @param uniqueByScore only works when **`unique`** parameter
+     *  value is set to value TRUE.
+     * 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, env?: object): object;
+   /**
+    * Found the best matched mz value with the target **`exactMass`**
+    * 
+    * 
+     * @param mz -
+     * @param exactMass -
+     * @param adducts -
+     * @param mzdiff -
+     * 
+     * + default value Is ``'da:0.005'``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return function returns a evaluated mz under the specific **`adducts`** value
+     *  and it also the min mass tolerance, if no result has mass tolerance less then the 
+     *  given threshold value, then this function returns nothing
+   */
+   function searchMz(mz: any, exactMass: number, adducts: object, mzdiff?: any, env?: object): object;
+   /**
+    * get metabolite annotation metadata by a set of given unique reference id
+    * 
+    * 
+     * @param engine -
+     * @param uniqueId -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function getMetadata(engine: any, uniqueId: object, env?: object): any;
    /**
     * removes all of the annotation result which is not 
     *  hits in the given ``id`` set.
@@ -38,79 +104,7 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function excludeFeatures(query:object, id:string, field:string, metadb:object, includes_metal_ions?:boolean, excludes?:boolean, env?:object): object;
-   /**
-    * get metabolite annotation metadata by a set of given unique reference id
-    * 
-    * 
-     * @param engine -
-     * @param uniqueId -
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function getMetadata(engine:any, uniqueId:object, env?:object): any;
-   /**
-     * @param env default value Is ``null``.
-   */
-   function load_asQueryHits(x:object, env?:object): object;
-   /**
-    * a generic function for handle ms1 search
-    * 
-    * 
-     * @param compounds kegg compounds
-     * @param precursors -
-     * @param tolerance -
-     * 
-     * + default value Is ``'ppm:20'``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function ms1_handler(compounds:any, precursors:any, tolerance?:any, env?:object): any;
-   /**
-    * get duplictaed raw annotation results.
-    * 
-    * 
-     * @param engine -
-     * @param mz a m/z numeric vector or a object list that 
-     *  contains the data mapping of unique id to 
-     *  m/z value.
-     * @param unique 
-     * + default value Is ``false``.
-     * @param uniqueByScore only works when **`unique`** parameter
-     *  value is set to value TRUE.
-     * 
-     * + default value Is ``false``.
-     * @param env 
-     * + default value Is ``null``.
-   */
-   function ms1_search(engine:any, mz:any, unique?:boolean, uniqueByScore?:boolean, env?:object): object;
-   /**
-     * @param keepsRaw default value Is ``false``.
-     * @param env default value Is ``null``.
-   */
-   function parseLipidName(name:any, keepsRaw?:boolean, env?:object): any;
-   /**
-   */
-   function precursorIon(ion:string): object;
-   /**
-    * Found the best matched mz value with the target **`exactMass`**
-    * 
-    * 
-     * @param mz -
-     * @param exactMass -
-     * @param adducts -
-     * @param mzdiff -
-     * 
-     * + default value Is ``'da:0.005'``.
-     * @param env 
-     * + default value Is ``null``.
-     * @return function returns a evaluated mz under the specific **`adducts`** value
-     *  and it also the min mass tolerance, if no result has mass tolerance less then the 
-     *  given threshold value, then this function returns nothing
-   */
-   function searchMz(mz:any, exactMass:number, adducts:object, mzdiff?:any, env?:object): object;
+   function excludeFeatures(query: object, id: string, field: string, metadb: object, includes_metal_ions?: boolean, excludes?: boolean, env?: object): object;
    /**
     * unique of the peak annotation features
     * 
@@ -135,9 +129,15 @@ declare namespace metadb {
      * 
      * + default value Is ``null``.
    */
-   function uniqueFeatures(query:object, uniqueByScore?:boolean, scoreFactors?:object, format?:string, removesZERO?:boolean, verbose?:boolean, env?:object): object;
+   function uniqueFeatures(query: object, uniqueByScore?: boolean, scoreFactors?: object, format?: string, removesZERO?: boolean, verbose?: boolean, env?: object): object;
+   module cbind {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function metainfo(anno: object, engine: any, env?: object): any;
+   }
    /**
      * @param env default value Is ``null``.
    */
-   function verify_cas_number(num:any, env?:object): any;
+   function load_asQueryHits(x: object, env?: object): object;
 }

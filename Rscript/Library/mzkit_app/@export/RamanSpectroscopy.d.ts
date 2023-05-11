@@ -8,5 +8,5 @@ declare namespace RamanSpectroscopy {
    /**
      * @param env default value Is ``null``.
    */
-   function readFile(file:any, env?:object): any;
+   function readFile(file: any, env?: object): any;
 }

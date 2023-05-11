@@ -21,7 +21,7 @@ declare namespace SingleCells {
      * 
      * + default value Is ``null``.
    */
-   function cell_matrix(raw:object, mzdiff?:number, freq?:number, env?:object): any;
+   function cell_matrix(raw: object, mzdiff?: number, freq?: number, env?: object): any;
    /**
     * do stats of the single cell metabolomics ions
     * 
@@ -34,5 +34,5 @@ declare namespace SingleCells {
      * 
      * + default value Is ``true``.
    */
-   function SCM_ionStat(raw:object, da?:number, parallel?:boolean): object;
+   function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
 }
