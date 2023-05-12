@@ -100,22 +100,14 @@ Namespace Blender
                                                       dimension As Size,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional background As String = "black") As GraphicsData
-            ' rendering via raw dimesnion size
-            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+
             Dim defaultBackground As Color = background.TranslateColor
+            ' rendering via raw dimesnion size
+            Dim raw As Bitmap = DrawBackground(dimension, defaultBackground)
             Dim Rchannel = GetPixelChannelReader(R)
             Dim Gchannel = GetPixelChannelReader(G)
             Dim Bchannel = GetPixelChannelReader(B)
             Dim skipTransparent As Boolean = Not overlaps Is Nothing
-
-            ' draw background
-            Using gr As Graphics = Graphics.FromImage(raw)
-                If Not overlaps Is Nothing Then
-                    Call gr.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
-                Else
-                    Call gr.Clear(defaultBackground)
-                End If
-            End Using
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For x As Integer = 1 To dimension.Width
@@ -145,6 +137,23 @@ Namespace Blender
 
             ' no scale
             Return New ImageData(raw)
+        End Function
+
+        ''' <summary>
+        ''' draw background
+        ''' </summary>
+        Private Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
+            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+
+            Using g As Graphics = Graphics.FromImage(raw)
+                If Not overlaps Is Nothing Then
+                    Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
+                Else
+                    Call g.Clear(defaultBackground)
+                End If
+            End Using
+
+            Return raw
         End Function
 
         ''' <summary>
@@ -187,22 +196,30 @@ Namespace Blender
             Dim level As Double
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
             Dim levelRange As DoubleRange = New Double() {0, 1}
-            Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
+            ' create a blank canvas image
+            Dim raw As Bitmap = DrawBackground(dimension, Color.Transparent)
             Dim defaultColor As Color = defaultFill.TranslateColor
-
-            Call raw.CreateCanvas2D(directAccess:=True).FillRectangle(Brushes.Transparent, New Rectangle(0, 0, raw.Width, raw.Height))
+            Dim skipTransparent As Boolean = Not overlaps Is Nothing
 
             Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For Each point As PixelData In PixelData.ScalePixels(pixels)
                     level = point.level
 
-                    If level <= 0.0 Then
+                    If level <= 0.000005 Then
                         color = defaultColor
+
+                        If skipTransparent Then
+                            Continue For
+                        End If
                     Else
                         index = levelRange.ScaleMapping(level, indexrange)
 
-                        If index < 0 Then
+                        If index <= 0 Then
                             index = 0
+
+                            If skipTransparent Then
+                                Continue For
+                            End If
                         End If
 
                         color = colors(index)
