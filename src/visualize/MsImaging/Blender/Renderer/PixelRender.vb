@@ -146,10 +146,10 @@ Namespace Blender
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
 
             Using g As Graphics = Graphics.FromImage(raw)
+                Call g.Clear(defaultBackground)
+
                 If Not overlaps Is Nothing Then
                     Call g.DrawImage(overlaps, New Rectangle(New Point, raw.Size))
-                Else
-                    Call g.Clear(defaultBackground)
                 End If
             End Using
 
