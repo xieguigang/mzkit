@@ -19,5 +19,19 @@ Namespace Blender
             Return json.GetJson
         End Function
 
+        Public Shared Function ParseJSON(jsonstr As String) As RGBConfigs
+            Dim vals = jsonstr.LoadJSON(Of Dictionary(Of String, Dictionary(Of String, String)))
+            Dim cfgs As New RGBConfigs With {
+                .R = ParseVal(vals!r),
+                .G = ParseVal(vals!g),
+                .B = ParseVal(vals!b)
+            }
+
+            Return cfgs
+        End Function
+
+        Private Shared Function ParseVal(val As Dictionary(Of String, String)) As NamedValue(Of Double)
+            Return New NamedValue(Of Double)(val!annotation, Double.Parse(val("m/z")))
+        End Function
     End Class
 End Namespace
