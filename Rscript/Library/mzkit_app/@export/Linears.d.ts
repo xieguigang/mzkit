@@ -26,12 +26,17 @@ declare namespace Linears {
      * @param env default value Is ``null``.
    */
    function quantify(models: object, ions: object, integrator?: object, names?: object, baselineQuantile?: number, fileName?: string, env?: object): object;
+   module read {
+      /**
+      */
+      function linearPack(file: string): object;
+   }
    module report {
       /**
         * @param QC_dataset default value Is ``null``.
         * @param ionsRaw default value Is ``null``.
       */
-      function dataset(standardCurve: object, samples: object, QC_dataset?: string, ionsRaw?: object): any;
+      function dataset(standardCurve: object, samples: object, QC_dataset?: string, ionsRaw?: object): object|object;
    }
    /**
    */
