@@ -207,11 +207,14 @@ declare namespace mzweb {
         * @param file -
         * @param version 
         * + default value Is ``2``.
+        * @param headerSize negative value or zero means auto-evaluated via the different file size
+        * 
+        * + default value Is ``-1``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function mzPack(mzpack: object, file: any, version?: object, env?: object): any;
+      function mzPack(mzpack: object, file: any, version?: object, headerSize?: object, env?: object): any;
       /**
        * write ASCII text format of mzweb stream
        * 
