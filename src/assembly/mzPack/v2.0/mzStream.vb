@@ -369,7 +369,7 @@ Public Class mzStream : Implements IMzPackReader
         Dim text As String = Strings.Trim(pack.ReadText(mzStreamWriter.annotations_xml))
 
         If Not text.StringEmpty Then
-            For Each item As NamedValue In text.LoadXml(Of NamedValue())
+            For Each item As NamedValue In text.LoadFromXml(Of NamedValue())
                 Call annos.Add(item.name, item.text)
             Next
         End If
