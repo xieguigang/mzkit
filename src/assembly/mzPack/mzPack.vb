@@ -108,7 +108,7 @@ Public Class mzPack
     ''' A mapping of [mz.ToString(F4) => annotation data]
     ''' </returns>
     ''' <remarks>
-    ''' the annotation data could be a JSON string
+    ''' the annotation data could be a JSON string, this property only works for v2 format
     ''' </remarks>
     Public Property Annotations As Dictionary(Of String, String)
 
