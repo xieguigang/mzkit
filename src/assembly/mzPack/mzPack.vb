@@ -101,6 +101,16 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+    ''' <summary>
+    ''' m/z annotation
+    ''' </summary>
+    ''' <returns>
+    ''' A mapping of [mz.ToString(F4) => annotation data]
+    ''' </returns>
+    ''' <remarks>
+    ''' the annotation data could be a JSON string
+    ''' </remarks>
+    Public Property Annotations As Dictionary(Of String, String)
 
     Public ReadOnly Property rtmin As Double
         Get
