@@ -100,7 +100,7 @@ Namespace mzData.mzWebCache
 #End Region
 
         ''' <summary>
-        ''' [imported] 10 genomics spatial imaging
+        ''' [imported] 10x genomics spatial imaging
         ''' </summary>
         <Description("A1ACD1CD-3B16-4C47-B3ED-9D89EF3F2DCB")> STImaging
     End Enum
