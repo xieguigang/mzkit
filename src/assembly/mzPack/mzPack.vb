@@ -364,12 +364,26 @@ Public Class mzPack
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Write(file As Stream,
                           Optional version As Integer = 2,
+                          Optional headerSize As Long = -1,
                           Optional progress As Action(Of String) = Nothing) As Boolean
 
         If version = 1 Then
             Return v1MemoryLoader.Write(Me, file, progress)
         ElseIf version = 2 Then
-            Return Me.WriteStream(file, meta_size:=32 * 1024 * 1024)
+            If headerSize <= 0 Then
+                Select Case Application
+                    Case FileApplicationClass.GCxGC, FileApplicationClass.MSImaging, FileApplicationClass.MSImaging3D
+                        headerSize = 128 * 1024 * 1024
+                    Case FileApplicationClass.SingleCellsMetabolomics
+                        headerSize = 64 * 1024 * 1024
+                    Case FileApplicationClass.LCMS
+                        headerSize = 32 * 1024 * 1024
+                    Case Else
+                        headerSize = 24 * 1024 * 1024
+                End Select
+            End If
+
+            Return Me.WriteStream(file, meta_size:=headerSize)
         Else
             Return False
         End If
