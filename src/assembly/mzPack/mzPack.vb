@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::f706985f66d876c52f0a97d4b52ff660, mzkit\src\assembly\mzPack\mzPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 281
-    '    Code Lines: 191
-    ' Comment Lines: 61
-    '   Blank Lines: 29
-    '     File Size: 9.77 KB
+' Summaries:
 
 
-    ' Class mzPack
-    ' 
-    '     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
-    '                 MS, rtmax, rtmin, Scanners, size
-    '                 source, Thumbnail, totalIons
-    ' 
-    '     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-    '               GetXIC, hasMs2, Read, ReadAll, ToString
-    '               Write
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 281
+'    Code Lines: 191
+' Comment Lines: 61
+'   Blank Lines: 29
+'     File Size: 9.77 KB
+
+
+' Class mzPack
+' 
+'     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
+'                 MS, rtmax, rtmin, Scanners, size
+'                 source, Thumbnail, totalIons
+' 
+'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
+'               GetXIC, hasMs2, Read, ReadAll, ToString
+'               Write
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -372,9 +372,9 @@ Public Class mzPack
         ElseIf version = 2 Then
             If headerSize <= 0 Then
                 Select Case Application
-                    Case FileApplicationClass.GCxGC, FileApplicationClass.MSImaging, FileApplicationClass.MSImaging3D
+                    Case FileApplicationClass.MSImaging3D, FileApplicationClass.STImaging
                         headerSize = 128 * 1024 * 1024
-                    Case FileApplicationClass.SingleCellsMetabolomics
+                    Case FileApplicationClass.SingleCellsMetabolomics, FileApplicationClass.GCxGC, FileApplicationClass.MSImaging
                         headerSize = 64 * 1024 * 1024
                     Case FileApplicationClass.LCMS
                         headerSize = 32 * 1024 * 1024
