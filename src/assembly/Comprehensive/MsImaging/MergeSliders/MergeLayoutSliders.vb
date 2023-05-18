@@ -24,22 +24,24 @@ Public Module MergeLayoutSliders
             Function(m)
                 Return New Polygon2D(m.Value.MS.Select(Function(s1) s1.GetMSIPixel))
             End Function)
+
+        merge = If(merge, New MergeSMSlides(
+            relativePos:=True,
+            norm:=True,
+            println:=AddressOf RunSlavePipeline.SendMessage
+        ))
+
         Dim averageWidth = Aggregate p As Polygon2D In polygons.Values Into Average(p.GetRectangle.Width)
         Dim averageHeight = Aggregate p As Polygon2D In polygons.Values Into Average(p.GetRectangle.Height)
         Dim union As New List(Of ScanMS1)
-        Dim padding As New Size(30, 30)
+        Dim padding As Size = merge.Padding
         Dim top As Integer = padding.Height
         Dim left As Integer = padding.Width
-        Dim relativePos As Boolean = True
-        Dim norm As Boolean = True
-        Dim println As Action(Of String) = AddressOf RunSlavePipeline.SendMessage
         Dim scan_x As Integer
         Dim scan_y As Integer
         Dim mzmin As New List(Of Double)
         Dim mzmax As New List(Of Double)
         Dim res As New List(Of Double)
-
-        merge = If(merge, New MergeSMSlides(relativePos, norm, println))
 
         For Each row As String() In layout
             Dim maxHeight As Double = averageHeight

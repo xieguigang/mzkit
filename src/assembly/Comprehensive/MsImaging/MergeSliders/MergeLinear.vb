@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+﻿Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -18,6 +19,8 @@ Public MustInherit Class MergeLinear
         Me.norm = norm
         Me.println = println
     End Sub
+
+    Public MustOverride Function Padding() As Size
 
     Public MustOverride Function JoinOneSample(shape As Polygon2D,
                                                sample As mzPack,
@@ -65,6 +68,10 @@ Public Class MergeSMSlides : Inherits MergeLinear
                 Yield scan
             End If
         Next
+    End Function
+
+    Public Overrides Function Padding() As Size
+        Return New Size(30, 30)
     End Function
 End Class
 
@@ -125,5 +132,9 @@ Public Class MergeSTSlides : Inherits MergeLinear
                 Yield scan
             End If
         Next
+    End Function
+
+    Public Overrides Function Padding() As Size
+        Return New Size(0, 0)
     End Function
 End Class
