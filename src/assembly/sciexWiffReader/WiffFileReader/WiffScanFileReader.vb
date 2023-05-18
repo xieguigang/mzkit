@@ -183,7 +183,7 @@ Public Class WiffScanFileReader : Implements IDisposable
         Next
 
         If type_cache = ExperimentType.MRM Then
-            Dim info = current_experiment.Details
+            Dim info = scanInfo.details
             Dim ions = info.MassRangeInfo _
                 .Select(Function(a)
                             Dim i = DirectCast(a, Clearcore2.Data.DataAccess.SampleData.MRMMassRange)
@@ -334,7 +334,8 @@ Public Class WiffScanFileReader : Implements IDisposable
             .FragmentationType = "NULL",
             .IsolationWidth = isolationWidth,
             .IsolationCenter = isolationCenter,
-            .SampleName = sampleName
+            .SampleName = sampleName,
+            .details = details
         }
 
         If scanInfo.MSLevel > 1 Then

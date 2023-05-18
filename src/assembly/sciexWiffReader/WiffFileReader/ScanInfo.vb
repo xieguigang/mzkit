@@ -60,6 +60,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Clearcore2.Data.DataAccess.SampleData
 Imports stdNum = System.Math
 
 Public Class ScanInfo : Implements IRetentionTime, IMsScanData
@@ -107,6 +108,7 @@ Public Class ScanInfo : Implements IRetentionTime, IMsScanData
     Public Property IsolationCenter As Double
 
     Public Property IsolationWidth As Double
+    Public Property details As MSExperimentInfo
 
     Public Overrides Function ToString() As String
         Dim xcms_id As String
