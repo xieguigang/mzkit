@@ -223,6 +223,7 @@ Namespace MRM
                     .Select(Function(si)
                                 Return New ChromatogramTick(si.rt, si.into(Integer.Parse(si.meta(ionSet))))
                             End Function) _
+                    .OrderBy(Function(ti) ti.Time) _
                     .ToArray
                 Dim peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
 
