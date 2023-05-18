@@ -96,6 +96,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
     End Property
 
     Dim sampleName As String
+    Dim typeCache As FileApplicationClass
 
     Public Sub New(raw As WiffScanFileReader,
                    Optional scanIdFunc As Func(Of ScanInfo, Integer, String) = Nothing,
@@ -105,6 +106,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
 
         Me.raw = raw
         Me.checkNoise = checkNoise
+        Me.typeCache = getExperimentType
 
         If raw.experimentType = ExperimentType.MRM Then
             Me.checkNoise = False
@@ -129,7 +131,11 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
     End Sub
 
     Protected Overrides Sub walkScan(scan As ScanInfo)
-        Dim msData As PeakList = raw.GetCentroidFromScanNum(scan.ScanNumber)
+        Dim msData As PeakList = If(
+            typeCache = FileApplicationClass.LCMSMS,
+            raw.GetProfileFromScanNum(scan.ScanNumber),
+            raw.GetCentroidFromScanNum(scan.ScanNumber)
+        )
         Dim mz As Double() = msData.mz
         Dim into As Double() = msData.into
         Dim scanId As String = scanIdFunc(scan, MSscans.Count)
