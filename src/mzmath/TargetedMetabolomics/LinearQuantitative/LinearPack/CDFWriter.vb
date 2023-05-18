@@ -131,6 +131,7 @@ Namespace LinearQuantitative.Data
         <Extension>
         Private Function writeSampleNames(pack As LinearPack, file As netCDF.CDFWriter) As String()
             Dim allSampleNames As String() = pack.peakSamples _
+                .SafeQuery _
                 .Select(Function(p) p.SampleName) _
                 .Distinct _
                 .ToArray
@@ -147,7 +148,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writePeakSamples(pack As LinearPack, file As netCDF.CDFWriter)
-            For Each peak As TargetPeakPoint In pack.peakSamples
+            For Each peak As TargetPeakPoint In pack.peakSamples.SafeQuery
                 Call peak.writePeak(file)
             Next
         End Sub
@@ -181,10 +182,10 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writePeakNames(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim data As chars = pack.peakSamples.Select(Function(p) $"{p.SampleName}\{p.Name}").GetJson
-            Dim size As New Dimension With {.name = "sizeofPeaks", .size = pack.peakSamples.Length}
+            Dim data As chars = pack.peakSamples.SafeQuery.Select(Function(p) $"{p.SampleName}\{p.Name}").GetJson
+            Dim size As New Dimension With {.name = "sizeofPeaks", .size = If(pack.peakSamples.IsNullOrEmpty, 0, pack.peakSamples.Length)}
             Dim attrs As attribute() = {
-                New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = pack.linears.Length}
+                New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
             }
 
             file.AddVariable("peaks", data, size, attrs)
@@ -192,10 +193,14 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub peakLinearNames(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim data As chars = pack.linears.Select(Function(l) l.name).GetJson
+            Dim data As chars = pack.linears.SafeQuery.Select(Function(l) l.name).GetJson
             Dim size As New Dimension With {.name = "sizeofLinears", .size = data.Length}
             Dim attrs As attribute() = {
-                New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = pack.linears.Length}
+                New attribute With {
+                    .name = "linears",
+                    .type = CDFDataTypes.INT,
+                    .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)
+                }
             }
 
             file.AddVariable("linears", data, size, attrs)
@@ -203,7 +208,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writeLinears(pack As LinearPack, file As netCDF.CDFWriter)
-            For Each line As StandardCurve In pack.linears
+            For Each line As StandardCurve In pack.linears.SafeQuery
                 Call line.writeLinear(file)
             Next
         End Sub
@@ -229,8 +234,8 @@ Namespace LinearQuantitative.Data
             Dim title As New attribute With {.name = "title", .type = CDFDataTypes.CHAR, .value = pack.title}
             Dim time As New attribute With {.name = "time", .type = CDFDataTypes.CHAR, .value = pack.time.ToString}
             Dim github As New attribute With {.name = "github", .type = CDFDataTypes.CHAR, .value = "https://github.com/xieguigang/mzkit"}
-            Dim linears As New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = pack.linears.Length}
-            Dim peaks As New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = pack.peakSamples.Length}
+            Dim linears As New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = If(pack.linears.IsNullOrEmpty, 0, pack.linears.Length)}
+            Dim peaks As New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = If(pack.peakSamples.IsNullOrEmpty, 0, pack.peakSamples.Length)}
             Dim type As New attribute With {.name = "targetted", .type = CDFDataTypes.CHAR, .value = pack.targetted.ToString}
 
             Call file.GlobalAttributes(title, time, github, linears, peaks, type)
