@@ -167,8 +167,9 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
             }
 
             If typeCache = FileApplicationClass.LCMSMS Then
-                For Each di As Double In mz
-                    MS1.meta.Add(CInt(di).ToString, msData.MRM(CInt(di)).ToString)
+                ' MRM ion pair information is save in the scan1 metadata
+                For i As Integer = 0 To mz.Length - 1
+                    MS1.meta.Add("MRM: " & msData.MRM(i).ToString, CInt(i).ToString)
                 Next
             End If
         Else
