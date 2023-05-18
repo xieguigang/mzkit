@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::6ff59cf49dd40998018f362bbc1bafab, mzkit\src\assembly\Comprehensive\MsImaging\MergeSliders.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 199
-    '    Code Lines: 135
-    ' Comment Lines: 43
-    '   Blank Lines: 21
-    '     File Size: 7.55 KB
+' Summaries:
 
 
-    ' Module MergeSliders
-    ' 
-    '     Function: generateNormScan, JoinMSISamples
-    ' 
-    '     Sub: JoinOneSample
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 199
+'    Code Lines: 135
+' Comment Lines: 43
+'   Blank Lines: 21
+'     File Size: 7.55 KB
+
+
+' Module MergeSliders
+' 
+'     Function: generateNormScan, JoinMSISamples
+' 
+'     Sub: JoinOneSample
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,14 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module MergeSliders
+
+    <Extension>
+    Friend Iterator Function PullPolygons(samples As IEnumerable(Of mzPack), println As Action(Of String)) As IEnumerable(Of (ms As mzPack, polygon As Polygon2D))
+        For Each ms As mzPack In samples
+            Call println($"load {ms.source}!")
+            Yield (ms, New Polygon2D(ms.MS.Select(Function(a) a.GetMSIPixel)))
+        Next
+    End Function
 
     ''' <summary>
     ''' Merge multiple sample object into one sample file
@@ -86,13 +94,11 @@ Public Module MergeSliders
                                    Optional relativePos As Boolean = True,
                                    Optional padding As Integer = 20,
                                    Optional norm As Boolean = True,
-                                   Optional println As Action(Of String) = Nothing) As mzPack
-        Dim polygons = samples _
-            .Select(Function(ms)
-                        Call println($"load {ms.source}!")
-                        Return (ms, New Polygon2D(ms.MS.Select(Function(a) a.GetMSIPixel)))
-                    End Function) _
-            .ToArray
+                                   Optional println As Action(Of String) = Nothing,
+                                   Optional mergeLinear As MergeLinear = Nothing) As mzPack
+
+        ' load polygon shape for each imaging slider
+        Dim polygons = samples.PullPolygons(println).ToArray
         Dim maxHeight As Integer = polygons _
             .Select(Function(a) a.Item2.ypoints) _
             .IteratesALL _
@@ -103,18 +109,20 @@ Public Module MergeSliders
         Dim mzmax As New List(Of Double)
         Dim res As New List(Of Double)
 
+        If mergeLinear Is Nothing Then
+            mergeLinear = New MergeSMSlides(relativePos, norm, println)
+        End If
+
         ' for each sample mzpack object
         ' do sample join
         For Each sample As (Ms As mzPack, shape As Polygon2D) In polygons
-            Call union.JoinOneSample(
+            Call mergeLinear.JoinOneSample(
                 shape:=sample.shape,
                 sample:=sample.Ms,
                 left:=left,
-                top:=0,
-                relativePos:=relativePos,
-                norm:=norm,
-                println:=println
-            )
+                top:=0
+            ).DoCall(AddressOf union.AddRange)
+
             left += padding * 2 + (
                 sample.shape.xpoints.Max - sample.shape.xpoints.Min
             )
@@ -154,50 +162,6 @@ Public Module MergeSliders
         }
     End Function
 
-    <Extension>
-    Public Sub JoinOneSample(union As List(Of ScanMS1),
-                             shape As Polygon2D,
-                             sample As mzPack,
-                             left As Integer,
-                             top As Integer,
-                             relativePos As Boolean,
-                             norm As Boolean,
-                             println As Action(Of String))
-
-        Dim minX As Integer = shape.xpoints.Min
-        Dim height As Integer = shape.height
-        Dim deltaY As Integer = shape.ypoints.Min * -1 + top
-        Dim sampleid As String = sample.source
-
-        ' 20230119 the previous spot normalize is not working as expected
-        ' so do sample normalized based on the TIC of the entire sample data
-        ' at here
-        Dim totalIons As Double = Aggregate a As ScanMS1
-                                  In sample.MS
-                                  Let spot_TIC As Double = a.into.Sum
-                                  Into Sum(spot_TIC)
-
-        Const level As Double = 10.0 ^ 8
-        Call println(" >>> " & sampleid)
-
-        For Each scan As ScanMS1 In From s As ScanMS1
-                                    In sample.MS
-                                    Where Not s.into.IsNullOrEmpty
-
-            If norm Then
-                ' do normalized of current spot sample
-                scan.into = New Vector(scan.into) / totalIons * level
-            End If
-
-            If relativePos Then
-                union.Add(scan.generateNormScan(minX, left, deltaY, sampleid, norm))
-            Else
-                ' is absolute position, just merge the collection
-                union.Add(scan)
-            End If
-        Next
-    End Sub
-
     ''' <summary>
     ''' adjust of the sample spot location
     ''' </summary>
@@ -209,12 +173,12 @@ Public Module MergeSliders
     ''' <param name="norm"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function generateNormScan(scan As ScanMS1,
-                                      minX As Integer,
-                                      left As Integer,
-                                      deltaY As Double,
-                                      sampleid As String,
-                                      norm As Boolean) As ScanMS1
+    Friend Function generateNormScan(scan As ScanMS1,
+                                     minX As Integer,
+                                     left As Integer,
+                                     deltaY As Double,
+                                     sampleid As String,
+                                     norm As Boolean) As ScanMS1
 
         Dim meta As New Dictionary(Of String, String)(scan.meta)
         Dim xy = scan.GetMSIPixel
