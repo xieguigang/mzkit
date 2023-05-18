@@ -44,6 +44,7 @@ declare namespace visualPlots {
      * @param sampleLabelFont default value Is ``'font-style: normal; font-size: 16; font-family: Segoe UI;'``.
      * @param labelerIterations default value Is ``1000``.
      * @param gridFill default value Is ``'LightGray'``.
+     * @param reverse default value Is ``false``.
    */
-   function standard_curve(model: object, title?: string, samples?: object, size?: string, margin?: string, factorFormat?: string, sampleLabelFont?: string, labelerIterations?: object, gridFill?: string): object;
+   function standard_curve(model: object, title?: string, samples?: object, size?: string, margin?: string, factorFormat?: string, sampleLabelFont?: string, labelerIterations?: object, gridFill?: string, reverse?: boolean): object;
 }

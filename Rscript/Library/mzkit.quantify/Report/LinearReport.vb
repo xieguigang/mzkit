@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports stdNum = System.Math
@@ -81,27 +82,33 @@ Module LinearReport
         End If
     End Function
 
-    Public Function CreateHtml(obj As Object) As String
+    Public Function CreateHtml(obj As Object, args As list, env As Environment) As String
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
         Dim report As ScriptBuilder = getBlankReport(title:="Targeted Quantification Linear Models")
         Dim samples As QuantifyScan() = Nothing
         Dim ionsRaw As list = Nothing
+        Dim reverse As Boolean = args.getValue(Of Boolean)("reverse", env, [default]:=False)
 
         If obj.GetType Is GetType(LinearDataSet) Then
             samples = DirectCast(obj, LinearDataSet).Samples
             ionsRaw = DirectCast(obj, LinearDataSet).IonsRaw
         End If
 
-        Return report.doReport(standardCurves, samples, ionsRaw)
+        Return report.doReport(standardCurves, samples, ionsRaw, reverse)
     End Function
 
 
     <Extension>
-    Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan(), ionsRaw As list) As String
+    Private Function doReport(report As ScriptBuilder,
+                              standardCurves As StandardCurve(),
+                              samples As QuantifyScan(),
+                              ionsRaw As list,
+                              reverse As Boolean) As String
+
         Dim linears As New List(Of XElement)
 
         For Each line As StandardCurve In standardCurves
-            With line.singleLinear(ionsRaw)
+            With line.singleLinear(ionsRaw, reverse)
                 If Not .IsNothing Then
                     Call .DoCall(AddressOf linears.Add)
                 End If
@@ -138,9 +145,9 @@ Module LinearReport
     End Function
 
     <Extension>
-    Private Function singleLinear(line As StandardCurve, ionsRaw As list) As XElement
+    Private Function singleLinear(line As StandardCurve, ionsRaw As list, reverse As Boolean) As XElement
         Dim title$ = If(line.points.Length = 0, line.name, line.points(Scan0).Name)
-        Dim image As Image = Visual.DrawStandardCurve(line, title, gridFill:="white").AsGDIImage
+        Dim image As Image = Visual.DrawStandardCurve(line, title, gridFill:="white", reverse:=reverse).AsGDIImage
         Dim R2# = line.linear.R2
         Dim isWeighted As Boolean = line.isWeighted
         Dim range As DoubleRange = line.points _

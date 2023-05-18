@@ -66,10 +66,12 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module mzStreamWriter
 
     Public Const metadata_json As String = ".etc/metadata.json"
+    Public Const annotations_xml As String = ".etc/annotations.xml"
 
     ''' <summary>
     ''' 
@@ -107,11 +109,23 @@ Public Module mzStreamWriter
                 metadata(data.Key) = data.Value
             Next
 
+            Call writeAnnotations(mzpack, pack)
             Call pack.WriteText(metadata.GetJson, metadata_json)
         End Using
 
         Return True
     End Function
+
+    Private Sub writeAnnotations(mzpack As mzPack, pack As StreamPack)
+        If mzpack.Annotations.IsNullOrEmpty Then
+            Return
+        End If
+
+        Dim annos = mzpack.Annotations.Select(Function(v) New NamedValue(v.Key, v.Value)).ToArray
+        Dim xml As String = annos.GetXml
+
+        Call pack.WriteText(xml, annotations_xml)
+    End Sub
 
     <Extension>
     Private Function readme(mzpack As mzPack, summary As Dictionary(Of String, Double)) As String
@@ -270,7 +284,9 @@ Public Module mzStreamWriter
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
+#Disable Warning
                 Call mzpack.Thumbnail.Save(snapshot, ImageFormats.Png.GetFormat)
+#Enable Warning
             End Using
         End If
     End Sub

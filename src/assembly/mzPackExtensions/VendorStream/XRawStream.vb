@@ -81,6 +81,12 @@ Public Class XRawStream : Inherits VendorStreamLoader(Of SingleScanInfo)
         End Get
     End Property
 
+    Public Overrides ReadOnly Property getExperimentType As FileApplicationClass
+        Get
+            Return FileApplicationClass.LCMS
+        End Get
+    End Property
+
     Sub New(raw As MSFileReader, Optional scanIdFunc As Func(Of SingleScanInfo, Integer, String) = Nothing)
         Call MyBase.New(scanIdFunc)
 

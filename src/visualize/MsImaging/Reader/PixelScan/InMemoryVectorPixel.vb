@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Pixel
 
@@ -78,6 +79,7 @@ Namespace Pixel
 
         Public ReadOnly Property mz As Double()
         Public ReadOnly Property intensity As Double()
+        Public ReadOnly Property annotations As String()
 
         Public Overrides ReadOnly Property scanId As String
 
@@ -95,12 +97,16 @@ Namespace Pixel
         End Sub
 
         <DebuggerStepThrough>
-        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double(), Optional sampleTag As String = Nothing)
+        Sub New(scanId As String, x As Integer, y As Integer, mz As Double(), into As Double(),
+                Optional sampleTag As String = Nothing,
+                Optional annos As String() = Nothing)
+
             Me.scanId = scanId
             Me.X = x
             Me.Y = y
             Me.mz = mz
             Me.intensity = into
+            Me.annotations = annos
 
             If Not sampleTag.StringEmpty Then
                 Me.sampleTag = sampleTag
@@ -119,7 +125,8 @@ Namespace Pixel
             End If
         End Sub
 
-        Sub New(pixel As PixelScan)
+        Sub New(pixel As PixelScan, Optional annos As String() = Nothing)
+            annotations = annos
             X = pixel.X
             Y = pixel.Y
             scanId = pixel.scanId
@@ -157,6 +164,17 @@ Namespace Pixel
                 file.Write(mz.Length)
                 file.Write(mz)
                 file.Write(intensity)
+
+                If annotations.IsNullOrEmpty OrElse annotations.All(Function(si) si.StringEmpty) Then
+                    file.Write(0)
+                Else
+                    Dim anno_json As String = annotations.GetJson
+
+                    ' please notices that, this size is char count, not byte size
+                    file.Write(anno_json.Length)
+                    file.Write(anno_json, BinaryStringFormat.ZeroTerminated)
+                End If
+
                 file.Flush()
 
                 Return buf.ToArray
@@ -176,8 +194,13 @@ Namespace Pixel
                 Dim size As Integer = file.ReadInt32
                 Dim mz As Double() = file.ReadDoubles(size)
                 Dim into As Double() = file.ReadDoubles(size)
+                Dim annos As String() = Nothing
 
-                Return New InMemoryVectorPixel(scanId, x, y, mz, into, sampletag)
+                If (Not file.EndOfStream) AndAlso file.ReadInt32 > 0 Then
+                    annos = file.ReadString(BinaryStringFormat.ZeroTerminated).LoadJSON(Of String())()
+                End If
+
+                Return New InMemoryVectorPixel(scanId, x, y, mz, into, sampletag, annos)
             End Using
         End Function
 
@@ -221,9 +244,16 @@ Namespace Pixel
 
         Protected Friend Overrides Iterator Function GetMsPipe() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1
+                Dim anno As String = Nothing
+
+                If Not annotations.IsNullOrEmpty Then
+                    anno = annotations(i)
+                End If
+
                 Yield New ms2 With {
                     .mz = mz(i),
-                    .intensity = intensity(i)
+                    .intensity = intensity(i),
+                    .Annotation = anno
                 }
             Next
         End Function

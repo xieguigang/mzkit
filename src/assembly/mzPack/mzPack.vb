@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::f706985f66d876c52f0a97d4b52ff660, mzkit\src\assembly\mzPack\mzPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 281
-    '    Code Lines: 191
-    ' Comment Lines: 61
-    '   Blank Lines: 29
-    '     File Size: 9.77 KB
+' Summaries:
 
 
-    ' Class mzPack
-    ' 
-    '     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
-    '                 MS, rtmax, rtmin, Scanners, size
-    '                 source, Thumbnail, totalIons
-    ' 
-    '     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
-    '               GetXIC, hasMs2, Read, ReadAll, ToString
-    '               Write
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 281
+'    Code Lines: 191
+' Comment Lines: 61
+'   Blank Lines: 29
+'     File Size: 9.77 KB
+
+
+' Class mzPack
+' 
+'     Properties: Application, Chromatogram, CountMs2, maxIntensity, metadata
+'                 MS, rtmax, rtmin, Scanners, size
+'                 source, Thumbnail, totalIons
+' 
+'     Function: CastToPeakMs2, GetAllParentMz, GetAllScanMs1, GetBasePeak, GetMs2Peaks
+'               GetXIC, hasMs2, Read, ReadAll, ToString
+'               Write
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,6 +101,16 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+    ''' <summary>
+    ''' m/z annotation
+    ''' </summary>
+    ''' <returns>
+    ''' A mapping of [mz.ToString(F4) => annotation data]
+    ''' </returns>
+    ''' <remarks>
+    ''' the annotation data could be a JSON string, this property only works for v2 format
+    ''' </remarks>
+    Public Property Annotations As Dictionary(Of String, String)
 
     Public ReadOnly Property rtmin As Double
         Get
@@ -364,12 +374,26 @@ Public Class mzPack
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Write(file As Stream,
                           Optional version As Integer = 2,
+                          Optional headerSize As Long = -1,
                           Optional progress As Action(Of String) = Nothing) As Boolean
 
         If version = 1 Then
             Return v1MemoryLoader.Write(Me, file, progress)
         ElseIf version = 2 Then
-            Return Me.WriteStream(file, meta_size:=32 * 1024 * 1024)
+            If headerSize <= 0 Then
+                Select Case Application
+                    Case FileApplicationClass.MSImaging3D, FileApplicationClass.STImaging
+                        headerSize = 128 * 1024 * 1024
+                    Case FileApplicationClass.SingleCellsMetabolomics, FileApplicationClass.GCxGC, FileApplicationClass.MSImaging
+                        headerSize = 64 * 1024 * 1024
+                    Case FileApplicationClass.LCMS
+                        headerSize = 32 * 1024 * 1024
+                    Case Else
+                        headerSize = 24 * 1024 * 1024
+                End Select
+            End If
+
+            Return Me.WriteStream(file, meta_size:=headerSize)
         Else
             Return False
         End If

@@ -79,6 +79,8 @@ Namespace Spectra
         ''' <returns></returns>
         Public Property into As Double()
 
+        Public Property MRM As MRM()
+
         ''' <summary>
         ''' the number of the ion fragments 
         ''' in current peak list object 
@@ -102,6 +104,21 @@ Namespace Spectra
         End Sub
 
     End Class
+
+    Public Structure MRM
+
+        Dim Q1 As Double
+        Dim Q3 As Double
+
+        Sub New(q1 As Double, q3 As Double)
+            Me.Q1 = q1
+            Me.Q3 = q3
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{Q1}/{Q3}"
+        End Function
+    End Structure
 
     Public Interface IMsScan
 

@@ -123,7 +123,8 @@ Module Visual
                                       Optional factorFormat$ = "G4",
                                       Optional sampleLabelFont$ = CSSFont.Win10NormalLarger,
                                       Optional labelerIterations% = 1000,
-                                      Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
+                                      Optional gridFill$ = NameOf(Color.LightGray),
+                                      Optional reverse As Boolean = False) As GraphicsData
 
         Return StandardCurvesPlot.StandardCurves(
             model:=model,
@@ -134,7 +135,8 @@ Module Visual
             factorFormat:=factorFormat,
             sampleLabelFont:=sampleLabelFont,
             labelerIterations:=labelerIterations,
-            gridFill:=gridFill
+            gridFill:=gridFill,
+            reverse:=reverse
         )
     End Function
 
