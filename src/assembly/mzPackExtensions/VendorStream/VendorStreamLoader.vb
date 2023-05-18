@@ -56,7 +56,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 
 Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
@@ -67,6 +66,7 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
     Protected scanIdFunc As Func(Of T, Integer, String)
 
     Public MustOverride ReadOnly Property rawFileName As String
+    Public MustOverride ReadOnly Property getExperimentType As FileApplicationClass
 
     Protected Sub New(scanIdFunc As Func(Of T, Integer, String))
         Me.scanIdFunc = If(scanIdFunc, New Func(Of T, Integer, String)(AddressOf defaultScanId))
@@ -92,7 +92,7 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
                 TIC += scaninfo.TotalIonCurrent
                 BPC += scaninfo.BasePeakIntensity
 
-                If println IsNot Nothing AndAlso ++i Mod 7 = 0 Then
+                If println IsNot Nothing AndAlso ++i Mod 7 = 3 Then
                     Call println($"Load " & scaninfo.ToString)
                 End If
             End If
@@ -114,7 +114,8 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
                 .TIC = TIC.PopAll,
                 .scan_time = scan_times.PopAll
             },
-            .source = rawFileName.FileName
+            .source = rawFileName.FileName,
+            .Application = getExperimentType
         }
     End Function
 End Class

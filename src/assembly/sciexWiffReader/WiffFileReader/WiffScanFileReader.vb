@@ -97,6 +97,12 @@ Public Class WiffScanFileReader : Implements IDisposable
         End Get
     End Property
 
+    Public ReadOnly Property experimentType As ExperimentType
+        Get
+            Return wiffExperiments(0).Details.ExperimentType
+        End Get
+    End Property
+
     Sub New(wiffpath As String)
         Me.wiffDataProvider = New AnalystWiffDataProvider()
         Me.wiffPath = wiffpath
