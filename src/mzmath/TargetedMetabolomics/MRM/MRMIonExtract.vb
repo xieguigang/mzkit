@@ -156,7 +156,7 @@ Namespace MRM
             Else
                 Return New TargetPeakPoint With {
                     .Name = If(preferName, ion.name, ion.accession),
-                    .peak = peak,
+                    .Peak = peak,
                     .ChromatogramSummary = peak.ticks _
                         .Summary _
                         .ToArray
@@ -183,7 +183,7 @@ Namespace MRM
             Else
                 Return New TargetPeakPoint With {
                     .Name = If(preferName, ion.name, ion.accession),
-                    .peak = peak,
+                    .Peak = peak,
                     .ChromatogramSummary = peak.ticks _
                         .Summary _
                         .ToArray
