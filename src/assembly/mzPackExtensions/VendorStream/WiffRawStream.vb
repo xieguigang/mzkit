@@ -165,6 +165,12 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 .TIC = scan.TotalIonCurrent,
                 .meta = New Dictionary(Of String, String)
             }
+
+            If typeCache = FileApplicationClass.LCMSMS Then
+                For Each di As Double In mz
+                    MS1.meta.Add(CInt(di).ToString, msData.MRM(CInt(di)).ToString)
+                Next
+            End If
         Else
             MS2 += New ScanMS2 With {
                 .activationMethod = ActivationMethods.CID,
