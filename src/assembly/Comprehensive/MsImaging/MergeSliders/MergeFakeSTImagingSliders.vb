@@ -18,7 +18,7 @@ Public Module MergeFakeSTImagingSliders
     ''' </returns>
     Public Function JoinSTImagingSamples(samples As IEnumerable(Of mzPack),
                                          Optional relativePos As Boolean = True,
-                                         Optional padding As Integer = 20,
+                                         Optional padding As Integer = 0,
                                          Optional norm As Boolean = True,
                                          Optional println As Action(Of String) = Nothing) As mzPack
 
