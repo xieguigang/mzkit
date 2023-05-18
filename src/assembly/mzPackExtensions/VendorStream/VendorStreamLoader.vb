@@ -82,6 +82,7 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
         Dim scan_times As New List(Of Double)
         Dim TIC As New List(Of Double)
         Dim BPC As New List(Of Double)
+        Dim i As i32 = 0
 
         For Each scaninfo As T In pullAllScans(skipEmptyScan)
             Call walkScan(scaninfo)
@@ -91,7 +92,7 @@ Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
                 TIC += scaninfo.TotalIonCurrent
                 BPC += scaninfo.BasePeakIntensity
 
-                If Not println Is Nothing Then
+                If println IsNot Nothing AndAlso ++i Mod 7 = 0 Then
                     Call println($"Load " & scaninfo.ToString)
                 End If
             End If
