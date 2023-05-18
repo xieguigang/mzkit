@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
-Module MergeLayoutSliders
+Public Module MergeLayoutSliders
 
     ''' <summary>
     ''' 
