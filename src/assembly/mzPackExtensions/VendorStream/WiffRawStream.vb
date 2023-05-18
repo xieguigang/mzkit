@@ -82,6 +82,8 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         End Get
     End Property
 
+    Dim sampleName As String
+
     Public Sub New(raw As WiffScanFileReader,
                    Optional scanIdFunc As Func(Of ScanInfo, Integer, String) = Nothing,
                    Optional checkNoise As Boolean = True)
@@ -125,6 +127,7 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
         If scan.MSLevel = 1 Then
             If Not MS1 Is Nothing Then
                 MS1.products = MS2.PopAll
+                MS1.meta.Add(mzStreamWriter.SampleMetaName, sampleName)
                 MSscans += MS1
             End If
 
@@ -135,7 +138,8 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
                 .mz = mz,
                 .rt = scan.RetentionTime * 60,
                 .scan_id = scanId,
-                .TIC = scan.TotalIonCurrent
+                .TIC = scan.TotalIonCurrent,
+                .meta = New Dictionary(Of String, String)
             }
         Else
             MS2 += New ScanMS2 With {
@@ -165,6 +169,8 @@ Public Class WiffRawStream : Inherits VendorStreamLoader(Of ScanInfo)
             Call raw.SetCurrentSample(++i)
 
             Dim n As Integer = raw.GetLastSpectrumNumber
+
+            sampleName = name
 
             For scanId As Integer = 0 To n
                 Yield raw.GetScan(scanId)

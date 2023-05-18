@@ -284,7 +284,9 @@ Public Module mzStreamWriter
 
         If Not mzpack.Thumbnail Is Nothing Then
             Using snapshot As Stream = pack.OpenBlock("/thumbnail.png")
+#Disable Warning
                 Call mzpack.Thumbnail.Save(snapshot, ImageFormats.Png.GetFormat)
+#Enable Warning
             End Using
         End If
     End Sub
