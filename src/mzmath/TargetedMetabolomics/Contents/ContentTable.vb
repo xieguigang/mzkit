@@ -157,6 +157,10 @@ Namespace Content
             Next
 
             If names.All(Function(str) Char.IsDigit(str.First)) Then
+                ' 20230519 the reference name parser handling examples:
+                '
+                ' a. cal1, cal2, cal3 => 1,2,3 => L1,L2,L3
+                ' b. cal1-x, cal2-x, cal3-x => 1-x,2-x,3-x => L1,L2,L3
                 names = names _
                     .Select(Function(str) $"L{str.Match("\d+")}") _
                     .ToArray
