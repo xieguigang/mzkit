@@ -229,8 +229,8 @@ Namespace LinearQuantitative.Data
         Private Sub writeLinear(linear As StandardCurve, file As netCDF.CDFWriter)
             Dim attrs As attribute() = {
                 New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = linear.name},
-                New attribute With {.name = "points", .type = CDFDataTypes.INT, .value = linear.points.Length},
-                New attribute With {.name = "R2", .type = CDFDataTypes.CHAR, .value = linear.linear.R2}
+                New attribute With {.name = "points", .type = CDFDataTypes.INT, .value = linear.points.TryCount},
+                New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
             }
 
             Using buffer As MemoryStream = StandardCurveCDF.WriteCDF(linear)
