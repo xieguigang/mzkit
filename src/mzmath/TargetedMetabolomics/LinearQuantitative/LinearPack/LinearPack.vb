@@ -72,7 +72,23 @@ Namespace LinearQuantitative.Data
         Public Property peakSamples As TargetPeakPoint()
         Public Property title As String
         Public Property time As Date
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the key that store at here should be the ion pair 
+        ''' </remarks>
         Public Property reference As Dictionary(Of String, SampleContentLevels)
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the id that store at here should be the ion pair 
+        ''' </remarks>
         Public Property [IS] As [IS]()
         Public Property targetted As TargettedData
 

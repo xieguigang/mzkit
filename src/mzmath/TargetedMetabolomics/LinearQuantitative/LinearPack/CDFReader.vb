@@ -64,13 +64,11 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.Bencoding
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace LinearQuantitative.Data
@@ -89,6 +87,7 @@ Namespace LinearQuantitative.Data
                 pack.IS = cdf.parseIS
 
                 If cdf("targetted") Is Nothing Then
+                    ' default is MRM if the targetted attribute is missing
                     pack.targetted = TargettedData.MRM
                 Else
                     pack.targetted = [Enum].Parse(GetType(TargettedData), cdf("targetted"))
@@ -98,6 +97,11 @@ Namespace LinearQuantitative.Data
             Return pack
         End Function
 
+        ''' <summary>
+        ''' this data may be absent if the metabolite has no reference IS
+        ''' </summary>
+        ''' <param name="cdf"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function parseIS(cdf As netCDFReader) As [IS]()
             Dim ISbstr As String = DirectCast(cdf.getDataVariable("IS"), chars)
@@ -115,11 +119,16 @@ Namespace LinearQuantitative.Data
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' parse the linear standard curve data, this reference information maybe absent
+        ''' </summary>
+        ''' <param name="cdf"></param>
+        ''' <returns></returns>
         <Extension>
         Private Iterator Function parseLinears(cdf As netCDFReader) As IEnumerable(Of StandardCurve)
-            Dim ionNames As String() = DirectCast(cdf.getDataVariable("linears"), chars).LoadJSON(Of String())
+            Dim ionNames As String() = DirectCast(cdf.getDataVariable("linears"), chars).LoadJSON(Of String())(strict:=False)
 
-            For Each ionName As String In ionNames
+            For Each ionName As String In ionNames.SafeQuery
                 Using ms As MemoryStream = DirectCast(cdf.getDataVariable(ionName).genericValue, Byte()).DoCall(Function(bytes) New MemoryStream(bytes))
                     Yield ms.parseLinear
                 End Using
@@ -174,6 +183,10 @@ Namespace LinearQuantitative.Data
         Private Function parseLinearFit(cdf As netCDFReader) As IFitted
             Dim polynomial As variable = cdf.getDataVariableEntry("polynomial")
 
+            If polynomial Is Nothing Then
+                Return Nothing
+            End If
+
             Return New FitResult With {
                 .RMSE = polynomial.FindAttribute("RMSE").getObjectValue,
                 .SSE = polynomial.FindAttribute("SSE").getObjectValue,
@@ -205,11 +218,16 @@ Namespace LinearQuantitative.Data
             }
         End Function
 
+        ''' <summary>
+        ''' parse the raw sample data peaks, this data maybe absent
+        ''' </summary>
+        ''' <param name="cdf"></param>
+        ''' <returns></returns>
         <Extension>
         Private Iterator Function parsePeaks(cdf As netCDFReader) As IEnumerable(Of TargetPeakPoint)
-            Dim peakNames As String() = DirectCast(cdf.getDataVariable("peaks"), chars).LoadJSON(Of String())
+            Dim peakNames As String() = DirectCast(cdf.getDataVariable("peaks"), chars).LoadJSON(Of String())(strict:=False)
 
-            For Each name As String In peakNames
+            For Each name As String In peakNames.SafeQuery
                 Dim var As variable = cdf.getDataVariableEntry(name)
                 Dim data As doubles = cdf.getDataVariable(var)
                 Dim time As Double() = data.Take(data.Length \ 2).ToArray
@@ -253,6 +271,12 @@ Namespace LinearQuantitative.Data
             Next
         End Function
 
+        ''' <summary>
+        ''' parse the data reference, this data is required, 
+        ''' can not be absent from the data pack file 
+        ''' </summary>
+        ''' <param name="cdf"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function parseReference(cdf As netCDFReader) As Dictionary(Of String, SampleContentLevels)
             Dim allSampleNames As String() = DirectCast(cdf.getDataVariable("sampleNames"), chars).LoadJSON(Of String())

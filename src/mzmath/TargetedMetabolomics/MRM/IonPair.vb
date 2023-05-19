@@ -120,6 +120,14 @@ Namespace MRM.Models
             End If
         End Function
 
+        Public Function Assert(q1 As Double, q3 As Double, tolerance As Tolerance) As Boolean
+            If tolerance.Equals(q1, precursor) AndAlso tolerance.Equals(q3, product) Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' Produce an <see cref="IsomerismIonPairs"/> object sequence with 
         ''' element length equals to the input ions data 

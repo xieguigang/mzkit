@@ -94,17 +94,19 @@ Namespace LinearQuantitative.Data
             Dim [IS] As New attribute With {.name = "IS", .type = CDFDataTypes.CHAR, .value = linear.IS.ID}
             Dim IS_name As New attribute With {.name = "IS_name", .type = CDFDataTypes.CHAR, .value = linear.IS.name}
             Dim cIS As New attribute With {.name = "cIS", .type = CDFDataTypes.DOUBLE, .value = linear.IS.CIS}
-            Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = linear.linear.R2}
-            Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.INT, .value = linear.points.Where(Function(p) Not p.valid).Count}
+            Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
+            Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.INT, .value = linear.points.SafeQuery.Where(Function(p) Not p.valid).Count}
             Dim weighted As New attribute With {.name = "is_weighted", .type = CDFDataTypes.BOOLEAN, .value = TypeOf linear.linear Is WeightedFit}
-            Dim points As New attribute With {.name = "ref_size", .type = CDFDataTypes.INT, .value = linear.points.Length}
+            Dim points As New attribute With {.name = "ref_size", .type = CDFDataTypes.INT, .value = linear.points.TryCount}
 
             cdf.GlobalAttributes(name, [IS], IS_name, cIS, R2, outliers, weighted, points)
 
-            If TypeOf linear.linear Is WeightedFit Then
-                Call DirectCast(linear.linear, WeightedFit).fitLinear(cdf)
-            Else
-                Call DirectCast(linear.linear, FitResult).fitLinear(cdf)
+            If Not linear.linear Is Nothing Then
+                If TypeOf linear.linear Is WeightedFit Then
+                    Call DirectCast(linear.linear, WeightedFit).fitLinear(cdf)
+                Else
+                    Call DirectCast(linear.linear, FitResult).fitLinear(cdf)
+                End If
             End If
 
             Dim blankSize As New Dimension With {
@@ -115,6 +117,7 @@ Namespace LinearQuantitative.Data
             cdf.AddVariable("blanks", CType(linear.blankControls.SafeQuery.ToArray, doubles), blankSize)
 
             Dim levelNames As chars = linear.points _
+                .SafeQuery _
                 .Select(Function(p) p.level) _
                 .Distinct _
                 .GetJson
@@ -124,8 +127,8 @@ Namespace LinearQuantitative.Data
 
             Dim width As New Dimension With {.name = "width", .size = 5 + 3}
 
-            For Each p As ReferencePoint In linear.points
-                cdf.AddVariable(p.level, CType(New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, doubles), width, {
+            For Each p As ReferencePoint In linear.points.SafeQuery
+                Call cdf.AddVariable(p.level, CType(New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, doubles), width, {
                     New attribute With {.name = "valid", .type = CDFDataTypes.BOOLEAN, .value = p.valid},
                     New attribute With {.name = "ID", .type = CDFDataTypes.CHAR, .value = p.ID},
                     New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = p.Name}
