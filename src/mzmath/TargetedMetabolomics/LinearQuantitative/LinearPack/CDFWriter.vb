@@ -133,6 +133,20 @@ Namespace LinearQuantitative.Data
                 .Select(Function(p) p.SampleName) _
                 .Distinct _
                 .ToArray
+
+            If allSampleNames.IsNullOrEmpty Then
+                ' the peak samples in the linearpack object is empty
+                ' if this pack data object is created from a excel table
+                '
+                ' so extract the names from the reference names
+                allSampleNames = pack.reference.Values _
+                    .Select(Function(a) a.levels.Keys) _
+                    .IteratesALL _
+                    .OrderBy(Function(fname) fname) _
+                    .Distinct _
+                    .ToArray
+            End If
+
             Dim data As chars = allSampleNames.GetJson
             Dim size As New Dimension With {.name = "sizeofSamples", .size = data.Length}
             Dim attrs As attribute() = {
