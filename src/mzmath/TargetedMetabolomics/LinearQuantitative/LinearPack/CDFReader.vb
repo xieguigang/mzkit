@@ -183,6 +183,10 @@ Namespace LinearQuantitative.Data
         Private Function parseLinearFit(cdf As netCDFReader) As IFitted
             Dim polynomial As variable = cdf.getDataVariableEntry("polynomial")
 
+            If polynomial Is Nothing Then
+                Return Nothing
+            End If
+
             Return New FitResult With {
                 .RMSE = polynomial.FindAttribute("RMSE").getObjectValue,
                 .SSE = polynomial.FindAttribute("SSE").getObjectValue,
