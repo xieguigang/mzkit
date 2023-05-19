@@ -240,7 +240,9 @@ Namespace MRM
         ''' <param name="files"></param>
         ''' <param name="qIon">the MRM quantify ion pair</param>
         ''' <returns></returns>
-        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As IonPair, args As MRMArguments) As IEnumerable(Of TargetPeakPoint)
+        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)),
+                                                    qIon As IonPair,
+                                                    args As MRMArguments) As IEnumerable(Of TargetPeakPoint)
             Dim raw As indexedmzML
             Dim rawList As chromatogramTicks()
             Dim ionLine As chromatogramTicks
@@ -253,11 +255,22 @@ Namespace MRM
                 ionLine = rawList _
                     .Where(Function(c) qIon.Assert(c, massError)) _
                     .FirstOrDefault
-                peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
 
-                If Not peakTicks Is Nothing Then
-                    peakTicks.SampleName = file.Name
-                    Yield peakTicks
+                If ionLine Is Nothing Then
+                    Dim msg As String = $"Missing target ion {qIon} in raw data file {file}!"
+
+                    If args.strict Then
+                        Throw New MissingFieldException(msg)
+                    Else
+                        Call msg.Warning
+                    End If
+                Else
+                    peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
+
+                    If Not peakTicks Is Nothing Then
+                        peakTicks.SampleName = file.Name
+                        Yield peakTicks
+                    End If
                 End If
             Next
         End Function

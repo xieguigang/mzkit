@@ -89,6 +89,8 @@ Namespace MRM
         Public Property bspline_degree As Integer = 2
         Public Property bspline_density As Integer = 100
 
+        Public Property strict As Boolean = False
+
         <DebuggerStepThrough>
         Sub New(TPAFactors As Dictionary(Of String, Double),
                 tolerance As Tolerance,
