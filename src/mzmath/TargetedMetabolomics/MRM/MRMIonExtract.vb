@@ -215,7 +215,19 @@ Namespace MRM
 
                            Return qIon.Assert(t(0), t(1), mzdiff)
                        End Function) _
-                .First
+                .FirstOrDefault
+
+
+            If ionSet Is Nothing Then
+                Dim msg As String = $"Missing target ion {qIon} in raw data files!"
+
+                If args.strict Then
+                    Throw New MissingFieldException(msg)
+                Else
+                    Call msg.Warning
+                    Return
+                End If
+            End If
 
             For Each file In files
                 Dim fileName As String = file.Key
