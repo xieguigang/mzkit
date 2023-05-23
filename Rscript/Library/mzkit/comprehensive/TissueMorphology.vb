@@ -216,6 +216,8 @@ Module TissueMorphology
 
                 If Not pixel Is Nothing Then
                     tags.Add(pixel.sampleTag)
+                Else
+                    tags.Add(missing)
                 End If
             Next
 
@@ -290,6 +292,7 @@ Module TissueMorphology
                 .label = TissueMorphology.missing,
                 .points = missing.ToArray
             }}) _
+            .Where(Function(r) r.nsize > 0) _
             .ToArray
     End Function
 
