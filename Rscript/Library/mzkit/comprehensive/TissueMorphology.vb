@@ -177,11 +177,11 @@ Module TissueMorphology
 
     <Extension>
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
-        Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.CreateAxisTicks
-        Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.CreateAxisTicks
+        Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
+        Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
         Dim rect = canvas.PlotRegion
-        Dim lx = d3js.scale.linear.domain(values:=x).range(integers:={rect.Left, rect.Right})
-        Dim ly = d3js.scale.linear.domain(values:=y).range(integers:={rect.Top, rect.Height})
+        Dim lx = d3js.scale.linear.domain(range:=x).range(integers:={rect.Left, rect.Right})
+        Dim ly = d3js.scale.linear.domain(range:=y).range(integers:={rect.Top, rect.Height})
         Dim scale_x As Double = stdNum.Abs(lx(2) - lx(1))
         Dim scale_y As Double = stdNum.Abs(ly(2) - ly(1))
         Dim dotSize As New SizeF(scale_x, scale_y)
