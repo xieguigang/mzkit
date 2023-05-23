@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::85adcb71e40aabb06132caa56ac913af, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 823
-    '    Code Lines: 559
-    ' Comment Lines: 163
-    '   Blank Lines: 101
-    '     File Size: 33.22 KB
+' Summaries:
 
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-    '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-    '               KnnFill, layer, LimitIntensityRange, LoadPixels, MSICoverage
-    '               openIndexedCacheFile, plotMSI, printLayer, renderRowScans, RGB
-    '               testLayer, TrIQRange, viewer, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 823
+'    Code Lines: 559
+' Comment Lines: 163
+'   Blank Lines: 101
+'     File Size: 33.22 KB
+
+
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
+'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
+'               KnnFill, layer, LimitIntensityRange, LoadPixels, MSICoverage
+'               openIndexedCacheFile, plotMSI, printLayer, renderRowScans, RGB
+'               testLayer, TrIQRange, viewer, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -104,8 +104,46 @@ Module MsImaging
 
     Sub New()
         Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
+
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
     End Sub
+
+    ''' <summary>
+    ''' split the ms-imaging layer into multiple parts
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args">
+    ''' default is split layer into multiple sample source
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("split.layer")>
+    Public Function splitLayer(<RRawVectorArgument> x As Object,
+                               <RListObjectArgument>
+                               args As list,
+                               Optional env As Environment = Nothing) As Object
+
+        If TypeOf x Is SingleIonLayer Then
+            Dim layer As SingleIonLayer = x
+            Dim splits = layer.MSILayer _
+                .GroupBy(Function(a) a.sampleTag) _
+                .ToDictionary(Function(si)
+                                  Return si.Key
+                              End Function,
+                              Function(si)
+                                  Return CObj(New SingleIonLayer With {
+                                     .DimensionSize = layer.DimensionSize,
+                                     .IonMz = layer.IonMz,
+                                     .MSILayer = si.ToArray
+                                  })
+                              End Function)
+
+            Return New list With {.slots = splits}
+        Else
+            Return Internal.debug.stop(New NotImplementedException, envir:=env)
+        End If
+    End Function
 
     Private Function printLayer(ion As SingleIonLayer) As String
         Dim sb As New StringBuilder
