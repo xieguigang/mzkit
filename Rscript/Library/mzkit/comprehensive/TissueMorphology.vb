@@ -58,11 +58,14 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -200,6 +203,28 @@ Module TissueMorphology
 
     Const missing As String = NameOf(missing)
 
+    <ExportAPI("tag_samples")>
+    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion()) As Object
+        Dim reader As PixelReader = MSI.pixelReader
+
+        For Each tissue As TissueRegion In tissues
+            Dim tags As New List(Of String)
+            Dim pixel As PixelScan
+
+            For Each p As Point In tissue.points
+                pixel = reader.GetPixel(p.X, p.Y)
+
+                If Not pixel Is Nothing Then
+                    tags.Add(pixel.sampleTag)
+                End If
+            Next
+
+            tissue.tags = tags.ToArray
+        Next
+
+        Return tissues
+    End Function
+
     ''' <summary>
     ''' extract the missing tissue pixels based on the ion layer data
     ''' </summary>
@@ -214,21 +239,43 @@ Module TissueMorphology
         Dim missing As New List(Of Point)
         Dim intersectList As New List(Of TissueRegion)
         Dim MSI = Grid(Of PixelData).Create(layer.MSILayer)
+        Dim multiple_samples As Boolean = layer.hasMultipleSamples
+        Dim sample_tag As String = layer.sampleTags.FirstOrDefault
 
         For Each region As TissueRegion In tissues
             Dim region_filter As New List(Of Point)
 
-            For Each point As Point In region.points
-                Dim hit As Boolean = False
+            If region.tags.IsNullOrEmpty OrElse multiple_samples Then
+                For Each point As Point In region.points
+                    Dim hit As Boolean = False
 
-                Call MSI.GetData(point.X, point.Y, hit)
+                    Call MSI.GetData(point.X, point.Y, hit)
 
-                If Not hit Then
-                    Call missing.Add(point)
-                Else
-                    Call region_filter.Add(point)
-                End If
-            Next
+                    If Not hit Then
+                        Call missing.Add(point)
+                    Else
+                        Call region_filter.Add(point)
+                    End If
+                Next
+            Else
+                For i As Integer = 0 To region.points.Length - 1
+                    Dim point As Point = region.points(i)
+                    Dim tag As String = region.tags(i)
+                    Dim hit As Boolean = False
+
+                    If tag <> sample_tag Then
+                        Continue For
+                    End If
+
+                    Call MSI.GetData(point.X, point.Y, hit)
+
+                    If Not hit Then
+                        Call missing.Add(point)
+                    Else
+                        Call region_filter.Add(point)
+                    End If
+                Next
+            End If
 
             Call intersectList.Add(New TissueRegion With {
                 .color = region.color,
