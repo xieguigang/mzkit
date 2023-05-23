@@ -233,16 +233,31 @@ Module MSI
     ''' <param name="file">
     ''' imML/mzPack
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns the pixels in dimension size(a tuple list data with slot keys w and h) 
+    ''' if the count is set to FALSE, by default; otherwise this function will return an integer value for
+    ''' indicates the real pixel counts number if the count parameter is set to TRUE.
+    ''' </returns>
     <ExportAPI("pixels")>
     <RApiReturn("w", "h")>
-    Public Function pixels(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function pixels(file As Object,
+                           Optional count As Boolean = False,
+                           Optional env As Environment = Nothing) As Object
+
         If TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("imzml") Then
             Return getimzmlMetadata(file, env)
         ElseIf TypeOf file Is String AndAlso CStr(file).ExtensionSuffix("mzpack") Then
             Return getmzpackFileMetadata(file, env)
         ElseIf TypeOf file Is mzPack Then
             Return getmzPackMetadata(file, env)
+        ElseIf TypeOf file Is SingleIonLayer Then
+            Dim layer As SingleIonLayer = DirectCast(file, SingleIonLayer)
+
+            If count Then
+                Return layer.MSILayer.Length
+            Else
+                Return layer.DimensionSize
+            End If
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If

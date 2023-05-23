@@ -58,6 +58,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
@@ -65,7 +66,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -188,12 +188,22 @@ Module TissueMorphology
         Dim dot As RectangleF
         Dim scaler As New DataScaler() With {.X = lx, .Y = ly, .region = rect}
         Dim fillColor As SolidBrush
+        Dim dims As Size = InteropArgumentHelper.getSize(args.getByName("dims"), env, [default]:=Nothing).SizeParser
+        Dim interplate As PixelData()
+
+        If dims.IsEmpty Then
+            Return Internal.debug.stop("missng of the ms-imaging dimension size value!", env)
+        End If
 
         For Each region As TissueRegion In tissue.OrderBy(Function(r) If(r.label = missing, 0, 1))
             fillColor = New SolidBrush(region.color)
+            interplate = region.points _
+                .Select(Function(xy) New PixelData(xy) With {.intensity = 1}) _
+                .ToArray _
+                .KnnFill(dims, 4, 4)
 
-            For Each p As Point In region.points
-                dot = New RectangleF(scaler.Translate(p.X, p.Y), dotSize)
+            For Each p As PixelData In interplate
+                dot = New RectangleF(scaler.Translate(p.x, p.y), dotSize)
                 g.FillRectangle(fillColor, dot)
             Next
         Next

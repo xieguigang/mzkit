@@ -103,6 +103,11 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
         Me.intensity = into
     End Sub
 
+    Sub New(p As Point)
+        x = p.X
+        y = p.Y
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"
     End Function
