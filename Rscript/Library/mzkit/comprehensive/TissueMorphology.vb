@@ -1,76 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::c4e0ccf253ae264cf3f9def982afe714, mzkit\Rscript\Library\mzkit\comprehensive\TissueMorphology.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 396
-    '    Code Lines: 274
-    ' Comment Lines: 78
-    '   Blank Lines: 44
-    '     File Size: 14.51 KB
+' Summaries:
 
 
-    ' Module TissueMorphology
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
-    '               gridding, loadSpatialMapping, loadTissue, loadUMAP, SplitMapping
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 396
+'    Code Lines: 274
+' Comment Lines: 78
+'   Blank Lines: 44
+'     File Size: 14.51 KB
+
+
+' Module TissueMorphology
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
+'               gridding, loadSpatialMapping, loadTissue, loadUMAP, SplitMapping
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
 
 ''' <summary>
 ''' spatial tissue region handler
@@ -84,6 +90,8 @@ Module TissueMorphology
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(TissueRegion()), AddressOf createTissueTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(UMAPPoint()), AddressOf createUMAPTable)
+
+        Call Internal.generic.add("plot", GetType(TissueRegion()), AddressOf PlotTissueMap)
     End Sub
 
     Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
@@ -136,6 +144,35 @@ Module TissueMorphology
                 .Select(Function(xi, i) $"{xi},{py(i)}") _
                 .ToArray
         }
+    End Function
+
+    Public Function PlotTissueMap(tissue As TissueRegion(), args As list, env As Environment) As Object
+        If args.CheckGraphicsDeviceExists Then
+            ' draw on current graphics context
+            Dim dev As graphicsDevice = RgraphicsDev.GetCurrentDevice
+            ' config of the drawing layout
+            Dim padding As Padding = InteropArgumentHelper.getPadding(dev.getArgumentValue("padding", args))
+            Dim canvas As New GraphicsRegion(dev.g.Size, padding)
+
+            Return dev.g.PlotTissueMap(canvas, tissue, args, env)
+        Else
+            Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env)
+            Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"))
+            Dim bg As String = RColorPalette.getColor(args.getByName("bg"), "white")
+
+            Return g.GraphicsPlots(
+                size.SizeParser,
+                padding,
+                bg,
+                Sub(ByRef g, canvas)
+                    Call g.PlotTissueMap(canvas, tissue, args, env)
+                End Sub, driver:=env.getDriver)
+        End If
+    End Function
+
+    <Extension>
+    Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
+
     End Function
 
     ''' <summary>
