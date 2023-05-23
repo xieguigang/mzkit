@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
@@ -76,8 +77,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports REnv = SMRUCC.Rsharp.Runtime
 Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' spatial tissue region handler
@@ -173,7 +174,28 @@ Module TissueMorphology
 
     <Extension>
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
+        Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.CreateAxisTicks
+        Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.CreateAxisTicks
+        Dim rect = canvas.PlotRegion
+        Dim lx = d3js.scale.linear.domain(values:=x).range(integers:={rect.Left, rect.Right})
+        Dim ly = d3js.scale.linear.domain(values:=y).range(integers:={rect.Top, rect.Height})
+        Dim scale_x As Double = stdNum.Abs(lx(2) - lx(1))
+        Dim scale_y As Double = stdNum.Abs(ly(2) - ly(1))
+        Dim dotSize As New SizeF(scale_x, scale_y)
+        Dim dot As RectangleF
+        Dim scaler As New DataScaler() With {.X = lx, .Y = ly, .region = rect}
+        Dim fillColor As SolidBrush
 
+        For Each region As TissueRegion In tissue
+            fillColor = New SolidBrush(region.color)
+
+            For Each p As Point In region.points
+                dot = New RectangleF(scaler.Translate(p.X, p.Y), dotSize)
+                g.FillRectangle(fillColor, dot)
+            Next
+        Next
+
+        Return Nothing
     End Function
 
     ''' <summary>
