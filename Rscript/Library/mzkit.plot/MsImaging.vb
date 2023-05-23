@@ -514,7 +514,7 @@ Module MsImaging
         Return New SingleIonLayer With {
             .IonMz = Nothing,
             .MSILayer = layerPixels,
-            .DimensionSize = polygon.GetSize
+            .DimensionSize = polygon.GetDimension
         }
     End Function
 
