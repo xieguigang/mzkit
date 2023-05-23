@@ -95,6 +95,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
+Imports Point2D = System.Drawing.Point
 
 ''' <summary>
 ''' Visual MS imaging data(*.imzML)
@@ -934,7 +935,7 @@ Module MsImaging
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.pixels")>
-    <RApiReturn(GetType(String), GetType(Point))>
+    <RApiReturn(GetType(String), GetType(Point2D))>
     Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
         If character Then
             Return layer.MSILayer _
@@ -942,7 +943,7 @@ Module MsImaging
                 .ToArray
         Else
             Return layer.MSILayer _
-                .Select(Function(p) New Point(p.x, p.y)) _
+                .Select(Function(p) New Point2D(p.x, p.y)) _
                 .ToArray
         End If
     End Function
