@@ -84,6 +84,8 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -297,6 +299,15 @@ Module MsImaging
         Return New XICReader(stream.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' Extract a spectrum matrix object from MSI data by a given set of m/z values
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="title"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A spectrum matrix data of m/z value assocated with the intensity value</returns>
     <ExportAPI("FilterMz")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function FilterMz(viewer As Drawer, mz As Double(),
@@ -327,6 +338,16 @@ Module MsImaging
         }
     End Function
 
+    ''' <summary>
+    ''' get the ms1 spectrum data in a specific pixel position
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
@@ -381,6 +402,13 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' get a pixel data
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
     <ExportAPI("pixel")>
     Public Function GetPixel(data As XICReader, x As Integer, y As Integer) As ibdPixel
         Return data.GetPixel(x, y)
@@ -422,6 +450,72 @@ Module MsImaging
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' merge multiple layers via intensity sum
+    ''' </summary>
+    ''' <param name="layers"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("sum_layers")>
+    Public Function sumLayer(<RRawVectorArgument> layers As Object,
+                             Optional tolerance As Object = "da:0.1",
+                             Optional intocutoff As Double = 0.3,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim pixels = pipeline.TryCreatePipeline(Of PixelData)(layers, env)
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+        If pixels.isError Then
+            Return pixels.getError
+        End If
+
+        Dim layer_groups = pixels _
+            .populates(Of PixelData)(env) _
+            .GroupBy(Function(x) x.mz, mzdiff.TryCast(Of Tolerance)) _
+            .ToArray
+        Dim filter As New List(Of PixelData)
+        Dim all As New List(Of PixelData)
+
+        For Each i In layer_groups
+            Dim q = i.Select(Function(p) p.intensity).GKQuantile
+            Dim cutoff As Double = q.Query(intocutoff)
+
+            Call all.AddRange(i)
+            Call filter.AddRange(From p As PixelData In i Where p.intensity >= cutoff)
+        Next
+
+        Dim polygon As New Polygon2D(all.ToArray)
+        ' re-assembly a new layer object
+        Dim layerPixels = filter.GroupBy(Function(p) $"{p.x}+{p.y}") _
+            .AsParallel _
+            .Select(Function(p)
+                        Dim intensity As Double = Aggregate pi In p Into Sum(pi.intensity)
+                        Dim copy = p.First
+                        Dim tag As String = p.Select(Function(xi) xi.sampleTag) _
+                            .Where(Function(si) Not si.StringEmpty) _
+                            .FirstOrDefault
+
+                        Return New PixelData With {
+                            .x = copy.x,
+                            .y = copy.y,
+                            .sampleTag = tag,
+                            .intensity = intensity,
+                            .level = 0,
+                            .mz = -1
+                        }
+                    End Function) _
+            .ToArray
+
+        Return New SingleIonLayer With {
+            .IonMz = Nothing,
+            .MSILayer = layerPixels,
+            .DimensionSize = polygon.GetSize
+        }
     End Function
 
     ''' <summary>
