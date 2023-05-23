@@ -57,6 +57,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -173,6 +174,52 @@ Module TissueMorphology
     <Extension>
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
 
+    End Function
+
+    ''' <summary>
+    ''' extract the missing tissue pixels based on the ion layer data
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="tissues"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function used for generates the tissue map segment plot data for some special charts
+    ''' </remarks>
+    <ExportAPI("intersect_layer")>
+    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion()) As Object
+        Dim missing As New List(Of Point)
+        Dim intersectList As New List(Of TissueRegion)
+        Dim MSI = Grid(Of PixelData).Create(layer.MSILayer)
+
+        For Each region As TissueRegion In tissues
+            Dim region_filter As New List(Of Point)
+
+            For Each point As Point In region.points
+                Dim hit As Boolean = False
+
+                Call MSI.GetData(point.X, point.Y, hit)
+
+                If Not hit Then
+                    Call missing.Add(point)
+                Else
+                    Call region_filter.Add(point)
+                End If
+            Next
+
+            Call intersectList.Add(New TissueRegion With {
+                .color = region.color,
+                .label = region.label,
+                .points = region_filter.ToArray
+            })
+        Next
+
+        Return intersectList _
+            .JoinIterates({New TissueRegion With {
+                .color = Color.LightGray,
+                .label = "missing",
+                .points = missing.ToArray
+            }}) _
+            .ToArray
     End Function
 
     ''' <summary>
