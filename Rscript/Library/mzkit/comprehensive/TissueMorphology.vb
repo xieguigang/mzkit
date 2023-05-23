@@ -153,13 +153,13 @@ Module TissueMorphology
             ' draw on current graphics context
             Dim dev As graphicsDevice = RgraphicsDev.GetCurrentDevice
             ' config of the drawing layout
-            Dim padding As Padding = InteropArgumentHelper.getPadding(dev.getArgumentValue("padding", args))
+            Dim padding As Padding = InteropArgumentHelper.getPadding(dev.getArgumentValue("layout", args))
             Dim canvas As New GraphicsRegion(dev.g.Size, padding)
 
             Return dev.g.PlotTissueMap(canvas, tissue, args, env)
         Else
             Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env)
-            Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"))
+            Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("layout"))
             Dim bg As String = RColorPalette.getColor(args.getByName("bg"), "white")
 
             Return g.GraphicsPlots(
@@ -186,7 +186,7 @@ Module TissueMorphology
         Dim scaler As New DataScaler() With {.X = lx, .Y = ly, .region = rect}
         Dim fillColor As SolidBrush
 
-        For Each region As TissueRegion In tissue
+        For Each region As TissueRegion In tissue.OrderBy(Function(r) If(r.label = missing, 0, 1))
             fillColor = New SolidBrush(region.color)
 
             For Each p As Point In region.points
@@ -197,6 +197,8 @@ Module TissueMorphology
 
         Return Nothing
     End Function
+
+    Const missing As String = NameOf(missing)
 
     ''' <summary>
     ''' extract the missing tissue pixels based on the ion layer data
@@ -238,7 +240,7 @@ Module TissueMorphology
         Return intersectList _
             .JoinIterates({New TissueRegion With {
                 .color = Color.LightGray,
-                .label = "missing",
+                .label = TissueMorphology.missing,
                 .points = missing.ToArray
             }}) _
             .ToArray
