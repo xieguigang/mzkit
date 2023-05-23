@@ -2,6 +2,7 @@
 
 
 
++ [split.layer](MsImaging/split.layer.1) 
 + [TrIQ](MsImaging/TrIQ.1) 
 + [intensityLimits](MsImaging/intensityLimits.1) 
 + [write.mzImage](MsImaging/write.mzImage.1) 
@@ -11,6 +12,7 @@
 + [viewer](MsImaging/viewer.1) 
 + [pixel](MsImaging/pixel.1) 
 + [ionLayers](MsImaging/ionLayers.1) 
++ [sum_layers](MsImaging/sum_layers.1) 
 + [rgb](MsImaging/rgb.1) 
 + [MSIlayer](MsImaging/MSIlayer.1) 
 + [intensity](MsImaging/intensity.1) 
