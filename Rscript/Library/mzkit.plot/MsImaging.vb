@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -489,6 +490,37 @@ Module MsImaging
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' set cluster tags to the pixel tag property data
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="segments"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("tag_layers")>
+    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object, Optional env As Environment = Nothing) As Object
+        Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
+
+        If pointCluster.isError Then
+            Return pointCluster.getError
+        End If
+
+        Dim raster = Grid(Of PixelData).Create(layer.MSILayer)
+
+        For Each cluster As TissueRegion In pointCluster.populates(Of TissueRegion)(env)
+            For Each point As Point2D In cluster.points
+                Dim hit As Boolean = False
+                Dim p As PixelData = raster.GetData(point.X, point.Y, hit:=hit)
+
+                If hit Then
+                    p.sampleTag = cluster.label
+                End If
+            Next
+        Next
+
+        Return layer
     End Function
 
     ''' <summary>

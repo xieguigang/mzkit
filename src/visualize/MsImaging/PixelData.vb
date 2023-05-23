@@ -81,7 +81,17 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
     Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, HeatMapPixel.Y
     Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
     Public Property level As Double
+
+    ''' <summary>
+    ''' target m/z of current raster pixel data for rendering
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+
+    ''' <summary>
+    ''' the string tag value could be the sample tag or the cluster region tag data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property sampleTag As String
 
     Sub New()
