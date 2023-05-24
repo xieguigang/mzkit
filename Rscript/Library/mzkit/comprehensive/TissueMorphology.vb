@@ -237,7 +237,7 @@ Module TissueMorphology
     Const missing As String = NameOf(missing)
 
     <ExportAPI("tag_samples")>
-    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion()) As Object
+    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim reader As PixelReader = MSI.pixelReader
 
         For Each tissue As TissueRegion In tissues
@@ -248,7 +248,11 @@ Module TissueMorphology
                 pixel = reader.GetPixel(p.X, p.Y)
 
                 If Not pixel Is Nothing Then
-                    tags.Add(pixel.sampleTag)
+                    Call tags.Add(If(
+                        trim_suffix,
+                        pixel.sampleTag.BaseName,
+                        pixel.sampleTag
+                    ))
                 Else
                     tags.Add(missing)
                 End If
@@ -270,12 +274,16 @@ Module TissueMorphology
     ''' this function used for generates the tissue map segment plot data for some special charts
     ''' </remarks>
     <ExportAPI("intersect_layer")>
-    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion()) As Object
+    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim missing As New List(Of Point)
         Dim intersectList As New List(Of TissueRegion)
         Dim MSI = Grid(Of PixelData).Create(layer.MSILayer)
         Dim multiple_samples As Boolean = layer.hasMultipleSamples
         Dim sample_tag As String = layer.sampleTags.FirstOrDefault
+
+        If trim_suffix Then
+            sample_tag = sample_tag.BaseName
+        End If
 
         For Each region As TissueRegion In tissues
             Dim region_filter As New List(Of Point)
