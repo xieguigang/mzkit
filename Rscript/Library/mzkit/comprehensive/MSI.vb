@@ -258,6 +258,7 @@ Module MSI
             Else
                 Return layer.DimensionSize
             End If
+
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If
