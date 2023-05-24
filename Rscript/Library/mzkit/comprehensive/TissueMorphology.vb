@@ -177,6 +177,29 @@ Module TissueMorphology
 
     <Extension>
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
+        Dim is_missing_sample As Boolean = args.getValue({"missing"}, env, [default]:=False)
+        Dim sample As String = args.getValue({"sample"}, env, [default]:="")
+
+        If is_missing_sample AndAlso Not sample.StringEmpty Then
+            tissue = tissue _
+                .Select(Function(t)
+                            Dim i = t.tags _
+                                .Select(Function(si) si = sample) _
+                                .SeqIterator _
+                                .Where(Function(ti) ti.value) _
+                                .ToArray
+
+                            Return New TissueRegion With {
+                                .color = Color.LightGray,
+                                .label = sample,
+                                .tags = i.Select(Function(a) t.tags(a.i)).ToArray,
+                                .points = i.Select(Function(a) t.points(a.i)).ToArray
+                            }
+                        End Function) _
+                .Where(Function(t) t.nsize > 0) _
+                .ToArray
+        End If
+
         Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
         Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
         Dim rect = canvas.PlotRegion
