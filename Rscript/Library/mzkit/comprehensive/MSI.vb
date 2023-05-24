@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -258,7 +259,14 @@ Module MSI
             Else
                 Return layer.DimensionSize
             End If
+        ElseIf TypeOf file Is TissueRegion Then
+            Dim region As TissueRegion = file
 
+            If count Then
+                Return region.nsize
+            Else
+                Return region.GetRectangle.Size
+            End If
         Else
             Return Internal.debug.stop("unsupported file!", env)
         End If
