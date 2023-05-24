@@ -133,6 +133,10 @@ declare namespace MsImaging {
    */
    function sum_layers(layers: any, tolerance?: any, intocutoff?: number, env?: object): any;
    /**
+     * @param env default value Is ``null``.
+   */
+   function tag_layers(layer: object, segments: any, env?: object): any;
+   /**
      * @param q default value Is ``0.6``.
      * @param levels default value Is ``100``.
      * @param env default value Is ``null``.

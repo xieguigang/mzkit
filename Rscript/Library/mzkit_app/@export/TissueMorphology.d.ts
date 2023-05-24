@@ -26,6 +26,15 @@ declare namespace TissueMorphology {
    */
    function gridding(mapping: object, gridSize?: object, label?: string): any;
    /**
+    * extract the missing tissue pixels based on the ion layer data
+    * 
+    * > this function used for generates the tissue map segment plot data for some special charts
+    * 
+     * @param layer -
+     * @param tissues -
+   */
+   function intersect_layer(layer: object, tissues: object): any;
+   /**
     * load tissue region polygon data
     * 
     * 
@@ -68,6 +77,9 @@ declare namespace TissueMorphology {
    /**
    */
    function splitMapping(mapping: object): object;
+   /**
+   */
+   function tag_samples(MSI: object, tissues: object): any;
    /**
     * create a collection of the tissue region dataset
     * 

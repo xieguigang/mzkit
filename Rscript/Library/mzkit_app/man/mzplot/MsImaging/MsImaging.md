@@ -12,6 +12,7 @@
 + [viewer](MsImaging/viewer.1) 
 + [pixel](MsImaging/pixel.1) 
 + [ionLayers](MsImaging/ionLayers.1) 
++ [tag_layers](MsImaging/tag_layers.1) 
 + [sum_layers](MsImaging/sum_layers.1) 
 + [rgb](MsImaging/rgb.1) 
 + [MSIlayer](MsImaging/MSIlayer.1) 
