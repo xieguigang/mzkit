@@ -126,6 +126,14 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     ''' <summary>
+    ''' Populate all pixels from the MS-Imaging raw data pack
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function LoadPixels() As IEnumerable(Of PixelScan)
+        Return pixelReader.AllPixels
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="mz"></param>
