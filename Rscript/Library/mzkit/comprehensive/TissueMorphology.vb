@@ -177,6 +177,29 @@ Module TissueMorphology
 
     <Extension>
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
+        Dim is_missing_sample As Boolean = args.getValue({"missing"}, env, [default]:=False)
+        Dim sample As String = args.getValue({"sample"}, env, [default]:="")
+
+        If is_missing_sample AndAlso Not sample.StringEmpty Then
+            tissue = tissue _
+                .Select(Function(t)
+                            Dim i = t.tags _
+                                .Select(Function(si) si = sample) _
+                                .SeqIterator _
+                                .Where(Function(ti) ti.value) _
+                                .ToArray
+
+                            Return New TissueRegion With {
+                                .color = Color.LightGray,
+                                .label = sample,
+                                .tags = i.Select(Function(a) t.tags(a.i)).ToArray,
+                                .points = i.Select(Function(a) t.points(a.i)).ToArray
+                            }
+                        End Function) _
+                .Where(Function(t) t.nsize > 0) _
+                .ToArray
+        End If
+
         Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
         Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
         Dim rect = canvas.PlotRegion
@@ -214,7 +237,7 @@ Module TissueMorphology
     Const missing As String = NameOf(missing)
 
     <ExportAPI("tag_samples")>
-    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion()) As Object
+    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim reader As PixelReader = MSI.pixelReader
 
         For Each tissue As TissueRegion In tissues
@@ -225,7 +248,11 @@ Module TissueMorphology
                 pixel = reader.GetPixel(p.X, p.Y)
 
                 If Not pixel Is Nothing Then
-                    tags.Add(pixel.sampleTag)
+                    Call tags.Add(If(
+                        trim_suffix,
+                        pixel.sampleTag.BaseName,
+                        pixel.sampleTag
+                    ))
                 Else
                     tags.Add(missing)
                 End If
@@ -247,12 +274,16 @@ Module TissueMorphology
     ''' this function used for generates the tissue map segment plot data for some special charts
     ''' </remarks>
     <ExportAPI("intersect_layer")>
-    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion()) As Object
+    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim missing As New List(Of Point)
         Dim intersectList As New List(Of TissueRegion)
         Dim MSI = Grid(Of PixelData).Create(layer.MSILayer)
         Dim multiple_samples As Boolean = layer.hasMultipleSamples
         Dim sample_tag As String = layer.sampleTags.FirstOrDefault
+
+        If trim_suffix Then
+            sample_tag = sample_tag.BaseName
+        End If
 
         For Each region As TissueRegion In tissues
             Dim region_filter As New List(Of Point)
