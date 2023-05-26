@@ -32,8 +32,10 @@ declare namespace TissueMorphology {
     * 
      * @param layer -
      * @param tissues -
+     * @param trim_suffix 
+     * + default value Is ``false``.
    */
-   function intersect_layer(layer: object, tissues: object): any;
+   function intersect_layer(layer: object, tissues: object, trim_suffix?: boolean): any;
    /**
     * load tissue region polygon data
     * 
@@ -78,8 +80,9 @@ declare namespace TissueMorphology {
    */
    function splitMapping(mapping: object): object;
    /**
+     * @param trim_suffix default value Is ``false``.
    */
-   function tag_samples(MSI: object, tissues: object): any;
+   function tag_samples(MSI: object, tissues: object, trim_suffix?: boolean): any;
    /**
     * create a collection of the tissue region dataset
     * 
