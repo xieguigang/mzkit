@@ -82,7 +82,7 @@ Module LinearReport
         End If
     End Function
 
-    Public Function CreateHtml(obj As Object, args As list, env As Environment) As String
+    Public Function CreateHtml(obj As Object, args As list, env As Environment) As Object
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
         Dim report As ScriptBuilder = getBlankReport(title:="Targeted Quantification Linear Models")
         Dim samples As QuantifyScan() = Nothing

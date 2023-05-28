@@ -54,7 +54,9 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -65,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 Imports stdNum = System.Math
@@ -86,8 +89,12 @@ Namespace MRM
                 .ToArray
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetTargetROIPeak(ion As IonPair, chr As chromatogramTicks, args As MRMArguments) As ROIPeak
-            Dim ticks As ChromatogramTick() = chr.Ticks
+            Return GetTargetROIPeak(ion, chr.Ticks, args)
+        End Function
+
+        Public Shared Function GetTargetROIPeak(ion As IonPair, ticks As ChromatogramTick(), args As MRMArguments) As ROIPeak
             Dim ROIs = ticks _
                 .Shadows _
                 .PopulateROI(
@@ -134,6 +141,33 @@ Namespace MRM
         ''' 
         ''' </summary>
         ''' <param name="ion">the target ion</param>
+        ''' <param name="ticks">chromatogram data</param>
+        ''' <param name="preferName"></param>
+        ''' <returns></returns>
+        Public Shared Function GetTargetPeak(ion As IonPair,
+                                             ticks As ChromatogramTick(),
+                                             args As MRMArguments,
+                                             Optional preferName As Boolean = False) As TargetPeakPoint
+
+            Dim peak As ROIPeak = GetTargetROIPeak(ion, ticks, args)
+
+            If peak Is Nothing Then
+                Return Nothing
+            Else
+                Return New TargetPeakPoint With {
+                    .Name = If(preferName, ion.name, ion.accession),
+                    .Peak = peak,
+                    .ChromatogramSummary = peak.ticks _
+                        .Summary _
+                        .ToArray
+                }
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ion">the target ion</param>
         ''' <param name="chr">chromatogram data</param>
         ''' <param name="preferName"></param>
         ''' <returns></returns>
@@ -170,13 +204,57 @@ Namespace MRM
             Next
         End Function
 
+        Public Shared Iterator Function LoadSamples(files As Dictionary(Of String, ScanMS1()), qIon As IonPair, args As MRMArguments) As IEnumerable(Of TargetPeakPoint)
+            Dim mzdiff = args.tolerance
+            Dim ionSet = files.Values.IteratesALL _
+                .Select(Function(si) si.meta.Keys).IteratesALL.Distinct _
+                .Where(Function(a) a.StartsWith("MRM:")) _
+                .Where(Function(si)
+                           si = si.Replace("MRM:", "").Trim
+                           Dim t = si.Split("/"c).Select(AddressOf Strings.Trim).Select(Function(s) s.ParseDouble).ToArray
+
+                           Return qIon.Assert(t(0), t(1), mzdiff)
+                       End Function) _
+                .FirstOrDefault
+
+
+            If ionSet Is Nothing Then
+                Dim msg As String = $"Missing target ion {qIon} in raw data files!"
+
+                If args.strict Then
+                    Throw New MissingFieldException(msg)
+                Else
+                    Call msg.Warning
+                    Return
+                End If
+            End If
+
+            For Each file In files
+                Dim fileName As String = file.Key
+                Dim ionLine = file.Value _
+                    .Select(Function(si)
+                                Return New ChromatogramTick(si.rt, si.into(Integer.Parse(si.meta(ionSet))))
+                            End Function) _
+                    .OrderBy(Function(ti) ti.Time) _
+                    .ToArray
+                Dim peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
+
+                If Not peakTicks Is Nothing Then
+                    peakTicks.SampleName = fileName
+                    Yield peakTicks
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="files"></param>
         ''' <param name="qIon">the MRM quantify ion pair</param>
         ''' <returns></returns>
-        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As IonPair, args As MRMArguments) As IEnumerable(Of TargetPeakPoint)
+        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)),
+                                                    qIon As IonPair,
+                                                    args As MRMArguments) As IEnumerable(Of TargetPeakPoint)
             Dim raw As indexedmzML
             Dim rawList As chromatogramTicks()
             Dim ionLine As chromatogramTicks
@@ -189,11 +267,22 @@ Namespace MRM
                 ionLine = rawList _
                     .Where(Function(c) qIon.Assert(c, massError)) _
                     .FirstOrDefault
-                peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
 
-                If Not peakTicks Is Nothing Then
-                    peakTicks.SampleName = file.Name
-                    Yield peakTicks
+                If ionLine Is Nothing Then
+                    Dim msg As String = $"Missing target ion {qIon} in raw data file {file}!"
+
+                    If args.strict Then
+                        Throw New MissingFieldException(msg)
+                    Else
+                        Call msg.Warning
+                    End If
+                Else
+                    peakTicks = MRMIonExtract.GetTargetPeak(qIon, ionLine, args, preferName:=True)
+
+                    If Not peakTicks Is Nothing Then
+                        peakTicks.SampleName = file.Name
+                        Yield peakTicks
+                    End If
                 End If
             Next
         End Function

@@ -163,10 +163,15 @@ declare namespace MSI {
     * 
     * 
      * @param file imML/mzPack
+     * @param count 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
+     * @return this function will returns the pixels in dimension size(a tuple list data with slot keys w and h) 
+     *  if the count is set to FALSE, by default; otherwise this function will return an integer value for
+     *  indicates the real pixel counts number if the count parameter is set to TRUE.
    */
-   function pixels(file: any, env?: object): object;
+   function pixels(file: any, count?: boolean, env?: object): object;
    module row {
       /**
        * each raw data file is a row scan data

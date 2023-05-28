@@ -114,6 +114,21 @@ Public Class SingleIonLayer
         End Get
     End Property
 
+    Public ReadOnly Property hasMultipleSamples As Boolean
+        Get
+            Return sampleTags.Length > 1
+        End Get
+    End Property
+
+    Public ReadOnly Property sampleTags As String()
+        Get
+            Return MSILayer _
+                .Select(Function(a) a.sampleTag) _
+                .Distinct _
+                .ToArray
+        End Get
+    End Property
+
     ''' <summary>
     ''' Removes pixels which relative intensity value is 
     ''' less than the given <paramref name="intocutoff"/> 
