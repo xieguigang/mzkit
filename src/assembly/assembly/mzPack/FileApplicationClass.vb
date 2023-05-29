@@ -102,7 +102,7 @@ Namespace mzData.mzWebCache
         ''' <summary>
         ''' [imported] 10x genomics spatial imaging
         ''' </summary>
-        <Description("A1ACD1CD-3B16-4C47-B3ED-9D89EF3F2DCB")> STImaging
+        <Description("A1ACD1CD-3B16-4C47-B3ED-9D89EF3F2DCB")> STImaging = 100
     End Enum
 
 End Namespace
