@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
 
+    ''' <summary>
+    ''' check file type via the mzML vocabulary is exists or not
+    ''' </summary>
     Public Class RawScanParser
 
         Public Const SRMSignature As String = "selected reaction monitoring chromatogram"
@@ -88,7 +91,7 @@ Namespace MarkupData.mzML
         End Function
 
         ''' <summary>
-        ''' LCMSMS MRM
+        ''' LC-MSMS MRM
         ''' </summary>
         ''' <param name="mzml"></param>
         ''' <returns></returns>
