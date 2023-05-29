@@ -1,5 +1,7 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "MRMLinear" from "mz_quantify";
+//
 // ref=mzkit.MRMkit@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**

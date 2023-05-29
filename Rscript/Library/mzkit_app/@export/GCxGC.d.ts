@@ -1,5 +1,7 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "GCxGC" from "mzkit";
+//
 // ref=mzkit.GCxGC@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**

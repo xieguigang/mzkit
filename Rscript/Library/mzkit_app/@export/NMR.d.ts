@@ -1,5 +1,8 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "NMR" from "mzkit";
+//    imports "NMR" from "mzplot";
+//
 // ref=mzkit.NMRTool@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // ref=mzkit.plotNMR@mzplot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 

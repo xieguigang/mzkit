@@ -1,5 +1,7 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "mzkit.simulator" from "mzDIA";
+//
 // ref=mzkit.ms2_simulator@mzDIA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
