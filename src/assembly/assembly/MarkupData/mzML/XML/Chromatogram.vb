@@ -73,8 +73,18 @@ Namespace MarkupData.mzML
 
     Public Class chromatogram : Inherits BinaryData
 
+#Region "MRM Ion Pair"
+        ''' <summary>
+        ''' MRM Q1
+        ''' </summary>
+        ''' <returns></returns>
         Public Property precursor As precursor
+        ''' <summary>
+        ''' MRM Q3
+        ''' </summary>
+        ''' <returns></returns>
         Public Property product As product
+#End Region
 
         Public Overrides Function ToString() As String
             If id = "TIC" Then
