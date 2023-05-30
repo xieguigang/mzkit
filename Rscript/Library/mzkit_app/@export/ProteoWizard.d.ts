@@ -1,5 +1,7 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "ProteoWizard" from "mzkit";
+//
 // ref=mzkit.ProteoWizard@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**

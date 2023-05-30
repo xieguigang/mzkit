@@ -1,5 +1,7 @@
 ﻿// export R# package module type define for javascript/typescript language
 //
+//    imports "annotation" from "mzkit";
+//
 // ref=mzkit.library@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**

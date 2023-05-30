@@ -71,6 +71,11 @@ Namespace MarkupData.mzML
         Public Property run As run
         Public Property fileDescription As fileDescription
 
+        ''' <summary>
+        ''' load all ion channels (works for MRM ion paire)
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
             Return MarkupData.mzML.LoadChromatogramList(path)
