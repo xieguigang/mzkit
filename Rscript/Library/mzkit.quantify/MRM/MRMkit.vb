@@ -88,7 +88,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports stdNum = System.Math
-Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
 ''' <summary>
 ''' MRM Targeted Metabolomics
