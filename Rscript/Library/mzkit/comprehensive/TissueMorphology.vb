@@ -236,8 +236,35 @@ Module TissueMorphology
 
     Const missing As String = NameOf(missing)
 
+    ''' <summary>
+    ''' Add tissue region label to the pixels of the ms-imaging data
+    ''' </summary>
+    ''' <param name="MSI">
+    ''' the ms-imaging data to tag the region label, value type of this parameter
+    ''' could be a set of point data or a ms-imaging data drawer wrapper
+    ''' </param>
+    ''' <param name="tissues"></param>
+    ''' <param name="trim_suffix"></param>
+    ''' <returns></returns>
     <ExportAPI("tag_samples")>
-    Public Function tag_samples(MSI As Drawer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
+    Public Function tag_samples(<RRawVectorArgument>
+                                MSI As Object,
+                                tissues As TissueRegion(),
+                                Optional trim_suffix As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
+        If MSI Is Nothing Then
+            Call env.AddMessage("the required spatial spot data is nothing!")
+            Return Nothing
+        End If
+        If TypeOf MSI Is Drawer Then
+            Return TagSampleLabels(MSI, tissues, trim_suffix)
+        Else
+            Return GetPointLabels(tissues, MSI, trim_suffix, env)
+        End If
+    End Function
+
+    Private Function TagSampleLabels(MSI As Drawer, tissues As TissueRegion(), trim_suffix As Boolean) As Object
         Dim reader As PixelReader = MSI.pixelReader
 
         For Each tissue As TissueRegion In tissues
@@ -262,6 +289,69 @@ Module TissueMorphology
         Next
 
         Return tissues
+    End Function
+
+    Private Function GetPointLabels(tissues As TissueRegion(), pixels As Object, trim_suffix As Boolean, env As Environment) As Object
+        Dim spatialLabels = tissues _
+            .ExtractSpatialSpots _
+            .DoCall(Function(ls)
+                        Return Grid(Of PhenographSpot).Create(ls)
+                    End Function)
+
+        If TypeOf pixels Is dataframe Then
+            Return FillLabels(df:=pixels, spatialLabels, trim_suffix)
+        ElseIf TypeOf pixels Is list Then
+            Dim list As list = pixels
+
+            If list.hasName("x") AndAlso list.hasName("y") Then
+                Dim x As Integer() = CLRVector.asInteger(list.getByName("x"))
+                Dim y As Integer() = CLRVector.asInteger(list.getByName("y"))
+                Dim df As New dataframe With {
+                    .columns = New Dictionary(Of String, Array) From {
+                        {"x", x},
+                        {"y", y}
+                    },
+                    .rownames = Nothing
+                }
+
+                Return FillLabels(df, spatialLabels, trim_suffix)
+            End If
+        End If
+
+        Return Message.InCompatibleType(GetType(dataframe), pixels.GetType, env)
+    End Function
+
+    Private Function FillLabels(df As dataframe, spatialLabels As Grid(Of PhenographSpot), trim_suffix As Boolean) As Object
+        Dim x As Integer() = CLRVector.asInteger(df!x)
+        Dim y As Integer() = CLRVector.asInteger(df!y)
+        Dim hit As Boolean = False
+        Dim label As String() = New String(x.Length - 1) {}
+        Dim color As String() = New String(x.Length - 1) {}
+        Dim sample As String() = New String(x.Length - 1) {}
+
+        For i As Integer = 0 To x.Length - 1
+            Dim q = spatialLabels.GetData(x(i), y(i), hit)
+
+            If hit Then
+                label(i) = q.phenograph_cluster
+                color(i) = q.color
+                sample(i) = If(
+                    trim_suffix,
+                    q.sample_tag.BaseName,
+                    q.sample_tag
+                )
+            Else
+                label(i) = "NA"
+                color(i) = "gray"
+                sample(i) = "NA"
+            End If
+        Next
+
+        Call df.add("class", label)
+        Call df.add("color", label)
+        Call df.add("sample", sample)
+
+        Return df
     End Function
 
     ''' <summary>

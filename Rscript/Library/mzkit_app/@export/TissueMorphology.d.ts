@@ -82,9 +82,19 @@ declare namespace TissueMorphology {
    */
    function splitMapping(mapping: object): object;
    /**
-     * @param trim_suffix default value Is ``false``.
+    * Add tissue region label to the pixels of the ms-imaging data
+    * 
+    * 
+     * @param MSI the ms-imaging data to tag the region label, value type of this parameter
+     *  could be a set of point data or a ms-imaging data drawer wrapper
+     * @param tissues -
+     * @param trim_suffix -
+     * 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function tag_samples(MSI: object, tissues: object, trim_suffix?: boolean): any;
+   function tag_samples(MSI: any, tissues: object, trim_suffix?: boolean, env?: object): any;
    /**
     * create a collection of the tissue region dataset
     * 
