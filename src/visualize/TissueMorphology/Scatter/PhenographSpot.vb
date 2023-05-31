@@ -55,16 +55,22 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
-Public Class PhenographSpot
+Public Class PhenographSpot : Implements IPoint2D, INamedValue
 
     ''' <summary>
     ''' the spot pixel id, in string format of ``[x,y]``.
     ''' </summary>
     ''' <returns></returns>
-    Public Property id As String
+    Public Property id As String Implements INamedValue.Key
     Public Property phenograph_cluster As String
+    Public Property x As Integer Implements IPoint2D.X
+    Public Property y As Integer Implements IPoint2D.Y
+    Public Property color As String
+    Public Property sample_tag As String
 
     Public Overrides Function ToString() As String
         Return $"[{phenograph_cluster}] {id}"
@@ -78,7 +84,9 @@ Public Class PhenographSpot
         Return New Point(x, y)
     End Function
 
-    Public Shared Function GetSpotColorIndex(phenograph As IEnumerable(Of PhenographSpot), Optional colorSet As String = "paper") As Dictionary(Of String, Color)
+    Public Shared Function GetSpotColorIndex(phenograph As IEnumerable(Of PhenographSpot),
+                                             Optional colorSet As String = "paper") As Dictionary(Of String, Color)
+
         Dim classes As String() = phenograph.Select(Function(p) p.phenograph_cluster).Distinct.ToArray
         Dim colors As Color() = Designer.GetColors(colorSet, n:=classes.Length)
         Dim index As New Dictionary(Of String, Color)

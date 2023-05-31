@@ -90,10 +90,16 @@ Public Class TissueRegion
     ''' <summary>
     ''' the pixel point count of the current region
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this property value return ZERO if the <see cref="points"/> list is nothing
+    ''' </returns>
     Public ReadOnly Property nsize As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
+            If points Is Nothing Then
+                Return 0
+            End If
+
             Return points.Length
         End Get
     End Property
