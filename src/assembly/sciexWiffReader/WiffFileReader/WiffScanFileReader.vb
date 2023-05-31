@@ -81,6 +81,8 @@ Public Class WiffScanFileReader : Implements IDisposable
     Dim wiffSample As Sample
     Dim msSample As MassSpectrometerSample
     Dim wiffExperiments As New List(Of MSExperiment)()
+    Dim type_cache As ExperimentType
+    Dim current_experiment As MSExperiment
 
     Public ReadOnly Property minRT As Single
     Public ReadOnly Property maxRT As Single
@@ -94,6 +96,12 @@ Public Class WiffScanFileReader : Implements IDisposable
     Public ReadOnly Property InstrumentName() As String
         Get
             Return Me.wiffSample.Details.InstrumentName
+        End Get
+    End Property
+
+    Public ReadOnly Property experimentType As ExperimentType
+        Get
+            Return current_experiment.Details.ExperimentType
         End Get
     End Property
 
@@ -174,7 +182,19 @@ Public Class WiffScanFileReader : Implements IDisposable
             array2(i) = massSpectrum.GetYValue(i)
         Next
 
-        Return New PeakList(array, array2)
+        If type_cache = ExperimentType.MRM Then
+            Dim info = scanInfo.details
+            Dim ions = info.MassRangeInfo _
+                .Select(Function(a)
+                            Dim i = DirectCast(a, Clearcore2.Data.DataAccess.SampleData.MRMMassRange)
+                            Return New MRM(i.Q1Mass, i.Q3Mass)
+                        End Function) _
+                .ToArray
+
+            Return New PeakList(array, array2) With {.MRM = ions}
+        Else
+            Return New PeakList(array, array2)
+        End If
     End Function
 
     Public Function GetCentroidFromScanNum(scannumber As Integer) As PeakList
@@ -221,6 +241,11 @@ Public Class WiffScanFileReader : Implements IDisposable
             Me.scanList.Clear()
 
             Call InternalSetCurrentSample(_sampleNames(sampleId))
+
+            ' the wiffExperiments will has value after the setcurrentsample 
+            ' method has been called
+            ' so needs set type cache after the method call of setcurrentsample
+            type_cache = experimentType
         End If
     End Sub
 
@@ -242,6 +267,8 @@ Public Class WiffScanFileReader : Implements IDisposable
                 Call loadScan(array, sampleName, k, j)
             Next
         Next
+
+        current_experiment = wiffExperiments.Last
 
         _minRT = Me.scanList(0).RetentionTime
         _maxRT = Me.scanList(Me.scanList.Count - 1).RetentionTime
@@ -307,7 +334,8 @@ Public Class WiffScanFileReader : Implements IDisposable
             .FragmentationType = "NULL",
             .IsolationWidth = isolationWidth,
             .IsolationCenter = isolationCenter,
-            .SampleName = sampleName
+            .SampleName = sampleName,
+            .details = details
         }
 
         If scanInfo.MSLevel > 1 Then

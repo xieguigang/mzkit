@@ -187,6 +187,8 @@ Namespace Blender
         ''' <param name="dy"></param>
         ''' <param name="q"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function KnnFill(pixels As PixelData(), size As Size,
                                 Optional dx As Integer = 3,
                                 Optional dy As Integer = 3,

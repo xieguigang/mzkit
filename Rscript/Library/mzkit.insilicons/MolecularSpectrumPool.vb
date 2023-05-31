@@ -189,6 +189,7 @@ Public Module MolecularSpectrumPool
             peak.meta.Add("organism", organism)
             peak.meta.Add("project", project)
             peak.meta.Add("instrument", instrument)
+            
             peak.lib_guid = conservedGuid(peak)
 
             If peak.file.StringEmpty Then

@@ -82,6 +82,12 @@ Public Class TissueRegion
     Public Property points As Point()
 
     ''' <summary>
+    ''' the sample tags of the <see cref="points"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property tags As String()
+
+    ''' <summary>
     ''' the pixel point count of the current region
     ''' </summary>
     ''' <returns></returns>

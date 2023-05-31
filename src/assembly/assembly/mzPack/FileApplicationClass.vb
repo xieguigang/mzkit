@@ -98,6 +98,11 @@ Namespace mzData.mzWebCache
         ''' </summary>
         <Description("7F1953AB-E36A-4DFA-88D0-2EDCD0EC8BFC")> SingleCellsMetabolomics
 #End Region
+
+        ''' <summary>
+        ''' [imported] 10x genomics spatial imaging
+        ''' </summary>
+        <Description("A1ACD1CD-3B16-4C47-B3ED-9D89EF3F2DCB")> STImaging = 100
     End Enum
 
 End Namespace

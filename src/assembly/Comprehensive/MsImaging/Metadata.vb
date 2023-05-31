@@ -101,6 +101,12 @@ Namespace MsImaging
             Return $"[{mass_range.Min.ToString("F4")} - {mass_range.Max.ToString("F4")}] {scan_x}x{scan_y}@{resolution}um"
         End Function
 
+        ''' <summary>
+        ''' 1. width
+        ''' 2. height
+        ''' 3. resolution
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMetadata() As Dictionary(Of String, String)
             Dim datalist As New Dictionary(Of String, String) From {

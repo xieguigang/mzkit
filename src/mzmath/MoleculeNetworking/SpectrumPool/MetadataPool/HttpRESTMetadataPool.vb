@@ -133,7 +133,8 @@ Namespace PoolData
                 .organism = fetch!organism,
                 .rt = Val(fetch!rt),
                 .sample_source = fetch!biosample,
-                .source_file = fetch!filename
+                .source_file = fetch!filename,
+                .instrument = fetch!instrument
             }
         End Function
 

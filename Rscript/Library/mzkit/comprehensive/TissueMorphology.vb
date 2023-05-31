@@ -1,76 +1,87 @@
 ﻿#Region "Microsoft.VisualBasic::c4e0ccf253ae264cf3f9def982afe714, mzkit\Rscript\Library\mzkit\comprehensive\TissueMorphology.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 396
-    '    Code Lines: 274
-    ' Comment Lines: 78
-    '   Blank Lines: 44
-    '     File Size: 14.51 KB
+' Summaries:
 
 
-    ' Module TissueMorphology
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
-    '               gridding, loadSpatialMapping, loadTissue, loadUMAP, SplitMapping
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 396
+'    Code Lines: 274
+' Comment Lines: 78
+'   Blank Lines: 44
+'     File Size: 14.51 KB
+
+
+' Module TissueMorphology
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
+'               gridding, loadSpatialMapping, loadTissue, loadUMAP, SplitMapping
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' spatial tissue region handler
@@ -84,6 +95,8 @@ Module TissueMorphology
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(TissueRegion()), AddressOf createTissueTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(UMAPPoint()), AddressOf createUMAPTable)
+
+        Call Internal.generic.add("plot", GetType(TissueRegion()), AddressOf PlotTissueMap)
     End Sub
 
     Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
@@ -136,6 +149,282 @@ Module TissueMorphology
                 .Select(Function(xi, i) $"{xi},{py(i)}") _
                 .ToArray
         }
+    End Function
+
+    Public Function PlotTissueMap(tissue As TissueRegion(), args As list, env As Environment) As Object
+        If args.CheckGraphicsDeviceExists Then
+            ' draw on current graphics context
+            Dim dev As graphicsDevice = RgraphicsDev.GetCurrentDevice
+            ' config of the drawing layout
+            Dim padding As Padding = InteropArgumentHelper.getPadding(dev.getArgumentValue("layout", args))
+            Dim canvas As New GraphicsRegion(dev.g.Size, padding)
+
+            Return dev.g.PlotTissueMap(canvas, tissue, args, env)
+        Else
+            Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env)
+            Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("layout"))
+            Dim bg As String = RColorPalette.getColor(args.getByName("bg"), "white")
+
+            Return g.GraphicsPlots(
+                size.SizeParser,
+                padding,
+                bg,
+                Sub(ByRef g, canvas)
+                    Call g.PlotTissueMap(canvas, tissue, args, env)
+                End Sub, driver:=env.getDriver)
+        End If
+    End Function
+
+    <Extension>
+    Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
+        Dim is_missing_sample As Boolean = args.getValue({"missing"}, env, [default]:=False)
+        Dim sample As String = args.getValue({"sample"}, env, [default]:="")
+
+        If is_missing_sample AndAlso Not sample.StringEmpty Then
+            tissue = tissue _
+                .Select(Function(t)
+                            Dim i = t.tags _
+                                .Select(Function(si) si = sample) _
+                                .SeqIterator _
+                                .Where(Function(ti) ti.value) _
+                                .ToArray
+
+                            Return New TissueRegion With {
+                                .color = Color.LightGray,
+                                .label = sample,
+                                .tags = i.Select(Function(a) t.tags(a.i)).ToArray,
+                                .points = i.Select(Function(a) t.points(a.i)).ToArray
+                            }
+                        End Function) _
+                .Where(Function(t) t.nsize > 0) _
+                .ToArray
+        End If
+
+        Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
+        Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
+        Dim rect = canvas.PlotRegion
+        Dim lx = d3js.scale.linear.domain(range:=x).range(integers:={rect.Left, rect.Right})
+        Dim ly = d3js.scale.linear.domain(range:=y).range(integers:={rect.Top, rect.Height})
+        Dim scale_x As Double = stdNum.Abs(lx(2) - lx(1))
+        Dim scale_y As Double = stdNum.Abs(ly(2) - ly(1))
+        Dim dotSize As New SizeF(scale_x, scale_y)
+        Dim dot As RectangleF
+        Dim scaler As New DataScaler() With {.X = lx, .Y = ly, .region = rect}
+        Dim fillColor As SolidBrush
+        Dim dims As Size = InteropArgumentHelper.getSize(args.getByName("dims"), env, [default]:=Nothing).SizeParser
+        Dim interplate As PixelData()
+
+        If dims.IsEmpty Then
+            Return Internal.debug.stop("missng of the ms-imaging dimension size value!", env)
+        End If
+
+        For Each region As TissueRegion In tissue.OrderBy(Function(r) If(r.label = missing, 0, 1))
+            fillColor = New SolidBrush(region.color)
+            interplate = region.points _
+                .Select(Function(xy) New PixelData(xy) With {.intensity = 1}) _
+                .ToArray _
+                .KnnFill(dims, 4, 4)
+
+            For Each p As PixelData In interplate
+                dot = New RectangleF(scaler.Translate(p.x, p.y), dotSize)
+                g.FillRectangle(fillColor, dot)
+            Next
+        Next
+
+        Return Nothing
+    End Function
+
+    Const missing As String = NameOf(missing)
+
+    ''' <summary>
+    ''' Add tissue region label to the pixels of the ms-imaging data
+    ''' </summary>
+    ''' <param name="MSI">
+    ''' the ms-imaging data to tag the region label, value type of this parameter
+    ''' could be a set of point data or a ms-imaging data drawer wrapper
+    ''' </param>
+    ''' <param name="tissues"></param>
+    ''' <param name="trim_suffix"></param>
+    ''' <returns></returns>
+    <ExportAPI("tag_samples")>
+    Public Function tag_samples(<RRawVectorArgument>
+                                MSI As Object,
+                                tissues As TissueRegion(),
+                                Optional trim_suffix As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
+        If MSI Is Nothing Then
+            Call env.AddMessage("the required spatial spot data is nothing!")
+            Return Nothing
+        End If
+        If TypeOf MSI Is Drawer Then
+            Return TagSampleLabels(MSI, tissues, trim_suffix)
+        Else
+            Return GetPointLabels(tissues, MSI, trim_suffix, env)
+        End If
+    End Function
+
+    Private Function TagSampleLabels(MSI As Drawer, tissues As TissueRegion(), trim_suffix As Boolean) As Object
+        Dim reader As PixelReader = MSI.pixelReader
+
+        For Each tissue As TissueRegion In tissues
+            Dim tags As New List(Of String)
+            Dim pixel As PixelScan
+
+            For Each p As Point In tissue.points
+                pixel = reader.GetPixel(p.X, p.Y)
+
+                If Not pixel Is Nothing Then
+                    Call tags.Add(If(
+                        trim_suffix,
+                        pixel.sampleTag.BaseName,
+                        pixel.sampleTag
+                    ))
+                Else
+                    tags.Add(missing)
+                End If
+            Next
+
+            tissue.tags = tags.ToArray
+        Next
+
+        Return tissues
+    End Function
+
+    Private Function GetPointLabels(tissues As TissueRegion(), pixels As Object, trim_suffix As Boolean, env As Environment) As Object
+        Dim spatialLabels = tissues _
+            .ExtractSpatialSpots _
+            .DoCall(Function(ls)
+                        Return Grid(Of PhenographSpot).Create(ls)
+                    End Function)
+
+        If TypeOf pixels Is dataframe Then
+            Return FillLabels(df:=pixels, spatialLabels, trim_suffix)
+        ElseIf TypeOf pixels Is list Then
+            Dim list As list = pixels
+
+            If list.hasName("x") AndAlso list.hasName("y") Then
+                Dim x As Integer() = CLRVector.asInteger(list.getByName("x"))
+                Dim y As Integer() = CLRVector.asInteger(list.getByName("y"))
+                Dim df As New dataframe With {
+                    .columns = New Dictionary(Of String, Array) From {
+                        {"x", x},
+                        {"y", y}
+                    },
+                    .rownames = Nothing
+                }
+
+                Return FillLabels(df, spatialLabels, trim_suffix)
+            End If
+        End If
+
+        Return Message.InCompatibleType(GetType(dataframe), pixels.GetType, env)
+    End Function
+
+    Private Function FillLabels(df As dataframe, spatialLabels As Grid(Of PhenographSpot), trim_suffix As Boolean) As Object
+        Dim x As Integer() = CLRVector.asInteger(df!x)
+        Dim y As Integer() = CLRVector.asInteger(df!y)
+        Dim hit As Boolean = False
+        Dim label As String() = New String(x.Length - 1) {}
+        Dim color As String() = New String(x.Length - 1) {}
+        Dim sample As String() = New String(x.Length - 1) {}
+
+        For i As Integer = 0 To x.Length - 1
+            Dim q = spatialLabels.GetData(x(i), y(i), hit)
+
+            If hit Then
+                label(i) = q.phenograph_cluster
+                color(i) = q.color
+                sample(i) = If(
+                    trim_suffix,
+                    q.sample_tag.BaseName,
+                    q.sample_tag
+                )
+            Else
+                label(i) = "NA"
+                color(i) = "gray"
+                sample(i) = "NA"
+            End If
+        Next
+
+        Call df.add("class", label)
+        Call df.add("color", label)
+        Call df.add("sample", sample)
+
+        Return df
+    End Function
+
+    ''' <summary>
+    ''' extract the missing tissue pixels based on the ion layer data
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="tissues"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function used for generates the tissue map segment plot data for some special charts
+    ''' </remarks>
+    <ExportAPI("intersect_layer")>
+    Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
+        Dim missing As New List(Of Point)
+        Dim intersectList As New List(Of TissueRegion)
+        Dim MSI = Grid(Of PixelData).Create(layer.MSILayer)
+        Dim multiple_samples As Boolean = layer.hasMultipleSamples
+        Dim sample_tag As String = layer.sampleTags.FirstOrDefault
+
+        If trim_suffix Then
+            sample_tag = sample_tag.BaseName
+        End If
+
+        For Each region As TissueRegion In tissues
+            Dim region_filter As New List(Of Point)
+
+            If region.tags.IsNullOrEmpty OrElse multiple_samples Then
+                For Each point As Point In region.points
+                    Dim hit As Boolean = False
+
+                    Call MSI.GetData(point.X, point.Y, hit)
+
+                    If Not hit Then
+                        Call missing.Add(point)
+                    Else
+                        Call region_filter.Add(point)
+                    End If
+                Next
+            Else
+                For i As Integer = 0 To region.points.Length - 1
+                    Dim point As Point = region.points(i)
+                    Dim tag As String = region.tags(i)
+                    Dim hit As Boolean = False
+
+                    If tag <> sample_tag Then
+                        Continue For
+                    End If
+
+                    Call MSI.GetData(point.X, point.Y, hit)
+
+                    If Not hit Then
+                        Call missing.Add(point)
+                    Else
+                        Call region_filter.Add(point)
+                    End If
+                Next
+            End If
+
+            Call intersectList.Add(New TissueRegion With {
+                .color = region.color,
+                .label = region.label,
+                .points = region_filter.ToArray
+            })
+        Next
+
+        Return intersectList _
+            .JoinIterates({New TissueRegion With {
+                .color = Color.LightGray,
+                .label = TissueMorphology.missing,
+                .points = missing.ToArray
+            }}) _
+            .Where(Function(r) r.nsize > 0) _
+            .ToArray
     End Function
 
     ''' <summary>

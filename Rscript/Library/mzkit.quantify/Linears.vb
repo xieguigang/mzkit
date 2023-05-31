@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::1b65057ea431884728ff1a2710ab8aae, mzkit\Rscript\Library\mzkit.quantify\Linears.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 261
-    '    Code Lines: 164
-    ' Comment Lines: 70
-    '   Blank Lines: 27
-    '     File Size: 10.26 KB
+' Summaries:
 
 
-    ' Module Linears
-    ' 
-    '     Function: CreateMRMDataSet, getIonPeakTable, GetLinearPoints, GetQuantifyResult, GetRawX
-    '               printIS, printLineModel, printStandards, SampleQuantify, StandardCurveDataSet
-    '               writeMRMpeaktable, writeStandardCurve
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 261
+'    Code Lines: 164
+' Comment Lines: 70
+'   Blank Lines: 27
+'     File Size: 10.26 KB
+
+
+' Module Linears
+' 
+'     Function: CreateMRMDataSet, getIonPeakTable, GetLinearPoints, GetQuantifyResult, GetRawX
+'               printIS, printLineModel, printStandards, SampleQuantify, StandardCurveDataSet
+'               writeMRMpeaktable, writeStandardCurve
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -160,7 +161,9 @@ Module Linears
     ''' <returns></returns>
     <ExportAPI("points")>
     <RApiReturn(GetType(ReferencePoint))>
-    Public Function GetLinearPoints(linears As StandardCurve(), nameRef As Object, Optional env As Environment = Nothing) As Object
+    Public Function GetLinearPoints(linears As StandardCurve(),
+                                    nameRef As Object,
+                                    Optional env As Environment = Nothing) As Object
         Dim name As String
 
         If nameRef Is Nothing Then
@@ -214,7 +217,10 @@ Module Linears
     ''' <returns></returns>
     <ExportAPI("ionPeaks")>
     <RApiReturn(GetType(IonPeakTableRow))>
-    Public Function getIonPeakTable(<RRawVectorArgument> samples As Object, Optional env As Environment = Nothing) As Object
+    Public Function getIonPeakTable(<RRawVectorArgument>
+                                    samples As Object,
+                                    Optional env As Environment = Nothing) As Object
+
         Dim peaks As pipeline = pipeline.TryCreatePipeline(Of QuantifyScan)(samples, env)
 
         If peaks.isError Then
@@ -274,6 +280,11 @@ Module Linears
         Return fileScans.Select(Function(file) file.rawX).ToArray
     End Function
 
+    <ExportAPI("read.linearPack")>
+    Public Function readLinearPack(file As String) As LinearPack
+        Return LinearPack.OpenFile(file)
+    End Function
+
     ''' <summary>
     ''' Create targeted linear dataset object for do linear quantification data report.
     ''' </summary>
@@ -298,6 +309,7 @@ Module Linears
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("report.dataset")>
+    <RApiReturn(GetType(LinearDataSet), GetType(QCData))>
     Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(),
                                      Optional QC_dataset$ = Nothing,
                                      Optional ionsRaw As Rlist = Nothing) As Object

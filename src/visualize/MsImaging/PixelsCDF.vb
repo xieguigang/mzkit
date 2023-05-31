@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.DataStorage.netCDF
@@ -71,14 +72,22 @@ Imports stdNum = System.Math
 
 Public Module PixelsCDF
 
+    ''' <summary>
+    ''' Write image layers
+    ''' </summary>
+    ''' <param name="loadedPixels"></param>
+    ''' <param name="file"></param>
+    ''' <param name="dimension"></param>
+    ''' <param name="tolerance"></param>
     <Extension>
-    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size, tolerance As Tolerance)
+    Public Sub CreateCDF(loadedPixels As PixelData(), file As Stream, dimension As Size, tolerance As Tolerance, Optional rgb As RGBConfigs = Nothing)
         Using matrix As New CDFWriter(file)
             Dim mz As New List(Of Double)
             Dim intensity As New List(Of Double)
             Dim x As New List(Of Integer)
             Dim y As New List(Of Integer)
 
+            ' 下面的4个向量等长
             For Each p As PixelData In loadedPixels
                 mz.Add(p.mz)
                 intensity.Add(p.intensity)
@@ -103,6 +112,14 @@ Public Module PixelsCDF
             matrix.AddVariable("intensity", New doubles(intensity), "pixels")
             matrix.AddVariable("x", New integers(x), "pixels")
             matrix.AddVariable("y", New integers(y), "pixels")
+
+            If Not rgb Is Nothing Then
+                Dim configJSON As String = rgb.GetJSON
+                Dim chrs As New chars(configJSON)
+                Dim jsonDims As New Dimension(chrs) With {.name = "rgb_configs"}
+
+                Call matrix.AddVariable("rgb", chrs, jsonDims)
+            End If
         End Using
     End Sub
 

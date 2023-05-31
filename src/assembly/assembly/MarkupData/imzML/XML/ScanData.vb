@@ -90,6 +90,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace MarkupData.imzML
 
@@ -101,15 +102,15 @@ Namespace MarkupData.imzML
 
     End Interface
 
-    Public Class PixelScanIntensity : Implements IMSIPixel
+    Public Class PixelScanIntensity : Implements IMSIPixel, RasterPixel
 
         ''' <summary>
         ''' TIC
         ''' </summary>
         ''' <returns></returns>
         Public Property totalIon As Double Implements IMSIPixel.intensity
-        Public Property x As Integer Implements IMSIPixel.x
-        Public Property y As Integer Implements IMSIPixel.y
+        Public Property x As Integer Implements IMSIPixel.x, RasterPixel.X
+        Public Property y As Integer Implements IMSIPixel.y, RasterPixel.Y
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPoint() As Point

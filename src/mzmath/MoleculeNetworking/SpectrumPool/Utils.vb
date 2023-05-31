@@ -8,7 +8,9 @@ Namespace PoolData
         Public Const unknown As String = NameOf(unknown)
 
         Public Shared Function ConservedGuid(spectral As PeakMs2) As String
-            Dim desc = spectral.mzInto.OrderByDescending(Function(mzi) mzi.intensity).ToArray
+            Dim desc As ms2() = spectral.mzInto _
+                .OrderByDescending(Function(mzi) mzi.intensity) _
+                .ToArray
             Dim peaks As String() = desc _
                 .Select(Function(m) m.mz.ToString("F4") & ":" & m.intensity) _
                 .ToArray
@@ -17,6 +19,7 @@ Namespace PoolData
             Dim meta As String() = {
                 spectral.meta.TryGetValue("biosample", unknown),
                 spectral.meta.TryGetValue("organism", unknown),
+                spectral.meta.TryGetValue("instrument", unknown),
                 spectral.precursor_type
             }
             Dim hashcode As String = peaks _

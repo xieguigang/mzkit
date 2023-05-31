@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::50732017135c8a3eee600b6bea2b7c53, mzkit\src\assembly\Comprehensive\MsImaging\MSIMeasurement.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 97
-    '    Code Lines: 75
-    ' Comment Lines: 3
-    '   Blank Lines: 19
-    '     File Size: 3.26 KB
+' Summaries:
 
 
-    '     Class MSIMeasurement
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetCorrection, (+3 Overloads) Measure
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 97
+'    Code Lines: 75
+' Comment Lines: 3
+'   Blank Lines: 19
+'     File Size: 3.26 KB
+
+
+'     Class MSIMeasurement
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetCorrection, (+3 Overloads) Measure
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-#If netcore5 = 0 Or NET48 Then
+#If NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports stdNum = System.Math
 
 Namespace MsImaging
@@ -123,7 +124,7 @@ Namespace MsImaging
             Return New MSIMeasurement(maxrt.Average, scans.Average, hasMs2:=scanMs2)
         End Function
 
-#If netcore5 = 0 Or NET48 Then
+#If NET48 Then
 
         Public Shared Function Measure(raw As IEnumerable(Of MSFileReader), Optional scanMs2 As Boolean = False) As MSIMeasurement
             Dim scans As New List(Of Integer)

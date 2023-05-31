@@ -65,7 +65,11 @@ Namespace MsImaging
     Public Module PeakMatrix
 
         <Extension>
-        Public Iterator Function AlignMzPeaks(Of T)(raw As T(), mzErr As Tolerance, cutoff As Double, getPeaks As Func(Of T, ms2()), getSampleId As Func(Of T, String)) As IEnumerable(Of DataSet)
+        Public Iterator Function AlignMzPeaks(Of T)(raw As T(),
+                                                    mzErr As Tolerance,
+                                                    cutoff As Double,
+                                                    getPeaks As Func(Of T, ms2()),
+                                                    getSampleId As Func(Of T, String)) As IEnumerable(Of DataSet)
             Dim allMz As Double() = raw _
                 .Select(getPeaks) _
                 .IteratesALL _
@@ -99,7 +103,10 @@ Namespace MsImaging
         End Function
 
         <Extension>
-        Public Function TopIonsPeakMatrix(raw As mzPack, Optional topN As Integer = 3, Optional tolerance As String = "da:0.05") As IEnumerable(Of DataSet)
+        Public Function TopIonsPeakMatrix(raw As mzPack,
+                                          Optional topN As Integer = 3,
+                                          Optional tolerance As String = "da:0.05") As IEnumerable(Of DataSet)
+
             Dim mzErr As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
             Dim topPeaks = raw.MS _
                 .AsParallel _

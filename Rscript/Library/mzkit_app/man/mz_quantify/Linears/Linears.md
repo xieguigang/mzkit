@@ -10,4 +10,5 @@
 + [quantify](Linears/quantify.1) 
 + [result](Linears/result.1) 
 + [scans.X](Linears/scans.X.1) 
++ [read.linearPack](Linears/read.linearPack.1) 
 + [report.dataset](Linears/report.dataset.1) 

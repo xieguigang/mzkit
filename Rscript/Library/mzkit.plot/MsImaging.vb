@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::85adcb71e40aabb06132caa56ac913af, mzkit\Rscript\Library\mzkit.plot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 823
-    '    Code Lines: 559
-    ' Comment Lines: 163
-    '   Blank Lines: 101
-    '     File Size: 33.22 KB
+' Summaries:
 
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-    '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-    '               KnnFill, layer, LimitIntensityRange, LoadPixels, MSICoverage
-    '               openIndexedCacheFile, plotMSI, printLayer, renderRowScans, RGB
-    '               testLayer, TrIQRange, viewer, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 823
+'    Code Lines: 559
+' Comment Lines: 163
+'   Blank Lines: 101
+'     File Size: 33.22 KB
+
+
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
+'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
+'               KnnFill, layer, LimitIntensityRange, LoadPixels, MSICoverage
+'               openIndexedCacheFile, plotMSI, printLayer, renderRowScans, RGB
+'               testLayer, TrIQRange, viewer, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -84,6 +85,8 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -93,6 +96,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
+Imports Point2D = System.Drawing.Point
 
 ''' <summary>
 ''' Visual MS imaging data(*.imzML)
@@ -102,8 +106,46 @@ Module MsImaging
 
     Sub New()
         Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
+
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
     End Sub
+
+    ''' <summary>
+    ''' split the ms-imaging layer into multiple parts
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args">
+    ''' default is split layer into multiple sample source
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("split.layer")>
+    Public Function splitLayer(<RRawVectorArgument> x As Object,
+                               <RListObjectArgument>
+                               args As list,
+                               Optional env As Environment = Nothing) As Object
+
+        If TypeOf x Is SingleIonLayer Then
+            Dim layer As SingleIonLayer = x
+            Dim splits = layer.MSILayer _
+                .GroupBy(Function(a) a.sampleTag) _
+                .ToDictionary(Function(si)
+                                  Return si.Key
+                              End Function,
+                              Function(si)
+                                  Return CObj(New SingleIonLayer With {
+                                     .DimensionSize = layer.DimensionSize,
+                                     .IonMz = layer.IonMz,
+                                     .MSILayer = si.ToArray
+                                  })
+                              End Function)
+
+            Return New list With {.slots = splits}
+        Else
+            Return Internal.debug.stop(New NotImplementedException, envir:=env)
+        End If
+    End Function
 
     Private Function printLayer(ion As SingleIonLayer) As String
         Dim sb As New StringBuilder
@@ -297,6 +339,15 @@ Module MsImaging
         Return New XICReader(stream.TryCast(Of Stream))
     End Function
 
+    ''' <summary>
+    ''' Extract a spectrum matrix object from MSI data by a given set of m/z values
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="title"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A spectrum matrix data of m/z value assocated with the intensity value</returns>
     <ExportAPI("FilterMz")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function FilterMz(viewer As Drawer, mz As Double(),
@@ -327,6 +378,16 @@ Module MsImaging
         }
     End Function
 
+    ''' <summary>
+    ''' get the ms1 spectrum data in a specific pixel position
+    ''' </summary>
+    ''' <param name="viewer"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
@@ -381,6 +442,13 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' get a pixel data
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
     <ExportAPI("pixel")>
     Public Function GetPixel(data As XICReader, x As Integer, y As Integer) As ibdPixel
         Return data.GetPixel(x, y)
@@ -422,6 +490,103 @@ Module MsImaging
         Else
             Return Message.InCompatibleType(GetType(Drawer), imzML.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' set cluster tags to the pixel tag property data
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="segments"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("tag_layers")>
+    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object, Optional env As Environment = Nothing) As Object
+        Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
+
+        If pointCluster.isError Then
+            Return pointCluster.getError
+        End If
+
+        Dim raster = Grid(Of PixelData).Create(layer.MSILayer)
+
+        For Each cluster As TissueRegion In pointCluster.populates(Of TissueRegion)(env)
+            For Each point As Point2D In cluster.points
+                Dim hit As Boolean = False
+                Dim p As PixelData = raster.GetData(point.X, point.Y, hit:=hit)
+
+                If hit Then
+                    p.sampleTag = cluster.label
+                End If
+            Next
+        Next
+
+        Return layer
+    End Function
+
+    ''' <summary>
+    ''' merge multiple layers via intensity sum
+    ''' </summary>
+    ''' <param name="layers"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("sum_layers")>
+    Public Function sumLayer(<RRawVectorArgument> layers As Object,
+                             Optional tolerance As Object = "da:0.1",
+                             Optional intocutoff As Double = 0.3,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim pixels = pipeline.TryCreatePipeline(Of PixelData)(layers, env)
+        Dim mzdiff = Math.getTolerance(tolerance, env)
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+        If pixels.isError Then
+            Return pixels.getError
+        End If
+
+        Dim layer_groups = pixels _
+            .populates(Of PixelData)(env) _
+            .GroupBy(Function(x) x.mz, mzdiff.TryCast(Of Tolerance)) _
+            .ToArray
+        Dim filter As New List(Of PixelData)
+        Dim all As New List(Of PixelData)
+
+        For Each i In layer_groups
+            Dim q = i.Select(Function(p) p.intensity).GKQuantile
+            Dim cutoff As Double = q.Query(intocutoff)
+
+            Call all.AddRange(i)
+            Call filter.AddRange(From p As PixelData In i Where p.intensity >= cutoff)
+        Next
+
+        Dim polygon As New Polygon2D(all.ToArray)
+        ' re-assembly a new layer object
+        Dim layerPixels = filter.GroupBy(Function(p) $"{p.x}+{p.y}") _
+            .AsParallel _
+            .Select(Function(p)
+                        Dim intensity As Double = Aggregate pi In p Into Sum(pi.intensity)
+                        Dim copy = p.First
+                        Dim tag As String = p.Select(Function(xi) xi.sampleTag) _
+                            .Where(Function(si) Not si.StringEmpty) _
+                            .FirstOrDefault
+
+                        Return New PixelData With {
+                            .x = copy.x,
+                            .y = copy.y,
+                            .sampleTag = tag,
+                            .intensity = intensity,
+                            .level = 0,
+                            .mz = -1
+                        }
+                    End Function) _
+            .ToArray
+
+        Return New SingleIonLayer With {
+            .IonMz = Nothing,
+            .MSILayer = layerPixels,
+            .DimensionSize = polygon.GetDimension
+        }
     End Function
 
     ''' <summary>
@@ -802,7 +967,7 @@ Module MsImaging
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.pixels")>
-    <RApiReturn(GetType(String), GetType(Point))>
+    <RApiReturn(GetType(String), GetType(Point2D))>
     Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
         If character Then
             Return layer.MSILayer _
@@ -810,7 +975,7 @@ Module MsImaging
                 .ToArray
         Else
             Return layer.MSILayer _
-                .Select(Function(p) New Point(p.x, p.y)) _
+                .Select(Function(p) New Point2D(p.x, p.y)) _
                 .ToArray
         End If
     End Function

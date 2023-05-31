@@ -104,6 +104,10 @@ Namespace PoolData
             Return fs
         End Function
 
+        ''' <summary>
+        ''' add spectrum into current molecular networking cluster tree data
+        ''' </summary>
+        ''' <param name="spectrum"></param>
         Public Sub Add(spectrum As PeakMs2, Optional debug As Boolean = False)
             If Not fs.CheckExists(spectrum) Then
                 If debug Then

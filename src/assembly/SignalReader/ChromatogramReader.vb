@@ -16,6 +16,26 @@ Public Module ChromatogramReader
         Return file.LoadChromatogramList.GetIonsChromatogram
     End Function
 
+    Public Function GetIonsChromatogram(tic As ChromatogramTick(), bpc As ChromatogramTick()) As Chromatogram
+        If tic.IsNullOrEmpty AndAlso bpc.IsNullOrEmpty Then
+            Return Nothing
+        ElseIf tic.IsNullOrEmpty Then
+            Return New Chromatogram With {.BPC = bpc.IntensityArray, .scan_time = bpc.TimeArray, .TIC = .BPC}
+        ElseIf bpc.IsNullOrEmpty Then
+            Return New Chromatogram With {.TIC = tic.IntensityArray, .scan_time = tic.TimeArray, .BPC = .TIC}
+        End If
+
+        Dim union = tic.JoinIterates(bpc).OrderBy(Function(ci) ci.Time).ToArray
+        Dim ticReader As Resampler = Resampler.CreateSampler(tic.TimeArray, tic.IntensityArray)
+        Dim bpcReader As Resampler = Resampler.CreateSampler(bpc.TimeArray, bpc.IntensityArray)
+
+        Return New Chromatogram With {
+            .scan_time = union.TimeArray.Range.AsVector(10000),
+            .BPC = .scan_time.Select(Function(ti) bpcReader.GetIntensity(ti)).ToArray,
+            .TIC = .scan_time.Select(Function(ti) ticReader.GetIntensity(ti)).ToArray
+        }
+    End Function
+
     <Extension>
     Public Function GetIonsChromatogram(channels As IEnumerable(Of RawChromatogram)) As Chromatogram
         Dim allTicks As ChromatogramTick() = channels _

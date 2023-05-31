@@ -233,7 +233,10 @@ Public Module MSIRawPack
         Next
     End Function
 
-    Public Function LoadMSIFromSCiLSLab(spots As Stream, msdata As Stream, Optional println As Action(Of String) = Nothing) As mzPack
+    Public Function LoadMSIFromSCiLSLab(spots As Stream,
+                                        msdata As Stream,
+                                        Optional println As Action(Of String) = Nothing) As mzPack
+
         Dim spotsXy As SpotPack = SpotPack.ParseFile(spots)
         Dim spotsList As New List(Of ScanMS1)
         Dim minX As Double = spotsXy.X.Min

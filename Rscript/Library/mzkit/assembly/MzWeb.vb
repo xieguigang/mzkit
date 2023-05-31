@@ -294,20 +294,25 @@ Module MzWeb
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <param name="file"></param>
+    ''' <param name="headerSize">
+    ''' negative value or zero means auto-evaluated via the different file size
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("write.mzPack")>
     Public Function writeMzpack(mzpack As mzPack, file As Object,
                                 Optional version As Integer = 2,
+                                Optional headerSize As Long = -1,
                                 Optional env As Environment = Nothing) As Object
 
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim println As Action(Of Object) = env.WriteLineHandler
 
         If filestream Like GetType(Message) Then
             Return filestream.TryCast(Of Message)
         End If
 
-        Return mzpack.Write(filestream.TryCast(Of Stream), version)
+        Return mzpack.Write(filestream.TryCast(Of Stream), version, headerSize, Sub(s) println(s))
     End Function
 
     <ExportAPI("write.cdf")>

@@ -6,6 +6,7 @@ write.mzPack \- write version 2 format of the mzpack by default
 \fIwrite.mzPack(\fBmzpack\fR as <generic> mzPack, 
 \fBfile\fR as any, 
 \fBversion\fR as integer = 2, 
+\fBheaderSize\fR as integer = -1, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,6 +18,11 @@ write version 2 format of the mzpack by default
 .PP
 .PP
 \fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBheaderSize\fB \fR\- 
+ negative value or zero means auto-evaluated via the different file size
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
