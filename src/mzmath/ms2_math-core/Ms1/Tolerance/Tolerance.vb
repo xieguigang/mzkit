@@ -207,12 +207,30 @@ Namespace Ms1
         ''' + da:xxx
         ''' + ppm:xxx
         ''' </summary>
-        ''' <param name="script"></param>
+        ''' <param name="script">
+        ''' the tolerance script value text also could be a simple number:
+        ''' 
+        ''' 1. if less than 1, means da:xxx
+        ''' 2. if greater than or equals to 1, means ppm:xxx
+        ''' </param>
         ''' <returns></returns>
         Public Shared Function ParseScript(script As String) As Tolerance
             Dim tokens = script.GetTagValue(":", trim:=True)
             Dim method = tokens.Name.ToLower
             Dim tolerance# = tokens.Value.ParseDouble
+
+            If method.StringEmpty Then
+                ' 20230608 when the given script text value just a number, then
+                '
+                ' + less than 1, means da tolerance error
+                ' + greater than or equals to 1, means ppm tolerance error
+                '
+                If tolerance < 1 Then
+                    Return DeltaMass(tolerance)
+                Else
+                    Return PPM(value:=tolerance)
+                End If
+            End If
 
             If method = "da" Then
                 Return DeltaMass(da:=tolerance)
