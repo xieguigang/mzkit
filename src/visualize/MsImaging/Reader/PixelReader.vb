@@ -334,18 +334,18 @@ Namespace Reader
                     Continue For
                 Else
                     Dim tag As String = point.sampleTag
+                    Dim max As ms2
 
                     ' populate each m/z hit which has matched 
                     ' with the given tolerance value
                     For Each mzi As NamedCollection(Of ms2) In into
+                        max = mzi.OrderByDescending(Function(t) t.intensity).First
                         pixel = New PixelData With {
                             .x = point.X,
                             .y = point.Y,
-                            .mz = Val(mzi.name),
+                            .mz = max.mz,
                             .sampleTag = tag,
-                            .intensity = Aggregate x As ms2
-                                         In mzi
-                                         Into Max(x.intensity)
+                            .intensity = max.intensity
                         }
 
                         Yield pixel
