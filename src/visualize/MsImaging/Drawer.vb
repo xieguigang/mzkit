@@ -134,7 +134,9 @@ Public Class Drawer : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 
+    ''' This function will populate all of the pixel data which has
+    ''' m/z tagged and the mass error is matched with the given
+    ''' <paramref name="tolerance"/> value.
     ''' </summary>
     ''' <param name="mz"></param>
     ''' <param name="tolerance"></param>

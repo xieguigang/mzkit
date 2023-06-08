@@ -329,6 +329,8 @@ Namespace Reader
                 Else
                     Dim tag As String = point.sampleTag
 
+                    ' populate each m/z hit which has matched 
+                    ' with the given tolerance value
                     For Each mzi As NamedCollection(Of ms2) In into
                         pixel = New PixelData With {
                             .x = point.X,
