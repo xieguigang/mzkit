@@ -70,6 +70,21 @@ Namespace Ms1
             DeltaTolerance = da
         End Sub
 
+        ''' <summary>
+        ''' try to convert the mass dalton error as ppm error for 
+        ''' compares the da tolerance with the ppm tolerance in 
+        ''' some of the situation
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function GetErrorPPM() As Double
+            Dim sample_mz As Double() = {50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}
+            Dim sample_ppm As Double() = sample_mz _
+                .Select(Function(mzi) PPMmethod.PPM(mzi, mzi + DeltaTolerance)) _
+                .ToArray
+
+            Return sample_ppm.Average
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
             Return stdNum.Abs(mz1 - mz2) <= DeltaTolerance
