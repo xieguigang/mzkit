@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -30,6 +31,9 @@ Namespace PackLib
         ''' </summary>
         ReadOnly map As Dictionary(Of String, String)
         ReadOnly spectrum As New Dictionary(Of String, BlockNode)
+        ''' <summary>
+        ''' A id subset for filter target ions
+        ''' </summary>
         ReadOnly targetSet As Index(Of String)
         ReadOnly libnames As String()
         ReadOnly da As Tolerance = Tolerance.DeltaMass(0.3)
@@ -172,20 +176,45 @@ Namespace PackLib
                 .IteratesALL _
                 .ToArray
 
+            If exactMass.IsNullOrEmpty Then
+                Call ThrowNoMassIndex()
+            End If
+
             mzIndex = New MzIonSearch(mz, da:=Tolerance.DeltaMass(0.5))
 
             Return Me
+        End Function
+
+        Private Sub ThrowNoMassIndex()
+            Dim err_msg As New StringBuilder("There is no ion mass index was loaded from this reference library stream!")
+            Dim hasIdTargets As Boolean = targetSet.Count > 0
+
+            If hasIdTargets Then
+                Call err_msg.AppendLine("Please check of the target uuid set is correct map to the reference id name?")
+                Call err_msg.AppendLine($"Peeks part of the target uuid set: {targetSet.Objects.Take(13).JoinBy(", ")}...")
+                Call err_msg.AppendLine($"Peeks part of the ion spectral data reference id in this library: {GetMassFiles.Take(13).Select(Function(f) f.fileName.BaseName).JoinBy(", ")}")
+            Else
+                Call err_msg.AppendLine("No reference metabolite ion spectral data in this reference library?")
+            End If
+
+            Throw New Exception(err_msg.ToString)
+        End Sub
+
+        Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
+            Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
+                .ListFiles _
+                .Select(Function(f) DirectCast(f, StreamBlock))
         End Function
 
         ''' <summary>
         ''' load all of the metabolite index from the library file 
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' data could be filter via a given <see cref="targetSet"/>
+        ''' </remarks>
         Public Iterator Function LoadMass() As IEnumerable(Of MassIndex)
-            Dim files = DirectCast(file.GetObject("/massSet/"), StreamGroup) _
-                .ListFiles _
-                .Select(Function(f) DirectCast(f, StreamBlock)) _
-                .ToArray
+            Dim files As StreamBlock() = GetMassFiles().ToArray
             Dim hasIdTargets As Boolean = targetSet.Count > 0
 
             For Each ref As StreamBlock In files
