@@ -99,6 +99,7 @@ Public Class IonStat
 
         If Not mz.IsNullOrEmpty Then
             Dim allHits = ionList _
+                .AsParallel _
                 .Where(Function(i)
                            Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
                        End Function) _
@@ -185,6 +186,7 @@ Public Class IonStat
                                                     da As Double,
                                                     parallel As Boolean) As IEnumerable(Of IonStat)
         Dim ions = allIons _
+            .ToArray _
             .GroupBy(Function(d) d.ms.mz, Tolerance.DeltaMass(da)) _
             .ToArray
 
