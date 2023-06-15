@@ -81,6 +81,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
+''' <summary>
+''' toolkit for handling of the ncbi pubchem data
+''' </summary>
 <Package("pubchem_kit")>
 <RTypeExport("pubmed", GetType(PubMed))>
 Module PubChemToolKit
@@ -102,6 +105,13 @@ Module PubChemToolKit
         Return data
     End Function
 
+    ''' <summary>
+    ''' read pubmed data table files
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="lazy"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("read.pubmed")>
     <RApiReturn(GetType(PubMed))>
     Public Function readPubmed(file As String(), Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
@@ -201,6 +211,11 @@ Module PubChemToolKit
         )
     End Function
 
+    ''' <summary>
+    ''' Generate the url for get pubchem pugviews data object
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <returns></returns>
     <ExportAPI("pubchem_url")>
     Public Function pubchemUrl(cid As String) As String
         Return WebQuery.pugViewApi(cid)
