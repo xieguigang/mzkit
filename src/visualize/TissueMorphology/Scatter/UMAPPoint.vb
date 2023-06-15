@@ -57,6 +57,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' 3d scatter data point, a spatial spot or a single cell data
@@ -95,7 +96,12 @@ Public Class UMAPPoint
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray
         Dim z As Double() = df.GetColumnValues("z").Select(AddressOf Val).ToArray
         ' "Noise"
-        Dim [class] As String() = df.GetColumnValues("class").ToArray
+        Dim [class] As String() = df.GetColumnValues("class").SafeQuery.ToArray
+
+        If [class].IsNullOrEmpty Then
+            [class] = df.GetColumnValues("phenograph_cluster").SafeQuery.ToArray
+        End If
+
         Dim classIndex As Index(Of String) = [class].Distinct.Where(Function(c) c <> "Noise").Indexing
         Dim label As String
         Dim t As String()
