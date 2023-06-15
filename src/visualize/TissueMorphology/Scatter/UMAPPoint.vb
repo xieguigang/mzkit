@@ -74,7 +74,7 @@ Public Class UMAPPoint
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
-    ''' this property value may be nothing for the sptial data, 
+    ''' this property value may be nothing for the spatial data, 
     ''' label value should not be nothing if the data is single 
     ''' cell data.
     ''' </remarks>
@@ -86,7 +86,7 @@ Public Class UMAPPoint
     ''' the cell cluster data
     ''' </summary>
     ''' <returns></returns>
-    Public Property [class] As Integer
+    Public Property [class] As String
 
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
         Dim df As DataFrame = DataFrame.Load(file)
