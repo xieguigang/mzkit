@@ -219,10 +219,15 @@ Namespace PackLib
 
             For Each ref As StreamBlock In files
                 If hasIdTargets Then
+                    Dim ref_id As String = ref.fileName _
+                        .BaseName _
+                        .Split("|"c) _
+                        .First
+
                     ' only a subset of the spectrum will be
                     ' queried if the target idset has been 
                     ' specificed
-                    If Not ref.fileName.BaseName Like targetSet Then
+                    If Not ref_id Like targetSet Then
                         Continue For
                     End If
                 End If
