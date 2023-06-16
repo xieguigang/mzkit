@@ -63,11 +63,13 @@ Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -164,20 +166,33 @@ Module PubChemToolKit
     ''' data from the pubchem database.
     ''' </summary>
     ''' <param name="cid"></param>
-    ''' <param name="cache"></param>
+    ''' <param name="cache">
+    ''' A local dir path for the cache data or a filesystem wrapper object
+    ''' </param>
     ''' <param name="interval">
     ''' the sleep time interval in ms
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("query.external")>
     Public Function queryExternalMetadata(cid As String,
-                                          Optional cache$ = "./pubchem/",
-                                          Optional interval As Integer = -1) As list
+                                          Optional cache As Object = "./pubchem/",
+                                          Optional interval As Integer = -1,
+                                          Optional env As Environment = Nothing) As list
 
-        Dim query As New QueryPathways(cache, interval:=interval)
+        Dim query As QueryPathways
         Dim result As New list With {
             .slots = New Dictionary(Of String, Object)
         }
+
+        If cache Is Nothing Then
+            cache = "./pubchem/"
+            env.AddMessage("The cache is nothing, use the dir './pubchem/' in current workdir as cache.")
+        End If
+        If cache.GetType.ImplementInterface(Of IFileSystemEnvironment) Then
+            query = New QueryPathways(DirectCast(cache, IFileSystemEnvironment), interval:=interval)
+        Else
+            query = New QueryPathways(CLRVector.asCharacter(cache).First, interval:=interval)
+        End If
 
         Call result.add("pathways", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.pathways), cacheType:=".json"))
         Call result.add("taxonomy", query.QueryCacheText(New NamedValue(Of PubChem.Types)(cid, PubChem.Types.taxonomy), cacheType:=".json"))

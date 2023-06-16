@@ -24,7 +24,7 @@ const pubchem_graphjson = function(dataXml, process = NULL, extensionCache = "./
 	str(data);
 	str(data$synonym);
 	
-	ext = [data$"ID"] 
+	let ext = [data$"ID"] 
     |> query.external(
 		cache    = extensionCache, 
 		interval = 0
