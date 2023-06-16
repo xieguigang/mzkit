@@ -4,8 +4,9 @@
 query.external \- query of the pathways, taxonomy and reaction
 .SH SYNOPSIS
 \fIquery.external(\fBcid\fR as string, 
-\fBcache\fR as string = "./pubchem/", 
-\fBinterval\fR as integer = -1);\fR
+\fBcache\fR as any = "./pubchem/", 
+\fBinterval\fR as integer = -1, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 query of the pathways, taxonomy and reaction 
@@ -16,7 +17,9 @@ query of the pathways, taxonomy and reaction
 \fBcid\fB \fR\- -. 
 .PP
 .PP
-\fBcache\fB \fR\- -. 
+\fBcache\fB \fR\- 
+ A local dir path for the cache data or a filesystem wrapper object
+. 
 .PP
 .PP
 \fBinterval\fB \fR\- 

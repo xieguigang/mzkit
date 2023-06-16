@@ -57,6 +57,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' 3d scatter data point, a spatial spot or a single cell data
@@ -74,7 +75,7 @@ Public Class UMAPPoint
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
-    ''' this property value may be nothing for the sptial data, 
+    ''' this property value may be nothing for the spatial data, 
     ''' label value should not be nothing if the data is single 
     ''' cell data.
     ''' </remarks>
@@ -86,7 +87,7 @@ Public Class UMAPPoint
     ''' the cell cluster data
     ''' </summary>
     ''' <returns></returns>
-    Public Property [class] As Integer
+    Public Property [class] As String
 
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
         Dim df As DataFrame = DataFrame.Load(file)
@@ -95,7 +96,12 @@ Public Class UMAPPoint
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray
         Dim z As Double() = df.GetColumnValues("z").Select(AddressOf Val).ToArray
         ' "Noise"
-        Dim [class] As String() = df.GetColumnValues("class").ToArray
+        Dim [class] As String() = df.GetColumnValues("class").SafeQuery.ToArray
+
+        If [class].IsNullOrEmpty Then
+            [class] = df.GetColumnValues("phenograph_cluster").SafeQuery.ToArray
+        End If
+
         Dim classIndex As Index(Of String) = [class].Distinct.Where(Function(c) c <> "Noise").Indexing
         Dim label As String
         Dim t As String()
