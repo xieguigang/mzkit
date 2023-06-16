@@ -5,6 +5,7 @@
 // ref=mzkit.PubChemToolKit@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * toolkit for handling of the ncbi pubchem data
  * 
 */
 declare namespace pubchem_kit {
@@ -22,8 +23,10 @@ declare namespace pubchem_kit {
      * @param interval the time sleep interval in ms
      * 
      * + default value Is ``-1``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function CID(name: string, cache?: string, offline?: boolean, interval?: object): string;
+   function CID(name: string, cache?: any, offline?: boolean, interval?: object, env?: object): string;
    /**
      * @param size default value Is ``'500,500'``.
      * @param ignoresInvalidCid default value Is ``false``.
@@ -53,6 +56,10 @@ declare namespace pubchem_kit {
       function pugView(pugView: object): object;
    }
    /**
+    * Generate the url for get pubchem pugviews data object
+    * 
+    * 
+     * @param cid -
    */
    function pubchem_url(cid: string): string;
    /**
@@ -78,14 +85,16 @@ declare namespace pubchem_kit {
        * 
        * 
         * @param cid -
-        * @param cache -
+        * @param cache A local dir path for the cache data or a filesystem wrapper object
         * 
         * + default value Is ``'./pubchem/'``.
         * @param interval the sleep time interval in ms
         * 
         * + default value Is ``-1``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function external(cid: string, cache?: string, interval?: object): object;
+      function external(cid: string, cache?: any, interval?: object, env?: object): object;
       /**
         * @param cache default value Is ``'./graph_kb'``.
       */
@@ -97,8 +106,16 @@ declare namespace pubchem_kit {
       */
       function mesh_tree(file: any, env?: object): any;
       /**
-        * @param lazy default value Is ``true``.
-        * @param env default value Is ``null``.
+       * read pubmed data table files
+       * 
+       * 
+        * @param file -
+        * @param lazy -
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function pubmed(file: string, lazy?: boolean, env?: object): object;
       /**

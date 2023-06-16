@@ -79,7 +79,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports stdNum = System.Math
 
 ''' <summary>
-''' 
+''' Mummichog searches for enrichment patterns on metabolic network, 
+''' bypassing metabolite identification, to generate high-quality
+''' hypotheses directly from a LC-MS data table.
 ''' </summary>
 <Package("Mummichog")>
 Module Mummichog

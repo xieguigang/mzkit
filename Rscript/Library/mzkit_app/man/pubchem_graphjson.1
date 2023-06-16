@@ -1,4 +1,4 @@
-﻿.TH PUBCHEM_GRAPHJSON 1 2023-Jun "" "pubchem_graphjson"
+﻿.TH PUBCHEM_GRAPHJSON 1 2023-Jun "" "Parse the pugview xml as the metabolite data object"
 .SH NAME
 pubchem_graphjson \- pubchem_graphjson(dataXml,
     <i>process</i> = <span style='color: blue;'>NULL</span>,
@@ -9,17 +9,21 @@ pubchem_graphjson \- pubchem_graphjson(dataXml,
     <i>extensionCache</i> = ./.cache/extdata/)\fR
 .SH OPTIONS
 .PP
-\fBdataXml\fB \fR\- . 
+\fBdataXml\fB \fR\- . the xml content of the pugview data object
 .PP
 .PP
-\fBprocess\fB \fR\- NULL. 
+\fBprocess\fB \fR\- NULL. a callable function that used for additional object processing, example like attach a additional database cross reference id to the xrefs of the generated pugview metabolite data object
 .PP
 .PP
-\fBextensionCache\fB \fR\- ./.cache/extdata/. 
+\fBextensionCache\fB \fR\- ./.cache/extdata/. a cache dir for save the extension data of the current metabolite object, example as pathway query, reaction query, and reaction query. This parameter value also could be a filesystem wrapper object.
+.PP
+.SH VALUE
+.PP
+A generated metabolite object that could be used for dump well formatted json
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.pubchem_graphjson at graph_json.R:line 3
+SMRUCC/R#.declare_function.pubchem_graphjson at graph_json.R:line 15
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2023

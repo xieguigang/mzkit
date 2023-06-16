@@ -72,6 +72,11 @@ Namespace Ms1
             DeltaTolerance = ppm
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetErrorPPM() As Double
+            Return DeltaTolerance
+        End Function
+
         ''' <summary>
         ''' 分子量差值
         ''' </summary>

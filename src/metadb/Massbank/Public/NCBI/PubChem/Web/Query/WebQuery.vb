@@ -76,6 +76,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -102,6 +103,20 @@ Namespace NCBI.PubChem
                 cache,
                 interval,
                 offline
+            )
+        End Sub
+
+        Public Sub New(cache As IFileSystemEnvironment,
+                       Optional interval As Integer = -1,
+                       Optional offline As Boolean = False)
+
+            Call MyBase.New(
+                AddressOf queryApi, cache,
+                AddressOf normalizeFileName,
+                AddressOf loadQueryJson,
+                AddressOf prefix,
+                interval:=interval,
+                offline:=offline
             )
         End Sub
 

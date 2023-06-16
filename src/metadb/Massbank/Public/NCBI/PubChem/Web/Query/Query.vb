@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::04d37f42d8f0f2b5637329062a6b0531, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 65
-    ' Comment Lines: 26
-    '   Blank Lines: 17
-    '     File Size: 4.59 KB
+' Summaries:
 
 
-    '     Module Query
-    ' 
-    '         Function: FetchPugViewByCID, GetQueryHandler, QueryCID, QueryPugViews
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 65
+' Comment Lines: 26
+'   Blank Lines: 17
+'     File Size: 4.59 KB
+
+
+'     Module Query
+' 
+'         Function: FetchPugViewByCID, GetQueryHandler, QueryCID, QueryPugViews
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 
@@ -102,7 +103,13 @@ Namespace NCBI.PubChem
                                  Optional ByRef hitCache As Boolean = False,
                                  Optional interval As Integer = -1) As String()
 
-            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".GetQueryHandler(Of CIDQuery)(offline:=offlineMode, internal:=interval)
+            Return ($"{cacheFolder}/cid/") _
+                .GetQueryHandler(Of CIDQuery)(offline:=offlineMode, internal:=interval) _
+                .QueryCID(name, hitCache)
+        End Function
+
+        <Extension>
+        Public Function QueryCID(cidQuery As CIDQuery, name As String, Optional ByRef hitCache As Boolean = False) As String()
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json", hitCache:=hitCache)
             Dim CID As String() = Nothing
 
@@ -116,6 +123,22 @@ Namespace NCBI.PubChem
             End If
 
             Return CID
+        End Function
+
+        ''' <summary>
+        ''' Query pubchem compound id by a given name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="cacheFolder$"></param>
+        ''' <returns>
+        ''' a list of pubchem hit cid
+        ''' </returns>
+        Public Function QueryCID(name As String, cacheFolder As IFileSystemEnvironment,
+                                 Optional offlineMode As Boolean = False,
+                                 Optional ByRef hitCache As Boolean = False,
+                                 Optional interval As Integer = -1) As String()
+
+            Return New CIDQuery(cacheFolder, interval, offlineMode).QueryCID(name, hitCache)
         End Function
 
         ''' <summary>

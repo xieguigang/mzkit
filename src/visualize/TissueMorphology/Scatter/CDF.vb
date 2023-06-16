@@ -163,7 +163,7 @@ Public Module CDF
             Dim umapX As Double() = umap.Select(Function(p) p.x).ToArray
             Dim umapY As Double() = umap.Select(Function(p) p.y).ToArray
             Dim umapZ As Double() = umap.Select(Function(p) p.z).ToArray
-            Dim clusters As Integer() = umap.Select(Function(p) p.class).ToArray
+            Dim clusters As Integer() = umap.Select(Function(p) Integer.Parse(p.class)).ToArray
             Dim umapsize As New Dimension With {.name = "umap_size", .size = umap.Length}
             Dim labels As String() = umap.Select(Function(p) Strings.Trim(p.label)).ToArray
 

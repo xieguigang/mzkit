@@ -5,6 +5,9 @@
 // ref=mzkit.Mummichog@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * Mummichog searches for enrichment patterns on metabolic network, 
+ *  bypassing metabolite identification, to generate high-quality
+ *  hypotheses directly from a LC-MS data table.
  * 
 */
 declare namespace Mummichog {
