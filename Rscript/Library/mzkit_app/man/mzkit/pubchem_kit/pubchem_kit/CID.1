@@ -4,9 +4,10 @@
 CID \- query cid from pubchem database
 .SH SYNOPSIS
 \fICID(\fBname\fR as string, 
-\fBcache\fR as string = "./.pubchem", 
+\fBcache\fR as any = "./.pubchem", 
 \fBoffline\fR as boolean = FALSE, 
-\fBinterval\fR as integer = -1);\fR
+\fBinterval\fR as integer = -1, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 query cid from pubchem database
