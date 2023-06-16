@@ -7,7 +7,8 @@ require(JSON);
 #'    attach a additional database cross reference id to the xrefs of the generated pugview 
 #'    metabolite data object
 #' @param extensionCache a cache dir for save the extension data of the current metabolite object,
-#'    example as pathway query, reaction query, and reaction query.
+#'    example as pathway query, reaction query, and reaction query. This parameter value also 
+#'    could be a filesystem wrapper object.
 #'
 #' @return A generated metabolite object that could be used for dump well formatted json
 #'

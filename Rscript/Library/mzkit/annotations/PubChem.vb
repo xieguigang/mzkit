@@ -212,18 +212,37 @@ Module PubChemToolKit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("CID")>
+    <RApiReturn(GetType(String))>
     Public Function CID(name As String,
-                        Optional cache$ = "./.pubchem",
+                        Optional cache As Object = "./.pubchem",
                         Optional offline As Boolean = False,
-                        Optional interval As Integer = -1) As String()
+                        Optional interval As Integer = -1,
+                        Optional env As Environment = Nothing) As Object
 
-        Return Query.QueryCID(
-            name:=name,
-            cacheFolder:=cache,
-            offlineMode:=offline,
-            hitCache:=Nothing,
-            interval:=interval
-        )
+        If cache Is Nothing Then
+            cache = "./.pubchem/"
+            env.AddMessage("The cache of pubchem CID query is nothing, use the default local directory './.pubchem/' at current workdir as default cache location.")
+        End If
+
+        If TypeOf cache Is String Then
+            Return Query.QueryCID(
+                name:=name,
+                cacheFolder:=CStr(cache),
+                offlineMode:=offline,
+                hitCache:=Nothing,
+                interval:=interval
+            )
+        ElseIf cache.GetType.ImplementInterface(Of IFileSystemEnvironment) Then
+            Return Query.QueryCID(
+                name:=name,
+                cacheFolder:=DirectCast(cache, IFileSystemEnvironment),
+                offlineMode:=offline,
+                hitCache:=Nothing,
+                interval:=interval
+            )
+        Else
+            Return Message.InCompatibleType(GetType(String), cache.GetType, env)
+        End If
     End Function
 
     ''' <summary>
