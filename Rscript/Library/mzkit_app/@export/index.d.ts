@@ -30,7 +30,7 @@ declare namespace mzkit {
    /**
      * @param mzdiff default value Is ``da:0.001``.
    */
-   function alignment_peaksdata(peakcache: any, mzdiff?: string): object;
+   function alignment_peaksdata(peakcache: any, mzdiff?: any): object;
    /**
    */
    function ANOVAGroup(data: any, sampleinfo: any): object;
@@ -43,13 +43,13 @@ declare namespace mzkit {
    /**
      * @param output_dir default value Is ``./``.
    */
-   function GCMS_linearReport(sim: any, ions: any, quantify: any, calfiles: string, output_dir?: string): object;
+   function GCMS_linearReport(sim: any, ions: any, quantify: any, calfiles: string, output_dir?: any): object;
    /**
      * @param peakwidth default value Is ``[5, 13]``.
      * @param rtshift default value Is ``30``.
      * @param maxDeletions default value Is ``2``.
    */
-   function GCMS_linears(contentTable: any, mslIons: any, calfiles: string, peakwidth?: any, rtshift?: object, maxDeletions?: object): object;
+   function GCMS_linears(contentTable: any, mslIons: any, calfiles: string, peakwidth?: any, rtshift?: any, maxDeletions?: any): object;
    /**
    */
    function GCMS_quantify(linears: any, sim: any, sampleData: any): object;
@@ -59,7 +59,7 @@ declare namespace mzkit {
      * @param intocutoff default value Is ``0.05``.
      * @param equals default value Is ``0.85``.
    */
-   function get_representives(ions: any, top_n?: object, mzdiff?: number, intocutoff?: number, equals?: number): object;
+   function get_representives(ions: any, top_n?: any, mzdiff?: any, intocutoff?: any, equals?: any): object;
    /**
    */
    function getDataValues(section: any): object;
@@ -69,23 +69,23 @@ declare namespace mzkit {
    /**
      * @param unit default value Is ``Minute``.
    */
-   function ionPairsFromMsl(ions: any, unit?: string): object;
+   function ionPairsFromMsl(ions: any, unit?: any): object;
    /**
      * @param precursors default value Is ``["[M]+", "[M+H]+", "[M+H-H2O]+"]``.
      * @param mzdiff default value Is ``ppm:20``.
      * @param repofile default value Is ``Call "system.file"("data/KEGG_compounds.msgpack", "package" <- "mzkit")``.
    */
-   function kegg_compounds(precursors?: any, mzdiff?: string, repofile?: any): object;
+   function kegg_compounds(precursors?: any, mzdiff?: any, repofile?: any): object;
    /**
      * @param cache default value Is ``./graph_kb``.
    */
-   function knowledge_graph(cid: any, cache?: string): object;
+   function knowledge_graph(cid: any, cache?: any): object;
    /**
      * @param repofile default value Is ``Call "system.file"("data/LIPIDMAPS.msgpack", "package" <- "mzkit")``.
      * @param gsea default value Is ``false``.
      * @param category default value Is ``false``.
    */
-   function lipidmaps_repo(repofile?: any, gsea?: boolean, category?: boolean): object;
+   function lipidmaps_repo(repofile?: any, gsea?: any, category?: any): object;
    /**
    */
    function loadTree(files: string): object;
@@ -100,7 +100,7 @@ declare namespace mzkit {
    /**
      * @param output_dir default value Is ``./``.
    */
-   function output_datatables(quantify: any, linears: any, output_dir?: string): object;
+   function output_datatables(quantify: any, linears: any, output_dir?: any): object;
    /**
    */
    function parseDescriptors(descriptors: any): object;
@@ -117,12 +117,12 @@ declare namespace mzkit {
      * @param mslIons default value Is ``null``.
      * @param output_dir default value Is ``./linears``.
    */
-   function plotLinears(linears: any, mslIons?: any, output_dir?: string): object;
+   function plotLinears(linears: any, mslIons?: any, output_dir?: any): object;
    /**
      * @param process default value Is ``null``.
      * @param extensionCache default value Is ``./.cache/extdata/``.
    */
-   function pubchem_graphjson(dataXml: any, process?: any, extensionCache?: string): object;
+   function pubchem_graphjson(dataXml: any, process?: any, extensionCache?: any): object;
    /**
    */
    function pubchem_meta(term: any): object;
@@ -135,7 +135,7 @@ declare namespace mzkit {
         * @param outputdir default value Is ``./``.
         * @param n_threads default value Is ``8``.
       */
-      function Deconvolution(data_dir?: string, mzdiff?: string, baseline?: number, peakwidth?: any, outputdir?: string, n_threads?: object): object;
+      function Deconvolution(data_dir?: any, mzdiff?: any, baseline?: any, peakwidth?: any, outputdir?: any, n_threads?: any): object;
    }
    /**
    */
