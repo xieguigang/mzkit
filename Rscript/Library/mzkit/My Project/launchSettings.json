@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "D:\\biodeep\\biodeepdb_v3\\spatial\\MSI_analysis-3.0\\test\\pattern_test\\plot.R"
+      "commandLineArgs": "C:\\Users\\lipidsearch\\Source\\Repos\\OTCML-2023\\script\\query.R --attach \"D:\\mzkit\\Rscript\\Library\\mzkit_app\""
     }
   }
 }
