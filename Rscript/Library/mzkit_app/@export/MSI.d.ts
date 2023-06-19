@@ -219,6 +219,21 @@ declare namespace MSI {
      * + default value Is ``null``.
    */
    function scans2D(rowScans: any, correction?: object, intocutoff?: number, yscale?: number, env?: object): any;
+   module spatial {
+      /**
+       * sum pixels for create pixel spot convolution
+       * 
+       * 
+        * @param mat A matrix liked dataframe object that contains the 
+        *  molecule expression data on each spatial spots, data object should 
+        *  in format of spatial spot in columns and molecule feature in rows.
+        * @param win_size 
+        * + default value Is ``2``.
+        * @param steps 
+        * + default value Is ``1``.
+      */
+      function convolution(mat: object, win_size?: object, steps?: object): object;
+   }
    /**
     * split the raw 2D MSI data into multiple parts with given parts
     * 
