@@ -10,6 +10,14 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+	  <Title>Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics</Title>
+	  <Description>Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics</Description>
+	  <Company>ZhuLab</Company>
+	  <Authors>gg.xie@bionovogene.com</Authors>
+	  <Product>MZKit</Product>
+	  <Copyright>Copyright © BioNovoGene 2023</Copyright>
+	  <PackageProjectUrl>https://github.com/xieguigang/mzkit</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
