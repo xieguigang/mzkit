@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::f181bb878796360f3683471f36294a07, mzkit\Rscript\Library\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 661
-    '    Code Lines: 468
-    ' Comment Lines: 116
-    '   Blank Lines: 77
-    '     File Size: 25.23 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asMSILayer, basePeakMz, Correction, getimzmlMetadata, GetIonsJointMatrix
-    '               GetMatrixIons, GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, getStatTable
-    '               IonStats, loadRowSummary, MSI_summary, MSIScanMatrix, open_imzML
-    '               PeakMatrix, peakSamples, pixelId, PixelIons, PixelMatrix
-    '               pixels, pixels2D, rowScans, splice, write_imzML
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 661
+'    Code Lines: 468
+' Comment Lines: 116
+'   Blank Lines: 77
+'     File Size: 25.23 KB
+
+
+' Module MSI
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asMSILayer, basePeakMz, Correction, getimzmlMetadata, GetIonsJointMatrix
+'               GetMatrixIons, GetMSIMetadata, getmzpackFileMetadata, getmzPackMetadata, getStatTable
+'               IonStats, loadRowSummary, MSI_summary, MSIScanMatrix, open_imzML
+'               PeakMatrix, peakSamples, pixelId, PixelIons, PixelMatrix
+'               pixels, pixels2D, rowScans, splice, write_imzML
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,8 +76,10 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
@@ -85,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
@@ -741,4 +744,70 @@ Module MSI
 
         Return Nothing
     End Function
+
+    ''' <summary>
+    ''' sum pixels for create pixel spot convolution
+    ''' </summary>
+    ''' <param name="mat">A matrix liked dataframe object that contains the 
+    ''' molecule expression data on each spatial spots, data object should 
+    ''' in format of spatial spot in columns and molecule feature in rows.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("spatial.convolution")>
+    Public Function spatialConvolution(mat As rDataframe, Optional win_size As Integer = 2, Optional steps As Integer = 1) As rDataframe
+        Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(SpotVector.LoadDataFrame(mat))
+        Dim convolution As New rDataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = mat.getRowNames
+        }
+
+        For Each spot As SpotVector In spatial.EnumerateData
+            If spot.X Mod steps = 0 AndAlso spot.Y Mod steps = 0 Then
+                Dim x = spot.X, y = spot.Y
+                Dim vec = spot.expression
+                Dim v As Integer = 1
+
+                For xi = x - win_size To x + win_size
+                    For yi = y - win_size To y + win_size
+                        If xi <> x AndAlso yi <> y Then
+                            Dim vi = spatial.GetData(xi, yi)
+
+                            If Not vi Is Nothing Then
+                                vec += vi.expression
+                                v += 1
+                            End If
+                        End If
+                    Next
+                Next
+
+                Call convolution.add($"{x},{y}", vec / v)
+            End If
+        Next
+
+        Return convolution
+    End Function
 End Module
+
+Public Class SpotVector : Implements IPoint2D
+
+    Public Property X As Integer Implements IPoint2D.X
+    Public Property Y As Integer Implements IPoint2D.Y
+    Public Property expression As Vector
+
+    Public Overrides Function ToString() As String
+        Return $"[{X},{Y}]"
+    End Function
+
+    Public Shared Iterator Function LoadDataFrame(mat As rDataframe) As IEnumerable(Of SpotVector)
+        For Each col As KeyValuePair(Of String, Array) In mat.columns
+            Dim t As String() = col.Key.Split(","c)
+            Dim xy As Integer() = t.Select(AddressOf Integer.Parse).ToArray
+
+            Yield New SpotVector With {
+                .expression = CLRVector.asNumeric(col.Value).AsVector,
+                .X = xy(0),
+                .Y = xy(1)
+            }
+        Next
+    End Function
+End Class
