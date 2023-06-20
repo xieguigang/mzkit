@@ -48,12 +48,20 @@ declare namespace formula {
       function matrix(repo: object, cid: object, env?: object): object;
    }
    /**
-    * evaluate exact mass for the given formula strings.
+    * ### Evaluate formula exact mass
+    *  
+    *  evaluate exact mass for the given formula strings.
     * 
+    * > -1 will be return if the given formula is empty or error/invalid
     * 
      * @param formula a vector of the character formulas.
      * @param env 
      * + default value Is ``null``.
+     * @return the result data type is keeps the same as the given data type of the
+     *  **`formula`** parameter: this function returns a numeric 
+     *  vector if the given **`formula`** is a character vector,
+     *  or this function returns a key-value pair tuple list if the given
+     *  **`formula`** is a list.
    */
    function eval(formula: any, env?: object): number;
    /**
