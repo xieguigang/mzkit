@@ -268,12 +268,23 @@ Module FormulaTools
     End Function
 
     ''' <summary>
+    ''' ### Evaluate formula exact mass
+    ''' 
     ''' evaluate exact mass for the given formula strings.
     ''' </summary>
     ''' <param name="formula">
     ''' a vector of the character formulas.
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the result data type is keeps the same as the given data type of the
+    ''' <paramref name="formula"/> parameter: this function returns a numeric 
+    ''' vector if the given <paramref name="formula"/> is a character vector,
+    ''' or this function returns a key-value pair tuple list if the given
+    ''' <paramref name="formula"/> is a list.
+    ''' </returns>
+    ''' <remarks>
+    ''' -1 will be return if the given formula is empty or error/invalid
+    ''' </remarks>
     <ExportAPI("eval")>
     <RApiReturn(GetType(Double))>
     Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object

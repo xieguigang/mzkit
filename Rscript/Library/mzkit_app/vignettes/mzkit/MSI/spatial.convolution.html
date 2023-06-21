@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Evaluate formula exact mass</title>
+    <title>sum pixels for create pixel spot convolution</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,49 +143,49 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>eval {formula}</td>
+                <td>spatial.convolution {MSI}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Evaluate formula exact mass</h2>
+        <h2>sum pixels for create pixel spot convolution</h2>
 
         <h3>Description</h3>
 
-        <p><br /> evaluate exact mass for the given formula strings.</p>
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>eval</strong>(<i>formula</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>spatial.convolution</strong>(<i>mat</i>,
+    <i>win.size</i> = 2,
+    <i>steps</i> = 1);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>formula</dt>
-<dd><p><p>a vector of the character formulas.</p></p></dd>
+<dt>mat</dt>
+<dd><p><p>A matrix liked dataframe object that contains the <br />
+ molecule expression data on each spatial spots, data object should <br />
+ in format of spatial spot in columns and molecule feature in rows.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: block;">Details</h3>
+        <h3 style="display: none;">Details</h3>
 
-        <p>-1 will be return if the given formula is empty or error/invalid</p>
+        
 
 
         <h3>Value</h3>
 
-        <p>the result data type is keeps the same as the given data type of the<br />
- <strong><code>formula</code></strong> parameter: this function returns a numeric <br />
- vector if the given <strong><code>formula</code></strong> is a character vector,<br />
- or this function returns a key-value pair tuple list if the given<br />
- <strong><code>formula</code></strong> is a list.</p>
+        this function returns data object of type <a href="/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.
 
         <hr />
-        <div style="text-align: center;">[Package <em>formula</em> version 1.0.0.0 <a
-                href="../formula.html">Index</a>]
+        <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
+                href="../MSI.html">Index</a>]
         </div>
     </div>
 </body>

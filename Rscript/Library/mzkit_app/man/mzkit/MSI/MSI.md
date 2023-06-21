@@ -22,3 +22,4 @@ MS-Imaging data handler
 + [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
 + [getMatrixIons](MSI/getMatrixIons.1) 
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
++ [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
