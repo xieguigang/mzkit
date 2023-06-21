@@ -111,6 +111,10 @@ Public Class Drawer : Implements IDisposable
         pixelReader = New ReadRawPack(mzpack)
     End Sub
 
+    Sub New(matrix As mzPackPixel())
+        pixelReader = New ReadRawPack(matrix)
+    End Sub
+
     Sub New(reader As PixelReader)
         pixelReader = reader
     End Sub

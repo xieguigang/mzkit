@@ -84,6 +84,7 @@ Namespace Pixel
         Public MustOverride Function HasAnyMzIon() As Boolean
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
         Public MustOverride Function GetMzIonIntensity() As Double()
+        Public MustOverride Function SetXY(x As Integer, y As Integer) As mzPackPixel
 
         Public Overridable Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double Implements IMsScan.GetMzIonIntensity
             Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray

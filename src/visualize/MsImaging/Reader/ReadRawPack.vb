@@ -96,6 +96,11 @@ Namespace Reader
             Call ReadDimensions(mzpack)
         End Sub
 
+        Sub New(raw As mzPackPixel())
+            Call loadPixelsArray(raw)
+            Call ReadDimensions(mzpack:=Nothing)
+        End Sub
+
         Sub New(mzpack As String)
             Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Call Assembly.mzPack _
@@ -145,6 +150,10 @@ Namespace Reader
             End If
         End Function
 
+        ''' <summary>
+        ''' the required mzpack object could be nothing
+        ''' </summary>
+        ''' <param name="mzpack"></param>
         Private Overloads Sub ReadDimensions(mzpack As mzPack)
             Dim metadata As Dictionary(Of String, String)
             Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
