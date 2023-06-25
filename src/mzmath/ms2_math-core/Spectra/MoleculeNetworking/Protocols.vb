@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::3e8b8a2e96d1018489b09f64a595bb2a, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 117
-    ' Comment Lines: 16
-    '   Blank Lines: 26
-    '     File Size: 6.36 KB
+' Summaries:
 
 
-    '     Class Protocols
-    ' 
-    '         Properties: Cluster
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
-    '                   RunProtocol
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 117
+' Comment Lines: 16
+'   Blank Lines: 26
+'     File Size: 6.36 KB
+
+
+'     Class Protocols
+' 
+'         Properties: Cluster
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
+'                   RunProtocol
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -180,6 +180,7 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray
             Dim uniqueCounter As New Dictionary(Of String, Integer)
             Dim v As NetworkingNode
+            Dim vkey As String
 
             For Each mz As NamedCollection(Of PeakMs2) In groupByMz
                 For Each cluster As SpectrumCluster In BinaryTree(mz)
@@ -192,13 +193,14 @@ Namespace Spectra.MoleculeNetworking
                     ' make the reference unique by add a counter suffix at here
                     ' for avoid such duplicated key problem
                     v = NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
+                    vkey = v.referenceId
 
-                    If Not uniqueCounter.ContainsKey(v.referenceId) Then
-                        Call uniqueCounter.Add(v.referenceId, 1)
+                    If Not uniqueCounter.ContainsKey(vkey) Then
+                        Call uniqueCounter.Add(vkey, 1)
                     Else
                         ' has a duplicated id hit
-                        v.representation.name = $"{v.referenceId}_{uniqueCounter(v.referenceId)}"
-                        uniqueCounter(v.referenceId) += 1
+                        v.representation.name = $"{vkey}_{uniqueCounter(vkey)}"
+                        uniqueCounter(vkey) += 1
                     End If
 
                     Yield v
