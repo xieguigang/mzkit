@@ -130,6 +130,25 @@ Namespace Pixel
             End If
         End Sub
 
+        Sub New(mz As Double(), into As Double(), scan_id As String, sample As String, x As Integer, y As Integer)
+            Me.pixel = New Point(x, y)
+            Me.scan = New ScanMS1 With {
+                .BPC = into.Max,
+                .into = into,
+                .meta = New Dictionary(Of String, String) From {{"x", x}, {"y", y}, {"sample", sample}},
+                .mz = mz,
+                .products = Nothing,
+                .rt = y,
+                .scan_id = scan_id,
+                .TIC = into.Sum
+            }
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function SetXY(x As Integer, y As Integer) As mzPackPixel
+            Return New mzPackPixel(scan.mz, scan.into, scan.scan_id, scan.meta.TryGetValue("sample"), x, y)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function HasAnyMzIon() As Boolean
             Return scan.size > 0
