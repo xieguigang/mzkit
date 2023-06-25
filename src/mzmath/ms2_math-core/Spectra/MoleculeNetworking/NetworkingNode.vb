@@ -71,6 +71,16 @@ Namespace Spectra.MoleculeNetworking
         Public Property mz As Double
 
         ''' <summary>
+        ''' get collection size of the <see cref="members"/> in current network node
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return members.TryCount
+            End Get
+        End Property
+
+        ''' <summary>
         ''' get the reference <see cref="LibraryMatrix.name"/> from the <see cref="representation"/>
         ''' spectrum object as the reference id of current network node
         ''' </summary>

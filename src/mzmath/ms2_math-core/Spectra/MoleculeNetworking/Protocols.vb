@@ -65,12 +65,19 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace Spectra.MoleculeNetworking
+
     ''' <summary>
+    ''' this algorithm module works on create molecular networking
+    ''' for a small bundle of the ms2 spectrum data
+    ''' </summary>
+    ''' <remarks>
+    ''' algorithm descriptions:
+    ''' 
     ''' 1. 按照母离子m/z二叉树聚类
     ''' 2. 每一个聚类结果作为一个node进行碎片合并
     ''' 3. 基于node进行molecular networking
     ''' 4. 导出网络数据
-    ''' </summary>
+    ''' </remarks>
     Public Class Protocols
 
         ReadOnly ms1_tolerance As Tolerance
