@@ -63,6 +63,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -112,18 +113,21 @@ Namespace MZWork
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isLoaded As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Not loaded Is Nothing
             End Get
         End Property
 
         Public ReadOnly Property isInMemory As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return loaded IsNot Nothing AndAlso Not cache.FileExists
             End Get
         End Property
 
         Public ReadOnly Property cacheFileExists As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return cache.FileExists
             End Get
@@ -132,6 +136,7 @@ Namespace MZWork
         Public Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(inMemory As mzPack)
             Call loadMemory(inMemory)
         End Sub
@@ -145,10 +150,12 @@ Namespace MZWork
             Me.numOfScan2 = copy.numOfScan2
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLoadedMzpack() As mzPack
             Return loaded
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSnapshot() As Image
             Return loaded.Thumbnail
         End Function
@@ -222,18 +229,22 @@ mzPackReader:
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUVscans() As IEnumerable(Of UVScan)
             Return loaded.GetUVScans
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindMs2Scan(id As String) As ScanMS2
             Return ms2.TryGetValue(id)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindMs1Scan(id As String) As ScanMS1
             Return ms1.TryGetValue(id)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetCacheFileSize() As Long
             Return cache.FileLength
         End Function
@@ -253,6 +264,7 @@ mzPackReader:
             Return ms2.Values
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SaveAs(file As String)
             Call cache.FileCopy(file)
         End Sub
