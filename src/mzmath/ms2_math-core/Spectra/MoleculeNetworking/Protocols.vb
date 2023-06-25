@@ -167,14 +167,41 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw">
+        ''' processing all ms2 spectrum data at here for a cluster session
+        ''' </param>
+        ''' <returns></returns>
         Friend Iterator Function ProduceNodes(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of NetworkingNode)
             Dim groupByMz As NamedCollection(Of PeakMs2)() = raw _
                 .GroupBy(Function(peak) peak.mz, ms1_tolerance) _
                 .ToArray
+            Dim uniqueCounter As New Dictionary(Of String, Integer)
+            Dim v As NetworkingNode
 
             For Each mz As NamedCollection(Of PeakMs2) In groupByMz
                 For Each cluster As SpectrumCluster In BinaryTree(mz)
-                    Yield NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
+                    ' 20230625 due to the reason of the reference id is generated
+                    ' via take the top 3 ions from the ms2 spectrum, so the duplicated
+                    ' reference id can not be avoid in current cluster session.
+                    ' and the duplicated session id will crashed the network node
+                    ' indexing in the downstream process
+                    '
+                    ' make the reference unique by add a counter suffix at here
+                    ' for avoid such duplicated key problem
+                    v = NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
+
+                    If Not uniqueCounter.ContainsKey(v.referenceId) Then
+                        Call uniqueCounter.Add(v.referenceId, 1)
+                    Else
+                        ' has a duplicated id hit
+                        v.representation.name = $"{v.referenceId}_{uniqueCounter(v.referenceId)}"
+                        uniqueCounter(v.referenceId) += 1
+                    End If
+
+                    Yield v
                 Next
             Next
         End Function
