@@ -1,68 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::4c84a160e6255e28f9934a7c3a49ab9a, mzkit\src\assembly\mzPackExtensions\MZWork\Raw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 193
-    '    Code Lines: 136
-    ' Comment Lines: 20
-    '   Blank Lines: 37
-    '     File Size: 6.22 KB
+' Summaries:
 
 
-    '     Class Raw
-    ' 
-    '         Properties: cache, cacheFileExists, isInMemory, isLoaded, numOfScan1
-    '                     numOfScan2, rtmax, rtmin, source
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetLoadedMzpack, GetMs1Scans
-    '                   GetMs2Scans, GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
-    ' 
-    '         Sub: loadMemory, SaveAs
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 193
+'    Code Lines: 136
+' Comment Lines: 20
+'   Blank Lines: 37
+'     File Size: 6.22 KB
+
+
+'     Class Raw
+' 
+'         Properties: cache, cacheFileExists, isInMemory, isLoaded, numOfScan1
+'                     numOfScan2, rtmax, rtmin, source
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetLoadedMzpack, GetMs1Scans
+'                   GetMs2Scans, GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+' 
+'         Sub: loadMemory, SaveAs
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -112,18 +113,21 @@ Namespace MZWork
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isLoaded As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Not loaded Is Nothing
             End Get
         End Property
 
         Public ReadOnly Property isInMemory As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return loaded IsNot Nothing AndAlso Not cache.FileExists
             End Get
         End Property
 
         Public ReadOnly Property cacheFileExists As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return cache.FileExists
             End Get
@@ -132,6 +136,7 @@ Namespace MZWork
         Public Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(inMemory As mzPack)
             Call loadMemory(inMemory)
         End Sub
@@ -145,10 +150,12 @@ Namespace MZWork
             Me.numOfScan2 = copy.numOfScan2
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLoadedMzpack() As mzPack
             Return loaded
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSnapshot() As Image
             Return loaded.Thumbnail
         End Function
@@ -162,6 +169,11 @@ Namespace MZWork
                 .ToDictionary(Function(m2)
                                   Return m2.scan_id
                               End Function)
+
+            Me.rtmin = Aggregate m1 As ScanMS1 In ms1.Values Into Min(m1.rt)
+            Me.rtmax = Aggregate m1 As ScanMS1 In ms1.Values Into Max(m1.rt)
+            Me.numOfScan1 = ms1.Count
+            Me.numOfScan2 = ms2.Count
         End Sub
 
         Public Function LoadMzpack(reload As Action(Of String, String),
@@ -217,18 +229,22 @@ mzPackReader:
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUVscans() As IEnumerable(Of UVScan)
             Return loaded.GetUVScans
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindMs2Scan(id As String) As ScanMS2
             Return ms2.TryGetValue(id)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindMs1Scan(id As String) As ScanMS1
             Return ms1.TryGetValue(id)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetCacheFileSize() As Long
             Return cache.FileLength
         End Function
@@ -248,6 +264,7 @@ mzPackReader:
             Return ms2.Values
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SaveAs(file As String)
             Call cache.FileCopy(file)
         End Sub

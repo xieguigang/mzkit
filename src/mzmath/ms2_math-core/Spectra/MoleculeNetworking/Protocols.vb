@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::3e8b8a2e96d1018489b09f64a595bb2a, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 117
-    ' Comment Lines: 16
-    '   Blank Lines: 26
-    '     File Size: 6.36 KB
+' Summaries:
 
 
-    '     Class Protocols
-    ' 
-    '         Properties: Cluster
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
-    '                   RunProtocol
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 117
+' Comment Lines: 16
+'   Blank Lines: 26
+'     File Size: 6.36 KB
+
+
+'     Class Protocols
+' 
+'         Properties: Cluster
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
+'                   RunProtocol
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,12 +65,19 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace Spectra.MoleculeNetworking
+
     ''' <summary>
+    ''' this algorithm module works on create molecular networking
+    ''' for a small bundle of the ms2 spectrum data
+    ''' </summary>
+    ''' <remarks>
+    ''' algorithm descriptions:
+    ''' 
     ''' 1. 按照母离子m/z二叉树聚类
     ''' 2. 每一个聚类结果作为一个node进行碎片合并
     ''' 3. 基于node进行molecular networking
     ''' 4. 导出网络数据
-    ''' </summary>
+    ''' </remarks>
     Public Class Protocols
 
         ReadOnly ms1_tolerance As Tolerance
@@ -167,14 +174,43 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw">
+        ''' processing all ms2 spectrum data at here for a cluster session
+        ''' </param>
+        ''' <returns></returns>
         Friend Iterator Function ProduceNodes(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of NetworkingNode)
             Dim groupByMz As NamedCollection(Of PeakMs2)() = raw _
                 .GroupBy(Function(peak) peak.mz, ms1_tolerance) _
                 .ToArray
+            Dim uniqueCounter As New Dictionary(Of String, Integer)
+            Dim v As NetworkingNode
+            Dim vkey As String
 
             For Each mz As NamedCollection(Of PeakMs2) In groupByMz
                 For Each cluster As SpectrumCluster In BinaryTree(mz)
-                    Yield NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
+                    ' 20230625 due to the reason of the reference id is generated
+                    ' via take the top 3 ions from the ms2 spectrum, so the duplicated
+                    ' reference id can not be avoid in current cluster session.
+                    ' and the duplicated session id will crashed the network node
+                    ' indexing in the downstream process
+                    '
+                    ' make the reference unique by add a counter suffix at here
+                    ' for avoid such duplicated key problem
+                    v = NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
+                    vkey = v.referenceId
+
+                    If Not uniqueCounter.ContainsKey(vkey) Then
+                        Call uniqueCounter.Add(vkey, 1)
+                    Else
+                        ' has a duplicated id hit
+                        v.representation.name = $"{vkey}_{uniqueCounter(vkey)}"
+                        uniqueCounter(vkey) += 1
+                    End If
+
+                    Yield v
                 Next
             Next
         End Function

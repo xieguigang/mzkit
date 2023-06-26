@@ -70,6 +70,21 @@ Namespace Spectra.MoleculeNetworking
         Public Property members As PeakMs2()
         Public Property mz As Double
 
+        ''' <summary>
+        ''' get collection size of the <see cref="members"/> in current network node
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return members.TryCount
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get the reference <see cref="LibraryMatrix.name"/> from the <see cref="representation"/>
+        ''' spectrum object as the reference id of current network node
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property referenceId As String
             Get
                 Return representation.name
@@ -125,22 +140,24 @@ Namespace Spectra.MoleculeNetworking
                 .ToArray _
                 .Centroid(tolerance, cutoff) _
                 .ToArray
-            Dim products As ms2() = matrix _
-                .OrderByDescending(Function(a) a.intensity) _
-                .Take(3).ToArray
-            '.Select(Function(a) BitConverter.GetBytes(a.mz)) _
-            '.IteratesALL _
-            '.ToBase64String _
-            '.MD5 _
-            '.Substring(0, 6) _
-            '.ToUpper
-            Dim uid As String = products.Select(Function(i) $"{i.mz.ToString("F3")}:{(i.intensity * 100).ToString("F0")}").JoinBy("/") ' $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
             Return New LibraryMatrix With {
                 .centroid = True,
                 .ms2 = matrix,
-                .name = uid
+                .name = CreateReferenceId(matrix, topN:=3)
             }
+        End Function
+
+        Private Shared Function CreateReferenceId(matrix As ms2(), Optional topN As Integer = 3) As String
+            Dim products As ms2() = matrix _
+                .OrderByDescending(Function(a) a.intensity) _
+                .Take(topN) _
+                .ToArray
+            Dim uid As String = products _
+                .Select(Function(i) $"{i.mz.ToString("F3")}:{(i.intensity * 100).ToString("F0")}") _
+                .JoinBy("/")
+
+            Return uid
         End Function
     End Class
 End Namespace
