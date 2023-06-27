@@ -68,7 +68,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports stdNum = System.Math
 
@@ -222,17 +224,41 @@ Module MoleculeNetworking
         Dim graph = workflow.RunProtocol(peakms2.populates(Of PeakMs2)(env), Sub(msg) println(msg)) _
             .ProduceNodes _
             .Networking
-        Dim net As IO.DataSet() = ProtocolPipeline _
+        Dim matrix As rDataframe = ProtocolPipeline _
             .Networking(Of IO.DataSet)(graph, Function(a, b) stdNum.Min(a, b)) _
-            .ToArray
+            .RMatrix
         Dim clusters As NetworkingNode() = graph _
             .Select(Function(u) workflow.Cluster(u.reference)) _
             .ToArray
+        Dim graph_score As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim spectrum_cluster As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each cluster As NetworkingNode In clusters
+            spectrum_cluster.slots(cluster.referenceId) = New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"reference_id", cluster.referenceId},
+                    {"size", cluster.size},
+                    {"representation", cluster.representation},
+                    {"members", cluster.members}
+                }
+            }
+        Next
+
+        For Each link As LinkSet In graph
+            graph_score.slots(link.reference) = New dataframe With {
+                .rownames = link.links.Keys.ToArray,
+                .columns = New Dictionary(Of String, Array) From {
+                    {"forward", .rownames.Select(Function(i) link.links(i).forward).ToArray},
+                    {"reverse", .rownames.Select(Function(i) link.links(i).reverse).ToArray}
+                }
+            }
+        Next
 
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
-                {"graph", graph},
-                {"clusters", clusters}
+                {"graph", graph_score},
+                {"clusters", spectrum_cluster},
+                {"matrix", matrix}
             }
         }
     End Function
