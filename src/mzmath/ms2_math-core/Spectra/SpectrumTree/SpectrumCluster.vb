@@ -62,6 +62,9 @@ Imports stdNum = System.Math
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' A collection of <see cref="PeakMs2"/> spectrum data
+    ''' </summary>
     Public Class SpectrumCluster : Implements IEnumerable(Of PeakMs2)
 
         ''' <summary>
