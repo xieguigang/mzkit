@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::f0eec22665fb78f2cd9251da864f4ead, mzkit\Rscript\Library\mzkit.insilicons\MoleculeNetworking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 120
-    '    Code Lines: 85
-    ' Comment Lines: 16
-    '   Blank Lines: 19
-    '     File Size: 4.41 KB
+' Summaries:
 
 
-    ' Module MoleculeNetworking
-    ' 
-    '     Function: createGraph, MsBin, RepresentativeSpectrum, Tree, unqiueNames
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 120
+'    Code Lines: 85
+' Comment Lines: 16
+'   Blank Lines: 19
+'     File Size: 4.41 KB
+
+
+' Module MoleculeNetworking
+' 
+'     Function: createGraph, MsBin, RepresentativeSpectrum, Tree, unqiueNames
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,8 +56,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
@@ -66,8 +68,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Molecular Networking (MN) is a computational strategy that may help visualization and interpretation of the complex data arising from MS analysis. 
@@ -164,6 +169,98 @@ Module MoleculeNetworking
                          Optional equals As Double = 0.85) As TreeCluster
 
         Return ions.Tree(mzdiff, intocutoff, equals)
+    End Function
+
+    ''' <summary>
+    ''' Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="mzdiff1">the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,
+    ''' for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error
+    ''' should be smaller in ppm unit; 
+    ''' for precursor m/z comes from the ms2 parent ion m/z, tolerance error should 
+    ''' be larger in da unit.</param>
+    ''' <param name="mzdiff2">the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the
+    ''' cos similarity score evaluation, should be larger tolerance value in unit da,
+    ''' value of this tolerance parameter could be da:0.3</param>
+    ''' <param name="intocutoff">intensity cutoff value for make spectrum centroid</param>
+    ''' <param name="tree_identical">
+    ''' score cutoff for assert that spectrum in the binary tree
+    ''' is in the same cluster node
+    ''' </param>
+    ''' <param name="tree_right">
+    ''' score cutoff for assert that spectrum in the binary tree should be put into the right
+    ''' node.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this workflow usually used for processing the ms2 spectrum inside a 
+    ''' single raw data file
+    ''' </remarks>
+    <ExportAPI("clustering")>
+    Public Function clustering(<RRawVectorArgument> ions As Object,
+                               Optional mzdiff1 As Object = "da:0.1",
+                               Optional mzdiff2 As Object = "da:0.3",
+                               Optional intocutoff As Double = 0.05,
+                               Optional tree_identical As Double = 0.8,
+                               Optional tree_right As Double = 0.01,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim peakms2 As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
+        Dim mz1 = Math.getTolerance(mzdiff1, env, "da:0.1")
+        Dim mz2 = Math.getTolerance(mzdiff2, env, "da:0.3")
+
+        If peakms2.isError Then
+            Return peakms2.getError
+        ElseIf mz1 Like GetType(Message) Then
+            Return mz1.TryCast(Of Message)
+        ElseIf mz2 Like GetType(Message) Then
+            Return mz2.TryCast(Of Message)
+        End If
+
+        Dim println As Action(Of Object) = env.WriteLineHandler
+        Dim workflow As New Protocols(mz1, mz2, tree_identical, tree_right, New RelativeIntensityCutoff(intocutoff))
+        Dim graph = workflow.RunProtocol(peakms2.populates(Of PeakMs2)(env), Sub(msg) println(msg)) _
+            .ProduceNodes _
+            .Networking
+        Dim matrix As rDataframe = ProtocolPipeline _
+            .Networking(Of IO.DataSet)(graph, Function(a, b) stdNum.Min(a, b)) _
+            .RMatrix
+        Dim clusters As NetworkingNode() = graph _
+            .Select(Function(u) workflow.Cluster(u.reference)) _
+            .ToArray
+        Dim graph_score As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim spectrum_cluster As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each cluster As NetworkingNode In clusters
+            spectrum_cluster.slots(cluster.referenceId) = New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"reference_id", cluster.referenceId},
+                    {"size", cluster.size},
+                    {"representation", cluster.representation},
+                    {"members", cluster.members}
+                }
+            }
+        Next
+
+        For Each link As LinkSet In graph
+            graph_score.slots(link.reference) = New dataframe With {
+                .rownames = link.links.Keys.ToArray,
+                .columns = New Dictionary(Of String, Array) From {
+                    {"forward", .rownames.Select(Function(i) link.links(i).forward).ToArray},
+                    {"reverse", .rownames.Select(Function(i) link.links(i).reverse).ToArray}
+                }
+            }
+        Next
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"graph", graph_score},
+                {"clusters", spectrum_cluster},
+                {"matrix", matrix}
+            }
+        }
     End Function
 
     ''' <summary>

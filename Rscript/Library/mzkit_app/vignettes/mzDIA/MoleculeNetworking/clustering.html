@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <style rel="stylesheet" type="text/css">
+        @media screen {
+            .container {
+                padding-right: 10px;
+                padding-left: 10px;
+                margin-right: auto;
+                margin-left: auto;
+                max-width: 900px;
+            }
+        }
+
+        .rimage img {
+            /* from knitr - for examples and demos */
+            width: 96%;
+            margin-left: 2%;
+        }
+
+        .katex {
+            font-size: 1.1em;
+        }
+
+        code {
+            color: rgb(194, 42, 42);
+            background: inherit;
+            font-style:italic;
+            font-weight: bold;
+        }
+
+        body {
+            line-height: 1.4;
+            background: white;
+            color: black;
+        }
+
+        a:link {
+            background: white;
+            color: blue;
+        }
+
+        a:visited {
+            background: white;
+            color: rgb(50%, 0%, 50%);
+        }
+
+        h1 {
+            background: white;
+            color: rgb(55%, 55%, 55%);
+            font-family: monospace;
+            font-size: 1.4em;
+            /* x-large; */
+            text-align: center;
+        }
+
+        h2 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-size: 1.2em;
+            /* large; */
+            text-align: center;
+        }
+
+        h3 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-size: 1.2em;
+            /* large; */
+        }
+
+        h4 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-style: italic;
+            font-size: 1.2em;
+            /* large; */
+        }
+
+        h5 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+        }
+
+        h6 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-style: italic;
+        }
+
+        img.toplogo {
+            width: 4em;
+            vertical-align: middle;
+        }
+
+        img.arrow {
+            width: 30px;
+            height: 30px;
+            border: 0;
+        }
+
+        span.acronym {
+            font-size: small;
+        }
+
+        span.env {
+            font-family: monospace;
+        }
+
+        span.file {
+            font-family: monospace;
+        }
+
+        span.option {
+            font-family: monospace;
+        }
+
+        span.pkg {
+            font-weight: bold;
+        }
+
+        span.samp {
+            font-family: monospace;
+        }
+
+        div.vignettes a:hover {
+            background: rgb(85%, 85%, 85%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>clustering {MoleculeNetworking}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>clustering</strong>(<i>ions</i>,
+    <i>mzdiff1</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
+    <i>mzdiff2</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
+    <i>intocutoff</i> = 0.05,
+    <i>tree.identical</i> = 0.8,
+    <i>tree.right</i> = 0.01);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>ions</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzdiff1</dt>
+<dd><p><p>the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,<br />
+ for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error<br />
+ should be smaller in ppm unit; <br />
+ for precursor m/z comes from the ms2 parent ion m/z, tolerance error should <br />
+ be larger in da unit.</p></p></dd>
+
+
+<dt>mzdiff2</dt>
+<dd><p><p>the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the<br />
+ cos similarity score evaluation, should be larger tolerance value in unit da,<br />
+ value of this tolerance parameter could be da:0.3</p></p></dd>
+
+
+<dt>intocutoff</dt>
+<dd><p><p>intensity cutoff value for make spectrum centroid</p></p></dd>
+
+
+<dt>tree.identical</dt>
+<dd><p><p>score cutoff for assert that spectrum in the binary tree<br />
+ is in the same cluster node</p></p></dd>
+
+
+<dt>tree.right</dt>
+<dd><p><p>score cutoff for assert that spectrum in the binary tree should be put into the right<br />
+ node.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: block;">Details</h3>
+
+        <p>this workflow usually used for processing the ms2 spectrum inside a <br />
+ single raw data file</p>
+
+
+        <h3>Value</h3>
+
+        this function returns data object of type <i>any</i> kind.
+
+        <hr />
+        <div style="text-align: center;">[Package <em>MoleculeNetworking</em> version 1.0.0.0 <a
+                href="../MoleculeNetworking.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+</html>
