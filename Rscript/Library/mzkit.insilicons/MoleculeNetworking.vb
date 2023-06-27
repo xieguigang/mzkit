@@ -53,9 +53,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
@@ -164,6 +166,67 @@ Module MoleculeNetworking
                          Optional equals As Double = 0.85) As TreeCluster
 
         Return ions.Tree(mzdiff, intocutoff, equals)
+    End Function
+
+    ''' <summary>
+    ''' Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="mzdiff1">the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,
+    ''' for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error
+    ''' should be smaller in ppm unit; 
+    ''' for precursor m/z comes from the ms2 parent ion m/z, tolerance error should 
+    ''' be larger in da unit.</param>
+    ''' <param name="mzdiff2">the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the
+    ''' cos similarity score evaluation, should be larger tolerance value in unit da,
+    ''' value of this tolerance parameter could be da:0.3</param>
+    ''' <param name="intocutoff">intensity cutoff value for make spectrum centroid</param>
+    ''' <param name="tree_identical">
+    ''' score cutoff for assert that spectrum in the binary tree
+    ''' is in the same cluster node
+    ''' </param>
+    ''' <param name="tree_right">
+    ''' score cutoff for assert that spectrum in the binary tree should be put into the right
+    ''' node.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this workflow usually used for processing the ms2 spectrum inside a 
+    ''' single raw data file
+    ''' </remarks>
+    <ExportAPI("clustering")>
+    Public Function clustering(<RRawVectorArgument> ions As Object,
+                               Optional mzdiff1 As Object = "da:0.1",
+                               Optional mzdiff2 As Object = "da:0.3",
+                               Optional intocutoff As Double = 0.05,
+                               Optional tree_identical As Double = 0.8,
+                               Optional tree_right As Double = 0.01,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim peakms2 As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
+        Dim mz1 = Math.getTolerance(mzdiff1, env, "da:0.1")
+        Dim mz2 = Math.getTolerance(mzdiff2, env, "da:0.3")
+
+        If peakms2.isError Then
+            Return peakms2.getError
+        ElseIf mz1 Like GetType(Message) Then
+            Return mz1.TryCast(Of Message)
+        ElseIf mz2 Like GetType(Message) Then
+            Return mz2.TryCast(Of Message)
+        End If
+
+        Dim println As Action(Of Object) = env.WriteLineHandler
+        Dim workflow As New Protocols(mz1, mz2, tree_identical, tree_right, New RelativeIntensityCutoff(intocutoff))
+        Dim graph = workflow.RunProtocol(peakms2.populates(Of PeakMs2)(env), Sub(msg) println(msg)).ProduceNodes.Networking
+        Dim clusters = graph.Select(Function(u) workflow.Cluster(u.reference)).ToArray
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"graph", graph},
+                {"clusters", clusters}
+            }
+        }
     End Function
 
     ''' <summary>
