@@ -218,8 +218,12 @@ Module MoleculeNetworking
 
         Dim println As Action(Of Object) = env.WriteLineHandler
         Dim workflow As New Protocols(mz1, mz2, tree_identical, tree_right, New RelativeIntensityCutoff(intocutoff))
-        Dim graph = workflow.RunProtocol(peakms2.populates(Of PeakMs2)(env), Sub(msg) println(msg)).ProduceNodes.Networking
-        Dim clusters = graph.Select(Function(u) workflow.Cluster(u.reference)).ToArray
+        Dim graph = workflow.RunProtocol(peakms2.populates(Of PeakMs2)(env), Sub(msg) println(msg)) _
+            .ProduceNodes _
+            .Networking
+        Dim clusters As NetworkingNode() = graph _
+            .Select(Function(u) workflow.Cluster(u.reference)) _
+            .ToArray
 
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
