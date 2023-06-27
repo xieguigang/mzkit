@@ -93,11 +93,25 @@ Namespace Spectra
             Return $"{mzwidth} && {intocutoff}"
         End Function
 
-        Public Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
+        Public Overloads Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
             Dim align As AlignmentOutput = CreateAlignment(a.mzInto, b.mzInto)
 
             align.query = GetMeta(a)
             align.reference = GetMeta(b)
+
+            Return align
+        End Function
+
+        Public Overloads Function CreateAlignment(a As PeakMs2, b As LibraryMatrix) As AlignmentOutput
+            Dim align As AlignmentOutput = CreateAlignment(a.mzInto, b.ms2)
+
+            align.query = GetMeta(a)
+            align.reference = New Meta With {
+                .id = b.name,
+                .intensity = b.intensity.Sum,
+                .mz = -1,
+                .scan_time = -1
+            }
 
             Return align
         End Function
@@ -111,7 +125,7 @@ Namespace Spectra
             }
         End Function
 
-        Public Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
+        Public Overloads Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
             Dim align As SSM2MatrixFragment() = GlobalAlignment _
                 .CreateAlignment(a, b, mzwidth) _
                 .ToArray

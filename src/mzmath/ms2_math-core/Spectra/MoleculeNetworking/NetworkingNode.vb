@@ -128,13 +128,11 @@ Namespace Spectra.MoleculeNetworking
                 .IteratesALL _
                 .GroupBy(Function(a) a.mz, tolerance) _
                 .ToArray
-            ' Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
-            ' Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
             Dim matrix As ms2() = mz _
                 .Select(Function(a)
                             Return New ms2 With {
                                 .mz = Val(a.name),
-                                .intensity = a.Select(Function(x) x.intensity).Max
+                                .intensity = a.Select(Function(x) x.intensity).Sum
                             }
                         End Function) _
                 .ToArray _
