@@ -23,3 +23,5 @@ print(raw);
 let network = raw 
 |> MoleculeNetworking::clustering()
 ;
+
+str(network);
