@@ -79,7 +79,7 @@ declare namespace MoleculeNetworking {
      * 
      * + default value Is ``null``.
    */
-   function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): any;
+   function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): object;
    /**
     * populate a list of peak ms2 cluster data
     * 
@@ -102,6 +102,12 @@ declare namespace MoleculeNetworking {
      * + default value Is ``null``.
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
+   /**
+     * @param rtwin default value Is ``30``.
+     * @param wrap_peaks default value Is ``false``.
+     * @param env default value Is ``null``.
+   */
+   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): any;
    /**
     * do spectrum data clustering
     * 

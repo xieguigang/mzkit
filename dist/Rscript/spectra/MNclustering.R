@@ -19,9 +19,20 @@ raw = raw
 ;
 
 print(raw);
+print(length(raw));
 
 let network = raw 
 |> MoleculeNetworking::clustering()
 ;
 
 str(network);
+
+let specturm = network$cluster.raw |> splitClusterRT(rtwin = 30, wrap.peaks = TRUE);
+
+print(specturm);
+
+print("raw data size:");
+print(length(raw));
+print("cluster size:");
+print(length(specturm));
+
