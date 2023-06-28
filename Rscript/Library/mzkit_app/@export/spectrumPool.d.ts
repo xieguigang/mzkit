@@ -28,11 +28,13 @@ declare namespace spectrumPool {
      * + default value Is ``'unknown'``.
      * @param file 
      * + default value Is ``'unknown'``.
+     * @param filename_overrides 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function addPool(pool: object, x: any, biosample?: string, organism?: string, project?: string, instrument?: string, file?: string, env?: object): any;
+   function addPool(pool: object, x: any, biosample?: string, organism?: string, project?: string, instrument?: string, file?: string, filename_overrides?: boolean, env?: object): any;
    /**
     * close the connection to the spectrum pool
     * 

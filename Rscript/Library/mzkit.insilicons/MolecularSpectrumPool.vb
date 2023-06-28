@@ -168,6 +168,7 @@ Public Module MolecularSpectrumPool
                         Optional project As String = "unknown",
                         Optional instrument As String = "unknown",
                         Optional file As String = "unknown",
+                        Optional filename_overrides As Boolean = False,
                         Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
@@ -196,7 +197,7 @@ Public Module MolecularSpectrumPool
 
             peak.lib_guid = conservedGuid(peak)
 
-            If peak.file.StringEmpty Then
+            If filename_overrides OrElse peak.file.StringEmpty Then
                 peak.file = file
                 peak.meta("file") = file
             End If
