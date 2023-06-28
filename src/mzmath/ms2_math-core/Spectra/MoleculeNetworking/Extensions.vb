@@ -6,7 +6,8 @@ Imports stdNum = System.Math
 
 Namespace Spectra.MoleculeNetworking
 
-    Module Module1
+    <HideModuleName>
+    Public Module Extensions
 
         ''' <summary>
         ''' Split the current spectrum cluster into multiple part of the sub-cluster via a given rt window
