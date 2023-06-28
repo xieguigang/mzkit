@@ -54,9 +54,16 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
+''' <summary>
+''' XIC dataset that used for deconv
+''' </summary>
 Public Class MzGroup
 
     Public Property mz As Double
     Public Property XIC As ChromatogramTick()
+
+    Public Overrides Function ToString() As String
+        Return mz
+    End Function
 
 End Class
