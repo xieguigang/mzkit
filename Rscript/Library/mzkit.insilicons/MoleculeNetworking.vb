@@ -175,6 +175,7 @@ Module MoleculeNetworking
     Public Function splitClusterRT(<RRawVectorArgument>
                                    clusters As Object,
                                    Optional rtwin As Double = 30,
+                                   Optional wrap_peaks As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim src As pipeline = pipeline.TryCreatePipeline(Of NetworkingNode)(clusters, env)
@@ -183,10 +184,31 @@ Module MoleculeNetworking
             Return src.getError
         End If
 
-        Return src.populates(Of NetworkingNode)(env) _
+        Dim subNodes = src.populates(Of NetworkingNode)(env) _
             .Select(Function(c) c.SplitClusterRT(rt_win:=rtwin)) _
             .IteratesALL _
             .ToArray
+
+        If wrap_peaks Then
+            Return subNodes _
+                .Select(Function(n)
+                            Return New PeakMs2 With {
+                                .mz = n.mz,
+                                .activation = "NA",
+                                .collisionEnergy = 30,
+                                .file = n.referenceId,
+                                .intensity = n.size,
+                                .lib_guid = n.referenceId,
+                                .mzInto = n.representation.ms2,
+                                .precursor_type = "NA",
+                                .rt = n.members.Average(Function(p) p.rt),
+                                .scan = "NA"
+                            }
+                        End Function) _
+                .ToArray
+        Else
+            Return subNodes
+        End If
     End Function
 
     ''' <summary>
