@@ -118,6 +118,9 @@ Namespace Spectra.MoleculeNetworking
         End Function
     End Class
 
+    ''' <summary>
+    ''' A collection of the cluster similarity score
+    ''' </summary>
     Public Structure LinkSet
 
         Public Property reference As String
@@ -142,6 +145,10 @@ Namespace Spectra.MoleculeNetworking
         Public Property id As String
         Public Property forward As Double
         Public Property reverse As Double
+
+        Public Function GetScore() As Double
+            Return forward * reverse
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{id}] forward:{forward}, reverse:{reverse}"
