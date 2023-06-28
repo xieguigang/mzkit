@@ -171,6 +171,24 @@ Module MoleculeNetworking
         Return ions.Tree(mzdiff, intocutoff, equals)
     End Function
 
+    <ExportAPI("splitClusterRT")>
+    Public Function splitClusterRT(<RRawVectorArgument>
+                                   clusters As Object,
+                                   Optional rtwin As Double = 30,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim src As pipeline = pipeline.TryCreatePipeline(Of NetworkingNode)(clusters, env)
+
+        If src.isError Then
+            Return src.getError
+        End If
+
+        Return src.populates(Of NetworkingNode)(env) _
+            .Select(Function(c) c.SplitClusterRT(rt_win:=rtwin)) _
+            .IteratesALL _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file
     ''' </summary>
@@ -199,7 +217,9 @@ Module MoleculeNetworking
     ''' single raw data file
     ''' </remarks>
     <ExportAPI("clustering")>
-    Public Function clustering(<RRawVectorArgument> ions As Object,
+    <RApiReturn("graph", "clusters", "matrix", "cluster.raw")>
+    Public Function clustering(<RRawVectorArgument>
+                               ions As Object,
                                Optional mzdiff1 As Object = "da:0.1",
                                Optional mzdiff2 As Object = "da:0.3",
                                Optional intocutoff As Double = 0.05,
@@ -258,7 +278,8 @@ Module MoleculeNetworking
             .slots = New Dictionary(Of String, Object) From {
                 {"graph", graph_score},
                 {"clusters", spectrum_cluster},
-                {"matrix", matrix}
+                {"matrix", matrix},
+                {"cluster.raw", clusters}
             }
         }
     End Function
