@@ -176,6 +176,13 @@ Namespace PoolData
                         Dim key As String = tags(i)
 
                         If Not classTree.ContainsKey(key) Then
+                            If metadata.Depth > 2048 Then
+                                ' 20230629
+                                ' exit of current add method when stack size is greater than 2048
+                                ' for avoid the possible stack overflow problem
+                                Return
+                            End If
+
                             Call classTree.Add(key, New SpectrumPool(fs, handle & $"/{key}/"))
                         End If
 

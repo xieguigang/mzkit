@@ -25,6 +25,8 @@ Namespace PoolData
         Dim rootId As String
         Dim model_id As String
 
+        Dim m_depth As Integer = 0
+
         ''' <summary>
         ''' the cluster id in the database
         ''' </summary>
@@ -48,6 +50,12 @@ Namespace PoolData
                 End If
 
                 Return rootId
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Depth As Integer
+            Get
+                Return m_depth
             End Get
         End Property
 
@@ -90,16 +98,18 @@ Namespace PoolData
             If obj.code = 404 Then
                 ' create new
                 Dim payload As New NameValueCollection
+
                 payload.Add("parent", parentId)
                 payload.Add("key", path.BaseName)
                 payload.Add("hashcode", hash_index)
                 payload.Add("depth", path.Split("/"c).Length)
+
                 url = $"{http.base}/new/cluster/?model_id={http.model_id}"
                 obj = Restful.ParseJSON(url.POST(payload))
-                Me.cluster_data = obj.info
-            Else
-                Me.cluster_data = obj.info
             End If
+
+            Me.cluster_data = obj.info
+            Me.m_depth = Val((cluster_data!depth).ToString)
         End Sub
 
         Public Shared Iterator Function FetchClusterData(url_get As String,
