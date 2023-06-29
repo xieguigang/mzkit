@@ -116,7 +116,8 @@ Namespace PoolData
                                                          hash_index As String,
                                                          model_id As String) As IEnumerable(Of Metadata)
 
-            Dim json As String = $"{url_get}?id={hash_index}&is_cluster=true&model_id={model_id}".GET
+            Dim url As String = $"{url_get}?id={hash_index}&is_cluster=true&model_id={model_id}"
+            Dim json As String = url.GET
             Dim list As Restful = Restful.ParseJSON(json)
 
             If list.code <> 0 Then
