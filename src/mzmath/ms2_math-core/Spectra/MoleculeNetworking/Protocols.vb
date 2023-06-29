@@ -102,6 +102,33 @@ Namespace Spectra.MoleculeNetworking
             End Get
         End Property
 
+        ''' <summary>
+        ''' construct a workflow for create molecular networking pipeline which is
+        ''' used for running on a small bundle of the ms2 spectrum data.
+        ''' </summary>
+        ''' <param name="ms1_tolerance">
+        ''' the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,
+        ''' for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error
+        ''' should be smaller in ppm unit; 
+        ''' for precursor m/z comes from the ms2 parent ion m/z, tolerance error should 
+        ''' be larger in da unit. 
+        ''' </param>
+        ''' <param name="ms2_tolerance">
+        ''' the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the
+        ''' cos similarity score evaluation, should be larger tolerance value in unit da,
+        ''' value of this tolerance parameter could be da:0.3
+        ''' </param>
+        ''' <param name="treeIdentical">score cutoff for assert that spectrum in the binary tree
+        ''' is in the same cluster node</param>
+        ''' <param name="treeSimilar">
+        ''' score cutoff for assert that spectrum in the binary tree should be put into the right
+        ''' node.
+        ''' </param>
+        ''' <param name="intoCutoff">intensity cutoff value for make spectrum centroid</param>
+        ''' <remarks>
+        ''' this workflow usually used for processing the ms2 spectrum inside a 
+        ''' single raw data file
+        ''' </remarks>
         Sub New(ms1_tolerance As Tolerance,
                 ms2_tolerance As Tolerance,
                 treeIdentical As Double,
@@ -231,7 +258,10 @@ Namespace Spectra.MoleculeNetworking
                             End Function) _
                     .ToArray
 
-                Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+                If ++i Mod 3 = 0 Then
+                    Call progress($"[{i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+                End If
+
                 Call clusters.Add(scan.referenceId, scan)
 
                 Dim links = scores _

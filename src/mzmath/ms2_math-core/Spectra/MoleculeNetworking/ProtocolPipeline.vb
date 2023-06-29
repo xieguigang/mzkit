@@ -1,71 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::ab3187d7fa14c75d6e52d307fbdccfc6, mzkit\src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\ProtocolPipeline.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 77
-    '    Code Lines: 56
-    ' Comment Lines: 0
-    '   Blank Lines: 21
-    '     File Size: 2.73 KB
+' Summaries:
 
 
-    '     Class ProtocolPipeline
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+3 Overloads) Networking, ProduceNodes
-    ' 
-    '     Structure LinkSet
-    ' 
-    '         Properties: links, reference
-    ' 
-    '     Class NetworkClusterLinkEndPoint
-    ' 
-    '         Properties: forward, id, reverse
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 77
+'    Code Lines: 56
+' Comment Lines: 0
+'   Blank Lines: 21
+'     File Size: 2.73 KB
+
+
+'     Class ProtocolPipeline
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+3 Overloads) Networking, ProduceNodes
+' 
+'     Structure LinkSet
+' 
+'         Properties: links, reference
+' 
+'     Class NetworkClusterLinkEndPoint
+' 
+'         Properties: forward, id, reverse
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports stdNum = System.Math
 
 Namespace Spectra.MoleculeNetworking
 
@@ -97,7 +98,14 @@ Namespace Spectra.MoleculeNetworking
             Return Networking(Of T)(protocol.Networking(nodes, progress), aggrate)
         End Function
 
-        Public Shared Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(linkSet As IEnumerable(Of LinkSet), aggrate As Func(Of Double, Double, Double)) As IEnumerable(Of T)
+        Public Shared Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(
+            linkSet As IEnumerable(Of LinkSet),
+            Optional aggrate As Func(Of Double, Double, Double) = Nothing) As IEnumerable(Of T)
+
+            If aggrate Is Nothing Then
+                aggrate = AddressOf stdNum.Min
+            End If
+
             For Each row As LinkSet In linkSet
                 Dim obj As New T With {.Key = row.reference}
 
@@ -110,6 +118,9 @@ Namespace Spectra.MoleculeNetworking
         End Function
     End Class
 
+    ''' <summary>
+    ''' A collection of the cluster similarity score
+    ''' </summary>
     Public Structure LinkSet
 
         Public Property reference As String
@@ -134,6 +145,10 @@ Namespace Spectra.MoleculeNetworking
         Public Property id As String
         Public Property forward As Double
         Public Property reverse As Double
+
+        Public Function GetScore() As Double
+            Return forward * reverse
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{id}] forward:{forward}, reverse:{reverse}"

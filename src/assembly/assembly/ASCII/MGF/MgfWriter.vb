@@ -190,6 +190,17 @@ Namespace ASCII.MGF
         End Sub
 
         <Extension>
+        Public Function SaveAsMgfIons(ions As IEnumerable(Of PeakMs2), file As String) As Boolean
+            Using textfile As New StreamWriter(file.Open(doClear:=True, [readOnly]:=False, verbose:=True))
+                Call ions _
+                    .Select(Function(i) i.MgfIon) _
+                    .SaveTo(textfile)
+            End Using
+
+            Return True
+        End Function
+
+        <Extension>
         Public Function SaveTo(ion As Ions, file$) As Boolean
             Using write As StreamWriter = file.OpenWriter
                 Call ion.WriteAsciiMgf(write)
@@ -197,6 +208,18 @@ Namespace ASCII.MGF
 
             Return True
         End Function
+
+        ''' <summary>
+        ''' save ions data as mgf file
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <param name="file"></param>
+        <Extension>
+        Public Sub SaveTo(ions As IEnumerable(Of Ions), file As TextWriter)
+            For Each ion As Ions In ions
+                Call ion.WriteAsciiMgf(file)
+            Next
+        End Sub
 
         ''' <summary>
         ''' save ions data as mgf file

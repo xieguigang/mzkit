@@ -46,6 +46,41 @@ declare namespace MoleculeNetworking {
       function graph(tree: object, ions: object): object;
    }
    /**
+    * Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file
+    * 
+    * > this workflow usually used for processing the ms2 spectrum inside a 
+    * >  single raw data file
+    * 
+     * @param ions -
+     * @param mzdiff1 the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,
+     *  for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error
+     *  should be smaller in ppm unit; 
+     *  for precursor m/z comes from the ms2 parent ion m/z, tolerance error should 
+     *  be larger in da unit.
+     * 
+     * + default value Is ``'da:0.1'``.
+     * @param mzdiff2 the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the
+     *  cos similarity score evaluation, should be larger tolerance value in unit da,
+     *  value of this tolerance parameter could be da:0.3
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff intensity cutoff value for make spectrum centroid
+     * 
+     * + default value Is ``0.05``.
+     * @param tree_identical score cutoff for assert that spectrum in the binary tree
+     *  is in the same cluster node
+     * 
+     * + default value Is ``0.8``.
+     * @param tree_right score cutoff for assert that spectrum in the binary tree should be put into the right
+     *  node.
+     * 
+     * + default value Is ``0.01``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): object;
+   /**
     * populate a list of peak ms2 cluster data
     * 
     * 
@@ -67,6 +102,12 @@ declare namespace MoleculeNetworking {
      * + default value Is ``null``.
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
+   /**
+     * @param rtwin default value Is ``30``.
+     * @param wrap_peaks default value Is ``false``.
+     * @param env default value Is ``null``.
+   */
+   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): any;
    /**
     * do spectrum data clustering
     * 
