@@ -7,6 +7,7 @@ Namespace PoolData
 
         Dim data As Dictionary(Of String, Metadata)
         Dim rootId As String
+        Dim m_depth As Integer
 
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -21,8 +22,15 @@ Namespace PoolData
             End Get
         End Property
 
-        Sub New(data As Dictionary(Of String, Metadata))
+        Public Overrides ReadOnly Property Depth As Integer
+            Get
+                Return m_depth
+            End Get
+        End Property
+
+        Sub New(data As Dictionary(Of String, Metadata), depth As Integer)
             Me.data = data
+            Me.m_depth = depth
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

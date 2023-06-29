@@ -65,9 +65,10 @@ Namespace PoolData
         End Function
 
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
+            Dim depth As Integer = path.Split("/"c).Length
             Dim inMemory = fs.ReadText($"{path}/node_data/metadata.json").LoadJSON(Of Dictionary(Of String, Metadata))
             inMemory = If(inMemory, New Dictionary(Of String, Metadata))
-            Return New InMemoryKeyValueMetadataPool(inMemory)
+            Return New InMemoryKeyValueMetadataPool(inMemory, depth)
         End Function
 
         Public Overrides Function FindRootId(path As String) As String
