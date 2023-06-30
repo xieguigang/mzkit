@@ -99,7 +99,15 @@ Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
 
 ''' <summary>
-''' Visual MS imaging data(*.imzML)
+''' ### Visual MS imaging data(*.imzML)
+''' 
+''' Mass spec imaging (MSI) is a technique measuring chemical composition and 
+''' linking it to spatial coordinates on a surface.  The chemical composition
+''' is determined by mass spectrometry, which measures the mass-to-charge ratios
+''' (m/z's) of any ions that can be generated from the surface.  Most commonly,
+''' the surface is a tissue section on a microscope slide; however, any flat 
+''' surface could be analyzed given it has suitable dimensions and is properly 
+''' prepared. 
 ''' </summary>
 <Package("MsImaging")>
 Module MsImaging
