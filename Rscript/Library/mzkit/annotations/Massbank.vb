@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
@@ -259,53 +260,7 @@ Module Massbank
                     .CreateMeta _
                     .ToDictionary(Function(l) l.LM_ID,
                                   Function(l)
-                                      Dim list As New list With {
-                                         .slots = New Dictionary(Of String, Object)
-                                      }
-
-                                      If l.ABBREVIATION.StringEmpty Then
-                                          list.add(NameOf(l.ABBREVIATION), l.ABBREVIATION)
-                                      Else
-                                          Dim lipidName As LipidName = LipidName.ParseLipidName(l.ABBREVIATION)
-
-                                          list.add(NameOf(l.ABBREVIATION), {
-                                              l.ABBREVIATION,
-                                              lipidName.ToSystematicName,
-                                              lipidName.ToOverviewName
-                                          })
-
-                                          list.add("lipid", lipidName.ToOverviewName)
-                                      End If
-
-                                      list.add(NameOf(l.CATEGORY), l.CATEGORY)
-                                      list.add(NameOf(l.CHEBI_ID), l.CHEBI_ID)
-                                      list.add(NameOf(l.CLASS_LEVEL4), l.CLASS_LEVEL4)
-                                      ' list.add(NameOf(l.COMMON_NAME), l.COMMON_NAME)
-                                      list.add(NameOf(l.EXACT_MASS), l.EXACT_MASS)
-                                      list.add(NameOf(l.FORMULA), l.FORMULA)
-                                      ' list.add(NameOf(l.HMDBID), l.HMDBID)
-                                      list.add(NameOf(l.HMDB_ID), l.HMDB_ID)
-                                      list.add(NameOf(l.INCHI), l.INCHI)
-                                      list.add(NameOf(l.INCHI_KEY), l.INCHI_KEY)
-                                      list.add(NameOf(l.KEGG_ID), l.KEGG_ID)
-                                      list.add(NameOf(l.LIPIDBANK_ID), l.LIPIDBANK_ID)
-                                      ' list.add(NameOf(l.LIPID_MAPS_CMPD_URL), l.LIPID_MAPS_CMPD_URL)
-                                      list.add(NameOf(l.LM_ID), l.LM_ID)
-                                      list.add(NameOf(l.MAIN_CLASS), l.MAIN_CLASS)
-                                      ' list.add(NameOf(l.METABOLOMICS_ID), l.METABOLOMICS_ID)
-                                      list.add(NameOf(l.NAME), l.NAME)
-                                      list.add(NameOf(l.PLANTFA_ID), l.PLANTFA_ID)
-                                      list.add(NameOf(l.PUBCHEM_CID), l.PUBCHEM_CID)
-                                      ' list.add(NameOf(l.PUBCHEM_SID), l.PUBCHEM_SID)
-                                      ' list.add(NameOf(l.PUBCHEM_SUBSTANCE_URL), l.PUBCHEM_SUBSTANCE_URL)
-                                      list.add(NameOf(l.SMILES), l.SMILES)
-                                      ' list.add(NameOf(l.STATUS), l.STATUS)
-                                      list.add(NameOf(l.SUB_CLASS), l.SUB_CLASS)
-                                      list.add(NameOf(l.SWISSLIPIDS_ID), l.SWISSLIPIDS_ID)
-                                      list.add(NameOf(l.SYNONYMS), l.SYNONYMS)
-                                      list.add(NameOf(l.SYSTEMATIC_NAME), l.SYSTEMATIC_NAME)
-
-                                      Return CObj(list)
+                                      Return l.lipidmaps_data
                                   End Function)
             }
         Else
@@ -313,6 +268,57 @@ Module Massbank
                 .CreateMeta _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         End If
+    End Function
+
+    <Extension>
+    Private Function lipidmaps_data(l As LipidMaps.MetaData) As Object
+        Dim list As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        If l.ABBREVIATION.StringEmpty Then
+            list.add(NameOf(l.ABBREVIATION), l.ABBREVIATION)
+        Else
+            Dim lipidName As LipidName = LipidName.ParseLipidName(l.ABBREVIATION)
+
+            list.add(NameOf(l.ABBREVIATION), {
+                l.ABBREVIATION,
+                lipidName.ToSystematicName,
+                lipidName.ToOverviewName
+            })
+
+            list.add("lipid", lipidName.ToOverviewName)
+        End If
+
+        list.add(NameOf(l.CATEGORY), l.CATEGORY)
+        list.add(NameOf(l.CHEBI_ID), l.CHEBI_ID)
+        list.add(NameOf(l.CLASS_LEVEL4), l.CLASS_LEVEL4)
+        ' list.add(NameOf(l.COMMON_NAME), l.COMMON_NAME)
+        list.add(NameOf(l.EXACT_MASS), l.EXACT_MASS)
+        list.add(NameOf(l.FORMULA), l.FORMULA)
+        ' list.add(NameOf(l.HMDBID), l.HMDBID)
+        list.add(NameOf(l.HMDB_ID), l.HMDB_ID)
+        list.add(NameOf(l.INCHI), l.INCHI)
+        list.add(NameOf(l.INCHI_KEY), l.INCHI_KEY)
+        list.add(NameOf(l.KEGG_ID), l.KEGG_ID)
+        list.add(NameOf(l.LIPIDBANK_ID), l.LIPIDBANK_ID)
+        ' list.add(NameOf(l.LIPID_MAPS_CMPD_URL), l.LIPID_MAPS_CMPD_URL)
+        list.add(NameOf(l.LM_ID), l.LM_ID)
+        list.add(NameOf(l.MAIN_CLASS), l.MAIN_CLASS)
+        ' list.add(NameOf(l.METABOLOMICS_ID), l.METABOLOMICS_ID)
+        list.add(NameOf(l.NAME), l.NAME)
+        list.add(NameOf(l.PLANTFA_ID), l.PLANTFA_ID)
+        list.add(NameOf(l.PUBCHEM_CID), l.PUBCHEM_CID)
+        ' list.add(NameOf(l.PUBCHEM_SID), l.PUBCHEM_SID)
+        ' list.add(NameOf(l.PUBCHEM_SUBSTANCE_URL), l.PUBCHEM_SUBSTANCE_URL)
+        list.add(NameOf(l.SMILES), l.SMILES)
+        ' list.add(NameOf(l.STATUS), l.STATUS)
+        list.add(NameOf(l.SUB_CLASS), l.SUB_CLASS)
+        list.add(NameOf(l.SWISSLIPIDS_ID), l.SWISSLIPIDS_ID)
+        list.add(NameOf(l.SYNONYMS), l.SYNONYMS)
+        list.add(NameOf(l.SYSTEMATIC_NAME), l.SYSTEMATIC_NAME)
+
+        Return CObj(list)
     End Function
 
     <ExportAPI("lipid.nameMaps")>
