@@ -59,6 +59,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
@@ -111,6 +112,11 @@ Module Massbank
         Next
 
         Return table
+    End Function
+
+    <ExportAPI("mona.msp_metadata")>
+    Public Function monaMSP(msp As MspData) As Object
+        Return msp.GetMetadata
     End Function
 
     ''' <summary>
