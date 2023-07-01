@@ -258,7 +258,10 @@ Namespace Spectra.MoleculeNetworking
                             End Function) _
                     .ToArray
 
-                Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+                If ++i Mod 3 = 0 Then
+                    Call progress($"[{i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+                End If
+
                 Call clusters.Add(scan.referenceId, scan)
 
                 Dim links = scores _

@@ -127,7 +127,7 @@ Public Module Deconvolution
     Public Iterator Function GetMzGroups(Of T As scan)(scans As IEnumerable(Of T),
                                                        Optional rtwin As Double = 0.05,
                                                        Optional mzdiff As Tolerance = Nothing) As IEnumerable(Of MzGroup)
-
+        ' group by m/z at first
         For Each group As NamedCollection(Of T) In scans _
             .GroupBy(
                 evaluate:=Function(ti) ti.mz,

@@ -168,6 +168,7 @@ Public Module MolecularSpectrumPool
                         Optional project As String = "unknown",
                         Optional instrument As String = "unknown",
                         Optional file As String = "unknown",
+                        Optional filename_overrides As Boolean = False,
                         Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
@@ -185,16 +186,20 @@ Public Module MolecularSpectrumPool
         End If
 
         For Each peak As PeakMs2 In data.populates(Of PeakMs2)(env)
-            peak.meta.Add("biosample", biosample)
-            peak.meta.Add("organism", organism)
-            peak.meta.Add("project", project)
-            peak.meta.Add("instrument", instrument)
-            
+            If peak.meta Is Nothing Then
+                peak.meta = New Dictionary(Of String, String)
+            End If
+
+            peak.meta("biosample") = biosample
+            peak.meta("organism") = organism
+            peak.meta("project") = project
+            peak.meta("instrument") = instrument
+
             peak.lib_guid = conservedGuid(peak)
 
-            If peak.file.StringEmpty Then
+            If filename_overrides OrElse peak.file.StringEmpty Then
                 peak.file = file
-                peak.meta.Add("file", file)
+                peak.meta("file") = file
             End If
 
             Call pool.Add(peak)

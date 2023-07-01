@@ -239,7 +239,9 @@ Module mzDeco
     ''' <param name="ms1"></param>
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' create a list of XIC dataset for run downstream deconv operation
+    ''' </returns>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument>

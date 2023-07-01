@@ -55,6 +55,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -101,8 +102,20 @@ Namespace Spectra.MoleculeNetworking
         ''' <param name="raw"></param>
         ''' <param name="tolerance">ms2 tolerance</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Create(parentIon As Double, raw As SpectrumCluster, tolerance As Tolerance, cutoff As LowAbundanceTrimming) As NetworkingNode
-            Dim ions As PeakMs2() = raw.cluster _
+            Return Create(parentIon, raw.cluster, tolerance, cutoff)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="tolerance">ms2 tolerance</param>
+        ''' <returns></returns>
+        Public Shared Function Create(parentIon As Double, raw As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As NetworkingNode
+            Dim ions As PeakMs2() = raw _
                 .Select(Function(a)
                             Dim maxInto = a.mzInto.Select(Function(x) x.intensity).Max
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>add sample peaks data to spectrum pool</title>
+    <title>splitClusterRT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,59 +143,35 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>addPool {spectrumPool}</td>
+                <td>splitClusterRT {MoleculeNetworking}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>add sample peaks data to spectrum pool</h2>
+        <h2>splitClusterRT</h2>
 
         <h3>Description</h3>
 
-        
+        splitClusterRT
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>addPool</strong>(<i>pool</i>, <i>x</i>,
-    <i>biosample</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
-    <i>organism</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
-    <i>project</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
-    <i>instrument</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
-    <i>file</i> = <span style='color: brown;'><strong>"unknown"</strong></span>,
-    <i>filename.overrides</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>splitClusterRT</strong>(<i>clusters</i>,
+    <i>rtwin</i> = 30,
+    <i>wrap.peaks</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>pool</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>x</dt>
-<dd><p><p>the spectrum data collection</p></p></dd>
-
-
-<dt>biosample</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>organism</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
-        <h3 style="display: block;">Details</h3>
+        <h3 style="display: none;">Details</h3>
 
-        <p>the spectrum data for run clustering should be <br />
- processed into centroid mode at first!</p>
+        
 
 
         <h3>Value</h3>
@@ -203,8 +179,8 @@
         this function returns data object of type <i>any</i> kind.
 
         <hr />
-        <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a
-                href="../spectrumPool.html">Index</a>]
+        <div style="text-align: center;">[Package <em>MoleculeNetworking</em> version 1.0.0.0 <a
+                href="../MoleculeNetworking.html">Index</a>]
         </div>
     </div>
 </body>
