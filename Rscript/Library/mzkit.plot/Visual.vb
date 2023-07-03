@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking
@@ -110,6 +111,8 @@ Module Visual
         Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
         Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
         Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
+        Call Internal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
+        Call Internal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
     End Sub
 
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
@@ -604,17 +607,27 @@ Module Visual
     End Function
 
     ''' <summary>
-    ''' 
+    ''' A unify method for extract the <see cref="LibraryMatrix"/> spectrum 
+    ''' data from various mzkit data object model.
     ''' </summary>
     ''' <param name="data">
-    ''' <see cref="ms2"/>[], <see cref="LibraryMatrix"/>, <see cref="MGF.Ions"/>, <see cref="PeakMs2"/> and <see cref="dataframe"/>
-    ''' 
     ''' <see cref="dataframe"/> object should contains 
     ''' ``mz`` and ``into`` these two column data at 
     ''' least.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' supports data models:
+    ''' 
+    ''' 1. <see cref="ms2"/>[], 
+    ''' 2. <see cref="LibraryMatrix"/>, 
+    ''' 3. <see cref="MGF.Ions"/>, 
+    ''' 4. <see cref="PeakMs2"/>, 
+    ''' 5. <see cref="ScanMs1"/>, 
+    ''' 6. <see cref="ScanMs2"/> 
+    ''' 7. and <see cref="dataframe"/>
+    ''' </remarks>
     Private Function getSpectrum(data As Object, env As Environment) As [Variant](Of Message, LibraryMatrix)
         Dim type As Type = data.GetType
 
@@ -625,6 +638,17 @@ Module Visual
                 Return DirectCast(data, LibraryMatrix)
             Case GetType(MGF.Ions)
                 Return DirectCast(data, MGF.Ions).GetLibrary
+            Case GetType(ScanMS1), GetType(ScanMS2)
+                With DirectCast(data, MSScan)
+                    Dim peaks = .GetMs.ToArray
+                    Dim libname As String = .scan_id
+                    Dim libMs As New LibraryMatrix With {
+                        .ms2 = peaks,
+                        .name = libname
+                    }
+
+                    Return libMs
+                End With
             Case GetType(dataframe)
                 Dim matrix As dataframe = DirectCast(data, dataframe)
 
