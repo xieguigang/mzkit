@@ -216,10 +216,22 @@ Module MzWeb
 
         If levels.ElementAtOrDefault(0, 1) = 1 Then
             ' parse scanms1
+            Dim ms1 As New ScanMS1 With {.meta = New Dictionary(Of String, String)}
+            Dim reader As New BinaryDataReader(raw.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.LittleEndian}
 
+            Call reader.Seek(Scan0, SeekOrigin.Begin)
+            Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
+
+            Return ms1
         Else
             ' parse scanms2
+            Dim scan2 As ScanMS2
+            Dim pool As New BinaryDataReader(raw.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.LittleEndian}
 
+            pool.Seek(Scan0, SeekOrigin.Begin)
+            scan2 = pool.ReadScanMs2
+
+            Return scan2
         End If
     End Function
 
