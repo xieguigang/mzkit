@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -101,7 +102,13 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
 
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChemicalFormula), AddressOf atoms_table)
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
+        Return atomGroups(smiles)
+    End Function
 
     Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
         Dim candidates As New RDataframe With {
