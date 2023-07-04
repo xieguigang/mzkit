@@ -575,7 +575,7 @@ Module FormulaTools
     ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
     ''' information) are known as generic SMILES.
     ''' </remarks>
-    <ExportAPI("parseSMILES")>
+    <ExportAPI("parse_SMILES")>
     Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Return ParseChain.ParseGraph(SMILES, strict)
     End Function
