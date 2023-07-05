@@ -76,7 +76,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -793,7 +793,7 @@ Public Class SpotVector : Implements IPoint2D
 
     Public Property X As Integer Implements IPoint2D.X
     Public Property Y As Integer Implements IPoint2D.Y
-    Public Property expression As Vector
+    Public Property expression As vector
 
     Public Overrides Function ToString() As String
         Return $"[{X},{Y}]"

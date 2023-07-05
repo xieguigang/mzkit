@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -101,7 +102,13 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
 
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChemicalFormula), AddressOf atoms_table)
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
+        Return atomGroups(smiles)
+    End Function
 
     Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
         Dim candidates As New RDataframe With {
@@ -575,7 +582,7 @@ Module FormulaTools
     ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
     ''' information) are known as generic SMILES.
     ''' </remarks>
-    <ExportAPI("parseSMILES")>
+    <ExportAPI("parse_SMILES")>
     Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Return ParseChain.ParseGraph(SMILES, strict)
     End Function
