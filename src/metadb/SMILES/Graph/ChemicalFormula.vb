@@ -62,12 +62,20 @@ Imports EmpiricalFormula = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
 ''' </summary>
 Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, ChemicalKey)
 
+    ''' <summary>
+    ''' the graph edges is the connection links between the atom groups
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property AllBonds As IEnumerable(Of ChemicalKey)
         Get
             Return graphEdges
         End Get
     End Property
 
+    ''' <summary>
+    ''' the atom groups
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property AllElements As IEnumerable(Of ChemicalElement)
         Get
             Return vertex
