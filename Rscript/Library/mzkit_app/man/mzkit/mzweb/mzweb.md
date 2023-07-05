@@ -7,6 +7,7 @@ biodeep mzweb data viewer raw data file helper
 + [TIC](mzweb/TIC.1) 
 + [load.chromatogram](mzweb/load.chromatogram.1) load chromatogram data from the raw file data
 + [load.stream](mzweb/load.stream.1) load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.
++ [parse.scanMs](mzweb/parse.scanMs.1) 
 + [write.text_cache](mzweb/write.text_cache.1) write ASCII text format of mzweb stream
 + [packBin](mzweb/packBin.1) write binary format of mzweb stream data
 + [read.cache](mzweb/read.cache.1) read the mzPack data file liked simple msn cached data

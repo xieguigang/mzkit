@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Math.vb" />
+    <Compile Include="$(MSBuildThisFileDirectory)MsSpectrumData.vb" />
   </ItemGroup>
 </Project>

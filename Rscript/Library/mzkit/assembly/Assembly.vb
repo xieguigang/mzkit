@@ -443,8 +443,8 @@ Module Assembly
             Dim ms = DirectCast(scans, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).MS
 
             For Each Ms1 As ScanMS1 In ms
-                For Each ms2 In Ms1.products
-                    polar.Add(ms2.polarity)
+                For Each ms2 As ScanMS2 In Ms1.products.SafeQuery
+                    Call polar.Add(ms2.polarity)
                 Next
             Next
 
