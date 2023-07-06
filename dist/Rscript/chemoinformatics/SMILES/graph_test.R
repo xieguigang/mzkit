@@ -4,7 +4,9 @@ imports "formula" from "mzkit";
 
 setwd(@dir);
 
-let simple = formula::parse_SMILES("O");
+# let simple = formula::parse_SMILES("O");
+let simple = formula::parse_SMILES("C=C(O=CCCC)CC");
+
 
 print(as.formula(simple));
 
