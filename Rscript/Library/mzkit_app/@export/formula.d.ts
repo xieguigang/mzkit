@@ -11,8 +11,12 @@
 declare namespace formula {
    module as {
       /**
+        * @param canonical default value Is ``true``.
       */
-      function formula(SMILES: object): object;
+      function formula(SMILES: object, canonical?: boolean): object;
+      /**
+      */
+      function graph(smiles: object): object;
    }
    /**
     * get atoms table from the SMILES structure data
