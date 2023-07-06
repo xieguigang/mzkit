@@ -66,6 +66,8 @@ Imports System.ComponentModel
 ''' omitted).
 ''' </summary>
 Public Enum Bonds As Byte
+    NA
+
     <Description("-")> [single] = 1
     <Description("=")> [double] = 2
     <Description("#")> triple = 3

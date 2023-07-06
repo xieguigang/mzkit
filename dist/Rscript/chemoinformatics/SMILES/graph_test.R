@@ -4,6 +4,10 @@ imports "formula" from "mzkit";
 
 setwd(@dir);
 
+let simple = formula::parse_SMILES("O");
+
+print(as.formula(simple));
+
 let A = formula::parse_SMILES(readText("test_smiles_graphs\A.smi"), strict = FALSE);
 let B = formula::parse_SMILES(readText("test_smiles_graphs\B.smi"), strict = FALSE);
 let C = formula::parse_SMILES(readText("test_smiles_graphs\C.smi"), strict = FALSE);

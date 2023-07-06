@@ -76,10 +76,17 @@ Public Class FormulaBuilder
     End Sub
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
-        For Each bond As ChemicalKey In graph.AllBonds
-            Call WalkElement(bond.U, bond.bond)
-            Call WalkElement(bond.V, bond.bond)
-        Next
+        If graph.AllBonds.Count = 0 Then
+            ' only a single element
+            If graph.AllElements.Count = 1 Then
+                Call WalkElement(graph.AllElements.First, Bonds.NA)
+            End If
+        Else
+            For Each bond As ChemicalKey In graph.AllBonds
+                Call WalkElement(bond.U, bond.bond)
+                Call WalkElement(bond.V, bond.bond)
+            Next
+        End If
 
         empirical = Me.empirical.ToString
 
