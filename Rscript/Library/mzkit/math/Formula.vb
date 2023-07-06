@@ -591,8 +591,8 @@ Module FormulaTools
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("as.formula")>
-    Public Function asFormula(SMILES As ChemicalFormula) As Formula
-        Return SMILES.GetFormula
+    Public Function asFormula(SMILES As ChemicalFormula, Optional canonical As Boolean = True) As Formula
+        Return SMILES.GetFormula(canonical)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

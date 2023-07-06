@@ -90,9 +90,13 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Next
     End Function
 
-    Public Function GetFormula() As EmpiricalFormula
+    Public Function GetFormula(Optional canonical As Boolean = False) As EmpiricalFormula
         Dim empiricalFormula As String = Nothing
         Dim composition As Dictionary(Of String, Integer) = New FormulaBuilder(Me).GetComposition(empiricalFormula)
+
+        If canonical Then
+            empiricalFormula = Nothing
+        End If
 
         Return New EmpiricalFormula(composition, empiricalFormula)
     End Function
