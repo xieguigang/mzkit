@@ -267,7 +267,7 @@ Namespace PoolData
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function decode(base64 As String) As Double()
+        Public Shared Function decode(base64 As String) As Double()
             Return base64.Base64RawBytes _
                 .AddGzipMagic _
                 .UnGzipStream _
@@ -275,6 +275,18 @@ Namespace PoolData
                 .Split(8) _
                 .Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b, Scan0)) _
                 .ToArray
+        End Function
+
+        Public Shared Function DecodeConsensus(base64 As String) As (mz As Double(), into As Double())
+            Dim v = base64.Base64RawBytes _
+                .UnZipStream _
+                .ToArray _
+                .Split(8) _
+                .Select(Function(b) NetworkByteOrderBitConvertor.ToDouble(b, Scan0)) _
+                .ToArray
+            Dim p = v.Split(v.Length / 2)
+
+            Return (p(0), p(1))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
