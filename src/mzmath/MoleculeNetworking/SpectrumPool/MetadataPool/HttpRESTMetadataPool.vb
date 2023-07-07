@@ -149,18 +149,14 @@ Namespace PoolData
             }
         End Function
 
-        Public Shared Function ParseMetadata(obj As Restful) As Metadata
-            If obj.code <> 0 Then
-                Call VBDebugger.EchoLine(obj.debug)
-                Return Nothing
-            End If
-
-            Dim fetch As JavaScriptObject = obj.info
+        Public Shared Function ParseMetadata(fetch As JavaScriptObject) As Metadata
             Dim data As Metadata = castMetaData(fetch)
 
-            data.block = New BufferRegion With {
-                .position = Long.Parse(CStr(fetch!spectral_id))
-            }
+            If fetch!spectral_id IsNot Nothing Then
+                data.block = New BufferRegion With {
+                    .position = Long.Parse(CStr(fetch!spectral_id))
+                }
+            End If
 
             Return data
         End Function
@@ -170,7 +166,12 @@ Namespace PoolData
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 
-            Return ParseMetadata(obj)
+            If obj.code <> 0 Then
+                Call VBDebugger.EchoLine(obj.debug)
+                Return Nothing
+            Else
+                Return ParseMetadata(fetch:=obj.info)
+            End If
         End Function
 
         ''' <summary>
