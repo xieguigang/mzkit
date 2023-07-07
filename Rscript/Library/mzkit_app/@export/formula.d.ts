@@ -123,7 +123,7 @@ declare namespace formula {
      * + default value Is ``true``.
      * @return A chemical graph object that could be used for build formula or structure analysis
    */
-   function parseSMILES(SMILES: string, strict?: boolean): object;
+   function parse_SMILES(SMILES: string, strict?: boolean): object;
    /**
     * do peak annotation for the ms2 fragments
     * 
