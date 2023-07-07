@@ -79,7 +79,7 @@ Namespace PoolData
         ''' <summary>
         ''' check the given spectrum object is already exists inside the database or not?
         ''' </summary>
-        ''' <param name="spectrum"></param>
+        ''' <param name="spectral"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' <see cref="TreeFs.GetMetadata(PeakMs2)"/>

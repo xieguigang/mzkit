@@ -58,6 +58,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace mzData.mzWebCache
 
@@ -85,6 +86,15 @@ Namespace mzData.mzWebCache
                 .centroid = centroided,
                 .ms2 = GetMs.ToArray,
                 .name = scan_id
+            }
+        End Function
+
+        Public Function GetScanMeta() As Meta
+            Return New Meta With {
+                .id = scan_id,
+                .mz = parentMz,
+                .intensity = intensity,
+                .scan_time = rt
             }
         End Function
 
