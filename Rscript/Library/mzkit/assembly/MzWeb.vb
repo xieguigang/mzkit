@@ -87,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 
 #If NET48 Then
@@ -197,6 +198,40 @@ Module MzWeb
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
             Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+        End If
+    End Function
+
+    <ExportAPI("parse.scanMs")>
+    Public Function parseScanMsBuffer(<RRawVectorArgument> bytes As Object,
+                                      <RRawVectorArgument(GetType(Integer))>
+                                      Optional level As Object = "1,2",
+                                      Optional env As Environment = Nothing) As Object
+
+        Dim raw = SMRUCC.Rsharp.GetFileStream(bytes, FileAccess.Read, env)
+        Dim levels As Integer() = CLRVector.asInteger(level)
+
+        If raw Like GetType(Message) Then
+            Return raw.TryCast(Of Message)
+        End If
+
+        If levels.ElementAtOrDefault(0, 1) = 1 Then
+            ' parse scanms1
+            Dim ms1 As New ScanMS1 With {.meta = New Dictionary(Of String, String)}
+            Dim reader As New BinaryDataReader(raw.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.LittleEndian}
+
+            Call reader.Seek(Scan0, SeekOrigin.Begin)
+            Call Serialization.ReadScan1(ms1, file:=reader, readmeta:=True)
+
+            Return ms1
+        Else
+            ' parse scanms2
+            Dim scan2 As ScanMS2
+            Dim pool As New BinaryDataReader(raw.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.LittleEndian}
+
+            pool.Seek(Scan0, SeekOrigin.Begin)
+            scan2 = pool.ReadScanMs2
+
+            Return scan2
         End If
     End Function
 

@@ -1,13 +1,27 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "ionLayers" "ionLayers"
 .SH NAME
-ionLayers \- 
+ionLayers \- load the raw pixels data from imzML file
 .SH SYNOPSIS
 \fIionLayers(\fBimzML\fR as any, 
 \fBmz\fR as double, 
 \fBtolerance\fR as any = "da:0.1", 
 \fBskip_zero\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+load the raw pixels data from imzML file
+.PP
+.SH OPTIONS
+.PP
+\fBmz\fB \fR\- a collection of ion m/z value for rendering on one image. 
+.PP
+.PP
+\fBtolerance\fB \fR\- m/z tolerance error for get layer data. 
+.PP
+.PP
+\fBskip_zero\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES

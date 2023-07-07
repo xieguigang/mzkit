@@ -117,7 +117,8 @@ Module Layout2D
             If strict Then
                 Throw New InvalidConstraintException(msg)
             Else
-                Call Console.WriteLine(msg)
+                Call VBDebugger.EchoLine(msg)
+
                 Return 2 * stdNum.PI / n
             End If
         End If

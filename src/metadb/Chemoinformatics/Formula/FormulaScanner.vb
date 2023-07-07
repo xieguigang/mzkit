@@ -84,6 +84,14 @@ Namespace Formula
             Call ExactMass.SetExactMassParser(Function(f) EvaluateExactMass(f))
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <param name="n%"></param>
+        ''' <returns>
+        ''' this function will returns -1 if the <paramref name="formula"/> input is invalid
+        ''' </returns>
         Public Shared Function EvaluateExactMass(formula$, Optional n% = 9999) As Double
             Static cache As New Dictionary(Of String, Double)
 

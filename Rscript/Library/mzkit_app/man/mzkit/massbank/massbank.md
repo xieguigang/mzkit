@@ -2,6 +2,7 @@
 
 Metabolite annotation database toolkit
 
++ [mona.msp_metadata](massbank/mona.msp_metadata.1) 
 + [read.MoNA](massbank/read.MoNA.1) read MoNA database file.
 + [read.SDF](massbank/read.SDF.1) read metabolite data in a given sdf data file.
 + [write.lipidmaps](massbank/write.lipidmaps.1) save lipidmaps data repository.

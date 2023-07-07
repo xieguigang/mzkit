@@ -63,7 +63,7 @@ Namespace mzData.mzWebCache
     Public Module Serialization
 
         ''' <summary>
-        ''' 
+        ''' the given file input data should be in <see cref="ByteOrder.LittleEndian"/>
         ''' </summary>
         ''' <param name="ms1"></param>
         ''' <param name="file">should be in little endian byte order</param>

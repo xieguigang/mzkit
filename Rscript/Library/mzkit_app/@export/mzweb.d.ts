@@ -158,6 +158,13 @@ declare namespace mzweb {
      * @param cache -
    */
    function packBin(file: string, cache: string): ;
+   module parse {
+      /**
+        * @param level default value Is ``[1,2]``.
+        * @param env default value Is ``null``.
+      */
+      function scanMs(bytes: any, level?: any, env?: object): any;
+   }
    module read {
       /**
        * read the mzPack data file liked simple msn cached data

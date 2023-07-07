@@ -8,6 +8,8 @@
 
 /**
  * 
+ * plot NMR spectrum data
+ * 
 */
 declare namespace NMR {
    /**

@@ -60,6 +60,11 @@ declare namespace massbank {
    /**
    */
    function lipid_profiles(categry: object, enrich: object): any;
+   module mona {
+      /**
+      */
+      function msp_metadata(msp: object): any;
+   }
    /**
    */
    function parseChEBIEntity(xml: string): object;

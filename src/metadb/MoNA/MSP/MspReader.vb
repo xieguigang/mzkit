@@ -83,6 +83,7 @@ Public Module MspReader
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function GetMetadata(spectrum As MspData) As MetaData
         Return spectrum.Comments.FillData
     End Function

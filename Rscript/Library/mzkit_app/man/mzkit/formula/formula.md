@@ -16,7 +16,8 @@ The chemical formulae toolkit
 + [SDF.convertKCF](formula/SDF.convertKCF.1) 
 + [open.descriptor.db](formula/open.descriptor.db.1) open the file handles of the chemical descriptor database.
 + [descriptor.matrix](formula/descriptor.matrix.1) 
-+ [parseSMILES](formula/parseSMILES.1) Parse the SMILES molecule structre string
++ [parse_SMILES](formula/parse_SMILES.1) Parse the SMILES molecule structre string
 + [as.formula](formula/as.formula.1) 
++ [as.graph](formula/as.graph.1) 
 + [atoms](formula/atoms.1) get atoms table from the SMILES structure data
 + [isotope_distribution](formula/isotope_distribution.1) 

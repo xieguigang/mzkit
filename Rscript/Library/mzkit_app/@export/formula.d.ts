@@ -11,8 +11,12 @@
 declare namespace formula {
    module as {
       /**
+        * @param canonical default value Is ``true``.
       */
-      function formula(SMILES: object): object;
+      function formula(SMILES: object, canonical?: boolean): object;
+      /**
+      */
+      function graph(smiles: object): object;
    }
    /**
     * get atoms table from the SMILES structure data
@@ -123,7 +127,7 @@ declare namespace formula {
      * + default value Is ``true``.
      * @return A chemical graph object that could be used for build formula or structure analysis
    */
-   function parseSMILES(SMILES: string, strict?: boolean): object;
+   function parse_SMILES(SMILES: string, strict?: boolean): object;
    /**
     * do peak annotation for the ms2 fragments
     * 

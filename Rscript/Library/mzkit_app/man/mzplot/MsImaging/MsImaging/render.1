@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "render" "render"
 .SH NAME
-render \- 
+render \- MS-imaging of the MSI summary data result.
 .SH SYNOPSIS
 \fIrender(\fBdata\fR as any, 
 \fBintensity\fR as <integer> IntensitySummary = [Total], 
@@ -14,6 +14,46 @@ render \-
 \fBcolorLevels\fR as integer = 255, 
 \fBdims\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+MS-imaging of the MSI summary data result.
+.PP
+.SH OPTIONS
+.PP
+\fBdata\fB \fR\- 
+ 1. @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary\fR
+ 2. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer\fR
+. 
+.PP
+.PP
+\fBintensity\fB \fR\- -. 
+.PP
+.PP
+\fBcolorSet\fB \fR\- @\fBT:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette\fR. 
+.PP
+.PP
+\fBdefaultFill\fB \fR\- -. 
+.PP
+.PP
+\fBpixelSize\fB \fR\- -. 
+.PP
+.PP
+\fBbackground\fB \fR\- 
+ all of the pixels in this index parameter data value will 
+ be treated as background pixels and removed from the MSI 
+ rendering.
+. 
+.PP
+.PP
+\fBsize\fB \fR\- 
+ do size overrides, default parameter value nothing means the
+ size is evaluated based on the dimension **`dims`** 
+ of the ms-imaging raw data and the **`pixelSize`**
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES
