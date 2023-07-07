@@ -149,11 +149,7 @@ Namespace PoolData
             }
         End Function
 
-        Public Function GetMetadataByHashKey(hash As String) As Metadata
-            Dim url As String = $"{url_get}?id={hash}&model_id={model_id}&cluster_id={guid}"
-            Dim json As String = url.GET
-            Dim obj As Restful = Restful.ParseJSON(json)
-
+        Public Shared Function ParseMetadata(obj As Restful) As Metadata
             If obj.code <> 0 Then
                 Call VBDebugger.EchoLine(obj.debug)
                 Return Nothing
@@ -167,6 +163,14 @@ Namespace PoolData
             }
 
             Return data
+        End Function
+
+        Public Function GetMetadataByHashKey(hash As String) As Metadata
+            Dim url As String = $"{url_get}?id={hash}&model_id={model_id}&cluster_id={guid}"
+            Dim json As String = url.GET
+            Dim obj As Restful = Restful.ParseJSON(json)
+
+            Return ParseMetadata(obj)
         End Function
 
         ''' <summary>
