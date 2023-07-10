@@ -272,7 +272,7 @@ Module LinearReport
         Dim equation$ = line.linear.Polynomial.ToString("G4", html:=True)
         Dim nameTitle As String = If(line.points.IsNullOrEmpty, line.name, line.points(Scan0).Name)
         Dim title As String = $"Linear Model Reference Points of '{nameTitle}'"
-        Dim pointTable$ = line.points.ToHTMLTable(
+        Dim pointTable$ = HTMLWriter.ToHTMLTable(line.points,
             className:="table",
             width:="100%",
             title:=title,

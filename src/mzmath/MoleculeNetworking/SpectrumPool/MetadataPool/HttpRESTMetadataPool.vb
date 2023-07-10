@@ -149,6 +149,18 @@ Namespace PoolData
             }
         End Function
 
+        Public Shared Function ParseMetadata(fetch As JavaScriptObject) As Metadata
+            Dim data As Metadata = castMetaData(fetch)
+
+            If fetch!spectral_id IsNot Nothing Then
+                data.block = New BufferRegion With {
+                    .position = Long.Parse(CStr(fetch!spectral_id))
+                }
+            End If
+
+            Return data
+        End Function
+
         Public Function GetMetadataByHashKey(hash As String) As Metadata
             Dim url As String = $"{url_get}?id={hash}&model_id={model_id}&cluster_id={guid}"
             Dim json As String = url.GET
@@ -157,16 +169,9 @@ Namespace PoolData
             If obj.code <> 0 Then
                 Call VBDebugger.EchoLine(obj.debug)
                 Return Nothing
+            Else
+                Return ParseMetadata(fetch:=obj.info)
             End If
-
-            Dim fetch As JavaScriptObject = obj.info
-            Dim data As Metadata = castMetaData(fetch)
-
-            data.block = New BufferRegion With {
-                .position = Long.Parse(CStr(fetch!spectral_id))
-            }
-
-            Return data
         End Function
 
         ''' <summary>

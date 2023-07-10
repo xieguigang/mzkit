@@ -59,6 +59,9 @@ Imports System.Xml.Serialization
 
 Namespace Spectra.Xml
 
+    ''' <summary>
+    ''' [id, mz, rt, intensity]
+    ''' </summary>
     Public Class Meta : Inherits ms1_scan
 
         <XmlText>

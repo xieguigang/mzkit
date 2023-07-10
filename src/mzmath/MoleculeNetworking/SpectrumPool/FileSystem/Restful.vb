@@ -18,14 +18,18 @@ Namespace PoolData
         End Function
 
         Public Shared Function ParseJSON(json As String) As Restful
-            Dim obj As JavaScriptObject = DirectCast(JsonParser.Parse(json), JsonObject)
-            Dim code As String = obj!code
+            If json.StringEmpty OrElse json.TextEquals("null") Then
+                Return New Restful With {.code = -1, .info = Nothing}
+            Else
+                Dim obj As JavaScriptObject = DirectCast(JsonParser.Parse(json), JsonObject)
+                Dim code As String = obj!code
 
-            Return New Restful With {
-                .code = Integer.Parse(code),
-                .debug = obj!debug,
-                .info = obj!info
-            }
+                Return New Restful With {
+                    .code = Integer.Parse(code),
+                    .debug = obj!debug,
+                    .info = obj!info
+                }
+            End If
         End Function
 
     End Class

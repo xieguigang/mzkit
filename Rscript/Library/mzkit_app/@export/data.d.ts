@@ -85,6 +85,8 @@ declare namespace data {
      * + default value Is ``null``.
      * @param libname 
      * + default value Is ``null``.
+     * @param precursor_type 
+     * + default value Is ``null``.
      * @param meta -
      * 
      * + default value Is ``null``.
@@ -92,7 +94,7 @@ declare namespace data {
      * 
      * + default value Is ``null``.
    */
-   function peakMs2(precursor: number, rt: number, mz: number, into: number, totalIons?: number, file?: string, libname?: string, meta?: object, env?: object): object;
+   function peakMs2(precursor: number, rt: number, mz: number, into: number, totalIons?: number, file?: string, libname?: string, precursor_type?: string, meta?: object, env?: object): object;
    module read {
       /**
       */
