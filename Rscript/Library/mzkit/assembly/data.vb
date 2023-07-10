@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -245,6 +246,7 @@ Module data
                                   Optional totalIons As Double = 0,
                                   Optional file As String = Nothing,
                                   Optional libname As String = Nothing,
+                                  Optional precursor_type As String = Nothing,
                                   <RListObjectArgument>
                                   Optional meta As list = Nothing,
                                   Optional env As Environment = Nothing) As PeakMs2
@@ -263,7 +265,8 @@ Module data
             .rt = rt,
             .file = file,
             .meta = meta.AsGeneric(Of String)(env),
-            .lib_guid = libname
+            .lib_guid = libname,
+            .precursor_type = precursor_type
         }
     End Function
 
