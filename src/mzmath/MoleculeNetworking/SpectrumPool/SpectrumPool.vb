@@ -84,13 +84,17 @@ Namespace PoolData
                 rootId = Nothing
             End If
 
-            For Each dir As String In fs.GetTreeChilds(path)
-                If dir.BaseName = "z" Then
-                    zeroBlock = New SpectrumPool(fs, dir)
-                Else
-                    classTree.Add(dir.BaseName, New SpectrumPool(fs, dir))
-                End If
-            Next
+            ' 20230709 lazy laoding, the spectrum pool object could be
+            ' created in the add method in lazy mode. no needs for create
+            ' all spectrum pool at once in this constructor
+            ' 
+            'For Each dir As String In fs.GetTreeChilds(path)
+            '    If dir.BaseName = "z" Then
+            '        zeroBlock = New SpectrumPool(fs, dir)
+            '    Else
+            '        classTree.Add(dir.BaseName, New SpectrumPool(fs, dir))
+            '    End If
+            'Next
 
             If Not rootId.StringEmpty Then
                 ' first element always the root element
