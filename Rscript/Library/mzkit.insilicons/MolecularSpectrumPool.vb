@@ -47,10 +47,19 @@ Public Module MolecularSpectrumPool
     ''' <param name="link">
     ''' the resource string to the spectrum pool
     ''' </param>
+    ''' <param name="score_overrides">
+    ''' WARNING: this optional parameter will overrides the mode score 
+    ''' level when this parameter has a positive numeric value in 
+    ''' range ``(0,1]``. it is dangers to overrides the score parameter
+    ''' in the exists model.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String, Optional model_id As String = Nothing) As SpectrumPool
-        Return SpectrumPool.Open(link, model_id:=model_id)
+    Public Function openPool(link As String,
+                             Optional model_id As String = Nothing,
+                             Optional score_overrides As Double? = Nothing) As SpectrumPool
+
+        Return SpectrumPool.Open(link, model_id:=model_id, score:=score_overrides)
     End Function
 
     ''' <summary>
