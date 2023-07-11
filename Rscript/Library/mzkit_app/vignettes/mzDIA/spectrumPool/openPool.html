@@ -158,7 +158,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>openPool</strong>(<i>link</i>,
-    <i>model.id</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+    <i>model.id</i> = <span style='color: blue;'>NULL</span>,
+    <i>score.overrides</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -167,6 +168,13 @@
             
 <dt>link</dt>
 <dd><p><p>the resource string to the spectrum pool</p></p></dd>
+
+
+<dt>score.overrides</dt>
+<dd><p><p>WARNING: this optional parameter will overrides the mode score <br />
+ level when this parameter has a positive numeric value in <br />
+ range <code>(0,1]</code>. it is dangers to overrides the score parameter<br />
+ in the exists model.</p></p></dd>
 
         </table>
 

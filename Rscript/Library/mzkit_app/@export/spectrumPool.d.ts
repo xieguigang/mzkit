@@ -95,8 +95,14 @@ declare namespace spectrumPool {
      * @param link the resource string to the spectrum pool
      * @param model_id 
      * + default value Is ``null``.
+     * @param score_overrides WARNING: this optional parameter will overrides the mode score 
+     *  level when this parameter has a positive numeric value in 
+     *  range ``(0,1]``. it is dangers to overrides the score parameter
+     *  in the exists model.
+     * 
+     * + default value Is ``null``.
    */
-   function openPool(link: string, model_id?: string): object;
+   function openPool(link: string, model_id?: string, score_overrides?: number): object;
    /**
      * @param prefix default value Is ``null``.
      * @param env default value Is ``null``.

@@ -4,7 +4,8 @@
 openPool \- open the spectrum pool from a given resource link
 .SH SYNOPSIS
 \fIopenPool(\fBlink\fR as string, 
-\fBmodel_id\fR as string = \fB<NULL>\fR);\fR
+\fBmodel_id\fR as string = \fB<NULL>\fR, 
+\fBscore_overrides\fR as double = \fB<NULL>\fR);\fR
 .SH DESCRIPTION
 .PP
 open the spectrum pool from a given resource link
@@ -13,6 +14,14 @@ open the spectrum pool from a given resource link
 .PP
 \fBlink\fB \fR\- 
  the resource string to the spectrum pool
+. 
+.PP
+.PP
+\fBscore_overrides\fB \fR\- 
+ WARNING: this optional parameter will overrides the mode score 
+ level when this parameter has a positive numeric value in 
+ range \fB(0,1]\fR. it is dangers to overrides the score parameter
+ in the exists model.
 . 
 .PP
 .SH SEE ALSO
