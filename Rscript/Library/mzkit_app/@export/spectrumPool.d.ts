@@ -101,8 +101,10 @@ declare namespace spectrumPool {
      *  in the exists model.
      * 
      * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function openPool(link: string, model_id?: string, score_overrides?: number): object;
+   function openPool(link: string, model_id?: string, score_overrides?: number, env?: object): object;
    /**
      * @param prefix default value Is ``null``.
      * @param env default value Is ``null``.

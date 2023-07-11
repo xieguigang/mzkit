@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -57,7 +58,15 @@ Public Module MolecularSpectrumPool
     <ExportAPI("openPool")>
     Public Function openPool(link As String,
                              Optional model_id As String = Nothing,
-                             Optional score_overrides As Double? = Nothing) As SpectrumPool
+                             Optional score_overrides As Double? = Nothing,
+                             Optional env As Environment = Nothing) As SpectrumPool
+
+        If score_overrides IsNot Nothing AndAlso
+            score_overrides > 0 AndAlso
+            score_overrides < 1 Then
+
+            Call env.AddMessage($"NOTICE: the score level of the spectrum graph model has been overrides to {score_overrides}!", MSG_TYPES.WRN)
+        End If
 
         Return SpectrumPool.Open(link, model_id:=model_id, score:=score_overrides)
     End Function
