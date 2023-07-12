@@ -11,6 +11,10 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' Spectrum clustering/inference via molecule networking method, 
+''' this api module is working with the biodeep public cloud service
+''' </summary>
 <Package("spectrumPool")>
 Public Module MolecularSpectrumPool
 
@@ -40,6 +44,29 @@ Public Module MolecularSpectrumPool
         Else
             Return Nothing
         End If
+    End Function
+
+    ''' <summary>
+    ''' Create a spectrum inference protocol workflow
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="model_id"></param>
+    ''' <returns></returns>
+    <ExportAPI("load_infer")>
+    Public Function openInferTool(url As String, model_id As String,
+                                  Optional ms1diff As String = "da:0.5",
+                                  Optional ms2diff As String = "da:0.3",
+                                  Optional intocutoff As Double = 0.05) As DIAInfer
+
+        Dim tree As New HttpTreeFs(url, model_id)
+        Dim dia As New DIAInfer(tree, ms1diff, ms2diff, intocutoff)
+
+        Return dia
+    End Function
+
+    <ExportAPI("infer")>
+    Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String) As PeakMs2()
+        Return dia.InferCluster(cluster_id).ToArray
     End Function
 
     ''' <summary>
