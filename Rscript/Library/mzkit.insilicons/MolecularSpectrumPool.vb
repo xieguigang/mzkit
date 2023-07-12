@@ -54,7 +54,7 @@ Public Module MolecularSpectrumPool
     ''' <returns></returns>
     <ExportAPI("load_infer")>
     Public Function openInferTool(url As String, model_id As String,
-                                  Optional ms1diff As String = "da:0.5",
+                                  Optional ms1diff As String = "da:0.3",
                                   Optional ms2diff As String = "da:0.3",
                                   Optional intocutoff As Double = 0.05) As DIAInfer
 

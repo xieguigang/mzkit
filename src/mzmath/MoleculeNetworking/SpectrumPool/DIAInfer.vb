@@ -16,7 +16,7 @@ Namespace PoolData
         ReadOnly intocutoff As LowAbundanceTrimming
 
         Sub New(pool As HttpTreeFs,
-                Optional ms1diff As String = "da:0.5",
+                Optional ms1diff As String = "da:0.3",
                 Optional ms2diff As String = "da:0.3",
                 Optional intocutoff As Double = 0.05)
 
@@ -35,6 +35,7 @@ Namespace PoolData
                               Function(a)
                                   Return a.ToArray
                               End Function)
+            Dim cache As New Dictionary(Of String, PeakMs2)
 
             If reference.IsNullOrEmpty Then
                 Return
@@ -67,7 +68,7 @@ Namespace PoolData
                     .scan = refer(0).name,
                     .rt = rt,
                     .mz = exact_mass,
-                    .mzInto = GetUnionSpectra(selects).ToArray,
+                    .mzInto = GetUnionSpectra(selects, cache).ToArray,
                     .precursor_type = "[M]",
                     .intensity = selects.Length,
                     .meta = New Dictionary(Of String, String) From {
@@ -99,8 +100,18 @@ Namespace PoolData
             Next
         End Function
 
-        Private Function GetUnionSpectra(ions As IEnumerable(Of Metadata)) As IEnumerable(Of ms2)
-            Dim all_spectrums = ions.Select(Function(a) pool.ReadSpectrum(a)).ToArray
+        Private Function GetUnionSpectra(ions As IEnumerable(Of Metadata), cache As Dictionary(Of String, PeakMs2)) As IEnumerable(Of ms2)
+            Dim all_spectrums As PeakMs2() = ions _
+                .Select(Function(a)
+                            Dim key As String = a.block.position
+
+                            If Not cache.ContainsKey(key) Then
+                                Call cache.Add(key, pool.ReadSpectrum(a))
+                            End If
+
+                            Return cache(key)
+                        End Function) _
+                .ToArray
             Dim union = NetworkingNode.UnionRepresentative(all_spectrums, ms2diff, intocutoff)
 
             Return union.ms2
