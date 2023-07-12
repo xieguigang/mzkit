@@ -64,6 +64,12 @@ Public Module MolecularSpectrumPool
         Return dia
     End Function
 
+    ''' <summary>
+    ''' Infer and make annotation to a specific cluster
+    ''' </summary>
+    ''' <param name="dia"></param>
+    ''' <param name="cluster_id"></param>
+    ''' <returns></returns>
     <ExportAPI("infer")>
     Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String) As PeakMs2()
         Return dia.InferCluster(cluster_id).ToArray
