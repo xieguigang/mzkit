@@ -135,7 +135,7 @@ Namespace Spectra.MoleculeNetworking
             }
         End Function
 
-        Private Shared Function unionRepresentative(ions As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As LibraryMatrix
+        Public Shared Function UnionRepresentative(ions As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As LibraryMatrix
             Dim mz As NamedCollection(Of ms2)() = ions _
                 .Select(Function(i) i.mzInto) _
                 .IteratesALL _

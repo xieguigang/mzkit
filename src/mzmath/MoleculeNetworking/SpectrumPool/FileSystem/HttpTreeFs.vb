@@ -125,7 +125,7 @@ Namespace PoolData
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Get cluster information data via path hash code
         ''' </summary>
         ''' <param name="key">
         ''' hashcode of the cluster tree path
