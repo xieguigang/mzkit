@@ -135,7 +135,7 @@ Namespace PoolData
             Dim array As Array = info!metabolites
 
             For i As Integer = 0 To array.Length - 1
-                Yield castMetaData(array(i))
+                Yield ParseMetadata(array(i))
             Next
         End Function
 
