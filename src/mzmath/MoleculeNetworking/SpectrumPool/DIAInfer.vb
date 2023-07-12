@@ -45,7 +45,8 @@ Namespace PoolData
             End If
 
             For Each refer As Metadata() In reference.Values
-                Dim adducts_mz As Double() = GetAdducts(refer).ToArray
+                Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(refer(Scan0).formula)
+                Dim adducts_mz As Double() = GetAdducts(refer, exact_mass).ToArray
                 Dim selects = ions_all _
                     .Where(Function(i) adducts_mz.Any(Function(a) da(i.mz, a))) _
                     .ToArray
@@ -60,13 +61,18 @@ Namespace PoolData
                 Yield New PeakMs2 With {
                     .lib_guid = refer(0).biodeep_id,
                     .file = selects _
-                        .Select(Function(a) a.source_file) _
+                        .Select(Function(a) a.source_file.BaseName) _
                         .Distinct _
                         .JoinBy(", "),
-                    .scan = "NA",
+                    .scan = refer(0).name,
                     .rt = rt,
-                    .mz = 0,
-                    .mzInto = GetUnionSpectra(selects).ToArray
+                    .mz = exact_mass,
+                    .mzInto = GetUnionSpectra(selects).ToArray,
+                    .precursor_type = "[M]",
+                    .intensity = selects.Length,
+                    .meta = New Dictionary(Of String, String) From {
+                        {"organism", selects.Select(Function(a) a.organism).Distinct.JoinBy("; ")}
+                    }
                 }
             Next
         End Function
@@ -78,8 +84,7 @@ Namespace PoolData
         ''' this metadata collection should be reference to the same metabolite
         ''' </param>
         ''' <returns>A set of the precursor m/z</returns>
-        Private Iterator Function GetAdducts(refer As Metadata()) As IEnumerable(Of Double)
-            Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(refer(Scan0).formula)
+        Private Iterator Function GetAdducts(refer As Metadata(), exact_mass As Double) As IEnumerable(Of Double)
             Dim polarity = refer _
                 .Where(Function(a) Not a.adducts.StringEmpty) _
                 .Select(Function(a) Provider.ParseIonMode(a.adducts.Last)) _
