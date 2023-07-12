@@ -102,7 +102,7 @@ declare namespace spectrumPool {
      * @param url -
      * @param model_id -
      * @param ms1diff 
-     * + default value Is ``'da:0.5'``.
+     * + default value Is ``'da:0.3'``.
      * @param ms2diff 
      * + default value Is ``'da:0.3'``.
      * @param intocutoff 
