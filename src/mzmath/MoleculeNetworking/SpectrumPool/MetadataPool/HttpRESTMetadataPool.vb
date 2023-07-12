@@ -112,6 +112,13 @@ Namespace PoolData
             Me.m_depth = Val((cluster_data!depth).ToString)
         End Sub
 
+        ''' <summary>
+        ''' get metabolite ion data from a specific spectrum cluster
+        ''' </summary>
+        ''' <param name="url_get"></param>
+        ''' <param name="hash_index"></param>
+        ''' <param name="model_id"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function FetchClusterData(url_get As String,
                                                          hash_index As String,
                                                          model_id As String) As IEnumerable(Of Metadata)

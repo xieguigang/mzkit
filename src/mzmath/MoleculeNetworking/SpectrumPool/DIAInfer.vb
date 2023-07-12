@@ -13,6 +13,17 @@ Namespace PoolData
         ReadOnly ms2diff As Tolerance
         ReadOnly intocutoff As LowAbundanceTrimming
 
+        Sub New(pool As HttpTreeFs,
+                Optional ms1diff As String = "da:0.5",
+                Optional ms2diff As String = "da:0.3",
+                Optional intocutoff As Double = 0.05)
+
+            Me.pool = pool
+            Me.da = Tolerance.ParseScript(ms1diff)
+            Me.ms2diff = Tolerance.ParseScript(ms2diff)
+            Me.intocutoff = New RelativeIntensityCutoff(intocutoff)
+        End Sub
+
         Public Iterator Function InferCluster(cluster_id As String) As IEnumerable(Of PeakMs2)
             Dim ions_all = GetAllClusterMetadata(cluster_id).ToArray
             Dim reference = ions_all _
@@ -41,7 +52,10 @@ Namespace PoolData
 
                 Yield New PeakMs2 With {
                     .lib_guid = refer(0).biodeep_id,
-                    .file = selects.Select(Function(a) a.source_file).Distinct.JoinBy(", "),
+                    .file = selects _
+                        .Select(Function(a) a.source_file) _
+                        .Distinct _
+                        .JoinBy(", "),
                     .scan = "NA",
                     .rt = rt,
                     .mz = 0,
@@ -57,8 +71,11 @@ Namespace PoolData
             Return union.ms2
         End Function
 
-        Private Iterator Function GetAllClusterMetadata(cluster_id As String) As IEnumerable(Of Metadata)
+        Private Function GetAllClusterMetadata(cluster_id As String) As IEnumerable(Of Metadata)
+            Dim url As String = $"{pool.HttpServices}/get/metadata/"
+            Dim gets = HttpRESTMetadataPool.FetchClusterData(url, cluster_id, model_id:=pool.model_id)
 
+            Return gets
         End Function
     End Class
 End Namespace
