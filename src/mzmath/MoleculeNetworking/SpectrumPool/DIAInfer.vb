@@ -45,7 +45,7 @@ Namespace PoolData
             End If
 
             For Each refer As Metadata() In reference.Values
-                Dim adducts_mz As Double() = GetAdducts(refer)
+                Dim adducts_mz As Double() = GetAdducts(refer).ToArray
                 Dim selects = ions_all _
                     .Where(Function(i) adducts_mz.Any(Function(a) da(i.mz, a))) _
                     .ToArray
