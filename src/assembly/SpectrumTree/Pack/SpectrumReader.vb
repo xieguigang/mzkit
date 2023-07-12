@@ -82,13 +82,20 @@ Namespace PackLib
         ''' <returns></returns>
         Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of BlockNode)
             Dim ions = mzIndex.QueryByMz(mz).ToArray
-            Dim index As IEnumerable(Of String) = From i As IonIndex
-                                                  In ions
-                                                  Let i32 As Integer = i.node
-                                                  Select i32
-                                                  Distinct
-                                                  Let tag As String = i32.ToString
-                                                  Select tag
+            Dim index As IEnumerable(Of String)
+
+            If ions.Length = 0 Then
+                Return
+            Else
+                index = From i As IonIndex
+                        In ions
+                        Let i32 As Integer = i.node
+                        Select i32
+                        Distinct
+                        Let tag As String = i32.ToString
+                        Select tag
+            End If
+
             For Each key As String In index
                 Yield GetSpectrum(key)
             Next
