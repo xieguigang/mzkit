@@ -1,7 +1,9 @@
 ﻿
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace PoolData
@@ -43,8 +45,9 @@ Namespace PoolData
             End If
 
             For Each refer As Metadata() In reference.Values
+                Dim adducts_mz As Double() = GetAdducts(refer)
                 Dim selects = ions_all _
-                    .Where(Function(i) refer.Any(Function(a) da(i.mz, a.mz))) _
+                    .Where(Function(i) adducts_mz.Any(Function(a) da(i.mz, a))) _
                     .ToArray
 
                 If selects.IsNullOrEmpty Then
@@ -65,6 +68,29 @@ Namespace PoolData
                     .mz = 0,
                     .mzInto = GetUnionSpectra(selects).ToArray
                 }
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="refer">
+        ''' this metadata collection should be reference to the same metabolite
+        ''' </param>
+        ''' <returns>A set of the precursor m/z</returns>
+        Private Iterator Function GetAdducts(refer As Metadata()) As IEnumerable(Of Double)
+            Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(refer(Scan0).formula)
+            Dim polarity = refer _
+                .Where(Function(a) Not a.adducts.StringEmpty) _
+                .Select(Function(a) Provider.ParseIonMode(a.adducts.Last)) _
+                .ToArray
+
+            If Not polarity.All(Function(a) a = polarity(Scan0)) Then
+                Return
+            End If
+
+            For Each adduct As MzCalculator In Provider.GetCalculator(polarity(Scan0)).Values
+                Yield adduct.CalcMZ(exact_mass)
             Next
         End Function
 
