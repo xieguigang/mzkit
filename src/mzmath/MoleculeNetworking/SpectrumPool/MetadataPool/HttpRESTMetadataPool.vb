@@ -152,7 +152,8 @@ Namespace PoolData
                 .rt = Val(fetch!rt),
                 .sample_source = fetch!biosample,
                 .source_file = fetch!filename,
-                .instrument = fetch!instrument
+                .instrument = fetch!instrument,
+                .project = fetch!project
             }
         End Function
 

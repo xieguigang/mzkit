@@ -36,6 +36,10 @@ Namespace PoolData
 
             If reference.IsNullOrEmpty Then
                 Return
+            Else
+                ions_all = ions_all _
+                    .Where(Function(a) a.project <> "Reference Annotation") _
+                    .ToArray
             End If
 
             For Each refer As Metadata() In reference.Values
