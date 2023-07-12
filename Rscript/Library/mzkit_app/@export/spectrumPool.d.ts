@@ -5,6 +5,8 @@
 // ref=mzkit.MolecularSpectrumPool@mzDIA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * Spectrum clustering/inference via molecule networking method, 
+ *  this api module is working with the biodeep public cloud service
  * 
 */
 declare namespace spectrumPool {
@@ -85,6 +87,28 @@ declare namespace spectrumPool {
      * + default value Is ``null``.
    */
    function getClusterInfo(pool: object, path?: string): any;
+   /**
+    * Infer and make annotation to a specific cluster
+    * 
+    * 
+     * @param dia -
+     * @param cluster_id -
+   */
+   function infer(dia: object, cluster_id: string): object;
+   /**
+    * Create a spectrum inference protocol workflow
+    * 
+    * 
+     * @param url -
+     * @param model_id -
+     * @param ms1diff 
+     * + default value Is ``'da:0.5'``.
+     * @param ms2diff 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff 
+     * + default value Is ``0.05``.
+   */
+   function load_infer(url: string, model_id: string, ms1diff?: string, ms2diff?: string, intocutoff?: number): object;
    /**
    */
    function model_id(pool: object): string;
