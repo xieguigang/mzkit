@@ -71,8 +71,15 @@ Public Module MolecularSpectrumPool
     ''' <param name="cluster_id"></param>
     ''' <returns></returns>
     <ExportAPI("infer")>
-    Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String) As PeakMs2()
-        Return dia.InferCluster(cluster_id).ToArray
+    Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String,
+                                           Optional reference_id As String() = Nothing,
+                                           Optional formula As String() = Nothing) As PeakMs2()
+
+        If reference_id.IsNullOrEmpty OrElse formula.IsNullOrEmpty Then
+            Return dia.InferCluster(cluster_id).ToArray
+        Else
+
+        End If
     End Function
 
     ''' <summary>

@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace PoolData
@@ -14,6 +15,7 @@ Namespace PoolData
         ReadOnly da As Tolerance
         ReadOnly ms2diff As Tolerance
         ReadOnly intocutoff As LowAbundanceTrimming
+        ReadOnly ionMode As IonModes = IonModes.Positive
 
         Sub New(pool As HttpTreeFs,
                 Optional ms1diff As String = "da:0.3",
@@ -26,28 +28,33 @@ Namespace PoolData
             Me.intocutoff = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
-        Public Iterator Function InferCluster(cluster_id As String) As IEnumerable(Of PeakMs2)
+        Public Function InferCluster(cluster_id As String, reference As NamedValue(Of String)()) As IEnumerable(Of PeakMs2)
+            Dim candidates = reference.GroupBy(Function(i) i.Name).ToArray
+            Dim cache As New Dictionary(Of String, PeakMs2)
             Dim ions_all = GetAllClusterMetadata(cluster_id).ToArray
-            Dim reference = ions_all _
-                .Where(Function(a) a.project = "Reference Annotation") _
-                .GroupBy(Function(a) a.biodeep_id) _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return a.ToArray
-                              End Function)
+
+            Return InferCluster(ions_all, candidates,
+                                getFormula:=Function(f) f.First.Value,
+                                getBiodeepID:=Function(f) f.Key,
+                                getName:=Function(f) f.First.Description)
+        End Function
+
+        Private Iterator Function InferCluster(Of T)(ions_all As Metadata(),
+                                                     reference As IEnumerable(Of T),
+                                                     getFormula As Func(Of T, String),
+                                                     getBiodeepID As Func(Of T, String),
+                                                     getName As Func(Of T, String)) As IEnumerable(Of PeakMs2)
+
             Dim cache As New Dictionary(Of String, PeakMs2)
 
-            If reference.IsNullOrEmpty Then
-                Return
-            Else
-                ions_all = ions_all _
-                    .Where(Function(a) a.project <> "Reference Annotation") _
-                    .ToArray
-            End If
+            ions_all = ions_all _
+                .Where(Function(a) a.project <> "Reference Annotation") _
+                .ToArray
 
-            For Each refer As Metadata() In reference.Values
-                Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(refer(Scan0).formula)
-                Dim adducts_mz As Double() = GetAdducts(refer, exact_mass).ToArray
+            For Each refer As T In reference
+                Dim formula As String = getFormula(refer)
+                Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(formula)
+                Dim adducts_mz As Double() = GetAdducts(exact_mass).ToArray
                 Dim selects = ions_all _
                     .Where(Function(i) adducts_mz.Any(Function(a) da(i.mz, a))) _
                     .ToArray
@@ -60,12 +67,12 @@ Namespace PoolData
                 Dim rt As Double = rt_bin.Average
 
                 Yield New PeakMs2 With {
-                    .lib_guid = refer(0).biodeep_id,
+                    .lib_guid = getBiodeepID(refer),
                     .file = selects _
                         .Select(Function(a) a.source_file.BaseName) _
                         .Distinct _
                         .JoinBy(", "),
-                    .scan = refer(0).name,
+                    .scan = getName(refer),
                     .rt = rt,
                     .mz = exact_mass,
                     .mzInto = GetUnionSpectra(selects, cache).ToArray,
@@ -78,24 +85,33 @@ Namespace PoolData
             Next
         End Function
 
+        Public Function InferCluster(cluster_id As String) As IEnumerable(Of PeakMs2)
+            Dim ions_all As Metadata() = GetAllClusterMetadata(cluster_id).ToArray
+            Dim reference = ions_all _
+                .Where(Function(a) a.project = "Reference Annotation") _
+                .GroupBy(Function(a) a.biodeep_id) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.ToArray
+                              End Function)
+            Dim cache As New Dictionary(Of String, PeakMs2)
+
+            If reference.IsNullOrEmpty Then
+                Return {}
+            Else
+                Return InferCluster(ions_all, reference,
+                                    getFormula:=Function(f) f.Value(Scan0).formula,
+                                    getBiodeepID:=Function(f) f.Key,
+                                    getName:=Function(f) f.Value(Scan0).name)
+            End If
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="refer">
-        ''' this metadata collection should be reference to the same metabolite
-        ''' </param>
         ''' <returns>A set of the precursor m/z</returns>
-        Private Iterator Function GetAdducts(refer As Metadata(), exact_mass As Double) As IEnumerable(Of Double)
-            Dim polarity = refer _
-                .Where(Function(a) Not a.adducts.StringEmpty) _
-                .Select(Function(a) Provider.ParseIonMode(a.adducts.Last)) _
-                .ToArray
-
-            If Not polarity.All(Function(a) a = polarity(Scan0)) Then
-                Return
-            End If
-
-            For Each adduct As MzCalculator In Provider.GetCalculator(polarity(Scan0)).Values
+        Private Iterator Function GetAdducts(exact_mass As Double) As IEnumerable(Of Double)
+            For Each adduct As MzCalculator In Provider.GetCalculator(ionMode).Values
                 Yield adduct.CalcMZ(exact_mass)
             Next
         End Function
