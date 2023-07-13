@@ -201,6 +201,13 @@ Module MzWeb
         End If
     End Function
 
+    ''' <summary>
+    ''' Parse the ms scan data from a given raw byte stream data
+    ''' </summary>
+    ''' <param name="bytes">the raw vector which could be parsed from the HDS file via HDS read data function.</param>
+    ''' <param name="level">specific the ms level to parse the scan data, level could be 1(scan ms1) or 2(scan ms2)</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("parse.scanMs")>
     Public Function parseScanMsBuffer(<RRawVectorArgument> bytes As Object,
                                       <RRawVectorArgument(GetType(Integer))>

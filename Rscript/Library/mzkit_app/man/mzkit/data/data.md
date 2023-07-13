@@ -2,7 +2,7 @@
 
 m/z data operator module
 
-+ [unionPeaks](data/unionPeaks.1) 
++ [unionPeaks](data/unionPeaks.1) Union and merge the given multiple spectrum data into one single spectrum
 + [nsize](data/nsize.1) get the size of the target ms peaks
 + [peakMs2](data/peakMs2.1) create a new ms2 peaks data object
 + [libraryMatrix](data/libraryMatrix.1) Create a library matrix object

@@ -1,11 +1,34 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "unionPeaks" "unionPeaks"
 .SH NAME
-unionPeaks \- 
+unionPeaks \- Union and merge the given multiple spectrum data into one single spectrum
 .SH SYNOPSIS
 \fIunionPeaks(\fBpeaks\fR as <generic> PeakMs2[], 
 \fBmatrix\fR as boolean = FALSE, 
 \fBmassDiff\fR as double = 0.1);\fR
+.SH DESCRIPTION
+.PP
+Union and merge the given multiple spectrum data into one single spectrum
+.PP
+.SH OPTIONS
+.PP
+\fBpeaks\fB \fR\- A collection of the spectrum object that going to merge into single one. 
+.PP
+.PP
+\fBmatrix\fB \fR\- 
+ this parameter will affects the data type of the value returns of this function:
+ 
+ 1. default false, returns a peak ms2 data object
+ 2. true, returns a library matrix data object
+. 
+.PP
+.PP
+\fBmassDiff\fB \fR\- the mass error for merge two spectra peak. 
+.PP
+.SH VALUE
+.PP
+a single ms spectrum data object, its data type depeneds on the **`matrix`** parameter.
+.PP
 .SH SEE ALSO
 data
 .SH FILES

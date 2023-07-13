@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>unionPeaks</title>
+    <title>Union and merge the given multiple spectrum data into one single spectrum</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,11 +148,11 @@
             </tr>
         </table>
 
-        <h2>unionPeaks</h2>
+        <h2>Union and merge the given multiple spectrum data into one single spectrum</h2>
 
         <h3>Description</h3>
 
-        unionPeaks
+        
 
         <h3>Usage</h3>
 
@@ -166,6 +166,22 @@
 
         <table>
             
+<dt>peaks</dt>
+<dd><p><p>A collection of the spectrum object that going to merge into single one</p></p></dd>
+
+
+<dt>matrix</dt>
+<dd><p><p>this parameter will affects the data type of the value returns of this function:</p>
+
+<ol>
+<li>default false, returns a peak ms2 data object</li>
+<li>true, returns a library matrix data object</li>
+</ol></p></dd>
+
+
+<dt>massDiff</dt>
+<dd><p><p>the mass error for merge two spectra peak</p></p></dd>
+
         </table>
 
 
@@ -176,7 +192,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>, <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.
+        <p>a single ms spectrum data object, its data type depeneds on the <strong><code>matrix</code></strong> parameter.</p>
 
         <hr />
         <div style="text-align: center;">[Package <em>data</em> version 1.0.0.0 <a

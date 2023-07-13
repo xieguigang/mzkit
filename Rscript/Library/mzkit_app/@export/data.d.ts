@@ -123,8 +123,20 @@ declare namespace data {
    */
    function scan_time(ticks: any, env?: object): number;
    /**
-     * @param matrix default value Is ``false``.
-     * @param massDiff default value Is ``0.1``.
+    * Union and merge the given multiple spectrum data into one single spectrum
+    * 
+    * 
+     * @param peaks A collection of the spectrum object that going to merge into single one
+     * @param matrix this parameter will affects the data type of the value returns of this function:
+     *  
+     *  1. default false, returns a peak ms2 data object
+     *  2. true, returns a library matrix data object
+     * 
+     * + default value Is ``false``.
+     * @param massDiff the mass error for merge two spectra peak
+     * 
+     * + default value Is ``0.1``.
+     * @return a single ms spectrum data object, its data type depeneds on the **`matrix`** parameter.
    */
    function unionPeaks(peaks: object, matrix?: boolean, massDiff?: number): object|object;
    /**
