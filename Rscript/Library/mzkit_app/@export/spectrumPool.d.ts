@@ -93,8 +93,14 @@ declare namespace spectrumPool {
     * 
      * @param dia -
      * @param cluster_id -
+     * @param reference_id 
+     * + default value Is ``null``.
+     * @param formula 
+     * + default value Is ``null``.
+     * @param name 
+     * + default value Is ``null``.
    */
-   function infer(dia: object, cluster_id: string): object;
+   function infer(dia: object, cluster_id: string, reference_id?: string, formula?: string, name?: string): object;
    /**
     * Create a spectrum inference protocol workflow
     * 
