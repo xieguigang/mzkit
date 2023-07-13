@@ -72,6 +72,11 @@ Imports stdNum = System.Math
 
 Public Module Converter
 
+    ''' <summary>
+    ''' load ions from mgf/msp file and then convert to mzpack
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     Public Function LoadAsciiFileAuto(file As String) As mzPack
         If file.ExtensionSuffix("mgf") Then
             Return LoadMgf(file)

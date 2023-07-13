@@ -59,7 +59,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Security.Cryptography
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -75,7 +74,6 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -255,6 +253,7 @@ Module data
     ''' must be already been centroid processed!</param>
     ''' <returns></returns>
     <ExportAPI("search")>
+    <RApiReturn(GetType(AlignmentOutput))>
     Public Function simpleSearch(q As Object, refer As mzPack,
                                  Optional tolerance As Object = "da:0.3",
                                  Optional intocutoff As Double = 0.05,
@@ -268,13 +267,15 @@ Module data
             Return mzErr.TryCast(Of Message)
         ElseIf spectra Like GetType(Message) Then
             Return spectra.TryCast(Of Message)
+        ElseIf refer Is Nothing OrElse refer.MS Is Nothing Then
+            Return Internal.debug.stop("the required reference data should not be nothing!", env)
         End If
 
         Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
-        Dim query = spectra.TryCast(Of LibraryMatrix).CentroidMode(mzdiff, cutoff)
+        Dim query As LibraryMatrix = spectra.TryCast(Of LibraryMatrix).CentroidMode(mzdiff, cutoff)
         Dim cos As New CosAlignment(mzdiff, cutoff)
-        Dim alignments = refer.MS _
+        Dim alignments As AlignmentOutput() = refer.MS _
             .AsParallel _
             .Select(Function(ms1)
                         Return ms1.products _

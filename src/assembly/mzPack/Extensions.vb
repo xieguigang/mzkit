@@ -130,29 +130,34 @@ Public Module Extensions
 
         data.MS = data.MS _
             .Select(Function(ms1)
-                        Dim mass2 As New List(Of ScanMS2)
-
-                        For Each scan2 As ScanMS2 In ms1.products.SafeQuery
-                            Dim calibration As ms2 = ms1.GetMs _
-                                .Where(Function(d)
-                                           Return mzdiff(d.mz, scan2.parentMz)
-                                       End Function) _
-                                .OrderByDescending(Function(d) d.intensity) _
-                                .FirstOrDefault
-
-                            If Not calibration Is Nothing Then
-                                scan2.parentMz = calibration.mz
-                            End If
-
-                            mass2.Add(scan2)
-                        Next
-
-                        ms1.products = mass2.ToArray
-
-                        Return ms1
+                        Return ms1.ProcessScan1(mzdiff)
                     End Function) _
             .ToArray
 
         Return data
+    End Function
+
+    <Extension>
+    Private Function ProcessScan1(ms1 As ScanMS1, mzdiff As Tolerance) As ScanMS1
+        Dim mass2 As New List(Of ScanMS2)
+
+        For Each scan2 As ScanMS2 In ms1.products.SafeQuery
+            Dim calibration As ms2 = ms1.GetMs _
+                .Where(Function(d)
+                           Return mzdiff(d.mz, scan2.parentMz)
+                       End Function) _
+                .OrderByDescending(Function(d) d.intensity) _
+                .FirstOrDefault
+
+            If Not calibration Is Nothing Then
+                scan2.parentMz = calibration.mz
+            End If
+
+            mass2.Add(scan2)
+        Next
+
+        ms1.products = mass2.ToArray
+
+        Return ms1
     End Function
 End Module
