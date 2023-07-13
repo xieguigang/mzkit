@@ -27,6 +27,7 @@ declare namespace math {
      *  + a library matrix data 
      *  + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
      *  + or just a m/z vector
+     *  + also could be a mzpack data object
      * @param tolerance 
      * + default value Is ``'da:0.1'``.
      * @param intoCutoff 
@@ -43,14 +44,25 @@ declare namespace math {
        * get all nodes from the spectrum tree cluster result
        * 
        * 
-        * @param tree -
+        * @param tree the spectra molecule networking tree
       */
       function nodes(tree: object): object;
    }
    /**
-     * @param tolerance default value Is ``'da:0.3'``.
-     * @param intocutoff default value Is ``0.05``.
-     * @param env default value Is ``null``.
+    * Do evaluate the spectra cosine similarity score
+    * 
+    * 
+     * @param query -
+     * @param ref -
+     * @param tolerance -
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff -
+     * 
+     * + default value Is ``0.05``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function cosine(query: object, ref: object, tolerance?: any, intocutoff?: number, env?: object): object;
    /**
@@ -72,7 +84,7 @@ declare namespace math {
    function exact_mass(mz: number, mode?: any): object;
    module ions {
       /**
-       * data pre-processing helper
+       * data pre-processing helper, make the spectra ion data unique
        * 
        * 
         * @param ions -

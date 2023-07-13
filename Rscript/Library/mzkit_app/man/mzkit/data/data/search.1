@@ -1,0 +1,31 @@
+.\" man page create by R# package system.
+.TH DATA 1 2000-Jan "search" "search"
+.SH NAME
+search \- search the target query spectra against a reference mzpack data file
+.SH SYNOPSIS
+\fIsearch(\fBq\fR as any, 
+\fBrefer\fR as <generic> mzPack, 
+\fBtolerance\fR as any = "da:0.3", 
+\fBintocutoff\fR as double = 0.05, 
+\fBsimilarity_cutoff\fR as double = 0.3, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+search the target query spectra against a reference mzpack data file
+.PP
+.SH OPTIONS
+.PP
+\fBq\fB \fR\- The target spectra data, mz and into data fields must 
+ be included inside if this parameter value is a dataframe.. 
+.PP
+.PP
+\fBrefer\fB \fR\- A mzpack data object that contains the reference 
+ spectrum dataset. The spectra dataset inside this mzpack data object
+ must be already been centroid processed!. 
+.PP
+.SH SEE ALSO
+data
+.SH FILES
+.PP
+mzkit.dll
+.PP

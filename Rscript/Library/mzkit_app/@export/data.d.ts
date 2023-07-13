@@ -123,6 +123,25 @@ declare namespace data {
    */
    function scan_time(ticks: any, env?: object): number;
    /**
+    * search the target query spectra against a reference mzpack data file
+    * 
+    * 
+     * @param q The target spectra data, mz and into data fields must 
+     *  be included inside if this parameter value is a dataframe.
+     * @param refer A mzpack data object that contains the reference 
+     *  spectrum dataset. The spectra dataset inside this mzpack data object
+     *  must be already been centroid processed!
+     * @param tolerance 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff 
+     * + default value Is ``0.05``.
+     * @param similarity_cutoff 
+     * + default value Is ``0.3``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function search(q: any, refer: object, tolerance?: any, intocutoff?: number, similarity_cutoff?: number, env?: object): object;
+   /**
     * Union and merge the given multiple spectrum data into one single spectrum
     * 
     * 

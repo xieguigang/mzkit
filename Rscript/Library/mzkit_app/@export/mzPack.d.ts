@@ -101,7 +101,9 @@ declare namespace mzPack {
     * 
     * 
      * @param data A collection of the scan ms1 or ms2 data for pack as mzpack object
-     * @param timeWindow the time slide window size for create different data scan groups in the mzpack object
+     * @param timeWindow the time slide window size for create different
+     *  data scan groups in the mzpack object. this rt data grouping window parameter is not working
+     *  when the input ms spectrum data collection is scan ms1 objects
      * 
      * + default value Is ``1``.
      * @param pack_singleCells 
