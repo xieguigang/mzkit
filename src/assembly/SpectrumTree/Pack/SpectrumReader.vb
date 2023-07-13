@@ -82,13 +82,20 @@ Namespace PackLib
         ''' <returns></returns>
         Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of BlockNode)
             Dim ions = mzIndex.QueryByMz(mz).ToArray
-            Dim index As IEnumerable(Of String) = From i As IonIndex
-                                                  In ions
-                                                  Let i32 As Integer = i.node
-                                                  Select i32
-                                                  Distinct
-                                                  Let tag As String = i32.ToString
-                                                  Select tag
+            Dim index As IEnumerable(Of String)
+
+            If ions.Length = 0 Then
+                Return
+            Else
+                index = From i As IonIndex
+                        In ions
+                        Let i32 As Integer = i.node
+                        Select i32
+                        Distinct
+                        Let tag As String = i32.ToString
+                        Select tag
+            End If
+
             For Each key As String In index
                 Yield GetSpectrum(key)
             Next
@@ -177,7 +184,7 @@ Namespace PackLib
                 .ToArray
 
             If exactMass.IsNullOrEmpty Then
-                Call ThrowNoMassIndex()
+                Call ThrowNoMassIndex().Warning
             End If
 
             mzIndex = New MzIonSearch(mz, da:=Tolerance.DeltaMass(0.5))
@@ -185,7 +192,7 @@ Namespace PackLib
             Return Me
         End Function
 
-        Private Sub ThrowNoMassIndex()
+        Private Function ThrowNoMassIndex() As String
             Dim err_msg As New StringBuilder("There is no ion mass index was loaded from this reference library stream!")
             Dim hasIdTargets As Boolean = targetSet.Count > 0
 
@@ -197,12 +204,12 @@ Namespace PackLib
                 Call err_msg.AppendLine("No reference metabolite ion spectral data in this reference library?")
             End If
 
-            Throw New Exception(err_msg.ToString)
-        End Sub
+            Return (err_msg.ToString)
+        End Function
 
         Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
             Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
-                .ListFiles _
+                .ListFiles(safe:=True) _
                 .Select(Function(f) DirectCast(f, StreamBlock))
         End Function
 
