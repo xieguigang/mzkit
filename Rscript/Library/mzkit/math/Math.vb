@@ -546,7 +546,8 @@ Module MzMath
     ''' </returns>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
-    Public Function centroid(<RRawVectorArgument> ions As Object,
+    Public Function centroid(<RRawVectorArgument>
+                             ions As Object,
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
