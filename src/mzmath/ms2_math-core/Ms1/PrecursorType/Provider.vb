@@ -254,6 +254,22 @@ Namespace Ms1.PrecursorType
             End If
         End Function
 
+        Public Function GetCalculator(ion_mode As IonModes) As Dictionary(Of String, MzCalculator)
+            If ion_mode = IonModes.Positive Then
+                Return pos
+            Else
+                Return neg
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Get the internal default adducts data set
+        ''' </summary>
+        ''' <param name="ion_mode">any character string that could 
+        ''' be parse a <see cref="IonModes"/> value via the 
+        ''' <see cref="ParseIonMode(String, Boolean)"/> function.
+        ''' </param>
+        ''' <returns></returns>
         Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
             If ParseIonMode(ion_mode) = 1 Then
                 Return pos

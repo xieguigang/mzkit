@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking</RootNamespace>
+    <RootNamespace>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
-	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking</AssemblyName>
+	  <AssemblyName>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <Platforms>AnyCPU;ARM32;x64</Platforms>
 	  <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
@@ -11,52 +11,83 @@
 	  <Title>Molecular Networking Generator</Title>
 	  <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
 	  <Company>PANOMIX</Company>
+	  <UseApplicationFramework>True</UseApplicationFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|ARM32'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|ARM32'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|ARM32'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|ARM32'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <Optimize>false</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
@@ -65,6 +96,153 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|ARM32'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|x64'">
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <ItemGroup>

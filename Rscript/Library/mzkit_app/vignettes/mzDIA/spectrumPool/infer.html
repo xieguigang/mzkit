@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>create a new spectrum clustering data pool</title>
+    <title>Infer and make annotation to a specific cluster</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>createPool {spectrumPool}</td>
+                <td>infer {spectrumPool}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>create a new spectrum clustering data pool</h2>
+        <h2>Infer and make annotation to a specific cluster</h2>
 
         <h3>Description</h3>
 
@@ -157,27 +157,19 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>createPool</strong>(<i>link</i>,
-    <i>level</i> = 0.9,
-    <i>split</i> = 9,
-    <i>name</i> = <span style='color: brown;'><strong>"no_named"</strong></span>,
-    <i>desc</i> = <span style='color: brown;'><strong>"no_information"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>infer</strong>(<i>dia</i>, <i>cluster.id</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>link</dt>
+<dt>dia</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>level</dt>
+<dt>cluster.id</dt>
 <dd><p><p>-</p></p></dd>
-
-
-<dt>split</dt>
-<dd><p><p>hex, max=15</p></p></dd>
 
         </table>
 
@@ -189,7 +181,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/MassSpectrometry/MoleculeNetworking/PoolData/SpectrumPool.html">SpectrumPool</a>.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2[].html">PeakMs2[]</a>.
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a

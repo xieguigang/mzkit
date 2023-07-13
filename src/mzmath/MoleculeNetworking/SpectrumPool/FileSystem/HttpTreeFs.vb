@@ -125,7 +125,7 @@ Namespace PoolData
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Get cluster information data via path hash code
         ''' </summary>
         ''' <param name="key">
         ''' hashcode of the cluster tree path
@@ -224,7 +224,7 @@ Namespace PoolData
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ReadSpectrum(p As Metadata) As Spectra.PeakMs2
+        Public Overrides Function ReadSpectrum(p As Metadata) As PeakMs2
             Return ReadSpectrum(p.block.position)
         End Function
 
@@ -234,7 +234,7 @@ Namespace PoolData
         ''' </summary>
         ''' <param name="p"></param>
         ''' <returns></returns>
-        Public Overloads Function ReadSpectrum(p As String) As Spectra.PeakMs2
+        Public Overloads Function ReadSpectrum(p As String) As PeakMs2
             Dim url As String = $"{base}/get/spectrum/?id={p}&model_id={model_id}"
             Dim json As String = url.GET
             Dim data = Restful.ParseJSON(json)
