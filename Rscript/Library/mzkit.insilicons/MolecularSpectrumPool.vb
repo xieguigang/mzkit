@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking.PoolData
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -73,12 +74,24 @@ Public Module MolecularSpectrumPool
     <ExportAPI("infer")>
     Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String,
                                            Optional reference_id As String() = Nothing,
-                                           Optional formula As String() = Nothing) As PeakMs2()
+                                           Optional formula As String() = Nothing,
+                                           Optional name As String() = Nothing) As PeakMs2()
 
         If reference_id.IsNullOrEmpty OrElse formula.IsNullOrEmpty Then
             Return dia.InferCluster(cluster_id).ToArray
         Else
+            If name.IsNullOrEmpty Then
+                name = formula
+            End If
 
+            Dim tuples = reference_id _
+                .Select(Function(biodeep_id, i)
+                            Return New NamedValue(Of String)(biodeep_id, formula(i), name(i))
+                        End Function) _
+                .ToArray
+            Dim result = dia.InferCluster(cluster_id, reference:=tuples).ToArray
+
+            Return result
         End If
     End Function
 
