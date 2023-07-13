@@ -160,4 +160,39 @@ Public Module Extensions
 
         Return ms1
     End Function
+
+    ''' <summary>
+    ''' make the ms2 spectrum data inside the mzpack object centroid
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="errors"></param>
+    ''' <param name="threshold"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function CentroidMzPack(data As mzPack, errors As Tolerance, threshold As LowAbundanceTrimming) As mzPack
+        data.MS = data.MS _
+            .AsParallel _
+            .Select(Function(s1)
+                        Return s1.ProcessScan2(errors, threshold)
+                    End Function) _
+            .ToArray
+
+        Return data
+    End Function
+
+    <Extension>
+    Private Function ProcessScan2(ms1 As ScanMS1, mzdiff As Tolerance, intocutoff As RelativeIntensityCutoff) As ScanMS1
+        ms1.products = ms1.products _
+            .SafeQuery _
+            .Select(Function(s2)
+                        Dim centroid = s2.GetMs.ToArray.Centroid(mzdiff, intocutoff).ToArray
+                        s2.mz = centroid.Select(Function(a) a.mz).ToArray
+                        s2.into = centroid.Select(Function(a) a.intensity).ToArray
+                        Return s2
+                    End Function) _
+            .ToArray
+
+        Return ms1
+    End Function
 End Module

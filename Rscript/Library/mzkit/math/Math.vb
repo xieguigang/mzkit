@@ -610,6 +610,8 @@ Module MzMath
                 .ToArray
 
             Return ms2Peak
+        ElseIf inputType Is GetType(mzPack) Then
+            Return DirectCast(ions, mzPack).CentroidMzPack(errors, threshold)
         ElseIf inputType Is GetType(LibraryMatrix) Then
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
@@ -641,10 +643,6 @@ Module MzMath
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
-    End Function
-
-    Private Function centroidMzPack(data As mzPack, errors As Tolerance, threshold As LowAbundanceTrimming) As mzPack
-
     End Function
 
     <Extension>
