@@ -487,6 +487,17 @@ Module MzPackAccess
             scan_id1 = Guid.NewGuid.ToString
         End If
 
+        For Each ms As PeakMs2 In m2.populates(Of PeakMs2)(env)
+            Call scan2.Add(New ScanMS2 With {
+                .scan_id = ms.lib_guid,
+                .intensity = ms.intensity,
+                .parentMz = ms.mz,
+                .rt = ms.rt,
+                .mz = ms.mzInto.Select(Function(a) a.mz).ToArray,
+                .into = ms.mzInto.Select(Function(a) a.intensity).ToArray
+            })
+        Next
+
         Return New ScanMS1 With {
             .scan_id = scan_id1,
             .BPC = scan2.Max(Function(a) a.intensity),
