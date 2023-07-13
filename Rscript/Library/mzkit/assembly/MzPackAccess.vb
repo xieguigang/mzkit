@@ -463,4 +463,39 @@ Module MzPackAccess
             Return denoiseMsMs(raw, cut, env)
         End If
     End Function
+
+    ''' <summary>
+    ''' pack a given ms2 spectrum collection as a single ms1 scan product
+    ''' </summary>
+    ''' <param name="ms2">a collection of the ms2 spectrum data</param>
+    ''' <param name="scan_id1">the scan id which will be specificed to the result scan ms1 object</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("pack_ms1")>
+    <RApiReturn(GetType(ScanMS1))>
+    Public Function packMs1(<RRawVectorArgument> ms2 As Object,
+                            Optional scan_id1 As String = Nothing,
+                            Optional env As Environment = Nothing) As Object
+
+        Dim scan2 As New List(Of ScanMS2)
+        Dim m2 As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2, env)
+
+        If m2.isError Then
+            Return m2.getError
+        End If
+        If scan_id1.StringEmpty Then
+            scan_id1 = Guid.NewGuid.ToString
+        End If
+
+        Return New ScanMS1 With {
+            .scan_id = scan_id1,
+            .BPC = scan2.Max(Function(a) a.intensity),
+            .into = scan2.Select(Function(a) a.intensity).ToArray,
+            .mz = scan2.Select(Function(a) a.parentMz).ToArray,
+            .products = scan2.ToArray,
+            .rt = scan2.Average(Function(a) a.rt),
+            .TIC = scan2.Sum(Function(a) a.intensity),
+            .meta = New Dictionary(Of String, String)
+        }
+    End Function
 End Module
