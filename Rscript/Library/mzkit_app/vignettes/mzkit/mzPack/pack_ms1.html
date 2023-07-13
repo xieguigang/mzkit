@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Removes the sciex AB5600 noise data from the MS2 raw data</title>
+    <title>pack a given ms2 spectrum collection as a single ms1 scan product</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>removeSciexNoise {mzPack}</td>
+                <td>pack_ms1 {mzPack}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Removes the sciex AB5600 noise data from the MS2 raw data</h2>
+        <h2>pack a given ms2 spectrum collection as a single ms1 scan product</h2>
 
         <h3>Description</h3>
 
@@ -157,16 +157,20 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>removeSciexNoise</strong>(<i>raw</i>,
-    <i>cut</i> = 2);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pack_ms1</strong>(<i>ms2</i>,
+    <i>scan.id1</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>raw</dt>
-<dd><p><p>should be a mzpack object or a collection of the ms2 data for handling the noise spectra peak removes</p></p></dd>
+<dt>ms2</dt>
+<dd><p><p>a collection of the ms2 spectrum data</p></p></dd>
+
+
+<dt>scan.id1</dt>
+<dd><p><p>the scan id which will be specificed to the result scan ms1 object</p></p></dd>
 
 
 <dt>env</dt>
@@ -182,7 +186,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1</a>.
 
         <hr />
         <div style="text-align: center;">[Package <em>mzPack</em> version 1.0.0.0 <a

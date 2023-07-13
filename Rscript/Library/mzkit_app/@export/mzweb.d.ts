@@ -160,8 +160,16 @@ declare namespace mzweb {
    function packBin(file: string, cache: string): ;
    module parse {
       /**
-        * @param level default value Is ``[1,2]``.
-        * @param env default value Is ``null``.
+       * Parse the ms scan data from a given raw byte stream data
+       * 
+       * 
+        * @param bytes the raw vector which could be parsed from the HDS file via HDS read data function.
+        * @param level specific the ms level to parse the scan data, level could be 1(scan ms1) or 2(scan ms2)
+        * 
+        * + default value Is ``[1,2]``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function scanMs(bytes: any, level?: any, env?: object): any;
    }
