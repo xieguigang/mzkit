@@ -261,11 +261,33 @@ Namespace PoolData
             Return pool
         End Function
 
-        Public Shared Function Open(link As String, Optional model_id As String = Nothing) As SpectrumPool
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="link"></param>
+        ''' <param name="model_id"></param>
+        ''' <param name="score">
+        ''' WARNING: this optional parameter will overrides the mode score 
+        ''' level when this parameter has a positive numeric value in 
+        ''' range ``(0,1]``.
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function Open(link As String,
+                                    Optional model_id As String = Nothing,
+                                    Optional score As Double? = Nothing) As SpectrumPool
+
             Dim fs As PoolFs = PoolFs.OpenAuto(link, model_id)
             Dim pool As New SpectrumPool(fs, "/")
 
-            Call fs.SetLevel(fs.level, fs.split)
+            If score IsNot Nothing AndAlso
+                score > 0 AndAlso
+                score < 1 Then
+
+                Call fs.SetLevel(score, fs.split)
+            Else
+                Call fs.SetLevel(fs.level, fs.split)
+            End If
+
             Call fs.SetScore(0.3, 0.05)
 
             Return pool

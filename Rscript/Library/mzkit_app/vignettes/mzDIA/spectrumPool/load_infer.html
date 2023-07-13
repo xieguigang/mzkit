@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>create a new spectrum clustering data pool</title>
+    <title>Create a spectrum inference protocol workflow</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>createPool {spectrumPool}</td>
+                <td>load_infer {spectrumPool}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>create a new spectrum clustering data pool</h2>
+        <h2>Create a spectrum inference protocol workflow</h2>
 
         <h3>Description</h3>
 
@@ -157,27 +157,22 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>createPool</strong>(<i>link</i>,
-    <i>level</i> = 0.9,
-    <i>split</i> = 9,
-    <i>name</i> = <span style='color: brown;'><strong>"no_named"</strong></span>,
-    <i>desc</i> = <span style='color: brown;'><strong>"no_information"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load_infer</strong>(<i>url</i>, <i>model.id</i>,
+    <i>ms1diff</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
+    <i>ms2diff</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
+    <i>intocutoff</i> = 0.05);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>link</dt>
+<dt>url</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>level</dt>
+<dt>model.id</dt>
 <dd><p><p>-</p></p></dd>
-
-
-<dt>split</dt>
-<dd><p><p>hex, max=15</p></p></dd>
 
         </table>
 
@@ -189,7 +184,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/MassSpectrometry/MoleculeNetworking/PoolData/SpectrumPool.html">SpectrumPool</a>.
+        this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/MassSpectrometry/MoleculeNetworking/PoolData/DIAInfer.html">DIAInfer</a>.
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a

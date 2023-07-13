@@ -149,7 +149,7 @@ Namespace Spectra.MoleculeNetworking
 
             centroid = centroidlized(raw)
 
-            For Each ion In centroid
+            For Each ion As PeakMs2 In centroid
                 Me.raw.Add(ion.lib_guid, ion)
             Next
 
