@@ -170,6 +170,20 @@ Module data
         End If
     End Function
 
+    ''' <summary>
+    ''' Union and merge the given multiple spectrum data into one single spectrum
+    ''' </summary>
+    ''' <param name="peaks">A collection of the spectrum object that going to merge into single one</param>
+    ''' <param name="matrix">
+    ''' this parameter will affects the data type of the value returns of this function:
+    ''' 
+    ''' 1. default false, returns a peak ms2 data object
+    ''' 2. true, returns a library matrix data object
+    ''' </param>
+    ''' <param name="massDiff">the mass error for merge two spectra peak</param>
+    ''' <returns>
+    ''' a single ms spectrum data object, its data type depeneds on the <paramref name="matrix"/> parameter.
+    ''' </returns>
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function unionPeaks(peaks As PeakMs2(),
