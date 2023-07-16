@@ -114,6 +114,13 @@ Public Class SpotMap : Implements IPoint2D
     ''' <returns></returns>
     <XmlText> Public Property TissueMorphology As String
 
+    ''' <summary>
+    ''' The optional heatmap scale data
+    ''' </summary>
+    ''' <returns></returns>
+    <XmlElement>
+    Public Property heatmap As Double?
+
     Private ReadOnly Property X As Integer Implements IPoint2D.X
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
